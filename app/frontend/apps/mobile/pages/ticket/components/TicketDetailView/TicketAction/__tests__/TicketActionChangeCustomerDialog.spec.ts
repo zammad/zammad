@@ -1,15 +1,19 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
+
 import { renderComponent } from '#tests/support/components/index.ts'
-import { nullableMock, waitUntil } from '#tests/support/utils.ts'
-import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { nullableMock, waitUntil } from '#tests/support/utils.ts'
+
+import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
+import type { AutocompleteSearchUserQuery } from '#shared/graphql/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+
 import { mockTicketObjectAttributesGql } from '#mobile/entities/ticket/__tests__/mocks/ticket-mocks.ts'
 import { defaultTicket } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
-import type { AutocompleteSearchUserQuery } from '#shared/graphql/types.ts'
-import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
+
 import TicketActionChangeCustomerDialog from '../TicketActionChangeCustomerDialog.vue'
 
 beforeAll(async () => {

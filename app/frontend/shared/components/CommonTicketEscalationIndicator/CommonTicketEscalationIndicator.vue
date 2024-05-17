@@ -2,11 +2,12 @@
 
 <script setup lang="ts">
 import { toRef } from 'vue'
-import type { Scalars } from '#shared/graphql/types.ts'
+
 import {
   useEscalationState,
   EscalationState,
 } from '#shared/composables/useEscalationState.ts'
+import type { Scalars } from '#shared/graphql/types.ts'
 
 export interface Props {
   escalationAt?: Maybe<Scalars['ISO8601DateTime']['output']>

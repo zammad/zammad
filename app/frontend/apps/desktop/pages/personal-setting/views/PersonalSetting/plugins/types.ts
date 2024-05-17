@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { RouteRecordRaw } from 'vue-router'
-
 import type { NavigationMenuCategory } from '#desktop/components/NavigationMenu/types.ts'
+
+import type { RouteRecordRaw } from 'vue-router'
 
 export interface PersonalSettingPlugin {
   label: string

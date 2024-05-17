@@ -4,15 +4,15 @@
 import { computed, toRef } from 'vue'
 import { type RouteLocationRaw, useRouter } from 'vue-router'
 
-import { useForm } from '#shared/components/Form/useForm.ts'
 import type { FormRef } from '#shared/components/Form/types.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import LayoutPublicPageBoxActions from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPageBoxActions.vue'
 import type {
   ButtonType,
   ButtonVariant,
 } from '#desktop/components/CommonButton/types.ts'
+import LayoutPublicPageBoxActions from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPageBoxActions.vue'
 
 interface Props {
   form?: FormRef

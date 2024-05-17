@@ -1,13 +1,15 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Component } from 'vue'
-import { markRaw } from 'vue'
-import type { FormKitSchemaNode, FormKitTypeDefinition } from '@formkit/core'
-import { cloneAny } from '@formkit/utils'
-import type { FormKitSchemaExtendableSection } from '@formkit/inputs'
 import { createSection } from '@formkit/inputs'
-import type { FieldsCustomOptions } from './initializeFieldDefinition.ts'
+import { cloneAny } from '@formkit/utils'
+import { markRaw } from 'vue'
+
 import initializeFieldDefinition from './initializeFieldDefinition.ts'
+
+import type { FieldsCustomOptions } from './initializeFieldDefinition.ts'
+import type { FormKitSchemaNode, FormKitTypeDefinition } from '@formkit/core'
+import type { FormKitSchemaExtendableSection } from '@formkit/inputs'
+import type { Component } from 'vue'
 
 let totalCreated = 0
 

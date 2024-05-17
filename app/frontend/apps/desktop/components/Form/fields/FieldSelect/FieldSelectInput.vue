@@ -1,20 +1,22 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, nextTick, ref, toRef, watch } from 'vue'
 import { useElementBounding, useWindowSize } from '@vueuse/core'
 import { escapeRegExp } from 'lodash-es'
-import { i18n } from '#shared/i18n.ts'
+import { computed, nextTick, ref, toRef, watch } from 'vue'
+
+import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
+import useValue from '#shared/components/Form/composables/useValue.ts'
+import type { SelectContext } from '#shared/components/Form/fields/FieldSelect/types.ts'
+import useSelectOptions from '#shared/composables/useSelectOptions.ts'
+import useSelectPreselect from '#shared/composables/useSelectPreselect.ts'
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
+import { useFormBlock } from '#shared/form/useFormBlock.ts'
+import { i18n } from '#shared/i18n.ts'
+
 import CommonInputSearch from '#desktop/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonSelect from '#desktop/components/CommonSelect/CommonSelect.vue'
 import type { CommonSelectInstance } from '#desktop/components/CommonSelect/types.ts'
-import { useFormBlock } from '#shared/form/useFormBlock.ts'
-import useValue from '#shared/components/Form/composables/useValue.ts'
-import useSelectOptions from '#shared/composables/useSelectOptions.ts'
-import useSelectPreselect from '#shared/composables/useSelectPreselect.ts'
-import type { SelectContext } from '#shared/components/Form/fields/FieldSelect/types.ts'
-import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
 
 interface Props {
   context: SelectContext & {

@@ -1,26 +1,28 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+
 import {
   useNotifications,
   NotificationTypes,
 } from '#shared/components/CommonNotifications/index.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
-import { computed } from 'vue'
+import useLoginTwoFactor from '#shared/composables/authentication/useLoginTwoFactor.ts'
 import { useThirdPartyAuthentication } from '#shared/composables/authentication/useThirdPartyAuthentication.ts'
 import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
+import { usePublicLinks } from '#shared/composables/usePublicLinks.ts'
 import type UserError from '#shared/errors/UserError.ts'
 import { EnumPublicLinksScreen } from '#shared/graphql/types.ts'
-import { usePublicLinks } from '#shared/composables/usePublicLinks.ts'
-import useLoginTwoFactor from '#shared/composables/authentication/useLoginTwoFactor.ts'
-import LoginThirdParty from '../components/LoginThirdParty.vue'
+import { useApplicationStore } from '#shared/stores/application.ts'
+
 import LoginCredentialsForm from '../components/LoginCredentialsForm.vue'
+import LoginFooter from '../components/LoginFooter.vue'
 import LoginHeader from '../components/LoginHeader.vue'
+import LoginRecoveryCode from '../components/LoginRecoveryCode.vue'
+import LoginThirdParty from '../components/LoginThirdParty.vue'
 import LoginTwoFactor from '../components/LoginTwoFactor.vue'
 import LoginTwoFactorMethods from '../components/LoginTwoFactorMethods.vue'
-import LoginRecoveryCode from '../components/LoginRecoveryCode.vue'
-import LoginFooter from '../components/LoginFooter.vue'
 
 const route = useRoute()
 const router = useRouter()

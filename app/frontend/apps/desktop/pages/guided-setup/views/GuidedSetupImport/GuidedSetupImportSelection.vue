@@ -7,9 +7,9 @@ import CommonButtonGroup from '#desktop/components/CommonButtonGroup/CommonButto
 import type { CommonButtonItem } from '#desktop/components/CommonButtonGroup/types.ts'
 import { guidedSetupImportSourcePlugins } from '#desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/index.ts'
 
-import { useSystemSetupInfoStore } from '../../stores/systemSetupInfo.ts'
 import GuidedSetupActionFooter from '../../components/GuidedSetupActionFooter.vue'
 import { useSystemSetup } from '../../composables/useSystemSetup.ts'
+import { useSystemSetupInfoStore } from '../../stores/systemSetupInfo.ts'
 
 const { setTitle } = useSystemSetup()
 

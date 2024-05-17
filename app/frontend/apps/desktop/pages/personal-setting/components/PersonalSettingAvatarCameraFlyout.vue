@@ -1,8 +1,8 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
 import { useUserMedia, usePermission } from '@vueuse/core'
+import { computed, ref, watch } from 'vue'
 
 import type { ImageFileData } from '#shared/utils/files.ts'
 

@@ -1,13 +1,15 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
-import { mockPublicLinksQuery } from '#shared/entities/public-links/graphql/queries/links.mocks.ts'
 import { mockGraphQLResult } from '#tests/graphql/builders/mocks.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
+import { mockPublicLinksQuery } from '#shared/entities/public-links/graphql/queries/links.mocks.ts'
 import type {
   UserSignupMutation,
   UserSignupResendMutation,
 } from '#shared/graphql/types.ts'
+
 import { UserSignupDocument } from '../graphql/mutations/userSignup.api.ts'
 import { UserSignupResendDocument } from '../graphql/mutations/userSignupResend.api.ts'
 

@@ -1,11 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Component } from 'vue'
-
 import type {
   EnumTwoFactorAuthenticationMethod,
   Scalars,
 } from '#shared/graphql/types.ts'
+
+import type { Component } from 'vue'
 
 export interface LoginFormData {
   login: string

@@ -1,9 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
-import { useApplicationStore } from '#shared/stores/application.ts'
+import { computed } from 'vue'
+
 import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 
 const { twoFactorMethods } = useTwoFactorPlugins()
 

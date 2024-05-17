@@ -3,10 +3,11 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import { i18n } from '#shared/i18n.ts'
+
 import CommonDialog from '#desktop/components/CommonDialog/CommonDialog.vue'
 
-import { i18n } from '#shared/i18n.ts'
-import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import type { ConfirmationVariantOptions } from './types.ts'
 
 const { confirmationOptions } = useConfirmation()

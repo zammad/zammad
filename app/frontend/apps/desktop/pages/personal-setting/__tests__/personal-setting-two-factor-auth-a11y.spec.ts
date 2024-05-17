@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { axe } from 'vitest-axe'
+
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
 import { visitViewAndMockPasswordConfirmation } from '#desktop/pages/personal-setting/__tests__/support/personal-setting-two-factor-auth.ts'
 
 describe('testing locale a11y view', async () => {

@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { useApplicationStore } from '#shared/stores/application.ts'
 import type { FieldResolverModule } from '#shared/entities/object-attributes/types/resolver.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
+
 import FieldResolver from '../FieldResolver.ts'
 
 export class FieldResolverTag extends FieldResolver {

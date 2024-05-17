@@ -9,9 +9,10 @@ import { useDebouncedLoading } from '#shared/composables/useDebouncedLoading.ts'
 import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
 import { provideImportSource } from '#desktop/pages/guided-setup/composables/useImportSource.ts'
 
-import { SYSTEM_SETUP_SYMBOL } from '../../composables/useSystemSetup.ts'
-import type { SystemSetup } from '../../types/setup.ts'
 import { useSetTitle } from '../../composables/useSetTitle.ts'
+import { SYSTEM_SETUP_SYMBOL } from '../../composables/useSystemSetup.ts'
+
+import type { SystemSetup } from '../../types/setup.ts'
 
 const { title, setTitle } = useSetTitle()
 

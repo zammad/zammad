@@ -2,9 +2,12 @@
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
-import CommonTicketStateIndicator from '#shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
+
 import CommonTicketPriorityIndicator from '#shared/components/CommonTicketPriorityIndicator/CommonTicketPriorityIndicator.vue'
+import CommonTicketStateIndicator from '#shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
+
 import { useEditedBy } from '#mobile/composables/useEditedBy.ts'
+
 import { type TicketItemData } from './types.ts'
 
 export interface Props {

@@ -1,11 +1,14 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import { EnumAuthenticationProvider } from '#shared/graphql/types.ts'
-import { waitForUserCurrentRemoveLinkedAccountMutationCalls } from '#desktop/pages/personal-setting/graphql/mutations/userCurrentLinkedAccount.mocks.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
+
+import { EnumAuthenticationProvider } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
+import { waitForUserCurrentRemoveLinkedAccountMutationCalls } from '#desktop/pages/personal-setting/graphql/mutations/userCurrentLinkedAccount.mocks.ts'
 
 describe('linked accounts page', () => {
   it('is not accessible if no providers are enabled', async () => {

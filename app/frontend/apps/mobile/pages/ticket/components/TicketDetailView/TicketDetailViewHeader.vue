@@ -1,18 +1,18 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
-import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-
 import { toRef } from 'vue'
-import { useDialog } from '#mobile/composables/useDialog.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
 
+import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import type {
   TicketById,
   TicketLiveAppUser,
 } from '#shared/entities/ticket/types.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
+import LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
+import { useDialog } from '#mobile/composables/useDialog.ts'
 
 interface Props {
   ticket?: TicketById

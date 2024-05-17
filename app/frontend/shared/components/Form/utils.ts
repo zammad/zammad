@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import UserError from '#shared/errors/UserError.ts'
 import { getNode, type FormKitNode } from '@formkit/core'
+
+import UserError from '#shared/errors/UserError.ts'
+
 import type { MutationSendError } from '../../types/error.ts'
 
 export const getNodeId = (formId: string, selector: string) => {

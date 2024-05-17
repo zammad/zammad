@@ -1,24 +1,30 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { axe } from 'vitest-axe'
-import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
-import { visitView } from '#tests/support/components/visitView.ts'
+
 import '#tests/graphql/builders/mocks.ts'
+
+import { visitView } from '#tests/support/components/visitView.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockAuthentication } from '#tests/support/mock-authentication.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
+
+import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
 import {
   EnumFormUpdaterId,
   EnumSystemSetupInfoStatus,
   EnumSystemSetupInfoType,
 } from '#shared/graphql/types.ts'
+
 import { mockChannelEmailSetNotificationConfigurationMutation } from '#desktop/entities/channel-email/graphql/mutations/channelEmailSetNotificationConfiguration.mocks.ts'
 import { mockChannelEmailValidateConfigurationOutboundMutation } from '#desktop/entities/channel-email/graphql/mutations/channelEmailValidateConfigurationOutbound.mocks.ts'
 import { mockEmailAddressesQuery } from '#desktop/entities/email-addresses/graphql/queries/emailAddresses.mocks.ts'
-import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
-import { mockAuthentication } from '#tests/support/mock-authentication.ts'
-import { mockPermissions } from '#tests/support/mock-permissions.ts'
-import { mockSystemSetupInfoQuery } from '../graphql/queries/systemSetupInfo.mocks.ts'
-import { mockSystemSetupInfo } from './mocks/mock-systemSetupInfo.ts'
+
 import { mockSystemImportStartMutation } from '../graphql/mutations/systemImportStart.mocks.ts'
 import { mockSystemImportStateQuery } from '../graphql/queries/systemImportState.mocks.ts'
+import { mockSystemSetupInfoQuery } from '../graphql/queries/systemSetupInfo.mocks.ts'
+
+import { mockSystemSetupInfo } from './mocks/mock-systemSetupInfo.ts'
 
 describe('testing admin password request a11y', () => {
   beforeEach(() => {

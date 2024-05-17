@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { useApplicationConfigTwoFactor } from '#shared/composables/authentication/useApplicationConfigTwoFactor.ts'
+
 import type { PersonalSettingPlugin } from './types.ts'
 
 export default <PersonalSettingPlugin>{

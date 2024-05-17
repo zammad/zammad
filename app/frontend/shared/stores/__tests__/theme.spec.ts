@@ -1,9 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 // mounted makes store to reinitiate on each test
+import { nextTick } from 'vue'
+
 import { mounted } from '#tests/support/components/mounted.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
-import { nextTick } from 'vue'
+
 import { useAppTheme } from '../theme.ts'
 
 const haveUserPreference = (theme: string | undefined) => {

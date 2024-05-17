@@ -2,6 +2,7 @@
 
 import type { Ticket } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
+
 import type { ActivityMessageBuilder } from '../types.ts'
 
 const path = (metaObject: Ticket) => {

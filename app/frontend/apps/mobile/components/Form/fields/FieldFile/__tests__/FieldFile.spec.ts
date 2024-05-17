@@ -2,17 +2,21 @@
 
 import { createNode, getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
-import type { ExtendedRenderResult } from '#tests/support/components/index.ts'
+import { expect } from 'vitest'
+
 import { renderComponent } from '#tests/support/components/index.ts'
+import type { ExtendedRenderResult } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
-import CommonImageViewer from '#shared/components/CommonImageViewer/CommonImageViewer.vue'
 import { waitUntil } from '#tests/support/utils.ts'
-import { createDeferred } from '#shared/utils/helpers.ts'
-import type { FormUploadCacheAddMutation } from '#shared/graphql/types.ts'
-import { expect } from 'vitest'
+
+import CommonImageViewer from '#shared/components/CommonImageViewer/CommonImageViewer.vue'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import type { FormUploadCacheAddMutation } from '#shared/graphql/types.ts'
+import { createDeferred } from '#shared/utils/helpers.ts'
+
 import type { FieldFileProps } from '#mobile/components/Form/fields/FieldFile/types.ts'
+
 import { FormUploadCacheAddDocument } from '../graphql/mutations/uploadCache/add.api.ts'
 import { FormUploadCacheRemoveDocument } from '../graphql/mutations/uploadCache/remove.api.ts'
 

@@ -1,12 +1,14 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormKitNode } from '@formkit/core'
 import { checkbox as checkboxDefinition } from '@formkit/inputs'
 import { has } from '@formkit/utils'
+
 import { useAppName } from '#shared/composables/useAppName.ts'
 import initializeFieldDefinition from '#shared/form/core/initializeFieldDefinition.ts'
 import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
 import extendSchemaDefinition from '#shared/form/utils/extendSchemaDefinition.ts'
+
+import type { FormKitNode } from '@formkit/core'
 
 const addCheckedDataAttribute = (node: FormKitNode) => {
   extendSchemaDefinition(node, 'wrapper', {

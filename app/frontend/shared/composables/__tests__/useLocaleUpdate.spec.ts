@@ -1,12 +1,14 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { beforeEach, describe, expect, vi } from 'vitest'
+
+import { initializePiniaStore } from '#tests/support/components/renderComponent.ts'
 import { waitUntil } from '#tests/support/utils.ts'
+
 import { useLocaleUpdate } from '#shared/composables/useLocaleUpdate.ts'
 import { mockLocalesQuery } from '#shared/graphql/queries/locales.mocks.ts'
-import { useLocaleStore } from '#shared/stores/locale.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
-import { initializePiniaStore } from '#tests/support/components/renderComponent.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
 
 const mockUpdateLocaleMutationHandler = () => {
   const sendMock = vi.fn()

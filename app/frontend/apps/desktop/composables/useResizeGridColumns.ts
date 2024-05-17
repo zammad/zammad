@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { shallowRef, computed, type Ref } from 'vue'
 import { useLocalStorage, useWindowSize } from '@vueuse/core'
+import { shallowRef, computed, type Ref } from 'vue'
 
 export const DEFAULT_SIDEBAR_WIDTH = 260
 export const MINIMUM_SIDEBAR_WIDTH = 200

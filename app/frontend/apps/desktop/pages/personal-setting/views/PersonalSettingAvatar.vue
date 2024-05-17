@@ -1,36 +1,29 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, shallowRef } from 'vue'
 import { storeToRefs } from 'pinia'
-import type { ApolloCache, NormalizedCacheObject } from '@apollo/client'
-
-import { getApolloClient } from '#shared/server/apollo/client.ts'
-import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
+import { computed, shallowRef } from 'vue'
 
 import CommonAvatar from '#shared/components/CommonAvatar/CommonAvatar.vue'
-import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
-
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
+import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
-
-import { useUserCurrentAvatarDeleteMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAvatarDelete.api.ts'
 import { useUserCurrentAvatarAddMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAvatarAdd.api.ts'
-
-import { useApplicationStore } from '#shared/stores/application.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
-
+import { useUserCurrentAvatarDeleteMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAvatarDelete.api.ts'
 import type {
   UserCurrentAvatarUpdatesSubscriptionVariables,
   UserCurrentAvatarUpdatesSubscription,
   Avatar,
   UserCurrentAvatarListQuery,
 } from '#shared/graphql/types.ts'
+import { getApolloClient } from '#shared/server/apollo/client.ts'
+import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
+import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
 import type { ImageFileData } from '#shared/utils/files.ts'
-
 import {
   convertFileList,
   allowedImageTypesString,
@@ -38,18 +31,19 @@ import {
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonDivider from '#desktop/components/CommonDivider/CommonDivider.vue'
+import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
-import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
-
+import { useUserCurrentAvatarSelectMutation } from '../graphql/mutations/userCurrentAvatarSelect.api.ts'
 import {
   useUserCurrentAvatarListQuery,
   UserCurrentAvatarListDocument,
 } from '../graphql/queries/userCurrentAvatarList.api.ts'
-import { useUserCurrentAvatarSelectMutation } from '../graphql/mutations/userCurrentAvatarSelect.api.ts'
 import { UserCurrentAvatarUpdatesDocument } from '../graphql/subscriptions/userCurrentAvatarUpdates.api.ts'
+
+import type { ApolloCache, NormalizedCacheObject } from '@apollo/client'
 
 const { user } = storeToRefs(useSessionStore())
 

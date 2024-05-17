@@ -1,13 +1,16 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { print } from 'graphql'
-import type { FormKitNode } from '@formkit/core'
+
+import { AutocompleteSearchRecipientDocument } from '#shared/components/Form/fields/FieldRecipient/graphql/queries/autocompleteSearch/recipient.api.ts'
 import createInput from '#shared/form/core/createInput.ts'
 import addLink from '#shared/form/features/addLink.ts'
 import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
-import { AutocompleteSearchRecipientDocument } from '#shared/components/Form/fields/FieldRecipient/graphql/queries/autocompleteSearch/recipient.api.ts'
+
 import FieldAutoCompleteInput from '../FieldAutoComplete/FieldAutoCompleteInput.vue'
 import { autoCompleteProps } from '../FieldAutoComplete/index.ts'
+
+import type { FormKitNode } from '@formkit/core'
 
 export type FieldRecipientContact = 'email' | 'phone'
 

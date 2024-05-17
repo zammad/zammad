@@ -1,15 +1,15 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
-
-import { useUserCurrentLocaleMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentLocale.api.ts'
-import { useLocaleStore } from '#shared/stores/locale.ts'
+import { computed, ref } from 'vue'
 
 import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
+import { useUserCurrentLocaleMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentLocale.api.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
+
 import MutationHandler from '../server/apollo/handler/MutationHandler.ts'
 
 const ZAMMAD_TRANSLATION_LINK = 'https://translations.zammad.org/'

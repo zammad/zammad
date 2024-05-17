@@ -8,6 +8,7 @@ import type {
   EnumObjectManagerObjects,
   ObjectManagerFrontendAttribute,
 } from '#shared/graphql/types.ts'
+
 import type { JsonValue } from 'type-fest'
 
 export default abstract class FieldResolver {

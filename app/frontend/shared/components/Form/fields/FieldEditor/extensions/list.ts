@@ -1,27 +1,29 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import Underline from '@tiptap/extension-underline'
-import OrderedList from '@tiptap/extension-ordered-list'
-import ListItem from '@tiptap/extension-list-item'
-import Link from '@tiptap/extension-link'
 import Blockquote from '@tiptap/extension-blockquote'
-import StarterKit from '@tiptap/starter-kit'
-import Paragraph from '@tiptap/extension-paragraph'
-import HardBreak from '@tiptap/extension-hard-break'
 import CharacterCount from '@tiptap/extension-character-count'
+import HardBreak from '@tiptap/extension-hard-break'
+import Link from '@tiptap/extension-link'
+import ListItem from '@tiptap/extension-list-item'
+import OrderedList from '@tiptap/extension-ordered-list'
+import Paragraph from '@tiptap/extension-paragraph'
+import Underline from '@tiptap/extension-underline'
+import StarterKit from '@tiptap/starter-kit'
 import TextDirection from 'tiptap-text-direction'
 
-import type { Extensions } from '@tiptap/core'
-
-import type { Ref } from 'vue'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
-import UserMention, { UserLink } from '../suggestions/UserMention.ts'
+
 import KnowledgeBaseSuggestion from '../suggestions/KnowledgeBaseSuggestion.ts'
 import TextModuleSuggestion from '../suggestions/TextModuleSuggestion.ts'
-import Image from './Image.ts'
+import UserMention, { UserLink } from '../suggestions/UserMention.ts'
+
 import HardBreakPlain from './HardBreakPlain.ts'
+import Image from './Image.ts'
 import Signature from './Signature.ts'
+
 import type { FieldEditorProps } from '../types.ts'
+import type { Extensions } from '@tiptap/core'
+import type { Ref } from 'vue'
 
 export const getPlainExtensions = (): Extensions => [
   StarterKit.configure({

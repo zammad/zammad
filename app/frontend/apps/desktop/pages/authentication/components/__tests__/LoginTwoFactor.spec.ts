@@ -1,20 +1,23 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { waitFor } from '@testing-library/vue'
+
+import {
+  mockGraphQLResult,
+  waitForGraphQLMockCalls,
+} from '#tests/graphql/builders/mocks.ts'
+import renderComponent from '#tests/support/components/renderComponent.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
+import securityKeys from '#shared/entities/two-factor/plugins/security-keys.ts'
 import type {
   TwoFactorPlugin,
   TwoFactorSetupResult,
 } from '#shared/entities/two-factor/types.ts'
 import { TwoFactorMethodInitiateAuthenticationDocument } from '#shared/graphql/mutations/twoFactorMethodInitiateAuthentication.api.ts'
 import type { TwoFactorMethodInitiateAuthenticationMutation } from '#shared/graphql/types.ts'
-import renderComponent from '#tests/support/components/renderComponent.ts'
-import {
-  mockGraphQLResult,
-  waitForGraphQLMockCalls,
-} from '#tests/graphql/builders/mocks.ts'
-import securityKeys from '#shared/entities/two-factor/plugins/security-keys.ts'
 import { createDeferred } from '#shared/utils/helpers.ts'
-import { waitFor } from '@testing-library/vue'
-import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
 import LoginTwoFactor from '../LoginTwoFactor.vue'
 
 const prepareInitialData = (

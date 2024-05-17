@@ -3,35 +3,35 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
+import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import { useUserCurrentAccessTokenDeleteMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAccessTokenDelete.api.ts'
 import { useUserCurrentAccessTokenListQuery } from '#shared/entities/user/current/graphql/queries/userCurrentAcessTokenList.api.ts'
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import type {
   Token,
   UserCurrentAccessTokenUpdatesSubscription,
   UserCurrentAccessTokenUpdatesSubscriptionVariables,
   UserCurrentAccessTokenListQuery,
 } from '#shared/graphql/types.ts'
-import { useUserCurrentAccessTokenDeleteMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAccessTokenDelete.api.ts'
-import { useConfirmation } from '#shared/composables/useConfirmation.ts'
-import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
-import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
+import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
+import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
-import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
-import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import CommonPageHelp from '#desktop/components/CommonPageHelp/CommonPageHelp.vue'
+import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
+import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
 import type {
   TableHeader,
   TableItem,
 } from '#desktop/components/CommonSimpleTable/types.ts'
-import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
+import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
-import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
 import { useCheckTokenAccess } from '../composables/permission/useCheckTokenAccess.ts'
+import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
 import { UserCurrentAccessTokenUpdatesDocument } from '../graphql/subscriptions/userCurrentAccessTokenUpdates.api.ts'
 
 defineOptions({

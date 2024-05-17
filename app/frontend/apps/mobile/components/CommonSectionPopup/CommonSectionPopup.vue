@@ -1,12 +1,15 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { onClickOutside, onKeyUp, useVModel } from '@vueuse/core'
+import { nextTick, type Ref, shallowRef, watch } from 'vue'
+
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import stopEvent from '#shared/utils/events.ts'
 import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
-import { onClickOutside, onKeyUp, useVModel } from '@vueuse/core'
-import { nextTick, type Ref, shallowRef, watch } from 'vue'
+
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
+
 import type { PopupItemDescriptor } from './types.ts'
 
 export interface Props {

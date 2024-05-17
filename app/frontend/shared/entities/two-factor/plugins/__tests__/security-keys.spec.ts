@@ -4,6 +4,7 @@
 // If we start doing that, we can remove this test case.
 
 import { get } from '@github/webauthn-json'
+
 import securityKeys from '../security-keys.ts'
 
 vi.mock('@github/webauthn-json', () => ({ get: vi.fn() }))

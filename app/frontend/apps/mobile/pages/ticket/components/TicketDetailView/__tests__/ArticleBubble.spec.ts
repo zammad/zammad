@@ -1,14 +1,18 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import { waitForAnimationFrame } from '#shared/utils/helpers.ts'
 import { getByAltText, queryByAltText } from '@testing-library/vue'
+
 import { renderComponent } from '#tests/support/components/index.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
-import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
-import { routes } from '#mobile/router/index.ts'
-import { isStandalone } from '#shared/utils/pwa.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
+
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { waitForAnimationFrame } from '#shared/utils/helpers.ts'
+import { isStandalone } from '#shared/utils/pwa.ts'
+
+import { routes } from '#mobile/router/index.ts'
+
 import ArticleBubble from '../ArticleBubble.vue'
 
 const mainRoutes = routes.at(-1)?.children || []

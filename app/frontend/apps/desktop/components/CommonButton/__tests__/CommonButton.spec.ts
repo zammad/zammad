@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
+
 import CommonButton from '../CommonButton.vue'
 
 describe('CommonButton.vue', () => {

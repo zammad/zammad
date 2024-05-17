@@ -1,15 +1,16 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { UserDocument } from '#mobile/entities/user/graphql/queries/user.api.ts'
-import {
-  defaultUser,
-  mockUserDetailsApis,
-} from '#mobile/entities/user/__tests__/mocks/user-mocks.ts'
+import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import { setupView } from '#tests/support/mock-user.ts'
 import { waitUntil, waitUntilApisResolved } from '#tests/support/utils.ts'
-import { getTestRouter } from '#tests/support/components/renderComponent.ts'
+
+import {
+  defaultUser,
+  mockUserDetailsApis,
+} from '#mobile/entities/user/__tests__/mocks/user-mocks.ts'
+import { UserDocument } from '#mobile/entities/user/graphql/queries/user.api.ts'
 
 describe('visiting user page', () => {
   test('view static content', async () => {

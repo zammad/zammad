@@ -2,12 +2,14 @@
 
 import { useRouter } from 'vue-router'
 
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import { EnumSystemImportSource } from '#shared/graphql/types.ts'
+import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 
 import { useSystemImportConfigurationMutation } from '../graphql/mutations/systemImportConfiguration.api.ts'
-import type { ImportSourceConfigurationBase } from '../types/setup-import.ts'
+
 import { useImportSource } from './useImportSource.ts'
+
+import type { ImportSourceConfigurationBase } from '../types/setup-import.ts'
 
 export const useImportSourceConfiguration = <
   T extends ImportSourceConfigurationBase,

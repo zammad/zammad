@@ -1,11 +1,14 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { createPinia, setActivePinia } from 'pinia'
+
 import { errorOptions } from '#shared/router/error.ts'
-import type { RouteLocationNormalized } from 'vue-router'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
+
 import permissionGuard from '../permission.ts'
+
+import type { RouteLocationNormalized } from 'vue-router'
 
 vi.mock('#shared/server/apollo/client.ts', () => {
   return {}

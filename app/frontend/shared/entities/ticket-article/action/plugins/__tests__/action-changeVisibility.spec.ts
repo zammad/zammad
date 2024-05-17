@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { TicketView } from '#shared/entities/ticket/types.ts'
 import { setupView } from '#tests/support/mock-user.ts'
+
+import type { TicketView } from '#shared/entities/ticket/types.ts'
+
 import {
   createTicketArticle,
   createTestArticleActions,

@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, reactive, watch } from 'vue'
 import { isString } from 'lodash-es'
+import { computed, reactive, watch } from 'vue'
+
 import { i18n } from '#shared/i18n.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 

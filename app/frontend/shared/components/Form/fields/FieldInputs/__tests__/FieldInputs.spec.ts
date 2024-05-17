@@ -2,6 +2,7 @@
 
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
+
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForTimeout } from '#tests/support/utils.ts'
 

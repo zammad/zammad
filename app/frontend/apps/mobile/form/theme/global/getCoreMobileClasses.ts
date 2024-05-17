@@ -1,14 +1,15 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { clean, extendClasses } from '#shared/form/plugins/utils.ts'
+import type { Classes } from '#shared/form/plugins/utils.ts'
 import type {
   FormThemeClasses,
   FormThemeExtension,
 } from '#shared/types/form.ts'
-import type { Classes } from '#shared/form/plugins/utils.ts'
-import { clean, extendClasses } from '#shared/form/plugins/utils.ts'
+
 import { addAbsoluteFloatingLabel } from './addAbsoluteFloatingLabel.ts'
-import { addFloatingTextareaLabel } from './addFloatingTextareaLabel.ts'
 import { addBlockFloatingLabel } from './addBlockFloatingLabel.ts'
+import { addFloatingTextareaLabel } from './addFloatingTextareaLabel.ts'
 import { addStaticFloatingLabel } from './addStaticFloatingLabel.ts'
 
 export const addButtonVariants = (classes: Classes = {}): Classes => {

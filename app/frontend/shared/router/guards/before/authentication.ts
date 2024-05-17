@@ -1,15 +1,17 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { watch } from 'vue'
+
+import { useApplicationStore } from '#shared/stores/application.ts'
+import { useAuthenticationStore } from '#shared/stores/authentication.ts'
+import log from '#shared/utils/log.ts'
+
 import type { WatchStopHandle } from 'vue'
 import type {
   NavigationGuard,
   RouteLocationNormalized,
   NavigationGuardNext,
 } from 'vue-router'
-import log from '#shared/utils/log.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
-import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 
 const checkAuthenticated = (
   to: RouteLocationNormalized,

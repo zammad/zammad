@@ -1,10 +1,11 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import type { TwoFactorPlugin } from '#shared/entities/two-factor/types.ts'
 import type { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
+
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 
 defineProps<{
   methods: TwoFactorPlugin[]

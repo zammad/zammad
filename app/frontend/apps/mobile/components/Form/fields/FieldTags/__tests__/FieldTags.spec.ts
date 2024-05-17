@@ -1,18 +1,20 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { FormKit } from '@formkit/vue'
+import { getByText, queryByRole } from '@testing-library/vue'
+
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import type { MockGraphQLInstance } from '#tests/support/mock-graphql-api.ts'
+import { waitUntil } from '#tests/support/utils.ts'
+
 import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
-import { AutocompleteSearchTagDocument } from '#shared/entities/tags/graphql/queries/autocompleteTags.api.ts'
-import { getByText, queryByRole } from '@testing-library/vue'
-import { renderComponent } from '#tests/support/components/index.ts'
-import { getByIconName } from '#tests/support/components/iconQueries.ts'
-import type { MockGraphQLInstance } from '#tests/support/mock-graphql-api.ts'
-import { waitUntil } from '#tests/support/utils.ts'
-import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import type { FieldTagsContext } from '#shared/components/Form/fields/FieldTags/types.ts'
+import { AutocompleteSearchTagDocument } from '#shared/entities/tags/graphql/queries/autocompleteTags.api.ts'
 
 const defaultTags = [
   { label: 'test', value: 'test' },

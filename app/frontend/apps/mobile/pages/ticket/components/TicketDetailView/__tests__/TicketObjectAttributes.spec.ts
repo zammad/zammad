@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
 import TicketObjectAttributes from '../TicketObjectAttributes.vue'
 
 describe('TicketObjectAttributes', () => {

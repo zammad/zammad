@@ -1,15 +1,15 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ShallowRef, Ref } from 'vue'
-
 import type { FormRef, FormFieldValue } from '#shared/components/Form/types.ts'
 import type { MutationSendError } from '#shared/types/error.ts'
+
 import type { EmailAccountData } from './email-account.ts'
 import type {
   EmailInboundData,
   EmailInboundMessagesData,
   EmailOutboundData,
 } from './email-inbound-outbound.ts'
+import type { ShallowRef, Ref } from 'vue'
 
 export type EmailChannelSteps =
   | 'account'

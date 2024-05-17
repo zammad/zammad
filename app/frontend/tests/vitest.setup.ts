@@ -1,16 +1,18 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
 import '@testing-library/jest-dom/vitest'
 import { toBeDisabled } from '@testing-library/jest-dom/matchers'
 import { configure } from '@testing-library/vue'
-import * as matchers from 'vitest-axe/matchers'
 import { expect } from 'vitest'
+import * as matchers from 'vitest-axe/matchers'
+
 import 'vitest-axe/extend-expect'
 import { ServiceWorkerHelper } from '#shared/utils/testSw.ts'
-import { loadErrorMessages, loadDevMessages } from '@apollo/client/dev'
+
+import * as assertions from './support/assertions/index.ts'
 
 // Zammad custom assertions: toBeAvatarElement, toHaveClasses, toHaveImagePreview, toHaveCurrentUrl
-import * as assertions from './support/assertions/index.ts'
 
 loadDevMessages()
 loadErrorMessages()

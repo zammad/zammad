@@ -2,6 +2,7 @@
 
 import { injectSvgIcons } from '#shared/components/CommonIcon/injectIcons.ts'
 import { provideIcons } from '#shared/components/CommonIcon/useIcons.ts'
+
 import iconsAliases from './desktopIconsAliasesMap.ts'
 
 const iconsSymbolsList = Object.entries(

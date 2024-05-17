@@ -1,9 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { useRouter } from 'vue-router'
+
 import { redirectToError } from '#shared/router/error.ts'
 import type { GraphQLHandlerError } from '#shared/types/error.ts'
 import { ErrorStatusCodes, GraphQLErrorTypes } from '#shared/types/error.ts'
-import { useRouter } from 'vue-router'
 
 interface ErrorMessages {
   notFound?: string

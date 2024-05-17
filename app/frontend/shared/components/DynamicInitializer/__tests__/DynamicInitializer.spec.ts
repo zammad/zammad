@@ -2,6 +2,7 @@
 
 import { render } from '@testing-library/vue'
 import { h, nextTick, ref } from 'vue'
+
 import DynamicInitializer from '../DynamicInitializer.vue'
 import { destroyComponent, pushComponent } from '../manage.ts'
 

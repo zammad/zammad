@@ -1,15 +1,16 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
 import {
   EnumSystemSetupInfoStatus,
   EnumSystemSetupInfoType,
 } from '#shared/graphql/types.ts'
 
-import { mockSystemSetupInfoQuery } from '../graphql/queries/systemSetupInfo.mocks.ts'
 import { mockSystemImportConfigurationMutation } from '../graphql/mutations/systemImportConfiguration.mocks.ts'
+import { mockSystemSetupInfoQuery } from '../graphql/queries/systemSetupInfo.mocks.ts'
+
 import { mockSystemSetupInfo } from './mocks/mock-systemSetupInfo.ts'
 
 describe('guided setup import source', () => {

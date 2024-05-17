@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-const path = require('path')
 const fs = require('fs')
+const path = require('path')
 
 const mobilePagesDir = path.resolve(__dirname, 'app/frontend/apps/mobile/pages')
 const mobilePagesFolder = fs.readdirSync(mobilePagesDir)
@@ -26,6 +26,7 @@ module.exports = {
     'sonarjs',
     'security',
     'zammad',
+    'import',
   ],
   extends: [
     'airbnb-base',
@@ -149,6 +150,50 @@ module.exports = {
       'error',
       {
         order: ['script', 'template', 'style'],
+      },
+    ],
+
+    // Enforce ordering for imports
+    'import/order': [
+      'error',
+      {
+        groups: [
+          'builtin',
+          'external',
+          'internal',
+          'parent',
+          'sibling',
+          'index',
+          'object',
+          'type',
+        ],
+        pathGroups: [
+          {
+            pattern: '#tests/**',
+            group: 'internal',
+            position: 'before',
+          },
+          {
+            pattern: '#shared/**',
+            group: 'internal',
+            position: 'before',
+          },
+          {
+            pattern: '#desktop/**',
+            group: 'internal',
+          },
+          {
+            pattern: '#mobile/**',
+            group: 'internal',
+          },
+          {
+            pattern: '**/types.ts',
+            group: 'type',
+            position: 'after',
+          },
+        ],
+        'newlines-between': 'always',
+        alphabetize: { order: 'asc', caseInsensitive: true },
       },
     ],
 

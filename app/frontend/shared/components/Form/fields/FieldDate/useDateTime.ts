@@ -1,9 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, type Ref } from 'vue'
+
+import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
-import { EnumTextDirection } from '#shared/graphql/types.ts'
+
 import type { DateTimeContext } from './types.ts'
 
 export const useDateTime = (context: Ref<DateTimeContext>) => {

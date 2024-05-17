@@ -1,9 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { useDialogObjectForm } from '#mobile/components/CommonDialogObjectForm/useDialogObjectForm.ts'
-import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
-import { useUserUpdateMutation } from '#mobile/pages/user/graphql/mutations/update.api.ts'
 import type { FormSchemaField } from '#shared/components/Form/types.ts'
+import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import type { UserQuery } from '#shared/graphql/types.ts'
 import {
   EnumFormUpdaterId,
@@ -11,6 +9,9 @@ import {
 } from '#shared/graphql/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
+
+import { useDialogObjectForm } from '#mobile/components/CommonDialogObjectForm/useDialogObjectForm.ts'
+import { useUserUpdateMutation } from '#mobile/pages/user/graphql/mutations/update.api.ts'
 
 export const useUserEdit = () => {
   const dialog = useDialogObjectForm('user-edit', EnumObjectManagerObjects.User)

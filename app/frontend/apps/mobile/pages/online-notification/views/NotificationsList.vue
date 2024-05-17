@@ -2,17 +2,20 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import { useHeader } from '#mobile/composables/useHeader.ts'
+
+import { useOnlineNotificationCount } from '#shared/entities/online-notification/composables/useOnlineNotificationCount.ts'
+import { useOnlineNotificationMarkAllAsSeenMutation } from '#shared/entities/online-notification/graphql/mutations/markAllAsSeen.api.ts'
 import { useOnlineNotificationsQuery } from '#shared/entities/online-notification/graphql/queries/onlineNotifications.api.ts'
+import type { OnlineNotification, Scalars } from '#shared/graphql/types.ts'
 import {
   QueryHandler,
   MutationHandler,
 } from '#shared/server/apollo/handler/index.ts'
-import type { OnlineNotification, Scalars } from '#shared/graphql/types.ts'
-import { useOnlineNotificationMarkAllAsSeenMutation } from '#shared/entities/online-notification/graphql/mutations/markAllAsSeen.api.ts'
-import { useOnlineNotificationCount } from '#shared/entities/online-notification/composables/useOnlineNotificationCount.ts'
-import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import { edgesToArray } from '#shared/utils/helpers.ts'
+
+import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
+import { useHeader } from '#mobile/composables/useHeader.ts'
+
 import NotificationItem from '../components/NotificationItem.vue'
 
 const notificationsHandler = new QueryHandler(useOnlineNotificationsQuery())

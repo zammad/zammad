@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { ErrorStatusCodes } from '#shared/types/error.ts'
 import { ref } from 'vue'
+
+import { ErrorStatusCodes } from '#shared/types/error.ts'
+
 import type { NavigationHookAfter, Router } from 'vue-router'
 
 interface ErrorOptions {

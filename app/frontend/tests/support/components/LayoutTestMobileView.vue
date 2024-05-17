@@ -1,15 +1,17 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { headerOptions as header } from '#mobile/composables/useHeader.ts'
 import { computed, unref } from 'vue'
 import { useRoute } from 'vue-router'
-import LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
+
+import CommonImageViewer from '#shared/components/CommonImageViewer/CommonImageViewer.vue'
 import CommonNotifications from '#shared/components/CommonNotifications/CommonNotifications.vue'
 import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
 import useAuthenticationChanges from '#shared/composables/authentication/useAuthenticationUpdates.ts'
+
 import CommonConfirmation from '#mobile/components/CommonConfirmation/CommonConfirmation.vue'
-import CommonImageViewer from '#shared/components/CommonImageViewer/CommonImageViewer.vue'
+import LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
+import { headerOptions as header } from '#mobile/composables/useHeader.ts'
 
 defineProps<{ testKey: number }>()
 

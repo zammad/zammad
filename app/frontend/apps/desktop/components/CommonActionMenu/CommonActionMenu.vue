@@ -3,19 +3,19 @@
 <script setup lang="ts">
 import { computed, ref, toRefs } from 'vue'
 
-import getUuid from '#shared/utils/getUuid.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
+import getUuid from '#shared/utils/getUuid.ts'
 
-import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import CommonPopoverMenu from '#desktop/components/CommonPopover/CommonPopoverMenu.vue'
-import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
 import type { ButtonSize } from '#desktop/components/CommonButton/types.ts'
+import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
+import CommonPopoverMenu from '#desktop/components/CommonPopover/CommonPopoverMenu.vue'
 import type {
   MenuItem,
   Orientation,
   Placement,
 } from '#desktop/components/CommonPopover/types.ts'
+import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
 import { usePopoverMenu } from '#desktop/components/CommonPopover/usePopoverMenu.ts'
 
 export interface Props {

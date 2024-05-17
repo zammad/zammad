@@ -6,6 +6,7 @@ import { toRef } from 'vue'
 import { useForm } from '#shared/components/Form/useForm.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+
 import type { ActionFooterOptions as Props } from './types.ts'
 
 const props = withDefaults(defineProps<Props>(), {

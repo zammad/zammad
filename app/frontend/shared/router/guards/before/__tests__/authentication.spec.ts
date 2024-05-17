@@ -1,10 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { createTestingPinia } from '@pinia/testing'
-import type { RouteLocationNormalized } from 'vue-router'
-import { useAuthenticationStore } from '#shared/stores/authentication.ts'
+
 import { useApplicationStore } from '#shared/stores/application.ts'
+import { useAuthenticationStore } from '#shared/stores/authentication.ts'
+
 import authenticationGuard from '../authentication.ts'
+
+import type { RouteLocationNormalized } from 'vue-router'
 
 vi.mock('#shared/server/apollo/client.ts', () => {
   return {}

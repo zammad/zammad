@@ -2,12 +2,16 @@
 
 <script setup lang="ts">
 import { ref, computed, toRef } from 'vue'
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+
+import { useForm } from '#shared/components/Form/useForm.ts'
 import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
-import { useForm } from '#shared/components/Form/useForm.ts'
-import TwoFactorConfigurationRecoveryCodes from './TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue'
+
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+
 import TwoFactorConfigurationMethodList from './TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue'
+import TwoFactorConfigurationRecoveryCodes from './TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue'
+
 import type {
   TwoFactorConfigurationActionPayload,
   TwoFactorConfigurationComponentInstance,

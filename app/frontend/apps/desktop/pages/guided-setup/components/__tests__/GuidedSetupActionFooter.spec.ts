@@ -2,9 +2,11 @@
 
 import { shallowRef } from 'vue'
 
-import Form from '#shared/components/Form/Form.vue'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
+
+import Form from '#shared/components/Form/Form.vue'
+
 import GuidedSetupActionFooter from '../GuidedSetupActionFooter.vue'
 
 const wrapperParameters = {

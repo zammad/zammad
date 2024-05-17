@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { ApolloLink } from '@apollo/client/core'
+
 import { setCSRFToken } from '../utils/csrfToken.ts'
 
 const csrfLink = new ApolloLink((operation, forward) => {

@@ -2,26 +2,29 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
-import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
-import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
+
+import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import Form from '#shared/components/Form/Form.vue'
 import { useForm } from '#shared/components/Form/useForm.ts'
-import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
-import type { TableHeader } from '#desktop/components/CommonSimpleTable/types.ts'
+import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
+import type { TwoFactorSetupResult } from '#shared/entities/two-factor/types.ts'
+import { useUserCurrentTwoFactorGetMethodConfigurationQuery } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorGetMethodConfiguration.api.ts'
+import { useUserCurrentTwoFactorRemoveMethodCredentialsMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorRemoveMethodCredentials.api.ts'
+import { useUserCurrentTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorVerifyMethodConfiguration.api.ts'
+import { useUserCurrentTwoFactorInitiateMethodConfigurationLazyQuery } from '#shared/entities/user/current/graphql/queries/two-factor/userCurrentTwoFactorInitiateMethodConfiguration.api.ts'
+import UserError from '#shared/errors/UserError.ts'
 import {
   MutationHandler,
   QueryHandler,
 } from '#shared/server/apollo/handler/index.ts'
-import { useUserCurrentTwoFactorGetMethodConfigurationQuery } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorGetMethodConfiguration.api.ts'
-import { useUserCurrentTwoFactorInitiateMethodConfigurationLazyQuery } from '#shared/entities/user/current/graphql/queries/two-factor/userCurrentTwoFactorInitiateMethodConfiguration.api.ts'
-import { useUserCurrentTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorVerifyMethodConfiguration.api.ts'
-import { useUserCurrentTwoFactorRemoveMethodCredentialsMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorRemoveMethodCredentials.api.ts'
-import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
-import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
-import UserError from '#shared/errors/UserError.ts'
-import type { TwoFactorSetupResult } from '#shared/entities/two-factor/types.ts'
+
+import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
+import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
+import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
+import type { TableHeader } from '#desktop/components/CommonSimpleTable/types.ts'
+
 import type { TwoFactorConfigurationComponentProps } from '../types.ts'
 
 const props = defineProps<TwoFactorConfigurationComponentProps>()

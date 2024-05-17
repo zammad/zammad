@@ -2,11 +2,11 @@
 
 import { initializeAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
 import { initializeAvatarClasses } from '#shared/initializer/initializeAvatarClasses.ts'
-import { initializeUserAvatarClasses } from '#shared/initializer/initializeUserAvatarClasses.ts'
-import { initializeOrganizationAvatarClasses } from '#shared/initializer/initializeOrganizationAvatarClasses.ts'
 import { initializeBadgeClasses } from '#shared/initializer/initializeBadgeClasses.ts'
 import { initializeLinkClasses } from '#shared/initializer/initializeLinkClasses.ts'
 import { initializeNotificationClasses } from '#shared/initializer/initializeNotificationClasses.ts'
+import { initializeOrganizationAvatarClasses } from '#shared/initializer/initializeOrganizationAvatarClasses.ts'
+import { initializeUserAvatarClasses } from '#shared/initializer/initializeUserAvatarClasses.ts'
 
 export const initializeGlobalComponentStyles = () => {
   initializeBadgeClasses({

@@ -4,6 +4,7 @@
 import { useSharedVisualConfig } from '#shared/composables/useSharedVisualConfig.ts'
 import type { ObjectManagerFrontendAttribute } from '#shared/graphql/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
+
 import { useDisplayObjectAttributes } from './useDisplayObjectAttributes.ts'
 
 export interface Props {

@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import VueEasyLightbox from 'vue-easy-lightbox'
+
 import 'vue-easy-lightbox/dist/external-css/vue-easy-lightbox.css'
 import { imageViewerOptions } from '#shared/composables/useImageViewer.ts'
 </script>

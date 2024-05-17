@@ -1,11 +1,14 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { toRef } from 'vue'
+
 import CommonInputSearch, {
   type CommonInputSearchProps,
 } from '#shared/components/CommonInputSearch/CommonInputSearch.vue'
-import { toRef } from 'vue'
+
 import useValue from '../../composables/useValue.ts'
+
 import type { FormFieldContext } from '../../types/field.ts'
 
 export interface FieldSearchProps {

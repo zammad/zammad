@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { renderComponent } from '#tests/support/components/index.ts'
 import { onMounted, ref } from 'vue'
+
+import { renderComponent } from '#tests/support/components/index.ts'
+
 import CommonInputSearch, {
   type CommonInputSearchExpose,
 } from '../CommonInputSearch.vue'

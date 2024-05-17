@@ -3,32 +3,32 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
-import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import useFingerprint from '#shared/composables/useFingerprint.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
 import type {
   UserCurrentDevicesUpdatesSubscription,
   UserCurrentDevicesUpdatesSubscriptionVariables,
   UserCurrentDeviceListQuery,
   UserDevice,
 } from '#shared/graphql/types.ts'
+import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
+import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
 
-import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
-import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
 import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
+import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
 import type {
   TableHeader,
   TableItem,
 } from '#desktop/components/CommonSimpleTable/types.ts'
+import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
-import { useUserCurrentDeviceListQuery } from '../graphql/queries/userCurrentDeviceList.api.ts'
 import { useUserCurrentDeviceDeleteMutation } from '../graphql/mutations/userCurrentDeviceDelete.api.ts'
+import { useUserCurrentDeviceListQuery } from '../graphql/queries/userCurrentDeviceList.api.ts'
 import { UserCurrentDevicesUpdatesDocument } from '../graphql/subscriptions/userCurrentDevicesUpdates.api.ts'
 
 const session = useSessionStore()

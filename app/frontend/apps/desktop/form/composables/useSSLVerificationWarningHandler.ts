@@ -1,15 +1,17 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { createMessage } from '@formkit/core'
-import { i18n } from '#shared/i18n.ts'
+
 import { FormHandlerExecution } from '#shared/components/Form/types.ts'
-import type { FormKitNode } from '@formkit/core'
 import type {
   ChangedField,
   FormHandler,
   FormHandlerFunction,
   ReactiveFormSchemData,
 } from '#shared/components/Form/types.ts'
+import { i18n } from '#shared/i18n.ts'
+
+import type { FormKitNode } from '@formkit/core'
 
 export const useSSLVerificationWarningHandler = (): FormHandler => {
   const addWarning = (formNode?: FormKitNode) => {

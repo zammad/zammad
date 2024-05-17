@@ -2,10 +2,12 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import LayoutMain from '#desktop/components/layout/LayoutMain.vue'
-import LayoutBottomBar from '#desktop/components/layout/LayoutBottomBar.vue'
+
 import CommonBreadcrumb from '#desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue'
 import type { BreadcrumbItem } from '#desktop/components/CommonBreadcrumb/types.ts'
+import LayoutBottomBar from '#desktop/components/layout/LayoutBottomBar.vue'
+import LayoutMain from '#desktop/components/layout/LayoutMain.vue'
+
 import type { ContentWidth } from './types'
 
 interface Props {

@@ -2,12 +2,13 @@
 
 import { FormKit } from '@formkit/vue'
 import { waitFor } from '@testing-library/vue'
-import { renderComponent } from '#tests/support/components/index.ts'
-import { waitForNextTick } from '#tests/support/utils.ts'
+
 import {
   checkSimpleTableContent,
   checkSimpleTableHeader,
 } from '#tests/support/components/checkSimpleTableContent.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
 
 const tableHeaders = [
   'Name',

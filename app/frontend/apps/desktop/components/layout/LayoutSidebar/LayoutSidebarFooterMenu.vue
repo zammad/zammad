@@ -1,15 +1,16 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
 
-import { useSessionStore } from '#shared/stores/session.ts'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import { useSessionStore } from '#shared/stores/session.ts'
 
 import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
 import CommonPopoverMenu from '#desktop/components/CommonPopover/CommonPopoverMenu.vue'
 import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
+
 import { avatarMenuItems } from './AvatarMenu/plugins/index.ts'
 
 interface Props {

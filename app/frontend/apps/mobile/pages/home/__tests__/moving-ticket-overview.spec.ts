@@ -1,14 +1,17 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { getAllByTestId, getByTestId, within } from '@testing-library/vue'
+
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
+import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'
+
 import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
-import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
-import { getByIconName } from '#tests/support/components/iconQueries.ts'
-import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'
+
 import { getTicketOverviewStorage } from '#mobile/entities/ticket/helpers/ticketOverviewStorage.ts'
 
 const actualLocalStorage = window.localStorage

@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ShallowRef, Ref } from 'vue'
-
 import type { FormRef } from '#shared/components/Form/types.ts'
+
+import type { ShallowRef, Ref } from 'vue'
 
 export interface ImportSource {
   form: ShallowRef<FormRef | undefined>

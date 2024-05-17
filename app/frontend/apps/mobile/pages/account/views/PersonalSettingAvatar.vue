@@ -1,41 +1,39 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { reactive, shallowRef, watch, ref, computed } from 'vue'
-import { useRouter } from 'vue-router'
 import { storeToRefs } from 'pinia'
+import { reactive, shallowRef, watch, ref, computed } from 'vue'
 import { Cropper, type CropperResult } from 'vue-advanced-cropper'
+import { useRouter } from 'vue-router'
 import 'vue-advanced-cropper/dist/style.css'
 
-import { useConfirmation } from '#shared/composables/useConfirmation.ts'
-import type UserError from '#shared/errors/UserError.ts'
-import type { ImageFileData } from '#shared/utils/files.ts'
-import {
-  convertFileList,
-  allowedImageTypesString,
-} from '#shared/utils/files.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
-
-import {
-  MutationHandler,
-  QueryHandler,
-} from '#shared/server/apollo/handler/index.ts'
-import type { UserCurrentAvatarActiveQuery } from '#shared/graphql/types.ts'
-import { useUserCurrentAvatarAddMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAvatarAdd.api.ts'
-import { useUserCurrentAvatarDeleteMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAvatarDelete.api.ts'
-
+import CommonAvatar from '#shared/components/CommonAvatar/CommonAvatar.vue'
 import {
   useNotifications,
   NotificationTypes,
 } from '#shared/components/CommonNotifications/index.ts'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import CommonAvatar from '#shared/components/CommonAvatar/CommonAvatar.vue'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import { useUserCurrentAvatarAddMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAvatarAdd.api.ts'
+import { useUserCurrentAvatarDeleteMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAvatarDelete.api.ts'
+import type UserError from '#shared/errors/UserError.ts'
+import type { UserCurrentAvatarActiveQuery } from '#shared/graphql/types.ts'
+import {
+  MutationHandler,
+  QueryHandler,
+} from '#shared/server/apollo/handler/index.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+import type { ImageFileData } from '#shared/utils/files.ts'
+import {
+  convertFileList,
+  allowedImageTypesString,
+} from '#shared/utils/files.ts'
 
-import { useHeader } from '#mobile/composables/useHeader.ts'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
-import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import type { CommonButtonOption } from '#mobile/components/CommonButtonGroup/types.ts'
+import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
+import { useHeader } from '#mobile/composables/useHeader.ts'
 
 import { useUserCurrentAvatarActiveQuery } from '../graphql/queries/userCurrentAvatarActive.api.ts'
 

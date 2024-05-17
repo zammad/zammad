@@ -1,10 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { flushPromises, mount } from '@vue/test-utils'
+
 import {
   destroyComponent,
   pushComponent,
 } from '#shared/components/DynamicInitializer/manage.ts'
+
 import { getDialogMeta, useDialog } from '../useDialog.ts'
 
 vi.mock('#shared/components/DynamicInitializer/manage.ts', () => {

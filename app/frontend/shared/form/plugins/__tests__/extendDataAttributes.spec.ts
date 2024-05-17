@@ -1,14 +1,17 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { createNode, getNode } from '@formkit/core'
+import { FormKit } from '@formkit/vue'
+
+import { renderComponent } from '#tests/support/components/index.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
+
+import extendDataAttribues from '../global/extendDataAttributes.ts'
+
 import type {
   FormKitExtendableSchemaRoot,
   FormKitFrameworkContext,
 } from '@formkit/core'
-import { createNode, getNode } from '@formkit/core'
-import { FormKit } from '@formkit/vue'
-import { renderComponent } from '#tests/support/components/index.ts'
-import { waitForNextTick } from '#tests/support/utils.ts'
-import extendDataAttribues from '../global/extendDataAttributes.ts'
 
 const wrapperParameters = {
   form: true,

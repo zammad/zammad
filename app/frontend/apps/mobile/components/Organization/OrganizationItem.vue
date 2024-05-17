@@ -1,9 +1,12 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useEditedBy } from '#mobile/composables/useEditedBy.ts'
-import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import { computed, toRef } from 'vue'
+
+import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
+
+import { useEditedBy } from '#mobile/composables/useEditedBy.ts'
+
 import type { OrganizationItemData } from './types.ts'
 
 export interface Props {

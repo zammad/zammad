@@ -2,9 +2,13 @@
 
 <script setup lang="ts">
 import { computed, nextTick, toRef, watch } from 'vue'
+
 import stopEvent from '#shared/utils/events.ts'
+
 import useValue from '../../composables/useValue.ts'
+
 import { getToggleClasses } from './initializeToggleClasses.ts'
+
 import type { FormFieldContext } from '../../types/field.ts'
 
 const props = defineProps<{

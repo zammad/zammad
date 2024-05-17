@@ -2,14 +2,15 @@
 
 <script setup lang="ts">
 import ActivityMessage from '#shared/components/ActivityMessage/ActivityMessage.vue'
+import type { AvatarUser } from '#shared/components/CommonUserAvatar/types.ts'
+import { useOnlineNotificationDeleteMutation } from '#shared/entities/online-notification/graphql/mutations/delete.api.ts'
 import type {
   ActivityMessageMetaObject,
   Scalars,
 } from '#shared/graphql/types.ts'
-import type { AvatarUser } from '#shared/components/CommonUserAvatar/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+
 import type { ApolloCache, InMemoryCache } from '@apollo/client'
-import { useOnlineNotificationDeleteMutation } from '#shared/entities/online-notification/graphql/mutations/delete.api.ts'
 
 export interface Props {
   itemId: Scalars['ID']['output']

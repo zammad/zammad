@@ -1,8 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { mergeAttributes, Node } from '@tiptap/core'
-import type { Range } from '@tiptap/core'
 import { DOMParser, type Node as ProseNode } from '@tiptap/pm/model'
+
+import type { Range } from '@tiptap/core'
 
 export default Node.create({
   name: 'signature',

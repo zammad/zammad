@@ -3,28 +3,30 @@
 <!-- eslint-disable @typescript-eslint/no-unused-vars -->
 
 <script setup lang="ts">
-import Form from '#shared/components/Form/Form.vue'
-import { useForm } from '#shared/components/Form/useForm.ts'
-import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
-import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
-import { useUserAddMutation } from '#shared/entities/user/graphql/mutations/add.api.ts'
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
-import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
-import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
-import type { FormSubmitData } from '#shared/components/Form/types.ts'
-import {
-  GroupAccess,
-  type GroupPermissionReactive,
-} from '#desktop/components/Form/fields/FieldGroupPermissions/types.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
+import Form from '#shared/components/Form/Form.vue'
+import type { FormSubmitData } from '#shared/components/Form/types.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
+import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
+import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
+import { useUserAddMutation } from '#shared/entities/user/graphql/mutations/add.api.ts'
+import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import {
   EnumObjectManagerObjects,
   EnumFormUpdaterId,
   type UserInput,
 } from '#shared/graphql/types.ts'
-import { useSystemSetup } from '../../composables/useSystemSetup.ts'
+import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
+
+import {
+  GroupAccess,
+  type GroupPermissionReactive,
+} from '#desktop/components/Form/fields/FieldGroupPermissions/types.ts'
+
 import GuidedSetupActionFooter from '../../components/GuidedSetupActionFooter.vue'
+import { useSystemSetup } from '../../composables/useSystemSetup.ts'
 
 const { setBoxSize, setTitle } = useSystemSetup()
 

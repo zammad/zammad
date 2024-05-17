@@ -2,7 +2,9 @@
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
 import type { TicketDuplicateDetectionItem } from '#mobile/pages/ticket/composable/useTicketDuplicateDetectionHandler.ts'
+
 import TicketDuplicateDetectionDialog from '../TicketDuplicateDetectionDialog.vue'
 
 describe('TicketDuplicateDetectionDialog.vue', () => {

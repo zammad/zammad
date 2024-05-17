@@ -3,12 +3,13 @@
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
 import { computed } from 'vue'
-import { i18n } from '#shared/i18n.ts'
-import { useLocaleStore } from '#shared/stores/locale.ts'
+
 import type {
   FlatSelectOption,
   MatchedFlatSelectOption,
 } from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
+import { i18n } from '#shared/i18n.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
 
 const props = defineProps<{
   option: FlatSelectOption | MatchedFlatSelectOption

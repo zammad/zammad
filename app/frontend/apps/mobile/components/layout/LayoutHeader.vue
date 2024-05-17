@@ -1,12 +1,14 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
-import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButton.vue'
-import CommonRefetch from '#mobile/components/CommonRefetch/CommonRefetch.vue'
 import { computed, ref, useSlots } from 'vue'
-import type { RouteLocationRaw } from 'vue-router'
+
+import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButton.vue'
+import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import type { CommonButtonProps } from '#mobile/components/CommonButton/types.ts'
+import CommonRefetch from '#mobile/components/CommonRefetch/CommonRefetch.vue'
+
+import type { RouteLocationRaw } from 'vue-router'
 
 export interface Props {
   containerTag?: 'header' | 'div'

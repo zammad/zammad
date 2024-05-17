@@ -1,8 +1,6 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
-import type { Editor } from '@tiptap/vue-3'
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import { useEventListener } from '@vueuse/core'
 import {
@@ -14,15 +12,25 @@ import {
   watch,
   nextTick,
 } from 'vue'
-import testFlags from '#shared/utils/testFlags.ts'
+
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import { htmlCleanup } from '#shared/utils/htmlCleanup.ts'
 import log from '#shared/utils/log.ts'
+import testFlags from '#shared/utils/testFlags.ts'
+
 import useValue from '../../composables/useValue.ts'
+import { getNodeByName } from '../../utils.ts'
+
 import {
   getCustomExtensions,
   getHtmlExtensions,
   getPlainExtensions,
 } from './extensions/list.ts'
+import FieldEditorActionBar from './FieldEditorActionBar.vue'
+import FieldEditorFooter from './FieldEditorFooter.vue'
+import { PLUGIN_NAME as userMentionPluginName } from './suggestions/UserMention.ts'
+import { convertInlineImages } from './utils.ts'
+
 import type {
   EditorContentType,
   EditorCustomPlugins,
@@ -30,11 +38,7 @@ import type {
   FieldEditorProps,
   PossibleSignature,
 } from './types.ts'
-import FieldEditorActionBar from './FieldEditorActionBar.vue'
-import FieldEditorFooter from './FieldEditorFooter.vue'
-import { PLUGIN_NAME as userMentionPluginName } from './suggestions/UserMention.ts'
-import { getNodeByName } from '../../utils.ts'
-import { convertInlineImages } from './utils.ts'
+import type { Editor } from '@tiptap/vue-3'
 
 interface Props {
   context: FormFieldContext<FieldEditorProps>

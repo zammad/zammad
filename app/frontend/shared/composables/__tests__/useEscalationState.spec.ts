@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { toRef, type ToRef } from 'vue'
+
 import { EscalationState, useEscalationState } from '../useEscalationState.ts'
 
 const getState = (value: ToRef<string | undefined | null>) => {

@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { useCopyToClipboard } from '#desktop/composables/useCopyToClipboard.ts'
+
 import CommonButton from '../CommonButton/CommonButton.vue'
 
 interface Props {

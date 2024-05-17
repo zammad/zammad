@@ -1,9 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
+
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
 import { mockUserCurrentTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorVerifyMethodConfiguration.mocks.ts'
 import { mockUserCurrentTwoFactorInitiateMethodConfigurationQuery } from '#shared/entities/user/current/graphql/queries/two-factor/userCurrentTwoFactorInitiateMethodConfiguration.mocks.ts'
+
 import { visitViewAndMockPasswordConfirmation } from '#desktop/pages/personal-setting/__tests__/support/personal-setting-two-factor-auth.ts'
 
 const copyToClipboardMock = vi.fn()

@@ -8,11 +8,10 @@ import Form from '#shared/components/Form/Form.vue'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { EnumFormUpdaterId } from '#shared/graphql/types.ts'
 
-import { useSSLVerificationWarningHandler } from '#desktop/form/composables/useSSLVerificationWarningHandler.ts'
 import { useEmailAccountForm } from '#desktop/entities/channel-email/composables/useEmailAccountForm.ts'
+import { useEmailChannelConfiguration } from '#desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts'
 import { useEmailInboundForm } from '#desktop/entities/channel-email/composables/useEmailInboundForm.ts'
 import { useEmailInboundMessagesForm } from '#desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts'
-import { useEmailChannelConfiguration } from '#desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts'
 import { useEmailOutboundForm } from '#desktop/entities/channel-email/composables/useEmailOutboundForm.ts'
 import type { EmailAccountData } from '#desktop/entities/channel-email/types/email-account.ts'
 import type {
@@ -20,6 +19,7 @@ import type {
   EmailOutboundData,
   EmailInboundMessagesData,
 } from '#desktop/entities/channel-email/types/email-inbound-outbound.ts'
+import { useSSLVerificationWarningHandler } from '#desktop/form/composables/useSSLVerificationWarningHandler.ts'
 
 import GuidedSetupActionFooter from '../../components/GuidedSetupActionFooter.vue'
 import GuidedSetupStatusMessage from '../../components/GuidedSetupStatusMessage.vue'

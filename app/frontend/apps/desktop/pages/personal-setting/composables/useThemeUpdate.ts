@@ -2,14 +2,14 @@
 
 import { computed, ref } from 'vue'
 
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
-import { EnumAppearanceTheme } from '#shared/graphql/types.ts'
-
 import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
+import { EnumAppearanceTheme } from '#shared/graphql/types.ts'
+import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+
 import { useUserCurrentAppearanceMutation } from '../graphql/mutations/userCurrentAppearance.api.ts'
 
 export const useThemeUpdate = (showSuccessNotification = false) => {

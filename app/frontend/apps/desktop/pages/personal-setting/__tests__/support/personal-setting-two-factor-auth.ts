@@ -1,14 +1,17 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { visitView } from '#tests/support/components/visitView.ts'
-import { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
+import { faker } from '@faker-js/faker'
 import { within } from '@testing-library/vue'
+
+import { visitView } from '#tests/support/components/visitView.ts'
+
+import type { TwoFactorActionTypes } from '#shared/entities/two-factor/types.ts'
+import { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
+
 import {
   mockUserCurrentPasswordCheckMutation,
   waitForUserCurrentPasswordCheckMutationCalls,
 } from '#desktop/entities/user/current/graphql/mutations/userCurrentPasswordCheck.mocks.ts'
-import type { TwoFactorActionTypes } from '#shared/entities/two-factor/types.ts'
-import { faker } from '@faker-js/faker'
 import { getUserCurrentTwoFactorUpdatesSubscriptionHandler } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTwoFactorUpdates.mocks.ts'
 
 interface AuthenticatorApp {

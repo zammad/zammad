@@ -2,6 +2,7 @@
 
 import { useSessionStore } from '#shared/stores/session.ts'
 import type { UserData } from '#shared/types/store.ts'
+
 import { initializePiniaStore } from './components/renderComponent.ts'
 
 export const mockUserCurrent = (mockUser: Partial<UserData>) => {

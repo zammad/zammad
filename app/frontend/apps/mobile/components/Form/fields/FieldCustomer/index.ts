@@ -3,8 +3,10 @@
 import createInput from '#shared/form/core/createInput.ts'
 import addLink from '#shared/form/features/addLink.ts'
 import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
-import FieldCustomerWrapper from './FieldCustomerWrapper.vue'
+
 import { autoCompleteProps } from '../FieldAutoComplete/index.ts'
+
+import FieldCustomerWrapper from './FieldCustomerWrapper.vue'
 
 const fieldDefinition = createInput(
   FieldCustomerWrapper,

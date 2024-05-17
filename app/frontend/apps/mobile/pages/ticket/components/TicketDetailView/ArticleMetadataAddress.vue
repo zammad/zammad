@@ -1,9 +1,11 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import CommonSectionMenuItem from '#mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
 import { computed } from 'vue'
+
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
+
+import CommonSectionMenuItem from '#mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
 
 interface Props {
   address?: TicketArticle['from']

@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormKitFrameworkContext } from '@formkit/core'
 import { createNode } from '@formkit/core'
+
 import requiredValidation from '../global/requiredValidation.ts'
+
+import type { FormKitFrameworkContext } from '@formkit/core'
 
 const createInput = (props: any = {}) => {
   const originalSchema = vi.fn()

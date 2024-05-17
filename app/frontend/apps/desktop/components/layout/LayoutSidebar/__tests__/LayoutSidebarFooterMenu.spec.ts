@@ -2,6 +2,7 @@
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
+
 import LayoutSidebarFooterMenu from '../LayoutSidebarFooterMenu.vue'
 
 describe('layout sidebar footer menu', () => {

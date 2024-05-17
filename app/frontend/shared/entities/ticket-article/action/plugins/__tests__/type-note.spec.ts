@@ -2,6 +2,7 @@
 
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+
 import { createTestArticleTypes, createTicket } from './utils.ts'
 
 describe('note type', () => {

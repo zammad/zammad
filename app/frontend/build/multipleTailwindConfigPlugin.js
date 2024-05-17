@@ -1,9 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-const tailwindcss = require('tailwindcss')
 const { minimatch } = require('minimatch')
-const mobileConfig = require('../apps/mobile/styles/tailwind.mobile.js')
+const tailwindcss = require('tailwindcss')
+
 const desktopConfig = require('../apps/desktop/styles/tailwind.desktop.js')
+const mobileConfig = require('../apps/mobile/styles/tailwind.mobile.js')
 
 /** @type {import('postcss').TransformCallback} */
 module.exports = (root, result) => {

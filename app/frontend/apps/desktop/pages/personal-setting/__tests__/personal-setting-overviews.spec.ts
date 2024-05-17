@@ -1,13 +1,16 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { getAllByRole } from '@testing-library/vue'
+
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
+
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import { mockUserCurrentOverviewListQuery } from '../graphql/queries/userCurrentOverviewList.mocks.ts'
+
 import { mockUserCurrentOverviewResetOrderMutation } from '../graphql/mutations/userCurrentOverviewResetOrder.mocks.ts'
+import { mockUserCurrentOverviewListQuery } from '../graphql/queries/userCurrentOverviewList.mocks.ts'
 import { getUserCurrentOverviewOrderingUpdatesSubscriptionHandler } from '../graphql/subscriptions/userCurrentOverviewOrderingUpdates.mocks.ts'
 
 const userCurrentOverviewList = [

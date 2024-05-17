@@ -2,9 +2,9 @@
 
 import { createMessage, type FormKitNode } from '@formkit/core'
 
-import { i18n } from '#shared/i18n.ts'
-import { FormValidationVisibility } from '#shared/components/Form/types.ts'
 import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
+import { FormValidationVisibility } from '#shared/components/Form/types.ts'
+import { i18n } from '#shared/i18n.ts'
 
 const validateForErrors = (node: FormKitNode, files: FileUploaded[]) => {
   const accept = node.context?.accept as string

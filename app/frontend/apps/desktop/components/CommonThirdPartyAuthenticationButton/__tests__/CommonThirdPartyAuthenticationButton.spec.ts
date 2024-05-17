@@ -1,9 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import renderComponent from '#tests/support/components/renderComponent.ts'
-import CommonThirdPartyAuthenticationButton from '#desktop/components/CommonThirdPartyAuthenticationButton/CommonThirdPartyAuthenticationButton.vue'
 import { expect } from 'vitest'
+
+import renderComponent from '#tests/support/components/renderComponent.ts'
+
 import { setCSRFToken } from '#shared/server/apollo/utils/csrfToken.ts'
+
+import CommonThirdPartyAuthenticationButton from '#desktop/components/CommonThirdPartyAuthenticationButton/CommonThirdPartyAuthenticationButton.vue'
 
 const token = '12345'
 const url = '/auth/github'

@@ -3,16 +3,16 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import {
   EnumSystemSetupInfoStatus,
   EnumSystemSetupInfoType,
 } from '#shared/graphql/types.ts'
+import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 
-import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import { useSystemSetupLockMutation } from '../graphql/mutations/systemSetupLock.api.ts'
+import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
 
+import { useSystemSetupLockMutation } from '../graphql/mutations/systemSetupLock.api.ts'
 import { useSystemSetupInfoStore } from '../stores/systemSetupInfo.ts'
 
 const router = useRouter()

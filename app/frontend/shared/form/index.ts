@@ -1,9 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { App } from 'vue'
-import { plugin as formPlugin, bindings as bindingsPlugin } from '@formkit/vue'
-import type { FormKitConfig, FormKitPlugin } from '@formkit/core'
 import { createThemePlugin } from '@formkit/themes'
+import { plugin as formPlugin, bindings as bindingsPlugin } from '@formkit/vue'
+
 import '@formkit/dev'
 import type {
   FormAppSpecificTheme,
@@ -14,11 +13,15 @@ import type {
   ImportGlobEagerOutput,
   ImportGlobEagerDefault,
 } from '#shared/types/utils.ts'
+
+import createCustomIcons from './core/createCustomIcons.ts'
 import createFieldPlugin from './core/createFieldPlugin.ts'
-import createValidationPlugin from './core/createValidationPlugin.ts'
 import createI18nPlugin from './core/createI18nPlugin.ts'
 import createTailwindClasses from './core/createTailwindClasses.ts'
-import createCustomIcons from './core/createCustomIcons.ts'
+import createValidationPlugin from './core/createValidationPlugin.ts'
+
+import type { FormKitConfig, FormKitPlugin } from '@formkit/core'
+import type { App } from 'vue'
 
 export const getFormPlugins = (
   modules: ImportGlobEagerOutput<FormKitPlugin>,

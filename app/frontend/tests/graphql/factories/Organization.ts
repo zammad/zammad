@@ -1,9 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { faker } from '@faker-js/faker'
+
 import type { Organization } from '#shared/graphql/types.ts'
-import type { DeepPartial } from '#shared/types/utils.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import type { DeepPartial } from '#shared/types/utils.ts'
 
 export default (parent: any): DeepPartial<Organization> => {
   const organization: DeepPartial<Organization> = {

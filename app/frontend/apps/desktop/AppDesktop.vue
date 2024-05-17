@@ -1,19 +1,21 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import useFormKitConfig from '#shared/composables/form/useFormKitConfig.ts'
+import { onBeforeMount, onBeforeUnmount } from 'vue'
+import { useRouter } from 'vue-router'
+
 import CommonNotifications from '#shared/components/CommonNotifications/CommonNotifications.vue'
-import useAppMaintenanceCheck from '#shared/composables/useAppMaintenanceCheck.ts'
+import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
 import useAuthenticationChanges from '#shared/composables/authentication/useAuthenticationUpdates.ts'
+import useFormKitConfig from '#shared/composables/form/useFormKitConfig.ts'
+import useAppMaintenanceCheck from '#shared/composables/useAppMaintenanceCheck.ts'
 import useMetaTitle from '#shared/composables/useMetaTitle.ts'
 import usePushMessages from '#shared/composables/usePushMessages.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 import emitter from '#shared/utils/emitter.ts'
-import { onBeforeMount, onBeforeUnmount } from 'vue'
-import { useRouter } from 'vue-router'
-import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
+
 import { initializeConfirmationDialog } from '#desktop/components/CommonConfirmationDialog/initializeConfirmationDialog.ts'
 
 const router = useRouter()

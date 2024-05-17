@@ -2,10 +2,13 @@
 
 <script setup lang="ts">
 import { toRef } from 'vue'
+
+import { useTicketLiveUsersDisplay } from '#shared/entities/ticket/composables/useTicketLiveUsersDisplay.ts'
 import type { TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
+
 import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
 import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
-import { useTicketLiveUsersDisplay } from '#shared/entities/ticket/composables/useTicketLiveUsersDisplay.ts'
+
 import TicketViewerItem from './TicketViewerItem.vue'
 
 interface Props {

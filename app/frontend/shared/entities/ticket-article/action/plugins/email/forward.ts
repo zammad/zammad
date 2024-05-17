@@ -1,17 +1,18 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { getArticleAttachmentsLinks } from '#shared/entities/ticket-article/composables/getArticleAttachmentsLinks.ts'
-import { useTicketArticleEmailForwardReplyMutation } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleEmailForwardReply.api.ts'
 import type {
   TicketArticle,
   TicketById,
 } from '#shared/entities/ticket/types.ts'
+import { getArticleAttachmentsLinks } from '#shared/entities/ticket-article/composables/getArticleAttachmentsLinks.ts'
+import { useTicketArticleEmailForwardReplyMutation } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleEmailForwardReply.api.ts'
 import type { TicketArticleEmailForwardReplyMutation } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import type { ConfigList } from '#shared/types/store.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
 import { textCleanup, textToHtml } from '#shared/utils/helpers.ts'
+
 import type { TicketArticlePerformOptions } from '../types.ts'
 
 const forwardMutation = new MutationHandler(

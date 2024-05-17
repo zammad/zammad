@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { RouteLocationNormalized } from 'vue-router'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
 import systemGuard from '../systemSetupInfo.ts'
+
+import type { RouteLocationNormalized } from 'vue-router'
 
 describe('systemGuard', () => {
   const from = {} as RouteLocationNormalized

@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
+
 import { useSystemSetupInfoStore } from '../stores/systemSetupInfo.ts'
 
 defineOptions({

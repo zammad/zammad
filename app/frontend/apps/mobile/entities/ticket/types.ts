@@ -1,16 +1,17 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ComputedRef, Ref, ShallowRef } from 'vue'
+import type { FormRef, FormValues } from '#shared/components/Form/types.ts'
 import type {
   TicketById,
   TicketLiveAppUser,
 } from '#shared/entities/ticket/types.ts'
-import type { FormRef, FormValues } from '#shared/components/Form/types.ts'
 import type {
   TicketQuery,
   TicketQueryVariables,
 } from '#shared/graphql/types.ts'
 import type { QueryHandler } from '#shared/server/apollo/handler/index.ts'
+
+import type { ComputedRef, Ref, ShallowRef } from 'vue'
 
 export interface TicketInformation {
   ticketQuery: QueryHandler<TicketQuery, TicketQueryVariables>

@@ -1,15 +1,19 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { within } from '@testing-library/vue'
+
+import { visitView } from '#tests/support/components/visitView.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { waitUntilApisResolved } from '#tests/support/utils.ts'
+
+import type { UserQuery } from '#shared/graphql/types.ts'
+import type { ConfidentTake } from '#shared/types/utils.ts'
+
 import {
   defaultUser,
   mockUserDetailsApis,
 } from '#mobile/entities/user/__tests__/mocks/user-mocks.ts'
-import type { UserQuery } from '#shared/graphql/types.ts'
-import type { ConfidentTake } from '#shared/types/utils.ts'
-import { within } from '@testing-library/vue'
-import { visitView } from '#tests/support/components/visitView.ts'
-import { mockPermissions } from '#tests/support/mock-permissions.ts'
-import { waitUntilApisResolved } from '#tests/support/utils.ts'
+
 import { mockTicketDetailViewGql } from './mocks/detail-view.ts'
 
 const visitTicketUser = async (user: ConfidentTake<UserQuery, 'user'>) => {

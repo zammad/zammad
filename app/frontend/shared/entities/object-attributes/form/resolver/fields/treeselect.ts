@@ -4,6 +4,7 @@ import type {
   FieldResolverModule,
   ObjectAttributeTreeSelectOption,
 } from '#shared/entities/object-attributes/types/resolver.ts'
+
 import { FieldResolverSelect } from './select.ts'
 
 export interface ObjectTreeSelectOption {

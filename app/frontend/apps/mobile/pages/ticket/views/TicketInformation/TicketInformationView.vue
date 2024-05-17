@@ -2,16 +2,20 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import type { CommonButtonOption } from '#mobile/components/CommonButtonGroup/types.ts'
-import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
-import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
-import { useSessionStore } from '#shared/stores/session.ts'
-import { useDialog } from '#mobile/composables/useDialog.ts'
-import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
 import { useRoute, useRouter } from 'vue-router'
+
+import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+
+import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
+import type { CommonButtonOption } from '#mobile/components/CommonButtonGroup/types.ts'
+import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
-import { ticketInformationPlugins } from './plugins/index.ts'
+import { useDialog } from '#mobile/composables/useDialog.ts'
+
 import { useTicketInformation } from '../../composable/useTicketInformation.ts'
+
+import { ticketInformationPlugins } from './plugins/index.ts'
 
 defineProps<{
   internalId: string

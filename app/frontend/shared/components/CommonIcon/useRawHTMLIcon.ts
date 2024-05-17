@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { i18n } from '#shared/i18n.ts'
-import type { Props } from './CommonIcon.vue'
+
 import { usePrivateIcon } from './usePrivateIcon.ts'
+
+import type { Props } from './CommonIcon.vue'
 
 export const useRawHTMLIcon = (props: Props & { class?: string }) => {
   const { iconClass, finalSize } = usePrivateIcon({ size: 'medium', ...props })

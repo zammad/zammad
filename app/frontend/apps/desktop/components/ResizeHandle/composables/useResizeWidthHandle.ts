@@ -1,6 +1,5 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { ref, onUnmounted } from 'vue'
 import {
   type MaybeComputedElementRef,
   type MaybeElement,
@@ -8,6 +7,8 @@ import {
   useElementBounding,
   useWindowSize,
 } from '@vueuse/core'
+import { ref, onUnmounted } from 'vue'
+
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 

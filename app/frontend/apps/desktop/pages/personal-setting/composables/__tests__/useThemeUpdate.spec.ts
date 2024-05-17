@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { EnumAppearanceTheme } from '#shared/graphql/types.ts'
-import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { flushPromises } from '@vue/test-utils'
+
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
+
+import { EnumAppearanceTheme } from '#shared/graphql/types.ts'
 
 import { mockUserCurrentAppearanceMutation } from '../../graphql/mutations/userCurrentAppearance.mocks.ts'
 import { useThemeUpdate } from '../useThemeUpdate.ts'

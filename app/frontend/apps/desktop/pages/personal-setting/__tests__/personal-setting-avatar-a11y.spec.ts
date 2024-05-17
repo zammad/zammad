@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { axe } from 'vitest-axe'
+
 import { visitView } from '#tests/support/components/visitView.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 

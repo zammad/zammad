@@ -1,14 +1,16 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { useDialogObjectForm } from '#mobile/components/CommonDialogObjectForm/useDialogObjectForm.ts'
-import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
+import { useRouter } from 'vue-router'
+
 import { useUserAddMutation } from '#shared/entities/user/graphql/mutations/add.api.ts'
+import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import type { User, UserAddPayload } from '#shared/graphql/types.ts'
 import {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
 } from '#shared/graphql/types.ts'
-import { useRouter } from 'vue-router'
+
+import { useDialogObjectForm } from '#mobile/components/CommonDialogObjectForm/useDialogObjectForm.ts'
 
 interface UserCreateOptions {
   onUserCreated?: (user: User) => void

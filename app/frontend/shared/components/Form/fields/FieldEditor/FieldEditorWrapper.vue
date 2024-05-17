@@ -1,8 +1,11 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
 import { computed, defineAsyncComponent } from 'vue'
+
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+
 import FieldEditorFooter from './FieldEditorFooter.vue'
+
 import type {
   FieldEditorContext,
   FieldEditorProps,

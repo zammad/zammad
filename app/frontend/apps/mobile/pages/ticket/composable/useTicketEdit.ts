@@ -1,25 +1,28 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ComputedRef, ShallowRef } from 'vue'
-import { computed, reactive, watch } from 'vue'
 import { isEqualWith } from 'lodash-es'
+import { computed, reactive, watch } from 'vue'
+
+import { populateEditorNewLines } from '#shared/components/Form/fields/FieldEditor/utils.ts'
 import type {
   FormValues,
   FormRef,
   FormSubmitData,
 } from '#shared/components/Form/types.ts'
+import { getNodeByName } from '#shared/components/Form/utils.ts'
 import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
 import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
+import type { TicketById } from '#shared/entities/ticket/types.ts'
+import type { TicketArticleFormValues } from '#shared/entities/ticket-article/action/plugins/types.ts'
 import type { TicketUpdateInput } from '#shared/graphql/types.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
-import type { TicketById } from '#shared/entities/ticket/types.ts'
-import type { TicketArticleFormValues } from '#shared/entities/ticket-article/action/plugins/types.ts'
 import type { PartialRequired } from '#shared/types/utils.ts'
 import { convertFilesToAttachmentInput } from '#shared/utils/files.ts'
-import { getNodeByName } from '#shared/components/Form/utils.ts'
-import { populateEditorNewLines } from '#shared/components/Form/fields/FieldEditor/utils.ts'
+
 import { useTicketUpdateMutation } from '../graphql/mutations/update.api.ts'
+
+import type { ComputedRef, ShallowRef } from 'vue'
 
 type TicketArticleReceivedFormValues = PartialRequired<
   TicketArticleFormValues,

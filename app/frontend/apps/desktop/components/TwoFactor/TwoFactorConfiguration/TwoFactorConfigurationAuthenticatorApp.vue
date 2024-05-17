@@ -1,25 +1,27 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
 import QRCode from 'qrcode'
-import Form from '#shared/components/Form/Form.vue'
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
-import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
-import { useCopyToClipboard } from '#desktop/composables/useCopyToClipboard.ts'
-import { useForm } from '#shared/components/Form/useForm.ts'
-import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
-import { useUserCurrentTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorVerifyMethodConfiguration.api.ts'
-import { useUserCurrentTwoFactorInitiateMethodConfigurationQuery } from '#shared/entities/user/current/graphql/queries/two-factor/userCurrentTwoFactorInitiateMethodConfiguration.api.ts'
+import { computed, ref } from 'vue'
 
-import UserError from '#shared/errors/UserError.ts'
-import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
+import Form from '#shared/components/Form/Form.vue'
+import type { FormSubmitData } from '#shared/components/Form/types.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
+import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
+import { useUserCurrentTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorVerifyMethodConfiguration.api.ts'
+import { useUserCurrentTwoFactorInitiateMethodConfigurationQuery } from '#shared/entities/user/current/graphql/queries/two-factor/userCurrentTwoFactorInitiateMethodConfiguration.api.ts'
+import UserError from '#shared/errors/UserError.ts'
+import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
+import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
+
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
+import { useCopyToClipboard } from '#desktop/composables/useCopyToClipboard.ts'
+
 import type { TwoFactorConfigurationComponentProps } from '../types.ts'
 
 const props = defineProps<TwoFactorConfigurationComponentProps>()

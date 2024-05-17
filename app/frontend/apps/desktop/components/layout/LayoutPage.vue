@@ -2,11 +2,13 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
-import LayoutSidebar from '#desktop/components/layout/LayoutSidebar.vue'
+
+import { useSessionStore } from '#shared/stores/session.ts'
+
 import LayoutSidebarFooterMenu from '#desktop/components/layout/LayoutSidebar/LayoutSidebarFooterMenu.vue'
+import LayoutSidebar from '#desktop/components/layout/LayoutSidebar.vue'
 import PageNavigation from '#desktop/components/PageNavigation/PageNavigation.vue'
 import { useResizeGridColumns } from '#desktop/composables/useResizeGridColumns.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
 
 const noTransition = ref(false)
 const { userId } = useSessionStore()

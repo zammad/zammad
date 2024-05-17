@@ -1,31 +1,32 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import Form from '#shared/components/Form/Form.vue'
-import type { FormSubmitData } from '#shared/components/Form/types.ts'
-import { useForm } from '#shared/components/Form/useForm.ts'
-import {
-  EnumObjectManagerObjects,
-  type TicketCustomerUpdateInput,
-} from '#shared/graphql/types.ts'
-import { closeDialog } from '#mobile/composables/useDialog.ts'
-import { useTicketFormOganizationHandler } from '#shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts'
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
-import UserError from '#shared/errors/UserError.ts'
+import Form from '#shared/components/Form/Form.vue'
+import type { FormSubmitData } from '#shared/components/Form/types.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import { useTicketFormOganizationHandler } from '#shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts'
 import { useTicketCustomerUpdateMutation } from '#shared/entities/ticket/graphql/mutations/customerUpdate.api.ts'
-import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
-import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
-import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import type {
   TicketById,
   TicketCustomerUpdateFormData,
 } from '#shared/entities/ticket/types.ts'
-import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import UserError from '#shared/errors/UserError.ts'
+import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
+import {
+  EnumObjectManagerObjects,
+  type TicketCustomerUpdateInput,
+} from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+
+import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
+import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
+import { closeDialog } from '#mobile/composables/useDialog.ts'
 
 export interface Props {
   name: string

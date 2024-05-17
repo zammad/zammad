@@ -2,10 +2,12 @@
 
 <script setup lang="ts">
 import { toRef } from 'vue'
-import useValue from '#shared/components/Form/composables/useValue.ts'
-import { useDelegateFocus } from '#shared/composables/useDelegateFocus.ts'
-import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
+import useValue from '#shared/components/Form/composables/useValue.ts'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import { useDelegateFocus } from '#shared/composables/useDelegateFocus.ts'
+
 import type { RadioListOption } from './types.ts'
 
 const props = defineProps<{

@@ -3,7 +3,9 @@
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockAuthentication } from '#tests/support/mock-authentication.ts'
+
 import { EnumSystemSetupInfoStatus } from '#shared/graphql/types.ts'
+
 import { mockSystemSetupInfoQuery } from '../graphql/queries/systemSetupInfo.mocks.ts'
 
 describe('guided setup automated info', () => {

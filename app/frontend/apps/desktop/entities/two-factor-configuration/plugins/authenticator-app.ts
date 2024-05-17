@@ -2,6 +2,7 @@
 
 import type { TwoFactorConfigurationPlugin } from '#shared/entities/two-factor/types.ts'
 import { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
+
 import TwoFactorConfigurationAuthenticatorApp from '#desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue'
 
 export default {

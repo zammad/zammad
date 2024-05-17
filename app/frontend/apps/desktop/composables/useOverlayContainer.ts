@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { AsyncComponentLoader, Component, Ref } from 'vue'
+import { last, noop } from 'lodash-es'
 import {
   computed,
   defineAsyncComponent,
@@ -10,13 +10,14 @@ import {
   onMounted,
   nextTick,
 } from 'vue'
-import { last, noop } from 'lodash-es'
 
 import {
   destroyComponent,
   pushComponent,
 } from '#shared/components/DynamicInitializer/manage.ts'
 import testFlags from '#shared/utils/testFlags.ts'
+
+import type { AsyncComponentLoader, Component, Ref } from 'vue'
 
 export interface OverlayContainerOptions {
   name: string

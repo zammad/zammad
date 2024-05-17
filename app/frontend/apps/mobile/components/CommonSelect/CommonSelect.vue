@@ -1,18 +1,21 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { onClickOutside, onKeyDown, useVModel } from '@vueuse/core'
+import { onUnmounted, computed, nextTick, ref } from 'vue'
+
+import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
 import { useFocusWhenTyping } from '#shared/composables/useFocusWhenTyping.ts'
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
 import stopEvent from '#shared/utils/events.ts'
-import { onClickOutside, onKeyDown, useVModel } from '@vueuse/core'
-import type { Ref } from 'vue'
-import { onUnmounted, computed, nextTick, ref } from 'vue'
-import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
 import testFlags from '#shared/utils/testFlags.ts'
+
 import CommonSelectItem from './CommonSelectItem.vue'
 import { useCommonSelect } from './useCommonSelect.ts'
+
 import type { CommonSelectInternalInstance } from './types.ts'
+import type { Ref } from 'vue'
 
 export interface Props {
   // we cannot move types into separate file, because Vue would not be able to

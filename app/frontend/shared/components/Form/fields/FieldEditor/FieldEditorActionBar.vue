@@ -1,14 +1,17 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import stopEvent from '#shared/utils/events.ts'
-import type { Editor } from '@tiptap/vue-3'
-import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
 import { onKeyDown, useEventListener, whenever } from '@vueuse/core'
 import { nextTick, ref, toRef } from 'vue'
-import type { Ref } from 'vue'
+
+import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
+import stopEvent from '#shared/utils/events.ts'
+
 import useEditorActions from './useEditorActions.ts'
+
 import type { EditorContentType, EditorCustomPlugins } from './types.ts'
+import type { Editor } from '@tiptap/vue-3'
+import type { Ref } from 'vue'
 
 const props = defineProps<{
   editor?: Editor

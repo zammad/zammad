@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { computed } from 'vue'
+
 import { usePublicLinksQuery } from '#shared/entities/public-links/graphql/queries/links.api.ts'
 import { PublicLinkUpdatesDocument } from '#shared/entities/public-links/graphql/subscriptions/currentLinks.api.ts'
 import {
@@ -9,7 +11,6 @@ import {
   type PublicLinksQuery,
 } from '#shared/graphql/types.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
-import { computed } from 'vue'
 
 export const usePublicLinks = (screen: EnumPublicLinksScreen) => {
   const publicLinksQuery = new QueryHandler(usePublicLinksQuery({ screen }))

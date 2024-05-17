@@ -1,10 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { inject, computed, provide } from 'vue'
-import type { ComputedRef, Ref } from 'vue'
+
 import { useSessionStore } from '#shared/stores/session.ts'
-import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
+
+import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
+
+import type { ComputedRef, Ref } from 'vue'
 
 const POPOVER_MENU_SYMBOL = Symbol('popover-menu')
 

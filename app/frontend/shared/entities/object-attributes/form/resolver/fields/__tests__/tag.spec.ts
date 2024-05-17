@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+
 import { FieldResolverTag } from '../tag.ts'
 
 describe('FieldResolverTag', () => {

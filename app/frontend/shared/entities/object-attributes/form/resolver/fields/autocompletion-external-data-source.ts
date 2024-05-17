@@ -1,12 +1,14 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { JsonValue } from 'type-fest'
+import { getNodeByName } from '#shared/components/Form/utils.ts'
 import type { FieldResolverModule } from '#shared/entities/object-attributes/types/resolver.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
-import type { ObjectLike } from '#shared/types/utils.ts'
-import { getNodeByName } from '#shared/components/Form/utils.ts'
 import { ensureGraphqlId } from '#shared/graphql/utils.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
+
 import FieldResolver from '../FieldResolver.ts'
+
+import type { JsonValue } from 'type-fest'
 
 export class FieldResolverAutocompletionExternalDataSource extends FieldResolver {
   fieldType = 'externalDataSource'

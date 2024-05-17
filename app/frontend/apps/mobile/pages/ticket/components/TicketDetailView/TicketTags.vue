@@ -1,17 +1,19 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { ref, toRef, watch } from 'vue'
 import { isEqual } from 'lodash-es'
-import type { FormKitNode } from '@formkit/core'
-import FormGroup from '#shared/components/Form/FormGroup.vue'
-import { useTagAssignmentUpdateMutation } from '#shared/entities/tags/graphql/mutations/assignment/update.api.ts'
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import { ref, toRef, watch } from 'vue'
+
 import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
+import FormGroup from '#shared/components/Form/FormGroup.vue'
+import { useTagAssignmentUpdateMutation } from '#shared/entities/tags/graphql/mutations/assignment/update.api.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+
+import type { FormKitNode } from '@formkit/core'
 
 interface Props {
   ticket: TicketById

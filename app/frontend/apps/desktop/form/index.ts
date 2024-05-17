@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { App } from 'vue'
-import type { FormKitPlugin } from '@formkit/core'
+import { initializeToggleClasses } from '#shared/components/Form/fields/FieldToggle/initializeToggleClasses.ts'
+import { initializeFieldLinkClasses } from '#shared/components/Form/initializeFieldLinkClasses.ts'
+import { initializeFormClasses } from '#shared/components/Form/initializeFormClasses.ts'
+import { initializeFormGroupClasses } from '#shared/components/Form/initializeFormGroupClasses.ts'
 import mainInitializeForm, { getFormPlugins } from '#shared/form/index.ts'
 import type {
   FormFieldTypeImportModules,
@@ -9,11 +11,11 @@ import type {
   InitializeAppForm,
 } from '#shared/types/form.ts'
 import type { ImportGlobEagerOutput } from '#shared/types/utils.ts'
-import { initializeFormClasses } from '#shared/components/Form/initializeFormClasses.ts'
-import { initializeFormGroupClasses } from '#shared/components/Form/initializeFormGroupClasses.ts'
-import { initializeFieldLinkClasses } from '#shared/components/Form/initializeFieldLinkClasses.ts'
-import { initializeToggleClasses } from '#shared/components/Form/fields/FieldToggle/initializeToggleClasses.ts'
+
 import { getCoreDesktopClasses } from './theme/global/getCoreDesktopClasses.ts'
+
+import type { FormKitPlugin } from '@formkit/core'
+import type { App } from 'vue'
 
 const pluginModules: ImportGlobEagerOutput<FormKitPlugin> = import.meta.glob(
   './plugins/global/*.ts',

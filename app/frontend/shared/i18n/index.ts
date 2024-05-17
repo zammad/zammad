@@ -1,10 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { reactive } from 'vue'
+
 import { useReactiveNow } from '#shared/composables/useReactiveNow.ts'
-import type { TranslationMap } from './translator.ts'
-import { Translator } from './translator.ts'
+
 import * as dates from './dates.ts'
+import { Translator } from './translator.ts'
+
+import type { TranslationMap } from './translator.ts'
 
 const reactiveNow = useReactiveNow()
 

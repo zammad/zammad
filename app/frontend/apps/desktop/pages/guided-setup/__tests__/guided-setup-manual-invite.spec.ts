@@ -1,17 +1,20 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { getAllByRole, getByRole, queryByRole } from '@testing-library/vue'
 import { flushPromises } from '@vue/test-utils'
-import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
 import { visitView } from '#tests/support/components/visitView.ts'
-import { EnumSystemSetupInfoStatus } from '#shared/graphql/types.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockAuthentication } from '#tests/support/mock-authentication.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+
 import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
 import {
   mockUserAddMutation,
   waitForUserAddMutationCalls,
 } from '#shared/entities/user/graphql/mutations/add.mocks.ts'
-import { getAllByRole, getByRole, queryByRole } from '@testing-library/vue'
+import { EnumSystemSetupInfoStatus } from '#shared/graphql/types.ts'
+
 import { mockSystemSetupInfoQuery } from '../graphql/queries/systemSetupInfo.mocks.ts'
 
 describe('guided setup manual invite', () => {

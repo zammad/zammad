@@ -1,10 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { ref } from 'vue'
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
-import { renderComponent } from '#tests/support/components/index.ts'
 import { flushPromises } from '@vue/test-utils'
+import { ref } from 'vue'
+
+import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
 const renderToggle = (props: any = {}) => {

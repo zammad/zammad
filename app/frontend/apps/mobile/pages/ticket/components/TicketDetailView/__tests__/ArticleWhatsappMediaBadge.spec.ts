@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import { mockTicketArticleRetryMediaDownloadMutation } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleRetryMediaDownload.mocks.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
+
+import { mockTicketArticleRetryMediaDownloadMutation } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleRetryMediaDownload.mocks.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
 import ArticleWhatsappMediaBadge, {
   type Props,
 } from '../ArticleWhatsappMediaBadge.vue'

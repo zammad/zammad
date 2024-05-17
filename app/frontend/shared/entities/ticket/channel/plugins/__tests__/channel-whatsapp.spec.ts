@@ -1,11 +1,15 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { describe } from 'vitest'
+
+import { setupView } from '#tests/support/mock-user.ts'
+
 import { TicketState } from '#shared/entities/ticket/types.ts'
 import { EnumChannelArea } from '#shared/graphql/types.ts'
-import { setupView } from '#tests/support/mock-user.ts'
-import { createTicket } from './utils.ts'
+
 import { getTicketChannelPlugin } from '../index.ts'
+
+import { createTicket } from './utils.ts'
 
 describe('whatsapp channel plugin', () => {
   describe('channel alert', () => {

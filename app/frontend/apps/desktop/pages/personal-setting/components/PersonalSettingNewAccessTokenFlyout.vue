@@ -3,22 +3,23 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
+import Form from '#shared/components/Form/Form.vue'
+import type { FormSubmitData } from '#shared/components/Form/types.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
+import { useUserCurrentAccessTokenAddMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAccessTokenAdd.api.ts'
+import { UserCurrentAccessTokenListDocument } from '#shared/entities/user/current/graphql/queries/userCurrentAcessTokenList.api.ts'
+import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import {
   EnumFormUpdaterId,
   type UserCurrentAccessTokenListQuery,
 } from '#shared/graphql/types.ts'
-import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
-import type { FormSubmitData } from '#shared/components/Form/types.ts'
-import Form from '#shared/components/Form/Form.vue'
-import { useForm } from '#shared/components/Form/useForm.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
-import { useUserCurrentAccessTokenAddMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAccessTokenAdd.api.ts'
-import { UserCurrentAccessTokenListDocument } from '#shared/entities/user/current/graphql/queries/userCurrentAcessTokenList.api.ts'
 
-import { closeFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
-import CommonInputCopyToClipboard from '#desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue'
 import type { ActionFooterOptions } from '#desktop/components/CommonFlyout/types.ts'
+import { closeFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
+import CommonInputCopyToClipboard from '#desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue'
+
 import type { NewTokenAccessFormData } from '../types/token-access.ts'
 
 const { form } = useForm()

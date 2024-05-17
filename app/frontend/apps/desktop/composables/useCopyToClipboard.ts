@@ -1,8 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { useClipboard, whenever } from '@vueuse/core'
-import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
+
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 
 export const useCopyToClipboard = () => {
   const { copy, copied: copiedToClipboard } = useClipboard()

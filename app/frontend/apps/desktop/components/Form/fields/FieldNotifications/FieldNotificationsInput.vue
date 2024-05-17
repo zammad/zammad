@@ -1,13 +1,15 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { toRef } from 'vue'
 import { cloneDeep } from 'lodash-es'
-import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
-import useValue from '#shared/components/Form/composables/useValue.ts'
+import { toRef } from 'vue'
 
+import useValue from '#shared/components/Form/composables/useValue.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+
+import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
 import type { TableHeader } from '#desktop/components/CommonSimpleTable/types.ts'
+
 import {
   NotificationMatrixColumnKey,
   NotificationMatrixPathKey,

@@ -1,11 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 /* eslint-disable no-nested-ternary */
 
-const startCase = require('lodash/startCase.js')
-const camelCase = require('lodash/camelCase.js')
 const { basename } = require('path')
 
 const { convertFactory } = require('@graphql-codegen/visitor-plugin-common')
+const camelCase = require('lodash/camelCase.js')
+const startCase = require('lodash/startCase.js')
 
 /** @typedef {import('graphql').OperationDefinitionNode} OperationDefinitionNode */
 

@@ -1,28 +1,30 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { SetNonNullable, SetOptional } from 'type-fest'
-import type { Ref } from 'vue'
 import { computed, ref, watch } from 'vue'
 
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
-import { useDebouncedLoading } from '#shared/composables/useDebouncedLoading.ts'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
-import type { MutationSendError } from '#shared/types/error.ts'
+import { useDebouncedLoading } from '#shared/composables/useDebouncedLoading.ts'
+import UserError from '#shared/errors/UserError.ts'
 import type {
   ChannelEmailInboundConfiguration,
   ChannelEmailOutboundConfiguration,
 } from '#shared/graphql/types.ts'
-import UserError from '#shared/errors/UserError.ts'
 import { i18n } from '#shared/i18n.ts'
+import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
+import type { MutationSendError } from '#shared/types/error.ts'
 
-import { useChannelEmailValidateConfigurationRoundtripMutation } from '#desktop/entities/channel-email/graphql/mutations/channelEmailValidateConfigurationRoundtrip.api.ts'
 import { useChannelEmailAddMutation } from '#desktop/entities/channel-email/graphql/mutations/channelEmailAdd.api.ts'
+import { useChannelEmailValidateConfigurationRoundtripMutation } from '#desktop/entities/channel-email/graphql/mutations/channelEmailValidateConfigurationRoundtrip.api.ts'
 
+import { useChannelEmailGuessConfigurationMutation } from '../graphql/mutations/channelEmailGuessConfiguration.api.ts'
+import { useChannelEmailValidateConfigurationInboundMutation } from '../graphql/mutations/channelEmailValidateConfigurationInbound.api.ts'
+import { useChannelEmailValidateConfigurationOutboundMutation } from '../graphql/mutations/channelEmailValidateConfigurationOutbound.api.ts'
+
+import type { EmailAccountData } from '../types/email-account.ts'
 import type {
   EmailChannelSteps,
   EmailChannelForms,
 } from '../types/email-channel.ts'
-import type { EmailAccountData } from '../types/email-account.ts'
 import type {
   UpdateMetaInformationInboundFunction,
   EmailInboundMetaInformation,
@@ -30,9 +32,8 @@ import type {
   EmailInboundData,
   EmailInboundMessagesData,
 } from '../types/email-inbound-outbound.ts'
-import { useChannelEmailGuessConfigurationMutation } from '../graphql/mutations/channelEmailGuessConfiguration.api.ts'
-import { useChannelEmailValidateConfigurationInboundMutation } from '../graphql/mutations/channelEmailValidateConfigurationInbound.api.ts'
-import { useChannelEmailValidateConfigurationOutboundMutation } from '../graphql/mutations/channelEmailValidateConfigurationOutbound.api.ts'
+import type { SetNonNullable, SetOptional } from 'type-fest'
+import type { Ref } from 'vue'
 
 export const useEmailChannelConfiguration = (
   emailChannelForms: EmailChannelForms,

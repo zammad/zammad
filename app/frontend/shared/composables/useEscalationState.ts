@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, type ToRef, toValue } from 'vue'
+
 import { useReactiveNow } from './useReactiveNow.ts'
 
 export enum EscalationState {

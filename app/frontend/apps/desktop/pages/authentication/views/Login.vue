@@ -3,31 +3,34 @@
 <script setup lang="ts">
 import { computed, ref, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { useAuthenticationStore } from '#shared/stores/authentication.ts'
-import UserError from '#shared/errors/UserError.ts'
+
+import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
+import CommonLink from '#shared/components/CommonLink/CommonLink.vue'
 import Form from '#shared/components/Form/Form.vue'
-import { useApplicationStore } from '#shared/stores/application.ts'
 import type {
   FormSubmitData,
   FormSchemaField,
   FormValues,
 } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
-import { useThirdPartyAuthentication } from '#shared/composables/authentication/useThirdPartyAuthentication.ts'
-import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
-import CommonLink from '#shared/components/CommonLink/CommonLink.vue'
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import LoginThirdParty from '#desktop/pages/authentication/components/LoginThirdParty.vue'
-import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
-import CommonPublicLinks from '#desktop/components/CommonPublicLinks/CommonPublicLinks.vue'
-import { EnumPublicLinksScreen } from '#shared/graphql/types.ts'
-import type { LoginCredentials } from '#shared/entities/two-factor/types.ts'
 import useLoginTwoFactor from '#shared/composables/authentication/useLoginTwoFactor.ts'
+import { useThirdPartyAuthentication } from '#shared/composables/authentication/useThirdPartyAuthentication.ts'
+import type { LoginCredentials } from '#shared/entities/two-factor/types.ts'
+import UserError from '#shared/errors/UserError.ts'
+import { EnumPublicLinksScreen } from '#shared/graphql/types.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import { useAuthenticationStore } from '#shared/stores/authentication.ts'
+
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import CommonPublicLinks from '#desktop/components/CommonPublicLinks/CommonPublicLinks.vue'
+import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
+import LoginThirdParty from '#desktop/pages/authentication/components/LoginThirdParty.vue'
+
+import { ensureAfterAuth } from '../after-auth/composable/useAfterAuthPlugins.ts'
+import LoginRecoveryCode from '../components/LoginRecoveryCode.vue'
 import LoginTwoFactor from '../components/LoginTwoFactor.vue'
 import LoginTwoFactorMethods from '../components/LoginTwoFactorMethods.vue'
-import LoginRecoveryCode from '../components/LoginRecoveryCode.vue'
 import { useAdminPasswordAuthVerify } from '../composables/useAdminPasswordAuthVerify.ts'
-import { ensureAfterAuth } from '../after-auth/composable/useAfterAuthPlugins.ts'
 
 const application = useApplicationStore()
 

@@ -1,7 +1,14 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Ref } from 'vue'
-import type { ApolloError, OperationVariables } from '@apollo/client/core'
+import {
+  useNotifications,
+  NotificationTypes,
+} from '#shared/components/CommonNotifications/index.ts'
+import type {
+  GraphQLErrorReport,
+  GraphQLHandlerError,
+} from '#shared/types/error.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 import type {
   BaseHandlerOptions,
   CommonHandlerOptions,
@@ -9,16 +16,10 @@ import type {
   OperationResult,
   OperationReturn,
 } from '#shared/types/server/apollo/handler.ts'
-import type {
-  GraphQLErrorReport,
-  GraphQLHandlerError,
-} from '#shared/types/error.ts'
-import { GraphQLErrorTypes } from '#shared/types/error.ts'
-import {
-  useNotifications,
-  NotificationTypes,
-} from '#shared/components/CommonNotifications/index.ts'
 import getUuid from '#shared/utils/getUuid.ts'
+
+import type { ApolloError, OperationVariables } from '@apollo/client/core'
+import type { Ref } from 'vue'
 
 export default abstract class BaseHandler<
   TResult = OperationResult,

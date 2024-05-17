@@ -1,12 +1,14 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { onBeforeRouteLeave, useRouter } from 'vue-router'
 import { ref, nextTick, watch } from 'vue'
-import type { RouteLocationRaw } from 'vue-router'
-import LoginHeader from '../components/LoginHeader.vue'
-import LoginFooter from '../components/LoginFooter.vue'
+import { onBeforeRouteLeave, useRouter } from 'vue-router'
+
 import { useAfterAuthPlugins } from '../after-auth/composable/useAfterAuthPlugins.ts'
+import LoginFooter from '../components/LoginFooter.vue'
+import LoginHeader from '../components/LoginHeader.vue'
+
+import type { RouteLocationRaw } from 'vue-router'
 
 const { currentPlugin, data } = useAfterAuthPlugins()
 

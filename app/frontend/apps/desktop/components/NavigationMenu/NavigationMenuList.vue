@@ -1,8 +1,9 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { NavigationMenuEntry } from '#desktop/components/NavigationMenu/types.ts'
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
+
+import type { NavigationMenuEntry } from '#desktop/components/NavigationMenu/types.ts'
 
 interface Props {
   items: NavigationMenuEntry[]

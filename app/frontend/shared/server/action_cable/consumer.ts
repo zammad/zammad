@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import * as ActionCable from '@rails/actioncable'
+
 import log from '#shared/utils/log.ts'
 
 ActionCable.adapters.logger = log as unknown as Console

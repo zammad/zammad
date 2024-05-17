@@ -2,12 +2,15 @@
 
 import { createMessage, getNode, type FormKitNode } from '@formkit/core'
 
-import Form from '#shared/components/Form/Form.vue'
-import { useForm } from '#shared/components/Form/useForm.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
-import type { FormRef, FormValues } from '../types.ts'
+
+import Form from '#shared/components/Form/Form.vue'
+import { useForm } from '#shared/components/Form/useForm.ts'
+
 import { FormValidationVisibility } from '../types.ts'
+
+import type { FormRef, FormValues } from '../types.ts'
 
 const wrapperParameters = {
   form: true,

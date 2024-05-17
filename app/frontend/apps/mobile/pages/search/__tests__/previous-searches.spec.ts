@@ -1,11 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { getByText, getAllByRole } from '@testing-library/vue'
+
 import { visitView } from '#tests/support/components/visitView.ts'
-import { nullableMock, waitUntil } from '#tests/support/utils.ts'
-import type { MockGraphQLInstance } from '#tests/support/mock-graphql-api.ts'
 import { clearMockClient } from '#tests/support/mock-apollo-client.ts'
+import type { MockGraphQLInstance } from '#tests/support/mock-graphql-api.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { nullableMock, waitUntil } from '#tests/support/utils.ts'
+
 import { mockSearchOverview } from '../graphql/mocks/mockSearchOverview.ts'
 
 describe('testing previous searches block', () => {

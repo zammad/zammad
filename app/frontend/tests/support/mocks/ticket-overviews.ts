@@ -1,9 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { TicketOverviewUpdatesDocument } from '#mobile/entities/ticket/graphql/subscriptions/ticketOverviewUpdates.api.ts'
 import { TicketOverviewsDocument } from '#shared/entities/ticket/graphql/queries/ticket/overviews.api.ts'
 import type { TicketOverviewsQuery } from '#shared/graphql/types.ts'
 import { EnumOrderDirection } from '#shared/graphql/types.ts'
+
+import { TicketOverviewUpdatesDocument } from '#mobile/entities/ticket/graphql/subscriptions/ticketOverviewUpdates.api.ts'
+
 import { mockGraphQLApi, mockGraphQLSubscription } from '../mock-graphql-api.ts'
 
 export const getApiTicketOverviews = (): TicketOverviewsQuery => ({

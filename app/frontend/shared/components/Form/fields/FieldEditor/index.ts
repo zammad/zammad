@@ -3,6 +3,7 @@
 import createInput from '#shared/form/core/createInput.ts'
 import defaultEmptyValueString from '#shared/form/features/defaultEmptyValueString.ts'
 import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
+
 import FieldEditorWrapper from './FieldEditorWrapper.vue'
 
 const fieldDefinition = createInput(

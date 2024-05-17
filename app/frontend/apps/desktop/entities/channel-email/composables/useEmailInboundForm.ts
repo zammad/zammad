@@ -1,6 +1,5 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ShallowRef } from 'vue'
 import { shallowRef, computed, ref, reactive } from 'vue'
 
 import type {
@@ -16,6 +15,7 @@ import type {
   EmailInboundMetaInformation,
   EmailInboundMetaInformationNextAction,
 } from '../types/email-inbound-outbound.ts'
+import type { ShallowRef } from 'vue'
 
 export const useEmailInboundForm = () => {
   const formEmailInbound: ShallowRef<FormRef | undefined> = shallowRef()

@@ -1,8 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { OrganizationItemData } from '#mobile/components/Organization/types.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+
+import type { OrganizationItemData } from '#mobile/components/Organization/types.ts'
 
 import SearchResults from '../SearchResults.vue'
 

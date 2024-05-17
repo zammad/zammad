@@ -1,16 +1,18 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, ref } from 'vue'
 import { type FormKitPlugin, getNode } from '@formkit/core'
-import Form from '#shared/components/Form/Form.vue'
-import type { Props } from '#shared/components/Form/Form.vue'
-import { useMultiStepForm } from '#shared/components/Form/useMultiStepForm.ts'
+import { waitFor } from '@testing-library/vue'
+import { computed, ref } from 'vue'
+
 import {
   type ExtendedMountingOptions,
   renderComponent,
 } from '#tests/support/components/index.ts'
 import { waitForNextTick, waitUntil } from '#tests/support/utils.ts'
-import { waitFor } from '@testing-library/vue'
+
+import Form from '#shared/components/Form/Form.vue'
+import type { Props } from '#shared/components/Form/Form.vue'
+import { useMultiStepForm } from '#shared/components/Form/useMultiStepForm.ts'
 
 const wrapperParameters = {
   form: true,

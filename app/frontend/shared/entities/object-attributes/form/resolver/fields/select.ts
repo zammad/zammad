@@ -4,11 +4,12 @@ import type {
   FormFieldAdditionalProps,
   FormSchemaField,
 } from '#shared/components/Form/types.ts'
-import { camelize } from '#shared/utils/formatter.ts'
 import type {
   FieldResolverModule,
   ObjectAttributeSelectOptions,
 } from '#shared/entities/object-attributes/types/resolver.ts'
+import { camelize } from '#shared/utils/formatter.ts'
+
 import FieldResolver from '../FieldResolver.ts'
 
 export type ObjectSelectValue = string | number | boolean

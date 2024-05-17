@@ -1,9 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { useCollapseHandler } from '#desktop/components/CollapseButton/composables/useCollapseHandler.ts'
-import { beforeEach, vi } from 'vitest'
 import { mount } from '@vue/test-utils'
+import { beforeEach, vi } from 'vitest'
 import { nextTick } from 'vue'
+
+import { useCollapseHandler } from '#desktop/components/CollapseButton/composables/useCollapseHandler.ts'
 
 describe('useCollapseHandler', async () => {
   const emit = vi.fn()

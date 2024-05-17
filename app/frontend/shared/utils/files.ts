@@ -2,6 +2,7 @@
 
 import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
+
 import log from './log.ts'
 
 export interface ImageFileData {

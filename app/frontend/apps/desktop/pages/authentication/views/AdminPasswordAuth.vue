@@ -7,15 +7,16 @@ import { useRouter } from 'vue-router'
 import Form from '#shared/components/Form/Form.vue'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
+import { useThirdPartyAuthentication } from '#shared/composables/authentication/useThirdPartyAuthentication.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
-import { useThirdPartyAuthentication } from '#shared/composables/authentication/useThirdPartyAuthentication.ts'
 
-import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
+
+import { useAdminPasswordAuthSendMutation } from '../graphql/mutations/adminPasswordAuthSend.api.ts'
 
 import type { AdminPasswordAuthRequestData } from '../types/admin-password-auth'
-import { useAdminPasswordAuthSendMutation } from '../graphql/mutations/adminPasswordAuthSend.api.ts'
 
 defineOptions({
   beforeRouteEnter(to) {

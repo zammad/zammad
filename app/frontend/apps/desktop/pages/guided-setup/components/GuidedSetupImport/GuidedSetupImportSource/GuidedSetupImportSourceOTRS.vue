@@ -3,8 +3,6 @@
 <script setup lang="ts">
 import { ref, reactive } from 'vue'
 
-import { EnumSystemImportSource } from '#shared/graphql/types.ts'
-import { i18n } from '#shared/i18n/index.ts'
 import Form from '#shared/components/Form/Form.vue'
 import type {
   FormFieldValue,
@@ -12,14 +10,17 @@ import type {
   FormSubmitData,
 } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
+import { EnumSystemImportSource } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n/index.ts'
 
 import { useSSLVerificationWarningHandler } from '#desktop/form/composables/useSSLVerificationWarningHandler.ts'
 
+import { useImportSource } from '../../../composables/useImportSource.ts'
+import { useImportSourceConfiguration } from '../../../composables/useImportSourceConfiguration.ts'
+import { useSystemSetup } from '../../../composables/useSystemSetup.ts'
+
 import GuidedSetupImportSourceOTRSDownloadButtons from './GuidedSetupImportSourceOTRSDownloadButtons.vue'
 
-import { useSystemSetup } from '../../../composables/useSystemSetup.ts'
-import { useImportSourceConfiguration } from '../../../composables/useImportSourceConfiguration.ts'
-import { useImportSource } from '../../../composables/useImportSource.ts'
 import type { ImportSourceConfigurationOtrsData } from '../../../types/setup-import.ts'
 
 const { setTitle } = useSystemSetup()

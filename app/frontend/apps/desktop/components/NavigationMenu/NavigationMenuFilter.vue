@@ -1,11 +1,13 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { nextTick, ref, shallowRef, watchEffect } from 'vue'
 import { useActiveElement, useMagicKeys, onClickOutside } from '@vueuse/core'
-import { i18n } from '#shared/i18n.ts'
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import { nextTick, ref, shallowRef, watchEffect } from 'vue'
+
 import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
+import { i18n } from '#shared/i18n.ts'
+
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 
 const filterFieldOpen = ref(false)
 const containerNode = ref<HTMLDivElement>()

@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import noop from 'lodash-es/noop'
+
 import type { RegisterSWOptions } from './types.ts'
 
 // should service worker be updated automatically without a prompt

@@ -8,8 +8,10 @@ import type {
   EnumObjectManagerObjects,
   ObjectManagerFrontendAttribute,
 } from '#shared/graphql/types.ts'
-import type { ScreenConfig } from '../types/resolver.ts'
+
 import getFieldResolver from './resolver/getFieldResolver.ts'
+
+import type { ScreenConfig } from '../types/resolver.ts'
 
 export const transformResolvedFieldForScreen = (
   screen: ScreenConfig,

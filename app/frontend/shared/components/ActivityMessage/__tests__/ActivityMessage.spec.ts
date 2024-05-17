@@ -1,11 +1,14 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Ticket } from '#shared/graphql/types.ts'
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { generateObjectData } from '#tests/graphql/builders/index.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
-import type { Props } from '../ActivityMessage.vue'
+
+import type { Ticket } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
 import ActivityMessage from '../ActivityMessage.vue'
+
+import type { Props } from '../ActivityMessage.vue'
 
 const now = vi.hoisted(() => {
   const now = new Date('2022-01-03 00:00:00')

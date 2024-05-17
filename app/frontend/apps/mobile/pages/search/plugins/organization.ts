@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import OrganizationItem from '#mobile/components/Organization/OrganizationItem.vue'
+
 import type { SearchPlugin } from './index.ts'
 
 export default <SearchPlugin>{

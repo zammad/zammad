@@ -3,6 +3,7 @@
 import { EnumSystemImportSource } from '#shared/graphql/types.ts'
 
 import GuidedSetupImportSourceFreshdesk from '../GuidedSetupImportSourceFreshdesk.vue'
+
 import type { GuidedSetupImportSourcePlugin } from './index.ts'
 
 export default <GuidedSetupImportSourcePlugin>{

@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
+
 import CommonTicketPriorityIndicator from '../CommonTicketPriorityIndicator.vue'
+
 import type { Props } from '../CommonTicketPriorityIndicator.vue'
 
 const renderCommonTicketPriorityIndicator = (props: Partial<Props> = {}) => {

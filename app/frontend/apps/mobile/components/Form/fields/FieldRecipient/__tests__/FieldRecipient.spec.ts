@@ -1,13 +1,15 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { escapeRegExp } from 'lodash-es'
-import { waitFor } from '@testing-library/vue'
 import { FormKit } from '@formkit/vue'
-import { renderComponent } from '#tests/support/components/index.ts'
-import { createMockClient } from 'mock-apollo-client'
+import { waitFor } from '@testing-library/vue'
 import { provideApolloClient } from '@vue/apollo-composable'
-import { AutocompleteSearchRecipientDocument } from '#shared/components/Form/fields/FieldRecipient/graphql/queries/autocompleteSearch/recipient.api.ts'
+import { escapeRegExp } from 'lodash-es'
+import { createMockClient } from 'mock-apollo-client'
+
+import { renderComponent } from '#tests/support/components/index.ts'
+
 import type { AutoCompleteOption } from '#shared/components/Form/fields/FieldAutocomplete/types.ts'
+import { AutocompleteSearchRecipientDocument } from '#shared/components/Form/fields/FieldRecipient/graphql/queries/autocompleteSearch/recipient.api.ts'
 
 const testOptions: AutoCompleteOption[] = [
   {

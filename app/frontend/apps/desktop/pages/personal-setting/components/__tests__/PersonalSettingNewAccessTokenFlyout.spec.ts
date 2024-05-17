@@ -3,11 +3,13 @@
 import { getByRole, within } from '@testing-library/vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
+
 import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
 import {
   mockUserCurrentAccessTokenAddMutation,
   waitForUserCurrentAccessTokenAddMutationCalls,
 } from '#shared/entities/user/current/graphql/mutations/userCurrentAccessTokenAdd.mocks.ts'
+
 import PersonalSettingNewAccessTokenFlyout from '../PersonalSettingNewAccessTokenFlyout.vue'
 
 const renderNewAccessTokenFlyout = (

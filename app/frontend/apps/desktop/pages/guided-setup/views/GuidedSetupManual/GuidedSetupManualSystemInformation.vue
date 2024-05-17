@@ -4,19 +4,20 @@
 import { shallowRef, computed, reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
+import Form from '#shared/components/Form/Form.vue'
 import type {
   FormSubmitData,
   FormValues,
 } from '#shared/components/Form/types.ts'
-import Form from '#shared/components/Form/Form.vue'
+import { useLogoUrl } from '#shared/composables/useLogoUrl.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
-import { useLogoUrl } from '#shared/composables/useLogoUrl.ts'
+
+import GuidedSetupActionFooter from '../../components/GuidedSetupActionFooter.vue'
+import { useSystemSetup } from '../../composables/useSystemSetup.ts'
+import { useGuidedSetupSetSystemInformationMutation } from '../../graphql/mutations/setSystemInformation.api.ts'
 
 import type { SystemInformationData } from '../../types/setup-manual.ts'
-import { useSystemSetup } from '../../composables/useSystemSetup.ts'
-import GuidedSetupActionFooter from '../../components/GuidedSetupActionFooter.vue'
-import { useGuidedSetupSetSystemInformationMutation } from '../../graphql/mutations/setSystemInformation.api.ts'
 
 const router = useRouter()
 const application = useApplicationStore()

@@ -1,13 +1,15 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed } from 'vue'
-import type { Ref } from 'vue'
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+
+import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import { useMentionSubscribeMutation } from '#shared/entities/ticket/graphql/mutations/subscribe.api.ts'
 import { useMentionUnsubscribeMutation } from '#shared/entities/ticket/graphql/mutations/unsubscribe.api.ts'
-import type { TicketQuery } from '#shared/graphql/types.ts'
-import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
+import type { TicketQuery } from '#shared/graphql/types.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+
+import type { Ref } from 'vue'
 
 export const useTicketSubscribe = (ticket: Ref<TicketById | undefined>) => {
   const { isTicketAgent } = useTicketView(ticket)

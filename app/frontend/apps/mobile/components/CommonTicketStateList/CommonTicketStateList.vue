@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { TicketState } from '#shared/entities/ticket/types.ts'
 import { replaceTags } from '#shared/utils/formatter.ts'
+
 import CommonSectionMenu from '../CommonSectionMenu/CommonSectionMenu.vue'
 import CommonSectionMenuLink from '../CommonSectionMenu/CommonSectionMenuLink.vue'
 

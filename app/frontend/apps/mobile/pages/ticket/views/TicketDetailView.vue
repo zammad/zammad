@@ -1,6 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { noop } from 'lodash-es'
 import { computed, provide, ref, reactive, toRef } from 'vue'
 import {
   onBeforeRouteLeave,
@@ -9,39 +10,41 @@ import {
   useRoute,
   useRouter,
 } from 'vue-router'
-import { noop } from 'lodash-es'
+
+import {
+  NotificationTypes,
+  useNotifications,
+} from '#shared/components/CommonNotifications/index.ts'
+import Form from '#shared/components/Form/Form.vue'
+import type { FormSubmitData } from '#shared/components/Form/types.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotificationSeen.ts'
+import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
+import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
+import UserError from '#shared/errors/UserError.ts'
 import type {
   TicketUpdatesSubscription,
   TicketUpdatesSubscriptionVariables,
 } from '#shared/graphql/types.ts'
 import { EnumFormUpdaterId } from '#shared/graphql/types.ts'
-import UserError from '#shared/errors/UserError.ts'
-import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
-import Form from '#shared/components/Form/Form.vue'
-import type { FormSubmitData } from '#shared/components/Form/types.ts'
-import { useForm } from '#shared/components/Form/useForm.ts'
-import {
-  NotificationTypes,
-  useNotifications,
-} from '#shared/components/CommonNotifications/index.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
-import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
-import type { TicketInformation } from '#mobile/entities/ticket/types.ts'
+
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
-import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotificationSeen.ts'
-import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
-import { getOpenedDialogs } from '#mobile/composables/useDialog.ts'
 import { useCommonSelect } from '#mobile/components/CommonSelect/useCommonSelect.ts'
-import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import { getOpenedDialogs } from '#mobile/composables/useDialog.ts'
+import type { TicketInformation } from '#mobile/entities/ticket/types.ts'
+
+import TicketDetailViewActions from '../components/TicketDetailView/TicketDetailViewActions.vue'
+import { useTicketArticleReply } from '../composable/useTicketArticleReply.ts'
 import { useTicketEdit } from '../composable/useTicketEdit.ts'
+import { useTicketEditForm } from '../composable/useTicketEditForm.ts'
 import { TICKET_INFORMATION_SYMBOL } from '../composable/useTicketInformation.ts'
+import { useTicketLiveUser } from '../composable/useTicketLiveUser.ts'
 import { useTicketQuery } from '../graphql/queries/ticket.api.ts'
 import { TicketUpdatesDocument } from '../graphql/subscriptions/ticketUpdates.api.ts'
-import { useTicketArticleReply } from '../composable/useTicketArticleReply.ts'
-import { useTicketEditForm } from '../composable/useTicketEditForm.ts'
-import { useTicketLiveUser } from '../composable/useTicketLiveUser.ts'
-import TicketDetailViewActions from '../components/TicketDetailView/TicketDetailViewActions.vue'
 
 interface Props {
   internalId: string

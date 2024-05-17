@@ -1,9 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vue'
 import { renderComponent } from '#tests/support/components/index.ts'
-import { useLocaleStore } from '#shared/stores/locale.ts'
+
 import { EnumTextDirection } from '#shared/graphql/types.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
+
+import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vue'
 
 describe('CollapseButton', () => {
   it.each([

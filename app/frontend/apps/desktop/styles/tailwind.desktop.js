@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-const formKitTailwind = require('@formkit/themes/tailwindcss')
 const path = require('path')
+
+const formKitTailwind = require('@formkit/themes/tailwindcss')
 const unimportantTailwind = require('tailwindcss-unimportant')
 
 const zammadTailwind = require('../../../build/zammadTailwindPlugin.js')

@@ -1,6 +1,8 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { onClickOutside, type UseElementBoundingReturn } from '@vueuse/core'
+import { onKeyUp, useElementBounding, useWindowSize } from '@vueuse/core'
 import {
   type ComponentPublicInstance,
   computed,
@@ -8,16 +10,15 @@ import {
   onUnmounted,
   ref,
 } from 'vue'
-import { onClickOutside, type UseElementBoundingReturn } from '@vueuse/core'
-import { onKeyUp, useElementBounding, useWindowSize } from '@vueuse/core'
 
-import stopEvent from '#shared/utils/events.ts'
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
-import testFlags from '#shared/utils/testFlags.ts'
-import { useLocaleStore } from '#shared/stores/locale.ts'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
+import stopEvent from '#shared/utils/events.ts'
+import testFlags from '#shared/utils/testFlags.ts'
 
 import { usePopoverInstances } from './usePopoverInstances.ts'
+
 import type {
   Placement,
   CommonPopoverInternalInstance,

@@ -1,10 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { useScroll } from '@vueuse/core'
-import type { CSSProperties, WatchSource } from 'vue'
 import { watch, ref, computed } from 'vue'
+
 // eslint-disable-next-line import/no-restricted-paths
 import LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
+
+import type { CSSProperties, WatchSource } from 'vue'
 
 export const useStickyHeader = (
   dependencies: WatchSource[] = [],

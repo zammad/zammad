@@ -1,8 +1,8 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { AvatarUser } from '#shared/components/CommonUserAvatar/types.ts'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import type { AvatarUser } from '#shared/components/CommonUserAvatar/types.ts'
 
 interface Props {
   users: (AvatarUser & { internalId: number })[]

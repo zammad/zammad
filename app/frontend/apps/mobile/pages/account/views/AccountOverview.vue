@@ -3,25 +3,27 @@
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
 
+import { storeToRefs } from 'pinia'
 import { computed, ref } from 'vue'
 import { useRouter } from 'vue-router'
-import { storeToRefs } from 'pinia'
+
+import { useRawHTMLIcon } from '#shared/components/CommonIcon/useRawHTMLIcon.ts'
+import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import FormGroup from '#shared/components/Form/FormGroup.vue'
+import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
+import { useLocaleUpdate } from '#shared/composables/useLocaleUpdate.ts'
+import { useProductAboutQuery } from '#shared/graphql/queries/about.api.ts'
+import { i18n } from '#shared/i18n.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
-import { usePWASupport, isStandalone } from '#shared/utils/pwa.ts'
 import { browser, os } from '#shared/utils/browser.ts'
-import FormGroup from '#shared/components/Form/FormGroup.vue'
-import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import { useProductAboutQuery } from '#shared/graphql/queries/about.api.ts'
+import { usePWASupport, isStandalone } from '#shared/utils/pwa.ts'
+
 import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import CommonSectionMenuItem from '#mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
 import CommonSectionMenuLink from '#mobile/components/CommonSectionMenu/CommonSectionMenuLink.vue'
 import CommonSectionPopup from '#mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
-import { useRawHTMLIcon } from '#shared/components/CommonIcon/useRawHTMLIcon.ts'
-import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
 import { useHeader } from '#mobile/composables/useHeader.ts'
-import { i18n } from '#shared/i18n.ts'
-import { useLocaleUpdate } from '#shared/composables/useLocaleUpdate.ts'
 
 const router = useRouter()
 

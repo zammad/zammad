@@ -1,15 +1,17 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { getAllByRole } from '@testing-library/vue'
+
+import { visitView } from '#tests/support/components/visitView.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { waitUntilApisResolved } from '#tests/support/utils.ts'
+
 import {
   mockPublicLinks,
   mockPublicLinksSubscription,
 } from '#shared/entities/public-links/__tests__/mocks/mockPublicLinks.ts'
 import type { PublicLinksQuery } from '#shared/graphql/types.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
-import { getAllByRole } from '@testing-library/vue'
-import { visitView } from '#tests/support/components/visitView.ts'
-import { waitUntilApisResolved } from '#tests/support/utils.ts'
-import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
 beforeEach(() => {
   mockApplicationConfig({ product_name: 'Zammad Gmbh' })

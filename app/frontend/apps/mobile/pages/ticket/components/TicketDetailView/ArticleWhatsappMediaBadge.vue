@@ -7,8 +7,8 @@ import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useTicketArticleRetryMediaDownloadMutation } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleRetryMediaDownload.api.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 
 import CommonSectionPopup from '#mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
 

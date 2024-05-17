@@ -1,12 +1,5 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormKitTypeDefinition } from '@formkit/core'
-import type {
-  FormKitSchemaExtendableSection,
-  FormKitInputs,
-  FormKitSlotData,
-} from '@formkit/inputs'
-import { mergeArray } from '#shared/utils/helpers.ts'
 import {
   outer,
   inner,
@@ -19,10 +12,21 @@ import {
   suffix,
   label,
 } from '@formkit/inputs'
-import { block } from '../sections/block.ts'
+
+import { mergeArray } from '#shared/utils/helpers.ts'
+
 import { arrow } from '../sections/arrow.ts'
+import { block } from '../sections/block.ts'
 import { link } from '../sections/link.ts'
+
 import defaulfFieldDefinition from './defaultFieldDefinition.ts'
+
+import type { FormKitTypeDefinition } from '@formkit/core'
+import type {
+  FormKitSchemaExtendableSection,
+  FormKitInputs,
+  FormKitSlotData,
+} from '@formkit/inputs'
 
 declare module '@formkit/inputs' {
   interface FormKitBaseSlots<Props extends FormKitInputs<Props>> {

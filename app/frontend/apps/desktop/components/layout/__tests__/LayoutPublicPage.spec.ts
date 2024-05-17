@@ -2,6 +2,7 @@
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
 import LayoutPublicPage from '../LayoutPublicPage/LayoutPublicPage.vue'
 
 const applicationConfig = {

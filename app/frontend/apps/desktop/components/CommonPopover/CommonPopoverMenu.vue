@@ -4,9 +4,12 @@
 import { computed, toRefs, useSlots } from 'vue'
 
 import type { ObjectLike } from '#shared/types/utils.ts'
+
 import { usePopoverMenu } from '#desktop/components/CommonPopover/usePopoverMenu.ts'
-import type { CommonPopoverInstance, MenuItem, Variant } from './types'
+
 import CommonPopoverMenuItem from './CommonPopoverMenuItem.vue'
+
+import type { CommonPopoverInstance, MenuItem, Variant } from './types'
 
 export interface Props {
   popover: CommonPopoverInstance | undefined

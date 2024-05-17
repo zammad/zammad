@@ -1,9 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { axe } from 'vitest-axe'
+
 import { visitView } from '#tests/support/components/visitView.ts'
-import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
+
 import { UserCurrentAvatarActiveDocument } from '../graphql/queries/userCurrentAvatarActive.api.ts'
 
 const mockAvatarImage =

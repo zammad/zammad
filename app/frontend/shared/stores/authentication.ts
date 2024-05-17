@@ -1,21 +1,23 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { ref } from 'vue'
-import { defineStore } from 'pinia'
 import { useLocalStorage } from '@vueuse/core'
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import { defineStore } from 'pinia'
+import { ref } from 'vue'
+
+import useFingerprint from '#shared/composables/useFingerprint.ts'
 import { useLoginMutation } from '#shared/graphql/mutations/login.api.ts'
 import { useLogoutMutation } from '#shared/graphql/mutations/logout.api.ts'
-import { clearApolloClientStore } from '#shared/server/apollo/client.ts'
-import useFingerprint from '#shared/composables/useFingerprint.ts'
-import testFlags from '#shared/utils/testFlags.ts'
 import {
   type EnumTwoFactorAuthenticationMethod,
   type LoginInput,
 } from '#shared/graphql/types.ts'
-import { useSessionStore } from './session.ts'
+import { clearApolloClientStore } from '#shared/server/apollo/client.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import testFlags from '#shared/utils/testFlags.ts'
+
 import { useApplicationStore } from './application.ts'
 import { resetAndDisposeStores } from './index.ts'
+import { useSessionStore } from './session.ts'
 
 interface LoginOptions {
   login: string

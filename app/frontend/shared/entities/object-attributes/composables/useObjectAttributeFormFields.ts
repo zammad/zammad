@@ -1,12 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import type { FormSchemaField } from '#shared/components/Form/types.ts'
 import type {
   EnumObjectManagerObjects,
   ObjectManagerFrontendAttribute,
 } from '#shared/graphql/types.ts'
-import type { FormSchemaField } from '#shared/components/Form/types.ts'
-import { useObjectAttributesStore } from '../stores/objectAttributes.ts'
+
 import { transformResolvedFieldForScreen } from '../form/getFieldFromAttribute.ts'
+import { useObjectAttributesStore } from '../stores/objectAttributes.ts'
 
 export const useObjectAttributeFormFields = (skippedFields: string[] = []) => {
   const { getObjectAttributesForObject } = useObjectAttributesStore()

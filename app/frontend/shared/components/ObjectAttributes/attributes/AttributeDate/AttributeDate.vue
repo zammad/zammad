@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import CommonDateTime from '#shared/components/CommonDateTime/CommonDateTime.vue'
+
 import type { ObjectAttributeDate } from './attributeDateTypes.ts'
 
 defineProps<{

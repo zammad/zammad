@@ -1,9 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
-import renderComponent from '#tests/support/components/renderComponent.ts'
 import { describe, expect } from 'vitest'
 import { nextTick } from 'vue'
+
+import renderComponent from '#tests/support/components/renderComponent.ts'
+
+import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
 
 const html = String.raw
 

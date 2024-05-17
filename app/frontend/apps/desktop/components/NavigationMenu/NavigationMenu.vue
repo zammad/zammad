@@ -1,16 +1,17 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
 import { transform, deburr } from 'lodash-es'
+import { computed, ref } from 'vue'
 
 import { i18n } from '#shared/i18n.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
+import NavigationMenuFilter from '#desktop/components/NavigationMenu/NavigationMenuFilter.vue'
 import NavigationMenuHeader from '#desktop/components/NavigationMenu/NavigationMenuHeader.vue'
 import NavigationMenuList from '#desktop/components/NavigationMenu/NavigationMenuList.vue'
-import NavigationMenuFilter from '#desktop/components/NavigationMenu/NavigationMenuFilter.vue'
 import { useTransitionCollapse } from '#desktop/composables/useTransitionCollapse.ts'
+
 import type { NavigationMenuCategory, NavigationMenuEntry } from './types'
 
 interface Props {

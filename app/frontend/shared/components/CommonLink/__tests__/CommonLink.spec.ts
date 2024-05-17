@@ -1,9 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { useApplicationStore } from '#shared/stores/application.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
-import type { MountingOptions } from '@vue/test-utils'
+
+import { useApplicationStore } from '#shared/stores/application.ts'
+
 import CommonLink, { type Props } from '../CommonLink.vue'
+
+import type { MountingOptions } from '@vue/test-utils'
 
 const wrapperParameters = {
   router: true,

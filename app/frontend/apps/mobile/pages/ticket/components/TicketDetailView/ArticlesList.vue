@@ -2,20 +2,24 @@
 
 <script setup lang="ts">
 import { toRef, shallowRef } from 'vue'
-import CommonSectionPopup from '#mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
+
 import type {
   TicketArticle,
   TicketById,
 } from '#shared/entities/ticket/types.ts'
-import ArticleBubble from './ArticleBubble.vue'
-import ArticleSeparatorNew from './ArticleSeparatorNew.vue'
-import ArticleSeparatorMore from './ArticleSeparatorMore.vue'
-import ArticleSeparatorDate from './ArticleSeparatorDate.vue'
-import { useTicketArticleRows } from '../../composable/useTicketArticlesRows.ts'
+
+import CommonSectionPopup from '#mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
+
 import { useTicketArticleContext } from '../../composable/useTicketArticleContext.ts'
-import ArticleSystem from './ArticleSystem.vue'
-import ArticleDeliveryMessage from './ArticleDeliveryMessage.vue'
+import { useTicketArticleRows } from '../../composable/useTicketArticlesRows.ts'
 import { useTicketInformation } from '../../composable/useTicketInformation.ts'
+
+import ArticleBubble from './ArticleBubble.vue'
+import ArticleDeliveryMessage from './ArticleDeliveryMessage.vue'
+import ArticleSeparatorDate from './ArticleSeparatorDate.vue'
+import ArticleSeparatorMore from './ArticleSeparatorMore.vue'
+import ArticleSeparatorNew from './ArticleSeparatorNew.vue'
+import ArticleSystem from './ArticleSystem.vue'
 
 interface Props {
   articles: TicketArticle[]

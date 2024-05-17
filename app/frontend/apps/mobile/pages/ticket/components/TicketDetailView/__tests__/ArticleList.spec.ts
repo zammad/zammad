@@ -1,11 +1,14 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { defaultTicket } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { getTestPlugins } from '#tests/support/components/renderComponent.ts'
+
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import { getTestPlugins } from '#tests/support/components/renderComponent.ts'
-import { renderComponent } from '#tests/support/components/index.ts'
+
+import { defaultTicket } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
 import { TICKET_INFORMATION_SYMBOL } from '#mobile/pages/ticket/composable/useTicketInformation.ts'
+
 import ArticlesList from '../ArticlesList.vue'
 
 it('renders delivery messages', () => {

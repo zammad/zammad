@@ -1,55 +1,58 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { useEventListener } from '@vueuse/core'
 import { computed, nextTick, reactive, ref, watch } from 'vue'
 import { onBeforeRouteLeave, useRouter } from 'vue-router'
-import { useEventListener } from '@vueuse/core'
-import type { ApolloError } from '@apollo/client'
 
+import {
+  NotificationTypes,
+  useNotifications,
+} from '#shared/components/CommonNotifications/index.ts'
+import { populateEditorNewLines } from '#shared/components/Form/fields/FieldEditor/utils.ts'
 import Form from '#shared/components/Form/Form.vue'
-import LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
+import type {
+  FormSubmitData,
+  FormSchemaNode,
+} from '#shared/components/Form/types.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
+import { useMultiStepForm } from '#shared/components/Form/useMultiStepForm.ts'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
+import { useTicketSignature } from '#shared/composables/useTicketSignature.ts'
+import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
+import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
+import { useTicketCreate } from '#shared/entities/ticket/composables/useTicketCreate.ts'
+import { useTicketCreateArticleType } from '#shared/entities/ticket/composables/useTicketCreateArticleType.ts'
+import { useTicketFormOganizationHandler } from '#shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts'
+import type { TicketFormData } from '#shared/entities/ticket/types.ts'
+import type UserError from '#shared/errors/UserError.ts'
+import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
   type TicketCreateInput,
 } from '#shared/graphql/types.ts'
-import { useForm } from '#shared/components/Form/useForm.ts'
-import { useMultiStepForm } from '#shared/components/Form/useMultiStepForm.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
-import { useTicketCreate } from '#shared/entities/ticket/composables/useTicketCreate.ts'
-import { useTicketCreateArticleType } from '#shared/entities/ticket/composables/useTicketCreateArticleType.ts'
-import { useTicketFormOganizationHandler } from '#shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts'
-import type {
-  FormSubmitData,
-  FormSchemaNode,
-} from '#shared/components/Form/types.ts'
 import { i18n } from '#shared/i18n.ts'
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
-import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
-import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
-import {
-  NotificationTypes,
-  useNotifications,
-} from '#shared/components/CommonNotifications/index.ts'
-import { ErrorStatusCodes, GraphQLErrorTypes } from '#shared/types/error.ts'
-import type UserError from '#shared/errors/UserError.ts'
-import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
-import { populateEditorNewLines } from '#shared/components/Form/fields/FieldEditor/utils.ts'
-import CommonStepper from '#mobile/components/CommonStepper/CommonStepper.vue'
-import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import { errorOptions } from '#shared/router/error.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import { ErrorStatusCodes, GraphQLErrorTypes } from '#shared/types/error.ts'
+import { convertFilesToAttachmentInput } from '#shared/utils/files.ts'
+
+import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
+import CommonStepper from '#mobile/components/CommonStepper/CommonStepper.vue'
+import LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
+import { useDialog } from '#mobile/composables/useDialog.ts'
+import { useUserQuery } from '#mobile/entities/user/graphql/queries/user.api.ts'
 import {
   useTicketDuplicateDetectionHandler,
   type TicketDuplicateDetectionPayload,
 } from '#mobile/pages/ticket/composable/useTicketDuplicateDetectionHandler.ts'
-import { useTicketSignature } from '#shared/composables/useTicketSignature.ts'
-import type { TicketFormData } from '#shared/entities/ticket/types.ts'
-import { convertFilesToAttachmentInput } from '#shared/utils/files.ts'
-import { useDialog } from '#mobile/composables/useDialog.ts'
-import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
-import { useConfirmation } from '#shared/composables/useConfirmation.ts'
-import { useUserQuery } from '#mobile/entities/user/graphql/queries/user.api.ts'
+
 import { useTicketCreateMutation } from '../graphql/mutations/create.api.ts'
+
+import type { ApolloError } from '@apollo/client'
 
 const router = useRouter()
 

@@ -1,10 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { fireEvent } from '@testing-library/vue'
 import { beforeEach, describe, expect } from 'vitest'
+
 import renderComponent, {
   type ExtendedRenderResult,
 } from '#tests/support/components/renderComponent.ts'
-import { fireEvent } from '@testing-library/vue'
+
 import LayoutSidebar from '#desktop/components/layout/LayoutSidebar.vue'
 
 describe('LayoutSidebar', () => {

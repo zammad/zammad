@@ -3,15 +3,15 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 
-import { i18n } from '#shared/i18n/index.ts'
 import { EnumSystemImportSource } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n/index.ts'
 
 import GuidedSetupActionFooter from '#desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue'
-import GuidedSetupStatusMessage from '#desktop/pages/guided-setup/components/GuidedSetupStatusMessage.vue'
-import { useSystemSetupInfoStore } from '#desktop/pages/guided-setup/stores/systemSetupInfo.ts'
 import { guidedSetupImportSourcePluginLookup } from '#desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/index.ts'
-import { useSystemSetup } from '#desktop/pages/guided-setup/composables/useSystemSetup.ts'
+import GuidedSetupStatusMessage from '#desktop/pages/guided-setup/components/GuidedSetupStatusMessage.vue'
 import { useImportSource } from '#desktop/pages/guided-setup/composables/useImportSource.ts'
+import { useSystemSetup } from '#desktop/pages/guided-setup/composables/useSystemSetup.ts'
+import { useSystemSetupInfoStore } from '#desktop/pages/guided-setup/stores/systemSetupInfo.ts'
 
 interface Props {
   source: EnumSystemImportSource

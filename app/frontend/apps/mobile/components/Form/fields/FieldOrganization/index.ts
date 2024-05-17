@@ -3,8 +3,10 @@
 import createInput from '#shared/form/core/createInput.ts'
 import addLink from '#shared/form/features/addLink.ts'
 import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
-import FieldOrganizationWrapper from './FieldOrganizationWrapper.vue'
+
 import { autoCompleteProps } from '../FieldAutoComplete/index.ts'
+
+import FieldOrganizationWrapper from './FieldOrganizationWrapper.vue'
 
 const fieldDefinition = createInput(
   FieldOrganizationWrapper,

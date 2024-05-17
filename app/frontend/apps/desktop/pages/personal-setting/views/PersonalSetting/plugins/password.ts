@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { useCheckChangePassword } from '../../../composables/permission/useCheckChangePassword.ts'
+
 import type { PersonalSettingPlugin } from './types.ts'
 
 export default <PersonalSettingPlugin>{

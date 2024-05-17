@@ -2,8 +2,10 @@
 
 <script setup lang="ts">
 // TODO: check external data input output
-import { phoneify } from '#shared/utils/formatter.ts'
 import { computed } from 'vue'
+
+import { phoneify } from '#shared/utils/formatter.ts'
+
 import type { ObjectAttributeInput } from './attributeInputTypes.ts'
 
 const props = defineProps<{

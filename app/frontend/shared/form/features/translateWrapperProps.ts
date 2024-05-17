@@ -1,11 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { i18n } from '#shared/i18n.ts'
-import type { FormKitNode } from '@formkit/core'
 import { createMessage } from '@formkit/core'
 import { isEmpty } from 'lodash-es'
-import type { ComputedRef } from 'vue'
 import { computed } from 'vue'
+
+import { i18n } from '#shared/i18n.ts'
+
+import type { FormKitNode } from '@formkit/core'
+import type { ComputedRef } from 'vue'
 
 const propsToTranslate = ['label', 'placeholder', 'help']
 const attrsToTranslate = ['placeholder']

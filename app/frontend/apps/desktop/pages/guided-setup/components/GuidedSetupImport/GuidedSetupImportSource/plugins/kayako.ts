@@ -3,6 +3,7 @@
 import { EnumSystemImportSource } from '#shared/graphql/types.ts'
 
 import GuidedSetupImportSourceKayako from '../GuidedSetupImportSourceKayako.vue'
+
 import type { GuidedSetupImportSourcePlugin } from './index.ts'
 
 export default <GuidedSetupImportSourcePlugin>{

@@ -2,6 +2,12 @@
 
 <script setup lang="ts">
 import {
+  type UseElementBoundingReturn,
+  onClickOutside,
+  onKeyDown,
+  useVModel,
+} from '@vueuse/core'
+import {
   computed,
   type ConcreteComponent,
   nextTick,
@@ -10,28 +16,26 @@ import {
   type Ref,
   toRef,
 } from 'vue'
-import { useFocusWhenTyping } from '#shared/composables/useFocusWhenTyping.ts'
-import { useTrapTab } from '#shared/composables/useTrapTab.ts'
-import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
-import stopEvent from '#shared/utils/events.ts'
-import {
-  type UseElementBoundingReturn,
-  onClickOutside,
-  onKeyDown,
-  useVModel,
-} from '@vueuse/core'
+
+import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import type {
   MatchedSelectOption,
   SelectOption,
   SelectValue,
 } from '#shared/components/CommonSelect/types.ts'
 import type { AutoCompleteOption } from '#shared/components/Form/fields/FieldAutocomplete/types.ts'
-import testFlags from '#shared/utils/testFlags.ts'
-import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
+import { useFocusWhenTyping } from '#shared/composables/useFocusWhenTyping.ts'
+import { useTrapTab } from '#shared/composables/useTrapTab.ts'
+import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
 import { i18n } from '#shared/i18n.ts'
+import stopEvent from '#shared/utils/events.ts'
+import testFlags from '#shared/utils/testFlags.ts'
+
 import { useTransitionCollapse } from '#desktop/composables/useTransitionCollapse.ts'
+
 import CommonSelectItem from './CommonSelectItem.vue'
 import { useCommonSelect } from './useCommonSelect.ts'
+
 import type { CommonSelectInternalInstance } from './types.ts'
 
 export interface Props {

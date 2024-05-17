@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { setContext } from '@apollo/client/link/context'
+
 import { getCSRFToken } from '../utils/csrfToken.ts'
 
 const setAuthorizationLink = setContext((request, { headers }) => ({

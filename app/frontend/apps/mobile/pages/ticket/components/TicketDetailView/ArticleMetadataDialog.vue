@@ -1,13 +1,16 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
+import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { getArticleChannelIcon } from '#shared/entities/ticket-article/composables/getArticleChannelIcon.ts'
+import { translateArticleSecurity } from '#shared/entities/ticket-article/composables/translateArticleSecurity.ts'
+
 import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
 import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import CommonSectionMenuItem from '#mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
-import { computed } from 'vue'
-import type { TicketArticle } from '#shared/entities/ticket/types.ts'
-import { translateArticleSecurity } from '#shared/entities/ticket-article/composables/translateArticleSecurity.ts'
+
 import ArticleMetadataAddress from './ArticleMetadataAddress.vue'
 
 interface Props {

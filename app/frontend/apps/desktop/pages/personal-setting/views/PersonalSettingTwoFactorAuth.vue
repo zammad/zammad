@@ -4,25 +4,25 @@
 import { computed, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
-import { useApplicationConfigTwoFactor } from '#shared/composables/authentication/useApplicationConfigTwoFactor.ts'
-import type { ObjectLike } from '#shared/types/utils.ts'
-
-import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
-import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
-import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
-import type { TwoFactorConfigurationType } from '#desktop/components/TwoFactor/types.ts'
-import { useConfigurationTwoFactor } from '#desktop/entities/two-factor-configuration/composables/useConfigurationTwoFactor.ts'
-import { useUserCurrentTwoFactorRemoveMethodMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorRemoveMethod.api.ts'
 import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
-import { useUserCurrentTwoFactorSetDefaultMethodMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorSetDefaultMethod.api.ts'
+import { useApplicationConfigTwoFactor } from '#shared/composables/authentication/useApplicationConfigTwoFactor.ts'
 import type { TwoFactorActionTypes } from '#shared/entities/two-factor/types.ts'
+import { useUserCurrentTwoFactorRemoveMethodMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorRemoveMethod.api.ts'
+import { useUserCurrentTwoFactorSetDefaultMethodMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorSetDefaultMethod.api.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
+
+import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
+import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
+import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
+import type { TwoFactorConfigurationType } from '#desktop/components/TwoFactor/types.ts'
+import { useConfigurationTwoFactor } from '#desktop/entities/two-factor-configuration/composables/useConfigurationTwoFactor.ts'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
 

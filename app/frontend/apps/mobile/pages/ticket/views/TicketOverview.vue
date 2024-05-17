@@ -1,20 +1,23 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { useRouteQuery } from '@vueuse/router'
+import { storeToRefs } from 'pinia'
 import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { storeToRefs } from 'pinia'
-import { useRouteQuery } from '@vueuse/router'
-import { i18n } from '#shared/i18n.ts'
+
+import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
 import { EnumOrderDirection } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
-import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
+
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import CommonSelectPill from '#mobile/components/CommonSelectPill/CommonSelectPill.vue'
 import CommonTicketCreateLink from '#mobile/components/CommonTicketCreateLink/CommonTicketCreateLink.vue'
-import { useTicketOverviews } from '#mobile/entities/ticket/composables/useTicketOverviews.ts'
 import LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
+import { useTicketOverviews } from '#mobile/entities/ticket/composables/useTicketOverviews.ts'
+
 import TicketList from '../components/TicketList/TicketList.vue'
 import TicketOrderBySelector from '../components/TicketList/TicketOrderBySelector.vue'
 

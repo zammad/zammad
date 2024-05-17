@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, type Ref } from 'vue'
+
 import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
 import type {
   FlatSelectOption,

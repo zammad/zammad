@@ -1,8 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { nextTick } from 'vue'
+
 import { renderComponent } from '#tests/support/components/index.ts'
+
 import { useApplicationStore } from '#shared/stores/application.ts'
+
 import CommonDateTime, { type Props } from '../CommonDateTime.vue'
 
 vi.hoisted(() => {

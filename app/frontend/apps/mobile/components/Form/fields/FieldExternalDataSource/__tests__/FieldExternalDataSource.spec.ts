@@ -1,9 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { FormKit } from '@formkit/vue'
 import { getNode } from '@formkit/core'
-import { renderComponent } from '#tests/support/components/index.ts'
+import { FormKit } from '@formkit/vue'
+
 import { getGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
+
 import { AutocompleteSearchObjectAttributeExternalDataSourceDocument } from '#shared/components/Form/fields/FieldExternalDataSource/graphql/queries/autocompleteSearchObjectAttributeExternalDataSource.api.ts'
 import {
   EnumObjectManagerObjects,

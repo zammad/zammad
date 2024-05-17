@@ -1,14 +1,16 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { computed, nextTick, ref, watch } from 'vue'
+
+import { useUserObjectAttributesStore } from '#shared/entities/user/stores/objectAttributes.ts'
+import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
 import { UserUpdatesDocument } from '#shared/graphql/subscriptions/userUpdates.api.ts'
 import type {
   UserUpdatesSubscriptionVariables,
   UserUpdatesSubscription,
 } from '#shared/graphql/types.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
-import { computed, nextTick, ref, watch } from 'vue'
-import { useUserObjectAttributesStore } from '#shared/entities/user/stores/objectAttributes.ts'
-import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
+
 import { useUserLazyQuery } from '../graphql/queries/user.api.ts'
 
 export const useUserDetail = () => {

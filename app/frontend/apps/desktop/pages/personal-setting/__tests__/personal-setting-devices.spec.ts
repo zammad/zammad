@@ -2,18 +2,19 @@
 
 import { within } from '@testing-library/vue'
 
-import { visitView } from '#tests/support/components/visitView.ts'
-import { waitForNextTick } from '#tests/support/utils.ts'
-import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
-import { mockPermissions } from '#tests/support/mock-permissions.ts'
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import {
   checkSimpleTableContent,
   checkSimpleTableHeader,
 } from '#tests/support/components/checkSimpleTableContent.ts'
+import { visitView } from '#tests/support/components/visitView.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
 
-import { mockUserCurrentDeviceListQuery } from '../graphql/queries/userCurrentDeviceList.mocks.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
 import { mockUserCurrentDeviceDeleteMutation } from '../graphql/mutations/userCurrentDeviceDelete.mocks.ts'
+import { mockUserCurrentDeviceListQuery } from '../graphql/queries/userCurrentDeviceList.mocks.ts'
 import { getUserCurrentDevicesUpdatesSubscriptionHandler } from '../graphql/subscriptions/userCurrentDevicesUpdates.mocks.ts'
 
 vi.hoisted(() => {

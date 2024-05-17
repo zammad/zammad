@@ -1,12 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ShallowRef } from 'vue'
 import { shallowRef } from 'vue'
 
 import type { FormRef } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 
 import type { EmailAccountData } from '../types/email-account.ts'
+import type { ShallowRef } from 'vue'
 
 export const useEmailAccountForm = () => {
   const formEmailAccount: ShallowRef<FormRef | undefined> = shallowRef()

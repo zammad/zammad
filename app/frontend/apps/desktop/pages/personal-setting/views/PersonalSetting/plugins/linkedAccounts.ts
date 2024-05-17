@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { useThirdPartyAuthentication } from '#shared/composables/authentication/useThirdPartyAuthentication.ts'
+
 import type { PersonalSettingPlugin } from './types.ts'
 
 export default <PersonalSettingPlugin>{

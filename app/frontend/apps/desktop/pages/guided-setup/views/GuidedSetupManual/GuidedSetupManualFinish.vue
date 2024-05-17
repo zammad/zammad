@@ -4,8 +4,8 @@
 import { useTimeoutFn } from '@vueuse/shared'
 import { useRouter } from 'vue-router'
 
-import { useSystemSetup } from '../../composables/useSystemSetup.ts'
 import GuidedSetupStatusMessage from '../../components/GuidedSetupStatusMessage.vue'
+import { useSystemSetup } from '../../composables/useSystemSetup.ts'
 
 const { setBoxSize, setHideFooter, setTitle } = useSystemSetup()
 

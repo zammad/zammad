@@ -1,38 +1,40 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue'
 import { isEqual } from 'lodash-es'
-import { useBreadcrumb } from '#desktop/pages/personal-setting/composables/useBreadcrumb.ts'
-import Form from '#shared/components/Form/Form.vue'
-import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import { useUserCurrentNotificationPreferencesUpdateMutation } from '#desktop/pages/personal-setting/graphql/mutations/userCurrentNotificationPreferencesUpdate.api.ts'
-import { useUserCurrentNotificationPreferencesResetMutation } from '#desktop/pages/personal-setting/graphql/mutations/userCurrentNotificationPreferencesReset.api.ts'
+import { storeToRefs } from 'pinia'
+import { computed, ref, watch } from 'vue'
+
 import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
-import { i18n } from '#shared/i18n/index.ts'
+import Form from '#shared/components/Form/Form.vue'
+import {
+  type FormSubmitData,
+  type FormValues,
+} from '#shared/components/Form/types.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import {
   EnumFormUpdaterId,
   EnumNotificationSoundFile,
   type UserNotificationMatrixInput,
 } from '#shared/graphql/types.ts'
-import { useForm } from '#shared/components/Form/useForm.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
-import { storeToRefs } from 'pinia'
-import {
-  type FormSubmitData,
-  type FormValues,
-} from '#shared/components/Form/types.ts'
 import {
   cleanupGraphQLTypename,
   convertToGraphQLId,
 } from '#shared/graphql/utils.ts'
-import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import { i18n } from '#shared/i18n/index.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
 import type { UserData } from '#shared/types/store.ts'
+
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
+import { useBreadcrumb } from '#desktop/pages/personal-setting/composables/useBreadcrumb.ts'
+import { useUserCurrentNotificationPreferencesResetMutation } from '#desktop/pages/personal-setting/graphql/mutations/userCurrentNotificationPreferencesReset.api.ts'
+import { useUserCurrentNotificationPreferencesUpdateMutation } from '#desktop/pages/personal-setting/graphql/mutations/userCurrentNotificationPreferencesUpdate.api.ts'
 import type { NotificationFormData } from '#desktop/pages/personal-setting/types/notifications.ts'
 
 const { breadcrumbItems } = useBreadcrumb(__('Notifications'))

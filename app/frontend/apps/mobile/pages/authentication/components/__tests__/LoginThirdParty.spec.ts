@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { EnumAuthenticationProvider } from '#shared/graphql/types.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
+
+import { EnumAuthenticationProvider } from '#shared/graphql/types.ts'
+
 import LoginThirdParty from '../LoginThirdParty.vue'
 
 const renderLoginThirdParty = () => {

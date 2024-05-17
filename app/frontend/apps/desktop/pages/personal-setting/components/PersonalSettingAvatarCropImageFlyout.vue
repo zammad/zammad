@@ -6,7 +6,6 @@ import { Cropper, type CropperResult } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css'
 
 import CommonAvatar from '#shared/components/CommonAvatar/CommonAvatar.vue'
-
 import type { ImageFileData } from '#shared/utils/files.ts'
 
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'

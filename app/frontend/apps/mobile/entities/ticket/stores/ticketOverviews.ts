@@ -1,19 +1,21 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { tryOnScopeDispose, watchOnce } from '@vueuse/core'
 import { keyBy } from 'lodash-es'
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
-import { tryOnScopeDispose, watchOnce } from '@vueuse/core'
-import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
+
 import { useTicketOverviewsQuery } from '#shared/entities/ticket/graphql/queries/ticket/overviews.api.ts'
 import type {
   TicketOverviewsQuery,
   TicketOverviewUpdatesSubscription,
   TicketOverviewUpdatesSubscriptionVariables,
 } from '#shared/graphql/types.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
-import { getTicketOverviewStorage } from '../helpers/ticketOverviewStorage.ts'
+
 import { TicketOverviewUpdatesDocument } from '../graphql/subscriptions/ticketOverviewUpdates.api.ts'
+import { getTicketOverviewStorage } from '../helpers/ticketOverviewStorage.ts'
 
 export type TicketOverview = ConfidentTake<
   TicketOverviewsQuery,

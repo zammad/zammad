@@ -1,21 +1,23 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref, toRef } from 'vue'
 import { watchIgnorable } from '@vueuse/shared'
+import { computed, ref, toRef } from 'vue'
+
 import type { CommonInputSearchExpose } from '#shared/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonInputSearch from '#shared/components/CommonInputSearch/CommonInputSearch.vue'
-import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
-import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
-import stopEvent from '#shared/utils/events.ts'
 import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
-import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
-import { useAutocompleteSearchTagQuery } from '#shared/entities/tags/graphql/queries/autocompleteTags.api.ts'
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import type { FieldTagsContext } from '#shared/components/Form/fields/FieldTags/types.ts'
+import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
+import { useAutocompleteSearchTagQuery } from '#shared/entities/tags/graphql/queries/autocompleteTags.api.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
+import stopEvent from '#shared/utils/events.ts'
+
+import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
 
 interface Props {
   name: string

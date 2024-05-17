@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import getUuid from '#shared/utils/getUuid.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
+
+import getUuid from '#shared/utils/getUuid.ts'
+
 import CommonInputCopyToClipboard from '../CommonInputCopyToClipboard.vue'
 
 const clipboardCopyMock = vi.fn()

@@ -1,9 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { EnumSearchableModels } from '#shared/graphql/types.ts'
-import type { Component } from 'vue'
-import { useSessionStore } from '#shared/stores/session.ts'
 import type { Props as IconProps } from '#shared/components/CommonIcon/CommonIcon.vue'
+import type { EnumSearchableModels } from '#shared/graphql/types.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+
+import type { Component } from 'vue'
 
 export interface SearchPlugin {
   model: EnumSearchableModels

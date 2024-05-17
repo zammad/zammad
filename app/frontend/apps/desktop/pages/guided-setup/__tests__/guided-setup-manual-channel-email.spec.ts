@@ -7,8 +7,13 @@ import {
   getByText,
   queryByText,
 } from '@testing-library/vue'
-import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
 import { visitView } from '#tests/support/components/visitView.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockAuthentication } from '#tests/support/mock-authentication.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
+
+import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
 import {
   EnumChannelEmailInboundAdapter,
   EnumChannelEmailOutboundAdapter,
@@ -16,17 +21,16 @@ import {
   EnumFormUpdaterId,
   EnumSystemSetupInfoStatus,
 } from '#shared/graphql/types.ts'
-import { mockAuthentication } from '#tests/support/mock-authentication.ts'
-import { mockPermissions } from '#tests/support/mock-permissions.ts'
-import { mockChannelEmailGuessConfigurationMutation } from '#desktop/entities/channel-email/graphql/mutations/channelEmailGuessConfiguration.mocks.ts'
-import { mockChannelEmailValidateConfigurationRoundtripMutation } from '#desktop/entities/channel-email/graphql/mutations/channelEmailValidateConfigurationRoundtrip.mocks.ts'
-import { mockChannelEmailValidateConfigurationInboundMutation } from '#desktop/entities/channel-email/graphql/mutations/channelEmailValidateConfigurationInbound.mocks.ts'
-import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
-import { mockChannelEmailValidateConfigurationOutboundMutation } from '#desktop/entities/channel-email/graphql/mutations/channelEmailValidateConfigurationOutbound.mocks.ts'
+
 import {
   mockChannelEmailAddMutation,
   waitForChannelEmailAddMutationCalls,
 } from '#desktop/entities/channel-email/graphql/mutations/channelEmailAdd.mocks.ts'
+import { mockChannelEmailGuessConfigurationMutation } from '#desktop/entities/channel-email/graphql/mutations/channelEmailGuessConfiguration.mocks.ts'
+import { mockChannelEmailValidateConfigurationInboundMutation } from '#desktop/entities/channel-email/graphql/mutations/channelEmailValidateConfigurationInbound.mocks.ts'
+import { mockChannelEmailValidateConfigurationOutboundMutation } from '#desktop/entities/channel-email/graphql/mutations/channelEmailValidateConfigurationOutbound.mocks.ts'
+import { mockChannelEmailValidateConfigurationRoundtripMutation } from '#desktop/entities/channel-email/graphql/mutations/channelEmailValidateConfigurationRoundtrip.mocks.ts'
+
 import { mockSystemSetupInfoQuery } from '../graphql/queries/systemSetupInfo.mocks.ts'
 
 const inboundConfiguration = {

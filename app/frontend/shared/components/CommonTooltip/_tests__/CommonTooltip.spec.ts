@@ -1,10 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { flushPromises } from '@vue/test-utils'
+import { h } from 'vue'
+
 import renderComponent, {
   type ExtendedRenderResult,
 } from '#tests/support/components/renderComponent.ts'
-import { h } from 'vue'
-import { flushPromises } from '@vue/test-utils'
+
 import CommonTooltipVue, { type Props } from '../CommonTooltip.vue'
 
 const CustomComponent = (props: any) => {

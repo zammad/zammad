@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
+
 import ArticleMetadataAddress from '../ArticleMetadataAddress.vue'
 
 describe('displaying contact address in metadata', () => {

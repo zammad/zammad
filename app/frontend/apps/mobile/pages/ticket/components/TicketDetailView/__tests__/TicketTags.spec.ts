@@ -1,10 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { TagAssignmentUpdateDocument } from '#shared/entities/tags/graphql/mutations/assignment/update.api.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import { waitUntil } from '#tests/support/utils.ts'
-import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
+import { TagAssignmentUpdateDocument } from '#shared/entities/tags/graphql/mutations/assignment/update.api.ts'
+
 import TicketTags from '../TicketTags.vue'
 
 beforeAll(async () => {

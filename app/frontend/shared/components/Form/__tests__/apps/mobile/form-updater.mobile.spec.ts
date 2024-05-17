@@ -1,15 +1,24 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { cloneDeep } from 'lodash-es'
 import { waitFor } from '@testing-library/vue'
-import Form from '#shared/components/Form/Form.vue'
-import type { Props } from '#shared/components/Form/Form.vue'
+import { cloneDeep } from 'lodash-es'
+
+import {
+  getByIconName,
+  queryByIconName,
+} from '#tests/support/components/iconQueries.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
 import type {
   ExtendedMountingOptions,
   ExtendedRenderResult,
 } from '#tests/support/components/index.ts'
-import { renderComponent } from '#tests/support/components/index.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import { waitForNextTick, waitUntil } from '#tests/support/utils.ts'
+
+import Form from '#shared/components/Form/Form.vue'
+import type { Props } from '#shared/components/Form/Form.vue'
+import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
+import frontendObjectAttributes from '#shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json'
 import {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
@@ -17,16 +26,11 @@ import {
   type ObjectManagerFrontendAttributesPayload,
   type FormUpdaterQuery,
 } from '#shared/graphql/types.ts'
-import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
-import {
-  getByIconName,
-  queryByIconName,
-} from '#tests/support/components/iconQueries.ts'
-import frontendObjectAttributes from '#shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json'
-import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
+
 import { FormUpdaterDocument } from '../../../graphql/queries/formUpdater.api.ts'
-import type { FormSchemaField, FormValues } from '../../../types.ts'
 import additionalFrontendObjectAttributes from '../../mocks/additionalFrontendObjectAttributes.json'
+
+import type { FormSchemaField, FormValues } from '../../../types.ts'
 
 beforeAll(async () => {
   // so we don't need to wait until it loads inside test

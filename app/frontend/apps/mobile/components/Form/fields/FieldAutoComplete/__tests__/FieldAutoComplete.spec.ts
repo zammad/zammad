@@ -1,24 +1,27 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { cloneDeep, escapeRegExp } from 'lodash-es'
-import { getByText, waitFor } from '@testing-library/vue'
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
+import { getByText, waitFor } from '@testing-library/vue'
+import { cloneDeep, escapeRegExp } from 'lodash-es'
+
+import { getByIconName } from '#tests/support/components/iconQueries.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
 import {
   mockGraphQLApi,
   type MockGraphQLInstance,
 } from '#tests/support/mock-graphql-api.ts'
-import { renderComponent } from '#tests/support/components/index.ts'
-import { i18n } from '#shared/i18n.ts'
 import {
   nullableMock,
   waitForNextTick,
   waitUntil,
 } from '#tests/support/utils.ts'
-import { getByIconName } from '#tests/support/components/iconQueries.ts'
-import type { ObjectLike } from '#shared/types/utils.ts'
-import type { AutocompleteSearchUserQuery } from '#shared/graphql/types.ts'
+
 import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
+import type { AutocompleteSearchUserQuery } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
+
 import { AutocompleteSearchUserDocument } from '../../../../../../../shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
 
 const testOptions = [

@@ -1,28 +1,29 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { ObjectLike } from '#shared/types/utils.ts'
-import { useForm } from '#shared/components/Form/useForm.ts'
-import { closeDialog } from '#mobile/composables/useDialog.ts'
-import type {
-  EnumFormUpdaterId,
-  EnumObjectManagerObjects,
-  ObjectAttributeValue,
-} from '#shared/graphql/types.ts'
+import Form from '#shared/components/Form/Form.vue'
 import type {
   FormFieldValue,
   FormSchemaField,
   FormSchemaNode,
   FormSubmitData,
 } from '#shared/components/Form/types.ts'
-import type { OperationMutationFunction } from '#shared/types/server/apollo/handler.ts'
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
-import Form from '#shared/components/Form/Form.vue'
-import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
+import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
+import type {
+  EnumFormUpdaterId,
+  EnumObjectManagerObjects,
+  ObjectAttributeValue,
+} from '#shared/graphql/types.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import type { OperationMutationFunction } from '#shared/types/server/apollo/handler.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
+
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
-import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import { closeDialog } from '#mobile/composables/useDialog.ts'
 
 export interface Props {
   name: string

@@ -1,17 +1,21 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { NetworkStatus } from '@apollo/client/core'
 import { useSubscription } from '@vue/apollo-composable'
-import type { IMockSubscription } from 'mock-apollo-client'
 import { createMockSubscription } from 'mock-apollo-client'
-import createMockClient from '#tests/support/mock-apollo-client.ts'
+
+import { SampleTypedSubscriptionDocument } from '#tests/fixtures/graphqlSampleTypes.ts'
 import type {
   SampleUpdatedSubscription,
   SampleUpdatedSubscriptionVariables,
 } from '#tests/fixtures/graphqlSampleTypes.ts'
-import { SampleTypedSubscriptionDocument } from '#tests/fixtures/graphqlSampleTypes.ts'
+import createMockClient from '#tests/support/mock-apollo-client.ts'
+
 import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
-import { NetworkStatus } from '@apollo/client/core'
+
 import SubscriptionHandler from '../SubscriptionHandler.ts'
+
+import type { IMockSubscription } from 'mock-apollo-client'
 
 const subscriptionFunctionCallSpy = vi.fn()
 

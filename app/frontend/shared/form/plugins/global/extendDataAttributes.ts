@@ -1,9 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { isEmpty } from 'lodash-es'
+
+import extendSchemaDefinition from '#shared/form/utils/extendSchemaDefinition.ts'
+
 import type { FormKitNode } from '@formkit/core'
 import type { FormKitValidation } from '@formkit/validation'
-import extendSchemaDefinition from '#shared/form/utils/extendSchemaDefinition.ts'
 
 const extendDataAttribues = (node: FormKitNode) => {
   const { props, context } = node

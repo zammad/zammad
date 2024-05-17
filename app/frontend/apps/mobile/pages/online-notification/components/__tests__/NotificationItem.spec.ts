@@ -1,12 +1,15 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { renderComponent } from '#tests/support/components/index.ts'
-import type { Scalars, Ticket } from '#shared/graphql/types.ts'
-import { OnlineNotificationDeleteDocument } from '#shared/entities/online-notification/graphql/mutations/delete.api.ts'
-import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { generateObjectData } from '#tests/graphql/builders/index.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+
+import { OnlineNotificationDeleteDocument } from '#shared/entities/online-notification/graphql/mutations/delete.api.ts'
+import type { Scalars, Ticket } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
 import NotificationItem from '../NotificationItem.vue'
+
 import type { Props } from '../NotificationItem.vue'
 
 const userId = convertToGraphQLId('User', 100)

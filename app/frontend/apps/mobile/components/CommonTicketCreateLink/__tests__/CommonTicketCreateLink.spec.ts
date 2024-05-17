@@ -3,6 +3,7 @@
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+
 import CommonTicketCreateLink from '../CommonTicketCreateLink.vue'
 
 describe('CommonTicketCreateLink', () => {

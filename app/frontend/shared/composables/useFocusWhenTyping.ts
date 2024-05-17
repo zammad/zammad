@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { onKeyStroke, unrefElement } from '@vueuse/core'
+
 import stopEvent from '#shared/utils/events.ts'
 import { getFocusableElements } from '#shared/utils/getFocusableElements.ts'
-import { onKeyStroke, unrefElement } from '@vueuse/core'
+
 import type { MaybeRefOrGetter } from '@vueuse/core'
 import type { Ref } from 'vue'
 

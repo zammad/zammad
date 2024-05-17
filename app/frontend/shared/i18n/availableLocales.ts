@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { useLocalesLazyQuery } from '#shared/graphql/queries/locales.api.ts'
 import type { LocalesQuery } from '#shared/graphql/types.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
 let availableLocales: Maybe<LocalesQuery['locales']>
 

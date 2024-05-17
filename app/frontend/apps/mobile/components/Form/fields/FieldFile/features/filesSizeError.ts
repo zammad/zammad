@@ -1,9 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { type FormKitNode } from '@formkit/core'
-import { useFileValidation } from '#mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts'
-import type { AllowedFile } from '#shared/utils/files.ts'
+
 import { FormValidationVisibility } from '#shared/components/Form/types.ts'
+import type { AllowedFile } from '#shared/utils/files.ts'
+
+import { useFileValidation } from '#mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts'
 
 const { validateFileSize } = useFileValidation()
 export const filesSizeError = (node: FormKitNode) => {

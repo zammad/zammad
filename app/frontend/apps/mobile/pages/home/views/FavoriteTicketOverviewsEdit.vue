@@ -1,17 +1,20 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
+import { storeToRefs } from 'pinia'
+import { computed, ref, watch } from 'vue'
 import Draggable from 'vuedraggable'
-import { useHeader } from '#mobile/composables/useHeader.ts'
+
 import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
-import { computed, ref, watch } from 'vue'
-import { storeToRefs } from 'pinia'
-import { useTicketOverviewsStore } from '#mobile/entities/ticket/stores/ticketOverviews.ts'
 import { useWalker } from '#shared/router/walker.ts'
+
+import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
+import { useHeader } from '#mobile/composables/useHeader.ts'
+import { useTicketOverviewsStore } from '#mobile/entities/ticket/stores/ticketOverviews.ts'
+
 import TicketOverviewEditItem from '../components/TicketOverviewEditItem.vue'
 
 const overviewStore = useTicketOverviewsStore()

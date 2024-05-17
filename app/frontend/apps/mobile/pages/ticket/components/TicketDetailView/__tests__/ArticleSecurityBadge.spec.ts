@@ -1,9 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { within } from '@testing-library/vue'
+
 import { renderComponent } from '#tests/support/components/index.ts'
+
 import { EnumSecurityStateType } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
 import ArticleSecurityBadge, { type Props } from '../ArticleSecurityBadge.vue'
 
 const renderBadge = (propsData: Props) => {

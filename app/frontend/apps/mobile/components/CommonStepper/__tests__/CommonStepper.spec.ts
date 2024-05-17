@@ -1,8 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { renderComponent } from '#tests/support/components/index.ts'
-import type { FormStep } from '#shared/components/Form/types.ts'
 import { ref } from 'vue'
+
+import { renderComponent } from '#tests/support/components/index.ts'
+
+import type { FormStep } from '#shared/components/Form/types.ts'
+
 import CommonStepper from '../CommonStepper.vue'
 
 describe('stepper component', () => {

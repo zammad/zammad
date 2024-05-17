@@ -1,10 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { computed } from 'vue'
+
 import { userDisplayName } from '#shared/entities/user/utils/getUserDisplayName.ts'
 import { i18n } from '#shared/i18n.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
+
 import type { Ref } from 'vue'
-import { computed } from 'vue'
 
 interface Author {
   id: string

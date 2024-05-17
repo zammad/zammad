@@ -1,15 +1,17 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { useAuthenticationStore } from '#shared/stores/authentication.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+import { ErrorStatusCodes } from '#shared/types/error.ts'
+import log from '#shared/utils/log.ts'
+
+import { errorOptions } from '../../error.ts'
+
 import type {
   NavigationGuard,
   RouteLocationNormalized,
   NavigationGuardNext,
 } from 'vue-router'
-import log from '#shared/utils/log.ts'
-import { useAuthenticationStore } from '#shared/stores/authentication.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
-import { ErrorStatusCodes } from '#shared/types/error.ts'
-import { errorOptions } from '../../error.ts'
 
 const permissionGuard: NavigationGuard = (
   to: RouteLocationNormalized,

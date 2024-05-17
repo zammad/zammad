@@ -1,11 +1,14 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { createTestingPinia } from '@pinia/testing'
-import type { RouteLocationNormalized } from 'vue-router'
 import { nextTick } from 'vue'
+
 import useMetaTitle from '#shared/composables/useMetaTitle.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
+
 import headerTitle from '../headerTitle.ts'
+
+import type { RouteLocationNormalized } from 'vue-router'
 
 describe('headerTitle', () => {
   createTestingPinia({ createSpy: vi.fn })

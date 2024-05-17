@@ -4,8 +4,8 @@ import { defineComponent } from 'vue'
 
 import type { ExtendedRenderResult } from '#tests/support/components/index.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
-import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 
 import { UserCurrentAvatarAddDocument } from '#shared/entities/user/current/graphql/mutations/userCurrentAvatarAdd.api.ts'
 import { UserCurrentAvatarDeleteDocument } from '#shared/entities/user/current/graphql/mutations/userCurrentAvatarDelete.api.ts'

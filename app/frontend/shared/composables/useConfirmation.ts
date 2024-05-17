@@ -1,9 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, ref } from 'vue'
-import type { Except } from 'type-fest'
 
 import type { ButtonVariant } from '#shared/types/button.ts'
+
+import type { Except } from 'type-fest'
 
 export type ConfirmationVariant = 'delete' | 'unsaved' | 'confirm'
 

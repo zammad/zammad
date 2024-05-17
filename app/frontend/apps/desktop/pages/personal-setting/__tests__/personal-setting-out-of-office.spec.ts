@@ -5,12 +5,13 @@ import { getByRole } from '@testing-library/vue'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { nullableMock, waitForNextTick } from '#tests/support/utils.ts'
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import type { AutocompleteSearchUserEntry } from '#shared/graphql/types.ts'
+
 import {
   mockAutocompleteSearchAgentQuery,
   waitForAutocompleteSearchAgentQueryCalls,
 } from '#shared/components/Form/fields/FieldAgent/graphql/queries/autocompleteSearch/agent.mocks.ts'
+import type { AutocompleteSearchUserEntry } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { waitForUserCurrentOutOfOfficeMutationCalls } from '../graphql/mutations/userCurrentOutOfOffice.mocks.ts'
 

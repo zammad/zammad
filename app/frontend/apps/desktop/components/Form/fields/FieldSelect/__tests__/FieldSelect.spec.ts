@@ -1,23 +1,26 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { SetRequired } from 'type-fest'
-import { cloneDeep, keyBy } from 'lodash-es'
+import { getNode } from '@formkit/core'
+import { FormKit } from '@formkit/vue'
 import {
   getAllByRole,
   getByRole,
   getByText,
   waitFor,
 } from '@testing-library/vue'
-import { FormKit } from '@formkit/vue'
-import { renderComponent } from '#tests/support/components/index.ts'
-import { i18n } from '#shared/i18n.ts'
-import { getNode } from '@formkit/core'
-import { waitForNextTick } from '#tests/support/utils.ts'
-import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
+import { cloneDeep, keyBy } from 'lodash-es'
+
 import {
   queryAllByIconName,
   queryByIconName,
 } from '#tests/support/components/iconQueries.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
+
+import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
+import { i18n } from '#shared/i18n.ts'
+
+import type { SetRequired } from 'type-fest'
 
 const testOptions: SetRequired<SelectOption, 'label'>[] = [
   {

@@ -1,8 +1,8 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref, watch, watchEffect } from 'vue'
 import { useTimeoutFn } from '@vueuse/shared'
+import { computed, ref, watch, watchEffect } from 'vue'
 import { useRouter } from 'vue-router'
 
 import { EnumSystemImportSource } from '#shared/graphql/types.ts'
@@ -13,10 +13,11 @@ import { useApplicationStore } from '#shared/stores/application.ts'
 import CommonProgressBar from '#desktop/components/CommonProgressBar/CommonProgressBar.vue'
 
 import GuidedSetupActionFooter from '../../../components/GuidedSetupActionFooter.vue'
-import GuidedSetupStatusMessage from '../../../components/GuidedSetupStatusMessage.vue'
 import { guidedSetupImportSourcePluginLookup } from '../../../components/GuidedSetupImport/GuidedSetupImportSource/plugins/index.ts'
+import GuidedSetupStatusMessage from '../../../components/GuidedSetupStatusMessage.vue'
 import { useSystemSetup } from '../../../composables/useSystemSetup.ts'
 import { useSystemImportStateQuery } from '../../../graphql/queries/systemImportState.api.ts'
+
 import type { ImportSourceStatusProgressItem } from '../../../types/setup-import.ts'
 
 defineOptions({

@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { ref } from 'vue'
+
 import { useArticleSeen } from '../../composable/useArticleSeen.ts'
 
 interface Props {

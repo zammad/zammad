@@ -1,19 +1,23 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { flushPromises } from '@vue/test-utils'
-import { getByRole, queryByRole } from '@testing-library/vue'
 import { getNode } from '@formkit/core'
-import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { getByRole, queryByRole } from '@testing-library/vue'
+import { flushPromises } from '@vue/test-utils'
+
 import { visitView } from '#tests/support/components/visitView.ts'
-import { EnumSystemSetupInfoStatus } from '#shared/graphql/types.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockAuthentication } from '#tests/support/mock-authentication.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+
 import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
+import { EnumSystemSetupInfoStatus } from '#shared/graphql/types.ts'
+
 import { mockChannelEmailSetNotificationConfigurationMutation } from '#desktop/entities/channel-email/graphql/mutations/channelEmailSetNotificationConfiguration.mocks.ts'
 import {
   mockChannelEmailValidateConfigurationOutboundMutation,
   waitForChannelEmailValidateConfigurationOutboundMutationCalls,
 } from '#desktop/entities/channel-email/graphql/mutations/channelEmailValidateConfigurationOutbound.mocks.ts'
+
 import { mockSystemSetupInfoQuery } from '../graphql/queries/systemSetupInfo.mocks.ts'
 
 describe('guided setup manual email notification', () => {

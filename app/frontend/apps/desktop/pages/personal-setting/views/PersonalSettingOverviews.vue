@@ -1,30 +1,33 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
 import { storeToRefs } from 'pinia'
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
-import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
-import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
+import { ref, watch } from 'vue'
+
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
 import type {
   UserCurrentOverviewListQuery,
   UserCurrentOverviewOrderingUpdatesSubscription,
   UserCurrentOverviewOrderingUpdatesSubscriptionVariables,
 } from '#shared/graphql/types.ts'
+import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
+import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
-import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
-import { useUserCurrentOverviewListQuery } from '../graphql/queries/userCurrentOverviewList.api.ts'
-import { UserCurrentOverviewOrderingUpdatesDocument } from '../graphql/subscriptions/userCurrentOverviewOrderingUpdates.api.ts'
+
 import PersonalSettingOverviewOrder, {
   type OverviewItem,
 } from '../components/PersonalSettingOverviewOrder.vue'
+import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
 import { useUserCurrentOverviewResetOrderMutation } from '../graphql/mutations/userCurrentOverviewResetOrder.api.ts'
 import { useUserCurrentOverviewUpdateOrderMutation } from '../graphql/mutations/userCurrentOverviewUpdateOrder.api.ts'
+import { useUserCurrentOverviewListQuery } from '../graphql/queries/userCurrentOverviewList.api.ts'
+import { UserCurrentOverviewOrderingUpdatesDocument } from '../graphql/subscriptions/userCurrentOverviewOrderingUpdates.api.ts'
 
 const { user } = storeToRefs(useSessionStore())
 

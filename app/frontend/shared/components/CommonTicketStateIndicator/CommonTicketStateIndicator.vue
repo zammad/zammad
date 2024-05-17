@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+
 import { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
 
 export interface Props {

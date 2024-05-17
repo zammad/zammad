@@ -1,25 +1,28 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { axe } from 'vitest-axe'
+
 import { visitView } from '#tests/support/components/visitView.ts'
-import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'
 import {
   mockGraphQLApi,
   mockGraphQLSubscription,
 } from '#tests/support/mock-graphql-api.ts'
+import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'
 import { waitUntil, waitUntilApisResolved } from '#tests/support/utils.ts'
-import { OrganizationDocument } from '#mobile/entities/organization/graphql/queries/organization.api.ts'
-import { OrganizationUpdatesDocument } from '#mobile/entities/organization/graphql/subscriptions/organizationUpdates.api.ts'
+
 import {
   defaultOrganization,
   mockOrganizationObjectAttributes,
 } from '#mobile/entities/organization/__tests__/mocks/organization-mocks.ts'
+import { OrganizationDocument } from '#mobile/entities/organization/graphql/queries/organization.api.ts'
+import { OrganizationUpdatesDocument } from '#mobile/entities/organization/graphql/subscriptions/organizationUpdates.api.ts'
 import {
   defaultUser,
   mockUserDetailsApis,
 } from '#mobile/entities/user/__tests__/mocks/user-mocks.ts'
-import { mockTicketsByOverview } from './mocks/overview.ts'
+
 import { mockTicketDetailViewGql } from './mocks/detail-view.ts'
+import { mockTicketsByOverview } from './mocks/overview.ts'
 
 describe('testing ticket a11y', () => {
   beforeEach(() => {

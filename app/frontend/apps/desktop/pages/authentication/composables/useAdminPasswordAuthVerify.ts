@@ -3,12 +3,12 @@
 import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import type { AlertVariant } from '#shared/components/CommonAlert/types.ts'
 import type {
   FormSchemaField,
   FormValues,
 } from '#shared/components/Form/types.ts'
-import type { AlertVariant } from '#shared/components/CommonAlert/types.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 
 import { useAdminPasswordAuthVerifyMutation } from '../graphql/mutations/adminPasswordAuthVerify.api.ts'
 

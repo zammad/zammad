@@ -1,13 +1,15 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, reactive, readonly, ref } from 'vue'
-import type { OperationVariables } from '@apollo/client/core'
+
 import type { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type {
   BaseConnection,
   OperationQueryResult,
   PaginationVariables,
 } from '#shared/types/server/apollo/handler.ts'
+
+import type { OperationVariables } from '@apollo/client/core'
 
 export default function usePagination<
   TQueryResult extends OperationQueryResult = OperationQueryResult,

@@ -1,14 +1,18 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { flushPromises } from '@vue/test-utils'
+
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockAuthentication } from '#tests/support/mock-authentication.ts'
+
 import { EnumSystemSetupInfoStatus } from '#shared/graphql/types.ts'
+
 import {
   mockSystemSetupRunAutoWizardMutation,
   waitForSystemSetupRunAutoWizardMutationCalls,
 } from '#desktop/pages/guided-setup/graphql/mutations/systemSetupRunAutoWizard.mocks.ts'
+
 import { mockSystemSetupInfoQuery } from '../graphql/queries/systemSetupInfo.mocks.ts'
 
 describe('guided setup automated run', () => {

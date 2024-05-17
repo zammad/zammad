@@ -1,13 +1,15 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { keyBy } from 'lodash-es'
+import { computed, ref } from 'vue'
+
 import type {
   EnumAfterAuthType,
   SessionAfterAuth,
 } from '#shared/graphql/types.ts'
-import { computed, ref } from 'vue'
-import type { Router } from 'vue-router'
+
 import type { AfterAuthPlugin } from '../types.ts'
+import type { Router } from 'vue-router'
 
 const pluginsModules = import.meta.glob<AfterAuthPlugin>('../plugins/*.ts', {
   eager: true,

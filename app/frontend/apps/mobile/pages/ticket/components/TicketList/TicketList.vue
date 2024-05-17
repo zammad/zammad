@@ -1,15 +1,18 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { EnumOrderDirection } from '#shared/graphql/types.ts'
-import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
-import usePagination from '#mobile/composables/usePagination.ts'
-import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
-import TicketItem from '#mobile/components/Ticket/TicketItem.vue'
 import { useInfiniteScroll } from '@vueuse/core'
 import { computed, ref, watch, watchEffect } from 'vue'
+
+import type { EnumOrderDirection } from '#shared/graphql/types.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { getFocusableElements } from '#shared/utils/getFocusableElements.ts'
 import { edgesToArray } from '#shared/utils/helpers.ts'
+
+import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
+import TicketItem from '#mobile/components/Ticket/TicketItem.vue'
+import usePagination from '#mobile/composables/usePagination.ts'
+
 import { useTicketsByOverviewQuery } from '../../graphql/queries/ticketsByOverview.api.ts'
 
 interface Props {

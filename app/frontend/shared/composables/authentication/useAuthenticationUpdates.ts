@@ -2,6 +2,7 @@
 
 import { watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import { useSessionStore } from '#shared/stores/session.ts'

@@ -1,30 +1,33 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { reactive, computed, watch } from 'vue'
 import { isEqual } from 'lodash-es'
 import { storeToRefs } from 'pinia'
+import { reactive, computed, watch } from 'vue'
 
-import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import { useSessionStore } from '#shared/stores/session.ts'
-import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import {
+  NotificationTypes,
+  useNotifications,
+} from '#shared/components/CommonNotifications/index.ts'
 import Form from '#shared/components/Form/Form.vue'
-import { useForm } from '#shared/components/Form/useForm.ts'
 import type {
   FormSubmitData,
   FormSchemaField,
   FormFieldValue,
 } from '#shared/components/Form/types.ts'
-import {
-  NotificationTypes,
-  useNotifications,
-} from '#shared/components/CommonNotifications/index.ts'
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
+import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import type { OutOfOfficeInput } from '#shared/graphql/types.ts'
-import { useUserCurrentOutOfOfficeMutation } from '../graphql/mutations/userCurrentOutOfOffice.api.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
+
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { useUserCurrentOutOfOfficeMutation } from '../graphql/mutations/userCurrentOutOfOffice.api.ts'
+
 import type { OutOfOfficeFormData } from '../types/out-of-office.ts'
 
 const { user } = storeToRefs(useSessionStore())

@@ -1,11 +1,14 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { EnumAfterAuthType } from '#shared/graphql/types.ts'
+import { isNavigationFailure } from 'vue-router'
+
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
-import { isNavigationFailure } from 'vue-router'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'
+
+import { EnumAfterAuthType } from '#shared/graphql/types.ts'
+
 import { ensureAfterAuth } from '../after-auth/composable/useAfterAuthPlugins.ts'
 
 it("doesn't open the page if there is nothing to show", async () => {

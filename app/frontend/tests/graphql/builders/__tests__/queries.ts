@@ -1,11 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import gql from 'graphql-tag'
+
 import type {
   UserError,
   UserInput,
   UserSignupInput,
 } from '#shared/graphql/types.ts'
-import gql from 'graphql-tag'
 
 export interface TestAvatarQuery {
   userCurrentAvatarActive: {

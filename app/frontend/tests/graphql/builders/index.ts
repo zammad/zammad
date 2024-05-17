@@ -3,11 +3,9 @@
 /* eslint-disable no-restricted-syntax */
 /* eslint-disable no-use-before-define */
 
+import { createRequire } from 'node:module'
+
 import { faker } from '@faker-js/faker'
-import {
-  convertToGraphQLId,
-  getIdFromGraphQLId,
-} from '#shared/graphql/utils.ts'
 import {
   Kind,
   type DocumentNode,
@@ -17,12 +15,17 @@ import {
   type TypeNode,
   type NamedTypeNode,
 } from 'graphql'
-import { createRequire } from 'node:module'
-import type { DeepPartial, DeepRequired } from '#shared/types/utils.ts'
 import { uniqBy } from 'lodash-es'
+
+import {
+  convertToGraphQLId,
+  getIdFromGraphQLId,
+} from '#shared/graphql/utils.ts'
+import type { DeepPartial, DeepRequired } from '#shared/types/utils.ts'
 import getUuid from '#shared/utils/getUuid.ts'
-import { generateGraphqlMockId, hasNodeParent, setNodeParent } from './utils.ts'
+
 import logger from './logger.ts'
+import { generateGraphqlMockId, hasNodeParent, setNodeParent } from './utils.ts'
 
 const _require = createRequire(import.meta.url)
 const introspection = _require('../../../../graphql/graphql_introspection.json')

@@ -1,13 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ComputedRef } from 'vue'
-
-import type { FormRef, FormSubmitData } from '#shared/components/Form/types.ts'
 import type {
   EditorContentType,
   FieldEditorContext,
   FieldEditorProps,
 } from '#shared/components/Form/fields/FieldEditor/types.ts'
+import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
+import type { SecurityValue } from '#shared/components/Form/fields/FieldSecurity/types.ts'
+import type { FormRef, FormSubmitData } from '#shared/components/Form/types.ts'
 import type {
   TicketArticle,
   TicketById,
@@ -15,11 +15,11 @@ import type {
 import type { getTicketView } from '#shared/entities/ticket/utils/getTicketView.ts'
 import type { AppName } from '#shared/types/app.ts'
 import type { ConfigList } from '#shared/types/store.ts'
-import type { SelectionData } from '#shared/utils/selection.ts'
-import type { SecurityValue } from '#shared/components/Form/fields/FieldSecurity/types.ts'
 import type { MaybeRecord } from '#shared/types/utils.ts'
-import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
 import type { AllowedFile } from '#shared/utils/files.ts'
+import type { SelectionData } from '#shared/utils/selection.ts'
+
+import type { ComputedRef } from 'vue'
 
 export interface TicketArticleSelectionOptions {
   body: FieldEditorContext

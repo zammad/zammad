@@ -1,17 +1,19 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormKitNode } from '@formkit/core'
-import { has } from '@formkit/utils'
 import {
   button as buttonDefinition,
   submit as submitDefinition,
 } from '@formkit/inputs'
+import { has } from '@formkit/utils'
+
+import initializeFieldDefinition from '#shared/form/core/initializeFieldDefinition.ts'
+import extendSchemaDefinition from '#shared/form/utils/extendSchemaDefinition.ts'
 import type {
   FormFieldsTypeDefinition,
   FormFieldType,
 } from '#shared/types/form.ts'
-import initializeFieldDefinition from '#shared/form/core/initializeFieldDefinition.ts'
-import extendSchemaDefinition from '#shared/form/utils/extendSchemaDefinition.ts'
+
+import type { FormKitNode } from '@formkit/core'
 
 // TODO: Build-In loading cycle funcitonality for the buttons or at least a disabled-state when loading is in progress?
 

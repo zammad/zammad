@@ -1,10 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, type ComputedRef } from 'vue'
+
 import type {
   EnumObjectManagerObjects,
   ObjectManagerFrontendAttribute,
 } from '#shared/graphql/types.ts'
+
 import { useObjectAttributes } from './useObjectAttributes.ts'
 
 export const useObjectAttributesScreen = (

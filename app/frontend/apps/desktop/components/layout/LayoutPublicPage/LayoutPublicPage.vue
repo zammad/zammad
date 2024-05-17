@@ -2,8 +2,11 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
+
 import CommonLogo from '#shared/components/CommonLogo/CommonLogo.vue'
+
 import LayoutPublicPageBoxActions from './LayoutPublicPageBoxActions.vue'
+
 import type { BoxSizes } from '../types'
 
 export interface Props {

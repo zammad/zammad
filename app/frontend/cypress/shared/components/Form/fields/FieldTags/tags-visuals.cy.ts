@@ -3,8 +3,9 @@
 // To update snapshots, run `yarn cypress:snapshots`
 // DO NOT update snapshots, when running with --open flag (Cypress GUI)
 
-import { FormValidationVisibility } from '#shared/components/Form/types.ts'
 import { mountFormField, checkFormMatchesSnapshot } from '#cy/utils.ts'
+
+import { FormValidationVisibility } from '#shared/components/Form/types.ts'
 
 const longText =
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec vestibulum sem quis purus elementum pulvinar. Quisque placerat nibh et dignissim tincidunt. Morbi semper tortor at dolor mollis laoreet. Aenean fringilla fermentum leo non finibus. Nulla porttitor lacus diam, at vestibulum risus viverra a'

@@ -1,16 +1,17 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import { i18n } from '#shared/i18n.ts'
-import log from '#shared/utils/log.ts'
+import { ref } from 'vue'
+
 import { useTranslationsLazyQuery } from '#shared/graphql/queries/translations.api.ts'
-import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type {
   TranslationsQuery,
   TranslationsQueryVariables,
 } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
+import log from '#shared/utils/log.ts'
 
 interface TranslationsCacheValue {
   cacheKey: string

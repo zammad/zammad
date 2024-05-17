@@ -1,8 +1,8 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import openExternalLink from '#shared/utils/openExternalLink.ts'
 import { i18n } from '#shared/i18n/index.ts'
+import openExternalLink from '#shared/utils/openExternalLink.ts'
 
 import CommonButtonGroup from '#desktop/components/CommonButtonGroup/CommonButtonGroup.vue'
 import type { CommonButtonItem } from '#desktop/components/CommonButtonGroup/types.ts'

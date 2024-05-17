@@ -2,11 +2,13 @@
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
 import { waitForUserCurrentTwoFactorRemoveMethodMutationCalls } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorRemoveMethod.mocks.ts'
-import { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
 import { waitForUserCurrentTwoFactorSetDefaultMethodMutationCalls } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorSetDefaultMethod.mocks.ts'
-import { visitViewAndMockPasswordConfirmation } from '#desktop/pages/personal-setting/__tests__/support/personal-setting-two-factor-auth.ts'
+import { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
+
 import { getUserCurrentTwoFactorUpdatesSubscriptionHandler } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTwoFactorUpdates.mocks.ts'
+import { visitViewAndMockPasswordConfirmation } from '#desktop/pages/personal-setting/__tests__/support/personal-setting-two-factor-auth.ts'
 
 describe('password personal settings', () => {
   it('redirects to the error page when two factor security is disabled', async () => {

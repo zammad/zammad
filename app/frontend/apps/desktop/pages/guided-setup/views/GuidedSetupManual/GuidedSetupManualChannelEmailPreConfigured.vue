@@ -4,8 +4,8 @@
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
 
-import { useApplicationStore } from '#shared/stores/application.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 
 import { useEmailAddressesQuery } from '#desktop/entities/email-addresses/graphql/queries/emailAddresses.api.ts'
 

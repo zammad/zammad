@@ -1,9 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import type { UserError } from '#shared/graphql/types.ts'
+
+import type { ApolloError } from '@apollo/client'
 import type { GraphQLErrorExtensions } from 'graphql'
 import type { Except } from 'type-fest'
-import type { ApolloError } from '@apollo/client'
-import type { UserError } from '#shared/graphql/types.ts'
 
 export enum GraphQLErrorTypes {
   UnknownError = 'Exceptions::UnknownError',

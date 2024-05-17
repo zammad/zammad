@@ -4,15 +4,16 @@
 /* eslint-disable zammad/zammad-detect-translatable-string */
 import { computed, reactive, ref } from 'vue'
 
+import { EnumSecurityStateType } from '#shared/components/Form/fields/FieldSecurity/types.ts'
 import Form from '#shared/components/Form/Form.vue'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
-import { useDialog } from '#mobile/composables/useDialog.ts'
+
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
-import { useUserCreate } from '#mobile/entities/user/composables/useUserCreate.ts'
 import CommonStepper from '#mobile/components/CommonStepper/CommonStepper.vue'
-import { EnumSecurityStateType } from '#shared/components/Form/fields/FieldSecurity/types.ts'
 import LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
+import { useDialog } from '#mobile/composables/useDialog.ts'
+import { useUserCreate } from '#mobile/entities/user/composables/useUserCreate.ts'
 
 const linkSchemaRaw = [
   {

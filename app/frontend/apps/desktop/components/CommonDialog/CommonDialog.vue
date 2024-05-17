@@ -1,12 +1,12 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { nextTick, onMounted, ref } from 'vue'
 import { onKeyUp } from '@vueuse/core'
+import { nextTick, onMounted, ref } from 'vue'
 
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
-import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
 import stopEvent from '#shared/utils/events.ts'
+import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonOverlayContainer from '#desktop/components/CommonOverlayContainer/CommonOverlayContainer.vue'

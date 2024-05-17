@@ -1,23 +1,24 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { defineComponent, ref } from 'vue'
-import * as VueUse from '@vueuse/core'
 import { within } from '@testing-library/vue'
+import * as VueUse from '@vueuse/core'
+import { defineComponent, ref } from 'vue'
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
+import { mockUserCurrentAvatarAddMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAvatarAdd.mocks.ts'
 import {
   mockUserCurrentAvatarDeleteMutation,
   waitForUserCurrentAvatarDeleteMutationCalls,
 } from '#shared/entities/user/current/graphql/mutations/userCurrentAvatarDelete.mocks.ts'
-import { mockUserCurrentAvatarAddMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAvatarAdd.mocks.ts'
-import { mockUserCurrentAvatarListQuery } from '../graphql/queries/userCurrentAvatarList.mocks.ts'
+
 import {
   mockUserCurrentAvatarSelectMutation,
   waitForUserCurrentAvatarSelectMutationCalls,
 } from '../graphql/mutations/userCurrentAvatarSelect.mocks.ts'
+import { mockUserCurrentAvatarListQuery } from '../graphql/queries/userCurrentAvatarList.mocks.ts'
 
 vi.mock('vue-advanced-cropper', () => {
   const Cropper = defineComponent({

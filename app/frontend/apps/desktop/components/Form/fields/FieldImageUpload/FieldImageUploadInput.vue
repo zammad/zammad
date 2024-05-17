@@ -1,12 +1,14 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
-import { computed, ref, toRef } from 'vue'
 import { useDropZone } from '@vueuse/core'
+import { computed, ref, toRef } from 'vue'
+
+import useValue from '#shared/components/Form/composables/useValue.ts'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import { i18n } from '#shared/i18n.ts'
+
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonDivider from '#desktop/components/CommonDivider/CommonDivider.vue'
-import useValue from '#shared/components/Form/composables/useValue.ts'
-import { i18n } from '#shared/i18n.ts'
-import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 
 export interface Props {
   context: FormFieldContext<{

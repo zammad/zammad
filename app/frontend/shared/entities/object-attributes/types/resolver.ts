@@ -4,6 +4,7 @@ import type {
   EnumObjectManagerObjects,
   ObjectManagerFrontendAttribute,
 } from '#shared/graphql/types.ts'
+
 import type FieldResolver from '../form/resolver/FieldResolver.ts'
 
 export interface ScreenConfig {

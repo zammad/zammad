@@ -1,17 +1,18 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, watch } from 'vue'
 import { storeToRefs } from 'pinia'
+import { computed, watch } from 'vue'
 
-import SubscriptionHandler from '#shared/server/apollo/handler/SubscriptionHandler.ts'
 import { useApplicationConfigTwoFactor } from '#shared/composables/authentication/useApplicationConfigTwoFactor.ts'
 import type {
   EnumTwoFactorAuthenticationMethod,
   TwoFactorEnabledAuthenticationMethod,
 } from '#shared/graphql/types.ts'
+import SubscriptionHandler from '#shared/server/apollo/handler/SubscriptionHandler.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
 import { useUserCurrentTwoFactorUpdatesSubscription } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTwoFactorUpdates.api.ts'
+
 import type { TwoFactorConfigurationMethod } from '../types.ts'
 
 export const useConfigurationTwoFactor = () => {

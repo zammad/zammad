@@ -1,29 +1,33 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { ConcreteComponent, Ref } from 'vue'
+import { useLazyQuery } from '@vue/apollo-composable'
+import { refDebounced, watchOnce } from '@vueuse/core'
+import gql from 'graphql-tag'
+import { cloneDeep } from 'lodash-es'
 import { computed, nextTick, onMounted, ref, toRef } from 'vue'
 import { useRouter } from 'vue-router'
-import { cloneDeep } from 'lodash-es'
-import { refDebounced, watchOnce } from '@vueuse/core'
-import { useLazyQuery } from '@vue/apollo-composable'
-import gql from 'graphql-tag'
-import type { NameNode, OperationDefinitionNode, SelectionNode } from 'graphql'
-import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
-import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
-import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
-import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
-import { closeDialog } from '#mobile/composables/useDialog.ts'
-import type { FormKitNode } from '@formkit/core'
-import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+
 import useValue from '#shared/components/Form/composables/useValue.ts'
-import useSelectOptions from '#shared/composables/useSelectOptions.ts'
 import type {
   AutoCompleteOption,
   AutoCompleteProps,
   AutocompleteSelectValue,
 } from '#shared/components/Form/fields/FieldAutocomplete/types.ts'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import useSelectOptions from '#shared/composables/useSelectOptions.ts'
+import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
+
+import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
+import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
+import { closeDialog } from '#mobile/composables/useDialog.ts'
+
 import FieldAutoCompleteOptionIcon from './FieldAutoCompleteOptionIcon.vue'
+
+import type { FormKitNode } from '@formkit/core'
+import type { NameNode, OperationDefinitionNode, SelectionNode } from 'graphql'
+import type { ConcreteComponent, Ref } from 'vue'
 
 const props = defineProps<{
   context: FormFieldContext<AutoCompleteProps>

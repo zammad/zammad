@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import {
   getAllByRole,
@@ -7,10 +8,12 @@ import {
   getByRole,
   waitFor,
 } from '@testing-library/vue'
-import { getNode } from '@formkit/core'
-import { i18n } from '#shared/i18n.ts'
+
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
+
+import { i18n } from '#shared/i18n.ts'
+
 import type { PermissionsParentOption } from '../types.ts'
 
 const testOptions: PermissionsParentOption[] = [

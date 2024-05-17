@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 
 export type SelectOptionSorting = 'label' | 'value'
 

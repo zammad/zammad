@@ -2,6 +2,7 @@
 
 import type { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
+
 import type { ActionFooterOptions } from '../CommonFlyout/types.ts'
 
 export type TwoFactorConfigurationType =

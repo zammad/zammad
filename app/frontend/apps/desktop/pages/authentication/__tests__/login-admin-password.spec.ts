@@ -3,7 +3,9 @@
 import { mockGraphQLResult } from '#tests/graphql/builders/mocks.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
 import type { AdminPasswordAuthVerifyMutation } from '#shared/graphql/types.ts'
+
 import { AdminPasswordAuthVerifyDocument } from '../graphql/mutations/adminPasswordAuthVerify.api.ts'
 
 describe('verifying a token for the admin password auth', () => {

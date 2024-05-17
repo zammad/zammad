@@ -1,9 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { flushPromises } from '@vue/test-utils'
-import type { Ref } from 'vue'
 import { ref } from 'vue'
+
 import { useStickyHeader } from '../useStickyHeader.ts'
+
+import type { Ref } from 'vue'
 
 const fixedHeaderStyle = {
   left: '0',

@@ -1,12 +1,14 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, toRef } from 'vue'
 import { cloneDeep } from 'lodash-es'
+import { computed, toRef } from 'vue'
+
 import useValue from '#shared/components/Form/composables/useValue.ts'
-import { i18n } from '#shared/i18n.ts'
-import { useDelegateFocus } from '#shared/composables/useDelegateFocus.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import { useDelegateFocus } from '#shared/composables/useDelegateFocus.ts'
+import { i18n } from '#shared/i18n.ts'
+
 import type { ToggleListOption, ToggleListOptionValue } from './types.ts'
 
 const props = defineProps<{

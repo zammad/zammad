@@ -2,12 +2,14 @@
 
 <script setup lang="ts">
 import { computed, toRef, ref } from 'vue'
+
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
+import { capitalize } from '#shared/utils/formatter.ts'
+
 import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
 import CommonSectionMenuItem from '#mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
 import CommonShowMoreButton from '#mobile/components/CommonShowMoreButton/CommonShowMoreButton.vue'
-import { capitalize } from '#shared/utils/formatter.ts'
 
 interface Props {
   ticket: TicketById

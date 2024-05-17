@@ -6,8 +6,10 @@ import {
   getByLabelText,
   getByRole,
 } from '@testing-library/vue'
+
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
+
 import { mockLogoutMutation } from '#shared/graphql/mutations/logout.mocks.ts'
 
 describe('Left sidebar', () => {

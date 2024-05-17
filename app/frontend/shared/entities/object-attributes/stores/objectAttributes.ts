@@ -1,9 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { ref } from 'vue'
 import { defineStore } from 'pinia'
-import log from '#shared/utils/log.ts'
+import { ref } from 'vue'
+
 import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import log from '#shared/utils/log.ts'
+
 import type { ObjectAttributesObject } from '../types/store.ts'
 
 export const useObjectAttributesStore = defineStore('objectAttributes', () => {

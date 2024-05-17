@@ -1,12 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { flushPromises } from '@vue/test-utils'
+import { afterAll, beforeAll } from 'vitest'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
-import { afterAll, beforeAll } from 'vitest'
-import { getDialogMeta, openDialog } from '../useDialog.ts'
 import CommonDialog from '../CommonDialog.vue'
+import { getDialogMeta, openDialog } from '../useDialog.ts'
 
 const html = String.raw
 

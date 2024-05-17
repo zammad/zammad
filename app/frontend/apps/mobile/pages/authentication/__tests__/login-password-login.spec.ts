@@ -1,11 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { visitView } from '#tests/support/components/visitView.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
 import {
   mockPublicLinks,
   mockPublicLinksSubscription,
 } from '#shared/entities/public-links/__tests__/mocks/mockPublicLinks.ts'
-import { visitView } from '#tests/support/components/visitView.ts'
-import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
 describe('password login', () => {
   beforeEach(() => {

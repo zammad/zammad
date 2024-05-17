@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { canPreviewFile } from '#shared/utils/files.ts'
-import type { MaybeRef } from '@vueuse/shared'
 import { ref, unref, watchEffect } from 'vue'
+
+import { canPreviewFile } from '#shared/utils/files.ts'
+
+import type { MaybeRef } from '@vueuse/shared'
 
 interface ImagePreview {
   src?: string

@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { computed, nextTick, ref, watch } from 'vue'
+
 import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
 import type {
@@ -8,7 +10,7 @@ import type {
 } from '#shared/graphql/types.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
-import { computed, nextTick, ref, watch } from 'vue'
+
 import { useOrganizationLazyQuery } from '../graphql/queries/organization.api.ts'
 import { OrganizationUpdatesDocument } from '../graphql/subscriptions/organizationUpdates.api.ts'
 

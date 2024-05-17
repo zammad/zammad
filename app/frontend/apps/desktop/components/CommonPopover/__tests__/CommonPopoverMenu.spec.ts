@@ -3,9 +3,11 @@
 import { h } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
-import CommonPopoverMenu from '../CommonPopoverMenu.vue'
+
 import CommonPopover from '../CommonPopover.vue'
+import CommonPopoverMenu from '../CommonPopoverMenu.vue'
 import { usePopover } from '../usePopover.ts'
+
 import type { MenuItem } from '../types.ts'
 
 const html = String.raw

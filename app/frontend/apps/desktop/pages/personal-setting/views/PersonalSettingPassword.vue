@@ -1,23 +1,23 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import Form from '#shared/components/Form/Form.vue'
-import { useForm } from '#shared/components/Form/useForm.ts'
-import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
+import Form from '#shared/components/Form/Form.vue'
+import type { FormSubmitData } from '#shared/components/Form/types.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 
-import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
-import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
 import { useCheckChangePassword } from '../composables/permission/useCheckChangePassword.ts'
+import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { useUserCurrentChangePasswordMutation } from '../graphql/mutations/userCurrentChangePassword.api.ts'
 
 import type { ChangePasswordFormData } from '../types/change-password.ts'
-import { useUserCurrentChangePasswordMutation } from '../graphql/mutations/userCurrentChangePassword.api.ts'
 
 defineOptions({
   beforeRouteEnter() {

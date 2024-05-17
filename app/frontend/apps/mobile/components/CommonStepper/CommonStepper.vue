@@ -2,7 +2,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+
 import type { FormStep } from '#shared/components/Form/types.ts'
+
 import CommonStepperStep from './CommonStepperStep.vue'
 
 interface Props {

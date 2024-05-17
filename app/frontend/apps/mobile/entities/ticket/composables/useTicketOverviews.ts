@@ -1,10 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { onMounted } from 'vue'
 import { useTimeoutFn } from '@vueuse/shared'
+import { onMounted } from 'vue'
+
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
-import { useTicketOverviewsStore } from '../stores/ticketOverviews.ts'
+
 import { useTicketOverviewTicketCountLazyQuery } from '../graphql/queries/ticketOverviewTicketCount.api.ts'
+import { useTicketOverviewsStore } from '../stores/ticketOverviews.ts'
 
 const POLLING_INTERVAL = 60000
 

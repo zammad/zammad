@@ -2,7 +2,9 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+
 import { translateOption } from '../../utils.ts'
+
 import type { ObjectAttributeSingleSelect } from './attributeSingleSelectTypes.ts'
 
 const props = defineProps<{

@@ -1,23 +1,27 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { PopupItemDescriptor } from '#mobile/components/CommonSectionPopup/types.ts'
-import { useDialog } from '#mobile/composables/useDialog.ts'
-import log from '#shared/utils/log.ts'
 import { computed, nextTick, ref, shallowRef } from 'vue'
+
+import type {
+  EditorContentType,
+  FieldEditorContext,
+} from '#shared/components/Form/fields/FieldEditor/types.ts'
 import type {
   TicketArticle,
   TicketById,
 } from '#shared/entities/ticket/types.ts'
 import { createArticleActions } from '#shared/entities/ticket-article/action/plugins/index.ts'
 import type { TicketArticlePerformOptions } from '#shared/entities/ticket-article/action/plugins/types.ts'
-import type {
-  EditorContentType,
-  FieldEditorContext,
-} from '#shared/components/Form/fields/FieldEditor/types.ts'
 import { getArticleSelection } from '#shared/entities/ticket-article/composables/getArticleSelection.ts'
+import log from '#shared/utils/log.ts'
 import type { SelectionData } from '#shared/utils/selection.ts'
-import type { FormKitNode } from '@formkit/core'
+
+import type { PopupItemDescriptor } from '#mobile/components/CommonSectionPopup/types.ts'
+import { useDialog } from '#mobile/composables/useDialog.ts'
+
 import { useTicketInformation } from './useTicketInformation.ts'
+
+import type { FormKitNode } from '@formkit/core'
 
 export const useTicketArticleContext = () => {
   const articleForContext = shallowRef<TicketArticle>()

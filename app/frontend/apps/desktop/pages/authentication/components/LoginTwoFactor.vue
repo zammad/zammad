@@ -1,24 +1,26 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { computed, onMounted, ref } from 'vue'
+
+import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import Form from '#shared/components/Form/Form.vue'
 import type {
   FormSubmitData,
   FormSchemaNode,
 } from '#shared/components/Form/types.ts'
-import UserError from '#shared/errors/UserError.ts'
-import { useAuthenticationStore } from '#shared/stores/authentication.ts'
-import { computed, onMounted, ref } from 'vue'
-import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
-import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
-import { useTwoFactorMethodInitiateAuthenticationMutation } from '#shared/graphql/mutations/twoFactorMethodInitiateAuthentication.api.ts'
 import type {
   TwoFactorLoginFormData,
   LoginCredentials,
   TwoFactorPlugin,
 } from '#shared/entities/two-factor/types.ts'
+import UserError from '#shared/errors/UserError.ts'
+import { useTwoFactorMethodInitiateAuthenticationMutation } from '#shared/graphql/mutations/twoFactorMethodInitiateAuthentication.api.ts'
+import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
+import { useAuthenticationStore } from '#shared/stores/authentication.ts'
+
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 
 export interface Props {
   credentials: LoginCredentials

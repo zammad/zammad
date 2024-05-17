@@ -1,9 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { renderComponent } from '#tests/support/components/index.ts'
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
+
 import CommonButtonGroup from '../CommonButtonGroup.vue'
+
 import type { CommonButtonOption } from '../types.ts'
 
 describe('buttons group', () => {

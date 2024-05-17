@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { keyBy } from 'lodash-es'
+
 import { twoFactorPluginsFiles } from './initializeTwoFactorPlugins.ts'
 
 const plugins = twoFactorPluginsFiles

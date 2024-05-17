@@ -1,38 +1,36 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
 import { storeToRefs } from 'pinia'
-
-import { useBreadcrumb } from '#desktop/pages/personal-setting/composables/useBreadcrumb.ts'
-import { useThirdPartyAuthentication } from '#shared/composables/authentication/useThirdPartyAuthentication.ts'
-import useFingerprint from '#shared/composables/useFingerprint.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
-import { i18n } from '#shared/i18n.ts'
-import type {
-  TableHeader,
-  TableItem,
-} from '#desktop/components/CommonSimpleTable/types.ts'
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import { computed, ref } from 'vue'
 
 import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
+import { useThirdPartyAuthentication } from '#shared/composables/authentication/useThirdPartyAuthentication.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
-import { useUserCurrentRemoveLinkedAccountMutation } from '#desktop/pages/personal-setting/graphql/mutations/userCurrentLinkedAccount.api.ts'
+import useFingerprint from '#shared/composables/useFingerprint.ts'
 import {
   type Authorization,
   EnumAuthenticationProvider,
 } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
 
-import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
-import type { LinkedAccountTableItem } from '#desktop/pages/personal-setting/types/linked-accounts.ts'
-
-import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
-import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
+import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
+import type {
+  TableHeader,
+  TableItem,
+} from '#desktop/components/CommonSimpleTable/types.ts'
 import CommonThirdPartyAuthenticationButton from '#desktop/components/CommonThirdPartyAuthenticationButton/CommonThirdPartyAuthenticationButton.vue'
+import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
+import { useBreadcrumb } from '#desktop/pages/personal-setting/composables/useBreadcrumb.ts'
+import { useUserCurrentRemoveLinkedAccountMutation } from '#desktop/pages/personal-setting/graphql/mutations/userCurrentLinkedAccount.api.ts'
+import type { LinkedAccountTableItem } from '#desktop/pages/personal-setting/types/linked-accounts.ts'
 
 defineOptions({
   beforeRouteEnter() {

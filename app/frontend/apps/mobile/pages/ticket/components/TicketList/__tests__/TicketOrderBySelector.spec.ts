@@ -1,8 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
+
 import { renderComponent } from '#tests/support/components/index.ts'
+
 import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
+
 import TicketOrderBySelector from '../TicketOrderBySelector.vue'
 
 const columns: SelectOption[] = [

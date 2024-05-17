@@ -4,6 +4,7 @@ import type {
   ObjectSelectOption,
   ObjectSelectValue,
 } from '#shared/entities/object-attributes/form/resolver/fields/select.ts'
+
 import type { FormKitFrameworkContext, FormKitNode } from '@formkit/core'
 import type { Dictionary } from 'ts-essentials'
 

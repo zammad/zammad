@@ -1,14 +1,18 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { defaultArticles } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
-import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { getAllByRole } from '@testing-library/vue'
-import { renderComponent } from '#tests/support/components/index.ts'
+
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
+
+import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import {
   EnumSecurityStateType,
   type TicketArticleSecurityState,
 } from '#shared/graphql/types.ts'
+
+import { defaultArticles } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
+
 import ArticleMetadata from '../ArticleMetadataDialog.vue'
 
 // parsed is tested in unit test

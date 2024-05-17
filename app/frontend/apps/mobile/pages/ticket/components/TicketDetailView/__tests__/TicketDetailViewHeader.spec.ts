@@ -1,8 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
-import { defaultTicket } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
+
 import { EnumTaskbarApp } from '#shared/graphql/types.ts'
+
+import { defaultTicket } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
+
 import TicketDetailViewHeader from '../TicketDetailViewHeader.vue'
 
 vi.hoisted(() => {

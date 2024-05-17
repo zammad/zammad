@@ -2,7 +2,9 @@
 
 import { createNode } from '@formkit/core'
 import { createLibraryPlugin } from '@formkit/inputs'
+
 import { i18n } from '#shared/i18n.ts'
+
 import translateWrapperProps from '../translateWrapperProps.ts'
 
 const map = new Map([

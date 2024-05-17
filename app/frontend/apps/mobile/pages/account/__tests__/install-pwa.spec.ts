@@ -1,10 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Mock } from 'vitest'
-import { visitView } from '#tests/support/components/visitView.ts'
-import * as utilsPWA from '#shared/utils/pwa.ts'
-import * as utilsBrowser from '#shared/utils/browser.ts'
 import { computed } from 'vue'
+
+import { visitView } from '#tests/support/components/visitView.ts'
+
+import * as utilsBrowser from '#shared/utils/browser.ts'
+import * as utilsPWA from '#shared/utils/pwa.ts'
+
+import type { Mock } from 'vitest'
 
 const utilsPWAmock = vi.mocked(utilsPWA)
 const utilsBrowsermock = vi.mocked(utilsBrowser)

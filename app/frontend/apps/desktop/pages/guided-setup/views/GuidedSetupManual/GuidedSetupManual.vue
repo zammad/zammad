@@ -6,9 +6,10 @@ import { provide, ref } from 'vue'
 import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
 import type { BoxSizes } from '#desktop/components/layout/types.ts'
 
-import { SYSTEM_SETUP_SYMBOL } from '../../composables/useSystemSetup.ts'
-import type { SystemSetup } from '../../types/setup.ts'
 import { useSetTitle } from '../../composables/useSetTitle.ts'
+import { SYSTEM_SETUP_SYMBOL } from '../../composables/useSystemSetup.ts'
+
+import type { SystemSetup } from '../../types/setup.ts'
 
 const { title, setTitle } = useSetTitle()
 

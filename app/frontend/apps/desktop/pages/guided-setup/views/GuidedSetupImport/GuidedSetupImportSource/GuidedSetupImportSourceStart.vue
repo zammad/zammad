@@ -3,14 +3,14 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router'
 
-import { i18n } from '#shared/i18n.ts'
 import { EnumSystemImportSource } from '#shared/graphql/types.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
+import { i18n } from '#shared/i18n.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 
+import GuidedSetupActionFooter from '../../../components/GuidedSetupActionFooter.vue'
 import { guidedSetupImportSourcePluginLookup } from '../../../components/GuidedSetupImport/GuidedSetupImportSource/plugins/index.ts'
 import { useSystemSetup } from '../../../composables/useSystemSetup.ts'
-import GuidedSetupActionFooter from '../../../components/GuidedSetupActionFooter.vue'
 import { useSystemImportStartMutation } from '../../../graphql/mutations/systemImportStart.api.ts'
 import { useSystemSetupInfoStore } from '../../../stores/systemSetupInfo.ts'
 

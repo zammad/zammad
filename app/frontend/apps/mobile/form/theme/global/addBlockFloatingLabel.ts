@@ -2,6 +2,7 @@
 
 import type { Classes } from '#shared/form/plugins/utils.ts'
 import { clean, extendClasses } from '#shared/form/plugins/utils.ts'
+
 import { addStaticFloatingLabel } from './addStaticFloatingLabel.ts'
 
 export const addBlockFloatingLabel = (classes: Classes = {}): Classes => {

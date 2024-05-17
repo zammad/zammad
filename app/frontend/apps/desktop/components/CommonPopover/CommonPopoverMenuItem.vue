@@ -1,9 +1,11 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { Variant } from '#desktop/components/CommonPopover/types.ts'
 import { computed } from 'vue'
+
 import type { ObjectLike } from '#shared/types/utils.ts'
+
+import type { Variant } from '#desktop/components/CommonPopover/types.ts'
 
 export interface Props {
   label?: string

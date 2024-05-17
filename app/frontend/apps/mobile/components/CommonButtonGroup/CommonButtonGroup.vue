@@ -1,9 +1,11 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
 import { type Props as IconProps } from '#shared/components/CommonIcon/CommonIcon.vue'
 import { useSessionStore } from '#shared/stores/session.ts'
-import { computed } from 'vue'
+
 import type { CommonButtonOption } from './types.ts'
 
 export interface Props {

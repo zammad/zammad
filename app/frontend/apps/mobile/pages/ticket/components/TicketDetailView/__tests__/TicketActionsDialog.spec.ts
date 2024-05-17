@@ -1,19 +1,23 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
-import { TicketMergeDocument } from '#shared/entities/ticket/graphql/mutations/merge.api.ts'
-import {
-  NotificationTypes,
-  useNotifications,
-} from '#shared/components/CommonNotifications/index.ts'
-import { useDialog } from '#mobile/composables/useDialog.ts'
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
 import { renderComponent } from '#tests/support/components/index.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { nullableMock, waitUntil } from '#tests/support/utils.ts'
+
+import {
+  NotificationTypes,
+  useNotifications,
+} from '#shared/components/CommonNotifications/index.ts'
+import { TicketMergeDocument } from '#shared/entities/ticket/graphql/mutations/merge.api.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
+import { useDialog } from '#mobile/composables/useDialog.ts'
 import { defaultTicket } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
+
 import { AutocompleteSearchMergeTicketDocument } from '../../../graphql/queries/autocompleteSearchMergeTicket.api.ts'
 import TicketActionsDialog from '../TicketActionsDialog.vue'
 

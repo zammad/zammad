@@ -1,21 +1,24 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import Mention from '@tiptap/extension-mention'
+import { cloneDeep } from 'lodash-es'
 
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import { getNodeByName } from '#shared/components/Form/utils.ts'
+import type { StoredFile } from '#shared/graphql/types.ts'
 import {
   MutationHandler,
   QueryHandler,
 } from '#shared/server/apollo/handler/index.ts'
-import type { Ref } from 'vue'
-import { cloneDeep } from 'lodash-es'
-import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import { debouncedQuery, htmlCleanup } from '#shared/utils/helpers.ts'
-import { getNodeByName } from '#shared/components/Form/utils.ts'
-import type { StoredFile } from '#shared/graphql/types.ts'
-import { useKnowledgeBaseAnswerSuggestionsLazyQuery } from '../graphql/queries/knowledgeBase/answerSuggestions.api.ts'
-import buildMentionSuggestion from './suggestions.ts'
+
 import { useKnowledgeBaseAnswerSuggestionContentTransformMutation } from '../graphql/mutations/knowledgeBase/suggestion/content/transform.api.ts'
+import { useKnowledgeBaseAnswerSuggestionsLazyQuery } from '../graphql/queries/knowledgeBase/answerSuggestions.api.ts'
+
+import buildMentionSuggestion from './suggestions.ts'
+
 import type { FieldEditorProps, MentionKnowledgeBaseItem } from '../types.ts'
+import type { Ref } from 'vue'
 
 export const PLUGIN_NAME = 'mentionKnowledgeBase'
 const ACTIVATOR = '??'

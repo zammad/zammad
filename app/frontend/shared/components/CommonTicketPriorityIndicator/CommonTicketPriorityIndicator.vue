@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+
 import type { TicketPriority } from './types.ts'
 
 export interface Props {

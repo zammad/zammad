@@ -1,26 +1,27 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Ref } from 'vue'
-import { nextTick, onMounted, ref } from 'vue'
-import type { FormKitNode } from '@formkit/core'
 import { getNode } from '@formkit/core'
 import { waitFor, within } from '@testing-library/vue'
+import { nextTick, onMounted, ref } from 'vue'
+
+import { renderComponent } from '#tests/support/components/index.ts'
 import type {
   ExtendedMountingOptions,
   ExtendedRenderResult,
 } from '#tests/support/components/index.ts'
-import { renderComponent } from '#tests/support/components/index.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import { waitForNextTick, waitUntil } from '#tests/support/utils.ts'
+
 import Form from '#shared/components/Form/Form.vue'
 import type { Props } from '#shared/components/Form/Form.vue'
+import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
+import frontendObjectAttributes from '#shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json'
 import UserError from '#shared/errors/UserError.ts'
 import {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
 } from '#shared/graphql/types.ts'
-import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
-import frontendObjectAttributes from '#shared/entities/ticket/__tests__/mocks/frontendObjectAttributes.json'
+
 import { FormUpdaterDocument } from '../graphql/queries/formUpdater.api.ts'
 import {
   type FormRef,
@@ -28,6 +29,9 @@ import {
   type FormSchemaField,
   FormHandlerExecution,
 } from '../types.ts'
+
+import type { FormKitNode } from '@formkit/core'
+import type { Ref } from 'vue'
 
 const wrapperParameters = {
   form: true,

@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed } from 'vue'
+
 import type { Props } from './CommonIcon.vue'
 import type { Animations, Sizes } from './types.ts'
 

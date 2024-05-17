@@ -1,16 +1,19 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { ShallowRef } from 'vue'
-import type { FormKitNode } from '@formkit/core'
 import { cloneDeep, isEqual } from 'lodash-es'
 import { computed, onMounted, onUnmounted } from 'vue'
+
+import type { FormRef } from '#shared/components/Form/types.ts'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import type { TicketById } from '#shared/entities/ticket/types.ts'
+
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
 import { closeDialog } from '#mobile/composables/useDialog.ts'
-import type { TicketById } from '#shared/entities/ticket/types.ts'
-import type { FormRef } from '#shared/components/Form/types.ts'
-import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+
+import type { FormKitNode } from '@formkit/core'
+import type { ShallowRef } from 'vue'
 
 interface Props {
   name: string

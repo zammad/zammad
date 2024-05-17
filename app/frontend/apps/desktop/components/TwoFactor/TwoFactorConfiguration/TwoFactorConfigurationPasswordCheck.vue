@@ -2,13 +2,16 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+
 import Form from '#shared/components/Form/Form.vue'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
+import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+
 import { useUserCurrentPasswordCheckMutation } from '#desktop/entities/user/current/graphql/mutations/userCurrentPasswordCheck.api.ts'
-import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
+
 import type { TwoFactorConfigurationComponentProps } from '../types.ts'
 
 const props = defineProps<TwoFactorConfigurationComponentProps>()

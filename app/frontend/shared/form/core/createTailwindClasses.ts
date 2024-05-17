@@ -1,16 +1,18 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { extend } from '@formkit/utils'
 import { generateClasses } from '@formkit/themes'
-import type {
-  ImportGlobEagerOutput,
-  ImportGlobEagerDefault,
-} from '#shared/types/utils.ts'
+import { extend } from '@formkit/utils'
+
 import type {
   FormAppSpecificTheme,
   FormThemeClasses,
   FormThemeExtension,
 } from '#shared/types/form.ts'
+import type {
+  ImportGlobEagerOutput,
+  ImportGlobEagerDefault,
+} from '#shared/types/utils.ts'
+
 import commonClasses from '../theme/global/index.ts'
 
 const extensionsModules: ImportGlobEagerOutput<FormThemeExtension> =

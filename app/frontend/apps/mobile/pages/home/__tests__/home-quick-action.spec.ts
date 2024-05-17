@@ -1,9 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { waitFor } from '@testing-library/vue'
+
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'
-import { waitFor } from '@testing-library/vue'
 
 describe('testing quick action', () => {
   beforeEach(() => {

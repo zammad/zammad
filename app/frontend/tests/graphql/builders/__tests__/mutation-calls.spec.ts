@@ -1,12 +1,14 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { MutationsUserCurrentAvatarAddArgs } from '#shared/graphql/types.ts'
 import { faker } from '@faker-js/faker'
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
 import UserError from '#shared/errors/UserError.ts'
 import { LoginDocument } from '#shared/graphql/mutations/login.api.ts'
+import type { MutationsUserCurrentAvatarAddArgs } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
 import { getGraphQLMockCalls, mockGraphQLResult } from '../mocks.ts'
-import { getMutationHandler, getQueryHandler } from './utils.ts'
+
 import {
   type TestAvatarMutation,
   TestAvatarActiveMutationDocument,
@@ -20,6 +22,7 @@ import {
   TestUserSignupMutationDocument,
   type TestUserSignupArgs,
 } from './queries.ts'
+import { getMutationHandler, getQueryHandler } from './utils.ts'
 
 describe('calling mutation without mocking document works correctly', () => {
   it('mutation correctly returns data', async () => {

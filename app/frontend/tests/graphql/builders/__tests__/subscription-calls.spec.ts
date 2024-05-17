@@ -1,15 +1,19 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { flushPromises } from '@vue/test-utils'
+
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
+import { getGraphQLSubscriptionHandler } from '../mocks.ts'
+
 import { TestUserDocument, TestUserUpdatesDocument } from './queries.ts'
+import { getQueryHandler, getSubscriptionHandler } from './utils.ts'
+
 import type {
   TestUserQuery,
   TestUserUpdatesSubscription,
   TestUserUpdatesSubscriptionVariables,
 } from './queries.ts'
-import { getQueryHandler, getSubscriptionHandler } from './utils.ts'
-import { getGraphQLSubscriptionHandler } from '../mocks.ts'
 
 describe('mocked subscription works correctly', () => {
   it('subscription returns data correctly when not mocked', async () => {

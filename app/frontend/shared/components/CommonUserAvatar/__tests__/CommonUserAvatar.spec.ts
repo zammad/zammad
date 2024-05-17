@@ -1,11 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import { SYSTEM_USER_ID } from '#shared/utils/constants.ts'
-import { initializeUserAvatarClasses } from '#shared/initializer/initializeUserAvatarClasses.ts'
+import { useDateFormat } from '@vueuse/shared'
+
 import { renderComponent } from '#tests/support/components/index.ts'
 
-import { useDateFormat } from '@vueuse/shared'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { initializeUserAvatarClasses } from '#shared/initializer/initializeUserAvatarClasses.ts'
+import { SYSTEM_USER_ID } from '#shared/utils/constants.ts'
+
 import CommonUserAvatar, { type Props } from '../CommonUserAvatar.vue'
 
 const USER_ID = convertToGraphQLId('User', '123')

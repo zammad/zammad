@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import gql from 'graphql-tag'
+
 import type { TypedDocumentNode } from '@apollo/client/core'
 
 export type ID = number

@@ -1,21 +1,23 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { noop } from '@vueuse/shared'
 import { type Ref, type ComputedRef, onBeforeMount } from 'vue'
 import { ref, watch } from 'vue'
+import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
+
+import { useAppName } from '#shared/composables/useAppName.ts'
 import type { TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
+import { EnumTaskbarApp } from '#shared/graphql/types.ts'
+import type { TicketLiveUser } from '#shared/graphql/types.ts'
+import { ensureGraphqlId } from '#shared/graphql/utils.ts'
 import {
   MutationHandler,
   SubscriptionHandler,
 } from '#shared/server/apollo/handler/index.ts'
-import { EnumTaskbarApp } from '#shared/graphql/types.ts'
-import type { TicketLiveUser } from '#shared/graphql/types.ts'
-import { useAppName } from '#shared/composables/useAppName.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
-import { onBeforeRouteLeave, onBeforeRouteUpdate } from 'vue-router'
-import { ensureGraphqlId } from '#shared/graphql/utils.ts'
-import { noop } from '@vueuse/shared'
-import { useTicketLiveUserUpsertMutation } from '../graphql/mutations/live-user/ticketLiveUserUpsert.api.ts'
+
 import { useTicketLiveUserDeleteMutation } from '../graphql/mutations/live-user/delete.api.ts'
+import { useTicketLiveUserUpsertMutation } from '../graphql/mutations/live-user/ticketLiveUserUpsert.api.ts'
 import { useTicketLiveUserUpdatesSubscription } from '../graphql/subscriptions/live-user/ticketLiveUserUpdates.api.ts'
 
 export const useTicketLiveUser = (

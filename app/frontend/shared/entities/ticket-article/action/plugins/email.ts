@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { uniq } from 'lodash-es'
+
 import { getTicketSignatureQuery } from '#shared/composables/useTicketSignature.ts'
 import type {
   TicketArticle,
@@ -7,9 +9,10 @@ import type {
 } from '#shared/entities/ticket/types.ts'
 import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import { textCleanup } from '#shared/utils/helpers.ts'
-import { uniq } from 'lodash-es'
+
 import { forwardEmail } from './email/forward.ts'
 import { replyToEmail } from './email/reply.ts'
+
 import type {
   TicketFieldsType,
   TicketArticleAction,

@@ -7,6 +7,7 @@ import type {
 import { getTicketView } from '#shared/entities/ticket/utils/getTicketView.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import type { AppName } from '#shared/types/app.ts'
+
 import type {
   TicketTypeAddOptions,
   TicketActionAddOptions,

@@ -2,20 +2,23 @@
 
 import { useApolloClient } from '@vue/apollo-composable'
 import { random } from 'lodash-es'
-import type { RouteRecordRaw } from 'vue-router'
 
 // import authenticationGuard from '#shared/router/guards/before/authentication.ts'
 // import permissionGuard from '#shared/router/guards/before/permission.ts'
 
 import { useLocaleStore } from '#shared/stores/locale.ts'
-import LayoutTestMobileView from './LayoutTestMobileView.vue'
-import LayoutTestDesktopView from './LayoutTestDesktopView.vue'
+
 import mockApolloClient from '../mock-apollo-client.ts'
+
+import { getTestAppName } from './app.ts'
+import LayoutTestDesktopView from './LayoutTestDesktopView.vue'
+import LayoutTestMobileView from './LayoutTestMobileView.vue'
 import renderComponent, {
   getTestRouter,
   type ExtendedMountingOptions,
 } from './renderComponent.ts'
-import { getTestAppName } from './app.ts'
+
+import type { RouteRecordRaw } from 'vue-router'
 
 Object.defineProperty(window, 'fetch', {
   value: (path: string) => {

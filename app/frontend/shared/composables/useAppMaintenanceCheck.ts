@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { onMounted, reactive, watch } from 'vue'
 import { useRouteQuery } from '@vueuse/router'
+import { onMounted, reactive, watch } from 'vue'
+
 import {
   useNotifications,
   NotificationTypes,

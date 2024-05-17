@@ -2,13 +2,17 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue'
-import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
-import { closeFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
+
 import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
 import { i18n } from '#shared/i18n.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
+
+import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
+import { closeFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
+
 import TwoFactorConfigurationPasswordCheck from './TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue'
 import TwoFactorConfigurationRecoveryCodes from './TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue'
+
 import type {
   TwoFactorConfigurationActionPayload,
   TwoFactorConfigurationComponentInstance,

@@ -1,13 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormKitNode } from '@formkit/core'
 import { computed, shallowRef } from 'vue'
-import type { ShallowRef, Ref } from 'vue'
 
 import type { MutationSendError } from '#shared/types/error.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
 import { setErrors } from './utils.ts'
+
 import type {
   FormRef,
   FormResetOptions,
@@ -15,6 +14,8 @@ import type {
   FormValues,
   FormSchemaField,
 } from './types.ts'
+import type { FormKitNode } from '@formkit/core'
+import type { ShallowRef, Ref } from 'vue'
 
 export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
   const form: ShallowRef<FormRef | undefined> = formRef || shallowRef()

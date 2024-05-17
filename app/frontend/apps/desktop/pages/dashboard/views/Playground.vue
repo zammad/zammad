@@ -2,40 +2,39 @@
 <!-- eslint-disable zammad/zammad-detect-translatable-string -->
 
 <script setup lang="ts">
-import { computed, h, onMounted, reactive, ref, watch } from 'vue'
-import { storeToRefs } from 'pinia'
 import { reset } from '@formkit/core'
 import gql from 'graphql-tag'
-
-import { useSessionStore } from '#shared/stores/session.ts'
+import { storeToRefs } from 'pinia'
+import { computed, h, onMounted, reactive, ref, watch } from 'vue'
 
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
+import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import Form from '#shared/components/Form/Form.vue'
 import type {
   FormSchemaNode,
   FormValues,
 } from '#shared/components/Form/types.ts'
+import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
 
+import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonButtonGroup from '#desktop/components/CommonButtonGroup/CommonButtonGroup.vue'
-import CommonProgressBar from '#desktop/components/CommonProgressBar/CommonProgressBar.vue'
 import type { CommonButtonItem } from '#desktop/components/CommonButtonGroup/types.ts'
+import CommonDialog from '#desktop/components/CommonDialog/CommonDialog.vue'
+import { useDialog } from '#desktop/components/CommonDialog/useDialog.ts'
+import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
+import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
+import CommonInputCopyToClipboard from '#desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue'
 import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
 import CommonPopoverMenu from '#desktop/components/CommonPopover/CommonPopoverMenu.vue'
-import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import ThemeSwitch from '#desktop/components/ThemeSwitch/ThemeSwitch.vue'
-import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
-import type { ThemeSwitchInstance } from '#desktop/components/ThemeSwitch/types.ts'
-import CommonDialog from '#desktop/components/CommonDialog/CommonDialog.vue'
-import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
-import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
-import { useDialog } from '#desktop/components/CommonDialog/useDialog.ts'
-import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
-import { useConfirmation } from '#shared/composables/useConfirmation.ts'
-import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
-import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
 import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
-import CommonInputCopyToClipboard from '#desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue'
+import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
+import CommonProgressBar from '#desktop/components/CommonProgressBar/CommonProgressBar.vue'
+import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
+import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
+import ThemeSwitch from '#desktop/components/ThemeSwitch/ThemeSwitch.vue'
+import type { ThemeSwitchInstance } from '#desktop/components/ThemeSwitch/types.ts'
 
 const alphabetOptions = computed(() =>
   [...Array(26).keys()].map((i) => ({

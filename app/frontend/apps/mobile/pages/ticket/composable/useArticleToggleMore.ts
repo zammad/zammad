@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { waitForAnimationFrame } from '#shared/utils/helpers.ts'
 import { onMounted, ref } from 'vue'
+
+import { waitForAnimationFrame } from '#shared/utils/helpers.ts'
 
 export const useArticleToggleMore = () => {
   const MIN_HEIGHT = 60

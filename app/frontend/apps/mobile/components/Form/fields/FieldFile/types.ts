@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { InputHTMLAttributes } from 'vue'
 import type { AllowedFile } from '#shared/utils/files.ts'
+
+import type { InputHTMLAttributes } from 'vue'
 
 export interface FieldFileProps {
   accept?: InputHTMLAttributes['accept']

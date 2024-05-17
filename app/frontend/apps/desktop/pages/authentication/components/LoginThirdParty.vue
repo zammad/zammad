@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import useFingerprint from '#shared/composables/useFingerprint.ts'
 import type { ThirdPartyAuthProvider } from '#shared/types/authentication.ts'
+
 import CommonThirdPartyAuthenticationButton from '#desktop/components/CommonThirdPartyAuthenticationButton/CommonThirdPartyAuthenticationButton.vue'
 
 export interface Props {

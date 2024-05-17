@@ -1,10 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormKitValidationMessages } from '@formkit/validation'
 import { createMessageName } from '@formkit/validation'
-import type { FormKitLocale } from '@formkit/i18n'
+
 import { i18n } from '#shared/i18n.ts'
 import { commaSeparatedList, order } from '#shared/utils/formatter.ts'
+
+import type { FormKitLocale } from '@formkit/i18n'
+import type { FormKitValidationMessages } from '@formkit/validation'
 import type { ComputedRef } from 'vue'
 
 interface FormKitLocaleExtended extends FormKitLocale {

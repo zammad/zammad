@@ -1,13 +1,15 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { Scalars } from '#shared/graphql/types.ts'
-import CommonSectionMenuItem from '#mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
 import { toRef } from 'vue'
+
 import {
   useEscalationState,
   EscalationState,
 } from '#shared/composables/useEscalationState.ts'
+import type { Scalars } from '#shared/graphql/types.ts'
+
+import CommonSectionMenuItem from '#mobile/components/CommonSectionMenu/CommonSectionMenuItem.vue'
 
 const props = defineProps<{
   label: string

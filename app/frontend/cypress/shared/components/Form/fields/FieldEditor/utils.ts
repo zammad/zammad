@@ -1,8 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { FormKit } from '@formkit/vue'
-import Form from '#shared/components/Form/Form.vue'
 import { mountComponent } from '#cy/utils.ts'
+import { FormKit } from '@formkit/vue'
+
+import Form from '#shared/components/Form/Form.vue'
 
 export const mountEditor = (props: Record<string, unknown> = {}) => {
   return mountComponent(FormKit, {

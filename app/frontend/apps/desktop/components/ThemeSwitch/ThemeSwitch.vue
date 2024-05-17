@@ -1,8 +1,9 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
 import { useVModel } from '@vueuse/core'
+import { computed } from 'vue'
+
 import stopEvent from '#shared/utils/events.ts'
 
 export interface Props {

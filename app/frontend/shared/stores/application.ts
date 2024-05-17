@@ -1,21 +1,22 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, ref, type Ref } from 'vue'
 import { defineStore } from 'pinia'
+import { computed, ref, type Ref } from 'vue'
+
 import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
-import type { ConfigList } from '#shared/types/store.ts'
+import { useApplicationLoaded } from '#shared/composables/useApplicationLoaded.ts'
+import { useApplicationConfigQuery } from '#shared/graphql/queries/applicationConfig.api.ts'
+import { useConfigUpdatesSubscription } from '#shared/graphql/subscriptions/configUpdates.api.ts'
 import type {
   ApplicationConfigQuery,
   ApplicationConfigQueryVariables,
 } from '#shared/graphql/types.ts'
-import { useConfigUpdatesSubscription } from '#shared/graphql/subscriptions/configUpdates.api.ts'
-import { useApplicationConfigQuery } from '#shared/graphql/queries/applicationConfig.api.ts'
 import {
   QueryHandler,
   SubscriptionHandler,
 } from '#shared/server/apollo/handler/index.ts'
+import type { ConfigList } from '#shared/types/store.ts'
 import testFlags from '#shared/utils/testFlags.ts'
-import { useApplicationLoaded } from '#shared/composables/useApplicationLoaded.ts'
 
 let configUpdatesSubscriptionInitialized = false
 

@@ -1,10 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { faker } from '@faker-js/faker'
+
+import type { Ticket } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
 import { OrganizationDocument } from '#mobile/entities/organization/graphql/queries/organization.api.ts'
 import { UserDocument } from '#mobile/entities/user/graphql/queries/user.api.ts'
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import { faker } from '@faker-js/faker'
-import type { Ticket } from '#shared/graphql/types.ts'
+
 import { generateObjectData, mockOperation } from '../index.ts'
 
 describe('correctly mocks operations', () => {

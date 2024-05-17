@@ -1,14 +1,15 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { EnumSystemImportSource } from '#shared/graphql/types.ts'
 import Form from '#shared/components/Form/Form.vue'
-import { i18n } from '#shared/i18n/index.ts'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
+import { EnumSystemImportSource } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n/index.ts'
 
-import type { ImportSourceConfigurationKayakoData } from '../../../types/setup-import.ts'
 import { useImportSource } from '../../../composables/useImportSource.ts'
 import { useImportSourceConfiguration } from '../../../composables/useImportSourceConfiguration.ts'
+
+import type { ImportSourceConfigurationKayakoData } from '../../../types/setup-import.ts'
 
 const { form } = useImportSource()
 

@@ -1,17 +1,19 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { keyBy, get } from 'lodash-es'
+import { computed } from 'vue'
+
 import type {
   ObjectManagerFrontendAttribute,
   ObjectAttributeValue,
 } from '#shared/graphql/types.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
-import { keyBy, get } from 'lodash-es'
-import type { Dictionary } from 'ts-essentials'
 import { camelize } from '#shared/utils/formatter.ts'
-import type { Component } from 'vue'
-import { computed } from 'vue'
+
 import type { AttributeDeclaration } from './types.ts'
+import type { Dictionary } from 'ts-essentials'
+import type { Component } from 'vue'
 
 export interface ObjectAttributesDisplayOptions {
   object: ObjectLike

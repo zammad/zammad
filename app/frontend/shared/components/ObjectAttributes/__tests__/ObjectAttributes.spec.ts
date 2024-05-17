@@ -3,11 +3,15 @@
 import { getByRole } from '@testing-library/vue'
 import { flushPromises } from '@vue/test-utils'
 import { keyBy } from 'lodash-es'
-import { i18n } from '#shared/i18n.ts'
+
+import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
-import { renderComponent } from '#tests/support/components/index.ts'
+
+import { i18n } from '#shared/i18n.ts'
+
 import ObjectAttributes from '../ObjectAttributes.vue'
+
 import attributes from './attributes.json'
 
 vi.hoisted(() => {

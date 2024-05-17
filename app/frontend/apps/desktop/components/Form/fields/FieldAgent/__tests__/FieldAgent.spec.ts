@@ -1,15 +1,17 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { getByTestId, waitFor } from '@testing-library/vue'
-import { FormKit } from '@formkit/vue'
-import { renderComponent } from '#tests/support/components/index.ts'
-import type { AutocompleteSearchUserEntry } from '#shared/graphql/types.ts'
 import { getNode, type FormKitNode } from '@formkit/core'
+import { FormKit } from '@formkit/vue'
+import { getByTestId, waitFor } from '@testing-library/vue'
+
+import { renderComponent } from '#tests/support/components/index.ts'
 import { nullableMock, waitForNextTick } from '#tests/support/utils.ts'
+
 import {
   mockAutocompleteSearchAgentQuery,
   waitForAutocompleteSearchAgentQueryCalls,
 } from '#shared/components/Form/fields/FieldAgent/graphql/queries/autocompleteSearch/agent.mocks.ts'
+import type { AutocompleteSearchUserEntry } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 const testOptions: AutocompleteSearchUserEntry[] = [

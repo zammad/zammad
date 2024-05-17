@@ -1,13 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ShallowRef, Ref } from 'vue'
 import { shallowRef, reactive } from 'vue'
 
 import type { FormRef } from '#shared/components/Form/types.ts'
-import { markup } from '#shared/utils/markup.ts'
 import { i18n } from '#shared/i18n/index.ts'
+import { markup } from '#shared/utils/markup.ts'
 
 import type { EmailInboundMetaInformation } from '../types/email-inbound-outbound.ts'
+import type { ShallowRef, Ref } from 'vue'
 
 export const useEmailInboundMessagesForm = (
   metaInformationInbound: Ref<Maybe<EmailInboundMetaInformation>>,

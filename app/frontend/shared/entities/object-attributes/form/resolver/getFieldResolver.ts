@@ -4,11 +4,12 @@ import type {
   EnumObjectManagerObjects,
   ObjectManagerFrontendAttribute,
 } from '#shared/graphql/types.ts'
+
+import type FieldResolver from './FieldResolver.ts'
 import type {
   FieldResolverClass,
   FieldResolverModule,
 } from '../../types/resolver.ts'
-import type FieldResolver from './FieldResolver.ts'
 
 const fieldResolverModules = import.meta.glob<FieldResolverModule>(
   ['./fields/*.ts', '!./__tests__/**/*.ts'],

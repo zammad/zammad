@@ -1,12 +1,14 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { i18n } from '#shared/i18n.ts'
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
-import type { ExtendedRenderResult } from '#tests/support/components/index.ts'
-import { renderComponent } from '#tests/support/components/index.ts'
-import { waitForTimeout } from '#tests/support/utils.ts'
 import { nextTick } from 'vue'
+
+import { renderComponent } from '#tests/support/components/index.ts'
+import type { ExtendedRenderResult } from '#tests/support/components/index.ts'
+import { waitForTimeout } from '#tests/support/utils.ts'
+
+import { i18n } from '#shared/i18n.ts'
 
 const wrapperParameters = {
   form: true,

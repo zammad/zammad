@@ -2,7 +2,9 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
+
 import { getAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
+
 import type { AlertVariant } from './types.ts'
 
 export interface Props {

@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { axe } from 'vitest-axe'
+
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'

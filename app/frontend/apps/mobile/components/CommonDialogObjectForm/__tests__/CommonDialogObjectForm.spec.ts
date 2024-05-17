@@ -1,19 +1,22 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { keyBy } from 'lodash-es'
 import { useMutation } from '@vue/apollo-composable'
 import gql from 'graphql-tag'
+import { keyBy } from 'lodash-es'
+
+import { renderComponent } from '#tests/support/components/index.ts'
+import { waitUntilApisResolved } from '#tests/support/utils.ts'
+
+import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
+import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 
 import { closeDialog } from '#mobile/composables/useDialog.ts'
 import {
   mockOrganizationObjectAttributes,
   organizationObjectAttributes,
 } from '#mobile/entities/organization/__tests__/mocks/organization-mocks.ts'
-import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
-import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
-import { renderComponent } from '#tests/support/components/index.ts'
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
-import { waitUntilApisResolved } from '#tests/support/utils.ts'
+
 import CommonDialogObjectForm from '../CommonDialogObjectForm.vue'
 
 vi.mock('#mobile/composables/useDialog.ts')

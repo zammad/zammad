@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref } from 'vue'
+
 import { useOnlineNotificationsCountSubscription } from '#shared/entities/online-notification/graphql/subscriptions/onlineNotificationsCount.api.ts'
 import { SubscriptionHandler } from '#shared/server/apollo/handler/index.ts'
 import { useSessionStore } from '#shared/stores/session.ts'

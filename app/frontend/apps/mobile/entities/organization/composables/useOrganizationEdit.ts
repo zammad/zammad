@@ -1,15 +1,18 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { reactive } from 'vue'
-import { useDialogObjectForm } from '#mobile/components/CommonDialogObjectForm/useDialogObjectForm.ts'
+
+import type { FormSchemaField } from '#shared/components/Form/types.ts'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import type { OrganizationQuery } from '#shared/graphql/types.ts'
-import type { FormSchemaField } from '#shared/components/Form/types.ts'
 import {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
 } from '#shared/graphql/types.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
+
+import { useDialogObjectForm } from '#mobile/components/CommonDialogObjectForm/useDialogObjectForm.ts'
+
 import { useOrganizationUpdateMutation } from '../graphql/mutations/update.api.ts'
 
 export const useOrganizationEdit = () => {

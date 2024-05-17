@@ -1,9 +1,5 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  destroyComponent,
-  pushComponent,
-} from '#shared/components/DynamicInitializer/manage.ts'
 import { noop } from 'lodash-es'
 import {
   computed,
@@ -14,8 +10,14 @@ import {
   onMounted,
   nextTick,
 } from 'vue'
-import type { AsyncComponentLoader, Component } from 'vue'
+
+import {
+  destroyComponent,
+  pushComponent,
+} from '#shared/components/DynamicInitializer/manage.ts'
 import testFlags from '#shared/utils/testFlags.ts'
+
+import type { AsyncComponentLoader, Component } from 'vue'
 
 interface DialogOptions {
   name: string

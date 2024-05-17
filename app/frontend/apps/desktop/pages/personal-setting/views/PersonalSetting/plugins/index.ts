@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import type { NavigationMenuCategory } from '#desktop/components/NavigationMenu/types.ts'
+
 import type { PersonalSettingPlugin } from './types.ts'
 
 const plugins = import.meta.glob<PersonalSettingPlugin>(

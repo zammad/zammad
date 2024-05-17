@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useTicketArticleChangeVisibilityMutation } from '#shared/entities/ticket-article/graphql/mutations/changeVisibility.api.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+
 import type { TicketArticleActionPlugin, TicketArticleAction } from './types.ts'
 
 const changeVisibilityAction = (

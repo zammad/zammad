@@ -1,9 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { ref } from 'vue'
+
 import { generateObjectData } from '#tests/graphql/builders/index.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
+
 import type { Ticket } from '#shared/graphql/types.ts'
+
 import { useTicketView } from '../useTicketView.ts'
 
 const ticketDefault = generateObjectData<Ticket>('Ticket')

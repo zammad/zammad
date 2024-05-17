@@ -2,10 +2,12 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import { useLocaleStore } from '#shared/stores/locale.ts'
+
 import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
+
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 
 const { isTouchDevice } = useTouchDevice()
 

@@ -1,8 +1,10 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { replaceTags } from '#shared/utils/formatter.ts'
 import { computed } from 'vue'
+
+import { replaceTags } from '#shared/utils/formatter.ts'
+
 import { useSearchPlugins } from '../plugins/index.ts'
 
 interface Props {

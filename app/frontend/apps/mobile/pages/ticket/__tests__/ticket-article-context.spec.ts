@@ -2,6 +2,7 @@
 
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+
 import { mockTicketDetailViewGql } from './mocks/detail-view.ts'
 
 beforeAll(async () => {

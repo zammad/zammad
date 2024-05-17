@@ -1,12 +1,15 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref, toRef } from 'vue'
 import { cloneDeep } from 'lodash-es'
-import { useTransitionCollapse } from '#desktop/composables/useTransitionCollapse.ts'
+import { computed, ref, toRef } from 'vue'
+
 import useValue from '#shared/components/Form/composables/useValue.ts'
-import { i18n } from '#shared/i18n.ts'
 import { useDelegateFocus } from '#shared/composables/useDelegateFocus.ts'
+import { i18n } from '#shared/i18n.ts'
+
+import { useTransitionCollapse } from '#desktop/composables/useTransitionCollapse.ts'
+
 import type { PermissionsChildOption, PermissionsProps } from './types.ts'
 
 const props = defineProps<{

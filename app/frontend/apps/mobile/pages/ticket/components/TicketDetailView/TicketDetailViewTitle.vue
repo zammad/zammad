@@ -2,15 +2,16 @@
 
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
-import CommonTicketPriorityIndicator from '#shared/components/CommonTicketPriorityIndicator/CommonTicketPriorityIndicator.vue'
-import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+
 import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import CommonTicketEscalationIndicator from '#shared/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue'
+import CommonTicketPriorityIndicator from '#shared/components/CommonTicketPriorityIndicator/CommonTicketPriorityIndicator.vue'
 import CommonTicketStateIndicator from '#shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
+import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import { useTicketChannel } from '#shared/entities/ticket/composables/useTicketChannel.ts'
+import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
-import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
-import { useTicketChannel } from '#shared/entities/ticket/composables/useTicketChannel.ts'
 
 interface Props {
   ticket: TicketById

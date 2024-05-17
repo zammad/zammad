@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { useSessionStore } from '#shared/stores/session.ts'
+
 import LayoutMain from '#desktop/components/layout/LayoutMain.vue'
 
 const session = useSessionStore()

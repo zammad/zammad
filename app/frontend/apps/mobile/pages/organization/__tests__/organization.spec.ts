@@ -1,22 +1,24 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { mockOnlineNotificationSeenGql } from '#shared/composables/__tests__/mocks/online-notification.ts'
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import {
   mockGraphQLApi,
   mockGraphQLSubscription,
 } from '#tests/support/mock-graphql-api.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { setupView } from '#tests/support/mock-user.ts'
 import { nullableMock, waitUntil } from '#tests/support/utils.ts'
-import { OrganizationDocument } from '#mobile/entities/organization/graphql/queries/organization.api.ts'
-import { OrganizationUpdatesDocument } from '#mobile/entities/organization/graphql/subscriptions/organizationUpdates.api.ts'
+
+import { mockOnlineNotificationSeenGql } from '#shared/composables/__tests__/mocks/online-notification.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
 import {
   defaultOrganization,
   mockOrganizationObjectAttributes,
 } from '#mobile/entities/organization/__tests__/mocks/organization-mocks.ts'
-import { getTestRouter } from '#tests/support/components/renderComponent.ts'
-import { setupView } from '#tests/support/mock-user.ts'
+import { OrganizationDocument } from '#mobile/entities/organization/graphql/queries/organization.api.ts'
+import { OrganizationUpdatesDocument } from '#mobile/entities/organization/graphql/subscriptions/organizationUpdates.api.ts'
 
 const prepareMocks = () => {
   const organization = defaultOrganization()

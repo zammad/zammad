@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { cloneDeep, keyBy } from 'lodash-es'
+import { getNode } from '@formkit/core'
+import { FormKit } from '@formkit/vue'
 import {
   getAllByRole,
   getByRole,
@@ -8,20 +9,22 @@ import {
   queryByRole,
   waitFor,
 } from '@testing-library/vue'
-import { FormKit } from '@formkit/vue'
-import { renderComponent } from '#tests/support/components/index.ts'
-import { i18n } from '#shared/i18n.ts'
-import { getNode } from '@formkit/core'
-import { useLocaleStore } from '#shared/stores/locale.ts'
-import { EnumTextDirection } from '#shared/graphql/types.ts'
+import { cloneDeep, keyBy } from 'lodash-es'
+
 import {
   findByIconName,
   getByIconName,
   queryAllByIconName,
   queryByIconName,
 } from '#tests/support/components/iconQueries.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
+
 import type { TreeSelectOption } from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
+import { EnumTextDirection } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
+
 import useFlatSelectOptions from '../useFlatSelectOptions.ts'
 
 const { flattenOptions } = useFlatSelectOptions()

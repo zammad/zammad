@@ -1,12 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { useApplicationStore } from '#shared/stores/application.ts'
+import log from '#shared/utils/log.ts'
+
 import type {
   NavigationGuard,
   RouteLocationNormalized,
   NavigationGuardNext,
 } from 'vue-router'
-import log from '#shared/utils/log.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
 
 const systemSetupInfo: NavigationGuard = (
   to: RouteLocationNormalized,

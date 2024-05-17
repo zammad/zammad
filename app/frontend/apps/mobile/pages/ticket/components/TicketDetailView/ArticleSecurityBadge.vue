@@ -1,7 +1,8 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import CommonSectionPopup from '#mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
+import { computed, ref } from 'vue'
+
 import {
   NotificationTypes,
   useNotifications,
@@ -10,7 +11,8 @@ import { useTicketArticleRetrySecurityProcessMutation } from '#shared/entities/t
 import type { TicketArticleSecurityState } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
-import { computed, ref } from 'vue'
+
+import CommonSectionPopup from '#mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
 
 export interface Props {
   articleId: string

@@ -1,13 +1,14 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
+
+import type { SelectOptionSorting } from '../FieldSelect/types.ts'
+import type { DocumentNode } from 'graphql'
+import type { JsonValue } from 'type-fest'
 import type { ConcreteComponent } from 'vue'
 import type { RouteLocationRaw } from 'vue-router'
-import type { JsonValue } from 'type-fest'
-import type { DocumentNode } from 'graphql'
-import type { ObjectLike } from '#shared/types/utils.ts'
-import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
-import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
-import type { SelectOptionSorting } from '../FieldSelect/types.ts'
 
 export type AutocompleteSelectValue =
   | SelectValue

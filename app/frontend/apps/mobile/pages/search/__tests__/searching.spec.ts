@@ -1,7 +1,5 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { SearchQuery } from '#shared/graphql/types.ts'
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import {
   getGraphQLMockCalls,
   mockGraphQLResult,
@@ -9,6 +7,10 @@ import {
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { setupView } from '#tests/support/mock-user.ts'
+
+import type { SearchQuery } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
 import { SearchDocument } from '../graphql/queries/searchOverview.api.ts'
 
 describe('visiting search page', () => {

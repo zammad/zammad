@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { type Ref } from 'vue'
-import type { FormKitNode } from '@formkit/core'
+
 import {
   FormHandlerExecution,
   type ChangedField,
@@ -10,8 +10,11 @@ import {
   type FormValues,
   type FormSchemaField,
 } from '#shared/components/Form/types.ts'
-import type { Except, SetOptional } from 'type-fest'
+
 import { useSSLVerificationWarningHandler } from '../composables/useSSLVerificationWarningHandler.ts'
+
+import type { FormKitNode } from '@formkit/core'
+import type { Except, SetOptional } from 'type-fest'
 
 const getReactivity = (
   changeFields?: Ref<Record<string, Partial<FormSchemaField>>>,

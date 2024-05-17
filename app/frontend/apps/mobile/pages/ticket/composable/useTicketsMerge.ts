@@ -1,23 +1,27 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormKitNode } from '@formkit/core'
+import { keyBy } from 'lodash-es'
+import { ref, markRaw } from 'vue'
+import { useRouter } from 'vue-router'
+
 import {
   useNotifications,
   NotificationTypes,
 } from '#shared/components/CommonNotifications/index.ts'
-import { useDialog } from '#mobile/composables/useDialog.ts'
-import UserError from '#shared/errors/UserError.ts'
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
-import type { Ref } from 'vue'
-import { ref, markRaw } from 'vue'
-import { useRouter } from 'vue-router'
-import { useTicketMergeMutation } from '#shared/entities/ticket/graphql/mutations/merge.api.ts'
-import type { AutocompleteSearchMergeTicketEntry } from '#shared/graphql/types.ts'
-import { keyBy } from 'lodash-es'
-import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
-import { AutocompleteSearchMergeTicketDocument } from '../graphql/queries/autocompleteSearchMergeTicket.api.ts'
+import { useTicketMergeMutation } from '#shared/entities/ticket/graphql/mutations/merge.api.ts'
+import type { TicketById } from '#shared/entities/ticket/types.ts'
+import UserError from '#shared/errors/UserError.ts'
+import type { AutocompleteSearchMergeTicketEntry } from '#shared/graphql/types.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+
+import { useDialog } from '#mobile/composables/useDialog.ts'
+
 import TicketMergeStatus from '../components/TicketDetailView/TicketMergeStatus.vue'
+import { AutocompleteSearchMergeTicketDocument } from '../graphql/queries/autocompleteSearchMergeTicket.api.ts'
+
+import type { FormKitNode } from '@formkit/core'
+import type { Ref } from 'vue'
 
 export const useTicketsMerge = (
   sourceTicket: Ref<TicketById>,

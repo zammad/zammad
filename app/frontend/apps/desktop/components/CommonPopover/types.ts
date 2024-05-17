@@ -1,11 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Ref, Component } from 'vue'
-
 import type { RequiredPermission } from '#shared/types/permission.ts'
-
 import type { ObjectLike } from '#shared/types/utils.ts'
+
 import { type Props as ItemProps } from './CommonPopoverMenuItem.vue'
+
+import type { Ref, Component } from 'vue'
 
 export interface CommonPopoverInstance {
   openPopover(): void

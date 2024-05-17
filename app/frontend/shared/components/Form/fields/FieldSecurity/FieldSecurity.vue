@@ -1,13 +1,18 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
 import { computed, ref, toRef } from 'vue'
+
 import CommonTooltip from '#shared/components/CommonTooltip/CommonTooltip.vue'
 import type { TooltipItemDescriptor } from '#shared/components/CommonTooltip/types.ts'
-import { i18n } from '#shared/i18n.ts'
+import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
 import { translateArticleSecurity } from '#shared/entities/ticket-article/composables/translateArticleSecurity.ts'
+import { i18n } from '#shared/i18n.ts'
+
 import useValue from '../../composables/useValue.ts'
+
+import { EnumSecurityStateType } from './types.ts'
+
 import type {
   SecurityAllowed,
   SecurityDefaultOptions,
@@ -15,7 +20,6 @@ import type {
   SecurityOption,
   SecurityValue,
 } from './types.ts'
-import { EnumSecurityStateType } from './types.ts'
 import type { FormFieldContext } from '../../types/field.ts'
 
 interface FieldSecurityProps {

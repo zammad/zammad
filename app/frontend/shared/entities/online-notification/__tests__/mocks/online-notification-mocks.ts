@@ -1,11 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { LastArrayElement } from 'type-fest'
+import { nullableMock } from '#tests/support/utils.ts'
+
 import type {
   OnlineNotificationsQuery,
   Scalars,
 } from '#shared/graphql/types.ts'
-import { nullableMock } from '#tests/support/utils.ts'
+
+import type { LastArrayElement } from 'type-fest'
 
 type OnlineNotificationNode = LastArrayElement<
   OnlineNotificationsQuery['onlineNotifications']['edges']

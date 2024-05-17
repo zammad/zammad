@@ -1,24 +1,26 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { useDateFormat } from '@vueuse/shared'
 import { computed } from 'vue'
 
-import { useApplicationStore } from '#shared/stores/application.ts'
-import { getInitials } from '#shared/utils/formatter.ts'
+import { useReactiveNow } from '#shared/composables/useReactiveNow.ts'
+import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import { i18n } from '#shared/i18n.ts'
+import { getUserAvatarClasses } from '#shared/initializer/initializeUserAvatarClasses.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 import {
   SYSTEM_USER_ID,
   SYSTEM_USER_INTERNAL_ID,
 } from '#shared/utils/constants.ts'
-import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
-import { getUserAvatarClasses } from '#shared/initializer/initializeUserAvatarClasses.ts'
+import { getInitials } from '#shared/utils/formatter.ts'
 
-import { useReactiveNow } from '#shared/composables/useReactiveNow.ts'
-import { useDateFormat } from '@vueuse/shared'
 import CommonAvatar from '../CommonAvatar/CommonAvatar.vue'
-import type { AvatarSize } from '../CommonAvatar/index.ts'
-import type { AvatarUser } from './types.ts'
+
 import logo from './assets/logo.svg'
+
+import type { AvatarUser } from './types.ts'
+import type { AvatarSize } from '../CommonAvatar/index.ts'
 
 export interface Props {
   entity: AvatarUser

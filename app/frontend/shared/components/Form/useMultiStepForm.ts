@@ -1,10 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { createMessage, getNode } from '@formkit/core'
-import type { FormKitNode } from '@formkit/core'
 import { computed, toRef, ref, reactive, watch } from 'vue'
-import type { ComputedRef, Ref } from 'vue'
+
 import type { FormStep } from './types.ts'
+import type { FormKitNode } from '@formkit/core'
+import type { ComputedRef, Ref } from 'vue'
 
 interface InternalMultiFormSteps {
   label: string

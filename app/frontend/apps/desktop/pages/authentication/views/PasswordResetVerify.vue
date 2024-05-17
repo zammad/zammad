@@ -3,23 +3,26 @@
 <script setup lang="ts">
 import { ref, onBeforeMount } from 'vue'
 import { useRouter } from 'vue-router'
-import { useForm } from '#shared/components/Form/useForm.ts'
+
+import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
+import Form from '#shared/components/Form/Form.vue'
 import type {
   FormSchemaNode,
   FormSubmitData,
 } from '#shared/components/Form/types.ts'
-import Form from '#shared/components/Form/Form.vue'
-import { useApplicationStore } from '#shared/stores/application.ts'
+import { useForm } from '#shared/components/Form/useForm.ts'
 import { EnumPublicLinksScreen } from '#shared/graphql/types.ts'
-import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
-import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
-import CommonPublicLinks from '#desktop/components/CommonPublicLinks/CommonPublicLinks.vue'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
+
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
-import { useUserPasswordResetVerifyMutation } from '../graphql/mutations/userPasswordResetVerify.api.ts'
+import CommonPublicLinks from '#desktop/components/CommonPublicLinks/CommonPublicLinks.vue'
+import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
+
 import { useUserPasswordResetUpdateMutation } from '../graphql/mutations/userPasswordResetUpdate.api.ts'
+import { useUserPasswordResetVerifyMutation } from '../graphql/mutations/userPasswordResetVerify.api.ts'
 
 defineOptions({
   beforeRouteEnter(to) {

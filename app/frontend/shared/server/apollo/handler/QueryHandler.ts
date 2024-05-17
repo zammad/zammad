@@ -1,8 +1,19 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 /* eslint-disable no-use-before-define */
 
-import type { Ref, WatchStopHandle } from 'vue'
+import { getOperationName } from '@apollo/client/utilities'
+import { useApolloClient } from '@vue/apollo-composable'
 import { watch } from 'vue'
+
+import type {
+  OperationQueryOptionsReturn,
+  OperationQueryResult,
+  WatchResultCallback,
+} from '#shared/types/server/apollo/handler.ts'
+import type { ReactiveFunction } from '#shared/types/utils.ts'
+
+import BaseHandler from './BaseHandler.ts'
+
 import type {
   ApolloError,
   ApolloQueryResult,
@@ -13,16 +24,8 @@ import type {
   QueryOptions,
   SubscribeToMoreOptions,
 } from '@apollo/client/core'
-import type {
-  OperationQueryOptionsReturn,
-  OperationQueryResult,
-  WatchResultCallback,
-} from '#shared/types/server/apollo/handler.ts'
-import type { ReactiveFunction } from '#shared/types/utils.ts'
 import type { UseQueryOptions, UseQueryReturn } from '@vue/apollo-composable'
-import { useApolloClient } from '@vue/apollo-composable'
-import { getOperationName } from '@apollo/client/utilities'
-import BaseHandler from './BaseHandler.ts'
+import type { Ref, WatchStopHandle } from 'vue'
 
 export default class QueryHandler<
   TResult = OperationQueryResult,

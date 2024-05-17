@@ -1,8 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref } from 'vue'
+
 import getUuid from '#shared/utils/getUuid.ts'
+
 import { NotificationTypes } from './types.ts'
+
 import type { NewNotification, Notification } from './types.ts'
 
 const notifications = ref<Notification[]>([])

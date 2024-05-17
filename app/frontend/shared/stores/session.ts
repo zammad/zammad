@@ -1,19 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, ref } from 'vue'
-import { defineStore } from 'pinia'
 import { cloneDeep } from 'lodash-es'
-import type { JsonValue } from 'type-fest'
+import { defineStore } from 'pinia'
+import { computed, ref } from 'vue'
 
-import { useSessionLazyQuery } from '#shared/graphql/queries/session.api.ts'
+import useFingerprint from '#shared/composables/useFingerprint.ts'
 import { useCurrentUserLazyQuery } from '#shared/graphql/queries/currentUser.api.ts'
-import {
-  QueryHandler,
-  SubscriptionHandler,
-} from '#shared/server/apollo/handler/index.ts'
-import type { UserData } from '#shared/types/store.ts'
-import hasPermission from '#shared/utils/hasPermission.ts'
-import type { RequiredPermission } from '#shared/types/permission.ts'
+import { useSessionLazyQuery } from '#shared/graphql/queries/session.api.ts'
 import { useCurrentUserUpdatesSubscription } from '#shared/graphql/subscriptions/currentUserUpdates.api.ts'
 import type {
   CurrentUserQuery,
@@ -24,11 +17,19 @@ import type {
   SessionQuery,
   SessionQueryVariables,
 } from '#shared/graphql/types.ts'
-import useFingerprint from '#shared/composables/useFingerprint.ts'
-import testFlags from '#shared/utils/testFlags.ts'
+import {
+  QueryHandler,
+  SubscriptionHandler,
+} from '#shared/server/apollo/handler/index.ts'
+import type { RequiredPermission } from '#shared/types/permission.ts'
+import type { UserData } from '#shared/types/store.ts'
+import hasPermission from '#shared/utils/hasPermission.ts'
 import log from '#shared/utils/log.ts'
+import testFlags from '#shared/utils/testFlags.ts'
 
 import { useLocaleStore } from './locale.ts'
+
+import type { JsonValue } from 'type-fest'
 
 let sessionQuery: QueryHandler<SessionQuery, SessionQueryVariables>
 

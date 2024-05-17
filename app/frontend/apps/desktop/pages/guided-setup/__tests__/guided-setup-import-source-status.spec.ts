@@ -1,19 +1,20 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
 
+import { getConfigUpdatesSubscriptionHandler } from '#shared/graphql/subscriptions/configUpdates.mocks.ts'
 import {
   EnumSystemSetupInfoStatus,
   EnumSystemSetupInfoType,
 } from '#shared/graphql/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
-import { getConfigUpdatesSubscriptionHandler } from '#shared/graphql/subscriptions/configUpdates.mocks.ts'
-import { waitForNextTick } from '#tests/support/utils.ts'
 
-import { mockSystemSetupInfoQuery } from '../graphql/queries/systemSetupInfo.mocks.ts'
-import { mockSystemSetupInfo } from './mocks/mock-systemSetupInfo.ts'
 import { mockSystemImportStateQuery } from '../graphql/queries/systemImportState.mocks.ts'
+import { mockSystemSetupInfoQuery } from '../graphql/queries/systemSetupInfo.mocks.ts'
+
+import { mockSystemSetupInfo } from './mocks/mock-systemSetupInfo.ts'
 
 describe('guided setup import source status', () => {
   describe('when import_mode is not set', () => {

@@ -1,11 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { nullableMock } from '#tests/support/utils.ts'
+
 import type {
   TicketArticleEdge,
   TicketArticlesQuery,
 } from '#shared/graphql/types.ts'
-import { nullableMock } from '#tests/support/utils.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
 import type { LastArrayElement } from 'type-fest'
 
 export const mockTicketDate = new Date(2022, 0, 30, 0, 0, 0, 0)

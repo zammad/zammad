@@ -1,12 +1,14 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { waitFor } from '@testing-library/vue'
-import { getNode } from '@formkit/core'
-import type { SetRequired } from 'type-fest'
+
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
+
 import type { RadioListOption } from '../types.ts'
+import type { SetRequired } from 'type-fest'
 
 const testOptions: SetRequired<RadioListOption, 'label'>[] = [
   {

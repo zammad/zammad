@@ -3,8 +3,9 @@
 // To update snapshots, run `yarn cypress:snapshots`
 // DO NOT update snapshots, when running with --open flag (Cypress GUI)
 
-import { FormValidationVisibility } from '#shared/components/Form/types.ts'
 import { mountFormField, checkFormMatchesSnapshot } from '#cy/utils.ts'
+
+import { FormValidationVisibility } from '#shared/components/Form/types.ts'
 
 import './hide-scroll.css'
 

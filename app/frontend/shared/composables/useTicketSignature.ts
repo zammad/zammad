@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { TicketById } from '#shared/entities/ticket/types.ts'
+import type { FieldEditorContext } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import type {
   FormHandler,
   FormHandlerFunction,
@@ -8,18 +8,19 @@ import type {
   ChangedField,
 } from '#shared/components/Form/types.ts'
 import { FormHandlerExecution } from '#shared/components/Form/types.ts'
-import type { FieldEditorContext } from '#shared/components/Form/fields/FieldEditor/types.ts'
+import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { useTicketSignatureLazyQuery } from '#shared/graphql/queries/ticketSignature.api.ts'
+import type {
+  TicketSignatureQuery,
+  TicketSignatureQueryVariables,
+} from '#shared/graphql/types.ts'
 import {
   convertToGraphQLId,
   getIdFromGraphQLId,
 } from '#shared/graphql/utils.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
+
 import type { Ref } from 'vue'
-import type {
-  TicketSignatureQuery,
-  TicketSignatureQueryVariables,
-} from '#shared/graphql/types.ts'
 
 let signatureQuery: QueryHandler<
   TicketSignatureQuery,

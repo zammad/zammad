@@ -1,11 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed } from 'vue'
 import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
+
+import { EnumAuthenticationProvider } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import type { ThirdPartyAuthProvider } from '#shared/types/authentication.ts'
-import { EnumAuthenticationProvider } from '#shared/graphql/types.ts'
 
 export const useThirdPartyAuthentication = () => {
   const application = useApplicationStore()

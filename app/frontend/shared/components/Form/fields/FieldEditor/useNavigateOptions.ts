@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Ref } from 'vue'
 import { ref } from 'vue'
+
+import type { Ref } from 'vue'
 
 // we don't use useTraverOptions here because we don't FOCUS elements, just traverse
 export default function useNavigateOptions(

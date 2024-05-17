@@ -1,15 +1,17 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
-import { ApplicationBuildChecksumDocument } from '#shared/graphql/queries/applicationBuildChecksum.api.ts'
-import { AppMaintenanceDocument } from '#shared/graphql/subscriptions/appMaintenance.api.ts'
-import { EnumAppMaintenanceType } from '#shared/graphql/types.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 import {
   type ExtendedIMockSubscription,
   mockGraphQLApi,
   mockGraphQLSubscription,
 } from '#tests/support/mock-graphql-api.ts'
+
+import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
+import { ApplicationBuildChecksumDocument } from '#shared/graphql/queries/applicationBuildChecksum.api.ts'
+import { AppMaintenanceDocument } from '#shared/graphql/subscriptions/appMaintenance.api.ts'
+import { EnumAppMaintenanceType } from '#shared/graphql/types.ts'
+
 import useAppMaintenanceCheck from '../useAppMaintenanceCheck.ts'
 
 let subscriptionAppMaintenance: ExtendedIMockSubscription

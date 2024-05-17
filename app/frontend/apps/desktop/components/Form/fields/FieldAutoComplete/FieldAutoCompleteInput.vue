@@ -1,6 +1,15 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { useLazyQuery } from '@vue/apollo-composable'
+import {
+  refDebounced,
+  useElementBounding,
+  useWindowSize,
+  watchOnce,
+} from '@vueuse/core'
+import gql from 'graphql-tag'
+import { cloneDeep, escapeRegExp } from 'lodash-es'
 import {
   computed,
   markRaw,
@@ -12,35 +21,30 @@ import {
   type ConcreteComponent,
   type Ref,
 } from 'vue'
-import { cloneDeep, escapeRegExp } from 'lodash-es'
-import gql from 'graphql-tag'
-import {
-  refDebounced,
-  useElementBounding,
-  useWindowSize,
-  watchOnce,
-} from '@vueuse/core'
-import { useLazyQuery } from '@vue/apollo-composable'
-import type { FormKitNode } from '@formkit/core'
-import type { NameNode, OperationDefinitionNode, SelectionNode } from 'graphql'
-import CommonInputSearch from '#desktop/components/CommonInputSearch/CommonInputSearch.vue'
-import CommonSelect from '#desktop/components/CommonSelect/CommonSelect.vue'
-import type { CommonSelectInstance } from '#desktop/components/CommonSelect/types'
-import { i18n } from '#shared/i18n.ts'
-import { useFormBlock } from '#shared/form/useFormBlock.ts'
+
+import type { SelectOption } from '#shared/components/CommonSelect/types'
 import useValue from '#shared/components/Form/composables/useValue.ts'
-import useSelectOptions from '#shared/composables/useSelectOptions.ts'
-import { useTrapTab } from '#shared/composables/useTrapTab.ts'
-import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
-import type { ObjectLike } from '#shared/types/utils.ts'
-import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import type {
   AutoCompleteOption,
   AutoCompleteProps,
   AutocompleteSelectValue,
 } from '#shared/components/Form/fields/FieldAutocomplete/types.ts'
-import type { SelectOption } from '#shared/components/CommonSelect/types'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import useSelectOptions from '#shared/composables/useSelectOptions.ts'
+import { useTrapTab } from '#shared/composables/useTrapTab.ts'
+import { useFormBlock } from '#shared/form/useFormBlock.ts'
+import { i18n } from '#shared/i18n.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
+
+import CommonInputSearch from '#desktop/components/CommonInputSearch/CommonInputSearch.vue'
+import CommonSelect from '#desktop/components/CommonSelect/CommonSelect.vue'
+import type { CommonSelectInstance } from '#desktop/components/CommonSelect/types'
+
 import FieldAutoCompleteOptionIcon from './FieldAutoCompleteOptionIcon.vue'
+
+import type { FormKitNode } from '@formkit/core'
+import type { NameNode, OperationDefinitionNode, SelectionNode } from 'graphql'
 
 interface Props {
   context: FormFieldContext<AutoCompleteProps>

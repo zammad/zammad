@@ -1,19 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import {
-  Kind,
-  type DocumentNode,
-  OperationTypeNode,
-  GraphQLError,
-  type DefinitionNode,
-  type FieldNode,
-  type OperationDefinitionNode,
-  type TypeNode,
-  type SelectionNode,
-  type FragmentDefinitionNode,
-} from 'graphql'
-import { waitForNextTick } from '#tests/support/utils.ts'
-import {
   ApolloClient,
   ApolloLink,
   Observable,
@@ -25,12 +12,28 @@ import {
   mergeDeep,
   removeConnectionDirectiveFromDocument,
 } from '@apollo/client/utilities'
+import { provideApolloClient } from '@vue/apollo-composable'
 import { visit, print } from 'graphql'
+import {
+  Kind,
+  type DocumentNode,
+  OperationTypeNode,
+  GraphQLError,
+  type DefinitionNode,
+  type FieldNode,
+  type OperationDefinitionNode,
+  type TypeNode,
+  type SelectionNode,
+  type FragmentDefinitionNode,
+} from 'graphql'
+import { noop } from 'lodash-es'
+
+import { waitForNextTick } from '#tests/support/utils.ts'
+
 import createCache from '#shared/server/apollo/cache.ts'
 import type { CacheInitializerModules } from '#shared/types/server/apollo/client.ts'
-import { noop } from 'lodash-es'
-import { provideApolloClient } from '@vue/apollo-composable'
 import type { DeepPartial, DeepRequired } from '#shared/types/utils.ts'
+
 import {
   getFieldData,
   getObjectDefinition,

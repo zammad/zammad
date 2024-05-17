@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+
 import { FieldResolverInteger } from '../integer.ts'
 
 describe('FieldResovlerInput', () => {

@@ -4,19 +4,19 @@
 import { shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
 
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
-import type { SignupFormData } from '#shared/entities/user/types.ts'
-import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import Form from '#shared/components/Form/Form.vue'
+import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import useFingerprint from '#shared/composables/useFingerprint.ts'
+import type { SignupFormData } from '#shared/entities/user/types.ts'
+import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 
 import { useSignupForm } from '#desktop/composables/authentication/useSignupForm.ts'
 
-import { useSystemSetup } from '../../composables/useSystemSetup.ts'
-import { useSystemSetupInfoStore } from '../../stores/systemSetupInfo.ts'
 import GuidedSetupActionFooter from '../../components/GuidedSetupActionFooter.vue'
+import { useSystemSetup } from '../../composables/useSystemSetup.ts'
 import { useUserAddFirstAdminMutation } from '../../graphql/mutations/userAddFirstAdmin.api.ts'
+import { useSystemSetupInfoStore } from '../../stores/systemSetupInfo.ts'
 
 const { setTitle } = useSystemSetup()
 

@@ -2,15 +2,18 @@
 
 <script setup lang="ts">
 import { computed, ref, watchEffect } from 'vue'
+
+import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
+import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
+
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
-import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import CommonTicketStateList from '#mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
-import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
-import { useOrganizationEdit } from '#mobile/entities/organization/composables/useOrganizationEdit.ts'
 import OrganizationMembersList from '#mobile/components/Organization/OrganizationMembersList.vue'
-import { useOrganizationTicketsCount } from '#mobile/entities/organization/composables/useOrganizationTicketsCount.ts'
 import { useOrganizationDetail } from '#mobile/entities/organization/composables/useOrganizationDetail.ts'
+import { useOrganizationEdit } from '#mobile/entities/organization/composables/useOrganizationEdit.ts'
+import { useOrganizationTicketsCount } from '#mobile/entities/organization/composables/useOrganizationTicketsCount.ts'
+
 import { useTicketInformation } from '../../composable/useTicketInformation.ts'
 
 const { ticket, updateRefetchingStatus } = useTicketInformation()

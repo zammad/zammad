@@ -1,25 +1,26 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { computed, shallowRef } from 'vue'
-import type { Ref } from 'vue'
-import type { FormKitNode } from '@formkit/core'
 
+import type { FieldEditorContext } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import { FormHandlerExecution } from '#shared/components/Form/types.ts'
-import { createArticleTypes } from '#shared/entities/ticket-article/action/plugins/index.ts'
-import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
-import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
-import type {
-  AppSpecificTicketArticleType,
-  TicketArticleTypeFields,
-} from '#shared/entities/ticket-article/action/plugins/types.ts'
-import type { TicketById } from '#shared/entities/ticket/types.ts'
 import type {
   ChangedField,
   ReactiveFormSchemData,
   FormHandlerFunction,
   FormRef,
 } from '#shared/components/Form/types.ts'
-import type { FieldEditorContext } from '#shared/components/Form/fields/FieldEditor/types.ts'
+import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
+import type { TicketById } from '#shared/entities/ticket/types.ts'
+import { createArticleTypes } from '#shared/entities/ticket-article/action/plugins/index.ts'
+import type {
+  AppSpecificTicketArticleType,
+  TicketArticleTypeFields,
+} from '#shared/entities/ticket-article/action/plugins/types.ts'
+import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+
+import type { FormKitNode } from '@formkit/core'
+import type { Ref } from 'vue'
 
 export const useTicketEditForm = (
   ticket: Ref<TicketById | undefined>,

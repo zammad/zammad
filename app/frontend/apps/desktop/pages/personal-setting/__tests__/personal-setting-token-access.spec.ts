@@ -2,20 +2,21 @@
 
 import { within } from '@testing-library/vue'
 
-import { visitView } from '#tests/support/components/visitView.ts'
-import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
-import { mockPermissions } from '#tests/support/mock-permissions.ts'
-import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import { mockUserCurrentAccessTokenListQuery } from '#shared/entities/user/current/graphql/queries/userCurrentAcessTokenList.mocks.ts'
 import {
   checkSimpleTableContent,
   checkSimpleTableHeader,
 } from '#tests/support/components/checkSimpleTableContent.ts'
-import { mockUserCurrentAccessTokenDeleteMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAccessTokenDelete.mocks.ts'
+import { visitView } from '#tests/support/components/visitView.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
+
 import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
 import { mockUserCurrentAccessTokenAddMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAccessTokenAdd.mocks.ts'
-import { waitForNextTick } from '#tests/support/utils.ts'
+import { mockUserCurrentAccessTokenDeleteMutation } from '#shared/entities/user/current/graphql/mutations/userCurrentAccessTokenDelete.mocks.ts'
+import { mockUserCurrentAccessTokenListQuery } from '#shared/entities/user/current/graphql/queries/userCurrentAcessTokenList.mocks.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { getUserCurrentAccessTokenUpdatesSubscriptionHandler } from '../graphql/subscriptions/userCurrentAccessTokenUpdates.mocks.ts'
 

@@ -1,10 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { i18n } from '#shared/i18n.ts'
-import { renderComponent } from '#tests/support/components/index.ts'
 import { flushPromises } from '@vue/test-utils'
-import { useLocaleStore } from '#shared/stores/locale.ts'
+
+import { renderComponent } from '#tests/support/components/index.ts'
+
 import { EnumTextDirection } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
+
 import CommonBackButton from '../CommonBackButton.vue'
 
 // $walker.back not tested because there is a unit test for it

@@ -2,14 +2,16 @@
 
 <script setup lang="ts">
 import { computed, onBeforeMount, ref } from 'vue'
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
-import UserError from '#shared/errors/UserError.ts'
+
 import { useUserCurrentTwoFactorRecoveryCodesGenerateMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorRecoveryCodesGenerate.api.ts'
+import UserError from '#shared/errors/UserError.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
-import { usePrintMode } from '#desktop/composables/usePrintMode.ts'
 import { useCopyToClipboard } from '#desktop/composables/useCopyToClipboard.ts'
+import { usePrintMode } from '#desktop/composables/usePrintMode.ts'
+
 import type { TwoFactorConfigurationComponentProps } from '../types.ts'
 
 const props = defineProps<TwoFactorConfigurationComponentProps>()

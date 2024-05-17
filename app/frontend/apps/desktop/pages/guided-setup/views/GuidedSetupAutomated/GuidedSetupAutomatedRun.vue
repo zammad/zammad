@@ -2,22 +2,20 @@
 
 <script setup lang="ts">
 import { computed, ref } from 'vue'
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
-import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
-
-import useFingerprint from '#shared/composables/useFingerprint.ts'
-import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import { useRouter } from 'vue-router'
 
+import useFingerprint from '#shared/composables/useFingerprint.ts'
 import type UserError from '#shared/errors/UserError.ts'
+import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
+import { useAuthenticationStore } from '#shared/stores/authentication.ts'
+
+import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
 
 // TODO: check
 // eslint-disable-next-line import/no-restricted-paths
 import { ensureAfterAuth } from '../../../authentication/after-auth/composable/useAfterAuthPlugins.ts'
-
-import { useSystemSetupRunAutoWizardMutation } from '../../graphql/mutations/systemSetupRunAutoWizard.api.ts'
-
 import GuidedSetupStatusMessage from '../../components/GuidedSetupStatusMessage.vue'
+import { useSystemSetupRunAutoWizardMutation } from '../../graphql/mutations/systemSetupRunAutoWizard.api.ts'
 
 interface Props {
   token?: string

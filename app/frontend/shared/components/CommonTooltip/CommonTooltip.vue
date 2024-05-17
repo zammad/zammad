@@ -4,8 +4,11 @@
 // https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/
 
 import { ref } from 'vue'
+
 import { useSharedVisualConfig } from '#shared/composables/useSharedVisualConfig.ts'
+
 import { useTooltipControls } from './useTooltipControls.ts'
+
 import type { TooltipItemDescriptor } from './types.ts'
 
 export interface Props {

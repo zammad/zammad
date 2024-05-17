@@ -1,8 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { renderComponent } from '#tests/support/components/index.ts'
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
 import CommonFilePreview, { type Props } from '../CommonFilePreview.vue'
 
 const renderFilePreview = (

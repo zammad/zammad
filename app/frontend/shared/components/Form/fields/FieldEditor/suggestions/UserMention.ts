@@ -1,21 +1,25 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import Mention from '@tiptap/extension-mention'
 import Link from '@tiptap/extension-link'
-import type { Ref } from 'vue'
-import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
-import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
+import Mention from '@tiptap/extension-mention'
+
 import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
-import { ensureGraphqlId } from '#shared/graphql/utils.ts'
-import { debouncedQuery } from '#shared/utils/helpers.ts'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import { getNodeByName } from '#shared/components/Form/utils.ts'
+import { ensureGraphqlId } from '#shared/graphql/utils.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
-import buildMentionSuggestion from './suggestions.ts'
-import type { FieldEditorProps, MentionUserItem } from '../types.ts'
+import { debouncedQuery } from '#shared/utils/helpers.ts'
+
 import { useMentionSuggestionsLazyQuery } from '../graphql/queries/mention/mentionSuggestions.api.ts'
+
+import buildMentionSuggestion from './suggestions.ts'
+
+import type { FieldEditorProps, MentionUserItem } from '../types.ts'
+import type { Ref } from 'vue'
 
 export const PLUGIN_NAME = 'mentionUser'
 export const PLUGIN_LINK_NAME = 'mentionUserLink'

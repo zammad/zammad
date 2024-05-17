@@ -5,17 +5,21 @@ import {
   type AutocompleteSearchObjectAttributeExternalDataSourceInput,
 } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
 import {
   getGraphQLMockCalls,
   mockGraphQLResult,
   mockedApolloClient,
 } from '../mocks.ts'
+
 import {
   TestAutocompleteArrayFirstLevel,
   TestAvatarDocument,
   TestTicketArticlesMultiple,
   TestUserDocument,
 } from './queries.ts'
+import { getQueryHandler } from './utils.ts'
+
 import type {
   TestAutocompleteArrayFirstLevelQuery,
   TestAvatarQuery,
@@ -23,7 +27,6 @@ import type {
   TestUserQuery,
   TestUserQueryVariables,
 } from './queries.ts'
-import { getQueryHandler } from './utils.ts'
 
 describe('calling queries without mocking document works correctly', () => {
   it('client is defined', () => {

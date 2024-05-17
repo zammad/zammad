@@ -1,17 +1,18 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, ref, type Ref, watch } from 'vue'
-import { i18n } from '#shared/i18n.ts'
 import { cloneDeep, keyBy } from 'lodash-es'
-import type { AutoCompleteOption } from '#shared/components/Form/fields/FieldAutocomplete/types'
-import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
-import useValue from '#shared/components/Form/composables/useValue.ts'
+import { computed, ref, type Ref, watch } from 'vue'
+
 import type {
   SelectOption,
   SelectValue,
 } from '#shared/components/CommonSelect/types.ts'
+import useValue from '#shared/components/Form/composables/useValue.ts'
+import type { AutoCompleteOption } from '#shared/components/Form/fields/FieldAutocomplete/types'
 import type { SelectOptionSorting } from '#shared/components/Form/fields/FieldSelect/types.ts'
 import type { FlatSelectOption } from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+import { i18n } from '#shared/i18n.ts'
 
 type AllowedSelectValue = SelectValue | Record<string, unknown>
 

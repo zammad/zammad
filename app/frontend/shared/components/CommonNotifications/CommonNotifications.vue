@@ -3,9 +3,9 @@
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
 
-import { getNotificationClasses } from '#shared/initializer/initializeNotificationClasses.ts'
-import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import type { Notification } from '#shared/components/CommonNotifications/types.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
+import { getNotificationClasses } from '#shared/initializer/initializeNotificationClasses.ts'
 import { markup } from '#shared/utils/markup.ts'
 
 const notificationTypeClassMap = getNotificationClasses()

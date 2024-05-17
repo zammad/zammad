@@ -10,16 +10,17 @@ import {
   textInput,
   url as inputUrlDefinition,
 } from '@formkit/inputs'
+
 import initializeFieldDefinition from '#shared/form/core/initializeFieldDefinition.ts'
 import addLink from '#shared/form/features/addLink.ts'
 import addSubmitEvent from '#shared/form/features/addSubmitEvent.ts'
+import defaultEmptyValueString from '#shared/form/features/defaultEmptyValueString.ts'
 import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
 import { setPopulatedOnWebkitAutofill } from '#shared/form/features/setPopulatedOnWebkitAutofill.ts'
 import type {
   FormFieldsTypeDefinition,
   FormFieldType,
 } from '#shared/types/form.ts'
-import defaultEmptyValueString from '#shared/form/features/defaultEmptyValueString.ts'
 
 const inputFieldDefinitionList: FormFieldsTypeDefinition = {
   text: inputTextDefinition,

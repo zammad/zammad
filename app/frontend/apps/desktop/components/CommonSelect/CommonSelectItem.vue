@@ -3,12 +3,13 @@
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
 import { computed, type ConcreteComponent } from 'vue'
-import { i18n } from '#shared/i18n.ts'
+
 import type {
   MatchedSelectOption,
   SelectOption,
 } from '#shared/components/CommonSelect/types.ts'
 import type { AutoCompleteOption } from '#shared/components/Form/fields/FieldAutocomplete/types'
+import { i18n } from '#shared/i18n.ts'
 
 const props = defineProps<{
   option: MatchedSelectOption | SelectOption

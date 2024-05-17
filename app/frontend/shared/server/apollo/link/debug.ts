@@ -1,9 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { capitalize, isEmpty } from 'lodash-es'
 import { ApolloLink } from '@apollo/client/core'
 import { getMainDefinition } from '@apollo/client/utilities'
 import { print } from 'graphql/language/printer'
+import { capitalize, isEmpty } from 'lodash-es'
+
 import type {
   DebugLinkRequestOutput,
   DebugLinkResponseOutput,

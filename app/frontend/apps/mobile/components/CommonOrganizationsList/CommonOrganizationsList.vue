@@ -1,8 +1,9 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { AvatarOrganization } from '#shared/components/CommonOrganizationAvatar/index.ts'
 import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
+import type { AvatarOrganization } from '#shared/components/CommonOrganizationAvatar/index.ts'
+
 import CommonSectionMenu from '../CommonSectionMenu/CommonSectionMenu.vue'
 import CommonShowMoreButton from '../CommonShowMoreButton/CommonShowMoreButton.vue'
 

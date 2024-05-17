@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { defineComponent, nextTick } from 'vue'
+
 import { renderComponent } from '#tests/support/components/index.ts'
+
 import { i18n } from '#shared/i18n.ts'
 
 const Example = defineComponent({

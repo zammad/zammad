@@ -1,21 +1,23 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
-import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
-import { waitForUserCurrentNotificationPreferencesResetMutationCalls } from '#desktop/pages/personal-setting/graphql/mutations/userCurrentNotificationPreferencesReset.mocks.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
-import {
-  mockUserCurrentNotificationPreferencesUpdateMutation,
-  waitForUserCurrentNotificationPreferencesUpdateMutationCalls,
-} from '#desktop/pages/personal-setting/graphql/mutations/userCurrentNotificationPreferencesUpdate.mocks.ts'
-import { mockCurrentUserQuery } from '#shared/graphql/queries/currentUser.mocks.ts'
+
 import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
+import { mockCurrentUserQuery } from '#shared/graphql/queries/currentUser.mocks.ts'
 import {
   EnumFormUpdaterId,
   EnumNotificationSoundFile,
 } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
+import { waitForUserCurrentNotificationPreferencesResetMutationCalls } from '#desktop/pages/personal-setting/graphql/mutations/userCurrentNotificationPreferencesReset.mocks.ts'
+import {
+  mockUserCurrentNotificationPreferencesUpdateMutation,
+  waitForUserCurrentNotificationPreferencesUpdateMutationCalls,
+} from '#desktop/pages/personal-setting/graphql/mutations/userCurrentNotificationPreferencesUpdate.mocks.ts'
 
 const mockPersonalSettings = (withGroups = true) => {
   return {

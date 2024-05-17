@@ -1,12 +1,14 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { mockPublicLinksQuery } from '#shared/entities/public-links/graphql/queries/links.mocks.ts'
 import {
   getTestRouter,
   type ExtendedRenderResult,
 } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
+import { mockPublicLinksQuery } from '#shared/entities/public-links/graphql/queries/links.mocks.ts'
+
 import { waitForUserPasswordResetUpdateMutationCalls } from '../graphql/mutations/userPasswordResetUpdate.mocks.ts'
 import { mockUserPasswordResetVerifyMutation } from '../graphql/mutations/userPasswordResetVerify.mocks.ts'
 

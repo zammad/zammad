@@ -1,8 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { FormKit } from '@formkit/vue'
-import type { ExtendedMountingOptions } from '#tests/support/components/index.ts'
+
 import { renderComponent } from '#tests/support/components/index.ts'
+import type { ExtendedMountingOptions } from '#tests/support/components/index.ts'
 
 const wrapperParameters = {
   form: true,

@@ -1,13 +1,14 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { App } from 'vue'
-import type { FormKit } from '@formkit/vue'
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
-import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
-import CommonLink from '#shared/components/CommonLink/CommonLink.vue'
-import CommonDateTime from '#shared/components/CommonDateTime/CommonDateTime.vue'
-import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import CommonBadge from '#shared/components/CommonBadge/CommonBadge.vue'
+import CommonDateTime from '#shared/components/CommonDateTime/CommonDateTime.vue'
+import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
+import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
+import CommonLink from '#shared/components/CommonLink/CommonLink.vue'
+
+import type { FormKit } from '@formkit/vue'
+import type { App } from 'vue'
 import type { RouterLink, RouterView } from 'vue-router'
 
 declare module '@vue/runtime-core' {

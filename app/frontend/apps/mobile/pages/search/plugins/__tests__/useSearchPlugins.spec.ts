@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { useSessionStore } from '#shared/stores/session.ts'
+
 import { useSearchPlugins } from '../index.ts'
 
 vi.mock('#shared/stores/session.ts', () => {

@@ -1,9 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { CredentialCreationOptionsJSON } from '@github/webauthn-json'
 import type { TwoFactorConfigurationPlugin } from '#shared/entities/two-factor/types.ts'
 import { EnumTwoFactorAuthenticationMethod } from '#shared/graphql/types.ts'
+
 import TwoFactorConfigurationSecurityKeys from '#desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue'
+
+import type { CredentialCreationOptionsJSON } from '@github/webauthn-json'
 
 export default {
   name: EnumTwoFactorAuthenticationMethod.SecurityKeys,

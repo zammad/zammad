@@ -1,5 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import type { ExtendedRenderResult } from '#tests/support/components/renderComponent.ts'
+import { visitView } from '#tests/support/components/visitView.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+
 import {
   mockPublicLinks,
   mockPublicLinksSubscription,
@@ -9,10 +14,6 @@ import {
   EnumTwoFactorAuthenticationMethod,
   type LoginMutation,
 } from '#shared/graphql/types.ts'
-import type { ExtendedRenderResult } from '#tests/support/components/renderComponent.ts'
-import { visitView } from '#tests/support/components/visitView.ts'
-import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
-import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 
 const twoFactorAuthentication = () => ({
   availableTwoFactorAuthenticationMethods: [

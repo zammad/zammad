@@ -1,21 +1,24 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
-import type { DocumentNode, OperationVariables } from '@apollo/client/core'
 import { render } from '@testing-library/vue'
 import {
   useLazyQuery,
   useMutation,
   useSubscription,
 } from '@vue/apollo-composable'
+
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
+import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import SubscriptionHandler from '#shared/server/apollo/handler/SubscriptionHandler.ts'
-import type { OptionsParameter } from '@vue/apollo-composable/dist/useQuery'
+
 import {
   getGraphQLMockCalls,
   getGraphQLSubscriptionHandler,
   type TestSubscriptionHandler,
 } from '../mocks.ts'
+
+import type { DocumentNode, OperationVariables } from '@apollo/client/core'
+import type { OptionsParameter } from '@vue/apollo-composable/dist/useQuery'
 
 interface EnhancedQueryHandler<R, V extends OperationVariables>
   extends QueryHandler<R, V> {

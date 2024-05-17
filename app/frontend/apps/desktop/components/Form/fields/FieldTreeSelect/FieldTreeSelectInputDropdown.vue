@@ -1,30 +1,34 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { Ref } from 'vue'
-import { onUnmounted, computed, nextTick, ref, toRef } from 'vue'
 import {
   type UseElementBoundingReturn,
   onClickOutside,
   onKeyDown,
   useVModel,
 } from '@vueuse/core'
-import { useFocusWhenTyping } from '#shared/composables/useFocusWhenTyping.ts'
-import { useLocaleStore } from '#shared/stores/locale.ts'
-import { useTrapTab } from '#shared/composables/useTrapTab.ts'
-import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
-import stopEvent from '#shared/utils/events.ts'
-import testFlags from '#shared/utils/testFlags.ts'
-import { i18n } from '#shared/i18n.ts'
+import { onUnmounted, computed, nextTick, ref, toRef } from 'vue'
+
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
-import { useCommonSelect } from '#desktop/components/CommonSelect/useCommonSelect.ts'
-import { useTransitionCollapse } from '#desktop/composables/useTransitionCollapse.ts'
 import type {
   FlatSelectOption,
   MatchedFlatSelectOption,
 } from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
-import type { FieldTreeSelectInputDropdownInternalInstance } from './types.ts'
+import { useFocusWhenTyping } from '#shared/composables/useFocusWhenTyping.ts'
+import { useTrapTab } from '#shared/composables/useTrapTab.ts'
+import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
+import { i18n } from '#shared/i18n.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
+import stopEvent from '#shared/utils/events.ts'
+import testFlags from '#shared/utils/testFlags.ts'
+
+import { useCommonSelect } from '#desktop/components/CommonSelect/useCommonSelect.ts'
+import { useTransitionCollapse } from '#desktop/composables/useTransitionCollapse.ts'
+
 import FieldTreeSelectInputDropdownItem from './FieldTreeSelectInputDropdownItem.vue'
+
+import type { FieldTreeSelectInputDropdownInternalInstance } from './types.ts'
+import type { Ref } from 'vue'
 
 export interface Props {
   // we cannot move types into separate file, because Vue would not be able to

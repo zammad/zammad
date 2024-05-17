@@ -1,18 +1,19 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { ProductAboutDocument } from '#shared/graphql/queries/about.api.ts'
-import { TranslationsDocument } from '#shared/graphql/queries/translations.api.ts'
-import type { LocalesQuery } from '#shared/graphql/types.ts'
-import { EnumTextDirection } from '#shared/graphql/types.ts'
-import { useLocaleStore } from '#shared/stores/locale.ts'
+import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
-import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
-import { waitUntil, waitUntilApisResolved } from '#tests/support/utils.ts'
 import { setupView } from '#tests/support/mock-user.ts'
-import { getTestRouter } from '#tests/support/components/renderComponent.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
+import { waitUntil, waitUntilApisResolved } from '#tests/support/utils.ts'
+
 import { UserCurrentLocaleDocument } from '#shared/entities/user/current/graphql/mutations/userCurrentLocale.api.ts'
+import { ProductAboutDocument } from '#shared/graphql/queries/about.api.ts'
+import { TranslationsDocument } from '#shared/graphql/queries/translations.api.ts'
+import { EnumTextDirection } from '#shared/graphql/types.ts'
+import type { LocalesQuery } from '#shared/graphql/types.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
 
 const locales: Record<string, LocalesQuery['locales'][number]> = {
   de: {

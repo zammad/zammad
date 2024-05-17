@@ -1,6 +1,5 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { App } from 'vue'
 import {
   createRouter,
   createWebHistory,
@@ -9,13 +8,17 @@ import {
   type Router,
   type RouteRecordRaw,
 } from 'vue-router'
-import type { RouteRecordMeta } from '#shared/types/router.ts'
+
 import { useApplicationStore } from '#shared/stores/application.ts'
+import type { RouteRecordMeta } from '#shared/types/router.ts'
+
+import { errorAfterGuard } from './error.ts'
+import headerTitleGuard from './guards/after/headerTitle.ts'
 import authenticationGuard from './guards/before/authentication.ts'
 import permissionGuard from './guards/before/permission.ts'
-import headerTitleGuard from './guards/after/headerTitle.ts'
-import { errorAfterGuard } from './error.ts'
 import { initializeWalker } from './walker.ts'
+
+import type { App } from 'vue'
 
 declare module 'vue-router' {
   // eslint-disable-next-line @typescript-eslint/no-empty-interface

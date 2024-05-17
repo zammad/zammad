@@ -3,6 +3,7 @@
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
 import { getAllByRole } from '@testing-library/vue'
+
 import { renderComponent } from '#tests/support/components/index.ts'
 
 const wrapperParameters = {

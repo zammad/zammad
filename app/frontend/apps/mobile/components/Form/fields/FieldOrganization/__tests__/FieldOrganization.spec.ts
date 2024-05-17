@@ -1,23 +1,26 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { escapeRegExp } from 'lodash-es'
-import { waitFor } from '@testing-library/vue'
-import { FormKit } from '@formkit/vue'
 import { getNode } from '@formkit/core'
-import { renderComponent } from '#tests/support/components/index.ts'
+import { FormKit } from '@formkit/vue'
+import { waitFor } from '@testing-library/vue'
+import { escapeRegExp } from 'lodash-es'
+
 import { queryByIconName } from '#tests/support/components/iconQueries.ts'
-import type {
-  AutocompleteSearchOrganizationEntry,
-  AutocompleteSearchOrganizationQuery,
-} from '#shared/graphql/types.ts'
-import type { MockGraphQLInstance } from '#tests/support/mock-graphql-api.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
+import type { MockGraphQLInstance } from '#tests/support/mock-graphql-api.ts'
 import {
   nullableMock,
   waitForNextTick,
   waitUntil,
 } from '#tests/support/utils.ts'
+
 import { AutocompleteSearchOrganizationDocument } from '#shared/components/Form/fields/FieldOrganization/graphql/queries/autocompleteSearch/organization.api.ts'
+import type {
+  AutocompleteSearchOrganizationEntry,
+  AutocompleteSearchOrganizationQuery,
+} from '#shared/graphql/types.ts'
+
 import testOptions from './test-options.json'
 
 const mockQueryResult = (input: {

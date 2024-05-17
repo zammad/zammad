@@ -1,17 +1,19 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import type { JsonValue } from 'type-fest'
 import { defineAsyncComponent } from 'vue'
-import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+
 import type {
   AutoCompleteProps,
   AutocompleteSelectValue,
 } from '#shared/components/Form/fields/FieldAutocomplete/types.ts'
-import type { AutoCompleteExternalDataSourceOption } from '#shared/components/Form/fields/FieldExternalDataSource/types.ts'
 import { AutocompleteSearchObjectAttributeExternalDataSourceDocument } from '#shared/components/Form/fields/FieldExternalDataSource/graphql/queries/autocompleteSearchObjectAttributeExternalDataSource.api.ts'
-import type { ObjectLike } from '#shared/types/utils.ts'
+import type { AutoCompleteExternalDataSourceOption } from '#shared/components/Form/fields/FieldExternalDataSource/types.ts'
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
+
+import type { JsonValue } from 'type-fest'
 
 const FieldAutoCompleteInput = defineAsyncComponent(
   () =>

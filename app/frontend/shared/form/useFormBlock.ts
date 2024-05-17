@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
-import type { Ref } from 'vue'
 import { onUnmounted } from 'vue'
+
+import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
+
+import type { Ref } from 'vue'
 
 // TODO maybe there is a better way to do this with FormKit?
 export const useFormBlock = (

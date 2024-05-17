@@ -1,13 +1,14 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { ref, watch } from 'vue'
 import { useActiveElement } from '@vueuse/core'
-import ResizeHandle from '#desktop/components/ResizeHandle/ResizeHandle.vue'
+import { ref, watch } from 'vue'
+
 import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vue'
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useCollapseHandler } from '#desktop/components/CollapseButton/composables/useCollapseHandler.ts'
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useResizeWidthHandle } from '#desktop/components/ResizeHandle/composables/useResizeWidthHandle.ts'
+import ResizeHandle from '#desktop/components/ResizeHandle/ResizeHandle.vue'
 
 interface Props {
   name: string

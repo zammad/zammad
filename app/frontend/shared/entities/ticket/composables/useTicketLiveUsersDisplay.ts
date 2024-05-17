@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref, type Ref, watch } from 'vue'
+
 import { useReactiveNow } from '#shared/composables/useReactiveNow.ts'
+
 import type { TicketLiveAppUser } from '../types.ts'
 
 // Default idle time from 5 minutes.

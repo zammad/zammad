@@ -1,8 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { waitForGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
-import { waitForGraphQLMockCalls } from '#tests/graphql/builders/mocks.ts'
+
 import { mockLoginMutation } from '#shared/graphql/mutations/login.mocks.ts'
 
 describe('password login', () => {

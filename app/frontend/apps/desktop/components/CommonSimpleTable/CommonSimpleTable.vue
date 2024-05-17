@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
+
 import type { TableHeader, TableItem } from './types.ts'
 
 export interface Props {

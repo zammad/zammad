@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { useSessionStore } from '#shared/stores/session.ts'
+
 import type { TicketById, TicketView } from '../types.ts'
 
 export const getTicketView = (ticket: TicketById) => {

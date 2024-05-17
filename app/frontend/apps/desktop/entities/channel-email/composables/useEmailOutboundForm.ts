@@ -1,12 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ShallowRef } from 'vue'
 import { shallowRef, reactive } from 'vue'
 
 import type { FormRef, FormSchemaField } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 
 import type { EmailOutboundData } from '../types/email-inbound-outbound.ts'
+import type { ShallowRef } from 'vue'
 
 export const useEmailOutboundForm = () => {
   const formEmailOutbound: ShallowRef<FormRef | undefined> = shallowRef()

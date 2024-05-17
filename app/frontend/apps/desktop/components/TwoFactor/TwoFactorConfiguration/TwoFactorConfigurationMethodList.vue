@@ -2,9 +2,12 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+
 import { useApplicationConfigTwoFactor } from '#shared/composables/authentication/useApplicationConfigTwoFactor.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
+
+import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+
 import type {
   TwoFactorConfigurationComponentProps,
   TwoFactorConfigurationType,

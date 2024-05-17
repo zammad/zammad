@@ -2,6 +2,7 @@
 
 import createInput from '#shared/form/core/createInput.ts'
 import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
+
 import FieldNotificationsInput from './FieldNotificationsInput.vue'
 
 const fieldDefinition = createInput(FieldNotificationsInput, [], {

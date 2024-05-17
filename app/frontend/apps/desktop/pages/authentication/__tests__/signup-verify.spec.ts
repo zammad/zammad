@@ -1,9 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
-import { visitView } from '#tests/support/components/visitView.ts'
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
+import { visitView } from '#tests/support/components/visitView.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+
 import { mockUserSignupVerifyMutation } from '../graphql/mutations/userSignupVerify.mocks.ts'
 
 describe('signup verify view', () => {

@@ -1,33 +1,36 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, watch, nextTick } from 'vue'
+import { useEventListener } from '@vueuse/core'
 import { noop } from 'lodash-es'
-import { useHeader } from '#mobile/composables/useHeader.ts'
-import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
-import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
-import {
-  convertToGraphQLId,
-  getIdFromGraphQLId,
-} from '#shared/graphql/utils.ts'
+import { computed, watch, nextTick } from 'vue'
+import { useRoute } from 'vue-router'
+
+import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
 import type {
   PageInfo,
   TicketArticleUpdatesSubscription,
   TicketArticleUpdatesSubscriptionVariables,
 } from '#shared/graphql/types.ts'
+import {
+  convertToGraphQLId,
+  getIdFromGraphQLId,
+} from '#shared/graphql/utils.ts'
 import { getApolloClient } from '#shared/server/apollo/client.ts'
-import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
-import { edgesToArray, waitForElement } from '#shared/utils/helpers.ts'
-import { useRoute } from 'vue-router'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
-import { useEventListener } from '@vueuse/core'
+import { edgesToArray, waitForElement } from '#shared/utils/helpers.ts'
+
+import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
+import { useHeader } from '#mobile/composables/useHeader.ts'
+
+import TicketArticlesList from '../components/TicketDetailView/ArticlesList.vue'
 import TicketHeader from '../components/TicketDetailView/TicketDetailViewHeader.vue'
 import TicketTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
-import TicketArticlesList from '../components/TicketDetailView/ArticlesList.vue'
-import { useTicketArticlesQuery } from '../graphql/queries/ticket/articles.api.ts'
-import { useTicketInformation } from '../composable/useTicketInformation.ts'
-import { TicketArticleUpdatesDocument } from '../graphql/subscriptions/ticketArticlesUpdates.api.ts'
 import { useTicketArticlesQueryVariables } from '../composable/useTicketArticlesVariables.ts'
+import { useTicketInformation } from '../composable/useTicketInformation.ts'
+import { useTicketArticlesQuery } from '../graphql/queries/ticket/articles.api.ts'
+import { TicketArticleUpdatesDocument } from '../graphql/subscriptions/ticketArticlesUpdates.api.ts'
 
 interface Props {
   internalId: string

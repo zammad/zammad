@@ -1,18 +1,22 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { NetworkStatus } from '@apollo/client/core'
 import { useLazyQuery, useQuery } from '@vue/apollo-composable'
-import createMockClient from '#tests/support/mock-apollo-client.ts'
+
+import { SampleTypedQueryDocument } from '#tests/fixtures/graphqlSampleTypes.ts'
 import type {
   SampleQuery,
   SampleQueryVariables,
 } from '#tests/fixtures/graphqlSampleTypes.ts'
-import { SampleTypedQueryDocument } from '#tests/fixtures/graphqlSampleTypes.ts'
-import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
-import type { ApolloError, ApolloQueryResult } from '@apollo/client/core'
-import { NetworkStatus } from '@apollo/client/core'
-import { GraphQLErrorTypes } from '#shared/types/error.ts'
+import createMockClient from '#tests/support/mock-apollo-client.ts'
 import { waitForNextTick, waitUntilSpyCalled } from '#tests/support/utils.ts'
+
+import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
+
 import QueryHandler from '../QueryHandler.ts'
+
+import type { ApolloError, ApolloQueryResult } from '@apollo/client/core'
 
 const queryFunctionCallSpy = vi.fn()
 

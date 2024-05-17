@@ -1,10 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { App } from 'vue'
-import type { FetchResult } from '@apollo/client/core'
-import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
-import type { DocumentNode } from 'graphql'
 import type { ImportGlobEagerOutput } from '../../utils.ts'
+import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
+import type { FetchResult } from '@apollo/client/core'
+import type { DocumentNode } from 'graphql'
+import type { App } from 'vue'
 
 export type RegisterInMemoryCacheConfig = (
   config: InMemoryCacheConfig,

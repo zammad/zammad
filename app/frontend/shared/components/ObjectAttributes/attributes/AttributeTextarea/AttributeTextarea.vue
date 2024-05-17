@@ -4,6 +4,7 @@
 /* eslint-disable vue/no-v-html */
 
 import { textToHtml } from '#shared/utils/helpers.ts'
+
 import type { ObjectAttributeTextarea } from './attributeTextareaTypes.ts'
 
 defineProps<{

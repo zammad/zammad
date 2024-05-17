@@ -1,5 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
+
 import type {
   FormKitClasses,
   FormKitGroupValue,
@@ -9,14 +12,12 @@ import type {
   FormKitSchemaCondition,
   FormKitSchemaNode,
 } from '@formkit/core'
-import type { Ref } from 'vue'
 import type {
   FormKitValidationMessages,
   FormKitValidationRules,
 } from '@formkit/validation'
-import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
-import type { ObjectLike } from '#shared/types/utils.ts'
 import type { Except, Primitive, SetOptional, SetRequired } from 'type-fest'
+import type { Ref } from 'vue'
 
 export interface FormFieldAdditionalProps {
   belongsToObjectField?: string

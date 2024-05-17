@@ -1,8 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import '#tests/graphql/builders/mocks.ts'
-import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
+
 import { renderComponent } from '#tests/support/components/index.ts'
+import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 
 import { EnumAppearanceTheme } from '#shared/graphql/types.ts'
 import { useSessionStore } from '#shared/stores/session.ts'

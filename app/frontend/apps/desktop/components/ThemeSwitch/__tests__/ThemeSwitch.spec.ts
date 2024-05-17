@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref, type Ref } from 'vue'
+
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
+
 import ThemeSwitch, { type Props } from '../ThemeSwitch.vue'
 
 export const renderThemeSwitch = (props?: Props, modelValue?: Ref) => {

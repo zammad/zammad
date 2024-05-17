@@ -1,19 +1,19 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { cloneDeep } from 'lodash-es'
+import { getNode } from '@formkit/core'
+import { FormKit } from '@formkit/vue'
 import {
   getAllByRole,
   getByRole,
   getByText,
   waitFor,
 } from '@testing-library/vue'
-import { getNode } from '@formkit/core'
-import { FormKit } from '@formkit/vue'
-import { renderComponent } from '#tests/support/components/index.ts'
-import { i18n } from '#shared/i18n.ts'
-import { nullableMock, waitForNextTick } from '#tests/support/utils.ts'
+import { cloneDeep } from 'lodash-es'
+
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
-import type { ObjectLike } from '#shared/types/utils.ts'
+import { renderComponent } from '#tests/support/components/index.ts'
+import { nullableMock, waitForNextTick } from '#tests/support/utils.ts'
+
 import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
 import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
 import {
@@ -22,6 +22,8 @@ import {
 } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.mocks.ts'
 import type { AutocompleteSearchUserEntry } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { i18n } from '#shared/i18n.ts'
+import type { ObjectLike } from '#shared/types/utils.ts'
 
 const testOptions: AutocompleteSearchUserEntry[] = [
   {

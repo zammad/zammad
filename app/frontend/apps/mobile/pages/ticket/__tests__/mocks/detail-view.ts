@@ -1,5 +1,19 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { initializeStore } from '#tests/support/components/initializeStore.ts'
+import {
+  mockGraphQLApi,
+  mockGraphQLSubscription,
+} from '#tests/support/mock-graphql-api.ts'
+import type { ExtendedIMockSubscription } from '#tests/support/mock-graphql-api.ts'
+import { setupView } from '#tests/support/mock-user.ts'
+import { nullableMock, waitUntil } from '#tests/support/utils.ts'
+
+import { FormUpdaterDocument } from '#shared/components/Form/graphql/queries/formUpdater.api.ts'
+import { mockOnlineNotificationSeenGql } from '#shared/composables/__tests__/mocks/online-notification.ts'
+import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
+import type { TicketView } from '#shared/entities/ticket/types.ts'
+import { TicketState } from '#shared/entities/ticket/types.ts'
 import {
   type TicketArticlesQuery,
   type TicketLiveUserDeletePayload,
@@ -8,29 +22,18 @@ import {
   type PolicyTicket,
   EnumTicketStateColorCode,
 } from '#shared/graphql/types.ts'
-import { TicketState } from '#shared/entities/ticket/types.ts'
-import type { TicketView } from '#shared/entities/ticket/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import { FormUpdaterDocument } from '#shared/components/Form/graphql/queries/formUpdater.api.ts'
-import { mockOnlineNotificationSeenGql } from '#shared/composables/__tests__/mocks/online-notification.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
-import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
-import type { ExtendedIMockSubscription } from '#tests/support/mock-graphql-api.ts'
-import {
-  mockGraphQLApi,
-  mockGraphQLSubscription,
-} from '#tests/support/mock-graphql-api.ts'
-import { setupView } from '#tests/support/mock-user.ts'
-import { initializeStore } from '#tests/support/components/initializeStore.ts'
-import { nullableMock, waitUntil } from '#tests/support/utils.ts'
+
 import {
   ticketObjectAttributes,
   ticketArticleObjectAttributes,
 } from '#mobile/entities/ticket/__tests__/mocks/ticket-mocks.ts'
+
 import { TicketLiveUserDeleteDocument } from '../../graphql/mutations/live-user/delete.api.ts'
 import { TicketLiveUserUpsertDocument } from '../../graphql/mutations/live-user/ticketLiveUserUpsert.api.ts'
-import { TicketDocument } from '../../graphql/queries/ticket.api.ts'
 import { TicketArticlesDocument } from '../../graphql/queries/ticket/articles.api.ts'
+import { TicketDocument } from '../../graphql/queries/ticket.api.ts'
 import { TicketLiveUserUpdatesDocument } from '../../graphql/subscriptions/live-user/ticketLiveUserUpdates.api.ts'
 import { TicketArticleUpdatesDocument } from '../../graphql/subscriptions/ticketArticlesUpdates.api.ts'
 import { TicketUpdatesDocument } from '../../graphql/subscriptions/ticketUpdates.api.ts'

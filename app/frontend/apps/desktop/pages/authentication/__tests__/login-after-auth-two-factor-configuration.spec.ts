@@ -1,12 +1,15 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { EnumAfterAuthType } from '#shared/graphql/types.ts'
+import { getByRole } from '@testing-library/vue'
+
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
-import { getByRole } from '@testing-library/vue'
-import { mockLogoutMutation } from '#shared/graphql/mutations/logout.mocks.ts'
-import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
+
+import { mockLogoutMutation } from '#shared/graphql/mutations/logout.mocks.ts'
+import { EnumAfterAuthType } from '#shared/graphql/types.ts'
+
 import { ensureAfterAuth } from '../after-auth/composable/useAfterAuthPlugins.ts'
 
 const visitAfterAuthTwoFactorConfiguration = async () => {

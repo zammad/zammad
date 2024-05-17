@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { ref } from 'vue'
 import { tryOnScopeDispose } from '@vueuse/shared'
+import { ref } from 'vue'
 
 export const useTouchDevice = () => {
   const isTouchDevice = ref(false)

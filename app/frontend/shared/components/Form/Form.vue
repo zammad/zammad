@@ -1,8 +1,11 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { getNode, createMessage } from '@formkit/core'
+import { cloneAny } from '@formkit/utils'
+import { FormKit, FormKitMessages, FormKitSchema } from '@formkit/vue'
+import { refDebounced, watchOnce } from '@vueuse/shared'
 import { isEqual, cloneDeep, merge, isEmpty } from 'lodash-es'
-import type { ConcreteComponent, Ref } from 'vue'
 import {
   computed,
   ref,
@@ -14,27 +17,9 @@ import {
   markRaw,
   useSlots,
 } from 'vue'
-import { FormKit, FormKitMessages, FormKitSchema } from '@formkit/vue'
-import type {
-  FormKitPlugin,
-  FormKitSchemaNode,
-  FormKitSchemaCondition,
-  FormKitNode,
-  FormKitClasses,
-  FormKitSchemaDOMNode,
-  FormKitSchemaComponent,
-  FormKitMessageProps,
-} from '@formkit/core'
-import { getNode, createMessage } from '@formkit/core'
-import type { Except, SetRequired } from 'type-fest'
-import { refDebounced, watchOnce } from '@vueuse/shared'
-import { cloneAny } from '@formkit/utils'
 
-import { I18N, i18n } from '#shared/i18n.ts'
-import getUuid from '#shared/utils/getUuid.ts'
-import { markup } from '#shared/utils/markup.ts'
-import log from '#shared/utils/log.ts'
-import { camelize } from '#shared/utils/formatter.ts'
+import { useObjectAttributeFormFields } from '#shared/entities/object-attributes/composables/useObjectAttributeFormFields.ts'
+import { useObjectAttributeLoadFormFields } from '#shared/entities/object-attributes/composables/useObjectAttributeLoadFormFields.ts'
 import UserError from '#shared/errors/UserError.ts'
 import type {
   EnumObjectManagerObjects,
@@ -46,23 +31,30 @@ import type {
   FormUpdaterMetaInput,
   FormUpdaterChangedFieldInput,
 } from '#shared/graphql/types.ts'
-import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
-import { useObjectAttributeLoadFormFields } from '#shared/entities/object-attributes/composables/useObjectAttributeLoadFormFields.ts'
-import { useObjectAttributeFormFields } from '#shared/entities/object-attributes/composables/useObjectAttributeFormFields.ts'
-import testFlags from '#shared/utils/testFlags.ts'
-import { edgesToArray } from '#shared/utils/helpers.ts'
-import type { FormUpdaterTrigger } from '#shared/types/form.ts'
-import type { EntityObject } from '#shared/types/entity.ts'
-import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
 import { parseGraphqlId } from '#shared/graphql/utils.ts'
+import { I18N, i18n } from '#shared/i18n.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
+import type { EntityObject } from '#shared/types/entity.ts'
+import type { FormUpdaterTrigger } from '#shared/types/form.ts'
+import { camelize } from '#shared/utils/formatter.ts'
+import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
+import getUuid from '#shared/utils/getUuid.ts'
+import { edgesToArray } from '#shared/utils/helpers.ts'
+import log from '#shared/utils/log.ts'
+import { markup } from '#shared/utils/markup.ts'
+import testFlags from '#shared/utils/testFlags.ts'
+
+import FormGroup from './FormGroup.vue'
+import FormLayout from './FormLayout.vue'
 import { useFormUpdaterQuery } from './graphql/queries/formUpdater.api.ts'
+import { getFormClasses } from './initializeFormClasses.ts'
 import { FormHandlerExecution, FormValidationVisibility } from './types.ts'
 import {
   getNodeByName as getFormkitFieldNode,
   getNodeId,
   setErrors,
 } from './utils.ts'
-import { getFormClasses } from './initializeFormClasses.ts'
+
 import type {
   ChangedField,
   FormSubmitData,
@@ -76,8 +68,18 @@ import type {
   FormValues,
   ReactiveFormSchemData,
 } from './types.ts'
-import FormLayout from './FormLayout.vue'
-import FormGroup from './FormGroup.vue'
+import type {
+  FormKitPlugin,
+  FormKitSchemaNode,
+  FormKitSchemaCondition,
+  FormKitNode,
+  FormKitClasses,
+  FormKitSchemaDOMNode,
+  FormKitSchemaComponent,
+  FormKitMessageProps,
+} from '@formkit/core'
+import type { Except, SetRequired } from 'type-fest'
+import type { ConcreteComponent, Ref } from 'vue'
 
 export interface Props {
   id?: string

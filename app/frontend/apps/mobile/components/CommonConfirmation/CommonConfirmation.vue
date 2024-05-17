@@ -7,6 +7,7 @@ import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { i18n } from '#shared/i18n.ts'
 
 import CommonSectionPopup from '../CommonSectionPopup/CommonSectionPopup.vue'
+
 import type { PopupItemDescriptor } from '../CommonSectionPopup/types.ts'
 
 const { confirmationOptions, showConfirmation } = useConfirmation()

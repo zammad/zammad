@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { visitView } from '#tests/support/components/visitView.ts'
+
 import { waitForUserCurrentAppearanceMutationCalls } from '../graphql/mutations/userCurrentAppearance.mocks.ts'
 
 describe('appearance page', () => {

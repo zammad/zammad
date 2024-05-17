@@ -1,9 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
+
 import { TicketState } from '#shared/entities/ticket/types.ts'
 import { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
+
 import TicketItem from '../TicketItem.vue'
+
 import type { TicketItemData } from '../types.ts'
 
 vi.hoisted(() => {

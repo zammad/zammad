@@ -1,8 +1,10 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { sortedFirstLevelRoutes } from '#desktop/components/PageNavigation/firstLevelRoutes.ts'
 import { useRouter } from 'vue-router'
+
+import { sortedFirstLevelRoutes } from '#desktop/components/PageNavigation/firstLevelRoutes.ts'
+
 import CommonButton from '../CommonButton/CommonButton.vue'
 
 interface Props {

@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Component } from 'vue'
 import { nextTick, reactive } from 'vue'
 
 import type { DestroyComponentData, PushComponentData } from './types.ts'
+import type { Component } from 'vue'
 
 export enum Events {
   Push = 'dynamic-component.push',

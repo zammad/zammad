@@ -4,8 +4,10 @@ import type { FieldTagsProps } from '#shared/components/Form/fields/FieldTags/ty
 import createInput from '#shared/form/core/createInput.ts'
 import addLink from '#shared/form/features/addLink.ts'
 import formUpdaterTrigger from '#shared/form/features/formUpdaterTrigger.ts'
-import type { FormKitBaseSlots, FormKitInputs } from '@formkit/inputs'
+
 import FieldTagsInput from './FieldTagsInput.vue'
+
+import type { FormKitBaseSlots, FormKitInputs } from '@formkit/inputs'
 
 declare module '@formkit/inputs' {
   interface FormKitInputProps<Props extends FormKitInputs<Props>> {

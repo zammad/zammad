@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import CommonOverlayContainer from '#desktop/components/CommonOverlayContainer/CommonOverlayContainer.vue'
-import renderComponent from '#tests/support/components/renderComponent.ts'
 import { afterEach, expect } from 'vitest'
+
+import renderComponent from '#tests/support/components/renderComponent.ts'
+
+import CommonOverlayContainer from '#desktop/components/CommonOverlayContainer/CommonOverlayContainer.vue'
 
 const html = String.raw
 

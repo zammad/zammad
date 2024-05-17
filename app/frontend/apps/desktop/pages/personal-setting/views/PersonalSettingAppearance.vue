@@ -3,8 +3,8 @@
 <script setup lang="ts">
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 
-import { useThemeUpdate } from '../composables/useThemeUpdate.ts'
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
+import { useThemeUpdate } from '../composables/useThemeUpdate.ts'
 
 const { currentTheme, savingTheme } = useThemeUpdate(true)
 

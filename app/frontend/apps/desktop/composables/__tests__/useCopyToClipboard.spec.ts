@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { ref } from 'vue'
+
 import { waitForNextTick } from '#tests/support/utils.ts'
+
 import { useCopyToClipboard } from '../useCopyToClipboard.ts'
 
 const clipboardCopyMock = vi.fn()

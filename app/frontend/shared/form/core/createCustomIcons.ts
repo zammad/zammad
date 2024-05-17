@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { invert } from 'lodash-es'
+
 import { useIcons } from '#shared/components/CommonIcon/useIcons.ts'
 
 const createCustomIcons = (): Record<string, string> => {

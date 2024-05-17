@@ -1,25 +1,26 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
 import { ref } from 'vue'
+import { useRouter } from 'vue-router'
 
+import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
+import Form from '#shared/components/Form/Form.vue'
 import type {
   FormSchemaNode,
   FormSubmitData,
 } from '#shared/components/Form/types.ts'
-import Form from '#shared/components/Form/Form.vue'
 import { useForm } from '#shared/components/Form/useForm.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
+import UserError from '#shared/errors/UserError.ts'
 import { EnumPublicLinksScreen } from '#shared/graphql/types.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
-import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
-import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
-import UserError from '#shared/errors/UserError.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 
-import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonPublicLinks from '#desktop/components/CommonPublicLinks/CommonPublicLinks.vue'
+import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
+
 import { useUserPasswordResetSendMutation } from '../graphql/mutations/userPasswordResetSend.api.ts'
 
 defineOptions({

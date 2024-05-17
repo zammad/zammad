@@ -2,10 +2,13 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+
 import log from '#shared/utils/log.ts'
-import { usePrivateIcon } from './usePrivateIcon.ts'
-import type { Animations, Sizes } from './types.ts'
+
 import { useIcons } from './useIcons.ts'
+import { usePrivateIcon } from './usePrivateIcon.ts'
+
+import type { Animations, Sizes } from './types.ts'
 
 export interface Props {
   size?: Sizes

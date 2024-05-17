@@ -1,10 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ViewerOptions } from '#shared/composables/useImageViewer.ts'
-import type { Ref } from 'vue'
 import { nextTick } from 'vue'
-import type { Mock } from 'vitest'
+
+import type { ViewerOptions } from '#shared/composables/useImageViewer.ts'
+
 import type { MockGraphQLInstance } from './mock-graphql-api'
+import type { Mock } from 'vitest'
+import type { Ref } from 'vue'
 
 const state = Symbol('test:state')
 

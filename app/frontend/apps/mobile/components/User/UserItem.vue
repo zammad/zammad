@@ -1,9 +1,12 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useEditedBy } from '#mobile/composables/useEditedBy.ts'
-import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import { toRef } from 'vue'
+
+import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+
+import { useEditedBy } from '#mobile/composables/useEditedBy.ts'
+
 import type { UserItemData } from './types.ts'
 
 export interface Props {

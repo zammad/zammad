@@ -1,10 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { type Ref, onMounted, watch } from 'vue'
+
 import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import type { FlatSelectOption } from '#shared/components/Form/fields/FieldTreeSelect/types.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
-import { type Ref, onMounted, watch } from 'vue'
 
 const useSelectPreselect = (
   options: Ref<SelectOption[] | FlatSelectOption[]>,

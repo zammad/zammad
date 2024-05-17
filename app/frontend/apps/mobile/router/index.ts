@@ -1,10 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { App } from 'vue'
-import type { RouteRecordRaw } from 'vue-router'
 import mainInitializeRouter from '#shared/router/index.ts'
 import type { InitializeAppRouter, RoutesModule } from '#shared/types/router.ts'
+
 import transitionViewGuard from './guards/before/viewTransition.ts'
+
+import type { App } from 'vue'
+import type { RouteRecordRaw } from 'vue-router'
 
 const routeModules: Record<string, RoutesModule> = import.meta.glob(
   ['../pages/*/routes.ts', '../pages/*/routes/*.ts'],

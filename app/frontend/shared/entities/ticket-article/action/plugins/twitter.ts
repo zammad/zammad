@@ -1,12 +1,14 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormValues } from '#shared/components/Form/types.ts'
+import { isArray, isObject, uniq } from 'lodash-es'
+
 import type { FieldEditorProps } from '#shared/components/Form/fields/FieldEditor/types.ts'
+import type { FormValues } from '#shared/components/Form/types.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import type { ConfigList } from '#shared/types/store.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
 import { getInitials } from '#shared/utils/formatter.ts'
-import { isArray, isObject, uniq } from 'lodash-es'
+
 import type {
   TicketArticleAction,
   TicketArticleActionPlugin,

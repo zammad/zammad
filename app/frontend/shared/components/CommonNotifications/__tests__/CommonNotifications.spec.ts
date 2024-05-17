@@ -1,14 +1,16 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { nextTick } from 'vue'
+
 import {
   renderComponent,
   type ExtendedRenderResult,
 } from '#tests/support/components/index.ts'
 import { waitForTimeout } from '#tests/support/utils.ts'
-import { useNotifications } from '../useNotifications.ts'
-import { NotificationTypes } from '../types.ts'
+
 import CommonNotifications from '../CommonNotifications.vue'
+import { NotificationTypes } from '../types.ts'
+import { useNotifications } from '../useNotifications.ts'
 
 let wrapper: ExtendedRenderResult
 

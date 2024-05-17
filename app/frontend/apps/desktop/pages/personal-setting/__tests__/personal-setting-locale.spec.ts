@@ -1,9 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
-import { mockLocalesQuery } from '#shared/graphql/queries/locales.mocks.ts'
+
 import { waitForUserCurrentLocaleMutationCalls } from '#shared/entities/user/current/graphql/mutations/userCurrentLocale.mocks.ts'
+import { mockLocalesQuery } from '#shared/graphql/queries/locales.mocks.ts'
+import { EnumTextDirection } from '#shared/graphql/types.ts'
 
 describe('locale page', () => {
   it('can change language', async () => {

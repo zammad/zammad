@@ -1,12 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { createMessage, type FormKitNode } from '@formkit/core'
+
+import { i18n } from '#shared/i18n.ts'
 import {
   type AllowedFile,
   humanizeFileSize,
   validateFileSizes,
 } from '#shared/utils/files.ts'
-import { createMessage, type FormKitNode } from '@formkit/core'
-import { i18n } from '#shared/i18n.ts'
 
 export const useFileValidation = () => {
   const validateFileSize = (

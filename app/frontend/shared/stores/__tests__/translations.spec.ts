@@ -1,11 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { createPinia, setActivePinia } from 'pinia'
-import { createMockClient } from 'mock-apollo-client'
 import { provideApolloClient } from '@vue/apollo-composable'
-import { i18n } from '#shared/i18n.ts'
+import { createMockClient } from 'mock-apollo-client'
+import { createPinia, setActivePinia } from 'pinia'
+
 import { TranslationsDocument } from '#shared/graphql/queries/translations.api.ts'
 import type { TranslationsPayload } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n.ts'
+
 import { useTranslationsStore } from '../translations.ts'
 
 const mockQueryResult = (

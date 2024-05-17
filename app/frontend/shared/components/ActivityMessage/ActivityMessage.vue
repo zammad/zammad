@@ -4,14 +4,18 @@
 /* eslint-disable vue/no-v-html */
 
 import { computed } from 'vue'
-import log from '#shared/utils/log.ts'
-import type { ActivityMessageMetaObject } from '#shared/graphql/types.ts'
+
 import { userDisplayName } from '#shared/entities/user/utils/getUserDisplayName.ts'
+import type { ActivityMessageMetaObject } from '#shared/graphql/types.ts'
+import log from '#shared/utils/log.ts'
 import { markup } from '#shared/utils/markup.ts'
-import CommonUserAvatar from '../CommonUserAvatar/CommonUserAvatar.vue'
+
 import CommonAvatar from '../CommonAvatar/CommonAvatar.vue'
-import type { AvatarUser } from '../CommonUserAvatar/types.ts'
+import CommonUserAvatar from '../CommonUserAvatar/CommonUserAvatar.vue'
+
 import { activityMessageBuilder } from './builders/index.ts'
+
+import type { AvatarUser } from '../CommonUserAvatar/types.ts'
 
 export interface Props {
   typeName: string

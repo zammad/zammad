@@ -2,6 +2,7 @@
 
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
+
 import CommonLoader from '../CommonLoader.vue'
 
 describe('CommonLoader.vue', () => {

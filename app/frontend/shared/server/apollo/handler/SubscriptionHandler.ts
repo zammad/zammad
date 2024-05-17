@@ -1,15 +1,18 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { Ref, WatchStopHandle } from 'vue'
 import { watch } from 'vue'
-import type { FetchResult, OperationVariables } from '@apollo/client/core'
+
 import type {
   OperationSubscriptionOptionsReturn,
   OperationSubscriptionsResult,
   WatchResultCallback,
 } from '#shared/types/server/apollo/handler.ts'
-import type { UseSubscriptionReturn } from '@vue/apollo-composable'
+
 import BaseHandler from './BaseHandler.ts'
+
+import type { FetchResult, OperationVariables } from '@apollo/client/core'
+import type { UseSubscriptionReturn } from '@vue/apollo-composable'
+import type { Ref, WatchStopHandle } from 'vue'
 
 export default class SubscriptionHandler<
   TResult = OperationSubscriptionsResult,

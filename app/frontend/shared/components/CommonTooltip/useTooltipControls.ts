@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import stopEvent from '#shared/utils/events.ts'
 import { onKeyStroke, useEventListener } from '@vueuse/core'
 import { ref, type Ref } from 'vue'
+
+import stopEvent from '#shared/utils/events.ts'
+
 import type { TooltipVisualConfig } from './types.ts'
 
 export const useTooltipControls = (

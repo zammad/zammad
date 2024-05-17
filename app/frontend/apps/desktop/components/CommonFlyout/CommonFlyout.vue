@@ -2,6 +2,13 @@
 
 <script setup lang="ts">
 import {
+  useWindowSize,
+  useLocalStorage,
+  useScroll,
+  onKeyUp,
+  useActiveElement,
+} from '@vueuse/core'
+import {
   computed,
   nextTick,
   onMounted,
@@ -10,25 +17,19 @@ import {
   shallowRef,
   watch,
 } from 'vue'
-import {
-  useWindowSize,
-  useLocalStorage,
-  useScroll,
-  onKeyUp,
-  useActiveElement,
-} from '@vueuse/core'
 
-import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
 import stopEvent from '#shared/utils/events.ts'
+import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
 
-import ResizeHandle from '#desktop/components/ResizeHandle/ResizeHandle.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonOverlayContainer from '#desktop/components/CommonOverlayContainer/CommonOverlayContainer.vue'
 import { useResizeWidthHandle } from '#desktop/components/ResizeHandle/composables/useResizeWidthHandle.ts'
+import ResizeHandle from '#desktop/components/ResizeHandle/ResizeHandle.vue'
+
+import CommonFlyoutActionFooter from './CommonFlyoutActionFooter.vue'
+import { closeFlyout } from './useFlyout.ts'
 
 import type { ActionFooterOptions, FlyoutSizes } from './types.ts'
-import { closeFlyout } from './useFlyout.ts'
-import CommonFlyoutActionFooter from './CommonFlyoutActionFooter.vue'
 
 export interface Props {
   /**

@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
-import { useApplicationStore } from '#shared/stores/application.ts'
+
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockAuthentication } from '#tests/support/mock-authentication.ts'
@@ -9,16 +9,18 @@ import {
   mockGraphQLApi,
   mockGraphQLSubscription,
 } from '#tests/support/mock-graphql-api.ts'
-import { ConfigUpdatesDocument } from '#shared/graphql/subscriptions/configUpdates.api.ts'
-import { LogoutDocument } from '#shared/graphql/mutations/logout.api.ts'
-import { ApplicationConfigDocument } from '#shared/graphql/queries/applicationConfig.api.ts'
-import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'
+
 import {
   mockPublicLinks,
   mockPublicLinksSubscription,
 } from '#shared/entities/public-links/__tests__/mocks/mockPublicLinks.ts'
-import { mockTicketOverviews } from '#tests/support/mocks/ticket-overviews.ts'
+import { LogoutDocument } from '#shared/graphql/mutations/logout.api.ts'
+import { ApplicationConfigDocument } from '#shared/graphql/queries/applicationConfig.api.ts'
+import { ConfigUpdatesDocument } from '#shared/graphql/subscriptions/configUpdates.api.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
+import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 
 vi.mock('#shared/server/apollo/client.ts', () => {
   return {

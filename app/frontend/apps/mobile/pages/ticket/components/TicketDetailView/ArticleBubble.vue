@@ -3,30 +3,34 @@
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
 
-import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
-import { i18n } from '#shared/i18n.ts'
-import { textToHtml } from '#shared/utils/helpers.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
+import { useRouter } from 'vue-router'
+
+import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import type { ImageViewerFile } from '#shared/composables/useImageViewer.ts'
+import { useImageViewer } from '#shared/composables/useImageViewer.ts'
+import type { TicketArticleAttachment } from '#shared/entities/ticket/types.ts'
 import type {
   TicketArticleSecurityState,
   TicketArticlesQuery,
 } from '#shared/graphql/types.ts'
-import type { ConfidentTake } from '#shared/types/utils.ts'
-import type { ImageViewerFile } from '#shared/composables/useImageViewer.ts'
-import { useImageViewer } from '#shared/composables/useImageViewer.ts'
-import CommonFilePreview from '#mobile/components/CommonFilePreview/CommonFilePreview.vue'
-import stopEvent from '#shared/utils/events.ts'
 import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
-import type { TicketArticleAttachment } from '#shared/entities/ticket/types.ts'
-import { useRouter } from 'vue-router'
+import { i18n } from '#shared/i18n.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
+import type { ConfidentTake } from '#shared/types/utils.ts'
+import stopEvent from '#shared/utils/events.ts'
+import { textToHtml } from '#shared/utils/helpers.ts'
 import { isStandalone } from '#shared/utils/pwa.ts'
-import { useArticleToggleMore } from '../../composable/useArticleToggleMore.ts'
+
+import CommonFilePreview from '#mobile/components/CommonFilePreview/CommonFilePreview.vue'
+
 import { useArticleAttachments } from '../../composable/useArticleAttachments.ts'
+import { useArticleSeen } from '../../composable/useArticleSeen.ts'
+import { useArticleToggleMore } from '../../composable/useArticleToggleMore.ts'
+
 import ArticleSecurityBadge from './ArticleSecurityBadge.vue'
 import ArticleWhatsappMediaBadge from './ArticleWhatsappMediaBadge.vue'
-import { useArticleSeen } from '../../composable/useArticleSeen.ts'
 
 interface Props {
   position: 'left' | 'right'

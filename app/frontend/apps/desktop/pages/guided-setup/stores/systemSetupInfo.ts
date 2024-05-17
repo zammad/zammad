@@ -1,20 +1,21 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed } from 'vue'
-import { defineStore } from 'pinia'
 import { useLocalStorage } from '@vueuse/core'
+import { defineStore } from 'pinia'
+import { computed } from 'vue'
 
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
-import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import {
   EnumSystemSetupInfoStatus,
   EnumSystemSetupInfoType,
 } from '#shared/graphql/types.ts'
+import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
+import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
-import type { SystemSetupInfoStorage } from '../types/setup-info.ts'
-import { useSystemSetupInfoLazyQuery } from '../graphql/queries/systemSetupInfo.api.ts'
 import { useSystemSetupUnlockMutation } from '../graphql/mutations/systemSetupUnlock.api.ts'
+import { useSystemSetupInfoLazyQuery } from '../graphql/queries/systemSetupInfo.api.ts'
+
+import type { SystemSetupInfoStorage } from '../types/setup-info.ts'
 
 export const useSystemSetupInfoStore = defineStore('systemSetupInfo', () => {
   const systemSetupInfo = useLocalStorage<SystemSetupInfoStorage>(
