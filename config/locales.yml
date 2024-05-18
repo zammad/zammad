@@ -96,7 +96,7 @@
   dir: ltr
 - locale: lv
   alias: ''
-  name: Latvijas
+  name: Latviešu
   active: true
   dir: ltr
 - locale: no-no
