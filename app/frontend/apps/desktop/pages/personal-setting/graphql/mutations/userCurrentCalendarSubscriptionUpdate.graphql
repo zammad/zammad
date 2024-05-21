@@ -1,0 +1,8 @@
+mutation userCurrentCalendarSubscriptionUpdate($input: UserCalendarSubscriptionsConfigInput!) {
+  userCurrentCalendarSubscriptionUpdate(input: $input) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

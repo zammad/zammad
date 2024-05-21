@@ -100,7 +100,7 @@ export const useMultiStepForm = (
     const mappedSteps: Record<string, FormStep> = {}
 
     stepNames.value.forEach((stepName) => {
-      const alreadyVisisted = visitedSteps.value.includes(stepName)
+      const alreadyVisited = visitedSteps.value.includes(stepName)
 
       mappedSteps[stepName] = {
         label: internalSteps[stepName].label,
@@ -111,8 +111,8 @@ export const useMultiStepForm = (
         valid:
           internalSteps[stepName].valid &&
           internalSteps[stepName].errorCount === 0,
-        disabled: !alreadyVisisted || activeStep.value === stepName,
-        completed: alreadyVisisted,
+        disabled: !alreadyVisited || activeStep.value === stepName,
+        completed: alreadyVisited,
       }
     })
 

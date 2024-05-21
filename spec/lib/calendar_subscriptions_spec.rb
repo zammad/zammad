@@ -269,5 +269,41 @@ RSpec.describe CalendarSubscriptions, :aggregate_failures do
       include_examples 'verify events', { alarm: false }
       include_examples 'verify timestamps'
     end
+
+    context 'with pending only' do
+      before do
+        Setting.set('timezone_default', 'Europe/Berlin')
+
+        agent.preferences[:calendar_subscriptions] ||= {}
+
+        agent.preferences[:calendar_subscriptions][:tickets] = {
+          escalation: {
+            own:          false,
+            not_assigned: false,
+          },
+          new_open:   {
+            own:          false,
+            not_assigned: false,
+          },
+          pending:    {
+            own:          true,
+            not_assigned: true,
+          },
+          alarm:      false,
+        }
+        agent.save!
+
+        tickets
+        calendars
+      end
+
+      include_examples 'verify ical'
+      include_examples 'verify calendar', {
+        count:  1,
+        events: 2,
+      }
+      include_examples 'verify events', { alarm: false }
+      include_examples 'verify timestamps'
+    end
   end
 end

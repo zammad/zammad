@@ -32,6 +32,9 @@ import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
 import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
 import CommonProgressBar from '#desktop/components/CommonProgressBar/CommonProgressBar.vue'
 import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
+import CommonTabManager from '#desktop/components/CommonTabManager/CommonTabManager.vue'
+import type { Tab } from '#desktop/components/CommonTabManager/types.ts'
+import { useTabManager } from '#desktop/components/CommonTabManager/useTabManager.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import ThemeSwitch from '#desktop/components/ThemeSwitch/ThemeSwitch.vue'
 import type { ThemeSwitchInstance } from '#desktop/components/ThemeSwitch/types.ts'
@@ -932,6 +935,10 @@ const tableActions: MenuItem[] = [
 const changeRow = () => {
   tableItems[0].role = tableItems[0].role ? '' : 'Member'
 }
+
+const { activeTab } = useTabManager<string>()
+
+const { activeTab: activeFilters } = useTabManager<Tab[]>()
 </script>
 
 <template>
@@ -1378,5 +1385,27 @@ const changeRow = () => {
         >{{ formValues }}</pre
       >
     </div>
+
+    <h3>Tabs Groups</h3>
+    <CommonTabManager
+      v-model="activeTab"
+      :tabs="[
+        { label: 'Tab 1', key: 'tab-1' },
+        { label: 'Tab 2', default: true, key: 'tab-2' },
+        { label: 'Tab 3', key: 'tab-3' },
+      ]"
+    />
+
+    <h3>Filter Selector</h3>
+    <CommonTabManager
+      v-model="activeFilters"
+      label="Roles"
+      :tabs="[
+        { label: 'Admin', key: 'admin' },
+        { label: 'Agent', key: 'agent' },
+        { label: 'Customer', key: 'customer' },
+      ]"
+      multiple
+    />
   </LayoutContent>
 </template>

@@ -1,0 +1,27 @@
+fragment userCalendarSubscriptionAttributes on UserPersonalSettingsCalendarSubscriptionsConfig {
+  combinedUrl
+  globalOptions {
+    alarm
+  }
+  newOpen {
+    url
+    options {
+      own
+      notAssigned
+    }
+  }
+  pending {
+    url
+    options {
+      own
+      notAssigned
+    }
+  }
+  escalation {
+    url
+    options {
+      own
+      notAssigned
+    }
+  }
+}

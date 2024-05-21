@@ -35,7 +35,7 @@ class CalendarSubscriptionsController < ApplicationController
   # @response_message 422          Unprocessable Entity.
   def object
     calendar_subscriptions = CalendarSubscriptions.new(current_user)
-    ical                   = calendar_subscriptions.generic(params[:object], params[:method])
+    ical                   = calendar_subscriptions.generic(params[:object], params[:method].presence || 'all')
 
     send_data(
       ical,

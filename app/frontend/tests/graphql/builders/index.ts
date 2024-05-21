@@ -201,6 +201,8 @@ const getScalarValue = (
       return commonStringGenerators[fieldName]?.() || faker.lorem.word()
     case 'JSON':
       return {}
+    case 'UriHttpString':
+      return faker.internet.url()
     default:
       throw new Error(`not implemented for ${definition.name}`)
   }
@@ -820,7 +822,30 @@ export const mockOperation = (
   }
   const { operation, name, selectionSet } = definition
   const operationName = name!.value!
-  const operationType = getOperationDefinition(operation, operationName)
+
+  let operationType = getOperationDefinition(operation, operationName)
+
+  // In case the operation cannot be inferred from the operation name, switch to selection name instead.
+  //   E.g. `currentUserUpdates` vs `userUpdates`
+  if (!operationType && selectionSet.selections.length === 1) {
+    const selection = selectionSet.selections[0]
+
+    if (selection.kind !== Kind.FIELD) {
+      throw new Error(
+        `unsupported selection kind ${selectionSet.selections[0].kind}`,
+      )
+    }
+
+    operationType = getOperationDefinition(operation, selection.name.value)
+
+    if (!operationType)
+      throw new Error(
+        `unsupported operation named ${operationName} or ${selection.name.value}`,
+      )
+  } else if (!operationType) {
+    throw new Error(`unsupported operation named ${operationName}`)
+  }
+
   const query: any = { __typename: queriesTypes[operation] }
   const rootName = operationType.name
   logger.log(`[MOCKER] mocking "${rootName}" ${operation}`)

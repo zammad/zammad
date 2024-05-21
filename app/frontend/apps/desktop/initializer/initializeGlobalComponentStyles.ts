@@ -58,7 +58,7 @@ export const initializeGlobalComponentStyles = () => {
   })
 
   initializeNotificationClasses({
-    base: 'grid gap-4 text-center md:text-start text-sm items-center justify-center md:justify-start grid-flow-row md:grid-flow-col md:grid-cols-[auto_minmax(auto,_1fr)] w-full rounded-lg gap-1.5 p-2 border-transparent',
+    base: 'grid gap-1.5 text-center md:text-start text-sm items-center justify-center md:justify-start grid-flow-row md:grid-flow-col md:grid-cols-[auto_minmax(auto,_1fr)] w-full rounded-lg p-2 border-transparent',
     baseContainer: 'mx-auto',
     error: 'bg-pink-100 dark:bg-red-900 text-red-500',
     info: 'bg-blue-500 dark:bg-blue-950 text-blue-800',

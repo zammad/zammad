@@ -10,6 +10,7 @@ interface Props {
   labelPlaceholder?: string[]
   value: string
   copyButtonText?: string
+  help?: string
 }
 
 withDefaults(defineProps<Props>(), {
@@ -22,9 +23,10 @@ const { copyToClipboard } = useCopyToClipboard()
 <template>
   <FormKit
     type="text"
+    :model-value="value"
     :label="label"
-    :labe-placeholder="labelPlaceholder"
-    :value="value"
+    :label-placeholder="labelPlaceholder"
+    :help="help"
     readonly
   >
     <template #link="context">

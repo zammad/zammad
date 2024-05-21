@@ -6,66 +6,41 @@ class CalendarSubscriptions
 
   def initialize(user)
     @user        = user
-    @preferences = {}
     @time_zone   = Setting.get('timezone_default')
-
-    default_preferences = Setting.where(area: 'Defaults::CalendarSubscriptions')
-    default_preferences.each do |calendar_subscription|
-
-      next if calendar_subscription.name !~ %r{\Adefaults_calendar_subscriptions_(.*)\z}
-
-      object_name                 = $1 # rubocop:disable Lint/OutOfRangeRegexpRef
-      @preferences[ object_name ] = calendar_subscription.state_current[:value]
-    end
-
-    return if @user.preferences[:calendar_subscriptions].blank?
-
-    @preferences = @preferences.merge(@user.preferences[:calendar_subscriptions])
+    @preferences = Service::User::CalendarSubscription::Preferences.new(@user).execute
   end
 
   def all
-    events_data = []
-    @preferences.each_key do |object_name|
-      result = generic_call(object_name)
-      events_data += result
-    end
-    to_ical(events_data)
+    to_ical @preferences
+      .keys
+      .map { |object_name| generic_call(object_name) }
+      .flatten
   end
 
   def generic(object_name, method_name = 'all')
-    events_data = generic_call(object_name, method_name)
-    to_ical(events_data)
+    to_ical generic_call(object_name, method_name)
   end
 
   def generic_call(object_name, method_name = 'all')
+    return [] if @preferences[ object_name ].blank?
 
-    method_name ||= 'all'
+    sub_class_name = object_name.to_s.capitalize
+    object         = "CalendarSubscriptions::#{sub_class_name}".constantize
+    instance       = object.new(@user, @preferences[ object_name ], @time_zone)
 
-    events_data = []
-    if @preferences[ object_name ].present?
-      sub_class_name = object_name.to_s.capitalize
-      object         = "CalendarSubscriptions::#{sub_class_name}".constantize
-      instance       = object.new(@user, @preferences[ object_name ], @time_zone)
+    raise Exceptions::UnprocessableEntity, __('An unknown method name was requested.') if object::ALLOWED_METHODS.exclude?(method_name)
 
-      raise Exceptions::UnprocessableEntity, __('An unknown method name was requested.') if object::ALLOWED_METHODS.exclude?(method_name)
-
-      method = instance.method(method_name)
-      events_data += method.call
-    end
-    events_data
+    instance.send(method_name)
   end
 
   def to_ical(events_data)
-
     cal = Icalendar::Calendar.new
-
-    tz = ActiveSupport::TimeZone.find_tzinfo(@time_zone)
+    tz  = ActiveSupport::TimeZone.find_tzinfo(@time_zone)
 
     # https://github.com/zammad/zammad/issues/3989
     # https://datatracker.ietf.org/doc/html/rfc5545#section-3.2.19
-    if events_data.first.present?
-      timezone = tz.ical_timezone(DateTime.parse(events_data.first[:dtstart].to_s))
-      cal.add_timezone(timezone)
+    if events_data.any?
+      cal.add_timezone tz.ical_timezone(DateTime.parse(events_data.first[:dtstart].to_s))
     end
 
     events_data.each do |event_data|
@@ -76,7 +51,7 @@ class CalendarSubscriptions
 
         # by design all new/open ticket events are scheduled at midnight:
         # skip adding TZ offset
-        if !event_data[:type].match('new_open')
+        if event_data[:type] != 'new_open'
           dtstart = tz.utc_to_local(dtstart)
           dtend = tz.utc_to_local(dtend)
         end
