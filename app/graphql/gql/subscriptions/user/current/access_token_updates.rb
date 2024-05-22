@@ -11,7 +11,7 @@ module Gql::Subscriptions
 
     # Instance method: allow subscriptions only for the current user
     def authorized?(user:)
-      context.current_user == user
+      context.current_user.permissions?('user_preferences.access_token') && user.id == context.current_user.id
     end
 
     def update(user:)

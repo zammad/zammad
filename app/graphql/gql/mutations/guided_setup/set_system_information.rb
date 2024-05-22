@@ -10,7 +10,7 @@ module Gql::Mutations
     field :success, Boolean, description: 'System setup information updated successfully?'
 
     def self.authorize(_obj, ctx)
-      ctx[:current_user].permissions?('admin.wizard')
+      ctx.current_user.permissions?('admin.wizard')
     end
 
     def resolve(input:)

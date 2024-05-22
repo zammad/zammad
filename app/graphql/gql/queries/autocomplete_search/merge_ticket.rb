@@ -10,7 +10,7 @@ module Gql::Queries
     type [Gql::Types::AutocompleteSearch::MergeTicketEntryType], null: false
 
     def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?(['ticket.agent'])
+      ctx.current_user.permissions?('ticket.agent')
     end
 
     def resolve(input:)

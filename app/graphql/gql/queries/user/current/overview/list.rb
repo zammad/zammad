@@ -7,8 +7,8 @@ module Gql::Queries
 
     type [Gql::Types::OverviewType], null: false
 
-    def authorized?
-      context.current_user.permissions?('user_preferences.overview_sorting')
+    def self.authorize(_obj, ctx)
+      ctx.current_user.permissions?('user_preferences.overview_sorting')
     end
 
     def resolve

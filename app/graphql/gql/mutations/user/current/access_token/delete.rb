@@ -7,6 +7,10 @@ module Gql::Mutations
     argument :token_id, GraphQL::Types::ID, loads: Gql::Types::TokenType, description: 'The token o be deleted'
     field :success, Boolean, null: false, description: 'Was the access token deletion successful?'
 
+    def self.authorize(_obj, ctx)
+      ctx.current_user.permissions?('user_preferences.access_token')
+    end
+
     def resolve(token:)
       token.destroy!
 

@@ -9,7 +9,7 @@ module Gql::Mutations
     field :ticket, Gql::Types::TicketType, description: 'The created ticket. If this is present but empty, the mutation was successful but the user has no rights to view the new ticket.'
 
     def self.authorize(_obj, ctx)
-      ctx[:current_user].permissions?(['ticket.agent', 'ticket.customer'])
+      ctx.current_user.permissions?(['ticket.agent', 'ticket.customer'])
     end
 
     def resolve(input:)

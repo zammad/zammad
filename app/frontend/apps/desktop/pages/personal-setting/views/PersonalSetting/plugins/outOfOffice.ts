@@ -18,7 +18,7 @@ export default <PersonalSettingPlugin>{
     meta: {
       title: __('Out of Office'),
       requiresAuth: true,
-      requiredPermission: 'user_preferences.out_of_office',
+      requiredPermission: 'user_preferences.out_of_office+ticket.agent',
     },
   },
   order: 4000,

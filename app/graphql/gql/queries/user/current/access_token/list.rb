@@ -7,8 +7,8 @@ module Gql::Queries
 
     type [Gql::Types::TokenType], null: true
 
-    def authorized?(...)
-      context.current_user.permissions?('user_preferences.access_token')
+    def self.authorize(_obj, ctx)
+      ctx.current_user.permissions?('user_preferences.access_token')
     end
 
     def resolve

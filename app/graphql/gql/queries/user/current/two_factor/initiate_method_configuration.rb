@@ -10,7 +10,7 @@ module Gql::Queries
     type GraphQL::Types::JSON, null: false
 
     def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?(['user_preferences.two_factor_authentication'])
+      ctx.current_user.permissions?('user_preferences.two_factor_authentication')
     end
 
     def resolve(method_name:)

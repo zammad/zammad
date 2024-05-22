@@ -8,6 +8,10 @@ module Gql::Mutations
 
     field :avatar, Gql::Types::AvatarType, description: 'The newly created avatar.'
 
+    def self.authorize(_obj, ctx)
+      ctx.current_user.permissions?('user_preferences.avatar')
+    end
+
     def resolve(images:)
       original = images[:original]
       resized  = images[:resized]

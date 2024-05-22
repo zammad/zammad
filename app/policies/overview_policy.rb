@@ -35,7 +35,7 @@ class OverviewPolicy < ApplicationPolicy
   private
 
   def user_is_admin?
-    user.permissions?(['admin.overview'])
+    user.permissions?('admin.overview')
   end
 
   def user_has_assigned_role?

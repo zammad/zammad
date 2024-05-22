@@ -10,7 +10,7 @@ module Gql::Mutations
     field :success, Boolean, null: false, description: 'Profile appearance settings updated successfully?'
 
     def self.authorize(_obj, ctx)
-      ctx.current_user&.permissions?('user_preferences.calendar+ticket.agent')
+      ctx.current_user.permissions?('user_preferences.calendar') && ctx.current_user.permissions?('ticket.agent')
     end
 
     def resolve(input:)

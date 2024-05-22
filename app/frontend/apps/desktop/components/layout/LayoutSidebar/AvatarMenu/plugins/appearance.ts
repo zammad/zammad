@@ -11,4 +11,5 @@ export default <AvatarMenuPlugin>{
   noCloseOnClick: true,
   order: 100,
   component: AvatarMenuAppearanceItem,
+  permission: 'user_preferences.appearance',
 }

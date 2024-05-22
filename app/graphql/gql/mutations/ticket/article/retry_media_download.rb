@@ -10,7 +10,7 @@ module Gql::Mutations
     field :article, Gql::Types::Ticket::ArticleType, description: 'Updated article (article is not updated in case of an error result).'
 
     def self.authorize(_obj, ctx)
-      ctx[:current_user].permissions?(['ticket.agent'])
+      ctx.current_user.permissions?('ticket.agent')
     end
 
     def authorized?(article:)

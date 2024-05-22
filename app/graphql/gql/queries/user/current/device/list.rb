@@ -7,8 +7,8 @@ module Gql::Queries
 
     type [Gql::Types::UserDeviceType], null: true
 
-    def authorized?(...)
-      context.current_user.permissions?('user_preferences.device')
+    def self.authorize(_obj, ctx)
+      ctx.current_user.permissions?('user_preferences.device')
     end
 
     def resolve(...)

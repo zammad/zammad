@@ -10,7 +10,7 @@ module Gql::Mutations
     field :user, Gql::Types::UserType, description: 'The created user.'
 
     def self.authorize(_obj, ctx)
-      ctx[:current_user].permissions?(['admin.user', 'ticket.agent'])
+      ctx.current_user.permissions?(['admin.user', 'ticket.agent'])
     end
 
     def resolve(input:, send_invite: false)

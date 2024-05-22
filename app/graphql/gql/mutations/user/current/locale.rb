@@ -8,6 +8,10 @@ module Gql::Mutations
 
     field :success, Boolean, null: false, description: 'Was the update successful?'
 
+    def self.authorize(_obj, ctx)
+      ctx.current_user.permissions?('user_preferences.language')
+    end
+
     def resolve(locale:)
       if !Locale.exists?(locale: locale, active: true)
         raise ActiveRecord::RecordNotFound, __('Locale could not be found.')

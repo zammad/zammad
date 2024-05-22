@@ -8,7 +8,7 @@ module Gql::Queries
     type Gql::Types::User::PersonalSettings::CalendarSubscriptionsConfigType, null: false
 
     def self.authorize(_obj, ctx)
-      ctx.current_user&.permissions?('user_preferences.calendar+ticket.agent')
+      ctx.current_user.permissions?('user_preferences.calendar') && ctx.current_user.permissions?('ticket.agent')
     end
 
     def resolve

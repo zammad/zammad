@@ -10,7 +10,7 @@ module Gql::Mutations
     field :success, Boolean, null: false, description: 'Was the linked account removed?'
 
     def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?(['user_preferences.linked_accounts'])
+      ctx.current_user.permissions?('user_preferences.linked_accounts')
     end
 
     def resolve(provider:, uid:)

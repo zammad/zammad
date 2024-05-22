@@ -11,6 +11,10 @@ module Gql::Mutations
 
     field :success, Boolean, description: 'This indicates if changing the password was successful.'
 
+    def self.authorize(_obj, ctx)
+      ctx.current_user.permissions?('user_preferences.password')
+    end
+
     def ready?(...)
       throttle!(limit: 3, period: 1.minute, by_identifier: context.current_user.login)
     end

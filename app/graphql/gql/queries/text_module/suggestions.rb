@@ -11,7 +11,7 @@ module Gql::Queries
     type [Gql::Types::TextModuleType], null: false
 
     def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?(['ticket.agent'])
+      ctx.current_user.permissions?('ticket.agent')
     end
 
     def resolve(query:, template_render_context: nil, limit: 10)

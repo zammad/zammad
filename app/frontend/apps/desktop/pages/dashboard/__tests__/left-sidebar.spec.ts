@@ -8,6 +8,7 @@ import {
 } from '@testing-library/vue'
 
 import { visitView } from '#tests/support/components/visitView.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 
 import { mockLogoutMutation } from '#shared/graphql/mutations/logout.mocks.ts'
@@ -150,11 +151,13 @@ describe('Left sidebar', () => {
         const menu = getByRole(popover, 'menu')
         const menuItems = getAllByRole(menu, 'menuitem')
 
-        expect(menuItems).toHaveLength(5)
+        expect(menuItems).toHaveLength(4)
       },
     )
 
     it('supports cycling appearance state', async () => {
+      mockPermissions(['user_preferences.appearance'])
+
       const view = await visitView('/')
 
       const aside = view.getByRole('complementary')

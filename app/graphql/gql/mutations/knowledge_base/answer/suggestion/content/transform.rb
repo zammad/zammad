@@ -11,7 +11,7 @@ module Gql::Mutations
     field :attachments, [Gql::Types::StoredFileType], null: true, description: 'Attachments of the answer'
 
     def self.authorize(_obj, ctx)
-      ctx[:current_user].permissions?('ticket.agent')
+      ctx.current_user.permissions?('ticket.agent')
     end
 
     def resolve(translation_id:, form_id:)

@@ -17,7 +17,7 @@ export default <PersonalSettingPlugin>{
     meta: {
       title: __('Notifications'),
       requiresAuth: true,
-      requiredPermission: 'user_preferences.notifications',
+      requiredPermission: 'user_preferences.notifications+ticket.agent',
     },
   },
   order: 1000,

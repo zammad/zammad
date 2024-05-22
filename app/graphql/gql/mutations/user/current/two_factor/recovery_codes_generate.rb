@@ -7,7 +7,7 @@ module Gql::Mutations
     field :recovery_codes, [String], description: 'One-time two-factor authentication codes'
 
     def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?(['user_preferences.two_factor_authentication'])
+      ctx.current_user.permissions?('user_preferences.two_factor_authentication')
     end
 
     def resolve

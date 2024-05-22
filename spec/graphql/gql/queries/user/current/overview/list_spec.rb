@@ -14,6 +14,16 @@ RSpec.describe Gql::Queries::User::Current::Overview::List, type: :graphql do
     QUERY
   end
 
+  context 'when user is authenticated, but has no permission', authenticated_as: :agent do
+    let(:agent) { create(:agent, roles: []) }
+
+    before do
+      gql.execute(query)
+    end
+
+    it_behaves_like 'graphql responds with error if unauthenticated'
+  end
+
   context 'when authenticated', authenticated_as: :user do
     let(:user)       { create(:agent) }
     let(:overview_1) { create(:overview) }

@@ -11,7 +11,7 @@ module Gql::Mutations
     field :target_ticket, Gql::Types::TicketType, description: 'The target ticket after merging.'
 
     def self.authorize(_obj, ctx)
-      ctx[:current_user].permissions?(['ticket.agent'])
+      ctx.current_user.permissions?('ticket.agent')
     end
 
     def resolve(source_ticket:, target_ticket:)

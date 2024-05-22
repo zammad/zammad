@@ -7,6 +7,10 @@ module Gql::Queries
 
     type Gql::Types::AvatarType, null: true
 
+    def self.authorize(_obj, ctx)
+      ctx.current_user.permissions?('user_preferences.avatar')
+    end
+
     def resolve(...)
       return if context.current_user.image.blank?
 

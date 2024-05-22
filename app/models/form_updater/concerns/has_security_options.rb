@@ -76,6 +76,6 @@ module FormUpdater::Concerns::HasSecurityOptions
   end
 
   def agent?
-    current_user.permissions?(['ticket.agent'])
+    current_user.permissions?('ticket.agent')
   end
 end

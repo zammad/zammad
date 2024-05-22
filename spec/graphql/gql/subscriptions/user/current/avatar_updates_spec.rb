@@ -26,6 +26,16 @@ RSpec.describe Gql::Subscriptions::User::Current::AvatarUpdates, type: :graphql 
   let(:avatar)       { create(:avatar, o_id: target.id, default: false, initial: true) }
   let(:variables)    { { userId: gql.id(target) } }
 
+  context 'when user is authenticated, but has no permission', authenticated_as: :agent do
+    let(:agent) { create(:agent, roles: []) }
+
+    before do
+      gql.execute(subscription, variables: variables, context: { channel: mock_channel })
+    end
+
+    it_behaves_like 'graphql responds with error if unauthenticated'
+  end
+
   context 'with authenticated user', authenticated_as: :target do
     it 'subscribes' do
       gql.execute(subscription, variables: variables, context: { channel: mock_channel })

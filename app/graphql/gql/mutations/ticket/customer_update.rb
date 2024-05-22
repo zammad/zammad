@@ -10,7 +10,7 @@ module Gql::Mutations
     field :ticket, Gql::Types::TicketType, description: 'The updated ticket.'
 
     def self.authorize(_obj, ctx)
-      ctx[:current_user].permissions?(['ticket.agent'])
+      ctx.current_user.permissions?('ticket.agent')
     end
 
     def resolve(ticket:, input:)

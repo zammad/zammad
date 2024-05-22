@@ -17,7 +17,7 @@ export default <PersonalSettingPlugin>{
     meta: {
       title: __('Devices'),
       requiresAuth: true,
-      requiredPermission: 'user_preferences.language',
+      requiredPermission: 'user_preferences.device',
     },
   },
   order: 3000,

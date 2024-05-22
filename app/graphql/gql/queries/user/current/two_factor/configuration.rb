@@ -8,7 +8,7 @@ module Gql::Queries
     type Gql::Types::User::ConfigurationTwoFactorType, null: false
 
     def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?(['user_preferences.two_factor_authentication'])
+      ctx.current_user.permissions?('user_preferences.two_factor_authentication')
     end
 
     def resolve(...)
