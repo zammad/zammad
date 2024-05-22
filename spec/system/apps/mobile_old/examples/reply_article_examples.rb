@@ -44,7 +44,7 @@ RSpec.shared_examples 'mobile app: reply article' do |type_label, note, internal
 
     assert_fields(type_label, internal)
 
-    find_editor('Text').type(new_text, click: false) if new_text
+    find_editor('Text').type(new_text) if new_text
 
     find_autocomplete('To').search_for_option(new_to) if new_to.present?
     find_field('Subject', visible: :all).input(new_subject) if new_subject.present?

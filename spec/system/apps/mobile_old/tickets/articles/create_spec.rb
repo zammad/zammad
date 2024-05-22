@@ -117,7 +117,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
 
         wait_for_test_flag('editor.signatureAdd')
 
-        find_editor('Text').type('This is a note!', click: false)
+        find_editor('Text').type('This is a note!')
 
         find_autocomplete('To').search_for_option('zammad_test_to@zammad.com', gql_number: 1)
         find_autocomplete('CC').search_for_option('zammad_test_cc@zammad.com', gql_number: 2)
@@ -144,7 +144,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
 
         wait_for_test_flag('editor.signatureAdd')
 
-        find_editor('Text').type('This is a note!', click: false)
+        find_editor('Text').type('This is a note!')
 
         find_autocomplete('To').search_for_option('zammad_test_to@zammad.com', gql_number: 1)
 
