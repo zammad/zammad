@@ -16,7 +16,12 @@ import { useSignupForm } from '#desktop/composables/authentication/useSignupForm
 import GuidedSetupActionFooter from '../../components/GuidedSetupActionFooter.vue'
 import { useSystemSetup } from '../../composables/useSystemSetup.ts'
 import { useUserAddFirstAdminMutation } from '../../graphql/mutations/userAddFirstAdmin.api.ts'
+import { systemSetupBeforeRouteEnterGuard } from '../../router/guards/systemSetupBeforeRouteEnterGuard.ts'
 import { useSystemSetupInfoStore } from '../../stores/systemSetupInfo.ts'
+
+defineOptions({
+  beforeRouteEnter: systemSetupBeforeRouteEnterGuard,
+})
 
 const { setTitle } = useSystemSetup()
 

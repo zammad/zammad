@@ -102,7 +102,9 @@ RSpec.describe Gql::Mutations::User::AddFirstAdmin, :aggregate_failures, set_up:
       end
 
       it 'fails with an error' do
-        expect(graphql_response['errors'].first['message']).to eq('This system has already been configured and an administrator account exists.')
+        expect(graphql_response['data']['userAddFirstAdmin']['errors']).to eq(
+          [{ 'message' => 'This system has already been configured and an administrator account exists.', 'field' => nil }]
+        )
       end
     end
   end

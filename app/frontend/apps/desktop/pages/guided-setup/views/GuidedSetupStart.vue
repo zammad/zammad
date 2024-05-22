@@ -13,7 +13,12 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import LayoutPublicPage from '#desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue'
 
 import { useSystemSetupLockMutation } from '../graphql/mutations/systemSetupLock.api.ts'
+import { systemSetupBeforeRouteEnterGuard } from '../router/guards/systemSetupBeforeRouteEnterGuard.ts'
 import { useSystemSetupInfoStore } from '../stores/systemSetupInfo.ts'
+
+defineOptions({
+  beforeRouteEnter: systemSetupBeforeRouteEnterGuard,
+})
 
 const router = useRouter()
 

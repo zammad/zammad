@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
@@ -7,6 +8,7 @@ import { EnumSystemSetupInfoStatus } from '#shared/graphql/types.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 
 import { mockSystemSetupInfoQuery } from '../graphql/queries/systemSetupInfo.mocks.ts'
+import { useSystemSetupInfoStore } from '../stores/systemSetupInfo.ts'
 
 describe('guided setup admin user creation', () => {
   describe('when system initialization is done', () => {
@@ -31,6 +33,10 @@ describe('guided setup admin user creation', () => {
       mockApplicationConfig({
         system_init_done: false,
       })
+    })
+
+    afterEach(() => {
+      vi.clearAllMocks()
     })
 
     it('shows guided setup screen and opens manual setup on click', async () => {
@@ -86,6 +92,26 @@ describe('guided setup admin user creation', () => {
       })
 
       expect(useAuthenticationStore().authenticated).toBe(true)
+
+      // Redirects to home screen on back navigation, if the setup was completed.
+      mockSystemSetupInfoQuery({
+        systemSetupInfo: {
+          status: EnumSystemSetupInfoStatus.Done,
+          type: null,
+        },
+      })
+
+      const { setSystemSetupInfo } = useSystemSetupInfoStore()
+
+      await setSystemSetupInfo()
+
+      const router = getTestRouter()
+
+      router.back()
+
+      await vi.waitFor(() => {
+        expect(view, 'correctly redirects to home screen').toHaveCurrentUrl('/')
+      })
     })
   })
 })

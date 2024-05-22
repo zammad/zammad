@@ -22,6 +22,8 @@ module Gql::Mutations
       create_session(user, false, 'password')
 
       authenticate_result
+    rescue Service::System::CheckSetup::SystemSetupError => e
+      error_response({ message: e.message })
     rescue PasswordPolicy::Error => e
       error_response({ message: e.message, field: 'password' })
     end
