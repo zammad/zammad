@@ -16,7 +16,7 @@ module MonitoringHelper
       def scope
         ::DataPrivacyTask
           .where.not(state: 'completed')
-          .where('updated_at <= ?', TIMEOUT.ago)
+          .where(updated_at: ..TIMEOUT.ago)
       end
     end
   end

@@ -48,7 +48,9 @@ optional you can put the max oldest stats store entries as argument
 =end
 
   def self.cleanup(diff = 12.months)
-    StatsStore.where('updated_at < ?', Time.zone.now - diff).delete_all
+    where(updated_at: ...diff.ago)
+      .delete_all
+
     true
   end
 

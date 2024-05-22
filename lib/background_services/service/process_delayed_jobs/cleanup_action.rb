@@ -20,7 +20,7 @@ class BackgroundServices
         end
 
         private_class_method def self.scope(after)
-          ::Delayed::Job.where('updated_at < ?', after).where.not(locked_at: nil)
+          ::Delayed::Job.where(updated_at: ...after).where.not(locked_at: nil)
         end
 
         def initialize(job)

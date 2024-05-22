@@ -175,13 +175,11 @@ with dedicated times
   def self.cleanup(max_age = 9.months.ago, max_own_seen = 10.minutes.ago, max_auto_seen = 8.hours.ago)
     affected_user_ids = []
 
-    OnlineNotification
-      .where('created_at < ?', max_age)
+    where(created_at: ...max_age)
       .tap { |relation| affected_user_ids |= relation.distinct.pluck(:user_id) }
       .delete_all
 
-    OnlineNotification
-      .where(seen: true)
+    where(seen: true)
       .where('(user_id = updated_by_id AND updated_at < :max_own_seen) OR (user_id != updated_by_id AND updated_at < :max_auto_seen)',
              max_own_seen:, max_auto_seen:)
       .tap { |relation| affected_user_ids |= relation.distinct.pluck(:user_id) }

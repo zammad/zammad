@@ -27,7 +27,9 @@ class DataPrivacyTask < ApplicationModel
   end
 
   def self.cleanup(diff = 12.months)
-    where('created_at < ?', diff.ago).destroy_all
+    where(created_at: ...diff.ago)
+      .destroy_all
+
     true
   end
 

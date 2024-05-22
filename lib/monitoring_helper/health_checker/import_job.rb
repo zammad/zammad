@@ -22,9 +22,7 @@ module MonitoringHelper
 
       def failed_import_job(backend)
         ::ImportJob
-          .where(name: backend, dry_run: false)
-          .where('finished_at >= ?', TIMEOUT.ago)
-          .limit(1)
+          .where(name: backend, dry_run: false, finished_at: TIMEOUT.ago..)
           .first
       end
 
@@ -46,9 +44,7 @@ module MonitoringHelper
 
       def stuck_import_job(backend)
         ::ImportJob
-          .where(name: backend, dry_run: false, finished_at: nil)
-          .where('updated_at <= ?', TIMEOUT.ago)
-          .limit(1)
+          .where(name: backend, dry_run: false, finished_at: nil, updated_at: ..TIMEOUT.ago)
           .first
       end
 

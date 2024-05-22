@@ -5,9 +5,14 @@ class UploadCacheCleanupJob < ApplicationJob
     taskbar_form_ids = Taskbar.with_form_id.filter_map(&:persisted_form_id)
     return if store_object_id.blank?
 
-    Store.where(store_object_id: store_object_id).where('created_at < ?', 1.month.ago).where.not(o_id: taskbar_form_ids).find_each do |store|
-      Store.remove_item(store.id)
-    end
+    Store
+      .where(store_object_id: store_object_id, created_at: ...1.month.ago)
+      .where.not(o_id: taskbar_form_ids)
+      .in_batches do |batch|
+        batch
+          .pluck(:id)
+          .each { |elem| Store.remove_item(elem) }
+      end
   end
 
   private

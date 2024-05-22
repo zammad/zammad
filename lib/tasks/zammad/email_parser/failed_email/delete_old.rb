@@ -18,7 +18,7 @@ module Tasks
             puts 'Deleting failed emails older than 24 hours.'
 
             destroyed = ::FailedEmail
-              .where('updated_at < ?', 24.hours.ago)
+              .where(updated_at: ...24.hours.ago)
               .destroy_all
 
             puts "#{destroyed.count} email(s) deleted."

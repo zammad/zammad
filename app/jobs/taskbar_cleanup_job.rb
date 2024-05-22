@@ -5,8 +5,7 @@ class TaskbarCleanupJob < ApplicationJob
 
   def perform
     Taskbar
-      .where(app: :mobile)
-      .where('last_contact < ?', LAST_CONTACT_THRESHOLD.ago)
+      .where(app: :mobile, last_contact: ...LAST_CONTACT_THRESHOLD.ago)
       .destroy_all
   end
 end

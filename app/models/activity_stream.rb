@@ -125,7 +125,9 @@ optional you can put the max oldest stream entries as argument
 =end
 
   def self.cleanup(diff = 3.months)
-    ActivityStream.where('created_at < ?', Time.zone.now - diff).delete_all
+    where(created_at: ...diff.ago)
+      .delete_all
+
     true
   end
 

@@ -128,7 +128,7 @@ reload config settings
     base_query = Setting.reorder(:id)
 
     settings_query = if @@last_changed_at && @@current.present?
-                       base_query.where('updated_at >= ?', @@last_changed_at)
+                       base_query.where(updated_at: @@last_changed_at..)
                      else
                        base_query
                      end

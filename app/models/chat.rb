@@ -557,10 +557,9 @@ optional you can put the max oldest chat entries
 =end
 
   def self.cleanup(diff = 12.months)
-    Chat::Session.where(state: 'closed').where('updated_at < ?', Time.zone.now - diff).each do |chat_session|
-      Chat::Message.where(chat_session_id: chat_session.id).delete_all
-      chat_session.destroy
-    end
+    Chat::Session
+      .where(state: 'closed', updated_at: ...diff.ago)
+      .each(&:destroy)
 
     true
   end
@@ -578,20 +577,25 @@ optional you can put the max oldest chat sessions as argument
 =end
 
   def self.cleanup_close(diff = 5.minutes)
-    Chat::Session.where.not(state: 'closed').where('updated_at < ?', Time.zone.now - diff).each do |chat_session|
-      next if chat_session.recipients_active?
+    Chat::Session
+      .where.not(state: 'closed')
+      .where(updated_at: ...diff.ago)
+      .each do |chat_session|
+        next if chat_session.recipients_active?
 
-      chat_session.state = 'closed'
-      chat_session.save
-      message = {
-        event: 'chat_session_closed',
-        data:  {
-          session_id: chat_session.session_id,
-          realname:   'System',
-        },
-      }
-      chat_session.send_to_recipients(message)
-    end
+        chat_session.state = 'closed'
+        chat_session.save
+
+        message = {
+          event: 'chat_session_closed',
+          data:  {
+            session_id: chat_session.session_id,
+            realname:   'System',
+          },
+        }
+        chat_session.send_to_recipients(message)
+      end
+
     true
   end
 

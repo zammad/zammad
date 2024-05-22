@@ -53,7 +53,11 @@ module SessionHelper
 
   def self.models_public
     allowed_user_attributes = %w[firstname lastname email password]
-    user_attributes         = ObjectManager::Object.new('User').attributes(nil, skip_permission: true).select { |attribute| allowed_user_attributes.include?(attribute[:name]) }
+
+    user_attributes = ObjectManager::Object
+      .new('User')
+      .attributes(nil, skip_permission: true)
+      .select { |attribute| allowed_user_attributes.include?(attribute[:name]) }
 
     {
       'User' => user_attributes,
@@ -63,11 +67,14 @@ module SessionHelper
   def self.cleanup_expired
 
     # delete temp. sessions
-    ActiveRecord::SessionStore::Session.where('persistent IS NULL AND updated_at < ?', 2.hours.ago).delete_all
+    ActiveRecord::SessionStore::Session
+      .where(persistent: nil, updated_at: ...2.hours.ago)
+      .delete_all
 
     # web sessions not updated the last x days
-    ActiveRecord::SessionStore::Session.where('updated_at < ?', 60.days.ago).delete_all
-
+    ActiveRecord::SessionStore::Session
+      .where(updated_at: ...60.days.ago)
+      .delete_all
   end
 
   def self.get(id)
@@ -79,9 +86,8 @@ module SessionHelper
   end
 
   def self.destroy(id)
-    session = ActiveRecord::SessionStore::Session.find_by(id: id)
-    return if !session
-
-    session.destroy
+    ActiveRecord::SessionStore::Session
+      .find_by(id: id)
+      &.destroy
   end
 end

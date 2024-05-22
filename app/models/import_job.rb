@@ -179,15 +179,16 @@ class ImportJob < ApplicationModel
       # we need to exclude jobs that were updated at or since we started
       # cleaning up (via the #reschedule? call) because they might
       # were started `.delay`-ed and are flagged for restart
-      ImportJob.running.where('updated_at < ?', after).each do |job|
-
-        job.update!(
-          finished_at: after,
-          result:      {
-            error: error
-          }
-        )
-      end
+      running
+        .where(updated_at: ...after)
+        .each do |job|
+          job.update!(
+            finished_at: after,
+            result:      {
+              error: error
+            }
+          )
+        end
     end
   end
 end

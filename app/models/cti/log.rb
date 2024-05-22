@@ -487,7 +487,9 @@ optional you can put the max oldest chat entries as argument
 =end
 
     def self.cleanup(diff = 12.months)
-      Cti::Log.where('created_at < ?', Time.zone.now - diff).delete_all
+      where(created_at: ...diff.ago)
+        .delete_all
+
       true
     end
 

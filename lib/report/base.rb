@@ -231,21 +231,26 @@ class Report::Base
   # :condition
   def self.time_average(data)
     query, bind_params, tables = Ticket.selector2sql(data[:condition])
-    ticket_list = Ticket.where('tickets.created_at >= ? AND tickets.created_at <= ?', data[:start], data[:end])
-                        .where(query, *bind_params).joins(tables)
+
     tickets = 0
     time_total = 0
-    ticket_list.each do |ticket|
-      timestamp = ticket[ data[:type].to_sym ]
-      next if !timestamp
 
-      #          puts 'FR:' + first_response.to_s
-      #          puts 'CT:' + ticket.created_at.to_s
-      diff = timestamp - ticket.created_at
-      # puts 'DIFF:' + diff.to_s
-      time_total += diff
-      tickets += 1
-    end
+    Ticket
+      .where(tickets: { created_at: data[:start]..data[:end] })
+      .where(query, *bind_params)
+      .joins(tables)
+      .each do |ticket|
+        timestamp = ticket[ data[:type].to_sym ]
+        next if !timestamp
+
+        #          puts 'FR:' + first_response.to_s
+        #          puts 'CT:' + ticket.created_at.to_s
+        diff = timestamp - ticket.created_at
+        # puts 'DIFF:' + diff.to_s
+        time_total += diff
+        tickets += 1
+      end
+
     if time_total.zero? || tickets.zero?
       tickets = -0.001
     else
@@ -263,26 +268,31 @@ class Report::Base
   # :condition
   def self.time_min(data)
     query, bind_params, tables = Ticket.selector2sql(data[:condition])
-    ticket_list = Ticket.where('tickets.created_at >= ? AND tickets.created_at <= ?', data[:start], data[:end])
-                        .where(query, *bind_params).joins(tables)
+
     time_min = 0
     ticket_ids = []
-    ticket_list.each do |ticket|
-      timestamp = ticket[ data[:type].to_sym ]
-      next if !timestamp
 
-      ticket_ids.push ticket.id
-      #          puts 'FR:' + first_response.to_s
-      #          puts 'CT:' + ticket.created_at.to_s
-      diff = timestamp - ticket.created_at
-      # puts 'DIFF:' + diff.to_s
-      if !time_min
-        time_min = diff
+    Ticket
+      .where(tickets: { created_at: data[:start]..data[:end] })
+      .where(query, *bind_params)
+      .joins(tables)
+      .each do |ticket|
+        timestamp = ticket[ data[:type].to_sym ]
+        next if !timestamp
+
+        ticket_ids.push ticket.id
+        #          puts 'FR:' + first_response.to_s
+        #          puts 'CT:' + ticket.created_at.to_s
+        diff = timestamp - ticket.created_at
+        # puts 'DIFF:' + diff.to_s
+        if !time_min
+          time_min = diff
+        end
+        if diff < time_min
+          time_min = diff
+        end
       end
-      if diff < time_min
-        time_min = diff
-      end
-    end
+
     tickets = if time_min.zero?
                 -0.001
               else
@@ -300,27 +310,32 @@ class Report::Base
   # :condition
   def self.time_max(data)
     query, bind_params, tables = Ticket.selector2sql(data[:condition])
-    ticket_list = Ticket.where('tickets.created_at >= ? AND tickets.created_at <= ?', data[:start], data[:end])
-                        .where(query, *bind_params).joins(tables)
+
     time_max = 0
     ticket_ids = []
-    ticket_list.each do |ticket|
-      timestamp = ticket[ data[:type].to_sym ]
-      next if !timestamp
 
-      ticket_ids.push ticket.id
-      #        puts "#{data[:type].to_s} - #{timestamp} - #{ticket.inspect}"
-      #          puts 'FR:' + ticket.first_response.to_s
-      #          puts 'CT:' + ticket.created_at.to_s
-      diff = timestamp - ticket.created_at
-      # puts 'DIFF:' + diff.to_s
-      if !time_max
-        time_max = diff
+    Ticket
+      .where(tickets: { created_at: data[:start]..data[:end] })
+      .where(query, *bind_params)
+      .joins(tables)
+      .each do |ticket|
+        timestamp = ticket[ data[:type].to_sym ]
+        next if !timestamp
+
+        ticket_ids.push ticket.id
+        #        puts "#{data[:type].to_s} - #{timestamp} - #{ticket.inspect}"
+        #          puts 'FR:' + ticket.first_response.to_s
+        #          puts 'CT:' + ticket.created_at.to_s
+        diff = timestamp - ticket.created_at
+        # puts 'DIFF:' + diff.to_s
+        if !time_max
+          time_max = diff
+        end
+        if diff > time_max
+          time_max = diff
+        end
       end
-      if diff > time_max
-        time_max = diff
-      end
-    end
+
     tickets = if time_max.zero?
                 -0.001
               else

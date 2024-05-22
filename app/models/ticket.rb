@@ -135,18 +135,16 @@ returns
         next_state_map[state.id] = state.next_state_id
       end
 
-      tickets = where(state_id: next_state_map.keys)
-                .where('pending_time <= ?', Time.zone.now)
-
-      tickets.find_each(batch_size: 500) do |ticket|
-        Transaction.execute do
-          ticket.state_id      = next_state_map[ticket.state_id]
-          ticket.updated_at    = Time.zone.now
-          ticket.updated_by_id = 1
-          ticket.save!
+      where(state_id: next_state_map.keys, pending_time: ..Time.current)
+        .find_each(batch_size: 500) do |ticket|
+          Transaction.execute do
+            ticket.state_id      = next_state_map[ticket.state_id]
+            ticket.updated_at    = Time.zone.now
+            ticket.updated_by_id = 1
+            ticket.save!
+          end
+          result.push ticket
         end
-        result.push ticket
-      end
     end
 
     # process pending reminder tickets
@@ -159,28 +157,26 @@ returns
         reminder_state_map[state.id] = state.next_state_id
       end
 
-      tickets = where(state_id: reminder_state_map.keys)
-                .where('pending_time <= ?', Time.zone.now)
+      where(state_id: reminder_state_map.keys, pending_time: ..Time.current)
+        .find_each(batch_size: 500) do |ticket|
 
-      tickets.find_each(batch_size: 500) do |ticket|
+          article_id = nil
+          article = Ticket::Article.last_customer_agent_article(ticket.id)
+          if article
+            article_id = article.id
+          end
 
-        article_id = nil
-        article = Ticket::Article.last_customer_agent_article(ticket.id)
-        if article
-          article_id = article.id
+          # send notification
+          TransactionJob.perform_now(
+            object:     'Ticket',
+            type:       'reminder_reached',
+            object_id:  ticket.id,
+            article_id: article_id,
+            user_id:    1,
+          )
+
+          result.push ticket
         end
-
-        # send notification
-        TransactionJob.perform_now(
-          object:     'Ticket',
-          type:       'reminder_reached',
-          object_id:  ticket.id,
-          article_id: article_id,
-          user_id:    1,
-        )
-
-        result.push ticket
-      end
     end
 
     result
@@ -227,37 +223,38 @@ returns
     result = []
 
     # fetch all escalated and soon to be escalating tickets
-    where('escalation_at <= ?', 15.minutes.from_now).find_each(batch_size: 500) do |ticket|
+    where(escalation_at: ..15.minutes.from_now)
+      .find_each(batch_size: 500) do |ticket|
+        article_id = nil
+        article = Ticket::Article.last_customer_agent_article(ticket.id)
+        if article
+          article_id = article.id
+        end
 
-      article_id = nil
-      article = Ticket::Article.last_customer_agent_article(ticket.id)
-      if article
-        article_id = article.id
-      end
+        # send escalation
+        if ticket.escalation_at < Time.zone.now
+          TransactionJob.perform_now(
+            object:     'Ticket',
+            type:       'escalation',
+            object_id:  ticket.id,
+            article_id: article_id,
+            user_id:    1,
+          )
+          result.push ticket
+          next
+        end
 
-      # send escalation
-      if ticket.escalation_at < Time.zone.now
+        # check if warning needs to be sent
         TransactionJob.perform_now(
           object:     'Ticket',
-          type:       'escalation',
+          type:       'escalation_warning',
           object_id:  ticket.id,
           article_id: article_id,
           user_id:    1,
         )
         result.push ticket
-        next
       end
 
-      # check if warning needs to be sent
-      TransactionJob.perform_now(
-        object:     'Ticket',
-        type:       'escalation_warning',
-        object_id:  ticket.id,
-        article_id: article_id,
-        user_id:    1,
-      )
-      result.push ticket
-    end
     result
   end
 
