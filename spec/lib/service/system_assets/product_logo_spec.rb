@@ -117,6 +117,17 @@ RSpec.describe Service::SystemAssets::ProductLogo do
         .to have_attributes(width: 100, height: 100)
     end
 
+    context 'with SVG logo' do
+      let(:data) { Rails.public_path.join('assets/images/icons/rss.svg').binread }
+
+      it 'stores SVG logo' do
+        described_class.store(data)
+
+        expect(Store.list(object: 'System::Logo', o_id: described_class::PRODUCT_LOGO_RAW)).to be_present
+        expect(Store.list(object: 'System::Logo', o_id: described_class::PRODUCT_LOGO_RESIZED)).to be_blank
+      end
+    end
+
     context 'when logos exist beforehand' do
       before do
         raw_logo

@@ -33,8 +33,12 @@ module Service
         Time.current.to_i
       end
 
-      def self.store(logo, logo_resize = nil)
+      def self.store(logo, logo_resize = nil) # rubocop:disable Metrics/CyclomaticComplexity,Metrics/PerceivedComplexity
         return if !logo && !logo_resize
+
+        if logo&.match?(%r{<svg}i)
+          return store_logo({ content: logo, mime_type: 'image/svg+xml' })
+        end
 
         begin
           original_image = Rszr::Image.load_data logo if logo
