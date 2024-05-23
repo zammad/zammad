@@ -33,7 +33,7 @@ const localValue = defineModel<OverviewItem[]>('modelValue')
             role="listitem"
             draggable="true"
             aria-describedby="drag-and-drop-ticket-overviews"
-            class="draggable flex h-9 cursor-grab items-center gap-2.5 p-2.5 active:cursor-grabbing"
+            class="draggable flex min-h-9 cursor-grab items-start gap-2.5 p-2.5 active:cursor-grabbing"
           >
             <CommonIcon
               class="fill-stone-200 dark:fill-neutral-500"
