@@ -82,9 +82,9 @@ watch(isResizingHorizontal, (isResizing) => {
 <template>
   <aside
     :id="props.id"
-    class="group/sidebar -:bg-neutral-950 relative flex h-full flex-col border-e border-neutral-100 p-3 dark:border-gray-900"
+    class="group/sidebar -:bg-neutral-950 relative flex max-h-screen flex-col border-e border-neutral-100 dark:border-gray-900"
     :class="{
-      'px-2': isCollapsed,
+      'px-2 py-3': isCollapsed,
     }"
   >
     <CollapseButton
@@ -119,6 +119,8 @@ watch(isResizingHorizontal, (isResizing) => {
       :icon="iconCollapsed"
       @click="toggleCollapse"
     />
-    <slot v-else v-bind="{ isCollapsed }" />
+    <div v-else class="flex h-full flex-col overflow-y-auto p-3">
+      <slot v-bind="{ isCollapsed }" />
+    </div>
   </aside>
 </template>
