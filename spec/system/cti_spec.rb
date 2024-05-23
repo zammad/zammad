@@ -112,7 +112,7 @@ RSpec.describe 'Caller log', authenticated_as: :authenticate, type: :system do
           expect(page).to have_css('input[name="title"][value="Call from 0190333"]', visible: :all)
           expect(page).to have_css('.tabsSidebar-tab[data-tab="customer"]', visible: :all)
           expect(page).to have_css("input[name=customer_id][value='#{customer.id}']", visible: :hide)
-          expect(find('[name=customer_id_completion]').value).to eq customer.fullname
+          expect(find('[name=customer_id_completion]').value).to eq "#{customer.fullname} <#{customer.email}>"
         end
       end
     end

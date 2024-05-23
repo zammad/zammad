@@ -374,38 +374,63 @@ RSpec.describe 'Ticket create > Secure mailing', authenticated_as: :authenticate
         create(:smime_certificate, fixture: recipient_email_address)
       end
 
+      shared_examples 'switching between security types' do
+        it 'switches between security types' do
+          within(:active_content) do
+
+            click '.btn', text: 'PGP'
+
+            # Wait until the security options check AJAX call is ready.
+            expect(page).to have_css('div.js-securityEncrypt.btn--active')
+            expect(page).to have_css('div.js-securitySign.btn--active')
+
+            expect(page).to have_css('.btn.btn--active', text: 'PGP')
+            expect(page).to have_no_css('.btn.btn--active', text: 'S/MIME')
+
+            expect(find('.js-securityEncryptComment')['title']).to eq('The PGP keys for pgp+smime-recipient@example.com were found.')
+            expect(find('.js-securitySignComment')['title']).to eq('The PGP key for pgp+smime-sender@example.com was found.')
+
+            click '.btn', text: 'S/MIME'
+
+            # Wait until the security options check AJAX call is ready.
+            expect(page).to have_css('div.js-securityEncrypt.btn--active')
+            expect(page).to have_css('div.js-securitySign.btn--active')
+
+            expect(page).to have_no_css('.btn.btn--active', text: 'PGP')
+            expect(page).to have_css('.btn.btn--active', text: 'S/MIME')
+
+            expect(find('.js-securityEncryptComment')['title']).to eq('The certificates for pgp+smime-recipient@example.com were found.')
+            expect(find('.js-securitySignComment')['title']).to eq('The certificate for pgp+smime-sender@example.com was found.')
+          end
+        end
+      end
+
       it_behaves_like 'showing security type switcher'
 
-      it 'switches between security types' do
-        visit 'ticket/create'
+      context 'when customer selection is based on template' do
+        before do
+          visit 'ticket/create'
 
-        within(:active_content) do
-          use_template(template)
-
-          click '.btn', text: 'PGP'
-
-          # Wait until the security options check AJAX call is ready.
-          expect(page).to have_css('div.js-securityEncrypt.btn--active')
-          expect(page).to have_css('div.js-securitySign.btn--active')
-
-          expect(page).to have_css('.btn.btn--active', text: 'PGP')
-          expect(page).to have_no_css('.btn.btn--active', text: 'S/MIME')
-
-          expect(find('.js-securityEncryptComment')['title']).to eq('The PGP keys for pgp+smime-recipient@example.com were found.')
-          expect(find('.js-securitySignComment')['title']).to eq('The PGP key for pgp+smime-sender@example.com was found.')
-
-          click '.btn', text: 'S/MIME'
-
-          # Wait until the security options check AJAX call is ready.
-          expect(page).to have_css('div.js-securityEncrypt.btn--active')
-          expect(page).to have_css('div.js-securitySign.btn--active')
-
-          expect(page).to have_no_css('.btn.btn--active', text: 'PGP')
-          expect(page).to have_css('.btn.btn--active', text: 'S/MIME')
-
-          expect(find('.js-securityEncryptComment')['title']).to eq('The certificates for pgp+smime-recipient@example.com were found.')
-          expect(find('.js-securitySignComment')['title']).to eq('The certificate for pgp+smime-sender@example.com was found.')
+          within(:active_content) do
+            use_template(template)
+          end
         end
+
+        it_behaves_like 'switching between security types'
+      end
+
+      context 'when customer selection is based on manual selection' do
+        before do
+          visit 'ticket/create'
+
+          within(:active_content) do
+            click '.tab', text: 'Send Email'
+            find('[name=customer_id_completion]').fill_in with: customer.firstname
+            find("li.recipientList-entry.js-object[data-object-id='#{customer.id}']").click
+          end
+        end
+
+        it_behaves_like 'switching between security types'
       end
     end
   end

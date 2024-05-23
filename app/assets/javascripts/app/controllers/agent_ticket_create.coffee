@@ -616,10 +616,18 @@ class App.TicketCreate extends App.Controller
     # to replace in text modules properly
     params.customer = App.User.find(params.customer_id) || {}
 
-    # show selected user display name in customer attribute in UI
-    if _.isEmpty(@el.find('input[name=customer_id_completion]').val())
-      if params.customer && params.customer.displayName
-        @el.find('input[name=customer_id_completion]').val(params.customer.displayName())
+    # if customer is given in params (e. g. from CTI integration) show selected customer
+    # display name with email address (if exists) in customer attribute in UI
+    fillCompletionIfRequiredCallback = =>
+      return if !_.isEmpty(@el.find('input[name=customer_id_completion]').val())
+      return if !params.customer
+      return if !params.customer.displayName
+      completion = params.customer.displayName()
+      if params.customer.email
+        completion = App.Utils.buildEmailAddress(params.customer.displayName(), params.customer.email)
+      return if !completion
+      @el.find('input[name=customer_id_completion]').val(completion)
+    @delay(fillCompletionIfRequiredCallback, 10)
 
     @sidebarWidget.render(params)
     @textModule.reload(
