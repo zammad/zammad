@@ -40,6 +40,23 @@ RSpec.describe 'Desktop > Account', app: :desktop_view, authenticated_as: :agent
     end
   end
 
+  describe 'password change' do
+    let(:agent) { create(:agent, password: 'test') }
+
+    it 'user can change password' do
+      click_on 'Profile settings'
+      click_on 'Password'
+
+      fill_in 'Current password', with: 'test'
+      fill_in 'New password', with: 'testTEST1234'
+      fill_in 'Confirm new password', with: 'testTEST1234'
+
+      click_on 'Change Password'
+
+      expect(page).to have_text('Password changed successfully')
+    end
+  end
+
   describe 'avatar handling', authenticated_as: :agent do
     let(:agent) { create(:agent, firstname: 'Jane', lastname: 'Doe') }
 
