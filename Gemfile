@@ -200,12 +200,12 @@ gem 'pry-theme'
 # monitoring / system report
 gem 'macaddr'
 
+# watch file changes (also relevant for graphql generation in context of CDs)
+gem 'listen'
+
 # Gems used only for develop/test and not required
 # in production environments by default.
 group :development, :test do
-
-  # watch file changes
-  gem 'listen'
 
   # test frameworks
   gem 'minitest-profile', require: false
