@@ -6,6 +6,7 @@ Rails.application.config.html_sanitizer_tags_remove_content = %w[
   comment
   meta
   script
+  title
 ]
 
 # content of this tags will will be inserted html quoted
