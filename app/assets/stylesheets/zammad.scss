@@ -12468,6 +12468,16 @@ output {
   }
 }
 
+.manage-chat-jquery-switch-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  .zammad-switch {
+    @include bidi-style(margin-right, 8px, margin-left, 8px);
+  }
+}
+
 .browser {
   margin: 0 0 20px;
   position: relative;
