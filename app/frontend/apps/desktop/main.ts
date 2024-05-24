@@ -14,7 +14,6 @@ import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import initializeStore from '#shared/stores/index.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
-import { useAppTheme } from '#shared/stores/theme.ts'
 
 import { twoFactorConfigurationPluginLookup } from '#desktop/entities/two-factor-configuration/plugins/index.ts'
 import { initializeForm, initializeFormFields } from '#desktop/form/index.ts'
@@ -23,6 +22,7 @@ import { initializeGlobalComponentStyles } from '#desktop/initializer/initialize
 import { ensureAfterAuth } from '#desktop/pages/authentication/after-auth/composable/useAfterAuthPlugins.ts'
 import initializeRouter from '#desktop/router/index.ts'
 import initializeApolloClient from '#desktop/server/apollo/index.ts'
+import { useThemeStore } from '#desktop/stores/theme.ts'
 
 import App from './AppDesktop.vue'
 
@@ -72,7 +72,7 @@ export const mountApp = async () => {
   }
 
   // sync theme so the store is initialized and user (if exists) and DOM have the same value
-  useAppTheme().syncTheme()
+  useThemeStore().syncTheme()
 
   if (VITE_TEST_MODE) {
     await import('#shared/initializer/initializeFakeTimer.ts')

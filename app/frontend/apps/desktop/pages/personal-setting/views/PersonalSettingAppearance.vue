@@ -1,12 +1,36 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
+import { computed } from 'vue'
+
+import {
+  NotificationTypes,
+  useNotifications,
+} from '#shared/components/CommonNotifications/index.ts'
+
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
+import { useThemeStore } from '#desktop/stores/theme.ts'
 
 import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
-import { useThemeUpdate } from '../composables/useThemeUpdate.ts'
 
-const { currentTheme, savingTheme } = useThemeUpdate(true)
+const { notify } = useNotifications()
+const themeStore = useThemeStore()
+const { updateTheme } = themeStore
+const { currentTheme, savingTheme } = storeToRefs(themeStore)
+
+const modelTheme = computed({
+  get: () => currentTheme.value,
+  set: (theme) => {
+    updateTheme(theme).then(() => {
+      notify({
+        id: 'theme-update',
+        message: __('Your theme has been updated.'),
+        type: NotificationTypes.Success,
+      })
+    })
+  },
+})
 
 const themeOptions = [
   {
@@ -39,7 +63,7 @@ const { breadcrumbItems } = useBreadcrumb(__('Appearance'))
   <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
     <div class="mb-4">
       <FormKit
-        v-model="currentTheme"
+        v-model="modelTheme"
         type="radioList"
         name="theme"
         :label="__('Theme')"

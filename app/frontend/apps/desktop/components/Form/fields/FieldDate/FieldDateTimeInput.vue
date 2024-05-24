@@ -10,7 +10,8 @@ import type { DateTimeContext } from '#shared/components/Form/fields/FieldDate/t
 import { useDateTime } from '#shared/components/Form/fields/FieldDate/useDateTime.ts'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
-import { useAppTheme } from '#shared/stores/theme.ts'
+
+import { useThemeStore } from '#desktop/stores/theme.ts'
 import '@vuepic/vue-datepicker/dist/main.css'
 
 interface Props {
@@ -59,9 +60,9 @@ const inputIcon = computed(() => {
 
 const picker = ref<DatePickerInstance>()
 
-const { theme } = storeToRefs(useAppTheme())
+const { currentTheme } = storeToRefs(useThemeStore())
 
-const dark = computed(() => theme.value === 'dark')
+const dark = computed(() => currentTheme.value === 'dark')
 </script>
 
 <template>

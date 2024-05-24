@@ -165,7 +165,7 @@ export const useSessionStore = defineStore(
     //   Use with care.
     const userId = computed(() => user.value?.id || '')
 
-    const setUserPreference = async (key: string, value: JsonValue) => {
+    const setUserPreference = (key: string, value: JsonValue) => {
       if (!user.value) return
 
       user.value.preferences[key] = value

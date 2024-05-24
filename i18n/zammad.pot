@@ -10527,10 +10527,6 @@ msgstr ""
 msgid "Profile"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
-msgid "Profile appearance updated successfully."
-msgstr ""
-
 #: app/frontend/shared/composables/useLocaleUpdate.ts
 msgid "Profile language updated successfully."
 msgstr ""
@@ -13050,7 +13046,7 @@ msgstr ""
 msgid "The admin password auth email could not be sent."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
+#: app/frontend/apps/desktop/stores/theme.ts
 msgid "The appearance could not be updated."
 msgstr ""
 
@@ -16564,6 +16560,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue
 msgid "Your language"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
+msgid "Your theme has been updated."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee

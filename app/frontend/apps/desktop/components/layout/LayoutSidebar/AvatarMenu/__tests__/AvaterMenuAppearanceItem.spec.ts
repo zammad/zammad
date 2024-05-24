@@ -10,16 +10,16 @@ import { useSessionStore } from '#shared/stores/session.ts'
 
 import AvatarMenuAppearanceItem from '../AvatarMenuAppearanceItem.vue'
 
-describe('avatar menu apperance item', () => {
-  beforeEach(() => {
+describe('avatar menu appearance item', () => {
+  it('renders menu item with switcher', async () => {
     mockUserCurrent({
       lastname: 'Doe',
       firstname: 'John',
-      preferences: {},
+      preferences: {
+        theme: EnumAppearanceTheme.Dark,
+      },
     })
-  })
 
-  it('renders menu item with switcher', async () => {
     const view = renderComponent(AvatarMenuAppearanceItem, {
       props: {
         label: 'Appearance',
@@ -29,14 +29,14 @@ describe('avatar menu apperance item', () => {
     expect(view.getByText('Appearance')).toBeInTheDocument()
     const appearanceSwitch = view.getByRole('checkbox', { name: 'Dark Mode' })
 
-    expect(appearanceSwitch).toBePartiallyChecked()
+    expect(appearanceSwitch).toBeChecked()
 
     await view.events.click(appearanceSwitch)
 
-    expect(appearanceSwitch).toBeChecked()
+    expect(appearanceSwitch).not.toBeChecked()
 
     const session = useSessionStore()
 
-    expect(session.user?.preferences?.theme).toBe(EnumAppearanceTheme.Dark)
+    expect(session.user?.preferences?.theme).toBe(EnumAppearanceTheme.Light)
   })
 })
