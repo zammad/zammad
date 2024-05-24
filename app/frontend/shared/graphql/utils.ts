@@ -35,27 +35,3 @@ export const getIdFromGraphQLId = (graphqlId: string) => {
 export const convertToGraphQLIds = (type: string, ids: (number | string)[]) => {
   return ids.map((id) => convertToGraphQLId(type, id))
 }
-
-/**
- * Recursively removes the '__typename' key from the given object and its nested objects/ array.
- *
- * @param {unknown} obj - The input object to clean up.
- * @return {unknown} The cleaned up object without the '__typename' key.
- * @info Used for graphql mutation that need payload with the appollo client added '__typename' key
- */
-export const cleanupGraphQLTypename = (obj: unknown): unknown => {
-  if (Array.isArray(obj)) {
-    return obj.map(cleanupGraphQLTypename)
-  } else if (typeof obj === 'object' && obj !== null) {
-    const newObj: Record<string, unknown> = {}
-    Object.keys(obj as Record<string, unknown>).forEach((key) => {
-      if (key !== '__typename') {
-        newObj[key] = cleanupGraphQLTypename(
-          (obj as Record<string, unknown>)[key],
-        )
-      }
-    })
-    return newObj
-  }
-  return obj
-}

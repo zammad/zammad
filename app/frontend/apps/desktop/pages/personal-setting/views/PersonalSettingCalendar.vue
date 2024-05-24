@@ -235,7 +235,7 @@ watch(formInitialValues, (newValues) => {
   // No reset needed when the form has already the correct state.
   if (isEqual(values.value, newValues) && !isDirty.value) return
 
-  formReset(newValues, user.value!.personalSettings!)
+  formReset(newValues)
 })
 
 const { notify } = useNotifications()

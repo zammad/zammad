@@ -2,6 +2,7 @@
 
 import { ApolloLink, createHttpLink, from } from '@apollo/client/core'
 import { BatchHttpLink } from '@apollo/client/link/batch-http'
+import { removeTypenameFromVariables } from '@apollo/client/link/remove-typename'
 import { getMainDefinition } from '@apollo/client/utilities'
 import ActionCableLink from 'graphql-ruby-client/subscriptions/ActionCableLink'
 
@@ -96,6 +97,7 @@ const link = from([
   setAuthorizationLink,
   debugLink,
   connectedStateLink,
+  removeTypenameFromVariables(),
   splitLink,
 ])
 

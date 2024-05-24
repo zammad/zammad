@@ -10,10 +10,7 @@ import {
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
 import Form from '#shared/components/Form/Form.vue'
-import {
-  type FormSubmitData,
-  type FormValues,
-} from '#shared/components/Form/types.ts'
+import { type FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
@@ -22,11 +19,8 @@ import {
   EnumNotificationSoundFile,
   type UserNotificationMatrixInput,
 } from '#shared/graphql/types.ts'
-import {
-  cleanupGraphQLTypename,
-  convertToGraphQLId,
-} from '#shared/graphql/utils.ts'
-import { i18n } from '#shared/i18n/index.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import type { UserData } from '#shared/types/store.ts'
 
@@ -90,36 +84,29 @@ const schema = defineFormSchema([
   },
 ])
 
-const formInitialValues = computed<FormValues>((oldValues) => {
-  if (!user.value?.personalSettings) return {}
-
-  // We have to remove the __typename from the matrix to satisfy the mutation schema
-  // With the __typename, it will cause an error when the update mutation is executed
+const initialFormValues = computed<NotificationFormData>((oldValues) => {
   const { notificationConfig = {}, notificationSound = {} } =
-    cleanupGraphQLTypename(user.value.personalSettings) as Record<
-      'notificationConfig' | 'notificationSound',
-      Record<string, unknown>
-    >
+    user.value?.personalSettings || {}
 
-  const values = {
+  const values: NotificationFormData = {
     group_ids: notificationConfig?.groupIds ?? [],
-    matrix: notificationConfig?.matrix,
+    matrix: notificationConfig?.matrix || {},
 
     // Default notification sound settings are not present on the user preferences.
     file: notificationSound?.file ?? EnumNotificationSoundFile.Xylo,
     enabled: notificationSound?.enabled ?? true,
-  } as unknown as FormValues
+  }
 
   if (oldValues && isEqual(values, oldValues)) return oldValues
 
   return values
 })
 
-watch(formInitialValues, (newValues) => {
+watch(initialFormValues, (newValues) => {
   // No reset needed when the form has already the correct state.
   if (isEqual(values.value, newValues) && !isDirty.value) return
 
-  formReset(newValues, user.value!.personalSettings!)
+  formReset(newValues)
 })
 
 onChangedField('file', (fileName) => {
@@ -127,71 +114,83 @@ onChangedField('file', (fileName) => {
 })
 
 const onSubmit = async (form: FormSubmitData<NotificationFormData>) => {
-  try {
-    loading.value = true
+  loading.value = true
 
-    const response =
-      await useUserCurrentNotificationPreferencesUpdateMutation().mutate({
-        matrix: form.matrix as UserNotificationMatrixInput,
-        groupIds:
-          form?.group_ids?.map((id) => convertToGraphQLId('Group', id)) || [],
-        sound: {
-          file: form.file as EnumNotificationSoundFile,
-          enabled: form.enabled,
-        },
-      })
+  const notificationUpdateMutation = new MutationHandler(
+    useUserCurrentNotificationPreferencesUpdateMutation(),
+    {
+      errorNotificationMessage: __('Notification settings could not be saved.'),
+    },
+  )
 
-    if (response?.data?.userCurrentNotificationPreferencesUpdate) {
-      notify({
-        id: 'notification-update-success',
-        type: NotificationTypes.Success,
-        message: i18n.t('Notification settings have been saved successfully.'),
-      })
-    }
-  } finally {
-    loading.value = false
-  }
+  return notificationUpdateMutation
+    .send({
+      matrix: form.matrix as UserNotificationMatrixInput,
+      groupIds:
+        form?.group_ids?.map((id) => convertToGraphQLId('Group', id)) || [],
+      sound: {
+        file: form.file as EnumNotificationSoundFile,
+        enabled: form.enabled,
+      },
+    })
+    .then((response) => {
+      if (response?.userCurrentNotificationPreferencesUpdate) {
+        notify({
+          id: 'notification-update-success',
+          type: NotificationTypes.Success,
+          message: __('Notification settings have been saved successfully.'),
+        })
+      }
+    })
+    .finally(() => {
+      loading.value = false
+    })
 }
 
-const resetFormToDefaults = (preferences: UserData['preferences']) => {
+const resetFormToDefaults = (
+  personalSettings: UserData['personalSettings'],
+) => {
   form.value?.resetForm({
-    matrix: preferences.notificationConfig?.matrix,
+    matrix: personalSettings?.notificationConfig?.matrix || {},
   })
 }
 
 const onResetToDefaultSettings = async () => {
-  try {
-    loading.value = true
+  const confirmed = await waitForConfirmation(
+    __('Are you sure? Your notifications settings will be reset to default.'),
+  )
 
-    const confirmed = await waitForConfirmation(
-      i18n.t(
-        'Are you sure? Your notifications settings will be reset to default.',
-      ),
-    )
+  if (!confirmed) return
 
-    if (!confirmed) return
+  loading.value = true
 
-    const response =
-      await useUserCurrentNotificationPreferencesResetMutation().mutate()
+  const notificationResetMutation = new MutationHandler(
+    useUserCurrentNotificationPreferencesResetMutation(),
+    {
+      errorNotificationMessage: __('Notification settings could not be reset.'),
+    },
+  )
 
-    const preferences =
-      response?.data?.userCurrentNotificationPreferencesReset?.user
-        ?.personalSettings
+  return notificationResetMutation
+    .send()
+    .then((response) => {
+      const personalSettings =
+        response?.userCurrentNotificationPreferencesReset?.user
+          ?.personalSettings
 
-    if (!preferences) return
+      if (!personalSettings) return
 
-    // We have to remove the __typename from the matrix to satisfy the mutation schema
-    // With the __typename, it will cause an error when the update mutation is executed
-    resetFormToDefaults(cleanupGraphQLTypename(preferences))
+      resetFormToDefaults(personalSettings)
 
-    notify({
-      id: 'notification-reset-success',
-      type: NotificationTypes.Success,
-      message: i18n.t('Notification settings have been reset to default.'),
+      notify({
+        id: 'notification-reset-success',
+        type: NotificationTypes.Success,
+        message: __('Notification settings have been reset to default.'),
+      })
     })
-  } finally {
-    loading.value = false
-  }
+    .finally(() => {
+      loading.value = false
+    })
 }
 </script>
 
@@ -203,7 +202,7 @@ const onResetToDefaultSettings = async () => {
       :schema="schema"
       :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterUserNotifications"
       form-updater-initial-only
-      :initial-values="formInitialValues"
+      :initial-values="initialFormValues"
       @submit="onSubmit($event as FormSubmitData<NotificationFormData>)"
     >
       <template #after-fields>

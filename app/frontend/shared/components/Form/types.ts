@@ -24,7 +24,14 @@ export interface FormFieldAdditionalProps {
   [index: string]: unknown
 }
 
-type SimpleFormFieldValue = Primitive | Primitive[]
+type SimpleFormFieldValueBase =
+  | Primitive
+  | Primitive[]
+  | Record<string, Primitive | Primitive[]>
+
+type SimpleFormFieldValue =
+  | SimpleFormFieldValueBase
+  | Record<string, SimpleFormFieldValueBase>
 
 export type FormFieldValue =
   | SimpleFormFieldValue
