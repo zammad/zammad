@@ -18,8 +18,8 @@ class Gql::ZammadSchema < GraphQL::Schema
   default_page_size 100
   max_complexity 10_000
 
-  # The GraphQL introspection query has a depth of 13, so allow that in the development env.
-  max_depth Rails.env.eql?('development') ? 13 : 10
+  # Depth of 15 is needed for commmon introspection queries like Insomnia.
+  max_depth 15
 
   TYPE_MAP = {
     ::Store => ::Gql::Types::StoredFileType
