@@ -137,14 +137,51 @@
 
   <p><%- marked(@T('Insert the widget code into the source code of every page the chat shall be visible on. It should be placed at the end of the page\'s source code before the §</body>§ closing tag.')) %></p>
 
-  <h3><%- @T('Requirements') %></h3>
-  <p><%- @T("Zammad Chat requires jQuery. If you don't already use it on your website, you can add it like this:") %></p>
-  <pre><code class="language-html js-code">&lt;script src="https://code.jquery.com/jquery-3.6.0.min.js"&gt;&lt;/script&gt;</code></pre>
+  <div class="manage-chat-jquery-switch-container">
+    <div class="zammad-switch zammad-switch--small">
+       <input name="jquery" type="checkbox" id="chat-jquery" class="js-chat-jquery-widget">
+       <label for="chat-jquery"></label>
+    </div>
+    With jQuery
+  </div>
 
-  <h3><%- @T('Show chat automatically') %> (<%- @T('default') %>)</h3>
-  <p><%- @T('The chat will show up once the connection to the server got established and if there is an operator online to chat with.') %></p>
+  <div class="js-chat-jquery-widget-vanilla">
+    <h3><%- @T('Show chat automatically') %> (<%- @T('default') %>)</h3>
+    <p><%- @T('The chat will show up once the connection to the server got established and if there is an operator online to chat with.') %></p>
 
-  <pre><code class="language-html js-code">&lt;script src="<%= @baseurl %>/assets/chat/chat.min.js"&gt;&lt;/script&gt;
+    <pre><code class="language-html js-code">&lt;script src="<%= @baseurl %>/assets/chat/chat-no-jquery.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+(function() {
+  new ZammadChat({
+<span class="js-modal-params"></span>
+  });
+})();
+&lt;/script&gt;</code></pre>
+
+  <h3><%- @T('Manually open chat') %></h3>
+  <p><%- @T('If you want to open the chat by clicking a button, set the option §show§ to §false§ and add the class §open-zammad-chat§ to the button.') %></p>
+  <pre><code class="language-html js-code">&lt;button class="open-zammad-chat"&gt;Chat with us&lt;/button&gt;
+
+&lt;script src="<%= @baseurl %>/assets/chat/chat-no-jquery.min.js"&gt;&lt;/script&gt;
+&lt;script&gt;
+(function() {
+  new ZammadChat({
+<span class="js-modal-params"></span>,
+    show: false
+  });
+})();
+&lt;/script&gt;</code></pre>
+  </div>
+
+  <div class="js-chat-jquery-widget-jquery hide">
+    <h3><%- @T('Requirements') %></h3>
+    <p><%- @T("If you don't already use jQuery on your website, you can add it like this:") %></p>
+    <pre><code class="language-html js-code">&lt;script src="https://code.jquery.com/jquery-3.6.0.min.js"&gt;&lt;/script&gt;</code></pre>
+
+    <h3><%- @T('Show chat automatically') %> (<%- @T('default') %>)</h3>
+    <p><%- @T('The chat will show up once the connection to the server got established and if there is an operator online to chat with.') %></p>
+
+    <pre><code class="language-html js-code">&lt;script src="<%= @baseurl %>/assets/chat/chat.min.js"&gt;&lt;/script&gt;
 &lt;script&gt;
 $(function() {
   new ZammadChat({
@@ -166,6 +203,7 @@ $(function() {
   });
 });
 &lt;/script&gt;</code></pre>
+  </div>
 
   <h3><%- @T("Why doesn't the chat show up?") %></h3>
   <p>

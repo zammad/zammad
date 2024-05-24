@@ -10,6 +10,7 @@ class ChannelChat extends App.ControllerSubContent
     'click .js-toggle-chat': 'toggleChat'
     'change .js-chatSetting input': 'toggleChatSetting'
     'click .js-eyedropper': 'pickColor'
+    'change .js-chat-jquery-widget': 'switchScriptPreview'
 
   elements:
     '.js-browser': 'browser'
@@ -302,6 +303,10 @@ class ChannelChat extends App.ControllerSubContent
     pixels = ctx.getImageData(relative_x, relative_y, 1, 1).data
 
     @colorField.val("rgb(#{pixels.slice(0,3).join(',')})").trigger('change')
+
+  switchScriptPreview: (e) ->
+    @$('.js-chat-jquery-widget-jquery').toggleClass('hide', !e.currentTarget.checked)
+    @$('.js-chat-jquery-widget-vanilla').toggleClass('hide', e.currentTarget.checked)
 
   toggleChat: =>
     @chat.toggleClass('is-open')
