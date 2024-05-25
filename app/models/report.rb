@@ -70,6 +70,13 @@ class Report
         adapter:      Report::TicketMoved,
         params:       { type: 'out' }
       },
+      {
+        name:         'merged',
+        display:      __('Merged'),
+        selected:     false,
+        dataDownload: true,
+        adapter:      Report::TicketMerged,
+      },
     ]
     config[:metric][:count][:backend] = backend
 

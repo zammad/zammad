@@ -11,7 +11,6 @@ class Report::Base
   # :end
   # :selector
   def self.history_count(params)
-
     history_object = History::Object.lookup(name: params[:object])
 
     query, bind_params, tables = Ticket.selector2sql(params[:selector])
@@ -357,4 +356,21 @@ class Report::Base
     true
   end
 
+  INTERVAL_LENGTH = {
+    month:  12,
+    week:   7,
+    # day:  31, Day is counted bellow by given month/year
+    hour:   24,
+    minute: 60,
+  }.with_indifferent_access
+
+  def self.interval_length(params)
+    interval = params[:interval]
+
+    if interval == 'day'
+      return Time.days_in_month params[:range_start].month, params[:range_start].year
+    end
+
+    INTERVAL_LENGTH[interval]
+  end
 end

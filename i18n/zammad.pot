@@ -8388,6 +8388,10 @@ msgstr ""
 msgid "Merge to Ticket#"
 msgstr ""
 
+#: app/models/report.rb
+msgid "Merged"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: public/assets/form/form.js
