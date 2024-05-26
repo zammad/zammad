@@ -20,7 +20,7 @@ returns
 =end
 
   def self.aggs(params_origin)
-    params = params_origin.dup
+    params = params_origin.deep_dup
     interval_es = params[:interval]
     if params[:interval] == 'week'
       interval_es = 'day'

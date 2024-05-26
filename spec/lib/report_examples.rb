@@ -153,13 +153,17 @@ RSpec.shared_context 'with report examples' do
     ticket = create(:ticket,
                     group:         group_1,
                     customer:      customer,
-                    state_name:    'merged',
+                    state_name:    'open',
                     priority_name: '2 normal',
                     close_at:      Time.zone.now)
 
     create(:ticket_article,
            :inbound_email,
            ticket: ticket)
+
+    travel 10.minutes
+
+    ticket.update!(state: Ticket::State.lookup(name: 'merged'))
 
     travel_back
     ticket
@@ -176,6 +180,10 @@ RSpec.shared_context 'with report examples' do
     create(:ticket_article,
            :inbound_email,
            ticket: ticket)
+
+    travel 10.minutes
+
+    ticket.update!(state: Ticket::State.lookup(name: 'merged'))
 
     travel_back
 

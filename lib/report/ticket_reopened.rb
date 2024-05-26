@@ -19,7 +19,7 @@ returns
 =end
 
   def self.aggs(params_origin)
-    params = params_origin.dup
+    params = params_origin.deep_dup
     ticket_state_ids = ticket_ids
 
     result = []

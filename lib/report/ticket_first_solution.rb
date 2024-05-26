@@ -18,7 +18,7 @@ returns
 =end
 
   def self.aggs(params_origin)
-    params = params_origin.dup
+    params = params_origin.deep_dup
 
     result = []
     case params[:interval]
