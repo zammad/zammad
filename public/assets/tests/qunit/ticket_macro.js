@@ -8,22 +8,23 @@ QUnit.module("ticket macro pending time check", hooks => {
     this.clock.restore()
   })
 
-  var calculate_travel_on_ticket_diff = (rules) => {
-    var new_date = travel_on_ticket_date(rules)
+  var calculate_travel_on_ticket_diff = (rules, attribute = 'pending_time') => {
+    var new_date = travel_on_ticket_date(rules, attribute)
     return new Date(new_date) - new Date()
   }
 
-  var travel_on_ticket_date = (rules) => {
+  var travel_on_ticket_date = (rules, attribute = 'pending_time') => {
     var ticket = new App.Ticket()
+
+    macro = {}
+    macro["ticket."+ attribute] = rules
 
     App.Ticket.macro({
       ticket: ticket,
-      macro: {
-        "ticket.pending_time": rules
-      }
+      macro:  macro
     })
 
-    return ticket.pending_time
+    return ticket[attribute]
   }
 
   QUnit.test("5 days", assert => {
@@ -80,5 +81,19 @@ QUnit.module("ticket macro pending time check", hooks => {
     var target_date = new Date("1971-01-01T00:00:00.000Z")
 
     assert.equal(new_date.getTime(), target_date.getTime())
+  });
+
+  QUnit.test("5 minutes on a different attribute", assert => {
+    App.Ticket.configure_attributes.push({
+      name: 'custom_date', display: 'Custom date',  tag: 'datetime'
+    })
+
+    var rules = {
+      operator: "relative",
+      range: "minute",
+      value: 3
+    }
+
+    assert.equal(calculate_travel_on_ticket_diff(rules, 'custom_date'), 60 * 3 * 1000)
   });
 })

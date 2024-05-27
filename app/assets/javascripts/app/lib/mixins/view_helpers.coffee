@@ -90,6 +90,11 @@ App.ViewHelpers =
         time.setFullYear(time.getFullYear() + diff)
 
     if includeTime
+      # Clear seconds & miliseconds
+      # Because time picker allows to put in hours and minutes only
+      # If time contains seconds, detection of changed input malfunctions
+      time.setSeconds(0)
+      time.setMilliseconds(0)
       time.toISOString()
     else
       time.toISOString().substring(0, 10)

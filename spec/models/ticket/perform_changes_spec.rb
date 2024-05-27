@@ -97,7 +97,8 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
     it 'changes pending date to given date' do
       freeze_time do
         expect { object.perform_changes(performable, 'trigger', object, User.first) }
-          .to change(object, :pending_time).to(be_within(1.minute).of(timestamp))
+          .to change(object, :pending_time)
+          .to timestamp.change(sec: 0)
       end
     end
   end
@@ -107,10 +108,14 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
     shared_examples 'verify' do
       it 'verify relative pending time rule' do
         freeze_time do
-          interval = relative_value.send(relative_range).from_now
+          target_time = relative_value
+            .send(relative_range)
+            .from_now
+            .change(sec: 0)
 
           expect { object.perform_changes(performable, 'trigger', object, User.first) }
-            .to change(object, :pending_time).to(be_within(1.minute).of(interval))
+            .to change(object, :pending_time)
+            .to target_time
         end
       end
     end

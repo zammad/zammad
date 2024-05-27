@@ -103,15 +103,26 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
   end
 
   def fetch_new_date_value(value)
-    return TimeRangeHelper.relative(range: value['range'], value: value['value']) if value['operator'].eql?('relative')
-
-    value['value']
+    case value['operator']
+    when 'relative'
+      # Clear seconds & miliseconds
+      # Because time picker allows to put in hours and minutes only
+      # If time contains seconds, detection of changed input malfunctions
+      TimeRangeHelper
+        .relative(range: value['range'], value: value['value'])
+        .change(usec: 0, sec: 0)
+    else
+      value['value']
+    end
   end
 
   def format_new_date_value(new_value, object_attribute)
-    return new_value.to_datetime if object_attribute[:data_type].eql?('datetime')
-
-    new_value.to_date
+    case object_attribute[:data_type]
+    when 'datetime'
+      new_value.to_datetime
+    else
+      new_value.to_date
+    end
   end
 
   def template_value(value)

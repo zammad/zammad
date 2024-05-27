@@ -124,6 +124,10 @@ class App.Ticket extends App.Model
 
   # apply macro
   @macro: (params) ->
+    isTimeTag = (attribute) ->
+      config = _.findWhere(App.Ticket.configure_attributes, { name: attribute })
+      _.includes(['date', 'datetime'], config?.tag)
+
     for key, content of params.macro
       attributes = key.split('.')
 
@@ -146,7 +150,7 @@ class App.Ticket extends App.Model
                 @tagAdd(params.ticket.id, tag)
 
         # apply pending date changes
-        else if attributes[1] is 'pending_time' && content.operator is 'relative'
+        else if isTimeTag(attributes[1]) && content.operator is 'relative'
           params.ticket[attributes[1]] = App.ViewHelpers.relative_time(content.value, content.range)
 
         # apply user changes
