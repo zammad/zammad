@@ -5,7 +5,7 @@ class Service::User::Deprecated::Signup < Service::User::Signup
   attr_reader :user_data, :resend
 
   def initialize(user_data:, resend: false)
-    super(user_data: user_data, resend: resend)
+    super
 
     @path = {
       signup: '#email_verify/',

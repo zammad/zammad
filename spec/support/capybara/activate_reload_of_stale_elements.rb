@@ -7,8 +7,8 @@
 
 module ZammadActivateReloadOfStaleElements
 
-  def all(*args, allow_reload: true, **options, &optional_filter_block)
-    super(*args, allow_reload: allow_reload, **options, &optional_filter_block)
+  def all(*, allow_reload: true, **, &optional_filter_block)
+    super
   end
 end
 

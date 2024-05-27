@@ -3,7 +3,7 @@
 class Service::System::Import::ApplyKayakoConfiguration < Service::System::Import::ApplyConfigurationBase
 
   def execute
-    super()
+    super
 
     Setting.set('import_kayako_endpoint', @endpoint)
     Setting.set('import_kayako_endpoint_username', @username)

@@ -3,7 +3,7 @@
 class Service::System::Import::ApplyFreshdeskConfiguration < Service::System::Import::ApplyConfigurationBase
 
   def execute
-    super()
+    super
 
     Setting.set('import_freshdesk_endpoint', @endpoint)
     Setting.set('import_freshdesk_endpoint_key', @secret)

@@ -29,7 +29,7 @@ class AssetsSet < SimpleDelegator
     # This method overwrites the SimpleDelegator initializer
     # to be able to have the actual Assets Hash as an optional argument.
     def initialize(assets = {})
-      super(assets)
+      super
     end
 
     # This method intercepts `assets[model_name][object_id]` calls and return the actual objects data.

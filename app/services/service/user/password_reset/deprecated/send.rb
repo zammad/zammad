@@ -5,7 +5,7 @@ class Service::User::PasswordReset::Deprecated::Send < Service::User::PasswordRe
   attr_reader :username
 
   def initialize(username:)
-    super(username: username)
+    super
 
     @path = {
       reset: '#password_reset_verify/'

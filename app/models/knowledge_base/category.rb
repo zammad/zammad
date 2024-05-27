@@ -44,7 +44,7 @@ class KnowledgeBase::Category < ApplicationModel
   def assets(data = {})
     return data if assets_added_to?(data)
 
-    data = super(data)
+    data = super
     data = knowledge_base.assets(data)
 
     data = ApplicationModel::CanAssets.reduce(translations, data)

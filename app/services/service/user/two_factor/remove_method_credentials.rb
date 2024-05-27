@@ -3,8 +3,8 @@
 class Service::User::TwoFactor::RemoveMethodCredentials < Service::User::TwoFactor::Base
   attr_reader :credential_id
 
-  def initialize(credential_id:, **kwargs)
-    super(**kwargs)
+  def initialize(credential_id:, **)
+    super(**)
 
     @credential_id = credential_id
   end

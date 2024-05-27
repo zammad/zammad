@@ -5,7 +5,7 @@ class Service::System::Import::ApplyOtrsConfiguration < Service::System::Import:
   def execute
     sanitize_url
 
-    super()
+    super
 
     parse_url
 

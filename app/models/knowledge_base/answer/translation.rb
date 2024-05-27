@@ -28,7 +28,7 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   def assets(data = {})
     return data if assets_added_to?(data)
 
-    data = super(data)
+    data = super
     answer.assets(data)
     ApplicationModel::CanAssets.reduce inline_linked_objects, data
   end

@@ -16,7 +16,7 @@ module Gql::Fields
 
     # If a field is not authorized, just return 'nil' rather than throwing a GraphQL error.
     def resolve(object, args, context)
-      field_authorized?(object) ? super(object, args, context) : nil
+      field_authorized?(object) ? super : nil
     end
 
     private

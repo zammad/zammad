@@ -8,7 +8,7 @@ class SecureMailing::PGP::Incoming < SecureMailing::Backend::HandlerIncoming
   SIGNATURE_CONTENT_TYPE      = 'application/pgp-signature'.freeze
 
   def initialize(mail)
-    super(mail)
+    super
 
     @mime_type = mail[:mail_instance].mime_type
     @content_type_parameters = mail[:mail_instance].content_type_parameters

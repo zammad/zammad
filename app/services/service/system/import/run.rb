@@ -2,7 +2,7 @@
 
 class Service::System::Import::Run < Service::Base
   def initialize
-    super()
+    super
 
     configured!
   end
@@ -31,7 +31,7 @@ class Service::System::Import::Run < Service::Base
 
   class ExecuteError < StandardError
     def initialize(message = __('Please configure import source before running.'))
-      super(message)
+      super
     end
   end
 end

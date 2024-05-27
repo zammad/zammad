@@ -50,7 +50,7 @@ class TicketPolicy < ApplicationPolicy
     def respond_to?(*args)
       return false if args.first.to_s == 'resolve' && instance_of?(TicketPolicy::BaseScope)
 
-      super(*args)
+      super
     end
   end
 end

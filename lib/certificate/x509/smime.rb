@@ -14,7 +14,7 @@ class Certificate::X509::SMIME < Certificate::X509
   end
 
   def initialize(pem)
-    super(pem)
+    super
 
     @email_addresses = fetch_email_addresses
     @subject_hash    = subject.hash.to_s(16)

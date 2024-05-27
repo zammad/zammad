@@ -3,8 +3,8 @@
 class Service::User::TwoFactor::SetDefaultMethod < Service::User::TwoFactor::Base
   attr_reader :force
 
-  def initialize(force: false, **kwargs)
-    super(**kwargs)
+  def initialize(force: false, **)
+    super(**)
 
     @force = force
   end

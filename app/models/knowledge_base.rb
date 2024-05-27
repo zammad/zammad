@@ -53,7 +53,7 @@ class KnowledgeBase < ApplicationModel
   def assets(data)
     return data if assets_added_to?(data)
 
-    data = super(data)
+    data = super
     ApplicationModel::CanAssets.reduce(kb_locales + translations, data)
   end
 

@@ -3,8 +3,8 @@
 class Service::User::TwoFactor::VerifyMethodConfiguration < Service::User::TwoFactor::Base
   attr_reader :payload, :configuration
 
-  def initialize(configuration:, payload:, **kwargs)
-    super(**kwargs)
+  def initialize(configuration:, payload:, **)
+    super(**)
 
     @configuration = configuration
     @payload = payload

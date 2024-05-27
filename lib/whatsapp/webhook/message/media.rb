@@ -32,6 +32,6 @@ class Whatsapp::Webhook::Message::Media < Whatsapp::Webhook::Message
       preferences[:filename] = message[:filename]
     end
 
-    super().merge(preferences)
+    super.merge(preferences)
   end
 end

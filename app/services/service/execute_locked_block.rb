@@ -44,7 +44,7 @@ class Service::ExecuteLockedBlock < Service::Base
 
   class ExecuteLockedBlockError < StandardError
     def initialize(message = __('This resource cannot be locked, because it has already been locked by another process.'))
-      super(message)
+      super
     end
   end
 end

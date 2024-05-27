@@ -3,7 +3,7 @@
 class Service::System::Import::ApplyZendeskConfiguration < Service::System::Import::ApplyConfigurationBase
 
   def execute
-    super()
+    super
 
     Setting.set('import_zendesk_endpoint', @endpoint)
     Setting.set('import_zendesk_endpoint_username', @username)

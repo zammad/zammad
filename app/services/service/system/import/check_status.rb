@@ -5,7 +5,7 @@ class Service::System::Import::CheckStatus < Service::Base
   attr_reader :source
 
   def initialize
-    super()
+    super
 
     @source = Setting.get('import_backend')
 

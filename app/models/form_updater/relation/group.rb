@@ -4,7 +4,7 @@ class FormUpdater::Relation::Group < FormUpdater::Relation
   attr_accessor :lookup_parent_child_groups, :root_groups
 
   def initialize(...)
-    super(...)
+    super
 
     @root_groups = []
     @lookup_parent_child_groups = {}

@@ -8,7 +8,7 @@ class Service::Ticket::Article::Type::WhatsappMessage::Deliver < Service::Ticket
   end
 
   def check_channel!
-    super()
+    super
 
     error!(message: "Recipient phone number is missing in ticket.preferences['whatsapp']['from']['phone_number'] for Ticket.find(#{ticket.id})") if !from_phone_number
   end

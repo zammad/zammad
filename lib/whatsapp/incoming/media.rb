@@ -5,7 +5,7 @@ class Whatsapp::Incoming::Media < Whatsapp::Client
   attr_reader :medias_api
 
   def initialize(access_token:)
-    super(access_token:)
+    super
 
     @medias_api = WhatsappSdk::Api::Medias.new client
   end

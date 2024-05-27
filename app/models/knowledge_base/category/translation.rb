@@ -24,7 +24,7 @@ class KnowledgeBase::Category::Translation < ApplicationModel
   def assets(data)
     return data if assets_added_to?(data)
 
-    data = super(data)
+    data = super
     category.assets(data)
   end
 
