@@ -3621,10 +3621,10 @@
     js-beautify "^1.14.9"
     vue-component-type-helpers "^2.0.0"
 
-"@vuepic/vue-datepicker@^8.6.0":
-  version "8.6.0"
-  resolved "https://registry.yarnpkg.com/@vuepic/vue-datepicker/-/vue-datepicker-8.6.0.tgz#9dc549757e670f0ad9edc9ad2dc781ed1e08b889"
-  integrity sha512-ZnG7xquVf7WyMKXk7JxWOJ5ursig1t8o2AtH9ycetiik+lemV9+HNEx+YOR1xeCUfhupGTgJmyAxCSZHP/Sv/w==
+"@vuepic/vue-datepicker@^8.7.0":
+  version "8.7.0"
+  resolved "https://registry.yarnpkg.com/@vuepic/vue-datepicker/-/vue-datepicker-8.7.0.tgz#380704498913c965b4153818093ff5dc790e0beb"
+  integrity sha512-EqL51GdaRg6AExVuPCOmnO81n9+oLqgTi+LlST44TwU0UcX0UfefHx1HXwV948fAqBgj0ESgTyDvjXx7EFFL2A==
   dependencies:
     date-fns "^3.6.0"
 
