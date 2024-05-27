@@ -11,11 +11,18 @@ module TriggerWebhookJob::CustomPayload::Validator
     Integer
     String
     Float
+    FalseClass
+    TrueClass
   ].freeze
 
   ALLOWED_RAILS_CLASSES = %w[
     ActiveSupport::TimeWithZone
     ActiveSupport::Duration
+  ].freeze
+
+  ALLOWED_CONTAINER_CLASSES = %w[
+    Hash
+    Array
   ].freeze
 
   ALLOWED_DEFAULT_CLASSES = ALLOWED_SIMPLE_CLASSES + ALLOWED_RAILS_CLASSES
@@ -47,9 +54,25 @@ module TriggerWebhookJob::CustomPayload::Validator
 
   # Final value must be one of the above described classes.
   def validate_value!(value, display)
+    return validate_container_values(value) if value.class.to_s.in?(ALLOWED_CONTAINER_CLASSES)
     return "\#{#{display} / no such method}" if !value.class.to_s.in?(ALLOWED_DEFAULT_CLASSES)
 
     value
+  end
+
+  def validate_container_values(container)
+    case container.class.to_s
+    when 'Array'
+      container.each_with_index do |value, index|
+        container[index] = value.class.to_s.in?(ALLOWED_DEFAULT_CLASSES) ? value : 'no such item'
+      end
+    when 'Hash'
+      container.each do |key, value|
+        container[key] = value.class.to_s.in?(ALLOWED_DEFAULT_CLASSES) ? value : 'no such item'
+      end
+    end
+
+    container
   end
 
   # Any top level object must be provided by the tracks hash (ticket, article,

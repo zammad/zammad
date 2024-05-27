@@ -7,6 +7,12 @@ module TriggerWebhookJob::CustomPayload::Parser
 
   private
 
+  STRING_LIKE_CLASSES = %w[
+    String
+    ActiveSupport::TimeWithZone
+    ActiveSupport::Duration
+  ].freeze
+
   # This module validates the scanned replacement variables.
   def parse(variables, tracks)
     mappings = {}
@@ -29,17 +35,36 @@ module TriggerWebhookJob::CustomPayload::Parser
   # payload is valid JSON.
   def replace(record, mappings)
     mappings.each do |variable, value|
-      record.gsub!("\#{#{variable}}", value
-      .to_s
-      .gsub(%r{"}, '\"')
-      .gsub(%r{\n}, '\n')
-      .gsub(%r{\r}, '\r')
-      .gsub(%r{\t}, '\t')
-      .gsub(%r{\f}, '\f')
-      .gsub(%r{\v}, '\v'))
+      escaped_variable = Regexp.escape(variable)
+      pattern = %r{("\#\{#{escaped_variable}\}"|\#\{#{escaped_variable}\})}
+
+      is_string_like = value.class.to_s.in?(STRING_LIKE_CLASSES)
+
+      record.gsub!(pattern) do |match|
+        if match.start_with?('"')
+          escaped_value = escape_replace_value(value, is_string_like:)
+          is_string_like ? "\"#{escaped_value}\"" : escaped_value
+        else
+          escape_replace_value(value, is_string_like: true)
+        end
+      end
     end
 
     record
+  end
+
+  def escape_replace_value(value, is_string_like: false)
+    if is_string_like
+      value.to_s
+        .gsub(%r{"}, '\"')
+        .gsub(%r{\n}, '\n')
+        .gsub(%r{\r}, '\r')
+        .gsub(%r{\t}, '\t')
+        .gsub(%r{\f}, '\f')
+        .gsub(%r{\v}, '\v')
+    else
+      value.to_json
+    end
   end
 
   # Scan the custom payload for replacement variables.
