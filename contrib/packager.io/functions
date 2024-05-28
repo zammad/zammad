@@ -315,14 +315,6 @@ function elasticsearch_searchindex_rebuild () {
   fi
 }
 
-function detect_local_gemfiles () {
-  if ls ${ZAMMAD_DIR}/Gemfile.local* 1> /dev/null 2>&1; then
-    zammad config:set BUNDLE_DEPLOYMENT=0
-    zammad run bundle config set --local deployment 'false'
-    zammad run bundle install
-  fi
-}
-
 function detect_zammad_packages () {
   if [ "$(zammad run rails r 'puts Package.count.positive?')" == "true" ] && [ -n "$(which yarn 2> /dev/null)" ] ; then
     echo "# Detected custom packages..."
@@ -339,9 +331,7 @@ function zammad_packages_reinstall_all () {
   if [ "${ZAMMAD_PACKAGES}" == "yes" ]; then
     echo "# Setup custom packages files..."
     zammad run rake zammad:package:reinstall_all
-    detect_local_gemfiles
-    zammad run rake zammad:package:migrate
-    zammad run rake assets:precompile
+    zammad run rake zammad:package:post_install
   fi
 }
 

@@ -63,6 +63,12 @@ module Tasks
 
         Pathname.new(Rake.original_dir).join(path)
       end
+
+      def self.exec_command(cmd)
+        puts "> #{cmd}"
+        puts `#{cmd}`
+        puts ''
+      end
     end
   end
 end

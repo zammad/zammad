@@ -12,19 +12,9 @@
     <%- @T('After installing, updating, or uninstalling packages the following commands need to be executed on the server:') %>
     <ul>
     <% if @package_installation: %>
-      <% if @local_gemfiles: %>
-      <li><code>root> zammad config:set BUNDLE_DEPLOYMENT=0</code></li>
-      <li><code>root> zammad run bundle config set --local deployment 'false'</code></li>
-      <li><code>root> zammad run bundle install</code></li>
-      <% end %>
-      <li><code>root> zammad run rake zammad:package:migrate</code></strong></li>
-      <li><code>root> zammad run rake assets:precompile</code></strong></li>
-    <% else: %>
-      <% if @local_gemfiles: %>
-      <li><code>zammad> bundle install</code></li>
-      <% end %>
-      <li><code>zammad> rake zammad:package:migrate</code></strong></li>
-      <li><code>zammad> rake assets:precompile</code></strong></li>
+      <li><code>root> zammad run rake zammad:package:post_install</code></li>
+      <% else: %>
+      <li><code>zammad> rake zammad:package:post_install</code></li>
     <% end %>
       <li><code>root> systemctl restart zammad</code></li>
     </ul>
