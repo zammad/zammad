@@ -219,6 +219,7 @@ returns
 
     # prepare scaling of images
     if result[:body]
+      result[:body] = HtmlSanitizer.adjust_inline_image_size(result[:body])
       result[:body] = HtmlSanitizer.dynamic_image_size(result[:body])
     end
 
