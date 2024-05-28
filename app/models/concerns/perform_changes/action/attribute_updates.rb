@@ -131,7 +131,7 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
     value['value'] = NotificationFactory::Mailer.template(
       templateInline: value['value'],
       objects:        notification_factory_template_objects,
-      quote:          true,
+      quote:          false,
       locale:         locale,
       timezone:       timezone,
     )

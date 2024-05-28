@@ -61,5 +61,54 @@ RSpec.shared_examples 'CanPerformChanges', :aggregate_failures do |object_name:,
         expect(object.reload.custom_attribute_text2).to eq('testing-example')
       end
     end
+
+    # All fields (aside from richtext) are escaped in frontend. No need to escape in database.
+    # https://github.com/zammad/zammad/issues/5108
+    describe 'Allow special characters', db_strategy: :reset do
+      let(:custom_attribute_text1) do
+        create(:object_manager_attribute_text, name: 'custom_attribute_text1', object_name: object_name)
+      end
+      let(:custom_attribute_text2) do
+        create(:object_manager_attribute_text, name: 'custom_attribute_text2', object_name: object_name)
+      end
+
+      let(:object) { create(object_name.downcase.to_sym, custom_attribute_text2: 'special &&& characters') }
+
+      let(:perform) do
+        {
+          "#{object_name_downcase}.#{target_field}" => {
+            'value' => "\#{#{object_name_downcase}.custom_attribute_text2}",
+          }
+        }
+      end
+
+      before do
+        custom_attribute_text1
+        custom_attribute_text2
+        ObjectManager::Attribute.migration_execute
+
+        object
+      end
+
+      context 'when target field is a text field' do
+        let(:target_field) { :custom_attribute_text1 }
+
+        it 'does not escape special characters' do
+          expect { object.perform_changes(performable, 'trigger') }
+            .to change { object.reload.custom_attribute_text1 }
+            .to 'special &&& characters'
+        end
+      end
+
+      context 'when target field is a rich text field' do
+        let(:target_field) { :note }
+
+        it 'escapes special characters' do
+          expect { object.perform_changes(performable, 'trigger') }
+            .to change { object.reload.note }
+            .to 'special &amp;&amp;&amp; characters'
+        end
+      end
+    end
   end
 end
