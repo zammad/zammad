@@ -84,7 +84,7 @@ watch(isResizingHorizontal, (isResizing) => {
     :id="props.id"
     class="group/sidebar -:bg-neutral-950 relative flex max-h-screen flex-col border-e border-neutral-100 dark:border-gray-900"
     :class="{
-      'px-2 py-3': isCollapsed,
+      'py-3': isCollapsed,
     }"
   >
     <CollapseButton
@@ -119,7 +119,11 @@ watch(isResizingHorizontal, (isResizing) => {
       :icon="iconCollapsed"
       @click="toggleCollapse"
     />
-    <div v-else class="flex h-full flex-col overflow-y-auto p-3">
+    <div
+      v-else
+      class="flex h-full flex-col overflow-y-auto"
+      :class="{ 'p-3': !isCollapsed }"
+    >
       <slot v-bind="{ isCollapsed }" />
     </div>
   </aside>

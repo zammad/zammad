@@ -27,7 +27,10 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
 </script>
 
 <template>
-  <section class="flex flex-row items-center justify-between">
+  <section
+    class="flex flex-row items-center justify-between"
+    :class="{ 'mx-auto mb-0.5': collapsed }"
+  >
     <CommonPopover
       id="user-menu-popover"
       ref="popover"
