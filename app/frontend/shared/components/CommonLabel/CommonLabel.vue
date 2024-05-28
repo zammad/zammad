@@ -15,10 +15,10 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const fontSizeClassMap = {
-  small: 'text-xs leading-4',
-  medium: 'text-sm leading-4',
-  large: 'text-base leading-5',
-  xl: 'text-xl leading-6',
+  small: 'text-xs leading-snug',
+  medium: 'text-sm leading-snug',
+  large: 'text-base leading-snug',
+  xl: 'text-xl leading-snug',
 }
 
 const iconClassMap = {
@@ -37,6 +37,7 @@ const iconClassMap = {
   >
     <CommonIcon
       v-if="prefixIcon"
+      class="shrink-0"
       :size="iconClassMap[props.size]"
       :name="prefixIcon"
       :class="iconColor"
@@ -47,6 +48,7 @@ const iconClassMap = {
 
     <CommonIcon
       v-if="suffixIcon"
+      class="shrink-0"
       :size="iconClassMap[props.size]"
       :name="suffixIcon"
       :class="iconColor"

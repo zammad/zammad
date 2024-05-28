@@ -61,7 +61,7 @@ const getHoverFocusStyles = (variant?: Variant) => {
       v-if="showHeaderLabel"
       role="heading"
       aria-level="2"
-      class="p-2 leading-3"
+      class="p-2 leading-snug"
     >
       <slot name="header">
         <CommonLabel size="small" class="text-stone-200 dark:text-neutral-500"

@@ -83,7 +83,11 @@ onMounted(() => {
     :role="isTabMode ? 'tablist' : 'listbox'"
     class="relative flex w-fit items-center gap-1 rounded-full bg-blue-200 p-1 dark:bg-gray-700"
   >
-    <CommonTab v-if="label" id="filter-select-label">{{ $t(label) }}</CommonTab>
+    <CommonTab v-if="label" id="filter-select-label">
+      <CommonLabel class="text-stone-200 dark:text-neutral-500" size="medium">{{
+        $t(label)
+      }}</CommonLabel>
+    </CommonTab>
 
     <CommonTab
       v-if="!multiple"

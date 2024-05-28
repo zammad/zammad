@@ -22,7 +22,7 @@ withDefaults(defineProps<Props>(), {
 <template>
   <!--  eslint-disable vuejs-accessibility/no-static-element-interactions-->
   <header
-    class="group/heading flex cursor-default justify-between px-0 text-base font-normal leading-5 text-stone-200 active:text-stone-200 dark:text-neutral-500 dark:active:text-neutral-500"
+    class="group/heading flex cursor-default justify-between px-0 text-base font-normal leading-snug text-stone-200 active:text-stone-200 dark:text-neutral-500 dark:active:text-neutral-500"
     :class="{ 'cursor-pointer': collapsible }"
     @click="collapsible && $emit('toggle-collapsed', title)"
     @keydown.enter="collapsible && $emit('toggle-collapsed', title)"
