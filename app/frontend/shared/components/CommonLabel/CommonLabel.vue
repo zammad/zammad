@@ -15,7 +15,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const fontSizeClassMap = {
-  small: 'text-xs leading-3',
+  small: 'text-xs leading-4',
   medium: 'text-sm leading-4',
   large: 'text-base leading-5',
   xl: 'text-xl leading-6',
@@ -31,7 +31,7 @@ const iconClassMap = {
 
 <template>
   <span
-    class="-:gap-1 -:text-gray-100 -:dark:text-neutral-400 inline-flex items-center justify-start"
+    class="-:gap-1 -:text-gray-100 -:dark:text-neutral-400 -:inline-flex items-center justify-start"
     :class="fontSizeClassMap[props.size]"
     data-test-id="common-label"
   >

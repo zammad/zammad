@@ -99,10 +99,12 @@ const tableHeaders: TableHeader[] = [
   {
     key: 'name',
     label: __('Name'),
+    truncate: true,
   },
   {
     key: 'location',
     label: __('Location'),
+    truncate: true,
   },
   {
     key: 'updatedAt',

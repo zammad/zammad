@@ -44,7 +44,7 @@ const outputAbsoluteDate = computed(() => {
   </time>
   <time
     v-else
-    :title="i18n.dateTime(dateTime)"
+    v-tooltip="i18n.dateTime(dateTime)"
     :datetime="dateTime"
     data-test-id="date-time-relative"
   >

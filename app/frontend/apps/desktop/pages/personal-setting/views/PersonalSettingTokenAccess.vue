@@ -88,10 +88,12 @@ const tableHeaders: TableHeader[] = [
   {
     key: 'name',
     label: __('Name'),
+    truncate: true,
   },
   {
     key: 'permissions',
     label: __('Permissions'),
+    truncate: true,
   },
   {
     key: 'createdAt',

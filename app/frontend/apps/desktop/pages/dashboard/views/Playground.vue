@@ -856,6 +856,7 @@ const tableHeaders = [
   {
     key: 'title',
     label: 'Job position',
+    truncate: true,
   },
   {
     key: 'email',
@@ -899,14 +900,15 @@ const tableItems = reactive([
   {
     id: 5,
     name: 'Leonard Krasner',
-    title: 'Senior Designer',
+    title: 'Senior Designer Principal Designer ',
     email: 'leonard.krasner@example.com',
     role: 'Owner',
   },
   {
     id: 6,
     name: 'Floyd Miles',
-    title: 'Principal Designer',
+    title:
+      'Principal Designer for a very long way to go to see the end of the title. It is a very long title, indeed.',
     email: 'floyd.miles@example.com',
     role: 'Member',
   },
@@ -944,9 +946,11 @@ const { activeTab: activeFilters } = useTabManager<Tab[]>()
 <template>
   <LayoutContent :breadcrumb-items="[]">
     <div class="w-1/2">
-      <h2 class="text-xl">Buttons</h2>
+      <h1 id="test" v-tooltip="'Hello world'" class="w-fit">Tooltip example</h1>
 
-      <h3>Text only</h3>
+      <h2 title="Buttons" class="text-xl">Buttons</h2>
+
+      <h3 v-tooltip="'another example'">Text only</h3>
       <div class="flex space-x-3 py-2">
         <CommonButton variant="primary" />
         <CommonButton variant="secondary" />

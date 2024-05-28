@@ -76,6 +76,7 @@ const tableHeaders: TableHeader[] = [
   {
     key: 'username',
     label: __('Username'),
+    truncate: true,
   },
 ]
 

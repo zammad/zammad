@@ -158,7 +158,9 @@ describe('Two-factor Authentication - Security Keys', () => {
     await waitForUserCurrentTwoFactorGetMethodConfigurationQueryCalls()
 
     expect(flyout).toHaveTextContent('foobar')
-    expect(within(flyout).getByTitle('2024-01-01 00:00')).toBeInTheDocument()
+    expect(
+      within(flyout).getByLabelText('2024-01-01 00:00'),
+    ).toBeInTheDocument()
 
     mockUserCurrentTwoFactorRemoveMethodCredentialsMutation({
       userCurrentTwoFactorRemoveMethodCredentials: {

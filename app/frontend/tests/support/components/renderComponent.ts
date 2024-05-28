@@ -36,6 +36,7 @@ import type { ImportGlobEagerOutput } from '#shared/types/utils.ts'
 
 import { twoFactorConfigurationPluginLookup } from '#desktop/entities/two-factor-configuration/plugins/index.ts'
 import desktopIconsAliases from '#desktop/initializer/desktopIconsAliasesMap.ts'
+import { directives } from '#desktop/initializer/initializeGlobalDirectives.ts'
 import mobileIconsAliases from '#mobile/initializer/mobileIconsAliasesMap.ts'
 
 import { setTestState, waitForNextTick } from '../utils.ts'
@@ -156,6 +157,7 @@ const defaultWrapperOptions: ExtendedMountingOptions<unknown> = {
       CommonLabel,
       CommonBadge,
     },
+    directives,
     stubs: {},
     plugins,
   },

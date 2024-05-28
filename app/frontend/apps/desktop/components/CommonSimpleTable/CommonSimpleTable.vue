@@ -1,6 +1,10 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { ref } from 'vue'
+
+import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
+
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
 
@@ -36,6 +40,12 @@ const rowBackgroundClasses = 'bg-blue-200 dark:bg-gray-700'
 
 const columnSeparatorClasses =
   'border-r border-neutral-100 dark:border-gray-900'
+
+const contentCells = ref()
+
+const getTooltipText = (item: TableItem, header: TableHeader) => {
+  return header.truncate ? item[header.key] : undefined
+}
 </script>
 
 <template>
@@ -74,11 +84,14 @@ const columnSeparatorClasses =
         <td
           v-for="header in headers"
           :key="`${item.id}-${header.key}`"
-          class="h-10 p-2.5 text-sm text-gray-100 first:rounded-s-md last:rounded-e-md dark:text-neutral-400"
+          class="h-10 p-2.5 text-sm first:rounded-s-md last:rounded-e-md"
           :class="[
             (index + 1) % 2 && rowBackgroundClasses,
             header.columnSeparator && columnSeparatorClasses,
             cellAlignmentClasses[header.alignContent || 'left'],
+            {
+              'max-w-32 truncate text-black dark:text-white': header.truncate,
+            },
           ]"
         >
           <slot
@@ -86,7 +99,11 @@ const columnSeparatorClasses =
             :item="item"
             :header="header"
           >
-            <CommonLabel class="text-black dark:text-white">
+            <CommonLabel
+              ref="contentCells"
+              v-tooltip.truncateOnly="getTooltipText(item, header)"
+              class="inline text-black dark:text-white"
+            >
               <template v-if="!item[header.key]">-</template>
               <template v-else-if="header.type === 'timestamp'">
                 <CommonDateTime :date-time="item[header.key] as string" />

@@ -18,6 +18,7 @@ declare module '@vue/runtime-core' {
     CommonLink: typeof CommonLink
     CommonDateTime: typeof CommonDateTime
     CommonBadge: typeof CommonBadge
+    CommonLabel: typeof CommonLabel
     FormKit: typeof FormKit
 
     RouterView: typeof RouterView

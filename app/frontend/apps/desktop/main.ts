@@ -19,6 +19,7 @@ import { twoFactorConfigurationPluginLookup } from '#desktop/entities/two-factor
 import { initializeForm, initializeFormFields } from '#desktop/form/index.ts'
 import { initializeDesktopIcons } from '#desktop/initializer/initializeDesktopIcons.ts'
 import { initializeGlobalComponentStyles } from '#desktop/initializer/initializeGlobalComponentStyles.ts'
+import initializeGlobalDirectives from '#desktop/initializer/initializeGlobalDirectives.ts'
 import { ensureAfterAuth } from '#desktop/pages/authentication/after-auth/composable/useAfterAuthPlugins.ts'
 import initializeRouter from '#desktop/router/index.ts'
 import initializeApolloClient from '#desktop/server/apollo/index.ts'
@@ -39,6 +40,7 @@ export const mountApp = async () => {
   initializeGlobalComponents(app)
   initializeAppName('desktop')
   initializeGlobalProperties(app)
+  initializeGlobalDirectives(app)
   initializeStoreSubscriptions()
   initializeTwoFactorPlugins(twoFactorConfigurationPluginLookup)
 

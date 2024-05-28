@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { waitFor } from '@testing-library/vue'
+
 import { renderComponent } from '#tests/support/components/index.ts'
 
 import { i18n } from '#shared/i18n.ts'
@@ -111,5 +113,62 @@ describe('CommonSimpleTable.vue', () => {
     expect(view.baseElement.querySelector('table')).toMatchFileSnapshot(
       `${__filename}.snapshot.txt`,
     )
+  })
+
+  it('supports text truncation in cell content', async () => {
+    const view = renderTable({
+      headers: [
+        ...tableHeaders,
+        {
+          key: 'truncated',
+          label: 'Truncated',
+          truncate: true,
+        },
+      ],
+      items: [
+        ...tableItems,
+        {
+          id: 2,
+          name: 'Max Mustermann',
+          role: 'Admin',
+          truncated: 'Some text to be truncated',
+        },
+      ],
+    })
+
+    const truncatedText = view.getByText('Some text to be truncated')
+
+    expect(truncatedText.parentElement).toHaveClass('truncate')
+  })
+
+  it('supports tooltip on truncated cell content', async () => {
+    const view = renderTable({
+      headers: [
+        ...tableHeaders,
+        {
+          key: 'truncated',
+          label: 'Truncated',
+          truncate: true,
+        },
+      ],
+      items: [
+        ...tableItems,
+        {
+          id: 2,
+          name: 'Max Mustermann',
+          role: 'Admin',
+          truncated: 'Some text to be truncated',
+        },
+      ],
+    })
+
+    await view.events.hover(view.getByText('Max Mustermann'))
+
+    await waitFor(() => {
+      expect(view.getByText('Some text to be truncated')).toBeInTheDocument()
+      expect(
+        view.getByLabelText('Some text to be truncated'),
+      ).toBeInTheDocument()
+    })
   })
 })

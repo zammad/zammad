@@ -38,7 +38,7 @@ export const checkSimpleTableContent = (
           const withinCell = within(cell)
 
           if (Array.isArray(content)) {
-            const dateTime = withinCell.getByTitle(content[0])
+            const dateTime = withinCell.getByLabelText(content[0])
             expect(dateTime).toHaveTextContent(content[1])
           } else {
             expect(withinCell.getByText(content)).toBeInTheDocument()

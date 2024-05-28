@@ -10,6 +10,7 @@ export interface TableHeader<K = string> {
   columnSeparator?: boolean
   alignContent?: 'center' | 'right'
   type?: TableColumnType
+  truncate?: boolean
   [key: string]: unknown
 }
 export interface TableItem {
