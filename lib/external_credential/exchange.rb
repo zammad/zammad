@@ -123,6 +123,8 @@ class ExternalCredential::Exchange
   end
 
   def self.refresh_token
+    return {} if !Setting.get('exchange_integration')
+
     config = Setting.get('exchange_oauth')
     return {} if config.blank?
     return config if config[:created_at] >= 50.minutes.ago
