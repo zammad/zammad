@@ -3,9 +3,28 @@
 require 'rails_helper'
 
 RSpec.describe ExternalCredential::Exchange do
-  describe "Exchange Oauth token update job is always marked as failed job when it's not configured #4454", performs_jobs: true do
-    it 'does always return a value' do
-      expect(described_class.refresh_token).to be_truthy
+  describe '.refresh_token' do
+    # https://github.com/zammad/zammad/issues/4454
+    context 'when Exchange integration is not configured at all' do
+      before do
+        Setting.set('exchange_oauth', {})
+        Setting.set('exchange_integration', true)
+      end
+
+      it 'does always return a value' do
+        expect(described_class.refresh_token).to be_truthy
+      end
+    end
+
+    # https://github.com/zammad/zammad/issues/4961
+    context 'when Exchange integration is not enabled' do
+      before do
+        Setting.set('exchange_integration', false)
+      end
+
+      it 'does always return a value' do
+        expect(described_class.refresh_token).to be_truthy
+      end
     end
   end
 end
