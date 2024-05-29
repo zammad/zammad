@@ -221,9 +221,11 @@ returns
       ratio = image.width / width
       return if image.height / ratio <= 6
 
+      original_format = image.format
+
       image.resize!(width, :auto)
       temp_file_resize = ::Tempfile.new.path
-      image.save(temp_file_resize)
+      image.save(temp_file_resize, format: original_format)
       ::File.binread(temp_file_resize)
     end
   end
