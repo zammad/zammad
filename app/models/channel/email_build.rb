@@ -100,6 +100,8 @@ generate email with S/MIME
         logger.error e
       end
 
+      html_alternative.body = Channel::EmailBuild.adjust_inline_image_size(html_alternative.body.to_s) if found_content_ids.present?
+
       html_container = Mail::Part.new { content_type 'multipart/related' }
       html_container.add_part html_alternative
 
@@ -224,4 +226,15 @@ Add/change markup to display html in any mail client nice.
     new_html
   end
 
+=begin
+
+Adjust image size in html email for MS Outlook to always contain `width` and `height` as tags, not only as part of the `style`.
+
+  html_string_with_adjustments = Channel::EmailBuild.adjust_inline_image_size(html_string)
+
+=end
+
+  def self.adjust_inline_image_size(html)
+    Loofah.fragment(html).scrub!(HtmlSanitizer::Scrubber::Outgoing::ImageSize.new).to_html
+  end
 end

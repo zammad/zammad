@@ -55,4 +55,16 @@ sanitize style of img tags
     HtmlSanitizer::DynamicImageSize.new.sanitize(string)
   end
 
+=begin
+
+Adjust height + width of img tags
+
+  string = HtmlSanitizer.adjust_inline_image_size(article.body)
+
+=end
+
+  def self.adjust_inline_image_size(string)
+    HtmlSanitizer::AdjustInlineImageSize.new.sanitize(string)
+  end
+
 end
