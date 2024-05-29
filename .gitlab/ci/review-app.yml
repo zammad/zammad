@@ -278,3 +278,10 @@ review-app:stop:
     - ${DOCKER_COMPOSE_COMMAND} down
   environment:
     action: stop
+
+review-app:restart:
+  extends:
+    - .review-app
+  script:
+    - echo "Restart review app…"
+    - ${DOCKER_COMPOSE_COMMAND} restart
