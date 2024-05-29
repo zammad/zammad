@@ -945,471 +945,484 @@ const { activeTab: activeFilters } = useTabManager<Tab[]>()
 
 <template>
   <LayoutContent :breadcrumb-items="[]">
-    <div class="w-1/2">
-      <h1 id="test" v-tooltip="'Hello world'" class="w-fit">Tooltip example</h1>
-
-      <h2 title="Buttons" class="text-xl">Buttons</h2>
-
-      <h3 v-tooltip="'another example'">Text only</h3>
-      <div class="flex space-x-3 py-2">
-        <CommonButton variant="primary" />
-        <CommonButton variant="secondary" />
-        <CommonButton variant="tertiary" />
-        <CommonButton variant="submit" />
-        <CommonButton variant="danger" />
-        <CommonButton variant="subtle" />
-        <CommonButton variant="neutral" />
-      </div>
-
-      <h3>With icon</h3>
-      <div class="flex space-x-3 py-2">
-        <CommonButton variant="primary" prefix-icon="logo-flat" />
-        <CommonButton variant="secondary" prefix-icon="logo-flat" />
-        <CommonButton variant="tertiary" prefix-icon="logo-flat" />
-        <CommonButton variant="submit" prefix-icon="logo-flat" />
-        <CommonButton variant="danger" prefix-icon="logo-flat" />
-        <CommonButton variant="subtle" prefix-icon="logo-flat" />
-        <CommonButton variant="neutral" prefix-icon="logo-flat" />
-      </div>
-
-      <h3>Icon only</h3>
-      <div class="flex items-center space-x-3 py-2">
-        <CommonButton variant="primary" icon="logo-flat" />
-        <CommonButton variant="secondary" icon="logo-flat" />
-        <CommonButton variant="tertiary" icon="logo-flat" />
-        <CommonButton variant="submit" icon="logo-flat" />
-        <CommonButton variant="danger" icon="logo-flat" />
-        <CommonButton variant="subtle" icon="logo-flat" />
-        <CommonButton variant="neutral" icon="logo-flat" />
-        <CommonButton variant="primary" icon="logo-flat" size="medium" />
-        <CommonButton variant="secondary" icon="logo-flat" size="medium" />
-        <CommonButton variant="tertiary" icon="logo-flat" size="medium" />
-        <CommonButton variant="submit" icon="logo-flat" size="medium" />
-        <CommonButton variant="danger" icon="logo-flat" size="medium" />
-        <CommonButton variant="subtle" icon="logo-flat" size="medium" />
-        <CommonButton variant="neutral" icon="logo-flat" size="medium" />
-        <CommonButton variant="primary" icon="logo-flat" size="large" />
-        <CommonButton variant="secondary" icon="logo-flat" size="large" />
-        <CommonButton variant="tertiary" icon="logo-flat" size="large" />
-        <CommonButton variant="submit" icon="logo-flat" size="large" />
-        <CommonButton variant="danger" icon="logo-flat" size="large" />
-        <CommonButton variant="subtle" icon="logo-flat" size="large" />
-        <CommonButton variant="neutral" icon="logo-flat" size="large" />
-      </div>
-
-      <h3>Misc</h3>
-      <div class="flex-wrap space-x-3 space-y-2 py-2">
-        <CommonButton variant="submit" block>Block</CommonButton>
-        <CommonButton variant="primary" disabled>Disabled</CommonButton>
-        <CommonButton variant="secondary" disabled>Disabled</CommonButton>
-        <CommonButton variant="tertiary" disabled>Disabled</CommonButton>
-        <CommonButton variant="submit" disabled>Disabled</CommonButton>
-        <CommonButton variant="danger" disabled>Disabled</CommonButton>
-        <CommonButton variant="subtle" disabled>Disabled</CommonButton>
-        <CommonButton variant="neutral" disabled>Disabled</CommonButton>
-      </div>
-
-      <h3>Group</h3>
-      <div class="w-1/2 space-x-3 space-y-2 py-2">
-        <CommonButtonGroup :items="buttonGroupOptions" />
-      </div>
-    </div>
-
-    <div class="w-1/2">
-      <h2 class="text-xl">Alerts</h2>
-
-      <CommonAlert
-        variant="info"
-        dismissible
-        link="https://youtu.be/U6n2NcJ7rLc"
-        link-text="Party 🎉"
-        class="mb-2.5"
-        >It's Friday!
-      </CommonAlert>
-      <CommonAlert variant="success" class="mb-2.5"
-        >Hooray! Ticket got updated.
-      </CommonAlert>
-      <CommonAlert variant="warning" class="mb-2.5"
-        >Heee! You're typing too fast.
-      </CommonAlert>
-      <CommonAlert variant="danger" class="mb-2.5"
-        >Ooops! You broke it.
-      </CommonAlert>
-    </div>
-
     <div>
-      <h2>Labels</h2>
-      <CommonLabel size="small" prefix-icon="logo" suffix-icon="logo-flat">
-        Small
-      </CommonLabel>
+      <div class="w-1/2">
+        <h1 id="test" v-tooltip="'Hello world'" class="w-fit">
+          Tooltip example
+        </h1>
 
-      <br />
+        <h2 title="Buttons" class="text-xl">Buttons</h2>
 
-      <CommonLabel size="medium" prefix-icon="logo" suffix-icon="logo-flat">
-        Medium
-      </CommonLabel>
-
-      <br />
-
-      <CommonLabel size="large" prefix-icon="logo" suffix-icon="logo-flat">
-        Large
-      </CommonLabel>
-
-      <br />
-
-      <CommonLabel size="xl" prefix-icon="logo" suffix-icon="logo-flat">
-        Extra large
-      </CommonLabel>
-    </div>
-
-    <div>
-      <h2>Badges</h2>
-
-      <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="neutral">
-        Neutral
-      </CommonBadge>
-
-      <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="info">Info</CommonBadge>
-
-      <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="success">
-        Success
-      </CommonBadge>
-
-      <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="warning">
-        Warning
-      </CommonBadge>
-
-      <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="danger">
-        Danger
-      </CommonBadge>
-
-      <CommonBadge
-        class="bg-pink-300 text-white ltr:mr-2 rtl:ml-2 dark:bg-pink-300"
-        variant="custom"
-        >Custom
-      </CommonBadge>
-    </div>
-
-    <div class="w-1/5">
-      <h2>Progress Bar</h2>
-
-      <div class="flex flex-col gap-3">
-        <div class="flex flex-col gap-2">
-          <CommonLabel size="small">What is the meaning of life?</CommonLabel>
-          <CommonProgressBar />
+        <h3 v-tooltip="'another example'">Text only</h3>
+        <div class="flex space-x-3 py-2">
+          <CommonButton variant="primary" />
+          <CommonButton variant="secondary" />
+          <CommonButton variant="tertiary" />
+          <CommonButton variant="submit" />
+          <CommonButton variant="danger" />
+          <CommonButton variant="subtle" />
+          <CommonButton variant="neutral" />
         </div>
 
-        <div class="flex items-end gap-2">
-          <div class="mb-1 flex grow flex-col gap-1">
-            <div class="flex justify-between">
-              <CommonLabel size="small">Organizations</CommonLabel>
-              <CommonLabel
-                class="text-stone-200 dark:text-neutral-500"
-                size="small"
-              >
-                {{ progressBarValue }} of 100
-              </CommonLabel>
-            </div>
+        <h3>With icon</h3>
+        <div class="flex space-x-3 py-2">
+          <CommonButton variant="primary" prefix-icon="logo-flat" />
+          <CommonButton variant="secondary" prefix-icon="logo-flat" />
+          <CommonButton variant="tertiary" prefix-icon="logo-flat" />
+          <CommonButton variant="submit" prefix-icon="logo-flat" />
+          <CommonButton variant="danger" prefix-icon="logo-flat" />
+          <CommonButton variant="subtle" prefix-icon="logo-flat" />
+          <CommonButton variant="neutral" prefix-icon="logo-flat" />
+        </div>
 
-            <CommonProgressBar :value="progressBarValue.toString()" max="100" />
+        <h3>Icon only</h3>
+        <div class="flex items-center space-x-3 py-2">
+          <CommonButton variant="primary" icon="logo-flat" />
+          <CommonButton variant="secondary" icon="logo-flat" />
+          <CommonButton variant="tertiary" icon="logo-flat" />
+          <CommonButton variant="submit" icon="logo-flat" />
+          <CommonButton variant="danger" icon="logo-flat" />
+          <CommonButton variant="subtle" icon="logo-flat" />
+          <CommonButton variant="neutral" icon="logo-flat" />
+          <CommonButton variant="primary" icon="logo-flat" size="medium" />
+          <CommonButton variant="secondary" icon="logo-flat" size="medium" />
+          <CommonButton variant="tertiary" icon="logo-flat" size="medium" />
+          <CommonButton variant="submit" icon="logo-flat" size="medium" />
+          <CommonButton variant="danger" icon="logo-flat" size="medium" />
+          <CommonButton variant="subtle" icon="logo-flat" size="medium" />
+          <CommonButton variant="neutral" icon="logo-flat" size="medium" />
+          <CommonButton variant="primary" icon="logo-flat" size="large" />
+          <CommonButton variant="secondary" icon="logo-flat" size="large" />
+          <CommonButton variant="tertiary" icon="logo-flat" size="large" />
+          <CommonButton variant="submit" icon="logo-flat" size="large" />
+          <CommonButton variant="danger" icon="logo-flat" size="large" />
+          <CommonButton variant="subtle" icon="logo-flat" size="large" />
+          <CommonButton variant="neutral" icon="logo-flat" size="large" />
+        </div>
+
+        <h3>Misc</h3>
+        <div class="flex-wrap space-x-3 space-y-2 py-2">
+          <CommonButton variant="submit" block>Block</CommonButton>
+          <CommonButton variant="primary" disabled>Disabled</CommonButton>
+          <CommonButton variant="secondary" disabled>Disabled</CommonButton>
+          <CommonButton variant="tertiary" disabled>Disabled</CommonButton>
+          <CommonButton variant="submit" disabled>Disabled</CommonButton>
+          <CommonButton variant="danger" disabled>Disabled</CommonButton>
+          <CommonButton variant="subtle" disabled>Disabled</CommonButton>
+          <CommonButton variant="neutral" disabled>Disabled</CommonButton>
+        </div>
+
+        <h3>Group</h3>
+        <div class="w-1/2 space-x-3 space-y-2 py-2">
+          <CommonButtonGroup :items="buttonGroupOptions" />
+        </div>
+      </div>
+
+      <div class="w-1/2">
+        <h2 class="text-xl">Alerts</h2>
+
+        <CommonAlert
+          variant="info"
+          dismissible
+          link="https://youtu.be/U6n2NcJ7rLc"
+          link-text="Party 🎉"
+          class="mb-2.5"
+          >It's Friday!
+        </CommonAlert>
+        <CommonAlert variant="success" class="mb-2.5"
+          >Hooray! Ticket got updated.
+        </CommonAlert>
+        <CommonAlert variant="warning" class="mb-2.5"
+          >Heee! You're typing too fast.
+        </CommonAlert>
+        <CommonAlert variant="danger" class="mb-2.5"
+          >Ooops! You broke it.
+        </CommonAlert>
+      </div>
+
+      <div>
+        <h2>Labels</h2>
+        <CommonLabel size="small" prefix-icon="logo" suffix-icon="logo-flat">
+          Small
+        </CommonLabel>
+
+        <br />
+
+        <CommonLabel size="medium" prefix-icon="logo" suffix-icon="logo-flat">
+          Medium
+        </CommonLabel>
+
+        <br />
+
+        <CommonLabel size="large" prefix-icon="logo" suffix-icon="logo-flat">
+          Large
+        </CommonLabel>
+
+        <br />
+
+        <CommonLabel size="xl" prefix-icon="logo" suffix-icon="logo-flat">
+          Extra large
+        </CommonLabel>
+      </div>
+
+      <div>
+        <h2>Badges</h2>
+
+        <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="neutral">
+          Neutral
+        </CommonBadge>
+
+        <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="info">Info</CommonBadge>
+
+        <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="success">
+          Success
+        </CommonBadge>
+
+        <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="warning">
+          Warning
+        </CommonBadge>
+
+        <CommonBadge class="ltr:mr-2 rtl:ml-2" variant="danger">
+          Danger
+        </CommonBadge>
+
+        <CommonBadge
+          class="bg-pink-300 text-white ltr:mr-2 rtl:ml-2 dark:bg-pink-300"
+          variant="custom"
+          >Custom
+        </CommonBadge>
+      </div>
+
+      <div class="w-1/5">
+        <h2>Progress Bar</h2>
+
+        <div class="flex flex-col gap-3">
+          <div class="flex flex-col gap-2">
+            <CommonLabel size="small">What is the meaning of life?</CommonLabel>
+            <CommonProgressBar />
           </div>
 
-          <CommonIcon
-            class="shrink-0 fill-green-500"
-            :class="progressBarValue !== 100 ? 'invisible' : undefined"
-            name="check2"
-            size="tiny"
-            decorative
+          <div class="flex items-end gap-2">
+            <div class="mb-1 flex grow flex-col gap-1">
+              <div class="flex justify-between">
+                <CommonLabel size="small">Organizations</CommonLabel>
+                <CommonLabel
+                  class="text-stone-200 dark:text-neutral-500"
+                  size="small"
+                >
+                  {{ progressBarValue }} of 100
+                </CommonLabel>
+              </div>
+
+              <CommonProgressBar
+                :value="progressBarValue.toString()"
+                max="100"
+              />
+            </div>
+
+            <CommonIcon
+              class="shrink-0 fill-green-500"
+              :class="progressBarValue !== 100 ? 'invisible' : undefined"
+              name="check2"
+              size="tiny"
+              decorative
+            />
+          </div>
+        </div>
+      </div>
+
+      <h2 class="mb-2 mt-8">Table</h2>
+      <div class="mb-6 flex flex-col gap-4">
+        <CommonButton variant="primary" @click="changeRow()"
+          >Change row</CommonButton
+        >
+        <CommonSimpleTable
+          :headers="tableHeaders"
+          :items="tableItems"
+          :actions="tableActions"
+        ></CommonSimpleTable>
+      </div>
+
+      <div class="w-1/2">
+        <h2 class="text-lg">Avatar</h2>
+
+        <div class="my-4 flex items-center gap-4">
+          <CommonUserAvatar
+            class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
+            tabindex="0"
+            :entity="{
+              id: 'gid://zammad/User/1',
+              vip,
+            }"
+            size="medium"
+          />
+
+          <CommonButton
+            :variant="vip ? 'neutral' : 'subtle'"
+            @click="vip = !vip"
+          >
+            {{ vip ? 'Make us unimportant :(' : 'Make us important :)' }}
+          </CommonButton>
+        </div>
+
+        <div class="flex gap-4">
+          <CommonUserAvatar
+            class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
+            tabindex="0"
+            :entity="{
+              id: 'gid://zammad/User/2',
+              firstname: 'Alfa',
+              lastname: 'Bravo',
+              vip,
+            }"
+            size="xs"
+          />
+          <CommonUserAvatar
+            class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
+            tabindex="0"
+            :entity="{
+              id: 'gid://zammad/User/3',
+              firstname: 'Charlie',
+              lastname: 'Delta',
+              vip,
+            }"
+            size="small"
+          />
+          <CommonUserAvatar
+            class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
+            tabindex="0"
+            :entity="{
+              id: 'gid://zammad/User/4',
+              firstname: 'Echo',
+              lastname: 'Foxtrot',
+              vip,
+            }"
+            size="medium"
+          />
+          <CommonUserAvatar
+            class="cursor-pointer outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
+            tabindex="0"
+            :entity="{
+              id: 'gid://zammad/User/5',
+              firstname: 'Golf',
+              lastname: 'Hotel',
+              vip,
+            }"
+            size="normal"
+          />
+          <CommonUserAvatar
+            class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
+            tabindex="0"
+            :entity="{
+              id: 'gid://zammad/User/6',
+              firstname: 'India',
+              lastname: 'Juliett',
+              vip,
+            }"
+            size="large"
+          />
+          <CommonUserAvatar
+            class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
+            tabindex="0"
+            :entity="{
+              id: 'gid://zammad/User/7',
+              firstname: 'Kilo',
+              lastname: 'Lima',
+              vip,
+            }"
+            size="xl"
           />
         </div>
       </div>
-    </div>
 
-    <h2 class="mb-2 mt-8">Table</h2>
-    <div class="mb-6 flex flex-col gap-4">
-      <CommonButton variant="primary" @click="changeRow()"
-        >Change row</CommonButton
-      >
-      <CommonSimpleTable
-        :headers="tableHeaders"
-        :items="tableItems"
-        :actions="tableActions"
-      ></CommonSimpleTable>
-    </div>
+      <div>
+        <h2 class="text-lg">Popover</h2>
 
-    <div class="w-1/2">
-      <h2 class="text-lg">Avatar</h2>
-
-      <div class="my-4 flex items-center gap-4">
-        <CommonUserAvatar
-          class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
-          tabindex="0"
-          :entity="{
-            id: 'gid://zammad/User/1',
-            vip,
-          }"
-          size="medium"
-        />
-
-        <CommonButton :variant="vip ? 'neutral' : 'subtle'" @click="vip = !vip">
-          {{ vip ? 'Make us unimportant :(' : 'Make us important :)' }}
-        </CommonButton>
-      </div>
-
-      <div class="flex gap-4">
-        <CommonUserAvatar
-          class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
-          tabindex="0"
-          :entity="{
-            id: 'gid://zammad/User/2',
-            firstname: 'Alfa',
-            lastname: 'Bravo',
-            vip,
-          }"
-          size="xs"
-        />
-        <CommonUserAvatar
-          class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
-          tabindex="0"
-          :entity="{
-            id: 'gid://zammad/User/3',
-            firstname: 'Charlie',
-            lastname: 'Delta',
-            vip,
-          }"
-          size="small"
-        />
-        <CommonUserAvatar
-          class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
-          tabindex="0"
-          :entity="{
-            id: 'gid://zammad/User/4',
-            firstname: 'Echo',
-            lastname: 'Foxtrot',
-            vip,
-          }"
-          size="medium"
-        />
-        <CommonUserAvatar
-          class="cursor-pointer outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
-          tabindex="0"
-          :entity="{
-            id: 'gid://zammad/User/5',
-            firstname: 'Golf',
-            lastname: 'Hotel',
-            vip,
-          }"
-          size="normal"
-        />
-        <CommonUserAvatar
-          class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
-          tabindex="0"
-          :entity="{
-            id: 'gid://zammad/User/6',
-            firstname: 'India',
-            lastname: 'Juliett',
-            vip,
-          }"
-          size="large"
-        />
-        <CommonUserAvatar
-          class="cursor-pointer border border-neutral-100 outline outline-2 outline-transparent hover:outline-blue-600 focus:outline-blue-800 dark:border-gray-900 dark:hover:outline-blue-900 dark:hover:focus:outline-blue-800"
-          tabindex="0"
-          :entity="{
-            id: 'gid://zammad/User/7',
-            firstname: 'Kilo',
-            lastname: 'Lima',
-            vip,
-          }"
-          size="xl"
-        />
-      </div>
-    </div>
-
-    <div>
-      <h2 class="text-lg">Popover</h2>
-
-      <template v-if="user">
-        <CommonPopover
-          ref="popover"
-          :owner="popoverTarget"
-          orientation="autoVertical"
-          placement="start"
-        >
-          <CommonPopoverMenu
-            :popover="popover"
-            header-label="Erika Mustermann"
-            :items="[
-              {
-                key: 'appearance',
-                label: 'Appearance',
-                icon: 'brightness-alt-high',
-                noCloseOnClick: true,
-                onClick: cycleThemeSwitchValue,
-              },
-              {
-                key: 'keyboard-shortcuts',
-                label: 'Keyboard shortcuts',
-                onClick: () => {
-                  console.log('OPEN KEYBOARD SHORTCUTS DIALOG')
-                },
-                icon: 'keyboard',
-              },
-              {
-                key: 'personal-setting',
-                label: 'Profile settings',
-                link: '/personal-setting',
-                icon: 'person-gear',
-              },
-              {
-                key: 'sign-out',
-                label: 'Sign out',
-                link: '/logout',
-                icon: 'box-arrow-in-right',
-                separatorTop: true,
-              },
-            ]"
+        <template v-if="user">
+          <CommonPopover
+            ref="popover"
+            :owner="popoverTarget"
+            orientation="autoVertical"
+            placement="start"
           >
-            <template #itemRight-appearance>
-              <div class="flex items-center px-2">
-                <ThemeSwitch
-                  ref="themeSwitch"
-                  v-model="appearance"
-                  size="small"
-                />
-              </div>
-            </template>
-          </CommonPopoverMenu>
-        </CommonPopover>
-        <button
-          ref="popoverTarget"
-          class="-:outline-transparent hover:-:outline-blue-900 rounded-full outline outline-2 focus:outline-blue-800 hover:focus:outline-blue-800"
-          :class="{
-            'outline-blue-800 hover:outline-blue-800': popoverIsOpen,
-          }"
-          @click="toggle(true)"
-        >
-          <CommonUserAvatar :entity="user" size="large" personal />
-        </button>
-      </template>
-    </div>
-
-    <section>
-      <h2>Common Action Menu</h2>
-      <CommonActionMenu
-        :entity="{ id: 'test-me', name: 'playground' }"
-        :actions="[
-          {
-            key: 'delete-customer',
-            label: 'Delete Customer',
-            variant: 'danger',
-            icon: 'trash3',
-            onClick: (data) => {
-              console.log(data?.id, data?.name, 'Delete customer')
-            },
-          },
-          {
-            key: 'change-customer',
-            label: 'Change Customer',
-            icon: 'person-gear',
-            onClick: (data) => {
-              console.log(data?.id, data?.name, 'Change customer')
-            },
-          },
-        ]"
-      />
-      <h3>Single Action Item</h3>
-      <CommonActionMenu
-        :entity="{ id: 'test-me', name: 'playground' }"
-        :actions="[
-          {
-            key: 'change-customer',
-            label: 'Change Customer',
-            icon: 'person-gear',
-            onClick: (id) => {
-              console.log(id, 'Delete customer')
-            },
-          },
-        ]"
-      />
-    </section>
-
-    <div class="w-1/2">
-      <h2 class="mb-2 mt-8">Flyout and Dialog</h2>
-      <div class="mb-6 flex gap-4">
-        <CommonButton variant="tertiary" @click="dialog.open()"
-          >Show Dialog
-        </CommonButton>
-        <CommonButton variant="primary" @click="flyout.open()">
-          Open Flyout
-        </CommonButton>
-      </div>
-
-      <h2 class="mb-2">Confirmation</h2>
-      <div class="mb-6 flex gap-4">
-        <CommonButton variant="tertiary" @click="deleteTest()"
-          >Delete
-        </CommonButton>
-      </div>
-
-      <h2 class="mb-2 mt-8">Input Copy To Clipboard</h2>
-      <div class="mb-6">
-        <CommonInputCopyToClipboard value="some text to copy" label="A label" />
-      </div>
-    </div>
-
-    <div class="w-1/2">
-      <h2 class="text-lg">Form</h2>
-
-      <Form
-        id="playground-form"
-        v-model="formValues"
-        form-class="mb-2.5 space-y-2.5"
-        :schema="formSchema"
-        :initial-values="formInitialValues"
-        @submit="console.debug($event)"
-      >
-        <template #after-fields>
-          <div class="my-5 flex items-center justify-end gap-2">
-            <CommonButton
-              variant="secondary"
-              size="medium"
-              @click="reset('playground-form')"
+            <CommonPopoverMenu
+              :popover="popover"
+              header-label="Erika Mustermann"
+              :items="[
+                {
+                  key: 'appearance',
+                  label: 'Appearance',
+                  icon: 'brightness-alt-high',
+                  noCloseOnClick: true,
+                  onClick: cycleThemeSwitchValue,
+                },
+                {
+                  key: 'keyboard-shortcuts',
+                  label: 'Keyboard shortcuts',
+                  onClick: () => {
+                    console.log('OPEN KEYBOARD SHORTCUTS DIALOG')
+                  },
+                  icon: 'keyboard',
+                },
+                {
+                  key: 'personal-setting',
+                  label: 'Profile settings',
+                  link: '/personal-setting',
+                  icon: 'person-gear',
+                },
+                {
+                  key: 'sign-out',
+                  label: 'Sign out',
+                  link: '/logout',
+                  icon: 'box-arrow-in-right',
+                  separatorTop: true,
+                },
+              ]"
             >
-              Reset
-            </CommonButton>
-            <CommonButton variant="submit" type="submit" size="medium">
-              Submit
-            </CommonButton>
-          </div>
+              <template #itemRight-appearance>
+                <div class="flex items-center px-2">
+                  <ThemeSwitch
+                    ref="themeSwitch"
+                    v-model="appearance"
+                    size="small"
+                  />
+                </div>
+              </template>
+            </CommonPopoverMenu>
+          </CommonPopover>
+          <button
+            ref="popoverTarget"
+            class="-:outline-transparent hover:-:outline-blue-900 rounded-full outline outline-2 focus:outline-blue-800 hover:focus:outline-blue-800"
+            :class="{
+              'outline-blue-800 hover:outline-blue-800': popoverIsOpen,
+            }"
+            @click="toggle(true)"
+          >
+            <CommonUserAvatar :entity="user" size="large" personal />
+          </button>
         </template>
-      </Form>
-      <pre
-        class="flex flex-wrap gap-5 rounded-lg bg-blue-200 p-5 font-mono text-sm text-gray-100 dark:bg-gray-700 dark:text-neutral-400"
-        >{{ formValues }}</pre
-      >
+      </div>
+
+      <section>
+        <h2>Common Action Menu</h2>
+        <CommonActionMenu
+          :entity="{ id: 'test-me', name: 'playground' }"
+          :actions="[
+            {
+              key: 'delete-customer',
+              label: 'Delete Customer',
+              variant: 'danger',
+              icon: 'trash3',
+              onClick: (data) => {
+                console.log(data?.id, data?.name, 'Delete customer')
+              },
+            },
+            {
+              key: 'change-customer',
+              label: 'Change Customer',
+              icon: 'person-gear',
+              onClick: (data) => {
+                console.log(data?.id, data?.name, 'Change customer')
+              },
+            },
+          ]"
+        />
+        <h3>Single Action Item</h3>
+        <CommonActionMenu
+          :entity="{ id: 'test-me', name: 'playground' }"
+          :actions="[
+            {
+              key: 'change-customer',
+              label: 'Change Customer',
+              icon: 'person-gear',
+              onClick: (id) => {
+                console.log(id, 'Delete customer')
+              },
+            },
+          ]"
+        />
+      </section>
+
+      <div class="w-1/2">
+        <h2 class="mb-2 mt-8">Flyout and Dialog</h2>
+        <div class="mb-6 flex gap-4">
+          <CommonButton variant="tertiary" @click="dialog.open()"
+            >Show Dialog
+          </CommonButton>
+          <CommonButton variant="primary" @click="flyout.open()">
+            Open Flyout
+          </CommonButton>
+        </div>
+
+        <h2 class="mb-2">Confirmation</h2>
+        <div class="mb-6 flex gap-4">
+          <CommonButton variant="tertiary" @click="deleteTest()"
+            >Delete
+          </CommonButton>
+        </div>
+
+        <h2 class="mb-2 mt-8">Input Copy To Clipboard</h2>
+        <div class="mb-6">
+          <CommonInputCopyToClipboard
+            value="some text to copy"
+            label="A label"
+          />
+        </div>
+      </div>
+
+      <div class="w-1/2">
+        <h2 class="text-lg">Form</h2>
+
+        <Form
+          id="playground-form"
+          v-model="formValues"
+          form-class="mb-2.5 space-y-2.5"
+          :schema="formSchema"
+          :initial-values="formInitialValues"
+          @submit="console.debug($event)"
+        >
+          <template #after-fields>
+            <div class="my-5 flex items-center justify-end gap-2">
+              <CommonButton
+                variant="secondary"
+                size="medium"
+                @click="reset('playground-form')"
+              >
+                Reset
+              </CommonButton>
+              <CommonButton variant="submit" type="submit" size="medium">
+                Submit
+              </CommonButton>
+            </div>
+          </template>
+        </Form>
+        <pre
+          class="flex flex-wrap gap-5 rounded-lg bg-blue-200 p-5 font-mono text-sm text-gray-100 dark:bg-gray-700 dark:text-neutral-400"
+          >{{ formValues }}</pre
+        >
+      </div>
+
+      <h3>Tabs Groups</h3>
+      <CommonTabManager
+        v-model="activeTab"
+        :tabs="[
+          { label: 'Tab 1', key: 'tab-1' },
+          { label: 'Tab 2', default: true, key: 'tab-2' },
+          { label: 'Tab 3', key: 'tab-3' },
+        ]"
+      />
+
+      <h3>Filter Selector</h3>
+      <CommonTabManager
+        v-model="activeFilters"
+        label="Roles"
+        :tabs="[
+          { label: 'Admin', key: 'admin' },
+          { label: 'Agent', key: 'agent' },
+          { label: 'Customer', key: 'customer' },
+        ]"
+        multiple
+      />
     </div>
-
-    <h3>Tabs Groups</h3>
-    <CommonTabManager
-      v-model="activeTab"
-      :tabs="[
-        { label: 'Tab 1', key: 'tab-1' },
-        { label: 'Tab 2', default: true, key: 'tab-2' },
-        { label: 'Tab 3', key: 'tab-3' },
-      ]"
-    />
-
-    <h3>Filter Selector</h3>
-    <CommonTabManager
-      v-model="activeFilters"
-      label="Roles"
-      :tabs="[
-        { label: 'Admin', key: 'admin' },
-        { label: 'Agent', key: 'agent' },
-        { label: 'Customer', key: 'customer' },
-      ]"
-      multiple
-    />
   </LayoutContent>
 </template>

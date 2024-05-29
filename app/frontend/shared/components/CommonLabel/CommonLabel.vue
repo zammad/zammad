@@ -8,10 +8,12 @@ export interface Props {
   iconColor?: string
   prefixIcon?: string
   suffixIcon?: string
+  tag?: 'span' | 'p'
 }
 
 const props = withDefaults(defineProps<Props>(), {
   size: 'medium',
+  tag: 'span',
 })
 
 const fontSizeClassMap = {
@@ -30,7 +32,8 @@ const iconClassMap = {
 </script>
 
 <template>
-  <span
+  <component
+    :is="tag"
     class="-:gap-1 -:text-gray-100 -:dark:text-neutral-400 -:inline-flex items-center justify-start"
     :class="fontSizeClassMap[props.size]"
     data-test-id="common-label"
@@ -54,5 +57,5 @@ const iconClassMap = {
       :class="iconColor"
       decorative
     />
-  </span>
+  </component>
 </template>

@@ -110,7 +110,13 @@ const submitForm = async (formData: FormSubmitData<ChangePasswordFormData>) => {
 </script>
 
 <template>
-  <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
+  <LayoutContent
+    :breadcrumb-items="breadcrumbItems"
+    :help-text="
+      $t('Enter your current password, insert a new one and confirm it.')
+    "
+    width="narrow"
+  >
     <div class="mb-4">
       <Form
         ref="form"

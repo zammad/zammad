@@ -300,8 +300,8 @@ const activeAvatarButtonClass = (active: boolean) => {
 
 <template>
   <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
-    <div class="mb-4">
-      <CommonLoader :loading="avatarListQueryLoading">
+    <CommonLoader :loading="avatarListQueryLoading">
+      <div class="mb-4">
         <CommonLabel class="!mt-0.5 mb-1 !block"
           >{{ $t('Your avatar') }}
         </CommonLabel>
@@ -394,7 +394,7 @@ const activeAvatarButtonClass = (active: boolean) => {
             </CommonButton>
           </div>
         </div>
-      </CommonLoader>
-    </div>
+      </div>
+    </CommonLoader>
   </LayoutContent>
 </template>

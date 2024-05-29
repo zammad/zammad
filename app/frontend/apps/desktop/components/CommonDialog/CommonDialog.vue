@@ -23,13 +23,19 @@ export interface Props {
   content?: string
   contentPlaceholder?: string[]
   hideFooter?: boolean
+  /**
+   * Inner wrapper for the dialog content.
+   * */
+  wrapperTag?: 'div' | 'article'
   footerActionOptions?: ActionFooterProps
   // Don't focus the first element inside a Dialog after being mounted
   // if nothing is focusable, will focus "Close" button when dismissable is active.
   noAutofocus?: boolean
 }
 
-const props = withDefaults(defineProps<Props>(), {})
+const props = withDefaults(defineProps<Props>(), {
+  wrapperTag: 'div',
+})
 
 defineOptions({
   inheritAttrs: false,
@@ -83,7 +89,8 @@ onMounted(() => {
     :aria-labelledby="`${dialogId}-title`"
     @click-background="close()"
   >
-    <div
+    <component
+      :is="wrapperTag"
       ref="dialogElement"
       data-common-dialog
       class="flex flex-col gap-3 rounded-xl border border-neutral-100 bg-white p-3 dark:border-gray-900 dark:bg-gray-500"
@@ -122,6 +129,6 @@ onMounted(() => {
           />
         </slot>
       </div>
-    </div>
+    </component>
   </CommonOverlayContainer>
 </template>

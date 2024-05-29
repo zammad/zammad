@@ -196,35 +196,37 @@ const onResetToDefaultSettings = async () => {
 
 <template>
   <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
-    <Form
-      id="notifications-form"
-      ref="form"
-      :schema="schema"
-      :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterUserNotifications"
-      form-updater-initial-only
-      :initial-values="initialFormValues"
-      @submit="onSubmit($event as FormSubmitData<NotificationFormData>)"
-    >
-      <template #after-fields>
-        <div class="flex justify-end gap-2">
-          <CommonButton
-            size="medium"
-            variant="danger"
-            :disabled="loading"
-            @click="onResetToDefaultSettings"
-          >
-            {{ $t('Reset to Default Settings') }}
-          </CommonButton>
-          <CommonButton
-            size="medium"
-            type="submit"
-            variant="submit"
-            :disabled="loading"
-          >
-            {{ $t('Save Notifications') }}
-          </CommonButton>
-        </div>
-      </template>
-    </Form>
+    <div class="mb-4">
+      <Form
+        id="notifications-form"
+        ref="form"
+        :schema="schema"
+        :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterUserNotifications"
+        form-updater-initial-only
+        :initial-values="initialFormValues"
+        @submit="onSubmit($event as FormSubmitData<NotificationFormData>)"
+      >
+        <template #after-fields>
+          <div class="flex justify-end gap-2">
+            <CommonButton
+              size="medium"
+              variant="danger"
+              :disabled="loading"
+              @click="onResetToDefaultSettings"
+            >
+              {{ $t('Reset to Default Settings') }}
+            </CommonButton>
+            <CommonButton
+              size="medium"
+              type="submit"
+              variant="submit"
+              :disabled="loading"
+            >
+              {{ $t('Save Notifications') }}
+            </CommonButton>
+          </div>
+        </template>
+      </Form>
+    </div>
   </LayoutContent>
 </template>

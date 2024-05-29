@@ -20,21 +20,23 @@ export default {
 </script>
 
 <template>
-  <div
-    v-if="loading"
-    v-bind="$attrs"
-    class="flex items-center justify-center"
-    role="status"
-  >
-    <CommonIcon
-      class="fill-yellow-300"
-      name="spinner"
-      animation="spin"
-      :label="__('Loading…')"
-    />
-  </div>
-  <CommonAlert v-else-if="error" v-bind="$attrs" variant="danger">
-    <span v-html="markup($t(error))" />
-  </CommonAlert>
-  <slot v-else />
+  <Transition name="fade" mode="out-in">
+    <div
+      v-if="loading"
+      v-bind="$attrs"
+      class="flex items-center justify-center"
+      role="status"
+    >
+      <CommonIcon
+        class="fill-yellow-300"
+        name="spinner"
+        animation="spin"
+        :label="__('Loading…')"
+      />
+    </div>
+    <CommonAlert v-else-if="error" v-bind="$attrs" variant="danger">
+      <span v-html="markup($t(error))" />
+    </CommonAlert>
+    <slot v-else />
+  </Transition>
 </template>

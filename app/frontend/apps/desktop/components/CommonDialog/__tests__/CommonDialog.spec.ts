@@ -16,6 +16,7 @@ describe('visuals for common dialog', () => {
     main.id = 'page-main-content'
     document.body.appendChild(main)
   })
+
   beforeEach(() => {
     const { dialogsOptions } = getDialogMeta()
     dialogsOptions.set('dialog', {

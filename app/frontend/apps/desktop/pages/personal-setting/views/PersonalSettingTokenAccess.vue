@@ -14,6 +14,7 @@ import type {
   UserCurrentAccessTokenUpdatesSubscriptionVariables,
   UserCurrentAccessTokenListQuery,
 } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n/index.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
@@ -21,7 +22,6 @@ import { useSessionStore } from '#shared/stores/session.ts'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
-import CommonPageHelp from '#desktop/components/CommonPageHelp/CommonPageHelp.vue'
 import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
 import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
 import type {
@@ -174,28 +174,24 @@ const currentAccessTokens = computed<TableItem[]>(() => {
 const currentAccessTokenPresent = computed(
   () => currentAccessTokens.value.length > 0,
 )
+
+const helpText = computed(() => [
+  i18n.t(
+    'You can generate a personal access token for each application you use that needs access to the Zammad API.',
+  ),
+  i18n.t("Pick a name for the application, and we'll give you a unique token."),
+])
 </script>
 
 <template>
-  <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
+  <LayoutContent
+    :help-text="helpText"
+    :show-inline-help="!currentAccessTokenPresent && !accessTokenListLoading"
+    :breadcrumb-items="breadcrumbItems"
+    width="narrow"
+  >
     <template #headerRight>
       <div class="flex flex-row gap-2">
-        <template v-if="currentAccessTokenPresent">
-          <CommonPageHelp>
-            <div class="flex flex-col gap-4 ltr:text-left rtl:text-right">
-              <CommonLabel>{{
-                $t(
-                  'You can generate a personal access token for each application you use that needs access to the Zammad API.',
-                )
-              }}</CommonLabel>
-              <CommonLabel>{{
-                $t(
-                  "Pick a name for the application, and we'll give you a unique token.",
-                )
-              }}</CommonLabel>
-            </div>
-          </CommonPageHelp>
-        </template>
         <CommonButton
           prefix-icon="key"
           variant="primary"
@@ -206,10 +202,10 @@ const currentAccessTokenPresent = computed(
         </CommonButton>
       </div>
     </template>
-    <div class="mb-4">
-      <CommonLoader :loading="accessTokenListLoading">
+
+    <CommonLoader :loading="accessTokenListLoading">
+      <div class="mb-4">
         <CommonSimpleTable
-          v-if="currentAccessTokenPresent"
           :headers="tableHeaders"
           :items="currentAccessTokens"
           :actions="tableActions"
@@ -222,23 +218,11 @@ const currentAccessTokenPresent = computed(
               size="medium"
               variant="info"
               class="ltr:ml-2 rtl:mr-2"
-              >{{ $t('This device') }}</CommonBadge
-            >
+              >{{ $t('This device') }}
+            </CommonBadge>
           </template>
         </CommonSimpleTable>
-        <div v-else class="flex flex-col gap-2.5">
-          <CommonLabel>{{
-            $t(
-              'You can generate a personal access token for each application you use that needs access to the Zammad API.',
-            )
-          }}</CommonLabel>
-          <CommonLabel>{{
-            $t(
-              "Pick a name for the application, and we'll give you a unique token.",
-            )
-          }}</CommonLabel>
-        </div>
-      </CommonLoader>
-    </div>
+      </div>
+    </CommonLoader>
   </LayoutContent>
 </template>

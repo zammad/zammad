@@ -127,8 +127,8 @@ const confirmResetOverviewOrder = async () => {
 
 <template>
   <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
-    <div class="mb-4">
-      <CommonLoader class="mb-3 mt-5" :loading="overviewListQueryLoading">
+    <CommonLoader class="mb-3 mt-5" :loading="overviewListQueryLoading">
+      <div class="mb-4">
         <CommonLabel
           id="label-ticket-overview-order"
           class="!mt-0.5 mb-1 !block"
@@ -152,7 +152,7 @@ const confirmResetOverviewOrder = async () => {
             {{ $t('Reset Overview Order') }}
           </CommonButton>
         </div>
-      </CommonLoader>
-    </div>
+      </div>
+    </CommonLoader>
   </LayoutContent>
 </template>

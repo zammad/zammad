@@ -9,6 +9,7 @@
       <common-label-stub
         class="font-normal text-stone-200 dark:text-neutral-500 text-left"
         size="small"
+        tag="span"
       />
       
       
@@ -19,6 +20,7 @@
       <common-label-stub
         class="font-normal text-stone-200 dark:text-neutral-500 text-left"
         size="small"
+        tag="span"
       />
       
       
@@ -30,6 +32,7 @@
       <common-label-stub
         class="font-normal text-stone-200 dark:text-neutral-500"
         size="small"
+        tag="span"
       />
     </th>
   </thead>
@@ -44,6 +47,7 @@
         <common-label-stub
           class="inline text-black dark:text-white"
           size="medium"
+          tag="span"
         />
         
         
@@ -56,6 +60,7 @@
         <common-label-stub
           class="inline text-black dark:text-white"
           size="medium"
+          tag="span"
         />
         
         

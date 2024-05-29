@@ -292,7 +292,15 @@ const tabs = [
 </script>
 
 <template>
-  <LayoutContent :breadcrumb-items="breadcrumbItems" width="narrow">
+  <LayoutContent
+    :breadcrumb-items="breadcrumbItems"
+    :help-text="
+      $t(
+        'See your tickets from within your favorite calendar by adding the subscription URL to your calendar app.',
+      )
+    "
+    width="narrow"
+  >
     <div class="mb-4">
       <CommonInputCopyToClipboard
         :label="__('Combined subscription URL')"

@@ -13,6 +13,7 @@ import type {
   UserCurrentDeviceListQuery,
   UserDevice,
 } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n/index.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
@@ -136,39 +137,40 @@ const currentDevices = computed<TableItem[]>(() => {
     },
   )
 })
+
+const helpText = computed(() =>
+  i18n.t(
+    'All computers and browsers from which you logged in to Zammad appear here.',
+  ),
+)
 </script>
 
 <template>
   <LayoutContent
     :breadcrumb-items="breadcrumbItems"
+    :help-text="helpText"
     width="narrow"
     provide-default
   >
-    <div class="mb-4">
-      <CommonLoader :loading="deviceListQueryLoading">
-        <CommonLabel id="device-list-description" class="!mt-0.5 mb-1 !block">{{
-          $t(
-            'All computers and browsers that have access to your Zammad appear here.',
-          )
-        }}</CommonLabel>
-
+    <CommonLoader :loading="deviceListQueryLoading">
+      <div class="mb-4">
         <CommonSimpleTable
           :headers="tableHeaders"
           :items="currentDevices"
           :actions="tableActions"
           class="min-w-150"
-          aria-describedby="device-list-description"
+          :aria-label="helpText"
         >
           <template #item-suffix-name="{ item }">
             <CommonBadge
               v-if="item.current"
               variant="info"
               class="ltr:ml-2 rtl:mr-2"
-              >{{ $t('This device') }}</CommonBadge
-            >
+              >{{ $t('This device') }}
+            </CommonBadge>
           </template>
         </CommonSimpleTable>
-      </CommonLoader>
-    </div>
+      </div>
+    </CommonLoader>
   </LayoutContent>
 </template>
