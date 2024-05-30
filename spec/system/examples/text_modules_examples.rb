@@ -232,7 +232,7 @@ RSpec.shared_examples 'text modules' do |path:, ticket: nil|
           within(:active_content) do
             find(:richtext).send_keys('::ext')
             page.send_keys(:enter)
-            expect(find(:richtext)).to have_text 'external aaa'
+            expect(find(:richtext)).to have_text 'external AAA'
           end
         end
       end
