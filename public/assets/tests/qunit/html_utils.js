@@ -1576,9 +1576,7 @@ QUnit.test("check replace tags", assert => {
   var attribute_external_source = {
     name: 'external_data_source', display: 'external_data_source',  tag: 'autocompletion_ajax_external_data_source', null: true
   };
-  App.Ticket.configure_attributes.push( attribute_external_source )
-  message = "<a href=\"https://example.co/product/#{ticket.external_data_source}\">some text</a>"
-  result  = '<a href=\"https://example.co/product/1234">some text</a>'
+  App.Ticket.configure_attributes.push(attribute_external_source)
   data    = {
     ticket: {
       external_data_source: {
@@ -1587,7 +1585,88 @@ QUnit.test("check replace tags", assert => {
       }
     }
   }
-  verify = App.Utils.replaceTags(message, data, true)
+  message = "<a href=\"https://example.co/product/#{ticket.external_data_source}\">some text</a>"
+  result  = '<a href=\"https://example.co/product/1234">some text</a>'
+  verify  = App.Utils.replaceTags(message, data, true)
+  assert.equal(verify, result)
+
+  message = "<a href=\"https://example.co/product/#{ticket.external_data_source.value}\">some text</a>"
+  result = '<a href=\"https://example.co/product/Example%20Label">some text</a>'
+  verify  = App.Utils.replaceTags(message, data, true)
+  assert.equal(verify, result)
+
+  data = { ticket: {} }
+  message = "Test: #{ticket.external_data_source}"
+  result = 'Test: -'
+  verify = App.Utils.replaceTags(message, data)
+  assert.equal(verify, result)
+
+  data = { ticket: {} }
+  message = "Test: #{ticket.external_data_source.value}"
+  result = 'Test: -'
+  verify = App.Utils.replaceTags(message, data)
+  assert.equal(verify, result)
+
+  var attribute_select = {
+    name: 'select', display: 'select', tag: 'select', null: true, nulloption: true, options: { a: 'Value A', b: 'Value B' }, value: null, historical_options: { a: 'Value A', b: 'Value B', c: 'Value C' }
+  }
+  App.Ticket.configure_attributes.push(attribute_select)
+  data = {
+    ticket: {
+      select: 'b',
+    }
+  }
+  message = "Test: #{ticket.select}"
+  result  = 'Test: b'
+  verify  = App.Utils.replaceTags(message, data)
+  assert.equal(verify, result)
+
+  message = "Test: #{ticket.select.value}"
+  result  = 'Test: Value B'
+  verify  = App.Utils.replaceTags(message, data)
+  assert.equal(verify, result)
+
+  data = { ticket: {} }
+  message = "Test: #{ticket.select}"
+  result = 'Test: -'
+  verify = App.Utils.replaceTags(message, data)
+  assert.equal(verify, result)
+
+  data = { ticket: {} }
+  message = "Test: #{ticket.select.value}"
+  result = 'Test: -'
+  verify = App.Utils.replaceTags(message, data)
+  assert.equal(verify, result)
+
+  var attribute_multiselect = {
+    name: 'multiselect', display: 'multiselect', tag: 'multiselect', null: true, nulloption: true, options: { a: 'Value A', b: 'Value B', c: 'Value C' }, value: null, historical_options: { a: 'Value A', b: 'Value B', c: 'Value C' }
+  }
+  App.Ticket.configure_attributes.push(attribute_multiselect)
+  data = {
+    ticket: {
+      multiselect: ['a', 'b'],
+    }
+  }
+  message = "Test: #{ticket.multiselect}"
+  result = 'Test: a, b'
+  verify = App.Utils.replaceTags(message, data)
+  assert.equal(verify, result)
+
+  message = "Test: #{ticket.multiselect.value}"
+  result = 'Test: Value A, Value B'
+  verify = App.Utils.replaceTags(message, data)
+  assert.equal(verify, result)
+
+  data = { ticket: {} }
+  message = "Test: #{ticket.multiselect}"
+  result = 'Test: -'
+  verify = App.Utils.replaceTags(message, data)
+  assert.equal(verify, result)
+
+  data = { ticket: {} }
+  message = "Test: #{ticket.multiselect.value}"
+  result = 'Test: -'
+  verify = App.Utils.replaceTags(message, data)
   assert.equal(verify, result)
 
   message = "<div>#{user.avatar(100, 100)}</div>"
