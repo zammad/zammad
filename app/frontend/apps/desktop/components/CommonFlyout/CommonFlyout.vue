@@ -66,8 +66,6 @@ export interface Props {
 const props = withDefaults(defineProps<Props>(), {
   resizable: true,
   showBackdrop: true,
-  noCloseOnBackdropClick: true,
-  noCloseOnEscape: true,
 })
 
 defineOptions({
@@ -140,13 +138,13 @@ const resizeCallback = (valueX: number) => {
 const activeElement = useActiveElement()
 
 const handleKeyStroke = (e: KeyboardEvent, adjustment: number) => {
-  e.preventDefault()
-
   if (
     !flyoutContainerWidth.value ||
     activeElement.value !== resizeHandleComponent.value?.$el
   )
     return
+
+  e.preventDefault()
 
   const newWidth = flyoutContainerWidth.value + adjustment
 

@@ -7,7 +7,7 @@ import {
   useElementBounding,
   useWindowSize,
 } from '@vueuse/core'
-import { ref, onUnmounted } from 'vue'
+import { ref, onUnmounted, type Ref } from 'vue'
 
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
@@ -23,7 +23,9 @@ export const useResizeWidthHandle = (
   const isResizingHorizontal = ref(false)
 
   const locale = useLocaleStore()
-  const { width } = useElementBounding(handleRef)
+  const { width } = useElementBounding(
+    handleRef as MaybeComputedElementRef<MaybeElement>,
+  )
   const { width: screenWidth } = useWindowSize()
 
   const resize = (event: MouseEvent | TouchEvent) => {
@@ -87,21 +89,29 @@ export const useResizeWidthHandle = (
   })
 
   // a11y keyboard navigation horizontal resize
-  onKeyStroke('ArrowLeft', (e: KeyboardEvent) => {
-    if (options?.calculateFromRight) {
-      keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? -5 : 5)
-    } else {
-      keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? 5 : -5)
-    }
-  })
+  onKeyStroke(
+    'ArrowLeft',
+    (e: KeyboardEvent) => {
+      if (options?.calculateFromRight) {
+        keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? -5 : 5)
+      } else {
+        keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? 5 : -5)
+      }
+    },
+    { target: handleRef as Ref<EventTarget> },
+  )
 
-  onKeyStroke('ArrowRight', (e: KeyboardEvent) => {
-    if (options?.calculateFromRight) {
-      keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? 5 : -5)
-    } else {
-      keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? -5 : 5)
-    }
-  })
+  onKeyStroke(
+    'ArrowRight',
+    (e: KeyboardEvent) => {
+      if (options?.calculateFromRight) {
+        keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? 5 : -5)
+      } else {
+        keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? -5 : 5)
+      }
+    },
+    { target: handleRef as Ref<EventTarget> },
+  )
 
   return {
     isResizingHorizontal,

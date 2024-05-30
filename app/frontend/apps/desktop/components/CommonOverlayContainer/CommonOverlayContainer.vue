@@ -14,7 +14,6 @@ withDefaults(
     noCloseOnBackdropClick?: boolean
   }>(),
   {
-    noCloseOnBackdropClick: true,
     showBackdrop: true,
     teleportTo: '#page-main-content',
   },
@@ -35,7 +34,7 @@ defineEmits<{
         role="presentation"
         tabindex="-1"
         aria-hidden="true"
-        @click="noCloseOnBackdropClick && $emit('click-background')"
+        @click="!noCloseOnBackdropClick && $emit('click-background')"
       />
     </teleport>
   </component>

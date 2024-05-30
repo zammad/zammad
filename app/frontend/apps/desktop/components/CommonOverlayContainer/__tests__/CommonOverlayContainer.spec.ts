@@ -40,7 +40,30 @@ describe('CommonOverlayContainer', () => {
     expect(main.querySelector('[role=presentation]')).not.toBeInTheDocument()
   })
 
-  it('should emit close event when backdrop is clicked', async () => {
+  it('should emit close event when backdrop is clicked, by default', async () => {
+    const view = renderComponent({
+      template: html`<div id="test-backdrop"></div>`,
+    })
+
+    const dialog = renderComponent(CommonOverlayContainer, {
+      props: {
+        tag: 'div',
+        teleportTo: '#test-backdrop',
+      },
+    })
+
+    await view.events.click(
+      view
+        .getAllByRole('presentation', {
+          hidden: true,
+        })
+        .at(-1) as HTMLElement,
+    )
+
+    expect(dialog.emitted('click-background')).toHaveLength(1)
+  })
+
+  it('should not emit close event when backdrop is clicked, if specified', async () => {
     const view = renderComponent({
       template: html`<div id="test-backdrop"></div>`,
     })
@@ -61,6 +84,6 @@ describe('CommonOverlayContainer', () => {
         .at(-1) as HTMLElement,
     )
 
-    expect(dialog.emitted('click-background')).toHaveLength(1)
+    expect(dialog.emitted('click-background')).toBeUndefined()
   })
 })

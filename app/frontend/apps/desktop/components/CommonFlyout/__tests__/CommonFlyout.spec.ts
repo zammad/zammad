@@ -135,12 +135,18 @@ describe('CommonFlyout', () => {
         expect(flyout.emitted('close')).toHaveLength(1)
       })
 
-      it('emits close event when escape key is pressed', async () => {
-        await flyout.rerender({ noCloseOnEscape: false })
-
+      it('emits close event when escape key is pressed, by default', async () => {
         await flyout.events.keyboard('{Escape}')
 
         expect(flyout.emitted('close')).toHaveLength(1)
+      })
+
+      it('emits close event when escape key is pressed, if specified', async () => {
+        await flyout.rerender({ noCloseOnEscape: true })
+
+        await flyout.events.keyboard('{Escape}')
+
+        expect(flyout.emitted('close')).toBeUndefined()
       })
 
       it('emits event when action button is clicked', async () => {

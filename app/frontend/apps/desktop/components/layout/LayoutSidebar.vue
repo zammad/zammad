@@ -48,19 +48,23 @@ const resizeHandleComponent = ref<InstanceType<typeof ResizeHandle>>()
 const activeElement = useActiveElement()
 
 const handleKeyStroke = (e: KeyboardEvent, adjustment: number) => {
-  e.preventDefault()
   if (
     !props.currentWidth ||
     activeElement.value !== resizeHandleComponent.value?.$el
   )
     return
+
+  e.preventDefault()
+
   const newWidth = props.currentWidth + adjustment
+
   if (
     props.maxWidth &&
     props.minWidth &&
     (newWidth >= props.maxWidth || newWidth <= props.minWidth)
   )
     return
+
   emit('resize-horizontal', newWidth)
 }
 

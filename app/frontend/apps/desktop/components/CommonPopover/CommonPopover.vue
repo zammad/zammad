@@ -1,8 +1,13 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { onClickOutside, type UseElementBoundingReturn } from '@vueuse/core'
-import { onKeyUp, useElementBounding, useWindowSize } from '@vueuse/core'
+import {
+  onClickOutside,
+  onKeyUp,
+  useElementBounding,
+  useWindowSize,
+  type UseElementBoundingReturn,
+} from '@vueuse/core'
 import {
   type ComponentPublicInstance,
   computed,
@@ -223,11 +228,14 @@ const updateOwnerAriaExpandedState = () => {
   }
 }
 
+let removeOnKeyUpEscapeHandler: () => void
+
 const closePopover = (isInteractive = false) => {
   if (!showPopover.value) return
 
   showPopover.value = false
   emit('close')
+  removeOnKeyUpEscapeHandler?.()
 
   nextTick(() => {
     if (!isInteractive && props.owner) {
@@ -251,6 +259,13 @@ const openPopover = () => {
   showPopover.value = true
   emit('open')
 
+  removeOnKeyUpEscapeHandler = onKeyUp('Escape', (e) => {
+    if (!showPopover.value) return
+
+    stopEvent(e)
+    closePopover()
+  })
+
   onClickOutside(popoverElement, () => closePopover(true), {
     ignore: [props.owner],
   })
@@ -272,13 +287,6 @@ const togglePopover = (isInteractive = false) => {
   }
 }
 
-onKeyUp('Escape', (e) => {
-  if (!showPopover.value) return
-
-  stopEvent(e)
-  closePopover()
-})
-
 const exposedInstance: CommonPopoverInternalInstance = {
   isOpen: computed(() => showPopover.value),
   openPopover,
@@ -290,6 +298,7 @@ instances.value.add(exposedInstance)
 
 onUnmounted(() => {
   instances.value.delete(exposedInstance)
+  removeOnKeyUpEscapeHandler?.()
 })
 
 defineExpose(exposedInstance)
