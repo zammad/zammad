@@ -94,6 +94,27 @@ RSpec.describe 'External Data Source', :aggregate_failures, db_adapter: :postgre
           expect(ExternalDataSource).to have_received(:new).with(include(render_context: { group: group, user: admin }))
         end
       end
+
+      context 'when customer is given' do
+        let(:object_name) { 'Group' }
+        let(:customer)    { create(:customer) }
+        let(:url)         { "/api/v1/external_data_source/#{attribute.object_lookup.name}/#{attribute.name}?query=abc&search_context%5Bcustomer_id%5D=#{customer.id}" }
+
+        it 'responds with an array of ExternalCredential records' do
+          get url, as: :json
+
+          expect(response).to have_http_status(:ok)
+          expect(json_response).to eq('result' => mocked_payload)
+          expect(ExternalDataSource)
+            .to have_received(:new)
+            .with(include(
+                    render_context: {
+                      user:   admin,
+                      ticket: a_kind_of(Ticket).and(have_attributes(customer: customer))
+                    }
+                  ))
+        end
+      end
     end
   end
 end

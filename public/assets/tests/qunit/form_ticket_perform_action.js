@@ -781,3 +781,85 @@ QUnit.test( "ticket_perform_action check template attributes", assert => {
   var articleBody = row.find('[data-name="ticket_perform_action8::article.body::value"]')
   assert.equal(articleBody.html(), 'foobar', 'article body text check')
 });
+
+QUnit.test( "ticket_perform_action allows to load data from external data source", assert => {
+  var testOptions = [
+    {
+      value: 1,
+      label: 'A',
+    },
+    {
+      value: 2,
+      label: 'B',
+    },
+    {
+      value: 3,
+      label: 'C',
+    },
+  ]
+
+  App.ExternalDataSourceAjaxSelect.TEST_SEARCH_RESULT_CACHE = {
+    'Ticket+external_data_source1+*': {
+      result: testOptions,
+    },
+    'Ticket+external_data_source1+': {
+      result: testOptions,
+    },
+  }
+
+  $('#forms').append('<hr><h1>ticket_perform_action allows to load data from external data source</h1><form id="form9"></form>')
+
+  var el = $('#form9')
+
+  App.Ticket.configure_attributes.push({
+    name:    'external_data_source1',
+    display: 'ExternalDataSource1',
+    tag:     'autocompletion_ajax_external_data_source',
+    null:    true,
+  })
+
+  new App.ControllerForm({
+    el:        el,
+    model:     {
+      configure_attributes: [
+        {
+          name:    'ticket_perform_action6',
+          display: 'TicketPerformAction6',
+          tag:     'ticket_perform_action',
+          null:    true,
+        },
+      ]
+    },
+    params:    {},
+    autofocus: true
+  })
+
+  $('[data-attribute-name="ticket_perform_action6"] .js-attributeSelector .form-control')
+    .last()
+    .val('ticket.external_data_source1')
+    .trigger('change')
+
+  $('[data-attribute-name="ticket_perform_action6"] .js-input')
+    .trigger('focus')
+    .val('*')
+    .trigger('input')
+
+  var entries = $('[data-attribute-name="ticket_perform_action6"]').find('.js-optionsList li').length
+  assert.equal(entries, 3, 'dropdown count')
+
+  $('[data-attribute-name="ticket_perform_action6"]').find('.js-optionsList li:first').trigger('click')
+
+  var params = App.ControllerForm.params(el)
+  var test_params = {
+    ticket_perform_action6: {
+      'ticket.external_data_source1': {
+        'value': {
+          label: 'A',
+          value: 1
+        }
+      }
+    }
+  }
+
+  assert.deepEqual(params, test_params, 'form param check')
+});
