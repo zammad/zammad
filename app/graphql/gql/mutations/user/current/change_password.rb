@@ -16,7 +16,7 @@ module Gql::Mutations
     end
 
     def ready?(...)
-      throttle!(limit: 3, period: 1.minute, by_identifier: context.current_user.login)
+      throttle!(limit: 10, period: 1.minute, by_identifier: context.current_user.login)
     end
 
     def resolve(current_password:, new_password:)
