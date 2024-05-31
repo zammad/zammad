@@ -1,7 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
+
 export const useTransitionCollapse = () => {
-  const collapseDuration = VITE_TEST_MODE ? undefined : 200
+  const { durations } = useTransitionConfig()
+  const collapseDuration = durations.normal
 
   const collapseEnter = (element: Element | HTMLElement) => {
     if (!(element instanceof HTMLElement)) return

@@ -8,6 +8,7 @@ import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
 import { i18n } from '#shared/i18n.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 const filterFieldOpen = ref(false)
 const containerNode = ref<HTMLDivElement>()
@@ -41,7 +42,7 @@ watchEffect(() => {
   closeFilterField()
 })
 
-const duration = VITE_TEST_MODE ? undefined : 500
+const { durations } = useTransitionConfig()
 </script>
 
 <template>
@@ -79,7 +80,7 @@ const duration = VITE_TEST_MODE ? undefined : 500
       type="text"
       role="searchbox"
     />
-    <Transition name="fade-move" :duration="duration">
+    <Transition name="fade-move" :duration="durations.normal">
       <CommonButton
         v-if="filterFieldOpen"
         icon="x-lg"

@@ -17,6 +17,8 @@ import { useLocaleStore } from '#shared/stores/locale.ts'
 import stopEvent from '#shared/utils/events.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 
+import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
+
 import { usePopoverInstances } from './usePopoverInstances.ts'
 
 import type {
@@ -292,12 +294,12 @@ onUnmounted(() => {
 
 defineExpose(exposedInstance)
 
-const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
+const { durations } = useTransitionConfig()
 </script>
 
 <template>
   <Teleport to="body">
-    <Transition name="fade" :duration="duration">
+    <Transition name="fade" :duration="durations.normal">
       <div
         v-if="showPopover"
         :id="id"

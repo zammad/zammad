@@ -5,5 +5,7 @@ export const useTransitionConfig = () => {
     normal: VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 },
   }
 
-  return { durations }
+  const isTestMode = VITE_TEST_MODE
+
+  return { durations, isTestMode }
 }
