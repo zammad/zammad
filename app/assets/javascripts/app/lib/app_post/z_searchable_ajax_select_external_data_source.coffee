@@ -67,18 +67,19 @@ class App.ExternalDataSourceAjaxSelect extends App.SearchableAjaxSelect
     "#{objectName}+#{attributeName}+#{query}"
 
   ajaxAttributes: =>
-    objectName    = @options.attribute.objectName
-    attributeName = @options.attribute.attributeName or @options.attribute.nameRaw
-    query         = @input.val()
-
-    params = if @delegate.params?.id then @delegate.params else App.ControllerForm.params(@delegate.form)
-
+    objectName     = @options.attribute.objectName
+    attributeName  = @options.attribute.attributeName or @options.attribute.nameRaw
+    query          = @input.val()
     search_context = {}
-    if params.id
-      search_context["#{@delegate.model.className.toLowerCase()}_id"] = params.id
 
-    if params.customer_id
-      search_context.customer_id = params.customer_id
+    if @delegate
+      params = if @delegate.params?.id then @delegate.params else App.ControllerForm.params(@delegate.form)
+
+      if params.id
+        search_context["#{@delegate.model.className.toLowerCase()}_id"] = params.id
+
+      if params.customer_id
+        search_context.customer_id = params.customer_id
 
     {
       id:   @options.attribute.id
