@@ -1650,97 +1650,97 @@
   resolved "https://registry.yarnpkg.com/@faker-js/faker/-/faker-8.4.1.tgz#5d5e8aee8fce48f5e189bf730ebd1f758f491451"
   integrity sha512-XQ3cU+Q8Uqmrbf2e0cIC/QN43sTBSC8KF12u29Mb47tWrt2hAgBXSgpZMj4Ao8Uk0iJcU99QsOCaIL8934obCg==
 
-"@formkit/core@1.6.3", "@formkit/core@^1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@formkit/core/-/core-1.6.3.tgz#f5c205be207200c3d54a8ecc747f4ab93c90a6b3"
-  integrity sha512-rirECaQABzO2ExM2EYUuXRRQfLShF//L98jWZPZUZGIlPuV6ow6sp06CO4bCC3r1lKVuP6IQ1kpvhUu9j/91hQ==
+"@formkit/core@1.6.5", "@formkit/core@^1.6.5":
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/@formkit/core/-/core-1.6.5.tgz#f6f75ad98ad95198507986c674dfbf2f211a0971"
+  integrity sha512-LLq8+vLd9ddPYA0NkyvnKycN4ESU8Wqcl9TrllPyU/axduJunSIJMZz4LHzlwK8G26b0pQNegXF/hXaj4wbmng==
   dependencies:
-    "@formkit/utils" "1.6.3"
+    "@formkit/utils" "1.6.5"
 
-"@formkit/dev@1.6.3", "@formkit/dev@^1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@formkit/dev/-/dev-1.6.3.tgz#e133e96bbbb3cb666f0cf0a468da1d4975e2acb0"
-  integrity sha512-MSN4xrzr+2ditdJ8D+09I36rp2WU+EHXPAKS7KE6zxyn2/kCSPpyO7zbSixz26TSdElV0QZS+hojQhmAjNQTAg==
+"@formkit/dev@1.6.5", "@formkit/dev@^1.6.5":
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/@formkit/dev/-/dev-1.6.5.tgz#010cf704f995b2795188827fd61e950c4697cb93"
+  integrity sha512-dg62HTehLPi9lLBShixr9AoYgIv13gpxTZgiHEvf1UZz2HQq0Lcp63d0a+XT/tQ2HTz2ewLUGeXSN9dUVkYFSg==
   dependencies:
-    "@formkit/core" "1.6.3"
-    "@formkit/utils" "1.6.3"
+    "@formkit/core" "1.6.5"
+    "@formkit/utils" "1.6.5"
 
-"@formkit/i18n@1.6.3", "@formkit/i18n@^1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@formkit/i18n/-/i18n-1.6.3.tgz#30ac5f409af716674c707565826d38c2c4b82747"
-  integrity sha512-1kfCmtcRfB0b+Qw97IA9QcqYfPvplME1f5XXzSe9si7EegtcFWH2gYpu9itI+LpIQGZA0ArxZREGXjoFjt9LLQ==
+"@formkit/i18n@1.6.5", "@formkit/i18n@^1.6.5":
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/@formkit/i18n/-/i18n-1.6.5.tgz#34b0eaf12598375fda5b0ee0aa5c5c30903d4522"
+  integrity sha512-mM1UKGSa0Mdd8a8AAF+6BCNFnf8gUD1nOzU6dJ9UoPE8M/qA+hmcPR3PJm39p6e3OaT5O0Gn/J6JxgccPyWmGA==
   dependencies:
-    "@formkit/core" "1.6.3"
-    "@formkit/utils" "1.6.3"
-    "@formkit/validation" "1.6.3"
+    "@formkit/core" "1.6.5"
+    "@formkit/utils" "1.6.5"
+    "@formkit/validation" "1.6.5"
 
-"@formkit/inputs@1.6.3", "@formkit/inputs@^1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@formkit/inputs/-/inputs-1.6.3.tgz#e35f14f0b5b615ab25095ed7f164866af8450950"
-  integrity sha512-BeQDOq7llxVLHWKiAWt9NVFJBwYWAv/HCgQHH8rpDUHtapkOMz8j95ZmLE0p/oNgJvmLNdhABmNdmp+SQEYRdQ==
+"@formkit/inputs@1.6.5", "@formkit/inputs@^1.6.5":
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/@formkit/inputs/-/inputs-1.6.5.tgz#8a61bf4540f5371e6d6e27ce55c8674456cef984"
+  integrity sha512-mHLMF0JMFZL/JC6NYrG4xaIdi7lUNE+tdC+QMipBdhobUhND0EJSpO6QNPGF6OLd9Zm9MDgqAzNXEtc05/nvow==
   dependencies:
-    "@formkit/core" "1.6.3"
-    "@formkit/utils" "1.6.3"
+    "@formkit/core" "1.6.5"
+    "@formkit/utils" "1.6.5"
 
-"@formkit/observer@1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@formkit/observer/-/observer-1.6.3.tgz#eccb5294448651086a536b2e05b481ff517436df"
-  integrity sha512-WAKzl3BmGB0Hvoj2b87+36GfeTVReZOu/FQ03IvQHAlaOrG2n+e3AwW1KHLChZ5+UQ8FjC1qkpyyQ2nCXpnYwg==
+"@formkit/observer@1.6.5":
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/@formkit/observer/-/observer-1.6.5.tgz#2e01311a0b1fb57f4cdc01b6e990112ddf4baf33"
+  integrity sha512-3Vh2Pj6tHX3wosbNm5VvwVVlTI5Zq0FT3dl/+DAuaCG84abpTLoc3O0C2pmbQcDaJ4aCuxu3+tBmhY9J7qFXMQ==
   dependencies:
-    "@formkit/core" "1.6.3"
-    "@formkit/utils" "1.6.3"
+    "@formkit/core" "1.6.5"
+    "@formkit/utils" "1.6.5"
 
-"@formkit/rules@1.6.3", "@formkit/rules@^1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@formkit/rules/-/rules-1.6.3.tgz#594e74bec17d56496b0223c0d229d94814b04d89"
-  integrity sha512-5XwZ4AMslUJPlhPLshzmoeuQPkCgGR6QN8QYRfYinn/Xt1HBd5r4PUIjwAotDRc4sJov6ZktV+zkpH0WczARXA==
+"@formkit/rules@1.6.5", "@formkit/rules@^1.6.5":
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/@formkit/rules/-/rules-1.6.5.tgz#f37cad06b64fa0b6a85ac9c1941c563b9790b6de"
+  integrity sha512-j9ylAibBvNx+3tEAkYzl2HjQwDzWV2mRPmFH7GTAmtxijFiktPS8HTU9H88H/x2stkYk9S13/MMeqDgZnc3VrQ==
   dependencies:
-    "@formkit/core" "1.6.3"
-    "@formkit/utils" "1.6.3"
-    "@formkit/validation" "1.6.3"
+    "@formkit/core" "1.6.5"
+    "@formkit/utils" "1.6.5"
+    "@formkit/validation" "1.6.5"
 
-"@formkit/tailwindcss@^1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@formkit/tailwindcss/-/tailwindcss-1.6.3.tgz#36bc6f4d0f23680ff00e13b75ca608c18e35643f"
-  integrity sha512-QDVOCcfx/9G38LMfzzZMKIjAyy84HQDmKOVx6wxsmiFLIYLlfBl2WyjBAXR3RgXtXwVJ9/eaQWfnQkT7MYat3Q==
+"@formkit/tailwindcss@^1.6.5":
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/@formkit/tailwindcss/-/tailwindcss-1.6.5.tgz#0aaecfd2ef8bd9b1c1b5b52945090540e40dcf86"
+  integrity sha512-iFaifYZEIkqsdib+KFcBJ/k9neR336QLBTeTRKVlhOFsL/T9+rueylkz+7VneYrX9z82fnGbkNB4lXiEkfCYLQ==
   dependencies:
-    "@formkit/themes" "1.6.3"
+    "@formkit/themes" "1.6.5"
 
-"@formkit/themes@1.6.3", "@formkit/themes@^1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@formkit/themes/-/themes-1.6.3.tgz#e28f45d41095ac82e779d399c853257a38c94fef"
-  integrity sha512-4ItGSvD1rYe2bXrNdd26jtim1QfqyOoOy4kjLpbR27npQUHBrlzkEyhKk0yoUPbvUh/ox2Q0IEaUI+Y32PQtLA==
+"@formkit/themes@1.6.5", "@formkit/themes@^1.6.5":
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/@formkit/themes/-/themes-1.6.5.tgz#b964932cf8e8b50933f37f690d7598916509eecb"
+  integrity sha512-C+ANzH6qw4zS7niv+RamJAqpASOPfrZvMURVj5HQcT1XlcYB7ULvA9UmDW/AKOqP/OGf/OL6WvOzA7B16UkiiA==
   dependencies:
-    "@formkit/core" "1.6.3"
+    "@formkit/core" "1.6.5"
 
-"@formkit/utils@1.6.3", "@formkit/utils@^1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@formkit/utils/-/utils-1.6.3.tgz#e5444a73d0a6913c5c65ea0b686e0944ad68135e"
-  integrity sha512-ke3G91J8uHQ6JbDsPv8gxm7kmXI7LU7zd6Xe/TdG225XUXVhgnCrAZTxugLBriziF+9cHDo8QfapDiesD2cuDg==
+"@formkit/utils@1.6.5", "@formkit/utils@^1.6.5":
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/@formkit/utils/-/utils-1.6.5.tgz#a9a93a5d8650506c4eed9e74c1751859ab96a523"
+  integrity sha512-fohOg344tqFujHlEwvyHzzH5YiOBgecuOPkg7r7QObUrsH8gP1N8Rp9CHZlafxZ1zAEHZY2nTNx0VVQBkVmJbA==
 
-"@formkit/validation@1.6.3", "@formkit/validation@^1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@formkit/validation/-/validation-1.6.3.tgz#3744dbc25687cdd7a6c509d1fca88100eeecbec4"
-  integrity sha512-GmYdjUKYBWUitQg46Av1F/sMJF7W5tk6otssZal5Kh0oG9JmQ2jOVVK2B9eGKCzIeXZ2ekSkOH7O/DcXWPWHnA==
+"@formkit/validation@1.6.5", "@formkit/validation@^1.6.5":
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/@formkit/validation/-/validation-1.6.5.tgz#fb9b07f02cf7a4c4ae216dde8c1d940b6adb3376"
+  integrity sha512-mnU+F6uXsNlczbU7QOq6QfsafSYNmMF9zvOpk4ravn9mba0IDXRhkPgU/+VFpcF/EEiXmqQql3pqQ7Vqv2wVbg==
   dependencies:
-    "@formkit/core" "1.6.3"
-    "@formkit/observer" "1.6.3"
-    "@formkit/utils" "1.6.3"
+    "@formkit/core" "1.6.5"
+    "@formkit/observer" "1.6.5"
+    "@formkit/utils" "1.6.5"
 
-"@formkit/vue@^1.6.3":
-  version "1.6.3"
-  resolved "https://registry.yarnpkg.com/@formkit/vue/-/vue-1.6.3.tgz#87f1babfeece76ccf720960fa07e41540ffcb0c8"
-  integrity sha512-d6STY6onIqNdNErtxmAFQU/qaq7BYSXyO2aRw6i55cXDSHgtgsH3/Lc5aNTgk1GMonWpX0LT0XhLWc6uHGGaxA==
+"@formkit/vue@^1.6.5":
+  version "1.6.5"
+  resolved "https://registry.yarnpkg.com/@formkit/vue/-/vue-1.6.5.tgz#36e42d995e9a9b04ea345d95f3e6eb2dbc0b3d9b"
+  integrity sha512-D5W8JfhFJXUXm8RX0OfPbPZt3Ds68iqxSrvbvmyabae2cBlGl8sqhMEuc48FptnsGOYqYXOhG+CPni+uE72Whw==
   dependencies:
-    "@formkit/core" "1.6.3"
-    "@formkit/dev" "1.6.3"
-    "@formkit/i18n" "1.6.3"
-    "@formkit/inputs" "1.6.3"
-    "@formkit/observer" "1.6.3"
-    "@formkit/rules" "1.6.3"
-    "@formkit/themes" "1.6.3"
-    "@formkit/utils" "1.6.3"
-    "@formkit/validation" "1.6.3"
+    "@formkit/core" "1.6.5"
+    "@formkit/dev" "1.6.5"
+    "@formkit/i18n" "1.6.5"
+    "@formkit/inputs" "1.6.5"
+    "@formkit/observer" "1.6.5"
+    "@formkit/rules" "1.6.5"
+    "@formkit/themes" "1.6.5"
+    "@formkit/utils" "1.6.5"
+    "@formkit/validation" "1.6.5"
 
 "@github/webauthn-json@^2.1.1":
   version "2.1.1"
