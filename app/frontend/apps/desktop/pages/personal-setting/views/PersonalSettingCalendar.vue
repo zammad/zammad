@@ -29,7 +29,7 @@ import { useBreadcrumb } from '../composables/useBreadcrumb.ts'
 import { useUserCurrentCalendarSubscriptionUpdateMutation } from '../graphql/mutations/userCurrentCalendarSubscriptionUpdate.api.ts'
 import { useUserCurrentCalendarSubscriptionListQuery } from '../graphql/queries/userCurrentCalendarSubscriptionList.api.ts'
 
-const { breadcrumbItems } = useBreadcrumb(__('Overviews'))
+const { breadcrumbItems } = useBreadcrumb(__('Calendar'))
 
 const { form, isDirty, node, formReset, formSubmit, values } = useForm()
 
