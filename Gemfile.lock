@@ -428,7 +428,7 @@ GEM
       iniparse (~> 1.4)
       rexml (~> 3.2)
     parallel (1.24.0)
-    parser (3.3.1.0)
+    parser (3.3.2.0)
       ast (~> 2.4.1)
       racc
     pg (1.5.6)
@@ -540,7 +540,7 @@ GEM
       rspec-core (> 3.3)
     rspec-support (3.13.1)
     rszr (1.5.0)
-    rubocop (1.64.0)
+    rubocop (1.64.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
