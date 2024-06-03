@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-05-06 12:18+0000\n"
+"PO-Revision-Date: 2024-05-31 01:05+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -481,8 +481,8 @@ msgid ""
 "%s email(s) were found in your mailbox. They will all be moved from your "
 "mailbox into Zammad."
 msgstr ""
-"%s e-postmeddelande(n) hittades i din e-postlåda. De kommer alla att flyttas "
-"från din e-postlåda till Zammad."
+"%s e-postmeddelande(n) hittades i din e-postlåda. De kommer att flyttas från "
+"din e-postlåda till Zammad."
 
 #: app/assets/javascripts/app/models/user.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts
@@ -997,59 +997,47 @@ msgstr "Acceptera dataskydds- och användningspolicyn"
 
 #: db/seeds/permissions.rb
 msgid "Access the agent chat features."
-msgstr ""
+msgstr "Få tillgång till chattfunktionerna för agenter."
 
 #: db/seeds/permissions.rb
 msgid "Access the agent phone features."
-msgstr ""
+msgstr "Få tillgång till telefonfunktioner för agent."
 
 #: db/seeds/permissions.rb
 msgid "Access the knowledge base editor features."
-msgstr ""
+msgstr "Få tillgång till redigeringsfunktionerna i Kunskapsbanken."
 
 #: db/seeds/permissions.rb
 msgid "Access the knowledge base reader features."
-msgstr ""
+msgstr "Få tillgång till kunskapsbasens läsarfunktioner."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Access to Agent Tickets based on Group Access"
 msgid "Access the tickets as agent based on group access."
-msgstr "Åtkomst till Handläggare-ärenden baserat på gruppåtkomst"
+msgstr "Få tillgång till ärendena som agent baserat på gruppåtkomst."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "ticket.customer"
 msgid "Access tickets as customer."
-msgstr "ticket.customer"
+msgstr "Få tillgång till ärenden som kund."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Access to customer tickets"
 msgid "Access to the chat interface."
-msgstr "Åtkomst till kundärenden"
+msgstr "Tillgång till chattgränssnittet."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Inserts knowledge base answer"
 msgid "Access to the knowledge base interface."
-msgstr "Infoga ett kunskapsbas-svar"
+msgstr "Tillgång till gränssnittet för kunskapsbanken."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Access to customer tickets"
 msgid "Access to the phone interface."
-msgstr "Åtkomst till kundärenden"
+msgstr "Åtkomst till telefongränssnittet."
 
 #: db/seeds/permissions.rb
 msgid "Access to the report interface."
-msgstr ""
+msgstr "Åtkomst till rapportgränssnittet."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Access to customer tickets"
 msgid "Access to the ticket interface."
-msgstr "Åtkomst till kundärenden"
+msgstr "Åtkomst till ärendegränssnittet."
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
 msgid "Access token"
@@ -1173,7 +1161,8 @@ msgid ""
 "Activates lost password feature for users. This setting is only effective if "
 "the password login is enabled."
 msgstr ""
-"Aktivera glömt lösenords-funktionen. Endast om lösenordsinloggning är aktiv."
+"Aktivera glömt lösenords-funktionen. Endast möjlig om lösenordsinloggning är "
+"aktiv."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee
 #: app/assets/javascripts/app/models/chat.coffee
@@ -1341,6 +1330,10 @@ msgstr "Lägg till ett meddelande"
 msgid "Add agreement text before submit."
 msgstr "Lägg till avtalstext innan du skickar."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Add alarm to pending reminder and escalated tickets"
+msgstr "Lägg till larm på väntande påminnelser och eskalerade ärenden"
+
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Add alarm to pending reminder and escalated tickets."
 msgstr "Lägg till larm på väntande påminnelser och eskalerade ärenden."
@@ -1406,7 +1399,7 @@ msgstr "Lägg till underrubrik"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee
 msgid "Add this class to a button on your page that should open the chat."
-msgstr "Lägg till css klass på knappen på sidan som ska öppna chatten."
+msgstr "Lägg till denna css klass på en knapp på sidan som ska öppna chatten."
 
 #: app/controllers/first_steps_controller.rb
 msgid "Additional Channels"
@@ -1443,7 +1436,7 @@ msgstr "Administratör"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 msgid "Admin Consent"
-msgstr "Godännande av administratör"
+msgstr "Godkännande av administratör"
 
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee
 #: app/frontend/apps/desktop/pages/authentication/routes.ts
@@ -1451,10 +1444,8 @@ msgid "Admin Password Login"
 msgstr "Admin-lösenord"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Admin Interface"
 msgid "Admin interface"
-msgstr "Admin-gränssnitt"
+msgstr "Administratörsgränssnitt"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -1511,6 +1502,10 @@ msgstr "Administratörskonto"
 msgid "Advance to next ticket from overview"
 msgstr "Gå till nästa ärende från översikt"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+msgid "Affects only notifications for not assigned and all tickets."
+msgstr "Påverkar endast aviseringar för ej tilldelade och alla ärenden."
+
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 msgid "After approval, please re-connect your Exchange account."
 msgstr "Efter godkännande, återanslut ditt Exchange konto."
@@ -1553,38 +1548,31 @@ msgstr "Handläggarnamn"
 
 #: db/seeds/settings.rb
 msgid "Agent Name + FromSeparator + System Address Display Name"
-msgstr "Handlläggarnamn + Frånavskiljare + Systemadressanvändarnamn"
+msgstr "Handläggarnamn + Frånavskiljare + Systemadressanvändarnamn"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Agent Name"
 msgid "Agent chat"
-msgstr "Handläggarnamn"
+msgstr "Agentchatt"
 
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
-msgstr "Overksamhetstidsgräns för handläggare"
+msgstr "Timeout för inaktiv agent"
 
 #: app/models/role.rb app/models/user.rb
 msgid "Agent limit exceeded, please check your account settings."
-msgstr ""
-"Handläggarebegränsningstiden uppnådd, vänligen kolla dina kontoinställningar."
+msgstr "Handläggarbegränsning uppnådd, kontrollera dina kontoinställningar."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Agent Name"
 msgid "Agent phone"
-msgstr "Handläggarnamn"
+msgstr "Agenttelefon"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Open tickets"
 msgid "Agent tickets"
-msgstr "Öppna ärenden"
+msgstr "Agentärenden"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid "Agents"
-msgstr "Handläggare"
+msgstr "Agenter"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Alarm"
@@ -1601,7 +1589,7 @@ msgid ""
 "without a history entry. There is no rollback of this deletion possible."
 msgstr ""
 "Alla påverkade ärenden kommer att raderas omedelbart när detta jobb körs, "
-"utan att någon historik sparas. Denna åtgärd går inte att ångra."
+"historik sparas inte. Denna åtgärd går inte att ångra."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 msgid ""
@@ -1628,19 +1616,25 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee
 msgid "All agents"
-msgstr "Alla handläggare"
+msgstr "Alla agenter"
 
 #: public/assets/chat/views/waiting.eco
 msgid "All colleagues are busy."
 msgstr "Alla kollegor är upptagna."
 
-#: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+msgid ""
+"All computers and browsers from which you logged in to Zammad appear here."
+msgstr ""
+"Samtliga datorer och webbläsare som du har loggat in på Zammad listas här."
+
+#: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "All computers and browsers that have access to your Zammad appear here."
 msgstr ""
-"Alla datorer och webbläsare som har åtkomst till din Zammad listas här."
+"Samtliga datorer och webbläsare som har åtkomst till din Zammad listas här."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "All tickets"
 msgstr "Alla ärenden"
 
@@ -1663,11 +1657,11 @@ msgstr "Tillåt återöppnande av ärende inom en viss tidsgräns."
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Allow users to add new tags."
-msgstr "Tillåt användare att skapa nya etiketter."
+msgstr "Tillåt användare att skapa nya taggar."
 
 #: db/seeds/settings.rb
 msgid "Allow users to create new tags."
-msgstr "Tillåt användare att skapa nya etiketter."
+msgstr "Tillåt användare att skapa nya taggar."
 
 #: db/seeds/settings.rb
 msgid "Allow using one email address for multiple users."
@@ -1675,9 +1669,10 @@ msgstr "Tillåt att använda samma e-postadress för flera användare."
 
 #: app/assets/javascripts/app/models/chat.coffee
 msgid "Allow websites (separated by ;)"
-msgstr "Tillåt webbplatser (separera med semikolon \";\")"
+msgstr "Tillåtna webbplatser (separera med semikolon \";\")"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Also notify via email"
 msgstr "Notifiera även via e-post"
 
@@ -1719,20 +1714,20 @@ msgstr "Ett fel inträffade"
 
 #: app/frontend/shared/server/apollo/handler/BaseHandler.ts
 msgid "An error occured during the operation."
-msgstr "Det inträffade ett fel."
+msgstr "Det inträffade ett fel under åtgärden."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco
 msgid "An error occurred: %s"
-msgstr "Fel: %s"
+msgstr "Ett fel inträffade: %s"
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee
 msgid "An open-source monitoring tool."
-msgstr "Ett fri programvaru-övervakningsverktyg."
+msgstr "Ett open-source övervakningsverktyg."
 
 #: app/frontend/shared/components/Form/utils.ts
 msgid "An unexpected error has occurred."
@@ -1749,12 +1744,12 @@ msgstr "Okänt metodnamn begärdes."
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Analyzing entries with given configuration…"
-msgstr "Analyserar poster med given konfiguration …"
+msgstr "Analyserar poster med angiven konfiguration …"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco
 msgid "Analyzing structure…"
-msgstr "Analyserar struktur …"
+msgstr "Analyserar struktur…"
 
 #. This is the template file app/views/mailer/ticket_update_received_merge/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -1823,7 +1818,7 @@ msgstr "Apphemlighet"
 
 #: db/seeds/settings.rb
 msgid "App Tenant ID"
-msgstr "Katalog-ID (klient)"
+msgstr "App Tenant ID"
 
 #: db/seeds/settings.rb
 msgid "App Version"
@@ -1860,12 +1855,13 @@ msgid "Appearance"
 msgstr "Utseende"
 
 #: app/assets/javascripts/app/controllers/api.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
 msgid "Application"
-msgstr "Användning"
+msgstr "Applikation"
 
 #: db/seeds/settings.rb
 msgid "Application secret"
-msgstr "Applikations-hemlighet"
+msgstr "Applikation secret"
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Applications"
@@ -1881,7 +1877,7 @@ msgstr "Använd utkast"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee
 msgid "Apply Shared Draft"
-msgstr "Använd gemensamt utkast"
+msgstr "Använd delat utkast"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
 msgid "Apply current defaults to all agents"
@@ -1977,7 +1973,7 @@ msgid ""
 "Are you sure? The agent default notifications settings will be reset to the "
 "system default."
 msgstr ""
-"Är du säker? Agenten standarnotifieringsinställningar kommer att återställas "
+"Är du säker? Agent standarnotifieringsinställningar kommer att återställas "
 "till systemstandard."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
@@ -2006,6 +2002,7 @@ msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "Är du säker? Du har osparade ändringar som kommer förloras."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
 msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr ""
 "Är du säker? Dina notifieringsinställningar kommer att återställas till "
@@ -2029,11 +2026,11 @@ msgstr "Artikel"
 
 #: db/seeds/settings.rb
 msgid "Article - visibility confirmation dialog"
-msgstr "Arikel - bekräftadialog för synlighets"
+msgstr "Arikel - bekräftadialog för synlighet"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Article Count"
-msgstr "Antal inlägg"
+msgstr "Antal Artiklar"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts
 msgid "Article Type"
@@ -2054,7 +2051,7 @@ msgstr "Artikeln använder en annan säkerhetsmekanism."
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
 msgid "Article#"
-msgstr "Inlägg"
+msgstr "Artikel#"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Assign Follow-Ups"
@@ -2063,7 +2060,7 @@ msgstr "Tilldela uppföljning"
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Assign follow-up to latest agent again."
-msgstr "Tilldela uppföljning till den senaste handläggaren igen."
+msgstr "Tilldela uppföljning till den senaste agent."
 
 #: app/assets/javascripts/app/models/group.coffee
 msgid "Assign follow-ups"
@@ -2083,7 +2080,7 @@ msgstr "Tilldelad"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco
 msgid "Assignee"
-msgstr "Anställd"
+msgstr "Uppdragstagare"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Assignment Timeout"
@@ -2092,7 +2089,7 @@ msgstr "Uppdragets Timeout"
 #: app/assets/javascripts/app/models/_application_model.coffee
 #: app/assets/javascripts/app/models/group.coffee
 msgid "Assignment timeout"
-msgstr "Tilldelningens frist"
+msgstr "Tilldelningens timeout"
 
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -2101,7 +2098,7 @@ msgid ""
 "will be shown as unassigend."
 msgstr ""
 "Uppdragets timeout i minuter ifall tilldelad handläggare inte arbetar på "
-"den. Ärendet kommer att visas som otilldelad."
+"den. Ärendet kommer att visas som ej tilldelad."
 
 #: app/models/user.rb
 msgid ""
@@ -2113,7 +2110,7 @@ msgstr ""
 
 #: app/models/postmaster_filter.rb
 msgid "At least one match rule is required, but none was provided."
-msgstr "Åtminstone en regelmatchning krävs, men ingen gavs."
+msgstr "Åtminstone en regelmatchning krävs, men ingen var angiven."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "At least one object must be selected."
@@ -2121,7 +2118,7 @@ msgstr "Åtminstone ett objekt måste väljas."
 
 #: app/models/role.rb app/models/user.rb
 msgid "At least one user needs to have admin permissions."
-msgstr "Åtminstone en användare behöver ha admin-rättigheter."
+msgstr "Minst en användare behöver ha admin-rättigheter."
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
 msgid "Attach another file"
@@ -2137,7 +2134,7 @@ msgstr "Bifoga filer"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
 msgid "Attached"
-msgstr "Bilagda"
+msgstr "Bilagor"
 
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco
 #: app/views/knowledge_base/public/answers/show.html.erb
@@ -2191,8 +2188,8 @@ msgid ""
 "Attention: These will also be your login and password after the import is "
 "completed."
 msgstr ""
-"Observera: Dessa kommer att bli dina användaruppgifter (användarnamn och "
-"lösenord) efter att importen är klar."
+"Observera: Dessa kommer även att bli dina användaruppgifter (användarnamn "
+"och lösenord) efter att importen är klar."
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
@@ -2216,8 +2213,8 @@ msgid ""
 "Attribute that uniquely identifies the user. If unset, the name identifier "
 "returned by the IDP is used."
 msgstr ""
-"Attribut som identifierar användaren. Om inte satt, namn identifieraren som "
-"returneras av IDP används."
+"Attribut som identifierar användaren. Om inte angivet, kommer "
+"namnidentifieraren som returneras av IDP användas."
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -2227,7 +2224,7 @@ msgstr "Attribut"
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: db/seeds/settings.rb
 msgid "Attributes to compare"
-msgstr "Attributer att jämföra"
+msgstr "Attribut att jämföra"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
@@ -2320,7 +2317,7 @@ msgstr "Automatisk Tilldelning Ignorerade Användare"
 
 #: db/seeds/settings.rb
 msgid "Auto Assignment Selector"
-msgstr "Automatisk Tilldelning Väljare"
+msgstr "Automatisk Tilldelningväljare"
 
 #: app/assets/javascripts/app/controllers/getting_started/auto_wizard.coffee
 msgid "Auto Wizard"
@@ -2328,7 +2325,7 @@ msgstr "Automatisk assistent"
 
 #: db/seeds/settings.rb
 msgid "Auto close"
-msgstr "Auto stängning"
+msgstr "Automatisk stängning"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee
 msgid "Auto create"
@@ -2374,7 +2371,7 @@ msgid ""
 "set it to false."
 msgstr ""
 "Laddar automatiskt chat.css filen. Om du vill använda din egen css, sätt den "
-"bara till false."
+"till false."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
 #: app/assets/javascripts/app/models/overview.coffee
@@ -2472,7 +2469,7 @@ msgstr ""
 
 #: app/models/report.rb
 msgid "Backlog"
-msgstr "Eftersläpning"
+msgstr "Backlog"
 
 #: app/assets/javascripts/app/controllers/_manage/branding.coffee
 #: app/assets/javascripts/app/controllers/_manage/security.coffee
@@ -2490,7 +2487,7 @@ msgstr "Bas DN"
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
 msgid "Base Objects"
-msgstr "Bas Objekt"
+msgstr "Basobjekt"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
@@ -2499,7 +2496,7 @@ msgstr "Basic Authentication"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee
 msgid "Basic Settings"
-msgstr "Normala Inställningar"
+msgstr "Basinställningar"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js
 #: app/frontend/shared/components/Form/fields/FieldEditor/suggestions/UserMention.ts
@@ -2561,15 +2558,15 @@ msgstr "Blå"
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco
 msgid "Body"
-msgstr "Meddelande"
+msgstr "Body"
 
 #: db/seeds/settings.rb
 msgid "Body - Search for follow-up also in mail body."
-msgstr "Body - Sök även i mejltexten efter uppföljning."
+msgstr "Body - Sök för uppföljning även i mailtexten."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Boolean field"
-msgstr "Boolskt fält"
+msgstr "Boolean fält"
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco
 msgid "Bots"
@@ -2590,7 +2587,7 @@ msgstr "Webbläsare"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Bulk action executed!"
-msgstr "Bulkåtgärd exekverad!"
+msgstr "Bulkåtgärd utförd!"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee
 msgid "Bulk action failed"
@@ -2608,7 +2605,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 msgid "Business Hours"
-msgstr "ÖPPETTIDER"
+msgstr "Öppettider"
 
 #: app/views/knowledge_base/public/show_alternatives.html.erb
 msgid "But it's only available in these languages:"
@@ -2620,7 +2617,7 @@ msgid ""
 "setting lets you add more fields for which the follow-up check will be "
 "executed."
 msgstr ""
-"Som standard så görs uppföljningskontroller på rubriken i ett mejl. Med "
+"Som standard så görs uppföljningskontroller på rubriken i ett mail. Med "
 "denna inställning kan du lägga till fler fält för vilket "
 "uppföljningskontrollen kommer att utföras."
 
@@ -2631,8 +2628,8 @@ msgid ""
 "the user profile upon picking up a new call."
 msgstr ""
 "Genom att koppla handläggarnas Placetel SIP-användare till deras Zammad-"
-"användarkonton stöder Zammad handläggarna genom att antingen öppna nytt "
-"ärende-dialogen eller användarprofilen när ett nytt samtal tas emot."
+"användarkonton stöder Zammad agenterna genom att antingen öppna nytt ärende-"
+"dialogen eller användarprofilen när ett nytt samtal tas emot."
 
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid ""
@@ -2641,8 +2638,8 @@ msgid ""
 "profile upon picking up a new call."
 msgstr ""
 "Genom att koppla handläggarnas sipgate-användare till deras Zammad-"
-"användarkonton stöder Zammad handläggarna genom att antingen öppna nytt "
-"ärende-dialogen eller användarprofilen när ett nytt samtal tas emot."
+"användarkonton stöder Zammad agenterna genom att antingen öppna nytt ärende-"
+"dialogen eller användarprofilen när ett nytt samtal tas emot."
 
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco
 msgid "CA"
@@ -2671,8 +2668,8 @@ msgid ""
 "CSS font-size with a unit like 12px, 1.5em. If left undefined it inherits "
 "the font-size of the website."
 msgstr ""
-"CSS-font-storlek med en enhet som 12px eller 1.5em. Om den lämnas "
-"odefinierad så ärvs font-storleken från webbplatsen."
+"CSS-font-storlek med en enhet som 12px, 1.5em. Om den lämnas odefinierad så "
+"ärvs font-storleken från webbplatsen."
 
 #: app/assets/javascripts/app/controllers/cti.coffee
 msgid "CTI"
@@ -2697,7 +2694,7 @@ msgstr "CTI senaste kundaktivitet"
 
 #: db/seeds/settings.rb
 msgid "CTI integration"
-msgstr "CTI-integrationer"
+msgstr "CTI-integration"
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
@@ -2706,7 +2703,10 @@ msgstr "CTI-integrationer"
 #: app/assets/javascripts/app/models/sla.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
-#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#: db/seeds/permissions.rb
 msgid "Calendar"
 msgstr "Kalender"
 
@@ -2764,7 +2764,7 @@ msgstr "Kamera"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Can be in any CSS color format."
-msgstr "Kan vara i ett CSS färgsformat."
+msgstr "Kan vara i ett CSS färgformat."
 
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee
 msgid "Can't create user!"
@@ -2840,7 +2840,7 @@ msgstr "Avbryt uppladdning"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Cannot delete category"
-msgstr "Kunde inte ta bort kategorin"
+msgstr "Det gick inte att ta bort kategorin"
 
 msgid "Cannot delete record because a dependent %{record} exists"
 msgstr "Kunde inta ta bort posten eftersom en beroende %{record} finns"
@@ -2862,7 +2862,7 @@ msgstr "Kan inte processera extern datakälla %s. %s"
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "Cannot set online notifications as seen"
-msgstr "Kunde inte sätta online-notiser som lästa"
+msgstr "Kunde inte sätta online-notiser som visade"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee
 msgid "Cannot upload file"
@@ -2921,7 +2921,7 @@ msgstr "Byt Lösenord"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Change Your Password"
-msgstr "Byt lösenord"
+msgstr "Byt ditt lösenord"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
@@ -2938,10 +2938,8 @@ msgid "Change order"
 msgstr "Ändra ordning"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Change Your Password"
 msgid "Change personal account password."
-msgstr "Byt lösenord"
+msgstr "Ändra Lösenord för personligt konto."
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changed:"
@@ -2953,12 +2951,12 @@ msgstr "Ändrad:"
 #: app/views/mailer/ticket_update/zh-cn.html.erb
 #: app/views/mailer/ticket_update/zh-tw.html.erb
 msgid "Changes"
-msgstr "Ändningar"
+msgstr "Ändringar"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
 msgid "Changes could not be loaded."
-msgstr "Ändringar kunde inte läsas in."
+msgstr "Ändringar kunde inte laddas."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee
@@ -2967,7 +2965,7 @@ msgstr "Ändringar kunde inte sparas."
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changes were made that require a database update."
-msgstr "Ändringar utfördes som kräver en databasuppdatering."
+msgstr "Ändringar genomfördes som kräver en databasuppdatering."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -2982,7 +2980,7 @@ msgstr "Kanal"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco
 msgid "Channel Distribution"
-msgstr "KANALDISTRUBITION"
+msgstr "Kanaldistribution"
 
 #: app/assets/javascripts/app/controllers/manage.coffee
 msgid "Channels"
@@ -3042,7 +3040,7 @@ msgid ""
 "Check this box if you want to customise how options are sorted. If the box "
 "is not checked, values are sorted in alphabetical order."
 msgstr ""
-"Bocka i rutan om du vill ändra sorteringen av alternativ. Om ej ibockad så "
+"Bocka i rutan om du vill ändra sorteringen av alternativ. Om inte ibockad så "
 "sorteras värdena alfabetiskt."
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee
@@ -3071,7 +3069,7 @@ msgstr "Välj datum"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco
 msgid "Choose if retweets should also be converted to tickets."
-msgstr "Välj om retweetar också ska generera ärenden."
+msgstr "Välj om retweet också ska konverteras till ärenden."
 
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco
 msgid ""
@@ -3143,7 +3141,7 @@ msgstr "Rensa 'Cti::Log'."
 
 #: db/seeds/schedulers.rb
 msgid "Clean up 'DataPrivacyTask'."
-msgstr "GDPR-borttagnings-uppgift."
+msgstr "Rensa 'Dataskyddsuppgift'."
 
 #: db/seeds/schedulers.rb
 msgid "Clean up 'HttpLog'."
@@ -3227,11 +3225,11 @@ msgstr "Klient-id"
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco
 #: db/seeds/settings.rb
 msgid "Client Secret"
-msgstr "Klienthemlighet"
+msgstr "Klient Secret"
 
 #: app/assets/javascripts/app/models/application.coffee
 msgid "Clients"
-msgstr "Kunder"
+msgstr "Klienter"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee
 msgid "Clone"
@@ -3256,7 +3254,7 @@ msgstr "Stäng & Tagga som Spam"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Close Diff In Min"
-msgstr "Stäng diffen om X minuter"
+msgstr "Stäng differens i minuter"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Close Escalation At"
@@ -3264,7 +3262,7 @@ msgstr "Stäng eskaleringen vid"
 
 #: lib/excel_sheet/ticket.rb
 msgid "Close In Min"
-msgstr "Stäng om X minuter"
+msgstr "Stäng i minuter"
 
 #: db/seeds/schedulers.rb
 msgid "Close chat sessions where participants are offline."
@@ -3306,12 +3304,12 @@ msgstr "Stängda"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco
 #: lib/excel_sheet/ticket.rb
 msgid "Closed At"
-msgstr "Stängt vid"
+msgstr "Stängd vid"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee
 #: app/assets/javascripts/app/controllers/widget/user.coffee
 msgid "Closed Tickets"
-msgstr "Låsta ärenden"
+msgstr "Stängda ärenden"
 
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/graphql/gql/types/overview_type.rb
@@ -3325,6 +3323,10 @@ msgstr "Fäll ihop element"
 #: db/seeds/settings.rb
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Färgrepresentation över öppna ärenden i sidopanelen."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Combined subscription URL"
+msgstr "URL för kombinerad prenumeration"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "Comment"
@@ -3408,13 +3410,11 @@ msgstr "Konfigurera app"
 
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee
 msgid "Configure Basic Settings"
-msgstr "Grundinställningar"
+msgstr "Konfigurera grundinställningar"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "To configure your system."
 msgid "Configure your system."
-msgstr "För att konfigurera ditt system."
+msgstr "Konfigurera ditt system."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid "Confirm"
@@ -3431,7 +3431,7 @@ msgstr "Bekräfta dialog"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue
 msgid "Confirm merge"
-msgstr "Konfigurera sammanslagning"
+msgstr "Bekräfta sammanslagning"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 msgid "Confirm new password"
@@ -3483,7 +3483,7 @@ msgstr "Bekräfta/skicka dialog"
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue
 msgid "Confirmation"
-msgstr "Bekräfta"
+msgstr "Bekräftelse"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee
 msgid "Confirmation failed."
@@ -3519,17 +3519,17 @@ msgstr "Anslut Facebook app"
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
 #: app/assets/javascripts/app/views/google/index.jst.eco
 msgid "Connect Google App"
-msgstr "Anslut Google-app"
+msgstr "Anslut Google App"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco
 msgid "Connect Microsoft 365 App"
-msgstr "Anslut Microsoft 365-app"
+msgstr "Anslut Microsoft 365 App"
 
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 #: app/assets/javascripts/app/views/twitter/index.jst.eco
 msgid "Connect Twitter App"
-msgstr "Anslut Twitter-app"
+msgstr "Anslut Twitter App"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue
 msgid "Connect and Continue"
@@ -3554,13 +3554,13 @@ msgstr "Anslutningen återupprättas"
 
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee
 msgid "Connection test successful"
-msgstr "Uppkopplingstest lyckat"
+msgstr "Uppkopplingstest lyckades"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue
 msgid "Contact the administrator if you have any problems logging in."
-msgstr "Kontakt administratören om du har problem med att logga in."
+msgstr "Kontakta administratören om du har problem med att logga in."
 
 #: app/assets/javascripts/app/models/knowledge_base_answer.coffee
 #: app/assets/javascripts/app/models/text_module.coffee
@@ -3574,7 +3574,7 @@ msgstr "Innehållet kunde inte läsas in."
 
 #: app/models/store.rb
 msgid "Content preview could not be generated."
-msgstr "Innehållet kunde inte genereras."
+msgstr "Innehållsförvisning kunde inte genereras."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee
 msgid "Content was changed since loading"
@@ -3605,7 +3605,7 @@ msgstr "Fortsätt"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco
 msgid "Continue anyway"
-msgstr "Fortsätt iallafall"
+msgstr "Fortsätt ändå"
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee
@@ -3626,7 +3626,7 @@ msgstr "Gå till mobilversion"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco
 msgid "Contributing Translations"
-msgstr "Bidrag till översättningar"
+msgstr "Bidra till översättningar"
 
 #: lib/sessions/event/chat_transfer.rb
 msgid "Conversation is transferred into another chat. Please stay tuned."
@@ -3655,16 +3655,16 @@ msgid "Copy Secret"
 msgstr "Kopiera Secret"
 
 #: app/frontend/apps/desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue
-#, fuzzy
-#| msgid "Copy Secret"
 msgid "Copy Text"
-msgstr "Kopiera Secret"
+msgstr "Kopiera text"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
-#, fuzzy
-#| msgid "CTI Token"
 msgid "Copy Token"
-msgstr "CTI-token"
+msgstr "Kopiera Token"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Copy URL"
+msgstr "Kopiera URL"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
@@ -3710,21 +3710,24 @@ msgstr "Det gick inte att generera återställningskoder"
 msgid ""
 "Could not load the two-factor authentication configuration for this user."
 msgstr ""
-"Kunde inte ladda två-faktorautentiseringskonfigurationen för denna användare."
+"Det gick inte att ladda två-faktorautentiseringskonfigurationen för denna "
+"användare."
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid "Could not remove all two-factor authentication methods for this user."
 msgstr ""
-"Kunde inte ta bort alla två-faktorautentiseringsmetoder för denna användare."
+"Det gick inte att ta bort samtliga två-faktorautentiseringsmetoder för denna "
+"användare."
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid "Could not remove the two-factor authentication method for this user."
 msgstr ""
-"Kunde inte ta bort två-faktorautentiseringsmetoden för denna användare."
+"Det gick inte att ta bort två-faktorautentiseringsmetoden för denna "
+"användare."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 msgid "Could not remove two-factor authentication method"
-msgstr "Kunde inte ta bort två-faktorautentiseringsmetod"
+msgstr "Det gick inte ta bort två-faktorautentiseringsmetod"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
@@ -3738,7 +3741,7 @@ msgstr "Kunde inte sätta upp två-faktorautentiseringsmetoden som standard"
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco
 msgid "Count"
-msgstr "ANTAL"
+msgstr "Antal"
 
 #: app/models/system_report/plugin/failed_emails.rb
 msgid "Count of failed emails"
@@ -3846,7 +3849,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create Ticket"
-msgstr "Skapa ett Ärende"
+msgstr "Skapa Ärende"
 
 #: app/controllers/first_steps_controller.rb
 msgid "Create a Test Ticket"
@@ -3862,17 +3865,15 @@ msgstr "Skapa ett delat utkast"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee
 msgid "Create a translation"
-msgstr "Skapa översättning"
+msgstr "Skapa en översättning"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue
 msgid "Create account"
 msgstr "Skapa konto"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Create Knowledge Base"
 msgid "Create and set up Knowledge Base."
-msgstr "Skapa kunskapsbas"
+msgstr "Skapa och konfigurera Kunskapsbank."
 
 #: app/assets/javascripts/app/views/signup.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue
@@ -3914,15 +3915,15 @@ msgstr "Skapa organisationer automatiskt om posten har informationen."
 #: app/assets/javascripts/app/models/sla.coffee
 msgid ""
 "Create rules that single out the tickets for the Service Level Agreement."
-msgstr "Skapa regler som singlar ut ärenden för SLA."
+msgstr "Skapa regler som väljer ut ärenden för SLA."
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue
 msgid "Create tag"
-msgstr "Skapa etikett"
+msgstr "Skapa tagg"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue
 msgid "Create ticket"
-msgstr "Skapa ett ärende"
+msgstr "Skapa ärende"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
 msgid "Create your first ticket"
@@ -4024,7 +4025,7 @@ msgstr "Kanaler"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Creation mask"
-msgstr "Mask"
+msgstr "Skapa mask"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue
@@ -4073,7 +4074,7 @@ msgid ""
 "administrator."
 msgstr ""
 "För tillfället så finns det ingen översikt tilldelad dina roller. Kontakta "
-"dina administratör."
+"din administratör."
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 msgid "Custom"
@@ -4085,12 +4086,12 @@ msgstr "Anpassad Payload"
 
 #: app/assets/javascripts/app/controllers/translation.coffee
 msgid "Custom Translation"
-msgstr "Översättning"
+msgstr "Anpassad översättning"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee
 #: app/assets/javascripts/app/models/knowledge_base.coffee
 msgid "Custom URL"
-msgstr "Custom URL"
+msgstr "Anpassad URL"
 
 #: lib/knowledge_base/server_snippet.rb
 msgid "Custom address is not set"
@@ -4134,16 +4135,16 @@ msgid "Customer selection based on sender and receiver list"
 msgstr "Kundval baserat på avsändare och mottagare lista"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Recent Customer Tickets"
 msgid "Customer tickets"
-msgstr "Senaste kundtickets"
+msgstr "Kundärenden"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid ""
 "Customer tickets of the user will get deleted on execution of the task. No "
 "rollback possible."
-msgstr "Kundärenden från användaren kommer att tas bort."
+msgstr ""
+"Kundärenden från användaren kommer att tas bort vid utförande av uppgifter. "
+"Detta går inte att ångras."
 
 #: app/assets/javascripts/app/models/organization.coffee
 #: db/seeds/object_manager_attributes.rb
@@ -4183,7 +4184,7 @@ msgstr "Dashboard"
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco
 #: db/seeds/permissions.rb
 msgid "Data Privacy"
-msgstr "GDPR-borttagning"
+msgstr "Dataskydd"
 
 #: lib/validations/data_privacy_task_validator.rb
 msgid "Data privacy task allows to delete a user or a ticket only."
@@ -4192,11 +4193,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "DataPrivacyTask"
-msgstr "GDPR-borttagnings-uppgift"
+msgstr "Dataskyddsuppgift"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "DataPrivacyTasks"
-msgstr "GDPR-borttagnings-uppgifter"
+msgstr "Dataskyddsuppgifter"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco
 #: db/seeds/settings.rb
@@ -4215,7 +4216,7 @@ msgstr "Datum"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "Date & time field"
-msgstr "Dag- och tidsfält"
+msgstr "Datum och tidsfält"
 
 #: db/seeds/settings.rb
 msgid "Date (Year.Month.Day.SystemID.Counter)"
@@ -4227,7 +4228,7 @@ msgstr "Datumfält"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 msgid "Datepicker input field"
-msgstr "Datumväljarinmatning"
+msgstr "Datumväljarfält"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts
 msgid "Datepicker menu"
@@ -4270,7 +4271,7 @@ msgstr "Minska sekundvärde"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee
 msgid "Decryption failed!"
-msgstr "Avkrypteringen misslyckades!"
+msgstr "Dekrypteringen misslyckades!"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Decryption failed! %s"
@@ -4279,7 +4280,7 @@ msgstr "Dekryptering misslyckades! %s"
 #: app/assets/javascripts/app/controllers/article_view/item.coffee
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue
 msgid "Decryption was successful."
-msgstr "Avkrypteringen lyckades."
+msgstr "Dekrypteringen lyckades."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
@@ -4314,11 +4315,11 @@ msgstr "Standard Ärende Agent Notifieringar"
 
 #: app/assets/javascripts/app/models/role.coffee
 msgid "Default at Signup"
-msgstr "STANDARD VID REGISTRERING"
+msgstr "Standard vid registering"
 
 #: db/seeds/settings.rb
 msgid "Default calendar tickets subscriptions"
-msgstr "Standardkalender för ärendeabonneringar"
+msgstr "Standardkalender för ärendeprenumeration"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
@@ -4353,20 +4354,20 @@ msgid ""
 "Define an exception of \"automatic assignment\" for certain users (e.g. "
 "executives)."
 msgstr ""
-"Definiera ett undantag för \"automatisk uppgift\" för vissa användare (t ex "
-"chefer)."
+"Definiera ett undantag för \"automatisk tilldelning\" för vissa användare (t "
+"ex chefer)."
 
 #: db/seeds/settings.rb
 msgid "Define max. attachment size for Elasticsearch."
-msgstr "Definiera maximal storlek på bilagor för elastisk sökning."
+msgstr "Definiera maximal storlek på bilagor för Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Define max. payload size for Elasticsearch."
-msgstr "Definiera maximal total storlek för elastisk sökning."
+msgstr "Definiera maximal payload storlek för Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Define model configuration for Elasticsearch."
-msgstr "Definiera distributionspipelines för Elasticsearch."
+msgstr "Definiera modellkonfiguration för Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
@@ -4413,35 +4414,35 @@ msgstr "Definierar Elasticsearch SSL verifikation."
 
 #: db/seeds/settings.rb
 msgid "Defines Elasticsearch index name."
-msgstr "Definierar namnet på det elastiska sökindexet."
+msgstr "Definierar Elasticsearch indexnamn."
 
 #: db/seeds/settings.rb
 msgid "Defines Freshdesk endpoint authentication API key."
-msgstr "Definierar API-nyckeln för slutpunktsautentisering med Freshdesk."
+msgstr "Definierar Freshdesk endpoint autentisering API-nyckel."
 
 #: db/seeds/settings.rb
 msgid "Defines HTTP basic auth password of Elasticsearch."
-msgstr "Definierar HTTP Basic Auth-lösenordet för elastisk sökning."
+msgstr "Definierar HTTP Basic Auth-lösenordet för Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Defines HTTP basic auth user of Elasticsearch."
-msgstr "Definierar HTTP Basic Auth-användare för elastisk sökning."
+msgstr "Definierar HTTP Basic Auth-användare för Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines HTTP basic authentication password (only if OTRS is protected via "
 "HTTP basic auth)."
 msgstr ""
-"Definierar lösenordet för grundläggande HTTP-autentisering (endast om OTRS "
-"skyddas via grundläggande HTTP-autentisering)."
+"Definierar HTTP basic autentisering (endast om OTRS skyddas via HTTP basic "
+"autentisering)."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines HTTP basic authentication user (only if OTRS is protected via HTTP "
 "basic auth)."
 msgstr ""
-"Definierar användare för grundläggande HTTP-autentisering (endast om OTRS "
-"skyddas via grundläggande HTTP-autentisering)."
+"Definierar HTTP basic autentisering användare (endast om OTRS skyddas via "
+"HTTP basic autentisering)."
 
 #: db/seeds/settings.rb
 msgid "Defines Kayako endpoint authentication password."
@@ -4449,7 +4450,7 @@ msgstr "Definierar Kayako endpoint autentiseringslösenord."
 
 #: db/seeds/settings.rb
 msgid "Defines Kayako endpoint authentication user."
-msgstr "Definierar användaren för autentisering av Kayako API-anrop."
+msgstr "Definierar Kayako endpoint autentisering användare."
 
 #: db/seeds/settings.rb
 msgid "Defines OTRS endpoint authentication key."
@@ -4457,11 +4458,11 @@ msgstr "Definierar OTRS endpoint autentiseringsnyckel."
 
 #: db/seeds/settings.rb
 msgid "Defines Zendesk endpoint authentication API key."
-msgstr "Definierar API-nyckel för autentisering av Zendesk API-anrop."
+msgstr "Definierar Zendesk endpoint autentisering API-nyckel."
 
 #: db/seeds/settings.rb
 msgid "Defines Zendesk endpoint authentication user."
-msgstr "Definierar användaren för autentisering med Zendesk API-anrop."
+msgstr "Definierar Zendesk endpoint autentisering användare."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4474,15 +4475,15 @@ msgstr ""
 msgid ""
 "Defines a Kayako endpoint to import users, tickets, states, and articles."
 msgstr ""
-"Definierar ett Kayako API-anrop för att importera användare, ärenden, status "
+"Definierar ett Kayako endpoint för att importera användare, ärenden, status "
 "och artiklar."
 
 #: db/seeds/settings.rb
 msgid ""
 "Defines a Zendesk endpoint to import users, tickets, states, and articles."
 msgstr ""
-"Definierar ett Zendesk API-anrop för att importera användare, ärenden, "
-"status och artiklar."
+"Definierar ett Zendesk endpoint för att importera användare, ärenden, status "
+"och artiklar."
 
 #: db/seeds/settings.rb
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
@@ -4555,8 +4556,8 @@ msgid ""
 "Defines groups for which a customer can create tickets via web interface. No "
 "selection means all groups are available."
 msgstr ""
-"Definierar grupper för vilka en kund kan skapa ärenden via webbgränssnitt. "
-"Inget val betyder att alla grupper är tillgängliga."
+"Definierar grupper för vilka grupper en kund kan skapa ärenden för via "
+"webbgränssnitt. Inget val betyder att alla grupper är tillgängliga."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4707,7 +4708,7 @@ msgid ""
 "Defines if the application is in developer mode (all users have the same "
 "password and password reset will work without email delivery)."
 msgstr ""
-"Definierar om applikationen är i utvecklingsläge(alla användare har samma "
+"Definierar om applikationen är i utvecklingsläge (alla användare har samma "
 "lösenord och lösenordsåterställning kommer att fungera utan e-post utskick)."
 
 #: db/seeds/settings.rb
@@ -4752,7 +4753,7 @@ msgid ""
 "Defines if the ticket conditions editor supports regular expression "
 "operators for triggers and ticket auto assignment."
 msgstr ""
-"Definierar om redigeraren för villkor stöder reguljära uttryck operatörer "
+"Definierar om redigeraren för villkor stödjer reguljära uttryck operatörer "
 "för trigger och automatisk ärendetilldelning."
 
 #: db/seeds/settings.rb
@@ -4794,7 +4795,7 @@ msgid ""
 "itself and will set the article sender."
 msgstr ""
 "Definierar postmaster filter för att kontrollera om e-post har skapats av "
-"Zammad och kommer sätta artikelskaparen."
+"Zammad och kommer att sätta artikelskaparen."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5063,7 +5064,7 @@ msgstr "Definierar systemets standardspråk."
 
 #: db/seeds/settings.rb
 msgid "Defines the default system timezone."
-msgstr "Standardtidszon."
+msgstr "Definierar systemets standardtidszon."
 
 #: db/seeds/settings.rb
 msgid "Defines the default time accounting type."
@@ -5071,7 +5072,7 @@ msgstr "Definierar standard tidsredovisningstyp."
 
 #: db/seeds/settings.rb
 msgid "Defines the default visibility for new notes."
-msgstr "Standardsynlighet för ny anteckning."
+msgstr "Definierar standardsynlighet för ny anteckning."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5129,8 +5130,8 @@ msgid ""
 "Defines the name of the application, shown in the web interface, tabs, and "
 "title bar of the web browser."
 msgstr ""
-"Definierar programmets namn, som visas i webbläsarens webbgränssnitt, flikar "
-"och titelfält."
+"Definierar applikationens namn, som visas i webbläsarens webbgränssnitt, "
+"flikar och titelfält."
 
 #: db/seeds/settings.rb
 msgid "Defines the permission level used for lookups."
@@ -5224,7 +5225,7 @@ msgstr "Definierar transaktionsbackend att utföra triggers."
 
 #: db/seeds/settings.rb
 msgid "Defines the transaction backend to send agent notifications."
-msgstr "Definierar transaktionsbackend att skicka agentnotfifikationer."
+msgstr "Definierar transaktionsbackend att skicka agentnotifikationer."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5287,8 +5288,7 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Defines which ticket attributes are checked before creating a ticket."
 msgstr ""
-"Definierar vilka ärendeetiketter som ska kontrolleras innan ett ärende "
-"skapas."
+"Definierar vilka ärendeattribut som ska kontrolleras innan ett ärende skapas."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5371,17 +5371,15 @@ msgstr "Ta bort samtliga underkategorier och svar, prova sen på nytt."
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco
 msgid "Delete all existing records first."
-msgstr "Ta bort alla befintliga poster först."
+msgstr "Ta bort samtliga befintliga poster först."
 
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue
 msgid "Delete avatar"
 msgstr "Ta bort avatar"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Delete all existing records first."
 msgid "Delete existing data of your system."
-msgstr "Ta bort alla befintliga poster först."
+msgstr "Radera befintlig data i systemet."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 msgid "Delete immediately"
@@ -5424,10 +5422,8 @@ msgid "Delete records"
 msgstr "Radera poster"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
-#, fuzzy
-#| msgid "Getting an Access Token"
 msgid "Delete this access token"
-msgstr "Hämtar en åtkomst-token"
+msgstr "Ta bort denna access-token"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
 msgid "Delete this avatar"
@@ -5451,7 +5447,7 @@ msgstr "Borttagna ärenden (totalt %s):"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee
 msgid "Deletion Task"
-msgstr "Borttagning"
+msgstr "Borttagningsuppgift"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee
 msgid "Deletion failed."
@@ -5583,6 +5579,10 @@ msgstr "Grupp för direktmeddelanden"
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Direct URL"
 msgstr "Direktlänk"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Direct subscription URL"
+msgstr "URL för direktprenumeration"
 
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
@@ -5794,6 +5794,10 @@ msgstr "Utkast"
 msgid "Draft available"
 msgstr "Utkast tillgängligt"
 
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue
+msgid "Drag and drop to reorder ticket overview list items."
+msgstr "Dra och släpp för att ändra ordningen på ärendeöversikter."
+
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee
 msgid "Drag to reorder"
 msgstr "Drag för att ändra ordning"
@@ -5880,7 +5884,7 @@ msgstr "Redigera kund"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue
 msgid "Edit Organization"
-msgstr "Ändra organisation"
+msgstr "Redigera organisation"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts
 msgid "Edit authenticator app"
@@ -5888,7 +5892,7 @@ msgstr "Redigera Authenticator App"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee
 msgid "Edit mask"
-msgstr "Rediga mall"
+msgstr "Rediga mask"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue
@@ -5952,7 +5956,7 @@ msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
 msgstr ""
-"Elasticsearch är inte nåbar. Det är möjligt att den inte är körs. "
+"Elasticsearch är inte nåbart. Det är möjligt att den inte är körs. "
 "Kontrollera om den är installerad."
 
 #: app/controllers/reports_controller.rb
@@ -5985,11 +5989,11 @@ msgstr "E-post"
 
 #: app/models/report.rb
 msgid "Email (in)"
-msgstr "Email (in)"
+msgstr "E-post (in)"
 
 #: app/models/report.rb
 msgid "Email (out)"
-msgstr "Email (Ut)"
+msgstr "E-post (Ut)"
 
 #: db/seeds/settings.rb
 msgid "Email - full quote"
@@ -5997,7 +6001,7 @@ msgstr "E-post - fullständigt citat"
 
 #: db/seeds/settings.rb
 msgid "Email - quote header"
-msgstr "Email - citathuvud"
+msgstr "E-post - citathuvud"
 
 #: db/seeds/settings.rb
 msgid "Email - subject field"
@@ -6027,7 +6031,7 @@ msgstr "E-postadress"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannels.vue
 msgid "Email Channel"
-msgstr "E-postKanal"
+msgstr "E-postkanal"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
@@ -6041,7 +6045,7 @@ msgstr "Inkommande e-post"
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue
 msgid "Email Notification"
-msgstr "E-postnotifieringar"
+msgstr "E-postnotifiering"
 
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee
 msgid "Email Notifications"
@@ -6065,7 +6069,8 @@ msgstr "E-postadress '%{email}' används redan för en annan användare."
 #: app/assets/javascripts/app/controllers/email_verify.coffee
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue
 msgid "Email could not be verified. Please contact your administrator."
-msgstr "Det gick inte att verifiera mejladressen. Kontakta din administratör."
+msgstr ""
+"Det gick inte att verifiera e-postadressen. Kontakta din administratör."
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts
 msgid "Email import mode"
@@ -6293,7 +6298,7 @@ msgstr ""
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via GitHub."
-msgstr "Möjliggör autentisering via GitHub."
+msgstr "Aktiverar autentisering via GitHub."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via GitLab."
@@ -6301,15 +6306,15 @@ msgstr "Aktiverar användarautentisering via GitLab."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via Google."
-msgstr "Tillåter inloggning via Google."
+msgstr "Aktiverar inloggning via Google."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via LinkedIn."
-msgstr "Tillåter inloggning via LinkedIn."
+msgstr "Aktiverar inloggning via LinkedIn."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via Microsoft 365."
-msgstr "Möjliggör autentisering via Microsoft 365."
+msgstr "Aktiverar autentisering via Microsoft 365."
 
 #: db/seeds/settings.rb
 msgid "Enables user authentication via SAML."
@@ -6324,7 +6329,7 @@ msgid ""
 "Enables users to create their own account via web interface. This setting is "
 "only effective if the password login is enabled."
 msgstr ""
-"Tillåt användare att skapa nytt konto via webbgränssnitt. Endast om "
+"Tillåter användare att skapa nytt konto via webbgränssnitt. Endast om "
 "lösenordsinloggning är aktiv."
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee
@@ -6386,7 +6391,7 @@ msgstr "Endpoint"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco
 msgid "Endpoint Settings"
-msgstr "Slutpunktsinställningar"
+msgstr "Endpointinställningar"
 
 #: db/seeds/settings.rb
 msgid "Enforce the setup of the two-factor authentication"
@@ -6402,7 +6407,7 @@ msgstr "Engelska (USA)"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 msgid "Enter Note or"
-msgstr "Ange notering"
+msgstr "Ange notering eller"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee
@@ -6427,13 +6432,13 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/input.jst.eco
 msgid "Enter a valid email address."
-msgstr "Ange ditt användarnamn eller mejladress."
+msgstr "Ange en giltig e-postadress."
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco
 #: app/assets/javascripts/app/views/import/kayako.jst.eco
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco
 msgid "Enter credentials"
-msgstr "Ange uppgifter"
+msgstr "Ange Inloggningsuppgifter"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts
 msgid "Enter link URL"
@@ -6523,6 +6528,7 @@ msgid "Enter your Zendesk API token gained from your admin interface."
 msgstr "Ange din Zendesk API-token hämtad från ditt administratörsgränssnitt."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 msgid "Enter your current password, insert a new one and confirm it."
 msgstr ""
 "Ange ditt nuvarande lösenord, ange ett nytt lösenord och bekräfta det nya "
@@ -6583,6 +6589,7 @@ msgstr "Fel"
 msgid "Error during execution of auto wizard."
 msgstr "Fel under exekvering av automatisk guide."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
 #: db/seeds/overviews.rb
 msgid "Escalated Tickets"
 msgstr "Eskalerade ärenden"
@@ -6806,10 +6813,8 @@ msgid "Experts"
 msgstr "Experter"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
-#, fuzzy
-#| msgid "Escalation at"
 msgid "Expiration date"
-msgstr "Eskaleras om"
+msgstr "Utgångsdatum"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
@@ -6821,15 +6826,15 @@ msgstr "Upphör"
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 msgid "Expires at"
-msgstr "Upphör"
+msgstr "Upphör vid"
 
 #: app/assets/javascripts/app/controllers/search.coffee
 msgid "Extended Search"
-msgstr "Utökat sök"
+msgstr "Utökad sökning"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee
 msgid "External data source field"
-msgstr "Extern datakällfält"
+msgstr "Externt datakällfält"
 
 #: lib/search_index_backend.rb
 msgid "Extract zammad-attachment information from arrays"
@@ -6852,7 +6857,7 @@ msgstr "Facebook-app-id"
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee
 msgid "Facebook Account"
-msgstr "Facebook-konto"
+msgstr "Facebook konto"
 
 #: db/seeds/settings.rb
 msgid "Facebook App Credentials"
@@ -6860,7 +6865,7 @@ msgstr "Facebook App Användaruppgifter"
 
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco
 msgid "Facebook App Secret"
-msgstr "Facebook-apphemlighet"
+msgstr "Facebook App Secret"
 
 #: db/seeds/settings.rb
 msgid "Facebook Developer Site"
@@ -6901,15 +6906,13 @@ msgstr "Funktionen är inaktiverad!"
 #: app/controllers/integration/placetel_controller.rb
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Feature is disabled, please contact your administrator!"
-msgstr ""
-"Det gick inte att verifiera mejladressen. Vänligen kontakta din "
-"administratör!"
+msgstr "Funktionen är inaktiverad, kontakta din administratör!"
 
 #: app/controllers/integration/cti_controller.rb
 #: app/controllers/integration/placetel_controller.rb
 #: app/controllers/integration/sipgate_controller.rb
 msgid "Feature not configured, please contact your admin!"
-msgstr "Funktionen är inte konfigurerad, vänligen kontakta din administratör!"
+msgstr "Funktionen är inte konfigurerad, kontakta din administratör!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee
 #: app/assets/javascripts/app/controllers/report.coffee
@@ -6927,11 +6930,11 @@ msgstr "Feedback"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid "Feedback Form"
-msgstr "Återkopplingsformulär"
+msgstr "Feedback-formulär"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue
 msgid "File '%s' is uploading"
-msgstr "Filen '%s' håller på att laddas upp"
+msgstr "Filen '%s' laddas upp"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "File format is not allowed: %s"
@@ -6989,11 +6992,11 @@ msgstr "Fingeravtryck"
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue
 msgid "Finish"
-msgstr "Slut"
+msgstr "Avsluta"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue
 msgid "Finish Setup"
-msgstr "Avsluta konfiguration"
+msgstr "Slutför konfiguration"
 
 #: lib/excel_sheet/ticket.rb
 msgid "First Response At"
@@ -7043,7 +7046,7 @@ msgstr "Fixerade e-postkonton"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Flat Design"
-msgstr "Flat Design"
+msgstr "Platt design"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee
 #: app/assets/javascripts/app/controllers/_channel/google.coffee
@@ -7052,11 +7055,11 @@ msgstr "Flat Design"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts
 msgid "Folder"
-msgstr "Katalog"
+msgstr "Mapp"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco
 msgid "Folder:"
-msgstr "Katalog:"
+msgstr "Mappar:"
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
@@ -7071,7 +7074,7 @@ msgstr "Uppföljning för stängt ärende möjligt eller inte möjligt."
 #: app/assets/javascripts/app/models/group.coffee
 #: db/seeds/object_manager_attributes.rb
 msgid "Follow-up possible"
-msgstr "Uppföljning tillgänglig"
+msgstr "Uppföljning möjlig"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee
 msgid "Font Awesome"
@@ -7079,7 +7082,7 @@ msgstr "Font Awesome"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco
 msgid "Font size"
-msgstr "Typsnitt storlek"
+msgstr "Fontstorlek"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_manager.coffee
 msgid "Footer Menu"
@@ -7203,7 +7206,7 @@ msgstr "Vidarebefordra"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco
 msgid "Frequency"
-msgstr "FREKVENS"
+msgstr "Frekvens"
 
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/freshdesk.ts
@@ -7480,7 +7483,7 @@ msgstr "Google Client ID"
 
 #: app/assets/javascripts/app/views/google/app_config.jst.eco
 msgid "Google Client Secret"
-msgstr "Google-klienthemlighet"
+msgstr "Google-klient Secret"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee
 msgid "Green"
@@ -7692,7 +7695,7 @@ msgstr "Header länkfärg"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_manager.coffee
 msgid "Header Menu"
-msgstr "Sidhuvudmeny"
+msgstr "Sidhuvud meny"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco
 msgid "Health Check"
@@ -7721,7 +7724,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelp.vue
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelpDialog.vue
 msgid "Help"
-msgstr ""
+msgstr "Hjälp"
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee
 msgid "Help to improve Zammad!"
@@ -7786,7 +7789,7 @@ msgstr "Här kan du logga ut, ändra språk och se dina senast visade ärenden."
 
 #: app/assets/javascripts/app/views/object_manager/attribute.jst.eco
 msgid "Here you define which authorization has access to the attribute."
-msgstr "Här definierar du vilket behörighet som har tillgång till attributet."
+msgstr "Här definierar du vilken behörighet som har tillgång till attributet."
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid ""
@@ -7845,7 +7848,7 @@ msgstr "Historik"
 #: app/assets/javascripts/app/models/calendar.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 msgid "Holidays"
-msgstr "LEDIGA DAGAR"
+msgstr "Ledighet"
 
 #: app/assets/javascripts/app/models/calendar.coffee
 msgid "Holidays iCalendar Feed"
@@ -7870,7 +7873,7 @@ msgstr "Värd"
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco
 msgid "Host Notification"
-msgstr "Host Notifiering"
+msgstr "Värd Notifiering"
 
 #: app/controllers/import_otrs_controller.rb
 msgid "Host found, but it seems to be no OTRS installation!"
@@ -7882,7 +7885,7 @@ msgstr "Värd hittad, men ingen OTRS-migrator är installerad!"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco
 msgid "Hour"
-msgstr "Timma"
+msgstr "Timme"
 
 #: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee
 msgid "Hour(s)"
@@ -7933,7 +7936,7 @@ msgstr ""
 
 #: app/controllers/first_steps_controller.rb
 msgid "How to use it"
-msgstr "Hur man gör"
+msgstr "Hur man använder det"
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco
 msgid "ID"
@@ -8037,6 +8040,13 @@ msgid "If this regex matches, no notification will be sent by the sender."
 msgstr ""
 "Om denna regex matchar, kommer ingen notifikation att skickas av avsändaren."
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+msgid ""
+"If you don't already use jQuery on your website, you can add it like this:"
+msgstr ""
+"Om du inte redan använder jQuery på din webbplats, kan du lägga till det så "
+"här:"
+
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -8046,7 +8056,7 @@ msgid ""
 "spam and junk filters, or try resending your request."
 msgstr ""
 "Om du inte får instruktioner inom en minut eller två, kolla e-postens "
-"skräppost och skräpfilter eller försök att skicka din begäran igen."
+"skräppost och skräppostfilter eller försök att skicka din begäran igen."
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
 #: app/assets/javascripts/app/views/signup/verify.jst.eco
@@ -8055,7 +8065,7 @@ msgid ""
 "spam, social, or other folders."
 msgstr ""
 "Om du inte ser e-postmeddelandet kan du kontrollera andra platser som det "
-"kan vara, som ditt skräp, skräppost, sociala eller andra mappar."
+"kan vara, som i din skräppost, sociala eller andra mappar."
 
 #: app/assets/javascripts/app/views/login.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue
@@ -8326,9 +8336,41 @@ msgstr "Incident"
 msgid "Include attachments of the article?"
 msgstr "Inkludera artikelbilagor?"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include unassigned tickets in subscription for escalated tickets."
+msgstr ""
+"Inkludera ej tilldelade ärenden i prenumerationen för eskalerade ärenden."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include unassigned tickets in subscription for new & open tickets."
+msgstr ""
+"Inkludera ej tilldelade ärenden i prenumerationen för nya och öppna ärenden."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include unassigned tickets in subscription for pending tickets."
+msgstr ""
+"Inkludera ej tilldelade ärenden i prenumerationen för väntande ärenden."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include your own tickets in subscription for escalated tickets."
+msgstr "Inkludera dina egna ärenden i prenumerationen för eskalerade ärenden."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include your own tickets in subscription for new & open tickets."
+msgstr ""
+"Inkludera dina egna ärenden i prenumerationen för nya och öppna ärenden."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include your own tickets in subscription for pending tickets."
+msgstr "Inkludera dina egna ärenden i prenumerationen på väntande ärenden."
+
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 msgid "Included ticket overviews"
 msgstr "Inkluderade ärendeöversikter"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Includes escalated, new & open and pending tickets."
+msgstr "Inkluderar eskalerade, nya och öppna samt pågående ärenden."
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -8899,8 +8941,6 @@ msgid "Last Internal Article"
 msgstr "Senaste interna artikel"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
-#, fuzzy
-#| msgid "Last used"
 msgid "Last Used"
 msgstr "Senast använd"
 
@@ -8992,6 +9032,10 @@ msgstr "Ljust"
 msgid "Limit Groups"
 msgstr "Begränsa grupper"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+msgid "Limit notifications to specific groups"
+msgstr "Begränsa meddelanden till specifika Grupper"
+
 #: db/seeds/settings.rb
 msgid "Limit tickets by IP per day"
 msgstr "Begränsa antalet ärende per IP och dag"
@@ -9042,6 +9086,10 @@ msgstr "Länka GitLab-problem till dina ärenden."
 msgid "Link Related Answer"
 msgstr "Länka till relaterat svar"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+msgid "Link account on %s"
+msgstr "Länka konto på %s"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "Link issue"
 msgstr "Länka problem"
@@ -9052,7 +9100,10 @@ msgstr "Länk-mallar"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/popover/user.jst.eco
-#: app/assets/javascripts/app/views/widget/user.jst.eco db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/widget/user.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+#: db/seeds/permissions.rb
 msgid "Linked Accounts"
 msgstr "Länkade konton"
 
@@ -9276,52 +9327,40 @@ msgid "Manage"
 msgstr "Administration"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage API of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera API för ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the Subdomain of your %s system"
 msgid "Manage Facebook channel of your system."
-msgstr "Ange Subdomänen för ditt %s system"
+msgstr "Hantera Facebook-kanalen för ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the Subdomain of your %s system"
 msgid "Manage Google mail channel of your system."
-msgstr "Ange Subdomänen för ditt %s system"
+msgstr "Hantera Google Mail-kanalen i ditt system."
 
 #: db/seeds/permissions.rb
 msgid "Manage Microsoft 365 mail channel of your system."
-msgstr ""
+msgstr "Hantera Microsoft 365 e-postkanal i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage SMS channel of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera SMS-kanalen i ditt system."
 
 #: db/seeds/permissions.rb
 msgid "Manage Service Level Agreements of your system."
-msgstr ""
+msgstr "Hantera servicenivåavtal för ditt system."
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco
 msgid "Manage Tags"
 msgstr "Editera Taggar"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage Telegram channel of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera Telegram-kanalen för ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage Twitter channel of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera Twitter-kanalen för ditt system."
 
 #: app/assets/javascripts/app/controllers/user.coffee
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
@@ -9329,28 +9368,20 @@ msgid "Manage Two-Factor Authentication"
 msgstr "Hantera Två-faktorautentisering"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage WhatsApp channel of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera WhatsApp-kanalen i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the Subdomain of your %s system"
 msgid "Manage active user sessions of your system."
-msgstr "Ange Subdomänen för ditt %s system"
+msgstr "Hantera aktiva användarsessioner i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "New organizations are shared."
 msgid "Manage all organizations of your system."
-msgstr "Nya organisationer är delade."
+msgstr "Hantera samtliga organisationer i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage all users of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera samtliga användare av ditt system."
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid ""
@@ -9362,253 +9393,179 @@ msgstr ""
 
 #: db/seeds/permissions.rb
 msgid "Manage branding settings of your system."
-msgstr ""
+msgstr "Hantera varumärkesinställningar i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage calendars of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera kalendrar för ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage chat channel of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera chattkanalen i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Manage %s Settings"
 msgid "Manage core system settings."
-msgstr "Hantera %s Inställningar"
+msgstr "Hantera core systeminställningar."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage core workflows of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera grundläggande arbetsflöden i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the Subdomain of your %s system"
 msgid "Manage email channel of your system."
-msgstr "Ange Subdomänen för ditt %s system"
+msgstr "Hantera e-postkanalen i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage form channel of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera formulär i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "To configure your system."
 msgid "Manage groups of your system."
-msgstr "För att konfigurera ditt system."
+msgstr "Hantera grupper i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the Subdomain of your %s system"
 msgid "Manage integrations of your system."
-msgstr "Ange Subdomänen för ditt %s system"
+msgstr "Hantera integrationer av ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage maintenance mode of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera underhållsläget för ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the Subdomain of your %s system"
 msgid "Manage monitoring of your system."
-msgstr "Ange Subdomänen för ditt %s system"
+msgstr "Hantera övervakningen av ditt system."
 
 #: db/seeds/permissions.rb
 msgid "Manage object attributes of your system."
-msgstr ""
+msgstr "Hantera objektattribut för ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage packages of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera installationspaket i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Personal Access Tokens"
 msgid "Manage personal API tokens."
-msgstr "Personal Access Tokens"
+msgstr "Hantera personliga API-tokens."
 
 #: db/seeds/permissions.rb
 msgid "Manage personal appearance settings."
-msgstr ""
+msgstr "Hantera inställningar för personligt utseende."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Manage %s Settings"
 msgid "Manage personal avatar settings."
-msgstr "Hantera %s Inställningar"
+msgstr "Hantera inställningar för personlig avatar."
 
 #: db/seeds/permissions.rb
 msgid "Manage personal calendar."
-msgstr ""
+msgstr "Hantera personlig kalender."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Clean up dead sessions."
 msgid "Manage personal devices and sessions."
-msgstr "Rensa döda sessioner."
+msgstr "Hantera personliga enheter och sessioner."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Manage %s Settings"
 msgid "Manage personal language settings."
-msgstr "Hantera %s Inställningar"
+msgstr "Hantera personliga språkinställningar."
 
 #: db/seeds/permissions.rb
 msgid "Manage personal linked accounts."
-msgstr ""
+msgstr "Hantera personliga länkade konton."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Manage your notification settings"
 msgid "Manage personal notifications settings."
-msgstr "Administrera dina notifieringsinställningar"
+msgstr "Hantera notifikationsinställningar."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Manage your notification settings"
 msgid "Manage personal out of office settings."
-msgstr "Administrera dina notifieringsinställningar"
+msgstr "Hantera personliga inställningar för utanför kontoret."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Personal overview order was reset."
 msgid "Manage personal overviews."
-msgstr "Översiktsordning återställdes."
+msgstr "Hantera personliga översikter."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Manage %s Settings"
 msgid "Manage personal settings."
-msgstr "Hantera %s Inställningar"
+msgstr "Hantera personliga inställningar."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Could not remove two-factor authentication method."
 msgid "Manage personal two-factor authentication methods."
-msgstr "Det gick inte ta bort två-faktorautentiseringsmetod."
+msgstr "Hantera personliga metoder för tvåfaktorsautentisering."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the Subdomain of your %s system"
 msgid "Manage public links of your system."
-msgstr "Ange Subdomänen för ditt %s system"
+msgstr "Hantera publikalänkar i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "To configure your system."
 msgid "Manage report profiles of your system."
-msgstr "För att konfigurera ditt system."
+msgstr "Hantera rapportprofiler i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage roles of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera roller i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage schedulers of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera schemaläggare i ditt system."
 
 #: db/seeds/permissions.rb
 msgid "Manage security settings of your system."
-msgstr ""
+msgstr "Hantera säkerhetsinställningar för ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage system report of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera systemrapport."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage text modules of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera textmoduler i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage ticket macros of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera makron för ärenden i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "More ticket overviews"
 msgid "Manage ticket overviews of your system."
-msgstr "Fler ärendeöversikter"
+msgstr "Hantera ärendeöversikter i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage ticket priorities of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera ärendeprioriteringar i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage ticket settings of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera inställningar för ärenden i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage ticket states of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera ärendestatus för ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage ticket tags of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera ärendetaggar i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage ticket templates of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera ärendemallar i ditt system."
 
 #: db/seeds/permissions.rb
 msgid "Manage time accounting settings of your system."
-msgstr ""
+msgstr "Hantera tidredovisningsinställningar i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the Subdomain of your %s system"
 msgid "Manage translations of your system."
-msgstr "Ange Subdomänen för ditt %s system"
+msgstr "Hantera översättningar i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage triggers of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera triggers i ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage web channel of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera webbkanalen för ditt system."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage webhooks of your system."
-msgstr "Ange webbadressen till ditt %s system."
+msgstr "Hantera webhooks i ditt system."
 
 #: app/views/mailer/application.html.erb
 msgid "Manage your notification settings"
@@ -9796,6 +9753,10 @@ msgstr "Slå ihop ärenden"
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 msgid "Merge to Ticket#"
 msgstr "Slå ihop Ärende#"
+
+#: app/models/report.rb
+msgid "Merged"
+msgstr "Sammanfogad"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
@@ -10069,6 +10030,11 @@ msgstr "Mina ärenden"
 msgid "My handling time: %s minutes"
 msgstr "Min handläggningstid: %s minuter"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "My tickets"
+msgstr "Mina ärenden"
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "My tickets in process"
 msgstr "Mina pågående ärenden"
@@ -10134,6 +10100,7 @@ msgstr "Nagios integration"
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
@@ -10223,6 +10190,10 @@ msgstr "Nätverk"
 msgid "New"
 msgstr "Nytt"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "New & Open Tickets"
+msgstr "Nya & öppna ärenden"
+
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "New Access Token is"
 msgstr "Nytt åtkomsttoken är"
@@ -10265,10 +10236,8 @@ msgstr "Ny översikt"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
-#, fuzzy
-#| msgid "Your New Personal Access Token"
 msgid "New Personal Access Token"
-msgstr "Din nya personliga åtkomsttoken"
+msgstr "Ny personlig access-token"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee
 msgid "New Priority"
@@ -10367,6 +10336,10 @@ msgstr "Ny flik"
 #: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "New text module"
 msgstr "Ny textmodul"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+msgid "New ticket"
+msgstr "Nytt ärende"
 
 #. This is the template file app/views/mailer/ticket_create/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -10617,10 +10590,6 @@ msgstr "Ingen privat nyckel hittad."
 msgid "No proxy for the following hosts."
 msgstr "Ingen proxy för följande värdar."
 
-#: app/controllers/users_controller.rb
-msgid "No record found!"
-msgstr "Inga uppgifter har hittats!"
-
 #: lib/whatsapp/webhook/message/status.rb
 msgid "No related article found to process the status message on."
 msgstr ""
@@ -10729,6 +10698,11 @@ msgid ""
 msgstr ""
 "Ej tillämplig för: sammanfogning, e-post, formulär, Facebook, Telegram, "
 "Twitter, SMS"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Not assigned"
+msgstr "Ej tilldelad"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
@@ -10848,9 +10822,33 @@ msgstr "Avsändare notifieringar"
 msgid "Notification Sound"
 msgstr "Notifikationsljud"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+msgid "Notification matrix"
+msgstr "Meddelandematris"
+
 #: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue
 msgid "Notification read"
 msgstr "Lästa notifieringar"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+msgid "Notification settings could not be reset."
+msgstr "Notifieringsinställningarna kunde inte återställas."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+msgid "Notification settings could not be saved."
+msgstr "Notifieringsinställningarna kunde inte sparas."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+msgid "Notification settings have been reset to default."
+msgstr "Notifieringsinställningarna har återställts till standard."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+msgid "Notification settings have been saved successfully."
+msgstr "Notifieringsinställningarna har sparats."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+msgid "Notification sound"
+msgstr "Notifikationsljud"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -10858,6 +10856,8 @@ msgstr "Lästa notifieringar"
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts
 #: db/seeds/permissions.rb
 msgid "Notifications"
@@ -10902,8 +10902,6 @@ msgid "OK"
 msgstr "OK"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
-#, fuzzy
-#| msgid "OK, I've copied my token"
 msgid "OK, I have copied my token"
 msgstr "OK, jag har kopierat min token"
 
@@ -11192,6 +11190,10 @@ msgstr "Eller använd en av dina"
 msgid "Order of Overviews"
 msgstr "Översiktsordning"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+msgid "Order of ticket overviews"
+msgstr "Översiktsordning"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
@@ -11368,6 +11370,8 @@ msgstr "Översikt bulk mall"
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 #: app/assets/javascripts/app/controllers/overview.coffee
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
 #: db/seeds/permissions.rb
 msgid "Overviews"
 msgstr "Översikter"
@@ -11571,6 +11575,10 @@ msgstr "Klistra in nyckel"
 msgid "Pending Reached Tickets"
 msgstr "Mina väntan nådd-ärenden"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Pending Tickets"
+msgstr "Mina väntande ärenden"
+
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Pending reminder reached for ticket |%s|"
@@ -11617,10 +11625,8 @@ msgid "Personal Settings"
 msgstr "Personliga Inställningar"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
-#, fuzzy
-#| msgid "Personal Access Tokens"
 msgid "Personal access token has been deleted."
-msgstr "Personal Access Tokens"
+msgstr "Personlig access token har tagits bort."
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 msgid "Personal overview order was reset."
@@ -11681,6 +11687,7 @@ msgid "Placetel integration"
 msgstr "Placetel integration"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
 msgid "Play user interface sound effects"
 msgstr "Spela ljud-effekter i användargränssnittet"
 
@@ -12032,14 +12039,6 @@ msgstr "Produktnamn"
 msgid "Profile"
 msgstr "Profil"
 
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
-msgid "Profile ASDa sdasf sdfasdf  safsaf safsadf"
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
-msgid "Profile appearance updated successfully."
-msgstr "Profilutseendet uppdaterades."
-
 #: app/frontend/shared/composables/useLocaleUpdate.ts
 msgid "Profile language updated successfully."
 msgstr "Profilspråket har uppdaterats."
@@ -12336,6 +12335,10 @@ msgstr "Ta bort två-faktorautentisering: %s"
 msgid "Remove a configured two-factor authentication method"
 msgstr "Ta bort en konfigurerad tvåfaktorsautentiseringmetod"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+msgid "Remove account link on %s"
+msgstr "Ta bort länken till kontot på %s"
+
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove all"
 msgstr "Ta bort alla"
@@ -12440,10 +12443,8 @@ msgid "Reply-To"
 msgstr "Svara till"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Reporting"
 msgid "Report"
-msgstr "Rapportering"
+msgstr "Rapport"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee
 msgid "Report Profile"
@@ -12523,6 +12524,10 @@ msgstr "Skicka bekräftelsemail igen"
 msgid "Reset"
 msgstr "Nollställ"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+msgid "Reset Overview Order"
+msgstr "Återställ översiktsordningen"
+
 #: app/assets/javascripts/app/controllers/password_reset.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Reset Password"
@@ -12539,6 +12544,10 @@ msgstr "Återställ översiktsordningen"
 #: app/assets/javascripts/app/models/setting.coffee
 msgid "Reset successful."
 msgstr "Återställning lyckades."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+msgid "Reset to Default Settings"
+msgstr "Återställ till standardinställningar"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
 msgid "Reset to default"
@@ -12633,6 +12642,10 @@ msgstr ""
 "</div>\n"
 "<br>\n"
 "<div>Ditt #{config.product_name} Team</div>\n"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+msgid "Resetting the order of your ticket overviews failed."
+msgstr "Det gick inte att återställa översiktsordningen."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageResizable.vue
 msgid "Resize frame"
@@ -12942,6 +12955,10 @@ msgstr "Spara Koder"
 msgid "Save Draft"
 msgstr "Spara utkast"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+msgid "Save Notifications"
+msgstr "Spara notifieringar"
+
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 msgid "Save Out of Office"
 msgstr "Spara Out of Office"
@@ -13161,6 +13178,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
@@ -13250,6 +13268,14 @@ msgid ""
 msgstr ""
 "Se dina ärenden från din favoritkalender genom att lägga till följande "
 "webbadress i din kalenderapp."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid ""
+"See your tickets from within your favorite calendar by adding the "
+"subscription URL to your calendar app."
+msgstr ""
+"Se dina ärenden från din favoritkalender genom att lägga till följande "
+"prenumeration URL i din kalenderapp."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
 msgid "Select All"
@@ -14280,12 +14306,20 @@ msgstr "Prenumerera på allmäna helgdagar i"
 msgid "Subscribed Tickets"
 msgstr "Följda ärenden"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+msgid "Subscribed tickets"
+msgstr "Följda ärenden"
+
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Subscribers"
 msgstr "Följare"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Subscription Settings"
+msgstr "Prenumerationsinställningar"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Subscription settings"
 msgstr "Prenumerationsinställningar"
 
 #: app/assets/javascripts/app/models/user.coffee
@@ -14713,10 +14747,12 @@ msgid "The WhatsApp webhook payload could not be validated."
 msgstr "WhatsApp webhook payload kunde inte valideras."
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
-#, fuzzy
-#| msgid "The token could not be generated."
 msgid "The access token could not be created."
-msgstr "Token kunde inte genereras."
+msgstr "Det gick inte att skapa en access-token."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+msgid "The account link was successfully removed!"
+msgstr "Länken till kontot har tagits bort!"
 
 #: app/controllers/reports_controller.rb
 msgid "The active reporting profile could not be found."
@@ -14731,7 +14767,7 @@ msgstr "Begäran om administratörsmedgivande skickades till din administratör.
 msgid "The admin password auth email could not be sent."
 msgstr "Admin lösenord autentiseringsmail kunde inte skickas."
 
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
+#: app/frontend/apps/desktop/stores/theme.ts
 msgid "The appearance could not be updated."
 msgstr "Utseendet kunde inte uppdateras."
 
@@ -15160,6 +15196,10 @@ msgstr ""
 "Gränsen för hur många förslag som kan visas har nåtts, vänligen begränsa din "
 "sökning."
 
+#: app/services/service/user/remove_linked_account.rb
+msgid "The linked account could not be found."
+msgstr "Det länkade kontot kunde inte hittas."
+
 #: app/services/service/auth/verify_admin_token.rb
 msgid "The login is not possible."
 msgstr "Inloggning är inte möjlig."
@@ -15200,6 +15240,14 @@ msgstr "Objektet kunde inte uppdateras."
 msgid "The online notification could not be marked as seen."
 msgstr "Online notifieringen kunde inte markeras som sedd."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+msgid "The order of your ticket overviews was reset."
+msgstr "Ordningen av ärendeöversikter återställdes."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+msgid "The order of your ticket overviews was updated."
+msgstr "Översiktsordningen uppdaterades."
+
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "The page is not available anymore"
 msgstr "Sidan är inte längre tillgänglig"
@@ -15230,10 +15278,8 @@ msgid "The password reset request was successful."
 msgstr "Återställning av lösenordet lyckades."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue
-#, fuzzy
-#| msgid "The user token could not be generated."
 msgid "The personal access token could not be deleted."
-msgstr "Användartoken kunde inte genereras."
+msgstr "Den personliga access token kunde inte raderas."
 
 #: app/controllers/ticket_articles_controller.rb
 msgid ""
@@ -15751,11 +15797,19 @@ msgstr "Verifikationsmail kunde inte skickas."
 
 #: app/models/setting/validation/saml/tls.rb
 msgid ""
-"The verification of the TLS connection failed. Please check the IDP "
+"The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
 msgstr ""
-"Verifieringen av TLS-anslutningen misslyckades. Vänligen kontrollera IDP-"
-"certifikatet."
+"Verifieringen av TLS-anslutningen misslyckades. Vänligen kontrollera SAML "
+"IDP-certifikatet."
+
+#: app/models/setting/validation/saml/tls.rb
+msgid ""
+"The verification of the TLS connection is not possible. Please check the "
+"SAML IDP connection."
+msgstr ""
+"Verifieringen av TLS-anslutningen misslyckades. Vänligen kontrollera SAML "
+"IDP anslutningen."
 
 #: app/services/service/user/two_factor/verify_method_configuration.rb
 msgid ""
@@ -16528,6 +16582,7 @@ msgstr "Kundärende har uppdaterats."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Ticket escalation"
 msgstr "Ärende-eskalering"
 
@@ -16554,6 +16609,7 @@ msgstr "Ärendeinformation"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Ticket reminder reached"
 msgstr "Ärendepåminnelse uppnådd"
 
@@ -16626,6 +16682,7 @@ msgstr "Ärendetitel"
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Ticket update"
 msgstr "Ärendeuppdatering"
 
@@ -16725,6 +16782,9 @@ msgstr "Ärende-ID"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
@@ -17649,6 +17709,15 @@ msgstr ""
 msgid "Updating Database"
 msgstr "Uppdaterar databas"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+msgid "Updating the order of your ticket overviews failed."
+msgstr "Uppdateringen av översiktsordningen misslyckades."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Updating your calendar subscription settings failed."
+msgstr ""
+"Uppdatering av inställningarna för din kalenderprenumeration misslyckades."
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
@@ -17868,6 +17937,7 @@ msgid "UserDevice could not be found."
 msgstr "Användarenhet kunde inte hittas."
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
 msgid "Username"
 msgstr "Användarnamn"
 
@@ -18472,6 +18542,10 @@ msgstr "Du får detta eftersom du är ägare till detta ärende."
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Du får detta eftersom du nämndes i detta ärende."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "You calendar subscription settings were updated."
+msgstr "Inställningarna för din kalenderprenumeration har uppdaterats."
+
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/google/index.jst.eco
@@ -18805,10 +18879,8 @@ msgid "Your New Personal Access Token"
 msgstr "Din nya personliga åtkomsttoken"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
-#, fuzzy
-#| msgid "Your New Personal Access Token"
 msgid "Your Personal Access Token"
-msgstr "Din nya personliga åtkomsttoken"
+msgstr "Din personliga åtkomsttoken"
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid ""
@@ -18882,6 +18954,10 @@ msgstr "Din anslutning är inte privat"
 msgid "Your language"
 msgstr "Ditt språk"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
+msgid "Your theme has been updated."
+msgstr "Ditt tema har uppdaterats."
+
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 msgid ""
 "Your user role is not allowed to create new tickets. Please contact your "
@@ -18900,14 +18976,6 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
 msgstr "Zammad"
-
-#: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid ""
-"Zammad Chat requires jQuery. If you don't already use it on your website, "
-"you can add it like this:"
-msgstr ""
-"Zammads chatt kräver jQuery. Om du inte redan använder det på din webbplats, "
-"inkludera det så här:"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid ""
@@ -19256,10 +19324,6 @@ msgstr "anpassad"
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
 msgid "custom unit"
 msgstr "Anpassad enhet"
-
-#: lib/calendar_subscriptions/tickets.rb
-msgid "customer"
-msgstr "kund"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "d"
@@ -19749,6 +19813,10 @@ msgstr "just nu"
 msgid "left"
 msgstr "vänster"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts
+msgid "linked accounts,facebook,github,gitlab,google,linkedin,microsoft,saml"
+msgstr "länkade konton,facebook,github,gitlab,google,linkedin,microsoft,saml"
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorMore.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "load %s more"
@@ -19945,6 +20013,10 @@ msgstr "notering"
 msgid "notification sent to '%s'"
 msgstr "notifiering skickad till '%s'"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts
+msgid "notifications,tickets"
+msgstr "notifieringar,ärenden"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "now"
 msgstr "nu"
@@ -19974,6 +20046,10 @@ msgstr "eller"
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "or sign in using"
 msgstr "eller logga in med"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts
+msgid "order,sort,overview,ticket,sorting"
+msgstr "ordning,sortering,översikt,ärende,sortering"
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 msgid "pending"
@@ -20207,6 +20283,10 @@ msgstr "Startar med"
 msgid "starts with one of"
 msgstr "startar med en av"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts
+msgid "subscription,calendars,ticket,ical"
+msgstr "prenumeration,kalendrar,ärende,ical"
+
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"
 msgstr "support@exempel.se"
@@ -20229,17 +20309,12 @@ msgstr "Ärendet ihopslaget med ärendet %s"
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
-#: lib/calendar_subscriptions/tickets.rb
 msgid "ticket"
 msgstr "ärende"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "ticket %s was merged into this ticket"
 msgstr "Ärendet %s slogs ihop med det här ärendet"
-
-#: lib/calendar_subscriptions/tickets.rb
-msgid "ticket escalation"
-msgstr "ärende eskalering"
 
 #: db/seeds/settings.rb
 msgid "ticket.agent"
@@ -20275,7 +20350,7 @@ msgstr "idag"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
 msgid "token access,token,api,access token,application"
-msgstr ""
+msgstr "token access,token,api,access token,applikation"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts
 msgid "translation,locale,localization"
@@ -20423,6 +20498,18 @@ msgstr "... av hela textfältet"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Väntetid idag"
+
+#~ msgid "Profile appearance updated successfully."
+#~ msgstr "Profilutseendet uppdaterades."
+
+#~ msgid "customer"
+#~ msgstr "kund"
+
+#~ msgid "ticket escalation"
+#~ msgstr "ärende eskalering"
+
+#~ msgid "No record found!"
+#~ msgstr "Inga uppgifter har hittats!"
 
 #~ msgid "Access to %s"
 #~ msgstr "Åtkomst till %s"

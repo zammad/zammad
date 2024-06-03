@@ -1403,6 +1403,13 @@ msgstr "Προσθήκη ετικέτας"
 msgid "Add agreement text before submit."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Add alarm to pending reminder and escalated tickets."
+msgid "Add alarm to pending reminder and escalated tickets"
+msgstr ""
+"Προσθέστε ειδοποίηση για υπενθύμιση σε εκκρεμότητα και κλιμακωτά αιτήματα."
+
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Add alarm to pending reminder and escalated tickets."
 msgstr ""
@@ -1571,6 +1578,16 @@ msgstr "Λογαριασμός διαχειριστή"
 msgid "Advance to next ticket from overview"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid ""
+#| "Here you find your ticket overviews for open, assigned and escalated "
+#| "tickets."
+msgid "Affects only notifications for not assigned and all tickets."
+msgstr ""
+"Εδώ θα βρείτε τις επισκοπήσεις των αιτημάτων σας για ανοιχτά, καθορισμένα "
+"και κλιμακωτά αιτήματα."
+
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 msgid "After approval, please re-connect your Exchange account."
 msgstr ""
@@ -1681,14 +1698,24 @@ msgstr "Ολοι οι χειρηστές"
 msgid "All colleagues are busy."
 msgstr "Όλοι οι συνάδελφοι μας είναι απασχολημένοι."
 
-#: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+#, fuzzy
+#| msgid ""
+#| "All computers and browsers that have access to your Zammad appear here."
+msgid ""
+"All computers and browsers from which you logged in to Zammad appear here."
+msgstr ""
+"Όλοι οι υπολογιστές και τα προγράμματα περιήγησης που έχουν πρόσβαση στο "
+"Zammad σας εμφανίζονται εδώ."
+
+#: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "All computers and browsers that have access to your Zammad appear here."
 msgstr ""
 "Όλοι οι υπολογιστές και τα προγράμματα περιήγησης που έχουν πρόσβαση στο "
 "Zammad σας εμφανίζονται εδώ."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 #, fuzzy
 #| msgid "All Tickets"
 msgid "All tickets"
@@ -1729,6 +1756,7 @@ msgid "Allow websites (separated by ;)"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Also notify via email"
 msgstr "Επίσης ειδοποιήστε μέσω ηλεκτρονικού ταχυδρομείου."
 
@@ -1912,6 +1940,7 @@ msgid "Appearance"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
 msgid "Application"
 msgstr ""
 
@@ -2066,6 +2095,7 @@ msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
 msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr ""
 
@@ -2831,7 +2861,10 @@ msgstr "Ενσωματώσεις"
 #: app/assets/javascripts/app/models/sla.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
-#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#: db/seeds/permissions.rb
 msgid "Calendar"
 msgstr "Ημερολόγιο"
 
@@ -3513,6 +3546,10 @@ msgstr ""
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Combined subscription URL"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "Comment"
 msgstr "Σχόλιο"
@@ -3885,6 +3922,12 @@ msgstr "App Secret"
 #| msgid "Security"
 msgid "Copy Token"
 msgstr "Ασφάλεια"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Custom URL"
+msgid "Copy URL"
+msgstr "Προσαρμοσμένη διεύθυνση URL"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
@@ -5833,6 +5876,12 @@ msgstr "Ομάδα άμεσων μηνυμάτων"
 msgid "Direct URL"
 msgstr "Άμεση διεύθυνση URL"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Description"
+msgid "Direct subscription URL"
+msgstr "Περιγραφή"
+
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Direction"
@@ -6070,6 +6119,10 @@ msgstr "Πρόχειρο"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Draft available"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue
+msgid "Drag and drop to reorder ticket overview list items."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee
@@ -6851,6 +6904,7 @@ msgstr ""
 "διεπαφή διαχειριστή."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 msgid "Enter your current password, insert a new one and confirm it."
 msgstr ""
 
@@ -6902,6 +6956,7 @@ msgstr ""
 msgid "Error during execution of auto wizard."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
 #: db/seeds/overviews.rb
 #, fuzzy
 #| msgid "Escalation Times"
@@ -8475,6 +8530,11 @@ msgstr ""
 "Εάν αυτό το regex ταιριάζει, δεν θα σταλεί καμία ειδοποίηση από τον "
 "αποστολέα."
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+msgid ""
+"If you don't already use jQuery on your website, you can add it like this:"
+msgstr ""
+
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -8795,11 +8855,39 @@ msgstr ""
 msgid "Include attachments of the article?"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include unassigned tickets in subscription for escalated tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include unassigned tickets in subscription for new & open tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include unassigned tickets in subscription for pending tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include your own tickets in subscription for escalated tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include your own tickets in subscription for new & open tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include your own tickets in subscription for pending tickets."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 #, fuzzy
 #| msgid "Overviews"
 msgid "Included ticket overviews"
 msgstr "Overviews"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Includes escalated, new & open and pending tickets."
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -9505,6 +9593,10 @@ msgstr ""
 msgid "Limit Groups"
 msgstr "Οριακές ομάδες"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+msgid "Limit notifications to specific groups"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Limit tickets by IP per day"
 msgstr ""
@@ -9555,6 +9647,12 @@ msgstr "Συνδέστε τα ζητήματα GitLab με τα αιτήματά
 msgid "Link Related Answer"
 msgstr "Σύνδεσε σχετική απάντηση."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+#, fuzzy
+#| msgid "Link Accounts"
+msgid "Link account on %s"
+msgstr "Σύνδεση λογαριασμών"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "Link issue"
 msgstr "Πρόβλημα σύνδεσης"
@@ -9567,7 +9665,10 @@ msgstr "Templates"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/popover/user.jst.eco
-#: app/assets/javascripts/app/views/widget/user.jst.eco db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/widget/user.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+#: db/seeds/permissions.rb
 msgid "Linked Accounts"
 msgstr "Συνδεδεμένοι λογαριασμοί"
 
@@ -10333,6 +10434,12 @@ msgstr "Συγχώνευση στο αίτημα#"
 msgid "Merge to Ticket#"
 msgstr "Συγχώνευση στο αίτημα#"
 
+#: app/models/report.rb
+#, fuzzy
+#| msgid "Merge"
+msgid "Merged"
+msgstr "Ένωση"
+
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: public/assets/form/form.js
@@ -10641,6 +10748,13 @@ msgstr "Τα αιτήματά μου"
 msgid "My handling time: %s minutes"
 msgstr "Μέσος Χρόνος: %s λεπτά"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "My Tickets"
+msgid "My tickets"
+msgstr "Τα αιτήματά μου"
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 #, fuzzy
 #| msgid "Your tickets in process"
@@ -10708,6 +10822,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
@@ -10798,6 +10913,12 @@ msgstr "Δίκτυο"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "New"
 msgstr "Νέο"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "New & Open Tickets"
+msgstr "Ανοικτά Αιτήματα"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "New Access Token is"
@@ -10957,6 +11078,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "New text module"
 msgstr "Νέα ενότητα κειμένου"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+#, fuzzy
+#| msgid "New Ticket"
+msgid "New ticket"
+msgstr "Νέο Δελτίο"
 
 #. This is the template file app/views/mailer/ticket_create/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -11214,10 +11341,6 @@ msgid "No proxy for the following hosts."
 msgstr ""
 "Xωρίς διακομιστή μεσολάβησης για τους ακόλουθους κεντρικούς υπολογιστές."
 
-#: app/controllers/users_controller.rb
-msgid "No record found!"
-msgstr ""
-
 #: lib/whatsapp/webhook/message/status.rb
 msgid "No related article found to process the status message on."
 msgstr ""
@@ -11323,6 +11446,13 @@ msgstr ""
 msgid ""
 "Not applicable to: merging, emails, form, Facebook, Telegram, Twitter, SMS"
 msgstr ""
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Not Assigned"
+msgid "Not assigned"
+msgstr "Δεν έχει ανατεθεί"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
@@ -11444,11 +11574,45 @@ msgstr "Ειδοποίηση Αποστολέα"
 msgid "Notification Sound"
 msgstr "Ηχος Ειδοποίησης"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Notification Sender"
+msgid "Notification matrix"
+msgstr "Ειδοποίηση Αποστολέα"
+
 #: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue
 #, fuzzy
 #| msgid "Notification Sender"
 msgid "Notification read"
 msgstr "Ειδοποίηση Αποστολέα"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "Notification settings could not be reset."
+msgstr "%s Object(s) are updated."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "Notification settings could not be saved."
+msgstr "%s Object(s) are updated."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+msgid "Notification settings have been reset to default."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Update successful!"
+msgid "Notification settings have been saved successfully."
+msgstr "Επιτυχής Ενημέρωση "
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "Notification sound"
+msgstr "Ηχος Ειδοποίησης"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -11456,6 +11620,8 @@ msgstr "Ειδοποίηση Αποστολέα"
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts
 #: db/seeds/permissions.rb
 msgid "Notifications"
@@ -11819,6 +11985,12 @@ msgstr ""
 msgid "Order of Overviews"
 msgstr "Νέα επισκόπηση"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+#, fuzzy
+#| msgid "Overviews"
+msgid "Order of ticket overviews"
+msgstr "Overviews"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
@@ -12014,6 +12186,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 #: app/assets/javascripts/app/controllers/overview.coffee
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
 #: db/seeds/permissions.rb
 msgid "Overviews"
 msgstr "Overviews"
@@ -12241,6 +12415,12 @@ msgstr ""
 msgid "Pending Reached Tickets"
 msgstr "Τα εκκρεμή μου αιτήματα"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "My pending reached Tickets"
+msgid "Pending Tickets"
+msgstr "Τα εκκρεμή μου αιτήματα"
+
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 #, fuzzy
@@ -12361,6 +12541,7 @@ msgid "Placetel integration"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
 msgid "Play user interface sound effects"
 msgstr "Παίξε ηχητικά εφέ διεπαφής χρήστη"
 
@@ -12731,16 +12912,6 @@ msgstr "Όνομα προιόντος"
 msgid "Profile"
 msgstr "Προφίλ"
 
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
-msgid "Profile ASDa sdasf sdfasdf  safsaf safsadf"
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
-#, fuzzy
-#| msgid "Update successful!"
-msgid "Profile appearance updated successfully."
-msgstr "Επιτυχής Ενημέρωση "
-
 #: app/frontend/shared/composables/useLocaleUpdate.ts
 #, fuzzy
 #| msgid "Update successful!"
@@ -13071,6 +13242,12 @@ msgstr "Authentication"
 msgid "Remove a configured two-factor authentication method"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+#, fuzzy
+#| msgid "Authentication"
+msgid "Remove account link on %s"
+msgstr "Authentication"
+
 #: app/frontend/shared/form/i18n/locales.ts
 #, fuzzy
 #| msgid "Remove"
@@ -13291,6 +13468,12 @@ msgstr ""
 msgid "Reset"
 msgstr "Αρχικοποίηση"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+#, fuzzy
+#| msgid "Reset"
+msgid "Reset Overview Order"
+msgstr "Αρχικοποίηση"
+
 #: app/assets/javascripts/app/controllers/password_reset.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Reset Password"
@@ -13311,6 +13494,12 @@ msgstr "Αρχικοποίηση"
 #| msgid "Connection test successful"
 msgid "Reset successful."
 msgstr "Η δοκιμή σύνδεσης ήταν επιτυχής"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Personal Settings"
+msgid "Reset to Default Settings"
+msgstr "Προσωπικές ρυθμίσεις"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
 #, fuzzy
@@ -13372,6 +13561,10 @@ msgid ""
 "Your password will not be reset.</div>\n"
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+msgid "Resetting the order of your ticket overviews failed."
 msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageResizable.vue
@@ -13696,6 +13889,12 @@ msgstr "Ασφάλεια"
 msgid "Save Draft"
 msgstr "Πρόχειρο"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Save Notifications"
+msgstr "Αποκλεισμός ειδοποιήσεων"
+
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 #, fuzzy
 #| msgid "Out of Office"
@@ -13937,6 +14136,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
@@ -14039,6 +14239,12 @@ msgstr "Προβολή περισσότερων"
 msgid ""
 "See your tickets from within your favorite calendar by adding the following "
 "URL to your calendar app."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid ""
+"See your tickets from within your favorite calendar by adding the "
+"subscription URL to your calendar app."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
@@ -15181,6 +15387,12 @@ msgstr "Subscribe to public holidays in"
 msgid "Subscribed Tickets"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+#, fuzzy
+#| msgid "My subscribed Tickets"
+msgid "Subscribed tickets"
+msgstr "Tα εγγεγραμμένα μου αιτήματα "
+
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #, fuzzy
 #| msgid "My subscribed Tickets"
@@ -15189,6 +15401,12 @@ msgstr "Tα εγγεγραμμένα μου αιτήματα "
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Subscription Settings"
+msgstr "Subscription Settings"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Subscription Settings"
+msgid "Subscription settings"
 msgstr "Subscription Settings"
 
 #: app/assets/javascripts/app/models/user.coffee
@@ -15648,6 +15866,10 @@ msgstr "%s Object(s) are created."
 msgid "The access token could not be created."
 msgstr "%s Object(s) are created."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+msgid "The account link was successfully removed!"
+msgstr ""
+
 #: app/controllers/reports_controller.rb
 #, fuzzy
 #| msgid "%s Object(s) are created."
@@ -15667,7 +15889,7 @@ msgstr "Unable to verify email. Please contact your administrator."
 msgid "The admin password auth email could not be sent."
 msgstr "%s Object(s) are created."
 
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
+#: app/frontend/apps/desktop/stores/theme.ts
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The appearance could not be updated."
@@ -16119,6 +16341,12 @@ msgid ""
 "search."
 msgstr ""
 
+#: app/services/service/user/remove_linked_account.rb
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "The linked account could not be found."
+msgstr "%s Object(s) are updated."
+
 #: app/services/service/auth/verify_admin_token.rb
 #, fuzzy
 #| msgid "Time Accounting"
@@ -16172,6 +16400,22 @@ msgstr "%s Object(s) are updated."
 #| msgid "%s Object(s) are updated."
 msgid "The online notification could not be marked as seen."
 msgstr "%s Object(s) are updated."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+#, fuzzy
+#| msgid "Overviews"
+msgid "The order of your ticket overviews was reset."
+msgstr "Overviews"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+#, fuzzy
+#| msgid ""
+#| "Here you find your ticket overviews for open, assigned and escalated "
+#| "tickets."
+msgid "The order of your ticket overviews was updated."
+msgstr ""
+"Εδώ θα βρείτε τις επισκοπήσεις των αιτημάτων σας για ανοιχτά, καθορισμένα "
+"και κλιμακωτά αιτήματα."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "The page is not available anymore"
@@ -16741,8 +16985,14 @@ msgstr "%s Object(s) are created."
 
 #: app/models/setting/validation/saml/tls.rb
 msgid ""
-"The verification of the TLS connection failed. Please check the IDP "
+"The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
+msgstr ""
+
+#: app/models/setting/validation/saml/tls.rb
+msgid ""
+"The verification of the TLS connection is not possible. Please check the "
+"SAML IDP connection."
 msgstr ""
 
 #: app/services/service/user/two_factor/verify_method_configuration.rb
@@ -17578,6 +17828,7 @@ msgstr "Επιτυχής Ενημέρωση "
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Ticket escalation"
 msgstr ""
 
@@ -17610,6 +17861,7 @@ msgstr "Αποκλεισμός ειδοποιήσεων"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Ticket reminder reached"
 msgstr ""
 
@@ -17666,6 +17918,7 @@ msgstr "Ενημέρωση Αιτήματος"
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Ticket update"
 msgstr "Ενημέρωση Αιτήματος"
 
@@ -17749,6 +18002,9 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
@@ -18677,6 +18933,14 @@ msgstr ""
 msgid "Updating Database"
 msgstr "Updating Database"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+msgid "Updating the order of your ticket overviews failed."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Updating your calendar subscription settings failed."
+msgstr ""
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
@@ -18898,6 +19162,7 @@ msgid "UserDevice could not be found."
 msgstr "%s Object(s) are updated."
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
 msgid "Username"
 msgstr "Ψευδόνυμο"
 
@@ -19507,6 +19772,10 @@ msgstr ""
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "You calendar subscription settings were updated."
+msgstr ""
+
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/google/index.jst.eco
@@ -19882,6 +20151,12 @@ msgstr ""
 msgid "Your language"
 msgstr "Αλλαγή γλώσσας"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
+#, fuzzy
+#| msgid "%s Object(s) are created."
+msgid "Your theme has been updated."
+msgstr "%s Object(s) are created."
+
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 #, fuzzy
 #| msgid "Unable to verify email. Please contact your administrator."
@@ -19899,12 +20174,6 @@ msgstr "Unable to verify email. Please contact your administrator."
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
-msgstr ""
-
-#: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid ""
-"Zammad Chat requires jQuery. If you don't already use it on your website, "
-"you can add it like this:"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
@@ -20243,10 +20512,6 @@ msgstr "Πελάτης"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
 msgid "custom unit"
-msgstr ""
-
-#: lib/calendar_subscriptions/tickets.rb
-msgid "customer"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
@@ -20778,6 +21043,10 @@ msgstr ""
 msgid "left"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts
+msgid "linked accounts,facebook,github,gitlab,google,linkedin,microsoft,saml"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorMore.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 #, fuzzy
@@ -20983,6 +21252,12 @@ msgstr "σημείωση"
 msgid "notification sent to '%s'"
 msgstr "Ειδοποίηση Αποστολέα"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts
+#, fuzzy
+#| msgid "Notifications"
+msgid "notifications,tickets"
+msgstr "Ειδοποιήσεις"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 #, fuzzy
 #| msgid "no"
@@ -21013,6 +21288,10 @@ msgstr "ή"
 
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "or sign in using"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts
+msgid "order,sort,overview,ticket,sorting"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
@@ -21269,6 +21548,10 @@ msgstr "Εκκίνηση νεου"
 msgid "starts with one of"
 msgstr "Εκκίνηση νεου"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts
+msgid "subscription,calendars,ticket,ical"
+msgstr ""
+
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"
 msgstr "support@example.com"
@@ -21295,7 +21578,6 @@ msgstr "Επιλέξτε αν τα retweets θα πρέπει επίσης να 
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
-#: lib/calendar_subscriptions/tickets.rb
 msgid "ticket"
 msgstr ""
 
@@ -21304,10 +21586,6 @@ msgstr ""
 #| msgid "Choose if retweets should also be converted to tickets."
 msgid "ticket %s was merged into this ticket"
 msgstr "Επιλέξτε αν τα retweets θα πρέπει επίσης να μετατραπούν σε αιτήματα."
-
-#: lib/calendar_subscriptions/tickets.rb
-msgid "ticket escalation"
-msgstr ""
 
 #: db/seeds/settings.rb
 msgid "ticket.agent"
@@ -21495,6 +21773,11 @@ msgstr "... ολόκληρης της περιοχής κειμένου"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ μεσος χρονοσ αναμονησ σημερα"
+
+#, fuzzy
+#~| msgid "Update successful!"
+#~ msgid "Profile appearance updated successfully."
+#~ msgstr "Επιτυχής Ενημέρωση "
 
 #~ msgid "Access to %s"
 #~ msgstr "Προσβαση σε %s"

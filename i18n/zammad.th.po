@@ -1370,6 +1370,12 @@ msgstr "เพิ่มข้อความ"
 msgid "Add agreement text before submit."
 msgstr "เพิ่มข้อความข้อตกลงก่อนส่ง"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Add alarm to pending reminder and escalated tickets."
+msgid "Add alarm to pending reminder and escalated tickets"
+msgstr "เพิ่มการเตือนเพื่อเตือนความจำที่รอดำเนินการและ tickets ที่ส่งต่อ"
+
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Add alarm to pending reminder and escalated tickets."
 msgstr "เพิ่มการเตือนเพื่อเตือนความจำที่รอดำเนินการและ tickets ที่ส่งต่อ"
@@ -1566,6 +1572,12 @@ msgstr "Administrator Account"
 msgid "Advance to next ticket from overview"
 msgstr "เลื่อนไปยัง ticket ถัดไปจากภาพรวม"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "The file could not be uploaded."
+msgid "Affects only notifications for not assigned and all tickets."
+msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
+
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 msgid "After approval, please re-connect your Exchange account."
 msgstr "หลังจากได้รับการอนุมัติโปรดเชื่อมต่อบัญชี Exchange ของคุณอีกครั้ง"
@@ -1674,12 +1686,20 @@ msgstr "เจ้าหน้าที่ทั้งหมด"
 msgid "All colleagues are busy."
 msgstr "เพื่อนร่วมงานทุกคนไม่ว่าง"
 
-#: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+#, fuzzy
+#| msgid ""
+#| "All computers and browsers that have access to your Zammad appear here."
+msgid ""
+"All computers and browsers from which you logged in to Zammad appear here."
+msgstr "คอมพิวเตอร์และเบราว์เซอร์ทั้งหมดที่เข้าถึง Zammad ของคุณจะปรากฏที่นี่"
+
+#: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "All computers and browsers that have access to your Zammad appear here."
 msgstr "คอมพิวเตอร์และเบราว์เซอร์ทั้งหมดที่เข้าถึง Zammad ของคุณจะปรากฏที่นี่"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "All tickets"
 msgstr "Tickets ทั้งหมด"
 
@@ -1716,6 +1736,7 @@ msgid "Allow websites (separated by ;)"
 msgstr "อนุญาตเว็บไซต์ (คั่นด้วย ;)"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Also notify via email"
 msgstr "แจ้งเตือนทางอีเมล์ด้วย"
 
@@ -1902,6 +1923,7 @@ msgid "Appearance"
 msgstr "ลักษณะ"
 
 #: app/assets/javascripts/app/controllers/api.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
 msgid "Application"
 msgstr "โปรแกรม"
 
@@ -2062,6 +2084,7 @@ msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการโหลดซ้ำ? คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึกที่จะสูญหาย"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
 #, fuzzy
 #| msgid ""
 #| "Are you sure you want to reload? You have unsaved changes that will get "
@@ -2784,7 +2807,10 @@ msgstr "CTI integration"
 #: app/assets/javascripts/app/models/sla.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
-#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#: db/seeds/permissions.rb
 msgid "Calendar"
 msgstr "ปฏิทิน"
 
@@ -3429,6 +3455,12 @@ msgstr ""
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "การแสดงสีของตัวระบุ ticket ที่เปิดในแถบด้านข้าง"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Ticket Subscriptions"
+msgid "Combined subscription URL"
+msgstr "Ticket สมัครรับข้อมูล"
+
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "Comment"
 msgstr "ความคิดเห็น"
@@ -3781,6 +3813,12 @@ msgstr "รหัส แอป"
 #| msgid "CTI Token"
 msgid "Copy Token"
 msgstr "CTI Token"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Copy"
+msgid "Copy URL"
+msgstr "คัดลอก"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
@@ -5676,6 +5714,12 @@ msgstr "กลุ่มข้อความโดยตรง"
 msgid "Direct URL"
 msgstr "URL โดยตรง"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Ticket Subscriptions"
+msgid "Direct subscription URL"
+msgstr "Ticket สมัครรับข้อมูล"
+
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Direction"
@@ -5902,6 +5946,10 @@ msgstr "ร่าง"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Draft available"
 msgstr "มีฉบับร่าง"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue
+msgid "Drag and drop to reorder ticket overview list items."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee
 msgid "Drag to reorder"
@@ -6640,6 +6688,7 @@ msgid "Enter your Zendesk API token gained from your admin interface."
 msgstr "ป้อนที่อยู่อีเมลของคุณและ %s โทเค็น API ที่ได้รับจากอินเทอร์เฟซผู้ดูแลระบบของคุณ."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 msgid "Enter your current password, insert a new one and confirm it."
 msgstr ""
 
@@ -6697,6 +6746,7 @@ msgstr "ข้อผิดพลาด"
 msgid "Error during execution of auto wizard."
 msgstr "เกิดข้อผิดพลาดขณะเรียกใช้ตัวช่วยสร้างอัตโนมัติ"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
 #: db/seeds/overviews.rb
 msgid "Escalated Tickets"
 msgstr ""
@@ -8183,6 +8233,16 @@ msgstr ""
 msgid "If this regex matches, no notification will be sent by the sender."
 msgstr ""
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+#, fuzzy
+#| msgid ""
+#| "Zammad Chat requires jQuery. If you don't already use it on your website, "
+#| "you can add it like this:"
+msgid ""
+"If you don't already use jQuery on your website, you can add it like this:"
+msgstr ""
+"Zammad Chat ต้องการ jQuery หากคุณยังไม่ได้ใช้งานบนเว็บไซต์ของคุณ คุณสามารถเพิ่มได้ดังนี้:"
+
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -8480,9 +8540,37 @@ msgstr "เหตุการณ์"
 msgid "Include attachments of the article?"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include unassigned tickets in subscription for escalated tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include unassigned tickets in subscription for new & open tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include unassigned tickets in subscription for pending tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include your own tickets in subscription for escalated tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include your own tickets in subscription for new & open tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include your own tickets in subscription for pending tickets."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 msgid "Included ticket overviews"
 msgstr "ภาพรวม Ticket ทั้งหมด"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Includes escalated, new & open and pending tickets."
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -9167,6 +9255,10 @@ msgstr "แสง"
 msgid "Limit Groups"
 msgstr "จำกัดกลุ่ม"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+msgid "Limit notifications to specific groups"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Limit tickets by IP per day"
 msgstr ""
@@ -9217,6 +9309,12 @@ msgstr ""
 msgid "Link Related Answer"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+#, fuzzy
+#| msgid "Link Accounts"
+msgid "Link account on %s"
+msgstr "เชื่อมโยงบัญชี"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "Link issue"
 msgstr "ปัญหาเกี่ยวกับลิงค์"
@@ -9229,7 +9327,10 @@ msgstr "แม่แบบ"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/popover/user.jst.eco
-#: app/assets/javascripts/app/views/widget/user.jst.eco db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/widget/user.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+#: db/seeds/permissions.rb
 msgid "Linked Accounts"
 msgstr "บัญชีที่เชื่อมโยง"
 
@@ -9981,6 +10082,12 @@ msgstr "รวมเป็น Ticket#"
 msgid "Merge to Ticket#"
 msgstr "รวมเป็น Ticket#"
 
+#: app/models/report.rb
+#, fuzzy
+#| msgid "Merge"
+msgid "Merged"
+msgstr "ผสาน"
+
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: public/assets/form/form.js
@@ -10269,6 +10376,13 @@ msgstr "Tickets ของฉัน"
 msgid "My handling time: %s minutes"
 msgstr "วันทำการของฉัน: %s นาที"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "My Tickets"
+msgid "My tickets"
+msgstr "Tickets ของฉัน"
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "My tickets in process"
 msgstr "Tickets ของฉันอยู่ระหว่างดำเนินการ"
@@ -10334,6 +10448,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
@@ -10424,6 +10539,12 @@ msgstr "เครือข่าย"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "New"
 msgstr "ใหม่"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "New & Open Tickets"
+msgstr "เปิด Ticket"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "New Access Token is"
@@ -10579,6 +10700,12 @@ msgstr "แท็บใหม่"
 #: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "New text module"
 msgstr "โมดูลข้อความใหม่"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+#, fuzzy
+#| msgid "New Ticket"
+msgid "New ticket"
+msgstr "Ticket ใหม่"
 
 #. This is the template file app/views/mailer/ticket_create/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -10817,10 +10944,6 @@ msgstr "ไม่พบกล้อง"
 msgid "No proxy for the following hosts."
 msgstr ""
 
-#: app/controllers/users_controller.rb
-msgid "No record found!"
-msgstr "‎ไม่พบเรกคอร์ด !"
-
 #: lib/whatsapp/webhook/message/status.rb
 msgid "No related article found to process the status message on."
 msgstr ""
@@ -10926,6 +11049,13 @@ msgstr ""
 msgid ""
 "Not applicable to: merging, emails, form, Facebook, Telegram, Twitter, SMS"
 msgstr "ไม่สามารถใช้ได้กับ: การรวม, อีเมล, แบบฟอร์ม, Facebook, โทรเลข, Twitter, SMS"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Not Assigned"
+msgid "Not assigned"
+msgstr "ไม่ได้รับมอบหมาย"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
@@ -11043,11 +11173,49 @@ msgstr "ส่งการแจ้งเตือน"
 msgid "Notification Sound"
 msgstr "เสียงแจ้งเตือน"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Notification Sender"
+msgid "Notification matrix"
+msgstr "ส่งการแจ้งเตือน"
+
 #: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue
 #, fuzzy
 #| msgid "Notification Sender"
 msgid "Notification read"
 msgstr "ส่งการแจ้งเตือน"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "The file could not be uploaded."
+msgid "Notification settings could not be reset."
+msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "The file could not be uploaded."
+msgid "Notification settings could not be saved."
+msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid ""
+#| "Are you sure you want to reload? You have unsaved changes that will get "
+#| "lost"
+msgid "Notification settings have been reset to default."
+msgstr "คุณแน่ใจหรือไม่ว่าต้องการโหลดซ้ำ? คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึกที่จะสูญหาย"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Notification settings have been saved successfully."
+msgstr "การทดสอบดำเนินการสำเร็จ"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "Notification sound"
+msgstr "เสียงแจ้งเตือน"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -11055,6 +11223,8 @@ msgstr "ส่งการแจ้งเตือน"
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts
 #: db/seeds/permissions.rb
 msgid "Notifications"
@@ -11410,6 +11580,12 @@ msgstr ""
 msgid "Order of Overviews"
 msgstr "ลําดับของภาพรวม"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+#, fuzzy
+#| msgid "More ticket overviews"
+msgid "Order of ticket overviews"
+msgstr "ภาพรวม Ticket ทั้งหมด"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
@@ -11595,6 +11771,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 #: app/assets/javascripts/app/controllers/overview.coffee
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
 #: db/seeds/permissions.rb
 msgid "Overviews"
 msgstr "ภาพรวม"
@@ -11813,6 +11991,12 @@ msgstr "วาง"
 msgid "Pending Reached Tickets"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "Pending Tickets"
+msgstr "เปิด Ticket"
+
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Pending reminder reached for ticket |%s|"
@@ -11927,6 +12111,7 @@ msgid "Placetel integration"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
 msgid "Play user interface sound effects"
 msgstr ""
 
@@ -12289,16 +12474,6 @@ msgstr "ชื่อผลิตภัณฑ์"
 msgid "Profile"
 msgstr "โพรไฟล์"
 
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
-msgid "Profile ASDa sdasf sdfasdf  safsaf safsadf"
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
-#, fuzzy
-#| msgid "The test run was successful."
-msgid "Profile appearance updated successfully."
-msgstr "การทดสอบดำเนินการสำเร็จ"
-
 #: app/frontend/shared/composables/useLocaleUpdate.ts
 #, fuzzy
 #| msgid "The test run was successful."
@@ -12609,6 +12784,12 @@ msgstr "การยึนยันตน"
 msgid "Remove a configured two-factor authentication method"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+#, fuzzy
+#| msgid "Authentication"
+msgid "Remove account link on %s"
+msgstr "การยึนยันตน"
+
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove all"
 msgstr "ลบทั้งหมด"
@@ -12823,6 +13004,12 @@ msgstr "ส่งอีเมลยืนยันอีกครั้ง"
 msgid "Reset"
 msgstr "ล้างค่า"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+#, fuzzy
+#| msgid "Reset overview order"
+msgid "Reset Overview Order"
+msgstr "รีเซ็ตลําดับภาพรวม"
+
 #: app/assets/javascripts/app/controllers/password_reset.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Reset Password"
@@ -12841,6 +13028,12 @@ msgstr "รีเซ็ตลําดับภาพรวม"
 #| msgid "Update successful."
 msgid "Reset successful."
 msgstr "อัปเดตสำเร็จแล้ว"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Restore Defaults"
+msgid "Reset to Default Settings"
+msgstr "เรียกคืนค่าเริ่มต้น"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
 #, fuzzy
@@ -12981,6 +13174,10 @@ msgstr ""
 "ไม่ต้องการเข้าสู่ระบบโปรดเพิกเฉยต่อข้อความนี้</div>\n"
 "<br>\n"
 "<div>ทีม #{config.product_name} ของคุณ</div>\n"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+msgid "Resetting the order of your ticket overviews failed."
+msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageResizable.vue
 msgid "Resize frame"
@@ -13294,6 +13491,12 @@ msgstr "บันทึกเป็น"
 msgid "Save Draft"
 msgstr "บันทึกฉบับร่าง"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Save Notifications"
+msgstr "ปิดกั้นการแจ้งเตือน"
+
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 #, fuzzy
 #| msgid "Out of Office"
@@ -13527,6 +13730,7 @@ msgstr "องค์กรรองจะได้รับอนุญาตก
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
@@ -13625,6 +13829,12 @@ msgstr "แสดงเพิ่ม"
 msgid ""
 "See your tickets from within your favorite calendar by adding the following "
 "URL to your calendar app."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid ""
+"See your tickets from within your favorite calendar by adding the "
+"subscription URL to your calendar app."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee
@@ -14717,6 +14927,12 @@ msgstr ""
 msgid "Subscribed Tickets"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+#, fuzzy
+#| msgid "Subscribe"
+msgid "Subscribed tickets"
+msgstr "บอกรับ"
+
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 #, fuzzy
 #| msgid "Subscribe"
@@ -14726,6 +14942,12 @@ msgstr "บอกรับ"
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Subscription Settings"
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Ticket Subscriptions"
+msgid "Subscription settings"
+msgstr "Ticket สมัครรับข้อมูล"
 
 #: app/assets/javascripts/app/models/user.coffee
 msgid "Summer holiday"
@@ -15183,6 +15405,12 @@ msgstr "ไม่สามารถอ่าน โลโก้ RAW ไฟล์
 msgid "The access token could not be created."
 msgstr "ไม่สามารถสร้างรายงานได้"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+#, fuzzy
+#| msgid "The signature was successfully verified."
+msgid "The account link was successfully removed!"
+msgstr "ตรวจสอบลายเซ็นเรียบร้อยแล้ว"
+
 #: app/controllers/reports_controller.rb
 msgid "The active reporting profile could not be found."
 msgstr "ไม่พบโปรไฟล์การรายงานที่ใช้งานอยู่"
@@ -15200,7 +15428,7 @@ msgstr "ไม่สามารถตั้งรหัสผ่านได้
 msgid "The admin password auth email could not be sent."
 msgstr "ไม่สามารถส่งอีเมลยืนยันได้"
 
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
+#: app/frontend/apps/desktop/stores/theme.ts
 #, fuzzy
 #| msgid "The file could not be uploaded."
 msgid "The appearance could not be updated."
@@ -15656,6 +15884,12 @@ msgid ""
 "search."
 msgstr ""
 
+#: app/services/service/user/remove_linked_account.rb
+#, fuzzy
+#| msgid "The object could not be found."
+msgid "The linked account could not be found."
+msgstr "ไม่พบวัตถุ"
+
 #: app/services/service/auth/verify_admin_token.rb
 #, fuzzy
 #| msgid "Time Accounting Selector"
@@ -15703,6 +15937,16 @@ msgstr ""
 #| msgid "The file could not be uploaded."
 msgid "The online notification could not be marked as seen."
 msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+#, fuzzy
+#| msgid "More ticket overviews"
+msgid "The order of your ticket overviews was reset."
+msgstr "ภาพรวม Ticket ทั้งหมด"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+msgid "The order of your ticket overviews was updated."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "The page is not available anymore"
@@ -16312,8 +16556,14 @@ msgstr "ไม่สามารถส่งอีเมลยืนยันไ
 
 #: app/models/setting/validation/saml/tls.rb
 msgid ""
-"The verification of the TLS connection failed. Please check the IDP "
+"The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
+msgstr ""
+
+#: app/models/setting/validation/saml/tls.rb
+msgid ""
+"The verification of the TLS connection is not possible. Please check the "
+"SAML IDP connection."
 msgstr ""
 
 #: app/services/service/user/two_factor/verify_method_configuration.rb
@@ -17138,6 +17388,7 @@ msgstr "การทดสอบดำเนินการสำเร็จ"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Ticket escalation"
 msgstr "Ticket ขยาย"
 
@@ -17172,6 +17423,7 @@ msgstr "แจ้งเตือน Ticket."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Ticket reminder reached"
 msgstr "Ticket เตือนความจำแล้ว"
 
@@ -17228,6 +17480,7 @@ msgstr "Ticket อัปเดต"
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Ticket update"
 msgstr "Ticket อัปเดต"
 
@@ -17309,6 +17562,9 @@ msgstr "TicketID"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
@@ -18249,6 +18505,16 @@ msgstr ""
 msgid "Updating Database"
 msgstr "กำลังอัพเดทฐานข้อมูล"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+msgid "Updating the order of your ticket overviews failed."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Defines the default calendar tickets subscription settings."
+msgid "Updating your calendar subscription settings failed."
+msgstr "กำหนดการตั้งค่าการสมัครรับตั๋วปฏิทินเริ่มต้น"
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
@@ -18472,6 +18738,7 @@ msgid "UserDevice could not be found."
 msgstr "ไม่พบตําแหน่งที่ตั้ง"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
 msgid "Username"
 msgstr "บัญชีผู้ใช้"
 
@@ -19090,6 +19357,12 @@ msgstr ""
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Defines the default calendar tickets subscription settings."
+msgid "You calendar subscription settings were updated."
+msgstr "กำหนดการตั้งค่าการสมัครรับตั๋วปฏิทินเริ่มต้น"
+
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/google/index.jst.eco
@@ -19513,6 +19786,12 @@ msgstr "การเชื่อมต่อของคุณไม่เป็
 msgid "Your language"
 msgstr "เลือกภาษาของคุณ."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
+#, fuzzy
+#| msgid "The file could not be uploaded."
+msgid "Your theme has been updated."
+msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
+
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 msgid ""
 "Your user role is not allowed to create new tickets. Please contact your "
@@ -19529,13 +19808,6 @@ msgstr "บทบาทผู้ใช้ของคุณไม่ได้ร
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
 msgstr "Zammad"
-
-#: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid ""
-"Zammad Chat requires jQuery. If you don't already use it on your website, "
-"you can add it like this:"
-msgstr ""
-"Zammad Chat ต้องการ jQuery หากคุณยังไม่ได้ใช้งานบนเว็บไซต์ของคุณ คุณสามารถเพิ่มได้ดังนี้:"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid ""
@@ -19874,10 +20146,6 @@ msgstr "ลูกค้า"
 #, fuzzy
 #| msgid "customer"
 msgid "custom unit"
-msgstr "ลูกค้า"
-
-#: lib/calendar_subscriptions/tickets.rb
-msgid "customer"
 msgstr "ลูกค้า"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
@@ -20400,6 +20668,10 @@ msgstr "ขณะนี้"
 msgid "left"
 msgstr "ซ้าย"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts
+msgid "linked accounts,facebook,github,gitlab,google,linkedin,microsoft,saml"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorMore.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 #, fuzzy
@@ -20607,6 +20879,12 @@ msgstr "บันทึก"
 msgid "notification sent to '%s'"
 msgstr "ส่งการแจ้งเตือนไปที่ '%s'"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts
+#, fuzzy
+#| msgid "Notifications"
+msgid "notifications,tickets"
+msgstr "การแจ้งเตือน"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "now"
 msgstr "ขณะนี้"
@@ -20636,6 +20914,10 @@ msgstr "หรือ"
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "or sign in using"
 msgstr "หรือเข้าสู่ระบบโดยใช้"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts
+msgid "order,sort,overview,ticket,sorting"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 msgid "pending"
@@ -20883,6 +21165,10 @@ msgstr ""
 msgid "starts with one of"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts
+msgid "subscription,calendars,ticket,ical"
+msgstr ""
+
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"
 msgstr "support@example.com"
@@ -20907,17 +21193,12 @@ msgstr "ticket อีกใบถูกรวมเข้าเป็น ticket 
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
-#: lib/calendar_subscriptions/tickets.rb
 msgid "ticket"
 msgstr "ticket"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "ticket %s was merged into this ticket"
 msgstr "ticket %s ถูกรวมเข้ากับตั๋วนี้"
-
-#: lib/calendar_subscriptions/tickets.rb
-msgid "ticket escalation"
-msgstr ""
 
 #: db/seeds/settings.rb
 msgid "ticket.agent"
@@ -21109,6 +21390,17 @@ msgstr "‎... ของพื้นที่ข้อความทั้ง�
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
+
+#, fuzzy
+#~| msgid "The test run was successful."
+#~ msgid "Profile appearance updated successfully."
+#~ msgstr "การทดสอบดำเนินการสำเร็จ"
+
+#~ msgid "customer"
+#~ msgstr "ลูกค้า"
+
+#~ msgid "No record found!"
+#~ msgstr "‎ไม่พบเรกคอร์ด !"
 
 #~ msgid "Access to %s"
 #~ msgstr "เข้าถึง %s"

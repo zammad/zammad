@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-05-04 01:11+0000\n"
-"Last-Translator: Leroy Aronds <leroy@nimbizz.com>\n"
+"PO-Revision-Date: 2024-05-29 01:07+0000\n"
+"Last-Translator: michelvdriel <michel@vdriel.com>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
 "development/nl/>\n"
 "Language: nl-nl\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -55,8 +55,8 @@ msgid ""
 msgstr ""
 "\"Database\" slaat alle bijlagen op in de database (niet aanbevolen voor "
 "grote hoeveelheden gegevens). \"Filesystem\" slaat de gegevens op in het "
-"bestandssysteem. \"Simple Storage (S3)\" \" slaat de gegevens op in een "
-"extern S3 compatibel bestandssysteem. Je kan wisselen tussen deze modules, "
+"bestandssysteem. \"Simple Storage (S3)\" slaat de gegevens op in een extern "
+"S3 compatibel objectbestandssysteem. Je kan wisselen tussen deze modules, "
 "zelfs op een systeem dat al in productie is, zonder verlies van gegevens."
 
 #. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
@@ -515,7 +515,7 @@ msgstr "%s is niet actief, selecteer een actieve."
 
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "%s is required."
-msgstr "%s is vereist"
+msgstr "%s is vereist."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee
 msgid "%s is sent without text caption"
@@ -1026,44 +1026,32 @@ msgid "Access the knowledge base reader features."
 msgstr ""
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Access to Agent Tickets based on Group Access"
 msgid "Access the tickets as agent based on group access."
 msgstr "Toegang tot Behandelaar tickets gebaseerd op groepstoegang"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "ticket.customer"
 msgid "Access tickets as customer."
-msgstr "ticket.customer"
+msgstr "Toegang tot tickets als klant."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Access to customer tickets"
 msgid "Access to the chat interface."
-msgstr "Toegang tot klantentickets"
+msgstr "Toegang tot de chat interface"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Inserts knowledge base answer"
 msgid "Access to the knowledge base interface."
-msgstr "Voegt kennisbankantwoord in"
+msgstr "Toegang tot de interface van de kennisbank"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Access to customer tickets"
 msgid "Access to the phone interface."
-msgstr "Toegang tot klantentickets"
+msgstr "Toegang tot de telefoon interface"
 
 #: db/seeds/permissions.rb
 msgid "Access to the report interface."
 msgstr ""
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Access to customer tickets"
 msgid "Access to the ticket interface."
-msgstr "Toegang tot klantentickets"
+msgstr "Toegang tot de ticket interface."
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
 msgid "Access token"
@@ -1157,16 +1145,12 @@ msgid "Action execution"
 msgstr "Uitvoering van acties"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts
-#, fuzzy
-#| msgid "Action execution"
 msgid "Action menu button for authenticator app"
-msgstr "Uitvoering van acties"
+msgstr "Actiemenu knop voor authenticator app"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts
-#, fuzzy
-#| msgid "Action execution"
 msgid "Action menu button for security keys"
-msgstr "Uitvoering van acties"
+msgstr "Actiemenu knop voor beveiligingssleutels"
 
 #: app/assets/javascripts/app/models/macro.coffee
 #: app/assets/javascripts/app/models/template.coffee
@@ -1359,6 +1343,12 @@ msgstr "Voeg een bericht toe"
 msgid "Add agreement text before submit."
 msgstr "Voeg de tekst van de overeenkomst toe voor het versturen."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Add alarm to pending reminder and escalated tickets."
+msgid "Add alarm to pending reminder and escalated tickets"
+msgstr "Alarm toevoegen aan herinneringen en geëscaleerde tickets."
+
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Add alarm to pending reminder and escalated tickets."
 msgstr "Alarm toevoegen aan herinneringen en geëscaleerde tickets."
@@ -1471,10 +1461,8 @@ msgid "Admin Password Login"
 msgstr "Admin wachtwoord login"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Admin Interface"
 msgid "Admin interface"
-msgstr "Interface Beheer"
+msgstr "Beheersinterface"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -1531,6 +1519,16 @@ msgstr "Administrator Account"
 msgid "Advance to next ticket from overview"
 msgstr "Ga naar het volgende ticket in de lijst"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid ""
+#| "Here you find your ticket overviews for open, assigned, and escalated "
+#| "tickets."
+msgid "Affects only notifications for not assigned and all tickets."
+msgstr ""
+"Hier vindt je jouw ticketoverzichten voor open, toegewezen en geëscaleerde "
+"tickets."
+
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 msgid "After approval, please re-connect your Exchange account."
 msgstr "Koppel na goedkeuring je Exchange-account opnieuw."
@@ -1576,10 +1574,8 @@ msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr "Naam behandelaar + VanScheiding + Systeemadres naamweergave"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Agent Name"
 msgid "Agent chat"
-msgstr "Naam behandelaar"
+msgstr "Chat met behandelaar"
 
 #: db/seeds/settings.rb
 msgid "Agent idle timeout"
@@ -1590,16 +1586,12 @@ msgid "Agent limit exceeded, please check your account settings."
 msgstr "Maximum behandelaren overschreden, controleer je accountinstellingen."
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Agent Name"
 msgid "Agent phone"
-msgstr "Naam behandelaar"
+msgstr "Behandelaar telefoon"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Open tickets"
 msgid "Agent tickets"
-msgstr "Open tickets"
+msgstr "Behandelaar tickets"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco
 msgid "Agents"
@@ -1654,13 +1646,22 @@ msgstr "Alle behandelaren"
 msgid "All colleagues are busy."
 msgstr "Alle collega's zijn bezet."
 
-#: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+#, fuzzy
+#| msgid ""
+#| "All computers and browsers that have access to your Zammad appear here."
+msgid ""
+"All computers and browsers from which you logged in to Zammad appear here."
+msgstr ""
+"Hier verschijnen alle computers en browsers die toegang hebben tot Zammad."
+
+#: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "All computers and browsers that have access to your Zammad appear here."
 msgstr ""
 "Hier verschijnen alle computers en browsers die toegang hebben tot Zammad."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "All tickets"
 msgstr "Alle tickets"
 
@@ -1699,6 +1700,7 @@ msgid "Allow websites (separated by ;)"
 msgstr "Toegestane website (gescheiden door ;)"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Also notify via email"
 msgstr "Verstuur ook via e -mail"
 
@@ -1727,15 +1729,11 @@ msgid "Always"
 msgstr "Altijd"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee
-#, fuzzy
-#| msgid ""
-#| "We've sent an email to _%s_. Click the link in the email to verify your "
-#| "account."
 msgid ""
 "An email was sent to _%s_. Click the link in the email to verify your "
 "account."
 msgstr ""
-"We hebben een e-mail gestuurd naar _%s_. Klik op de link in de e-mail om je "
+"Er is een e-mail gestuurd naar _%s_. Klik op de link in de e-mail om je "
 "account te verifiëren."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee
@@ -1885,6 +1883,7 @@ msgid "Appearance"
 msgstr "Uiterlijk"
 
 #: app/assets/javascripts/app/controllers/api.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
 msgid "Application"
 msgstr "Applicatie"
 
@@ -2033,6 +2032,7 @@ msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "Weet je het zeker? Alle niet opgeslagen aanpassingen gaan verloren."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
 msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr ""
 "Weet je het zeker? De instellingen voor meldingen worden teruggezet naar de "
@@ -2131,10 +2131,6 @@ msgstr ""
 "aan werkt. Ticket wordt getoond als niet toegewezen."
 
 #: app/models/user.rb
-#, fuzzy
-#| msgid ""
-#| "At least one identifier (firstname, lastname, phone or email) for user is "
-#| "required."
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2159,8 +2155,6 @@ msgid "Attach another file"
 msgstr "Extra bijlage toevoegen"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue
-#, fuzzy
-#| msgid "Attach files"
 msgid "Attach file"
 msgstr "Bijlage toevoegen"
 
@@ -2316,10 +2310,8 @@ msgid "Authenticator App"
 msgstr "Authenticator App"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
-#, fuzzy
-#| msgid "Authenticator app secret"
 msgid "Authenticator app QR code"
-msgstr "Authenticator app geheim"
+msgstr "Authenticator app QR code"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
@@ -2413,10 +2405,8 @@ msgid "Available for the following roles"
 msgstr "Beschikbaar voor de volgende rollen"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
-#, fuzzy
-#| msgid "Remove all methods"
 msgid "Available methods"
-msgstr "Verwijder alle methodes"
+msgstr "Beschikbare methodes"
 
 #: db/seeds/settings.rb
 msgid "Available types for a new ticket"
@@ -2741,7 +2731,10 @@ msgstr "CTI integratie"
 #: app/assets/javascripts/app/models/sla.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
-#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#: db/seeds/permissions.rb
 msgid "Calendar"
 msgstr "Kalender"
 
@@ -2815,15 +2808,11 @@ msgstr "Gebruiker van Toker kan niet gevonden worden"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
-#, fuzzy
-#| msgid ""
-#| "Can't update password, your entered passwords do not match. Please try "
-#| "again!"
 msgid ""
 "Can't update password, your entered passwords do not match. Please try again."
 msgstr ""
-"Kan wachtwoord niet opslaan, de wachtwoorden komen niet overeen. Probeer "
-"opnieuw!"
+"Kan wachtwoord niet bijwerken, de ingevulde wachtwoorden komen niet overeen. "
+"Probeer opnieuw."
 
 #: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee
@@ -2865,8 +2854,6 @@ msgid "Cancel & Go Back"
 msgstr "Annuleer & ga terug"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue
-#, fuzzy
-#| msgid "Cancel & Sign out"
 msgid "Cancel & Sign Out"
 msgstr "Annuleren & uitloggen"
 
@@ -2917,7 +2904,7 @@ msgstr "Kan bestand niet uploaden"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue
 msgid "Capture From Camera"
-msgstr ""
+msgstr "Leg vast met camera"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee
 msgid "Categories"
@@ -2963,10 +2950,8 @@ msgid "Change Objects"
 msgstr "Objecten wijzigen"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
-#, fuzzy
-#| msgid "Change Your Password"
 msgid "Change Password"
-msgstr "Wijzig je wachtwoord"
+msgstr "Wijzig wachtwoord"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Change Your Password"
@@ -2987,10 +2972,8 @@ msgid "Change order"
 msgstr "Wijzig volgorde"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Change Your Password"
 msgid "Change personal account password."
-msgstr "Wijzig je wachtwoord"
+msgstr "Wijzig wachtwoord voor je persoonlijke account"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco
 msgid "Changed:"
@@ -3375,6 +3358,12 @@ msgstr "Element inklappen"
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Kleurweergave van de open ticket-indicator in de zijbalk."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Ticket Subscriptions"
+msgid "Combined subscription URL"
+msgstr "Ticket Abonnementen"
+
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "Comment"
 msgstr "Opmerking"
@@ -3440,7 +3429,7 @@ msgstr "Configuratie voor %s"
 
 #: app/models/system_report/plugin/environment.rb
 msgid "Configuration of performance settings via environment variables."
-msgstr ""
+msgstr "Configuratie van performance-instellingen via omgevingsvariabelen"
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco
@@ -3460,10 +3449,8 @@ msgid "Configure Basic Settings"
 msgstr "Configureer Basisinstellingen"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "To configure your system."
 msgid "Configure your system."
-msgstr "Om het systeem te configureren."
+msgstr "Configureer je systeem."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee
 msgid "Confirm"
@@ -3483,15 +3470,11 @@ msgid "Confirm merge"
 msgstr "Samenvoeging bevestigen"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
-#, fuzzy
-#| msgid "Confirm Password"
 msgid "Confirm new password"
 msgstr "Bevestig wachtwoord"
 
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue
-#, fuzzy
-#| msgid "Confirm Password"
 msgid "Confirm password"
 msgstr "Bevestig wachtwoord"
 
@@ -3651,8 +3634,6 @@ msgid "Content was changed since loading"
 msgstr "Inhoud is aangepast sinds deze geladen werd"
 
 #: app/assets/javascripts/app/views/system_report.jst.eco
-#, fuzzy
-#| msgid "Content"
 msgid "Contents"
 msgstr "Inhoud"
 
@@ -3719,28 +3700,26 @@ msgid "Copy"
 msgstr "Kopie"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
-#, fuzzy
-#| msgid "Recovery Codes"
 msgid "Copy Codes"
-msgstr "Herstelcodes"
+msgstr "Kopieer codes"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue
-#, fuzzy
-#| msgid "App Secret"
 msgid "Copy Secret"
-msgstr "App Secret"
+msgstr "Kopieer sleutel"
 
 #: app/frontend/apps/desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue
-#, fuzzy
-#| msgid "App Secret"
 msgid "Copy Text"
-msgstr "App Secret"
+msgstr "Kopieer tekst"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
-#, fuzzy
-#| msgid "CTI Token"
 msgid "Copy Token"
-msgstr "CTI Token"
+msgstr "Kopieer token"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Copy"
+msgid "Copy URL"
+msgstr "Kopie"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
@@ -3774,17 +3753,13 @@ msgid "Could not fetch WhatsApp phone number details."
 msgstr "Kon WhatsApp-telefoonnummerdetails niet ophalen."
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
-#, fuzzy
-#| msgid "Name for this security key"
 msgid "Could not fetch security keys"
-msgstr "Naam voor deze beveiligingssleutel"
+msgstr "Kon beveiligingssleutels niet ophalen"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue
 #: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb
-#, fuzzy
-#| msgid "Regenerate recovery codes"
 msgid "Could not generate recovery codes"
-msgstr "Genereer herstelcodes opnieuw"
+msgstr "Kon herstelcodes niet genereren"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee
 msgid ""
@@ -3808,10 +3783,8 @@ msgstr "Kan twee-factor-authenticatiemethode niet verwijderen"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
-#, fuzzy
-#| msgid "Could not remove two-factor authentication method"
 msgid "Could not remove two-factor authentication method."
-msgstr "Kan twee-factor-authenticatiemethode niet verwijderen"
+msgstr "Kan twee-factor-authenticatiemethode niet verwijderen."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue
@@ -3824,7 +3797,7 @@ msgstr "Aantal"
 
 #: app/models/system_report/plugin/failed_emails.rb
 msgid "Count of failed emails"
-msgstr ""
+msgstr "Aantal mislukte emails"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco
@@ -3951,8 +3924,6 @@ msgid "Create account"
 msgstr "Maak account aan"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Create Knowledge Base"
 msgid "Create and set up Knowledge Base."
 msgstr "Maak Kennisbank"
 
@@ -3966,8 +3937,6 @@ msgid "Create new Customer"
 msgstr "Maak nieuwe klant"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue
-#, fuzzy
-#| msgid "Create new Customer"
 msgid "Create new customer"
 msgstr "Maak nieuwe klant"
 
@@ -4139,6 +4108,7 @@ msgstr "Huidig wachtwoord"
 #: app/models/system_report/plugin/setting.rb
 msgid "Current state of configured settings (excluding passwords and tokens)"
 msgstr ""
+"Huidige geconfigureerde instellingen (exclusief wachtwoorden en tokens)"
 
 #: app/controllers/application_controller/has_user.rb
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
@@ -4217,10 +4187,8 @@ msgid "Customer selection based on sender and receiver list"
 msgstr "Klant-selectie op basis van zender- en ontvangerslijst"
 
 #: db/seeds/permissions.rb
-#, fuzzy
-#| msgid "Recent Customer Tickets"
 msgid "Customer tickets"
-msgstr "Recente Klanttickets"
+msgstr "Klanttickets"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco
 msgid ""
@@ -4453,10 +4421,8 @@ msgid "Define max. payload size for Elasticsearch."
 msgstr "Definieer max. payloadgrootte voor Elasticsearch."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Define pipeline name for Elasticsearch."
 msgid "Define model configuration for Elasticsearch."
-msgstr "Definieer de pipeline naam voor Elasticsearch."
+msgstr "Definieer de modelconfiguratie voor Elasticsearch."
 
 #: db/seeds/settings.rb
 msgid "Define pipeline name for Elasticsearch."
@@ -4716,10 +4682,8 @@ msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr "Zet Nagios-integratie (http://www.nagios.org) aan of uit."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines if S/MIME encryption is enabled or not."
 msgid "Defines if PGP encryption is enabled or not."
-msgstr "Zet S/MIME encryption aan of uit."
+msgstr "Zet PGP encryptie aan of uit."
 
 #: db/seeds/settings.rb
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
@@ -4781,10 +4745,8 @@ msgid ""
 msgstr "Zet de GitLab-integratie (http://www.gitlab.com) aan of uit."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines if generic CTI integration is enabled or not."
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
-msgstr "Zet de generieke CTI-integratie aan of uit."
+msgstr "Zet de PGP ontvanger aliasconfiguratie aan of uit."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -4840,22 +4802,17 @@ msgstr ""
 "ondersteunt."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "Defines if the ticket conditions editor supports complex logical "
-#| "expressions."
 msgid ""
 "Defines if the ticket conditions editor supports regular expression "
 "operators for triggers and ticket auto assignment."
 msgstr ""
-"Bepaald of de editor voor ticketvoorwaarden complexe logische uitdrukkingen "
-"ondersteunt."
+"Bepaalt of de editor voor ticketvoorwaarden, operators voor complexe "
+"reguliere expressies ondersteunt, ten behoeve van triggers en automatische "
+"toewijzing."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the default screen."
 msgid "Defines if the time accounting types are enabled."
-msgstr "Bepaald de standaard schermconfiguratie."
+msgstr "Bepaalt of de tijdsverantwoording types ingeschakeld zijn."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5074,10 +5031,8 @@ msgid "Defines the HTTP protocol of your instance."
 msgstr "Bepaald het http-protocol van de instantie."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid "Defines the LDAP config."
 msgid "Defines the PGP config."
-msgstr "De LDAP-configuratie."
+msgstr "Definieert de PGP config."
 
 #: db/seeds/settings.rb
 msgid "Defines the Placetel config."
@@ -5124,15 +5079,12 @@ msgid "Defines the backend for user and organization image lookups."
 msgstr "Bepaald de backend voor gebruikers en organisatie image lookups."
 
 #: db/seeds/settings.rb
-#, fuzzy
-#| msgid ""
-#| "Defines a limit for how many tickets can be created via web form per day."
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "globally."
 msgstr ""
-"Limiteer het aantal tickets die via een webformulier per dag gemaakt mogen "
-"worden."
+"Definieert de configuratie van het aantal artikelen dat globaal in een "
+"minuutbereik kan worden aangemaakt."
 
 #: db/seeds/settings.rb
 #, fuzzy
@@ -5370,6 +5322,8 @@ msgstr ""
 #: db/seeds/settings.rb
 msgid "Defines the unit to be shown next to the time accounting input field."
 msgstr ""
+"Definieert de weer te geven tijdseenheid bij het invoerveld voor "
+"tijdsverantwoording."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5684,7 +5638,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue
 msgid "Did you know?"
-msgstr ""
+msgstr "Wist je dat?"
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco
 msgid "Did you know? You can help translating %s at:"
@@ -5705,6 +5659,12 @@ msgstr "Direct Messages Group"
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Direct URL"
 msgstr "Direct adres"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Ticket Subscriptions"
+msgid "Direct subscription URL"
+msgstr "Ticket Abonnementen"
 
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
@@ -5837,7 +5797,7 @@ msgstr "Wil je echt \"%s\" verwijderen?"
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts
 #: lib/validations/ticket_article_validator/whatsapp_message.rb
 msgid "Document file"
-msgstr ""
+msgstr "Document bestand"
 
 #: db/seeds/object_manager_attributes.rb
 msgid "Domain"
@@ -5929,6 +5889,10 @@ msgstr "Concept"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Draft available"
 msgstr "Concept beschikbaar"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue
+msgid "Drag and drop to reorder ticket overview list items."
+msgstr "Sleep om lijstitems in het ticketoverzicht te herschikken."
 
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee
 msgid "Drag to reorder"
@@ -6705,6 +6669,7 @@ msgstr ""
 "Voer je e-mailadres en de % API token verkregen van de admin-interface in."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 msgid "Enter your current password, insert a new one and confirm it."
 msgstr ""
 
@@ -6769,6 +6734,7 @@ msgstr "Error"
 msgid "Error during execution of auto wizard."
 msgstr "Error tijdens uitvoeren van de auto-assistent."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
 #: db/seeds/overviews.rb
 msgid "Escalated Tickets"
 msgstr "Geëscaleerde tickets"
@@ -8276,6 +8242,17 @@ msgstr ""
 msgid "If this regex matches, no notification will be sent by the sender."
 msgstr "Als deze regex overeenkomt, zal de afzender geen melding sturen."
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+#, fuzzy
+#| msgid ""
+#| "Zammad Chat requires jQuery. If you don't already use it on your website, "
+#| "you can add it like this:"
+msgid ""
+"If you don't already use jQuery on your website, you can add it like this:"
+msgstr ""
+"Zammad Chat vereist jQuery. Als het niet al op de website wordt gebruikt, "
+"neem het dan als volgt op:"
+
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -8591,9 +8568,37 @@ msgstr "Incident"
 msgid "Include attachments of the article?"
 msgstr "Bijlagen van de notitie toevoegen?"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include unassigned tickets in subscription for escalated tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include unassigned tickets in subscription for new & open tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include unassigned tickets in subscription for pending tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include your own tickets in subscription for escalated tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include your own tickets in subscription for new & open tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include your own tickets in subscription for pending tickets."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 msgid "Included ticket overviews"
 msgstr "Inbegrepen ticketoverzichten"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Includes escalated, new & open and pending tickets."
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -9282,6 +9287,10 @@ msgstr "Helder"
 msgid "Limit Groups"
 msgstr "Groepen beperken"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+msgid "Limit notifications to specific groups"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Limit tickets by IP per day"
 msgstr "Beperk tickets per IP per dag"
@@ -9332,6 +9341,12 @@ msgstr "Koppel GitLab-issues aan je tickets."
 msgid "Link Related Answer"
 msgstr "Gerelateerde antwoorden koppelen"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+#, fuzzy
+#| msgid "Link Accounts"
+msgid "Link account on %s"
+msgstr "Link Accounts"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "Link issue"
 msgstr "Link issue"
@@ -9344,7 +9359,10 @@ msgstr "Koppel sjabloon"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/popover/user.jst.eco
-#: app/assets/javascripts/app/views/widget/user.jst.eco db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/widget/user.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+#: db/seeds/permissions.rb
 msgid "Linked Accounts"
 msgstr "Gekoppelde accounts"
 
@@ -10109,6 +10127,12 @@ msgstr "Tickets samenvoegen"
 msgid "Merge to Ticket#"
 msgstr "Samenvoegen met Ticket #"
 
+#: app/models/report.rb
+#, fuzzy
+#| msgid "Merge"
+msgid "Merged"
+msgstr "Samenvoegen"
+
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: public/assets/form/form.js
@@ -10383,6 +10407,13 @@ msgstr "Mijn tickets"
 msgid "My handling time: %s minutes"
 msgstr "Mijn behandeltijd: %s minuten"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "My Tickets"
+msgid "My tickets"
+msgstr "Mijn tickets"
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "My tickets in process"
 msgstr "Mijn tickets in behandeling"
@@ -10448,6 +10479,7 @@ msgstr "Nagios integratie"
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
@@ -10540,6 +10572,12 @@ msgstr "Netwerk"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "New"
 msgstr "Nieuw"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "New & Open Tickets"
+msgstr "Open Tickets"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "New Access Token is"
@@ -10693,6 +10731,12 @@ msgstr "Nieuwe tab"
 #: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "New text module"
 msgstr "Nieuwe tekstmodule"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+#, fuzzy
+#| msgid "New Ticket"
+msgid "New ticket"
+msgstr "Nieuw ticket"
 
 #. This is the template file app/views/mailer/ticket_create/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -10955,10 +10999,6 @@ msgstr "Geen camera gevonden."
 msgid "No proxy for the following hosts."
 msgstr "Geen Proxy voor de volgende hosts."
 
-#: app/controllers/users_controller.rb
-msgid "No record found!"
-msgstr "Geen record gevonden!"
-
 #: lib/whatsapp/webhook/message/status.rb
 msgid "No related article found to process the status message on."
 msgstr ""
@@ -11066,6 +11106,13 @@ msgid ""
 msgstr ""
 "Niet van toepassing op: samenvoegen, e-mails, formulier, Facebook, Telegram, "
 "Twitter, SMS"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Not Assigned"
+msgid "Not assigned"
+msgstr "Niet Toegewezen"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
@@ -11181,9 +11228,47 @@ msgstr "Notificatie"
 msgid "Notification Sound"
 msgstr "Meldings Geluid"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Notification read"
+msgid "Notification matrix"
+msgstr "Notificatie gelezen"
+
 #: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue
 msgid "Notification read"
 msgstr "Notificatie gelezen"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "The setting could not be reset."
+msgid "Notification settings could not be reset."
+msgstr "De instelling kan niet opnieuw worden ingesteld."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "The setting could not be updated."
+msgid "Notification settings could not be saved."
+msgstr "De instelling kan niet worden bijgewerkt."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Are you sure? Your notifications settings will be reset to default."
+msgid "Notification settings have been reset to default."
+msgstr ""
+"Weet je het zeker? De instellingen voor meldingen worden teruggezet naar de "
+"standaardinstellingen."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Ticket has been created successfully."
+msgid "Notification settings have been saved successfully."
+msgstr "Ticket is succesvol aangemaakt."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "Notification sound"
+msgstr "Meldings Geluid"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -11191,6 +11276,8 @@ msgstr "Notificatie gelezen"
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts
 #: db/seeds/permissions.rb
 msgid "Notifications"
@@ -11556,6 +11643,12 @@ msgstr "Of gebruik een van je"
 msgid "Order of Overviews"
 msgstr "Volgorde van overzichten"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+#, fuzzy
+#| msgid "More ticket overviews"
+msgid "Order of ticket overviews"
+msgstr "Meer ticketoverzichten"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
@@ -11692,7 +11785,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
 msgstr ""
-"Hoeveel van alle open tickets (organisatiebreed) zijn er aan jouw toegewezen?"
+"Hoeveel van alle open tickets (organisatiebreed) zijn er aan jou toegewezen?"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee
@@ -11740,6 +11833,8 @@ msgstr "Overzicht bulk mask"
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 #: app/assets/javascripts/app/controllers/overview.coffee
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
 #: db/seeds/permissions.rb
 msgid "Overviews"
 msgstr "Overzichten"
@@ -11958,6 +12053,12 @@ msgstr "Plakken"
 msgid "Pending Reached Tickets"
 msgstr "Overschreden Tickets"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Pending Reached Tickets"
+msgid "Pending Tickets"
+msgstr "Overschreden Tickets"
+
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Pending reminder reached for ticket |%s|"
@@ -12070,6 +12171,7 @@ msgid "Placetel integration"
 msgstr "Placetel integratie"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
 msgid "Play user interface sound effects"
 msgstr "Speel gebruikersinterface geluidseffecten"
 
@@ -12438,16 +12540,6 @@ msgstr "Productnaam"
 msgid "Profile"
 msgstr "Profiel"
 
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
-msgid "Profile ASDa sdasf sdfasdf  safsaf safsadf"
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
-#, fuzzy
-#| msgid "Ticket updated successfully."
-msgid "Profile appearance updated successfully."
-msgstr "Ticket succesvol geüpdatet."
-
 #: app/frontend/shared/composables/useLocaleUpdate.ts
 #, fuzzy
 #| msgid "Ticket tags updated successfully."
@@ -12761,6 +12853,12 @@ msgstr "Verwijder twee-factor-authenticatie"
 msgid "Remove a configured two-factor authentication method"
 msgstr "Verwijder een geconfigureerde twee-factor-authenticatiemethode"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+#, fuzzy
+#| msgid "Remove two-factor authentication"
+msgid "Remove account link on %s"
+msgstr "Verwijder twee-factor-authenticatie"
+
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove all"
 msgstr "Verwijder alles"
@@ -12961,6 +13059,12 @@ msgstr "Zend verificatiemail opnieuw"
 msgid "Reset"
 msgstr "Opnieuw"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+#, fuzzy
+#| msgid "Reset overview order"
+msgid "Reset Overview Order"
+msgstr "Reset volgorde overzicht"
+
 #: app/assets/javascripts/app/controllers/password_reset.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Reset Password"
@@ -12977,6 +13081,12 @@ msgstr "Reset volgorde overzicht"
 #: app/assets/javascripts/app/models/setting.coffee
 msgid "Reset successful."
 msgstr "Reset succesvol."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Reset to default settings"
+msgid "Reset to Default Settings"
+msgstr "Herstel naar standaardinstellingen"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
 msgid "Reset to default"
@@ -13123,6 +13233,10 @@ msgstr ""
 "negeren. Je wachtwoord wordt niet gereset.</div>\n"
 "<br>\n"
 "<div>Het #{config.product_name}-team</div>\n"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+msgid "Resetting the order of your ticket overviews failed."
+msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageResizable.vue
 msgid "Resize frame"
@@ -13436,6 +13550,12 @@ msgstr "Codes opslaan"
 msgid "Save Draft"
 msgstr "Concept opslaan"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Slack Notifications"
+msgid "Save Notifications"
+msgstr "Slack Notificaties"
+
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 #, fuzzy
 #| msgid "Out of Office"
@@ -13671,6 +13791,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
@@ -13761,6 +13882,18 @@ msgstr "Bekijk meer"
 msgid ""
 "See your tickets from within your favorite calendar by adding the following "
 "URL to your calendar app."
+msgstr ""
+"Zie je tickets in je favoriete kalender app door de volgende URL toe te "
+"voegen aan je kalender app."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid ""
+#| "See your tickets from within your favorite calendar by adding the "
+#| "following URL to your calendar app."
+msgid ""
+"See your tickets from within your favorite calendar by adding the "
+"subscription URL to your calendar app."
 msgstr ""
 "Zie je tickets in je favoriete kalender app door de volgende URL toe te "
 "voegen aan je kalender app."
@@ -14850,12 +14983,24 @@ msgstr "Abonneren op feestdagen in"
 msgid "Subscribed Tickets"
 msgstr "geabonneerde tickets"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+#, fuzzy
+#| msgid "Subscribed Tickets"
+msgid "Subscribed tickets"
+msgstr "geabonneerde tickets"
+
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Subscribers"
 msgstr "Abonnees"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Subscription Settings"
+msgstr "Abonnementsinstellingen"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Subscription Settings"
+msgid "Subscription settings"
 msgstr "Abonnementsinstellingen"
 
 #: app/assets/javascripts/app/models/user.coffee
@@ -15336,6 +15481,12 @@ msgstr "Het logo kon niet worden gelezen."
 msgid "The access token could not be created."
 msgstr "Het rapport kon niet worden gegenereert"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+#, fuzzy
+#| msgid "The signature was successfully verified."
+msgid "The account link was successfully removed!"
+msgstr "De signature werd succesvol geverifieerd."
+
 #: app/controllers/reports_controller.rb
 msgid "The active reporting profile could not be found."
 msgstr "Het actieve rapportage profiel kon niet worden gevonden."
@@ -15351,7 +15502,7 @@ msgstr "Het beheerderstoestemmingsverzoek is naar de beheerder verzonden."
 msgid "The admin password auth email could not be sent."
 msgstr "Verificatie e-mail kon niet verzonden worden."
 
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
+#: app/frontend/apps/desktop/stores/theme.ts
 #, fuzzy
 #| msgid "The language could not be updated."
 msgid "The appearance could not be updated."
@@ -15815,6 +15966,12 @@ msgid ""
 "search."
 msgstr "Limiet van %s toonbare tickets is bereikt (%s resterend)"
 
+#: app/services/service/user/remove_linked_account.rb
+#, fuzzy
+#| msgid "The object could not be found."
+msgid "The linked account could not be found."
+msgstr "Het object kon niet worden gevonden."
+
 #: app/services/service/auth/verify_admin_token.rb
 #, fuzzy
 #| msgid "Time Accounting"
@@ -15858,6 +16015,22 @@ msgstr "Het object kon niet worden bijgewerkt."
 #| msgid "The online notifcation could not be marked as seen."
 msgid "The online notification could not be marked as seen."
 msgstr "De online melding kon niet worden gemarkeerd als gezien."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+#, fuzzy
+#| msgid "More ticket overviews"
+msgid "The order of your ticket overviews was reset."
+msgstr "Meer ticketoverzichten"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+#, fuzzy
+#| msgid ""
+#| "Here you find your ticket overviews for open, assigned, and escalated "
+#| "tickets."
+msgid "The order of your ticket overviews was updated."
+msgstr ""
+"Hier vindt je jouw ticketoverzichten voor open, toegewezen en geëscaleerde "
+"tickets."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "The page is not available anymore"
@@ -16452,8 +16625,16 @@ msgstr "Verificatie e-mail kon niet verzonden worden."
 #, fuzzy
 #| msgid "This field isn't a valid date, please use the format \"%s\"."
 msgid ""
-"The verification of the TLS connection failed. Please check the IDP "
+"The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
+msgstr "Dit veld bevat geen correcte datum. Gebruik de opbouw \"%s\"."
+
+#: app/models/setting/validation/saml/tls.rb
+#, fuzzy
+#| msgid "This field isn't a valid date, please use the format \"%s\"."
+msgid ""
+"The verification of the TLS connection is not possible. Please check the "
+"SAML IDP connection."
 msgstr "Dit veld bevat geen correcte datum. Gebruik de opbouw \"%s\"."
 
 #: app/services/service/user/two_factor/verify_method_configuration.rb
@@ -17284,6 +17465,7 @@ msgstr "Ticketklant succesvol geüpdatet."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Ticket escalation"
 msgstr "Ticket escalatie"
 
@@ -17310,6 +17492,7 @@ msgstr "Ticket informatie"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Ticket reminder reached"
 msgstr "Ticket herinnering behaald"
 
@@ -17382,6 +17565,7 @@ msgstr "Ticket titel"
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Ticket update"
 msgstr "Ticket bijwerken"
 
@@ -17481,6 +17665,9 @@ msgstr "TicketID"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
@@ -17500,7 +17687,7 @@ msgstr "Tickets zijn gerangschikt volgens \"%s\" kolom (%s)."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_load_measure.jst.eco
 msgid "Tickets assigned to me: %s of %s"
-msgstr "Tickets aan mijn toegewezen: %s van de %s"
+msgstr "Tickets aan mij toegewezen: %s van de %s"
 
 #: app/controllers/ticket_articles_controller.rb
 #: app/controllers/tickets_controller.rb
@@ -18458,6 +18645,16 @@ msgstr ""
 msgid "Updating Database"
 msgstr "Database bijwerken"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+msgid "Updating the order of your ticket overviews failed."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Defines the default calendar tickets subscription settings."
+msgid "Updating your calendar subscription settings failed."
+msgstr "Bepaald de standaard abonnementsinstellingen voor agendatickets."
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
@@ -18684,6 +18881,7 @@ msgid "UserDevice could not be found."
 msgstr "Locale kon niet worden gevonden."
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
 msgid "Username"
 msgstr "Gebruikersnaam"
 
@@ -19318,6 +19516,12 @@ msgstr "Je ontvangt dit omdat je de behandelaar bent van dit ticket."
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Je ontvangt dit omdat je bent genoemd in dit ticket."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Defines the default calendar tickets subscription settings."
+msgid "You calendar subscription settings were updated."
+msgstr "Bepaald de standaard abonnementsinstellingen voor agendatickets."
+
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/google/index.jst.eco
@@ -19751,6 +19955,12 @@ msgstr "De verbinding is niet beveiligd"
 msgid "Your language"
 msgstr "Kies je taal."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
+#, fuzzy
+#| msgid "The avatar could not be uploaded."
+msgid "Your theme has been updated."
+msgstr "De avatar kon niet worden geüpload."
+
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 msgid ""
 "Your user role is not allowed to create new tickets. Please contact your "
@@ -19769,14 +19979,6 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
 msgstr "Zammad"
-
-#: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid ""
-"Zammad Chat requires jQuery. If you don't already use it on your website, "
-"you can add it like this:"
-msgstr ""
-"Zammad Chat vereist jQuery. Als het niet al op de website wordt gebruikt, "
-"neem het dan als volgt op:"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid ""
@@ -20128,10 +20330,6 @@ msgstr "klant"
 #, fuzzy
 #| msgid "customer"
 msgid "custom unit"
-msgstr "klant"
-
-#: lib/calendar_subscriptions/tickets.rb
-msgid "customer"
 msgstr "klant"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
@@ -20633,6 +20831,10 @@ msgstr "zojuist"
 msgid "left"
 msgstr "links"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts
+msgid "linked accounts,facebook,github,gitlab,google,linkedin,microsoft,saml"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorMore.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "load %s more"
@@ -20836,6 +21038,12 @@ msgstr "notitie"
 msgid "notification sent to '%s'"
 msgstr "Notificatie verzonden naar '%s'"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts
+#, fuzzy
+#| msgid "Notifications"
+msgid "notifications,tickets"
+msgstr "Notificaties"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "now"
 msgstr "nu"
@@ -20865,6 +21073,10 @@ msgstr "of"
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "or sign in using"
 msgstr "of login met"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts
+msgid "order,sort,overview,ticket,sorting"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 msgid "pending"
@@ -21109,6 +21321,10 @@ msgstr "Gebruikers met \"%s\""
 msgid "starts with one of"
 msgstr "Gebruikers met \"%s\""
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts
+msgid "subscription,calendars,ticket,ical"
+msgstr ""
+
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"
 msgstr "support@example.com"
@@ -21133,17 +21349,12 @@ msgstr "Dit ticket is samengevoegd met ticket %s"
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
-#: lib/calendar_subscriptions/tickets.rb
 msgid "ticket"
 msgstr "ticket"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "ticket %s was merged into this ticket"
 msgstr "ticket %s werd samengevoegd met dit ticket"
-
-#: lib/calendar_subscriptions/tickets.rb
-msgid "ticket escalation"
-msgstr "Ticket escalatie"
 
 #: db/seeds/settings.rb
 msgid "ticket.agent"
@@ -21331,6 +21542,20 @@ msgstr "…van geheel tekstvak"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ Wachttijd vandaag"
+
+#, fuzzy
+#~| msgid "Ticket updated successfully."
+#~ msgid "Profile appearance updated successfully."
+#~ msgstr "Ticket succesvol geüpdatet."
+
+#~ msgid "customer"
+#~ msgstr "klant"
+
+#~ msgid "ticket escalation"
+#~ msgstr "Ticket escalatie"
+
+#~ msgid "No record found!"
+#~ msgstr "Geen record gevonden!"
 
 #~ msgid "Access to %s"
 #~ msgstr "Toegang tot %s"

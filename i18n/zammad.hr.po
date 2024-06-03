@@ -1354,6 +1354,12 @@ msgstr "Dodaj poruku"
 msgid "Add agreement text before submit."
 msgstr "Dodajte sporazumni tekst prije slanja."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Add alarm to pending reminder and escalated tickets."
+msgid "Add alarm to pending reminder and escalated tickets"
+msgstr "Dodaj alarm kod podsjetnika i eskaliranih ticketa."
+
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Add alarm to pending reminder and escalated tickets."
 msgstr "Dodaj alarm kod podsjetnika i eskaliranih ticketa."
@@ -1523,6 +1529,16 @@ msgstr "Administratorski račun"
 msgid "Advance to next ticket from overview"
 msgstr "Prijeđite na sljedeći ticket u pregledu"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid ""
+#| "Here you find your ticket overviews for open, assigned, and escalated "
+#| "tickets."
+msgid "Affects only notifications for not assigned and all tickets."
+msgstr ""
+"Ovdje ćete pronaći preglede ticketa za otvorene, dodijeljene i eskalirane "
+"tickete."
+
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco
 msgid "After approval, please re-connect your Exchange account."
 msgstr "Nakon odobrenja, molimo, ponovno povežite Vaš Exchange račun."
@@ -1644,13 +1660,22 @@ msgstr "Svi agenti"
 msgid "All colleagues are busy."
 msgstr "Svi kolege su zauzeti."
 
-#: app/assets/javascripts/app/views/profile/devices.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
+#, fuzzy
+#| msgid ""
+#| "All computers and browsers that have access to your Zammad appear here."
+msgid ""
+"All computers and browsers from which you logged in to Zammad appear here."
+msgstr ""
+"Sva računala i preglednici koji imaju pristup Zammad-u pojavljuju se ovdje."
+
+#: app/assets/javascripts/app/views/profile/devices.jst.eco
 msgid "All computers and browsers that have access to your Zammad appear here."
 msgstr ""
 "Sva računala i preglednici koji imaju pristup Zammad-u pojavljuju se ovdje."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "All tickets"
 msgstr "Svi ticketi"
 
@@ -1688,6 +1713,7 @@ msgid "Allow websites (separated by ;)"
 msgstr "Dopusti web stranice (odvojeno sa ;)"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Also notify via email"
 msgstr "Također obavijesti putem e-maila"
 
@@ -1869,6 +1895,7 @@ msgid "Appearance"
 msgstr "Izgled"
 
 #: app/assets/javascripts/app/controllers/api.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
 msgid "Application"
 msgstr "Aplikacija"
 
@@ -2021,6 +2048,7 @@ msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "Jeste li sigurni? Imate nespremljene promjene koje će biti izgubljene."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
 msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr ""
 "Jeste li sigurni? Vaše postavke obavijesti će biti vraćene na početne "
@@ -2733,7 +2761,10 @@ msgstr "CTI integracija"
 #: app/assets/javascripts/app/models/sla.coffee
 #: app/assets/javascripts/app/views/calendar/index.jst.eco
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
-#: app/assets/javascripts/app/views/sla/index.jst.eco db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/sla/index.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#: db/seeds/permissions.rb
 msgid "Calendar"
 msgstr "Kalendar"
 
@@ -3369,6 +3400,12 @@ msgstr ""
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Prikaz boje otvorenog ticketa u bočnoj traci."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Ticket Subscriptions"
+msgid "Combined subscription URL"
+msgstr "Pretplate ticketa"
+
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee
 msgid "Comment"
 msgstr "Komentar"
@@ -3716,6 +3753,12 @@ msgstr "App tajna"
 #| msgid "CTI Token"
 msgid "Copy Token"
 msgstr "CTI token"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Copy"
+msgid "Copy URL"
+msgstr "Kopiraj"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
@@ -5653,6 +5696,12 @@ msgstr "Grupa direktnih poruka"
 msgid "Direct URL"
 msgstr "Direktni URL"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Ticket Subscriptions"
+msgid "Direct subscription URL"
+msgstr "Pretplate ticketa"
+
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco
 msgid "Direction"
@@ -5866,6 +5915,10 @@ msgstr "Nacrt"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco
 msgid "Draft available"
 msgstr "Nacrt dostupan"
+
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue
+msgid "Drag and drop to reorder ticket overview list items."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee
 msgid "Drag to reorder"
@@ -6600,6 +6653,7 @@ msgstr ""
 "sučelju."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue
 msgid "Enter your current password, insert a new one and confirm it."
 msgstr "Unesite Vašu trenutnu lozinku, dodajte novu i potvrdite je."
 
@@ -6653,6 +6707,7 @@ msgstr "Greška"
 msgid "Error during execution of auto wizard."
 msgstr "Greška prilikom izvođenja automatskog čarobnjaka."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
 #: db/seeds/overviews.rb
 msgid "Escalated Tickets"
 msgstr "Eskalirani ticketi"
@@ -8115,6 +8170,17 @@ msgstr ""
 msgid "If this regex matches, no notification will be sent by the sender."
 msgstr "Ako se ovaj regex podudara, obavijest neće biti poslana pošiljatelju."
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+#, fuzzy
+#| msgid ""
+#| "Zammad Chat requires jQuery. If you don't already use it on your website, "
+#| "you can add it like this:"
+msgid ""
+"If you don't already use jQuery on your website, you can add it like this:"
+msgstr ""
+"Zammad Chat zahtijeva jQuery. Ako ga već ne upotrebljavate na svojoj web-"
+"stranici, možete ga dodati ovako:"
+
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -8406,9 +8472,37 @@ msgstr "Incident"
 msgid "Include attachments of the article?"
 msgstr "Priložiti privitke članku?"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include unassigned tickets in subscription for escalated tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include unassigned tickets in subscription for new & open tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include unassigned tickets in subscription for pending tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include your own tickets in subscription for escalated tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include your own tickets in subscription for new & open tickets."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Include your own tickets in subscription for pending tickets."
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue
 msgid "Included ticket overviews"
 msgstr "Uključeni pregledi ticketa"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+msgid "Includes escalated, new & open and pending tickets."
+msgstr ""
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco
@@ -9081,6 +9175,10 @@ msgstr "Svjetlo"
 msgid "Limit Groups"
 msgstr "Ograniči na grupe"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+msgid "Limit notifications to specific groups"
+msgstr ""
+
 #: db/seeds/settings.rb
 msgid "Limit tickets by IP per day"
 msgstr "Ograniči dnevni broj ticketa po IP adresi"
@@ -9131,6 +9229,12 @@ msgstr "Povežite GitLab bugove sa svojim ticketima."
 msgid "Link Related Answer"
 msgstr "Poveži sličan odgovor"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+#, fuzzy
+#| msgid "Link Accounts"
+msgid "Link account on %s"
+msgstr "Povezani računi"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee
 msgid "Link issue"
 msgstr "Poveži bug"
@@ -9141,7 +9245,10 @@ msgstr "Poveznica - predložak"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee
 #: app/assets/javascripts/app/views/popover/user.jst.eco
-#: app/assets/javascripts/app/views/widget/user.jst.eco db/seeds/permissions.rb
+#: app/assets/javascripts/app/views/widget/user.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+#: db/seeds/permissions.rb
 msgid "Linked Accounts"
 msgstr "Povezani računi"
 
@@ -9890,6 +9997,12 @@ msgstr "Spoji tickete"
 msgid "Merge to Ticket#"
 msgstr "Spoji sa Ticket#"
 
+#: app/models/report.rb
+#, fuzzy
+#| msgid "Merge"
+msgid "Merged"
+msgstr "Objedini"
+
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: public/assets/form/form.js
@@ -10162,6 +10275,13 @@ msgstr "Moji kartice"
 msgid "My handling time: %s minutes"
 msgstr "Moje vrijeme obrade: %s minuta"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "My Tickets"
+msgid "My tickets"
+msgstr "Moji kartice"
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco
 msgid "My tickets in process"
 msgstr "Moji ticketi u obradi"
@@ -10227,6 +10347,7 @@ msgstr "Nagios integracija"
 #: app/assets/javascripts/app/views/widget/organization.jst.eco
 #: app/assets/javascripts/app/views/widget/user.jst.eco
 #: app/controllers/time_accountings_controller.rb
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue
@@ -10317,6 +10438,12 @@ msgstr "Mreža"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 msgid "New"
 msgstr "Novi"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "New & Open Tickets"
+msgstr "Otvori tickete"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "New Access Token is"
@@ -10462,6 +10589,12 @@ msgstr "Nova kartica"
 #: app/assets/javascripts/app/controllers/text_module.coffee
 msgid "New text module"
 msgstr "Novi tekstni modul"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+#, fuzzy
+#| msgid "New Ticket"
+msgid "New ticket"
+msgstr "Nova kartica"
 
 #. This is the template file app/views/mailer/ticket_create/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -10716,10 +10849,6 @@ msgstr "Privatni ključ nije pronađen."
 msgid "No proxy for the following hosts."
 msgstr "Bez proxy-a za sljedeće servere."
 
-#: app/controllers/users_controller.rb
-msgid "No record found!"
-msgstr "Nema pronađenih zapisa!"
-
 #: lib/whatsapp/webhook/message/status.rb
 msgid "No related article found to process the status message on."
 msgstr "Nije pronađen nijedan povezani članak za obradu statusne poruke."
@@ -10827,6 +10956,13 @@ msgid ""
 msgstr ""
 "Nije primjenjivo na: spajanje, e-mailove, formulare, Facebook, Telegram, "
 "Twitter, SMS"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Not Assigned"
+msgid "Not assigned"
+msgstr "Nije dodijeljen"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee
@@ -10942,9 +11078,47 @@ msgstr "Pošiljatelj obavijesti"
 msgid "Notification Sound"
 msgstr "Zvuk obavijesti"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Notification read"
+msgid "Notification matrix"
+msgstr "Pročitana obavijest"
+
 #: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue
 msgid "Notification read"
 msgstr "Pročitana obavijest"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "The setting could not be reset."
+msgid "Notification settings could not be reset."
+msgstr "Postavku nije moguće vratiti na izvorno."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "The setting could not be updated."
+msgid "Notification settings could not be saved."
+msgstr "Postavku nije moguće ažurirati."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Are you sure? Your notifications settings will be reset to default."
+msgid "Notification settings have been reset to default."
+msgstr ""
+"Jeste li sigurni? Vaše postavke obavijesti će biti vraćene na početne "
+"postavke sustava."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Ticket has been created successfully."
+msgid "Notification settings have been saved successfully."
+msgstr "Ticket je uspješno stvoren."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Notification Sound"
+msgid "Notification sound"
+msgstr "Zvuk obavijesti"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee
@@ -10952,6 +11126,8 @@ msgstr "Pročitana obavijest"
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
 #: app/assets/javascripts/app/views/widget/mention.jst.eco
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts
 #: db/seeds/permissions.rb
 msgid "Notifications"
@@ -11295,6 +11471,12 @@ msgstr "Ili koristite jedan od Vaših"
 msgid "Order of Overviews"
 msgstr "Redoslijed pregleda"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+#, fuzzy
+#| msgid "More ticket overviews"
+msgid "Order of ticket overviews"
+msgstr "Više pregleda ticketa"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
@@ -11475,6 +11657,8 @@ msgstr "Pregled višestrukih radnji"
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee
 #: app/assets/javascripts/app/controllers/overview.coffee
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
 #: db/seeds/permissions.rb
 msgid "Overviews"
 msgstr "Pregledi"
@@ -11683,6 +11867,12 @@ msgstr "Zalijepi ključ"
 msgid "Pending Reached Tickets"
 msgstr "Ticketi sa dostignutim vremenom čekanja"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Pending Reached Tickets"
+msgid "Pending Tickets"
+msgstr "Ticketi sa dostignutim vremenom čekanja"
+
 #: app/assets/javascripts/app/models/ticket.coffee
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts
 msgid "Pending reminder reached for ticket |%s|"
@@ -11794,6 +11984,7 @@ msgid "Placetel integration"
 msgstr "Placetel integracija"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
 msgid "Play user interface sound effects"
 msgstr "Reproduciraj zvukove korisničkog sučelja"
 
@@ -12151,16 +12342,6 @@ msgstr "Naziv proizvoda"
 msgid "Profile"
 msgstr "Profil"
 
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts
-msgid "Profile ASDa sdasf sdfasdf  safsaf safsadf"
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
-#, fuzzy
-#| msgid "Ticket updated successfully."
-msgid "Profile appearance updated successfully."
-msgstr "Ticket je uspješno ažuriran."
-
 #: app/frontend/shared/composables/useLocaleUpdate.ts
 #, fuzzy
 #| msgid "Ticket tags updated successfully."
@@ -12468,6 +12649,12 @@ msgstr "Ukloni dvofaktorsku autentifikaciju"
 msgid "Remove a configured two-factor authentication method"
 msgstr "Ukloni konfiguriranu dvofaktorsku metodu autentifikacije"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+#, fuzzy
+#| msgid "Remove two-factor authentication"
+msgid "Remove account link on %s"
+msgstr "Ukloni dvofaktorsku autentifikaciju"
+
 #: app/frontend/shared/form/i18n/locales.ts
 msgid "Remove all"
 msgstr "Ukloni sve"
@@ -12662,6 +12849,12 @@ msgstr "Ponovno pošalji potvrdni e-mail"
 msgid "Reset"
 msgstr "Reset"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+#, fuzzy
+#| msgid "Reset overview order"
+msgid "Reset Overview Order"
+msgstr "Vrati izvorni redoslijed pregleda"
+
 #: app/assets/javascripts/app/controllers/password_reset.coffee
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee
 msgid "Reset Password"
@@ -12678,6 +12871,12 @@ msgstr "Vrati izvorni redoslijed pregleda"
 #: app/assets/javascripts/app/models/setting.coffee
 msgid "Reset successful."
 msgstr "Resetiranje uspjelo."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Reset to default settings"
+msgid "Reset to Default Settings"
+msgstr "Vrati početne postavke"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco
 msgid "Reset to default"
@@ -12774,6 +12973,10 @@ msgstr ""
 "biti resetirana.</div>\n"
 "<br>\n"
 "<div>Vaš #{config.product_name} tim</div>\n"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+msgid "Resetting the order of your ticket overviews failed."
+msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageResizable.vue
 msgid "Resize frame"
@@ -13082,6 +13285,12 @@ msgstr "Spremi kodove"
 msgid "Save Draft"
 msgstr "Spremi skicu"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue
+#, fuzzy
+#| msgid "Slack Notifications"
+msgid "Save Notifications"
+msgstr "Slack obavijesti"
+
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue
 #, fuzzy
 #| msgid "Out of Office"
@@ -13305,6 +13514,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts
@@ -13391,6 +13601,18 @@ msgstr "Pokaži više"
 msgid ""
 "See your tickets from within your favorite calendar by adding the following "
 "URL to your calendar app."
+msgstr ""
+"Pogledajte svoje tickete unutar Vašeg omiljenog kalendara dodavanjem "
+"sljedećeg URL-a u aplikaciju kalendara."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid ""
+#| "See your tickets from within your favorite calendar by adding the "
+#| "following URL to your calendar app."
+msgid ""
+"See your tickets from within your favorite calendar by adding the "
+"subscription URL to your calendar app."
 msgstr ""
 "Pogledajte svoje tickete unutar Vašeg omiljenog kalendara dodavanjem "
 "sljedećeg URL-a u aplikaciju kalendara."
@@ -14447,12 +14669,24 @@ msgstr "Pretplati se na državne praznike u"
 msgid "Subscribed Tickets"
 msgstr "Pretplaćeni ticketi"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
+#, fuzzy
+#| msgid "Subscribed Tickets"
+msgid "Subscribed tickets"
+msgstr "Pretplaćeni ticketi"
+
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue
 msgid "Subscribers"
 msgstr "Pretplatnici"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco
 msgid "Subscription Settings"
+msgstr "Postavke pretplate"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Subscription Settings"
+msgid "Subscription settings"
 msgstr "Postavke pretplate"
 
 #: app/assets/javascripts/app/models/user.coffee
@@ -14887,6 +15121,12 @@ msgstr "Nije moguće potvrditi payload WhatsApp webhooka."
 msgid "The access token could not be created."
 msgstr "Nije moguće generirati token."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
+#, fuzzy
+#| msgid "The signature was successfully verified."
+msgid "The account link was successfully removed!"
+msgstr "Potpis je uspješno potvrđen."
+
 #: app/controllers/reports_controller.rb
 msgid "The active reporting profile could not be found."
 msgstr "Nije moguće pronaći aktivni profil izvješćivanja."
@@ -14900,7 +15140,7 @@ msgstr "Zahtjev za pristanak je poslan Vašem administratoru."
 msgid "The admin password auth email could not be sent."
 msgstr "Nije moguće poslati e-mail za autorizaciju lozinke administratora."
 
-#: app/frontend/apps/desktop/pages/personal-setting/composables/useThemeUpdate.ts
+#: app/frontend/apps/desktop/stores/theme.ts
 #, fuzzy
 #| msgid "The language could not be updated."
 msgid "The appearance could not be updated."
@@ -15339,6 +15579,12 @@ msgstr ""
 "Dosegnuto je ograničenje prijedloga koji se mogu prikazati, molimo, suzite "
 "Vaše pretraživanje."
 
+#: app/services/service/user/remove_linked_account.rb
+#, fuzzy
+#| msgid "The object could not be found."
+msgid "The linked account could not be found."
+msgstr "Nije moguće pronaći objekt."
+
 #: app/services/service/auth/verify_admin_token.rb
 msgid "The login is not possible."
 msgstr "Prijava nije moguća."
@@ -15378,6 +15624,22 @@ msgstr "Nije moguće ažurirati objekt."
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue
 msgid "The online notification could not be marked as seen."
 msgstr "Obavijest nije mogla biti označena kao pročitana."
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+#, fuzzy
+#| msgid "More ticket overviews"
+msgid "The order of your ticket overviews was reset."
+msgstr "Više pregleda ticketa"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+#, fuzzy
+#| msgid ""
+#| "Here you find your ticket overviews for open, assigned, and escalated "
+#| "tickets."
+msgid "The order of your ticket overviews was updated."
+msgstr ""
+"Ovdje ćete pronaći preglede ticketa za otvorene, dodijeljene i eskalirane "
+"tickete."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee
 msgid "The page is not available anymore"
@@ -15925,9 +16187,23 @@ msgid "The verification email could not be resent."
 msgstr "Nije moguće ponovno poslati potvrdni e-mail."
 
 #: app/models/setting/validation/saml/tls.rb
+#, fuzzy
+#| msgid ""
+#| "The verification of the TLS connection failed. Please check the IDP "
+#| "certificate."
 msgid ""
-"The verification of the TLS connection failed. Please check the IDP "
+"The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
+msgstr "Provjera TLS veze nije uspjela. Molimo, provjerite IDP certifikat."
+
+#: app/models/setting/validation/saml/tls.rb
+#, fuzzy
+#| msgid ""
+#| "The verification of the TLS connection failed. Please check the IDP "
+#| "certificate."
+msgid ""
+"The verification of the TLS connection is not possible. Please check the "
+"SAML IDP connection."
 msgstr "Provjera TLS veze nije uspjela. Molimo, provjerite IDP certifikat."
 
 #: app/services/service/user/two_factor/verify_method_configuration.rb
@@ -16696,6 +16972,7 @@ msgstr "Klijent u ticketu je uspješno ažuriran."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Ticket escalation"
 msgstr "Eskalacija ticketa"
 
@@ -16722,6 +16999,7 @@ msgstr "Informacije ticketa"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Ticket reminder reached"
 msgstr "Dostignuto vrijeme čekanja ticketa"
 
@@ -16795,6 +17073,7 @@ msgstr "Naslov ticketa"
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee
+#: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue
 msgid "Ticket update"
 msgstr "Ažuriranje ticketa"
 
@@ -16894,6 +17173,9 @@ msgstr "TicketID"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/kayako.ts
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/zendesk.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts
 #: app/frontend/apps/mobile/pages/ticket/routes.ts
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue
@@ -17831,6 +18113,16 @@ msgstr ""
 msgid "Updating Database"
 msgstr "Ažuriranje baze podataka"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue
+msgid "Updating the order of your ticket overviews failed."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Defines the default calendar tickets subscription settings."
+msgid "Updating your calendar subscription settings failed."
+msgstr "Određuje zadane postavke pretplate na tickete u kalendaru."
+
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue
@@ -18052,6 +18344,7 @@ msgid "UserDevice could not be found."
 msgstr "Lokalna verzija nije pronađena."
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue
 msgid "Username"
 msgstr "Korisničko ime"
 
@@ -18658,6 +18951,12 @@ msgstr "Primate ovo jer ste vlasnik ovog ticketa."
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Primate ovo jer ste spomenuti u ovom ticketu."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue
+#, fuzzy
+#| msgid "Defines the default calendar tickets subscription settings."
+msgid "You calendar subscription settings were updated."
+msgstr "Određuje zadane postavke pretplate na tickete u kalendaru."
+
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco
 #: app/assets/javascripts/app/views/facebook/index.jst.eco
 #: app/assets/javascripts/app/views/google/index.jst.eco
@@ -19078,6 +19377,12 @@ msgstr "Vaša veza nije sigurna"
 msgid "Your language"
 msgstr "Odaberi željeni jezik."
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue
+#, fuzzy
+#| msgid "The avatar could not be uploaded."
+msgid "Your theme has been updated."
+msgstr "Nije moguće učitati avatar."
+
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee
 msgid ""
 "Your user role is not allowed to create new tickets. Please contact your "
@@ -19096,14 +19401,6 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
 msgstr "Zammad"
-
-#: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid ""
-"Zammad Chat requires jQuery. If you don't already use it on your website, "
-"you can add it like this:"
-msgstr ""
-"Zammad Chat zahtijeva jQuery. Ako ga već ne upotrebljavate na svojoj web-"
-"stranici, možete ga dodati ovako:"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid ""
@@ -19455,10 +19752,6 @@ msgstr "prilagođeno"
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee
 msgid "custom unit"
 msgstr "prilagođena jedinica"
-
-#: lib/calendar_subscriptions/tickets.rb
-msgid "customer"
-msgstr "klijent"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee
 msgid "d"
@@ -19950,6 +20243,10 @@ msgstr "upravo sada"
 msgid "left"
 msgstr "lijevo"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts
+msgid "linked accounts,facebook,github,gitlab,google,linkedin,microsoft,saml"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorMore.vue
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue
 msgid "load %s more"
@@ -20145,6 +20442,12 @@ msgstr "Bilješka"
 msgid "notification sent to '%s'"
 msgstr "obavijest poslana '%s'"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts
+#, fuzzy
+#| msgid "Notifications"
+msgid "notifications,tickets"
+msgstr "Obavijesti"
+
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee
 msgid "now"
 msgstr "sad"
@@ -20174,6 +20477,10 @@ msgstr "ili"
 #: app/assets/javascripts/app/views/login.jst.eco
 msgid "or sign in using"
 msgstr "ili se prijavi pomoću"
+
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts
+msgid "order,sort,overview,ticket,sorting"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee
 msgid "pending"
@@ -20405,6 +20712,10 @@ msgstr "počinje sa"
 msgid "starts with one of"
 msgstr "počinje s jednim od"
 
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts
+msgid "subscription,calendars,ticket,ical"
+msgstr ""
+
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco
 msgid "support@example.com"
 msgstr "support@example.com"
@@ -20427,17 +20738,12 @@ msgstr "Ovaj je ticket spojen sa ticketom %s"
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue
 #: app/frontend/apps/mobile/components/User/UserItem.vue
-#: lib/calendar_subscriptions/tickets.rb
 msgid "ticket"
 msgstr "ticket"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee
 msgid "ticket %s was merged into this ticket"
 msgstr "Ticket %s je spojen u ovaj ticket"
-
-#: lib/calendar_subscriptions/tickets.rb
-msgid "ticket escalation"
-msgstr "eskalacija ticketa"
 
 #: db/seeds/settings.rb
 msgid "ticket.agent"
@@ -20621,6 +20927,20 @@ msgstr "... cijelog tekstnog polja"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco
 msgid "∅ Waiting time today"
 msgstr "∅ vrijeme čekanja danas"
+
+#, fuzzy
+#~| msgid "Ticket updated successfully."
+#~ msgid "Profile appearance updated successfully."
+#~ msgstr "Ticket je uspješno ažuriran."
+
+#~ msgid "customer"
+#~ msgstr "klijent"
+
+#~ msgid "ticket escalation"
+#~ msgstr "eskalacija ticketa"
+
+#~ msgid "No record found!"
+#~ msgstr "Nema pronađenih zapisa!"
 
 #~ msgid "Access to %s"
 #~ msgstr "Pristup %s"
