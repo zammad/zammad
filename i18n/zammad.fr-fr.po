@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-25 01:05+0000\n"
-"Last-Translator: Misha <misha@association-enoria.org>\n"
+"PO-Revision-Date: 2024-06-01 01:07+0000\n"
+"Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.4.2\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -564,7 +564,7 @@ msgstr "%s de mes tickets sont en cours."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco
 msgid "%s of my tickets escalated"
-msgstr "% de mes tickets escaladés"
+msgstr "%s de mes tickets escaladés"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco
 msgid "%s people"
@@ -7863,6 +7863,13 @@ msgstr ""
 "Si cette expression régulière est satisfaite, aucune notification ne sera "
 "envoyée à l'expéditeur."
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+msgid ""
+"If you don't already use jQuery on your website, you can add it like this:"
+msgstr ""
+"Si vous n'utilisez pas déjà jQuery sur votre site Web, vous pouvez l'ajouter "
+"comme ceci :"
+
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -9276,6 +9283,10 @@ msgstr "Fusionner les tickets"
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 msgid "Merge to Ticket#"
 msgstr "Fusioner avec le ticket #"
+
+#: app/models/report.rb
+msgid "Merged"
+msgstr "Fusionné"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
@@ -14972,11 +14983,19 @@ msgstr "L'email de vérification n'a pas pu être renvoyé."
 
 #: app/models/setting/validation/saml/tls.rb
 msgid ""
-"The verification of the TLS connection failed. Please check the IDP "
+"The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
 msgstr ""
 "La vérification de la connexion TLS a échoué. Veuillez vérifier le "
-"certificat IDP."
+"certificat SAML IDP."
+
+#: app/models/setting/validation/saml/tls.rb
+msgid ""
+"The verification of the TLS connection is not possible. Please check the "
+"SAML IDP connection."
+msgstr ""
+"La vérification de la connexion TLS n'est pas possible. Veuillez vérifier la "
+"connexion SAML IDP."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
@@ -16828,7 +16847,7 @@ msgstr ""
 "longname}</b>\".\n"
 "</div>\n"
 "<br>\n"
-"<% if @objects[:changes].present? %>\n"
+"<% if @objects[:changes].present ? %>\n"
 "  <div>\n"
 "  #{t('Changes')} : <br>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
@@ -18087,14 +18106,6 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
 msgstr "Zammad"
-
-#: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid ""
-"Zammad Chat requires jQuery. If you don't already use it on your website, "
-"you can add it like this:"
-msgstr ""
-"Le chat de Zammad requiert jQuery. S'il n'est pas déjà inclus dans votre "
-"site web, ajoutez le code suivant :"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid ""

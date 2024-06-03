@@ -7843,6 +7843,17 @@ msgstr ""
 "Si esta expresión regular coincide, el remitente no enviará ninguna "
 "notificación."
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+#, fuzzy
+#| msgid ""
+#| "Zammad Chat requires jQuery. If you don't already use it on your website, "
+#| "you can add it like this:"
+msgid ""
+"If you don't already use jQuery on your website, you can add it like this:"
+msgstr ""
+"el Chat de Zammad requiere jQuery. Si usted no lo utiliza en su sitio web, "
+"puede agregarlo así:"
+
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -9255,6 +9266,12 @@ msgstr "Fusionar tickets"
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 msgid "Merge to Ticket#"
 msgstr "Unir con Ticket#"
+
+#: app/models/report.rb
+#, fuzzy
+#| msgid "Merge"
+msgid "Merged"
+msgstr "Fusionar"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
@@ -14927,9 +14944,25 @@ msgid "The verification email could not be resent."
 msgstr "No se ha podido reenviar el correo electrónico de verificación."
 
 #: app/models/setting/validation/saml/tls.rb
+#, fuzzy
+#| msgid ""
+#| "The verification of the TLS connection failed. Please check the IDP "
+#| "certificate."
 msgid ""
-"The verification of the TLS connection failed. Please check the IDP "
+"The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
+msgstr ""
+"Ha fallado la verificación de la conexión TLS. Por favor, revisa el "
+"certificado IDP."
+
+#: app/models/setting/validation/saml/tls.rb
+#, fuzzy
+#| msgid ""
+#| "The verification of the TLS connection failed. Please check the IDP "
+#| "certificate."
+msgid ""
+"The verification of the TLS connection is not possible. Please check the "
+"SAML IDP connection."
 msgstr ""
 "Ha fallado la verificación de la conexión TLS. Por favor, revisa el "
 "certificado IDP."
@@ -18038,14 +18071,6 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
 msgstr "Zammad"
-
-#: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid ""
-"Zammad Chat requires jQuery. If you don't already use it on your website, "
-"you can add it like this:"
-msgstr ""
-"el Chat de Zammad requiere jQuery. Si usted no lo utiliza en su sitio web, "
-"puede agregarlo así:"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid ""

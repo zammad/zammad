@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-05-03 08:19+0000\n"
+"PO-Revision-Date: 2024-05-29 01:05+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/sr_Cyrl/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.5\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1260,7 +1260,7 @@ msgstr "Додај напомену"
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Add a Personal Access Token"
-msgstr "Додај лични кључ за приступ"
+msgstr "Додај лични приступни кључ"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee
 msgid "Add a data privacy deletion task"
@@ -6234,7 +6234,8 @@ msgstr "Унеси свој %s API кључ из профила налога."
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue
 msgid "Enter your Zendesk API token gained from your admin interface."
-msgstr "Унеси своју имејл адресу и %s API кључ из администраторског интерфејса."
+msgstr ""
+"Унеси своју имејл адресу и %s API кључ из администраторског интерфејса."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco
 msgid "Enter your current password, insert a new one and confirm it."
@@ -7699,6 +7700,13 @@ msgstr ""
 "Уколико је овај регуларни израз задовољен, неће бити слања обавештења "
 "пошиљаоца."
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+msgid ""
+"If you don't already use jQuery on your website, you can add it like this:"
+msgstr ""
+"Уколи већ не користите jQuery на вашем сајту, можете га додати на следећи "
+"начин:"
+
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -9097,6 +9105,10 @@ msgstr "Споји тикете"
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 msgid "Merge to Ticket#"
 msgstr "Споји са Ticket#"
+
+#: app/models/report.rb
+msgid "Merged"
+msgstr "Спојено"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
@@ -10795,7 +10807,7 @@ msgstr "Дозволе"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Personal Access Tokens"
-msgstr "Лични кључеви приступа"
+msgstr "Лични приступни кључеви"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid "Personal Settings"
@@ -14701,9 +14713,17 @@ msgstr "Није било могуће поново послати имејл п
 
 #: app/models/setting/validation/saml/tls.rb
 msgid ""
-"The verification of the TLS connection failed. Please check the IDP "
+"The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
-msgstr "Провера TLS конекције је неуспела. Молимо проверите IDP сертификат."
+msgstr ""
+"Провера TLS конекције је неуспела. Молимо проверите SAML IDP сертификат."
+
+#: app/models/setting/validation/saml/tls.rb
+msgid ""
+"The verification of the TLS connection is not possible. Please check the "
+"SAML IDP connection."
+msgstr ""
+"Провера TLS конекције није могућа. Молимо проверите SAML IDP конекцију."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
@@ -17450,7 +17470,7 @@ msgid ""
 "You can generate a personal access token for each application you use that "
 "needs access to the Zammad API."
 msgstr ""
-"Можете генерисати лични кључ приступа за сваку апликацију коју користите а "
+"Можете генерисати лични приступни кључ за сваку апликацију коју користите а "
 "којој је неопходан приступ Zammad API."
 
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
@@ -17681,7 +17701,7 @@ msgstr "Ваше име"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
-msgstr "Ваш нови лични кључ приступа"
+msgstr "Ваш нови лични приступни кључ"
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid ""
@@ -17753,14 +17773,6 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
 msgstr "Zammad"
-
-#: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid ""
-"Zammad Chat requires jQuery. If you don't already use it on your website, "
-"you can add it like this:"
-msgstr ""
-"Zammad ћаскање захтева jQuery. Уколико га већ не користите на вашем сајту, "
-"можете га додати на следећи начин:"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid ""

@@ -7957,6 +7957,17 @@ msgstr ""
 msgid "If this regex matches, no notification will be sent by the sender."
 msgstr "이 정규식과 일치하는 경우, 통지는 송신자가 전송되지 않습니다."
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+#, fuzzy
+#| msgid ""
+#| "Zammad Chat requires jQuery. If you don't already use it on your website "
+#| "include it like this:"
+msgid ""
+"If you don't already use jQuery on your website, you can add it like this:"
+msgstr ""
+"Zammad 채팅 jQuery를 필요로한다. 당신은 이미 당신의 웹 사이트에 그것을 사용하"
+"지 않을 경우 이런 식으로 포함 :"
+
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -9409,6 +9420,12 @@ msgstr "Ticket #에 병합"
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 msgid "Merge to Ticket#"
 msgstr "Ticket #에 병합"
+
+#: app/models/report.rb
+#, fuzzy
+#| msgid "Merge"
+msgid "Merged"
+msgstr "병합"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
@@ -15417,8 +15434,14 @@ msgstr "알림이 전송 될 때."
 
 #: app/models/setting/validation/saml/tls.rb
 msgid ""
-"The verification of the TLS connection failed. Please check the IDP "
+"The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
+msgstr ""
+
+#: app/models/setting/validation/saml/tls.rb
+msgid ""
+"The verification of the TLS connection is not possible. Please check the "
+"SAML IDP connection."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
@@ -18554,18 +18577,6 @@ msgstr "이메일을 확인할 수 없습니다. 관리자에게 문의하시기
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
 msgstr ""
-
-#: app/assets/javascripts/app/views/channel/chat.jst.eco
-#, fuzzy
-#| msgid ""
-#| "Zammad Chat requires jQuery. If you don't already use it on your website "
-#| "include it like this:"
-msgid ""
-"Zammad Chat requires jQuery. If you don't already use it on your website, "
-"you can add it like this:"
-msgstr ""
-"Zammad 채팅 jQuery를 필요로한다. 당신은 이미 당신의 웹 사이트에 그것을 사용하"
-"지 않을 경우 이런 식으로 포함 :"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #, fuzzy

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-05-03 01:05+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2024-05-29 01:05+0000\n"
+"Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
 "Language: de-de\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -981,7 +981,7 @@ msgstr "API-Token"
 
 #: db/seeds/settings.rb
 msgid "API Token Access"
-msgstr "API-Token Zugriff"
+msgstr "Zugriff über API-Token"
 
 #: lib/whatsapp/webhook/payload.rb
 msgid "API error."
@@ -1016,7 +1016,7 @@ msgstr "Zugriff auf Kunden-Tickets"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco
 msgid "Access token"
-msgstr "Zugangstoken"
+msgstr "Zugangs-Token"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco
 #: app/frontend/apps/mobile/pages/account/routes.ts
@@ -5958,8 +5958,8 @@ msgid ""
 "users need to create their own access tokens in the user profile."
 msgstr ""
 "REST-API-Zugriff über Token (nicht Benutzername/E-Mail und Passwort) "
-"aktivieren. Alle Benutzer müssen persönliche Zugriffs-Token im "
-"Benutzerprofil erstellen."
+"aktivieren. Alle Benutzer müssen persönliche Zugangs-Token im Benutzerprofil "
+"erstellen."
 
 #: db/seeds/settings.rb
 msgid ""
@@ -5967,7 +5967,7 @@ msgid ""
 "user needs to create its own access tokens in user profile."
 msgstr ""
 "Aktiviert die Verwendung der REST-API mit Tokens (anstelle von Benutzername/"
-"E-Mail und Passwort). Jeder Benutzer muss eigene Zugriffstoken im "
+"E-Mail und Passwort). Jeder Benutzer muss eigene Zugangs-Token im "
 "Benutzerprofil erstellen."
 
 #: db/seeds/settings.rb
@@ -7100,7 +7100,7 @@ msgstr "Sitzungsdaten generieren."
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Generate Access Token for |%s|"
-msgstr "Zugangstoken für |%s| generieren"
+msgstr "Zugangs-Token für |%s| generieren"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "Generate Token"
@@ -7151,7 +7151,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/api.jst.eco
 msgid "Getting an Access Token"
-msgstr "Ein Access Token erhalten"
+msgstr "Ein Zugangs-Token erhalten"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/register.jst.eco
 msgid "Getting key information from the browser…"
@@ -7852,6 +7852,13 @@ msgid "If this regex matches, no notification will be sent by the sender."
 msgstr ""
 "Wenn diese Regex übereinstimmt, wird keine Benachrichtigung vom Absender "
 "gesendet."
+
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+msgid ""
+"If you don't already use jQuery on your website, you can add it like this:"
+msgstr ""
+"Wenn Sie jQuery noch nicht auf Ihrer Website verwenden, können Sie es wie "
+"folgt hinzufügen:"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
@@ -9267,6 +9274,10 @@ msgstr "Tickets zusammenfassen"
 msgid "Merge to Ticket#"
 msgstr "Zusammenfassen zu Ticket#"
 
+#: app/models/report.rb
+msgid "Merged"
+msgstr "Zusammengefasst"
+
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
 #: public/assets/form/form.js
@@ -9684,7 +9695,7 @@ msgstr "Neu"
 
 #: app/assets/javascripts/app/controllers/api.coffee
 msgid "New Access Token is"
-msgstr "Das neue Zugangstoken lautet"
+msgstr "Das neue Zugangs-Token lautet"
 
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee
 msgid "New Activity Type"
@@ -10979,7 +10990,7 @@ msgstr "Berechtigungen"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco
 msgid "Personal Access Tokens"
-msgstr "Persönliche Zugriffs-Token"
+msgstr "Persönliche Zugangs-Token"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee
 msgid "Personal Settings"
@@ -11691,7 +11702,7 @@ msgstr "Entfernt die Schatten für ein flaches Design."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee
 msgid "Renew Access Token"
-msgstr "Zugangstoken erneuern"
+msgstr "Zugangs-Token erneuern"
 
 #: app/models/report.rb
 msgid "Reopened"
@@ -14962,11 +14973,19 @@ msgstr "Die Bestätigungs-E-Mail konnte nicht erneut gesendet werden."
 
 #: app/models/setting/validation/saml/tls.rb
 msgid ""
-"The verification of the TLS connection failed. Please check the IDP "
+"The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
 msgstr ""
-"Die Prüfung der TLS-Verbindung ist fehlgeschlagen. Bitte prüfen Sie das IDP-"
-"Zertifikat."
+"Die Prüfung der TLS-Verbindung ist fehlgeschlagen. Bitte prüfen Sie das SAML "
+"IDP-Zertifikat."
+
+#: app/models/setting/validation/saml/tls.rb
+msgid ""
+"The verification of the TLS connection is not possible. Please check the "
+"SAML IDP connection."
+msgstr ""
+"Die Überprüfung der TLS-Verbindung ist nicht möglich. Bitte prüfen Sie das "
+"SAML IDP-Zertifikat."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco
@@ -16442,11 +16461,11 @@ msgstr "Twitter - Tweet-Initialen"
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 msgid "Twitter Access Token"
-msgstr "Twitter-Zugriffstoken"
+msgstr "Twitter-Zugangs-Token"
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco
 msgid "Twitter Access Token Secret"
-msgstr "Passwort für den Twitter-Zugriffstoken"
+msgstr "Passwort für das Twitter-Zugangs-Token"
 
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee
 msgid "Twitter Account"
@@ -17771,8 +17790,8 @@ msgid ""
 "You can generate a personal access token for each application you use that "
 "needs access to the Zammad API."
 msgstr ""
-"Generieren Sie einen persönlichen Zugangstoken für jede Anwendung, welche "
-"auf die Zammad API zugreifen soll."
+"Generieren Sie ein persönliches Zugangs-Token für jede Anwendung, welche auf "
+"die Zammad API zugreifen soll."
 
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts
 msgid "You can no longer see the data privacy task."
@@ -18008,7 +18027,7 @@ msgstr "Ihr Name"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee
 msgid "Your New Personal Access Token"
-msgstr "Neuer persönlicher Zugangstoken"
+msgstr "Neues persönliches Zugangs-Token"
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco
 msgid ""
@@ -18081,14 +18100,6 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
 msgstr "Zammad"
-
-#: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid ""
-"Zammad Chat requires jQuery. If you don't already use it on your website, "
-"you can add it like this:"
-msgstr ""
-"Zammad Chat benötigt jQuery. Wenn Sie dies bisher nicht auf Ihrer Webseite "
-"verwenden, können Sie es folgendermaßen einbinden:"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid ""

@@ -7988,6 +7988,17 @@ msgid "If this regex matches, no notification will be sent by the sender."
 msgstr ""
 "Dacă acest regex se potrivește, expeditorul nu va primi nici o notificare"
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+#, fuzzy
+#| msgid ""
+#| "Zammad Chat requires jQuery. If you don't already use it on your website "
+#| "include it like this:"
+msgid ""
+"If you don't already use jQuery on your website, you can add it like this:"
+msgstr ""
+"Chat-ul Zammad are nevoie de jQuery. Dacă încă nu-l folosești pe pagina ta "
+"web include-l folosind:"
+
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -9434,6 +9445,12 @@ msgstr "Unește cu Tichetul#"
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 msgid "Merge to Ticket#"
 msgstr "Unește cu Tichetul#"
+
+#: app/models/report.rb
+#, fuzzy
+#| msgid "Merge"
+msgid "Merged"
+msgstr "Unește"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
@@ -15457,8 +15474,14 @@ msgstr "Când se trimite notificarea."
 
 #: app/models/setting/validation/saml/tls.rb
 msgid ""
-"The verification of the TLS connection failed. Please check the IDP "
+"The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
+msgstr ""
+
+#: app/models/setting/validation/saml/tls.rb
+msgid ""
+"The verification of the TLS connection is not possible. Please check the "
+"SAML IDP connection."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
@@ -18610,18 +18633,6 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
 msgstr ""
-
-#: app/assets/javascripts/app/views/channel/chat.jst.eco
-#, fuzzy
-#| msgid ""
-#| "Zammad Chat requires jQuery. If you don't already use it on your website "
-#| "include it like this:"
-msgid ""
-"Zammad Chat requires jQuery. If you don't already use it on your website, "
-"you can add it like this:"
-msgstr ""
-"Chat-ul Zammad are nevoie de jQuery. Dacă încă nu-l folosești pe pagina ta "
-"web include-l folosind:"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #, fuzzy

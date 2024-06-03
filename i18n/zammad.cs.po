@@ -7936,6 +7936,17 @@ msgid "If this regex matches, no notification will be sent by the sender."
 msgstr ""
 "Při shodě regulárního výrazu nebude odesílatelem zasláno žádné oznámení."
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+#, fuzzy
+#| msgid ""
+#| "Zammad Chat requires jQuery. If you don't already use it on your website, "
+#| "you can add it like this:"
+msgid ""
+"If you don't already use jQuery on your website, you can add it like this:"
+msgstr ""
+"Zammad Chat vyžaduje knihovnu jQuery. Pokud ji na svých stránkách ještě "
+"nepoužíváte, můžete ji přidat třeba takto:"
+
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -9387,6 +9398,12 @@ msgstr "Sloučit s ticketem"
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 msgid "Merge to Ticket#"
 msgstr "Sloučit s Ticket#"
+
+#: app/models/report.rb
+#, fuzzy
+#| msgid "Merge"
+msgid "Merged"
+msgstr "Sloučit"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
@@ -15322,8 +15339,20 @@ msgstr "Ověřovací e-mail se nepodařilo odeslat."
 #| "The certificate is not valid for S/MIME usage. Please check the "
 #| "certificate format."
 msgid ""
-"The verification of the TLS connection failed. Please check the IDP "
+"The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
+msgstr ""
+"Certifikát není platný pro použití S/MIME. Prosím zkontrolujte formát "
+"certifikátu."
+
+#: app/models/setting/validation/saml/tls.rb
+#, fuzzy
+#| msgid ""
+#| "The certificate is not valid for S/MIME usage. Please check the "
+#| "certificate format."
+msgid ""
+"The verification of the TLS connection is not possible. Please check the "
+"SAML IDP connection."
 msgstr ""
 "Certifikát není platný pro použití S/MIME. Prosím zkontrolujte formát "
 "certifikátu."
@@ -18509,14 +18538,6 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
 msgstr "Zammad"
-
-#: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid ""
-"Zammad Chat requires jQuery. If you don't already use it on your website, "
-"you can add it like this:"
-msgstr ""
-"Zammad Chat vyžaduje knihovnu jQuery. Pokud ji na svých stránkách ještě "
-"nepoužíváte, můžete ji přidat třeba takto:"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid ""

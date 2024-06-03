@@ -8056,6 +8056,17 @@ msgstr ""
 msgid "If this regex matches, no notification will be sent by the sender."
 msgstr "Amennyiben ez a regex egyezik, a feladó nem küld értesítést."
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+#, fuzzy
+#| msgid ""
+#| "Zammad Chat requires jQuery. If you don't already use it on your website, "
+#| "you can add it like this:"
+msgid ""
+"If you don't already use jQuery on your website, you can add it like this:"
+msgstr ""
+"A Zammad Csevegés jQuery-t igényel. Amennyiben még nem használja a "
+"weboldalán, akkor a következőképpen adhatja hozzá:"
+
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -9518,6 +9529,12 @@ msgstr "Jegyek egyesítése"
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 msgid "Merge to Ticket#"
 msgstr "Egyesítés a Ticket#-be"
+
+#: app/models/report.rb
+#, fuzzy
+#| msgid "Merge"
+msgid "Merged"
+msgstr "Egyesítés"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
@@ -15475,8 +15492,20 @@ msgstr "Az ellenőrző e-mailt nem sikerült elküldeni."
 #| "The certificate is not valid for S/MIME usage. Please check the "
 #| "certificate format."
 msgid ""
-"The verification of the TLS connection failed. Please check the IDP "
+"The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
+msgstr ""
+"A tanúsítvány nem érvényes S/MIME használatra. Kérjük, ellenőrizze a "
+"tanúsítvány formátumát."
+
+#: app/models/setting/validation/saml/tls.rb
+#, fuzzy
+#| msgid ""
+#| "The certificate is not valid for S/MIME usage. Please check the "
+#| "certificate format."
+msgid ""
+"The verification of the TLS connection is not possible. Please check the "
+"SAML IDP connection."
 msgstr ""
 "A tanúsítvány nem érvényes S/MIME használatra. Kérjük, ellenőrizze a "
 "tanúsítvány formátumát."
@@ -18644,14 +18673,6 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
 msgstr "Zammad"
-
-#: app/assets/javascripts/app/views/channel/chat.jst.eco
-msgid ""
-"Zammad Chat requires jQuery. If you don't already use it on your website, "
-"you can add it like this:"
-msgstr ""
-"A Zammad Csevegés jQuery-t igényel. Amennyiben még nem használja a "
-"weboldalán, akkor a következőképpen adhatja hozzá:"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 msgid ""

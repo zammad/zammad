@@ -124,8 +124,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Досягнуто нагадування!_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Досягнуто нагадування!_\n"
 "Заявка потребує уваги: досягнуто нагадування для (#{ticket.title}) від "
 "клієнта \"*#{ticket.customer.longname}*\".\n"
 "\n"
@@ -7898,6 +7898,17 @@ msgstr ""
 "У разі збігу цього регулярного виразу жодне сповіщення відправником не "
 "надсилатиметься."
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+#, fuzzy
+#| msgid ""
+#| "Zammad Chat requires jQuery. If you don't already use it on your website "
+#| "include it like this:"
+msgid ""
+"If you don't already use jQuery on your website, you can add it like this:"
+msgstr ""
+"Чат у системі Zammad потребує jQuery. Якщо Ви ще не використовуєте цієї "
+"бібліотеки на своєму веб-сайті, підключіть її таким способом:\t"
+
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -9358,6 +9369,12 @@ msgstr "Об’єднати із заявкою №"
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 msgid "Merge to Ticket#"
 msgstr "Об’єднати із заявкою №"
+
+#: app/models/report.rb
+#, fuzzy
+#| msgid "Merge"
+msgid "Merged"
+msgstr "Об'єднати"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
@@ -15383,8 +15400,14 @@ msgstr "При надсиланні сповіщення.\t"
 
 #: app/models/setting/validation/saml/tls.rb
 msgid ""
-"The verification of the TLS connection failed. Please check the IDP "
+"The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
+msgstr ""
+
+#: app/models/setting/validation/saml/tls.rb
+msgid ""
+"The verification of the TLS connection is not possible. Please check the "
+"SAML IDP connection."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
@@ -18559,18 +18582,6 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
 msgstr ""
-
-#: app/assets/javascripts/app/views/channel/chat.jst.eco
-#, fuzzy
-#| msgid ""
-#| "Zammad Chat requires jQuery. If you don't already use it on your website "
-#| "include it like this:"
-msgid ""
-"Zammad Chat requires jQuery. If you don't already use it on your website, "
-"you can add it like this:"
-msgstr ""
-"Чат у системі Zammad потребує jQuery. Якщо Ви ще не використовуєте цієї "
-"бібліотеки на своєму веб-сайті, підключіть її таким способом:\t"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #, fuzzy

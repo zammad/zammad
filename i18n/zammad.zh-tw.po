@@ -8330,6 +8330,17 @@ msgstr "如果寄件人是客服人員，則將收件人列表中的第一個使
 msgid "If this regex matches, no notification will be sent by the sender."
 msgstr "如果此正規表達式符合匹配，則不會有這個寄件人所發送的通知。"
 
+#: app/assets/javascripts/app/views/channel/chat.jst.eco
+#, fuzzy
+#| msgid ""
+#| "Zammad Chat requires jQuery. If you don't already use it on your website "
+#| "include it like this:"
+msgid ""
+"If you don't already use jQuery on your website, you can add it like this:"
+msgstr ""
+"Zammad 文字對談需要 jQuery。如果您尚未在您的網站上使用它，請像下面這樣放進網"
+"頁中："
+
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue
@@ -9848,6 +9859,12 @@ msgstr "合併到工單#"
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco
 msgid "Merge to Ticket#"
 msgstr "合併到工單#"
+
+#: app/models/report.rb
+#, fuzzy
+#| msgid "Merge"
+msgid "Merged"
+msgstr "合併"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee
 #: app/assets/javascripts/app/views/maintenance.jst.eco
@@ -16038,8 +16055,14 @@ msgstr "何時會發送通知。"
 
 #: app/models/setting/validation/saml/tls.rb
 msgid ""
-"The verification of the TLS connection failed. Please check the IDP "
+"The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
+msgstr ""
+
+#: app/models/setting/validation/saml/tls.rb
+msgid ""
+"The verification of the TLS connection is not possible. Please check the "
+"SAML IDP connection."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee
@@ -19397,18 +19420,6 @@ msgstr "無法驗證電子郵件。請與您的管理員聯繫。"
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue
 msgid "Zammad"
 msgstr ""
-
-#: app/assets/javascripts/app/views/channel/chat.jst.eco
-#, fuzzy
-#| msgid ""
-#| "Zammad Chat requires jQuery. If you don't already use it on your website "
-#| "include it like this:"
-msgid ""
-"Zammad Chat requires jQuery. If you don't already use it on your website, "
-"you can add it like this:"
-msgstr ""
-"Zammad 文字對談需要 jQuery。如果您尚未在您的網站上使用它，請像下面這樣放進網"
-"頁中："
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco
 #, fuzzy
