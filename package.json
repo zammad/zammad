@@ -153,7 +153,7 @@
     "workbox-window": "^7.1.0"
   },
   "resolutions": {
-    "loader-utils": "^3.2.1",
+    "loader-utils": "^3.2.2",
     "postcss": "^8.4.38",
     "stylelint-config-recommended": "^14.0.0",
     "prosemirror-model": "1.21.0",
