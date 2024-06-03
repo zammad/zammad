@@ -59,7 +59,7 @@ const createTooltip = (
 ) => {
   const tooltipNode = document.createElement('div')
   tooltipNode.classList.add('tooltip')
-  tooltipNode.style.position = 'fixed'
+
   tooltipNode.style.top = top
   tooltipNode.style.left = left
   tooltipNode.setAttribute('aria-hidden', 'true')
@@ -137,7 +137,7 @@ const addTooltip = (
   tooltipNode.style.top = top
   tooltipNode.style.left = left
 
-  targetNode.insertAdjacentElement('afterend', tooltipNode)
+  document.body.insertAdjacentElement('beforeend', tooltipNode)
 
   setTimeout(() => {
     tooltipNode.classList.add('tooltip-animate')
@@ -268,10 +268,19 @@ export default {
       }
     },
     updated(element: HTMLDivElement, { value: message }) {
-      element.setAttribute('aria-label', message)
+      // In some cases we update the aria-label on an interval f.e table time cells
+      // We don't want to write to the DOM on every update if nothing has changed
+      if (element.getAttribute('aria-label') !== message)
+        element.setAttribute('aria-label', message)
     },
-    beforeUnmount() {
-      // Cleanup
+    beforeUnmount(element) {
+      // If we dynamically remove the element from the DOM, we need to remove it from the tooltipTargetRecords
+      tooltipTargetRecords = tooltipTargetRecords.filter(
+        (record) => record.element !== element,
+      )
+      // If there are no more elements with the tooltip directive, remove event listeners
+      if (tooltipTargetRecords.length !== 1) return
+      // Cleanup only on the last element
       if (isTooltipInDom) removeTooltips()
       if (isListeningToEvents) cleanupEventHandlers()
       isListeningToEvents = false
