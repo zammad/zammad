@@ -14,7 +14,7 @@ paths = [
   '''^spec/fixtures/files/ldap/.*\.crt''',
   '''^spec/fixtures/files/pgp/.*\.asc''',
   '''^spec/fixtures/files/smime/.*\.key''',
-  '''^test/data/mail/mail015\.(yml|box)''',
+  '''^test/data/mail/mail\d+\.(yml|box)''',
   '''^test/data/saml/zammad-client.json''',
   '''^test/data/telegram/private/sticker.json''',
   '''^test/data/vcr_cassettes/''',
