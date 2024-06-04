@@ -30,9 +30,10 @@
   ],
   "Channels": [
     {
-      "id": 1,
+      "id": 3,
       "area": "Email::Account",
       "group": "Users",
+      "active": false,
       "options": {
         "inbound": {
           "adapter": "imap",
