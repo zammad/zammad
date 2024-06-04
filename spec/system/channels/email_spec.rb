@@ -235,7 +235,7 @@ RSpec.describe 'Manage > Channels > Email', type: :system do
 
     context 'with SSL verification off' do
       before do
-        channel = Channel.find(1)
+        channel = Channel.in_area('Email::Account').first
         channel.options[:inbound][:options][:ssl_verify] = false
         channel.save!
       end
