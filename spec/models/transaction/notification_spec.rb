@@ -42,7 +42,7 @@ RSpec.describe Transaction::Notification, type: :model do
     let(:reason_en) { 'You are receiving this because you are the owner of this ticket.' }
     let(:reason_de) do
       Translation.translate('de-de', reason_en).tap do |translated|
-        expect(translated).not_to eq(reason_en)
+        expect(translated).not_to eq(reason_en) # rubocop:disable RSpec/ExpectInLet
       end
     end
 
