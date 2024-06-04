@@ -156,9 +156,9 @@
     "loader-utils": "^3.2.2",
     "postcss": "^8.4.38",
     "stylelint-config-recommended": "^14.0.0",
-    "prosemirror-model": "1.21.0",
+    "prosemirror-model": "1.21.1",
     "prosemirror-state": "1.4.3",
     "prosemirror-transform": "1.9.0",
-    "prosemirror-view": "1.33.6"
+    "prosemirror-view": "1.33.7"
   }
 }
