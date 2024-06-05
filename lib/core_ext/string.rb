@@ -335,8 +335,9 @@ class String
     # https://github.com/zammad/zammad/issues/4112
     string.gsub!(%r{<!\[if !supportLists\]>.+?<!\[endif\]>}mi, '• ')
 
-    string = HtmlSanitizer.strict(string, true).strip
-    string = HtmlSanitizer.cleanup(string).strip
+    strict_sanitizer = HtmlSanitizer::Strict.new
+    string = strict_sanitizer.sanitize(string, external: true).strip
+    string = HtmlSanitizer::Cleanup.new.sanitize(string).strip
 
     # as fallback, use html2text and text2html
     if string.blank?
@@ -368,7 +369,13 @@ class String
     marker_template = '<span class="js-signatureMarker"></span>'
     string.sub!(%r{######SIGNATURE_MARKER######}, marker_template)
     string.gsub!(%r{######SIGNATURE_MARKER######}, '')
-    string.chomp
+
+    [
+      string.chomp,
+      {
+        remote_content_removed: strict_sanitizer.remote_content_removed
+      },
+    ]
   end
 
   def signature_identify(type = 'text', force = false)

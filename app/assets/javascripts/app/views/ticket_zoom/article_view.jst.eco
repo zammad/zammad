@@ -83,7 +83,7 @@
     </div>
   </div>
 </div>
-<% if encryptionSuccess || signSuccess || encryptionWarning || signWarning || @article.preferences?.whatsapp?.media_error: %>
+<% if encryptionSuccess || signSuccess || encryptionWarning || signWarning || @article.preferences?.whatsapp?.media_error || @article.preferences?.remote_content_removed: %>
   <div class="article-meta-permanent">
     <% if encryptionWarning || signWarning: %>
       <div class="alert alert--warning">
@@ -111,6 +111,15 @@
     <div class="alert alert--warning">
       <div class="btn btn--action btn--small js-retryWhatsAppAttachmentDownload"><%- @T('Retry attachment download') %>
       </div>
+    </div>
+  <% end %>
+
+  <% if @article.preferences?.remote_content_removed: %>
+    <div class="alert alert--warning">
+      <div class="alert-row">
+        <%- @Icon('danger') %> <%- @T('For privacy reasons, Zammad has blocked remote content in this message. You can retrieve it from the original formatting.') %>
+      </div>
+      <div class="btn btn--action btn--small js-fetchOriginalFormatting"><%- @T('Original Formatting') %></div>
     </div>
   <% end %>
   </div>

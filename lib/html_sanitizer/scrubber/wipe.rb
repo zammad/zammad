@@ -3,8 +3,12 @@
 class HtmlSanitizer
   module Scrubber
     class Wipe < Base
+      attr_reader :remote_content_removed
+
       def initialize # rubocop:disable Lint/MissingSuper
         @direction = :bottom_up
+
+        @remote_content_removed = false
       end
 
       def scrub(node)
@@ -141,6 +145,7 @@ class HtmlSanitizer
         return if src !~ %r{(javascript|livescript|vbscript):}i && !src.downcase.start_with?('http', 'ftp', '//')
 
         node.remove
+        @remote_content_removed = true if !src.match?(%r{javascript|livescript|vbscript:}i)
         true
       end
 

@@ -29,6 +29,7 @@ import { useArticleAttachments } from '../../composable/useArticleAttachments.ts
 import { useArticleSeen } from '../../composable/useArticleSeen.ts'
 import { useArticleToggleMore } from '../../composable/useArticleToggleMore.ts'
 
+import ArticleRemoteContentBadge from './ArticleRemoteContentBadge.vue'
 import ArticleSecurityBadge from './ArticleSecurityBadge.vue'
 import ArticleWhatsappMediaBadge from './ArticleWhatsappMediaBadge.vue'
 
@@ -42,6 +43,7 @@ interface Props {
   ticketInternalId: number
   articleId: string
   attachments: TicketArticleAttachment[]
+  remoteContentWarning?: string
   mediaError?: boolean | null
 }
 
@@ -328,6 +330,10 @@ const onContextClick = () => {
             :article-id="articleId"
             :success-class="colorClasses"
             :security="security"
+          />
+          <ArticleRemoteContentBadge
+            v-if="remoteContentWarning"
+            :original-formatting-url="remoteContentWarning"
           />
           <button
             v-if="hasShowMore"

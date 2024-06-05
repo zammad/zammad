@@ -2,10 +2,13 @@
 
 class HtmlSanitizer
   class Strict < Base
+    attr_reader :remote_content_removed
+
     def initialize(no_images: false)
       super()
 
-      @no_images = no_images
+      @no_images              = no_images
+      @remote_content_removed = false
     end
 
     def sanitize(string, external: false, timeout: true)
@@ -31,6 +34,8 @@ class HtmlSanitizer
       wipe_scrubber = HtmlSanitizer::Scrubber::Wipe.new
 
       string = loop_string(fragment.to_html, wipe_scrubber)
+
+      @remote_content_removed = wipe_scrubber.remote_content_removed
 
       link_scrubber = HtmlSanitizer::Scrubber::Link.new(web_app_url_prefix: web_app_url_prefix, external: external)
       Loofah.fragment(string).scrub!(link_scrubber).to_html

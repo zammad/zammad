@@ -3936,6 +3936,10 @@ ol.tabs li {
 
 .icon-danger {
   color: hsl(41, 100%, 49%);
+
+  .alert.alert--warning & {
+    color: inherit;
+  }
 }
 
 .icon-draggable {

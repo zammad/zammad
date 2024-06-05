@@ -460,6 +460,41 @@ describe('calling API to retry encryption', () => {
   })
 })
 
+describe('remote content removal', () => {
+  it('shows blocked content badge', async () => {
+    const articlesQuery = defaultArticles()
+    const article = articlesQuery.description!.edges[0].node
+    article.preferences = {
+      remote_content_removed: true,
+    }
+    article.attachmentsWithoutInline = [
+      {
+        internalId: 1,
+        name: 'message',
+        preferences: {
+          'original-format': true,
+        },
+      },
+    ]
+
+    const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
+      articles: articlesQuery,
+    })
+
+    const view = await visitView('/tickets/1')
+
+    await waitUntilTicketLoaded()
+
+    const blockedContent = view.getByRole('button', { name: 'Blocked Content' })
+
+    await view.events.click(blockedContent)
+
+    await view.events.click(view.getByText('Original Formatting'))
+
+    expect(view.queryByTestId('popupWindow')).not.toBeInTheDocument()
+  })
+})
+
 describe('ticket viewers inside a ticket', () => {
   it('displays information with newer last interaction (and without own entry)', async () => {
     const { waitUntilTicketLoaded, mockTicketLiveUsersSubscription } =

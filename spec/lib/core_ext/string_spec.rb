@@ -594,63 +594,63 @@ RSpec.describe String do
 
   describe '#html2html_strict' do
     it 'leaves human-readable text as-is' do
-      expect('test'.html2html_strict).to eq('test')
+      expect('test'.html2html_strict.first).to eq('test')
     end
 
     it 'strips leading/trailing spaces' do
-      expect('  test '.html2html_strict).to eq('test')
+      expect('  test '.html2html_strict.first).to eq('test')
     end
 
     it 'also strips leading/trailing newlines' do
-      expect("\n\n  test \n\n\n".html2html_strict).to eq('test')
+      expect("\n\n  test \n\n\n".html2html_strict.first).to eq('test')
     end
 
     it 'also strips leading <br>' do
-      expect('<br><br><div>abc</div>'.html2html_strict).to eq('<div>abc</div>')
+      expect('<br><br><div>abc</div>'.html2html_strict.first).to eq('<div>abc</div>')
     end
 
     it 'also strips trailing <br> & spaces' do
-      expect('<div>abc</div><br> <br>'.html2html_strict).to eq('<div>abc</div>')
+      expect('<div>abc</div><br> <br>'.html2html_strict.first).to eq('<div>abc</div>')
     end
 
     it 'leaves <b> as-is' do
-      expect('<b>test</b>'.html2html_strict).to eq('<b>test</b>')
+      expect('<b>test</b>'.html2html_strict.first).to eq('<b>test</b>')
     end
 
     it 'downcases tag names' do
-      expect('<B>test</B>'.html2html_strict).to eq('<b>test</b>')
+      expect('<B>test</B>'.html2html_strict.first).to eq('<b>test</b>')
     end
 
     it 'leaves <i> as-is' do
-      expect('<i>test</i>'.html2html_strict).to eq('<i>test</i>')
+      expect('<i>test</i>'.html2html_strict.first).to eq('<i>test</i>')
     end
 
     it 'leaves <h1> as-is' do
-      expect('<h1>test</h1>'.html2html_strict).to eq('<h1>test</h1>')
+      expect('<h1>test</h1>'.html2html_strict.first).to eq('<h1>test</h1>')
     end
 
     it 'leaves <h2> as-is' do
-      expect('<h2>test</h2>'.html2html_strict).to eq('<h2>test</h2>')
+      expect('<h2>test</h2>'.html2html_strict.first).to eq('<h2>test</h2>')
     end
 
     it 'leaves <h3> as-is' do
-      expect('<h3>test</h3>'.html2html_strict).to eq('<h3>test</h3>')
+      expect('<h3>test</h3>'.html2html_strict.first).to eq('<h3>test</h3>')
     end
 
     it 'leaves <pre> as-is' do
-      expect("<pre>a\nb\nc</pre>".html2html_strict).to eq("<pre>a\nb\nc</pre>")
+      expect("<pre>a\nb\nc</pre>".html2html_strict.first).to eq("<pre>a\nb\nc</pre>")
     end
 
     it 'leaves <pre> nested inside <div> as-is' do
-      expect("<div><pre>a\nb\nc</pre></div>".html2html_strict).to eq("<div><pre>a\nb\nc</pre></div>")
+      expect("<div><pre>a\nb\nc</pre></div>".html2html_strict.first).to eq("<div><pre>a\nb\nc</pre></div>")
     end
 
     it 'strips HTML comments' do
-      expect('<h3>test</h3><!-- some comment -->'.html2html_strict).to eq('<h3>test</h3>')
+      expect('<h3>test</h3><!-- some comment -->'.html2html_strict.first).to eq('<h3>test</h3>')
     end
 
     it 'strips <html>/<body> tags & <head> elements' do
-      expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+      expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
         <html><head><base href="x-msg://2849/"></head><body style="word-wrap: break-word; -webkit-nbsp-mode: space; -webkit-line-break: after-white-space; "><span class="Apple-style-span" style="border-collapse: separate; font-family: Helvetica; font-style: normal; font-variant: normal; font-weight: normal; letter-spacing: normal; line-height: normal; orphans: 2; text-align: -webkit-auto; text-indent: 0px; text-transform: none; white-space: normal; widows: 2; word-spacing: 0px; -webkit-border-horizontal-spacing: 0px; -webkit-border-vertical-spacing: 0px; -webkit-text-decorations-in-effect: none; -webkit-text-size-adjust: auto; -webkit-text-stroke-width: 0px; font-size: medium; "><div lang="DE" link="blue" vlink="purple"><div class="Section1" style="page: Section1; "><div style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt; font-family: Arial, sans-serif; ">Hello Martin,<o:p></o:p></span></div>
       HTML
         <div lang="DE">Hello Martin,</div>
@@ -658,11 +658,11 @@ RSpec.describe String do
     end
 
     it 'strips <span> tags' do
-      expect('<span></span>'.html2html_strict).to eq('')
+      expect('<span></span>'.html2html_strict.first).to eq('')
     end
 
     it 'keeps style with color in <span>' do
-      expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+      expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
         <span style="color: red; bgcolor: red">Hello Martin,</span>
       HTML
         <span style="color: red;">Hello Martin,</span>
@@ -670,7 +670,7 @@ RSpec.describe String do
     end
 
     it 'remove style=#ffffff with color in <span>' do
-      expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+      expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
         <span style="color: #ffffff; bgcolor: red">Hello Martin,</span>
       HTML
         Hello Martin,
@@ -678,7 +678,7 @@ RSpec.describe String do
     end
 
     it 'strips <span> tags, id/class attrs, and <o:*> (MS Office) tags' do
-      expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+      expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
         <div id="123" class="WordSection1">
         <p class="MsoNormal"><span style="color:#1F497D">Guten Morgen, Frau Koppenhagen,<o:p></o:p></span></p>
         <p class="MsoNormal"><span style="color:#1F497D"><o:p>&nbsp;</o:p></span></p>
@@ -694,7 +694,7 @@ RSpec.describe String do
     end
 
     it 'strips <font> tags' do
-      expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+      expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
         <p><font size="2"><a style="color: " href="http://www.example.com/?wm=mail"><img border="0" src="cid:example_new.png@8B201D8C.000B" width="101" height="30"></a></font></p>
       HTML
         <p><a href="http://www.example.com/?wm=mail" rel="nofollow noreferrer noopener" target="_blank" title="http://www.example.com/?wm=mail"><img border="0" src="cid:example_new.png@8B201D8C.000B" style="width:101px;height:30px;"></a></p>
@@ -702,23 +702,23 @@ RSpec.describe String do
     end
 
     it 'strips extraneous whitespace from end of opening tag' do
-      expect('<b >test</b>'.html2html_strict).to eq('<b>test</b>')
+      expect('<b >test</b>'.html2html_strict.first).to eq('<b>test</b>')
     end
 
     it 'strips extraneous whitespace from closing tag' do
-      expect('<b >test</b >'.html2html_strict).to eq('<b>test</b>')
+      expect('<b >test</b >'.html2html_strict.first).to eq('<b>test</b>')
     end
 
     it 'does not detect < /b > as closing tag; converts chars and auto-closes tag' do
-      expect('<b >test< /b >'.html2html_strict).to eq('<b>test&lt; /b &gt;</b>')
+      expect('<b >test< /b >'.html2html_strict.first).to eq('<b>test&lt; /b &gt;</b>')
     end
 
     it 'does not detect <\n/b> as closing tag; converts chars and auto-closes tag' do
-      expect("<b\n>test<\n/b>".html2html_strict).to eq('<b>test&lt; /b&gt;</b>')
+      expect("<b\n>test<\n/b>".html2html_strict.first).to eq('<b>test&lt; /b&gt;</b>')
     end
 
     it 'collapses multiple whitespace-only <p> into one with &nbsp;' do
-      expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+      expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
         <p> </p><p> </p><p> </p>
       HTML
         <p>&nbsp;</p>
@@ -726,7 +726,7 @@ RSpec.describe String do
     end
 
     it 'keeps lang attr on <p>' do
-      expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+      expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
         <p lang="DE"><b><span></span></b></p>
       HTML
         <p lang="DE"></p>
@@ -734,7 +734,7 @@ RSpec.describe String do
     end
 
     it 'strips <span> inside <p>' do
-      expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+      expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
         <p lang="DE"><b><span>Hello Martin,</span></b></p>
       HTML
         <p lang="DE"><b>Hello Martin,</b></p>
@@ -742,7 +742,7 @@ RSpec.describe String do
     end
 
     it 'strips empty <p> keep <p>s with content' do
-      expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+      expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
         <p> </p><p>123</p><p></p>
       HTML
         <p>&nbsp;</p><p>123</p>
@@ -750,11 +750,11 @@ RSpec.describe String do
     end
 
     it 'strips <br> between <p>' do
-      expect('<p>&nbsp;</p><br><br><p>&nbsp;</p>'.html2html_strict).to eq('<p>&nbsp;</p><p>&nbsp;</p>')
+      expect('<p>&nbsp;</p><br><br><p>&nbsp;</p>'.html2html_strict.first).to eq('<p>&nbsp;</p><p>&nbsp;</p>')
     end
 
     it 'auto-adds missing closing brackets on tags, but not opening brackets' do
-      expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+      expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
         <b id=123 classs="
         some_class"
         >test<
@@ -765,7 +765,7 @@ RSpec.describe String do
     end
 
     it 'auto-adds missing closing tags' do
-      expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+      expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
         <ul id=123 classs="
         some_class"
         ><li>test</li>
@@ -779,7 +779,7 @@ RSpec.describe String do
     end
 
     it 'auto-closes <div> with missing closing tag; removes </p> with missing opening tag' do
-      expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+      expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
         Damit Sie keinen Tag versäumen, empfehlen wir Ihnen den <a href="http://newsletters.cylex.de/" class="">Link des Adventkalenders</a> in<br class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ihrer Lesezeichen-Symbolleiste zu ergänzen.</p><div class="">&nbsp;
       HTML
         Damit Sie keinen Tag versäumen, empfehlen wir Ihnen den <a href="http://newsletters.cylex.de/" rel="nofollow noreferrer noopener" target="_blank" title="http://newsletters.cylex.de/">Link des Adventkalenders</a> in<br> Ihrer Lesezeichen-Symbolleiste zu ergänzen.<div> </div>
@@ -787,7 +787,7 @@ RSpec.describe String do
     end
 
     it 'intelligently inserts missing </td> & </tr> tags (and ignores misplaced </table> tags)' do
-      expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+      expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
         <table>
         <tr>
         <td bgcolor=white><font size=2 face="sans-serif"><b>Franz Schäfer</b></font>
@@ -827,7 +827,7 @@ RSpec.describe String do
     end
 
     it 'ignores invalid (misspelled) attrs' do
-      expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+      expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
         <b id=123 classs="
         some_class">test</b>
       HTML
@@ -836,7 +836,7 @@ RSpec.describe String do
     end
 
     it 'strips incomplete CSS rules' do
-      expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+      expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
         <p><a style="color: " href="http://www.example.com/?wm=mail"><img border="0" src="cid:example_new.png@8B201D8C.000B" width="101" height="30"></a></p>
       HTML
         <p><a href="http://www.example.com/?wm=mail" rel="nofollow noreferrer noopener" target="_blank" title="http://www.example.com/?wm=mail"><img border="0" src="cid:example_new.png@8B201D8C.000B" style="width:101px;height:30px;"></a></p>
@@ -845,45 +845,45 @@ RSpec.describe String do
 
     context 'for whitespace-only <div>' do
       it 'preserves a single space' do
-        expect('<div> </div>'.html2html_strict).to eq('<div> </div>')
+        expect('<div> </div>'.html2html_strict.first).to eq('<div> </div>')
       end
 
       it 'converts a lone <br> to &nbsp;' do
-        expect('<div><br></div>'.html2html_strict).to eq('<div>&nbsp;</div>')
+        expect('<div><br></div>'.html2html_strict.first).to eq('<div>&nbsp;</div>')
       end
 
       it 'converts three <br> to one &nbsp;' do
-        expect('<div style="max-width: 600px;"><br><br><br></div>'.html2html_strict).to eq('<div>&nbsp;</div>')
+        expect('<div style="max-width: 600px;"><br><br><br></div>'.html2html_strict.first).to eq('<div>&nbsp;</div>')
       end
 
       it 'collapses two nested, whitespace-only <div> into a single &nbsp;' do
-        expect('<div><div> </div><div> </div></div>'.html2html_strict).to eq('<div>&nbsp;</div>')
+        expect('<div><div> </div><div> </div></div>'.html2html_strict.first).to eq('<div>&nbsp;</div>')
       end
 
       it 'collapses three nested, whitespace-only <div> into a single &nbsp;' do
-        expect('<div><div> </div><div> </div><div> </div></div>'.html2html_strict).to eq('<div>&nbsp;</div>')
+        expect('<div><div> </div><div> </div><div> </div></div>'.html2html_strict.first).to eq('<div>&nbsp;</div>')
       end
 
       it 'collapses 2+ nested, whitespace-only <p> into \n<p>&nbsp;</p>' do
-        expect('<div><p> </p><p> </p></div>'.html2html_strict).to eq("<div>\n<p>&nbsp;</p></div>")
+        expect('<div><p> </p><p> </p></div>'.html2html_strict.first).to eq("<div>\n<p>&nbsp;</p></div>")
       end
     end
 
     context 'for <div> with content' do
       it 'also strips trailing/leading newlines inside <div>' do
-        expect("<div>\n\n\ntest\n\n\n</div>".html2html_strict).to eq('<div>test</div>')
+        expect("<div>\n\n\ntest\n\n\n</div>".html2html_strict.first).to eq('<div>test</div>')
       end
 
       it 'also strips trailing/leading newlines & tabs inside <div>' do
-        expect("<div>\n\t\ntest\n\t\n</div>".html2html_strict).to eq('<div>test</div>')
+        expect("<div>\n\t\ntest\n\t\n</div>".html2html_strict.first).to eq('<div>test</div>')
       end
 
       it 'also strips trailing/leading newlines & tabs inside <div>, but not internal spaces' do
-        expect("<div>\n\t\ntest  123\n\t\n</div>".html2html_strict).to eq('<div>test 123</div>')
+        expect("<div>\n\t\ntest  123\n\t\n</div>".html2html_strict.first).to eq('<div>test 123</div>')
       end
 
       it 'strips newlines from trailing whitespace; leaves up to two <br> (with spaces) as-is' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div>
           <br> <p><b>Description</b></p>
           <br> <br> </div>
@@ -894,7 +894,7 @@ RSpec.describe String do
       end
 
       it 'strips newlines from trailing whitespace; collapses 3+ <br> into two' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div>
           <br> <p><b>Description</b></p>
           <br> <br> <br> </div>
@@ -905,7 +905,7 @@ RSpec.describe String do
       end
 
       it 'removes unnecessary <div> nesting' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div><div>Hello Martin,</div></div>
         HTML
           <div>Hello Martin,</div>
@@ -913,7 +913,7 @@ RSpec.describe String do
       end
 
       it 'keeps innermost <div> when removing nesting' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div lang="DE"><div><div>Hello Martin,</div></div></div>
         HTML
           <div lang="DE">Hello Martin,</div>
@@ -921,7 +921,7 @@ RSpec.describe String do
       end
 
       it 'keeps style with color in <div>' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div style="color: red; bgcolor: red">Hello Martin,</div>
         HTML
           <div style="color: red;">Hello Martin,</div>
@@ -929,7 +929,7 @@ RSpec.describe String do
       end
 
       it 'remove style=#ffffff with color in <div>' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div style="color: #ffffff; bgcolor: red">Hello Martin,</div>
         HTML
           <div>Hello Martin,</div>
@@ -937,7 +937,7 @@ RSpec.describe String do
       end
 
       it 'rearranges whitespace in nested <div>' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div lang="DE"><div><div>Hello Martin,</div> </div></div>
         HTML
           <div lang="DE">
@@ -946,7 +946,7 @@ RSpec.describe String do
       end
 
       it 'adds newline where <br> starts or ends <div> content' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div style="max-width: 600px;"><br>abc<br><br></div>
         HTML
           <div>
@@ -956,7 +956,7 @@ RSpec.describe String do
       end
 
       it 'leaves <s> nested in <div> as-is (?)' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div><s>abc</s></div>
         HTML
           <div><s>abc</s></div>
@@ -964,7 +964,7 @@ RSpec.describe String do
       end
 
       it 'collapses multiple whitespace-only <p> into one with &nbsp;' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div><p> </p>
           <p> </p>
           <p> </p>
@@ -976,7 +976,7 @@ RSpec.describe String do
       end
 
       it 'strips <div> tags when they contain only <p>' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div>lala<div lang="DE"><p><span>Hello Martin,</span></p></div></div>
         HTML
           <div>lala<div lang="DE"><p>Hello Martin,</p></div></div>
@@ -986,7 +986,7 @@ RSpec.describe String do
 
     context 'link handling' do
       it 'adds rel & target attrs to <a> tags' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <a href="http://web.de">web.de</a>
         HTML
           <a href="http://web.de" rel="nofollow noreferrer noopener" target="_blank">web.de</a>
@@ -994,7 +994,7 @@ RSpec.describe String do
       end
 
       it 'removes id attrs' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <a id="123" href="http://web.de">web.de</a>
         HTML
           <a href="http://web.de" rel="nofollow noreferrer noopener" target="_blank">web.de</a>
@@ -1002,7 +1002,7 @@ RSpec.describe String do
       end
 
       it 'removes class/id attrs' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <a href="http://example.com" class="abc" id="123">http://example.com</a>
         HTML
           <a href="http://example.com" rel="nofollow noreferrer noopener" target="_blank">http://example.com</a>
@@ -1010,7 +1010,7 @@ RSpec.describe String do
       end
 
       it 'downcases <a> tags' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <A href="http://example.com?a=1;">http://example.com?a=1;</A>
         HTML
           <a href="http://example.com?a=1;" rel="nofollow noreferrer noopener" target="_blank">http://example.com?a=1;</a>
@@ -1018,7 +1018,7 @@ RSpec.describe String do
       end
 
       it 'doesn’t downcase href attr or inner text' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <A href="http://example.com/withSoMeUpper/And/downCase">http://example.com/withSoMeUpper/And/downCase</A>
         HTML
           <a href="http://example.com/withSoMeUpper/And/downCase" rel="nofollow noreferrer noopener" target="_blank">http://example.com/withSoMeUpper/And/downCase</a>
@@ -1026,7 +1026,7 @@ RSpec.describe String do
       end
 
       it 'automatically wraps <a> tags around valid URLs' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div>https://www.facebook.com/test</div>
         HTML
           <div>\n<a href="https://www.facebook.com/test" rel="nofollow noreferrer noopener" target="_blank">https://www.facebook.com/test</a>\n</div>
@@ -1034,7 +1034,7 @@ RSpec.describe String do
       end
 
       it 'does not wrap URLs if leading https?:// is missing' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           some text www.example.com some other text
         HTML
           some text www.example.com some other text
@@ -1042,7 +1042,7 @@ RSpec.describe String do
       end
 
       it 'adds missing http:// to href attr (but not inner text)' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           web <a href="www.example.com"><span style="color:blue">www.example.com</span></a>
         HTML
           web <a href="http://www.example.com" rel="nofollow noreferrer noopener" target="_blank"><span style="color:blue;">www.example.com</span></a>
@@ -1050,7 +1050,7 @@ RSpec.describe String do
       end
 
       it 'includes URL parameters when wrapping URL in <a> tag' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <p>https://wiki.lab.example.com/doku.php?id=xxxx:start&a=1;#ldap</p>
         HTML
           <p><a href="https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;a=1;#ldap" rel="nofollow noreferrer noopener" target="_blank">https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;a=1;#ldap</a></p>
@@ -1058,7 +1058,7 @@ RSpec.describe String do
       end
 
       it 'does not rewrap valid URLs that already have <a> tags' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <a href="http://example.com">http://example.com</a>
         HTML
           <a href="http://example.com" rel="nofollow noreferrer noopener" target="_blank">http://example.com</a>
@@ -1066,7 +1066,7 @@ RSpec.describe String do
       end
 
       it 'recognizes URL parameters when matching href to inner text' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <p><a href="https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap">https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap</a></p>
         HTML
           <p><a href="https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap" rel="nofollow noreferrer noopener" target="_blank">https://wiki.lab.example.com/doku.php?id=xxxx:start&amp;#ldap</a></p>
@@ -1074,7 +1074,7 @@ RSpec.describe String do
       end
 
       it 'recognizes <br> as URL boundary' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div><br>https://www.facebook.com/test<br></div>
         HTML
           <div>
@@ -1083,7 +1083,7 @@ RSpec.describe String do
       end
 
       it 'recognizes space as URL boundary' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           some text http://example.com some other text
         HTML
           some text <a href="http://example.com" rel="nofollow noreferrer noopener" target="_blank">http://example.com</a> some other text
@@ -1091,7 +1091,7 @@ RSpec.describe String do
       end
 
       it 'wraps valid URLs from <div> elements in <a> tags' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div>http://example.com</div>
         HTML
           <div>
@@ -1101,7 +1101,7 @@ RSpec.describe String do
       end
 
       it 'recognizes trailing dot as URL boundary' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div>http://example.com.</div>
         HTML
           <div>
@@ -1110,7 +1110,7 @@ RSpec.describe String do
       end
 
       it 'does not add a leading newline if <div> begins with non-URL text' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div>lala http://example.com.</div>
         HTML
           <div>lala <a href="http://example.com" rel="nofollow noreferrer noopener" target="_blank">http://example.com</a>.</div>
@@ -1118,7 +1118,7 @@ RSpec.describe String do
       end
 
       it 'recognizes trailing comma as URL boundary' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div>http://example.com, and so on</div>
         HTML
           <div>
@@ -1127,7 +1127,7 @@ RSpec.describe String do
       end
 
       it 'recognizes trailing comma as URL boundary (immediately following URL parameters)' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div>http://example.com?lala=me, and so on</div>
         HTML
           <div>
@@ -1136,7 +1136,7 @@ RSpec.describe String do
       end
 
       it 'strips <a> tags when no href is present' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <a name="_MailEndCompose"><span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,&quot;sans-serif&quot;;color:#44546A">Hello Mr Smith,<o:p></o:p></span></a>
         HTML
           <span style="color:#44546a;">Hello Mr Smith,</span>
@@ -1145,7 +1145,7 @@ RSpec.describe String do
 
       context 'when <a> inner text is HTML elements' do
         it 'leaves <img> elements as-is' do
-          expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+          expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
             <a href="http://example.com/?abc=123&123=abc" class="abc\n"\n><img src="cid:123"></a>
           HTML
             <a href="http://example.com/?abc=123&amp;123=abc" rel="nofollow noreferrer noopener" target="_blank" title="http://example.com/?abc=123&amp;123=abc"><img src="cid:123"></a>
@@ -1153,7 +1153,7 @@ RSpec.describe String do
         end
 
         it 'strips <span> tags, but not content' do
-          expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+          expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
             <a href="http://facebook.de/examplesrbog"><span lang="EN-US" style='color:blue'>http://facebook.de/examplesrbog</span></a>
           HTML
             <a href="http://facebook.de/examplesrbog" rel="nofollow noreferrer noopener" target="_blank"><span lang="EN-US" style="color:blue;">http://facebook.de/examplesrbog</span></a>
@@ -1161,7 +1161,7 @@ RSpec.describe String do
         end
 
         it 'also strips surrounding <span> and <o:p> tags' do
-          expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+          expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
             <span style="font-size:10.0pt;font-family:&quot;Cambria&quot;,serif;color:#1F497D;mso-fareast-language:DE">web&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <a href="http://www.example.com"><span style="color:blue">www.example.com</span></a><o:p></o:p></span>
           HTML
@@ -1172,7 +1172,7 @@ RSpec.describe String do
 
       context 'when <a> inner text and href do not match' do
         it 'adds title attr' do
-          expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+          expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
             <a href="http://example.com">http://what-different.example.com</a>
           HTML
             <a href="http://example.com" rel="nofollow noreferrer noopener" target="_blank" title="http://example.com">http://what-different.example.com</a>
@@ -1180,7 +1180,7 @@ RSpec.describe String do
         end
 
         it 'converts unsafe characters in href attr and title' do
-          expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+          expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
             <a href="http://example.com %22test%22">http://what-different.example.com</a>
           HTML
             <a href="http://example.com%20%22test%22" rel="nofollow noreferrer noopener" target="_blank" title="http://example.com%20%22test%22">http://what-different.example.com</a>
@@ -1188,7 +1188,7 @@ RSpec.describe String do
         end
 
         it 'does not add title attr (for different capitalization)' do
-          expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+          expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
             <a href="http://example.com">http://EXAMPLE.com</a>
           HTML
             <a href="http://example.com" rel="nofollow noreferrer noopener" target="_blank">http://EXAMPLE.com</a>
@@ -1196,7 +1196,7 @@ RSpec.describe String do
         end
 
         it 'does not add title attr (for URL-safe/unsafe characters)' do
-          expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+          expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
             <a href="http://example.com/?abc=123&123=abc">http://example.com?abc=123&amp;123=abc</a>
           HTML
             <a href="http://example.com/?abc=123&amp;123=abc" rel="nofollow noreferrer noopener" target="_blank">http://example.com?abc=123&amp;123=abc</a>
@@ -1206,7 +1206,7 @@ RSpec.describe String do
 
       context 'for email links' do
         it 'strips <a> tags' do
-          expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+          expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
             <a href="mailto:john.smith@example.com" style="color: blue; text-decoration: underline; ">john.smith@example.com</a>
           HTML
             <a href="mailto:john.smith@example.com">john.smith@example.com</a>
@@ -1214,7 +1214,7 @@ RSpec.describe String do
         end
 
         it 'strips <a> tags (even with upcased "MAILTO:")' do
-          expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+          expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
             <a href="MAILTO:john.smith@example.com" style="color: blue; text-decoration: underline; ">john.smith@example.com</a>
           HTML
             <a href="MAILTO:john.smith@example.com">john.smith@example.com</a>
@@ -1222,7 +1222,7 @@ RSpec.describe String do
         end
 
         it 'extracts destination address when it differs from <a> innertext' do
-          expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+          expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
             <a href="MAILTO:john.smith2@example.com" style="color: blue; text-decoration: underline; ">john.smith@example.com</a>
           HTML
             <a href="MAILTO:john.smith2@example.com">john.smith@example.com</a>
@@ -1234,7 +1234,7 @@ RSpec.describe String do
 
     context 'for <img> tags' do
       it 'removes color CSS rule from style attr' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <img src="/some.png" style="color: blue; width: 30px; height: 50px">
         HTML
           <img src="/some.png" style=" width: 30px; height: 50px;">
@@ -1242,7 +1242,7 @@ RSpec.describe String do
       end
 
       it 'converts width/height attrs to CSS rules' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <img src="/some.png" width="30px" height="50px">
         HTML
           <img src="/some.png" style="width:30px;height:50px;">
@@ -1250,7 +1250,7 @@ RSpec.describe String do
       end
 
       it 'automatically adds terminal semicolons to CSS rules' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <img style="width: 181px; height: 125px" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/...">
         HTML
           <img style="width: 181px; height: 125px;" src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/...">
@@ -1259,7 +1259,7 @@ RSpec.describe String do
 
       context 'when <img> nested in <a>, nested in <p>' do
         it 'sanitizes those elements as normal' do
-          expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+          expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
             <p class="MsoNormal"><a href="http://www.example.com/"><span style="color:blue;text-decoration:none"><img border="0" width="30" height="30" id="_x0000_i1030" src="cid:image001.png@01D172FC.F323CDB0"></span></a><o:p></o:p></p>
           HTML
             <p><a href="http://www.example.com/" rel="nofollow noreferrer noopener" target="_blank" title="http://www.example.com/"><span style="color:blue;"><img border="0" src="cid:image001.png@01D172FC.F323CDB0" style="width:30px;height:30px;"></span></a></p>
@@ -1270,7 +1270,7 @@ RSpec.describe String do
 
     context 'sample email input' do
       it 'handles sample input 1' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div>
           abc<p><b>Von:</b> Fritz Bauer [mailto:me@example.com] <br><b>Gesendet:</b> Donnerstag, 3. Mai 2012 11:51<br><b>An:</b> John Smith<br><b>Cc:</b> Smith, John Marian; johnel.fratczak@example.com; ole.brei@example.com; Günther John | Example GmbH; bkopon@example.com; john.heisterhagen@team.example.com; sven.rocked@example.com; michael.house@example.com; tgutzeit@example.com<br><b>Betreff:</b> Re: OTRS::XXX Erweiterung - Anhänge an CI's </p></div>
         HTML
@@ -1279,7 +1279,7 @@ RSpec.describe String do
       end
 
       it 'handles sample input 2' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div> abc<p> <b>Von:</b> Fritz Bauer [mailto:me@example.com] <br><b>Gesendet:</b> Donnerstag, 3. Mai 2012 11:51<br><b>An:</b> John Smith<br><b>Cc:</b> Smith, John Marian; johnel.fratczak@example.com; ole.brei@example.com; Günther John | Example GmbH; bkopon@example.com; john.heisterhagen@team.example.com; sven.rocked@example.com; michael.house@example.com; tgutzeit@example.com<br><b>Betreff:</b> Re: OTRS::XXX Erweiterung - Anhänge an CI's </p></div>
         HTML
           <div>abc<span class="js-signatureMarker"></span><p> <b>Von:</b> Fritz Bauer [mailto:me@example.com] <br><b>Gesendet:</b> Donnerstag, 3. Mai 2012 11:51<br><b>An:</b> John Smith<br><b>Cc:</b> Smith, John Marian; johnel.fratczak@example.com; ole.brei@example.com; Günther John | Example GmbH; bkopon@example.com; john.heisterhagen@team.example.com; sven.rocked@example.com; michael.house@example.com; tgutzeit@example.com<br><b>Betreff:</b> Re: OTRS::XXX Erweiterung - Anhänge an CI's </p></div>
@@ -1287,7 +1287,7 @@ RSpec.describe String do
       end
 
       it 'handles sample input 3' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div> abc<p> <b>Von:</b> Fritz Bauer [mailto:me@example.com] <br><b>Gesendet:</b> Donnerstag, 3. Mai 2012 11:51<br><b>An:</b> John Smith<br><b>Cc:</b> Smith, John Marian; johnel.fratczak@example.com; ole.brei@example.com; Günther John | Example GmbH; bkopon@example.com; john.heisterhagen@team.example.com; sven.rocked@example.com; michael.house@example.com; tgutzeit@example.com<br><b>Betreff:</b> Re: OTRS::XXX Erweiterung - Anhänge an CI's </p> </div>
         HTML
           <div>abc<span class="js-signatureMarker"></span><p> <b>Von:</b> Fritz Bauer [mailto:me@example.com] <br><b>Gesendet:</b> Donnerstag, 3. Mai 2012 11:51<br><b>An:</b> John Smith<br><b>Cc:</b> Smith, John Marian; johnel.fratczak@example.com; ole.brei@example.com; Günther John | Example GmbH; bkopon@example.com; john.heisterhagen@team.example.com; sven.rocked@example.com; michael.house@example.com; tgutzeit@example.com<br><b>Betreff:</b> Re: OTRS::XXX Erweiterung - Anhänge an CI's </p></div>
@@ -1295,7 +1295,7 @@ RSpec.describe String do
       end
 
       it 'handles sample input 4' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt; font-family: Arial, sans-serif; ">Mit freundlichem Gruß<span class="Apple-converted-space">&nbsp;</span><br><br>John Smith<br>Service und Support<br><br>Example Service AG &amp; Co.<o:p></o:p></span></div><div style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt; font-family: Arial, sans-serif; ">Management OHG<br>Someware-Str. 4<br>xxxxx Someware<br><br></span><span style="font-size: 10pt; font-family: Arial, sans-serif; "><o:p></o:p></span></div><div style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt; font-family: Arial, sans-serif; ">Tel.: +49 001 7601 462<br>Fax: +49 001 7601 472</span><span style="font-size: 10pt; font-family: Arial, sans-serif; "><o:p></o:p></span></div><div style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt; font-family: Arial, sans-serif; "><a href="mailto:john.smith@example.com" style=color: blue; text-decoration: underline; ">john.smith@example.com</a></span><span style="font-size: 10pt; font-family: Arial, sans-serif; "><o:p></o:p></span></div><div style="margin-top: 0cm; margin-right: 0cm; margin-left: 0cm; margin-bottom: 0.0001pt; font-size: 11pt; font-family: Calibri, sans-serif; "><span style="font-size: 10pt; font-family: Arial, sans-serif; "><a href="http://www.example.com" style="color: blue; text-decoration: underline; ">www.example.com</a></span><span style="font-size: 10pt; font-family: Arial, sans-serif; "><o:p></o:p></span></div>
         HTML
           <div><span>Mit freundlichem Gruß <br><br>John Smith<br>Service und Support<br><br>Example Service AG &amp; Co.</span></div><div>
@@ -1311,7 +1311,7 @@ RSpec.describe String do
       end
 
       it 'handles sample input 5' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <body lang="DE" link="blue" vlink="purple"><div class="WordSection1">
           <p class="MsoNormal"><span style="color:#1F497D">Guten Morgen, Frau ABC,<o:p></o:p></span></p>
           <p class="MsoNormal"><span style="color:#1F497D"><o:p>&nbsp;</o:p></span></p>
@@ -1341,7 +1341,7 @@ RSpec.describe String do
       end
 
       it 'handles sample input 6' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <p class="MsoNormal"><span style="color:#1F497D"><o:p>&nbsp;</o:p></span></p>
           <div>
           <div style="border:none;border-top:solid #B5C4DF 1.0pt;padding:3.0pt 0cm 0cm 0cm">
@@ -1367,7 +1367,7 @@ RSpec.describe String do
       end
 
       it 'handles sample input 7' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div class="">Wir brauchen also die Instanz <a href="http://example.zammad.com" class="">example.zammad.com</a>, kann die aber nicht mehr nutzen.</div><div class=""><br class=""></div><div class="">Bitte um Freischaltung.</div><div class=""><br class=""></div><div class=""><br class=""><div class="">
         HTML
           <div>Wir brauchen also die Instanz <a href="http://example.zammad.com" rel="nofollow noreferrer noopener" target="_blank">example.zammad.com</a>, kann die aber nicht mehr nutzen.</div><div>&nbsp;</div><div>Bitte um Freischaltung.</div><div>&nbsp;</div>
@@ -1375,7 +1375,7 @@ RSpec.describe String do
       end
 
       it 'handles sample input 8' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif;color:#1F497D;mso-fareast-language:EN-US">oh jeee … Zauberwort vergessen ;-) Können Sie mir
           <b>bitte</b> noch meine Testphase verlängern?<o:p></o:p></span></p>
           <p class="MsoNormal"><span style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif;color:#1F497D;mso-fareast-language:EN-US"><o:p>&nbsp;</o:p></span></p>
@@ -1385,7 +1385,7 @@ RSpec.describe String do
       end
 
       it 'handles sample input 9' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div><a href="http://www.example.com/Community/Passwort-Vergessen/?module_fnc=ChangeForgotPassword&amp;pwchangekey=secret_key" title="http://www.example.com/Community/Passwort-Vergessen/?module_fnc%5BextranetHandler%5D=ChangeForgotPassword&amp;pwchangekey=secret_key" rel="nofollow" target="_blank">http://www.example.com/Community/Passwort-Vergessen/?module_fnc%5BextranetHandler%5D=ChangeForgotPassword&amp;pwchangekey=secret_key</a></div>
         HTML
           <div><a href="http://www.example.com/Community/Passwort-Vergessen/?module_fnc=ChangeForgotPassword&amp;pwchangekey=secret_key" title="http://www.example.com/Community/Passwort-Vergessen/?module_fnc%5BextranetHandler%5D=ChangeForgotPassword&amp;pwchangekey=secret_key" rel="nofollow noreferrer noopener" target="_blank">http://www.example.com/Community/Passwort-Vergessen/?module_fnc%5BextranetHandler%5D=ChangeForgotPassword&amp;pwchangekey=secret_key</a></div>
@@ -1393,7 +1393,7 @@ RSpec.describe String do
       end
 
       it 'handles sample input 10' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <tr style="height: 15pt;" class=""><td width="170" nowrap="" valign="bottom" style="width: 127.5pt; border-style: none none none solid; border-left-width: 1pt; border-left-color: windowtext; padding: 0cm 5.4pt; height: 15pt;" class=""><p class="MsoNormal" align="center" style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 'Times New Roman', serif; text-align: center;"><span style="" class="">&nbsp;</span></p></td><td width="58" nowrap="" valign="bottom" style="width: 43.5pt; padding: 0cm 5.4pt; height: 15pt;" class=""><div style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 'Times New Roman', serif; text-align: center;" class=""><span style="" class="">20-29</span></div></td><td width="47" nowrap="" valign="bottom" style="width: 35pt; background-color: rgb(255, 199, 206); padding: 0cm 5.4pt; height: 15pt; background-position: initial initial; background-repeat: initial initial;" class=""><div style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 'Times New Roman', serif; text-align: center;" class=""><span style="color: rgb(156, 0, 6);" class="">200</span></div></td><td width="76" nowrap="" valign="bottom" style="width: 57pt; background-color: rgb(255, 199, 206); padding: 0cm 5.4pt; height: 15pt; background-position: initial initial; background-repeat: initial initial;" class=""><div style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 'Times New Roman', serif; text-align: center;" class=""><span style="color: rgb(156, 0, 6);" class="">-1</span></div></td><td width="76" nowrap="" valign="bottom" style="width: 57pt; border-style: none solid none none; border-right-width: 1pt; border-right-color: windowtext; background-color: rgb(255, 199, 206); padding: 0cm 5.4pt; height: 15pt; background-position: initial initial; background-repeat: initial initial;" class=""><div style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 'Times New Roman', serif; text-align: center;" class=""><span style="color: rgb(156, 0, 6);" class="">201</span></div></td><td width="107" nowrap="" valign="bottom" style="width: 80pt; padding: 0cm 5.4pt; height: 15pt;" class=""></td><td width="85" nowrap="" valign="bottom" style="width: 64pt; padding: 0cm 5.4pt; height: 15pt;" class=""></td><td width="101" nowrap="" valign="bottom" style="width: 76pt; border-style: none solid solid; border-left-width: 1pt; border-left-color: windowtext; border-bottom-width: 1pt; border-bottom-color: gray; border-right-width: 1pt; border-right-color: gray; background-color: rgb(242, 242, 242); padding: 0cm 5.4pt; height: 15pt; background-position: initial initial; background-repeat: initial initial;" class=""><div style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 'Times New Roman', serif; text-align: center;" class=""><b class=""><span style="font-size: 10pt; font-family: Arial, sans-serif;" class="">country</span></b><span style="font-size: 11pt; font-family: Calibri, sans-serif;" class=""></span></div></td><td width="87" nowrap="" valign="bottom" style="width: 65pt; border-style: none solid solid none; border-bottom-width: 1pt; border-bottom-color: gray; border-right-width: 1pt; border-right-color: gray; background-color: rgb(242, 242, 242); padding: 0cm 5.4pt; height: 15pt; background-position: initial initial; background-repeat: initial initial;" class=""><div style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 'Times New Roman', serif; text-align: center;" class=""><span style="font-size: 10pt; font-family: Arial, sans-serif;" class="">Target (gross)</span></div></td><td width="123" nowrap="" valign="bottom" style="width: 92pt; border-style: none solid solid none; border-bottom-width: 1pt; border-bottom-color: gray; border-right-width: 1pt; border-right-color: gray; background-color: rgb(242, 242, 242); padding: 0cm 5.4pt; height: 15pt; background-position: initial initial; background-repeat: initial initial;" class=""><div style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 'Times New Roman', serif; text-align: center;" class=""><span style="font-size: 10pt; font-family: Arial, sans-serif;" class="">Remaining Recruits</span></div></td><td width="87" nowrap="" valign="bottom" style="width: 65pt; border-style: none solid solid none; border-bottom-width: 1pt; border-bottom-color: gray; border-right-width: 1pt; border-right-color: windowtext; background-color: rgb(242, 242, 242); padding: 0cm 5.4pt; height: 15pt; background-position: initial initial; background-repeat: initial initial;" class=""><div style="margin: 0cm 0cm 0.0001pt; font-size: 12pt; font-family: 'Times New Roman', serif; text-align: center;" class=""><span style="font-size: 10pt; font-family: Arial, sans-serif;" class="">Total Recruits</span></div></td></tr>
         HTML
           <tr>
@@ -1415,7 +1415,7 @@ RSpec.describe String do
       end
 
       it 'handles sample input 11' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div style="line-height:1.7;color:#000000;font-size:14px;font-family:Arial"><div>Dear Bob<span style="line-height: 23.8px;">:</span><span style="color: rgb(255, 255, 255); line-height: 1.7;">Mr/Mrs</span></div><div><br></div><div><span style="line-height: 1.7;">We&nbsp;are&nbsp;one&nbsp;of&nbsp;the&nbsp;leading&nbsp;manufacturer&nbsp;and&nbsp;supplier&nbsp;of&nbsp;</span>conduits and cars since 3000.</div><div><br></div><div>Could you inform me the specification you need?</div><div><br></div><div>May I sent you our products catalogues for your reference?</div><div><br></div><div><img src="cid:5cb2783c$1$15ae9b384c8$Coremail$zhanabcdzhao$example.com" orgwidth="1101" orgheight="637" data-image="1" style="width: 722.7px; height: 418px; border: none;"></div><div>Best regards!</div><div><br></div><div><b style="line-height: 1.7;"><i><u><span lang="EL" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif;color:#17365D;\nmso-ansi-language:EL">Welcome to our booth B11/1 Hall 13 during SOMEWHERE\n9999.</span></u></i></b></div><div style="position:relative;zoom:1"><div>Bob Smith</div><div><div>Exp. &amp; Imp.</div><div>Town Example Electric Co., Ltd.</div><div>Tel: 0000-11-12345678 (Ext-220) &nbsp;Fax: 0000-11-12345678&nbsp;</div><div><span style="color:#17365d;">Room1234, NO. 638, Smith Road, Town, 200000, Somewhere</span></div><div>Web: www.example.com</div></div><div style="clear:both"></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div></div>
         HTML
           <div>\n<div>Dear Bob:<span style="color: rgb(255, 255, 255);">Mr/Mrs</span>
@@ -1424,7 +1424,7 @@ RSpec.describe String do
       end
 
       it 'handles sample input 12' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <li><a style="font-size:15px; font-family:Arial;color:#0f7246" class="text_link" href="http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnY25pLGUsdXJ0b3NVTGVpNWZ8fGZh"><span style="color: rgb(0, 0, 0);">Luxemburg</span></a></li>
         HTML
           <li><a href="http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnY25pLGUsdXJ0b3NVTGVpNWZ8fGZh" rel="nofollow noreferrer noopener" target="_blank" title="http://business-catalogs.example.com/ODtpbGs5MWIzbjUyYzExLTA4Yy06Mmg7N3AvL3R0bmFvY3B0LXlhbW9sc2Nhb3NnYy5lL3RpbXJlZi9lbS9ycnJuaWFpZXMsdGxnY25pLGUsdXJ0b3NVTGVpNWZ8fGZh">Luxemburg</a></li>
@@ -1433,7 +1433,7 @@ RSpec.describe String do
 
       # https://github.com/zammad/zammad/issues/4112
       it 'converts lists from MS Outlook correctly' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <p class="MsoPlainText" style="margin-left:36.0pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1">
           <![if !supportLists]><span style="font-family:Symbol;mso-fareast-language:EN-US"><span style="mso-list:Ignore">Â·<span style="font:7.0pt &quot;Times New Roman&quot;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
           </span></span></span><![endif]><span style="mso-fareast-language:EN-US">1<o:p></o:p></span></p>
@@ -1447,7 +1447,7 @@ RSpec.describe String do
 
       # https://github.com/zammad/zammad/issues/4184
       it 'deletes downlevel revealed conditional comments' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <p class="MsoPlainText" style="margin-left:36.0pt;text-indent:-18.0pt;mso-list:l0 level1 lfo1">
           <![if !vml]><img width="52" height="52" src="cid:image001.png@01D8AC0A.08251CD0" v:shapes="Picture_x0020_1"><![endif]>
           <span style="font-size:9.0pt;font-family:&quot;Arial&quot;,sans-serif;color:black;mso-fareast-language:EN-AU">dummy1</span>
@@ -1465,11 +1465,11 @@ RSpec.describe String do
       let(:marker) { '<span class="js-signatureMarker"></span>' }
 
       it 'does not trim trailing whitespace and keeps the signature block working' do
-        expect('Hello<br><br>-- <br>This is the signature'.html2html_strict).to eq("Hello<br>#{marker}<br>-- <br>This is the signature")
+        expect('Hello<br><br>-- <br>This is the signature'.html2html_strict.first).to eq("Hello<br>#{marker}<br>-- <br>This is the signature")
       end
 
       it 'places marker before "--" line (surrounded by <br>)' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           lalala<br>--<br>Max Mix
         HTML
           lalala#{marker}<br>--<br>Max Mix
@@ -1477,7 +1477,7 @@ RSpec.describe String do
       end
 
       it 'places marker before "--" line (surrounded by <br/>)' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           lalala<br/>--<br/>Max Mix
         HTML
           lalala#{marker}<br>--<br>Max Mix
@@ -1485,7 +1485,7 @@ RSpec.describe String do
       end
 
       it 'places marker before "--" line (preceded by <br/>\n)' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           lalala<br/>
           --<br/>Max Mix
         HTML
@@ -1494,7 +1494,7 @@ RSpec.describe String do
       end
 
       it 'places marker before "--" line (surrounded by <p>)' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           lalala<p>--</p>Max Mix
         HTML
           lalala#{marker}<p>--</p>Max Mix
@@ -1502,7 +1502,7 @@ RSpec.describe String do
       end
 
       it 'places marker before "__" line (surrounded by <br>)' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           lalala<br>__<br>Max Mix
         HTML
           lalala#{marker}<br>__<br>Max Mix
@@ -1510,7 +1510,7 @@ RSpec.describe String do
       end
 
       it 'places marker before quoted reply’s "Von:" header (in German)' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           den.<br><br><b>Von:</b> Fritz Bauer [mailto:me@example.com]<br><b>Gesendet:</b> Donnerstag, 3. Mai 2012 11:51<br><b>An:</b> John Smith<br><b>Cc:</b> Smith, John Marian; johnel.fratczak@example.com; ole.brei@example.com; Günther John | Example GmbH; bkopon@example.com; john.heisterhagen@team.example.com; sven.rocked@example.com; michael.house@example.com; tgutzeit@example.com<br><b>Betreff:</b> Re: OTRS::XXX Erweiterung - Anhänge an CI's<br><br>Hello,<br><br>ich versuche an den Punkten
         HTML
           den.<br>#{marker}<br><b>Von:</b> Fritz Bauer [mailto:me@example.com]<br><b>Gesendet:</b> Donnerstag, 3. Mai 2012 11:51<br><b>An:</b> John Smith<br><b>Cc:</b> Smith, John Marian; johnel.fratczak@example.com; ole.brei@example.com; Günther John | Example GmbH; bkopon@example.com; john.heisterhagen@team.example.com; sven.rocked@example.com; michael.house@example.com; tgutzeit@example.com<br><b>Betreff:</b> Re: OTRS::XXX Erweiterung - Anhänge an CI's<br><br>Hello,<br><br>ich versuche an den Punkten
@@ -1518,7 +1518,7 @@ RSpec.describe String do
       end
 
       it 'places marker before quoted reply’s "Von:" header (as <p> with stripped parent <div>)' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div><div style="border:none;border-top:solid #e1e1e1 1.0pt;padding:3.0pt 0cm 0cm 0cm"><p class="MsoNormal"><b><span lang="DE" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif">Von:</span></b><span lang="DE" style="font-size:11.0pt;font-family:&quot;Calibri&quot;,sans-serif"> Martin Edenhofer via Zammad Helpdesk [mailto:<a href="mailto:support@example.com">support@zammad.com</a>] <br><b>Gesendet:</b>\u0020
         HTML
           <div>#{marker}<p><b><span lang="DE">Von:</span></b><span lang="DE"> Martin Edenhofer via Zammad Helpdesk [mailto:<a href="mailto:support@example.com">support@zammad.com</a>] <br><b>Gesendet:</b> </span></p></div>
@@ -1526,7 +1526,7 @@ RSpec.describe String do
       end
 
       it 'places marker before quoted reply’s "Von:" header (as <p> with parent <div>)' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div style="border:none;border-top:solid #B5C4DF 1.0pt;padding:3.0pt 0cm 0cm 0cm">
           <p class="MsoNormal" style="margin-left:35.4pt"><b><span style="font-family:Calibri;color:black">Von:
           </span></b><span style="font-family:Calibri;color:black">Johanna Kiefer via Zammad Projects &lt;projects@example.com&gt;<br>
@@ -1541,7 +1541,7 @@ RSpec.describe String do
       end
 
       it 'places marker before quoted reply’s "Von:" header (as <div>)' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div><br>
           <br>
           <br><font size=1 color=#5f5f5f face="sans-serif">Von: &nbsp; &nbsp; &nbsp;
@@ -1554,7 +1554,7 @@ RSpec.describe String do
       end
 
       it 'places marker before English quoted text intro (as <blockquote>)' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <br class=""><div><blockquote type="cite" class=""><div class="">On 04 Mar 2017, at 14:47, Oliver Ruhm &lt;<a href="mailto:oliver@example.com" class="">oliver@example.com</a>&gt; wrote:</div><br class="Apple-interchange-newline">
         HTML
           <div>#{marker}<blockquote type="cite">
@@ -1564,7 +1564,7 @@ RSpec.describe String do
       end
 
       it 'does not place marker if blockquote doesn’t contain a quoted text intro' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <br class=""><div><blockquote type="cite" class=""><div class="">some note</div><br class="Apple-interchange-newline">
         HTML
           <div><blockquote type="cite">
@@ -1574,7 +1574,7 @@ RSpec.describe String do
       end
 
       it 'does not place marker if quoted text intro isn’t followed by a <blockquote>' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div>
           <br> Am 17.03.2017 um 17:03 schrieb Martin Edenhofer via Zammad Helpdesk &lt;support@example.com&gt;:<br>
           <br>
@@ -1588,7 +1588,7 @@ RSpec.describe String do
       end
 
       it 'places marker before German quoted text intro (before <blockquote>)' do
-        expect(<<~HTML.chomp.html2html_strict).to eq(<<~TEXT.chomp)
+        expect(<<~HTML.chomp.html2html_strict.first).to eq(<<~TEXT.chomp)
           <div>
           <br> Am 17.03.2017 um 17:03 schrieb Martin Edenhofer via Zammad Helpdesk &lt;support@example.com&gt;:<br>
           <br>
