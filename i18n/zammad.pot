@@ -1909,6 +1909,10 @@ msgstr ""
 msgid "Block caller IDs based on sender caller ID."
 msgstr ""
 
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue
+msgid "Blocked Content"
+msgstr ""
+
 #: app/assets/javascripts/app/models/chat.coffee
 msgid "Blocked IPs (separated by ;)"
 msgstr ""
@@ -5680,6 +5684,11 @@ msgstr ""
 msgid "For more details, please check out our online documentation %l."
 msgstr ""
 
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue
+msgid "For privacy reasons, Zammad has blocked remote content in this message. You can retrieve it from the original formatting."
+msgstr ""
+
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco
 msgid "For security reasons, the API token is shown only once. You'll need to save it somewhere secure before continuing."
 msgstr ""
@@ -9102,7 +9111,9 @@ msgid "Origin By"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue
 msgid "Original Formatting"
 msgstr ""
 

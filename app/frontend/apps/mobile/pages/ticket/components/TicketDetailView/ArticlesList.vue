@@ -44,6 +44,24 @@ const filterAttachments = (article: TicketArticle) => {
   )
 }
 
+const remoteContentWarning = (article: TicketArticle): string | undefined => {
+  if (!article.preferences?.remote_content_removed) return
+
+  let originalFormattingUrl
+
+  article.attachmentsWithoutInline.forEach((file) => {
+    if (file.preferences?.['original-format'] !== true) {
+      return
+    }
+    const articleInternalId = article.internalId
+    const attachmentInternalId = file.internalId
+    const ticketInternalId = props.ticket.internalId
+    originalFormattingUrl = `/ticket_attachment/${ticketInternalId}/${articleInternalId}/${attachmentInternalId}?disposition=attachment`
+  })
+
+  return originalFormattingUrl
+}
+
 const { newArticlesIds } = useTicketInformation()
 
 const markSeen = (id: string) => {
@@ -71,6 +89,7 @@ const markSeen = (id: string) => {
         :ticket-internal-id="ticket.internalId"
         :article-id="row.article.id"
         :attachments="filterAttachments(row.article)"
+        :remote-content-warning="remoteContentWarning(row.article)"
         @seen="markSeen(row.key)"
         @show-context="showArticleContext(row.article, ticket)"
       />

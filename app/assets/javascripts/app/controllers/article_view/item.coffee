@@ -15,15 +15,16 @@ class App.ArticleViewItem extends App.ControllerObserver
     '.textBubble-overflowContainer': 'textBubbleOverflowContainer'
 
   events:
-    'click .article-meta-permanent':  'toggleMetaWithDelay'
-    'click .textBubble':              'toggleMetaWithDelay'
-    'click .textBubble a':            'stopPropagation'
-    'click .js-toggleFold':           'toggleFold'
-    'click .richtext-content img':    'imageView'
-    'click .attachments img':         'imageView'
-    'click .file-calendar .js-preview':  'calendarView'
-    'click .js-securityRetryProcess': 'retrySecurityProcess'
+    'click .article-meta-permanent':             'toggleMetaWithDelay'
+    'click .textBubble':                         'toggleMetaWithDelay'
+    'click .textBubble a':                       'stopPropagation'
+    'click .js-toggleFold':                      'toggleFold'
+    'click .richtext-content img':               'imageView'
+    'click .attachments img':                    'imageView'
+    'click .file-calendar .js-preview':          'calendarView'
+    'click .js-securityRetryProcess':            'retrySecurityProcess'
     'click .js-retryWhatsAppAttachmentDownload': 'retryWhatsAppAttachmentDownload'
+    'click .js-fetchOriginalFormatting':         'fetchOriginalFormatting'
 
   constructor: ->
     super
@@ -82,8 +83,9 @@ class App.ArticleViewItem extends App.ControllerObserver
         attachment.preview_url = "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}?view=preview"
 
         if attachment && attachment.preferences && attachment.preferences['original-format'] is true
+          @originalFormattingURL = "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}?disposition=attachment"
           link =
-              url: "#{App.Config.get('api_path')}/ticket_attachment/#{article.ticket_id}/#{article.id}/#{attachment.id}?disposition=attachment"
+              url: @originalFormattingURL
               name: __('Original Formatting')
               target: '_blank'
           links.push link
@@ -319,6 +321,18 @@ class App.ArticleViewItem extends App.ControllerObserver
           type: 'error'
           msg:  App.i18n.translateContent(details.error)
     )
+
+  fetchOriginalFormatting: (e) ->
+    return if not @originalFormattingURL
+
+    e.preventDefault()
+    e.stopPropagation()
+
+    originalFormattingLink = document.createElement('a')
+    originalFormattingLink.href = @originalFormattingURL
+    originalFormattingLink.target = '_blank'
+    originalFormattingLink.click()
+    originalFormattingLink.remove()
 
   stopPropagation: (e) ->
     e.stopPropagation()

@@ -82,6 +82,21 @@ RSpec.describe HtmlSanitizer::Scrubber::Wipe do
       let(:target) { '' }
 
       it { is_expected.to eq target }
+
+      it 'does not mark remote content as removed' do
+        expect { actual }.not_to change(scrubber, :remote_content_removed)
+      end
+    end
+
+    context 'when has an image with a proper link' do
+      let(:input)  { '<img style="width:100%" src="https://zammad.org/dummy.png">' }
+      let(:target) { '' }
+
+      it { is_expected.to eq target }
+
+      it 'does mark remote content as removed' do
+        expect { actual }.to change(scrubber, :remote_content_removed).from(false).to(true)
+      end
     end
   end
 end

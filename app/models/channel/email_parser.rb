@@ -301,6 +301,9 @@ returns
       # x-headers lookup
       set_attributes_by_x_headers(article, 'article', mail)
 
+      # Store additional information in preferences, e.g. if remote content got removed.
+      article.preferences.merge!(mail[:sanitized_body_info])
+
       # create article
       article.save!
 
@@ -626,7 +629,7 @@ returns
   def message_body_hash(mail)
     if mail.html_part&.body.present?
       content_type = mail.html_part.mime_type || 'text/plain'
-      body = body_text(mail.html_part, strict_html: true)
+      (body, sanitized_body_info) = body_text(mail.html_part, strict_html: true)
     elsif mail.text_part.present? && mail.all_parts.any? { |elem| elem.inline? && elem.content_type&.start_with?('image') }
       content_type = 'text/html'
 
@@ -634,7 +637,7 @@ returns
         .all_parts
         .reduce('') do |memo, part|
           if part.mime_type == 'text/plain' && !part.attachment?
-            memo += body_text(part, strict_html: false).text2html
+            memo += body_text(part, strict_html: false).first.text2html
           elsif part.inline? && part.content_type&.start_with?('image')
             memo += "<img src='cid:#{part.cid}'>"
           end
@@ -648,22 +651,23 @@ returns
         .all_parts
         .reduce('') do |memo, part|
           if part.mime_type == 'text/plain' && !part.attachment?
-            memo += body_text(part, strict_html: false)
+            memo += body_text(part, strict_html: false).first
           end
 
           memo
         end
     elsif mail&.body.present? && (mail.mime_type.nil? || mail.mime_type.match?(%r{^text/(plain|html)$}))
       content_type = mail.mime_type || 'text/plain'
-      body = body_text(mail, strict_html: content_type.eql?('text/html'))
+      (body, sanitized_body_info) = body_text(mail, strict_html: content_type.eql?('text/html'))
     end
 
     content_type = 'text/plain' if body.blank?
 
     {
-      attachments:  collect_attachments(mail),
-      content_type: content_type || 'text/plain',
-      body:         body.presence || 'no visible content'
+      attachments:         collect_attachments(mail),
+      content_type:        content_type || 'text/plain',
+      body:                body.presence || 'no visible content',
+      sanitized_body_info: sanitized_body_info || {},
     }.with_indifferent_access
   end
 
@@ -678,10 +682,10 @@ returns
     body_text = Mail::Utilities.to_lf(body_text)
 
     # plaintext body requires no processing
-    return body_text if !options[:strict_html]
+    return [body_text, {}] if !options[:strict_html]
 
     # Issue #2390 - emails with >5k HTML links should be rejected
-    return EXCESSIVE_LINKS_MSG if body_text.scan(%r{<a[[:space:]]}i).count >= 5_000
+    return [EXCESSIVE_LINKS_MSG, {}] if body_text.scan(%r{<a[[:space:]]}i).count >= 5_000
 
     body_text.html2html_strict
   end
@@ -719,7 +723,7 @@ returns
     }.compact_blank
 
     [{
-      data:        body_text(message),
+      data:        body_text(message).first,
       filename:    filename,
       preferences: headers_store
     }]
