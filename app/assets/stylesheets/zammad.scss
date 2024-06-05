@@ -12846,6 +12846,8 @@ output {
 }
 
 .richtext-content {
+  overflow-x: auto;
+
   &[contenteditable] {
     &,
     &:hover,
