@@ -574,7 +574,7 @@ const formSchema = [
     props: {
       clearable: true,
       gqlQuery: gql`
-        query autocompleteSearchUser($input: AutocompleteSearchInput!) {
+        query autocompleteSearchUser($input: AutocompleteSearchUserInput!) {
           autocompleteSearchUser(input: $input) {
             value
             label
@@ -591,6 +591,23 @@ const formSchema = [
     label: 'Agent',
     props: {
       clearable: true,
+    },
+  },
+  {
+    type: 'organization',
+    name: 'organization',
+    label: 'Organization',
+    props: {
+      clearable: true,
+      options: [
+        {
+          value: 1,
+          label: 'Zammad Foundation',
+          organization: {
+            active: true,
+          },
+        },
+      ],
     },
   },
   {

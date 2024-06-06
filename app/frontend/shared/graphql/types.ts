@@ -4315,8 +4315,6 @@ export type FormUploadCacheRemoveMutationVariables = Exact<{
 
 export type FormUploadCacheRemoveMutation = { __typename?: 'Mutations', formUploadCacheRemove?: { __typename?: 'FormUploadCacheRemovePayload', success: boolean } | null };
 
-export type OrganizationAttributesFragment = { __typename?: 'Organization', id: string, internalId: number, name?: string | null, shared?: boolean | null, domain?: string | null, domainAssignment?: boolean | null, active?: boolean | null, note?: string | null, vip?: boolean | null, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null };
-
 export type OrganizationMembersFragment = { __typename?: 'Organization', members?: { __typename?: 'UserConnection', totalCount: number, edges: Array<{ __typename?: 'UserEdge', node: { __typename?: 'User', id: string, internalId: number, image?: string | null, firstname?: string | null, lastname?: string | null, fullname?: string | null, outOfOffice?: boolean | null, outOfOfficeStartAt?: string | null, outOfOfficeEndAt?: string | null, active?: boolean | null, vip?: boolean | null } }> } | null };
 
 export type OrganizationUpdateMutationVariables = Exact<{
@@ -4612,6 +4610,8 @@ export type OnlineNotificationsCountSubscriptionVariables = Exact<{
 
 
 export type OnlineNotificationsCountSubscription = { __typename?: 'Subscriptions', onlineNotificationsCount: { __typename?: 'OnlineNotificationsCountPayload', unseenCount: number } };
+
+export type OrganizationAttributesFragment = { __typename?: 'Organization', id: string, internalId: number, name?: string | null, shared?: boolean | null, domain?: string | null, domainAssignment?: boolean | null, active?: boolean | null, note?: string | null, vip?: boolean | null, ticketsCount?: { __typename?: 'TicketCount', open: number, closed: number } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null };
 
 export type PublicLinksQueryVariables = Exact<{
   screen: EnumPublicLinksScreen;

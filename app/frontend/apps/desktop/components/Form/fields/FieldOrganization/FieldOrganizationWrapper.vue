@@ -1,19 +1,14 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
-import { defineAsyncComponent, markRaw } from 'vue'
+import { markRaw } from 'vue'
 
 import useFormFieldOrganizationInitialOptionBuilder from '#shared/components/Form/fields/FieldOrganization/composables/useFieldOrganizationInitialOptionBuilder.ts'
 import { AutocompleteSearchOrganizationDocument } from '#shared/components/Form/fields/FieldOrganization/graphql/queries/autocompleteSearch/organization.api.ts'
 import type { AutocompleteOrganizationProps } from '#shared/components/Form/fields/FieldOrganization/types.ts'
 
-import FieldOrganizationOptionIcon from './FieldOrganizationOptionIcon.vue'
+import FieldAutoCompleteInput from '../FieldAutoComplete/FieldAutoCompleteInput.vue'
 
-const FieldAutoCompleteInput = defineAsyncComponent(
-  () =>
-    import(
-      '#mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue'
-    ),
-)
+import FieldOrganizationOptionIcon from './FieldOrganizationOptionIcon.vue'
 
 const props = defineProps<AutocompleteOrganizationProps>()
 

@@ -1,7 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import { OrganizationAttributesFragmentDoc } from '../../../../../../../../apps/mobile/entities/organization/graphql/fragments/organizationAttributes.api';
+import { OrganizationAttributesFragmentDoc } from '../../../../../../../entities/organization/graphql/organizationAttributes.api';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
