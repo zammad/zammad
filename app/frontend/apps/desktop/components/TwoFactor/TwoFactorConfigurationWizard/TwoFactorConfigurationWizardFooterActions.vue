@@ -6,13 +6,9 @@ import { toRef } from 'vue'
 import { useForm } from '#shared/components/Form/useForm.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import type { ActionFooterOptions as Props } from '#desktop/components/CommonFlyout/types.ts'
 
-import type { ActionFooterOptions as Props } from './types.ts'
-
-const props = withDefaults(defineProps<Props>(), {
-  actionLabel: __('Update'),
-  cancelLabel: __('Cancel & Go Back'),
-})
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
   cancel: []
@@ -31,20 +27,11 @@ const execute = () => {
 </script>
 
 <template>
-  <div class="flex items-center justify-end gap-2">
-    <CommonButton
-      v-if="!hideCancelButton"
-      size="large"
-      :disabled="isDisabled || cancelButton?.disabled"
-      :prefix-icon="cancelButton?.prefixIcon"
-      :variant="cancelButton?.variant || 'secondary'"
-      @click="cancel()"
-    >
-      {{ $t(cancelLabel) }}
-    </CommonButton>
+  <div class="flex flex-col gap-3">
     <CommonButton
       v-if="!hideActionButton"
       size="large"
+      block
       :disabled="isDisabled || actionButton?.disabled"
       :form="formNodeId"
       :type="actionButton?.type"
@@ -52,7 +39,18 @@ const execute = () => {
       :variant="actionButton?.variant || 'submit'"
       @click="execute()"
     >
-      {{ $t(actionLabel) }}
+      {{ $t(actionLabel) || 'Submit' }}
+    </CommonButton>
+    <CommonButton
+      v-if="!hideCancelButton"
+      size="large"
+      block
+      :disabled="isDisabled || cancelButton?.disabled"
+      :prefix-icon="cancelButton?.prefixIcon"
+      :variant="cancelButton?.variant || 'secondary'"
+      @click="cancel()"
+    >
+      {{ $t(cancelLabel) }}
     </CommonButton>
   </div>
 </template>

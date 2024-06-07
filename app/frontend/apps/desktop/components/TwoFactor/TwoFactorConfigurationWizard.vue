@@ -1,16 +1,14 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { ref, computed, toRef } from 'vue'
+import { ref, computed } from 'vue'
 
-import { useForm } from '#shared/components/Form/useForm.ts'
 import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-
 import TwoFactorConfigurationMethodList from './TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue'
 import TwoFactorConfigurationRecoveryCodes from './TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue'
+import TwoFactorConfigurationWizardFooterActions from './TwoFactorConfigurationWizard/TwoFactorConfigurationWizardFooterActions.vue'
 
 import type {
   TwoFactorConfigurationActionPayload,
@@ -39,10 +37,6 @@ const activeComponent = computed(() => {
       return twoFactorMethodLookup[state.value].configurationOptions?.component
   }
 })
-
-const { isDisabled, formNodeId } = useForm(
-  toRef(activeComponentInstance.value?.footerActionOptions || {}, 'form'),
-)
 
 const footerActionOptions = computed(() => ({
   hideActionButton:
@@ -104,29 +98,10 @@ const cancel = () => {
     />
   </div>
   <div class="flex flex-col gap-3">
-    <CommonButton
-      v-if="!footerActionOptions.hideActionButton"
-      size="large"
-      block
-      :disabled="isDisabled || footerActionOptions.actionButton?.disabled"
-      :form="formNodeId"
-      :type="footerActionOptions.actionButton?.type"
-      :prefix-icon="footerActionOptions.actionButton?.prefixIcon"
-      :variant="footerActionOptions.actionButton?.variant || 'submit'"
-      @click="onFooterButtonAction()"
-    >
-      {{ $t(footerActionOptions.actionLabel) || 'Submit' }}
-    </CommonButton>
-    <CommonButton
-      v-if="!footerActionOptions.hideCancelButton"
-      size="large"
-      block
-      :disabled="isDisabled || footerActionOptions.cancelButton?.disabled"
-      :prefix-icon="footerActionOptions.cancelButton?.prefixIcon"
-      :variant="footerActionOptions.cancelButton?.variant || 'secondary'"
-      @click="cancel()"
-    >
-      {{ $t(footerActionOptions.cancelLabel) }}
-    </CommonButton>
+    <TwoFactorConfigurationWizardFooterActions
+      v-bind="footerActionOptions"
+      @action="onFooterButtonAction()"
+      @cancel="cancel()"
+    />
   </div>
 </template>

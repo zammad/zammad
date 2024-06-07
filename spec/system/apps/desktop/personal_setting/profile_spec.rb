@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Desktop > Account', app: :desktop_view, authenticated_as: :agent, type: :system do
+RSpec.describe 'Desktop > Personal Setting > Profile', app: :desktop_view, authenticated_as: :agent, type: :system do
   let(:agent) { create(:agent) }
 
   before do
@@ -37,47 +37,6 @@ RSpec.describe 'Desktop > Account', app: :desktop_view, authenticated_as: :agent
       find('label', text: 'Your language').click
       find('span', text: 'Deutsch').click
       expect(page).to have_text('Sprache')
-    end
-  end
-
-  describe 'password change' do
-    let(:agent) { create(:agent, password: 'test') }
-
-    it 'user can change password' do
-      click_on 'Profile settings'
-      click_on 'Password'
-
-      fill_in 'Current password', with: 'test'
-      fill_in 'New password', with: 'testTEST1234'
-      fill_in 'Confirm new password', with: 'testTEST1234'
-
-      click_on 'Change Password'
-
-      expect(page).to have_text('Password changed successfully')
-    end
-  end
-
-  describe 'token handling' do
-    let(:agent) { create(:admin) }
-
-    it 'user can create and use a token' do
-      click_on 'Profile settings'
-      click_on 'Token Access'
-
-      click_on 'New Personal Access Token'
-
-      fill_in 'Name', with: 'Test Token'
-
-      # Activate some permissions for the token
-      find('span', text: 'Configure your system.').click
-      find('span', text: 'Manage personal settings.').click
-
-      click_on 'Create'
-      wait_for_mutation('userCurrentAccessTokenAdd')
-
-      expect(Token.last.name).to eq('Test Token')
-      expect(Token.last.permissions.map(&:name)).to eq(%w[admin user_preferences])
-      expect(Token.last.check?).to be(true)
     end
   end
 
