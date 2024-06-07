@@ -18,10 +18,10 @@ class Zammad::TranslationCatalog::Extractor::ViewTemplates < Zammad::Translation
   end
 
   def find_files
-    files = []
-    %w[mailer messaging].each do |dir|
-      files += Dir.glob("#{base_path}/app/views/#{dir}/*/en.*.erb")
-    end
-    files
+    %w[mailer messaging]
+      .map do |dir|
+        Dir.glob("#{base_path}/app/views/#{dir}/*/en.*.erb")
+      end
+      .flatten
   end
 end
