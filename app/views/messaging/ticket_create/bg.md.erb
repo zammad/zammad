@@ -1,7 +1,7 @@
 # #{ticket.title}
 _<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Билет##{ticket.number}>: Създаден от #{current_user.longname} на #{ticket.updated_at}_
 * Група: #{ticket.group.name}
-* Притежател: #{ticket.owner.fullname}
+* Титуляр: #{ticket.owner.fullname}
 * Състояние: #{t(ticket.state.name)}
 
 <% if @objects[:article] %>
