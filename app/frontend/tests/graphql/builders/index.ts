@@ -394,7 +394,10 @@ const generateObject = (
   if (defaults === null) return null
   const type = definition.name
   const value = defaults ? { ...defaults } : {}
-  value.__typename = type
+
+  // Set the typename, if not already set by mocked value.
+  value.__typename = value.__typename ?? type
+
   populateObjectFromVariables(value, meta)
   setNodeParent(value, parent)
   const cached = getFromCache(value, meta)

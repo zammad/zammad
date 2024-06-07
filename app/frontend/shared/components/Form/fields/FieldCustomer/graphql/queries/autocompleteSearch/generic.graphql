@@ -1,0 +1,53 @@
+query autocompleteSearchGeneric($input: AutocompleteSearchGenericInput!, $membersCount: Int = 10)  {
+  autocompleteSearchGeneric(input: $input) {
+    value
+    label
+    labelPlaceholder
+    heading
+    headingPlaceholder
+    disabled
+    object {
+      ... on User {
+        id
+        internalId
+        login
+        image
+        firstname
+        lastname
+        fullname
+        phone
+        outOfOffice
+        outOfOfficeStartAt
+        outOfOfficeEndAt
+        active
+        vip
+      }
+      ... on Organization {
+        id
+        internalId
+        name
+        active
+        vip
+        members(first: $membersCount) {
+          edges {
+            node {
+              id
+              internalId
+              login
+              image
+              firstname
+              lastname
+              fullname
+              phone
+              outOfOffice
+              outOfOfficeStartAt
+              outOfOfficeEndAt
+              active
+              vip
+            }
+          }
+        }
+      }
+    }
+  }
+}

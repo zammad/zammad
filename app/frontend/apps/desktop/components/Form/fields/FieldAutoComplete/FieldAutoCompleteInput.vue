@@ -9,7 +9,7 @@ import {
   watchOnce,
 } from '@vueuse/core'
 import gql from 'graphql-tag'
-import { cloneDeep, escapeRegExp } from 'lodash-es'
+import { cloneDeep, escapeRegExp, isEqual } from 'lodash-es'
 import {
   computed,
   markRaw,
@@ -26,7 +26,6 @@ import type { SelectOption } from '#shared/components/CommonSelect/types'
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import type {
   AutoCompleteOption,
-  AutoCompleteProps,
   AutocompleteSelectValue,
 } from '#shared/components/Form/fields/FieldAutocomplete/types.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
@@ -43,6 +42,11 @@ import type { CommonSelectInstance } from '#desktop/components/CommonSelect/type
 
 import FieldAutoCompleteOptionIcon from './FieldAutoCompleteOptionIcon.vue'
 
+import type {
+  AutoCompleteProps,
+  SelectOptionFunction,
+  AutoCompleteOptionValueDictionary,
+} from './types.ts'
 import type { FormKitNode } from '@formkit/core'
 import type { NameNode, OperationDefinitionNode, SelectionNode } from 'graphql'
 
@@ -50,11 +54,21 @@ interface Props {
   context: FormFieldContext<AutoCompleteProps>
 }
 
+const emit = defineEmits<{
+  searchInteractionUpdate: [
+    filter: string,
+    optionValues: AutoCompleteOptionValueDictionary,
+    selectOption: SelectOptionFunction,
+  ]
+}>()
+
 const props = defineProps<Props>()
 const contextReactive = toRef(props, 'context')
 
 const { hasValue, valueContainer, currentValue, isCurrentValue, clearValue } =
   useValue<AutocompleteSelectValue>(contextReactive)
+
+// TODO: I think clearValue needs to wrapper for the full clear of the field (to remove some of the remembered stuff).
 
 const localOptions = ref(props.context.options || [])
 
@@ -62,6 +76,7 @@ const {
   sortedOptions,
   appendedOptions,
   optionValueLookup,
+  getSelectedOption,
   getSelectedOptionLabel,
 } = useSelectOptions<AutoCompleteOption[]>(localOptions, contextReactive)
 
@@ -195,11 +210,16 @@ const autocompleteQueryResultKey = (
     .selectionSet.selections[0] as SelectionNode & { name: NameNode }
 ).name.value
 
-const autocompleteQueryResultOptions = computed(
-  () =>
-    autocompleteQueryHandler.result().value?.[
-      autocompleteQueryResultKey
-    ] as unknown as AutoCompleteOption[],
+const autocompleteQueryResultOptions = computed<AutoCompleteOption[]>(
+  (oldValue) => {
+    const resultOptions =
+      autocompleteQueryHandler.result().value?.[autocompleteQueryResultKey] ||
+      []
+
+    if (oldValue && isEqual(oldValue, resultOptions)) return oldValue
+
+    return resultOptions
+  },
 )
 
 const autocompleteOptions = computed(
@@ -211,63 +231,100 @@ const {
   selectOption: selectAutocompleteOption,
   getSelectedOption: getSelectedAutocompleteOption,
   getSelectedOptionIcon: getSelectedAutocompleteOptionIcon,
-  getSelectedOptionLabel: getSelectedAutocompleteOptionLabel,
+  optionValueLookup: autocompleteOptionValueLookup,
 } = useSelectOptions<AutoCompleteOption[]>(
   autocompleteOptions,
   toRef(props, 'context'),
 )
 
-const selectOption = (option: SelectOption) => {
+const preprocessedAutocompleteOptions = computed(() => {
+  if (!props.context.autocompleteOptionsPreprocessor)
+    return sortedAutocompleteOptions.value
+
+  return props.context.autocompleteOptionsPreprocessor(
+    sortedAutocompleteOptions.value,
+  )
+})
+
+const selectOption = (option: SelectOption, focus = false) => {
   selectAutocompleteOption(option as AutoCompleteOption)
 
-  if (props.context.multiple) {
-    // If the current value contains the selected option, make sure it's added to the replacement list
-    //   if it's not already there.
-    if (
-      isCurrentValue(option.value) &&
-      !replacementLocalOptions.value.some(
-        (replacementLocalOption) =>
-          replacementLocalOption.value === option.value,
-      )
-    ) {
-      replacementLocalOptions.value.push(option as AutoCompleteOption)
-    }
-
-    // Remove any extra options from the replacement list.
-    replacementLocalOptions.value = replacementLocalOptions.value.filter(
-      (replacementLocalOption) => isCurrentValue(replacementLocalOption.value),
-    )
-
-    if (!sortedOptions.value.some((elem) => elem.value === option.value)) {
-      appendedOptions.value.push(option as AutoCompleteOption)
-    }
-
-    appendedOptions.value = appendedOptions.value.filter((elem) =>
-      isCurrentValue(elem.value),
-    )
-
-    // Sort the replacement list according to the original order.
-    replacementLocalOptions.value.sort(
-      (a, b) =>
-        sortedOptions.value.findIndex((option) => option.value === a.value) -
-        sortedOptions.value.findIndex((option) => option.value === b.value),
-    )
-
-    clearFilter()
-
+  if (!props.context.multiple) {
+    localOptions.value = [option as AutoCompleteOption]
+    select.value?.closeDropdown()
     return
   }
 
-  localOptions.value = [option as AutoCompleteOption]
+  // If the current value contains the selected option, make sure it's added to the replacement list
+  //   if it's not already there.
+  if (
+    isCurrentValue(option.value) &&
+    !replacementLocalOptions.value.some(
+      (replacementLocalOption) => replacementLocalOption.value === option.value,
+    )
+  ) {
+    replacementLocalOptions.value.push(option as AutoCompleteOption)
+  }
 
-  select.value?.closeDropdown()
+  // Remove any extra options from the replacement list.
+  replacementLocalOptions.value = replacementLocalOptions.value.filter(
+    (replacementLocalOption) => isCurrentValue(replacementLocalOption.value),
+  )
+
+  if (!sortedOptions.value.some((elem) => elem.value === option.value)) {
+    appendedOptions.value.push(option as AutoCompleteOption)
+  }
+
+  appendedOptions.value = appendedOptions.value.filter((elem) =>
+    isCurrentValue(elem.value),
+  )
+
+  // Sort the replacement list according to the original order.
+  replacementLocalOptions.value.sort(
+    (a, b) =>
+      sortedOptions.value.findIndex((option) => option.value === a.value) -
+      sortedOptions.value.findIndex((option) => option.value === b.value),
+  )
+
+  if (focus !== true) return
+
+  filterInput.value?.focus()
 }
 
-const availableOptions = computed(() =>
-  filter.value || props.context.defaultFilter
-    ? sortedAutocompleteOptions.value
-    : sortedOptions.value,
-)
+const availableOptions = computed<AutoCompleteOption[]>((oldValue) => {
+  const currentOptions =
+    filter.value || props.context.defaultFilter
+      ? preprocessedAutocompleteOptions.value
+      : sortedOptions.value
+
+  if (oldValue && isEqual(oldValue, currentOptions)) return oldValue
+
+  return currentOptions
+})
+
+const emitResultUpdated = () => {
+  nextTick(() => {
+    emit(
+      'searchInteractionUpdate',
+      debouncedFilter.value,
+      { ...autocompleteOptionValueLookup.value, ...optionValueLookup.value },
+      selectOption,
+    )
+  })
+}
+
+watch(debouncedFilter, (newValue) => {
+  if (newValue !== '' || props.context.defaultFilter) return
+
+  emitResultUpdated()
+})
+
+watch(autocompleteQueryHandler.loading(), (newValue, oldValue) => {
+  // We need not to trigger when query was started.
+  if (newValue && !oldValue) return
+
+  emitResultUpdated()
+})
 
 const deaccent = (s: string) =>
   s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -291,27 +348,38 @@ const availableOptionsWithMatches = computed(() => {
   )
 })
 
+const childOptions = ref<AutoCompleteOption[]>([])
+
+const showChildOptions = (option: AutoCompleteOption) => {
+  if (!option.children) return
+  childOptions.value = option.children
+}
+
+const clearChildOptions = () => {
+  if (!childOptions.value.length) return
+  childOptions.value = []
+}
+
+const displayOptions = computed(() => {
+  if (childOptions.value.length) return childOptions.value
+  return availableOptionsWithMatches.value
+})
+
 const suggestedOptionLabel = computed(() => {
   if (!filter.value || !availableOptionsWithMatches.value.length)
     return undefined
 
   const exactMatches = availableOptionsWithMatches.value.filter(
     (option) =>
-      (
-        getSelectedAutocompleteOptionLabel(option.value) ||
-        option.value.toString()
-      )
+      (option.label || option.value.toString())
         .toLowerCase()
         .indexOf(filter.value.toLowerCase()) === 0 &&
-      (
-        getSelectedAutocompleteOptionLabel(option.value) ||
-        option.value.toString()
-      ).length > filter.value.length,
+      (option.label || option.value.toString()).length > filter.value.length,
   )
 
   if (!exactMatches.length) return undefined
 
-  return getSelectedAutocompleteOptionLabel(exactMatches[0].value)
+  return exactMatches[0].label || exactMatches[0].value.toString()
 })
 
 const inputElementBounds = useElementBounding(input)
@@ -354,8 +422,13 @@ const onCloseDropdown = () => {
     areLocalOptionsReplaced = true
   }
 
+  clearChildOptions()
   clearFilter()
   deactivateTabTrap()
+}
+
+const onFocusFilterInput = () => {
+  filterInput.value?.focus()
 }
 
 const OptionIconComponent =
@@ -385,17 +458,23 @@ useFormBlock(contextReactive, openSelectDropdown)
       ref="select"
       #default="{ state: expanded, close: closeDropdown }"
       :model-value="currentValue"
-      :options="availableOptionsWithMatches"
+      :options="displayOptions"
       :multiple="context.multiple"
       :owner="context.id"
       :filter="filter"
       :option-icon-component="markRaw(OptionIconComponent)"
+      :empty-initial-label-text="contextReactive.emptyInitialLabelText"
+      :actions="context.actions"
+      :is-child-page="childOptions.length > 0"
       no-options-label-translation
       no-close
       passive
       initially-empty
       @select="selectOption"
+      @push="showChildOptions"
+      @pop="clearChildOptions"
       @close="onCloseDropdown"
+      @focus-filter-input="onFocusFilterInput"
     >
       <output
         :id="context.id"
@@ -467,18 +546,21 @@ useFormBlock(contextReactive, openSelectDropdown)
                 role="button"
                 tabindex="0"
                 @click.stop="
-                  selectAutocompleteOption(
-                    getSelectedAutocompleteOption(selectedValue),
+                  selectOption(
+                    getSelectedAutocompleteOption(selectedValue) ||
+                      getSelectedOption(selectedValue),
                   )
                 "
                 @keypress.enter.prevent.stop="
-                  selectAutocompleteOption(
-                    getSelectedAutocompleteOption(selectedValue),
+                  selectOption(
+                    getSelectedAutocompleteOption(selectedValue) ||
+                      getSelectedOption(selectedValue),
                   )
                 "
                 @keypress.space.prevent.stop="
-                  selectAutocompleteOption(
-                    getSelectedAutocompleteOption(selectedValue),
+                  selectOption(
+                    getSelectedAutocompleteOption(selectedValue) ||
+                      getSelectedOption(selectedValue),
                   )
                 "
               />

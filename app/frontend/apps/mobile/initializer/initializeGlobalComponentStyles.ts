@@ -40,7 +40,8 @@ export const initializeGlobalComponentStyles = () => {
   })
 
   initializeOrganizationAvatarClasses({
-    backgroundColor: 'bg-gray-200',
+    base: 'bg-gray-200 text-black',
+    inactive: 'opacity-30',
   })
 
   initializeNotificationClasses({

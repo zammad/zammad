@@ -103,6 +103,29 @@ export type AutocompleteSearchExternalDataSourceEntry = {
   value: Scalars['JSON']['output'];
 };
 
+/** Type that represents a generic autocomplete entry. */
+export type AutocompleteSearchGenericEntry = {
+  __typename?: 'AutocompleteSearchGenericEntry';
+  disabled?: Maybe<Scalars['Boolean']['output']>;
+  heading?: Maybe<Scalars['String']['output']>;
+  headingPlaceholder?: Maybe<Array<Scalars['String']['output']>>;
+  icon?: Maybe<Scalars['String']['output']>;
+  label: Scalars['String']['output'];
+  labelPlaceholder?: Maybe<Array<Scalars['String']['output']>>;
+  object: SearchResult;
+  value: Scalars['Int']['output'];
+};
+
+/** Input fields for generic autocomplete searches. */
+export type AutocompleteSearchGenericInput = {
+  /** Limit for the amount of entries */
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  /** Optionally restrict search certain models */
+  onlyIn?: InputMaybe<Array<EnumSearchableModels>>;
+  /** Query from the autocomplete field */
+  query: Scalars['String']['input'];
+};
+
 /** The default fields for autocomplete searches. */
 export type AutocompleteSearchInput = {
   /** Limit for the amount of entries */
@@ -124,7 +147,7 @@ export type AutocompleteSearchMergeTicketEntry = {
   value: Scalars['String']['output'];
 };
 
-/** The default fields for merge ticket autocomplete searches. */
+/** Input fields for merge ticket autocomplete searches. */
 export type AutocompleteSearchMergeTicketInput = {
   /** Limit for the amount of entries */
   limit?: InputMaybe<Scalars['Int']['input']>;
@@ -134,7 +157,7 @@ export type AutocompleteSearchMergeTicketInput = {
   sourceTicketId?: InputMaybe<Scalars['ID']['input']>;
 };
 
-/** The default fields for object attribute external data source autocomplete searches. */
+/** Input fields for object attribute external data source autocomplete searches. */
 export type AutocompleteSearchObjectAttributeExternalDataSourceInput = {
   /** Name of the object attribute */
   attributeName: Scalars['String']['input'];
@@ -161,7 +184,7 @@ export type AutocompleteSearchOrganizationEntry = {
   value: Scalars['Int']['output'];
 };
 
-/** The default fields for organization autocomplete searches. */
+/** Input fields for organization autocomplete searches. */
 export type AutocompleteSearchOrganizationInput = {
   /** Customer ID to filter the organizations by */
   customerId?: InputMaybe<Scalars['ID']['input']>;
@@ -184,7 +207,7 @@ export type AutocompleteSearchRecipientEntry = {
   value: Scalars['String']['output'];
 };
 
-/** The default fields for recipient autocomplete searches. */
+/** Input fields for recipient autocomplete searches. */
 export type AutocompleteSearchRecipientInput = {
   /** User contact type option, i.e. email or phone */
   contact?: InputMaybe<EnumUserContact>;
@@ -209,7 +232,7 @@ export type AutocompleteSearchUserEntry = {
   value: Scalars['Int']['output'];
 };
 
-/** The default fields for user autocomplete searches. */
+/** Input fields for user autocomplete searches. */
 export type AutocompleteSearchUserInput = {
   /** Optional user ID to be filtered out from results */
   exceptInternalId?: InputMaybe<Scalars['Int']['input']>;
@@ -2050,6 +2073,8 @@ export type Queries = {
   applicationConfig: Array<KeyComplexValue>;
   /** Search for agents */
   autocompleteSearchAgent: Array<AutocompleteSearchUserEntry>;
+  /** Generic autocomplete search */
+  autocompleteSearchGeneric: Array<AutocompleteSearchGenericEntry>;
   /** Search for tickets */
   autocompleteSearchMergeTicket: Array<AutocompleteSearchMergeTicketEntry>;
   /** Search for values in object attributes for external data sources */
@@ -2132,6 +2157,12 @@ export type Queries = {
 /** All available queries */
 export type QueriesAutocompleteSearchAgentArgs = {
   input: AutocompleteSearchUserInput;
+};
+
+
+/** All available queries */
+export type QueriesAutocompleteSearchGenericArgs = {
+  input: AutocompleteSearchGenericInput;
 };
 
 
@@ -4498,6 +4529,14 @@ export type AutocompleteSearchAgentQueryVariables = Exact<{
 
 
 export type AutocompleteSearchAgentQuery = { __typename?: 'Queries', autocompleteSearchAgent: Array<{ __typename?: 'AutocompleteSearchUserEntry', value: number, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, icon?: string | null, user: { __typename?: 'User', vip?: boolean | null, outOfOffice?: boolean | null, outOfOfficeStartAt?: string | null, outOfOfficeEndAt?: string | null, active?: boolean | null, id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, preferences?: any | null, hasSecondaryOrganizations?: boolean | null, outOfOfficeReplacement?: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, login?: string | null, phone?: string | null, email?: string | null } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null } | null, personalSettings?: { __typename?: 'UserPersonalSettings', notificationConfig?: { __typename?: 'UserPersonalSettingsNotificationConfig', groupIds?: Array<number> | null, matrix?: { __typename?: 'UserPersonalSettingsNotificationMatrix', create?: { __typename?: 'UserPersonalSettingsNotificationMatrixRow', channel?: { __typename?: 'UserPersonalSettingsNotificationMatrixChannel', email?: boolean | null, online?: boolean | null } | null, criteria?: { __typename?: 'UserPersonalSettingsNotificationMatrixCriteria', no?: boolean | null, ownedByMe?: boolean | null, ownedByNobody?: boolean | null, subscribed?: boolean | null } | null } | null, escalation?: { __typename?: 'UserPersonalSettingsNotificationMatrixRow', channel?: { __typename?: 'UserPersonalSettingsNotificationMatrixChannel', email?: boolean | null, online?: boolean | null } | null, criteria?: { __typename?: 'UserPersonalSettingsNotificationMatrixCriteria', no?: boolean | null, ownedByMe?: boolean | null, ownedByNobody?: boolean | null, subscribed?: boolean | null } | null } | null, reminderReached?: { __typename?: 'UserPersonalSettingsNotificationMatrixRow', channel?: { __typename?: 'UserPersonalSettingsNotificationMatrixChannel', email?: boolean | null, online?: boolean | null } | null, criteria?: { __typename?: 'UserPersonalSettingsNotificationMatrixCriteria', no?: boolean | null, ownedByMe?: boolean | null, ownedByNobody?: boolean | null, subscribed?: boolean | null } | null } | null, update?: { __typename?: 'UserPersonalSettingsNotificationMatrixRow', channel?: { __typename?: 'UserPersonalSettingsNotificationMatrixChannel', email?: boolean | null, online?: boolean | null } | null, criteria?: { __typename?: 'UserPersonalSettingsNotificationMatrixCriteria', no?: boolean | null, ownedByMe?: boolean | null, ownedByNobody?: boolean | null, subscribed?: boolean | null } | null } | null } | null } | null, notificationSound?: { __typename?: 'UserPersonalSettingsNotificationSound', enabled?: boolean | null, file?: EnumNotificationSoundFile | null } | null } | null } }> };
+
+export type AutocompleteSearchGenericQueryVariables = Exact<{
+  input: AutocompleteSearchGenericInput;
+  membersCount?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type AutocompleteSearchGenericQuery = { __typename?: 'Queries', autocompleteSearchGeneric: Array<{ __typename?: 'AutocompleteSearchGenericEntry', value: number, label: string, labelPlaceholder?: Array<string> | null, heading?: string | null, headingPlaceholder?: Array<string> | null, disabled?: boolean | null, object: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null, vip?: boolean | null, members?: { __typename?: 'UserConnection', edges: Array<{ __typename?: 'UserEdge', node: { __typename?: 'User', id: string, internalId: number, login?: string | null, image?: string | null, firstname?: string | null, lastname?: string | null, fullname?: string | null, phone?: string | null, outOfOffice?: boolean | null, outOfOfficeStartAt?: string | null, outOfOfficeEndAt?: string | null, active?: boolean | null, vip?: boolean | null } }> } | null } | { __typename?: 'Ticket' } | { __typename?: 'User', id: string, internalId: number, login?: string | null, image?: string | null, firstname?: string | null, lastname?: string | null, fullname?: string | null, phone?: string | null, outOfOffice?: boolean | null, outOfOfficeStartAt?: string | null, outOfOfficeEndAt?: string | null, active?: boolean | null, vip?: boolean | null } }> };
 
 export type AutocompleteSearchUserQueryVariables = Exact<{
   input: AutocompleteSearchUserInput;

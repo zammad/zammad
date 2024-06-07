@@ -433,6 +433,7 @@ const treeselectOptions = [
   {
     value: 0,
     label: 'Item A',
+    disabled: true,
     children: [
       {
         value: 1,
@@ -601,6 +602,33 @@ const formSchema = [
     },
   },
   {
+    type: 'recipient',
+    name: 'recipient',
+    label: 'Recipient',
+    props: {
+      clearable: true,
+    },
+  },
+  {
+    type: 'recipient',
+    name: 'recipient_multiple',
+    label: 'Recipient (multiple)',
+    props: {
+      clearable: true,
+      multiple: true,
+    },
+  },
+  {
+    type: 'customer',
+    name: 'customer',
+    label: 'Customer',
+    props: {
+      clearable: true,
+      link: '/',
+      linkIcon: 'person-add',
+    },
+  },
+  {
     type: 'organization',
     name: 'organization',
     label: 'Organization',
@@ -672,8 +700,6 @@ const formSchema = [
     clearable: true,
     props: {
       options: [...alphabetOptions.value, ...[longOption.value]],
-      link: '/',
-      linkIcon: 'person-add',
     },
   },
   {

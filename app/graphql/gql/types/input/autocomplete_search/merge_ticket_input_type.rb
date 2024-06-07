@@ -3,7 +3,7 @@
 module Gql::Types::Input::AutocompleteSearch
   class MergeTicketInputType < InputType
 
-    description 'The default fields for merge ticket autocomplete searches.'
+    description 'Input fields for merge ticket autocomplete searches.'
 
     argument :source_ticket_id, GraphQL::Types::ID, required: false, description: 'Ticket ID'
 

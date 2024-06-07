@@ -23,6 +23,7 @@ export type AutoCompleteOption = {
   disabled?: boolean
   icon?: string
   match?: RegExpExecArray
+  children?: AutoCompleteOption[]
 }
 
 export type AutoCompleteProps = FormFieldContext<{
@@ -53,6 +54,10 @@ export type AutoCompleteProps = FormFieldContext<{
     value: AutocompleteSelectValue,
     context?: FormFieldContext,
   ) => AutoCompleteOption
+  autocompleteOptionsPreprocessor?: (
+    autocompleteOptions: AutoCompleteOption[],
+  ) => AutoCompleteOption[]
   sorting?: SelectOptionSorting
   onActionClick?: () => void
+  emptyInitialLabelText?: string
 }>

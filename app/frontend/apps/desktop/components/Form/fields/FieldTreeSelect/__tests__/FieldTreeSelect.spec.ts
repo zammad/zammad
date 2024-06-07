@@ -516,6 +516,7 @@ describe('Form - Field - TreeSelect - Options', () => {
       {
         value: 2,
         label: 'Item C',
+        disabled: true,
       },
     ]
 
@@ -537,6 +538,14 @@ describe('Form - Field - TreeSelect - Options', () => {
     expect(selectOptions[1].childNodes[2]).toHaveClass('pointer-events-none')
 
     expect(getByText(listbox, disabledOptions[1].label)).toHaveClasses([
+      'text-gray-100',
+      'dark:text-neutral-400',
+    ])
+
+    expect(selectOptions[2]).toHaveAttribute('aria-disabled', 'true')
+    expect(selectOptions[2].childNodes[2]).toHaveClass('pointer-events-none')
+
+    expect(getByText(listbox, disabledOptions[2].label)).toHaveClasses([
       'text-stone-200',
       'dark:text-neutral-500',
     ])

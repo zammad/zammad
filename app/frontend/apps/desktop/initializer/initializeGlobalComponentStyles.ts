@@ -50,7 +50,8 @@ export const initializeGlobalComponentStyles = () => {
   })
 
   initializeOrganizationAvatarClasses({
-    backgroundColor: 'bg-green-100 dark:bg-gray-200',
+    base: 'bg-green-100 dark:bg-gray-200 text-stone-200 dark:text-gray-700',
+    inactive: 'opacity-30',
   })
 
   initializeLinkClasses({

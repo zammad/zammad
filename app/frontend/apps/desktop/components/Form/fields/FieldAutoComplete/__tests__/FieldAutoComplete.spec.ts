@@ -218,8 +218,6 @@ describe('Form - Field - AutoComplete - Query', () => {
 
     let selectOptions = wrapper.getAllByRole('option')
 
-    selectOptions = wrapper.getAllByRole('option')
-
     expect(selectOptions).toHaveLength(1)
     expect(selectOptions[0]).toHaveTextContent(testOptions[0].label)
 
@@ -363,11 +361,13 @@ describe('Form - Field - AutoComplete - Query', () => {
 
     selectOptions = wrapper.getAllByRole('option')
 
-    expect(selectOptions).toHaveLength(2)
-    expect(selectOptions[0]).toHaveTextContent(testOptions[2].label)
+    expect(selectOptions).toHaveLength(3)
+    expect(selectOptions[0]).toHaveTextContent(testOptions[0].label)
     expect(getByIconName(selectOptions[0], 'check-square')).toBeInTheDocument()
-    expect(selectOptions[1]).toHaveTextContent(testOptions[0].label)
-    expect(getByIconName(selectOptions[1], 'check-square')).toBeInTheDocument()
+    expect(selectOptions[1]).toHaveTextContent(testOptions[1].label)
+    expect(getByIconName(selectOptions[1], 'square')).toBeInTheDocument()
+    expect(selectOptions[2]).toHaveTextContent(testOptions[2].label)
+    expect(getByIconName(selectOptions[2], 'check-square')).toBeInTheDocument()
   })
 
   it('supports storing complex non-multiple values', async () => {
@@ -542,7 +542,10 @@ describe('Form - Field - AutoComplete - Initial Options', () => {
 
     await wrapper.events.click(wrapper.getByLabelText('Select…'))
 
-    expect(wrapper.getAllByRole('option')[1]).toHaveClass('pointer-events-none')
+    expect(wrapper.getAllByRole('option')[1]).toHaveAttribute(
+      'aria-disabled',
+      'true',
+    )
 
     expect(
       getByText(wrapper.getByRole('listbox'), disabledOptions[1].label),
@@ -888,52 +891,6 @@ describe('Form - Field - AutoComplete - Features', () => {
     )
   })
 
-  it.skip('supports selection of unknown values', async () => {
-    const wrapper = renderComponent(FormKit, {
-      ...wrapperParameters,
-      props: {
-        ...testProps,
-        allowUnknownValues: true,
-        debounceInterval: 0,
-      },
-    })
-
-    await wrapper.events.click(wrapper.getByLabelText('Select…'))
-
-    const filterElement = wrapper.getByRole('searchbox')
-
-    mockAutocompleteSearchUserQuery({
-      autocompleteSearchUser: [],
-    })
-
-    await wrapper.events.type(filterElement, 'qux')
-
-    await waitForAutocompleteSearchUserQueryCalls()
-
-    let selectOptions = wrapper.getAllByRole('option')
-
-    expect(selectOptions).toHaveLength(1)
-    expect(selectOptions[0]).toHaveTextContent('qux')
-
-    wrapper.events.click(wrapper.getAllByRole('option')[0])
-
-    await waitFor(() => {
-      expect(wrapper.emitted().inputRaw).toBeTruthy()
-    })
-
-    const emittedInput = wrapper.emitted().inputRaw as Array<Array<InputEvent>>
-
-    expect(emittedInput[0][0]).toBe('qux')
-    expect(wrapper.getByRole('listitem')).toHaveTextContent('qux')
-
-    await wrapper.events.click(wrapper.getByLabelText('Select…'))
-
-    selectOptions = wrapper.getAllByRole('option')
-
-    expect(selectOptions).toHaveLength(1)
-    expect(selectOptions[0]).toHaveTextContent('qux')
-  })
-
   it('supports value prefill with initial option builder', () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
@@ -990,6 +947,28 @@ describe('Form - Field - AutoComplete - Features', () => {
 
     expect(item1).toHaveTextContent('Item 1234')
     expect(item2).toHaveTextContent('Item 4321')
+  })
+
+  it('can add custom dropdown actions', async () => {
+    const actionCallbackSpy = vi.fn()
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        actions: [
+          {
+            key: 'custom-action',
+            label: 'Custom Action',
+            onClick: actionCallbackSpy,
+          },
+        ],
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+    await wrapper.events.click(wrapper.getByText('Custom Action'))
+
+    expect(actionCallbackSpy).toHaveBeenCalledTimes(1)
   })
 })
 
@@ -1111,6 +1090,27 @@ describe('Form - Field - AutoComplete - Accessibility', () => {
     expect(selectOptions).toHaveLength(1)
     expect(selectOptions[0]).toHaveAttribute('aria-disabled', 'true')
     expect(selectOptions[0]).toHaveTextContent('Start typing to search…')
+  })
+
+  it('shows the provided hint in case there are no options available', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        emptyInitialLabelText: 'Custom Text',
+        options: [],
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+
+    const listbox = wrapper.getByRole('listbox')
+
+    const selectOptions = getAllByRole(listbox, 'option')
+
+    expect(selectOptions).toHaveLength(1)
+    expect(selectOptions[0]).toHaveAttribute('aria-disabled', 'true')
+    expect(selectOptions[0]).toHaveTextContent('Custom Text')
   })
 
   it('provides labels for screen readers', async () => {

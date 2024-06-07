@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const iconSizes = {
-  xs: 'tiny',
+  xs: 'xs',
   small: 'small',
   medium: 'base',
   normal: 'medium',

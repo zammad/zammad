@@ -36,7 +36,7 @@ const useSelectOptions = <
   const { currentValue, hasValue, valueContainer, clearValue } =
     useValue(context)
 
-  const appendedOptions = ref<T>([] as unknown as T) as Ref<T>
+  const appendedOptions = ref<T>([] as unknown as T)
 
   const availableOptions = computed(() => [
     ...(options.value || []),
@@ -56,12 +56,12 @@ const useSelectOptions = <
 
     return availableOptions.value.map((option) => {
       const label = noOptionsLabelTranslation
-        ? option.label
+        ? option.label || ''
         : i18n.t(option.label, ...(option.labelPlaceholder || []))
 
       const variant = option as AutoCompleteOption
       const heading = noOptionsLabelTranslation
-        ? variant.heading
+        ? variant.heading || ''
         : i18n.t(variant.heading, ...(variant.headingPlaceholder || []))
 
       return {

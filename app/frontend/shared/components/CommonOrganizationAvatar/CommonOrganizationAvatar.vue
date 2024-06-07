@@ -21,12 +21,17 @@ const icon = computed(() => {
   return props.entity.active ? 'organization' : 'inactive-organization'
 })
 
-const { backgroundColor } = getOrganizationAvatarClasses()
+const { base, inactive } = getOrganizationAvatarClasses()
 </script>
 
 <template>
   <CommonAvatar
-    :class="backgroundColor"
+    :class="[
+      base,
+      {
+        [inactive]: !entity.active,
+      },
+    ]"
     :size="size"
     :icon="icon"
     :aria-label="`Avatar (${entity.name})`"

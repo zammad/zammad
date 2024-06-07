@@ -29,6 +29,7 @@ import App from './AppDesktop.vue'
 
 export const mountApp = async () => {
   const app = createApp(App)
+  initializeAppName('desktop')
 
   initializeApolloClient(app)
   const router = initializeRouter(app)
@@ -38,7 +39,6 @@ export const mountApp = async () => {
   initializeFormFields()
   initializeGlobalComponentStyles()
   initializeGlobalComponents(app)
-  initializeAppName('desktop')
   initializeGlobalProperties(app)
   initializeGlobalDirectives(app)
   initializeStoreSubscriptions()

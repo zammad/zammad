@@ -3,7 +3,7 @@
 module Gql::Types::Input::AutocompleteSearch
   class UserInputType < InputType
 
-    description 'The default fields for user autocomplete searches.'
+    description 'Input fields for user autocomplete searches.'
 
     argument :except_internal_id, Integer, required: false, description: 'Optional user ID to be filtered out from results'
   end

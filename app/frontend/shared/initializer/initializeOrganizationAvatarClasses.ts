@@ -4,7 +4,8 @@ import type { OrganizationAvatarClassMap } from '#shared/components/CommonOrgani
 
 // Provide your own map with the following keys, the values given here are just examples.
 let organizationAvatarClasses: OrganizationAvatarClassMap = {
-  backgroundColor: 'common-organization-avatar-background-color',
+  base: 'common-organization-avatar-base',
+  inactive: 'common-organization-avatar-inactive',
 }
 
 export const initializeOrganizationAvatarClasses = (

@@ -670,6 +670,212 @@
           "possibleTypes": null
         },
         {
+          "kind": "OBJECT",
+          "name": "AutocompleteSearchGenericEntry",
+          "description": "Type that represents a generic autocomplete entry.",
+          "fields": [
+            {
+              "name": "disabled",
+              "description": null,
+              "args": [
+
+              ],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "heading",
+              "description": null,
+              "args": [
+
+              ],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "headingPlaceholder",
+              "description": null,
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "icon",
+              "description": null,
+              "args": [
+
+              ],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "label",
+              "description": null,
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "labelPlaceholder",
+              "description": null,
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "object",
+              "description": null,
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "UNION",
+                  "name": "SearchResult",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "value",
+              "description": null,
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "AutocompleteSearchGenericInput",
+          "description": "Input fields for generic autocomplete searches.",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "query",
+              "description": "Query from the autocomplete field",
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "limit",
+              "description": "Limit for the amount of entries",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Int",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "onlyIn",
+              "description": "Optionally restrict search certain models",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "EnumSearchableModels",
+                    "ofType": null
+                  }
+                }
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
           "kind": "INPUT_OBJECT",
           "name": "AutocompleteSearchInput",
           "description": "The default fields for autocomplete searches.",
@@ -860,7 +1066,7 @@
         {
           "kind": "INPUT_OBJECT",
           "name": "AutocompleteSearchMergeTicketInput",
-          "description": "The default fields for merge ticket autocomplete searches.",
+          "description": "Input fields for merge ticket autocomplete searches.",
           "fields": null,
           "inputFields": [
             {
@@ -905,7 +1111,7 @@
         {
           "kind": "INPUT_OBJECT",
           "name": "AutocompleteSearchObjectAttributeExternalDataSourceInput",
-          "description": "The default fields for object attribute external data source autocomplete searches.",
+          "description": "Input fields for object attribute external data source autocomplete searches.",
           "fields": null,
           "inputFields": [
             {
@@ -1135,7 +1341,7 @@
         {
           "kind": "INPUT_OBJECT",
           "name": "AutocompleteSearchOrganizationInput",
-          "description": "The default fields for organization autocomplete searches.",
+          "description": "Input fields for organization autocomplete searches.",
           "fields": null,
           "inputFields": [
             {
@@ -1333,7 +1539,7 @@
         {
           "kind": "INPUT_OBJECT",
           "name": "AutocompleteSearchRecipientInput",
-          "description": "The default fields for recipient autocomplete searches.",
+          "description": "Input fields for recipient autocomplete searches.",
           "fields": null,
           "inputFields": [
             {
@@ -1541,7 +1747,7 @@
         {
           "kind": "INPUT_OBJECT",
           "name": "AutocompleteSearchUserInput",
-          "description": "The default fields for user autocomplete searches.",
+          "description": "Input fields for user autocomplete searches.",
           "fields": null,
           "inputFields": [
             {
@@ -12099,6 +12305,45 @@
                     "ofType": {
                       "kind": "OBJECT",
                       "name": "AutocompleteSearchUserEntry",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "autocompleteSearchGeneric",
+              "description": "Generic autocomplete search",
+              "args": [
+                {
+                  "name": "input",
+                  "description": "The input object for the autocomplete search",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "AutocompleteSearchGenericInput",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "AutocompleteSearchGenericEntry",
                       "ofType": null
                     }
                   }

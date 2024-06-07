@@ -7,5 +7,6 @@ export interface AvatarOrganization {
 }
 
 export interface OrganizationAvatarClassMap {
-  backgroundColor: string
+  base: string
+  inactive: string
 }

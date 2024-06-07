@@ -282,7 +282,6 @@ describe('Form - Field - Select - Options', () => {
     const selectOptions = getAllByRole(listbox, 'option')
 
     expect(selectOptions[1]).toHaveAttribute('aria-disabled', 'true')
-    expect(selectOptions[1]).toHaveClass('pointer-events-none')
 
     expect(getByText(listbox, disabledOptions[1].label)).toHaveClasses([
       'text-stone-200',
@@ -657,7 +656,7 @@ describe('Form - Field - Select - Options', () => {
         expect(selectOption.children[1].children[0]).toHaveTextContent('Item')
       }
 
-      expect(selectOption.children[1].children[0]).toHaveClasses([
+      expect(selectOption.children[1].children[0].children[0]).toHaveClasses([
         'bg-blue-600',
         'dark:bg-blue-900',
       ])

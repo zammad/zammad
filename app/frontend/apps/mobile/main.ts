@@ -33,6 +33,7 @@ if (forceDesktopLocalStorage.value) window.location.href = '/'
 
 export default async function mountApp(): Promise<void> {
   const app = createApp(App)
+  initializeAppName('mobile')
 
   initializeApolloClient(app)
 
@@ -46,7 +47,6 @@ export default async function mountApp(): Promise<void> {
   initializeFormFields()
   initializeGlobalComponentStyles()
   initializeGlobalComponents(app)
-  initializeAppName('mobile')
   initializeGlobalProperties(app)
   initializeMobileVisuals()
   initializeStoreSubscriptions()

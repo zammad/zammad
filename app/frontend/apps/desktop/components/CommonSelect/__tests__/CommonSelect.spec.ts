@@ -111,6 +111,43 @@ describe('CommonSelect.vue', () => {
     expect(view.queryAllByIconName('check-square')).toHaveLength(2)
   })
 
+  it('can use select all action with active multiple', async () => {
+    const modelValue = ref()
+    const view = renderSelect({ options, multiple: true }, modelValue)
+
+    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('select all options'))
+
+    expect(modelValue.value).toEqual([0, 1, 2])
+
+    expect(view.queryAllByIconName('check-square')).toHaveLength(3)
+  })
+
+  it('can add additional actions', async () => {
+    const modelValue = ref()
+
+    const actionCallbackSpy = vi.fn()
+    const view = renderSelect(
+      {
+        options,
+        multiple: true,
+        actions: [
+          {
+            label: 'example action',
+            key: 'example',
+            onClick: actionCallbackSpy,
+          },
+        ],
+      },
+      modelValue,
+    )
+
+    await view.events.click(view.getByText('Open Select'))
+    await view.events.click(view.getByText('example action'))
+
+    expect(actionCallbackSpy).toHaveBeenCalledTimes(1)
+  })
+
   it('passive mode does not change local value, but emits select', async () => {
     const modelValue = ref()
     const view = renderSelect({ options, passive: true }, modelValue)
@@ -199,5 +236,72 @@ describe('CommonSelect.vue', () => {
 
     expect(option).toHaveTextContent('foo (1) – bar (2)')
     expect(option.children[1]).toHaveAttribute('title', 'foo (1) – bar (2)')
+  })
+
+  it('supports navigating options with children', async () => {
+    const testChildOption = {
+      value: 1,
+      label: 'child',
+    }
+
+    const testParentOption = {
+      value: 1,
+      label: 'parent',
+      disabled: true,
+      children: [testChildOption],
+    }
+
+    const view = renderSelect({
+      options: [testParentOption],
+    })
+
+    await view.events.click(view.getByText('Open Select'))
+
+    expect(
+      view.queryByRole('button', { name: 'Back to previous page' }),
+    ).not.toBeInTheDocument()
+
+    expect(view.getByRole('option')).toHaveTextContent('parent')
+    expect(view.getByRole('option')).toHaveAttribute('aria-disabled', 'true')
+
+    await view.events.click(view.getByRole('button', { name: 'Has submenu' }))
+
+    expect(view.emitted().push).toEqual([[testParentOption]])
+
+    await view.rerender({
+      options: [testChildOption],
+      isChildPage: true,
+    })
+
+    expect(view.getByRole('option')).toHaveTextContent('child')
+
+    await view.events.click(
+      view.getByRole('button', { name: 'Back to previous page' }),
+    )
+
+    expect(view.emitted().pop).toEqual([[]])
+
+    await view.rerender({
+      options: [testParentOption],
+      isChildPage: false,
+    })
+
+    expect(
+      view.queryByRole('button', { name: 'Back to previous page' }),
+    ).not.toBeInTheDocument()
+
+    expect(view.getByRole('option')).toHaveTextContent('parent')
+    expect(view.getByRole('option')).toHaveAttribute('aria-disabled', 'true')
+
+    await view.events.click(view.getByRole('button', { name: 'Has submenu' }))
+
+    await view.rerender({
+      options: [testChildOption],
+      isChildPage: true,
+    })
+
+    await view.events.click(view.getByText('child'))
+
+    expect(view.emitted().select).toEqual([[testChildOption]])
   })
 })

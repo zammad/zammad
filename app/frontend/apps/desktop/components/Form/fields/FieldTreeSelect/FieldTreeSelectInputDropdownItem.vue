@@ -60,7 +60,7 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
     tabindex="0"
     :aria-selected="selected"
     :aria-disabled="option.disabled ? 'true' : undefined"
-    class="group flex h-9 items-center gap-1.5 self-stretch px-2.5 text-sm text-black outline-none dark:text-white"
+    class="group flex h-9 cursor-default items-center gap-1.5 self-stretch px-2.5 text-sm text-black outline-none dark:text-white"
     role="option"
     :data-value="option.value"
     @click="select(option)"
@@ -114,7 +114,9 @@ const goToNextPage = (option: FlatSelectOption, noFocus?: boolean) => {
       v-else
       :class="{
         'pointer-events-none text-stone-200 dark:text-neutral-500':
-          option.disabled,
+          option.disabled && !option.hasChildren,
+        'pointer-events-none text-gray-100 dark:text-neutral-400':
+          option.disabled && option.hasChildren,
       }"
       :title="label"
       class="grow truncate"

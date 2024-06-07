@@ -28,6 +28,7 @@ import { useFocusWhenTyping } from '#shared/composables/useFocusWhenTyping.ts'
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
 import { i18n } from '#shared/i18n.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
 import stopEvent from '#shared/utils/events.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 
@@ -36,7 +37,10 @@ import { useTransitionCollapse } from '#desktop/composables/useTransitionCollaps
 import CommonSelectItem from './CommonSelectItem.vue'
 import { useCommonSelect } from './useCommonSelect.ts'
 
-import type { CommonSelectInternalInstance } from './types.ts'
+import type {
+  CommonSelectInternalInstance,
+  DropdownOptionsAction,
+} from './types.ts'
 
 export interface Props {
   modelValue?:
@@ -57,14 +61,22 @@ export interface Props {
   filter?: string
   optionIconComponent?: ConcreteComponent
   initiallyEmpty?: boolean
+  emptyInitialLabelText?: string
+  actions?: DropdownOptionsAction[]
+  isChildPage?: boolean
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  emptyInitialLabelText: __('Start typing to search…'),
+})
 
 const emit = defineEmits<{
   'update:modelValue': [option: string | number | (string | number)[]]
   select: [option: SelectOption]
+  push: [option: AutoCompleteOption]
+  pop: []
   close: []
+  focusFilterInput: []
 }>()
 
 const dropdownElement = ref<HTMLElement>()
@@ -263,10 +275,26 @@ const hasMoreSelectableOptions = computed(
     ).length > 0,
 )
 
-const selectAll = () => {
+const focusFirstOption = () => {
+  const focusableElements = getFocusableOptions()
+  if (!focusableElements?.length) return
+
+  const focusElement = focusableElements[0]
+
+  focusElement?.focus()
+}
+
+const selectAll = (focusInput = false) => {
   props.options
     .filter((option) => !option.disabled && !isCurrentValue(option.value))
     .forEach((option) => select(option))
+
+  if (focusInput === true) {
+    emit('focusFilterInput')
+    return
+  }
+
+  focusFirstOption()
 }
 
 const highlightedOptions = computed(() =>
@@ -307,11 +335,65 @@ const highlightedOptions = computed(() =>
 
 const emptyLabelText = computed(() => {
   if (!props.initiallyEmpty) return __('No results found')
-  return props.filter ? __('No results found') : __('Start typing to search…')
+  return props.filter ? __('No results found') : props.emptyInitialLabelText
 })
 
 const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
   useTransitionCollapse()
+
+const dropdownActions = computed(() => {
+  return [
+    ...(props.actions || []),
+    ...(props.multiple && hasMoreSelectableOptions.value
+      ? [
+          {
+            key: 'selectAll',
+            label: __('select all options'),
+            icon: 'check-all',
+            onClick: selectAll,
+          },
+        ]
+      : []),
+  ]
+})
+
+const locale = useLocaleStore()
+
+const parentPageCallback = (noFocus?: boolean) => {
+  emit('pop')
+
+  if (noFocus) return
+
+  nextTick(() => {
+    focusFirstOption()
+  })
+}
+
+const goToParentPage = (noFocus?: boolean) => {
+  parentPageCallback(noFocus)
+}
+
+const childPageCallback = (option?: AutoCompleteOption, noFocus?: boolean) => {
+  if (option?.children) {
+    emit('push', option)
+
+    if (noFocus) return
+
+    nextTick(() => {
+      focusFirstOption()
+    })
+  }
+}
+
+const goToChildPage = ({
+  option,
+  noFocus,
+}: {
+  option: AutoCompleteOption
+  noFocus?: boolean
+}) => {
+  childPageCallback(option, noFocus)
+}
 </script>
 
 <template>
@@ -345,20 +427,44 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
             }"
           >
             <div
-              v-if="multiple && hasMoreSelectableOptions"
+              v-if="isChildPage || dropdownActions.length"
               class="flex w-full justify-between gap-2 px-2.5 py-1.5"
             >
               <CommonLabel
-                class="ms-auto text-blue-800 focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-blue-800"
-                prefix-icon="check-all"
+                v-if="isChildPage"
+                class="text-blue-800 focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-blue-800"
+                :aria-label="$t('Back to previous page')"
+                :prefix-icon="
+                  locale.localeData?.dir === 'rtl'
+                    ? 'chevron-right'
+                    : 'chevron-left'
+                "
                 role="button"
                 tabindex="0"
-                @click.stop="selectAll()"
-                @keypress.enter.prevent.stop="selectAll()"
-                @keypress.space.prevent.stop="selectAll()"
+                @click.stop="goToParentPage(true)"
+                @keypress.enter.prevent.stop="goToParentPage()"
+                @keypress.space.prevent.stop="goToParentPage()"
               >
-                {{ $t('select all options') }}
+                {{ $t('Back') }}
               </CommonLabel>
+              <div
+                v-if="dropdownActions.length"
+                class="flex grow justify-end gap-2"
+              >
+                <CommonLabel
+                  v-for="action of dropdownActions"
+                  :key="action.key"
+                  :prefix-icon="action.icon"
+                  class="text-blue-800 focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-blue-800"
+                  role="button"
+                  tabindex="0"
+                  @click.stop="action.onClick(true)"
+                  @keypress.enter.prevent.stop="action.onClick"
+                  @keypress.space.prevent.stop="action.onClick"
+                >
+                  {{ $t(action.label) }}
+                </CommonLabel>
+              </div>
             </div>
             <div
               :aria-label="$t('Select…')"
@@ -372,7 +478,9 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
                 :key="String(option.value)"
                 :class="{
                   'first:rounded-t-lg':
-                    hasDirectionUp && (!multiple || !hasMoreSelectableOptions),
+                    hasDirectionUp &&
+                    !isChildPage &&
+                    (!multiple || !hasMoreSelectableOptions),
                   'last:rounded-b-lg': !hasDirectionUp,
                 }"
                 :selected="isCurrentValue(option.value)"
@@ -382,6 +490,7 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
                 :filter="filter"
                 :option-icon-component="optionIconComponent"
                 @select="select($event)"
+                @next="goToChildPage($event)"
               />
               <CommonSelectItem
                 v-if="!options.length"

@@ -3,7 +3,7 @@
 module Gql::Types::Input::AutocompleteSearch
   class ObjectAttributeExternalDataSourceInputType < InputType
 
-    description 'The default fields for object attribute external data source autocomplete searches.'
+    description 'Input fields for object attribute external data source autocomplete searches.'
 
     argument :object, Gql::Types::Enum::ObjectManagerObjectsType, description: 'Object name of the object attribute, e.g. Ticket'
     argument :attribute_name, String, description: 'Name of the object attribute'

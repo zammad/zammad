@@ -15,3 +15,10 @@ export interface CommonSelectInternalInstance
   extends Omit<CommonSelectInstance, 'isOpen'> {
   isOpen: Ref<boolean>
 }
+
+export interface DropdownOptionsAction {
+  key: string
+  label: string
+  icon?: string
+  onClick: (focus: boolean) => void
+}
