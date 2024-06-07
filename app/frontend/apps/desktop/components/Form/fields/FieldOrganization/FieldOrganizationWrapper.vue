@@ -2,9 +2,9 @@
 <script setup lang="ts">
 import { markRaw } from 'vue'
 
-import useFormFieldOrganizationInitialOptionBuilder from '#shared/components/Form/fields/FieldOrganization/composables/useFieldOrganizationInitialOptionBuilder.ts'
 import { AutocompleteSearchOrganizationDocument } from '#shared/components/Form/fields/FieldOrganization/graphql/queries/autocompleteSearch/organization.api.ts'
 import type { AutocompleteOrganizationProps } from '#shared/components/Form/fields/FieldOrganization/types.ts'
+import { useFormFieldOrganizationInitialOptionBuilder } from '#shared/components/Form/fields/FieldOrganization/useFieldOrganizationInitialOptionBuilder.ts'
 
 import FieldAutoCompleteInput from '../FieldAutoComplete/FieldAutoCompleteInput.vue'
 

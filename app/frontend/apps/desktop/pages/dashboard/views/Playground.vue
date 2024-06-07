@@ -586,6 +586,13 @@ const formSchema = [
     },
   },
   {
+    type: 'externalDataSource',
+    name: 'external_data_source',
+    label: 'External Data Source',
+    object: 'Ticket',
+    help: 'Please add external_data_source attribute on Ticket object. Otherwise this field will not work.',
+  },
+  {
     type: 'agent',
     name: 'agent',
     label: 'Agent',

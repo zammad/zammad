@@ -6,7 +6,7 @@ import { getAutoCompleteOption } from '#shared/entities/organization/utils/getAu
 import type { Organization } from '#shared/graphql/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
-const useFormFieldOrganizationInitialOptionBuilder = () => {
+export const useFormFieldOrganizationInitialOptionBuilder = () => {
   return (
     initialEntityObject: ObjectLike,
     value: SelectValue,
@@ -23,5 +23,3 @@ const useFormFieldOrganizationInitialOptionBuilder = () => {
     return getAutoCompleteOption(belongsToObject)
   }
 }
-
-export default useFormFieldOrganizationInitialOptionBuilder
