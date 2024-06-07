@@ -1,15 +1,15 @@
-Reset je #{config.product_name} wachtwoord
+Wachtwoord opnieuw instellen #{config.product_name}
 
-<div>Hallo #{user.firstname},</div>
+<div>Hoi #{gebruiker.voornaam},</div>
 <br>
-<div>We hebben een verzoek ontvangen om het wachtwoord voor je #{config.product_name}-account <b>#{user.login}</b> opnieuw in te stellen.</div>
+<div>Wij hebben een verzoek ontvangen om het wachtwoord te resetten voor je #{config.product_name} account <b>#{user.login}</b>.</div>
 <br>
-<div>Als je het wachtwoord opnieuw wilt instellen klikt je op de onderstaande link (of kopieert en plakt de URL in de browser):</div>
+<div>Als jij je wachtwoord opnieuw wilt instellen, klik dan op de onderstaande link (of kopieer en plak de URL in je browser):</div>
 <br>
-<div><a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.token}">#{config.http_type}://#{config.fqdn} /#password_reset_verify/#{token.token}</a></div>
+<div><a href="#{url}">#{url}</a></div>
 <br>
-<div>Deze link brengt je naar een pagina waar je het wachtwoord kunt wijzigen.</div>
+<div>Deze link brengt jou naar een pagina waar jij je wachtwoord kunt wijzigen.</div>
 <br>
-<div>Als je het wachtwoord niet opnieuw wilt instellen, kun je dit bericht negeren. Je wachtwoord wordt niet gereset.</div>
+<div>Als jij je wachtwoord niet opnieuw wilt instellen, negeer dan dit bericht. Je wachtwoord zal niet worden gereset.</div>
 <br>
-<div>Het #{config.product_name}-team</div>
+<div>Uw #{config.product_name} Team</div>

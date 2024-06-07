@@ -1,6 +1,6 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Билет##{ticket.number}>: Напоминанието е получено!_
-Билетът има нужда от внимание: напоминание е получено за (#{ticket.title}) от клиент "*#{ticket.customer.longname}*".
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Билет##{ticket.number}>: Напомнянето е получено!_
+Билетът има нужда да бъде прегледан: получено напомняне за (#{ticket.title}) от клиент "*#{ticket.customer.longname}*".
 
 <% if @objects[:article] %>
 #{article.body_as_text}
