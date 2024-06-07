@@ -43,6 +43,8 @@
     - echo "Rails zeitwerk:check autoloader check…"
     - bundle exec rails zeitwerk:check
     - .gitlab/check_graphql_api_consistency.sh
+    - echo "Checking consistency of setting types API"
+    - bundle exec rails generate zammad:setting_types --check
 
 'lint: ruby & security':
   extends:
