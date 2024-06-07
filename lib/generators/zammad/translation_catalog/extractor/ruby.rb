@@ -1,39 +1,30 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class Zammad::TranslationCatalog::Extractor::Ruby < Zammad::TranslationCatalog::Extractor::Base
+  REMOVE_DOC_COMMENTS_REGEX = %r{^=begin.*?^=end}mx
+  REMOVE_STANDARD_COMMENTS = %r{^\s*\#.*?$}mx
+
+  # __()
+  UNDERSCORE_REGEX = %r{__\(\s*#{LITERAL_STRING_REGEX}}
 
   def extract_from_string(string, filename)
     return if string.empty?
 
     # Remove doc comments
-    string.gsub!(%r{^=begin.*?^=end}mx, '')
+    string.gsub!(REMOVE_DOC_COMMENTS_REGEX, '')
     # Remove standard comments
-    string.gsub!(%r{^\s*\#.*?$}mx, '')
+    string.gsub!(REMOVE_STANDARD_COMMENTS, '')
 
-    literal_string_regex = %r{('|")(.+?)(?<!\\)\1}
-
-    # Translation.translate
-    locale_regex = %r{['"a-z_0-9.&@:\[\]-]+}
-    translate_regex = %r{Translation\.translate\(?\s*#{locale_regex},\s*#{literal_string_regex}}
-
-    # __()
-    underscore_regex = %r{__\(\s*#{literal_string_regex}}
-
-    [translate_regex, underscore_regex].each do |r|
-      string.scan(r) do |match|
-        result = match[1].gsub(%r{\\'}, "'")
-        next if match[0].eql?('"') && result.include?('#{')
-
-        extracted_strings << Zammad::TranslationCatalog::ExtractedString.new(string: result, references: [filename])
-      end
+    [TRANSLATE_REGEX, UNDERSCORE_REGEX].each do |r|
+      collect_extracted_strings(filename, string, r)
     end
   end
 
   def find_files
-    files = []
-    %w[config app db lib].each do |dir|
-      files += Dir.glob("#{base_path}/#{dir}/**/*.rb")
-    end
-    files
+    %w[config app db lib]
+      .map do |dir|
+        Dir.glob("#{base_path}/#{dir}/**/*.rb")
+      end
+      .flatten
   end
 end

@@ -1,33 +1,18 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class Zammad::TranslationCatalog::Extractor::Erb < Zammad::TranslationCatalog::Extractor::Base
+  # zt() / t()
+  LITERAL_STRING_REGEX = %r{(['"])(.+?)(?<!\\)\1}
+  T_REGEX = %r{(?:#\{|\s)z?t\(?\s*#{LITERAL_STRING_REGEX}}
 
   def extract_from_string(string, filename)
     return if string.empty?
 
-    # zt() / t()
-    literal_string_regex = %r{(['"])(.+?)(?<!\\)\1}
-    t_regex = %r{(?:#\{|\s)z?t\(?\s*#{literal_string_regex}}
-
-    # Translation.translate
-    locale_regex = %r{['"a-z_0-9.&@:\[\]-]+}
-    translate_regex = %r{Translation\.translate\(?\s*#{locale_regex},\s*#{literal_string_regex}}
-
-    [t_regex, translate_regex].each do |r|
-      string.scan(r) do |match|
-        result = match[1].gsub(%r{\\'}, "'")
-        next if match[0].eql?('"') && result.include?('#{')
-
-        extracted_strings << Zammad::TranslationCatalog::ExtractedString.new(string: result, references: [filename])
-      end
-    end
+    collect_extracted_strings(filename, string, T_REGEX)
+    collect_extracted_strings(filename, string, TRANSLATE_REGEX)
   end
 
   def find_files
-    files = []
-    ['app/views/**'].each do |dir|
-      files += Dir.glob("#{base_path}/#{dir}/*.erb")
-    end
-    files
+    Dir.glob("#{base_path}/app/views/**/*.erb")
   end
 end
