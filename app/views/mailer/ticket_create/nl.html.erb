@@ -7,7 +7,7 @@ Nieuw ticket (#{ticket.title})
 <div>
 Groep: #{ticket.group.name}<br>
 Behandelaar: #{ticket.owner.fullname}<br>
-Status: #{ticket.state.name}<br>
+Status: #{t(ticket.state.name)}<br>
 </div>
 <br>
 <% if @objects[:article] %>
