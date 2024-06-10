@@ -367,8 +367,8 @@ msgstr "%s (metode)"
 msgid "%s (option)"
 msgstr "%s (valg)"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:274
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:454
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:302
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:533
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:229
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
@@ -575,6 +575,7 @@ msgid "%s of my tickets escalated"
 msgstr "%s av sakene mine eskalerte."
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
+#: app/graphql/gql/queries/autocomplete_search/generic.rb:64
 msgid "%s people"
 msgstr "%s personer"
 
@@ -2560,6 +2561,7 @@ msgid "BCC address for all outgoing emails"
 msgstr "BCC-adresse (blindkopi) for alle utgående e-poster"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:436
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:447
 msgid "Back"
 msgstr "Tilbake"
@@ -2572,6 +2574,7 @@ msgstr "Tilbake til visningen min"
 msgid "Back to overview"
 msgstr "Tilbake til oversikten"
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:436
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:447
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:197
 #, fuzzy
@@ -3368,7 +3371,7 @@ msgid "Clear Search"
 msgstr "Søk"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:526
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:608
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:140
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:292
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:352
@@ -7852,7 +7855,7 @@ msgstr "Gmail"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:98
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:105
 #: app/assets/javascripts/app/views/signup/verify.jst.eco:10
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue:57
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue:51
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:88
 msgid "Go Back"
 msgstr "Gå Tilbake"
@@ -8111,7 +8114,8 @@ msgstr ""
 msgid "Has processed"
 msgstr "Har behandlet"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:127
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:152
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:129
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:338
 #, fuzzy
 #| msgid "%s subdomain"
@@ -11331,7 +11335,7 @@ msgid "No related article found to process the status message on."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:309
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:337
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:510
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:100
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:402
@@ -14102,13 +14106,15 @@ msgstr "Søk etter brukere"
 msgid "Search for…"
 msgstr "Søk"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts:41
+#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts:24
+#: app/frontend/shared/components/Form/fields/FieldRecipient/features/setAutoCompleteBehavior.ts:33
 #, fuzzy
 #| msgid "Enter your username or email address"
 msgid "Search or enter email address…"
 msgstr "Skriv inn brukernavnet eller e-postadressen din"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts:33
+#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts:19
+#: app/frontend/shared/components/Form/fields/FieldRecipient/features/setAutoCompleteBehavior.ts:25
 #, fuzzy
 #| msgid "Enter your username or email address"
 msgid "Search or enter phone number…"
@@ -14411,7 +14417,7 @@ msgstr "Velger"
 msgid "Selects the ticket number generator module."
 msgstr "Velger saksnummergenerator."
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:364
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:470
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:474
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue:201
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:302
@@ -15303,7 +15309,20 @@ msgstr "Søk etter brukere"
 msgid "Start typing to search in Knowledge Base…"
 msgstr "Søk etter brukere"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:310
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:93
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:50
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Start typing to search or enter an email address…"
+msgstr "Skriv inn brukernavnet eller e-postadressen din"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Start typing to search or enter an phone number…"
+msgstr "Skriv inn brukernavnet eller e-postadressen din"
+
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:70
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:409
 #, fuzzy
 #| msgid "Search for users"
@@ -18931,7 +18950,7 @@ msgstr "Notifikasjon"
 msgid "Unsaved Changes"
 msgstr "Kast endringer"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:463
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:542
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:238
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:304
 msgid "Unselect Option"
@@ -20580,6 +20599,19 @@ msgstr "aktiv"
 msgid "add"
 msgstr "Legg til"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/useAddUnknownValueAction.ts:25
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:27
+#, fuzzy
+#| msgid "Enter a valid email address."
+msgid "add new email address"
+msgstr "Skriv inn en gyldig e-postadresse."
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:26
+#, fuzzy
+#| msgid "November"
+msgid "add new phone number"
+msgstr "november"
+
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "add option"
 msgstr ""
@@ -21743,7 +21775,7 @@ msgstr "kjør macro"
 msgid "select"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:360
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:351
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:469
 #, fuzzy
 #| msgid "reply"
@@ -22390,11 +22422,6 @@ msgstr "Vente tid i dag"
 #~| msgid "When notification is being sent."
 #~ msgid "Certificate for %s found."
 #~ msgstr "Når varsel skal sendes."
-
-#, fuzzy
-#~| msgid "Enter a valid email address."
-#~ msgid "Invalid email address."
-#~ msgstr "Skriv inn en gyldig e-postadresse."
 
 #, fuzzy
 #~| msgid "Assigned"

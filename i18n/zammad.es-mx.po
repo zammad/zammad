@@ -257,8 +257,8 @@ msgstr ""
 msgid "%s (option)"
 msgstr "establecer opcional"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:274
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:454
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:302
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:533
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:229
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
@@ -478,6 +478,7 @@ msgid "%s of my tickets escalated"
 msgstr "%s de Tickets escalados."
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
+#: app/graphql/gql/queries/autocomplete_search/generic.rb:64
 msgid "%s people"
 msgstr "%s gente"
 
@@ -2544,6 +2545,7 @@ msgid "BCC address for all outgoing emails"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:436
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:447
 msgid "Back"
 msgstr "Atrás"
@@ -2558,6 +2560,7 @@ msgstr "Volver a mi vista"
 msgid "Back to overview"
 msgstr "Volver a mi vista"
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:436
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:447
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:197
 #, fuzzy
@@ -3342,7 +3345,7 @@ msgid "Clear Search"
 msgstr "Buscar"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:526
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:608
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:140
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:292
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:352
@@ -7744,7 +7747,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:98
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:105
 #: app/assets/javascripts/app/views/signup/verify.jst.eco:10
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue:57
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue:51
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:88
 msgid "Go Back"
 msgstr "Regresar"
@@ -7999,7 +8002,8 @@ msgstr ""
 msgid "Has processed"
 msgstr "Ha procesado"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:127
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:152
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:129
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:338
 #, fuzzy
 #| msgid "%s subdomain"
@@ -11165,7 +11169,7 @@ msgid "No related article found to process the status message on."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:309
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:337
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:510
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:100
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:402
@@ -13847,13 +13851,15 @@ msgstr "Buscar usuarios"
 msgid "Search for…"
 msgstr "Buscar…"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts:41
+#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts:24
+#: app/frontend/shared/components/Form/fields/FieldRecipient/features/setAutoCompleteBehavior.ts:33
 #, fuzzy
 #| msgid "Enter your username or email address"
 msgid "Search or enter email address…"
 msgstr "Ingrese su nombre de usuario o correo electrónico"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts:33
+#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts:19
+#: app/frontend/shared/components/Form/fields/FieldRecipient/features/setAutoCompleteBehavior.ts:25
 #, fuzzy
 #| msgid "Enter your username or email address"
 msgid "Search or enter phone number…"
@@ -14151,7 +14157,7 @@ msgstr "Selector"
 msgid "Selects the ticket number generator module."
 msgstr "Selecciona el módulo generador de números de ticket."
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:364
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:470
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:474
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue:201
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:302
@@ -15014,7 +15020,20 @@ msgstr "Comienza a escribir para buscar usuarios …"
 msgid "Start typing to search in Knowledge Base…"
 msgstr "Comience a escribir para buscar en la base de conocimientos…"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:310
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:93
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:50
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Start typing to search or enter an email address…"
+msgstr "Ingrese su nombre de usuario o correo electrónico"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Start typing to search or enter an phone number…"
+msgstr "Ingrese su nombre de usuario o correo electrónico"
+
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:70
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:409
 #, fuzzy
 #| msgid "Start typing to search for users…"
@@ -18617,7 +18636,7 @@ msgstr "Notificación"
 msgid "Unsaved Changes"
 msgstr "Descartar los Cambios"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:463
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:542
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:238
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:304
 #, fuzzy
@@ -20230,6 +20249,19 @@ msgstr "activo"
 msgid "add"
 msgstr "Añadir"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/useAddUnknownValueAction.ts:25
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:27
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "add new email address"
+msgstr "Ingrese su nombre de usuario o correo electrónico"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:26
+#, fuzzy
+#| msgid "November"
+msgid "add new phone number"
+msgstr "Noviembre"
+
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "add option"
 msgstr "agregar opción"
@@ -21394,7 +21426,7 @@ msgstr "ejecutar macro"
 msgid "select"
 msgstr "Seleccione"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:360
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:351
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:469
 #, fuzzy
 #| msgid "set optional"
@@ -22019,11 +22051,6 @@ msgstr "∅ Tiempo de espera hoy"
 #~| msgid "Certificate for verification could not be found."
 #~ msgid "Certificate for %s found."
 #~ msgstr "No se pudo encontrar el certificado de verificación."
-
-#, fuzzy
-#~| msgid "Enter your username or email address"
-#~ msgid "Invalid email address."
-#~ msgstr "Ingrese su nombre de usuario o correo electrónico"
 
 #, fuzzy
 #~| msgid "Assigned"

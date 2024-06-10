@@ -372,8 +372,8 @@ msgstr "%s (metoda)"
 msgid "%s (option)"
 msgstr "%s (možnost)"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:274
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:454
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:302
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:533
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:229
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
@@ -580,6 +580,7 @@ msgid "%s of my tickets escalated"
 msgstr "%s mých ticketů bylo eskalováno."
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
+#: app/graphql/gql/queries/autocomplete_search/generic.rb:64
 msgid "%s people"
 msgstr "%s lidí"
 
@@ -2541,6 +2542,7 @@ msgid "BCC address for all outgoing emails"
 msgstr "Adresa slepé kopie (Bcc) pro všechny odchozí e-maily"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:436
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:447
 msgid "Back"
 msgstr "Zpět"
@@ -2553,6 +2555,7 @@ msgstr "Zpět do mého pohledu"
 msgid "Back to overview"
 msgstr "Zpět do přehledu"
 
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:436
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:447
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:197
 msgid "Back to previous page"
@@ -3305,7 +3308,7 @@ msgid "Clear Search"
 msgstr "Obnovit hledání"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:526
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:608
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:140
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:292
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:352
@@ -7781,7 +7784,7 @@ msgstr "Gmail"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:98
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:105
 #: app/assets/javascripts/app/views/signup/verify.jst.eco:10
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue:57
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue:51
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:88
 msgid "Go Back"
 msgstr "Jít Zpět"
@@ -8024,7 +8027,8 @@ msgstr ""
 msgid "Has processed"
 msgstr "Byl zpracován"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:127
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:152
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:129
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:338
 msgid "Has submenu"
 msgstr "Má submenu"
@@ -11163,7 +11167,7 @@ msgid "No related article found to process the status message on."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:309
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:337
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:510
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:100
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:402
@@ -13850,11 +13854,13 @@ msgstr "Hledat uživatele"
 msgid "Search for…"
 msgstr "Vyhledat…"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts:41
+#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts:24
+#: app/frontend/shared/components/Form/fields/FieldRecipient/features/setAutoCompleteBehavior.ts:33
 msgid "Search or enter email address…"
 msgstr "Hledejte nebo zadejte e-mailovou adresu…"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts:33
+#: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts:19
+#: app/frontend/shared/components/Form/fields/FieldRecipient/features/setAutoCompleteBehavior.ts:25
 msgid "Search or enter phone number…"
 msgstr "Vyhledejte nebo vložte telefonní číslo…"
 
@@ -14142,7 +14148,7 @@ msgstr "Selektor"
 msgid "Selects the ticket number generator module."
 msgstr "Zvolte modul generování čísla ticketu."
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:364
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:470
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:474
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue:201
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:302
@@ -14973,7 +14979,20 @@ msgstr "Pro vyhledání uživatelů začněte psát…"
 msgid "Start typing to search in Knowledge Base…"
 msgstr "Pro hledání ve Znalostní bázi začněte psát…"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:310
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:93
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:50
+#, fuzzy
+#| msgid "Search or enter email address…"
+msgid "Start typing to search or enter an email address…"
+msgstr "Hledejte nebo zadejte e-mailovou adresu…"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
+#, fuzzy
+#| msgid "Search or enter phone number…"
+msgid "Start typing to search or enter an phone number…"
+msgstr "Vyhledejte nebo vložte telefonní číslo…"
+
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:70
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:409
 msgid "Start typing to search…"
 msgstr "Pro vyhledání začněte psát…"
@@ -18593,7 +18612,7 @@ msgstr "Nepřečtená oznámení"
 msgid "Unsaved Changes"
 msgstr "Zahodit změny"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:463
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:542
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:238
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:304
 #, fuzzy
@@ -20282,6 +20301,19 @@ msgstr "aktivní"
 msgid "add"
 msgstr "Přidat"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/useAddUnknownValueAction.ts:25
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:27
+#, fuzzy
+#| msgid "Enter a valid email address."
+msgid "add new email address"
+msgstr "Zadejte platnou e-mailovou adresu."
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:26
+#, fuzzy
+#| msgid "Phone (in)"
+msgid "add new phone number"
+msgstr "Telefon (příchozí)"
+
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "add option"
 msgstr "přidat možnost"
@@ -21375,7 +21407,7 @@ msgstr "spustit makro"
 msgid "select"
 msgstr "zvolit"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:360
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:351
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:469
 #, fuzzy
 #| msgid "set optional"
@@ -22156,11 +22188,6 @@ msgstr "dnešní ∅ čekací doby"
 #~| msgid "Certificates & Private Keys"
 #~ msgid "Certificates found for %s."
 #~ msgstr "Certifikáty a soukromé klíče"
-
-#, fuzzy
-#~| msgid "Enter a valid email address."
-#~ msgid "Invalid email address."
-#~ msgstr "Zadejte platnou e-mailovou adresu."
 
 #, fuzzy
 #~| msgid "Assigned"
