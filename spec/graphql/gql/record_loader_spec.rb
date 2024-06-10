@@ -134,7 +134,7 @@ RSpec.describe Gql::RecordLoader, :aggregate_failures, authenticated_as: :agent,
         {
           'Overview Load'          => 1,
           'ObjectLookup Load'      => 1,
-          'Permission Load'        => 7,
+          'Permission Load'        => 6,
           'Permission Exists?'     => 6,
           'Group Load'             => 11,
           'UserGroup Exists?'      => 4,
@@ -215,7 +215,7 @@ RSpec.describe Gql::RecordLoader, :aggregate_failures, authenticated_as: :agent,
 
       expect(total_queries).to include(
         {
-          'Permission Load'    => 7,
+          'Permission Load'    => 5,
           'Permission Exists?' => 5,
           'User Load'          => 2,
           'Organization Load'  => 1,
