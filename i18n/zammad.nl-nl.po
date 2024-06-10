@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-07 06:29+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2024-06-10 05:52+0000\n"
+"Last-Translator: JPB <jeffreypeerboom@eijsden-margraten.nl>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/nl/>\n"
 "Language: nl-nl\n"
@@ -1850,7 +1850,7 @@ msgid ""
 "Are you sure you want to reload? You have unsaved changes that will get lost"
 msgstr ""
 "Weet je zeker dat je opnieuw wilt laden? Alle niet opgeslagen aanpassingen "
-"gaan verloren"
+"gaan verloren."
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:693
 msgid "Are you sure you want to set \"%s\" as default?"
@@ -9796,13 +9796,13 @@ msgstr ""
 "\n"
 "<div>Hallo #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>Het nieuwe ticket (#{ticket.title}) is aangemaakt door "
-"\"<b>#{current_user.longname}</b>\".</div>\n"
+"<div>Het nieuwe ticket (#{ticket.title}) is aangemaakt door \""
+"<b>#{current_user.longname}</b>\".</div>\n"
 "<br>\n"
 "<div>\n"
 "Groep: #{ticket.group.name}<br>\n"
 "Behandelaar: #{ticket.owner.fullname}<br>\n"
-"Status: #{ticket.state.name}<br>\n"
+"Status: #{t(ticket.state.name)}<br>\n"
 "</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
@@ -9815,8 +9815,8 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"   <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}\" target=\"zammad_app\">Bekijk dit in #{config.product_name}</a>\n"
+"   <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\""
+" target=\"zammad_app\">Bekijk dit in #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:200
@@ -10638,7 +10638,7 @@ msgstr "Overige instellingen"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:2
 #: db/seeds/permissions.rb:392
 msgid "Out of Office"
-msgstr "Niet op kantoor"
+msgstr "Out of Office"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee:11
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
@@ -10648,7 +10648,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:163
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:190
 msgid "Out of office replacement"
-msgstr "Niet op kantoor vervanging"
+msgstr "Out of Office vervanging"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:99
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:24
@@ -12262,7 +12262,7 @@ msgstr "Zoeken naar…"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts:38
 msgid "Search or enter email address…"
-msgstr "Zoek naar of voer je e-mailadres in…"
+msgstr "Zoek naar gebruiker of e-mailadres…"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldRecipient/index.ts:30
 msgid "Search or enter phone number…"
@@ -18807,7 +18807,7 @@ msgstr "overeenkomsten gevonden"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:87
 msgid "matches regex"
-msgstr "komt overeen met regex"
+msgstr "matcht met regex"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:69
 #: app/assets/javascripts/app/views/cti/caller_log_avatar.jst.eco:2
