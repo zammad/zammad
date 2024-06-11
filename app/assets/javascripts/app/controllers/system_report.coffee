@@ -38,4 +38,4 @@ class SystemReport extends App.ControllerSubContent
 
     @html content
 
-App.Config.set('SystemReport', { prio: 3800, name: __('System Report'), parent: '#system', target: '#system/system_report', controller: SystemReport, permission: ['admin'] }, 'NavBarAdmin' )
+App.Config.set('SystemReport', { prio: 3800, name: __('System Report'), parent: '#system', target: '#system/system_report', controller: SystemReport, permission: ['admin.system_report'] }, 'NavBarAdmin' )
