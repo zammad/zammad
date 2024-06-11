@@ -192,7 +192,7 @@ const actionPlugin: TicketArticleActionPlugin = {
     const type: TicketArticleType = {
       apps: ['mobile'],
       value: 'whatsapp message',
-      label: __('Whatsapp'),
+      label: __('WhatsApp'),
       icon: 'whatsapp',
       view: {
         agent: ['change'],
