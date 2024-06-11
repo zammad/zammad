@@ -88,7 +88,7 @@
     "vite-plugin-ruby": "^5.0.0",
     "vitest": "^1.6.0",
     "vitest-axe": "^0.1.0",
-    "vue-tsc": "^2.0.19"
+    "vue-tsc": "^2.0.21"
   },
   "dependencies": {
     "@apollo/client": "^3.10.4",
@@ -122,7 +122,7 @@
     "@tiptap/suggestion": "^2.4.0",
     "@tiptap/vue-3": "^2.4.0",
     "@vue/apollo-composable": "^4.0.2",
-    "@vuepic/vue-datepicker": "^8.7.0",
+    "@vuepic/vue-datepicker": "^8.8.0",
     "@vueuse/core": "^10.10.0",
     "@vueuse/router": "^10.10.0",
     "@vueuse/shared": "^10.10.0",
@@ -143,9 +143,9 @@
     "uuid": "^9.0.1",
     "vite-bundle-visualizer": "^1.2.1",
     "vue": "^3.4.27",
-    "vue-advanced-cropper": "^2.8.8",
+    "vue-advanced-cropper": "^2.8.9",
     "vue-easy-lightbox": "1.19.0",
-    "vue-router": "^4.3.2",
+    "vue-router": "^4.3.3",
     "vue3-draggable-resizable": "^1.6.5",
     "vuedraggable": "^4.1.0",
     "workbox-core": "^7.1.0",
