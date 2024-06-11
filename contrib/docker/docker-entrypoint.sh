@@ -151,6 +151,14 @@ elif [ "$1" = 'zammad-websocket' ]; then
 
   exec bundle exec script/websocket-server.rb -b 0.0.0.0 -p "${ZAMMAD_WEBSOCKET_PORT}" start
 
+# zammad-backup
+elif [ "$1" = 'zammad-backup' ]; then
+  check_zammad_ready
+
+  echo "starting backup..."
+
+  exec contrib/docker/backup.sh
+
 # Pass all other container commands to shell
 else
   exec "$@"
