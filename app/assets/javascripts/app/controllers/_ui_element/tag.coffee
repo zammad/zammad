@@ -11,9 +11,9 @@ class App.UiElement.tag
     a = ->
       $('#' + attribute.id ).tokenfield(
         createTokensOnBlur: true
+        showAutocompleteOnFocus: true
         autocomplete: {
           source: source
-          minLength: 1
           response: (e, ui) ->
             return if !ui
             return if !ui.content
