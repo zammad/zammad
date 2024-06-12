@@ -28,6 +28,8 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Tag, authenticated_as: :agent, 
     let(:limit)        { nil }
 
     before do
+      allow(Tag::Item).to receive(:recommended).and_call_original
+      allow(Tag::Item).to receive(:filter_by_name).and_call_original
       gql.execute(query, variables: variables)
     end
 
@@ -46,13 +48,15 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Tag, authenticated_as: :agent, 
     end
 
     context 'with exact search' do
+      let(:tag)          { tags.first }
+      let(:query_string) { tag.name }
+
       let(:first_tag_payload) do
         {
-          'value' => gql.id(tags.first),
-          'label' => tags.first.name,
+          'value' => tag.name,
+          'label' => tag.name,
         }
       end
-      let(:query_string) { tags.first.name }
 
       it 'has data' do
         expect(gql.result.data).to eq([first_tag_payload])
@@ -62,8 +66,24 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Tag, authenticated_as: :agent, 
     context 'when sending an empty search string' do
       let(:query_string) { '   ' }
 
-      it 'still returns tags' do
-        expect(gql.result.data.length).to eq(tags.length)
+      it 'returns recommended tags' do
+        expect(Tag::Item).to have_received(:recommended)
+      end
+    end
+
+    context 'when sending an asterisk' do
+      let(:query_string) { '*' }
+
+      it 'returns recommended tags' do
+        expect(Tag::Item).to have_received(:recommended)
+      end
+    end
+
+    context 'when asterisk is added to the query' do
+      let(:query_string) { 'Tag*' }
+
+      it 'returns filtered tags' do
+        expect(Tag::Item).to have_received(:filter_by_name).with('Tag')
       end
     end
 

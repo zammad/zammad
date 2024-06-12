@@ -124,4 +124,63 @@ RSpec.describe Tag::Item do
         .and change { Tag.exists?(id: tags.second.id) }.to(false)
     end
   end
+
+  describe '.filter_or_recommended' do
+    before do
+      allow(described_class).to receive(:recommended)
+      allow(described_class).to receive(:filter_by_name)
+    end
+
+    it 'calls filter_by_name when query is present' do
+      described_class.filter_or_recommended('query')
+      expect(described_class).to have_received(:filter_by_name)
+    end
+
+    it 'calls recommended when query is empty' do
+      described_class.filter_or_recommended('')
+      expect(described_class).to have_received(:recommended)
+    end
+  end
+
+  describe '.recommended' do
+    before do
+      create(:tag, o: create(:ticket), tag: 'once')
+      3.times { create(:tag, o: create(:ticket), tag: 'thrice') }
+      2.times { create(:tag, o: create(:ticket), tag: 'twice') }
+    end
+
+    it 'returns items descending by occurrence count' do
+      expect(described_class.recommended.pluck(:name))
+        .to eq(%w[thrice twice once])
+    end
+  end
+
+  describe '.filter_by_name' do
+    before do
+      %w[tag test qwerty].each do |elem|
+        create(:tag_item, name: elem)
+      end
+    end
+
+    it 'returns items descending by occurrence count' do
+      expect(described_class.filter_by_name('e').pluck(:name))
+        .to eq(%w[qwerty test])
+    end
+  end
+
+  describe 'validations' do
+    it 'does not allow comma in name' do
+      item = described_class.new(name: 'tag,with,comma')
+      item.valid?
+
+      expect(item.errors[:name]).to be_present
+    end
+
+    it 'does not allow asterisk in name' do
+      item = described_class.new(name: 'tag*with*asterisk')
+      item.valid?
+
+      expect(item.errors[:name]).to be_present
+    end
+  end
 end

@@ -10,7 +10,7 @@ import type { DropdownOptionsAction } from '#desktop/components/CommonSelect/typ
 import type { Dictionary } from 'ts-essentials'
 
 export interface AutoCompleteProps extends DefaultAutoCompleteProps {
-  actions: DropdownOptionsAction[]
+  actions?: DropdownOptionsAction[]
 }
 
 export type AutoCompleteOptionValueDictionary = Dictionary<AutoCompleteOption>
@@ -19,3 +19,5 @@ export type SelectOptionFunction = (
   option: AutoCompleteOption,
   focus?: boolean,
 ) => void
+
+export type ClearFilterInputFunction = () => void

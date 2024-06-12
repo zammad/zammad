@@ -24,21 +24,34 @@ export const useAddUnknownValueAction = (
   const actions = ref<DropdownOptionsAction[]>([])
   const actionLabel = label ?? ref(__('add new email address'))
 
-  const validFilterValue = filterValueValidator ?? emailFilterValueValidator
+  const isValidFilterValue = filterValueValidator ?? emailFilterValueValidator
+
+  const isNewOption = (
+    filter: string,
+    optionValues: AutoCompleteOptionValueDictionary,
+  ) => !optionValues[filter]
+
+  const addUnknownValue = (
+    filter: string,
+    selectOption: SelectOptionFunction,
+    focus: boolean,
+  ) => {
+    const newOption = {
+      value: filter,
+      label: filter,
+    }
+
+    selectOption(newOption, focus)
+  }
 
   const onSearchInteractionUpdate = (
     filter: string,
     optionValues: AutoCompleteOptionValueDictionary,
     selectOption: SelectOptionFunction,
   ) => {
-    if (optionValues[filter] || !validFilterValue(filter)) {
+    if (!isNewOption(filter, optionValues) || !isValidFilterValue(filter)) {
       actions.value = []
       return
-    }
-
-    const newOption = {
-      value: filter,
-      label: filter,
     }
 
     actions.value = [
@@ -47,7 +60,7 @@ export const useAddUnknownValueAction = (
         label: actionLabel.value,
         icon: 'plus-square-fill',
         onClick: (focus) => {
-          selectOption(newOption, focus)
+          addUnknownValue(filter, selectOption, focus)
 
           // Reset actions after current filter was added.
           actions.value = []
@@ -58,6 +71,9 @@ export const useAddUnknownValueAction = (
 
   return {
     actions,
+    isNewOption,
+    isValidFilterValue,
+    addUnknownValue,
     onSearchInteractionUpdate,
   }
 }

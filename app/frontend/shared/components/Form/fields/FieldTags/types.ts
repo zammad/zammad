@@ -2,13 +2,16 @@
 
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 
+import type { AutoCompleteProps } from '../FieldAutocomplete/types.ts'
+
 export interface FieldTagsProps {
   canCreate?: boolean
   sorting?: 'label' | 'value'
 }
 
 export type FieldTagsContext = FormFieldContext<
-  FieldTagsProps & {
-    options: FormFieldContext['options']
-  }
+  AutoCompleteProps &
+    FieldTagsProps & {
+      options?: FormFieldContext['options']
+    }
 >

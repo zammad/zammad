@@ -19,7 +19,7 @@ declare module '@formkit/inputs' {
   }
 
   interface FormKitInputSlots<Props extends FormKitInputs<Props>> {
-    treeselect: FormKitBaseSlots<Props>
+    autocomplete: FormKitBaseSlots<Props>
   }
 }
 

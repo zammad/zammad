@@ -12,10 +12,6 @@ export interface CommonInputSearchProps {
   alternativeBackground?: boolean
 }
 
-export interface CommonInputSearchEmits {
-  (e: 'update:modelValue', filter: string): void
-}
-
 export interface CommonInputSearchExpose {
   focus(): void
 }
@@ -23,7 +19,11 @@ export interface CommonInputSearchExpose {
 const props = withDefaults(defineProps<CommonInputSearchProps>(), {
   placeholder: __('Search…'),
 })
-const emit = defineEmits<CommonInputSearchEmits>()
+
+const emit = defineEmits<{
+  'update:modelValue': [filter: string]
+  keydown: [event: KeyboardEvent]
+}>()
 
 const filter = useVModel(props, 'modelValue', emit)
 
@@ -57,6 +57,10 @@ const maybeAcceptSuggestion = (event: Event) => {
 
   event.preventDefault()
   filter.value = props.suggestion
+}
+
+const onKeydown = (event: KeyboardEvent) => {
+  emit('keydown', event)
 }
 </script>
 
@@ -95,6 +99,7 @@ export default {
           @keydown.right="maybeAcceptSuggestion"
           @keydown.end="maybeAcceptSuggestion"
           @keydown.tab="maybeAcceptSuggestion"
+          @keydown="onKeydown"
         />
       </div>
       <div

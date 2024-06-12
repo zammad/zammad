@@ -1,12 +1,28 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class Tag::Item < ApplicationModel
-  validates   :name, presence: true
+  validates   :name, presence: true, format: { without: %r{,|\*} }
   before_save :fill_namedowncase
 
   has_many :tags, foreign_key: 'tag_item_id',
                   inverse_of:  :tag_item,
                   dependent:   :destroy
+
+  scope :recommended, lambda {
+    left_outer_joins(:tags)
+      .group(:id)
+      .reorder('COUNT(tags.tag_item_id) DESC, name ASC')
+
+  }
+
+  scope :filter_by_name, lambda { |query|
+    where('name_downcase LIKE ?', "%#{SqlHelper.quote_like(query.strip.downcase)}%")
+      .reorder(name: :asc)
+  }
+
+  scope :filter_or_recommended, lambda { |query|
+    query.blank? ? recommended : filter_by_name(query)
+  }
 
 =begin
 

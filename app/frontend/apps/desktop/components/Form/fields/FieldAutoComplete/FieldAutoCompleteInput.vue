@@ -45,6 +45,7 @@ import FieldAutoCompleteOptionIcon from './FieldAutoCompleteOptionIcon.vue'
 import type {
   AutoCompleteProps,
   SelectOptionFunction,
+  ClearFilterInputFunction,
   AutoCompleteOptionValueDictionary,
 } from './types.ts'
 import type { FormKitNode } from '@formkit/core'
@@ -59,6 +60,13 @@ const emit = defineEmits<{
     filter: string,
     optionValues: AutoCompleteOptionValueDictionary,
     selectOption: SelectOptionFunction,
+  ]
+  keydownFilterInput: [
+    event: KeyboardEvent,
+    filter: string,
+    optionValues: AutoCompleteOptionValueDictionary,
+    selectOption: SelectOptionFunction,
+    clearFilter: ClearFilterInputFunction,
   ]
 }>()
 
@@ -291,6 +299,11 @@ const selectOption = (option: SelectOption, focus = false) => {
   filterInput.value?.focus()
 }
 
+const selectNewOption = (option: SelectOption, focus = false) => {
+  if (isCurrentValue(option.value)) return
+  selectOption(option, focus)
+}
+
 const availableOptions = computed<AutoCompleteOption[]>((oldValue) => {
   const currentOptions =
     filter.value || props.context.defaultFilter
@@ -308,7 +321,7 @@ const emitResultUpdated = () => {
       'searchInteractionUpdate',
       debouncedFilter.value,
       { ...autocompleteOptionValueLookup.value, ...optionValueLookup.value },
-      selectOption,
+      selectNewOption,
     )
   })
 }
@@ -325,6 +338,19 @@ watch(autocompleteQueryHandler.loading(), (newValue, oldValue) => {
 
   emitResultUpdated()
 })
+
+const onKeydownFilterInput = (event: KeyboardEvent) => {
+  nextTick(() => {
+    emit(
+      'keydownFilterInput',
+      event,
+      filter.value,
+      { ...autocompleteOptionValueLookup.value, ...optionValueLookup.value },
+      selectNewOption,
+      clearFilter,
+    )
+  })
+}
 
 const deaccent = (s: string) =>
   s.normalize('NFD').replace(/[\u0300-\u036f]/g, '')
@@ -575,6 +601,7 @@ useFormBlock(contextReactive, openSelectDropdown)
           :suggestion="suggestedOptionLabel"
           :alternative-background="context.alternativeBackground"
           @keypress.space.stop
+          @keydown="onKeydownFilterInput"
         />
         <div v-if="!expanded" class="flex grow flex-wrap gap-1" role="list">
           <div

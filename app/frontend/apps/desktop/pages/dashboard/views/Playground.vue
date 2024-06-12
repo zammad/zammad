@@ -15,6 +15,7 @@ import type {
   FormValues,
 } from '#shared/components/Form/types.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
@@ -513,6 +514,8 @@ const buttonGroupOptions: CommonButtonItem[] = [
   },
 ]
 
+const application = useApplicationStore()
+
 const formSchema = [
   {
     isLayout: true,
@@ -643,6 +646,15 @@ const formSchema = [
           },
         },
       ],
+    },
+  },
+  {
+    type: 'tags',
+    name: 'tags',
+    label: 'Tags',
+    props: {
+      clearable: true,
+      canCreate: application.config.tag_new,
     },
   },
   {

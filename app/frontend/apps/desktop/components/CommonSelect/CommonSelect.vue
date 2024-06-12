@@ -432,13 +432,14 @@ const goToChildPage = ({
             >
               <CommonLabel
                 v-if="isChildPage"
-                class="text-blue-800 focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-blue-800"
+                class="text-blue-800 hover:text-black focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-blue-800 dark:hover:text-white"
                 :aria-label="$t('Back to previous page')"
                 :prefix-icon="
                   locale.localeData?.dir === 'rtl'
                     ? 'chevron-right'
                     : 'chevron-left'
                 "
+                size="small"
                 role="button"
                 tabindex="0"
                 @click.stop="goToParentPage(true)"
@@ -455,7 +456,8 @@ const goToChildPage = ({
                   v-for="action of dropdownActions"
                   :key="action.key"
                   :prefix-icon="action.icon"
-                  class="text-blue-800 focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-blue-800"
+                  class="text-blue-800 hover:text-black focus-visible:rounded-sm focus-visible:outline focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-blue-800 dark:hover:text-white"
+                  size="small"
                   role="button"
                   tabindex="0"
                   @click.stop="action.onClick(true)"

@@ -10,28 +10,26 @@ module Gql::Queries
     type [Gql::Types::AutocompleteSearch::EntryType], null: false
 
     def resolve(input:)
-      input = input.to_h
-      query = input[:query]
-      limit = input[:limit] || 10
-
-      search_tags(query: query, limit: limit).map { |t| coerce_to_result(t) }
+      Tag::Item
+        .filter_or_recommended(normalize_query(input.query))
+        .limit(input.limit || 10)
+        .pluck(:name)
+        .map do |elem|
+          {
+            value: elem,
+            label: elem,
+          }
+        end
     end
 
-    def search_tags(query:, limit:)
-      # Show some tags even without a query.
-      if query.strip.empty?
-        return Tag::Item.left_outer_joins(:tags).group(:id).reorder('COUNT(tags.tag_item_id) DESC, name ASC').limit(limit)
-      end
+    private
 
-      Tag::Item.where('name_downcase LIKE ?', "%#{SqlHelper.quote_like(query.strip.downcase)}%").reorder(name: :asc).limit(limit)
+    def normalize_query(input)
+      return '' if input == '*'
+
+      input
+        .delete_prefix('*')
+        .delete_suffix('*')
     end
-
-    def coerce_to_result(tag)
-      {
-        value: Gql::ZammadSchema.id_from_object(tag),
-        label: tag.name,
-      }
-    end
-
   end
 end
