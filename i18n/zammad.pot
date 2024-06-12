@@ -16147,6 +16147,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:37
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:3
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:195
 #: db/seeds/permissions.rb:179
 msgid "WhatsApp"
 msgstr ""
@@ -16157,10 +16158,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:10
 msgid "WhatsApp Business Account ID"
-msgstr ""
-
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:195
-msgid "Whatsapp"
 msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
