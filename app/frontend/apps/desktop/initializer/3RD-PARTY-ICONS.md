@@ -26,6 +26,9 @@
 - `assets/chevron-right.svg`
 - `assets/chevron-up.svg`
 - `assets/clock.svg`
+- `assets/code-slash.svg`
+- `assets/code-square.svg`
+- `assets/code.svg`
 - `assets/crown-right.svg`
 - `assets/crown-silver.svg`
 - `assets/dash-circle.svg`

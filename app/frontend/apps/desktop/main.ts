@@ -8,6 +8,7 @@ import { initializeAppName } from '#shared/composables/useAppName.ts'
 import { initializeTwoFactorPlugins } from '#shared/entities/two-factor/composables/initializeTwoFactorPlugins.ts'
 import initializeGlobalComponents from '#shared/initializer/globalComponents.ts'
 import initializeGlobalProperties from '#shared/initializer/globalProperties.ts'
+import { initializeAbstracts } from '#shared/initializer/initializeAbstracts.ts'
 import initializeStoreSubscriptions from '#shared/initializer/storeSubscriptions.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
@@ -18,6 +19,7 @@ import { useSessionStore } from '#shared/stores/session.ts'
 import { twoFactorConfigurationPluginLookup } from '#desktop/entities/two-factor-configuration/plugins/index.ts'
 import { initializeForm, initializeFormFields } from '#desktop/form/index.ts'
 import { initializeDesktopIcons } from '#desktop/initializer/initializeDesktopIcons.ts'
+import { initializeGlobalComponentConfigurations } from '#desktop/initializer/initializeGlobalComponentConfigurations.ts'
 import { initializeGlobalComponentStyles } from '#desktop/initializer/initializeGlobalComponentStyles.ts'
 import initializeGlobalDirectives from '#desktop/initializer/initializeGlobalDirectives.ts'
 import { ensureAfterAuth } from '#desktop/pages/authentication/after-auth/composable/useAfterAuthPlugins.ts'
@@ -38,11 +40,15 @@ export const mountApp = async () => {
   initializeForm(app)
   initializeFormFields()
   initializeGlobalComponentStyles()
+  initializeGlobalComponentConfigurations()
   initializeGlobalComponents(app)
   initializeGlobalProperties(app)
   initializeGlobalDirectives(app)
   initializeStoreSubscriptions()
   initializeTwoFactorPlugins(twoFactorConfigurationPluginLookup)
+  initializeAbstracts({
+    durations: { normal: { enter: 300, leave: 200 } },
+  }) // :TODO move this argument to own config?
 
   const session = useSessionStore()
   const authentication = useAuthenticationStore()

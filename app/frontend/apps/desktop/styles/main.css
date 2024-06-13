@@ -85,6 +85,68 @@
       @apply translate-y-0 opacity-100;
     }
   }
+
+  /*
+    Editor content styles
+  */
+  .Content,
+  .ProseMirror {
+    div[data-signature-marker] {
+      display: none;
+    }
+
+    &:focus-visible {
+      outline: none;
+    }
+
+    blockquote {
+      @apply border-l-4 border-l-gray-200 px-3 py-2;
+    }
+
+    ol {
+      list-style: decimal;
+    }
+
+    ul {
+      list-style: disc;
+    }
+
+    ol,
+    ul {
+      @apply pb-2;
+
+      padding-inline-start: theme('spacing.2');
+      list-style-position: inside;
+
+      p {
+        display: inline;
+      }
+    }
+
+    h1 {
+      @apply mb-1 mt-2 text-2xl font-bold;
+    }
+
+    h2 {
+      @apply mb-1 mt-2 text-xl font-bold;
+    }
+
+    h3 {
+      @apply mb-1 mt-2 text-lg font-bold;
+    }
+
+    a {
+      @apply text-blue-800;
+    }
+
+    [dir='rtl'] {
+      text-align: right;
+    }
+
+    [dir='ltr'] {
+      text-align: left;
+    }
+  }
 }
 
 @layer utilities {

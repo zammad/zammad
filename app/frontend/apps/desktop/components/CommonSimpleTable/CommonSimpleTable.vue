@@ -6,7 +6,7 @@ import { ref } from 'vue'
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
-import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
+import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 
 import type { TableHeader, TableItem } from './types.ts'
 

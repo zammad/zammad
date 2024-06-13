@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import type { Sizes } from '#shared/components/CommonIcon/types.ts'
 import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
@@ -21,6 +22,7 @@ import type { Ref } from 'vue'
 
 export interface FormFieldAdditionalProps {
   belongsToObjectField?: string
+
   [index: string]: unknown
 }
 
@@ -188,6 +190,7 @@ export interface ReactiveFormSchemData {
       >
     }
   >
+
   [index: string]: unknown
 }
 
@@ -205,8 +208,11 @@ export enum FormHandlerExecution {
 
 export interface FormHandlerFunctionData {
   formNode: FormKitNode | undefined
+
   getNodeByName(id: string): FormKitNode | undefined
+
   findNodeByName(name: string): FormKitNode | undefined
+
   values: FormValues
   changedField?: ChangedField
   initialEntityObject?: ObjectLike
@@ -251,8 +257,11 @@ export interface FormRef {
   updateChangedFields: (
     changedFields: Record<string, Partial<FormSchemaField>>,
   ) => void
+
   getNodeByName(id: string): FormKitNode | undefined
+
   findNodeByName(name: string): FormKitNode | undefined
+
   resetForm(
     initialValues?: FormValues,
     object?: ObjectLike,
@@ -278,3 +287,52 @@ export type FormGroupClassMap = Record<FormGroupClass, string>
 
 export type FieldLinkClass = 'container' | 'base' | 'link'
 export type FieldLinkClassMap = Record<FieldLinkClass, string>
+
+export type FieldEditorClass = {
+  actionBar: {
+    buttonContainer: string
+    tableMenuContainer: string
+    leftGradient: {
+      left: string
+      before: {
+        background: {
+          light: string
+          dark: string
+        }
+      }
+    }
+    rightGradient: {
+      before: {
+        background: {
+          light: string
+          dark: string
+        }
+      }
+    }
+    shadowGradient: {
+      before: {
+        top: string
+        height: string
+      }
+    }
+    button: {
+      base: string
+      active: string
+      action?: Record<string, string>
+    }
+  }
+  input: {
+    container: string
+  }
+}
+
+export type FieldEditorProps = {
+  actionBar: {
+    visible?: boolean
+    button: {
+      icon: {
+        size: Sizes
+      }
+    }
+  }
+}

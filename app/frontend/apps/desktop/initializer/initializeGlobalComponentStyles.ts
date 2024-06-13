@@ -1,11 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { initializeEditorColorMenuClasses } from '#shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/initializeEditorColorMenu.ts'
 import { initializeAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
 import { initializeAvatarClasses } from '#shared/initializer/initializeAvatarClasses.ts'
 import { initializeBadgeClasses } from '#shared/initializer/initializeBadgeClasses.ts'
 import { initializeLinkClasses } from '#shared/initializer/initializeLinkClasses.ts'
 import { initializeNotificationClasses } from '#shared/initializer/initializeNotificationClasses.ts'
 import { initializeOrganizationAvatarClasses } from '#shared/initializer/initializeOrganizationAvatarClasses.ts'
+import { initializePopoverClasses } from '#shared/initializer/initializePopover.ts'
 import { initializeUserAvatarClasses } from '#shared/initializer/initializeUserAvatarClasses.ts'
 
 export const initializeGlobalComponentStyles = () => {
@@ -66,5 +68,18 @@ export const initializeGlobalComponentStyles = () => {
     message: '',
     success: 'bg-green-300 dark:bg-green-900 text-green-500',
     warn: 'bg-yellow-50 dark:bg-yellow-900 text-yellow-600',
+  })
+
+  initializePopoverClasses({
+    base: 'min-h-9 rounded-xl border border-neutral-100 bg-white antialiased dark:border-gray-900 dark:bg-gray-500',
+    arrow:
+      'h-[22px] w-[22px] border border-neutral-100 bg-white dark:border-gray-900 dark:bg-gray-500',
+  })
+
+  initializeEditorColorMenuClasses({
+    colorSchemeList: {
+      base: 'border-b border-stone-200 dark:border-neutral-500 pb-1',
+      button: 'p-2',
+    },
   })
 }

@@ -91,5 +91,11 @@ export const getCoreDesktopClasses: FormThemeExtension = (
       inner:
         'formkit-invalid:outline formkit-invalid:outline-1 formkit-invalid:outline-offset-1 formkit-invalid:outline-red-500 formkit-errors:outline formkit-errors:outline-1 formkit-errors:outline-offset-1 formkit-errors:outline-red-500 w-full bg-blue-200 dark:bg-gray-700',
     }),
+    editor: extendClasses(classes.editor, {
+      wrapper: 'max-w-full',
+      input: 'min-h-[76px] text-sm text-black outline-none dark:text-white',
+      inner:
+        'bg-blue-200 focus-within:outline focus-within:outline-1 focus-within:outline-offset-1 focus-within:outline-blue-800 hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus-within:hover:outline-blue-800 focus-visible:outline-1 dark:bg-gray-700 dark:hover:outline-blue-900 dark:focus-within:hover:outline-blue-800',
+    }),
   }
 }

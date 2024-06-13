@@ -5,10 +5,10 @@ import { useActiveElement, useMagicKeys, onClickOutside } from '@vueuse/core'
 import { nextTick, ref, shallowRef, watchEffect } from 'vue'
 
 import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
+import { useTransitionConfig } from '#shared/composables/useTransitionConfig.ts'
 import { i18n } from '#shared/i18n.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 const filterFieldOpen = ref(false)
 const containerNode = ref<HTMLDivElement>()

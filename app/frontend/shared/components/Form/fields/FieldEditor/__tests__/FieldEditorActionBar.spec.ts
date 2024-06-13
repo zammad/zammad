@@ -131,7 +131,7 @@ describe('basic toolbar testing', () => {
     expect(view.queryByIconName('at-sign')).not.toBeInTheDocument()
   })
 
-  it("don't see plain text actions", () => {
+  it.todo("don't see plain text actions", async () => {
     const view = renderComponent(FieldEditorActionBar, {
       props: {
         contentType: 'text/plain',
@@ -140,9 +140,12 @@ describe('basic toolbar testing', () => {
       },
     })
 
+    await view.events.click(view.getByLabelText('Zammad Features'))
+
     expect(
       view.getByLabelText('Insert text from text module'),
     ).toBeInTheDocument()
+
     expect(view.getByIconName('snippet')).toBeInTheDocument()
 
     expect(

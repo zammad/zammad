@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
+import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 
 export interface AvatarMenuPlugin extends MenuItem {
   order: number

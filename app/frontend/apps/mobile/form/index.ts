@@ -1,6 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { initializeToggleClasses } from '#shared/components/Form/fields/FieldToggle/initializeToggleClasses.ts'
+import {
+  initializeFieldEditorClasses,
+  initializeFieldEditorProps,
+} from '#shared/components/Form/initializeFieldEditor.ts'
 import { initializeFieldLinkClasses } from '#shared/components/Form/initializeFieldLinkClasses.ts'
 import { initializeFormClasses } from '#shared/components/Form/initializeFormClasses.ts'
 import { initializeFormGroupClasses } from '#shared/components/Form/initializeFormGroupClasses.ts'
@@ -58,5 +62,66 @@ export const initializeFormFields = () => {
       'bg-gray-300 border border-transparent focus-within:ring-1 focus-within:ring-white focus-within:ring-opacity-75 focus:outline-none formkit-invalid:border-solid formkit-invalid:border-red',
     trackOn: '!bg-blue',
     knob: 'bg-white shadow-lg ring-0',
+  })
+
+  initializeFieldEditorClasses({
+    actionBar: {
+      buttonContainer: 'gap-1 p-2',
+      tableMenuContainer: 'gap-1 p-2',
+      leftGradient: {
+        left: '-0.5rem',
+        before: {
+          // Currently mobile supports only dark mode
+          background: {
+            light: `linear-gradient(
+                    270deg,
+                    rgba(255, 255, 255, 0),
+                    #282829)`,
+            dark: `linear-gradient(
+                    270deg,
+                    rgba(255, 255, 255, 0),
+                    #282829)`, // :TODO inject tailwind theme colors
+          },
+        },
+      },
+      rightGradient: {
+        before: {
+          // Currently mobile supports only dark mode
+          background: {
+            light: `linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0),
+                    #282829)`,
+            dark: `linear-gradient(
+                    90deg,
+                    rgba(255, 255, 255, 0),
+                    #282829`, // :TODO inject tailwind theme colors
+          },
+        },
+      },
+      shadowGradient: {
+        before: {
+          top: 'calc(0px - 30px - 1.5rem)',
+          height: 'calc(30px + 1.5rem)',
+        },
+      },
+      button: {
+        base: 'rounded bg-black p-2 lg:hover:bg-gray-300', // Should we add a hover class here? It was there in the original code.
+        active: 'bg-gray-300',
+      },
+    },
+    input: {
+      container: 'p-2',
+    },
+  })
+
+  initializeFieldEditorProps({
+    actionBar: {
+      button: {
+        icon: {
+          size: 'small',
+        },
+      },
+    },
   })
 }

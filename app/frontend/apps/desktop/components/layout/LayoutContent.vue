@@ -3,13 +3,14 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+import { useTransitionConfig } from '#shared/composables/useTransitionConfig.ts'
+
 import CommonBreadcrumb from '#desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue'
 import type { BreadcrumbItem } from '#desktop/components/CommonBreadcrumb/types.ts'
 import CommonHelpText from '#desktop/components/CommonPageHelp/CommonHelpText.vue'
 import CommonPageHelp from '#desktop/components/CommonPageHelp/CommonPageHelp.vue'
 import LayoutBottomBar from '#desktop/components/layout/LayoutBottomBar.vue'
 import LayoutMain from '#desktop/components/layout/LayoutMain.vue'
-import { useTransitionConfig } from '#desktop/composables/useTransitionConfig.ts'
 
 import type { ContentWidth } from './types'
 

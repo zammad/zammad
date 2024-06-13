@@ -8,6 +8,7 @@ import { initializeAppName } from '#shared/composables/useAppName.ts'
 import { useForceDesktop } from '#shared/composables/useForceDesktop.ts'
 import initializeGlobalComponents from '#shared/initializer/globalComponents.ts'
 import initializeGlobalProperties from '#shared/initializer/globalProperties.ts'
+import { initializeAbstracts } from '#shared/initializer/initializeAbstracts.ts'
 import initializeStoreSubscriptions from '#shared/initializer/storeSubscriptions.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
@@ -16,6 +17,7 @@ import { useLocaleStore } from '#shared/stores/locale.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
 import { initializeForm, initializeFormFields } from '#mobile/form/index.ts'
+import { initializeGlobalComponentConfigurations } from '#mobile/initializer/initializeGlobalComponentConfigurations.ts'
 import { initializeGlobalComponentStyles } from '#mobile/initializer/initializeGlobalComponentStyles.ts'
 import { initializeMobileIcons } from '#mobile/initializer/initializeMobileIcons.ts'
 import { initializeMobileVisuals } from '#mobile/initializer/mobileVisuals.ts'
@@ -46,10 +48,15 @@ export default async function mountApp(): Promise<void> {
   initializeForm(app)
   initializeFormFields()
   initializeGlobalComponentStyles()
+  initializeGlobalComponentConfigurations()
   initializeGlobalComponents(app)
   initializeGlobalProperties(app)
   initializeMobileVisuals()
   initializeStoreSubscriptions()
+
+  initializeAbstracts({
+    durations: { normal: { enter: 300, leave: 200 } },
+  }) // :TODO move this argument to own config?
 
   const session = useSessionStore()
   const authentication = useAuthenticationStore()

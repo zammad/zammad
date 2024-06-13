@@ -1,10 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { initializeEditorColorMenuClasses } from '#shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/initializeEditorColorMenu.ts'
 import { initializeAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
 import { initializeAvatarClasses } from '#shared/initializer/initializeAvatarClasses.ts'
 import { initializeLinkClasses } from '#shared/initializer/initializeLinkClasses.ts'
 import { initializeNotificationClasses } from '#shared/initializer/initializeNotificationClasses.ts'
 import { initializeOrganizationAvatarClasses } from '#shared/initializer/initializeOrganizationAvatarClasses.ts'
+import { initializePopoverClasses } from '#shared/initializer/initializePopover.ts'
 import { initializeUserAvatarClasses } from '#shared/initializer/initializeUserAvatarClasses.ts'
 
 export const initializeGlobalComponentStyles = () => {
@@ -53,4 +55,19 @@ export const initializeGlobalComponentStyles = () => {
     success: 'bg-green text-white',
     warn: 'bg-yellow text-black',
   })
+
+  initializePopoverClasses({
+    base: 'min-h-9 rounded-xl max-w-[calc(100vw-8px)] text-white top-0 border border-gray-500 bg-gray-400 antialiased rtl:right-1/2 ltr:left-1/2 rtl:translate-x-1/2 ltr:-translate-x-1/2',
+    arrow: 'hidden',
+  })
+
+  initializeEditorColorMenuClasses({
+    colorSchemeList: {
+      base: 'border-b  pb-1',
+      button: 'p-4',
+    },
+  })
+
+  //   Initialize editor classes
+  // :TODO Sub Folder
 }

@@ -1,17 +1,20 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { onKeyDown, useEventListener, whenever } from '@vueuse/core'
-import { nextTick, ref, toRef } from 'vue'
+import { nextTick, shallowRef, toRef } from 'vue'
 
-import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
-import stopEvent from '#shared/utils/events.ts'
+import CommonPopover from '#shared/components/CommonPopover/CommonPopover.vue'
+import { usePopover } from '#shared/components/CommonPopover/usePopover.ts'
+import ActionBar from '#shared/components/Form/fields/FieldEditor/ActionBar.vue'
+import { getFieldEditorProps } from '#shared/components/Form/initializeFieldEditor.ts'
 
-import useEditorActions from './useEditorActions.ts'
+import useEditorActions, { type EditorButton } from './useEditorActions.ts'
 
 import type { EditorContentType, EditorCustomPlugins } from './types.ts'
+import type { Selection } from '@tiptap/pm/state'
 import type { Editor } from '@tiptap/vue-3'
-import type { Ref } from 'vue'
+import type { Except } from 'type-fest'
+import type { Component } from 'vue'
 
 const props = defineProps<{
   editor?: Editor
@@ -20,12 +23,11 @@ const props = defineProps<{
   disabledPlugins: EditorCustomPlugins[]
 }>()
 
-const emit = defineEmits<{
+defineEmits<{
   hide: []
   blur: []
 }>()
 
-const actionBar = ref<HTMLElement>()
 const editor = toRef(props, 'editor')
 
 const { actions, isActive } = useEditorActions(
@@ -34,146 +36,79 @@ const { actions, isActive } = useEditorActions(
   props.disabledPlugins,
 )
 
-const opacityGradientEnd = ref('0')
-const opacityGradientStart = ref('0')
+const { popover, popoverTarget, open, close } = usePopover()
 
-const restoreScroll = () => {
-  const menuBar = actionBar.value as HTMLElement
-  // restore scroll position, if needed
-  menuBar.scroll(0, 0)
-}
+const editorProps = getFieldEditorProps()
 
-const recalculateOpacity = () => {
-  const target = actionBar.value
-  if (!target) {
-    return
+const subMenuPopoverContent = shallowRef<
+  Component | Except<EditorButton, 'subMenu'>[]
+>()
+
+let currentSelection: Selection | undefined
+
+const handleButtonClick = (action: EditorButton, event: MouseEvent) => {
+  if (!action.subMenu) return
+
+  // Save selection before opening the popover
+  if (editor.value && !editor.value.state.selection.empty) {
+    currentSelection = editor.value?.state.selection
   }
-  const scrollMin = 40
-  const bottomMax = target.scrollWidth - target.clientWidth
-  const bottomMin = bottomMax - scrollMin
-  const { scrollLeft } = target
-  opacityGradientStart.value = Math.min(1, scrollLeft / scrollMin).toFixed(2)
-  const opacityPart = (scrollLeft - bottomMin) / scrollMin
-  opacityGradientEnd.value = Math.min(1, 1 - opacityPart).toFixed(2)
+
+  subMenuPopoverContent.value = action.subMenu
+  popoverTarget.value = event.currentTarget as HTMLDivElement
+
+  nextTick(() => {
+    open()
+  })
 }
 
-onKeyDown(
-  'Escape',
-  (e) => {
-    stopEvent(e)
-    emit('blur')
-  },
-  { target: actionBar as Ref<EventTarget> },
-)
+const handleSubMenuClick = () => {
+  close()
+  editor.value?.commands.focus()
 
-useEventListener('click', (e) => {
-  if (!actionBar.value) return
-
-  const target = e.target as HTMLElement
-
-  if (!actionBar.value.contains(target) && !editor.value?.isFocused) {
-    restoreScroll()
-    emit('hide')
+  // Restore selection after closing the popover
+  if (editor.value && currentSelection) {
+    editor.value.commands.setTextSelection(currentSelection)
+    currentSelection = undefined
   }
-})
-
-whenever(
-  () => props.visible,
-  () => nextTick(recalculateOpacity),
-)
-
-const hideAfterLeaving = () => {
-  restoreScroll()
-  emit('hide')
 }
-
-useTraverseOptions(actionBar, { direction: 'horizontal', ignoreTabindex: true })
 </script>
 
 <template>
-  <div v-show="visible" class="relative">
-    <!-- :TODO move events on node which allows interaction toolbar does not allow interaction  -->
-    <!-- eslint-disable vuejs-accessibility/no-static-element-interactions -->
-    <div
-      ref="actionBar"
-      data-test-id="action-bar"
-      class="Menubar relative flex max-w-full gap-1 overflow-x-auto overflow-y-hidden p-2"
-      role="toolbar"
-      tabindex="0"
-      @keydown.tab="hideAfterLeaving"
-      @scroll.passive="recalculateOpacity"
-    >
-      <button
-        v-for="action in actions"
-        :key="action.name"
-        type="button"
-        :class="[
-          'rounded bg-black p-2 lg:hover:bg-gray-300',
-          action.class,
-          { '!bg-gray-300': isActive(action.name, action.attributes) },
-        ]"
-        :aria-label="action.label || action.name"
-        :aria-pressed="isActive(action.name, action.attributes)"
-        tabindex="-1"
-        @click="action.command"
-      >
-        <CommonIcon :name="action.icon" size="small" decorative />
-      </button>
-    </div>
-    <div
-      class="ShadowGradient LeftGradient"
-      :style="{ opacity: opacityGradientStart }"
-    ></div>
-    <div
-      class="ShadowGradient RightGradient"
-      :style="{ opacity: opacityGradientEnd }"
-    ></div>
-  </div>
+  <ActionBar
+    v-show="visible || editorProps.actionBar.visible"
+    :editor="editor"
+    :visible="visible"
+    :is-active="isActive"
+    :actions="actions"
+    @click-action="handleButtonClick"
+    @blur="$emit('blur')"
+    @hide="$emit('hide')"
+  />
+
+  <CommonPopover
+    ref="popover"
+    :owner="popoverTarget"
+    orientation="autoVertical"
+    placement="start"
+    no-auto-focus
+  >
+    <template v-if="Array.isArray(subMenuPopoverContent)">
+      <ActionBar
+        data-test-id="sub-menu-action-bar"
+        :actions="subMenuPopoverContent"
+        :editor="editor"
+        :is-active="isActive"
+        no-gradient
+        @click-action="handleButtonClick"
+      />
+    </template>
+    <component
+      :is="subMenuPopoverContent"
+      v-else
+      :editor="editor"
+      :content-type="contentType"
+      @action="handleSubMenuClick"
+    />
+  </CommonPopover>
 </template>
-
-<style scoped>
-.Menubar {
-  -ms-overflow-style: none; /* Internet Explorer 10+ */
-  scrollbar-width: none; /* Firefox */
-
-  &::-webkit-scrollbar {
-    display: none; /* Safari and Chrome */
-  }
-}
-
-.ShadowGradient {
-  @apply absolute h-full w-8;
-}
-
-.ShadowGradient::before {
-  content: '';
-  position: absolute;
-  top: calc(0px - 30px - 1.5rem);
-  height: calc(30px + 1.5rem);
-  pointer-events: none;
-}
-
-.LeftGradient::before {
-  left: -0.5rem;
-  right: 0;
-  background: linear-gradient(
-    270deg,
-    rgba(255, 255, 255, 0),
-    theme('colors.gray.500')
-  );
-}
-
-.RightGradient {
-  right: 0;
-}
-
-.RightGradient::before {
-  right: 0;
-  left: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(255, 255, 255, 0),
-    theme('colors.gray.500')
-  );
-}
-</style>

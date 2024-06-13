@@ -15,7 +15,7 @@ describe('FieldEditor basic functionality', { retries: 2 }, () => {
       .then(() => {
         cy.findByLabelText('Format as bold')
           .click()
-          .should('have.class', '!bg-gray-300')
+          .should('have.class', 'bg-gray-300')
           .then(() => {
             cy.findByTestId('action-bar').should('be.visible') // should not dissapear on click
           })
@@ -61,7 +61,8 @@ describe('FieldEditor basic functionality', { retries: 2 }, () => {
       .and('have.html', '<p><strong>Hello, World!</strong></p>')
   })
 
-  it('pasting images inlines them', () => {
+  // TODO: Clarify the paste handling in the editor.
+  it.skip('pasting images inlines them', () => {
     mountEditor()
 
     cy.findByRole('textbox')

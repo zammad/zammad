@@ -112,10 +112,6 @@
 
   .Content,
   .ProseMirror {
-    [style*='color'] {
-      color: inherit !important;
-    }
-
     div[data-signature-marker] {
       display: none;
     }

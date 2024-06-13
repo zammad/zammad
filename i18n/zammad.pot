@@ -982,7 +982,7 @@ msgstr ""
 msgid "Add attachment option to upload."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:199
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:270
 msgid "Add bullet list"
 msgstr ""
 
@@ -991,19 +991,23 @@ msgstr ""
 msgid "Add condition"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
 msgid "Add first level heading"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:105
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
+msgid "Add heading"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:131
 msgid "Add image"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:125
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
 msgid "Add link"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:187
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:257
 msgid "Add ordered list"
 msgstr ""
 
@@ -1012,7 +1016,7 @@ msgstr ""
 msgid "Add reply"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:167
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:203
 msgid "Add second level heading"
 msgstr ""
 
@@ -1029,7 +1033,7 @@ msgstr ""
 msgid "Add subclause"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:177
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:214
 msgid "Add third level heading"
 msgstr ""
 
@@ -1264,6 +1268,10 @@ msgstr ""
 msgid "Alternatively, you can use the Zammad API to import data."
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:40
+msgid "Alto"
+msgstr ""
+
 #: app/assets/javascripts/app/models/trigger.coffee:8
 msgid "Always"
 msgstr ""
@@ -1303,6 +1311,10 @@ msgstr ""
 
 #: lib/calendar_subscriptions.rb:31
 msgid "An unknown method name was requested."
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:287
+msgid "Anakiwa"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:187
@@ -1390,6 +1402,10 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:59
 #: db/seeds/permissions.rb:377
 msgid "Appearance"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:174
+msgid "Apple"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee:127
@@ -1964,6 +1980,10 @@ msgstr ""
 msgid "Backlog"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:125
+msgid "Bamboo"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/branding.coffee:9
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:9
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:10
@@ -1989,6 +2009,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:6
 msgid "Basic Settings"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:150
+msgid "Beeswax"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:788
@@ -2019,6 +2043,10 @@ msgstr ""
 msgid "Bind User"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:20
+msgid "Black"
+msgstr ""
+
 #: db/seeds/settings.rb:3322
 msgid "Block Notifications"
 msgstr ""
@@ -2043,6 +2071,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:20
 msgid "Blue"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:346
+msgid "Blue Chalk"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:30
@@ -2075,6 +2107,10 @@ msgstr ""
 msgid "Breadcrumb navigation"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:140
+msgid "Bright Sun"
+msgstr ""
+
 #: app/assets/javascripts/app/views/session.jst.eco:9
 msgid "Browser"
 msgstr ""
@@ -2102,6 +2138,10 @@ msgstr ""
 
 #: app/views/knowledge_base/public/show_alternatives.html.erb:5
 msgid "But it's only available in these languages:"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:130
+msgid "Buttercup"
 msgstr ""
 
 #: db/seeds/settings.rb:3193
@@ -2356,6 +2396,10 @@ msgstr ""
 msgid "Caution!"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:213
+msgid "Cello"
+msgstr ""
+
 #: db/seeds/settings.rb:1938
 msgid "Certificate (PEM)"
 msgstr ""
@@ -2406,6 +2450,10 @@ msgstr ""
 
 #: db/seeds/permissions.rb:409
 msgid "Change personal account password."
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
+msgid "Change text color"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
@@ -4456,6 +4504,10 @@ msgstr ""
 msgid "Delete avatar"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:149
+msgid "Delete column"
+msgstr ""
+
 #: db/seeds/permissions.rb:252
 msgid "Delete existing data of your system."
 msgstr ""
@@ -4498,6 +4550,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:18
 msgid "Delete records"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:121
+msgid "Delete row"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:206
+msgid "Delete table"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:154
@@ -4780,6 +4840,10 @@ msgstr ""
 msgid "Document file"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:272
+msgid "Dodger Blue"
+msgstr ""
+
 #: db/seeds/object_manager_attributes.rb:1593
 msgid "Domain"
 msgstr ""
@@ -4806,6 +4870,10 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:177
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:132
 msgid "Done"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:30
+msgid "Dove Gray"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee:4
@@ -4902,6 +4970,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee:334
 msgid "Easter holiday"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:223
+msgid "Eastern Blue"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:59
@@ -5141,6 +5213,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/signup.coffee:118
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:91
 msgid "Email sent to \"%s\". Please verify your email account."
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:25
+msgid "Emperor"
 msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco:21
@@ -5416,7 +5492,7 @@ msgstr ""
 msgid "Enter credentials"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:130
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
 msgid "Enter link URL"
 msgstr ""
 
@@ -5575,6 +5651,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee:19
 #: app/graphql/gql/types/overview_type.rb:72
 msgid "Escalation at (Update Time)"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:164
+msgid "Everglade"
 msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:271
@@ -5807,6 +5887,10 @@ msgstr ""
 msgid "Feedback Form"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:184
+msgid "Fern"
+msgstr ""
+
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:115
 msgid "File '%s' is uploading"
 msgstr ""
@@ -6032,7 +6116,7 @@ msgstr ""
 msgid "Format as _underlined_"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:84
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:99
 msgid "Format as bold"
 msgstr ""
 
@@ -6048,7 +6132,7 @@ msgstr ""
 msgid "Format as h3 heading"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:91
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:107
 msgid "Format as italic"
 msgstr ""
 
@@ -6056,11 +6140,11 @@ msgstr ""
 msgid "Format as ordered list"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:98
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:123
 msgid "Format as strikethrough"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:77
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:115
 msgid "Format as underlined"
 msgstr ""
 
@@ -6128,6 +6212,10 @@ msgstr ""
 
 #: db/seeds/settings.rb:263
 msgid "Fully Qualified Domain Name"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:262
+msgid "Fun Blue"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:686
@@ -6578,6 +6666,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco:20
 msgid "Health information can be retrieved as JSON using:"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:331
+msgid "Heliotrope"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:69
@@ -7146,6 +7238,10 @@ msgstr ""
 msgid "Increment seconds value"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
+msgid "Indent text"
+msgstr ""
+
 #: app/frontend/apps/desktop/components/CommonProgressBar/CommonProgressBar.vue:16
 msgid "Indicating progress"
 msgstr ""
@@ -7184,11 +7280,39 @@ msgstr ""
 msgid "Inline content could not be generated."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:225
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
+msgid "Insert code block"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:140
+msgid "Insert column after"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:131
+msgid "Insert column before"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
+msgid "Insert inline code"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:103
+msgid "Insert row above"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:112
+msgid "Insert row below"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
+msgid "Insert table"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
 msgid "Insert text from Knowledge Base article"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:232
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:350
 msgid "Insert text from text module"
 msgstr ""
 
@@ -7556,6 +7680,10 @@ msgstr ""
 msgid "Knowledge Base multilingual support"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:115
+msgid "Korma"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:24
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:8
@@ -7696,6 +7824,10 @@ msgstr ""
 msgid "Last used"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:97
+msgid "Lavender blush"
+msgstr ""
+
 #: app/assets/javascripts/app/models/knowledge_base.coffee:152
 msgid "Layout"
 msgstr ""
@@ -7711,6 +7843,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:25
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:45
 msgid "Light"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:135
+msgid "Lightning Yellow"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:17
@@ -7985,6 +8121,10 @@ msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb:122
 msgid "Maintenance mode enabled!"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:282
+msgid "Malibu"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/manage.coffee:15
@@ -8374,6 +8514,10 @@ msgstr ""
 msgid "Media download was successful."
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:326
+msgid "Medium Purple"
+msgstr ""
+
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco:20
 #: app/assets/javascripts/app/views/popover/organization.jst.eco:6
 #: app/assets/javascripts/app/views/widget/organization.jst.eco:29
@@ -8381,7 +8525,7 @@ msgstr ""
 msgid "Members"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:218
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 msgid "Mention user"
 msgstr ""
 
@@ -8396,6 +8540,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:7
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
 msgid "Merge"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:168
+msgid "Merge cells"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:51
@@ -8591,6 +8739,10 @@ msgstr ""
 msgid "Month(s)"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:62
+msgid "Monza"
+msgstr ""
+
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:3
 msgid "Mood"
 msgstr ""
@@ -8606,6 +8758,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:130
 msgid "More ticket overviews"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:189
+msgid "Moss Green"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:14
@@ -9911,6 +10067,10 @@ msgstr ""
 msgid "Outdated Browser"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:246
+msgid "Outdent text"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/models/group.coffee:47
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee:7
@@ -10125,6 +10285,10 @@ msgstr ""
 msgid "Paste key"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:297
+msgid "Pattens Blue"
+msgstr ""
+
 #: db/seeds/overviews.rb:132
 msgid "Pending Reached Tickets"
 msgstr ""
@@ -10148,8 +10312,16 @@ msgstr ""
 msgid "People who create Tickets ask for help."
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:199
+msgid "Peppermint"
+msgstr ""
+
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:10
 msgid "Perform actions"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:336
+msgid "Perfume"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:49
@@ -10222,6 +10394,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:24
 msgid "Pink"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:87
+msgid "Pink Salmon"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee:3
@@ -10647,6 +10823,10 @@ msgstr ""
 msgid "Purple"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:321
+msgid "Purple Heart"
+msgstr ""
+
 #: app/assets/javascripts/app/views/maintenance.jst.eco:27
 #: db/seeds/settings.rb:52
 msgid "Put a message on the login page. To change it, click on the text area below and change it in-line."
@@ -10742,6 +10922,10 @@ msgstr ""
 
 #: db/seeds/settings.rb:2714
 msgid "Recursive Ticket Triggers"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:67
+msgid "Red"
 msgstr ""
 
 #: app/models/system_report/plugin/redis.rb:4
@@ -10860,7 +11044,7 @@ msgstr ""
 msgid "Remove authenticator app"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:211
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:283
 msgid "Remove formatting"
 msgstr ""
 
@@ -11433,6 +11617,10 @@ msgstr ""
 msgid "Schedulers"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:233
+msgid "Scooter"
+msgstr ""
+
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:6
 msgid "Screen"
 msgstr ""
@@ -11453,6 +11641,10 @@ msgstr ""
 #: public/assets/chat/chat-no-jquery.coffee:168
 #: public/assets/chat/chat.coffee:166
 msgid "Scroll down to see new messages"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:311
+msgid "Seance"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:13
@@ -12276,6 +12468,10 @@ msgstr ""
 msgid "Signup Screen"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:35
+msgid "Silver Chalice"
+msgstr ""
+
 #: db/seeds/settings.rb:2598
 msgid "Similar tickets found"
 msgstr ""
@@ -12341,6 +12537,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:97
 msgid "Skip"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:238
+msgid "Sky Blue"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:3
@@ -12430,6 +12630,10 @@ msgstr ""
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/split.ts:12
 msgid "Split"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:159
+msgid "Split cells"
 msgstr ""
 
 #: db/seeds/groups.rb:7
@@ -15019,6 +15223,18 @@ msgstr ""
 msgid "Toggle dark mode"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:196
+msgid "Toggle header cell"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:187
+msgid "Toggle header column"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:178
+msgid "Toggle header row"
+msgstr ""
+
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:47
 msgid "Toggle the overlay"
 msgstr ""
@@ -15070,6 +15286,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:13
 msgid "Topics"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:72
+msgid "Torch Red"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:5
@@ -16193,8 +16413,20 @@ msgstr ""
 msgid "Where to append the chat to."
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:45
+msgid "White"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:248
+msgid "White Ice"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:208
 msgid "Why doesn't the chat show up?"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:82
+msgid "Wild Watermelon"
 msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/content_can_be_published_header_suffix.jst.eco:13
@@ -16633,6 +16865,10 @@ msgstr ""
 msgid "Zammad"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:327
+msgid "Zammad Features"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco:148
 msgid "Zammad Forms requires jQuery. If you don't already use it on your website, you can add it like this:"
 msgstr ""
@@ -16804,6 +17040,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:41
 #: app/assets/javascripts/app/views/sla/index.jst.eco:45
 msgid "between agent updates"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts:11
+msgid "black color scheme"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee:163

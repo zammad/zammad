@@ -6,7 +6,7 @@ import { computed, ref } from 'vue'
 
 import CommonPopoverMenuItem, {
   type Props,
-} from '#desktop/components/CommonPopover/CommonPopoverMenuItem.vue'
+} from '#desktop/components/CommonPopoverMenu/CommonPopoverMenuItem.vue'
 import ThemeSwitch from '#desktop/components/ThemeSwitch/ThemeSwitch.vue'
 import type { ThemeSwitchInstance } from '#desktop/components/ThemeSwitch/types.ts'
 import { useThemeStore } from '#desktop/stores/theme.ts'

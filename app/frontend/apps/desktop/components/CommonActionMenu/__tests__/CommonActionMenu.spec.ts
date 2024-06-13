@@ -5,7 +5,7 @@ import renderComponent from '#tests/support/components/renderComponent.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
-import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
+import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 
 import type { Props } from '../CommonActionMenu.vue'
 

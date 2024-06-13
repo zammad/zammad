@@ -8,6 +8,8 @@ import { storeToRefs } from 'pinia'
 import { computed, h, onMounted, reactive, ref, watch } from 'vue'
 
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
+import CommonPopover from '#shared/components/CommonPopover/CommonPopover.vue'
+import { usePopover } from '#shared/components/CommonPopover/usePopover.ts'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import Form from '#shared/components/Form/Form.vue'
 import type {
@@ -15,6 +17,7 @@ import type {
   FormValues,
 } from '#shared/components/Form/types.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
@@ -27,10 +30,8 @@ import { useDialog } from '#desktop/components/CommonDialog/useDialog.ts'
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import CommonInputCopyToClipboard from '#desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue'
-import CommonPopover from '#desktop/components/CommonPopover/CommonPopover.vue'
-import CommonPopoverMenu from '#desktop/components/CommonPopover/CommonPopoverMenu.vue'
-import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
-import { usePopover } from '#desktop/components/CommonPopover/usePopover.ts'
+import CommonPopoverMenu from '#desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue'
+import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import CommonProgressBar from '#desktop/components/CommonProgressBar/CommonProgressBar.vue'
 import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
 import CommonTabManager from '#desktop/components/CommonTabManager/CommonTabManager.vue'
@@ -516,7 +517,13 @@ const buttonGroupOptions: CommonButtonItem[] = [
 
 const application = useApplicationStore()
 
-const formSchema = [
+const formSchema = defineFormSchema([
+  {
+    type: 'editor',
+    name: 'editor',
+    label: 'Editor',
+    required: true,
+  },
   {
     isLayout: true,
     element: 'div',
@@ -709,38 +716,38 @@ const formSchema = [
     type: 'select',
     name: 'select_1',
     label: 'Single select',
-    clearable: true,
     props: {
       options: [...alphabetOptions.value, ...[longOption.value]],
+      clearable: true,
     },
   },
   {
     type: 'select',
     name: 'select_2',
     label: 'Multi select',
-    clearable: true,
     props: {
       multiple: true,
       options: [...alphabetOptions.value, ...[longOption.value]],
+      clearable: true,
     },
   },
   {
     type: 'treeselect',
     name: 'treeselect_1',
     label: 'Single treeselect',
-    clearable: true,
     props: {
       options: treeselectOptions,
+      clearable: true,
     },
   },
   {
     type: 'treeselect',
     name: 'treeselect_2',
     label: 'Multi treeselect',
-    clearable: true,
     props: {
       multiple: true,
       options: treeselectOptions,
+      clearable: true,
     },
   },
   {
@@ -777,7 +784,7 @@ const formSchema = [
       ],
     },
   },
-]
+])
 
 const formValues = ref()
 
@@ -1459,7 +1466,7 @@ const { activeTab: activeFilters } = useTabManager<Tab[]>()
           </template>
         </Form>
         <pre
-          class="flex flex-wrap gap-5 rounded-lg bg-blue-200 p-5 font-mono text-sm text-gray-100 dark:bg-gray-700 dark:text-neutral-400"
+          class="flex flex-wrap gap-5 text-wrap rounded-lg bg-blue-200 p-5 font-mono text-sm text-gray-100 dark:bg-gray-700 dark:text-neutral-400"
           >{{ formValues }}</pre
         >
       </div>

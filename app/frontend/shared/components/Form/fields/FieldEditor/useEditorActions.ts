@@ -3,26 +3,41 @@
 import { computed, nextTick, onUnmounted } from 'vue'
 
 import { i18n } from '#shared/i18n.ts'
+import { useLocaleStore } from '#shared/stores/locale.ts'
+import getUuid from '#shared/utils/getUuid.ts'
 import testFlags from '#shared/utils/testFlags.ts'
 
+import FieldEditorColorMenu from './FieldEditorColorMenu/FieldEditorColorMenu.vue'
 import { PLUGIN_NAME as KnowledgeBaseMentionName } from './suggestions/KnowledgeBaseSuggestion.ts'
 import { PLUGIN_NAME as TextModuleMentionName } from './suggestions/TextModuleSuggestion.ts'
 import { PLUGIN_NAME as UserMentionName } from './suggestions/UserMention.ts'
 import { convertInlineImages } from './utils.ts'
 
 import type { EditorContentType } from './types.ts'
-import type { ChainedCommands } from '@tiptap/core'
+import type { CanCommands, ChainedCommands } from '@tiptap/core'
 import type { Editor } from '@tiptap/vue-3'
-import type { ShallowRef } from 'vue'
+import type { Except } from 'type-fest'
+import type { Component, ShallowRef } from 'vue'
 
 export interface EditorButton {
+  id: string
   name: string
+  /**
+   * @type FieldEditorClass['actionBar']['button']['action']
+   *
+   * @info
+   * use `getFieldEditorClasses()` to get the class for the action.
+   * Define it in `initializeFieldEditorClasses()` invocation for the mobile/desktop field
+   * */
   class?: string
   icon: string
   label?: string
   contentType: EditorContentType[]
   attributes?: Record<string, unknown>
-  command?: () => void
+  command?: (e: MouseEvent) => void
+  disabled?: boolean
+  showDivider?: boolean
+  subMenu?: Component | Except<EditorButton, 'subMenu'>[]
 }
 
 export default function useEditorActions(
@@ -42,6 +57,11 @@ export default function useEditorActions(
 
   const isActive = (type: string, attributes?: Record<string, unknown>) => {
     return editor.value?.isActive(type, attributes) ?? false
+  }
+
+  const canExecute = (func: keyof CanCommands) => {
+    if (!editor.value) return false
+    return !!editor.value?.can()[func](null as never, null as never)
   }
 
   // this is primarily used by cypress tests, where it requires an actual input in the DOM tree
@@ -68,17 +88,12 @@ export default function useEditorActions(
     fileInput = null
   })
 
+  const { localeData } = useLocaleStore()
   // eslint-disable-next-line sonarjs/cognitive-complexity
   const getActionsList = (): EditorButton[] => {
     return [
       {
-        name: 'underline',
-        contentType: ['text/html'],
-        label: i18n.t('Format as underlined'),
-        icon: 'text-style-underline',
-        command: focused((c) => c.toggleUnderline()),
-      },
-      {
+        id: `action-${getUuid()}`,
         name: 'bold',
         contentType: ['text/html'],
         label: i18n.t('Format as bold'),
@@ -86,6 +101,7 @@ export default function useEditorActions(
         command: focused((c) => c.toggleBold()),
       },
       {
+        id: getUuid(),
         name: 'italic',
         contentType: ['text/html'],
         label: i18n.t('Format as italic'),
@@ -93,6 +109,15 @@ export default function useEditorActions(
         command: focused((c) => c.toggleItalic()),
       },
       {
+        id: getUuid(),
+        name: 'underline',
+        contentType: ['text/html'],
+        label: i18n.t('Format as underlined'),
+        icon: 'text-style-underline',
+        command: focused((c) => c.toggleUnderline()),
+      },
+      {
+        id: getUuid(),
         name: 'strike',
         contentType: ['text/html'],
         label: i18n.t('Format as strikethrough'),
@@ -100,6 +125,7 @@ export default function useEditorActions(
         command: focused((c) => c.toggleStrike()),
       },
       {
+        id: getUuid(),
         name: 'image',
         contentType: ['text/html'],
         label: i18n.t('Add image'),
@@ -120,6 +146,7 @@ export default function useEditorActions(
         }),
       },
       {
+        id: getUuid(),
         name: 'link',
         contentType: ['text/html'],
         label: i18n.t('Add link'),
@@ -152,36 +179,79 @@ export default function useEditorActions(
         }),
       },
       {
+        id: getUuid(),
         name: 'heading',
         contentType: ['text/html'],
-        label: i18n.t('Add first level heading'),
-        icon: 'text-style-h1',
-        attributes: {
-          level: 1,
-        },
-        command: focused((c) => c.toggleHeading({ level: 1 })),
+        label: i18n.t('Add heading'),
+        icon: 'text-style-h',
+        subMenu: [
+          {
+            id: getUuid(),
+            name: 'heading',
+            contentType: ['text/html'],
+            label: i18n.t('Add first level heading'),
+            icon: 'text-style-h1',
+            attributes: {
+              level: 1,
+            },
+            command: focused((c) => c.toggleHeading({ level: 1 })),
+          },
+          {
+            id: getUuid(),
+            name: 'heading',
+            contentType: ['text/html'],
+            label: i18n.t('Add second level heading'),
+            icon: 'text-style-h2',
+            attributes: {
+              level: 2,
+            },
+            command: focused((c) => c.toggleHeading({ level: 2 })),
+          },
+          {
+            id: getUuid(),
+            name: 'heading',
+            contentType: ['text/html'],
+            label: i18n.t('Add third level heading'),
+            icon: 'text-style-h3',
+            attributes: {
+              level: 3,
+            },
+            command: focused((c) => c.toggleHeading({ level: 3 })),
+          },
+        ],
       },
       {
-        name: 'heading',
+        id: getUuid(),
+        name: 'textColor',
         contentType: ['text/html'],
-        label: i18n.t('Add second level heading'),
-        icon: 'text-style-h2',
-        attributes: {
-          level: 2,
-        },
-        command: focused((c) => c.toggleHeading({ level: 2 })),
+        label: i18n.t('Change text color'),
+        icon: 'editor-text-color',
+        subMenu: FieldEditorColorMenu,
       },
       {
-        name: 'heading',
+        id: getUuid(),
+        name: 'indent',
         contentType: ['text/html'],
-        label: i18n.t('Add third level heading'),
-        icon: 'text-style-h3',
-        attributes: {
-          level: 3,
-        },
-        command: focused((c) => c.toggleHeading({ level: 3 })),
+        label: i18n.t('Indent text'),
+        icon:
+          localeData?.dir === 'ltr'
+            ? 'editor-indent-left'
+            : 'editor-indent-right',
+        command: focused((c) => c.increaseIndent()),
       },
       {
+        id: getUuid(),
+        name: 'outdent',
+        contentType: ['text/html'],
+        label: i18n.t('Outdent text'),
+        icon:
+          localeData?.dir === 'ltr'
+            ? 'editor-indent-right'
+            : 'editor-indent-left',
+        command: focused((c) => c.decreaseIndent()),
+      },
+      {
+        id: getUuid(),
         name: 'orderedList',
         contentType: ['text/html'],
         label: i18n.t('Add ordered list'),
@@ -194,18 +264,20 @@ export default function useEditorActions(
         }),
       },
       {
+        id: getUuid(),
         name: 'bulletList',
         contentType: ['text/html'],
         label: i18n.t('Add bullet list'),
         icon: 'editor-bullet-list',
         command: focused((c) => {
-          if (isActive('orderedList')) {
+          if (isActive('bulletList')) {
             return c.liftListItem('listItem')
           }
           return c.toggleBulletList()
         }),
       },
       {
+        id: getUuid(),
         name: 'jibberish',
         contentType: ['text/html'],
         label: i18n.t('Remove formatting'),
@@ -213,25 +285,73 @@ export default function useEditorActions(
         command: focused((c) => c.clearNodes().unsetAllMarks()),
       },
       {
-        name: UserMentionName,
+        id: getUuid(),
+        name: 'table',
         contentType: ['text/html'],
-        label: i18n.t('Mention user'),
-        icon: 'editor-mention-user',
-        command: focused((c) => c.openUserMention()),
+        label: i18n.t('Insert table'),
+        icon: 'editor-table',
+        command: () => {
+          editor.value
+            ?.chain()
+            .focus()
+            .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+            .run()
+
+          const end = editor.value?.state.doc.content.size ?? 0
+          editor.value?.chain().focus().insertContentAt(end, '<p></p>').run()
+        },
       },
       {
-        name: KnowledgeBaseMentionName,
-        contentType: ['text/html', 'text/plain'],
-        label: i18n.t('Insert text from Knowledge Base article'),
-        icon: 'editor-mention-knowledge-base',
-        command: focused((c) => c.openKnowledgeBaseMention()),
+        id: getUuid(),
+        name: 'code',
+        contentType: ['text/html'],
+        label: i18n.t('Insert inline code'),
+        icon:
+          editor.value?.isActive('code') && !editor.value?.isActive('codeBlock')
+            ? 'editor-code-slash'
+            : 'editor-code',
+        command: focused((c) => c.toggleCode()),
       },
       {
-        name: TextModuleMentionName,
+        id: getUuid(),
+        name: 'codeBlock',
+        contentType: ['text/html'],
+        label: i18n.t('Insert code block'),
+        icon: 'editor-code-block',
+        command: focused((c) => c.toggleCodeBlock()),
+      },
+      {
+        id: getUuid(),
+        name: 'zammad',
         contentType: ['text/html', 'text/plain'],
-        label: i18n.t('Insert text from text module'),
-        icon: 'editor-mention-text-module',
-        command: focused((c) => c.openTextMention()),
+        label: i18n.t('Zammad Features'),
+        icon: 'logo-flat',
+        subMenu: [
+          {
+            id: getUuid(),
+            name: UserMentionName,
+            contentType: ['text/html'],
+            label: i18n.t('Mention user'),
+            icon: 'editor-mention-user',
+            command: focused((c) => c.openUserMention()),
+          },
+          {
+            id: getUuid(),
+            name: KnowledgeBaseMentionName,
+            contentType: ['text/html', 'text/plain'],
+            label: i18n.t('Insert text from Knowledge Base article'),
+            icon: 'editor-mention-knowledge-base',
+            command: focused((c) => c.openKnowledgeBaseMention()),
+          },
+          {
+            id: getUuid(),
+            name: TextModuleMentionName,
+            contentType: ['text/html', 'text/plain'],
+            label: i18n.t('Insert text from text module'),
+            icon: 'editor-mention-text-module',
+            command: focused((c) => c.openTextMention()),
+          },
+        ],
       },
     ]
   }
@@ -248,6 +368,7 @@ export default function useEditorActions(
   return {
     focused,
     isActive,
+    canExecute,
     actions,
   }
 }

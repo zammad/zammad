@@ -6,7 +6,7 @@ import { renderComponent } from '#tests/support/components/index.ts'
 
 import { i18n } from '#shared/i18n.ts'
 
-import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
+import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 
 import CommonSimpleTable, { type Props } from '../CommonSimpleTable.vue'
 

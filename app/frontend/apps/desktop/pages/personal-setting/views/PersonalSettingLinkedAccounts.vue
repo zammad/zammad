@@ -20,7 +20,7 @@ import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import type { MenuItem } from '#desktop/components/CommonPopover/types.ts'
+import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
 import type {
   TableHeader,
