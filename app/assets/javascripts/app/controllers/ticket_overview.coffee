@@ -106,8 +106,6 @@ class App.TicketOverview extends App.Controller
         @contentController.show()
       return
 
-    App.TicketOverviewCollection.fetch()
-
     # remember last view
     @viewLast = @view
 

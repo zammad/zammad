@@ -43,6 +43,9 @@ class App.Search extends App.Controller
       @formMeta = data.form_meta
     @bindId = App.TicketOverviewCollection.bind(load)
 
+  release: =>
+    App.TicketOverviewCollection.unbindById(@bindId)
+
   meta: =>
     title = @query || App.i18n.translateInline('Extended Search')
 

@@ -29,7 +29,7 @@ class App.TicketOverviewTable extends App.Controller
 
   release: =>
     if @bindId
-      App.OverviewListCollection.unbind(@bindId)
+      App.OverviewListCollection.unbindById(@bindId)
 
   update: (params) =>
     for key, value of params
@@ -39,7 +39,7 @@ class App.TicketOverviewTable extends App.Controller
 
     if @view
       if @bindId
-        App.OverviewListCollection.unbind(@bindId)
+        App.OverviewListCollection.unbindById(@bindId)
       @bindId = App.OverviewListCollection.bind(@view, @updateTable)
 
   updateTable: (data) =>
