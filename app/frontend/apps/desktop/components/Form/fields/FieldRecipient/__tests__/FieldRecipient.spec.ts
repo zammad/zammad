@@ -112,7 +112,7 @@ describe('Form - Field - Recipient - Features', () => {
     await wrapper.events.click(await wrapper.findByLabelText('Recipient'))
 
     expect(
-      wrapper.queryByText('Start typing to search or enter an phone number…'),
+      wrapper.queryByText('Start typing to search or enter a phone number…'),
     ).toBeInTheDocument()
 
     const filterElement = wrapper.getByRole('searchbox')

@@ -46,7 +46,7 @@ Object.assign(props.context, {
   actions,
   emptyInitialLabelText:
     contact === 'phone'
-      ? __('Start typing to search or enter an phone number…')
+      ? __('Start typing to search or enter a phone number…')
       : __('Start typing to search or enter an email address…'),
 })
 </script>
