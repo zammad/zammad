@@ -77,6 +77,8 @@ class App.TicketBatch extends App.Controller
   startDragItem: (event) =>
     event.preventDefault()
 
+    App.TicketOverviewCollection.fetch()
+
     @grabbedItem      = $(event.currentTarget)
     offset            = @grabbedItem.offset()
     @batchDragger     = $(App.view('ticket_overview/batch_dragger')())

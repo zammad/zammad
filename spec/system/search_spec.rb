@@ -501,12 +501,6 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
     let(:before_authenticate) { agent_1 && agent_2 && agent_all }
     let(:authenticate_user) { agent_all }
 
-    def check_owner_empty
-      expect(page).to have_select('owner_id', text: '-', visible: :all)
-      expect(page).to have_no_select('owner_id', text: agent_1.fullname, visible: :all)
-      expect(page).to have_no_select('owner_id', text: agent_2.fullname, visible: :all)
-    end
-
     def click_ticket(ticket)
       page.find(".js-tableBody tr.item[data-id='#{ticket.id}'] td.js-checkbox-field").click
     end
@@ -522,7 +516,6 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
     end
 
     def check_owner_field
-      check_owner_empty
       click_ticket(ticket_1)
       check_owner_agent1_shown
       click_ticket(ticket_1)
@@ -535,6 +528,12 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
         visit '#search/4054'
       end
 
+      it 'does not show the bulk action when opening view' do
+        expect(page).to have_text(ticket_1.title)
+        expect(page).to have_text(ticket_2.title)
+        expect(page).to have_no_css('.bulkAction select[name=owner_id]')
+      end
+
       it 'does show the correct owner selection for each bulk action' do
         check_owner_field
       end
@@ -543,6 +542,12 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
     context 'when ticket overview is used' do
       before do
         visit '#ticket/view/all_unassigned'
+      end
+
+      it 'does not show the bulk action when opening view' do
+        expect(page).to have_text(ticket_1.title)
+        expect(page).to have_text(ticket_2.title)
+        expect(page).to have_no_css('.bulkAction select[name=owner_id]')
       end
 
       it 'does show the correct owner selection for each bulk action' do

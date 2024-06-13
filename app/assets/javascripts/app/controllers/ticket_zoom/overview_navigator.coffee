@@ -19,7 +19,7 @@ class App.TicketZoomOverviewNavigator extends App.Controller
     @render()
 
   release: =>
-    App.OverviewListCollection.unbind(@bindId)
+    App.OverviewListCollection.unbindById(@bindId)
 
   render: =>
     if !@overview_id

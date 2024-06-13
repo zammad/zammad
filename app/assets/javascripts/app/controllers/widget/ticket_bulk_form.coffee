@@ -27,11 +27,10 @@ class App.TicketBulkForm extends App.Controller
     load = (data) =>
       App.Collection.loadAssets(data.assets)
       @formMeta = data.form_meta
-      @render()
     @bindId = App.TicketOverviewCollection.bind(load)
 
   release: =>
-    App.TicketOverviewCollection.unbind(@bindId)
+    App.TicketOverviewCollection.unbindById(@bindId)
 
   render: ->
     @el.css('right', App.Utils.getScrollBarWidth())
@@ -41,6 +40,7 @@ class App.TicketBulkForm extends App.Controller
 
     handlers = @Config.get('TicketZoomFormHandler')
 
+    @controllerFormBulk?.releaseController()
     @controllerFormBulk = new App.ControllerForm(
       el: @$('#form-ticket-bulk')
       mixedAttributes: @configure_attributes_ticket
@@ -56,7 +56,8 @@ class App.TicketBulkForm extends App.Controller
 
     @controllerFormBulk.$('[data-attribute-name="group_id"] .controls').addClass('form-control')
 
-    new App.ControllerForm(
+    @controllerFormBulkComment?.releaseController()
+    @controllerFormBulkComment = new App.ControllerForm(
       el: @$('#form-ticket-bulk-comment')
       model:
         configure_attributes: [{ name: 'body', display: __('Comment'), tag: 'textarea', rows: 4, null: true, upload: false, item_class: 'flex' }]
@@ -71,7 +72,8 @@ class App.TicketBulkForm extends App.Controller
       { name: 'internal', display: __('Visibility'), tag: 'select', null: true, options: { true: 'internal', false: 'public' }, class: 'medium', item_class: '', default: false, translate: true }
     ]
 
-    new App.ControllerForm(
+    @controllerFormBulkTypeVisibility?.releaseController()
+    @controllerFormBulkTypeVisibility = new App.ControllerForm(
       el: @$('#form-ticket-bulk-typeVisibility')
       model:
         configure_attributes: @confirm_attributes
@@ -107,6 +109,9 @@ class App.TicketBulkForm extends App.Controller
     @$('.js-confirm-step').addClass('hide')
 
   show: =>
+    return if @visible
+    App.TicketOverviewCollection.fetch()
+
     @el.removeClass('hide')
     @visible = true
     @makeSpaceForTableRows()
