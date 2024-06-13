@@ -375,7 +375,7 @@ msgid "%s (option)"
 msgstr "%s (bekræft)"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:302
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:533
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:559
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:229
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
@@ -3241,13 +3241,13 @@ msgstr "Ryd op i udløbne sessioner."
 msgid "Clean up mobile taskbars."
 msgstr "Ryd op i mobil proceslinjer."
 
-#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:118
+#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:123
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue:78
 msgid "Clear Search"
 msgstr "Ryd Søgning"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:608
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:635
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:140
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:292
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:352
@@ -10592,7 +10592,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:337
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:510
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:512
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:100
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:402
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:348
@@ -13267,7 +13267,7 @@ msgstr "API token kunne ikke findes."
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:57
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco:9
 #: app/assets/javascripts/app/views/translation/form.jst.eco:7
-#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:24
+#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:20
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:63
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue:23
 msgid "Search…"
@@ -13464,8 +13464,8 @@ msgstr "Vælger"
 msgid "Selects the ticket number generator module."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:470
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:474
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:472
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:476
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue:201
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:302
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:173
@@ -14313,6 +14313,12 @@ msgstr ""
 msgid "Start typing to search in Knowledge Base…"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:43
+#, fuzzy
+#| msgid "Search or enter phone number…"
+msgid "Start typing to search or enter a new tag…"
+msgstr "Søg eller indtast telefonnummer…"
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:93
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:50
 #, fuzzy
@@ -14327,6 +14333,7 @@ msgid "Start typing to search or enter an phone number…"
 msgstr "Søg eller indtast telefonnummer…"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:70
+#: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:41
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:409
 msgid "Start typing to search…"
 msgstr ""
@@ -17826,7 +17833,7 @@ msgstr "Notifikation"
 msgid "Unsaved Changes"
 msgstr "Kassér ændringer"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:542
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:568
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:238
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:304
 msgid "Unselect Option"
@@ -18680,6 +18687,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:37
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:3
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:195
 #: db/seeds/permissions.rb:179
 #, fuzzy
 #| msgid "Chats"
@@ -18695,12 +18703,6 @@ msgstr "Tilføj konto"
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:10
 msgid "WhatsApp Business Account ID"
 msgstr ""
-
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:195
-#, fuzzy
-#| msgid "Chats"
-msgid "Whatsapp"
-msgstr "Chats"
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
 msgid ""
@@ -19391,6 +19393,12 @@ msgstr "Indtast en gyldig e-mailadresse."
 #| msgid "Phone (in)"
 msgid "add new phone number"
 msgstr "Kald (ind)"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:23
+#, fuzzy
+#| msgid "Add Tag"
+msgid "add new tag"
+msgstr "Tilføj tag"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "add option"
@@ -20510,7 +20518,7 @@ msgid "select"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:351
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:469
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:471
 #, fuzzy
 #| msgid "Select All"
 msgid "select all options"
@@ -20521,7 +20529,7 @@ msgstr "Vælg Alle"
 msgid "select attachment…"
 msgstr "Vælg vedhæftning…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:468
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:470
 #, fuzzy
 #| msgid "Select All"
 msgid "select visible options"
@@ -20859,6 +20867,11 @@ msgid "∅ Waiting time today"
 msgstr "Ventetid i dag"
 
 #, fuzzy
+#~| msgid "Chats"
+#~ msgid "Whatsapp"
+#~ msgstr "Chats"
+
+#, fuzzy
 #~| msgid "The test run was successful."
 #~ msgid "Profile appearance updated successfully."
 #~ msgstr "Testafviklingen var succesfuld."
@@ -21177,11 +21190,6 @@ msgstr "Ventetid i dag"
 #~| msgid "Edit Organization"
 #~ msgid "Edit organization"
 #~ msgstr "Ret organisation"
-
-#, fuzzy
-#~| msgid "Add Tag"
-#~ msgid "Add tags"
-#~ msgstr "Tilføj tag"
 
 #, fuzzy
 #~| msgid "Last sync"

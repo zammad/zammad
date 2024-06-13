@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-09-12 10:27+0000\n"
-"Last-Translator: salvolp <s.salvo17@gmail.com>\n"
+"PO-Revision-Date: 2024-06-13 01:05+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: Spanish (Mexico) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/es_MX/>\n"
 "Language: es-mx\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.14\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -44,7 +44,7 @@ msgstr "FORMAT_DATE"
 #. - 'P' - Meridian indicator ('am' or 'pm')
 #, fuzzy
 msgid "FORMAT_DATETIME"
-msgstr "FORMAT_DATETIME"
+msgstr "dd/mm/yyyy HH:MM"
 
 #: db/seeds/settings.rb:344
 #, fuzzy
@@ -258,7 +258,7 @@ msgid "%s (option)"
 msgstr "establecer opcional"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:302
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:533
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:559
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:229
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
@@ -3337,7 +3337,7 @@ msgstr ""
 msgid "Clean up mobile taskbars."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:118
+#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:123
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue:78
 #, fuzzy
 #| msgid "Search"
@@ -3345,7 +3345,7 @@ msgid "Clear Search"
 msgstr "Buscar"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:608
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:635
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:140
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:292
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:352
@@ -11170,7 +11170,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:337
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:510
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:512
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:100
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:402
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:348
@@ -13943,7 +13943,7 @@ msgstr "Sonido de Notificación"
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:57
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco:9
 #: app/assets/javascripts/app/views/translation/form.jst.eco:7
-#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:24
+#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:20
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:63
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue:23
 msgid "Search…"
@@ -14157,8 +14157,8 @@ msgstr "Selector"
 msgid "Selects the ticket number generator module."
 msgstr "Selecciona el módulo generador de números de ticket."
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:470
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:474
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:472
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:476
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue:201
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:302
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:173
@@ -15020,6 +15020,12 @@ msgstr "Comienza a escribir para buscar usuarios …"
 msgid "Start typing to search in Knowledge Base…"
 msgstr "Comience a escribir para buscar en la base de conocimientos…"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:43
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Start typing to search or enter a new tag…"
+msgstr "Ingrese su nombre de usuario o correo electrónico"
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:93
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:50
 #, fuzzy
@@ -15034,6 +15040,7 @@ msgid "Start typing to search or enter an phone number…"
 msgstr "Ingrese su nombre de usuario o correo electrónico"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:70
+#: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:41
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:409
 #, fuzzy
 #| msgid "Start typing to search for users…"
@@ -18636,7 +18643,7 @@ msgstr "Notificación"
 msgid "Unsaved Changes"
 msgstr "Descartar los Cambios"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:542
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:568
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:238
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:304
 #, fuzzy
@@ -19499,6 +19506,7 @@ msgstr "Qué valores de %s deben sincronizarse con los usuarios."
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:37
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:3
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:195
 #: db/seeds/permissions.rb:179
 msgid "WhatsApp"
 msgstr ""
@@ -19511,10 +19519,6 @@ msgstr "Agregar cuenta"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:10
 msgid "WhatsApp Business Account ID"
-msgstr ""
-
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:195
-msgid "Whatsapp"
 msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
@@ -20261,6 +20265,12 @@ msgstr "Ingrese su nombre de usuario o correo electrónico"
 #| msgid "November"
 msgid "add new phone number"
 msgstr "Noviembre"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:23
+#, fuzzy
+#| msgid "Add Tag"
+msgid "add new tag"
+msgstr "Agregar Tag"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "add option"
@@ -21427,7 +21437,7 @@ msgid "select"
 msgstr "Seleccione"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:351
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:469
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:471
 #, fuzzy
 #| msgid "set optional"
 msgid "select all options"
@@ -21438,7 +21448,7 @@ msgstr "establecer opcional"
 msgid "select attachment…"
 msgstr "seleccionar archivo adjunto…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:468
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:470
 #, fuzzy
 #| msgid "select"
 msgid "select visible options"
@@ -22104,11 +22114,6 @@ msgstr "∅ Tiempo de espera hoy"
 #~| msgid "Edit Organization"
 #~ msgid "Edit organization"
 #~ msgstr "Editar Organización"
-
-#, fuzzy
-#~| msgid "Add Tag"
-#~ msgid "Add tags"
-#~ msgstr "Agregar Tag"
 
 #, fuzzy
 #~| msgid "Ticket %s created!"

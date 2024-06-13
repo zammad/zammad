@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-05-01 01:05+0000\n"
+"PO-Revision-Date: 2024-06-13 01:05+0000\n"
 "Last-Translator: YosefAdPro <yosef@adpronet.com>\n"
 "Language-Team: Hebrew (Israel) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/he_IL/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 5.5\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -283,7 +283,7 @@ msgid "%s (option)"
 msgstr "add option"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:302
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:533
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:559
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:229
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
@@ -470,10 +470,8 @@ msgid "%s object(s) have been created."
 msgstr "%s% נפתחו מחדש"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco:24
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "%s object(s) have been updated."
-msgstr "%s% נפתחו מחדש"
+msgstr "%s% נפתחו מחדש."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco:18
 msgid "%s object(s) were deleted."
@@ -492,10 +490,8 @@ msgid "%s object(s) will be deleted."
 msgstr "%s% נפתחו מחדש"
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco:16
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "%s object(s) will be updated."
-msgstr "%s% נפתחו מחדש"
+msgstr "%s% נפתחו מחדש."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:234
 #, fuzzy
@@ -511,7 +507,7 @@ msgstr "%s מהכרטיסים שלך נמצאים כעת בתהליך."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:11
 msgid "%s of my tickets escalated"
-msgstr "%s מכרטיסים שלי הוסלמו."
+msgstr "%s מכרטיסים שלי הוסלמו"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 #: app/graphql/gql/queries/autocomplete_search/generic.rb:64
@@ -1836,7 +1832,7 @@ msgstr "סיסמת אפליקציה"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:59
 #: db/seeds/permissions.rb:377
 msgid "Appearance"
-msgstr ""
+msgstr "מראה"
 
 #: app/assets/javascripts/app/controllers/api.coffee:127
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:74
@@ -2985,10 +2981,8 @@ msgid "Change Password"
 msgstr "החלפת סיסמא"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:8
-#, fuzzy
-#| msgid "Change your password"
 msgid "Change Your Password"
-msgstr "החלפת סיסמא"
+msgstr "שנה את סיסמתך"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:123
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:137
@@ -3260,7 +3254,7 @@ msgstr ""
 msgid "Clean up mobile taskbars."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:118
+#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:123
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue:78
 #, fuzzy
 #| msgid "Search"
@@ -3268,7 +3262,7 @@ msgid "Clear Search"
 msgstr "חפש"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:608
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:635
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:140
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:292
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:352
@@ -4073,10 +4067,8 @@ msgid "Create your first ticket"
 msgstr "צור את הכרטיס הראשון שלך"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:27
-#, fuzzy
-#| msgid "Create"
 msgid "Create:"
-msgstr "יצירה"
+msgstr "נוצר:"
 
 #: app/assets/javascripts/app/models/application.coffee:10
 #: app/assets/javascripts/app/models/calendar.coffee:12
@@ -4320,14 +4312,12 @@ msgstr "גזור"
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:19
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:38
 msgid "Dark"
-msgstr ""
+msgstr "כהה"
 
 #: app/assets/javascripts/app/controllers/dark_mode.coffee:33
 #: app/frontend/apps/desktop/components/ThemeSwitch/ThemeSwitch.vue:93
-#, fuzzy
-#| msgid "Mode"
 msgid "Dark Mode"
-msgstr "מצב"
+msgstr "מצב כהה"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:5
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:95
@@ -5805,10 +5795,8 @@ msgid "Do not sign email"
 msgstr ""
 
 #: db/seeds/settings.rb:5748
-#, fuzzy
-#| msgid "You have not created a ticket yet."
 msgid "Do not update any tickets."
-msgstr "עדיין לא יצרת כרטיס."
+msgstr "אל תעדכן שום כרטיסים."
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco:21
 msgid "Do not use the proxy for the following hosts."
@@ -6389,7 +6377,7 @@ msgstr "אפשר/נטרל תרגום אינליין"
 
 #: db/seeds/settings.rb:3432
 msgid "Enable/disable online chat."
-msgstr ""
+msgstr "הפעל/השבת צ'אט חי."
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco:37
 msgid "Enabled"
@@ -6717,7 +6705,7 @@ msgstr "הזן את כתובת האימייל ואת אסימון ה- API %s ש�
 #: app/assets/javascripts/app/views/profile/password.jst.eco:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:116
 msgid "Enter your current password, insert a new one and confirm it."
-msgstr ""
+msgstr "הזן את הסיסמה הנוכחית שלך, הכנס סיסמה חדשה ואשר אותה."
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:36
 msgid ""
@@ -7216,8 +7204,6 @@ msgstr "צעדים ראשונים"
 #: app/assets/javascripts/app/models/user.coffee:9
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:14
 #: db/seeds/object_manager_attributes.rb:601
-#, fuzzy
-#| msgid "Firstname"
 msgid "First name"
 msgstr "שם פרטי"
 
@@ -7294,7 +7280,7 @@ msgstr "כלומר כרטיסים, משתמשים וארגונים ששונו ל
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:10
 msgid "For more details, please check out our online documentation %l."
-msgstr ""
+msgstr "לפרטים נוספים, עיין בתיעוד המקוון שלנו %l."
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
@@ -8173,24 +8159,27 @@ msgstr ""
 msgid ""
 "How long did each customer have to wait, on average, to get a response from "
 "you today?"
-msgstr ""
+msgstr "כמה זמן נאלץ כל לקוח להמתין בממוצע, כדי לקבל ממך תגובה היום?"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_escalation.coffee:9
 msgid ""
 "How many escalated tickets do you have open? (Mr. Bubbles gets grumpy if you "
 "have too many…)"
 msgstr ""
+"כמה כרטיסים מוסלמים יש לך פתוחים? (מר באבלס מתעצבן אם יש לך יותר מדי...)"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_channel_distribution.coffee:27
 msgid ""
 "How many of your tickets are coming from email, phone, Twitter, or Facebook? "
 "(Shows percentages for both inbound and outbound tickets.)"
 msgstr ""
+"כמה מהכרטיסים שלך מגיעים מאימייל, טלפון, טוויטר או פייסבוק? (מציג אחוזים "
+"עבור כרטיסים נכנסים ויוצאים כאחד.)"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_reopen.coffee:9
 msgid ""
 "How many of your tickets have been re-opened after being marked “closed”?"
-msgstr ""
+msgstr "כמה מהכרטיסים שלך נפתחו מחדש לאחר שסומנו כ\"סגור\"?"
 
 #: app/controllers/first_steps_controller.rb:78
 msgid "How to use it"
@@ -9231,10 +9220,8 @@ msgid "Last changed"
 msgstr "השתנה"
 
 #: app/assets/javascripts/app/models/ticket.coffee:26
-#, fuzzy
-#| msgid "Closing time"
 msgid "Last closing time"
-msgstr "זמן הסגירה"
+msgstr "זמן סגירה אחרונה"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:230
 #: app/assets/javascripts/app/models/ticket.coffee:21
@@ -9268,8 +9255,6 @@ msgstr "רץ לאחרונה"
 #: app/assets/javascripts/app/models/user.coffee:10
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:23
 #: db/seeds/object_manager_attributes.rb:653
-#, fuzzy
-#| msgid "Lastname"
 msgid "Last name"
 msgstr "שם משפחה"
 
@@ -9313,7 +9298,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:25
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:45
 msgid "Light"
-msgstr ""
+msgstr "בהיר"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:17
 msgid "Limit Groups"
@@ -10369,7 +10354,7 @@ msgstr ""
 
 #: app/models/user.rb:704
 msgid "More than 250 secondary organizations are not allowed."
-msgstr ""
+msgstr "יותר מ-250 ארגונים משניים אינם מורשים."
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:130
 #, fuzzy
@@ -11063,7 +11048,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:337
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:510
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:512
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:100
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:402
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:348
@@ -11497,7 +11482,7 @@ msgstr "טפסים אונליין"
 
 #: db/seeds/settings.rb:83
 msgid "Online Service"
-msgstr ""
+msgstr "שירות מקוון"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:18
 #, fuzzy
@@ -11776,10 +11761,8 @@ msgid "Organization Support"
 msgstr "תמיכת ארגון"
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationEdit.ts:85
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Organization could not be updated."
-msgstr "%s% נפתחו מחדש"
+msgstr "לא ניתן היה לעדכן את הארגון."
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:71
 #, fuzzy
@@ -11871,7 +11854,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee:11
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
-msgstr ""
+msgstr "מתוך כל הכרטיסים הפתוחים (ברחבי החברה), כמה מוקצים לך?"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:163
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:190
@@ -12041,10 +12024,8 @@ msgstr "סיסמא"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:3
 #: app/assets/javascripts/app/views/profile/password.jst.eco:3
-#, fuzzy
-#| msgid "Authentication"
 msgid "Password & Authentication"
-msgstr "אימות"
+msgstr "סיסמה ואימות"
 
 #: app/assets/javascripts/app/views/api.jst.eco:30
 msgid "Password Access"
@@ -13367,10 +13348,8 @@ msgid "Roles are …"
 msgstr ""
 
 #: app/assets/javascripts/app/views/user.jst.eco:20
-#, fuzzy
-#| msgid "Roles"
 msgid "Roles:"
-msgstr "תפקידים"
+msgstr "תפקידים:"
 
 #: app/assets/javascripts/app/views/google/list.jst.eco:104
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:106
@@ -13818,7 +13797,7 @@ msgstr "צליל התראה"
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:57
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco:9
 #: app/assets/javascripts/app/views/translation/form.jst.eco:7
-#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:24
+#: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:20
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:63
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue:23
 #, fuzzy
@@ -13829,10 +13808,8 @@ msgstr "חפש"
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:97
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:130
 #: db/seeds/object_manager_attributes.rb:962
-#, fuzzy
-#| msgid "Shared organization"
 msgid "Secondary organizations"
-msgstr "ארגון משותף"
+msgstr "ארגונים משניים"
 
 #: app/models/user.rb:698
 msgid ""
@@ -14030,8 +14007,8 @@ msgstr "בורר"
 msgid "Selects the ticket number generator module."
 msgstr "בחירת מודול הפקת מספר הכרטיסים."
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:470
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:474
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:472
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:476
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue:201
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:302
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:173
@@ -14916,6 +14893,12 @@ msgstr "התחל להקליד כדי לחפש משתמשים ..."
 msgid "Start typing to search in Knowledge Base…"
 msgstr "התחל להקליד כדי לחפש משתמשים ..."
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:43
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Start typing to search or enter a new tag…"
+msgstr "הקלד את שם המשתמש שלך או את כתובת המייל שלך"
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:93
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:50
 #, fuzzy
@@ -14930,6 +14913,7 @@ msgid "Start typing to search or enter an phone number…"
 msgstr "הקלד את שם המשתמש שלך או את כתובת המייל שלך"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:70
+#: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:41
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:409
 #, fuzzy
 #| msgid "Start typing to search for users..."
@@ -16066,10 +16050,8 @@ msgid "The issue could not be saved."
 msgstr "%s% נפתחו מחדש"
 
 #: app/frontend/shared/composables/useLocaleUpdate.ts:21
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The language could not be updated."
-msgstr "%s% נפתחו מחדש"
+msgstr "לא ניתן היה לעדכן את השפה."
 
 #: app/models/setting/validation/saml/security.rb:44
 msgid "The length of the private key is too short."
@@ -16134,10 +16116,8 @@ msgstr "%s% נפתחו מחדש"
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:327
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:142
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The object could not be updated."
-msgstr "%s% נפתחו מחדש"
+msgstr "לא ניתן היה לעדכן את האובייקט."
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:47
 #, fuzzy
@@ -16820,7 +16800,7 @@ msgstr "לא הוגדר"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:213
 msgid "There is no agent online."
-msgstr "אין טכנאי מקוון."
+msgstr "אין נציג מקוון."
 
 #: app/assets/javascripts/app/views/navigation/no_result.jst.eco:3
 msgid "There is no match for your search."
@@ -17642,10 +17622,8 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:37
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Ticket tags could not be updated."
-msgstr "%s% נפתחו מחדש"
+msgstr "לא ניתן היה לעדכן את תגי הכרטיסים."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:61
 #, fuzzy
@@ -17664,7 +17642,7 @@ msgstr "עדכון כרטיס"
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:11
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:79
 msgid "Ticket update"
-msgstr "עדכון כרטיס"
+msgstr "כרטיס עודכן"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:135
 #, fuzzy
@@ -18046,7 +18024,7 @@ msgstr "אב"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:359
 msgid "Toggle dark mode"
-msgstr ""
+msgstr "החלף מצב כהה"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:47
 #, fuzzy
@@ -18484,7 +18462,7 @@ msgstr "התראות"
 msgid "Unsaved Changes"
 msgstr "התעלם משינויים"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:542
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:568
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:238
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:304
 msgid "Unselect Option"
@@ -18542,11 +18520,11 @@ msgstr ""
 
 #: lib/excel_sheet/ticket.rb:66
 msgid "Update Escalation At"
-msgstr ""
+msgstr "עדכן הסלמה ב"
 
 #: lib/excel_sheet/ticket.rb:67
 msgid "Update In Min"
-msgstr ""
+msgstr "עדכון תוך דקות"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:32
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:11
@@ -18584,13 +18562,11 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
 #: app/assets/javascripts/app/models/setting.coffee:20
 msgid "Update successful."
-msgstr ""
+msgstr "העדכון הצליח."
 
 #: db/seeds/settings.rb:5747
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Update the most recent tickets."
-msgstr "%s% נפתחו מחדש"
+msgstr "עדכן את הכרטיסים העדכניים ביותר."
 
 #: app/assets/javascripts/app/models/application.coffee:11
 #: app/assets/javascripts/app/models/calendar.coffee:14
@@ -18618,11 +18594,11 @@ msgstr "%s% נפתחו מחדש"
 #: app/assets/javascripts/app/models/trigger.coffee:16
 #: app/assets/javascripts/app/models/webhook.coffee:16
 msgid "Updated"
-msgstr ""
+msgstr "עודכן"
 
 #: lib/excel_sheet/ticket.rb:57
 msgid "Updated At"
-msgstr ""
+msgstr "עודכן ב"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:242
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:8
@@ -18879,10 +18855,8 @@ msgid "User could not be created."
 msgstr "%s% נפתחו מחדש"
 
 #: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:86
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "User could not be updated."
-msgstr "%s% נפתחו מחדש"
+msgstr "לא ניתן היה לעדכן את המשתמש."
 
 #: lib/external_credential/google.rb:44
 msgid "User email could not be extracted from 'id_token'."
@@ -19350,6 +19324,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:37
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:3
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:195
 #: db/seeds/permissions.rb:179
 msgid "WhatsApp"
 msgstr ""
@@ -19362,10 +19337,6 @@ msgstr "Add Account"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:10
 msgid "WhatsApp Business Account ID"
-msgstr ""
-
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:195
-msgid "Whatsapp"
 msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
@@ -19618,7 +19589,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco:6
 msgid ""
 "You can find a tutorial on how to manage a %s in our online documentation %l."
-msgstr ""
+msgstr "תוכל למצוא הדרכה כיצד לנהל %s בתיעוד המקוון שלנו %l."
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco:3
 msgid ""
@@ -20102,6 +20073,12 @@ msgstr "הקלד את שם המשתמש שלך או את כתובת המייל �
 msgid "add new phone number"
 msgstr "נובמבר"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:23
+#, fuzzy
+#| msgid "Add Tag"
+msgid "add new tag"
+msgstr "הוספת תג"
+
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "add option"
 msgstr "add option"
@@ -20497,7 +20474,7 @@ msgstr "אימייל"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:97
 msgid "email sent to '%s'"
-msgstr ""
+msgstr "אימייל נשלח אל '%s'"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
 #, fuzzy
@@ -21260,7 +21237,7 @@ msgid "select"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:351
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:469
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:471
 #, fuzzy
 #| msgid "reply"
 msgid "select all options"
@@ -21273,7 +21250,7 @@ msgstr "השב"
 msgid "select attachment…"
 msgstr "בחר קובץ מצורף ..."
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:468
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:470
 #, fuzzy
 #| msgid "reply"
 msgid "select visible options"
@@ -21891,11 +21868,6 @@ msgstr "∅ זמן המתנה היום"
 #~| msgid "Edit Organization"
 #~ msgid "Edit organization"
 #~ msgstr "עריכת ארגון"
-
-#, fuzzy
-#~| msgid "Add Tag"
-#~ msgid "Add tags"
-#~ msgstr "הוספת תג"
 
 #, fuzzy
 #~| msgid "Ticket %s created!"
