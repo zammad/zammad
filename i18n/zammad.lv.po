@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-19 01:05+0000\n"
-"Last-Translator: Aivars Miška <allefm@gmail.com>\n"
+"PO-Revision-Date: 2024-06-12 01:05+0000\n"
+"Last-Translator: Katrina Laimina <katrina.laimina@paysera.net>\n"
 "Language-Team: Latvian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/lv/>\n"
 "Language: lv\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n % 10 == 0 || n % 100 >= 11 && n % 100 <= "
 "19) ? 0 : ((n % 10 == 1 && n % 100 != 11) ? 1 : 2);\n"
-"X-Generator: Weblate 5.4.2\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -791,7 +791,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/api.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:2 db/seeds/permissions.rb:243
 msgid "API"
-msgstr ""
+msgstr "API"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:64
 msgid "API Key"
@@ -848,7 +848,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/routes.ts:8
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:37
 msgid "Account"
-msgstr ""
+msgstr "Konts"
 
 #: app/models/channel/driver/sms/twilio.rb:103
 msgid "Account SID"

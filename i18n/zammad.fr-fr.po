@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-07 04:53+0000\n"
+"PO-Revision-Date: 2024-06-11 01:05+0000\n"
 "Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
@@ -17250,7 +17250,7 @@ msgstr "Vérifier le jeton"
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:71
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:59
 msgid "Verify sending and receiving"
-msgstr "Vérifier l'envoi et la réception"
+msgstr "Vérification de l'envoi et de la réception"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:172
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:93

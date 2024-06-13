@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-04 14:16+0000\n"
-"Last-Translator: Simonas Jusas <simonas.jusas@paysera.net>\n"
+"PO-Revision-Date: 2024-06-13 01:08+0000\n"
+"Last-Translator: Mantas Masalskis <mantas@idev.lt>\n"
 "Language-Team: Lithuanian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/lt/>\n"
 "Language: lt\n"
@@ -15288,7 +15288,7 @@ msgstr "Ketvirtadienis"
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/ticket.ts:6
 #: db/seeds/permissions.rb:208
 msgid "Ticket"
-msgstr "Užklausa"
+msgstr "Triktis"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:767
 msgid "Ticket %s created!"
@@ -18979,7 +18979,7 @@ msgstr "ši triktis buvo prijungta prie trikties %s"
 #: app/frontend/apps/mobile/components/User/UserItem.vue:29
 #: lib/calendar_subscriptions/tickets.rb:61
 msgid "ticket"
-msgstr "užklausa"
+msgstr "triktis"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:114
 msgid "ticket %s was merged into this ticket"

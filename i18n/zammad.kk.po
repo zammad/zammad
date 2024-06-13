@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-07 04:53+0000\n"
+"PO-Revision-Date: 2024-06-13 01:08+0000\n"
 "Last-Translator: Darkey Zhanbolat <darzhankz@gmail.com>\n"
 "Language-Team: Kazakh <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/kk/>\n"
@@ -101,6 +101,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: #{ticket.escalation_at}_ көтерілген\n"
+"Өтініш (#{ticket.title}) \"#{ticket.customer.longname}\"ден көтерілген \""
+"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -117,6 +126,16 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: #{ticket.updated_at}_соңғы рет жаңартылды\n"
+"* Топ: #{ticket.group.name}\n"
+"* Иесі: #{ticket.owner.fullname}\n"
+"* Жайы: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -132,6 +151,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Еске салғыш жетті!_\n"
+"Өтінім назар аударуды қажет етеді: \"*#{ticket.customer.longname}*\" "
+"клиенттен (#{ticket.title}) ескерту алынды.\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_update/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -1815,7 +1843,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:205
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:314
 msgid "Attachment"
-msgstr ""
+msgstr "Тіркеме"
 
 #: db/seeds/settings.rb:3204
 msgid "Attachment - Search for follow-up also in attachments."
@@ -3634,7 +3662,7 @@ msgstr ""
 #: db/seeds/object_manager_attributes.rb:60 db/seeds/roles.rb:23
 #: db/seeds/ticket_article_senders.rb:4 lib/excel_sheet/ticket.rb:29
 msgid "Customer"
-msgstr ""
+msgstr "Өтініш беруші"
 
 #: app/assets/javascripts/app/controllers/chat.coffee:125
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco:4
@@ -5239,7 +5267,7 @@ msgstr ""
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:126
 #: db/seeds/object_manager_attributes.rb:705 public/assets/form/form.js:32
 msgid "Email"
-msgstr ""
+msgstr "Электронды пошта"
 
 #: app/models/report.rb:131
 msgid "Email (in)"
@@ -5576,7 +5604,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco:6
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:6
 msgid "Encryption"
-msgstr ""
+msgstr "Шифрлау"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:165
@@ -5892,7 +5920,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:21
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:8
 msgid "Exchange"
-msgstr ""
+msgstr "Exchange"
 
 #: db/seeds/settings.rb:4746
 msgid "Exchange OAuth"
@@ -6096,7 +6124,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:5
 #: db/seeds/settings.rb:354
 msgid "Filesystem"
-msgstr ""
+msgstr "Файлдық жүйе"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:16
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:16
@@ -6175,7 +6203,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee:24
 #: app/graphql/gql/types/overview_type.rb:77
 msgid "First response"
-msgstr ""
+msgstr "Алғашқы жауап"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:3
 msgid "Fixed Email Accounts"
@@ -6644,7 +6672,7 @@ msgstr ""
 #: db/seeds/object_manager_attributes.rb:162 db/seeds/settings.rb:2850
 #: lib/excel_sheet/ticket.rb:27
 msgid "Group"
-msgstr ""
+msgstr "Топ"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:141
 msgid "Group (change)"
@@ -7029,7 +7057,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:8
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco:4
 msgid "ID:"
@@ -7810,7 +7838,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/knowledge_base.coffee:75
 #: app/models/knowledge_base.rb:199 db/seeds/permissions.rb:475
 msgid "Knowledge Base"
-msgstr ""
+msgstr "Білім Базасы"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:71
 msgid "Knowledge Base Answer"
@@ -9500,7 +9528,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/import_otrs.coffee:175
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts:10
 msgid "OTRS"
-msgstr ""
+msgstr "OTRS"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts:21
 msgid ""
@@ -9755,7 +9783,7 @@ msgstr ""
 #: db/seeds/object_manager_attributes.rb:94 db/seeds/settings.rb:140
 #: lib/excel_sheet/ticket.rb:30
 msgid "Organization"
-msgstr ""
+msgstr "Ұйым"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:382
 msgid "Organization & Department Name"
@@ -9910,7 +9938,7 @@ msgstr ""
 #: app/views/messaging/ticket_info/pt-br.md.erb:4
 #: db/seeds/object_manager_attributes.rb:207 lib/excel_sheet/ticket.rb:28
 msgid "Owner"
-msgstr ""
+msgstr "Иесі"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:11
 msgid ""
@@ -9994,7 +10022,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:51
 #: db/seeds/object_manager_attributes.rb:1249 db/seeds/permissions.rb:326
 msgid "Password"
-msgstr ""
+msgstr "Құпиясөз"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:3
 #: app/assets/javascripts/app/views/profile/password.jst.eco:3
@@ -10163,7 +10191,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:5
 #: app/controllers/cti_controller.rb:20
 msgid "Placetel"
-msgstr ""
+msgstr "Плацетель"
 
 #: db/seeds/settings.rb:5187
 msgid "Placetel Token"
@@ -11047,7 +11075,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:81
 #: app/assets/javascripts/app/views/knowledge_base/permissions_dialog.jst.eco:3
 msgid "Role"
-msgstr ""
+msgstr "Рөлі"
 
 #: app/assets/javascripts/app/controllers/_ui_element/user_permission.coffee:49
 msgid "Role %s is conflicting with role %s, do you want to continue?"
@@ -11103,7 +11131,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:74
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:9
 msgid "S/MIME"
-msgstr ""
+msgstr "S/MIME"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:6
 msgid ""
@@ -11146,7 +11174,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/sla.coffee:3
 msgid "SLAs"
-msgstr ""
+msgstr "SLAs"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:68
@@ -11184,7 +11212,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:48
 msgid "SSL"
-msgstr ""
+msgstr "SSL"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:12
 #: app/assets/javascripts/app/views/ssl_certificates.jst.eco:2
@@ -11226,7 +11254,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:55
 msgid "STARTTLS"
-msgstr ""
+msgstr "STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:157
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue:52
@@ -11313,7 +11341,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/job.coffee:3
 #: db/seeds/permissions.rb:96
 msgid "Scheduler"
-msgstr ""
+msgstr "Жоспарлаушы"
 
 #: app/assets/javascripts/app/controllers/job.coffee:17
 msgid "Schedulers"
@@ -11321,7 +11349,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:6
 msgid "Screen"
-msgstr ""
+msgstr "Экран"
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:38
 msgid "Script can be located under: ||%s|| and needs to be executable."
@@ -12190,7 +12218,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:5
 msgid "Sipgate"
-msgstr ""
+msgstr "Sipgate"
 
 #: db/seeds/settings.rb:1668
 msgid "Site"
@@ -12378,7 +12406,7 @@ msgstr ""
 #: app/views/messaging/ticket_info/pt-br.md.erb:5
 #: db/seeds/object_manager_attributes.rb:248 lib/excel_sheet/ticket.rb:25
 msgid "State"
-msgstr ""
+msgstr "Жайы"
 
 #: db/seeds/settings.rb:5309
 msgid "Stats Backend"
@@ -14374,7 +14402,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/ticket.ts:6
 #: db/seeds/permissions.rb:208
 msgid "Ticket"
-msgstr ""
+msgstr "Билет"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:767
 msgid "Ticket %s created!"
@@ -14964,7 +14992,7 @@ msgstr ""
 #: app/models/channel/driver/sms/message_bird.rb:91
 #: app/models/channel/driver/sms/twilio.rb:104
 msgid "Token"
-msgstr ""
+msgstr "Токен"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:12
@@ -15051,7 +15079,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:29
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
 msgid "Trigger"
-msgstr ""
+msgstr "Триггер"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
 #: db/seeds/permissions.rb:89
@@ -15269,7 +15297,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:8
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:50
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:677
 msgid "URL (AJAX endpoint)"
@@ -15357,7 +15385,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:57
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 msgid "Update"
-msgstr ""
+msgstr "Жаңарту"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:38
 msgid "Update Database"
@@ -15660,7 +15688,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/user/routes.ts:7
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:42
 msgid "User"
-msgstr ""
+msgstr "Пайдаланушы"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:16
 msgid "User (censored):"
@@ -16059,7 +16087,7 @@ msgstr ""
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:58
 #: db/seeds/settings.rb:1782
 msgid "Weibo"
-msgstr ""
+msgstr "Weibo"
 
 #: db/seeds/settings.rb:1790
 msgid "Weibo App Credentials"
@@ -17654,11 +17682,11 @@ msgstr ""
 
 #: db/seeds/ticket_states.rb:35
 msgid "pending close"
-msgstr ""
+msgstr "жабылуды күтуде"
 
 #: db/seeds/ticket_state_types.rb:5 db/seeds/ticket_states.rb:17
 msgid "pending reminder"
-msgstr ""
+msgstr "күтілетін еске салғыш"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/phone_reply.coffee:12
 #: db/seeds/ticket_article_types.rb:7
@@ -17890,7 +17918,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/User/UserItem.vue:29
 #: lib/calendar_subscriptions/tickets.rb:61
 msgid "ticket"
-msgstr ""
+msgstr "билет"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:114
 msgid "ticket %s was merged into this ticket"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-05-02 01:05+0000\n"
+"PO-Revision-Date: 2024-06-11 01:05+0000\n"
 "Last-Translator: YosefAdPro <yosef@adpronet.com>\n"
 "Language-Team: Hebrew (Israel) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/he_IL/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 5.5\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -469,10 +469,8 @@ msgid "%s object(s) have been created."
 msgstr "%s% נפתחו מחדש"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco:24
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "%s object(s) have been updated."
-msgstr "%s% נפתחו מחדש"
+msgstr "%s% נפתחו מחדש."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco:18
 msgid "%s object(s) were deleted."
@@ -491,10 +489,8 @@ msgid "%s object(s) will be deleted."
 msgstr "%s% נפתחו מחדש"
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco:16
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "%s object(s) will be updated."
-msgstr "%s% נפתחו מחדש"
+msgstr "%s% נפתחו מחדש."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:233
 #, fuzzy
@@ -510,7 +506,7 @@ msgstr "%s מהכרטיסים שלך נמצאים כעת בתהליך."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:11
 msgid "%s of my tickets escalated"
-msgstr "%s מכרטיסים שלי הוסלמו."
+msgstr "%s מכרטיסים שלי הוסלמו"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 msgid "%s people"
@@ -1718,7 +1714,7 @@ msgstr "סיסמת אפליקציה"
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:3
 #: db/seeds/permissions.rb:411
 msgid "Appearance"
-msgstr ""
+msgstr "מראה"
 
 #: app/assets/javascripts/app/controllers/api.coffee:127
 msgid "Application"
@@ -2805,10 +2801,8 @@ msgid "Change Objects"
 msgstr "שנה אובייקט"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:8
-#, fuzzy
-#| msgid "Change your password"
 msgid "Change Your Password"
-msgstr "החלפת סיסמא"
+msgstr "שנה את סיסמתך"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:118
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:134
@@ -3828,10 +3822,8 @@ msgid "Create your first ticket"
 msgstr "צור את הכרטיס הראשון שלך"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:27
-#, fuzzy
-#| msgid "Create"
 msgid "Create:"
-msgstr "יצירה"
+msgstr "נוצר:"
 
 #: app/assets/javascripts/app/models/application.coffee:10
 #: app/assets/javascripts/app/models/calendar.coffee:12
@@ -4055,13 +4047,11 @@ msgstr "גזור"
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:19
 msgid "Dark"
-msgstr ""
+msgstr "כהה"
 
 #: app/assets/javascripts/app/controllers/dark_mode.coffee:33
-#, fuzzy
-#| msgid "Mode"
 msgid "Dark Mode"
-msgstr "מצב"
+msgstr "מצב כהה"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:5
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:95
@@ -5456,10 +5446,8 @@ msgid "Do not sign email"
 msgstr ""
 
 #: db/seeds/settings.rb:5748
-#, fuzzy
-#| msgid "You have not created a ticket yet."
 msgid "Do not update any tickets."
-msgstr "עדיין לא יצרת כרטיס."
+msgstr "אל תעדכן שום כרטיסים."
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco:21
 msgid "Do not use the proxy for the following hosts."
@@ -6009,7 +5997,7 @@ msgstr "אפשר/נטרל תרגום אינליין"
 
 #: db/seeds/settings.rb:3432
 msgid "Enable/disable online chat."
-msgstr ""
+msgstr "הפעל/השבת צ'אט חי."
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco:37
 msgid "Enabled"
@@ -6335,7 +6323,7 @@ msgstr "הזן את כתובת האימייל ואת אסימון ה- API %s ש�
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:9
 msgid "Enter your current password, insert a new one and confirm it."
-msgstr ""
+msgstr "הזן את הסיסמה הנוכחית שלך, הכנס סיסמה חדשה ואשר אותה."
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:36
 msgid ""
@@ -6812,8 +6800,6 @@ msgstr "צעדים ראשונים"
 #: app/assets/javascripts/app/models/user.coffee:9
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:14
 #: db/seeds/object_manager_attributes.rb:601
-#, fuzzy
-#| msgid "Firstname"
 msgid "First name"
 msgstr "שם פרטי"
 
@@ -6890,7 +6876,7 @@ msgstr "כלומר כרטיסים, משתמשים וארגונים ששונו ל
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:10
 msgid "For more details, please check out our online documentation %l."
-msgstr ""
+msgstr "לפרטים נוספים, עיין בתיעוד המקוון שלנו %l."
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
@@ -7739,24 +7725,27 @@ msgstr ""
 msgid ""
 "How long did each customer have to wait, on average, to get a response from "
 "you today?"
-msgstr ""
+msgstr "כמה זמן נאלץ כל לקוח להמתין בממוצע, כדי לקבל ממך תגובה היום?"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_escalation.coffee:9
 msgid ""
 "How many escalated tickets do you have open? (Mr. Bubbles gets grumpy if you "
 "have too many…)"
 msgstr ""
+"כמה כרטיסים מוסלמים יש לך פתוחים? (מר באבלס מתעצבן אם יש לך יותר מדי...)"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_channel_distribution.coffee:27
 msgid ""
 "How many of your tickets are coming from email, phone, Twitter, or Facebook? "
 "(Shows percentages for both inbound and outbound tickets.)"
 msgstr ""
+"כמה מהכרטיסים שלך מגיעים מאימייל, טלפון, טוויטר או פייסבוק? (מציג אחוזים "
+"עבור כרטיסים נכנסים ויוצאים כאחד.)"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_reopen.coffee:9
 msgid ""
 "How many of your tickets have been re-opened after being marked “closed”?"
-msgstr ""
+msgstr "כמה מהכרטיסים שלך נפתחו מחדש לאחר שסומנו כ\"סגור\"?"
 
 #: app/controllers/first_steps_controller.rb:78
 msgid "How to use it"
@@ -8729,10 +8718,8 @@ msgid "Last changed"
 msgstr "השתנה"
 
 #: app/assets/javascripts/app/models/ticket.coffee:26
-#, fuzzy
-#| msgid "Closing time"
 msgid "Last closing time"
-msgstr "זמן הסגירה"
+msgstr "זמן סגירה אחרונה"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:230
 #: app/assets/javascripts/app/models/ticket.coffee:21
@@ -8761,8 +8748,6 @@ msgstr "רץ לאחרונה"
 #: app/assets/javascripts/app/models/user.coffee:10
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:23
 #: db/seeds/object_manager_attributes.rb:653
-#, fuzzy
-#| msgid "Lastname"
 msgid "Last name"
 msgstr "שם משפחה"
 
@@ -8805,7 +8790,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:25
 msgid "Light"
-msgstr ""
+msgstr "בהיר"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:17
 msgid "Limit Groups"
@@ -9537,7 +9522,7 @@ msgstr ""
 
 #: app/models/user.rb:738
 msgid "More than 250 secondary organizations are not allowed."
-msgstr ""
+msgstr "יותר מ-250 ארגונים משניים אינם מורשים."
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:125
 #, fuzzy
@@ -10556,7 +10541,7 @@ msgstr "טפסים אונליין"
 
 #: db/seeds/settings.rb:83
 msgid "Online Service"
-msgstr ""
+msgstr "שירות מקוון"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:18
 #, fuzzy
@@ -10785,10 +10770,8 @@ msgid "Organization Support"
 msgstr "תמיכת ארגון"
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationEdit.ts:82
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Organization could not be updated."
-msgstr "%s% נפתחו מחדש"
+msgstr "לא ניתן היה לעדכן את הארגון."
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:69
 #, fuzzy
@@ -10862,7 +10845,7 @@ msgstr "מחוץ למשרד"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee:11
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
-msgstr ""
+msgstr "מתוך כל הכרטיסים הפתוחים (ברחבי החברה), כמה מוקצים לך?"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:163
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:190
@@ -11028,10 +11011,8 @@ msgstr "סיסמא"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:3
 #: app/assets/javascripts/app/views/profile/password.jst.eco:3
-#, fuzzy
-#| msgid "Authentication"
 msgid "Password & Authentication"
-msgstr "אימות"
+msgstr "סיסמה ואימות"
 
 #: app/assets/javascripts/app/views/api.jst.eco:30
 msgid "Password Access"
@@ -12190,10 +12171,8 @@ msgid "Roles are …"
 msgstr ""
 
 #: app/assets/javascripts/app/views/user.jst.eco:20
-#, fuzzy
-#| msgid "Roles"
 msgid "Roles:"
-msgstr "תפקידים"
+msgstr "תפקידים:"
 
 #: app/assets/javascripts/app/views/google/list.jst.eco:104
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:106
@@ -12632,10 +12611,8 @@ msgstr "חפש"
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:94
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:128
 #: db/seeds/object_manager_attributes.rb:962
-#, fuzzy
-#| msgid "Shared organization"
 msgid "Secondary organizations"
-msgstr "ארגון משותף"
+msgstr "ארגונים משניים"
 
 #: app/models/user.rb:732
 msgid ""
@@ -14703,10 +14680,8 @@ msgid "The issue could not be saved."
 msgstr "%s% נפתחו מחדש"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:57
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The language could not be updated."
-msgstr "%s% נפתחו מחדש"
+msgstr "לא ניתן היה לעדכן את השפה."
 
 #: app/models/setting/validation/saml/security.rb:44
 msgid "The length of the private key is too short."
@@ -14765,10 +14740,8 @@ msgstr "%s% נפתחו מחדש"
 #: app/assets/javascripts/app/controllers/_settings/form.coffee:91
 #: app/assets/javascripts/app/controllers/object_manager.coffee:327
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:142
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The object could not be updated."
-msgstr "%s% נפתחו מחדש"
+msgstr "לא ניתן היה לעדכן את האובייקט."
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:44
 #, fuzzy
@@ -15393,7 +15366,7 @@ msgstr "לא הוגדר"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:213
 msgid "There is no agent online."
-msgstr "אין טכנאי מקוון."
+msgstr "אין נציג מקוון."
 
 #: app/assets/javascripts/app/views/navigation/no_result.jst.eco:3
 msgid "There is no match for your search."
@@ -16219,10 +16192,8 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:35
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Ticket tags could not be updated."
-msgstr "%s% נפתחו מחדש"
+msgstr "לא ניתן היה לעדכן את תגי הכרטיסים."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:58
 #, fuzzy
@@ -16240,7 +16211,7 @@ msgstr "עדכון כרטיס"
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:9
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:11
 msgid "Ticket update"
-msgstr "עדכון כרטיס"
+msgstr "כרטיס עודכן"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:131
 #, fuzzy
@@ -16606,7 +16577,7 @@ msgstr "היום"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:359
 msgid "Toggle dark mode"
-msgstr ""
+msgstr "החלף מצב כהה"
 
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
@@ -17061,11 +17032,11 @@ msgstr ""
 
 #: lib/excel_sheet/ticket.rb:66
 msgid "Update Escalation At"
-msgstr ""
+msgstr "עדכן הסלמה ב"
 
 #: lib/excel_sheet/ticket.rb:67
 msgid "Update In Min"
-msgstr ""
+msgstr "עדכון תוך דקות"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:32
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:11
@@ -17103,13 +17074,11 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/maintenance.coffee:74
 #: app/assets/javascripts/app/models/setting.coffee:20
 msgid "Update successful."
-msgstr ""
+msgstr "העדכון הצליח."
 
 #: db/seeds/settings.rb:5747
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Update the most recent tickets."
-msgstr "%s% נפתחו מחדש"
+msgstr "עדכן את הכרטיסים העדכניים ביותר."
 
 #: app/assets/javascripts/app/models/application.coffee:11
 #: app/assets/javascripts/app/models/calendar.coffee:14
@@ -17137,11 +17106,11 @@ msgstr "%s% נפתחו מחדש"
 #: app/assets/javascripts/app/models/trigger.coffee:16
 #: app/assets/javascripts/app/models/webhook.coffee:16
 msgid "Updated"
-msgstr ""
+msgstr "עודכן"
 
 #: lib/excel_sheet/ticket.rb:57
 msgid "Updated At"
-msgstr ""
+msgstr "עודכן ב"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:242
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:8
@@ -17389,10 +17358,8 @@ msgid "User could not be created."
 msgstr "%s% נפתחו מחדש"
 
 #: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:85
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "User could not be updated."
-msgstr "%s% נפתחו מחדש"
+msgstr "לא ניתן היה לעדכן את המשתמש."
 
 #: lib/external_credential/google.rb:44
 msgid "User email could not be extracted from 'id_token'."
@@ -18111,7 +18078,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco:6
 msgid ""
 "You can find a tutorial on how to manage a %s in our online documentation %l."
-msgstr ""
+msgstr "תוכל למצוא הדרכה כיצד לנהל %s בתיעוד המקוון שלנו %l."
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco:3
 msgid ""
@@ -18904,7 +18871,7 @@ msgstr "אימייל"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:97
 msgid "email sent to '%s'"
-msgstr ""
+msgstr "אימייל נשלח אל '%s'"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
 #, fuzzy
