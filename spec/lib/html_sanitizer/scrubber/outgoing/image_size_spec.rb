@@ -60,10 +60,19 @@ RSpec.describe HtmlSanitizer::Scrubber::Outgoing::ImageSize do
     end
 
     context 'when height is present in style' do
-      let(:input)  { '<img style="height: 100px">' }
-      let(:target) { '<img style="height: 100px" height="100">' }
+      context 'with pixels' do
+        let(:input)  { '<img style="height: 100px">' }
+        let(:target) { '<img style="height: 100px" height="100">' }
 
-      it { is_expected.to eq target }
+        it { is_expected.to eq target }
+      end
+
+      context 'with inches' do
+        let(:input)  { '<img style="height: 100in">' }
+        let(:target) { '<img style="height: 100in">' }
+
+        it { is_expected.to eq target }
+      end
     end
 
     context 'when height and width are present in style' do

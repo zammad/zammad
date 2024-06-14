@@ -30,6 +30,7 @@ class HtmlSanitizer
             value.strip!
 
             next if attr != key
+            next if !value.downcase.ends_with?('px')
 
             node[key] = value.include?('.') ? value.to_f : value.to_i
           end
