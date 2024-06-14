@@ -268,6 +268,12 @@ export default {
       }
     },
     updated(element: HTMLDivElement, { value: message }) {
+      if (!message) {
+        if (element.getAttribute('aria-label'))
+          element.removeAttribute('aria-label')
+        return
+      }
+
       // In some cases we update the aria-label on an interval f.e table time cells
       // We don't want to write to the DOM on every update if nothing has changed
       if (element.getAttribute('aria-label') !== message)

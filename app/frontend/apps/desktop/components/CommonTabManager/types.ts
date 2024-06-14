@@ -14,4 +14,6 @@ export interface Tab {
    * Defaults otherwise to first tab in group
    */
   default?: boolean
+  icon?: string
+  tooltip?: string
 }

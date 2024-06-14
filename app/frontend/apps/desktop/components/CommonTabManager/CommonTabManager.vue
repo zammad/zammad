@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref } from 'vue'
+import { computed, nextTick, onMounted, ref, watch } from 'vue'
 
 import CommonTab from '#desktop/components/CommonTabManager/CommonTab.vue'
 import type { Tab } from '#desktop/components/CommonTabManager/types.ts'
@@ -10,15 +10,18 @@ interface Props {
   multiple?: boolean
   label?: string
   tabs: Tab[]
-  modelValue?: Tab[] | Tab['key']
+  modelValue?: Tab['key'] | Tab['key'][]
+  size?: 'medium' | 'large'
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  size: 'large',
+})
 
 const tabNodes = ref<InstanceType<typeof CommonTab>[]>()
 
 const emit = defineEmits<{
-  'update:modelValue': [unknown]
+  'update:modelValue': [Tab['key'] | Tab['key'][]]
 }>()
 
 const isTabMode = computed(() => !props.multiple)
@@ -29,44 +32,56 @@ const activeTabIndex = computed(() => {
   )
 })
 
-const activeTabWidth = computed(() => {
-  return tabNodes.value?.at(activeTabIndex.value)?.$el.offsetWidth || 0
-})
+const activeTabWidth = ref<number>(0)
+const activeTabHeight = ref<number>(0)
+const activeTabOffsetLeft = ref<number>(0)
 
-const activeTabHeight = computed(() => {
-  return tabNodes.value?.at(activeTabIndex.value)?.$el.offsetHeight || 0
-})
+const getElementWidth = (el: HTMLElement) => el.offsetWidth || 0
+const getElementHeight = (el: HTMLElement) => el.offsetHeight || 0
+const getElementOffsetLeft = (el: HTMLElement) => el.offsetLeft || 0
 
-const activeTabOffsetLeft = computed(() => {
-  return tabNodes.value?.at(activeTabIndex.value)?.$el.offsetLeft || 0
-})
+const isActiveTab = (tab: Tab) =>
+  Array.isArray(props.modelValue)
+    ? props.modelValue.some((activeTab) => activeTab === tab.key)
+    : props.modelValue === tab.key
 
-// Functions are invoked only if multiple is true
-const removeActiveTab = (tab: Tab) => {
-  return (props.modelValue as Tab[])?.filter(
-    (activeTab) => activeTab?.key !== tab.key,
-  )
+const onTabReady = (tab: Tab, el?: HTMLElement) => {
+  if (props.multiple || !isActiveTab(tab)) return
+  if (!el) return
+
+  requestAnimationFrame(() => {
+    activeTabWidth.value = getElementWidth(el)
+    activeTabHeight.value = getElementHeight(el)
+    activeTabOffsetLeft.value = getElementOffsetLeft(el)
+  })
 }
 
-const addActiveTab = (tab: Tab) => {
-  // Initial modelValue could be falsy
-  if (props.modelValue) return [...(props.modelValue as Tab[]), tab]
-  return [tab]
-}
+watch(activeTabIndex, (index) => {
+  const el = tabNodes.value?.[index].$el
+  if (!el) return
+
+  requestAnimationFrame(() => {
+    activeTabWidth.value = getElementWidth(el)
+    activeTabHeight.value = getElementHeight(el)
+    activeTabOffsetLeft.value = getElementOffsetLeft(el)
+  })
+})
 
 const updateModelValue = (tab: Tab) => {
+  if (tab.disabled) return
   if (!props.multiple) return emit('update:modelValue', tab.key)
 
   // If tab is already included, remove it, otherwise add it
-  return (props.modelValue as Tab[])?.some(
-    (activeTab) => activeTab.label === tab.label,
-  )
-    ? emit('update:modelValue', removeActiveTab(tab))
-    : emit('update:modelValue', addActiveTab(tab))
+  return Array.isArray(props.modelValue) && props.modelValue?.includes(tab.key)
+    ? emit(
+        'update:modelValue',
+        props.modelValue?.filter((activeTab) => activeTab !== tab.key),
+      )
+    : emit('update:modelValue', [...(props.modelValue || []), tab.key])
 }
 
 onMounted(() => {
-  if (props.multiple) return
+  if (props.multiple || props.modelValue) return
 
   nextTick(() => {
     const defaultTabIndex = props.tabs.findIndex((tab) => tab.default)
@@ -76,6 +91,8 @@ onMounted(() => {
     updateModelValue(props.tabs[defaultTabIndex])
   })
 })
+
+const labelSize = computed(() => (props.size === 'large' ? 'medium' : 'small'))
 </script>
 
 <template>
@@ -83,19 +100,22 @@ onMounted(() => {
     :role="isTabMode ? 'tablist' : 'listbox'"
     class="relative flex w-fit items-center gap-1 rounded-full bg-blue-200 p-1 dark:bg-gray-700"
   >
-    <CommonTab v-if="label" id="filter-select-label">
-      <CommonLabel class="text-stone-200 dark:text-neutral-500" size="medium">{{
-        $t(label)
-      }}</CommonLabel>
-    </CommonTab>
+    <CommonLabel
+      v-if="label"
+      id="filter-select-label"
+      class="px-3.5 py-1 text-stone-200 dark:text-neutral-500"
+      :size="labelSize"
+      >{{ $t(label) }}</CommonLabel
+    >
 
     <CommonTab
       v-if="!multiple"
       :style="{
-        width: activeTabWidth + 'px',
-        left: activeTabOffsetLeft + 'px',
-        height: activeTabHeight + 'px',
+        width: `${activeTabWidth}px`,
+        left: `${activeTabOffsetLeft}px`,
+        height: `${activeTabHeight}px`,
       }"
+      :size="size"
       active
       role="presentation"
       class="absolute z-0 transition-[left]"
@@ -109,22 +129,20 @@ onMounted(() => {
       :role="isTabMode ? 'tab' : 'option'"
       :aria-controls="isTabMode ? `tab-panel-${tab.key}` : undefined"
       tabindex="0"
-      class="relative z-10 cursor-pointer"
-      :no-active-background="isTabMode"
+      class="relative z-10"
+      :size="size"
+      :disabled="tab.disabled"
+      :tab-mode="isTabMode"
       :aria-labelledby="label && !isTabMode ? 'filter-select-label' : undefined"
-      :aria-selected="
-        Array.isArray(modelValue)
-          ? modelValue?.some((activeTab) => activeTab.key === tab.key)
-          : modelValue === tab.key
-      "
-      :active="
-        Array.isArray(modelValue)
-          ? modelValue?.some((activeTab) => activeTab.key === tab.key)
-          : modelValue === tab.key
-      "
+      :aria-selected="isActiveTab(tab)"
+      :active="isActiveTab(tab)"
+      :label="tab.label"
+      :icon="tab.icon"
+      :tooltip="tab.tooltip"
       @click="updateModelValue(tab)"
-      @keydown.enter="updateModelValue(tab)"
-      >{{ $t(tab.label) }}
-    </CommonTab>
+      @keydown.enter.prevent="updateModelValue(tab)"
+      @keydown.space.prevent="updateModelValue(tab)"
+      @ready="onTabReady(tab, $event)"
+    />
   </div>
 </template>

@@ -104,11 +104,11 @@ msgstr ""
 msgid "%s (confirm)"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:159
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:108
 msgid "%s (method)"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:194
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:143
 msgid "%s (option)"
 msgstr ""
 
@@ -5345,6 +5345,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
+#: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:50
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:36
 msgid "Encrypt"
 msgstr ""
 
@@ -5373,8 +5375,8 @@ msgid "Encryption error"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:95
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:201
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:120
 msgid "Encryption:"
 msgstr ""
 
@@ -11677,7 +11679,7 @@ msgstr ""
 msgid "Security Error"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:186
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:135
 msgid "Security Information"
 msgstr ""
 
@@ -12251,6 +12253,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco:5
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:5
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:80
+#: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:59
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:43
 msgid "Sign"
 msgstr ""
 
@@ -12301,8 +12305,8 @@ msgid "Sign up"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:92
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:87
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:192
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:128
 msgid "Sign:"
 msgstr ""
 

@@ -43,6 +43,8 @@
 - `assets/info-circle.svg`
 - `assets/key.svg`
 - `assets/keyboard.svg`
+- `assets/lock.svg`
+- `assets/patch-check.svg`
 - `assets/pencil.svg`
 - `assets/person-add.svg`
 - `assets/person-gear.svg`
@@ -60,6 +62,7 @@
 - `assets/sun.svg`
 - `assets/three-dots-vertical.svg`
 - `assets/trash3.svg`
+- `assets/unlock.svg`
 - `assets/upload.svg`
 - `assets/upload.svg`
 - `assets/wrench.svg`

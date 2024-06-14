@@ -34,8 +34,8 @@ export default {
 
   'encryption-enabled': 'lock',
   'encryption-disabled': 'unlock',
-  'sign-enabled': 'signed',
-  'sign-disabled': 'not-signed',
+  'sign-enabled': 'patch-check',
+  'sign-disabled': 'patch-x',
 
   // editor, some of them are the same
   'text-style-underline': 'type-underline',

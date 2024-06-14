@@ -5,9 +5,8 @@ import { FormKit } from '@formkit/vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
+import { EnumSecurityStateType } from '#shared/components/Form/fields/FieldSecurity/types.ts'
 import Form from '#shared/components/Form/Form.vue'
-
-import { EnumSecurityStateType } from '../types.ts'
 
 const renderSecurityField = (props: any = {}) => {
   return renderComponent(FormKit, {

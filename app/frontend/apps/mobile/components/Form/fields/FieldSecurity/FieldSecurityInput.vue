@@ -5,90 +5,49 @@ import { computed, ref, toRef } from 'vue'
 
 import CommonTooltip from '#shared/components/CommonTooltip/CommonTooltip.vue'
 import type { TooltipItemDescriptor } from '#shared/components/CommonTooltip/types.ts'
+import useValue from '#shared/components/Form/composables/useValue.ts'
+import type {
+  FieldSecurityProps,
+  SecurityOption,
+  SecurityValue,
+} from '#shared/components/Form/fields/FieldSecurity/types.ts'
+import { useFieldSecurity } from '#shared/components/Form/fields/FieldSecurity/useFieldSecurity.ts'
 import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
 import { translateArticleSecurity } from '#shared/entities/ticket-article/composables/translateArticleSecurity.ts'
 import { i18n } from '#shared/i18n.ts'
 
-import useValue from '../../composables/useValue.ts'
-
-import { EnumSecurityStateType } from './types.ts'
-
-import type {
-  SecurityAllowed,
-  SecurityDefaultOptions,
-  SecurityMessages,
-  SecurityOption,
-  SecurityValue,
-} from './types.ts'
-import type { FormFieldContext } from '../../types/field.ts'
-
-interface FieldSecurityProps {
-  context: FormFieldContext<{
-    securityAllowed?: SecurityAllowed
-    securityDefaultOptions?: SecurityDefaultOptions
-    securityMessages?: SecurityMessages
-  }>
-}
-
 const props = defineProps<FieldSecurityProps>()
+const contextReactive = toRef(props, 'context')
 
-const { localValue } = useValue<SecurityValue>(toRef(props, 'context'))
+const { localValue } = useValue<SecurityValue>(contextReactive)
 
-const securityMethods = computed(() => {
-  return Object.keys(props.context.securityAllowed || {}).sort((a) => {
-    if (a === EnumSecurityStateType.Pgp) return -1
-    if (a === EnumSecurityStateType.Smime) return 1
-    return 0
-  }) as EnumSecurityStateType[]
-})
-
-const previewMethod = computed(
-  () =>
-    localValue.value?.method ??
-    // smime should have priority
-    (securityMethods.value.find(
-      (value) => value === EnumSecurityStateType.Smime,
-    ) ||
-      securityMethods.value[0]),
-)
-
-const filterOptions = (
-  method: EnumSecurityStateType,
-  options: SecurityOption[],
-) => {
-  return options
-    .filter((option) =>
-      props.context.securityAllowed?.[method]?.includes(option),
-    )
-    .sort()
-}
-
-const isCurrentValue = (option: SecurityOption) =>
-  localValue.value?.options.includes(option) ?? false
+const {
+  securityMethods,
+  previewMethod,
+  isCurrentSecurityOption,
+  isSecurityOptionDisabled,
+  changeSecurityState,
+} = useFieldSecurity(contextReactive, localValue)
 
 const options = computed(() => {
   return [
     {
       option: 'encryption',
-      label: 'Encrypt',
-      icon: isCurrentValue('encryption')
+      label: __('Encrypt'),
+      icon: isCurrentSecurityOption('encryption')
         ? 'encryption-enabled'
         : 'encryption-disabled',
     },
     {
       option: 'sign',
-      label: 'Sign',
-      icon: isCurrentValue('sign') ? 'sign-enabled' : 'sign-disabled',
+      label: __('Sign'),
+      icon: isCurrentSecurityOption('sign') ? 'sign-enabled' : 'sign-disabled',
     },
   ] as const
 })
 
-const isDisabled = (option: SecurityOption) =>
-  props.context.disabled ||
-  !props.context.securityAllowed?.[previewMethod.value]?.includes(option)
-
 const toggleOption = (name: SecurityOption) => {
-  if (isDisabled(name)) return
+  if (isSecurityOptionDisabled(name)) return
   let currentOptions = localValue.value?.options || []
 
   if (currentOptions.includes(name))
@@ -131,25 +90,15 @@ const tooltipMessages = computed(() => {
 
   return messages
 })
-
-const defaultOptions = (method: EnumSecurityStateType) =>
-  props.context.securityDefaultOptions?.[method] || []
-
-const changeSecurityState = (method: EnumSecurityStateType) => {
-  // Reset the default behavior of the chosen method and remove unsupported options.
-  const newOptions = filterOptions(method, defaultOptions(method))
-  localValue.value = {
-    method,
-    options: newOptions,
-  }
-}
 </script>
 
 <template>
   <div
-    :id="`${context.node.name}-${context.formId}`"
+    :id="context.id"
     :class="context.classes.input"
     class="flex h-auto flex-col gap-2"
+    :aria-describedby="context.describedBy"
+    v-bind="context.attrs"
   >
     <div
       v-if="securityMethods.length > 1"
@@ -202,15 +151,16 @@ const changeSecurityState = (method: EnumSecurityStateType) => {
           role="option"
           class="flex select-none items-center gap-1 rounded-md px-2 py-1 text-base"
           :class="{
-            'bg-gray-600/50 text-white/30': isDisabled(option),
-            'cursor-pointer': !isDisabled(option),
-            'bg-gray-300 text-white': !isCurrentValue(option),
-            'bg-white font-semibold text-black': isCurrentValue(option),
+            'bg-gray-600/50 text-white/30': isSecurityOptionDisabled(option),
+            'cursor-pointer': !isSecurityOptionDisabled(option),
+            'bg-gray-300 text-white': !isCurrentSecurityOption(option),
+            'bg-white font-semibold text-black':
+              isCurrentSecurityOption(option),
           }"
-          :tabindex="isDisabled(option) ? -1 : 0"
-          :disabled="isDisabled(option)"
-          :aria-selected="isCurrentValue(option)"
-          :aria-disabled="isDisabled(option)"
+          :tabindex="isSecurityOptionDisabled(option) ? -1 : 0"
+          :disabled="isSecurityOptionDisabled(option)"
+          :aria-selected="isCurrentSecurityOption(option)"
+          :aria-disabled="isSecurityOptionDisabled(option)"
           @click="toggleOption(option)"
           @keydown.space.prevent="toggleOption(option)"
         >

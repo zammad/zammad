@@ -7,10 +7,11 @@ import { renderComponent } from '#tests/support/components/index.ts'
 import CommonTab from '#desktop/components/CommonTabManager/CommonTab.vue'
 
 describe('CommonTab', () => {
-  it('renders default slot', () => {
+  it('renders passed label', () => {
     const wrapper = renderComponent(CommonTab, {
-      slots: {
-        default: () => 'foo',
+      props: {
+        label: 'foo',
+        size: 'medium',
       },
     })
 

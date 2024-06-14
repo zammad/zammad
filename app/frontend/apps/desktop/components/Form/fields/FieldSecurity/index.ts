@@ -2,9 +2,9 @@
 
 import createInput from '#shared/form/core/createInput.ts'
 
-import FieldSecurity from './FieldSecurity.vue'
+import FieldSecurityInput from './FieldSecurityInput.vue'
 
-const fieldDefinition = createInput(FieldSecurity, [
+const fieldDefinition = createInput(FieldSecurityInput, [
   'securityAllowed',
   'securityDefaultOptions',
   'securityMessages',

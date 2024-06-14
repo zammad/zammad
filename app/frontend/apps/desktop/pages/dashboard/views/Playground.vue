@@ -570,6 +570,44 @@ const formSchema = defineFormSchema([
     ],
   },
   {
+    type: 'security',
+    name: 'security',
+    label: 'Security',
+    props: {
+      securityAllowed: {
+        SMIME: [],
+        PGP: ['sign', 'encryption'],
+      },
+      securityDefaultOptions: {
+        SMIME: ['sign', 'encryption'],
+        PGP: ['sign'],
+      },
+      securityMessages: {
+        SMIME: {
+          sign: {
+            message: 'The certificate for %s was not found.',
+            messagePlaceholder: ['zammad@localhost'],
+          },
+          encryption: {
+            message: 'The certificates for %s were not found.',
+            messagePlaceholder: ['nicole.braun@zammad.org'],
+          },
+        },
+        PGP: {
+          sign: {
+            message: 'The PGP key for %s was found.',
+            messagePlaceholder: ['zammad@localhost'],
+          },
+          encryption: {
+            message: 'The PGP keys for %s were found.',
+            messagePlaceholder: ['nicole.braun@zammad.org'],
+          },
+        },
+      },
+    },
+    value: { method: 'SMIME', options: [] },
+  },
+  {
     type: 'permissions',
     name: 'permissions',
     label: 'Permissions',
