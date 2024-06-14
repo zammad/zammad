@@ -3698,8 +3698,7 @@ msgstr "Beiträge zur Übersetzung"
 
 #: lib/sessions/event/chat_transfer.rb:30
 msgid "Conversation is transferred into another chat. Please stay tuned."
-msgstr ""
-"Konversation wird in einen anderen Chat übertragen. Bitte warten Sie kurz."
+msgstr "Konversation wird in einen anderen Chat übertragen. Bitte warten Sie kurz."
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:77
 msgid "Conversion of retweets into tickets is turned off."
