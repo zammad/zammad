@@ -90,4 +90,75 @@ RSpec.describe 'Calendars', type: :request do
       expect(json_response['error']).to eq("Can't delete, object has references.")
     end
   end
+
+  context 'when fetching timezones' do
+    shared_examples 'returns a list of timezones' do
+      it 'returns a list of timezones' do
+        authenticated_as(user)
+        get '/api/v1/calendars/timezones', as: :json
+
+        expect(response).to have_http_status(:ok)
+        expect(json_response).to be_a(Hash)
+        expect(json_response['timezones']).to be_a(Hash)
+        expect(json_response['timezones']['America/New_York']).to be_truthy
+      end
+    end
+
+    shared_examples 'returns an error' do
+      it 'returns an error' do
+        authenticated_as(user)
+        get '/api/v1/calendars/timezones', as: :json
+
+        expect(response).to have_http_status(:forbidden)
+      end
+    end
+
+    context 'when user is an agent' do
+      let(:user) { create(:agent) }
+
+      it_behaves_like 'returns an error'
+    end
+
+    context 'when user is an admin' do
+      let(:user) { create(:admin_only, roles: []) }
+
+      # https://github.com/zammad/zammad/issues/5196
+      context 'with specific permissions' do
+        before do
+          user.roles << create(:role, permissions: [permission])
+          user.save!
+        end
+
+        context 'with admin permission' do
+          let(:permission) { Permission.find_by(name: 'admin') }
+
+          it_behaves_like 'returns a list of timezones'
+        end
+
+        context 'with admin.trigger permission' do
+          let(:permission) { Permission.find_by(name: 'admin.trigger') }
+
+          it_behaves_like 'returns a list of timezones'
+        end
+
+        context 'with admin.calendar permission' do
+          let(:permission) { Permission.find_by(name: 'admin.calendar') }
+
+          it_behaves_like 'returns a list of timezones'
+        end
+
+        context 'with admin.scheduler permission' do
+          let(:permission) { Permission.find_by(name: 'admin.scheduler') }
+
+          it_behaves_like 'returns a list of timezones'
+        end
+
+        context 'with admin.webhook permission' do
+          let(:permission) { Permission.find_by(name: 'admin.webhook') }
+
+          it_behaves_like 'returns an error'
+        end
+      end
+    end
+  end
 end
