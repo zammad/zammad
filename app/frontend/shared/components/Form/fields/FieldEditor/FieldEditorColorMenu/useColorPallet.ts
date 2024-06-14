@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+/* eslint-disable zammad/zammad-detect-translatable-string */
+
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 
@@ -8,7 +10,7 @@ import { useThemeStore } from '#desktop/stores/theme.ts'
 
 const neutralColors = [
   {
-    name: __('black color scheme'),
+    name: 'black color scheme',
     // default: {
     //   light: 950,
     //   dark: 50,
@@ -17,32 +19,32 @@ const neutralColors = [
       {
         value: '#000000',
         range: 950,
-        label: __('Black'),
+        label: 'Black',
       },
       {
         value: '#4f4f4f',
         range: 700,
-        label: __('Emperor'),
+        label: 'Emperor',
       },
       {
         value: '#6d6d6d',
         range: 500,
-        label: __('Dove Gray'),
+        label: 'Dove Gray',
       },
       {
         value: '#b0b0b0',
         range: 300,
-        label: __('Silver Chalice'),
+        label: 'Silver Chalice',
       },
       {
         value: '#d1d1d1',
         range: 200,
-        label: __('Alto'),
+        label: 'Alto',
       },
       {
         value: '#ffffff',
         range: 50,
-        label: __('White'),
+        label: 'White',
       },
     ],
   },
@@ -59,42 +61,42 @@ const accentColors = [
       {
         value: '#B00020',
         range: 800,
-        label: __('Monza'),
+        label: 'Monza',
       },
       // {
       //   value: '#db0028',
       //   range: 700,
-      //   label: __('Red'),
+      //   label: 'Red',
       // },
       {
         value: '#ff002e',
         range: 600,
-        label: __('Torch Red'),
+        label: 'Torch Red',
       },
       {
         value: '#ff1f48',
         range: 500,
-        label: __('Torch Red'),
+        label: 'Torch Red',
       },
       {
         value: '#ff5473',
         range: 400,
-        label: __('Wild Watermelon'),
+        label: 'Wild Watermelon',
       },
       {
         value: '#ff92a6',
         range: 300,
-        label: __('Pink Salmon'),
+        label: 'Pink Salmon',
       },
       // {
       //   value: '#ffbfcb',
       //   range: 200,
-      //   label: __('Red'),
+      //   label: 'Red',
       // },
       {
         value: '#ffeff2',
         range: 50,
-        label: __('Lavender blush'),
+        label: 'Lavender blush',
       },
     ],
   },
@@ -112,42 +114,42 @@ const accentColors = [
       {
         value: '#923f0e',
         range: 800,
-        label: __('Korma'),
+        label: 'Korma',
       },
       // {
       //   value: '#b45209',
       //   range: 700,
-      //   label: __('Red'),
+      //   label: 'Red',
       // },
       {
         value: '#d97506',
         range: 600,
-        label: __('Bamboo'),
+        label: 'Bamboo',
       },
       {
         value: '#f59c0b',
         range: 500,
-        label: __('Buttercup'),
+        label: 'Buttercup',
       },
       {
         value: '#fbc02d',
         range: 400,
-        label: __('Lightning Yellow'),
+        label: 'Lightning Yellow',
       },
       {
         value: '#fcd24d',
         range: 300,
-        label: __('Bright Sun'),
+        label: 'Bright Sun',
       },
       // {
       //   value: '#fde58a',
       //   range: 200,
-      //   label: __('Red'),
+      //   label: 'Red',
       // },
       {
         value: '#fef3c7',
         range: 100,
-        label: __('Beeswax'),
+        label: 'Beeswax',
       },
     ],
   },
@@ -161,42 +163,42 @@ const accentColors = [
       {
         value: '#275429',
         range: 800,
-        label: __('Everglade'),
+        label: 'Everglade',
       },
       // {
       //   value: '#2c692f',
       //   range: 700,
-      //   label: __('Red'),
+      //   label: 'Red',
       // },
       {
         value: '#388e3c',
         range: 600,
-        label: __('Apple'),
+        label: 'Apple',
       },
       {
         value: '#45a249',
         range: 500,
-        label: __('Apple'),
+        label: 'Apple',
       },
       {
         value: '#6abe6e',
         range: 400,
-        label: __('Fern'),
+        label: 'Fern',
       },
       {
         value: '#9dd89f',
         range: 300,
-        label: __('Moss Green'),
+        label: 'Moss Green',
       },
       // {
       //   value: '#c8eac9',
       //   range: 200,
-      //   label: __('Red'),
+      //   label: 'Red',
       // },
       {
         value: '#e3f5e3',
         range: 100,
-        label: __('Peppermint'),
+        label: 'Peppermint',
       },
     ],
   },
@@ -210,42 +212,42 @@ const accentColors = [
       {
         value: '#215a69',
         range: 800,
-        label: __('Cello'),
+        label: 'Cello',
       },
       // {
       //   value: '#1e6e80',
       //   range: 700,
-      //   label: __('Red'),
+      //   label: 'Red',
       // },
       {
         value: '#1d879d',
         range: 600,
-        label: __('Eastern Blue'),
+        label: 'Eastern Blue',
       },
       {
         value: '#1fa8bb',
         range: 500,
-        label: __('Eastern Blue'),
+        label: 'Eastern Blue',
       },
       {
         value: '#3bc5d5',
         range: 400,
-        label: __('Scooter'),
+        label: 'Scooter',
       },
       {
         value: '#77dde7',
         range: 300,
-        label: __('Sky Blue'),
+        label: 'Sky Blue',
       },
       // {
       //   value: '#b0edf1',
       //   range: 200,
-      //   label: __('Red'),
+      //   label: 'Red',
       // },
       {
         value: '#d5f6f8',
         range: 100,
-        label: __('White Ice'),
+        label: 'White Ice',
       },
     ],
   },
@@ -259,42 +261,42 @@ const accentColors = [
       {
         value: '#1c63b1',
         range: 800,
-        label: __('Fun Blue'),
+        label: 'Fun Blue',
       },
       // {
       //   value: '#1976d2',
       //   range: 700,
-      //   label: __('Red'),
+      //   label: 'Red',
       // },
       {
         value: '#2293ee',
         range: 600,
-        label: __('Dodger Blue'),
+        label: 'Dodger Blue',
       },
       {
         value: '#38aff9',
         range: 500,
-        label: __('Dodger Blue'),
+        label: 'Dodger Blue',
       },
       {
         value: '#5ecbfc',
         range: 400,
-        label: __('Malibu'),
+        label: 'Malibu',
       },
       {
         value: '#91dfff',
         range: 300,
-        label: __('Anakiwa'),
+        label: 'Anakiwa',
       },
       // {
       //   value: '#beebff',
       //   range: 200,
-      //   label: __('Red'),
+      //   label: 'Red',
       // },
       {
         value: '#daf3ff',
         range: 100,
-        label: __('Pattens Blue'),
+        label: 'Pattens Blue',
       },
     ],
   },
@@ -308,42 +310,42 @@ const accentColors = [
       {
         value: '#741f89',
         range: 800,
-        label: __('Seance'),
+        label: 'Seance',
       },
       // {
       //   value: '#8e24aa',
       //   range: 700,
-      //   label: __('Red'),
+      //   label: 'Red',
       // },
       {
         value: '#a62fca',
         range: 600,
-        label: __('Purple Heart'),
+        label: 'Purple Heart',
       },
       {
         value: '#c14fe6',
         range: 500,
-        label: __('Medium Purple'),
+        label: 'Medium Purple',
       },
       {
         value: '#d580f2',
         range: 400,
-        label: __('Heliotrope'),
+        label: 'Heliotrope',
       },
       {
         value: '#e4aff8',
         range: 300,
-        label: __('Perfume'),
+        label: 'Perfume',
       },
       // {
       //   value: '#efd2fc',
       //   range: 200,
-      //   label: __('Red'),
+      //   label: 'Red',
       // },
       {
         value: '#f6e9fe',
         range: 100,
-        label: __('Blue Chalk'),
+        label: 'Blue Chalk',
       },
     ],
   },
