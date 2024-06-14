@@ -89,6 +89,17 @@ class App.WidgetPlaceholder extends App.Controller
             content: content
           }
 
+    # Add HTML format of articles
+    if (_.filter(all, (item) -> item.name.startsWith('Article')).length > 0)
+      all.push {
+        # coffeelint: disable=no_interpolation_in_single_quotes
+        name: __('Article > Text (HTML)'),
+        id: '#{article.body_as_html}',
+        keywords: '#{article.body_as_html}',
+        content: '#{article.body_as_html}',
+        # coffeelint: enable=no_interpolation_in_single_quotes
+      }
+
     # modify article placeholders
     replaces = [
       { display: __('Last Article'), name: 'last_article' },

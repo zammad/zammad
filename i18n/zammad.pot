@@ -1555,6 +1555,10 @@ msgstr ""
 msgid "Article - visibility confirmation dialog"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+msgid "Article > Text (HTML)"
+msgstr ""
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr ""
@@ -2830,7 +2834,7 @@ msgstr ""
 msgid "Conditions for shown tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr ""
 
@@ -3343,7 +3347,7 @@ msgstr ""
 msgid "Created"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "Created Article"
 msgstr ""
 
@@ -3353,11 +3357,11 @@ msgstr ""
 msgid "Created At"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Created External Article"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Created Internal Article"
 msgstr ""
 
@@ -7655,7 +7659,7 @@ msgstr ""
 msgid "Languages"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 msgid "Last Article"
 msgstr ""
 
@@ -7671,11 +7675,11 @@ msgstr ""
 msgid "Last Contact Customer At"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
 msgstr ""
 
