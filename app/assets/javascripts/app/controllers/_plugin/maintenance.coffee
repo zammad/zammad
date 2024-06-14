@@ -52,8 +52,8 @@ class Maintenance extends App.Controller
     App.SessionStorage.clear()
 
     @messageRestartAuto = new App.SessionMessage(
-      head:         App.i18n.translateContent('Zammad is restarting…')
-      message:      App.i18n.translateContent('Some system settings have changed, Zammad is restarting. Please wait until Zammad is back again.')
+      head:         __('Zammad is restarting…')
+      message:      __('Some system settings have changed, Zammad is restarting. Please wait until Zammad is back again.')
       keyboard:     false
       backdrop:     false
       buttonClose:  false
@@ -71,14 +71,14 @@ class Maintenance extends App.Controller
     App.SessionStorage.clear()
 
     @messageRestartManual = new App.SessionMessage(
-      head:          App.i18n.translateInline('Zammad requires a restart!')
-      contentInline: App.i18n.translateInline('Some system settings have changed, please restart all Zammad processes! If you want to do this automatically, set environment variable APP_RESTART_CMD="/path/to/your_app_script.sh restart".')
-      keyboard:      false
-      backdrop:      false
-      buttonClose:   false
-      buttonSubmit:  false
-      small:         true
-      forceReload:   true
+      head:         __('Zammad requires a restart!')
+      message:      __('Some system settings have changed, please restart all Zammad processes! If you want to do this automatically, set environment variable APP_RESTART_CMD="/path/to/your_app_script.sh restart".')
+      keyboard:     false
+      backdrop:     false
+      buttonClose:  false
+      buttonSubmit: false
+      small:        true
+      forceReload:  true
     )
     @disconnectClient()
     @checkAvailability()
@@ -89,13 +89,13 @@ class Maintenance extends App.Controller
     App.SessionStorage.clear()
 
     @messageConfigChanged = new App.SessionMessage(
-      head:         App.i18n.translateContent('Config has changed')
-      message:      App.i18n.translateContent('The configuration of Zammad has changed, please reload your browser.')
-      keyboard:     false
-      backdrop:     true
-      buttonClose:  false
-      buttonSubmit: __('Continue session')
-      forceReload:  true
+      head:          __('Config has changed')
+      message:       __('The configuration of Zammad has changed, please reload your browser.')
+      keyboard:      false
+      backdrop:      true
+      buttonClose:   false
+      buttonSubmit:  __('Continue session')
+      forceReload:   true
     )
 
   maintanaceAppVersion: (data) =>
@@ -112,8 +112,8 @@ class Maintenance extends App.Controller
 
     message = =>
       @messageAppVersion = new App.SessionMessage(
-        head:         App.i18n.translateContent('New Version')
-        message:      App.i18n.translateContent('A new version of Zammad is available, please reload your browser.')
+        head:         __('New Version')
+        message:      __('A new version of Zammad is available, please reload your browser.')
         keyboard:     false
         backdrop:     true
         buttonClose:  false
