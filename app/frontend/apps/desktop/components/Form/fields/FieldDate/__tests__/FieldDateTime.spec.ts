@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 const { FormKit } = await import('@formkit/vue')
+const { EnumAppearanceTheme } = await import('#shared/graphql/types.ts')
 const { renderComponent } = await import('#tests/support/components/index.ts')
+const { mockMediaTheme } = await import('#tests/support/mock-mediaTheme.ts')
 const { waitForNextTick } = await import('#tests/support/utils.ts')
 const { i18n } = await import('#shared/i18n.ts')
 
@@ -222,6 +224,19 @@ describe('Fields - FieldDate', () => {
       await view.events.click(view.getByText('15'))
 
       expect(input).toHaveDisplayValue('2021-04-15')
+    })
+
+    it('renders in dark mode when user prefers dark media theme', async () => {
+      mockMediaTheme(EnumAppearanceTheme.Dark)
+
+      const view = await renderDateField()
+
+      const input = view.getByLabelText('Date')
+
+      await view.events.click(input)
+      const dialog = view.getByRole('dialog')
+
+      expect(dialog).toHaveClass('dp__theme_dark')
     })
   })
 

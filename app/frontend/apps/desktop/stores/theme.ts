@@ -61,6 +61,10 @@ export const useThemeStore = defineStore('theme', () => {
     () => session.user?.preferences?.theme || 'auto',
   )
 
+  const isDarkMode = computed(
+    () => sanitizeTheme(currentTheme.value) === 'dark',
+  )
+
   const updateTheme = async (value: EnumAppearanceTheme) => {
     try {
       if (value === session.user?.preferences?.theme || savingTheme.value)
@@ -103,6 +107,7 @@ export const useThemeStore = defineStore('theme', () => {
   return {
     savingTheme,
     currentTheme,
+    isDarkMode,
     updateTheme,
     syncTheme,
   }

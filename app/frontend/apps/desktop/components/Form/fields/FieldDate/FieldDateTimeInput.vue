@@ -60,9 +60,7 @@ const inputIcon = computed(() => {
 
 const picker = ref<DatePickerInstance>()
 
-const { currentTheme } = storeToRefs(useThemeStore())
-
-const dark = computed(() => currentTheme.value === 'dark')
+const { isDarkMode } = storeToRefs(useThemeStore())
 </script>
 
 <template>
@@ -80,7 +78,7 @@ const dark = computed(() => currentTheme.value === 'dark')
       :enable-time-picker="timePicker"
       :format="displayFormat"
       :is-24="is24"
-      :dark="dark"
+      :dark="isDarkMode"
       :locale="i18n.locale()"
       :max-date="context.maxDate"
       :min-date="minDate"

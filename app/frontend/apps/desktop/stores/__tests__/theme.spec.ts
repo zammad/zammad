@@ -3,6 +3,10 @@
 import { flushPromises } from '@vue/test-utils'
 import { createPinia, setActivePinia, storeToRefs } from 'pinia'
 
+import {
+  addEventListener,
+  mockMediaTheme,
+} from '#tests/support/mock-mediaTheme.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 
 import { EnumAppearanceTheme } from '#shared/graphql/types.ts'
@@ -32,16 +36,6 @@ const getDOMTheme = () => {
   return root.dataset.theme
 }
 
-const addEventListener = vi.fn()
-
-const haveMediaTheme = (theme: string) => {
-  window.matchMedia = (rule) =>
-    ({
-      matches: rule === '(prefers-color-scheme: dark)' && theme === 'dark',
-      addEventListener,
-    }) as any
-}
-
 describe('useThemeStore', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
@@ -55,7 +49,7 @@ describe('useThemeStore', () => {
     syncTheme()
 
     haveDOMTheme(undefined)
-    haveMediaTheme('light')
+    mockMediaTheme(EnumAppearanceTheme.Light)
   })
 
   it('should fallback to auto when no theme present', () => {
@@ -119,7 +113,6 @@ describe('useThemeStore', () => {
     expect(currentTheme.value).toBe(EnumAppearanceTheme.Auto)
   })
 
-  // describe('when user has a preference', () => {
   it('when user has no theme preference, takes from media', () => {
     const { syncTheme } = useThemeStore()
     syncTheme()
@@ -131,7 +124,7 @@ describe('useThemeStore', () => {
 
   it("changes in media don't affect theme", async () => {
     mockUserTheme(EnumAppearanceTheme.Dark)
-    haveMediaTheme(EnumAppearanceTheme.Dark)
+    mockMediaTheme(EnumAppearanceTheme.Dark)
 
     const { syncTheme, currentTheme } = useThemeStore()
     syncTheme()
@@ -139,10 +132,46 @@ describe('useThemeStore', () => {
     expect(currentTheme).toBe(EnumAppearanceTheme.Dark)
     expect(getDOMTheme()).toBe(EnumAppearanceTheme.Dark)
 
-    haveMediaTheme(EnumAppearanceTheme.Light)
+    mockMediaTheme(EnumAppearanceTheme.Light)
     addEventListener.mock.calls[0][1]()
 
     expect(currentTheme).toBe(EnumAppearanceTheme.Dark)
     expect(getDOMTheme()).toBe(EnumAppearanceTheme.Dark)
+  })
+
+  describe('isDarkMode', () => {
+    it('returns true when user prefers dark media theme', async () => {
+      mockMediaTheme(EnumAppearanceTheme.Dark)
+
+      const { isDarkMode } = useThemeStore()
+
+      expect(isDarkMode).toBe(true)
+    })
+
+    it('returns false when user prefers light media theme', async () => {
+      mockMediaTheme(EnumAppearanceTheme.Light)
+
+      const { isDarkMode } = useThemeStore()
+
+      expect(isDarkMode).toBe(false)
+    })
+
+    it('returns true when user has dark theme active', async () => {
+      mockUserTheme(EnumAppearanceTheme.Dark) // has precedence
+      mockMediaTheme(EnumAppearanceTheme.Light)
+
+      const { isDarkMode } = useThemeStore()
+
+      expect(isDarkMode).toBe(true)
+    })
+
+    it('returns false when user prefers light media theme', async () => {
+      mockUserTheme(EnumAppearanceTheme.Light) // has precedence
+      mockMediaTheme(EnumAppearanceTheme.Dark)
+
+      const { isDarkMode } = useThemeStore()
+
+      expect(isDarkMode).toBe(false)
+    })
   })
 })
