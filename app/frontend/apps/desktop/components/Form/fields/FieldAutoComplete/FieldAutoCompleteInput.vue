@@ -14,12 +14,10 @@ import {
   computed,
   markRaw,
   nextTick,
-  onMounted,
   ref,
   toRef,
   watch,
   type ConcreteComponent,
-  type Ref,
 } from 'vue'
 
 import type { SelectOption } from '#shared/components/CommonSelect/types'
@@ -88,18 +86,6 @@ const {
   getSelectedOption,
   getSelectedOptionLabel,
 } = useSelectOptions<AutoCompleteOption[]>(localOptions, contextReactive)
-
-let areLocalOptionsReplaced = false
-
-const replacementLocalOptions: Ref<AutoCompleteOption[]> = ref(
-  cloneDeep(localOptions),
-)
-
-onMounted(() => {
-  if (props.context.options && areLocalOptionsReplaced) {
-    replacementLocalOptions.value = [...props.context.options]
-  }
-})
 
 watch(
   () => props.context.options,
@@ -185,24 +171,29 @@ const additionalQueryParams = () => {
   return props.context.additionalQueryParams || {}
 }
 
+const defaultFilter = computed(() => {
+  if (hasValue.value) return ''
+  return props.context.defaultFilter
+})
+
 const autocompleteQueryHandler = new QueryHandler(
   useLazyQuery(
     AutocompleteSearchDocument,
     () => ({
       input: {
-        query: debouncedFilter.value || props.context.defaultFilter || '',
+        query: debouncedFilter.value || defaultFilter.value || '',
         limit: props.context.limit,
         ...(additionalQueryParams() || {}),
       },
     }),
     () => ({
-      enabled: !!(debouncedFilter.value || props.context.defaultFilter),
+      enabled: !!(debouncedFilter.value || defaultFilter.value),
       cachePolicy: 'no-cache', // Do not use cache, because we want always up-to-date results.
     }),
   ),
 )
 
-if (props.context.defaultFilter) {
+if (defaultFilter.value) {
   autocompleteQueryHandler.load()
 } else {
   watchOnce(
@@ -264,35 +255,12 @@ const selectOption = (option: SelectOption, focus = false) => {
     return
   }
 
-  // If the current value contains the selected option, make sure it's added to the replacement list
-  //   if it's not already there.
-  if (
-    isCurrentValue(option.value) &&
-    !replacementLocalOptions.value.some(
-      (replacementLocalOption) => replacementLocalOption.value === option.value,
-    )
-  ) {
-    replacementLocalOptions.value.push(option as AutoCompleteOption)
-  }
-
-  // Remove any extra options from the replacement list.
-  replacementLocalOptions.value = replacementLocalOptions.value.filter(
-    (replacementLocalOption) => isCurrentValue(replacementLocalOption.value),
-  )
-
   if (!sortedOptions.value.some((elem) => elem.value === option.value)) {
     appendedOptions.value.push(option as AutoCompleteOption)
   }
 
   appendedOptions.value = appendedOptions.value.filter((elem) =>
     isCurrentValue(elem.value),
-  )
-
-  // Sort the replacement list according to the original order.
-  replacementLocalOptions.value.sort(
-    (a, b) =>
-      sortedOptions.value.findIndex((option) => option.value === a.value) -
-      sortedOptions.value.findIndex((option) => option.value === b.value),
   )
 
   if (focus !== true) return
@@ -307,7 +275,7 @@ const selectNewOption = (option: SelectOption, focus = false) => {
 
 const availableOptions = computed<AutoCompleteOption[]>((oldValue) => {
   const currentOptions =
-    filter.value || props.context.defaultFilter
+    filter.value || defaultFilter.value
       ? preprocessedAutocompleteOptions.value
       : sortedOptions.value
 
@@ -329,7 +297,7 @@ const emitResultUpdated = () => {
 }
 
 watch(debouncedFilter, (newValue) => {
-  if (newValue !== '' || props.context.defaultFilter) return
+  if (newValue !== '' || defaultFilter.value) return
 
   emitResultUpdated()
 })
@@ -445,11 +413,6 @@ const openOrMoveFocusToDropdown = (lastOption = false) => {
 }
 
 const onCloseDropdown = () => {
-  if (props.context.multiple) {
-    replacementLocalOptions.value = []
-    areLocalOptionsReplaced = true
-  }
-
   clearChildOptions()
   clearFilter()
   deactivateTabTrap()

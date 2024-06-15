@@ -512,6 +512,53 @@ describe('Form - Field - AutoComplete - Query', () => {
       }),
     })
   })
+
+  it('supports default filter for initial query', async () => {
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        debounceInterval: 0,
+        defaultFilter: '*',
+        multiple: true,
+      },
+    })
+
+    mockAutocompleteSearchUserQuery({
+      autocompleteSearchUser: testOptions,
+    })
+
+    await wrapper.events.click(wrapper.getByLabelText('Select…'))
+
+    const calls = await waitForAutocompleteSearchUserQueryCalls()
+
+    expect(calls.at(-1)?.variables).toEqual({
+      input: expect.objectContaining({
+        query: '*',
+      }),
+    })
+
+    const listbox = wrapper.getByRole('listbox')
+
+    let selectOptions = getAllByRole(listbox, 'option')
+
+    expect(selectOptions).toHaveLength(3)
+    expect(selectOptions[0]).toHaveTextContent(testOptions[0].label)
+    expect(selectOptions[1]).toHaveTextContent(testOptions[1].label)
+    expect(selectOptions[2]).toHaveTextContent(testOptions[2].label)
+
+    // Replaces default filter query with selection.
+    await wrapper.events.click(selectOptions[0])
+
+    await waitFor(() => {
+      expect(wrapper.emitted().inputRaw).toBeTruthy()
+    })
+
+    selectOptions = getAllByRole(listbox, 'option')
+
+    expect(selectOptions).toHaveLength(1)
+    expect(selectOptions[0]).toHaveTextContent(testOptions[0].label)
+  })
 })
 
 describe('Form - Field - AutoComplete - Initial Options', () => {
