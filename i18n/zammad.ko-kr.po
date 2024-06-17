@@ -359,11 +359,11 @@ msgstr ""
 msgid "%s (confirm)"
 msgstr "s (확인)"
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:159
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:108
 msgid "%s (method)"
 msgstr "%s (메서드)"
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:194
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:143
 msgid "%s (option)"
 msgstr "%s (옵션)"
 
@@ -1403,7 +1403,7 @@ msgstr ""
 msgid "Add attachment option to upload."
 msgstr "업로드 첨부 파일 옵션을 추가합니다."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:199
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:270
 msgid "Add bullet list"
 msgstr ""
 
@@ -1414,23 +1414,29 @@ msgstr ""
 msgid "Add condition"
 msgstr "계정 추가"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
 msgid "Add first level heading"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:105
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
+#, fuzzy
+#| msgid "Add Tag"
+msgid "Add heading"
+msgstr "태그 추가"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:131
 #, fuzzy
 #| msgid "Add Tag"
 msgid "Add image"
 msgstr "태그 추가"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:125
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
 #, fuzzy
 #| msgid "Add Link"
 msgid "Add link"
 msgstr "링크 추가"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:187
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:257
 #, fuzzy
 #| msgid "Format as ordered list"
 msgid "Add ordered list"
@@ -1443,7 +1449,7 @@ msgstr "정렬 된 목록과 같은 형식"
 msgid "Add reply"
 msgstr "댓글"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:167
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:203
 msgid "Add second level heading"
 msgstr ""
 
@@ -1460,7 +1466,7 @@ msgstr "트윗의 마지막에 보낸 사람의 이니셜을 추가합니다."
 msgid "Add subclause"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:177
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:214
 msgid "Add third level heading"
 msgstr ""
 
@@ -2095,6 +2101,12 @@ msgstr "조"
 msgid "Article - visibility confirmation dialog"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#, fuzzy
+#| msgid "Article"
+msgid "Article > Text (HTML)"
+msgstr "조"
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr "제 개수"
@@ -2187,7 +2199,7 @@ msgstr ""
 msgid "At least one match rule is required, but none was provided."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr ""
 
@@ -2720,7 +2732,7 @@ msgstr "대량 작업 실행!"
 msgid "Bulk action failed"
 msgstr "대량 작업 실행!"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr ""
 
@@ -3092,6 +3104,12 @@ msgstr "주문 바꾸기"
 #| msgid "Change Your Password"
 msgid "Change personal account password."
 msgstr "내 암호 바꾸기"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
+#, fuzzy
+#| msgid "Change date"
+msgid "Change text color"
+msgstr "날짜 바꾸기"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -3508,7 +3526,7 @@ msgstr ""
 msgid "Combined subscription URL"
 msgstr "Ticket 구독"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "코멘트"
 
@@ -3556,7 +3574,7 @@ msgstr "영향받는 개체에 대한 조건"
 msgid "Conditions for shown tickets"
 msgstr "표시 Ticket 조건"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr "구성"
 
@@ -4182,7 +4200,7 @@ msgstr "생성"
 msgid "Created"
 msgstr "생성완료"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Created Article"
@@ -4194,13 +4212,13 @@ msgstr "테스트 Ticket 만들기"
 msgid "Created At"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Created External Article"
 msgstr "테스트 Ticket 만들기"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Created Internal Article"
@@ -5566,6 +5584,12 @@ msgstr "먼저 기존의 모든 기록을 삭제합니다."
 msgid "Delete avatar"
 msgstr "사용자 삭제"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:149
+#, fuzzy
+#| msgid "Delete File"
+msgid "Delete column"
+msgstr "파일 삭제"
+
 #: db/seeds/permissions.rb:252
 #, fuzzy
 #| msgid "Delete all existing records first."
@@ -5613,6 +5637,18 @@ msgstr "소속 삭제?"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:18
 msgid "Delete records"
 msgstr "기록 삭제"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:121
+#, fuzzy
+#| msgid "Delete User"
+msgid "Delete row"
+msgstr "사용자 삭제"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:206
+#, fuzzy
+#| msgid "Delete File"
+msgid "Delete table"
+msgstr "파일 삭제"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:154
 #, fuzzy
@@ -6602,6 +6638,8 @@ msgstr "닫기"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
+#: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:50
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:36
 msgid "Encrypt"
 msgstr "암호화"
 
@@ -6632,8 +6670,8 @@ msgid "Encryption error"
 msgstr "암호화"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:95
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:201
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:120
 #, fuzzy
 #| msgid "Encrypt"
 msgid "Encryption:"
@@ -6712,7 +6750,7 @@ msgstr "사용자 이름 또는 이메일 주소를 입력"
 msgid "Enter credentials"
 msgstr "자격 증명을 입력"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:130
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
 msgid "Enter link URL"
 msgstr ""
 
@@ -7099,7 +7137,7 @@ msgstr "만료"
 msgid "Expires at"
 msgstr "만료"
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "확장 검색"
 
@@ -7470,7 +7508,7 @@ msgstr "// 취소 // 같은 형식"
 msgid "Format as _underlined_"
 msgstr "_underlined_ 같은 형식"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:84
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:99
 #, fuzzy
 #| msgid "Format as |bold|"
 msgid "Format as bold"
@@ -7488,7 +7526,7 @@ msgstr "H2 제목 등의 형식"
 msgid "Format as h3 heading"
 msgstr "H3 제목 등의 형식"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:91
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:107
 #, fuzzy
 #| msgid "Format as ||italic||"
 msgid "Format as italic"
@@ -7498,13 +7536,13 @@ msgstr "|| 이탤릭체로 형식 ||"
 msgid "Format as ordered list"
 msgstr "정렬 된 목록과 같은 형식"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:98
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:123
 #, fuzzy
 #| msgid "Format as //strikethrough//"
 msgid "Format as strikethrough"
 msgstr "// 취소 // 같은 형식"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:77
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:115
 #, fuzzy
 #| msgid "Format as _underlined_"
 msgid "Format as underlined"
@@ -8783,6 +8821,12 @@ msgstr "의사록"
 msgid "Increment seconds value"
 msgstr "의사록"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
+#, fuzzy
+#| msgid "New text module"
+msgid "Indent text"
+msgstr "새로운 텍스트 모듈"
+
 #: app/frontend/apps/desktop/components/CommonProgressBar/CommonProgressBar.vue:16
 #, fuzzy
 #| msgid "Your tickets in process"
@@ -8828,13 +8872,45 @@ msgstr ""
 msgid "Inline content could not be generated."
 msgstr "%s 객체 (들)이 생성된다."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:225
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
+msgid "Insert code block"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:140
+msgid "Insert column after"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:131
+msgid "Insert column before"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
+#, fuzzy
+#| msgid "New text module"
+msgid "Insert inline code"
+msgstr "새로운 텍스트 모듈"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:103
+msgid "Insert row above"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:112
+msgid "Insert row below"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
+#, fuzzy
+#| msgid "New text module"
+msgid "Insert table"
+msgstr "새로운 텍스트 모듈"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
 #, fuzzy
 #| msgid "Delete Knowledge Base"
 msgid "Insert text from Knowledge Base article"
 msgstr "지식 삭제"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:232
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:350
 #, fuzzy
 #| msgid "New text module"
 msgid "Insert text from text module"
@@ -9309,7 +9385,7 @@ msgstr "언어"
 msgid "Languages"
 msgstr "언어"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 #, fuzzy
 #| msgid "Article"
 msgid "Last Article"
@@ -9327,11 +9403,11 @@ msgstr ""
 msgid "Last Contact Customer At"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
 msgstr ""
 
@@ -10247,7 +10323,7 @@ msgstr "연결 테스트 성공"
 msgid "Members"
 msgstr "회원"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:218
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 #, fuzzy
 #| msgid "Mentions"
 msgid "Mention user"
@@ -10265,6 +10341,12 @@ msgstr "언급 그룹"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
 msgid "Merge"
 msgstr "병합"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:168
+#, fuzzy
+#| msgid "Merge to Ticket#"
+msgid "Merge cells"
+msgstr "Ticket #에 병합"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:51
 #, fuzzy
@@ -12032,6 +12114,10 @@ msgstr "아웃바운드"
 msgid "Outdated Browser"
 msgstr "브라우저"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:246
+msgid "Outdent text"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/models/group.coffee:47
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee:7
@@ -12047,7 +12133,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:34
 #: db/seeds/permissions.rb:35
@@ -13120,7 +13206,7 @@ msgstr "풀다"
 msgid "Remove authenticator app"
 msgstr "인증"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:211
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:283
 #, fuzzy
 #| msgid "Removes the formatting"
 msgid "Remove formatting"
@@ -14013,7 +14099,7 @@ msgstr "보안"
 msgid "Security Error"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:186
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:135
 #, fuzzy
 #| msgid "Block Notifications"
 msgid "Security Information"
@@ -14707,6 +14793,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco:5
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:5
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:80
+#: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:59
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:43
 msgid "Sign"
 msgstr ""
 
@@ -14761,8 +14849,8 @@ msgid "Sign up"
 msgstr "가입"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:92
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:87
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:192
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:128
 #, fuzzy
 #| msgid "Sign in"
 msgid "Sign:"
@@ -14997,6 +15085,12 @@ msgstr ""
 msgid "Split"
 msgstr "스플릿"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:159
+#, fuzzy
+#| msgid "split"
+msgid "Split cells"
+msgstr "스플릿"
+
 #: db/seeds/groups.rb:7
 msgid "Standard Group/Pool for Tickets."
 msgstr ""
@@ -15063,17 +15157,17 @@ msgstr "사용자를위한 검색"
 msgid "Start typing to search or enter a new tag…"
 msgstr "사용자 이름 또는 이메일 주소를 입력"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Start typing to search or enter a phone number…"
+msgstr "사용자 이름 또는 이메일 주소를 입력"
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:93
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:50
 #, fuzzy
 #| msgid "Enter your username or email address"
 msgid "Start typing to search or enter an email address…"
-msgstr "사용자 이름 또는 이메일 주소를 입력"
-
-#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
-#, fuzzy
-#| msgid "Enter your username or email address"
-msgid "Start typing to search or enter an phone number…"
 msgstr "사용자 이름 또는 이메일 주소를 입력"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:70
@@ -18236,6 +18330,24 @@ msgstr "부모의"
 msgid "Toggle dark mode"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:196
+#, fuzzy
+#| msgid "Open note box"
+msgid "Toggle header cell"
+msgstr "노트 열기 상자"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:187
+#, fuzzy
+#| msgid "Open note box"
+msgid "Toggle header column"
+msgstr "노트 열기 상자"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:178
+#, fuzzy
+#| msgid "Open note box"
+msgid "Toggle header row"
+msgstr "노트 열기 상자"
+
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:47
 #, fuzzy
 #| msgid "Open note box"
@@ -18572,7 +18684,7 @@ msgstr "테스트 실행 성공했습니다."
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -19338,7 +19450,7 @@ msgstr "새로운 Ticket"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
@@ -20176,6 +20288,12 @@ msgstr "이메일을 확인할 수 없습니다. 관리자에게 문의하시기
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue:33
 msgid "Zammad"
 msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:327
+#, fuzzy
+#| msgid "This is Zammad version %s"
+msgid "Zammad Features"
+msgstr "이 Zammad 버전 %s입니다"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:148
 #, fuzzy
@@ -21834,6 +21952,61 @@ msgstr "... 전체 텍스트 영역의"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ 오늘 대기 시간"
+
+#, fuzzy
+#~| msgid "Apply"
+#~ msgid "Apple"
+#~ msgstr "적용"
+
+#, fuzzy
+#~| msgid "Slack"
+#~ msgid "Black"
+#~ msgstr "Slack"
+
+#, fuzzy
+#~| msgid "Yellow"
+#~ msgid "Cello"
+#~ msgstr "노랑"
+
+#, fuzzy
+#~| msgid "Blue"
+#~ msgid "Fun Blue"
+#~ msgstr "푸른"
+
+#, fuzzy
+#~| msgid "Normal"
+#~ msgid "Korma"
+#~ msgstr "표준"
+
+#, fuzzy
+#~| msgid "Purple"
+#~ msgid "Medium Purple"
+#~ msgstr "자"
+
+#, fuzzy
+#~| msgid "Green"
+#~ msgid "Moss Green"
+#~ msgstr "녹색"
+
+#, fuzzy
+#~| msgid "Purple"
+#~ msgid "Purple Heart"
+#~ msgstr "자"
+
+#, fuzzy
+#~| msgid "Wed"
+#~ msgid "Red"
+#~ msgstr "금"
+
+#, fuzzy
+#~| msgid "Cancel"
+#~ msgid "Seance"
+#~ msgstr "취소"
+
+#, fuzzy
+#~| msgid "Blue"
+#~ msgid "Sky Blue"
+#~ msgstr "푸른"
 
 #, fuzzy
 #~| msgid "The test run was successful."

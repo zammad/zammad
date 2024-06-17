@@ -375,11 +375,11 @@ msgstr ""
 msgid "%s (confirm)"
 msgstr "%s (ยืนยัน)"
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:159
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:108
 msgid "%s (method)"
 msgstr "%s (method)"
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:194
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:143
 msgid "%s (option)"
 msgstr "%s ตัวเลือก"
 
@@ -1390,7 +1390,7 @@ msgstr "เพิ่มค่าทั้งหมด"
 msgid "Add attachment option to upload."
 msgstr "เพิ่มตัวเลือกไฟล์แนบเพื่ออัปโหลด"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:199
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:270
 msgid "Add bullet list"
 msgstr "เพิ่มรายการหัวข้อย่อย"
 
@@ -1399,19 +1399,25 @@ msgstr "เพิ่มรายการหัวข้อย่อย"
 msgid "Add condition"
 msgstr "เพิ่มเงื่อนไข"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
 msgid "Add first level heading"
 msgstr "เพิ่มหัวเรื่องระดับแรก"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:105
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
+#, fuzzy
+#| msgid "Add Tag"
+msgid "Add heading"
+msgstr "เพิ่มแทค"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:131
 msgid "Add image"
 msgstr "เพิ่มรูป"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:125
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
 msgid "Add link"
 msgstr "เพิ่ม ลิ้ง"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:187
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:257
 msgid "Add ordered list"
 msgstr "เพิ่มรายการสั่งซื้อ"
 
@@ -1420,7 +1426,7 @@ msgstr "เพิ่มรายการสั่งซื้อ"
 msgid "Add reply"
 msgstr "เพิ่ม ตอบกลับ"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:167
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:203
 msgid "Add second level heading"
 msgstr "เพิ่มหัวเรื่องระดับที่สอง"
 
@@ -1437,7 +1443,7 @@ msgstr "เพิ่มชื่อย่อของผู้ส่งที่
 msgid "Add subclause"
 msgstr "เพิ่ม subclause"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:177
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:214
 msgid "Add third level heading"
 msgstr "เพิ่มหัวเรื่องระดับที่สาม"
 
@@ -2114,6 +2120,12 @@ msgstr "บทความ"
 msgid "Article - visibility confirmation dialog"
 msgstr "บทความ - กล่องโต้ตอบการยืนยันการเปิดเผย"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#, fuzzy
+#| msgid "Article"
+msgid "Article > Text (HTML)"
+msgstr "บทความ"
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr "จำนวนบทความ"
@@ -2202,7 +2214,7 @@ msgstr "ต้องมีตัวระบุอย่างน้อยหน
 msgid "At least one match rule is required, but none was provided."
 msgstr "ต้องมีกฎการจับคู่อย่างน้อยหนึ่งกฎ แต่ไม่มีการระบุ"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr "ต้องเลือกวัตถุอย่างน้อยหนึ่งรายการ"
 
@@ -2712,7 +2724,7 @@ msgstr "ดำเนินการเป็นกลุ่มแล้ว!"
 msgid "Bulk action failed"
 msgstr "การดำเนินการเป็นกลุ่มล้มเหลว"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr "การดำเนินการแบบกลุ่มหยุดลงโดยข้อผิดพลาด: %s!"
 
@@ -3070,6 +3082,12 @@ msgstr "การเปลี่ยนแปลงการสั่งซื้
 #| msgid "Change Your Password"
 msgid "Change personal account password."
 msgstr "เปลี่ยนรหัสผ่านของคุณ"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
+#, fuzzy
+#| msgid "Change order"
+msgid "Change text color"
+msgstr "การเปลี่ยนแปลงการสั่งซื้อ"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -3472,7 +3490,7 @@ msgstr "การแสดงสีของตัวระบุ ticket ที�
 msgid "Combined subscription URL"
 msgstr "Ticket สมัครรับข้อมูล"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "ความคิดเห็น"
 
@@ -3516,7 +3534,7 @@ msgstr "เงื่อนไขสำหรับวัตถุที่ได
 msgid "Conditions for shown tickets"
 msgstr "เงื่อนไขการแสดง Tickets"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr "การกำหนดค่า"
 
@@ -4150,7 +4168,7 @@ msgstr "สร้าง:"
 msgid "Created"
 msgstr "สร้าง"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 #, fuzzy
 #| msgid "Created At"
 msgid "Created Article"
@@ -4162,13 +4180,13 @@ msgstr "สร้าง ที่"
 msgid "Created At"
 msgstr "สร้าง ที่"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 #, fuzzy
 #| msgid "Create new object"
 msgid "Created External Article"
 msgstr "สร้างวัตถุใหม่"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 #, fuzzy
 #| msgid "Create new object"
 msgid "Created Internal Article"
@@ -5513,6 +5531,12 @@ msgstr "ลบระเบียนที่มีอยู่ทั้งหม
 msgid "Delete avatar"
 msgstr "‎ลบ อวตาร‎"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:149
+#, fuzzy
+#| msgid "Delete File"
+msgid "Delete column"
+msgstr "ลบ ไฟล์"
+
 #: db/seeds/permissions.rb:252
 #, fuzzy
 #| msgid "Delete all existing records first."
@@ -5560,6 +5584,18 @@ msgstr "ลบองค์กร?"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:18
 msgid "Delete records"
 msgstr "ลบบันทึก"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:121
+#, fuzzy
+#| msgid "Delete User"
+msgid "Delete row"
+msgstr "ลบ ผู้ใช้"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:206
+#, fuzzy
+#| msgid "Delete File"
+msgid "Delete table"
+msgstr "ลบ ไฟล์"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:154
 #, fuzzy
@@ -6505,6 +6541,8 @@ msgstr "สิ่งที่ส่งมาด้วย"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
+#: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:50
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:36
 msgid "Encrypt"
 msgstr "เข้ารหัสลับ"
 
@@ -6535,8 +6573,8 @@ msgid "Encryption error"
 msgstr "การเข้ารหัสลับ"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:95
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:201
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:120
 msgid "Encryption:"
 msgstr "การเข้ารหัสลับ:"
 
@@ -6609,7 +6647,7 @@ msgstr "กรุณาใส่อีเมลที่ใช้งานได
 msgid "Enter credentials"
 msgstr "ป้อนข้อมูลประจำตัว"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:130
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
 msgid "Enter link URL"
 msgstr "ป้อน URL ลิงค์"
 
@@ -6994,7 +7032,7 @@ msgstr "หมดอายุ"
 msgid "Expires at"
 msgstr "หมดอายุ"
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "การค้นหาเพิ่มเติม"
 
@@ -7349,7 +7387,7 @@ msgstr "จัดรูปแบบเป็น //ขีดทับ//"
 msgid "Format as _underlined_"
 msgstr "จัดรูปแบบเป็น_underlined_"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:84
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:99
 #, fuzzy
 #| msgid "Format as _underlined_"
 msgid "Format as bold"
@@ -7367,7 +7405,7 @@ msgstr ""
 msgid "Format as h3 heading"
 msgstr "จัดรูปแบบเป็นหัวเรื่อง h3"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:91
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:107
 #, fuzzy
 #| msgid "Format as _underlined_"
 msgid "Format as italic"
@@ -7377,13 +7415,13 @@ msgstr "จัดรูปแบบเป็น_underlined_"
 msgid "Format as ordered list"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:98
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:123
 #, fuzzy
 #| msgid "Format as //strikethrough//"
 msgid "Format as strikethrough"
 msgstr "จัดรูปแบบเป็น //ขีดทับ//"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:77
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:115
 #, fuzzy
 #| msgid "Format as _underlined_"
 msgid "Format as underlined"
@@ -8628,6 +8666,12 @@ msgstr "การเพิ่มขึ้น (SystemID.Counter)"
 msgid "Increment seconds value"
 msgstr "การเพิ่มขึ้น (SystemID.Counter)"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
+#, fuzzy
+#| msgid "Incident"
+msgid "Indent text"
+msgstr "เหตุการณ์"
+
 #: app/frontend/apps/desktop/components/CommonProgressBar/CommonProgressBar.vue:16
 #, fuzzy
 #| msgid "My tickets in process"
@@ -8671,11 +8715,43 @@ msgstr ""
 msgid "Inline content could not be generated."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:225
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
+msgid "Insert code block"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:140
+msgid "Insert column after"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:131
+msgid "Insert column before"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
+#, fuzzy
+#| msgid "Inserts text module"
+msgid "Insert inline code"
+msgstr "แทรกโมดูลข้อความ"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:103
+msgid "Insert row above"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:112
+msgid "Insert row below"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
+#, fuzzy
+#| msgid "Inserts text module"
+msgid "Insert table"
+msgstr "แทรกโมดูลข้อความ"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
 msgid "Insert text from Knowledge Base article"
 msgstr "แทรกข้อความจากบทความศูนย์การเรียนรู้"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:232
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:350
 msgid "Insert text from text module"
 msgstr "แทรกข้อความจากโมดูลข้อความ"
 
@@ -9153,7 +9229,7 @@ msgstr "ภาษา"
 msgid "Languages"
 msgstr "ภาษา"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 #, fuzzy
 #| msgid "Article"
 msgid "Last Article"
@@ -9171,11 +9247,11 @@ msgstr ""
 msgid "Last Contact Customer At"
 msgstr "ลูกค้าติดต่อล่าสุดที่"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
 msgstr ""
 
@@ -10079,7 +10155,7 @@ msgstr "ถอดรหัสสำเร็จ"
 msgid "Members"
 msgstr "สมาชิก"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:218
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 msgid "Mention user"
 msgstr "ยกเลิกการมอบหมายผู้ใช้"
 
@@ -10095,6 +10171,12 @@ msgstr "กล่าวถึงกลุ่ม"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
 msgid "Merge"
 msgstr "ผสาน"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:168
+#, fuzzy
+#| msgid "Merge to Ticket#"
+msgid "Merge cells"
+msgstr "รวมเป็น Ticket#"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:51
 #, fuzzy
@@ -11786,6 +11868,10 @@ msgstr "ขาออก:"
 msgid "Outdated Browser"
 msgstr "เบราว์เซอร์"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:246
+msgid "Outdent text"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/models/group.coffee:47
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee:7
@@ -11801,7 +11887,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:34
 #: db/seeds/permissions.rb:35
@@ -12845,7 +12931,7 @@ msgstr "ลบทั้งหมด"
 msgid "Remove authenticator app"
 msgstr "การยึนยันตน"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:211
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:283
 msgid "Remove formatting"
 msgstr "เอารูปแบบออก"
 
@@ -13794,7 +13880,7 @@ msgstr "ระบบความปลอดภัย"
 msgid "Security Error"
 msgstr "ข้อผิดพลาดด้านความปลอดภัย"
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:186
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:135
 #, fuzzy
 #| msgid "Information"
 msgid "Security Information"
@@ -14439,6 +14525,8 @@ msgstr "ไฟล์แนบแถบด้านข้าง"
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco:5
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:5
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:80
+#: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:59
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:43
 msgid "Sign"
 msgstr "เซ็นกำกับ"
 
@@ -14491,8 +14579,8 @@ msgid "Sign up"
 msgstr "ลงชื่อ"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:92
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:87
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:192
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:128
 msgid "Sign:"
 msgstr "เซ็นกำกับ:"
 
@@ -14717,6 +14805,12 @@ msgstr ""
 msgid "Split"
 msgstr "แยก"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:159
+#, fuzzy
+#| msgid "Split"
+msgid "Split cells"
+msgstr "แยก"
+
 #: db/seeds/groups.rb:7
 msgid "Standard Group/Pool for Tickets."
 msgstr ""
@@ -14779,18 +14873,18 @@ msgstr "พิมพ์ค้นหาใน ศูนย์การเรี�
 msgid "Start typing to search or enter a new tag…"
 msgstr "ค้นหาหรือป้อนหมายเลขโทรศัพท์…"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
+#, fuzzy
+#| msgid "Search or enter phone number…"
+msgid "Start typing to search or enter a phone number…"
+msgstr "ค้นหาหรือป้อนหมายเลขโทรศัพท์…"
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:93
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:50
 #, fuzzy
 #| msgid "Search or enter email address…"
 msgid "Start typing to search or enter an email address…"
 msgstr "ค้นหาหรือป้อนที่อยู่อีเมล…"
-
-#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
-#, fuzzy
-#| msgid "Search or enter phone number…"
-msgid "Start typing to search or enter an phone number…"
-msgstr "ค้นหาหรือป้อนหมายเลขโทรศัพท์…"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:70
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:41
@@ -17910,6 +18004,24 @@ msgstr "หลัก"
 msgid "Toggle dark mode"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:196
+#, fuzzy
+#| msgid "Open note box"
+msgid "Toggle header cell"
+msgstr "เปิดกล่องโน้ต"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:187
+#, fuzzy
+#| msgid "Open note box"
+msgid "Toggle header column"
+msgstr "เปิดกล่องโน้ต"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:178
+#, fuzzy
+#| msgid "Open note box"
+msgid "Toggle header row"
+msgstr "เปิดกล่องโน้ต"
+
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:47
 #, fuzzy
 #| msgid "Open note box"
@@ -18258,7 +18370,7 @@ msgstr "การทดสอบดำเนินการสำเร็จ"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -19016,7 +19128,7 @@ msgstr "Ticket ใหม่"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
@@ -19864,6 +19976,12 @@ msgstr "บทบาทผู้ใช้ของคุณไม่ได้ร
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue:33
 msgid "Zammad"
 msgstr "Zammad"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:327
+#, fuzzy
+#| msgid "This is Zammad version %s"
+msgid "Zammad Features"
+msgstr "Zammad เวอร์ชั่น %s"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:148
 msgid ""
@@ -21466,6 +21584,66 @@ msgstr "‎... ของพื้นที่ข้อความทั้ง�
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
+
+#, fuzzy
+#~| msgid "Apply"
+#~ msgid "Apple"
+#~ msgstr "ทำงาน"
+
+#, fuzzy
+#~| msgid "right"
+#~ msgid "Bright Sun"
+#~ msgstr "ขวา"
+
+#, fuzzy
+#~| msgid "Yellow"
+#~ msgid "Cello"
+#~ msgstr "เหลือง"
+
+#, fuzzy
+#~| msgid "Easter holiday"
+#~ msgid "Eastern Blue"
+#~ msgstr "วันหยุดอีสเตอร์"
+
+#, fuzzy
+#~| msgid "Blue"
+#~ msgid "Fun Blue"
+#~ msgstr "น้ำเงิน"
+
+#, fuzzy
+#~| msgid "Format"
+#~ msgid "Korma"
+#~ msgstr "รูปแบบ"
+
+#, fuzzy
+#~| msgid "Purple"
+#~ msgid "Medium Purple"
+#~ msgstr "ม่วง"
+
+#, fuzzy
+#~| msgid "Green"
+#~ msgid "Moss Green"
+#~ msgstr "สีเขียว"
+
+#, fuzzy
+#~| msgid "Purple"
+#~ msgid "Purple Heart"
+#~ msgstr "ม่วง"
+
+#, fuzzy
+#~| msgid "Read"
+#~ msgid "Red"
+#~ msgstr "อ่าน"
+
+#, fuzzy
+#~| msgid "Cancel"
+#~ msgid "Seance"
+#~ msgstr "ยกเลิก"
+
+#, fuzzy
+#~| msgid "Blue"
+#~ msgid "Sky Blue"
+#~ msgstr "น้ำเงิน"
 
 #, fuzzy
 #~| msgid "Chats"

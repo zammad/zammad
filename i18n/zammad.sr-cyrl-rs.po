@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-13 01:05+0000\n"
+"PO-Revision-Date: 2024-06-14 09:49+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -361,11 +361,11 @@ msgstr ""
 msgid "%s (confirm)"
 msgstr "%s (потврди)"
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:159
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:108
 msgid "%s (method)"
 msgstr "%s (врста)"
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:194
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:143
 msgid "%s (option)"
 msgstr "%s (опција)"
 
@@ -1348,7 +1348,7 @@ msgstr "Додај све вредности"
 msgid "Add attachment option to upload."
 msgstr "Додај опцију прилога за отпремање."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:199
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:270
 msgid "Add bullet list"
 msgstr "Додај листу са тачкама"
 
@@ -1357,19 +1357,23 @@ msgstr "Додај листу са тачкама"
 msgid "Add condition"
 msgstr "Додај услов"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
 msgid "Add first level heading"
 msgstr "Додај наслов првог реда"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:105
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
+msgid "Add heading"
+msgstr "Додај наслов"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:131
 msgid "Add image"
 msgstr "Додај слику"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:125
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
 msgid "Add link"
 msgstr "Додај везу"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:187
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:257
 msgid "Add ordered list"
 msgstr "Додај листу са бројевима"
 
@@ -1378,7 +1382,7 @@ msgstr "Додај листу са бројевима"
 msgid "Add reply"
 msgstr "Додај одговор"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:167
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:203
 msgid "Add second level heading"
 msgstr "Додај наслов другог реда"
 
@@ -1395,7 +1399,7 @@ msgstr "Додај иницијале пошиљаоца на крај твит�
 msgid "Add subclause"
 msgstr "Додај потклаузулу"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:177
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:214
 msgid "Add third level heading"
 msgstr "Додај наслов трећег реда"
 
@@ -2030,6 +2034,12 @@ msgstr "Чланак"
 msgid "Article - visibility confirmation dialog"
 msgstr "Чланак - дијалог потврде видљивости"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#, fuzzy
+#| msgid "Article Type"
+msgid "Article > Text (HTML)"
+msgstr "Тип чланка"
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr "Број чланака"
@@ -2115,7 +2125,7 @@ msgid "At least one match rule is required, but none was provided."
 msgstr ""
 "Неопходно је бар једно правило подударања, али ниједно није обезбеђено."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr "Неопходно је одабрати бар један објекат."
 
@@ -2601,7 +2611,7 @@ msgstr "Извршена масовна радња!"
 msgid "Bulk action failed"
 msgstr "Неуспела масовна радња"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr "Масовна радња заустављена због грешке(а): %s!"
 
@@ -2948,6 +2958,10 @@ msgstr "Измени редослед"
 #: db/seeds/permissions.rb:409
 msgid "Change personal account password."
 msgstr "Измена личне лозинке налога."
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
+msgid "Change text color"
+msgstr "Измени боју текста"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -3336,7 +3350,7 @@ msgstr "Боја индикатора отвореног тикета у тра�
 msgid "Combined subscription URL"
 msgstr "Комбиновани URL претплате тикета"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "Коментар"
 
@@ -3378,7 +3392,7 @@ msgstr "Услови за захваћене објекте"
 msgid "Conditions for shown tickets"
 msgstr "Услови за приказане тикете"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr "Конфигурација"
 
@@ -3971,7 +3985,7 @@ msgstr "Додај:"
 msgid "Created"
 msgstr "Додато"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "Created Article"
 msgstr "Додат чланак"
 
@@ -3981,11 +3995,11 @@ msgstr "Додат чланак"
 msgid "Created At"
 msgstr "Додато у"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Created External Article"
 msgstr "Додат екстерни чланак"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Created Internal Article"
 msgstr "Додат интерни чланак"
 
@@ -5369,6 +5383,10 @@ msgstr "Најпре избриши све постојеће записе."
 msgid "Delete avatar"
 msgstr "Избриши аватар"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:149
+msgid "Delete column"
+msgstr "Уклони колону"
+
 #: db/seeds/permissions.rb:252
 msgid "Delete existing data of your system."
 msgstr "Брисање постојећих података вашег система."
@@ -5412,6 +5430,14 @@ msgstr "Избриши организацију?"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:18
 msgid "Delete records"
 msgstr "Избриши записе"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:121
+msgid "Delete row"
+msgstr "Уклони ред"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:206
+msgid "Delete table"
+msgstr "Уклони табелу"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:154
 msgid "Delete this access token"
@@ -6338,6 +6364,8 @@ msgstr "Прилог"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
+#: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:50
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:36
 msgid "Encrypt"
 msgstr "Шифровање"
 
@@ -6367,8 +6395,8 @@ msgid "Encryption error"
 msgstr "Грешка шифровања"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:95
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:201
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:120
 msgid "Encryption:"
 msgstr "Шифровање:"
 
@@ -6436,7 +6464,7 @@ msgstr "Унеси исправну имејл адресу."
 msgid "Enter credentials"
 msgstr "Унеси креденцијале"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:130
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
 msgid "Enter link URL"
 msgstr "Унеси URL линка"
 
@@ -6820,7 +6848,7 @@ msgstr "Истиче"
 msgid "Expires at"
 msgstr "Истиче"
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "Проширена претрага"
 
@@ -7158,7 +7186,7 @@ msgstr "Форматирај као //прецртано//"
 msgid "Format as _underlined_"
 msgstr "Форматирај као _подвучено_"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:84
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:99
 msgid "Format as bold"
 msgstr "Форматирај као подебљано"
 
@@ -7174,7 +7202,7 @@ msgstr "Форматирај као h2 заглавље"
 msgid "Format as h3 heading"
 msgstr "Форматирај као h3 заглавље"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:91
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:107
 msgid "Format as italic"
 msgstr "Форматирај као курзив"
 
@@ -7182,11 +7210,11 @@ msgstr "Форматирај као курзив"
 msgid "Format as ordered list"
 msgstr "Форматирај као листу са бројевима"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:98
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:123
 msgid "Format as strikethrough"
 msgstr "Форматирај као прецртано"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:77
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:115
 msgid "Format as underlined"
 msgstr "Форматирај као подвучено"
 
@@ -8398,6 +8426,10 @@ msgstr "Увећај вредност минута"
 msgid "Increment seconds value"
 msgstr "Увећај вредност секунди"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
+msgid "Indent text"
+msgstr "Увуци текст"
+
 #: app/frontend/apps/desktop/components/CommonProgressBar/CommonProgressBar.vue:16
 msgid "Indicating progress"
 msgstr "Приказује прогрес"
@@ -8442,11 +8474,39 @@ msgstr ""
 msgid "Inline content could not be generated."
 msgstr "Није било могуће генерисати непосредни садржај."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:225
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
+msgid "Insert code block"
+msgstr "Додај блок кôда"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:140
+msgid "Insert column after"
+msgstr "Додај колону после"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:131
+msgid "Insert column before"
+msgstr "Додај колону пре"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
+msgid "Insert inline code"
+msgstr "Додај уметнути кôд"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:103
+msgid "Insert row above"
+msgstr "Додај ред изнад"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:112
+msgid "Insert row below"
+msgstr "Додај ред испод"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
+msgid "Insert table"
+msgstr "Додај табелу"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
 msgid "Insert text from Knowledge Base article"
 msgstr "Убаци текст из чланка базе знања"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:232
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:350
 msgid "Insert text from text module"
 msgstr "Убаци текст из текстуалног исечка"
 
@@ -8913,7 +8973,7 @@ msgstr "Језик"
 msgid "Languages"
 msgstr "Језици"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 msgid "Last Article"
 msgstr "Последњи чланак"
 
@@ -8929,11 +8989,11 @@ msgstr "Последњи одговор у"
 msgid "Last Contact Customer At"
 msgstr "Последњи одговор клијента у"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr "Последњи екстерни чланак"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
 msgstr "Последњи интерни чланак"
 
@@ -9730,7 +9790,7 @@ msgstr "Успешно преузимање медијског прилога."
 msgid "Members"
 msgstr "Чланови"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:218
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 msgid "Mention user"
 msgstr "Помени корисника"
 
@@ -9746,6 +9806,10 @@ msgstr "Група помињања"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
 msgid "Merge"
 msgstr "Споји"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:168
+msgid "Merge cells"
+msgstr "Споји ћелије"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:51
 msgid "Merge tickets"
@@ -11355,6 +11419,10 @@ msgstr "Одлазнo:"
 msgid "Outdated Browser"
 msgstr "Застарео претраживач"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:246
+msgid "Outdent text"
+msgstr "Развуци текст"
+
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/models/group.coffee:47
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee:7
@@ -11370,7 +11438,7 @@ msgstr "Форма масовне радње прегледа"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:34
 #: db/seeds/permissions.rb:35
@@ -12357,7 +12425,7 @@ msgstr "Избриши све вредности"
 msgid "Remove authenticator app"
 msgstr "Уклони апликацију за аутентификацију"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:211
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:283
 msgid "Remove formatting"
 msgstr "Уклони форматирање"
 
@@ -13210,7 +13278,7 @@ msgstr "Сигурносни код"
 msgid "Security Error"
 msgstr "Безбедносна грешка"
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:186
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:135
 msgid "Security Information"
 msgstr "Безбедносне информације"
 
@@ -13823,6 +13891,8 @@ msgstr "Трака са стране прилога"
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco:5
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:5
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:80
+#: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:59
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:43
 msgid "Sign"
 msgstr "Потписивање"
 
@@ -13874,8 +13944,8 @@ msgid "Sign up"
 msgstr "Региструј се"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:92
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:87
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:192
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:128
 msgid "Sign:"
 msgstr "Потпис:"
 
@@ -14088,6 +14158,10 @@ msgstr "Неопходан специјални знак"
 msgid "Split"
 msgstr "Раздели"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:159
+msgid "Split cells"
+msgstr "Раздели ћелије"
+
 #: db/seeds/groups.rb:7
 msgid "Standard Group/Pool for Tickets."
 msgstr "Основна група тикета."
@@ -14139,19 +14213,17 @@ msgid "Start typing to search in Knowledge Base…"
 msgstr "Унеси текст за претрагу базе знања…"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:43
-#, fuzzy
-#| msgid "Start typing to search or enter an phone number…"
 msgid "Start typing to search or enter a new tag…"
+msgstr "Унеси појам за претрагу или нову ознаку…"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
+msgid "Start typing to search or enter a phone number…"
 msgstr "Унеси појам за претрагу или број телефона…"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:93
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:50
 msgid "Start typing to search or enter an email address…"
 msgstr "Унеси појам за претрагу или имејл адресу…"
-
-#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
-msgid "Start typing to search or enter an phone number…"
-msgstr "Унеси појам за претрагу или број телефона…"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:70
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:41
@@ -17091,6 +17163,18 @@ msgstr "Укључи/искључи групу"
 msgid "Toggle dark mode"
 msgstr "Укључи/искључи тамни изглед"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:196
+msgid "Toggle header cell"
+msgstr "Укључи/искључи насловну ћелију"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:187
+msgid "Toggle header column"
+msgstr "Укључи/искључи насловну колону"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:178
+msgid "Toggle header row"
+msgstr "Укључи/искључи насловни ред"
+
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:47
 msgid "Toggle the overlay"
 msgstr "Укључи/искључи прозорчић"
@@ -17399,7 +17483,7 @@ msgstr "Метод двофакторске аутентификације је 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -18162,7 +18246,7 @@ msgstr "Гледају тикета"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
@@ -18996,6 +19080,10 @@ msgstr ""
 msgid "Zammad"
 msgstr "Zammad"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:327
+msgid "Zammad Features"
+msgstr "Zammad функције"
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco:148
 msgid ""
 "Zammad Forms requires jQuery. If you don't already use it on your website, "
@@ -19121,10 +19209,8 @@ msgid "add new phone number"
 msgstr "додај нови број телефона"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:23
-#, fuzzy
-#| msgid "Add tags"
 msgid "add new tag"
-msgstr "Додај ознаку"
+msgstr "додај нову ознаку"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "add option"
@@ -20531,6 +20617,71 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#, fuzzy
+#~| msgid "Apply"
+#~ msgid "Apple"
+#~ msgstr "Примени"
+
+#, fuzzy
+#~| msgid "Slack"
+#~ msgid "Black"
+#~ msgstr "Slack"
+
+#, fuzzy
+#~| msgid "right"
+#~ msgid "Bright Sun"
+#~ msgstr "десно"
+
+#, fuzzy
+#~| msgid "Yellow"
+#~ msgid "Cello"
+#~ msgstr "Жута"
+
+#, fuzzy
+#~| msgid "Easter holiday"
+#~ msgid "Eastern Blue"
+#~ msgstr "Ускршњи празници"
+
+#, fuzzy
+#~| msgid "Blue"
+#~ msgid "Fun Blue"
+#~ msgstr "Плава"
+
+#, fuzzy
+#~| msgid "Format"
+#~ msgid "Korma"
+#~ msgstr "Формат"
+
+#, fuzzy
+#~| msgid "Purple"
+#~ msgid "Medium Purple"
+#~ msgstr "Љубичаста"
+
+#, fuzzy
+#~| msgid "Green"
+#~ msgid "Moss Green"
+#~ msgstr "Зелена"
+
+#, fuzzy
+#~| msgid "Purple"
+#~ msgid "Purple Heart"
+#~ msgstr "Љубичаста"
+
+#, fuzzy
+#~| msgid "Read"
+#~ msgid "Red"
+#~ msgstr "Читање"
+
+#, fuzzy
+#~| msgid "Cancel"
+#~ msgid "Seance"
+#~ msgstr "Откажи"
+
+#, fuzzy
+#~| msgid "Blue"
+#~ msgid "Sky Blue"
+#~ msgstr "Плава"
 
 #~ msgid "Whatsapp"
 #~ msgstr "WhatsАpp"

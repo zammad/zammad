@@ -251,11 +251,11 @@ msgstr ""
 msgid "%s (confirm)"
 msgstr "Підтвердити"
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:159
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:108
 msgid "%s (method)"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:194
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:143
 #, fuzzy
 #| msgid "Confirm"
 msgid "%s (option)"
@@ -1290,7 +1290,7 @@ msgstr ""
 msgid "Add attachment option to upload."
 msgstr "Додати опцію вкладення для завантаження."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:199
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:270
 msgid "Add bullet list"
 msgstr ""
 
@@ -1301,23 +1301,29 @@ msgstr ""
 msgid "Add condition"
 msgstr "Додати обліковий запис"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
 msgid "Add first level heading"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:105
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
+#, fuzzy
+#| msgid "Add Tag"
+msgid "Add heading"
+msgstr "Додати тег"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:131
 #, fuzzy
 #| msgid "Add Tag"
 msgid "Add image"
 msgstr "Додати тег"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:125
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
 #, fuzzy
 #| msgid "Add Link"
 msgid "Add link"
 msgstr "Додати посилання"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:187
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:257
 #, fuzzy
 #| msgid "Format as ordered list"
 msgid "Add ordered list"
@@ -1330,7 +1336,7 @@ msgstr "Форматувати як упорядкований перелік"
 msgid "Add reply"
 msgstr "відповісти"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:167
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:203
 msgid "Add second level heading"
 msgstr ""
 
@@ -1347,7 +1353,7 @@ msgstr "Додати ініціали відправника в кінець т�
 msgid "Add subclause"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:177
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:214
 msgid "Add third level heading"
 msgstr ""
 
@@ -1989,6 +1995,12 @@ msgstr "Нотатка"
 msgid "Article - visibility confirmation dialog"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#, fuzzy
+#| msgid "Article"
+msgid "Article > Text (HTML)"
+msgstr "Нотатка"
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr "Кількість нотаток"
@@ -2081,7 +2093,7 @@ msgstr ""
 msgid "At least one match rule is required, but none was provided."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr ""
 
@@ -2615,7 +2627,7 @@ msgstr "Масову дію виконано!"
 msgid "Bulk action failed"
 msgstr "Масову дію виконано!"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr ""
 
@@ -2998,6 +3010,12 @@ msgstr "Змінити порядок"
 #| msgid "Change your password"
 msgid "Change personal account password."
 msgstr "Зміна пароля\t"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
+#, fuzzy
+#| msgid "Change order"
+msgid "Change text color"
+msgstr "Змінити порядок"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 #, fuzzy
@@ -3416,7 +3434,7 @@ msgstr ""
 msgid "Combined subscription URL"
 msgstr "Підписки на заявки\t"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "Коментар"
 
@@ -3462,7 +3480,7 @@ msgstr "Умови для задіяних об’єктів\t"
 msgid "Conditions for shown tickets"
 msgstr "Умови для показаних заявок\t"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr "Конфігурування"
 
@@ -4083,7 +4101,7 @@ msgstr "Створити"
 msgid "Created"
 msgstr "Створеий"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Created Article"
@@ -4095,13 +4113,13 @@ msgstr "Створити пробну заявку"
 msgid "Created At"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Created External Article"
 msgstr "Створити пробну заявку"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Created Internal Article"
@@ -5482,6 +5500,12 @@ msgstr "Спочатку видаліть усі наявні записи."
 msgid "Delete avatar"
 msgstr "Видалити Користувача"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:149
+#, fuzzy
+#| msgid "Delete File"
+msgid "Delete column"
+msgstr "Видалити файл"
+
 #: db/seeds/permissions.rb:252
 #, fuzzy
 #| msgid "Delete all existing records first."
@@ -5529,6 +5553,18 @@ msgstr "Видалити Організацію?"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:18
 msgid "Delete records"
 msgstr "Видалити записи"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:121
+#, fuzzy
+#| msgid "Delete User"
+msgid "Delete row"
+msgstr "Видалити Користувача"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:206
+#, fuzzy
+#| msgid "Delete File"
+msgid "Delete table"
+msgstr "Видалити файл"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:154
 #, fuzzy
@@ -6533,6 +6569,8 @@ msgstr "закрити\t"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
+#: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:50
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:36
 msgid "Encrypt"
 msgstr ""
 
@@ -6563,8 +6601,8 @@ msgid "Encryption error"
 msgstr "Опис"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:95
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:201
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:120
 #, fuzzy
 #| msgid "Description"
 msgid "Encryption:"
@@ -6641,7 +6679,7 @@ msgstr "Введіть своє ім’я користувача або адре
 msgid "Enter credentials"
 msgstr "Введіть ім’я користувача та пароль"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:130
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
 msgid "Enter link URL"
 msgstr ""
 
@@ -7027,7 +7065,7 @@ msgstr "Минає"
 msgid "Expires at"
 msgstr "Минає"
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "Розширений пошук"
 
@@ -7400,7 +7438,7 @@ msgstr "Форматувати як //закреслений//"
 msgid "Format as _underlined_"
 msgstr "Форматувати як _підкреслений_"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:84
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:99
 #, fuzzy
 #| msgid "Format as |bold|"
 msgid "Format as bold"
@@ -7418,7 +7456,7 @@ msgstr "Форматувати як заголовок h2"
 msgid "Format as h3 heading"
 msgstr "Форматувати як заголовок h3"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:91
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:107
 #, fuzzy
 #| msgid "Format as ||italic||"
 msgid "Format as italic"
@@ -7428,13 +7466,13 @@ msgstr "Форматувати як ||курсив||"
 msgid "Format as ordered list"
 msgstr "Форматувати як упорядкований перелік"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:98
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:123
 #, fuzzy
 #| msgid "Format as //strikethrough//"
 msgid "Format as strikethrough"
 msgstr "Форматувати як //закреслений//"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:77
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:115
 #, fuzzy
 #| msgid "Format as _underlined_"
 msgid "Format as underlined"
@@ -8736,6 +8774,12 @@ msgstr "хвилин"
 msgid "Increment seconds value"
 msgstr "хвилин"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
+#, fuzzy
+#| msgid "New text module"
+msgid "Indent text"
+msgstr "Новий текстовий модуль"
+
 #: app/frontend/apps/desktop/components/CommonProgressBar/CommonProgressBar.vue:16
 #, fuzzy
 #| msgid "Your tickets in process"
@@ -8781,13 +8825,45 @@ msgstr ""
 msgid "Inline content could not be generated."
 msgstr "%s об’єкт(ів) створено."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:225
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
+msgid "Insert code block"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:140
+msgid "Insert column after"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:131
+msgid "Insert column before"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
+#, fuzzy
+#| msgid "New text module"
+msgid "Insert inline code"
+msgstr "Новий текстовий модуль"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:103
+msgid "Insert row above"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:112
+msgid "Insert row below"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
+#, fuzzy
+#| msgid "New text module"
+msgid "Insert table"
+msgstr "Новий текстовий модуль"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
 #, fuzzy
 #| msgid "Delete Knowledge Base"
 msgid "Insert text from Knowledge Base article"
 msgstr "Видалити Базу Знань"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:232
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:350
 #, fuzzy
 #| msgid "New text module"
 msgid "Insert text from text module"
@@ -9263,7 +9339,7 @@ msgstr "Мова"
 msgid "Languages"
 msgstr "Мови"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 #, fuzzy
 #| msgid "Article"
 msgid "Last Article"
@@ -9281,11 +9357,11 @@ msgstr ""
 msgid "Last Contact Customer At"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
 msgstr ""
 
@@ -10201,7 +10277,7 @@ msgstr "Тест з'єднання успішний"
 msgid "Members"
 msgstr "Члени"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:218
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 #, fuzzy
 #| msgid "current user"
 msgid "Mention user"
@@ -10219,6 +10295,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
 msgid "Merge"
 msgstr "Об'єднати"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:168
+#, fuzzy
+#| msgid "Merge to Ticket#"
+msgid "Merge cells"
+msgstr "Об’єднати із заявкою №"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:51
 #, fuzzy
@@ -11986,6 +12068,10 @@ msgstr "Вихідний"
 msgid "Outdated Browser"
 msgstr "Браузер"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:246
+msgid "Outdent text"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/models/group.coffee:47
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee:7
@@ -12001,7 +12087,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:34
 #: db/seeds/permissions.rb:35
@@ -13079,7 +13165,7 @@ msgstr "Вилучити"
 msgid "Remove authenticator app"
 msgstr "Автентифікація"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:211
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:283
 #, fuzzy
 #| msgid "Removes the formatting"
 msgid "Remove formatting"
@@ -13970,7 +14056,7 @@ msgstr "Безпека"
 msgid "Security Error"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:186
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:135
 #, fuzzy
 #| msgid "Block Notifications"
 msgid "Security Information"
@@ -14671,6 +14757,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco:5
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:5
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:80
+#: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:59
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:43
 msgid "Sign"
 msgstr ""
 
@@ -14725,8 +14813,8 @@ msgid "Sign up"
 msgstr "Зареєструватися"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:92
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:87
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:192
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:128
 #, fuzzy
 #| msgid "Sign in"
 msgid "Sign:"
@@ -14963,6 +15051,12 @@ msgstr ""
 msgid "Split"
 msgstr "розділити"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:159
+#, fuzzy
+#| msgid "split"
+msgid "Split cells"
+msgstr "розділити"
+
 #: db/seeds/groups.rb:7
 msgid "Standard Group/Pool for Tickets."
 msgstr ""
@@ -15029,17 +15123,17 @@ msgstr "Шукати користувачів"
 msgid "Start typing to search or enter a new tag…"
 msgstr "Введіть своє ім’я користувача або адресу електронної пошти"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
+#, fuzzy
+#| msgid "Enter your username or email address"
+msgid "Start typing to search or enter a phone number…"
+msgstr "Введіть своє ім’я користувача або адресу електронної пошти"
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:93
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:50
 #, fuzzy
 #| msgid "Enter your username or email address"
 msgid "Start typing to search or enter an email address…"
-msgstr "Введіть своє ім’я користувача або адресу електронної пошти"
-
-#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
-#, fuzzy
-#| msgid "Enter your username or email address"
-msgid "Start typing to search or enter an phone number…"
 msgstr "Введіть своє ім’я користувача або адресу електронної пошти"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:70
@@ -18227,6 +18321,24 @@ msgstr "Джерело"
 msgid "Toggle dark mode"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:196
+#, fuzzy
+#| msgid "Open note box"
+msgid "Toggle header cell"
+msgstr "Відкрити вікно примітки"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:187
+#, fuzzy
+#| msgid "Open note box"
+msgid "Toggle header column"
+msgstr "Відкрити вікно примітки"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:178
+#, fuzzy
+#| msgid "Open note box"
+msgid "Toggle header row"
+msgstr "Відкрити вікно примітки"
+
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:47
 #, fuzzy
 #| msgid "Open note box"
@@ -18563,7 +18675,7 @@ msgstr "Тестовий запуск виконано вдало."
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -19334,7 +19446,7 @@ msgstr "Нова заявка"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
@@ -20187,6 +20299,12 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue:33
 msgid "Zammad"
 msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:327
+#, fuzzy
+#| msgid "This is Zammad version %s"
+msgid "Zammad Features"
+msgstr "Це – система Zammad версії %s\t"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:148
 #, fuzzy
@@ -21839,6 +21957,61 @@ msgstr "...від усієї текстової ділянки"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Час очікування сьогодні\t"
+
+#, fuzzy
+#~| msgid "Apply"
+#~ msgid "Apple"
+#~ msgstr "Застосувати"
+
+#, fuzzy
+#~| msgid "Slack"
+#~ msgid "Black"
+#~ msgstr "Slack"
+
+#, fuzzy
+#~| msgid "Yellow"
+#~ msgid "Cello"
+#~ msgstr "Жовтий"
+
+#, fuzzy
+#~| msgid "Blue"
+#~ msgid "Fun Blue"
+#~ msgstr "Блакитний"
+
+#, fuzzy
+#~| msgid "Normal"
+#~ msgid "Korma"
+#~ msgstr "Звичайний"
+
+#, fuzzy
+#~| msgid "Purple"
+#~ msgid "Medium Purple"
+#~ msgstr "Фіолетовий"
+
+#, fuzzy
+#~| msgid "Green"
+#~ msgid "Moss Green"
+#~ msgstr "Зелений"
+
+#, fuzzy
+#~| msgid "Purple"
+#~ msgid "Purple Heart"
+#~ msgstr "Фіолетовий"
+
+#, fuzzy
+#~| msgid "Wed"
+#~ msgid "Red"
+#~ msgstr "Сер."
+
+#, fuzzy
+#~| msgid "Cancel"
+#~ msgid "Seance"
+#~ msgstr "Відмінити"
+
+#, fuzzy
+#~| msgid "Blue"
+#~ msgid "Sky Blue"
+#~ msgstr "Блакитний"
 
 #, fuzzy
 #~| msgid "The test run was successful."

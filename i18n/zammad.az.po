@@ -239,11 +239,11 @@ msgstr ""
 msgid "%s (confirm)"
 msgstr "%s (təsdiq edin)"
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:159
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:108
 msgid "%s (method)"
 msgstr "%s (metod)"
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:194
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:143
 msgid "%s (option)"
 msgstr "%s (seçim)"
 
@@ -1243,7 +1243,7 @@ msgstr "Bütün dəyərləri əlavə et"
 msgid "Add attachment option to upload."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:199
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:270
 msgid "Add bullet list"
 msgstr ""
 
@@ -1252,19 +1252,25 @@ msgstr ""
 msgid "Add condition"
 msgstr "Şərt əlavə et"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
 msgid "Add first level heading"
 msgstr "Birinci səviyyə başlığı əlavə et"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:105
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
+#, fuzzy
+#| msgid "Add Tag"
+msgid "Add heading"
+msgstr "Teg əlavə et"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:131
 msgid "Add image"
 msgstr "Şəkil əlavə et"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:125
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
 msgid "Add link"
 msgstr "Link əlavə et"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:187
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:257
 msgid "Add ordered list"
 msgstr "Ardıcıl yığılan siyahını əlavə et"
 
@@ -1273,7 +1279,7 @@ msgstr "Ardıcıl yığılan siyahını əlavə et"
 msgid "Add reply"
 msgstr "Cavab əlavə et"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:167
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:203
 msgid "Add second level heading"
 msgstr "İkinci səviyyəli başlıq əlavə et"
 
@@ -1291,7 +1297,7 @@ msgstr ""
 msgid "Add subclause"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:177
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:214
 msgid "Add third level heading"
 msgstr "Üçüncü səviyyə başlığı əlavə et"
 
@@ -1939,6 +1945,12 @@ msgstr "Məqalə"
 msgid "Article - visibility confirmation dialog"
 msgstr "Məqalənin görünürlüğünü təsdiqləyən informasiya qutusu"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#, fuzzy
+#| msgid "Article Type"
+msgid "Article > Text (HTML)"
+msgstr "Məqalə növü"
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr "Məqalələrin sayı"
@@ -2031,7 +2043,7 @@ msgid "At least one match rule is required, but none was provided."
 msgstr ""
 "Ən azı bir uyğunluq qaydası tələb olunur, lakin heç biri təqdim edilməyib."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr "Ən azı bir obyekt seçilməlidir."
 
@@ -2532,7 +2544,7 @@ msgstr "Kütləvi fəaliyyət yerinə yetirildi!"
 msgid "Bulk action failed"
 msgstr "Kütləvi fəaliyyət yerinə yetirilmədi"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr "Xəta(lar) səbəbindən kütləvi hərəkət dayandırıldı: %s!"
 
@@ -2892,6 +2904,12 @@ msgstr "Tərtibini dəyişdir"
 #, fuzzy
 msgid "Change personal account password."
 msgstr "Şifrənizi dəyişdir"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
+#, fuzzy
+#| msgid "Change date"
+msgid "Change text color"
+msgstr "Tarixi dəyişdir"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -3300,7 +3318,7 @@ msgstr "Yan paneldəki açıq tətbiq göstəricisinin rəng görünüşü."
 msgid "Combined subscription URL"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "Şərh"
 
@@ -3343,7 +3361,7 @@ msgstr "Təsirə məruz qalan obyektlər üçün şərtlər"
 msgid "Conditions for shown tickets"
 msgstr "Təqdim olunan biletlər üçün şərtlər"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr "Konfiqurasiya"
 
@@ -3980,7 +3998,7 @@ msgstr "Yarat:"
 msgid "Created"
 msgstr "Yaradıldı"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "Created Article"
 msgstr "Yaradılmış məqalə"
 
@@ -3990,11 +4008,11 @@ msgstr "Yaradılmış məqalə"
 msgid "Created At"
 msgstr "Yaradıldı"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Created External Article"
 msgstr "Yaradılmış xarici məqalə"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Created Internal Article"
 msgstr "Daxili məqalə yaradıldı"
 
@@ -5421,6 +5439,12 @@ msgstr "Əvvəlcə bütün mövcud qeydləri silin."
 msgid "Delete avatar"
 msgstr "Avatar sil"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:149
+#, fuzzy
+#| msgid "Delete Article"
+msgid "Delete column"
+msgstr "Məqaləni sil"
+
 #: db/seeds/permissions.rb:252
 #, fuzzy
 #| msgid "Delete all existing records first."
@@ -5467,6 +5491,18 @@ msgstr "Təşkilatı silmək istəyirsiz?"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:18
 msgid "Delete records"
 msgstr "Qeydləri sil"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:121
+#, fuzzy
+#| msgid "Delete User"
+msgid "Delete row"
+msgstr "İstifadəçini sil"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:206
+#, fuzzy
+#| msgid "Delete File"
+msgid "Delete table"
+msgstr "Faylı sil"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:154
 #, fuzzy
@@ -6429,6 +6465,8 @@ msgstr "Qapalı"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
+#: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:50
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:36
 msgid "Encrypt"
 msgstr "Şifrələmək"
 
@@ -6461,8 +6499,8 @@ msgid "Encryption error"
 msgstr "Şifrələmə xətası"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:95
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:201
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:120
 msgid "Encryption:"
 msgstr "Şifrələmə:"
 
@@ -6531,7 +6569,7 @@ msgstr "Aktiv e-poçt ünvanı daxil et."
 msgid "Enter credentials"
 msgstr "Hesab məlumatlarını daxil et"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:130
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
 msgid "Enter link URL"
 msgstr "URL daxil et"
 
@@ -6923,7 +6961,7 @@ msgstr "Müddət bitir"
 msgid "Expires at"
 msgstr "Müddət bitir"
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "Ətraflı axtarış"
 
@@ -7272,7 +7310,7 @@ msgstr "//Qaralanmış// kimi formatlaşdırmaq"
 msgid "Format as _underlined_"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:84
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:99
 msgid "Format as bold"
 msgstr "Qalın şəklində formatlaşdırmaq"
 
@@ -7289,7 +7327,7 @@ msgstr "h2 başlığı kimi formatlaşdırmaq"
 msgid "Format as h3 heading"
 msgstr "h3 başlığı kimi formatlaşdırmaq"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:91
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:107
 msgid "Format as italic"
 msgstr ""
 
@@ -7297,12 +7335,12 @@ msgstr ""
 msgid "Format as ordered list"
 msgstr "Nizamlanmış siyahı kimi formatlaşdırmaq"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:98
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:123
 #, fuzzy
 msgid "Format as strikethrough"
 msgstr "Qaralanmış kimi formatlaşdırmaq"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:77
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:115
 msgid "Format as underlined"
 msgstr ""
 
@@ -8589,6 +8627,12 @@ msgstr "Artım (SystemID.Counter)"
 msgid "Increment seconds value"
 msgstr "Saniyə sayını artır"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
+#, fuzzy
+#| msgid "Incident"
+msgid "Indent text"
+msgstr "Hadisə"
+
 #: app/frontend/apps/desktop/components/CommonProgressBar/CommonProgressBar.vue:16
 #, fuzzy
 #| msgid "No import in progress."
@@ -8636,11 +8680,43 @@ msgstr ""
 msgid "Inline content could not be generated."
 msgstr "Daxili məzmun yaradıla bilmədi."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:225
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
+msgid "Insert code block"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:140
+msgid "Insert column after"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:131
+msgid "Insert column before"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
+#, fuzzy
+#| msgid "Inserts text module"
+msgid "Insert inline code"
+msgstr "Mətn modulunu daxil edir"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:103
+msgid "Insert row above"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:112
+msgid "Insert row below"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
+#, fuzzy
+#| msgid "Inserts text module"
+msgid "Insert table"
+msgstr "Mətn modulunu daxil edir"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
 msgid "Insert text from Knowledge Base article"
 msgstr "Məlumat bazası məqaləsindən mətni yerləşdirin"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:232
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:350
 msgid "Insert text from text module"
 msgstr "Mətn modulundan mətn daxil edin"
 
@@ -9109,7 +9185,7 @@ msgstr "Dil"
 msgid "Languages"
 msgstr "Dillər"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 msgid "Last Article"
 msgstr "Son məqalə"
 
@@ -9125,11 +9201,11 @@ msgstr "Son əlaqə"
 msgid "Last Contact Customer At"
 msgstr "Müştəri ilə son əlaqə"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr "Son xarici məqalə"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 #, fuzzy
 msgid "Last Internal Article"
 msgstr "Son daxili məqalə"
@@ -10041,7 +10117,7 @@ msgstr "Medianın yüklənməsi uğurlu oldu."
 msgid "Members"
 msgstr "Üzvlər"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:218
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 msgid "Mention user"
 msgstr "İstifadəçi qeyd et"
 
@@ -10057,6 +10133,12 @@ msgstr "Qeyd Qrupu"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
 msgid "Merge"
 msgstr "Birləşdir"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:168
+#, fuzzy
+#| msgid "Merge tickets"
+msgid "Merge cells"
+msgstr "Biletlərin birləşdirilməsi"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:51
 msgid "Merge tickets"
@@ -11773,6 +11855,10 @@ msgstr "Gedən:"
 msgid "Outdated Browser"
 msgstr "Köhnəlmiş brauzer"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:246
+msgid "Outdent text"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/models/group.coffee:47
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee:7
@@ -11788,7 +11874,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:34
 #: db/seeds/permissions.rb:35
@@ -12850,7 +12936,7 @@ msgstr "Bütün dəyərləri sil"
 msgid "Remove authenticator app"
 msgstr "İdentifikasiya tətbiqi"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:211
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:283
 msgid "Remove formatting"
 msgstr "Formatlaşdırmanı sil"
 
@@ -13676,7 +13762,7 @@ msgstr ""
 msgid "Security Error"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:186
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:135
 msgid "Security Information"
 msgstr ""
 
@@ -14279,6 +14365,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco:5
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:5
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:80
+#: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:59
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:43
 msgid "Sign"
 msgstr ""
 
@@ -14329,8 +14417,8 @@ msgid "Sign up"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:92
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:87
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:192
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:128
 msgid "Sign:"
 msgstr ""
 
@@ -14533,6 +14621,10 @@ msgstr ""
 msgid "Split"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:159
+msgid "Split cells"
+msgstr ""
+
 #: db/seeds/groups.rb:7
 msgid "Standard Group/Pool for Tickets."
 msgstr ""
@@ -14587,13 +14679,13 @@ msgstr ""
 msgid "Start typing to search or enter a new tag…"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
+msgid "Start typing to search or enter a phone number…"
+msgstr ""
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:93
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:50
 msgid "Start typing to search or enter an email address…"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
-msgid "Start typing to search or enter an phone number…"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:70
@@ -17365,6 +17457,24 @@ msgstr "Yeni qrup"
 msgid "Toggle dark mode"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:196
+#, fuzzy
+#| msgid "Open hours overlay"
+msgid "Toggle header cell"
+msgstr "İş saatlarının üst-üstə düşməsi"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:187
+#, fuzzy
+#| msgid "Open hours overlay"
+msgid "Toggle header column"
+msgstr "İş saatlarının üst-üstə düşməsi"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:178
+#, fuzzy
+#| msgid "Open hours overlay"
+msgid "Toggle header row"
+msgstr "İş saatlarının üst-üstə düşməsi"
+
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:47
 #, fuzzy
 #| msgid "Open hours overlay"
@@ -17672,7 +17782,7 @@ msgstr "Şifrə uğurla dəyişdirildi!"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -18387,7 +18497,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
@@ -19142,6 +19252,10 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:84
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue:33
 msgid "Zammad"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:327
+msgid "Zammad Features"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:148
@@ -20657,6 +20771,56 @@ msgstr ""
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Apply"
+#~ msgid "Apple"
+#~ msgstr "Müraciət et"
+
+#, fuzzy
+#~| msgid "Easter holiday"
+#~ msgid "Eastern Blue"
+#~ msgstr "Yeni il tətili"
+
+#, fuzzy
+#~| msgid "Blue"
+#~ msgid "Fun Blue"
+#~ msgstr "Mavi"
+
+#, fuzzy
+#~| msgid "Format"
+#~ msgid "Korma"
+#~ msgstr "Format"
+
+#, fuzzy
+#~| msgid "Purple"
+#~ msgid "Medium Purple"
+#~ msgstr "Bənövşəyi"
+
+#, fuzzy
+#~| msgid "Green"
+#~ msgid "Moss Green"
+#~ msgstr "Yaşıl"
+
+#, fuzzy
+#~| msgid "Purple"
+#~ msgid "Purple Heart"
+#~ msgstr "Bənövşəyi"
+
+#, fuzzy
+#~| msgid "Read"
+#~ msgid "Red"
+#~ msgstr "Oxu"
+
+#, fuzzy
+#~| msgid "Cancel"
+#~ msgid "Seance"
+#~ msgstr "Ləğv et"
+
+#, fuzzy
+#~| msgid "Blue"
+#~ msgid "Sky Blue"
+#~ msgstr "Mavi"
 
 #~ msgid "No record found!"
 #~ msgstr "Heç bir qeyd tapılmadı!"

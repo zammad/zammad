@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-13 01:05+0000\n"
-"Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
+"PO-Revision-Date: 2024-06-17 06:24+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fr/>\n"
 "Language: fr-fr\n"
@@ -361,11 +361,11 @@ msgstr ""
 msgid "%s (confirm)"
 msgstr "%s (confirmer)"
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:159
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:108
 msgid "%s (method)"
 msgstr "%s (méthode)"
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:194
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:143
 msgid "%s (option)"
 msgstr "%s (option)"
 
@@ -1373,7 +1373,7 @@ msgstr "Ajouter toutes les valeurs"
 msgid "Add attachment option to upload."
 msgstr "Permettre l'envoi de pièce jointe."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:199
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:270
 msgid "Add bullet list"
 msgstr "Ajouter une liste à puces"
 
@@ -1382,19 +1382,25 @@ msgstr "Ajouter une liste à puces"
 msgid "Add condition"
 msgstr "Ajouter une condition"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
 msgid "Add first level heading"
 msgstr "Ajouter un titre de premier niveau"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:105
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
+#, fuzzy
+#| msgid "Add Tag"
+msgid "Add heading"
+msgstr "Ajouter une étiquette"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:131
 msgid "Add image"
 msgstr "Ajouter une image"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:125
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
 msgid "Add link"
 msgstr "Ajouter un lien"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:187
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:257
 msgid "Add ordered list"
 msgstr "Ajouter une liste numérotée"
 
@@ -1403,7 +1409,7 @@ msgstr "Ajouter une liste numérotée"
 msgid "Add reply"
 msgstr "Ajouter une réponse"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:167
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:203
 msgid "Add second level heading"
 msgstr "Ajouter un titre de second niveau"
 
@@ -1420,7 +1426,7 @@ msgstr "Ajouter les initiales de l'auteur à la fin d'un tweet."
 msgid "Add subclause"
 msgstr "Ajouter une sous-clause"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:177
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:214
 msgid "Add third level heading"
 msgstr "Ajouter un titre de troisième niveau"
 
@@ -2067,6 +2073,12 @@ msgstr "Article"
 msgid "Article - visibility confirmation dialog"
 msgstr "Article - fenêtre de confirmation de visibilité"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#, fuzzy
+#| msgid "Article Type"
+msgid "Article > Text (HTML)"
+msgstr "Type d'article"
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr "Nombre d'articles"
@@ -2152,7 +2164,7 @@ msgstr ""
 msgid "At least one match rule is required, but none was provided."
 msgstr "Au moins une règle est requise, mais aucune n'a été fournie."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr "Au moins un objet doit être sélectionné."
 
@@ -2647,7 +2659,7 @@ msgstr "Action en masse effectué !"
 msgid "Bulk action failed"
 msgstr "Action en masse échouée"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr "Action de masse arrêtée en erreur : %s !"
 
@@ -3004,6 +3016,12 @@ msgstr "Modifier l'ordre"
 #: db/seeds/permissions.rb:409
 msgid "Change personal account password."
 msgstr "Modifier le mot de passe de votre compte."
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
+#, fuzzy
+#| msgid "Change date"
+msgid "Change text color"
+msgstr "Modifier la date"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -3400,7 +3418,7 @@ msgstr "Indicateur de couleur des tickets ouverts dans la barre latérale."
 msgid "Combined subscription URL"
 msgstr "URL d'abonnement combinée"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "Commentaire"
 
@@ -3442,7 +3460,7 @@ msgstr "Conditions pour les éléments concernés"
 msgid "Conditions for shown tickets"
 msgstr "Conditions d'affichage des tickets"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr "Configuration"
 
@@ -4044,7 +4062,7 @@ msgstr "Créer :"
 msgid "Created"
 msgstr "Créés"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "Created Article"
 msgstr "Article créé"
 
@@ -4054,11 +4072,11 @@ msgstr "Article créé"
 msgid "Created At"
 msgstr "Créé le"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Created External Article"
 msgstr "Article externe créé"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Created Internal Article"
 msgstr "Article interne créé"
 
@@ -5492,6 +5510,12 @@ msgstr "Supprimez tous les enregistrements d'abord."
 msgid "Delete avatar"
 msgstr "Supprimer l'avatar"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:149
+#, fuzzy
+#| msgid "Delete Article"
+msgid "Delete column"
+msgstr "Supprimer l'article"
+
 #: db/seeds/permissions.rb:252
 msgid "Delete existing data of your system."
 msgstr "Supprimez les données existantes de votre système."
@@ -5535,6 +5559,18 @@ msgstr "Supprimer l'organisation ?"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:18
 msgid "Delete records"
 msgstr "Supprimer les enregistrements"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:121
+#, fuzzy
+#| msgid "Delete User"
+msgid "Delete row"
+msgstr "Supprimer l'utilisateur"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:206
+#, fuzzy
+#| msgid "Delete File"
+msgid "Delete table"
+msgstr "Supprimer le fichier"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:154
 msgid "Delete this access token"
@@ -6475,6 +6511,8 @@ msgstr "Pièce jointe"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
+#: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:50
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:36
 msgid "Encrypt"
 msgstr "Chiffrer"
 
@@ -6503,8 +6541,8 @@ msgid "Encryption error"
 msgstr "Erreur de chiffrement"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:95
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:201
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:120
 msgid "Encryption:"
 msgstr "Chiffrement :"
 
@@ -6572,7 +6610,7 @@ msgstr "Saisir une adresse email valide."
 msgid "Enter credentials"
 msgstr "Saisir les identifiants de connexion"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:130
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
 msgid "Enter link URL"
 msgstr "Saisir l' URL du lien"
 
@@ -6967,7 +7005,7 @@ msgstr "Expiration"
 msgid "Expires at"
 msgstr "Expire le"
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "Recherche étendue"
 
@@ -7312,7 +7350,7 @@ msgstr "Formater en //barré//"
 msgid "Format as _underlined_"
 msgstr "Formater en _souligné_"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:84
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:99
 msgid "Format as bold"
 msgstr "Formater en gras"
 
@@ -7328,7 +7366,7 @@ msgstr "Formater en titre h2"
 msgid "Format as h3 heading"
 msgstr "Formater en titre h3"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:91
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:107
 msgid "Format as italic"
 msgstr "Formater en italique"
 
@@ -7336,11 +7374,11 @@ msgstr "Formater en italique"
 msgid "Format as ordered list"
 msgstr "Formater en liste numérotée"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:98
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:123
 msgid "Format as strikethrough"
 msgstr "Barrer le texte"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:77
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:115
 msgid "Format as underlined"
 msgstr "Formater en souligné"
 
@@ -8569,7 +8607,7 @@ msgstr "Identifiants incomplets"
 
 #: db/seeds/settings.rb:2313
 msgid "Increment (SystemID.Counter)"
-msgstr "Incrément (SystemID.Counter)"
+msgstr "Incrément (IDSystème.Compteur)"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:57
 msgid "Increment hours value"
@@ -8582,6 +8620,12 @@ msgstr "Incrémenter la valeur des minutes"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:62
 msgid "Increment seconds value"
 msgstr "Incrémenter la valeur des secondes"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
+#, fuzzy
+#| msgid "Incident"
+msgid "Indent text"
+msgstr "Incident"
 
 #: app/frontend/apps/desktop/components/CommonProgressBar/CommonProgressBar.vue:16
 msgid "Indicating progress"
@@ -8627,11 +8671,43 @@ msgstr ""
 msgid "Inline content could not be generated."
 msgstr "Le contenu en ligne n'a pas pu être généré."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:225
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
+msgid "Insert code block"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:140
+msgid "Insert column after"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:131
+msgid "Insert column before"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
+#, fuzzy
+#| msgid "Inserts text module"
+msgid "Insert inline code"
+msgstr "Insérer un modèle de texte"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:103
+msgid "Insert row above"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:112
+msgid "Insert row below"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
+#, fuzzy
+#| msgid "Inserts text module"
+msgid "Insert table"
+msgstr "Insérer un modèle de texte"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
 msgid "Insert text from Knowledge Base article"
 msgstr "Insérer du texte depuis un article de la base de connaissances"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:232
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:350
 msgid "Insert text from text module"
 msgstr "Insérer du texte depuis un modèle de texte"
 
@@ -9105,7 +9181,7 @@ msgstr "Langue"
 msgid "Languages"
 msgstr "Langues"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 msgid "Last Article"
 msgstr "Dernier article"
 
@@ -9121,11 +9197,11 @@ msgstr "Dernier contact le"
 msgid "Last Contact Customer At"
 msgstr "Dernier contact client le"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr "Dernier article externe"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
 msgstr "Dernier article interne"
 
@@ -9925,7 +10001,7 @@ msgstr "Téléchargement du média réussi."
 msgid "Members"
 msgstr "Membres"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:218
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 msgid "Mention user"
 msgstr "Mention de l'utilisateur"
 
@@ -9941,6 +10017,12 @@ msgstr "Mentions du groupe"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
 msgid "Merge"
 msgstr "Fusionner"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:168
+#, fuzzy
+#| msgid "Merge tickets"
+msgid "Merge cells"
+msgstr "Fusionner les tickets"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:51
 msgid "Merge tickets"
@@ -11566,6 +11648,10 @@ msgstr "Sortant :"
 msgid "Outdated Browser"
 msgstr "Navigateur obsolète"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:246
+msgid "Outdent text"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/models/group.coffee:47
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee:7
@@ -11581,7 +11667,7 @@ msgstr "Masque d'aperçu de masse"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:34
 #: db/seeds/permissions.rb:35
@@ -12582,7 +12668,7 @@ msgstr "Supprimer toutes les valeurs"
 msgid "Remove authenticator app"
 msgstr "Supprimer l'application d'authentification"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:211
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:283
 msgid "Remove formatting"
 msgstr "Supprimer le formatage"
 
@@ -13446,7 +13532,7 @@ msgstr "Code de sécurité"
 msgid "Security Error"
 msgstr "Erreur de sécurité"
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:186
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:135
 msgid "Security Information"
 msgstr "Information de sécurité"
 
@@ -14066,6 +14152,8 @@ msgstr "Pièces jointes dans la barre latérale"
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco:5
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:5
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:80
+#: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:59
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:43
 msgid "Sign"
 msgstr "Signer"
 
@@ -14117,8 +14205,8 @@ msgid "Sign up"
 msgstr "S'enregistrer"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:92
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:87
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:192
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:128
 msgid "Sign:"
 msgstr "Signer :"
 
@@ -14336,6 +14424,12 @@ msgstr "Un caractère spécial est requis"
 msgid "Split"
 msgstr "Séparer"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:159
+#, fuzzy
+#| msgid "Split"
+msgid "Split cells"
+msgstr "Séparer"
+
 #: db/seeds/groups.rb:7
 msgid "Standard Group/Pool for Tickets."
 msgstr "Groupe standard pour les tickets."
@@ -14387,19 +14481,19 @@ msgid "Start typing to search in Knowledge Base…"
 msgstr "Commencez à taper pour chercher dans la base de connaissances…"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:43
+msgid "Start typing to search or enter a new tag…"
+msgstr "Commencez à taper pour rechercher ou saisir une nouvelle étiquette…"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
 #, fuzzy
 #| msgid "Start typing to search or enter an phone number…"
-msgid "Start typing to search or enter a new tag…"
+msgid "Start typing to search or enter a phone number…"
 msgstr "Commencez à taper pour rechercher ou saisir un numéro de téléphone…"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:93
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:50
 msgid "Start typing to search or enter an email address…"
 msgstr "Commencez à taper pour rechercher ou saisir une adresse e-mail…"
-
-#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
-msgid "Start typing to search or enter an phone number…"
-msgstr "Commencez à taper pour rechercher ou saisir un numéro de téléphone…"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:70
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:41
@@ -14687,7 +14781,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:238
 msgid "SystemID"
-msgstr "SystemID"
+msgstr "IDSystème"
 
 #: db/seeds/settings.rb:2875
 msgid "Tab behaviour after ticket action"
@@ -17418,6 +17512,24 @@ msgstr "Basculer le groupe"
 msgid "Toggle dark mode"
 msgstr "Basculer en mode sombre"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:196
+#, fuzzy
+#| msgid "Toggle the overlay"
+msgid "Toggle header cell"
+msgstr "Basculer la superposition"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:187
+#, fuzzy
+#| msgid "Toggle the overlay"
+msgid "Toggle header column"
+msgstr "Basculer la superposition"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:178
+#, fuzzy
+#| msgid "Toggle dark mode"
+msgid "Toggle header row"
+msgstr "Basculer en mode sombre"
+
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:47
 msgid "Toggle the overlay"
 msgstr "Basculer la superposition"
@@ -17734,7 +17846,7 @@ msgstr "La méthode à deux facteurs a été configurée avec succès."
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -18040,9 +18152,9 @@ msgstr ""
 "longname}</b>\".\n"
 "</div>\n"
 "<br>\n"
-"<% if @objects[:changes].present ? %>\n"
+"<% if @objects[:changes].present? %>\n"
 "  <div>\n"
-"  #{t('Changes')} : <br>\n"
+"  Modifications : <br>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
 "    <%= t key %> : <%= h value[0] %> -&gt; <%= h value[1] %><br>\n"
 "  <% end %>\n"
@@ -18504,7 +18616,7 @@ msgstr "Voir le ticket"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
@@ -18833,7 +18945,7 @@ msgid ""
 "Counter\" (e.g. 201206231010138, 201206231010139)."
 msgstr ""
 "Avec |Date|, la numérotation des tickets sera générée avec la date du jour, "
-"le SystemID et le compteur. Le format sera \"Année.Mois.Jour.SystemID."
+"l'IDSystème et le compteur. Le format sera \"Année.Mois.Jour.IDSystème."
 "Compteur\" (par exemple 201707101010138, 201707101010139)."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee:35
@@ -19355,6 +19467,12 @@ msgstr ""
 msgid "Zammad"
 msgstr "Zammad"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:327
+#, fuzzy
+#| msgid "Zammad version"
+msgid "Zammad Features"
+msgstr "Version de Zammad"
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco:148
 msgid ""
 "Zammad Forms requires jQuery. If you don't already use it on your website, "
@@ -19481,10 +19599,8 @@ msgid "add new phone number"
 msgstr "ajouter un nouveau numéro de téléphone"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:23
-#, fuzzy
-#| msgid "Add Tag"
 msgid "add new tag"
-msgstr "Ajouter Tag"
+msgstr "ajouter une nouvelle étiquette"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "add option"
@@ -19854,7 +19970,7 @@ msgstr "modifié %s par moi"
 
 #: db/seeds/ticket_article_types.rb:3
 msgid "email"
-msgstr "email"
+msgstr "e-mail"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:97
 msgid "email sent to '%s'"
@@ -20862,8 +20978,8 @@ msgid ""
 "|Increment| increases the ticket number. The SystemID and the counter are "
 "used with \"SystemID.Counter\" format (e.g. 1010138, 1010139)."
 msgstr ""
-"|Incrément| incrémente le numéro du ticket. Le SystemID et le compteur sont "
-"utilisés au format \"SystemID.Compteur\" (par ex : 1010138, 1010139)."
+"|Incrément| incrémente le numéro du ticket. Le IDSystème et le compteur sont "
+"utilisés au format \"IDSystème.Compteur\" (par ex : 1010138, 1010139)."
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco:6
 msgid "|Left| means |[Ticket#12345] Some Subject|"
@@ -20896,6 +21012,71 @@ msgstr "... de toute la zone de texte"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Temps d'attente aujourd'hui"
+
+#, fuzzy
+#~| msgid "Apply"
+#~ msgid "Apple"
+#~ msgstr "Appliquer"
+
+#, fuzzy
+#~| msgid "Slack"
+#~ msgid "Black"
+#~ msgstr "Slack"
+
+#, fuzzy
+#~| msgid "right"
+#~ msgid "Bright Sun"
+#~ msgstr "droite"
+
+#, fuzzy
+#~| msgid "Yellow"
+#~ msgid "Cello"
+#~ msgstr "Jaune"
+
+#, fuzzy
+#~| msgid "Easter holiday"
+#~ msgid "Eastern Blue"
+#~ msgstr "Vacances de Pâques"
+
+#, fuzzy
+#~| msgid "Blue"
+#~ msgid "Fun Blue"
+#~ msgstr "Bleu"
+
+#, fuzzy
+#~| msgid "Format"
+#~ msgid "Korma"
+#~ msgstr "Format"
+
+#, fuzzy
+#~| msgid "Purple"
+#~ msgid "Medium Purple"
+#~ msgstr "Violet"
+
+#, fuzzy
+#~| msgid "Green"
+#~ msgid "Moss Green"
+#~ msgstr "Vert"
+
+#, fuzzy
+#~| msgid "Purple"
+#~ msgid "Purple Heart"
+#~ msgstr "Violet"
+
+#, fuzzy
+#~| msgid "Read"
+#~ msgid "Red"
+#~ msgstr "Lire"
+
+#, fuzzy
+#~| msgid "Cancel"
+#~ msgid "Seance"
+#~ msgstr "Annuler"
+
+#, fuzzy
+#~| msgid "Blue"
+#~ msgid "Sky Blue"
+#~ msgstr "Bleu"
 
 #~ msgid "Whatsapp"
 #~ msgstr "Whatsapp"

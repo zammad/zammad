@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-10 05:52+0000\n"
-"Last-Translator: JPB <jeffreypeerboom@eijsden-margraten.nl>\n"
-"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
-"development/nl/>\n"
+"PO-Revision-Date: 2024-06-17 06:24+0000\n"
+"Last-Translator: JPB <JPB@users.noreply.translations.zammad.org>\n"
+"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
+"zammad-development/nl/>\n"
 "Language: nl-nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -360,11 +360,11 @@ msgstr ""
 msgid "%s (confirm)"
 msgstr "%s (bevestig)"
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:159
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:108
 msgid "%s (method)"
 msgstr "%s (methode)"
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:194
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:143
 msgid "%s (option)"
 msgstr "%s (optie)"
 
@@ -519,7 +519,7 @@ msgstr "%s is vereist."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:67
 msgid "%s is sent without text caption"
-msgstr "%s wordt verzonden zonder tekstbijschrift"
+msgstr "%s wordt zonder tekst verzonden"
 
 #: app/frontend/shared/i18n/dates.ts:111
 msgid "%s minutes ago"
@@ -576,7 +576,7 @@ msgid ""
 "Authentication support in the future."
 msgstr ""
 "%s beveelt het gebruik van OAuth aan. %s heeft aangekondigd Basic "
-"Authentication in de toekomst niet meer te gaan ondersteunen."
+"Authentication in de toekomst niet meer te ondersteunen."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:65
 msgid "%s required!"
@@ -666,7 +666,7 @@ msgstr "%s% zijn momenteel in behandeling"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_reopen.jst.eco:11
 msgid "%s% have been reopened"
-msgstr "%s% zijn opnieuw geopend"
+msgstr "%s% zijn heropent"
 
 #: app/models/concerns/has_group_relation_definition.rb:51
 msgid "%{model} can have full or granular access to group"
@@ -674,7 +674,7 @@ msgstr "%{model} kan volledige of gedetailleerde toegang tot de groep hebben"
 
 #: app/models/object_manager/attribute.rb:572
 msgid "%{name} already exists"
-msgstr "%{name} bestaat al"
+msgstr "%{name} bestaat reeds"
 
 #: app/models/object_manager/attribute.rb:561
 msgid "%{name} is a reserved word"
@@ -716,7 +716,7 @@ msgid ""
 "take some additional time depending on the number of objects that will be "
 "deleted."
 msgstr ""
-"**Gegevens privacy**, helpt u bij het verwijderen en verifiëren van de "
+"**Gegevens privacy** helpt je bij het verwijderen en verifiëren van de "
 "verwijdering van bestaande gegevens van het systeem.\n"
 "\n"
 "Het kan worden gebruikt om tickets, organisaties en gebruikers te "
@@ -725,7 +725,7 @@ msgstr ""
 "\n"
 "Gegevens privacy taken worden elke 10 minuten uitgevoerd. De uitvoering kan "
 "wat extra tijd in beslag nemen, afhankelijk van het aantal objecten die "
-"worden verwijderd."
+"verwijderd worden."
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid ""
@@ -755,8 +755,8 @@ msgstr ""
 "tussen aanmaken en sluiten van een ticket).\n"
 "\n"
 "Alle geëscaleerde tickets (d.w.z. tickets die het gedefinieerde doel hebben "
-"gemist) worden in een aparte weergave in je overzichten weergegeven. Je kunt "
-"ook **e-mailmeldingen** configureren."
+"gemist) worden in een aparte weergave binnen je overzichten weergegeven. Je "
+"kunt ook **e-mailmeldingen** configureren."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:297
 msgid "1 attached file"
@@ -896,7 +896,7 @@ msgstr "Een lijst van active imports die automatisch gepland worden."
 
 #: lib/validations/mention_validator.rb:7
 msgid "A mentioned user has no agent access to this ticket"
-msgstr "Een genoemde Behandelaar heeft geen Behandelaartoegang tot dit ticket"
+msgstr "Een genoemde Behandelaar heeft geen Behandelaarstoegang tot dit ticket"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:26
 msgid ""
@@ -919,7 +919,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:156
 msgid "A powerful service to get more information about your customers."
-msgstr "Een krachtige service om meer informatie over jouw klanten te krijgen."
+msgstr "Een krachtige service om meer informatie over je klanten te krijgen."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee:208
 msgid "A queue is required!"
@@ -947,9 +947,9 @@ msgid ""
 "A ticket's priority is simply a ranking of how urgent or important it is. "
 "Different priorities allow you to see the importance of your tickets better."
 msgstr ""
-"De prioriteit van een ticket is eenvoudigweg een rangschikking van hoe "
-"urgent of belangrijk het is. Verschillende prioriteiten zorgen ervoor dat je "
-"het belang van jouw tickets beter kunt zien."
+"De prioriteit van een ticket is een rangschikking van hoe urgent of "
+"belangrijk het is. Verschillende prioriteiten zorgen ervoor dat je het "
+"belang van jouw tickets beter kunt zien."
 
 #: app/assets/javascripts/app/models/ticket_state.coffee
 msgid ""
@@ -1315,7 +1315,7 @@ msgstr "Voeg SSL-Certificaat toe"
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco:19
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:14
 msgid "Add Tag"
-msgstr "Label toevoegen"
+msgstr "Tag toevoegen"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:108
 msgid "Add Telegram Bot"
@@ -1361,7 +1361,7 @@ msgstr "Alle waarden toevoegen"
 msgid "Add attachment option to upload."
 msgstr "Bijlage-optie toevoegen om te uploaden."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:199
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:270
 msgid "Add bullet list"
 msgstr "Opsommingslijst toevoegen"
 
@@ -1370,19 +1370,23 @@ msgstr "Opsommingslijst toevoegen"
 msgid "Add condition"
 msgstr "Voeg een voorwaarde toe"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
 msgid "Add first level heading"
 msgstr "Hoofdniveau koptekst toevoegen"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:105
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
+msgid "Add heading"
+msgstr "Titel toevoegen"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:131
 msgid "Add image"
 msgstr "Afbeelding toevoegen"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:125
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
 msgid "Add link"
 msgstr "Link toevoegen"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:187
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:257
 msgid "Add ordered list"
 msgstr "Geordende lijst toevoegen"
 
@@ -1391,7 +1395,7 @@ msgstr "Geordende lijst toevoegen"
 msgid "Add reply"
 msgstr "Antwoord toevoegen"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:167
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:203
 msgid "Add second level heading"
 msgstr "Tweede niveau koptekst toevoegen"
 
@@ -1408,7 +1412,7 @@ msgstr "Initialen van de behandelaar toevoegen aan het eind van de tweet."
 msgid "Add subclause"
 msgstr "Onderdeel toevoegen"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:177
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:214
 msgid "Add third level heading"
 msgstr "Derde niveau koptekst toevoegen"
 
@@ -1678,7 +1682,7 @@ msgstr "Heropening van tickets binnen een bepaalde tijd toestaan."
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:16
 msgid "Allow users to add new tags."
-msgstr "Sta gebruikers toe nieuwe labels toe te voegen."
+msgstr "Sta gebruikers toe nieuwe tags toe te voegen."
 
 #: db/seeds/settings.rb:4024
 msgid "Allow users to create new tags."
@@ -2051,6 +2055,10 @@ msgstr "Notitie"
 msgid "Article - visibility confirmation dialog"
 msgstr "Notitie - zichtbaarheid bevestigingsdialoog"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+msgid "Article > Text (HTML)"
+msgstr "Notitie > Tekst (HTML)"
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr "Aantal notities"
@@ -2135,7 +2143,7 @@ msgstr ""
 msgid "At least one match rule is required, but none was provided."
 msgstr "Minimaal één regel is verplicht, maar er is er geen één aangeboden."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr "Minimaal één object moet geselecteerd worden."
 
@@ -2618,7 +2626,7 @@ msgstr "Bulkactie uitgevoerd!"
 msgid "Bulk action failed"
 msgstr "Bulk actie mislukt"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr "Bulk actie gestopt met error(s): %s!"
 
@@ -2973,6 +2981,10 @@ msgstr "Wijzig volgorde"
 #: db/seeds/permissions.rb:409
 msgid "Change personal account password."
 msgstr "Wijzig wachtwoord voor je persoonlijke account."
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
+msgid "Change text color"
+msgstr "Tekstkleur wijzigen"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -3362,7 +3374,7 @@ msgstr "Kleurweergave van de open ticket-indicator in de zijbalk."
 msgid "Combined subscription URL"
 msgstr "Gecombineerd abonnement URL"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "Opmerking"
 
@@ -3404,7 +3416,7 @@ msgstr "Voorwaarden voor getroffen objecten"
 msgid "Conditions for shown tickets"
 msgstr "Voorwaarden voor getoonde tickets"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr "Configuratie"
 
@@ -3953,7 +3965,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:156
 msgid "Create tag"
-msgstr "Label maken"
+msgstr "Tag maken"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:629
 msgid "Create ticket"
@@ -3994,7 +4006,7 @@ msgstr "Maak:"
 msgid "Created"
 msgstr "Aangemaakt"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "Created Article"
 msgstr "Notitie aangemaakt"
 
@@ -4004,11 +4016,11 @@ msgstr "Notitie aangemaakt"
 msgid "Created At"
 msgstr "Gemaakt op"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Created External Article"
 msgstr "Externe Notitie aangemaakt"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Created Internal Article"
 msgstr "Interne Notitie aangemaakt"
 
@@ -5423,6 +5435,10 @@ msgstr "Verwijder eerst alle huidige records."
 msgid "Delete avatar"
 msgstr "Avatar verwijderen"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:149
+msgid "Delete column"
+msgstr "Kolom verwijderen"
+
 #: db/seeds/permissions.rb:252
 msgid "Delete existing data of your system."
 msgstr "Verwijder bestaande gegevens van uw systeem."
@@ -5466,6 +5482,14 @@ msgstr "Organisatie verwijderen?"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:18
 msgid "Delete records"
 msgstr "Verwijderde records"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:121
+msgid "Delete row"
+msgstr "Rij verwijderen"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:206
+msgid "Delete table"
+msgstr "Tabel verwijderen"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:154
 msgid "Delete this access token"
@@ -6395,6 +6419,8 @@ msgstr "Omsluiting"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
+#: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:50
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:36
 msgid "Encrypt"
 msgstr "Versleutelen"
 
@@ -6423,8 +6449,8 @@ msgid "Encryption error"
 msgstr "Encryptie error"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:95
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:201
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:120
 msgid "Encryption:"
 msgstr "Versleuteling:"
 
@@ -6493,7 +6519,7 @@ msgstr "Voer een geldig e-mailadres in."
 msgid "Enter credentials"
 msgstr "Invoergegevens invoeren"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:130
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
 msgid "Enter link URL"
 msgstr "Voer URL in"
 
@@ -6886,7 +6912,7 @@ msgstr "Verloopt"
 msgid "Expires at"
 msgstr "Verloopt op"
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "Uitgebreid zoeken"
 
@@ -7224,7 +7250,7 @@ msgstr "Opmaken als //doorgestreept//"
 msgid "Format as _underlined_"
 msgstr "Opmaken als _onderstreept_"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:84
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:99
 msgid "Format as bold"
 msgstr "Opmaken als vetgedrukt"
 
@@ -7240,7 +7266,7 @@ msgstr "Opmaken als h2-rubriek"
 msgid "Format as h3 heading"
 msgstr "Opmaken als h3-rubriek"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:91
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:107
 msgid "Format as italic"
 msgstr "Opmaken als cursief"
 
@@ -7248,11 +7274,11 @@ msgstr "Opmaken als cursief"
 msgid "Format as ordered list"
 msgstr "Opmaken als geordende lijst"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:98
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:123
 msgid "Format as strikethrough"
 msgstr "Opmaken als doorgestreept"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:77
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:115
 msgid "Format as underlined"
 msgstr "Opmaken als onderstreept"
 
@@ -8001,8 +8027,8 @@ msgid ""
 "How many of your tickets are coming from email, phone, Twitter, or Facebook? "
 "(Shows percentages for both inbound and outbound tickets.)"
 msgstr ""
-"Hoeveel van jouw tickets komen van e-mail, telefoon, Twitter of Facebook? "
-"(Toont percentages voor zowel inkomende als uitgaande tickets.)"
+"Hoeveel van jouw tickets komen van e-mail, telefoon, Twitter of Facebook? ("
+"Toont percentages voor zowel inkomende als uitgaande tickets.)"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_reopen.coffee:9
 msgid ""
@@ -8479,6 +8505,10 @@ msgstr "Minuutwaarde verhogen"
 msgid "Increment seconds value"
 msgstr "Secondewaarde verhogen"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
+msgid "Indent text"
+msgstr "Tekst inspringen"
+
 #: app/frontend/apps/desktop/components/CommonProgressBar/CommonProgressBar.vue:16
 msgid "Indicating progress"
 msgstr "Vooruitgang aangeven"
@@ -8523,11 +8553,39 @@ msgstr ""
 msgid "Inline content could not be generated."
 msgstr "Inline-inhoud kon niet gegenereerd worden."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:225
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
+msgid "Insert code block"
+msgstr "Codeblok invoegen"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:140
+msgid "Insert column after"
+msgstr "Kolom invoegen na"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:131
+msgid "Insert column before"
+msgstr "Kolom invoegen vóór"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
+msgid "Insert inline code"
+msgstr "Inline code invoegen"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:103
+msgid "Insert row above"
+msgstr "Rij boven invoegen"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:112
+msgid "Insert row below"
+msgstr "Rij onder invoegen"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
+msgid "Insert table"
+msgstr "Tabel invoegen"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
 msgid "Insert text from Knowledge Base article"
 msgstr "Voeg tekst van kennisbankartikel in"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:232
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:350
 msgid "Insert text from text module"
 msgstr "Voeg tekst van tekstmodule in"
 
@@ -8980,7 +9038,7 @@ msgstr "Label"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:30
 msgid "Labels"
-msgstr "labels"
+msgstr "Labels"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:224
 msgid "Landing page layout"
@@ -9002,7 +9060,7 @@ msgstr "Taal"
 msgid "Languages"
 msgstr "Talen"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 msgid "Last Article"
 msgstr "Laatste Notitie"
 
@@ -9018,11 +9076,11 @@ msgstr "Laatste contact op"
 msgid "Last Contact Customer At"
 msgstr "Laatste contact met klant op"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr "Laatste Externe Notitie"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
 msgstr "Laatste Interne Notitie"
 
@@ -9441,7 +9499,7 @@ msgstr "Service Level Agreements van je systeem beheren."
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:20
 msgid "Manage Tags"
-msgstr "Labels beheren"
+msgstr "Tags beheren"
 
 #: db/seeds/permissions.rb:174
 msgid "Manage Telegram channel of your system."
@@ -9818,7 +9876,7 @@ msgstr "Het downloaden van media is gelukt."
 msgid "Members"
 msgstr "Leden"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:218
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 msgid "Mention user"
 msgstr "Vermeld gebruiker"
 
@@ -9834,6 +9892,10 @@ msgstr "Vermeldingen Groep"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
 msgid "Merge"
 msgstr "Samenvoegen"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:168
+msgid "Merge cells"
+msgstr "Cellen samenvoegen"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:51
 msgid "Merge tickets"
@@ -10360,7 +10422,7 @@ msgstr "Nieuwe bron"
 #: app/assets/javascripts/app/views/tag/index.jst.eco:14
 #: db/seeds/settings.rb:4021
 msgid "New Tags"
-msgstr "Nieuwe labels"
+msgstr "Nieuwe Tags"
 
 #: app/assets/javascripts/app/controllers/template.coffee:22
 msgid "New Template"
@@ -11451,6 +11513,10 @@ msgstr "Uitgaand:"
 msgid "Outdated Browser"
 msgstr "Verouderde browser"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:246
+msgid "Outdent text"
+msgstr "Inspringing verkleinen"
+
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/models/group.coffee:47
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee:7
@@ -11466,7 +11532,7 @@ msgstr "Overzicht bulk mask"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:34
 #: db/seeds/permissions.rb:35
@@ -12458,7 +12524,7 @@ msgstr "Verwijder alle waardes"
 msgid "Remove authenticator app"
 msgstr "authenticator-app verwijderen"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:211
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:283
 msgid "Remove formatting"
 msgstr "Verwijderd de formattering"
 
@@ -12551,12 +12617,12 @@ msgstr "Rapport"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee:3
 msgid "Report Profile"
-msgstr "Rapportage"
+msgstr "Rapportageprofiel"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee:15
 #: db/seeds/permissions.rb:101
 msgid "Report Profiles"
-msgstr "Rapportage profielen"
+msgstr "Rapportageprofielen"
 
 #: app/assets/javascripts/app/controllers/report.coffee:6
 #: app/assets/javascripts/app/views/report/main.jst.eco:5
@@ -13195,8 +13261,8 @@ msgid ""
 "Search result label is not a string, a number or a boolean. Please provide "
 "search result label key."
 msgstr ""
-"Het zoekresultaat is geen tekenreeks, nummer of booleaan. Geef de labelcode "
-"voor het zoekresultaat op."
+"Het zoekresultaat is geen tekenreeks, nummer of booleaan. Geef de "
+"labelsleutel voor het zoekresultaat."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:828
 msgid "Search result label key"
@@ -13205,7 +13271,7 @@ msgstr "Labelsleutel zoekresultaat"
 #: lib/external_data_source/errors.rb:111
 msgid "Search result label key \"%s\" is not a string, number or boolean."
 msgstr ""
-"De sleutel van het zoekresultaatlabel \"%s\" is geen tekenreeks, getal of "
+"De labelsleutel van het zoekresultaat \"%s\" is geen tekenreeks, getal of "
 "booleaan."
 
 #: lib/external_data_source/errors.rb:101
@@ -13316,7 +13382,7 @@ msgstr "Beveiligingscode"
 msgid "Security Error"
 msgstr "Beveiligingsfout"
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:186
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:135
 msgid "Security Information"
 msgstr "Beveiligingsinformatie"
 
@@ -13933,6 +13999,8 @@ msgstr "Sidebar Bijlagen"
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco:5
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:5
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:80
+#: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:59
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:43
 msgid "Sign"
 msgstr "Teken"
 
@@ -13984,8 +14052,8 @@ msgid "Sign up"
 msgstr "Aanmelden"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:92
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:87
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:192
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:128
 msgid "Sign:"
 msgstr "Ondertekenen:"
 
@@ -14197,6 +14265,10 @@ msgstr "Speciaal teken vereist"
 msgid "Split"
 msgstr "Splitsen"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:159
+msgid "Split cells"
+msgstr "Cellen splitsen"
+
 #: db/seeds/groups.rb:7
 msgid "Standard Group/Pool for Tickets."
 msgstr "Standaard groep/pool voor tickets."
@@ -14248,19 +14320,17 @@ msgid "Start typing to search in Knowledge Base…"
 msgstr "Start met typen om in de kennisbank te zoeken…"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:43
-#, fuzzy
-#| msgid "Start typing to search or enter an phone number…"
 msgid "Start typing to search or enter a new tag…"
-msgstr "Typ om te zoeken of voer een telefoonnummer in…"
+msgstr "Begin met typen om te zoeken of voer een nieuwe tag in…"
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
+msgid "Start typing to search or enter a phone number…"
+msgstr "Begin te typen om te zoeken of voer een telefoonnummer in…"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:93
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:50
 msgid "Start typing to search or enter an email address…"
 msgstr "Typ om te zoeken of voer een e-mailadres in…"
-
-#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
-msgid "Start typing to search or enter an phone number…"
-msgstr "Typ om te zoeken of voer een telefoonnummer in…"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:70
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:41
@@ -14575,7 +14645,7 @@ msgstr "Tag \"%s\" bestaat al."
 #: db/seeds/object_manager_attributes.rb:392 db/seeds/permissions.rb:59
 #: lib/excel_sheet/ticket.rb:33
 msgid "Tags"
-msgstr "Labels"
+msgstr "Tags"
 
 #: db/seeds/settings.rb:3232
 msgid ""
@@ -14901,7 +14971,7 @@ msgstr "De link naar het account is verwijderd!"
 
 #: app/controllers/reports_controller.rb:130
 msgid "The active reporting profile could not be found."
-msgstr "Het actieve rapportage profiel kon niet worden gevonden."
+msgstr "Het actieve rapportageprofiel kon niet worden gevonden."
 
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco:2
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco:2
@@ -17234,19 +17304,31 @@ msgstr "Vandaag"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:87
 msgid "Toggle AM/PM mode"
-msgstr "Schakelen tussen AM- en PM-modus"
+msgstr "Schakel tussen AM- en PM-modus"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:164
 msgid "Toggle Group"
-msgstr "Toggle Groep"
+msgstr "Schakel Groep aan/uit"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:359
 msgid "Toggle dark mode"
-msgstr "Schakel donkere modus in"
+msgstr "Schakel donkere modus aan/uit"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:196
+msgid "Toggle header cell"
+msgstr "Schakel header cel in/uit"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:187
+msgid "Toggle header column"
+msgstr "Schakel header kolom in/uit"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:178
+msgid "Toggle header row"
+msgstr "Schakel rij header in/uit"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:47
 msgid "Toggle the overlay"
-msgstr "Toggle de overlay"
+msgstr "Schakel de overlay in/uit"
 
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
@@ -17553,7 +17635,7 @@ msgstr "Twee-factor Authenticatiemethode is succesvol geconfigureerd."
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -18321,7 +18403,7 @@ msgstr "Bekijkt ticket"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
@@ -19164,6 +19246,10 @@ msgstr ""
 msgid "Zammad"
 msgstr "Zammad"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:327
+msgid "Zammad Features"
+msgstr "Zammad Functies"
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco:148
 msgid ""
 "Zammad Forms requires jQuery. If you don't already use it on your website, "
@@ -19289,10 +19375,8 @@ msgid "add new phone number"
 msgstr "nieuw telefoonnummer toevoegen"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:23
-#, fuzzy
-#| msgid "Add Tag"
 msgid "add new tag"
-msgstr "Label toevoegen"
+msgstr "nieuwe tag toevoegen"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "add option"
@@ -20705,6 +20789,71 @@ msgstr "…van geheel tekstvak"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Wachttijd vandaag"
+
+#, fuzzy
+#~| msgid "Apply"
+#~ msgid "Apple"
+#~ msgstr "Toepassen"
+
+#, fuzzy
+#~| msgid "Slack"
+#~ msgid "Black"
+#~ msgstr "Slack"
+
+#, fuzzy
+#~| msgid "right"
+#~ msgid "Bright Sun"
+#~ msgstr "rechts"
+
+#, fuzzy
+#~| msgid "Yellow"
+#~ msgid "Cello"
+#~ msgstr "Geel"
+
+#, fuzzy
+#~| msgid "Easter holiday"
+#~ msgid "Eastern Blue"
+#~ msgstr "Paasvakantie"
+
+#, fuzzy
+#~| msgid "Blue"
+#~ msgid "Fun Blue"
+#~ msgstr "Blauw"
+
+#, fuzzy
+#~| msgid "Format"
+#~ msgid "Korma"
+#~ msgstr "Formaat"
+
+#, fuzzy
+#~| msgid "Purple"
+#~ msgid "Medium Purple"
+#~ msgstr "Paars"
+
+#, fuzzy
+#~| msgid "Green"
+#~ msgid "Moss Green"
+#~ msgstr "Groen"
+
+#, fuzzy
+#~| msgid "Purple"
+#~ msgid "Purple Heart"
+#~ msgstr "Paars"
+
+#, fuzzy
+#~| msgid "Read"
+#~ msgid "Red"
+#~ msgstr "Lezen"
+
+#, fuzzy
+#~| msgid "Cancel"
+#~ msgid "Seance"
+#~ msgstr "Annuleren"
+
+#, fuzzy
+#~| msgid "Blue"
+#~ msgid "Sky Blue"
+#~ msgstr "Blauw"
 
 #~ msgid "Whatsapp"
 #~ msgstr "Whatsapp"

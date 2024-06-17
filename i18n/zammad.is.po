@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-07 01:05+0000\n"
+"PO-Revision-Date: 2024-06-15 01:05+0000\n"
 "Last-Translator: sigurbjartur <github@sigurbjartur.com>\n"
 "Language-Team: Icelandic <https://translations.zammad.org/projects/zammad/"
 "zammad-development/is/>\n"
@@ -244,11 +244,11 @@ msgstr ""
 msgid "%s (confirm)"
 msgstr "%s (staðfesta)"
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:159
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:108
 msgid "%s (method)"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:194
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:143
 msgid "%s (option)"
 msgstr "%s (valmöguleiki)"
 
@@ -266,10 +266,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:9
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:6
-#, fuzzy
-#| msgid "%s Api Token"
 msgid "%s API Token"
-msgstr "%s Api Tóki"
+msgstr "%s API Tóki"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:144
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:179
@@ -793,6 +791,7 @@ msgstr ""
 #: lib/validations/mention_validator.rb:7
 msgid "A mentioned user has no agent access to this ticket"
 msgstr ""
+"Tilvísaður notandi hefur ekki aðgang þjónustufulltrúa, að þessari beiðni"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:26
 msgid ""
@@ -1268,7 +1267,7 @@ msgstr ""
 msgid "Add attachment option to upload."
 msgstr "Bæta við viðhengisvalkost fyrir að hlaða upp skrám."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:199
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:270
 msgid "Add bullet list"
 msgstr ""
 
@@ -1279,23 +1278,29 @@ msgstr ""
 msgid "Add condition"
 msgstr "Aðgerð"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
 msgid "Add first level heading"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:105
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
+#, fuzzy
+#| msgid "Add Tag"
+msgid "Add heading"
+msgstr "Bæta við merkispjaldi"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:131
 #, fuzzy
 #| msgid "Add Tag"
 msgid "Add image"
 msgstr "Bæta við merki"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:125
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
 #, fuzzy
 #| msgid "Add Link"
 msgid "Add link"
 msgstr "Bæta við hlekk"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:187
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:257
 #, fuzzy
 #| msgid "Format as ordered list"
 msgid "Add ordered list"
@@ -1308,7 +1313,7 @@ msgstr "Forsníða sem númeraðan lista"
 msgid "Add reply"
 msgstr "svara"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:167
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:203
 msgid "Add second level heading"
 msgstr ""
 
@@ -1325,7 +1330,7 @@ msgstr "Bæta við upphafsstöfum sendanda aftan á tíst."
 msgid "Add subclause"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:177
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:214
 msgid "Add third level heading"
 msgstr ""
 
@@ -1460,7 +1465,7 @@ msgstr "Þjónustufulltrúi"
 
 #: db/seeds/settings.rb:3103
 msgid "Agent Name"
-msgstr ""
+msgstr "Nafn þjónustufulltrúa"
 
 #: db/seeds/settings.rb:3103
 msgid "Agent Name + FromSeparator + System Address Display Name"
@@ -1475,8 +1480,10 @@ msgid "Agent idle timeout"
 msgstr ""
 
 #: app/models/role.rb:153 app/models/user.rb:792
+#, fuzzy
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
+"Fjöldatakmarki þjónustufulltrúa náð, athugaðu reikningsstillingar þínar."
 
 #: db/seeds/permissions.rb:311
 msgid "Agent phone"
@@ -1488,7 +1495,7 @@ msgstr "Beiðnir þjónustufulltrúa"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:109
 msgid "Agents"
-msgstr "Fulltrúar"
+msgstr "Þjónustufulltrúar"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:27
 msgid "Alarm"
@@ -1521,10 +1528,8 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:462
-#, fuzzy
-#| msgid "All Agents"
 msgid "All agents"
-msgstr "Allir fulltrúar"
+msgstr "Allir þjónustufulltrúar"
 
 #: public/assets/chat/views/waiting.eco:7
 msgid "All colleagues are busy."
@@ -1783,7 +1788,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:10
 msgid "Apply current defaults to all agents"
-msgstr ""
+msgstr "Afrita sjálfgefin gildi á alla þjónustufulltrúa"
 
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:76
 #, fuzzy
@@ -1934,6 +1939,12 @@ msgstr "Grein"
 msgid "Article - visibility confirmation dialog"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#, fuzzy
+#| msgid "Article"
+msgid "Article > Text (HTML)"
+msgstr "Grein"
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr "Greinafjöldi"
@@ -2022,7 +2033,7 @@ msgstr ""
 msgid "At least one match rule is required, but none was provided."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr ""
 
@@ -2530,7 +2541,7 @@ msgstr "Fjöldaaðgerð framkvæmd!"
 msgid "Bulk action failed"
 msgstr "Fjöldaaðgerð misheppnaðist"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr ""
 
@@ -2882,6 +2893,12 @@ msgstr "Breyta röðun"
 #: db/seeds/permissions.rb:409
 msgid "Change personal account password."
 msgstr "Breyta lykilorði þíns reiknings."
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
+#, fuzzy
+#| msgid "Change order"
+msgid "Change text color"
+msgstr "Breyta röðun"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -3284,7 +3301,7 @@ msgstr ""
 msgid "Combined subscription URL"
 msgstr "Miðaáskriftir"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "Athugasemd"
 
@@ -3326,7 +3343,7 @@ msgstr ""
 msgid "Conditions for shown tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr ""
 
@@ -3920,7 +3937,7 @@ msgstr "Stofna:"
 msgid "Created"
 msgstr "Stofnað"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Created Article"
@@ -3932,13 +3949,13 @@ msgstr "Stofna prufu miða"
 msgid "Created At"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Created External Article"
 msgstr "Stofna prufu miða"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Created Internal Article"
@@ -5250,6 +5267,12 @@ msgstr "Eyða öllum fyrirliggjandi færslum fyrst."
 msgid "Delete avatar"
 msgstr "Eyða notanda"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:149
+#, fuzzy
+#| msgid "Delete File"
+msgid "Delete column"
+msgstr "Eyða skrá"
+
 #: db/seeds/permissions.rb:252
 msgid "Delete existing data of your system."
 msgstr "Eyða núverandi gögnum kerfissins."
@@ -5295,6 +5318,18 @@ msgstr "Eyða stofnun?"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:18
 msgid "Delete records"
 msgstr "Eyða færslum"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:121
+#, fuzzy
+#| msgid "Delete User"
+msgid "Delete row"
+msgstr "Eyða notanda"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:206
+#, fuzzy
+#| msgid "Delete File"
+msgid "Delete table"
+msgstr "Eyða skrá"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:154
 msgid "Delete this access token"
@@ -6241,6 +6276,8 @@ msgstr "loka"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
+#: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:50
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:36
 msgid "Encrypt"
 msgstr "Dulkóða"
 
@@ -6271,8 +6308,8 @@ msgid "Encryption error"
 msgstr "Dulkóða"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:95
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:201
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:120
 msgid "Encryption:"
 msgstr "Dulkóðun:"
 
@@ -6345,7 +6382,7 @@ msgstr "Sláðu inn gilt netfang."
 msgid "Enter credentials"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:130
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
 msgid "Enter link URL"
 msgstr ""
 
@@ -6664,10 +6701,8 @@ msgid "Existing tickets"
 msgstr "Nýr miði"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:260
-#, fuzzy
-#| msgid "assign tickets"
 msgid "Existing tickets (open)"
-msgstr "úthluta miða"
+msgstr "Beiðnir sem eru til (opnar)"
 
 #: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:70
 msgid "Expand this element"
@@ -6711,7 +6746,7 @@ msgstr "Rennur út"
 msgid "Expires at"
 msgstr "Rennur út"
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "Útvíkkuð leit"
 
@@ -7072,7 +7107,7 @@ msgstr "Forsníða sem //yfirstrikað//"
 msgid "Format as _underlined_"
 msgstr "Forsníða sem _undirstrikað_"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:84
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:99
 #, fuzzy
 #| msgid "Format as |bold|"
 msgid "Format as bold"
@@ -7090,7 +7125,7 @@ msgstr "Forsníða sem h2 titil"
 msgid "Format as h3 heading"
 msgstr "Forsníða sem h3 titil"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:91
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:107
 #, fuzzy
 #| msgid "Format as ||italic||"
 msgid "Format as italic"
@@ -7100,13 +7135,13 @@ msgstr "Forsníða sem ||skáletrað||"
 msgid "Format as ordered list"
 msgstr "Forsníða sem númeraðan lista"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:98
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:123
 #, fuzzy
 #| msgid "Format as //strikethrough//"
 msgid "Format as strikethrough"
 msgstr "Forsníða sem //yfirstrikað//"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:77
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:115
 #, fuzzy
 #| msgid "Format as _underlined_"
 msgid "Format as underlined"
@@ -7896,8 +7931,8 @@ msgstr ""
 msgid ""
 "How many of your tickets have been re-opened after being marked “closed”?"
 msgstr ""
-"Hve margir af miðunum þínum hafa verið opnaðir að nýju eftir að hafa verið "
-"merktir sem \"lokaðir\"?"
+"Hve margar af beiðnunum þínum hafa verið opnaðar að nýju eftir að hafa verið "
+"merktar sem \"lokuð\"?"
 
 #: app/controllers/first_steps_controller.rb:78
 msgid "How to use it"
@@ -8372,6 +8407,12 @@ msgstr "mínútur"
 msgid "Increment seconds value"
 msgstr "mínútur"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
+#, fuzzy
+#| msgid "Text modules"
+msgid "Indent text"
+msgstr "Texta einingar"
+
 #: app/frontend/apps/desktop/components/CommonProgressBar/CommonProgressBar.vue:16
 #, fuzzy
 #| msgid "Your tickets in process"
@@ -8417,13 +8458,45 @@ msgstr ""
 msgid "Inline content could not be generated."
 msgstr "Inline content could not be generated."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:225
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
+msgid "Insert code block"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:140
+msgid "Insert column after"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:131
+msgid "Insert column before"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
+#, fuzzy
+#| msgid "Text modules"
+msgid "Insert inline code"
+msgstr "Texta einingar"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:103
+msgid "Insert row above"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:112
+msgid "Insert row below"
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
+#, fuzzy
+#| msgid "Text modules"
+msgid "Insert table"
+msgstr "Texta einingar"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
 #, fuzzy
 #| msgid "Delete Knowledge Base"
 msgid "Insert text from Knowledge Base article"
 msgstr "Eyða þekkingarbrunni"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:232
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:350
 #, fuzzy
 #| msgid "Text modules"
 msgid "Insert text from text module"
@@ -8892,7 +8965,7 @@ msgstr "Tungumál"
 msgid "Languages"
 msgstr "Tungumál"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 #, fuzzy
 #| msgid "Article"
 msgid "Last Article"
@@ -8910,11 +8983,11 @@ msgstr ""
 msgid "Last Contact Customer At"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
 msgstr ""
 
@@ -9743,7 +9816,7 @@ msgstr "Niðurhal gagnamiðils heppnaðist."
 msgid "Members"
 msgstr "Meðlimir"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:218
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 #, fuzzy
 #| msgid "current user"
 msgid "Mention user"
@@ -9761,6 +9834,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
 msgid "Merge"
 msgstr "Sameina"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:168
+#, fuzzy
+#| msgid "Merge to Ticket#"
+msgid "Merge cells"
+msgstr "Sameina miða#"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:51
 #, fuzzy
@@ -10350,13 +10429,11 @@ msgstr "Skapalón"
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
 msgid "New Ticket"
-msgstr "Nýr miði"
+msgstr "Ný beiðni"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:21
-#, fuzzy
-#| msgid "New Ticket"
 msgid "New Ticket State"
-msgstr "Nýr miði"
+msgstr "Ný beiðni"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco:11
 #, fuzzy
@@ -11163,7 +11240,7 @@ msgstr "Opna miða# %s"
 #: app/assets/javascripts/app/controllers/widget/user.coffee:70
 #: db/seeds/overviews.rb:109
 msgid "Open Tickets"
-msgstr "Opnar Beiðnir"
+msgstr "Opnar beiðnir"
 
 #: app/models/system_report/plugin/entities/ticket.rb:4
 msgid "Open and closed tickets ratio (ticket counts based on state)"
@@ -11429,7 +11506,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee:11
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
 msgstr ""
-"Af öllum miðum ( þvert á fyrirtækið ), hve margir hafa verið úthlutaðir þér?"
+"Af öllum beiðnum (þvert á fyrirtækið), hve margar hafa verið úthlutaðir þér?"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:163
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:190
@@ -11463,6 +11540,10 @@ msgstr "Útfarandi:"
 msgid "Outdated Browser"
 msgstr "Vafri"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:246
+msgid "Outdent text"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/models/group.coffee:47
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee:7
@@ -11478,7 +11559,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:34
 #: db/seeds/permissions.rb:35
@@ -12539,7 +12620,7 @@ msgstr "Fjarlægja"
 msgid "Remove authenticator app"
 msgstr "Auðkenning"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:211
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:283
 #, fuzzy
 #| msgid "Removes the formatting"
 msgid "Remove formatting"
@@ -12635,7 +12716,7 @@ msgstr "svara"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:62
 msgid "Reply allowed only for open tickets"
-msgstr ""
+msgstr "Einungir hægt að svara opnum beiðnum"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:387
 msgid "Reply to last article"
@@ -13408,7 +13489,7 @@ msgstr "Öryggi"
 msgid "Security Error"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:186
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:135
 #, fuzzy
 #| msgid "Block Notifications"
 msgid "Security Information"
@@ -14071,6 +14152,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco:5
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:5
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:80
+#: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:59
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:43
 msgid "Sign"
 msgstr ""
 
@@ -14125,8 +14208,8 @@ msgid "Sign up"
 msgstr "Nýskráning"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:92
+#: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:87
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:192
-#: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:128
 msgid "Sign:"
 msgstr "Undirrita:"
 
@@ -14359,6 +14442,12 @@ msgstr ""
 msgid "Split"
 msgstr "skipta"
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:159
+#, fuzzy
+#| msgid "split"
+msgid "Split cells"
+msgstr "skipta"
+
 #: db/seeds/groups.rb:7
 msgid "Standard Group/Pool for Tickets."
 msgstr ""
@@ -14421,18 +14510,18 @@ msgstr "Byrjaðu að skrifa til að leita í þekkingarbrunni…"
 msgid "Start typing to search or enter a new tag…"
 msgstr "Leitaðu að eða sláðu inn símanúmer…"
 
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
+#, fuzzy
+#| msgid "Search or enter phone number…"
+msgid "Start typing to search or enter a phone number…"
+msgstr "Leitaðu að eða sláðu inn símanúmer…"
+
 #: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:93
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:50
 #, fuzzy
 #| msgid "Search or enter email address…"
 msgid "Start typing to search or enter an email address…"
 msgstr "Leitaðu að eða sláðu inn netfang…"
-
-#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
-#, fuzzy
-#| msgid "Search or enter phone number…"
-msgid "Start typing to search or enter an phone number…"
-msgstr "Leitaðu að eða sláðu inn símanúmer…"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:70
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:41
@@ -16114,10 +16203,8 @@ msgstr ""
 "logo_resize færibreytu."
 
 #: app/services/service/auth/send_admin_token.rb:33
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The user token could not be generated."
-msgstr "%s% hafa verið enduropnaðir"
+msgstr "Ekki tókst að búa til notandatóka."
 
 #: lib/external_credential/exchange.rb:51
 #: lib/external_credential/microsoft365.rb:51
@@ -16220,10 +16307,8 @@ msgid "There is no Google app configured."
 msgstr "Það er engin fulltrúi tengur í augnablikinu."
 
 #: lib/external_credential/twitter.rb:11
-#, fuzzy
-#| msgid "Not configured"
 msgid "There is no Twitter app configured."
-msgstr "Hefur ekki verið stillt af"
+msgstr "Twitter hefur ekki verið uppsett."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:213
 msgid "There is no agent online."
@@ -16260,10 +16345,8 @@ msgid "There is no route to this host."
 msgstr "Það er engin fulltrúi tengur í augnablikinu."
 
 #: lib/secure_mailing/pgp/tool/error.rb:124
-#, fuzzy
-#| msgid "matches"
 msgid "There is no valid PGP email recipient."
-msgstr "passar við"
+msgstr "Það er enginn gildur PGP tölvupóstsmóttakandi."
 
 #: lib/secure_mailing/pgp/tool/error.rb:133
 #, fuzzy
@@ -16278,10 +16361,8 @@ msgid "There was an unknown PGP error."
 msgstr "Það er engin fulltrúi tengur í augnablikinu."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:181
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "There was no Knowledge Base created."
-msgstr "%s% hafa verið enduropnaðir"
+msgstr "Enginn þekkingarbrunnur varð til."
 
 #: lib/secure_mailing/pgp/security_options.rb:12
 #, fuzzy
@@ -16290,10 +16371,8 @@ msgid "There was no PGP key found."
 msgstr "Það er engin fulltrúi tengur í augnablikinu."
 
 #: lib/secure_mailing/smime/security_options.rb:12
-#, fuzzy
-#| msgid "Notification Sound"
 msgid "There was no certificate found."
-msgstr "Tilkynningarhljóð"
+msgstr "Ekkert skilríki fannst."
 
 #: lib/secure_mailing/pgp/tool/error.rb:43
 #, fuzzy
@@ -16302,10 +16381,8 @@ msgid "There was no public PGP key found."
 msgstr "Það er engin fulltrúi tengur í augnablikinu."
 
 #: lib/secure_mailing/backend/handler_security_options.rb:43
-#, fuzzy
-#| msgid "matches"
 msgid "There was no recipient found."
-msgstr "passar við"
+msgstr "Enginn móttakandi fannst."
 
 #: lib/secure_mailing/pgp/tool/error.rb:34
 #, fuzzy
@@ -16314,10 +16391,8 @@ msgid "There was no secret PGP key found."
 msgstr "Það er engin fulltrúi tengur í augnablikinu."
 
 #: lib/secure_mailing/pgp/tool/error.rb:25
-#, fuzzy
-#| msgid "matches"
 msgid "There was no valid OpenPGP data found."
-msgstr "passar við"
+msgstr "Engin gild OpenPGP gögn fundust."
 
 #: lib/secure_mailing/pgp/security_options.rb:76
 msgid "There were PGP keys found for %s, but at least one of them has expired."
@@ -16355,10 +16430,8 @@ msgid ""
 msgstr ""
 
 #: app/models/ticket/time_accounting.rb:44
-#, fuzzy
-#| msgid "Defines the sender of email notifications."
 msgid "This article is not part of the ticket."
-msgstr "Skilgreinir hver sendir út tölvupóst tilkynningar"
+msgstr "Þessi grein er ekki hluti beiðnarinnar."
 
 #: lib/telegram_helper.rb:47
 msgid "This bot already exists."
@@ -16388,10 +16461,8 @@ msgid "This entry already exists!"
 msgstr ""
 
 #: app/services/service/check_feature_enabled.rb:23
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "This feature is not enabled."
-msgstr "Tímabókhald"
+msgstr "Þessi virkni er óvirk."
 
 #: config/initializers/activemodel_error.rb:31
 #, fuzzy
@@ -16504,10 +16575,8 @@ msgid "This field must contain at least one character."
 msgstr "Lykilorð verður að minnsta kosti innihalda einn tölustaf."
 
 #: app/frontend/shared/form/i18n/locales.ts:412
-#, fuzzy
-#| msgid "Password needs to contain 2 lower and 2 upper characters."
 msgid "This field must contain between %s and %s characters."
-msgstr "Lykilorð verður að innihalda 2 lágstafi og 2 hástafi"
+msgstr "Þetta svið verður að innihalda á milli %s og %s stafi."
 
 #: app/frontend/shared/form/i18n/locales.ts:185
 msgid "This field must contain letters or numbers."
@@ -16562,10 +16631,8 @@ msgid "This group or its children exceed the allowed nesting depth."
 msgstr ""
 
 #: lib/email_helper/probe.rb:285
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "This host cannot be reached."
-msgstr "%s% hafa verið enduropnaðir"
+msgstr "Ekki náðist í þessa tölvu."
 
 #: app/assets/javascripts/app/views/version.jst.eco:6
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:175
@@ -16685,16 +16752,12 @@ msgstr ""
 "rauntíma."
 
 #: app/services/service/concerns/handles_setting.rb:22
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "This setting is not disabled."
-msgstr "Tímabókhald"
+msgstr "Þessi stilling er ekki óvirk."
 
 #: app/services/service/concerns/handles_setting.rb:18
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "This setting is not enabled."
-msgstr "Tímabókhald"
+msgstr "Þessi stilling er ekki virk."
 
 #: app/assets/javascripts/app/models/group.coffee:13
 msgid "This signature is inactive, it won't be included in the reply."
@@ -16848,10 +16911,8 @@ msgid "Ticket Overview"
 msgstr "Nýtt yfirlit"
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:72
-#, fuzzy
-#| msgid "Overviews"
 msgid "Ticket Overview settings are saved."
-msgstr "Yfirlit"
+msgstr "Stillingar beiðnayfirlits eru vistaðar."
 
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:22
 #, fuzzy
@@ -16924,10 +16985,8 @@ msgid "Ticket actions"
 msgstr "Miðaáskriftir"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:386
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Ticket could not be created."
-msgstr "%s% hafa verið enduropnaðir"
+msgstr "Ekki tókst að stofna beiðni."
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:8
 #, fuzzy
@@ -17013,10 +17072,8 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:37
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Ticket tags could not be updated."
-msgstr "%s% hafa verið enduropnaðir"
+msgstr "Ekki tókst að uppfæra merkimiða beiðna."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:61
 msgid "Ticket tags updated successfully."
@@ -17240,10 +17297,8 @@ msgid "Time zone"
 msgstr "Tímabelti"
 
 #: app/models/setting/validation/time_zone.rb:6
-#, fuzzy
-#| msgid "Digit required"
 msgid "Time zone is required."
-msgstr "Tölustafs krafist"
+msgstr "Tímabeltis er krafist."
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:33
 msgid "Timeframe between agent updates or for an agent to respond."
@@ -17407,6 +17462,24 @@ msgstr "Foreldri"
 msgid "Toggle dark mode"
 msgstr ""
 
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:196
+#, fuzzy
+#| msgid "Open note box"
+msgid "Toggle header cell"
+msgstr "Opna athugasemdabox"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:187
+#, fuzzy
+#| msgid "Open note box"
+msgid "Toggle header column"
+msgstr "Opna athugasemdabox"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:178
+#, fuzzy
+#| msgid "Open note box"
+msgid "Toggle header row"
+msgstr "Opna athugasemdabox"
+
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:47
 #, fuzzy
 #| msgid "Open note box"
@@ -17419,7 +17492,7 @@ msgstr "Opna athugasemdabox"
 #: app/models/channel/driver/sms/message_bird.rb:91
 #: app/models/channel/driver/sms/twilio.rb:104
 msgid "Token"
-msgstr ""
+msgstr "Tóki"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:12
@@ -17702,10 +17775,8 @@ msgstr ""
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:189
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:107
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:112
-#, fuzzy
-#| msgid "Authentication"
 msgid "Two-factor authentication method could not be initiated."
-msgstr "Auðkenning"
+msgstr "Ekki tókst að vekja tveggja þátta auðkenningarhátt."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:191
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:156
@@ -17715,10 +17786,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:221
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:98
-#, fuzzy
-#| msgid "Authentication"
 msgid "Two-factor authentication method was set as default."
-msgstr "Auðkenning"
+msgstr "Tveggja þátta auðkenningarháttur var gerður sjalfgefinn."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee:59
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:277
@@ -17741,7 +17810,7 @@ msgstr "Uppfærsla tókst!"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -17787,10 +17856,8 @@ msgid "URL (AJAX endpoint)"
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb:215 db/seeds/overviews.rb:32
-#, fuzzy
-#| msgid "Unassigned & Open"
 msgid "Unassigned & Open Tickets"
-msgstr "Óúthlutaðir og opnir"
+msgstr "Óúthlutnaðar & Opnar beiðnir"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:23
 #: app/assets/javascripts/app/views/google/list.jst.eco:16
@@ -17942,10 +18009,8 @@ msgid "Update successful."
 msgstr ""
 
 #: db/seeds/settings.rb:5747
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Update the most recent tickets."
-msgstr "%s% hafa verið enduropnaðir"
+msgstr "Uppfæra nýjustu beiðnirnar."
 
 #: app/assets/javascripts/app/models/application.coffee:11
 #: app/assets/javascripts/app/models/calendar.coffee:14
@@ -18228,16 +18293,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:104
 #: app/assets/javascripts/app/controllers/signup.coffee:98
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts:55
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "User could not be created."
-msgstr "%s% hafa verið enduropnaðir"
+msgstr "Ekki tókst að stofna notanda."
 
 #: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:86
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "User could not be updated."
-msgstr "%s% hafa verið enduropnaðir"
+msgstr "Ekki tókst að uppfæra notanda."
 
 #: lib/external_credential/google.rb:44
 msgid "User email could not be extracted from 'id_token'."
@@ -18297,10 +18358,8 @@ msgid "Username / email"
 msgstr "Notandanafn / netfang"
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco:9
-#, fuzzy
-#| msgid "Username for proxy connection."
 msgid "Username for proxy connection"
-msgstr "Notandanafn fyrir vefsels tengingu."
+msgstr "Notandanafn fyrir vefselstengingu"
 
 #: db/seeds/settings.rb:508
 msgid "Username for proxy connection."
@@ -18459,10 +18518,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:62
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:40
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:10
-#, fuzzy
-#| msgid "No filter."
 msgid "Video file"
-msgstr "Engin sía."
+msgstr "Kvikmyndarskrá"
 
 #: app/assets/javascripts/app/controllers/api.coffee:41
 msgid "View"
@@ -18497,7 +18554,7 @@ msgstr "Nýr miði"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
@@ -18993,10 +19050,8 @@ msgstr ""
 
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:18
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:18
-#, fuzzy
-#| msgid "You have closed a ticket"
 msgid "You can no longer see the ticket."
-msgstr "Þú hefur lokað miða"
+msgstr "Þú getur ekki séð beiðnina lengur."
 
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts:18
 msgid "You can no longer see the user."
@@ -19014,10 +19069,8 @@ msgid "You can request your password"
 msgstr "Þú getur beðið um lykilorð"
 
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:175
-#, fuzzy
-#| msgid "You can request your password"
 msgid "You can request your password here."
-msgstr "Þú getur beðið um lykilorð"
+msgstr "Þú getur óskað eftir lykilorði þínu hér."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:3
 msgid ""
@@ -19280,14 +19333,12 @@ msgid "Your theme has been updated."
 msgstr "%s% hafa verið enduropnaðir"
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:46
-#, fuzzy
-#| msgid "Unable to verify email. Please contact your administrator."
 msgid ""
 "Your user role is not allowed to create new tickets. Please contact your "
 "administrator."
 msgstr ""
-"Ekki tókst að staðfesta netfang. Vinsamlegast hafðu samband við "
-"kerfisstjórann þinn"
+"Þitt notendahlutverk leyfir þér ekki að stofna beiðnir. Vinsamlega hafðu "
+"samband við kerfisstjórann."
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:31
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:88
@@ -19299,6 +19350,12 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue:33
 msgid "Zammad"
 msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:327
+#, fuzzy
+#| msgid "This is Zammad version %s"
+msgid "Zammad Features"
+msgstr "Þetta er Zammad útgáfa %s"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:148
 #, fuzzy
@@ -20927,6 +20984,66 @@ msgstr "...af textasvæðinu"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Biðtími í dag"
+
+#, fuzzy
+#~| msgid "Apply"
+#~ msgid "Apple"
+#~ msgstr "Virkja"
+
+#, fuzzy
+#~| msgid "Slack"
+#~ msgid "Black"
+#~ msgstr "Slack"
+
+#, fuzzy
+#~| msgid "Yellow"
+#~ msgid "Cello"
+#~ msgstr "Gulur"
+
+#, fuzzy
+#~| msgid "Easter holiday"
+#~ msgid "Eastern Blue"
+#~ msgstr "Páskafrí"
+
+#, fuzzy
+#~| msgid "Blue"
+#~ msgid "Fun Blue"
+#~ msgstr "Blár"
+
+#, fuzzy
+#~| msgid "Normal"
+#~ msgid "Korma"
+#~ msgstr "Venjulegt"
+
+#, fuzzy
+#~| msgid "Purple"
+#~ msgid "Medium Purple"
+#~ msgstr "Fjólublátt"
+
+#, fuzzy
+#~| msgid "Green"
+#~ msgid "Moss Green"
+#~ msgstr "Grænn"
+
+#, fuzzy
+#~| msgid "Purple"
+#~ msgid "Purple Heart"
+#~ msgstr "Fjólublátt"
+
+#, fuzzy
+#~| msgid "Wed"
+#~ msgid "Red"
+#~ msgstr "Mið"
+
+#, fuzzy
+#~| msgid "Cancel"
+#~ msgid "Seance"
+#~ msgstr "Hætta við"
+
+#, fuzzy
+#~| msgid "Blue"
+#~ msgid "Sky Blue"
+#~ msgstr "Blár"
 
 #, fuzzy
 #~| msgid "Update successful!"
