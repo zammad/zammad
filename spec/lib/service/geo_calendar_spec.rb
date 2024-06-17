@@ -126,7 +126,7 @@ RSpec.describe Service::GeoCalendar, integration: true, retry: 5, retry_wait: 30
       context 'with correct result for Mexican ip address' do
         let(:expected_result) do
           {
-            'name'     => 'Mexico/Mexico City',
+            'name'     => 'Mexico/México',
             'timezone' => 'America/Mexico_City',
             'ical_url' => 'https://www.google.com/calendar/ical/en.mexican%23holiday%40group.v.calendar.google.com/public/basic.ics',
           }
