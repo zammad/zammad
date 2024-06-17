@@ -90,7 +90,7 @@
     "vite-plugin-ruby": "^5.0.0",
     "vitest": "^1.6.0",
     "vitest-axe": "^0.1.0",
-    "vue-tsc": "^2.0.19"
+    "vue-tsc": "^2.0.21"
   },
   "dependencies": {
     "@apollo/client": "^3.10.5",
@@ -140,9 +140,9 @@
     "@tiptap/vue-3": "^2.4.0",
     "@vue/apollo-composable": "^4.0.2",
     "@vuepic/vue-datepicker": "^8.8.0",
-    "@vueuse/core": "^10.10.0",
-    "@vueuse/router": "^10.10.0",
-    "@vueuse/shared": "^10.10.0",
+    "@vueuse/core": "^10.11.0",
+    "@vueuse/router": "^10.11.0",
+    "@vueuse/shared": "^10.11.0",
     "async-mutex": "^0.5.0",
     "graphql": "^16.8.2",
     "graphql-ruby-client": "^1.13.3",
