@@ -107,8 +107,10 @@
   script:
     - echo "Checking if yarn.lock is up-to-date"
     - "if ! diff yarn.lock tmp/yarn.lock; then echo 'Error: yarn.lock is not up-to-date'; exit 1; fi"
+    - echo "TypeScript compiler check…"
+    - yarn lint:ts
     - echo "ESLint check…"
-    - yarn lint
+    - yarn lint:js app/frontend/ .eslint-plugin-zammad/
     - yarn analyse:vite-bundle -t list -o ./tmp/vite-bundle-stats.yml
     - .gitlab/verify_vite_bundle_size.rb
     # Artifacts are stored for failed jobs

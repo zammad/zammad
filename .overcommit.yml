@@ -36,10 +36,24 @@ PreCommit:
     enabled: true
     required_executable: 'yarn'
     command: ['yarn', '--silent', 'lint:css']
+  TypeCheck:
+    required_executable: 'yarn'
+    enabled: true
+    command: ['yarn', 'lint:ts']
+    exclude:
+     - 'node_modules'
+     - 'public'
+     - 'vendor'
+    include:
+      - 'app/frontend/**/*'
+      - '**/*.cy.ts'
+      - '**/cypress/**/*.ts'
+      - './vite.config.*'
+      - './vitest.setup.ts'
   EsLint:
     required_executable: 'yarn'
     enabled: true
-    command: ['yarn', 'lint']
+    command: ['yarn', 'lint:js']
     exclude:
       - 'app/assets/**/*'
       - 'public/assets/chat/**/*'

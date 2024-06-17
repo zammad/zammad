@@ -14,17 +14,26 @@ $ overcommit --install
 This will execute several checks on the changed files whenever you commit.
 Feel free to add suggestion for additional interesting commit hooks. 🚀
 
-Linters can also be ran manually:
+Linters can also be run manually:
 
 ```screen
 # Robocop
 $ bundle exec rubocop --parallel
 
-# ESLint
+# Type checks, ESLint & Stylelint
 $ yarn lint
+
+# Just type checking
+$ yarn lint:ts
+
+# ESLint checks with automatic fixing
+$ yarn lint:js:fix
 
 # Stylelint
 $ yarn lint:css
+
+# Stylelint with automatic fixing
+$ yarn lint:css:fix
 
 # Coffeelint
 $ coffeelint --rules ./.dev/coffeelint/rules/* app/
