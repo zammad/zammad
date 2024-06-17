@@ -429,7 +429,7 @@ GEM
       iniparse (~> 1.4)
       rexml (~> 3.2)
     parallel (1.25.1)
-    parser (3.3.2.0)
+    parser (3.3.3.0)
       ast (~> 2.4.1)
       racc
     pg (1.5.6)
@@ -518,8 +518,8 @@ GEM
     rchardet (1.8.0)
     redis (4.8.1)
     regexp_parser (2.9.2)
-    rexml (3.2.8)
-      strscan (>= 3.0.9)
+    rexml (3.2.9)
+      strscan
     rotp (6.3.0)
     rspec-core (3.13.0)
       rspec-support (~> 3.13.0)
@@ -567,7 +567,7 @@ GEM
       activesupport
       rubocop
       rubocop-rspec
-    rubocop-performance (1.21.0)
+    rubocop-performance (1.21.1)
       rubocop (>= 1.48.1, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
     rubocop-rails (2.25.0)
