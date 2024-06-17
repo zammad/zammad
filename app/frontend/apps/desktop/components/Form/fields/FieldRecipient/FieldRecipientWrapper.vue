@@ -37,10 +37,8 @@ const filterValueValidator = (filter: string) => {
   }
 }
 
-const { actions, onSearchInteractionUpdate } = useAddUnknownValueAction(
-  actionLabel,
-  filterValueValidator,
-)
+const { actions, onSearchInteractionUpdate, onKeydownFilterInput } =
+  useAddUnknownValueAction(actionLabel, filterValueValidator)
 
 Object.assign(props.context, {
   actions,
@@ -56,5 +54,6 @@ Object.assign(props.context, {
     :context="context"
     v-bind="$attrs"
     @search-interaction-update="onSearchInteractionUpdate"
+    @keydown-filter-input="onKeydownFilterInput"
   />
 </template>

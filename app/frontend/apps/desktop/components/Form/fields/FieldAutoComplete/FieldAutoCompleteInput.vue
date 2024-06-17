@@ -60,6 +60,7 @@ const emit = defineEmits<{
     filter: string,
     optionValues: AutoCompleteOptionValueDictionary,
     selectOption: SelectOptionFunction,
+    clearFilter: ClearFilterInputFunction,
   ]
   keydownFilterInput: [
     event: KeyboardEvent,
@@ -322,6 +323,7 @@ const emitResultUpdated = () => {
       debouncedFilter.value,
       { ...autocompleteOptionValueLookup.value, ...optionValueLookup.value },
       selectNewOption,
+      clearFilter,
     )
   })
 }

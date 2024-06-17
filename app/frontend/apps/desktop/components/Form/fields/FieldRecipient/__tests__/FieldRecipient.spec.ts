@@ -88,7 +88,7 @@ describe('Form - Field - Recipient - Features', () => {
     const selectOptions = wrapper.getAllByRole('option')
 
     expect(selectOptions).toHaveLength(1)
-    expect(selectOptions[0]).toHaveTextContent('No results found')
+    expect(selectOptions[0]).toHaveTextContent('foo@bar.tld')
 
     const listitem = within(wrapper.getByRole('listitem'))
 

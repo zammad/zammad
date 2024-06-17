@@ -36,7 +36,8 @@ const buildEntityOption = (entity: User) => {
   }
 }
 
-const { actions, onSearchInteractionUpdate } = useAddUnknownValueAction()
+const { actions, onSearchInteractionUpdate, onKeydownFilterInput } =
+  useAddUnknownValueAction()
 
 Object.assign(props.context, {
   optionIconComponent: markRaw(FieldCustomerOptionIcon),
@@ -100,5 +101,6 @@ Object.assign(props.context, {
     :context="context"
     v-bind="$attrs"
     @search-interaction-update="onSearchInteractionUpdate"
+    @keydown-filter-input="onKeydownFilterInput"
   />
 </template>

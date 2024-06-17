@@ -49,12 +49,18 @@ describe('phoneFilterValueValidator', () => {
 })
 
 describe('useAddUnknownValueAction', () => {
-  it('provides default action item and event handler', async () => {
+  it('provides default action item and search interaction event handler', async () => {
     const { actions, onSearchInteractionUpdate } = useAddUnknownValueAction()
 
     const testSelectOption = vi.fn()
+    const testClearFilter = vi.fn()
 
-    onSearchInteractionUpdate(testEmailAddress, testOptions, testSelectOption)
+    onSearchInteractionUpdate(
+      testEmailAddress,
+      testOptions,
+      testSelectOption,
+      testClearFilter,
+    )
 
     expect(actions.value).toEqual([
       expect.objectContaining({
@@ -64,15 +70,44 @@ describe('useAddUnknownValueAction', () => {
       }),
     ])
 
-    actions.value[0].onClick()
+    actions.value[0].onClick(true)
 
     expect(testSelectOption).toHaveBeenCalledWith(
       {
         value: testEmailAddress,
         label: testEmailAddress,
       },
-      undefined,
+      true,
     )
+
+    expect(testClearFilter).toHaveBeenCalledOnce()
+  })
+
+  it('provides keydown filter event handler', async () => {
+    const { actions, onKeydownFilterInput } = useAddUnknownValueAction()
+
+    const testSelectOption = vi.fn()
+    const testClearFilter = vi.fn()
+
+    onKeydownFilterInput(
+      new KeyboardEvent('keydown', { key: 'Enter' }),
+      testEmailAddress,
+      testOptions,
+      testSelectOption,
+      testClearFilter,
+    )
+
+    expect(actions.value).toEqual([])
+
+    expect(testSelectOption).toHaveBeenCalledWith(
+      {
+        value: testEmailAddress,
+        label: testEmailAddress,
+      },
+      true,
+    )
+
+    expect(testClearFilter).toHaveBeenCalledOnce()
   })
 
   it('supports providing custom action label', async () => {
@@ -82,8 +117,14 @@ describe('useAddUnknownValueAction', () => {
       useAddUnknownValueAction(testActionLabel)
 
     const testSelectOption = vi.fn()
+    const testClearFilter = vi.fn()
 
-    onSearchInteractionUpdate(testEmailAddress, testOptions, testSelectOption)
+    onSearchInteractionUpdate(
+      testEmailAddress,
+      testOptions,
+      testSelectOption,
+      testClearFilter,
+    )
 
     expect(actions.value).toEqual([
       expect.objectContaining({
@@ -93,7 +134,12 @@ describe('useAddUnknownValueAction', () => {
 
     testActionLabel.value = 'bar'
 
-    onSearchInteractionUpdate(testEmailAddress, testOptions, testSelectOption)
+    onSearchInteractionUpdate(
+      testEmailAddress,
+      testOptions,
+      testSelectOption,
+      testClearFilter,
+    )
 
     expect(actions.value).toEqual([
       expect.objectContaining({
@@ -115,11 +161,11 @@ describe('useAddUnknownValueAction', () => {
       testFilterValueValidator,
     )
 
-    onSearchInteractionUpdate('42', testOptions, vi.fn())
+    onSearchInteractionUpdate('42', testOptions, vi.fn(), vi.fn())
 
     expect(actions.value).toHaveLength(1)
 
-    onSearchInteractionUpdate('3', testOptions, vi.fn())
+    onSearchInteractionUpdate('3', testOptions, vi.fn(), vi.fn())
 
     expect(actions.value).toHaveLength(0)
   })

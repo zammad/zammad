@@ -3,9 +3,12 @@
 import { email as emailValidation } from '@formkit/rules'
 import { ref, type Ref } from 'vue'
 
+import stopEvent from '#shared/utils/events.ts'
+
 import type { DropdownOptionsAction } from '#desktop/components/CommonSelect/types.ts'
 import type {
   AutoCompleteOptionValueDictionary,
+  ClearFilterInputFunction,
   SelectOptionFunction,
 } from '#desktop/components/Form/fields/FieldAutoComplete/types.ts'
 
@@ -34,6 +37,7 @@ export const useAddUnknownValueAction = (
   const addUnknownValue = (
     filter: string,
     selectOption: SelectOptionFunction,
+    clearFilter: ClearFilterInputFunction,
     focus: boolean,
   ) => {
     const newOption = {
@@ -42,12 +46,14 @@ export const useAddUnknownValueAction = (
     }
 
     selectOption(newOption, focus)
+    clearFilter()
   }
 
   const onSearchInteractionUpdate = (
     filter: string,
     optionValues: AutoCompleteOptionValueDictionary,
     selectOption: SelectOptionFunction,
+    clearFilter: ClearFilterInputFunction,
   ) => {
     if (!isNewOption(filter, optionValues) || !isValidFilterValue(filter)) {
       actions.value = []
@@ -60,7 +66,7 @@ export const useAddUnknownValueAction = (
         label: actionLabel.value,
         icon: 'plus-square-fill',
         onClick: (focus) => {
-          addUnknownValue(filter, selectOption, focus)
+          addUnknownValue(filter, selectOption, clearFilter, focus)
 
           // Reset actions after current filter was added.
           actions.value = []
@@ -69,11 +75,33 @@ export const useAddUnknownValueAction = (
     ]
   }
 
+  const onKeydownFilterInput = (
+    event: KeyboardEvent,
+    filter: string,
+    optionValues: AutoCompleteOptionValueDictionary,
+    selectOption: SelectOptionFunction,
+    clearFilter: ClearFilterInputFunction,
+  ) => {
+    const { key } = event
+
+    if (!filter) return
+
+    if (['Enter', 'Tab'].includes(key)) {
+      stopEvent(event)
+
+      if (!isNewOption(filter, optionValues) || !isValidFilterValue(filter))
+        return
+
+      addUnknownValue(filter, selectOption, clearFilter, true)
+    }
+  }
+
   return {
     actions,
     isNewOption,
     isValidFilterValue,
     addUnknownValue,
     onSearchInteractionUpdate,
+    onKeydownFilterInput,
   }
 }

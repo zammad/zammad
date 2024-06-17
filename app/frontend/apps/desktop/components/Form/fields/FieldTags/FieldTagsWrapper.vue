@@ -65,7 +65,7 @@ const onKeydownFilterInput = (
 
     if (!allowNewTags() || !isValidFilterValue(filter)) return
 
-    addUnknownValue(filter, selectOption, true)
+    addUnknownValue(filter, selectOption, clearFilter, true)
     clearFilter()
   }
 }
