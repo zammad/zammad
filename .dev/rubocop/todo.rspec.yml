@@ -231,7 +231,7 @@ RSpec/SpecFilePathFormat:
 
 # This was split up into RSpec/SpecFilePathSuffix and RSpec/SpecFilePathFormat,
 #   and should now be disabled.
-RSpec/FilePath:
+Rails/FilePath:
   Enabled: false
 
 RSpec/InstanceVariable:

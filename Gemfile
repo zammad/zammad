@@ -226,12 +226,15 @@ group :development, :test do
   gem 'brakeman', require: false
   gem 'overcommit'
   gem 'rubocop'
+  gem 'rubocop-capybara'
+  gem 'rubocop-factory_bot'
   gem 'rubocop-faker'
   gem 'rubocop-graphql'
   gem 'rubocop-inflector'
   gem 'rubocop-performance'
   gem 'rubocop-rails'
   gem 'rubocop-rspec'
+  gem 'rubocop-rspec_rails'
 
   # generate random test data
   gem 'factory_bot_rails'

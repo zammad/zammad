@@ -518,7 +518,7 @@ GEM
     rchardet (1.8.0)
     redis (4.8.1)
     regexp_parser (2.9.2)
-    rexml (3.2.9)
+    rexml (3.3.0)
       strscan
     rotp (6.3.0)
     rspec-core (3.13.0)
@@ -556,8 +556,8 @@ GEM
       parser (>= 3.3.1.0)
     rubocop-capybara (2.20.0)
       rubocop (~> 1.41)
-    rubocop-factory_bot (2.25.1)
-      rubocop (~> 1.41)
+    rubocop-factory_bot (2.26.1)
+      rubocop (~> 1.61)
     rubocop-faker (1.1.0)
       faker (>= 2.12.0)
       rubocop (>= 0.82.0)
@@ -575,13 +575,11 @@ GEM
       rack (>= 1.1)
       rubocop (>= 1.33.0, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
-    rubocop-rspec (2.31.0)
-      rubocop (~> 1.40)
-      rubocop-capybara (~> 2.17)
-      rubocop-factory_bot (~> 2.22)
-      rubocop-rspec_rails (~> 2.28)
-    rubocop-rspec_rails (2.28.3)
-      rubocop (~> 1.40)
+    rubocop-rspec (3.0.1)
+      rubocop (~> 1.61)
+    rubocop-rspec_rails (2.30.0)
+      rubocop (~> 1.61)
+      rubocop-rspec (~> 3, >= 3.0.1)
     ruby-progressbar (1.13.0)
     ruby-saml (1.16.0)
       nokogiri (>= 1.13.10)
@@ -822,12 +820,15 @@ DEPENDENCIES
   rspec-retry
   rszr
   rubocop
+  rubocop-capybara
+  rubocop-factory_bot
   rubocop-faker
   rubocop-graphql
   rubocop-inflector
   rubocop-performance
   rubocop-rails
   rubocop-rspec
+  rubocop-rspec_rails
   sass-rails (~> 5)
   selenium-webdriver
   shoulda-matchers

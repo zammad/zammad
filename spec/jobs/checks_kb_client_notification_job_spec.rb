@@ -26,7 +26,7 @@ RSpec.describe ChecksKbClientNotificationJob, performs_jobs: true, type: :job do
 
         args.each do |key, value|
           it "#{key} #{value ? 'is' : 'not'} notified" do
-            expect(PushMessages).send(value ? :to : :not_to, have_received(:send_to).with(send(key).id, any_args))
+            expect(PushMessages).send(value ? :to : :not_to, have_received(:send_to).with(send(key).id, any_args)) # rubocop:disable RSpec/MissingExpectationTargetMethod
           end
         end
       end

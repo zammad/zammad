@@ -28,7 +28,7 @@ class TestCase < ActiveSupport::TestCase
     # print current test case to STDOUT
     # for status reasoning and debugging purposes
     source_location  = self.class.instance_method(method_name).source_location
-    test_file_path   = source_location[0].remove("#{Rails.root}/") # rubocop:disable Rails/FilePath
+    test_file_path   = source_location[0].remove("#{Rails.root}/")
     test_method_line = source_location[1]
     puts <<~HTML
 
