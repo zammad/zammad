@@ -1927,6 +1927,12 @@ msgstr "Stavka"
 msgid "Article - visibility confirmation dialog"
 msgstr "Stavka - dijaloški okvir za potvrdu vidljivosti"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#, fuzzy
+#| msgid "Article Type"
+msgid "Article > Text (HTML)"
+msgstr "Vrsta članka"
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr "Broj članaka"
@@ -2012,7 +2018,7 @@ msgid "At least one match rule is required, but none was provided."
 msgstr ""
 "Potrebno je barem jedno pravilo podudaranja, ali nijedno nije navedeno."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr "Mora biti odabran barem jedan objekt."
 
@@ -2480,7 +2486,7 @@ msgstr "Višestruki zadatak obavljen!"
 msgid "Bulk action failed"
 msgstr "Obavljanje višestrukog zadatka neuspjelo"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr "Višestruki zadatak zaustavljen greskom/ama: %s!"
 
@@ -3228,7 +3234,7 @@ msgstr "Vrijeme zatvaranja"
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Prikaz boje otvorenog ticketa u bočnoj traci."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "Komentar"
 
@@ -3270,7 +3276,7 @@ msgstr "Uvjeti za zahvaćene objekte"
 msgid "Conditions for shown tickets"
 msgstr "Uvjeti za prikazane tickete"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr "Konfiguracija"
 
@@ -3807,7 +3813,7 @@ msgstr "Kreiraj:"
 msgid "Created"
 msgstr "Stvoreno"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "Created Article"
 msgstr "Stvoreni članak"
 
@@ -3817,11 +3823,11 @@ msgstr "Stvoreni članak"
 msgid "Created At"
 msgstr "Stvoreno"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Created External Article"
 msgstr "Stvaranje novog članka"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Created Internal Article"
 msgstr "Stvaranje internog članka"
 
@@ -6539,7 +6545,7 @@ msgstr "Ističe"
 msgid "Expires at"
 msgstr "Ističe u"
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "Napredno pretraživanje"
 
@@ -8559,7 +8565,7 @@ msgstr "Jezik"
 msgid "Languages"
 msgstr "Jezici"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 msgid "Last Article"
 msgstr "Zadnji članak"
 
@@ -8575,11 +8581,11 @@ msgstr "Posljednji odgovor u"
 msgid "Last Contact Customer At"
 msgstr "Posljednji odgovor klijenta u"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr "Zadnji javni članak"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
 msgstr "Zadnji interni članak"
 
@@ -10632,7 +10638,7 @@ msgstr "Pregled višestrukih radnji"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: db/seeds/permissions.rb:40
 msgid "Overviews"
 msgstr "Pregledi"
@@ -16303,7 +16309,7 @@ msgstr "Metoda dvofaktorske autentifikacije je uspješno postavljena."
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -17040,7 +17046,7 @@ msgstr "Gledaju ticket"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3

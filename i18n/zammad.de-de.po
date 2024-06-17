@@ -1956,6 +1956,12 @@ msgstr "Artikel"
 msgid "Article - visibility confirmation dialog"
 msgstr "Artikel - Bestätigungsdialog zur Sichtbarkeit"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#, fuzzy
+#| msgid "Article Type"
+msgid "Article > Text (HTML)"
+msgstr "Artikel-Typ"
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr "Artikelanzahl"
@@ -2044,7 +2050,7 @@ msgstr ""
 "Es ist mindestens eine Übereinstimmungsregel erforderlich, aber es wurde "
 "keine angegeben."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr "Wählen Sie mindestens ein Objekt aus."
 
@@ -2514,7 +2520,7 @@ msgstr "Sammelaktion ausgeführt!"
 msgid "Bulk action failed"
 msgstr "Sammelaktion fehlgeschlagen"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr "Sammelaktion angehalten wegen Fehler: %s!"
 
@@ -3270,7 +3276,7 @@ msgstr "Schließzeit"
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Farbdarstellung des offenen Tickets in der Sidebar."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -3312,7 +3318,7 @@ msgstr "Bedingungen für zu verarbeitende Objekte"
 msgid "Conditions for shown tickets"
 msgstr "Bedingungen für angezeigte Tickets"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr "Konfiguration"
 
@@ -3851,7 +3857,7 @@ msgstr "Erstellen:"
 msgid "Created"
 msgstr "Erstellt"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "Created Article"
 msgstr "Artikel erstellt"
 
@@ -3861,11 +3867,11 @@ msgstr "Artikel erstellt"
 msgid "Created At"
 msgstr "Erstellt am"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Created External Article"
 msgstr "Externer Artikel erstellt"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Created Internal Article"
 msgstr "Interner Artikel erstellt"
 
@@ -6662,7 +6668,7 @@ msgstr "Läuft ab"
 msgid "Expires at"
 msgstr "Läuft ab am"
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "Erweiterte Suche"
 
@@ -8710,7 +8716,7 @@ msgstr "Sprache"
 msgid "Languages"
 msgstr "Sprachen"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 msgid "Last Article"
 msgstr "Letzter Artikel"
 
@@ -8726,11 +8732,11 @@ msgstr "Letzter Kontakt am"
 msgid "Last Contact Customer At"
 msgstr "Letzter Kontakt (Kunde) um"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr "Letzter externer Artikel"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
 msgstr "Letzter interner Artikel"
 
@@ -10791,7 +10797,7 @@ msgstr "Übersicht Bulk-Maske"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: db/seeds/permissions.rb:40
 msgid "Overviews"
 msgstr "Übersichten"
@@ -16579,7 +16585,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -17326,7 +17332,7 @@ msgstr "Ticket ansehen"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3

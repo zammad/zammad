@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-07 04:53+0000\n"
+"PO-Revision-Date: 2024-06-14 12:29+0000\n"
 "Last-Translator: sigurbjartur <github@sigurbjartur.com>\n"
 "Language-Team: Icelandic <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/is/>\n"
@@ -265,10 +265,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:9
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:6
-#, fuzzy
-#| msgid "%s Api Token"
 msgid "%s API Token"
-msgstr "%s Api Tóki"
+msgstr "%s API Tóki"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:144
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:179
@@ -783,6 +781,7 @@ msgstr ""
 #: lib/validations/mention_validator.rb:7
 msgid "A mentioned user has no agent access to this ticket"
 msgstr ""
+"Tilvísaður notandi hefur ekki aðgang þjónustufulltrúa, að þessari beiðni"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:26
 msgid ""
@@ -898,7 +897,7 @@ msgstr "Aðgangur að %s"
 
 #: db/seeds/permissions.rb:430
 msgid "Access to Agent Tickets based on Group Access"
-msgstr ""
+msgstr "Aðgangur að beiðnum þjónustufulltrúa samkvæmt hópaðgangi"
 
 #: db/seeds/permissions.rb:437
 msgid "Access to customer tickets"
@@ -1390,7 +1389,7 @@ msgstr "Þjónustufulltrúi"
 
 #: db/seeds/settings.rb:3103
 msgid "Agent Name"
-msgstr ""
+msgstr "Nafn þjónustufulltrúa"
 
 #: db/seeds/settings.rb:3103
 msgid "Agent Name + FromSeparator + System Address Display Name"
@@ -1401,12 +1400,14 @@ msgid "Agent idle timeout"
 msgstr ""
 
 #: app/models/role.rb:153 app/models/user.rb:837
+#, fuzzy
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
+"Fjöldatakmarki þjónustufulltrúa náð, athugaðu reikningsstillingar þínar."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:109
 msgid "Agents"
-msgstr "Fulltrúar"
+msgstr "Þjónustufulltrúar"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:27
 msgid "Alarm"
@@ -1439,10 +1440,8 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:462
-#, fuzzy
-#| msgid "All Agents"
 msgid "All agents"
-msgstr "Allir fulltrúar"
+msgstr "Allir þjónustufulltrúar"
 
 #: public/assets/chat/views/waiting.eco:7
 msgid "All colleagues are busy."
@@ -1687,7 +1686,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:10
 msgid "Apply current defaults to all agents"
-msgstr ""
+msgstr "Afrita sjálfgefin gildi á alla þjónustufulltrúa"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 #: app/assets/javascripts/app/controllers/report.coffee:204
@@ -1818,6 +1817,12 @@ msgstr "Grein"
 msgid "Article - visibility confirmation dialog"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#, fuzzy
+#| msgid "Article"
+msgid "Article > Text (HTML)"
+msgstr "Grein"
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr "Greinafjöldi"
@@ -1906,7 +1911,7 @@ msgstr ""
 msgid "At least one match rule is required, but none was provided."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr ""
 
@@ -2389,7 +2394,7 @@ msgstr "Fjöldaaðgerð framkvæmd!"
 msgid "Bulk action failed"
 msgstr "Fjöldaaðgerð misheppnaðist"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr ""
 
@@ -3148,7 +3153,7 @@ msgstr "Lokunartími"
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "Athugasemd"
 
@@ -3190,7 +3195,7 @@ msgstr ""
 msgid "Conditions for shown tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr ""
 
@@ -3725,7 +3730,7 @@ msgstr "Stofna:"
 msgid "Created"
 msgstr "Stofnað"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Created Article"
@@ -3737,13 +3742,13 @@ msgstr "Stofna prufu miða"
 msgid "Created At"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Created External Article"
 msgstr "Stofna prufu miða"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Created Internal Article"
@@ -6338,10 +6343,8 @@ msgid "Existing tickets"
 msgstr "Nýr miði"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:260
-#, fuzzy
-#| msgid "assign tickets"
 msgid "Existing tickets (open)"
-msgstr "úthluta miða"
+msgstr "Beiðnir sem eru til (opnar)"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:217
 msgid "Expert"
@@ -6374,7 +6377,7 @@ msgstr "Rennur út"
 msgid "Expires at"
 msgstr "Rennur út"
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "Útvíkkuð leit"
 
@@ -7523,8 +7526,8 @@ msgstr ""
 msgid ""
 "How many of your tickets have been re-opened after being marked “closed”?"
 msgstr ""
-"Hve margir af miðunum þínum hafa verið opnaðir að nýju eftir að hafa verið "
-"merktir sem \"lokaðir\"?"
+"Hve margar af beiðnunum þínum hafa verið opnaðar að nýju eftir að hafa verið "
+"merktar sem \"lokuð\"?"
 
 #: app/controllers/first_steps_controller.rb:78
 msgid "How to use it"
@@ -8457,7 +8460,7 @@ msgstr "Tungumál"
 msgid "Languages"
 msgstr "Tungumál"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 #, fuzzy
 #| msgid "Article"
 msgid "Last Article"
@@ -8475,11 +8478,11 @@ msgstr ""
 msgid "Last Contact Customer At"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
 msgstr ""
 
@@ -9607,13 +9610,11 @@ msgstr "Skapalón"
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
 msgid "New Ticket"
-msgstr "Nýr miði"
+msgstr "Ný beiðni"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:21
-#, fuzzy
-#| msgid "New Ticket"
 msgid "New Ticket State"
-msgstr "Nýr miði"
+msgstr "Ný beiðni"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco:11
 #, fuzzy
@@ -10347,7 +10348,7 @@ msgstr "Opna miða# %s"
 #: app/assets/javascripts/app/controllers/widget/user.coffee:70
 #: db/seeds/overviews.rb:109
 msgid "Open Tickets"
-msgstr "Opnar Beiðnir"
+msgstr "Opnar beiðnir"
 
 #: app/assets/javascripts/app/models/public_link.coffee:10
 #, fuzzy
@@ -10547,7 +10548,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee:11
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
 msgstr ""
-"Af öllum miðum ( þvert á fyrirtækið ), hve margir hafa verið úthlutaðir þér?"
+"Af öllum beiðnum (þvert á fyrirtækið), hve margar hafa verið úthlutaðir þér?"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:163
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:190
@@ -10596,7 +10597,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: db/seeds/permissions.rb:40
 msgid "Overviews"
 msgstr "Yfirlit"
@@ -11617,7 +11618,7 @@ msgstr "svara"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:62
 msgid "Reply allowed only for open tickets"
-msgstr ""
+msgstr "Einungir hægt að svara opnum beiðnum"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:387
 msgid "Reply to last article"
@@ -14830,10 +14831,8 @@ msgstr ""
 "logo_resize færibreytu."
 
 #: app/services/service/auth/send_admin_token.rb:33
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The user token could not be generated."
-msgstr "%s% hafa verið enduropnaðir"
+msgstr "Ekki tókst að búa til notandatóka."
 
 #: lib/external_credential/exchange.rb:51
 #: lib/external_credential/microsoft365.rb:51
@@ -14927,10 +14926,8 @@ msgid "There is no Google app configured."
 msgstr "Það er engin fulltrúi tengur í augnablikinu."
 
 #: lib/external_credential/twitter.rb:11
-#, fuzzy
-#| msgid "Not configured"
 msgid "There is no Twitter app configured."
-msgstr "Hefur ekki verið stillt af"
+msgstr "Twitter hefur ekki verið uppsett."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:213
 msgid "There is no agent online."
@@ -14972,10 +14969,8 @@ msgid ""
 msgstr ""
 
 #: lib/secure_mailing/pgp/tool/error.rb:124
-#, fuzzy
-#| msgid "matches"
 msgid "There is no valid PGP email recipient."
-msgstr "passar við"
+msgstr "Það er enginn gildur PGP tölvupóstsmóttakandi."
 
 #: lib/secure_mailing/pgp/tool/error.rb:133
 #, fuzzy
@@ -14990,10 +14985,8 @@ msgid "There was an unknown PGP error."
 msgstr "Það er engin fulltrúi tengur í augnablikinu."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:181
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "There was no Knowledge Base created."
-msgstr "%s% hafa verið enduropnaðir"
+msgstr "Enginn þekkingarbrunnur varð til."
 
 #: lib/secure_mailing/pgp/security_options.rb:12
 #, fuzzy
@@ -15002,10 +14995,8 @@ msgid "There was no PGP key found."
 msgstr "Það er engin fulltrúi tengur í augnablikinu."
 
 #: lib/secure_mailing/smime/security_options.rb:12
-#, fuzzy
-#| msgid "Notification Sound"
 msgid "There was no certificate found."
-msgstr "Tilkynningarhljóð"
+msgstr "Ekkert skilríki fannst."
 
 #: lib/secure_mailing/pgp/tool/error.rb:43
 #, fuzzy
@@ -15014,10 +15005,8 @@ msgid "There was no public PGP key found."
 msgstr "Það er engin fulltrúi tengur í augnablikinu."
 
 #: lib/secure_mailing/backend/handler_security_options.rb:43
-#, fuzzy
-#| msgid "matches"
 msgid "There was no recipient found."
-msgstr "passar við"
+msgstr "Enginn móttakandi fannst."
 
 #: lib/secure_mailing/pgp/tool/error.rb:34
 #, fuzzy
@@ -15026,10 +15015,8 @@ msgid "There was no secret PGP key found."
 msgstr "Það er engin fulltrúi tengur í augnablikinu."
 
 #: lib/secure_mailing/pgp/tool/error.rb:25
-#, fuzzy
-#| msgid "matches"
 msgid "There was no valid OpenPGP data found."
-msgstr "passar við"
+msgstr "Engin gild OpenPGP gögn fundust."
 
 #: lib/secure_mailing/pgp/security_options.rb:76
 msgid "There were PGP keys found for %s, but at least one of them has expired."
@@ -15067,10 +15054,8 @@ msgid ""
 msgstr ""
 
 #: app/models/ticket/time_accounting.rb:44
-#, fuzzy
-#| msgid "Defines the sender of email notifications."
 msgid "This article is not part of the ticket."
-msgstr "Skilgreinir hver sendir út tölvupóst tilkynningar"
+msgstr "Þessi grein er ekki hluti beiðnarinnar."
 
 #: lib/telegram_helper.rb:47
 msgid "This bot already exists."
@@ -15095,10 +15080,8 @@ msgid "This entry already exists!"
 msgstr ""
 
 #: app/services/service/check_feature_enabled.rb:23
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "This feature is not enabled."
-msgstr "Tímabókhald"
+msgstr "Þessi virkni er óvirk."
 
 #: config/initializers/activemodel_error.rb:31
 #, fuzzy
@@ -15211,10 +15194,8 @@ msgid "This field must contain at least one character."
 msgstr "Lykilorð verður að minnsta kosti innihalda einn tölustaf."
 
 #: app/frontend/shared/form/i18n/locales.ts:410
-#, fuzzy
-#| msgid "Password needs to contain 2 lower and 2 upper characters."
 msgid "This field must contain between %s and %s characters."
-msgstr "Lykilorð verður að innihalda 2 lágstafi og 2 hástafi"
+msgstr "Þetta svið verður að innihalda á milli %s og %s stafi."
 
 #: app/frontend/shared/form/i18n/locales.ts:183
 msgid "This field must contain letters or numbers."
@@ -15269,10 +15250,8 @@ msgid "This group or its children exceed the allowed nesting depth."
 msgstr ""
 
 #: lib/email_helper/probe.rb:285
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "This host cannot be reached."
-msgstr "%s% hafa verið enduropnaðir"
+msgstr "Ekki náðist í þessa tölvu."
 
 #: app/assets/javascripts/app/views/version.jst.eco:6
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:209
@@ -15392,16 +15371,12 @@ msgstr ""
 "rauntíma."
 
 #: app/services/service/concerns/handles_setting.rb:22
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "This setting is not disabled."
-msgstr "Tímabókhald"
+msgstr "Þessi stilling er ekki óvirk."
 
 #: app/services/service/concerns/handles_setting.rb:18
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "This setting is not enabled."
-msgstr "Tímabókhald"
+msgstr "Þessi stilling er ekki virk."
 
 #: app/assets/javascripts/app/models/group.coffee:13
 msgid "This signature is inactive, it won't be included in the reply."
@@ -15561,10 +15536,8 @@ msgid "Ticket Overview"
 msgstr "Nýtt yfirlit"
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:67
-#, fuzzy
-#| msgid "Overviews"
 msgid "Ticket Overview settings are saved."
-msgstr "Yfirlit"
+msgstr "Stillingar beiðnayfirlits eru vistaðar."
 
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:20
 #, fuzzy
@@ -15637,10 +15610,8 @@ msgid "Ticket actions"
 msgstr "Miðaáskriftir"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:381
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Ticket could not be created."
-msgstr "%s% hafa verið enduropnaðir"
+msgstr "Ekki tókst að stofna beiðni."
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:8
 #, fuzzy
@@ -15724,10 +15695,8 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:35
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Ticket tags could not be updated."
-msgstr "%s% hafa verið enduropnaðir"
+msgstr "Ekki tókst að uppfæra merkimiða beiðna."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:58
 msgid "Ticket tags updated successfully."
@@ -15947,10 +15916,8 @@ msgid "Time zone"
 msgstr "Tímabelti"
 
 #: app/models/setting/validation/time_zone.rb:6
-#, fuzzy
-#| msgid "Digit required"
 msgid "Time zone is required."
-msgstr "Tölustafs krafist"
+msgstr "Tímabeltis er krafist."
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:33
 msgid "Timeframe between agent updates or for an agent to respond."
@@ -16107,7 +16074,7 @@ msgstr ""
 #: app/models/channel/driver/sms/message_bird.rb:91
 #: app/models/channel/driver/sms/twilio.rb:104
 msgid "Token"
-msgstr ""
+msgstr "Tóki"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:12
@@ -16380,20 +16347,16 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:103
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:108
-#, fuzzy
-#| msgid "Authentication"
 msgid "Two-factor authentication method could not be initiated."
-msgstr "Auðkenning"
+msgstr "Ekki tókst að vekja tveggja þátta auðkenningarhátt."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:187
 msgid "Two-factor authentication method was removed."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:217
-#, fuzzy
-#| msgid "Authentication"
 msgid "Two-factor authentication method was set as default."
-msgstr "Auðkenning"
+msgstr "Tveggja þátta auðkenningarháttur var gerður sjalfgefinn."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal.coffee:59
 msgid "Two-factor authentication method was set up successfully."
@@ -16403,7 +16366,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -16449,10 +16412,8 @@ msgid "URL (AJAX endpoint)"
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb:215 db/seeds/overviews.rb:32
-#, fuzzy
-#| msgid "Unassigned & Open"
 msgid "Unassigned & Open Tickets"
-msgstr "Óúthlutaðir og opnir"
+msgstr "Óúthlutnaðar & Opnar beiðnir"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:23
 #: app/assets/javascripts/app/views/google/list.jst.eco:16
@@ -16595,10 +16556,8 @@ msgid "Update successful."
 msgstr ""
 
 #: db/seeds/settings.rb:5747
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "Update the most recent tickets."
-msgstr "%s% hafa verið enduropnaðir"
+msgstr "Uppfæra nýjustu beiðnirnar."
 
 #: app/assets/javascripts/app/models/application.coffee:11
 #: app/assets/javascripts/app/models/calendar.coffee:14
@@ -16872,16 +16831,12 @@ msgstr "Stillingar notanda"
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:104
 #: app/assets/javascripts/app/controllers/signup.coffee:98
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts:53
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "User could not be created."
-msgstr "%s% hafa verið enduropnaðir"
+msgstr "Ekki tókst að stofna notanda."
 
 #: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:85
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "User could not be updated."
-msgstr "%s% hafa verið enduropnaðir"
+msgstr "Ekki tókst að uppfæra notanda."
 
 #: lib/external_credential/google.rb:44
 msgid "User email could not be extracted from 'id_token'."
@@ -16928,10 +16883,8 @@ msgid "Username / email"
 msgstr "Notandanafn / netfang"
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco:9
-#, fuzzy
-#| msgid "Username for proxy connection."
 msgid "Username for proxy connection"
-msgstr "Notandanafn fyrir vefsels tengingu."
+msgstr "Notandanafn fyrir vefselstengingu"
 
 #: db/seeds/settings.rb:508
 msgid "Username for proxy connection."
@@ -17090,10 +17043,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:62
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:40
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:10
-#, fuzzy
-#| msgid "No filter."
 msgid "Video file"
-msgstr "Engin sía."
+msgstr "Kvikmyndarskrá"
 
 #: app/assets/javascripts/app/controllers/api.coffee:41
 msgid "View"
@@ -17128,7 +17079,7 @@ msgstr "Nýr miði"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
@@ -17617,10 +17568,8 @@ msgstr ""
 
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:17
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:17
-#, fuzzy
-#| msgid "You have closed a ticket"
 msgid "You can no longer see the ticket."
-msgstr "Þú hefur lokað miða"
+msgstr "Þú getur ekki séð beiðnina lengur."
 
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts:17
 msgid "You can no longer see the user."
@@ -17638,10 +17587,8 @@ msgid "You can request your password"
 msgstr "Þú getur beðið um lykilorð"
 
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:173
-#, fuzzy
-#| msgid "You can request your password"
 msgid "You can request your password here."
-msgstr "Þú getur beðið um lykilorð"
+msgstr "Þú getur óskað eftir lykilorði þínu hér."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:3
 msgid ""
@@ -17861,14 +17808,12 @@ msgid "Your connection is not private"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:46
-#, fuzzy
-#| msgid "Unable to verify email. Please contact your administrator."
 msgid ""
 "Your user role is not allowed to create new tickets. Please contact your "
 "administrator."
 msgstr ""
-"Ekki tókst að staðfesta netfang. Vinsamlegast hafðu samband við "
-"kerfisstjórann þinn"
+"Þitt notendahlutverk leyfir þér ekki að stofna beiðnir. Vinsamlega hafðu "
+"samband við kerfisstjórann."
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:31
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:88

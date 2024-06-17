@@ -1938,6 +1938,12 @@ msgstr "Artikel"
 msgid "Article - visibility confirmation dialog"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#, fuzzy
+#| msgid "Article Type"
+msgid "Article > Text (HTML)"
+msgstr "Artikel Type"
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr "Antal Artikler"
@@ -2022,7 +2028,7 @@ msgstr ""
 msgid "At least one match rule is required, but none was provided."
 msgstr "Der kræves mindst en match regel, men ingen blev angivet."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr "Mindst et objekt skal være valgt."
 
@@ -2501,7 +2507,7 @@ msgstr "Massehandling udført!"
 msgid "Bulk action failed"
 msgstr "Massehandling fejlet"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr "Massehandling stoppet af fejl: %s!"
 
@@ -3235,7 +3241,7 @@ msgstr "Lukketid"
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -3277,7 +3283,7 @@ msgstr "Tilstande for berørte objekter"
 msgid "Conditions for shown tickets"
 msgstr "Forhold for viste sager"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr "Konfiguration"
 
@@ -3790,7 +3796,7 @@ msgstr "Opret:"
 msgid "Created"
 msgstr "Oprettet"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "Created Article"
 msgstr "Artikel Oprettet"
 
@@ -3800,11 +3806,11 @@ msgstr "Artikel Oprettet"
 msgid "Created At"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Created External Article"
 msgstr "Opret Ekstern Artikel"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Created Internal Article"
 msgstr "Opret Intern Artikel"
 
@@ -6361,7 +6367,7 @@ msgstr "Udløber"
 msgid "Expires at"
 msgstr "Udløber"
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "Udvidet søgning"
 
@@ -8360,7 +8366,7 @@ msgstr "Sprog"
 msgid "Languages"
 msgstr "Sprog"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 msgid "Last Article"
 msgstr "Sidste Artikel"
 
@@ -8376,11 +8382,11 @@ msgstr ""
 msgid "Last Contact Customer At"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
 msgstr ""
 
@@ -10454,7 +10460,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: db/seeds/permissions.rb:40
 msgid "Overviews"
 msgstr "Overblik"
@@ -16324,7 +16330,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -17041,7 +17047,7 @@ msgstr "Ny sag"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3

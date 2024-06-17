@@ -1799,6 +1799,12 @@ msgstr "Məqalə"
 msgid "Article - visibility confirmation dialog"
 msgstr "Məqalənin görünürlüğünü təsdiqləyən informasiya qutusu"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#, fuzzy
+#| msgid "Article Type"
+msgid "Article > Text (HTML)"
+msgstr "Məqalə növü"
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr "Məqalələrin sayı"
@@ -1887,7 +1893,7 @@ msgid "At least one match rule is required, but none was provided."
 msgstr ""
 "Ən azı bir uyğunluq qaydası tələb olunur, lakin heç biri təqdim edilməyib."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr "Ən azı bir obyekt seçilməlidir."
 
@@ -2363,7 +2369,7 @@ msgstr "Kütləvi fəaliyyət yerinə yetirildi!"
 msgid "Bulk action failed"
 msgstr "Kütləvi fəaliyyət yerinə yetirilmədi"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr "Xəta(lar) səbəbindən kütləvi hərəkət dayandırıldı: %s!"
 
@@ -3132,7 +3138,7 @@ msgstr "Bağlanma vaxtı"
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Yan paneldəki açıq tətbiq göstəricisinin rəng görünüşü."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "Şərh"
 
@@ -3175,7 +3181,7 @@ msgstr "Təsirə məruz qalan obyektlər üçün şərtlər"
 msgid "Conditions for shown tickets"
 msgstr "Təqdim olunan biletlər üçün şərtlər"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr "Konfiqurasiya"
 
@@ -3733,7 +3739,7 @@ msgstr "Yarat:"
 msgid "Created"
 msgstr "Yaradıldı"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "Created Article"
 msgstr "Yaradılmış məqalə"
 
@@ -3743,11 +3749,11 @@ msgstr "Yaradılmış məqalə"
 msgid "Created At"
 msgstr "Yaradıldı"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Created External Article"
 msgstr "Yaradılmış xarici məqalə"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Created Internal Article"
 msgstr "Daxili məqalə yaradıldı"
 
@@ -6528,7 +6534,7 @@ msgstr "Müddət bitir"
 msgid "Expires at"
 msgstr "Müddət bitir"
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "Ətraflı axtarış"
 
@@ -8618,7 +8624,7 @@ msgstr "Dil"
 msgid "Languages"
 msgstr "Dillər"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 msgid "Last Article"
 msgstr "Son məqalə"
 
@@ -8634,11 +8640,11 @@ msgstr "Son əlaqə"
 msgid "Last Contact Customer At"
 msgstr "Müştəri ilə son əlaqə"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr "Son xarici məqalə"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 #, fuzzy
 msgid "Last Internal Article"
 msgstr "Son daxili məqalə"
@@ -10783,7 +10789,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: db/seeds/permissions.rb:40
 msgid "Overviews"
 msgstr ""
@@ -16227,7 +16233,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -16912,7 +16918,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3

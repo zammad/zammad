@@ -281,8 +281,9 @@ msgstr ""
 "\n"
 "<div>Buongiorno #{user.firstname},</div>\n"
 "<br>\n"
-"<div>sembra che tu abbia eseguito l'accesso alle \"#{user_device.created_at}"
-"\" da un <b>dispositivo conosciuto ma da un altro paese</b>:</div>\n"
+"<div>sembra che tu abbia eseguito l'accesso alle \"#{user_device."
+"created_at}\" da un <b>dispositivo conosciuto ma da un altro paese</b>:</"
+"div>\n"
 "<br>\n"
 "<div>\n"
 "Il tuo dispositivo: #{user_device.name}<br>\n"
@@ -293,8 +294,8 @@ msgstr ""
 "<div>Il nuovo paese è stato aggiunto all'elenco dei dispositivi conosciuti, "
 "che può essere visualizzato qui:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
-">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>In caso non sia stato tu, rimuovere il dispositivo, modifica la "
 "password dell'account e contatta l'amministratore. Qualcuno potrebbe avere "
@@ -1952,6 +1953,12 @@ msgstr "Nota"
 msgid "Article - visibility confirmation dialog"
 msgstr "Nota - Finestra Conferma visibilità"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#, fuzzy
+#| msgid "Article Type"
+msgid "Article > Text (HTML)"
+msgstr "Tipo articolo"
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr "Numero note"
@@ -2037,7 +2044,7 @@ msgid "At least one match rule is required, but none was provided."
 msgstr ""
 "È richiesta almeno una regola di corrispondenza, ma nessuna è stata fornita."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr "È necessario selezionare almeno un oggetto."
 
@@ -2504,7 +2511,7 @@ msgstr "Azione massiva eseguita!"
 msgid "Bulk action failed"
 msgstr "Azione massiva non riuscita"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr "Azione di massa arrestata a causa di uno o più errori%s!"
 
@@ -3262,7 +3269,7 @@ msgstr ""
 "Rappresentazione dei colori dell'indicatore dei ticket aperti nella barra "
 "laterale."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "Commento"
 
@@ -3304,7 +3311,7 @@ msgstr "Condizioni per gli oggetti interessati"
 msgid "Conditions for shown tickets"
 msgstr "Condizioni per i ticket mostrati"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr "Config"
 
@@ -3843,7 +3850,7 @@ msgstr "Crea:"
 msgid "Created"
 msgstr "Creato"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "Created Article"
 msgstr "Crea articolo"
 
@@ -3853,11 +3860,11 @@ msgstr "Crea articolo"
 msgid "Created At"
 msgstr "Creato il"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Created External Article"
 msgstr "Crea un articolo esterno"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Created Internal Article"
 msgstr "Articolo interno creato"
 
@@ -6629,7 +6636,7 @@ msgstr "Scade"
 msgid "Expires at"
 msgstr "Scade il"
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "Ricerca estesa"
 
@@ -8430,9 +8437,9 @@ msgstr ""
 "invitarti a collegarti a #{config.product_name} - la nostra piattaforma di "
 "supporto utenti.</div>\n"
 "<br>\n"
-"<div>Clicca <a href=\"#{config.http_type}://#{config.fqdn}/#"
-"password_reset_verify/#{token.token}\">qui</a> e imposta la tua "
-"password.</div>\n"
+"<div>Clicca <a href=\"#{config.http_type}://#{config.fqdn}/"
+"#password_reset_verify/#{token.token}\">qui</a> e imposta la tua password.</"
+"div>\n"
 "<br>\n"
 "<div>Grazie,</div>\n"
 "<br>\n"
@@ -8664,7 +8671,7 @@ msgstr "Lingua"
 msgid "Languages"
 msgstr "Lingue"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 msgid "Last Article"
 msgstr "Ultimo articolo"
 
@@ -8680,11 +8687,11 @@ msgstr "Ultimo contatto il"
 msgid "Last Contact Customer At"
 msgstr "Ultimo contatto del cliente il"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr "Ultimo articolo esterno"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
 msgstr "Ultimo articolo interno"
 
@@ -10742,7 +10749,7 @@ msgstr "Maschera panoramiche"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: db/seeds/permissions.rb:40
 msgid "Overviews"
 msgstr "Panoramiche"
@@ -16482,7 +16489,7 @@ msgstr "Metodo di autenticazione a due fattori configurato correttamente."
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -17222,7 +17229,7 @@ msgstr "Visualizzazione ticket"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
@@ -17915,8 +17922,8 @@ msgstr ""
 "\n"
 "<div>Buongiorno #{user.firstname},</div>\n"
 "<br>\n"
-"<div>la password per l'accesso a #{config.product_name} account #{user."
-"login}</b> è stata modificata di recente. </div>\n"
+"<div>la password per l'accesso a #{config.product_name} account #{user.login}"
+"</b> è stata modificata di recente. </div>\n"
 "<br>\n"
 "<div>Questa attività vi è sconosciuta? In questo caso, contattare "
 "l'amministratore di sistema.</div>\n"

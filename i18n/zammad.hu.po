@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-10 05:52+0000\n"
+"PO-Revision-Date: 2024-06-17 06:24+0000\n"
 "Last-Translator: Földes László <foldes.laszlo@outlook.com>\n"
 "Language-Team: Hungarian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hu/>\n"
@@ -1971,6 +1971,10 @@ msgstr "Cikk"
 msgid "Article - visibility confirmation dialog"
 msgstr "Cikk - láthatóság megerősítő párbeszédpanel"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+msgid "Article > Text (HTML)"
+msgstr "Cikk > Szöveg (HTML)"
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr "Cikkek száma"
@@ -2055,7 +2059,7 @@ msgstr ""
 msgid "At least one match rule is required, but none was provided."
 msgstr "Legalább egy megfelelési szabály szükséges, de egy sem lett megadva."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr "Legalább egy objektumot ki kell választani."
 
@@ -2526,7 +2530,7 @@ msgstr "Csoportos művelet végrehajtva!"
 msgid "Bulk action failed"
 msgstr "A csoportos művelet nem sikerült"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr "A csoportos művelet hiba miatt leállt: %s!"
 
@@ -3281,7 +3285,7 @@ msgstr "Zárási idő"
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "A nyitott jegy jelző színének megjelenítése az oldalsávon."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "Megjegyzés"
 
@@ -3323,7 +3327,7 @@ msgstr "Az érintett objektumok feltételei"
 msgid "Conditions for shown tickets"
 msgstr "A megjelenített jegyek feltételei"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr "Konfiguráció"
 
@@ -3881,7 +3885,7 @@ msgstr "Létrehozás:"
 msgid "Created"
 msgstr "Létrehozva"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "Created Article"
 msgstr "Létrehozott cikk"
 
@@ -3891,11 +3895,11 @@ msgstr "Létrehozott cikk"
 msgid "Created At"
 msgstr "Létrehozva ekkor"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Created External Article"
 msgstr "Létrehozott külső cikk"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Created Internal Article"
 msgstr "Létrehozott belső cikk"
 
@@ -6440,7 +6444,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:9
 msgid "Enter your current password, insert a new one and confirm it."
-msgstr "Írja be a jelenlegi jelszavát, adjon meg egy újat, és erősítse meg azt."
+msgstr ""
+"Írja be a jelenlegi jelszavát, adjon meg egy újat, és erősítse meg azt."
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:36
 msgid ""
@@ -6724,7 +6729,7 @@ msgstr "Lejár"
 msgid "Expires at"
 msgstr "Lejár"
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "Kibővített keresés"
 
@@ -8776,7 +8781,7 @@ msgstr "Nyelv"
 msgid "Languages"
 msgstr "Nyelvek"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 msgid "Last Article"
 msgstr "Utolsó cikk"
 
@@ -8792,11 +8797,11 @@ msgstr "Utolsó kapcsolatfelvétel ekkor"
 msgid "Last Contact Customer At"
 msgstr "Utolsó kapcsolat ügyfél ekkor"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr "Utolsó külső cikk"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
 msgstr "Utolsó belső cikk"
 
@@ -10887,7 +10892,7 @@ msgstr "Tömeges maszk áttekintése"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: db/seeds/permissions.rb:40
 msgid "Overviews"
 msgstr "Áttekintések"
@@ -13321,7 +13326,8 @@ msgstr "Simple Storage Service (S3)"
 
 #: app/models/store/provider/s3/config.rb:33
 msgid "Simple Storage Service configuration not found or invalid."
-msgstr "A Simple Storage Service konfigurációja nem található vagy érvénytelen."
+msgstr ""
+"A Simple Storage Service konfigurációja nem található vagy érvénytelen."
 
 #: app/models/store/provider/s3.rb:88
 msgid ""
@@ -14687,10 +14693,8 @@ msgstr ""
 "rendszergazdájával."
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:86
-#, fuzzy
-#| msgid "Password changed successfully!"
 msgid "The password reset request was successful."
-msgstr "A jelszó sikeresen megváltoztatva!"
+msgstr "A jelszó-visszaállítási kérelem sikeres volt."
 
 #: app/controllers/ticket_articles_controller.rb:274
 msgid ""
@@ -15804,7 +15808,8 @@ msgstr "Ez az aláírás inaktív, nem kerül bele a válaszba."
 #: app/services/service/user/add_first_admin.rb:8
 msgid ""
 "This system has already been configured and an administrator account exists."
-msgstr "Ez a rendszer már konfigurálva van, és létezik egy rendszergazdai fiók."
+msgstr ""
+"Ez a rendszer már konfigurálva van, és létezik egy rendszergazdai fiók."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue:11
 msgid "This system is configured for automated setup."
@@ -16799,7 +16804,7 @@ msgstr "A kétfaktoros hitelesítési módszer beállítása sikeresen megtört�
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -17543,7 +17548,7 @@ msgstr "Jegy megtekintése"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3

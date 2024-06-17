@@ -1845,6 +1845,10 @@ msgstr ""
 msgid "Article - visibility confirmation dialog"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+msgid "Article > Text (HTML)"
+msgstr ""
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr ""
@@ -1929,7 +1933,7 @@ msgstr ""
 msgid "At least one match rule is required, but none was provided."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr ""
 
@@ -2412,7 +2416,7 @@ msgstr ""
 msgid "Bulk action failed"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr ""
 
@@ -3169,7 +3173,7 @@ msgstr ""
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "टिप्पणी"
 
@@ -3211,7 +3215,7 @@ msgstr ""
 msgid "Conditions for shown tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr ""
 
@@ -3748,7 +3752,7 @@ msgstr "बनाएँ"
 msgid "Created"
 msgstr "बनाया"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 #, fuzzy
 #| msgid "Create"
 msgid "Created Article"
@@ -3760,13 +3764,13 @@ msgstr "बनाएँ"
 msgid "Created At"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 #, fuzzy
 #| msgid "Tickets of Organization"
 msgid "Created External Article"
 msgstr "संगठन के टिकट"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 #, fuzzy
 #| msgid "Tickets of Organization"
 msgid "Created Internal Article"
@@ -6366,7 +6370,7 @@ msgstr ""
 msgid "Expires at"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr ""
 
@@ -8382,7 +8386,7 @@ msgstr "भाषा"
 msgid "Languages"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 #, fuzzy
 #| msgid "Publish"
 msgid "Last Article"
@@ -8400,11 +8404,11 @@ msgstr ""
 msgid "Last Contact Customer At"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
 msgstr ""
 
@@ -10577,7 +10581,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: db/seeds/permissions.rb:40
 msgid "Overviews"
 msgstr " अवलोकन"
@@ -16528,7 +16532,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -17261,7 +17265,7 @@ msgstr "नये टिकट "
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3

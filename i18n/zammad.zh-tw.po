@@ -2227,6 +2227,12 @@ msgstr "文章"
 msgid "Article - visibility confirmation dialog"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#, fuzzy
+#| msgid "Article"
+msgid "Article > Text (HTML)"
+msgstr "文章"
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr "文章數量"
@@ -2321,7 +2327,7 @@ msgstr ""
 msgid "At least one match rule is required, but none was provided."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr ""
 
@@ -2821,7 +2827,7 @@ msgstr "批量操作已執行！"
 msgid "Bulk action failed"
 msgstr "批量操作已執行！"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr ""
 
@@ -3625,7 +3631,7 @@ msgstr "關閉時間"
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "評論"
 
@@ -3673,7 +3679,7 @@ msgstr "關聯事件的條件"
 msgid "Conditions for shown tickets"
 msgstr "顯示滿足以下條件的工單"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr "配置"
 
@@ -4257,7 +4263,7 @@ msgstr "建立"
 msgid "Created"
 msgstr "建立於"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Created Article"
@@ -4269,13 +4275,13 @@ msgstr "建立一個測試工單"
 msgid "Created At"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Created External Article"
 msgstr "建立一個測試工單"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Created Internal Article"
@@ -7058,7 +7064,7 @@ msgstr "逾期"
 msgid "Expires at"
 msgstr "逾期"
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "擴展搜尋"
 
@@ -9247,7 +9253,7 @@ msgstr "語言"
 msgid "Languages"
 msgstr "語言"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 #, fuzzy
 #| msgid "Article"
 msgid "Last Article"
@@ -9265,11 +9271,11 @@ msgstr ""
 msgid "Last Contact Customer At"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
 msgstr ""
 
@@ -11532,7 +11538,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: db/seeds/permissions.rb:40
 msgid "Overviews"
 msgstr "總覽"
@@ -17851,7 +17857,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -18655,7 +18661,7 @@ msgstr "新的工單"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3

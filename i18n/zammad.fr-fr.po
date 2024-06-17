@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-11 01:05+0000\n"
-"Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
+"PO-Revision-Date: 2024-06-17 06:24+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -1955,6 +1955,12 @@ msgstr "Article"
 msgid "Article - visibility confirmation dialog"
 msgstr "Article - fenêtre de confirmation de visibilité"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#, fuzzy
+#| msgid "Article Type"
+msgid "Article > Text (HTML)"
+msgstr "Type d'article"
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr "Nombre d'articles"
@@ -2040,7 +2046,7 @@ msgstr ""
 msgid "At least one match rule is required, but none was provided."
 msgstr "Au moins une règle est requise, mais aucune n'a été fournie."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr "Au moins un objet doit être sélectionné."
 
@@ -2514,7 +2520,7 @@ msgstr "Action en masse effectué !"
 msgid "Bulk action failed"
 msgstr "Action en masse échouée"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr "Action de masse arrêtée en erreur : %s !"
 
@@ -3276,7 +3282,7 @@ msgstr "Heure de fermeture"
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Indicateur de couleur des tickets ouverts dans la barre latérale."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "Commentaire"
 
@@ -3318,7 +3324,7 @@ msgstr "Conditions pour les éléments concernés"
 msgid "Conditions for shown tickets"
 msgstr "Conditions d'affichage des tickets"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr "Configuration"
 
@@ -3861,7 +3867,7 @@ msgstr "Créer :"
 msgid "Created"
 msgstr "Créés"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "Created Article"
 msgstr "Article créé"
 
@@ -3871,11 +3877,11 @@ msgstr "Article créé"
 msgid "Created At"
 msgstr "Créé le"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Created External Article"
 msgstr "Article externe créé"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Created Internal Article"
 msgstr "Article interne créé"
 
@@ -6664,7 +6670,7 @@ msgstr "Expiration"
 msgid "Expires at"
 msgstr "Expire le"
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "Recherche étendue"
 
@@ -8197,7 +8203,7 @@ msgstr "Identifiants incomplets"
 
 #: db/seeds/settings.rb:2313
 msgid "Increment (SystemID.Counter)"
-msgstr "Incrément (SystemID.Counter)"
+msgstr "Incrément (IDSystème.Compteur)"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:7
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:7
@@ -8716,7 +8722,7 @@ msgstr "Langue"
 msgid "Languages"
 msgstr "Langues"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 msgid "Last Article"
 msgstr "Dernier article"
 
@@ -8732,11 +8738,11 @@ msgstr "Dernier contact le"
 msgid "Last Contact Customer At"
 msgstr "Dernier contact client le"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr "Dernier article externe"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
 msgstr "Dernier article interne"
 
@@ -10803,7 +10809,7 @@ msgstr "Masque d'aperçu de masse"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: db/seeds/permissions.rb:40
 msgid "Overviews"
 msgstr "Aperçus"
@@ -13676,7 +13682,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:238
 msgid "SystemID"
-msgstr "SystemID"
+msgstr "IDSystème"
 
 #: db/seeds/settings.rb:2875
 msgid "Tab behaviour after ticket action"
@@ -16585,7 +16591,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -16884,9 +16890,9 @@ msgstr ""
 "longname}</b>\".\n"
 "</div>\n"
 "<br>\n"
-"<% if @objects[:changes].present ? %>\n"
+"<% if @objects[:changes].present? %>\n"
 "  <div>\n"
-"  #{t('Changes')} : <br>\n"
+"  Modifications : <br>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
 "    <%= t key %> : <%= h value[0] %> -&gt; <%= h value[1] %><br>\n"
 "  <% end %>\n"
@@ -17329,7 +17335,7 @@ msgstr "Voir le ticket"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
@@ -17662,7 +17668,7 @@ msgid ""
 "Counter\" (e.g. 201206231010138, 201206231010139)."
 msgstr ""
 "Avec |Date|, la numérotation des tickets sera générée avec la date du jour, "
-"le SystemID et le compteur. Le format sera \"Année.Mois.Jour.SystemID."
+"l'IDSystème et le compteur. Le format sera \"Année.Mois.Jour.IDSystème."
 "Compteur\" (par exemple 201707101010138, 201707101010139)."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee:35
@@ -18608,7 +18614,7 @@ msgstr "modifié %s par moi"
 
 #: db/seeds/ticket_article_types.rb:3
 msgid "email"
-msgstr "email"
+msgstr "e-mail"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:97
 msgid "email sent to '%s'"
@@ -19581,8 +19587,8 @@ msgid ""
 "|Increment| increases the ticket number. The SystemID and the counter are "
 "used with \"SystemID.Counter\" format (e.g. 1010138, 1010139)."
 msgstr ""
-"|Incrément| incrémente le numéro du ticket. Le SystemID et le compteur sont "
-"utilisés au format \"SystemID.Compteur\" (par ex : 1010138, 1010139)."
+"|Incrément| incrémente le numéro du ticket. Le IDSystème et le compteur sont "
+"utilisés au format \"IDSystème.Compteur\" (par ex : 1010138, 1010139)."
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco:6
 msgid "|Left| means |[Ticket#12345] Some Subject|"

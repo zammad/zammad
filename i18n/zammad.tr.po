@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-04-26 05:44+0000\n"
+"PO-Revision-Date: 2024-06-17 06:24+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: Turkish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/tr/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4.2\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1951,6 +1951,12 @@ msgstr "Yazı"
 msgid "Article - visibility confirmation dialog"
 msgstr "Yazı - görünürlük doğrulama kutusu"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#, fuzzy
+#| msgid "Article Type"
+msgid "Article > Text (HTML)"
+msgstr "Yazı Türü"
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr "Yazı Sayısı"
@@ -2035,7 +2041,7 @@ msgstr ""
 msgid "At least one match rule is required, but none was provided."
 msgstr "En az bir eşleşme kuralı gerekli, ancak hiçbiri sağlanmadı."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr "En az bir nesne seçilmelidir."
 
@@ -2505,7 +2511,7 @@ msgstr "Toplu işlem gerçekleştirildi!"
 msgid "Bulk action failed"
 msgstr "Toplu işlem başarısız oldu"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr "Toplu işlem, hata(lar) nedeniyle durduruldu: %s!"
 
@@ -3255,7 +3261,7 @@ msgstr "Kapanış zamanı"
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Kenar çubuğundaki açık destek talebi göstergesinin renk temsili."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "Yorum"
 
@@ -3297,7 +3303,7 @@ msgstr "Etkilenen nesneler için koşullar"
 msgid "Conditions for shown tickets"
 msgstr "Gösterilen destek talepleri için koşullar"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr "Yapılandırma"
 
@@ -3833,7 +3839,7 @@ msgstr "Oluştur:"
 msgid "Created"
 msgstr "Oluşturuldu"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "Created Article"
 msgstr "Oluşturulan Yazı"
 
@@ -3843,11 +3849,11 @@ msgstr "Oluşturulan Yazı"
 msgid "Created At"
 msgstr "Oluşturulduğu Tarih"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Created External Article"
 msgstr "Oluşturulan Harici Yazı"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Created Internal Article"
 msgstr "Oluşturulan Dahili Yazı"
 
@@ -6623,7 +6629,7 @@ msgstr "Expires"
 msgid "Expires at"
 msgstr "Expires"
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "Extended Search"
 
@@ -8896,7 +8902,7 @@ msgstr "Dil"
 msgid "Languages"
 msgstr "Languages"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 msgid "Last Article"
 msgstr "Son Yazı"
 
@@ -8915,12 +8921,12 @@ msgstr "True"
 msgid "Last Contact Customer At"
 msgstr "True"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 #, fuzzy
 msgid "Last External Article"
 msgstr "True"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 #, fuzzy
 msgid "Last Internal Article"
 msgstr "True"
@@ -11249,7 +11255,7 @@ msgstr "True"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: db/seeds/permissions.rb:40
 msgid "Overviews"
 msgstr "Konular"
@@ -12575,10 +12581,10 @@ msgstr ""
 "<div>Şifrenizi sıfırlamak istiyorsanız aşağıdaki bağlantıya tıklayın (veya "
 "URL'yi kopyalayıp tarayıcınıza yapıştırın):</div>\n"
 "<br>\n"
-"<div><a href=\"#{url}\">#{url</a></div>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
-"<div>Bu bağlantı sizi şifrenizi değiştirebileceğiniz bir sayfaya yönlendirir."
-"</div>\n"
+"<div>Bu bağlantı sizi şifrenizi değiştirebileceğiniz bir sayfaya "
+"yönlendirir.</div>\n"
 "<br>\n"
 "<div>Şifrenizi sıfırlamak istemiyorsanız lütfen bu mesajı dikkate almayın ve "
 "tamamen sildiğinizden emin olun. Şifreniz sıfırlanmayacak.</div>\n"
@@ -17734,7 +17740,7 @@ msgstr "İki faktörlü kimlik doğrulama yöntemi başarıyla kuruldu."
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -18515,7 +18521,7 @@ msgstr "Destek talebini inceliyor"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3

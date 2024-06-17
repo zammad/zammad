@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-05-20 03:19+0000\n"
-"Last-Translator: Mateusz Tylec <mateusz4004@gmail.com>\n"
+"PO-Revision-Date: 2024-06-14 12:29+0000\n"
+"Last-Translator: MBekspert <michal.bosak@ekspert.biz>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/pl/>\n"
 "Language: pl\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.5\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1944,6 +1944,12 @@ msgstr "Artykuł"
 msgid "Article - visibility confirmation dialog"
 msgstr "Wpis - okno potwierdzenia widoczności"
 
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#, fuzzy
+#| msgid "Article Type"
+msgid "Article > Text (HTML)"
+msgstr "Rodzaj artykułu"
+
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
 msgstr "Liczba wpisów"
@@ -2029,7 +2035,7 @@ msgid "At least one match rule is required, but none was provided."
 msgstr ""
 "Wymagana jest co najmniej jedna reguła dopasowania, a nie podano żadnej."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:151
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
 msgid "At least one object must be selected."
 msgstr "Musisz wybrać co najmniej jeden obiekt."
 
@@ -2445,10 +2451,8 @@ msgstr ""
 "nadawcy."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:42
-#, fuzzy
-#| msgid "Blocked countries"
 msgid "Blocked Content"
-msgstr "Zablokowane kraje"
+msgstr "Zablokowana treść"
 
 #: app/assets/javascripts/app/models/chat.coffee:254
 msgid "Blocked IPs (separated by ;)"
@@ -2499,7 +2503,7 @@ msgstr "Zbiorcza akcja wykonana!"
 msgid "Bulk action failed"
 msgstr "Działanie zbiorcze nie powiodło się"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:195
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
 msgid "Bulk action stopped by error(s): %s!"
 msgstr "Akcja zbiorcza zatrzymana przez błędy: %s!"
 
@@ -3250,7 +3254,7 @@ msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr ""
 "Kolorowa reprezentacja wskaźnika otwartego zgłoszenia na pasku bocznym."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
 msgid "Comment"
 msgstr "Komentarz"
 
@@ -3292,7 +3296,7 @@ msgstr "Warunki dla zmienianych obiektów"
 msgid "Conditions for shown tickets"
 msgstr "Warunki dla wyświetlanych zgłoszeń"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:119
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
 msgstr "Config"
 
@@ -3832,7 +3836,7 @@ msgstr "Utwórz:"
 msgid "Created"
 msgstr "Utworzone"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:97
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "Created Article"
 msgstr "Utworzony artykuł"
 
@@ -3842,11 +3846,11 @@ msgstr "Utworzony artykuł"
 msgid "Created At"
 msgstr "Utworzono"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:99
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Created External Article"
 msgstr "Utworzono wpis zewnętrzny"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:98
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Created Internal Article"
 msgstr "Utworzono artykuł wewnętrzny"
 
@@ -6611,7 +6615,7 @@ msgstr "Wygasa"
 msgid "Expires at"
 msgstr "Wygasa w"
 
-#: app/assets/javascripts/app/controllers/search.coffee:47
+#: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "Wyszukiwanie zaawansowane"
 
@@ -6890,6 +6894,8 @@ msgid ""
 "For privacy reasons, Zammad has blocked remote content in this message. You "
 "can retrieve it from the original formatting."
 msgstr ""
+"Ze względu na prywatność Zammad zablokował zdalną zawartość w tej "
+"wiadomości. Można ją odzyskać z oryginalnej zawarości."
 
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco:1
 msgid ""
@@ -7812,15 +7818,11 @@ msgstr ""
 "Jeśli to wyrażenie regularne jest zgodne, nie wyśle żadnego powiadomienia."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:178
-#, fuzzy
-#| msgid ""
-#| "Zammad Chat requires jQuery. If you don't already use it on your website, "
-#| "you can add it like this:"
 msgid ""
 "If you don't already use jQuery on your website, you can add it like this:"
 msgstr ""
-"Zammad Chat wymaga jQuery. Jeśli nie używasz go jeszcze w swojej witrynie, "
-"możesz go dodać w ten sposób:"
+"Jeśli nie używasz jeszcze jQuery w swojej witrynie, możesz dodać ją w ten "
+"sposób:"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:5
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco:5
@@ -8643,7 +8645,7 @@ msgstr "Język"
 msgid "Languages"
 msgstr "Języki"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:94
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 msgid "Last Article"
 msgstr "Ostatni wpis"
 
@@ -8659,11 +8661,11 @@ msgstr "Ostatni kontakt o"
 msgid "Last Contact Customer At"
 msgstr "Ostatni kontakt z klientem o"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
 msgstr "Ostatni wpis zewnętrzny"
 
-#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:95
+#: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
 msgstr "Ostatni wpis wewnętrzny"
 
@@ -9228,10 +9230,8 @@ msgid "Merge to Ticket#"
 msgstr "Scal ze zgłoszeniem#"
 
 #: app/models/report.rb:75
-#, fuzzy
-#| msgid "Merge"
 msgid "Merged"
-msgstr "Scal"
+msgstr "Scalone"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
 #: app/assets/javascripts/app/views/maintenance.jst.eco:32
@@ -10723,7 +10723,7 @@ msgstr "Przegląd maski zbiorczej"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
-#: app/assets/javascripts/app/controllers/ticket_overview.coffee:260
+#: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: db/seeds/permissions.rb:40
 msgid "Overviews"
 msgstr "Przegląd"
@@ -14894,14 +14894,11 @@ msgstr ""
 "Weryfikacja połączenia TLS nie powiodła się. Sprawdź certyfikat SAML IDP."
 
 #: app/models/setting/validation/saml/tls.rb:39
-#, fuzzy
-#| msgid ""
-#| "The verification of the TLS connection failed. Please check the IDP "
-#| "certificate."
 msgid ""
 "The verification of the TLS connection is not possible. Please check the "
 "SAML IDP connection."
-msgstr "Weryfikacja połączenia TLS nie powiodła się. Sprawdź certyfikat IDP."
+msgstr ""
+"Weryfikacja połączenia TLS nie jest możliwa. Sprawdź połączenie SAML IDP."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee:29
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:11
@@ -16437,7 +16434,7 @@ msgstr "Pomyślnie skonfigurowano metodę uwierzytelniania dwuskładnikowego."
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -17179,7 +17176,7 @@ msgstr "Przeglądający zgłoszenie"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
