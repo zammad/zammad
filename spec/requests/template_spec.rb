@@ -97,20 +97,6 @@ RSpec.describe Template, type: :request do
         expect(response).to have_http_status(:created)
       end
 
-      it 'supports template options in an older format' do
-        params = { name: 'Foo', options: { title: 'Bar', customer_id: customer.id.to_s, customer_id_completion: "#{customer.firstname} #{customer.lastname} <#{customer.email}>" } }
-
-        post '/api/v1/templates.json', params: params
-
-        expect(json_response['options']).to eq({ 'ticket.title': { value: 'Bar' }, 'ticket.customer_id': { value: customer.id.to_s, value_completion: "#{customer.firstname} #{customer.lastname} <#{customer.email}>" } }.deep_stringify_keys)
-      end
-
-      it 'throws deprecation warning' do
-        post '/api/v1/templates.json', params: { name: 'Foo', options: { title: 'Bar', customer_id: customer.id.to_s, customer_id_completion: "#{customer.firstname} #{customer.lastname} <#{customer.email}>" } }
-
-        expect(ActiveSupport::Deprecation).to have_received(:warn)
-      end
-
       context 'with agent permissions', authenticated_as: :agent do
         it 'request is forbidden' do
           post '/api/v1/templates.json', params: { name: 'Foo', options: { 'ticket.title': { value: 'Bar' } } }
@@ -127,20 +113,6 @@ RSpec.describe Template, type: :request do
         put "/api/v1/templates/#{template.id}.json", params: { options: { 'ticket.title': { value: 'Foo' } } }
 
         expect(response).to have_http_status(:ok)
-      end
-
-      it 'supports template options in an older format' do
-        params = { name: 'Foo', options: { title: 'Bar', customer_id: customer.id.to_s, customer_id_completion: "#{customer.firstname} #{customer.lastname} <#{customer.email}>" } }
-
-        put "/api/v1/templates/#{template.id}.json", params: params
-
-        expect(json_response['options']).to eq({ 'ticket.title': { value: 'Bar' }, 'ticket.customer_id': { value: customer.id.to_s, value_completion: "#{customer.firstname} #{customer.lastname} <#{customer.email}>" } }.deep_stringify_keys)
-      end
-
-      it 'throws deprecation warning' do
-        put "/api/v1/templates/#{template.id}.json", params: { name: 'Foo', options: { title: 'Bar', customer_id: customer.id.to_s, customer_id_completion: "#{customer.firstname} #{customer.lastname} <#{customer.email}>" } }
-
-        expect(ActiveSupport::Deprecation).to have_received(:warn)
       end
 
       context 'with agent permissions', authenticated_as: :agent do
