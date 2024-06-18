@@ -25,6 +25,8 @@ export default {
   'sign-enabled': 'signed',
   'sign-disabled': 'not-signed',
 
+  'remove-attachment': 'close-small',
+
   // editor, some of them are the same
   'text-style-underline': 'text-style-underline',
   'text-style-bold': 'text-style-bold',

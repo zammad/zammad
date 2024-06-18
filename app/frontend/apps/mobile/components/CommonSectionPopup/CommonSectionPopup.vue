@@ -133,7 +133,6 @@ const getClassesByType = (type: PopupItemDescriptor['type']) => {
         :style="{ zIndex }"
         role="presentation"
         tabindex="-1"
-        aria-hidden="true"
         data-test-id="popupWindow"
         @click="void 0"
         @keydown.esc="hidePopup()"

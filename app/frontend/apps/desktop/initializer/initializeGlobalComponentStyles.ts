@@ -4,6 +4,7 @@ import { initializeEditorColorMenuClasses } from '#shared/components/Form/fields
 import { initializeAlertClasses } from '#shared/initializer/initializeAlertClasses.ts'
 import { initializeAvatarClasses } from '#shared/initializer/initializeAvatarClasses.ts'
 import { initializeBadgeClasses } from '#shared/initializer/initializeBadgeClasses.ts'
+import { initializeFilePreviewClasses } from '#shared/initializer/initializeFilePreviewClasses.ts'
 import { initializeLinkClasses } from '#shared/initializer/initializeLinkClasses.ts'
 import { initializeNotificationClasses } from '#shared/initializer/initializeNotificationClasses.ts'
 import { initializeOrganizationAvatarClasses } from '#shared/initializer/initializeOrganizationAvatarClasses.ts'
@@ -32,7 +33,6 @@ export const initializeGlobalComponentStyles = () => {
     link: 'hover:underline',
   })
 
-  // TODO: check correct classes
   initializeAvatarClasses({
     base: 'border -:border-neutral-100 dark:-:border-gray-900 text-black',
     vipOrganization: 'text-neutral-400',
@@ -57,7 +57,7 @@ export const initializeGlobalComponentStyles = () => {
   })
 
   initializeLinkClasses({
-    base: 'link link-hover text-blue-800 focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800',
+    base: 'cursor-pointer no-underline hover:underline text-blue-800 focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800',
   })
 
   initializeNotificationClasses({
@@ -81,5 +81,15 @@ export const initializeGlobalComponentStyles = () => {
       base: 'border-b border-stone-200 dark:border-neutral-500 pb-1',
       button: 'p-2',
     },
+  })
+
+  initializeFilePreviewClasses({
+    base: 'dark:text-white text-black text-sm leading-snug',
+    wrapper: 'p-2.5',
+    preview:
+      'hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:outline-none focus:outline-0 focus:outline-offset-0 focus:hover:outline-1 focus:hover:outline-offset-1 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:hover:outline-blue-900',
+    link: 'hover:rounded-sm hover:no-underline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 dark:hover:outline-blue-900',
+    size: '-:dark:text-neutral-500 -:text-stone-400 text-xs leading-snug',
+    icon: '-:dark:text-neutral-500 -:text-stone-400',
   })
 }

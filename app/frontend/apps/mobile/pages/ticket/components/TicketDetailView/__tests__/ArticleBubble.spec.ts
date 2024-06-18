@@ -254,10 +254,13 @@ describe('component for displaying text article', () => {
     )
     expect(attachment1).toHaveTextContent('Zammad 1.png')
     expect(attachment1).toHaveTextContent('236 KB')
-    expect(getByAltText(attachment1, 'Image of Zammad 1.png')).toHaveAttribute(
-      'src',
-      '/api/ticket_attachment/6/12/1?view=preview',
-    )
+
+    const previewButton = view.getByRole('button', {
+      name: 'Preview Zammad 1.png',
+    })
+    expect(
+      getByAltText(previewButton, 'Image of Zammad 1.png'),
+    ).toHaveAttribute('src', '/api/ticket_attachment/6/12/1?view=preview')
 
     expect(attachment2).toHaveAttribute(
       'href',
@@ -285,7 +288,9 @@ describe('component for displaying text article', () => {
       ],
     })
 
-    const attachment = view.getByRole('link', { name: /Zammad 1.png/ })
+    const attachment = view.getByRole('button', {
+      name: 'Preview Zammad 1.png',
+    })
     await view.events.click(attachment)
 
     expect(view).toHaveImagePreview('/api/ticket_attachment/6/12/1?view=inline')

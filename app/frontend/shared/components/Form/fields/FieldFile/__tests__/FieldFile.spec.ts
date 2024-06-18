@@ -15,10 +15,10 @@ import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import type { FormUploadCacheAddMutation } from '#shared/graphql/types.ts'
 import { createDeferred } from '#shared/utils/helpers.ts'
 
-import type { FieldFileProps } from '#mobile/components/Form/fields/FieldFile/types.ts'
-
 import { FormUploadCacheAddDocument } from '../graphql/mutations/uploadCache/add.api.ts'
 import { FormUploadCacheRemoveDocument } from '../graphql/mutations/uploadCache/remove.api.ts'
+
+import type { FieldFileProps } from '../types.ts'
 
 const renderFileInput = (props: Record<string, unknown> = {}) => {
   renderComponent(CommonImageViewer)
@@ -110,7 +110,7 @@ describe('Fields - FieldFile', () => {
       'Attach another file',
     )
 
-    const filePreview = view.getByRole('link', { name: 'Preview foo.png' })
+    const filePreview = view.getByRole('button', { name: 'Preview foo.png' })
     expect(filePreview).toBeInTheDocument()
 
     await view.events.click(filePreview)
@@ -143,7 +143,7 @@ describe('Fields - FieldFile', () => {
       },
     ])
 
-    const filePreview = await view.findByRole('link', {
+    const filePreview = await view.findByRole('button', {
       name: 'Preview bar.png',
     })
     expect(filePreview).toBeInTheDocument()
@@ -179,11 +179,11 @@ describe('Fields - FieldFile', () => {
       `data:image/png;base64,${base64('image2')}`,
     ]
 
-    const elementImage1 = view.getByRole('link', {
+    const elementImage1 = view.getByRole('button', {
       name: 'Preview image1.png',
     })
     const elementPdf = view.getByText('pdf.pdf')
-    const elementImage2 = view.getByRole('link', {
+    const elementImage2 = view.getByRole('button', {
       name: 'Preview image2.png',
     })
 
@@ -305,7 +305,7 @@ describe('Fields - FieldFile', () => {
 
     resolve({ data: uploadedFileQuery })
     expect(
-      await view.findByRole('link', { name: 'Preview foo.png' }),
+      await view.findByRole('button', { name: 'Preview foo.png' }),
     ).toBeInTheDocument()
   })
 

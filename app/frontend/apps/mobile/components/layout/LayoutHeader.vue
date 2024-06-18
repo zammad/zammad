@@ -22,7 +22,7 @@ export interface Props {
   refetch?: boolean
   actionTitle?: string
   actionHidden?: boolean
-  actionBtnProps?: CommonButtonProps
+  actionButtonProps?: CommonButtonProps
 
   onAction?(): void
 }
@@ -84,12 +84,12 @@ const headerClass = computed(() => {
       v-if="((onAction || actionTitle) && !actionHidden) || slots.after"
       class="flex items-center justify-self-end text-base"
     >
-      <slot name="after" :data="{ actionBtnProps }">
+      <slot name="after" :data="{ actionButtonProps }">
         <CommonButton
           v-bind="{
             variant: 'primary',
             transparentBackground: true,
-            ...actionBtnProps,
+            ...actionButtonProps,
           }"
           @click="onAction?.()"
         >

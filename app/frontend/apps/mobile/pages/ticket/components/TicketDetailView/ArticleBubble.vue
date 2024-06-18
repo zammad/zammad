@@ -6,6 +6,7 @@
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
+import CommonFilePreview from '#shared/components/CommonFilePreview/CommonFilePreview.vue'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import type { ImageViewerFile } from '#shared/composables/useImageViewer.ts'
 import { useImageViewer } from '#shared/composables/useImageViewer.ts'
@@ -22,8 +23,6 @@ import type { ConfidentTake } from '#shared/types/utils.ts'
 import stopEvent from '#shared/utils/events.ts'
 import { textToHtml } from '#shared/utils/helpers.ts'
 import { isStandalone } from '#shared/utils/pwa.ts'
-
-import CommonFilePreview from '#mobile/components/CommonFilePreview/CommonFilePreview.vue'
 
 import { useArticleAttachments } from '../../composable/useArticleAttachments.ts'
 import { useArticleSeen } from '../../composable/useArticleSeen.ts'

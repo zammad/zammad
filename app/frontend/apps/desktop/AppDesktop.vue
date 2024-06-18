@@ -4,6 +4,7 @@
 import { onBeforeMount, onBeforeUnmount } from 'vue'
 import { useRouter } from 'vue-router'
 
+import CommonImageViewer from '#shared/components/CommonImageViewer/CommonImageViewer.vue'
 import CommonNotifications from '#shared/components/CommonNotifications/CommonNotifications.vue'
 import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicInitializer.vue'
 import useAuthenticationChanges from '#shared/composables/authentication/useAuthenticationUpdates.ts'
@@ -90,8 +91,12 @@ onBeforeUnmount(() => {
 <template>
   <template v-if="application.loaded">
     <CommonNotifications />
+    <Teleport to="body">
+      <CommonImageViewer />
+    </Teleport>
     <RouterView />
+
+    <DynamicInitializer name="dialog" :transition="transition" />
+    <DynamicInitializer name="flyout" :transition="transition" />
   </template>
-  <DynamicInitializer name="dialog" :transition="transition" />
-  <DynamicInitializer name="flyout" :transition="transition" />
 </template>

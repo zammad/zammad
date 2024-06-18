@@ -37,6 +37,8 @@ export default {
   'sign-enabled': 'patch-check',
   'sign-disabled': 'patch-x',
 
+  'remove-attachment': 'x-lg',
+
   // editor, some of them are the same
   'text-style-underline': 'type-underline',
   'text-style-bold': 'type-bold',
@@ -67,6 +69,16 @@ export default {
   '2fa-authenticator-app': 'phone',
 
   'form-field-link': 'box-arrow-up-right',
+
+  // File input field
+  attachment: 'paperclip',
+  template: 'file-text',
+  library: 'file-text',
+  photos: 'file-image',
+  audio: 'file-music',
+  video: 'file-play',
+  calendar: 'file-calendar',
+  'mail-out': 'file-email',
 
   // these aliases are used in shared context, but they refer to the same name
   search: 'search',

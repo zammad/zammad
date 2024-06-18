@@ -52,10 +52,10 @@ describe('popup confirm behaviour', () => {
 
     await waitForNextTick()
 
-    expect(wrapper.getByText('Custom button title')).toBeInTheDocument()
-    expect(wrapper.getByText('Custom button title')).toHaveClass(
-      'text-red-bright',
-    )
+    const button = wrapper.getByRole('button', { name: 'Custom button title' })
+
+    expect(button).toBeInTheDocument()
+    expect(button).toHaveClass('text-red-bright')
   })
 
   it('closes the confirmation dialog by using cancel', async () => {

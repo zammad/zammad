@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { initializeFileClasses } from '#shared/components/Form/fields/FieldFile/initializeFileClasses.ts'
 import { initializeToggleClasses } from '#shared/components/Form/fields/FieldToggle/initializeToggleClasses.ts'
 import {
   initializeFieldEditorClasses,
@@ -123,5 +124,10 @@ export const initializeFormFields = () => {
         },
       },
     },
+  })
+
+  initializeFileClasses({
+    button: 'disabled:text-blue/60 text-blue p-2.5 w-full',
+    listContainer: 'max-h-48 px-4 pt-4',
   })
 }

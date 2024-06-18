@@ -88,11 +88,13 @@ if (isMobile) {
   ConformationComponent = CommonConfirmation
   formFields = mobileFormFieldModules
 } else if (isDesktop) {
-  const { desktopFormFieldModules } = await import('#desktop/form/index.ts')
+  const [{ initializeDesktopVisuals }, { desktopFormFieldModules }] =
+    await Promise.all([
+      import('#desktop/initializer/desktopVisuals.ts'),
+      import('#desktop/form/index.ts'),
+    ])
+  initDefaultVisuals = initializeDesktopVisuals
   formFields = desktopFormFieldModules
-  // TODO: Desktop visuals composable was not defined yet
-  initDefaultVisuals = () => {}
-  // TODO: conformation component is not implemented yet
 } else {
   throw new Error(`Was not able to detect the app type from ${filepath} test.`)
 }
@@ -111,9 +113,6 @@ export interface ExtendedMountingOptions<Props>
   unmount?: boolean
   dialog?: boolean
   flyout?: boolean
-  /**
-   * @default 'mobile'
-   */
   app?: AppName
   vModel?: {
     [prop: string]: unknown

@@ -168,6 +168,32 @@
       text-align: left;
     }
   }
+
+  .file-list.show-gradient::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 1.25rem;
+    height: 30px;
+    pointer-events: none;
+  }
+
+  .file-list.bottom-gradient::before {
+    bottom: 1.25rem;
+    background: linear-gradient(
+      rgba(255, 255, 255, 0),
+      theme('colors.gray.500')
+    );
+  }
+
+  .file-list.top-gradient::before {
+    top: 0;
+    background: linear-gradient(
+      theme('colors.gray.500'),
+      rgba(255, 255, 255, 0)
+    );
+  }
 }
 
 @layer utilities {

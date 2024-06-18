@@ -318,6 +318,9 @@ const schema = defineFormSchema([
         type: 'file',
         name: 'file',
         // label: 'File',
+        props: {
+          multiple: true,
+        },
       },
     ],
   },

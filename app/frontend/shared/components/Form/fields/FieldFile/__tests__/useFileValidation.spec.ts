@@ -3,7 +3,7 @@
 import { faker } from '@faker-js/faker'
 import { createNode, type FormKitNode } from '@formkit/core'
 
-import { useFileValidation } from '#mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts'
+import { useFileValidation } from '../composable/useFileValidation.ts'
 // import { vi } from 'vitest'
 describe('useFileValidation', () => {
   // Simple function pointer otherwise if stateful add this to beforeEach

@@ -117,11 +117,11 @@ describe('popup behaviour', () => {
 
     await view.events.keyboard('{Tab}')
 
-    expect(view.getByText('Action')).toHaveFocus()
+    expect(view.getByRole('button', { name: 'Action' })).toHaveFocus()
 
     await view.events.keyboard('{Tab}')
 
-    expect(view.getByText('Cancel')).toHaveFocus()
+    expect(view.getByRole('button', { name: 'Cancel' })).toHaveFocus()
 
     await view.events.keyboard('{Tab}')
 

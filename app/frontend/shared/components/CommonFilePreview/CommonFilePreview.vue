@@ -1,10 +1,13 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, getCurrentInstance, ref } from 'vue'
+import { computed, ref } from 'vue'
 
+import { useSharedVisualConfig } from '#shared/composables/useSharedVisualConfig.ts'
+import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 import type { StoredFile } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
+import { getFilePreviewClasses } from '#shared/initializer/initializeFilePreviewClasses.ts'
 import {
   canDownloadFile,
   canPreviewFile,
@@ -27,11 +30,7 @@ export interface Props {
   sizeClass?: string
 }
 
-const props = withDefaults(defineProps<Props>(), {
-  wrapperClass: 'border-gray-300',
-  iconClass: 'border-gray-300',
-  sizeClass: 'text-white/80',
-})
+const props = defineProps<Props>()
 
 const emit = defineEmits<{
   remove: []
@@ -53,16 +52,10 @@ const icon = computed(() => getIconByContentType(props.file.type))
 
 const componentType = computed(() => {
   if (props.downloadUrl) return 'CommonLink'
-  if (canPreview.value) return 'button'
   return 'div'
 })
 
-const vm = getCurrentInstance()
-
 const ariaLabel = computed(() => {
-  const listensForPreview = !!vm?.vnode.props?.onPreview
-  if (canPreview.value && listensForPreview)
-    return i18n.t('Preview %s', props.file.name) // opens a preview on the same page
   if (props.downloadUrl && canDownload.value)
     return i18n.t('Download %s', props.file.name) // directly downloads file
   if (props.downloadUrl && !canDownload.value)
@@ -70,47 +63,62 @@ const ariaLabel = computed(() => {
   return props.file.name // cannot download and preview, probably just uploaded pdf
 })
 
-const onFileClick = (event: Event) => {
-  if (canPreview.value) {
-    event.preventDefault()
-    emit('preview', event)
-  }
+const onPreviewClick = (event: Event) => {
+  emit('preview', event)
 }
+
+const { isTouchDevice } = useTouchDevice()
+
+const { filePreview: filePreviewConfig } = useSharedVisualConfig()
+
+const classMap = getFilePreviewClasses()
 </script>
 
 <template>
   <div
-    class="focus-within:bg-blue-highlight mb-2 flex w-full items-center gap-2 rounded-2xl border-[0.5px] p-3 outline-none last:mb-0"
-    :class="wrapperClass"
+    class="group/file-preview flex w-full items-center gap-2 outline-none"
+    :class="[classMap.wrapper, wrapperClass]"
   >
+    <button
+      v-if="!noPreview && canPreview"
+      class="flex h-9 w-9 items-center justify-center rounded border"
+      :class="classMap.preview"
+      :aria-label="$t('Preview %s', props.file.name)"
+      @click="onPreviewClick"
+      @keydown.delete.prevent="$emit('remove')"
+      @keydown.backspace.prevent="$emit('remove')"
+    >
+      <img
+        v-if="canPreview"
+        class="max-h-9 rounded object-cover"
+        :src="previewUrl"
+        :alt="$t('Image of %s', file.name)"
+        @error="imageFailed = true"
+      />
+    </button>
+
     <Component
       :is="componentType"
       class="flex w-full select-none items-center gap-2 overflow-hidden text-left outline-none"
-      :type="componentType === 'button' ? 'button' : undefined"
-      :class="{ 'cursor-pointer': componentType !== 'div' }"
+      :class="{
+        'cursor-pointer': componentType !== 'div',
+        [classMap.link]: true,
+      }"
       :aria-label="ariaLabel"
       tabindex="0"
       :link="downloadUrl"
       :download="canDownload ? file.name : undefined"
       :target="!canDownload ? '_blank' : undefined"
-      @click="onFileClick"
       @keydown.delete.prevent="$emit('remove')"
       @keydown.backspace.prevent="$emit('remove')"
     >
       <div
-        v-if="!noPreview"
-        class="flex h-9 w-9 items-center justify-center rounded border-[0.5px] p-1"
-        :class="iconClass"
+        v-if="!canPreview"
+        class="flex h-9 w-9 items-center justify-center rounded border"
+        :class="[classMap.icon, iconClass]"
       >
-        <img
-          v-if="canPreview"
-          class="max-h-8"
-          :src="previewUrl"
-          :alt="$t('Image of %s', file.name)"
-          @error="imageFailed = true"
-        />
         <CommonIcon
-          v-else-if="loading"
+          v-if="loading"
           size="base"
           :label="$t('File \'%s\' is uploading', file.name)"
           name="loading"
@@ -118,30 +126,33 @@ const onFileClick = (event: Event) => {
         />
         <CommonIcon v-else size="base" decorative :name="icon" />
       </div>
-      <div class="flex flex-1 flex-col overflow-hidden leading-4">
+      <div class="flex flex-1 flex-col overflow-hidden" :class="classMap.base">
         <span class="truncate">
           {{ file.name }}
         </span>
-        <span v-if="file.size" class="whitespace-nowrap" :class="sizeClass">
+        <span
+          v-if="file.size"
+          class="whitespace-nowrap"
+          :class="[classMap.size, sizeClass]"
+        >
           {{ humanizeFileSize(file.size) }}
         </span>
       </div>
     </Component>
 
-    <button
+    <component
+      :is="filePreviewConfig.buttonComponent"
       v-if="!noRemove"
+      :class="{
+        'opacity-0 transition-opacity': !isTouchDevice,
+      }"
+      class="focus:opacity-100 group-hover/file-preview:opacity-100"
       type="button"
-      tabindex="-1"
+      icon="remove-attachment"
       :aria-label="i18n.t('Remove %s', file.name)"
+      v-bind="filePreviewConfig.buttonProps"
       @click.stop.prevent="$emit('remove')"
       @keypress.space.prevent="$emit('remove')"
-    >
-      <CommonIcon
-        class="text-gray ltr:right-2 rtl:left-2"
-        name="close-small"
-        size="base"
-        decorative
-      />
-    </button>
+    />
   </div>
 </template>

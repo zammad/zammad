@@ -18,6 +18,7 @@ import { useSessionStore } from '#shared/stores/session.ts'
 
 import { twoFactorConfigurationPluginLookup } from '#desktop/entities/two-factor-configuration/plugins/index.ts'
 import { initializeForm, initializeFormFields } from '#desktop/form/index.ts'
+import { initializeDesktopVisuals } from '#desktop/initializer/desktopVisuals.ts'
 import { initializeDesktopIcons } from '#desktop/initializer/initializeDesktopIcons.ts'
 import { initializeGlobalComponentConfigurations } from '#desktop/initializer/initializeGlobalComponentConfigurations.ts'
 import { initializeGlobalComponentStyles } from '#desktop/initializer/initializeGlobalComponentStyles.ts'
@@ -45,6 +46,7 @@ export const mountApp = async () => {
   initializeGlobalProperties(app)
   initializeGlobalDirectives(app)
   initializeStoreSubscriptions()
+  initializeDesktopVisuals()
   initializeTwoFactorPlugins(twoFactorConfigurationPluginLookup)
   initializeAbstracts({
     durations: { normal: { enter: 300, leave: 200 } },

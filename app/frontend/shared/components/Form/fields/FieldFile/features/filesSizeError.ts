@@ -5,7 +5,7 @@ import { type FormKitNode } from '@formkit/core'
 import { FormValidationVisibility } from '#shared/components/Form/types.ts'
 import type { AllowedFile } from '#shared/utils/files.ts'
 
-import { useFileValidation } from '#mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts'
+import { useFileValidation } from '../composable/useFileValidation.ts'
 
 const { validateFileSize } = useFileValidation()
 export const filesSizeError = (node: FormKitNode) => {

@@ -2,11 +2,10 @@
 
 import createInput from '#shared/form/core/createInput.ts'
 
-import FieldFileInput from '#mobile/components/Form/fields/FieldFile/FieldFileInput.vue'
-
 import { filesSizeError } from './features/filesSizeError.ts'
 import { filesTypeError } from './features/filesTypeError.ts'
 import { multipleFilesError } from './features/multipleFilesError.ts'
+import FieldFileInput from './FieldFileInput.vue'
 
 const fieldDefinition = createInput(
   FieldFileInput,

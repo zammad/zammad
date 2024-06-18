@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { initializeFileClasses } from '#shared/components/Form/fields/FieldFile/initializeFileClasses.ts'
 import { initializeToggleClasses } from '#shared/components/Form/fields/FieldToggle/initializeToggleClasses.ts'
 import {
   initializeFieldEditorClasses,
@@ -136,5 +137,13 @@ export const initializeFormFields = () => {
         },
       },
     },
+  })
+
+  initializeFileClasses({
+    button: 'disabled:opacity-60',
+    divider: 'bg-neutral-100 dark:bg-gray-900',
+    listContainer: 'max-h-96',
+    dropZoneContainer: 'bg-blue-200 dark:bg-gray-700',
+    dropZoneBorder: 'border-blue-800',
   })
 }

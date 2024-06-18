@@ -822,6 +822,12 @@ const formSchema = defineFormSchema([
       ],
     },
   },
+  {
+    type: 'file',
+    name: 'file',
+    label: 'Attachment',
+    multiple: true,
+  },
 ])
 
 const formValues = ref()

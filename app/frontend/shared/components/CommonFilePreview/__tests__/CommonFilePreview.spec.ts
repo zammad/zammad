@@ -44,16 +44,12 @@ describe('preview file component', () => {
       onPreview: previewMock,
     })
 
-    const link = view.getByRole('link')
-
-    expect(link).toHaveAttribute('aria-label', 'Preview name.png')
-    expect(link).toHaveAttribute('download')
-    expect(link).toHaveAttribute('href', '/api/url')
+    const button = view.getByRole('button', { name: 'Preview name.png' })
 
     const thumbnail = view.getByAltText('Image of name.png')
     expect(thumbnail).toHaveAttribute('src', '/api/url?preview')
 
-    await view.events.click(link)
+    await view.events.click(button)
 
     expect(view.emitted().preview).toBeTruthy()
     expect(previewMock).toHaveBeenCalled()

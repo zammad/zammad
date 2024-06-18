@@ -352,7 +352,6 @@ const activeAvatarButtonClass = (active: boolean) => {
                   :aria-label="$t('Delete this avatar')"
                   :class="{ 'opacity-0 transition-opacity': !isTouchDevice }"
                   class="absolute -end-2 -top-1 text-white focus:opacity-100 group-hover/avatar:opacity-100"
-                  group="avatar"
                   icon="x-lg"
                   size="small"
                   variant="remove"
