@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-14 09:49+0000\n"
+"PO-Revision-Date: 2024-06-19 01:05+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -370,7 +370,7 @@ msgid "%s (option)"
 msgstr "%s (опција)"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:302
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:559
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:524
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:229
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
@@ -420,7 +420,7 @@ msgstr "%s URL"
 msgid "%s ago"
 msgstr "пре %s"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:298
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:297
 msgid "%s attached files"
 msgstr "%s прилог(а)"
 
@@ -753,7 +753,7 @@ msgstr ""
 "приказани у посебном екрану ваших прегледа. Такође можете подесити **имејл "
 "обавештења**."
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:297
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:296
 msgid "1 attached file"
 msgstr "1 приложена датотека"
 
@@ -1919,7 +1919,7 @@ msgstr "Архивирано у"
 msgid "Are you sure to remove this article?"
 msgstr "Да ли сте сигурни да желите да уклоните овај чланак?"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:125
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:143
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Да ли сте сигурни да желите да обришете „%s”?"
 
@@ -2035,10 +2035,8 @@ msgid "Article - visibility confirmation dialog"
 msgstr "Чланак - дијалог потврде видљивости"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
-#, fuzzy
-#| msgid "Article Type"
 msgid "Article > Text (HTML)"
-msgstr "Тип чланка"
+msgstr "Чланак > Текст (HTML)"
 
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
@@ -2048,7 +2046,7 @@ msgstr "Број чланака"
 msgid "Article Type"
 msgstr "Тип чланка"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:357
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:356
 msgid "Article actions"
 msgstr "Радње чланака"
 
@@ -2133,15 +2131,15 @@ msgstr "Неопходно је одабрати бар један објека�
 msgid "At least one user needs to have admin permissions."
 msgstr "Неопходно је да бар један корисник има администраторске дозволе."
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:163
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:181
 msgid "Attach another file"
 msgstr "Приложи још једну датотеку"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:158
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:176
 msgid "Attach file"
 msgstr "Приложи датотеку"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:161
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:179
 msgid "Attach files"
 msgstr "Приложи датотеке"
 
@@ -2775,7 +2773,7 @@ msgstr "Евиденција позива"
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:238
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:7
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:119
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:393
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:392
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:215
 msgid "Camera"
 msgstr "Камера"
@@ -2814,7 +2812,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
-#: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:166
+#: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:165
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:259
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:284
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:227
@@ -2968,7 +2966,6 @@ msgid "Changed:"
 msgstr "Измењено:"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:17
-#: app/views/mailer/ticket_update/fr.html.erb:11
 #: app/views/mailer/ticket_update/ru.html.erb:11
 #: app/views/mailer/ticket_update/zh-cn.html.erb:11
 #: app/views/mailer/ticket_update/zh-tw.html.erb:11
@@ -3199,8 +3196,8 @@ msgid "Clear Search"
 msgstr "Очисти претрагу"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:635
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:140
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:600
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:292
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:352
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:155
@@ -5334,8 +5331,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:83
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:38
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:128
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:162
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:146
 msgid "Delete"
 msgstr "Избриши"
 
@@ -5766,7 +5763,7 @@ msgstr "Готово"
 msgid "Download"
 msgstr "Преузми"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:67
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:60
 msgid "Download %s"
 msgstr "Преузми %s"
 
@@ -5826,6 +5823,7 @@ msgstr "Превуци за промену редоследа"
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:28
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:44
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:119
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:342
 msgid "Drop files here"
 msgstr "Испустите датотеке овде"
 
@@ -6953,7 +6951,7 @@ msgstr "Повратне информације"
 msgid "Feedback Form"
 msgstr "Форма повратних информација"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:115
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:123
 msgid "File '%s' is uploading"
 msgstr "Датотека ’%s’ се отпрема"
 
@@ -6962,7 +6960,7 @@ msgid "File format is not allowed: %s"
 msgstr "Недозвољен формат датотеке: %s"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:869
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts:26
+#: app/frontend/shared/components/Form/fields/FieldFile/composable/useFileValidation.ts:26
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:38
 msgid "File is too big. %s has to be %s or smaller."
 msgstr "Датотека је превелика. %s мора бити %s или мања."
@@ -8173,7 +8171,7 @@ msgstr "Сервис за слике"
 msgid "Image file"
 msgstr "Датотека слике"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:109
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:95
 msgid "Image of %s"
 msgstr "Слика за %s"
 
@@ -9766,7 +9764,7 @@ msgstr "Максимални број тикета у прегледима"
 msgid "May"
 msgstr "мај"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:80
 msgid "Me"
 msgstr "Ја"
 
@@ -11142,7 +11140,7 @@ msgstr "Упс… Жао ми је, али немате дозволу да от
 msgid "Open"
 msgstr "Отвори"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:69
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:62
 msgid "Open %s"
 msgstr "Отвори %s"
 
@@ -12003,7 +12001,7 @@ msgstr ""
 msgid "Preview"
 msgstr "Приказ"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:65
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:86
 msgid "Preview %s"
 msgstr "Прикажи %s"
 
@@ -12393,7 +12391,7 @@ msgstr "Удаљено"
 msgid "Remove"
 msgstr "Обриши"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:135
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:152
 msgid "Remove %s"
 msgstr "Обриши %s"
 
@@ -13323,7 +13321,7 @@ msgstr "Погледајте HTTPLog за детаље."
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:444
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:348
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:347
 msgid "See less"
 msgstr "Прикажи мање"
 
@@ -13333,7 +13331,7 @@ msgstr "Прикажи мање"
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:142
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:348
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:347
 msgid "See more"
 msgstr "Прикажи више"
 
@@ -13922,7 +13920,7 @@ msgstr "Грешка потписа"
 #: app/frontend/apps/mobile/pages/authentication/components/LoginRecoveryCode.vue:86
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:152
 #: app/frontend/apps/mobile/pages/authentication/routes.ts:13
-#: app/frontend/apps/mobile/pages/playground/views/PlaygroundOverview.vue:498
+#: app/frontend/apps/mobile/pages/playground/views/PlaygroundOverview.vue:501
 msgid "Sign in"
 msgstr "Пријави се"
 
@@ -14216,12 +14214,12 @@ msgstr "Унеси текст за претрагу базе знања…"
 msgid "Start typing to search or enter a new tag…"
 msgstr "Унеси појам за претрагу или нову ознаку…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:47
 msgid "Start typing to search or enter a phone number…"
 msgstr "Унеси појам за претрагу или број телефона…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:93
-#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:50
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:94
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:48
 msgid "Start typing to search or enter an email address…"
 msgstr "Унеси појам за претрагу или имејл адресу…"
 
@@ -15170,7 +15168,7 @@ msgid "The file does not belong to the specified article."
 msgstr "Датотека не припада наведеном чланку."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:863
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/filesTypeError.ts:22
+#: app/frontend/shared/components/Form/fields/FieldFile/features/filesTypeError.ts:22
 msgid "The file type %s is not allowed."
 msgstr "Тип датотеке %s није дозвољен."
 
@@ -16139,7 +16137,7 @@ msgstr "Ова функција је искључена."
 msgid "This field %s"
 msgstr "Ово поље %s"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/multipleFilesError.ts:18
+#: app/frontend/shared/components/Form/fields/FieldFile/features/multipleFilesError.ts:18
 msgid "This field allows only one file."
 msgstr "Ово поље дозвољава само једну датотеку."
 
@@ -17573,7 +17571,7 @@ msgstr "Непрочитана обавештења"
 msgid "Unsaved Changes"
 msgstr "Несачуване измене"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:568
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:533
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:238
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:304
 msgid "Unselect Option"
@@ -17823,7 +17821,7 @@ msgstr "Није успело чување ваших подешавања пр�
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:18
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:9
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:384
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:383
 msgid "Upload"
 msgstr "Отпреми"
 
@@ -19199,7 +19197,7 @@ msgstr "укључено"
 msgid "add"
 msgstr "додај"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/useAddUnknownValueAction.ts:25
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/useAddUnknownValueAction.ts:28
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:27
 msgid "add new email address"
 msgstr "додај нову имејл адресу"

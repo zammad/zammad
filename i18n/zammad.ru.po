@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-03-24 02:05+0000\n"
-"Last-Translator: Alexander <alexall.ru@gmail.com>\n"
+"PO-Revision-Date: 2024-06-20 01:05+0000\n"
+"Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ru/>\n"
 "Language: ru\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.4.2\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -374,7 +374,7 @@ msgid "%s (option)"
 msgstr "%s (необязательно)"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:302
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:559
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:524
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:229
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
@@ -426,7 +426,7 @@ msgstr "%s URL"
 msgid "%s ago"
 msgstr "%s назад"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:298
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:297
 msgid "%s attached files"
 msgstr "Прикрепленные файлы %s"
 
@@ -773,7 +773,7 @@ msgstr ""
 "цели) отображаются в отдельном представлении в ваших обзорах. Вы также "
 "можете настроить ** уведомления по электронной почте **."
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:297
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:296
 msgid "1 attached file"
 msgstr "1 прикрепленный файл"
 
@@ -2030,7 +2030,7 @@ msgstr "Архивировано в"
 msgid "Are you sure to remove this article?"
 msgstr "Вы уверены, что хотите удалить эту статью?"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:125
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:143
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Вы уверены, что хотите удалить \"%s\"?"
 
@@ -2165,7 +2165,7 @@ msgstr "Количество статей"
 msgid "Article Type"
 msgstr "Тип статьи"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:357
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:356
 msgid "Article actions"
 msgstr "Действия со статьей"
 
@@ -2254,17 +2254,17 @@ msgstr "Должен быть выбран хотя бы один объект."
 msgid "At least one user needs to have admin permissions."
 msgstr "По крайней мере, один пользователь должен иметь права администратора."
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:163
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:181
 msgid "Attach another file"
 msgstr "Прикрепить другой файл"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:158
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:176
 #, fuzzy
 #| msgid "Attach files"
 msgid "Attach file"
 msgstr "Прикрепить файлы"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:161
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:179
 msgid "Attach files"
 msgstr "Прикрепить файлы"
 
@@ -2919,7 +2919,7 @@ msgstr "Журнал звонков"
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:238
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:7
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:119
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:393
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:392
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:215
 msgid "Camera"
 msgstr "Камера"
@@ -2962,7 +2962,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
-#: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:166
+#: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:165
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:259
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:284
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:227
@@ -3128,7 +3128,6 @@ msgid "Changed:"
 msgstr "Изменено:"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:17
-#: app/views/mailer/ticket_update/fr.html.erb:11
 #: app/views/mailer/ticket_update/ru.html.erb:11
 #: app/views/mailer/ticket_update/zh-cn.html.erb:11
 #: app/views/mailer/ticket_update/zh-tw.html.erb:11
@@ -3361,8 +3360,8 @@ msgid "Clear Search"
 msgstr "Очистить поиск"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:635
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:140
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:600
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:292
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:352
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:155
@@ -5634,8 +5633,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:83
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:38
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:128
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:162
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:146
 msgid "Delete"
 msgstr "Удалить"
 
@@ -6092,7 +6091,7 @@ msgstr "Готово"
 msgid "Download"
 msgstr "Скачать"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:67
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:60
 msgid "Download %s"
 msgstr "Скачать %s"
 
@@ -6154,6 +6153,7 @@ msgstr "Перетащите чтобы изменить порядок"
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:28
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:44
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:119
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:342
 msgid "Drop files here"
 msgstr "Перетяните мышкой файл сюда"
 
@@ -7142,10 +7142,8 @@ msgid "Examples"
 msgstr "Примеры"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:16
-#, fuzzy
-#| msgid "Examples"
 msgid "Examples:"
-msgstr "Примеры"
+msgstr "Примеры:"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee:39
 msgid "Excepted users"
@@ -7362,7 +7360,7 @@ msgstr "Обратная связь"
 msgid "Feedback Form"
 msgstr "Форма обратной связи"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:115
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:123
 msgid "File '%s' is uploading"
 msgstr "Файл \"%s\" загружается"
 
@@ -7373,7 +7371,7 @@ msgid "File format is not allowed: %s"
 msgstr "Недопустимые форматы файлов."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:869
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts:26
+#: app/frontend/shared/components/Form/fields/FieldFile/composable/useFileValidation.ts:26
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:38
 #, fuzzy
 #| msgid "File too big, max. %s MB allowed."
@@ -8632,7 +8630,7 @@ msgstr "Служба изображений"
 msgid "Image file"
 msgstr "Служба изображений"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:109
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:95
 msgid "Image of %s"
 msgstr "Изображение %s"
 
@@ -10396,7 +10394,7 @@ msgstr "Максимальное количество заявок, отобра
 msgid "May"
 msgstr "Май"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:80
 msgid "Me"
 msgstr "Мне"
 
@@ -11854,7 +11852,7 @@ msgstr "Ой.. Извините, но у вас недостаточно пра�
 msgid "Open"
 msgstr "Открытые"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:69
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:62
 msgid "Open %s"
 msgstr "Открытые"
 
@@ -12775,7 +12773,7 @@ msgstr ""
 msgid "Preview"
 msgstr "Предпросмотр"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:65
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:86
 msgid "Preview %s"
 msgstr "Предпросмотр %s"
 
@@ -13186,7 +13184,7 @@ msgstr "Удаленно"
 msgid "Remove"
 msgstr "Удалить"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:135
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:152
 msgid "Remove %s"
 msgstr "Удалить %s"
 
@@ -14065,7 +14063,7 @@ msgstr "Страница не найдена"
 #, fuzzy
 #| msgid "Back to search results"
 msgid "Search result list"
-msgstr "Вернуться к результатам поиска"
+msgstr "Список результатов поиска"
 
 #: lib/external_data_source/errors.rb:76
 msgid ""
@@ -14215,8 +14213,8 @@ msgid ""
 "Security keys are hardware or software credentials that can be used as your "
 "two-factor authentication method."
 msgstr ""
-"Вход в систему не удался. Вы перепроверили свои учетные данные и завершили "
-"этап подтверждения электронной почты?"
+"Ключи безопасности - это аппаратные или программные учетные данные, которые "
+"можно использовать в качестве двухфакторного метода аутентификации."
 
 #: lib/external_data_source/errors.rb:28
 msgid "See HTTPLog for details."
@@ -14225,7 +14223,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:444
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:348
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:347
 msgid "See less"
 msgstr "Свернуть"
 
@@ -14235,7 +14233,7 @@ msgstr "Свернуть"
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:142
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:348
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:347
 msgid "See more"
 msgstr "Развернуть"
 
@@ -14712,7 +14710,7 @@ msgstr "Показать черновик"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:212
 msgid "Show Feed Icon"
-msgstr ""
+msgstr "Показать иконку канала"
 
 #: app/assets/javascripts/app/views/navigation.jst.eco:21
 msgid "Show Search Details"
@@ -14738,7 +14736,7 @@ msgstr "Аутентификация через %s"
 
 #: db/seeds/settings.rb:5591
 msgid "Show calendar weeks in the picker of date/datetime fields"
-msgstr ""
+msgstr "Показывать календарные недели в окне выбора полей даты и времени"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:149
 msgid "Show chat automatically"
@@ -14871,7 +14869,7 @@ msgstr "Выход"
 #: app/frontend/apps/mobile/pages/authentication/components/LoginRecoveryCode.vue:86
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:152
 #: app/frontend/apps/mobile/pages/authentication/routes.ts:13
-#: app/frontend/apps/mobile/pages/playground/views/PlaygroundOverview.vue:498
+#: app/frontend/apps/mobile/pages/playground/views/PlaygroundOverview.vue:501
 msgid "Sign in"
 msgstr "Вход"
 
@@ -15200,14 +15198,14 @@ msgstr "Начните вводить текст для поиска в базе
 msgid "Start typing to search or enter a new tag…"
 msgstr "Найдите или введите номер телефона…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:47
 #, fuzzy
 #| msgid "Search or enter phone number…"
 msgid "Start typing to search or enter a phone number…"
 msgstr "Найдите или введите номер телефона…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:93
-#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:50
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:94
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:48
 #, fuzzy
 #| msgid "Search or enter email address…"
 msgid "Start typing to search or enter an email address…"
@@ -15228,16 +15226,12 @@ msgid "Starting Zammad"
 msgstr "Starting Zammad"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualFinish.vue:25
-#, fuzzy
-#| msgid "Starting Zammad"
 msgid "Starting Zammad…"
-msgstr "Starting Zammad"
+msgstr "Запуск Zammad…"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:211
-#, fuzzy
-#| msgid "Starting Zammad"
 msgid "Starting import…"
-msgstr "Starting Zammad"
+msgstr "Начало импорта…"
 
 #: app/assets/javascripts/app/models/chat_sessions.coffee:8
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:7
@@ -16259,7 +16253,7 @@ msgid "The file does not belong to the specified article."
 msgstr "Файл не относится к указанной статье."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:863
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/filesTypeError.ts:22
+#: app/frontend/shared/components/Form/fields/FieldFile/features/filesTypeError.ts:22
 #, fuzzy
 #| msgid "Feature not enabled!"
 msgid "The file type %s is not allowed."
@@ -16846,12 +16840,8 @@ msgid "The required parameter 'permission' is missing."
 msgstr "Отсутствует обязательный параметр «разрешение» (permission)."
 
 #: lib/external_credential/twitter.rb:53
-#, fuzzy
-#| msgid "The required parameter 'oauth_token' is missing."
 msgid "The required parameter 'request_token' is missing."
-msgstr ""
-"Отсутствует обязательный параметр "
-"«Ключ_открытого_протокола_авторизации» (oauth_token)."
+msgstr "Отсутствует обязательный параметр «request_token»."
 
 #: app/controllers/users_controller.rb:742
 msgid "The required parameter 'signup' is missing."
@@ -17396,7 +17386,7 @@ msgstr "Функция не включена!"
 msgid "This field %s"
 msgstr "Это поле %s"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/multipleFilesError.ts:18
+#: app/frontend/shared/components/Form/fields/FieldFile/features/multipleFilesError.ts:18
 #, fuzzy
 #| msgid "This field can only contain letters and numbers."
 msgid "This field allows only one file."
@@ -18618,10 +18608,8 @@ msgid "Topics"
 msgstr "Темы"
 
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:5
-#, fuzzy
-#| msgid "Total: %s"
 msgid "Total"
-msgstr "Всего: %s"
+msgstr "Всего"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:67
 #, fuzzy
@@ -19012,7 +19000,7 @@ msgstr "Уведомление от службы"
 msgid "Unsaved Changes"
 msgstr "Отменить изменения"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:568
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:533
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:238
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:304
 #, fuzzy
@@ -19304,7 +19292,7 @@ msgstr "Определяет параметры подписки на кален
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:18
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:9
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:384
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:383
 msgid "Upload"
 msgstr "Загрузить"
 
@@ -19669,35 +19657,25 @@ msgstr "Проверить отправку и получение"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:170
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:92
-#, fuzzy
-#| msgid "Ticket notifications"
 msgid "Verifying and saving your configuration…"
-msgstr "Уведомления о заявках"
+msgstr "Проверка и сохранение конфигурации…"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:45
-#, fuzzy
-#| msgid "Ticket notifications"
 msgid "Verifying and saving your import configuration…"
-msgstr "Уведомления о заявках"
+msgstr "Проверка и сохранение конфигурации импорта…"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco:24
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:15
-#, fuzzy
-#| msgid "Ticket notifications"
 msgid "Verifying key information…"
-msgstr "Уведомления о заявках"
+msgstr "Проверка ключевой информации…"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:178
-#, fuzzy
-#| msgid "Ticket notifications"
 msgid "Verifying your configuration…"
-msgstr "Уведомления о заявках"
+msgstr "Проверка Вашей конфигурации…"
 
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:54
-#, fuzzy
-#| msgid "Ticket notifications"
 msgid "Verifying your email…"
-msgstr "Уведомления о заявках"
+msgstr "Проверка Вашей электронной почты…"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:53
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:30
@@ -20285,10 +20263,8 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:38
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:167
-#, fuzzy
-#| msgid "Did you know? You can help translating %s at:"
 msgid "You can help translating Zammad."
-msgstr "Вы знали? Вы можете помочь перевести %s на:"
+msgstr "Вы можете помочь перевести Zammad."
 
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:19
 #, fuzzy
@@ -20770,7 +20746,7 @@ msgstr "активный"
 msgid "add"
 msgstr "Добавить"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/useAddUnknownValueAction.ts:25
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/useAddUnknownValueAction.ts:28
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:27
 #, fuzzy
 #| msgid "Enter a valid email address."
@@ -21929,10 +21905,8 @@ msgstr "Выбрать все"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:156
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:42
-#, fuzzy
-#| msgid "Create new Customer"
 msgid "sent to the customer"
-msgstr "Создать нового клиента"
+msgstr "отправить клиенту"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:24
 msgid "session,sessions,computer,computers,browser,browsers,access"

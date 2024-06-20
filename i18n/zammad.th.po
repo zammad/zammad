@@ -384,7 +384,7 @@ msgid "%s (option)"
 msgstr "%s ตัวเลือก"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:302
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:559
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:524
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:229
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
@@ -436,7 +436,7 @@ msgstr "%s URL"
 msgid "%s ago"
 msgstr "%s มาแล้ว"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:298
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:297
 msgid "%s attached files"
 msgstr "%s ไฟล์แนบ"
 
@@ -777,7 +777,7 @@ msgstr ""
 "จะแสดงในมุมมองที่แยกต่างหากในภาพรวมของคุณ คุณยังสามารถกำหนดค่า ** การแจ้งเตือนทางอีเมล "
 "**"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:297
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:296
 msgid "1 attached file"
 msgstr "1 ไฟล์แนบ"
 
@@ -1995,7 +1995,7 @@ msgstr "จัดเก็บที่"
 msgid "Are you sure to remove this article?"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการโหลดซ้ำ? คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึกที่จะสูญหาย"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:125
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:143
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "คุณต้องการลบ \"%s\" หรือไม่?"
 
@@ -2136,7 +2136,7 @@ msgstr "จำนวนบทความ"
 msgid "Article Type"
 msgstr "บทความ"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:357
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:356
 msgid "Article actions"
 msgstr "การกระทําของบทความ"
 
@@ -2222,17 +2222,17 @@ msgstr "ต้องเลือกวัตถุอย่างน้อยห
 msgid "At least one user needs to have admin permissions."
 msgstr "ผู้ใช้อย่างน้อยหนึ่งรายต้องมีสิทธิ์ของผู้ดูแลระบบ."
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:163
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:181
 msgid "Attach another file"
 msgstr "แนบไฟล์อื่น"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:158
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:176
 #, fuzzy
 #| msgid "Attach files"
 msgid "Attach file"
 msgstr "ไฟล์แนบ"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:161
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:179
 msgid "Attach files"
 msgstr "ไฟล์แนบ"
 
@@ -2885,7 +2885,7 @@ msgstr "บันทึกผู้โทร"
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:238
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:7
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:119
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:393
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:392
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:215
 msgid "Camera"
 msgstr "กล้อง"
@@ -2926,7 +2926,7 @@ msgstr "อัปเดตรหัสผ่านไม่ได้ รหั�
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
-#: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:166
+#: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:165
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:259
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:284
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:227
@@ -3094,7 +3094,6 @@ msgid "Changed:"
 msgstr "เปลี่ยน:"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:17
-#: app/views/mailer/ticket_update/fr.html.erb:11
 #: app/views/mailer/ticket_update/ru.html.erb:11
 #: app/views/mailer/ticket_update/zh-cn.html.erb:11
 #: app/views/mailer/ticket_update/zh-tw.html.erb:11
@@ -3329,8 +3328,8 @@ msgid "Clear Search"
 msgstr "ล้างการค้นหา"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:635
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:140
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:600
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:292
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:352
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:155
@@ -5476,8 +5475,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:83
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:38
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:128
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:162
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:146
 msgid "Delete"
 msgstr "ลบ"
 
@@ -5942,7 +5941,7 @@ msgstr "เสร็จแล้ว"
 msgid "Download"
 msgstr "ดาวน์โหลด"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:67
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:60
 msgid "Download %s"
 msgstr "ดาวน์โหลด %s"
 
@@ -6008,6 +6007,7 @@ msgstr "ลากเพื่อจัดลำดับใหม่"
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:28
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:44
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:119
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:342
 msgid "Drop files here"
 msgstr "วางไฟล์ที่นี่"
 
@@ -7146,7 +7146,7 @@ msgstr "ข้อเสนอแนะ"
 msgid "Feedback Form"
 msgstr "แบบฟอร์มคำติชม"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:115
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:123
 msgid "File '%s' is uploading"
 msgstr ""
 
@@ -7157,7 +7157,7 @@ msgid "File format is not allowed: %s"
 msgstr "ไม่อนุญาตให้ใช้รูปแบบไฟล์"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:869
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts:26
+#: app/frontend/shared/components/Form/fields/FieldFile/composable/useFileValidation.ts:26
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:38
 #, fuzzy
 #| msgid "File too big, max. %s MB allowed."
@@ -8395,7 +8395,7 @@ msgstr ""
 msgid "Image file"
 msgstr "Zammad Image Service"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:109
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:95
 msgid "Image of %s"
 msgstr "ของภาพ %s"
 
@@ -10128,7 +10128,7 @@ msgstr ""
 msgid "May"
 msgstr "พฤษภาคม"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:80
 msgid "Me"
 msgstr "เรา"
 
@@ -11559,7 +11559,7 @@ msgstr "อ๊ะ.. ขออภัย คุณมีสิทธิ์ไม�
 msgid "Open"
 msgstr "เปิด %s"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:69
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:62
 msgid "Open %s"
 msgstr "เปิด %s"
 
@@ -12473,7 +12473,7 @@ msgstr ""
 msgid "Preview"
 msgstr "ดูตัวอย่าง"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:65
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:86
 msgid "Preview %s"
 msgstr "ดูตัวอย่าง %s"
 
@@ -12889,7 +12889,7 @@ msgstr "รีโมท"
 msgid "Remove"
 msgstr "ลบ"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:135
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:152
 msgid "Remove %s"
 msgstr "ลบ %s"
 
@@ -13935,7 +13935,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:444
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:348
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:347
 msgid "See less"
 msgstr ""
 
@@ -13945,7 +13945,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:142
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:348
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:347
 msgid "See more"
 msgstr "แสดงเพิ่ม"
 
@@ -14557,7 +14557,7 @@ msgstr "ออกจากระบบ"
 #: app/frontend/apps/mobile/pages/authentication/components/LoginRecoveryCode.vue:86
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:152
 #: app/frontend/apps/mobile/pages/authentication/routes.ts:13
-#: app/frontend/apps/mobile/pages/playground/views/PlaygroundOverview.vue:498
+#: app/frontend/apps/mobile/pages/playground/views/PlaygroundOverview.vue:501
 msgid "Sign in"
 msgstr "ลงชื่อเข้าใช้"
 
@@ -14873,14 +14873,14 @@ msgstr "พิมพ์ค้นหาใน ศูนย์การเรี�
 msgid "Start typing to search or enter a new tag…"
 msgstr "ค้นหาหรือป้อนหมายเลขโทรศัพท์…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:47
 #, fuzzy
 #| msgid "Search or enter phone number…"
 msgid "Start typing to search or enter a phone number…"
 msgstr "ค้นหาหรือป้อนหมายเลขโทรศัพท์…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:93
-#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:50
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:94
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:48
 #, fuzzy
 #| msgid "Search or enter email address…"
 msgid "Start typing to search or enter an email address…"
@@ -15901,7 +15901,7 @@ msgid "The file does not belong to the specified article."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:863
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/filesTypeError.ts:22
+#: app/frontend/shared/components/Form/fields/FieldFile/features/filesTypeError.ts:22
 #, fuzzy
 #| msgid "Feature not enabled!"
 msgid "The file type %s is not allowed."
@@ -16968,7 +16968,7 @@ msgstr "ไม่ได้เปิดใช้งานคุณสมบัต
 msgid "This field %s"
 msgstr "ต้องการ User!."
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/multipleFilesError.ts:18
+#: app/frontend/shared/components/Form/fields/FieldFile/features/multipleFilesError.ts:18
 #, fuzzy
 #| msgid "This field can only contain alphabetical characters."
 msgid "This field allows only one file."
@@ -18466,7 +18466,7 @@ msgstr "การแจ้งเตือน"
 msgid "Unsaved Changes"
 msgstr "ยกเลิกการเปลี่ยนแปลง"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:568
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:533
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:238
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:304
 #, fuzzy
@@ -18690,7 +18690,7 @@ msgstr "กำหนดการตั้งค่าการสมัครร
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:18
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:9
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:384
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:383
 msgid "Upload"
 msgstr "อัพโหลด"
 
@@ -20083,7 +20083,7 @@ msgstr "กำลังใช้งาน"
 msgid "add"
 msgstr "เพิ่ม"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/useAddUnknownValueAction.ts:25
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/useAddUnknownValueAction.ts:28
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:27
 #, fuzzy
 #| msgid "Please enter a valid email address."

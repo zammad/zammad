@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-13 01:05+0000\n"
-"Last-Translator: Lorenzo Milesi <lorenzo@mile.si>\n"
+"PO-Revision-Date: 2024-06-20 01:05+0000\n"
+"Last-Translator: Random <random_r@users.noreply.translations.zammad.org>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/it/>\n"
 "Language: it-it\n"
@@ -370,7 +370,7 @@ msgid "%s (option)"
 msgstr "%s (option)"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:302
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:559
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:524
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:229
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:365
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
@@ -420,7 +420,7 @@ msgstr "%s URL"
 msgid "%s ago"
 msgstr "%s fa"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:298
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:297
 msgid "%s attached files"
 msgstr "%s file allegati"
 
@@ -764,7 +764,7 @@ msgstr ""
 "obiettivo) sono visualizzati in una vista diversa delle tue panoramiche. "
 "Puoi anche configurare delle **notifiche via email**."
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:297
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:296
 msgid "1 attached file"
 msgstr "1 file allegato"
 
@@ -1974,7 +1974,7 @@ msgstr "Archiviato il"
 msgid "Are you sure to remove this article?"
 msgstr "Sicuro di voler eliminare questo articolo?"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:125
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:143
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Vuoi davvero eliminare \"%s\"?"
 
@@ -2095,10 +2095,8 @@ msgid "Article - visibility confirmation dialog"
 msgstr "Nota - Finestra Conferma visibilità"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
-#, fuzzy
-#| msgid "Article Type"
 msgid "Article > Text (HTML)"
-msgstr "Tipo articolo"
+msgstr "Articolo > Testo (HTML)"
 
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
@@ -2108,7 +2106,7 @@ msgstr "Numero note"
 msgid "Article Type"
 msgstr "Tipo articolo"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:357
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:356
 msgid "Article actions"
 msgstr "Azioni sull'articolo"
 
@@ -2197,15 +2195,15 @@ msgstr "È necessario selezionare almeno un oggetto."
 msgid "At least one user needs to have admin permissions."
 msgstr "Dev'esserci almeno un utente con privilegi di amministratore."
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:163
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:181
 msgid "Attach another file"
 msgstr "Allega un altro file"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:158
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:176
 msgid "Attach file"
 msgstr "Allega file"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:161
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:179
 msgid "Attach files"
 msgstr "Allega file"
 
@@ -2849,7 +2847,7 @@ msgstr "Registro chiamate"
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:238
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:7
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:119
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:393
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:392
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:215
 msgid "Camera"
 msgstr "Fotocamera"
@@ -2888,7 +2886,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
-#: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:166
+#: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:165
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:259
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:284
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:227
@@ -3054,7 +3052,6 @@ msgid "Changed:"
 msgstr "Modificato:"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:17
-#: app/views/mailer/ticket_update/fr.html.erb:11
 #: app/views/mailer/ticket_update/ru.html.erb:11
 #: app/views/mailer/ticket_update/zh-cn.html.erb:11
 #: app/views/mailer/ticket_update/zh-tw.html.erb:11
@@ -3293,8 +3290,8 @@ msgid "Clear Search"
 msgstr "Pulisci ricerca"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:635
-#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:140
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:600
+#: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:292
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:352
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:155
@@ -5520,8 +5517,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:83
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:38
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:128
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:162
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:146
 msgid "Delete"
 msgstr "Cancella"
 
@@ -5975,7 +5972,7 @@ msgstr "Fatto"
 msgid "Download"
 msgstr "Scarica"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:67
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:60
 msgid "Download %s"
 msgstr "Scarica %s"
 
@@ -6035,6 +6032,7 @@ msgstr "Trascina per riordinare"
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:28
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:44
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:119
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:342
 msgid "Drop files here"
 msgstr "Trascina i file qui"
 
@@ -7187,7 +7185,7 @@ msgstr "Feedback"
 msgid "Feedback Form"
 msgstr "Feedback Form"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:115
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:123
 msgid "File '%s' is uploading"
 msgstr "Il file '%s' è in caricamento"
 
@@ -7196,7 +7194,7 @@ msgid "File format is not allowed: %s"
 msgstr "Formato del file non consentito: %s"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:869
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/composable/useFileValidation.ts:26
+#: app/frontend/shared/components/Form/fields/FieldFile/composable/useFileValidation.ts:26
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:38
 msgid "File is too big. %s has to be %s or smaller."
 msgstr "File troppo grande. %s deve essere di %s o meno."
@@ -8422,7 +8420,7 @@ msgstr "Servizio ricerca immagini"
 msgid "Image file"
 msgstr "File immagine"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:109
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:95
 msgid "Image of %s"
 msgstr "Immagine di %s"
 
@@ -10142,7 +10140,7 @@ msgstr "Numero massimo di ticket visualizzati nelle panoramiche"
 msgid "May"
 msgstr "Mag"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:80
 msgid "Me"
 msgstr "Me"
 
@@ -11555,7 +11553,7 @@ msgstr "Oops.. Mi spiace, ma non hai le autorizzazioni per aprire questo %s."
 msgid "Open"
 msgstr "Apri"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:69
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:62
 msgid "Open %s"
 msgstr "Apri %s"
 
@@ -12449,7 +12447,7 @@ msgstr ""
 msgid "Preview"
 msgstr "Anteprima"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:65
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:86
 msgid "Preview %s"
 msgstr "Anteprima %s"
 
@@ -12856,7 +12854,7 @@ msgstr "Remoto"
 msgid "Remove"
 msgstr "Rimuovi"
 
-#: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:135
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:152
 msgid "Remove %s"
 msgstr "Rimuovi %s"
 
@@ -13812,7 +13810,7 @@ msgstr "Vedi HTTPLog per i dettagli."
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:444
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:348
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:347
 msgid "See less"
 msgstr "Nascondi"
 
@@ -13822,7 +13820,7 @@ msgstr "Nascondi"
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:142
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:348
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:347
 msgid "See more"
 msgstr "Espandi"
 
@@ -14435,7 +14433,7 @@ msgstr "Errore di firma"
 #: app/frontend/apps/mobile/pages/authentication/components/LoginRecoveryCode.vue:86
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:152
 #: app/frontend/apps/mobile/pages/authentication/routes.ts:13
-#: app/frontend/apps/mobile/pages/playground/views/PlaygroundOverview.vue:498
+#: app/frontend/apps/mobile/pages/playground/views/PlaygroundOverview.vue:501
 msgid "Sign in"
 msgstr "Entra"
 
@@ -14736,14 +14734,14 @@ msgstr "Inizia a digitare per cercare nella knowledge base…"
 msgid "Start typing to search or enter a new tag…"
 msgstr "Cerca o inserisci un numero di telefono…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:49
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:47
 #, fuzzy
 #| msgid "Search or enter phone number…"
 msgid "Start typing to search or enter a phone number…"
 msgstr "Cerca o inserisci un numero di telefono…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:93
-#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:50
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:94
+#: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:48
 #, fuzzy
 #| msgid "Search or enter email address…"
 msgid "Start typing to search or enter an email address…"
@@ -15722,7 +15720,7 @@ msgid "The file does not belong to the specified article."
 msgstr "Il file non appartiene alla nota specificata."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:863
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/filesTypeError.ts:22
+#: app/frontend/shared/components/Form/fields/FieldFile/features/filesTypeError.ts:22
 msgid "The file type %s is not allowed."
 msgstr "Il file di tipo %s non è consentito."
 
@@ -16737,7 +16735,7 @@ msgstr "Funzione non abilitata."
 msgid "This field %s"
 msgstr "Questo campo %s"
 
-#: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/multipleFilesError.ts:18
+#: app/frontend/shared/components/Form/fields/FieldFile/features/multipleFilesError.ts:18
 msgid "This field allows only one file."
 msgstr "Questo campo consente un solo file."
 
@@ -17260,14 +17258,12 @@ msgid "Ticket Subscriptions"
 msgstr "ticket di iscrizione"
 
 #: db/seeds/settings.rb:2759
-#, fuzzy
 msgid "Ticket Trigger Loop Protection Articles Total"
-msgstr "Ticket Trigger Loop Protection Articles Total"
+msgstr "Protezione Loop Trigger Ticket - articoli totali"
 
 #: db/seeds/settings.rb:2740
-#, fuzzy
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
-msgstr "Ticket Trigger Loop Protection Articles per Ticket"
+msgstr "Protezione Loop Trigger Ticket - articoli per ticket"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:105
 msgid "Ticket actions"
@@ -18210,7 +18206,7 @@ msgstr "Notifiche non lette"
 msgid "Unsaved Changes"
 msgstr "Annulla Modifiche"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:568
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:533
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:238
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:304
 msgid "Unselect Option"
@@ -18465,7 +18461,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:18
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:9
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:384
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:383
 msgid "Upload"
 msgstr "Carica"
 
@@ -19875,7 +19871,7 @@ msgstr "attivo"
 msgid "add"
 msgstr "aggiungi"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/useAddUnknownValueAction.ts:25
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/useAddUnknownValueAction.ts:28
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:27
 #, fuzzy
 #| msgid "Enter a valid email address."
