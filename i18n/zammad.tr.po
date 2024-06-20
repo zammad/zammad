@@ -2854,7 +2854,6 @@ msgid "Changed:"
 msgstr "Değişti:"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:17
-#: app/views/mailer/ticket_update/fr.html.erb:11
 #: app/views/mailer/ticket_update/ru.html.erb:11
 #: app/views/mailer/ticket_update/zh-cn.html.erb:11
 #: app/views/mailer/ticket_update/zh-tw.html.erb:11
@@ -12583,8 +12582,8 @@ msgstr ""
 "<br>\n"
 "<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
-"<div>Bu bağlantı sizi şifrenizi değiştirebileceğiniz bir sayfaya "
-"yönlendirir.</div>\n"
+"<div>Bu bağlantı sizi şifrenizi değiştirebileceğiniz bir sayfaya yönlendirir."
+"</div>\n"
 "<br>\n"
 "<div>Şifrenizi sıfırlamak istemiyorsanız lütfen bu mesajı dikkate almayın ve "
 "tamamen sildiğinizden emin olun. Şifreniz sıfırlanmayacak.</div>\n"

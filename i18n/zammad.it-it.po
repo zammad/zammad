@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-13 01:08+0000\n"
+"PO-Revision-Date: 2024-06-20 04:52+0000\n"
 "Last-Translator: Random <random_r@users.noreply.translations.zammad.org>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/it/>\n"
@@ -1954,10 +1954,8 @@ msgid "Article - visibility confirmation dialog"
 msgstr "Nota - Finestra Conferma visibilità"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
-#, fuzzy
-#| msgid "Article Type"
 msgid "Article > Text (HTML)"
-msgstr "Tipo articolo"
+msgstr "Articolo > Testo (HTML)"
 
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
@@ -2856,7 +2854,6 @@ msgid "Changed:"
 msgstr "Modificato:"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:17
-#: app/views/mailer/ticket_update/fr.html.erb:11
 #: app/views/mailer/ticket_update/ru.html.erb:11
 #: app/views/mailer/ticket_update/zh-cn.html.erb:11
 #: app/views/mailer/ticket_update/zh-tw.html.erb:11
@@ -15702,14 +15699,12 @@ msgid "Ticket Subscriptions"
 msgstr "ticket di iscrizione"
 
 #: db/seeds/settings.rb:2759
-#, fuzzy
 msgid "Ticket Trigger Loop Protection Articles Total"
-msgstr "Ticket Trigger Loop Protection Articles Total"
+msgstr "Protezione Loop Trigger Ticket - articoli totali"
 
 #: db/seeds/settings.rb:2740
-#, fuzzy
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
-msgstr "Ticket Trigger Loop Protection Articles per Ticket"
+msgstr "Protezione Loop Trigger Ticket - articoli per ticket"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:102
 msgid "Ticket actions"

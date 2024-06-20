@@ -2,17 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-03-24 02:05+0000\n"
-"Last-Translator: Alexander <alexall.ru@gmail.com>\n"
+"PO-Revision-Date: 2024-06-20 04:52+0000\n"
+"Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
-"zammad-development/ru/>\n"
+"zammad-stable/ru/>\n"
 "Language: ru\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.4.2\n"
+"X-Generator: Weblate 5.5.5\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -2917,7 +2917,6 @@ msgid "Changed:"
 msgstr "Изменено:"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:17
-#: app/views/mailer/ticket_update/fr.html.erb:11
 #: app/views/mailer/ticket_update/ru.html.erb:11
 #: app/views/mailer/ticket_update/zh-cn.html.erb:11
 #: app/views/mailer/ticket_update/zh-tw.html.erb:11
@@ -6700,10 +6699,8 @@ msgid "Examples"
 msgstr "Примеры"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:16
-#, fuzzy
-#| msgid "Examples"
 msgid "Examples:"
-msgstr "Примеры"
+msgstr "Примеры:"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee:39
 msgid "Excepted users"
@@ -12742,7 +12739,7 @@ msgstr "Страница не найдена"
 #, fuzzy
 #| msgid "Back to search results"
 msgid "Search result list"
-msgstr "Вернуться к результатам поиска"
+msgstr "Список результатов поиска"
 
 #: lib/external_data_source/errors.rb:76
 msgid ""
@@ -12884,8 +12881,8 @@ msgid ""
 "Security keys are hardware or software credentials that can be used as your "
 "two-factor authentication method."
 msgstr ""
-"Вход в систему не удался. Вы перепроверили свои учетные данные и завершили "
-"этап подтверждения электронной почты?"
+"Ключи безопасности - это аппаратные или программные учетные данные, которые "
+"можно использовать в качестве двухфакторного метода аутентификации."
 
 #: lib/external_data_source/errors.rb:28
 msgid "See HTTPLog for details."
@@ -13322,7 +13319,7 @@ msgstr "Показать черновик"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:212
 msgid "Show Feed Icon"
-msgstr ""
+msgstr "Показать иконку канала"
 
 #: app/assets/javascripts/app/views/navigation.jst.eco:21
 msgid "Show Search Details"
@@ -13348,7 +13345,7 @@ msgstr "Аутентификация через %s"
 
 #: db/seeds/settings.rb:5591
 msgid "Show calendar weeks in the picker of date/datetime fields"
-msgstr ""
+msgstr "Показывать календарные недели в окне выбора полей даты и времени"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:149
 msgid "Show chat automatically"
@@ -13798,16 +13795,12 @@ msgid "Starting Zammad"
 msgstr "Starting Zammad"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualFinish.vue:25
-#, fuzzy
-#| msgid "Starting Zammad"
 msgid "Starting Zammad…"
-msgstr "Starting Zammad"
+msgstr "Запуск Zammad…"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:210
-#, fuzzy
-#| msgid "Starting Zammad"
 msgid "Starting import…"
-msgstr "Starting Zammad"
+msgstr "Начало импорта…"
 
 #: app/assets/javascripts/app/models/chat_sessions.coffee:8
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:7
@@ -15295,12 +15288,8 @@ msgid "The required parameter 'permission' is missing."
 msgstr "Отсутствует обязательный параметр «разрешение» (permission)."
 
 #: lib/external_credential/twitter.rb:53
-#, fuzzy
-#| msgid "The required parameter 'oauth_token' is missing."
 msgid "The required parameter 'request_token' is missing."
-msgstr ""
-"Отсутствует обязательный параметр "
-"«Ключ_открытого_протокола_авторизации» (oauth_token)."
+msgstr "Отсутствует обязательный параметр «request_token»."
 
 #: app/controllers/users_controller.rb:772
 msgid "The required parameter 'signup' is missing."
@@ -17004,10 +16993,8 @@ msgid "Topics"
 msgstr "Темы"
 
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:5
-#, fuzzy
-#| msgid "Total: %s"
 msgid "Total"
-msgstr "Всего: %s"
+msgstr "Всего"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:65
 #, fuzzy
@@ -17995,35 +17982,25 @@ msgstr "Проверить отправку и получение"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:172
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:93
-#, fuzzy
-#| msgid "Ticket notifications"
 msgid "Verifying and saving your configuration…"
-msgstr "Уведомления о заявках"
+msgstr "Проверка и сохранение конфигурации…"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:45
-#, fuzzy
-#| msgid "Ticket notifications"
 msgid "Verifying and saving your import configuration…"
-msgstr "Уведомления о заявках"
+msgstr "Проверка и сохранение конфигурации импорта…"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco:24
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts:12
-#, fuzzy
-#| msgid "Ticket notifications"
 msgid "Verifying key information…"
-msgstr "Уведомления о заявках"
+msgstr "Проверка ключевой информации…"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:180
-#, fuzzy
-#| msgid "Ticket notifications"
 msgid "Verifying your configuration…"
-msgstr "Уведомления о заявках"
+msgstr "Проверка Вашей конфигурации…"
 
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:52
-#, fuzzy
-#| msgid "Ticket notifications"
 msgid "Verifying your email…"
-msgstr "Уведомления о заявках"
+msgstr "Проверка Вашей электронной почты…"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:53
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:30
@@ -20140,10 +20117,8 @@ msgstr "Выбрать все"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:156
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:39
-#, fuzzy
-#| msgid "Create new Customer"
 msgid "sent to the customer"
-msgstr "Создать нового клиента"
+msgstr "отправить клиенту"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "set fixed to"
