@@ -1,0 +1,19 @@
+#{config.product_name} prisijungimas iš naujo įrenginio
+
+<div>Sveiki #{user.firstname},</div>
+<br>
+<div>Panašu, kad prisijungėte iš <b>naujo įrenginio</b> "#{user_device.created_at}":</div>
+<br>
+<div>
+Jūsų įrenginys: #{user_device.name}<br>
+Jūsų apytikslė vieta: #{user_device.location}<br>
+Jūsų IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Šis įrenginys buvo pridėtas į žinomų įrenginių sąrašą. Visą sąrašą galite pamatyti čia:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div> Jei jūs to nedarėte, ištrinkite tą įrenginį, pasikeiskite slaptažodį ir susisiekite su administratoriumi. Kažkas galėjo gauti neautorizuotą prieigą prie jūsų paskyros.</div>
+<br>
+<div>Jūsų #{config.product_name} komanda</div>

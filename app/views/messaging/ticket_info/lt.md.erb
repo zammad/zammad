@@ -1,8 +1,8 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Atnaujintas #{ticket.updated_at}_
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Atnaujinta #{ticket.updated_at}_
 * Grupė: #{ticket.group.name}
 * Savininkas: #{ticket.owner.fullname}
-* Statusas: #{t(ticket.state.name)}
+* Būklė: #{t(ticket.state.name)}
 
 <% if @objects[:article] %>
 #{article.body_as_text}
