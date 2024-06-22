@@ -46,7 +46,7 @@ RSpec.describe 'Idoit', type: :request do
       expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a(Hash)
       expect(json_response).not_to be_blank
-      expect(json_response['error']).to eq('Not authorized (user)!')
+      expect(json_response['error']).to eq('User authorization failed.')
 
       stub_request(:post, "#{endpoint}src/jsonrpc.php")
         .with(body: "{\"method\":\"cmdb.object_types\",\"params\":{\"apikey\":\"#{token}\"},\"version\":\"2.0\",\"id\":42}")

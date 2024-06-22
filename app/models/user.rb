@@ -24,6 +24,7 @@ class User < ApplicationModel
   include User::PerformsGeoLookup
   include User::UpdatesTicketOrganization
   include User::OutOfOffice
+  include User::Permissions
 
   has_and_belongs_to_many :organizations,          after_add: %i[cache_update create_organization_add_history], after_remove: %i[cache_update create_organization_remove_history], class_name: 'Organization'
   has_and_belongs_to_many :overviews,              dependent: :nullify
@@ -41,7 +42,6 @@ class User < ApplicationModel
   has_many                :owner_tickets,          class_name: 'Ticket', foreign_key: :owner_id, inverse_of: :owner
   has_many                :overview_sortings,      dependent: :destroy
   has_many                :created_recent_views,   class_name: 'RecentView', foreign_key: :created_by_id, dependent: :destroy, inverse_of: :created_by
-  has_many                :permissions,            -> { where(roles: { active: true }, active: true) }, through: :roles
   has_many                :data_privacy_tasks,     as: :deletable
   belongs_to              :organization,           inverse_of: :members, optional: true
 
@@ -81,8 +81,7 @@ class User < ApplicationModel
                                  :chat_agents,
                                  :data_privacy_tasks,
                                  :overviews,
-                                 :mentions,
-                                 :permissions
+                                 :mentions
 
   activity_stream_permission 'admin.user'
 
@@ -320,104 +319,6 @@ returns
       logger.error e
       raise Exceptions::UnprocessableEntity, e.message
     end
-  end
-
-=begin
-
-returns all accessable permission ids of user
-
-  user = User.find(123)
-  user.permissions_with_child_ids
-
-returns
-
-  [permission1_id, permission2_id, permission3_id]
-
-=end
-
-  def permissions_with_child_ids
-    permissions_with_child_elements.pluck(:id)
-  end
-
-=begin
-
-returns all accessable permission names of user
-
-  user = User.find(123)
-  user.permissions_with_child_names
-
-returns
-
-  [permission1_name, permission2_name, permission3_name]
-
-=end
-
-  def permissions_with_child_names
-    permissions_with_child_elements.pluck(:name)
-  end
-
-  def permissions?(permissions)
-    permissions!(permissions)
-    true
-  rescue Exceptions::Forbidden
-    false
-  end
-
-  def permissions!(auth_query)
-    return true if Auth::RequestCache.permissions?(self, auth_query)
-
-    raise Exceptions::Forbidden, __('Not authorized (user)!')
-  end
-
-=begin
-
-get all users with permission
-
-  users = User.with_permissions('ticket.agent')
-
-get all users with permission "admin.session" or "ticket.agent"
-
-  users = User.with_permissions(['admin.session', 'ticket.agent'])
-
-returns
-
-  [user1, user2, ...]
-
-=end
-
-  def self.with_permissions(keys)
-    if keys.class != Array
-      keys = [keys]
-    end
-    permission_ids = []
-
-    total_role_ids = keys
-      .filter_map do |key|
-        ::Permission.with_parents(key).each do |local_key|
-          permission = ::Permission.lookup(name: local_key)
-          next if !permission
-
-          permission_ids.push permission.id
-        end
-        next if permission_ids.blank?
-
-        Role
-          .joins(:permissions_roles)
-          .joins(:permissions)
-          .where(permissions_roles: { permission_id: permission_ids }, roles: { active: true }, permissions: { active: true })
-          .distinct
-          .pluck(:id)
-      end
-      .flatten
-
-    return [] if total_role_ids.blank?
-
-    User
-      .joins(:roles_users)
-      .where(users: { active: true })
-      .where(roles_users: { role_id: total_role_ids })
-      .distinct
-      .reorder(:id)
   end
 
   # Find a user by mobile number, either directly or by number variants stored in the Cti::CallerIds.
@@ -796,25 +697,6 @@ try to find correct name
     preferences[:notification_config][:matrix] = Setting.get('ticket_agent_default_notifications')
   end
 
-  def permissions_with_child_and_parent_elements
-    permission_names         = permissions.pluck(:name)
-    names_including_ancestor = permission_names.flat_map { |name| Permission.with_parents(name) }.uniq
-
-    base_query = Permission.reorder(:name).where(active: true)
-
-    permission_names
-      .reduce(base_query.where(name: names_including_ancestor)) do |memo, name|
-        memo.or(base_query.where('permissions.name LIKE ?', "#{SqlHelper.quote_like(name)}.%"))
-      end
-      .tap do |permissions|
-        ancestor_names = names_including_ancestor - permission_names
-
-        permissions
-          .select { |permission| permission.name.in?(ancestor_names) }
-          .each { |permission| permission.preferences['disabled'] = true }
-      end
-  end
-
   private
 
   def organization_history_log(org, type)
@@ -961,20 +843,6 @@ try to find correct name
     return if organization_ids.size <= 250
 
     errors.add :base, __('More than 250 secondary organizations are not allowed.')
-  end
-
-  def permissions_with_child_elements
-    where = ''
-    where_bind = [true]
-    permissions.pluck(:name).each do |permission_name|
-      where += ' OR ' if where != ''
-      where += 'permissions.name = ? OR permissions.name LIKE ?'
-      where_bind.push permission_name
-      where_bind.push "#{SqlHelper.quote_like(permission_name)}.%"
-    end
-    return [] if where == ''
-
-    ::Permission.where("permissions.active = ? AND (#{where})", *where_bind)
   end
 
   def validate_roles(role)

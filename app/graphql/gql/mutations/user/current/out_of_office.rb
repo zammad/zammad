@@ -9,7 +9,7 @@ module Gql::Mutations
     field :success, Boolean, description: 'Profile out of office settings updated successfully?'
 
     def self.authorize(_obj, ctx)
-      ctx.current_user.permissions?('user_preferences.out_of_office') && ctx.current_user.permissions?('ticket.agent')
+      ctx.current_user.permissions?('user_preferences.out_of_office+ticket.agent')
     end
 
     def resolve(input:)

@@ -884,7 +884,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       authenticated_as(customer)
       get '/api/v1/users/import_example', params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response['error']).to eq('Not authorized (user)!')
+      expect(json_response['error']).to eq('User authorization failed.')
     end
 
     it 'does csv example - admin access (05.02)' do

@@ -57,7 +57,7 @@ RSpec.describe 'GitHub', required_envs: %w[GITHUB_ENDPOINT GITHUB_APITOKEN], typ
       expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a(Hash)
       expect(json_response).not_to be_blank
-      expect(json_response['error']).to eq('Not authorized (user)!')
+      expect(json_response['error']).to eq('User authorization failed.')
 
       authenticated_as(admin)
       instance = instance_double(GitHub)

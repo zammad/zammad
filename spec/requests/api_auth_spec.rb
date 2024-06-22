@@ -133,7 +133,7 @@ RSpec.describe 'Api Auth', type: :request do
       get '/api/v1/sessions', params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a(Hash)
-      expect(json_response['error']).to eq('Not authorized (token)!')
+      expect(json_response['error']).to eq('Token authorization failed.')
 
       admin_token.preferences[:permission] = []
       admin_token.save!
@@ -141,7 +141,7 @@ RSpec.describe 'Api Auth', type: :request do
       get '/api/v1/sessions', params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a(Hash)
-      expect(json_response['error']).to eq('Not authorized (token)!')
+      expect(json_response['error']).to eq('Token authorization failed.')
 
       admin.active = false
       admin.save!
@@ -170,7 +170,7 @@ RSpec.describe 'Api Auth', type: :request do
       get '/api/v1/roles', params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a(Hash)
-      expect(json_response['error']).to eq('Not authorized (token)!')
+      expect(json_response['error']).to eq('Token authorization failed.')
 
       admin_token.preferences[:permission] = ['admin.session_not_existing', 'admin.role']
       admin_token.save!

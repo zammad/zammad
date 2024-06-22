@@ -77,7 +77,7 @@ RSpec.describe 'External Credentials', type: :request do
             it 'returns 403 Forbidden with internal (Zammad) error' do
               post '/api/v1/external_credentials/facebook/app_verify', as: :json
               expect(response).to have_http_status(:forbidden)
-              expect(json_response).to include('error' => 'Not authorized (user)!')
+              expect(json_response).to include('error' => 'User authorization failed.')
             end
           end
 

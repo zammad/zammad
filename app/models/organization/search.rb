@@ -27,7 +27,7 @@ returns if user has no permissions to search
 =end
 
       def search_preferences(current_user)
-        return false if !current_user.permissions?('ticket.agent') && !current_user.permissions?('ticket.customer') && !current_user.permissions?('admin.organization')
+        return false if !current_user.permissions?(['ticket.agent', 'ticket.customer', 'admin.organization'])
 
         {
           prio:                1500,
@@ -36,7 +36,7 @@ returns if user has no permissions to search
       end
 
       def customer_only?(current_user)
-        return true if current_user.permissions?('ticket.customer') && !current_user.permissions?('admin.organization') && !current_user.permissions?('ticket.agent')
+        return true if current_user.permissions?('ticket.customer') && !current_user.permissions?(['admin.organization', 'ticket.agent'])
 
         false
       end

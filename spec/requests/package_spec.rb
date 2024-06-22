@@ -61,7 +61,7 @@ RSpec.describe 'Packages', type: :request do
       expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a(Hash)
       expect(json_response['packages']).to be_falsey
-      expect(json_response['error']).to eq('Not authorized (user)!')
+      expect(json_response['error']).to eq('User authorization failed.')
     end
 
     it 'does packages index with customer' do
@@ -71,7 +71,7 @@ RSpec.describe 'Packages', type: :request do
       expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a(Hash)
       expect(json_response['packages']).to be_falsey
-      expect(json_response['error']).to eq('Not authorized (user)!')
+      expect(json_response['error']).to eq('User authorization failed.')
     end
   end
 end

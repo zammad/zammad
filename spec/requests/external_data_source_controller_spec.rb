@@ -64,7 +64,7 @@ RSpec.describe 'External Data Source', :aggregate_failures, db_adapter: :postgre
         post preview_url, params: { data_option: attribute.data_option, query: 'abc' }, as: :json
 
         expect(response).to have_http_status(:forbidden)
-        expect(json_response).to include('error' => 'Not authorized (user)!')
+        expect(json_response).to include('error' => 'User authorization failed.')
       end
     end
   end

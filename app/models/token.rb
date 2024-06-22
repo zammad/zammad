@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class Token < ApplicationModel
+  include Token::Permissions
   include Token::TriggersSubscriptions
 
   before_create :generate_token
@@ -103,26 +104,6 @@ cleanup old token
     Token.where(persistent: false, created_at: ...30.days.ago).delete_all
 
     true
-  end
-
-  def permissions
-    Permission.where(
-      name:   Array(preferences[:permission]),
-      active: true,
-    )
-  end
-
-  def permissions?(permissions)
-    permissions!(permissions)
-    true
-  rescue Exceptions::Forbidden
-    false
-  end
-
-  def permissions!(auth_query)
-    return true if effective_user.permissions?(auth_query) && Auth::RequestCache.permissions?(self, auth_query)
-
-    raise Exceptions::Forbidden, __('Not authorized (token)!')
   end
 
   # allows to evaluate token permissions in context of given user instead of owner

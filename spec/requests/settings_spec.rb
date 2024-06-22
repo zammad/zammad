@@ -194,13 +194,13 @@ RSpec.describe 'Settings', type: :request do
       expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a(Hash)
       expect(json_response['settings']).to be_falsey
-      expect(json_response['error']).to eq('Not authorized (user)!')
+      expect(json_response['error']).to eq('User authorization failed.')
 
       # show
       setting = Setting.find_by(name: 'product_name')
       get "/api/v1/settings/#{setting.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response['error']).to eq('Not authorized (user)!')
+      expect(json_response['error']).to eq('User authorization failed.')
     end
 
     it 'does settings index with customer' do
@@ -211,19 +211,19 @@ RSpec.describe 'Settings', type: :request do
       expect(response).to have_http_status(:forbidden)
       expect(json_response).to be_a(Hash)
       expect(json_response['settings']).to be_falsey
-      expect(json_response['error']).to eq('Not authorized (user)!')
+      expect(json_response['error']).to eq('User authorization failed.')
 
       # show
       setting = Setting.find_by(name: 'product_name')
       get "/api/v1/settings/#{setting.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response['error']).to eq('Not authorized (user)!')
+      expect(json_response['error']).to eq('User authorization failed.')
 
       # delete
       setting = Setting.find_by(name: 'product_name')
       delete "/api/v1/settings/#{setting.id}", params: {}, as: :json
       expect(response).to have_http_status(:forbidden)
-      expect(json_response['error']).to eq('Not authorized (user)!')
+      expect(json_response['error']).to eq('User authorization failed.')
     end
 
     it 'protected setting not existing in list' do

@@ -164,7 +164,7 @@ RSpec.describe 'External Credentials > Twitter', type: :request do
         post '/api/v1/external_credentials/twitter/app_verify', params: {}, as: :json
 
         expect(response).to have_http_status(:forbidden)
-        expect(json_response).to include('error' => 'Not authorized (user)!')
+        expect(json_response).to include('error' => 'User authorization failed.')
       end
     end
 
