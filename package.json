@@ -41,7 +41,7 @@
     "@types/rails__actioncable": "^6.1.10",
     "@types/sinonjs__fake-timers": "^8.1.5",
     "@types/ua-parser-js": "^0.7.39",
-    "@types/uuid": "^9.0.8",
+    "@types/uuid": "^10.0.0",
     "@typescript-eslint/eslint-plugin": "^7.13.1",
     "@typescript-eslint/parser": "^7.13.1",
     "@vitejs/plugin-vue": "^5.0.5",
