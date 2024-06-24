@@ -1613,7 +1613,7 @@ msgstr "Temsilci Adı"
 msgid "Agent idle timeout"
 msgstr "Temsilci boşta kalma zaman aşımı"
 
-#: app/models/role.rb:153 app/models/user.rb:792
+#: app/models/role.rb:153 app/models/user.rb:696
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Temsilci limiti aşıldı, lütfen hesap ayarlarınızı kontrol edin."
 
@@ -2178,7 +2178,7 @@ msgstr ""
 "Atanan temsilci üzerinde çalışmıyorsa dakika cinsinden atama zaman aşımı. "
 "Destek talebi atanmamış olarak gösterilecektir."
 
-#: app/models/user.rb:681
+#: app/models/user.rb:599
 #, fuzzy
 #| msgid ""
 #| "At least one identifier (firstname, lastname, phone or email) for user is "
@@ -2198,7 +2198,7 @@ msgstr "En az bir eşleşme kuralı gerekli, ancak hiçbiri sağlanmadı."
 msgid "At least one object must be selected."
 msgstr "En az bir nesne seçilmelidir."
 
-#: app/models/role.rb:125 app/models/user.rb:766
+#: app/models/role.rb:125 app/models/user.rb:670
 msgid "At least one user needs to have admin permissions."
 msgstr "En az bir kullanıcının yönetici izinlerine sahip olması gerekir."
 
@@ -6291,7 +6291,7 @@ msgstr "Email Outbound"
 msgid "Email Verification"
 msgstr "E-posta Doğrulama"
 
-#: app/models/user.rb:691
+#: app/models/user.rb:609
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 "'%{email}' e-posta adresi zaten başka bir kullanıcı tarafından kullanılıyor."
@@ -9103,7 +9103,7 @@ msgstr "Alım döngüsünde geçersiz client_id!"
 msgid "Invalid client_id received!"
 msgstr "Geçersiz client_id alındı!"
 
-#: app/models/user.rb:636
+#: app/models/user.rb:554
 msgid "Invalid email '%{email}'"
 msgstr "Geçersiz e-posta '%{email}'"
 
@@ -10730,7 +10730,7 @@ msgstr "Mood"
 msgid "More information can be found here."
 msgstr "Daha fazla bilgiye buradan ulaşabilirsiniz."
 
-#: app/models/user.rb:704
+#: app/models/user.rb:622
 #, fuzzy
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "True"
@@ -11598,16 +11598,6 @@ msgstr "True"
 #: app/controllers/application_controller/authenticates.rb:83
 #, fuzzy
 msgid "Not authorized (token expired)!"
-msgstr "True"
-
-#: app/models/token.rb:71
-#, fuzzy
-msgid "Not authorized (token)!"
-msgstr "True"
-
-#: app/models/user.rb:251
-#, fuzzy
-msgid "Not authorized (user)!"
 msgstr "True"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:203
@@ -14459,7 +14449,7 @@ msgstr "Ara"
 msgid "Secondary organizations"
 msgstr "Shared organization"
 
-#: app/models/user.rb:698
+#: app/models/user.rb:616
 #, fuzzy
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
@@ -19020,6 +19010,12 @@ msgstr "True"
 msgid "Token Access"
 msgstr "Token Access"
 
+#: app/models/token/permissions.rb:20
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "Token authorization failed."
+msgstr "Yetkilendirme başarısız"
+
 #: db/seeds/settings.rb:5114
 #, fuzzy
 msgid "Token for CTI."
@@ -19869,6 +19865,12 @@ msgstr "regex mismatch"
 #, fuzzy
 msgid "User Organization Selector - email"
 msgstr "True"
+
+#: app/models/user/permissions.rb:48
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "User authorization failed."
+msgstr "Yetkilendirme başarısız"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:104
 #: app/assets/javascripts/app/controllers/signup.coffee:98
@@ -22044,7 +22046,7 @@ msgstr "True"
 msgid "is the wrong length (should be 1 character)"
 msgstr "True"
 
-#: app/models/user.rb:916
+#: app/models/user.rb:820
 msgid "is too long"
 msgstr "çok uzun"
 
@@ -22858,6 +22860,14 @@ msgstr "...of whole textarea"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "Bugünkü bekleme süresi"
+
+#, fuzzy
+#~ msgid "Not authorized (token)!"
+#~ msgstr "True"
+
+#, fuzzy
+#~ msgid "Not authorized (user)!"
+#~ msgstr "True"
 
 #, fuzzy
 #~| msgid "Apply"

@@ -1797,7 +1797,7 @@ msgstr "客服名称"
 msgid "Agent idle timeout"
 msgstr "客服空闲超时"
 
-#: app/models/role.rb:153 app/models/user.rb:792
+#: app/models/role.rb:153 app/models/user.rb:696
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "已超出客服限制，请检查您的帐户设置。"
 
@@ -2408,7 +2408,7 @@ msgid ""
 "will be shown as unassigend."
 msgstr "如果客服坐席不在工作岗位上，分配会很快超时，工单将显示为未分配。"
 
-#: app/models/user.rb:681
+#: app/models/user.rb:599
 #, fuzzy
 #| msgid ""
 #| "At least one identifier (firstname, lastname, phone or email) for user is "
@@ -2428,7 +2428,7 @@ msgstr "至少需要一个字母"
 msgid "At least one object must be selected."
 msgstr "至少必须选择一个对象。"
 
-#: app/models/role.rb:125 app/models/user.rb:766
+#: app/models/role.rb:125 app/models/user.rb:670
 msgid "At least one user needs to have admin permissions."
 msgstr "至少有一个用户需要拥有admin权限。"
 
@@ -6651,7 +6651,7 @@ msgstr "Email 電子郵件出站"
 msgid "Email Verification"
 msgstr "邮件通知"
 
-#: app/models/user.rb:691
+#: app/models/user.rb:609
 msgid "Email address '%{email}' is already used for another user."
 msgstr "电子邮件地址“％{email}”已经用于另一个用户。"
 
@@ -9390,7 +9390,7 @@ msgstr "无效的client_id在接收循环中！"
 msgid "Invalid client_id received!"
 msgstr "接收到无效的client_id！"
 
-#: app/models/user.rb:636
+#: app/models/user.rb:554
 msgid "Invalid email '%{email}'"
 msgstr "无效的电子邮件'％{email}'"
 
@@ -10966,7 +10966,7 @@ msgstr "状态"
 msgid "More information can be found here."
 msgstr "更多信息可以在这里找到。"
 
-#: app/models/user.rb:704
+#: app/models/user.rb:622
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "不允许有250多个二级组织。"
 
@@ -11841,14 +11841,6 @@ msgstr "未经授权（不可能的功能）"
 #: app/controllers/application_controller/authenticates.rb:83
 msgid "Not authorized (token expired)!"
 msgstr "未授权（令牌已过期）！"
-
-#: app/models/token.rb:71
-msgid "Not authorized (token)!"
-msgstr "未经授权（令牌）！"
-
-#: app/models/user.rb:251
-msgid "Not authorized (user)!"
-msgstr "未授权（用户）！"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:203
 msgid "Not available in selected language"
@@ -14608,7 +14600,7 @@ msgstr "搜索…"
 msgid "Secondary organizations"
 msgstr "是否为共享的机构"
 
-#: app/models/user.rb:698
+#: app/models/user.rb:616
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -19047,6 +19039,12 @@ msgstr "令牌"
 msgid "Token Access"
 msgstr "存取權限 Token"
 
+#: app/models/token/permissions.rb:20
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "Token authorization failed."
+msgstr "认证失败"
+
 #: db/seeds/settings.rb:5114
 msgid "Token for CTI."
 msgstr "CTI的令牌。"
@@ -19922,6 +19920,12 @@ msgstr "正则不匹配"
 #: db/seeds/settings.rb:603
 msgid "User Organization Selector - email"
 msgstr "用户组织选择器 - 电子邮件"
+
+#: app/models/user/permissions.rb:48
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "User authorization failed."
+msgstr "认证失败"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:104
 #: app/assets/javascripts/app/controllers/signup.coffee:98
@@ -21958,7 +21962,7 @@ msgstr "是错误的长度（应该为％{count}字符）"
 msgid "is the wrong length (should be 1 character)"
 msgstr "是错误的长度（应该是1个字符）"
 
-#: app/models/user.rb:916
+#: app/models/user.rb:820
 msgid "is too long"
 msgstr "太长"
 
@@ -22732,6 +22736,12 @@ msgstr "...整个文本区域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅轮候时间"
+
+#~ msgid "Not authorized (token)!"
+#~ msgstr "未经授权（令牌）！"
+
+#~ msgid "Not authorized (user)!"
+#~ msgstr "未授权（用户）！"
 
 #, fuzzy
 #~| msgid "Apply"

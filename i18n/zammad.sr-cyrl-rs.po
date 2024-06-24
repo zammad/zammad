@@ -1564,7 +1564,7 @@ msgstr "Ћаскање оператера"
 msgid "Agent idle timeout"
 msgstr "Време након кога се оператер сматра неактивним"
 
-#: app/models/role.rb:153 app/models/user.rb:792
+#: app/models/role.rb:153 app/models/user.rb:696
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Број оператера је прекорачен, молимо проверите подешавање налога."
 
@@ -2110,7 +2110,7 @@ msgstr ""
 "Време истека доделе у минутима уколико одговорни оператер не ради на тикету. "
 "Тикет ће бити приказан као недодељен."
 
-#: app/models/user.rb:681
+#: app/models/user.rb:599
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2127,7 +2127,7 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr "Неопходно је одабрати бар један објекат."
 
-#: app/models/role.rb:125 app/models/user.rb:766
+#: app/models/role.rb:125 app/models/user.rb:670
 msgid "At least one user needs to have admin permissions."
 msgstr "Неопходно је да бар један корисник има администраторске дозволе."
 
@@ -6081,7 +6081,7 @@ msgstr "Одлазни имејл"
 msgid "Email Verification"
 msgstr "Провера имејл адресе"
 
-#: app/models/user.rb:691
+#: app/models/user.rb:609
 msgid "Email address '%{email}' is already used for another user."
 msgstr "Други корисник већ користи ’%{email}’ имејл адресу."
 
@@ -8623,7 +8623,7 @@ msgstr "Неисправан client_id у пријемној петљи!"
 msgid "Invalid client_id received!"
 msgstr "Примљен неисправан client_id!"
 
-#: app/models/user.rb:636
+#: app/models/user.rb:554
 msgid "Invalid email '%{email}'"
 msgstr "Неважећи имејл ’%{email}’"
 
@@ -10011,7 +10011,7 @@ msgstr "Расположење"
 msgid "More information can be found here."
 msgstr "Више информација можете пронаћи овде."
 
-#: app/models/user.rb:704
+#: app/models/user.rb:622
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Није дозвољено више од 250 додатних организација."
 
@@ -10784,14 +10784,6 @@ msgstr "Без ауторизације (функција није доступ�
 #: app/controllers/application_controller/authenticates.rb:83
 msgid "Not authorized (token expired)!"
 msgstr "Без ауторизације (истекао кључ)!"
-
-#: app/models/token.rb:71
-msgid "Not authorized (token)!"
-msgstr "Без ауторизације (кључ)!"
-
-#: app/models/user.rb:251
-msgid "Not authorized (user)!"
-msgstr "Без ауторизације (корисник)!"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:203
 msgid "Not available in selected language"
@@ -13240,7 +13232,7 @@ msgstr "Тражи…"
 msgid "Secondary organizations"
 msgstr "Додатне организације"
 
-#: app/models/user.rb:698
+#: app/models/user.rb:616
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -17194,6 +17186,12 @@ msgstr "Кључ"
 msgid "Token Access"
 msgstr "Приступ путем кључа"
 
+#: app/models/token/permissions.rb:20
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "Token authorization failed."
+msgstr "Неуспела ауторизација"
+
 #: db/seeds/settings.rb:5114
 msgid "Token for CTI."
 msgstr "CTI кључ."
@@ -17988,6 +17986,12 @@ msgstr "Корисник се не поклапа"
 #: db/seeds/settings.rb:603
 msgid "User Organization Selector - email"
 msgstr "Избор услова организације корисника - имејл"
+
+#: app/models/user/permissions.rb:48
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "User authorization failed."
+msgstr "Неуспела ауторизација"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:104
 #: app/assets/javascripts/app/controllers/signup.coffee:98
@@ -19908,7 +19912,7 @@ msgstr "је погрешне дужине (мора бити %{count} знак/
 msgid "is the wrong length (should be 1 character)"
 msgstr "је погрешне дужине (мора бити један знак)"
 
-#: app/models/user.rb:916
+#: app/models/user.rb:820
 msgid "is too long"
 msgstr "је предугачко"
 
@@ -20615,6 +20619,12 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "Not authorized (token)!"
+#~ msgstr "Без ауторизације (кључ)!"
+
+#~ msgid "Not authorized (user)!"
+#~ msgstr "Без ауторизације (корисник)!"
 
 #, fuzzy
 #~| msgid "Apply"

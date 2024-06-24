@@ -1596,7 +1596,7 @@ msgstr "Chat avec l'agent"
 msgid "Agent idle timeout"
 msgstr "Temps d'inactivité maximum de l'agent"
 
-#: app/models/role.rb:153 app/models/user.rb:792
+#: app/models/role.rb:153 app/models/user.rb:696
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Limites de l'agent atteintes, vérifiez les paramètres de votre compte."
 
@@ -2152,7 +2152,7 @@ msgstr ""
 "travailler sur ce sujet. A la fin du délai, l'affectation du ticket sera "
 "supprimée."
 
-#: app/models/user.rb:681
+#: app/models/user.rb:599
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2168,7 +2168,7 @@ msgstr "Au moins une règle est requise, mais aucune n'a été fournie."
 msgid "At least one object must be selected."
 msgstr "Au moins un objet doit être sélectionné."
 
-#: app/models/role.rb:125 app/models/user.rb:766
+#: app/models/role.rb:125 app/models/user.rb:670
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 "Au moins un utilisateur doit disposer des permissions d'administration."
@@ -6225,7 +6225,7 @@ msgstr "Email sortant"
 msgid "Email Verification"
 msgstr "Vérification de l'email"
 
-#: app/models/user.rb:691
+#: app/models/user.rb:609
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 "L'adresse email '%{email}' est déjà utilisée pour un autre utilisateur."
@@ -8826,7 +8826,7 @@ msgstr "client_id invalide dans la boucle de réception !"
 msgid "Invalid client_id received!"
 msgstr "client_id reçu invalide !"
 
-#: app/models/user.rb:636
+#: app/models/user.rb:554
 msgid "Invalid email '%{email}'"
 msgstr "Email invalide '%{email}'"
 
@@ -10226,7 +10226,7 @@ msgstr "Humeur"
 msgid "More information can be found here."
 msgstr "Plus d'informations peuvent être trouvées ici."
 
-#: app/models/user.rb:704
+#: app/models/user.rb:622
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Il ne peut pas y avoir plus de 250 organisations secondaires."
 
@@ -11000,14 +11000,6 @@ msgstr "Non autorisé (fonctionnalité non disponible)"
 #: app/controllers/application_controller/authenticates.rb:83
 msgid "Not authorized (token expired)!"
 msgstr "Non autorisé (jeton expiré) !"
-
-#: app/models/token.rb:71
-msgid "Not authorized (token)!"
-msgstr "Non autorisé (jeton) !"
-
-#: app/models/user.rb:251
-msgid "Not authorized (user)!"
-msgstr "Non autorisé (utilisateur) !"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:203
 msgid "Not available in selected language"
@@ -13495,7 +13487,7 @@ msgstr "Recherche…"
 msgid "Secondary organizations"
 msgstr "Organisations secondaires"
 
-#: app/models/user.rb:698
+#: app/models/user.rb:616
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -17551,6 +17543,12 @@ msgstr "Jeton d'accès"
 msgid "Token Access"
 msgstr "Jeton d'accès"
 
+#: app/models/token/permissions.rb:20
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "Token authorization failed."
+msgstr "Échec d'autorisation"
+
 #: db/seeds/settings.rb:5114
 msgid "Token for CTI."
 msgstr "Jeton pour CTI."
@@ -18359,6 +18357,12 @@ msgstr "L'utilisateur ne correspond pas"
 #: db/seeds/settings.rb:603
 msgid "User Organization Selector - email"
 msgstr "Sélecteur de l'organisation d'un utilisateur - email"
+
+#: app/models/user/permissions.rb:48
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "User authorization failed."
+msgstr "Échec d'autorisation"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:104
 #: app/assets/javascripts/app/controllers/signup.coffee:98
@@ -20302,7 +20306,7 @@ msgstr "n'est pas de la bonne longueur (devrait avoir %{count} caractères)"
 msgid "is the wrong length (should be 1 character)"
 msgstr "n'est pas de la bonne longueur (devrait être 1 caractère)"
 
-#: app/models/user.rb:916
+#: app/models/user.rb:820
 msgid "is too long"
 msgstr "est trop long"
 
@@ -21012,6 +21016,12 @@ msgstr "... de toute la zone de texte"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Temps d'attente aujourd'hui"
+
+#~ msgid "Not authorized (token)!"
+#~ msgstr "Non autorisé (jeton) !"
+
+#~ msgid "Not authorized (user)!"
+#~ msgstr "Non autorisé (utilisateur) !"
 
 #, fuzzy
 #~| msgid "Apply"

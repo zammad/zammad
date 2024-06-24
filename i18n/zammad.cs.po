@@ -1643,7 +1643,7 @@ msgstr "Jméno řešitele"
 msgid "Agent idle timeout"
 msgstr "Časový limit neaktivity řešitele"
 
-#: app/models/role.rb:153 app/models/user.rb:792
+#: app/models/role.rb:153 app/models/user.rb:696
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Počet řešitelů překročen, prosím zkontrolujte nastavení svého účtu."
 
@@ -2205,7 +2205,7 @@ msgstr ""
 "Lhůta pro zrušení přiřazení aktuálního řešitele, pokud na ticketu nepracuje. "
 "Ticket bude po uplynutí této doby zobrazen jako nepřiřazený."
 
-#: app/models/user.rb:681
+#: app/models/user.rb:599
 #, fuzzy
 #| msgid ""
 #| "At least one identifier (firstname, lastname, phone or email) for user is "
@@ -2225,7 +2225,7 @@ msgstr "Je vyžadováno nejméně jedno pravidlo shody, ale žádné nebylo zad�
 msgid "At least one object must be selected."
 msgstr "Musí být zvolen nejméně jeden objekt."
 
-#: app/models/role.rb:125 app/models/user.rb:766
+#: app/models/role.rb:125 app/models/user.rb:670
 msgid "At least one user needs to have admin permissions."
 msgstr "Nejméně jeden uživatel musí mít oprávnění správce."
 
@@ -6388,7 +6388,7 @@ msgstr "Odchozí Email"
 msgid "Email Verification"
 msgstr "E-mailové oznámení"
 
-#: app/models/user.rb:691
+#: app/models/user.rb:609
 msgid "Email address '%{email}' is already used for another user."
 msgstr "E-mailovou adresu '%{email}' již používá jiný uživatel."
 
@@ -9038,7 +9038,7 @@ msgstr "Neplatné ID klienta v přijímacím cyklu!"
 msgid "Invalid client_id received!"
 msgstr "Obdrženo neplatné ID klienta!"
 
-#: app/models/user.rb:636
+#: app/models/user.rb:554
 msgid "Invalid email '%{email}'"
 msgstr "E-mail '%{email}' není správný"
 
@@ -10570,7 +10570,7 @@ msgstr "Nálada"
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:704
+#: app/models/user.rb:622
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Více než 250 sekundárních organizací není povoleno."
 
@@ -11375,14 +11375,6 @@ msgstr "Neautorizováno (funkce není k dispozici)"
 #: app/controllers/application_controller/authenticates.rb:83
 msgid "Not authorized (token expired)!"
 msgstr "Neautorizováno (token vypršel)!"
-
-#: app/models/token.rb:71
-msgid "Not authorized (token)!"
-msgstr "Neautorizováno (token)!"
-
-#: app/models/user.rb:251
-msgid "Not authorized (user)!"
-msgstr "Neautorizováno (uživatel)!"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:203
 msgid "Not available in selected language"
@@ -14042,7 +14034,7 @@ msgstr "Vyhledat…"
 msgid "Secondary organizations"
 msgstr "Sekundární organizace"
 
-#: app/models/user.rb:698
+#: app/models/user.rb:616
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -18319,6 +18311,12 @@ msgstr "Token"
 msgid "Token Access"
 msgstr "Přístup přes Token"
 
+#: app/models/token/permissions.rb:20
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "Token authorization failed."
+msgstr "Autentizace se nezdařila"
+
 #: db/seeds/settings.rb:5114
 msgid "Token for CTI."
 msgstr "Token pro CTI."
@@ -19160,6 +19158,12 @@ msgstr "Neshoda uživatele"
 #: db/seeds/settings.rb:603
 msgid "User Organization Selector - email"
 msgstr "Selektor organizace uživatele - e-mail"
+
+#: app/models/user/permissions.rb:48
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "User authorization failed."
+msgstr "Autentizace se nezdařila"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:104
 #: app/assets/javascripts/app/controllers/signup.coffee:98
@@ -21152,7 +21156,7 @@ msgstr "nemá správnou délku (mělo by být %{count} znaků)"
 msgid "is the wrong length (should be 1 character)"
 msgstr "nemá správnou délku (měl by být 1 znak)"
 
-#: app/models/user.rb:916
+#: app/models/user.rb:820
 msgid "is too long"
 msgstr "je příliš dlouhý"
 
@@ -21884,6 +21888,12 @@ msgstr "...celé textové oblasti"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "dnešní ∅ čekací doby"
+
+#~ msgid "Not authorized (token)!"
+#~ msgstr "Neautorizováno (token)!"
+
+#~ msgid "Not authorized (user)!"
+#~ msgstr "Neautorizováno (uživatel)!"
 
 #, fuzzy
 #~| msgid "Apply"

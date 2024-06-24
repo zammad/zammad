@@ -1476,7 +1476,7 @@ msgstr "Agent Adı"
 msgid "Agent idle timeout"
 msgstr "Agentin fasilə müddəti"
 
-#: app/models/role.rb:153 app/models/user.rb:792
+#: app/models/role.rb:153 app/models/user.rb:696
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Agentin limiti aşıldı, zəhmət olmasa hesabınızın ayarlarını yoxlayın."
 
@@ -2026,7 +2026,7 @@ msgid ""
 "will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:681
+#: app/models/user.rb:599
 #, fuzzy
 #| msgid ""
 #| "At least one identifier (firstname, lastname, phone or email) for user is "
@@ -2047,7 +2047,7 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr "Ən azı bir obyekt seçilməlidir."
 
-#: app/models/role.rb:125 app/models/user.rb:766
+#: app/models/role.rb:125 app/models/user.rb:670
 msgid "At least one user needs to have admin permissions."
 msgstr "Ən azı bir istifadəçinin administrator hüquqları olmalıdır."
 
@@ -6178,7 +6178,7 @@ msgstr "Göndərilən e-poçt"
 msgid "Email Verification"
 msgstr "E-poçt yoxlanışı"
 
-#: app/models/user.rb:691
+#: app/models/user.rb:609
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 "%{email}' elektron poçt ünvanı artıq digər istifadəçi tərəfindən istifadə "
@@ -8838,7 +8838,7 @@ msgstr "Qəbul dövrəsində yanlış client_id!"
 msgid "Invalid client_id received!"
 msgstr "Yanlış client_id qəbul edildi!"
 
-#: app/models/user.rb:636
+#: app/models/user.rb:554
 msgid "Invalid email '%{email}'"
 msgstr "Yanlış email '%{email}'"
 
@@ -10355,7 +10355,7 @@ msgstr "Əhval"
 msgid "More information can be found here."
 msgstr "Daha çox məlumatı burada tapa bilərsiniz."
 
-#: app/models/user.rb:704
+#: app/models/user.rb:622
 #, fuzzy
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "250-dən çox kiçik təşkilata icazə verilmir."
@@ -11170,15 +11170,6 @@ msgstr "Səlahiyyətli deyil (funksiya mövcud deyil)"
 #, fuzzy
 msgid "Not authorized (token expired)!"
 msgstr "İcazə verilmir (Token müddəti bitdi)!"
-
-#: app/models/token.rb:71
-#, fuzzy
-msgid "Not authorized (token)!"
-msgstr "İcazə verilmir (token)!"
-
-#: app/models/user.rb:251
-msgid "Not authorized (user)!"
-msgstr "İcazə verilmir (istifadəçi)!"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:203
 msgid "Not available in selected language"
@@ -13727,7 +13718,7 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr ""
 
-#: app/models/user.rb:698
+#: app/models/user.rb:616
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -17498,6 +17489,12 @@ msgstr ""
 msgid "Token Access"
 msgstr ""
 
+#: app/models/token/permissions.rb:20
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "Token authorization failed."
+msgstr "Avtorizasiya xətası"
+
 #: db/seeds/settings.rb:5114
 msgid "Token for CTI."
 msgstr ""
@@ -18251,6 +18248,12 @@ msgstr ""
 #: db/seeds/settings.rb:603
 msgid "User Organization Selector - email"
 msgstr ""
+
+#: app/models/user/permissions.rb:48
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "User authorization failed."
+msgstr "Avtorizasiya xətası"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:104
 #: app/assets/javascripts/app/controllers/signup.coffee:98
@@ -20063,7 +20066,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:916
+#: app/models/user.rb:820
 msgid "is too long"
 msgstr ""
 
@@ -20771,6 +20774,13 @@ msgstr ""
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr ""
+
+#, fuzzy
+#~ msgid "Not authorized (token)!"
+#~ msgstr "İcazə verilmir (token)!"
+
+#~ msgid "Not authorized (user)!"
+#~ msgstr "İcazə verilmir (istifadəçi)!"
 
 #, fuzzy
 #~| msgid "Apply"

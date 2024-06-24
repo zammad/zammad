@@ -1636,7 +1636,7 @@ msgstr "ชื่อเจ้าหน้าที่"
 msgid "Agent idle timeout"
 msgstr "ระยะหมดเวลาของ เจ้าหน้าที่"
 
-#: app/models/role.rb:153 app/models/user.rb:792
+#: app/models/role.rb:153 app/models/user.rb:696
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "เกินขีดจำกัดเจ้าหน้าที่ โปรดตรวจสอบการตั้งค่าบัญชีของคุณ"
 
@@ -2200,7 +2200,7 @@ msgstr ""
 "หมดเวลาการมอบหมายเป็นนาทีหากตัวแทนที่ได้รับมอบหมายไม่ทำงาน Ticket จะแสดงเป็น "
 "ไม่ได้รับมอบหมาย"
 
-#: app/models/user.rb:681
+#: app/models/user.rb:599
 #, fuzzy
 #| msgid ""
 #| "At least one identifier (firstname, lastname, phone or email) for user is "
@@ -2218,7 +2218,7 @@ msgstr "ต้องมีกฎการจับคู่อย่างน้
 msgid "At least one object must be selected."
 msgstr "ต้องเลือกวัตถุอย่างน้อยหนึ่งรายการ"
 
-#: app/models/role.rb:125 app/models/user.rb:766
+#: app/models/role.rb:125 app/models/user.rb:670
 msgid "At least one user needs to have admin permissions."
 msgstr "ผู้ใช้อย่างน้อยหนึ่งรายต้องมีสิทธิ์ของผู้ดูแลระบบ."
 
@@ -6282,7 +6282,7 @@ msgstr "อีเมลขาออก"
 msgid "Email Verification"
 msgstr "การแจ้งเตือนทางอีเมล"
 
-#: app/models/user.rb:691
+#: app/models/user.rb:609
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -8873,7 +8873,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:636
+#: app/models/user.rb:554
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -10396,7 +10396,7 @@ msgstr "อารมณ์"
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:704
+#: app/models/user.rb:622
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "ไม่อนุญาตให้มีองค์กรรองมากกว่า 250 แห่ง"
 
@@ -11181,14 +11181,6 @@ msgstr ""
 #: app/controllers/application_controller/authenticates.rb:83
 msgid "Not authorized (token expired)!"
 msgstr ""
-
-#: app/models/token.rb:71
-msgid "Not authorized (token)!"
-msgstr ""
-
-#: app/models/user.rb:251
-msgid "Not authorized (user)!"
-msgstr "ไม่ได้รับอนุญาต (ผู้ใช้)!"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:203
 msgid "Not available in selected language"
@@ -13839,7 +13831,7 @@ msgstr ""
 msgid "Secondary organizations"
 msgstr "องค์กรที่ 2"
 
-#: app/models/user.rb:698
+#: app/models/user.rb:616
 #, fuzzy
 #| msgid ""
 #| "Secondary organizations are only allowed when the primary organization is "
@@ -18045,6 +18037,12 @@ msgstr "Token"
 msgid "Token Access"
 msgstr "Token Access"
 
+#: app/models/token/permissions.rb:20
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "Token authorization failed."
+msgstr "การยืนยันสิทธิ์ล้มเหลว"
+
 #: db/seeds/settings.rb:5114
 msgid "Token for CTI."
 msgstr "Token for CTI."
@@ -18859,6 +18857,12 @@ msgstr "regex mismatch"
 #: db/seeds/settings.rb:603
 msgid "User Organization Selector - email"
 msgstr "ตัวเลือกองค์กรผู้ใช้ - อีเมล"
+
+#: app/models/user/permissions.rb:48
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "User authorization failed."
+msgstr "การยืนยันสิทธิ์ล้มเหลว"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:104
 #: app/assets/javascripts/app/controllers/signup.coffee:98
@@ -20838,7 +20842,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:916
+#: app/models/user.rb:820
 msgid "is too long"
 msgstr ""
 
@@ -21584,6 +21588,9 @@ msgstr "‎... ของพื้นที่ข้อความทั้ง�
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
+
+#~ msgid "Not authorized (user)!"
+#~ msgstr "ไม่ได้รับอนุญาต (ผู้ใช้)!"
 
 #, fuzzy
 #~| msgid "Apply"

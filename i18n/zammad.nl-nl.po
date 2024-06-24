@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-17 06:24+0000\n"
+"PO-Revision-Date: 2024-06-24 05:23+0000\n"
 "Last-Translator: JPB <JPB@users.noreply.translations.zammad.org>\n"
-"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
-"development/nl/>\n"
+"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
+"zammad-development/nl/>\n"
 "Language: nl-nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.6\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1580,7 +1580,7 @@ msgstr "Chat met behandelaar"
 msgid "Agent idle timeout"
 msgstr "Behandelaar idle time-out"
 
-#: app/models/role.rb:153 app/models/user.rb:792
+#: app/models/role.rb:153 app/models/user.rb:696
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Maximum behandelaren overschreden, controleer je accountinstellingen."
 
@@ -1954,8 +1954,8 @@ msgstr "Weet je zeker dat je dit ticket (#%s) wilt samenvoegen met #%s?"
 msgid ""
 "Are you sure you want to reload? You have unsaved changes that will get lost"
 msgstr ""
-"Weet je zeker dat je opnieuw wilt laden? Alle niet opgeslagen aanpassingen "
-"gaan verloren."
+"Weet je zeker dat je de pagina opnieuw wilt laden? Alle niet opgeslagen "
+"aanpassingen gaan verloren"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:693
 msgid "Are you sure you want to set \"%s\" as default?"
@@ -2131,7 +2131,7 @@ msgstr ""
 "Toewijzing time-out in minuten toewijzen als toegewezen behandelaar er niet "
 "aan werkt. Ticket wordt getoond als niet toegewezen."
 
-#: app/models/user.rb:681
+#: app/models/user.rb:599
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2147,7 +2147,7 @@ msgstr "Minimaal één regel is verplicht, maar er is er geen één aangeboden."
 msgid "At least one object must be selected."
 msgstr "Minimaal één object moet geselecteerd worden."
 
-#: app/models/role.rb:125 app/models/user.rb:766
+#: app/models/role.rb:125 app/models/user.rb:670
 msgid "At least one user needs to have admin permissions."
 msgstr "Minimaal één gebruiker moet administrator rechten hebben."
 
@@ -6137,7 +6137,7 @@ msgstr "E-mail uitgaand"
 msgid "Email Verification"
 msgstr "E-mail verificatie"
 
-#: app/models/user.rb:691
+#: app/models/user.rb:609
 msgid "Email address '%{email}' is already used for another user."
 msgstr "E-mailadres '%{email}' is al in gebruik voor een andere gebruiker."
 
@@ -8704,7 +8704,7 @@ msgstr "Ongeldig client_id in ontvangstlus!"
 msgid "Invalid client_id received!"
 msgstr "Ongeldig client_id ontvangen!"
 
-#: app/models/user.rb:636
+#: app/models/user.rb:554
 msgid "Invalid email '%{email}'"
 msgstr "Ongeldig e-mailadres '%{email}'"
 
@@ -10099,7 +10099,7 @@ msgstr "Stemming"
 msgid "More information can be found here."
 msgstr "Meer informatie is hier te vinden."
 
-#: app/models/user.rb:704
+#: app/models/user.rb:622
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Meer dan 250 secundaire organisaties zijn niet toegestaan."
 
@@ -10872,14 +10872,6 @@ msgstr "Niet geautoriseerd (functie niet mogelijk)"
 #: app/controllers/application_controller/authenticates.rb:83
 msgid "Not authorized (token expired)!"
 msgstr "Niet geautoriseerd (token verlopen)!"
-
-#: app/models/token.rb:71
-msgid "Not authorized (token)!"
-msgstr "Niet geautoriseerd (token)!"
-
-#: app/models/user.rb:251
-msgid "Not authorized (user)!"
-msgstr "Niet geautoriseerd (gebruiker)!"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:203
 msgid "Not available in selected language"
@@ -13345,7 +13337,7 @@ msgstr "Zoeken…"
 msgid "Secondary organizations"
 msgstr "Secundaire organisaties"
 
-#: app/models/user.rb:698
+#: app/models/user.rb:616
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -17347,6 +17339,10 @@ msgstr "Token"
 msgid "Token Access"
 msgstr "Toegangstoken"
 
+#: app/models/token/permissions.rb:20
+msgid "Token authorization failed."
+msgstr "Token authenticatie mislukt."
+
 #: db/seeds/settings.rb:5114
 msgid "Token for CTI."
 msgstr "Token voor CTI."
@@ -18146,6 +18142,10 @@ msgstr "Gebruiker mismatch"
 #: db/seeds/settings.rb:603
 msgid "User Organization Selector - email"
 msgstr "Gebruikersorganisatie selector - e-mail"
+
+#: app/models/user/permissions.rb:48
+msgid "User authorization failed."
+msgstr "User authenticatie mislukt."
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:104
 #: app/assets/javascripts/app/controllers/signup.coffee:98
@@ -20077,7 +20077,7 @@ msgstr "is de verkeerde lengte (moet %{count} tekens zijn)"
 msgid "is the wrong length (should be 1 character)"
 msgstr "is de verkeerde lengte (moet 1 teken zijn)"
 
-#: app/models/user.rb:916
+#: app/models/user.rb:820
 msgid "is too long"
 msgstr "is te lang"
 
@@ -20789,6 +20789,12 @@ msgstr "…van geheel tekstvak"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Wachttijd vandaag"
+
+#~ msgid "Not authorized (token)!"
+#~ msgstr "Niet geautoriseerd (token)!"
+
+#~ msgid "Not authorized (user)!"
+#~ msgstr "Niet geautoriseerd (gebruiker)!"
 
 #, fuzzy
 #~| msgid "Apply"

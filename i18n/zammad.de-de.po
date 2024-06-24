@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-07 06:29+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2024-06-23 07:00+0000\n"
+"Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.6\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1381,10 +1381,8 @@ msgid "Add first level heading"
 msgstr "Überschrift für erste Ebene hinzufügen"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Add heading"
-msgstr "Tag hinzufügen"
+msgstr "Überschrift hinzufügen"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:131
 msgid "Add image"
@@ -1591,7 +1589,7 @@ msgstr "Agent-Chat"
 msgid "Agent idle timeout"
 msgstr "Zeitüberschreitung bei Leerlauf des Agenten"
 
-#: app/models/role.rb:153 app/models/user.rb:792
+#: app/models/role.rb:153 app/models/user.rb:696
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 "Agenten-Limit überschritten, überprüfen Sie bitte Ihre Kontoeinstellungen."
@@ -2074,10 +2072,8 @@ msgid "Article - visibility confirmation dialog"
 msgstr "Artikel - Bestätigungsdialog zur Sichtbarkeit"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
-#, fuzzy
-#| msgid "Article Type"
 msgid "Article > Text (HTML)"
-msgstr "Artikel-Typ"
+msgstr "Artikel > Text (HTML)"
 
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
@@ -2153,7 +2149,7 @@ msgstr ""
 "nicht am Ticket arbeitet. Das Ticket wird danach als nicht zugeordnet "
 "angezeigt."
 
-#: app/models/user.rb:681
+#: app/models/user.rb:599
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2171,7 +2167,7 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr "Wählen Sie mindestens ein Objekt aus."
 
-#: app/models/role.rb:125 app/models/user.rb:766
+#: app/models/role.rb:125 app/models/user.rb:670
 msgid "At least one user needs to have admin permissions."
 msgstr "Mindestens ein Benutzer muss administrative Berechtigungen besitzen."
 
@@ -3009,10 +3005,8 @@ msgid "Change personal account password."
 msgstr "Passwort für persönliches Konto ändern."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
-#, fuzzy
-#| msgid "Change date"
 msgid "Change text color"
-msgstr "Datum ändern"
+msgstr "Textfarbe ändern"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -5500,10 +5494,8 @@ msgid "Delete avatar"
 msgstr "Avatar löschen"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:149
-#, fuzzy
-#| msgid "Delete Article"
 msgid "Delete column"
-msgstr "Artikel löschen"
+msgstr "Spalte löschen"
 
 #: db/seeds/permissions.rb:252
 msgid "Delete existing data of your system."
@@ -5550,16 +5542,12 @@ msgid "Delete records"
 msgstr "Datensätze löschen"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:121
-#, fuzzy
-#| msgid "Delete User"
 msgid "Delete row"
-msgstr "Benutzer löschen"
+msgstr "Zeile löschen"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:206
-#, fuzzy
-#| msgid "Delete File"
 msgid "Delete table"
-msgstr "Datei löschen"
+msgstr "Tabelle löschen"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:154
 msgid "Delete this access token"
@@ -6215,7 +6203,7 @@ msgstr "E-Mail (ausgehend)"
 msgid "Email Verification"
 msgstr "E-Mail-Prüfung"
 
-#: app/models/user.rb:691
+#: app/models/user.rb:609
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 "Die E-Mail-Adresse '%{email}' wird bereits für einen anderen Benutzer "
@@ -8618,10 +8606,8 @@ msgid "Increment seconds value"
 msgstr "Sekundenwert erhöhen"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
-#, fuzzy
-#| msgid "Incident"
 msgid "Indent text"
-msgstr "Störung"
+msgstr "Text einrücken"
 
 #: app/frontend/apps/desktop/components/CommonProgressBar/CommonProgressBar.vue:16
 msgid "Indicating progress"
@@ -8669,35 +8655,31 @@ msgstr "Der Inline-Inhalt konnte nicht generiert werden."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
 msgid "Insert code block"
-msgstr ""
+msgstr "Codeblock einfügen"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:140
 msgid "Insert column after"
-msgstr ""
+msgstr "Spalte danach einfügen"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:131
 msgid "Insert column before"
-msgstr ""
+msgstr "Spalte davor einfügen"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
-#, fuzzy
-#| msgid "Inserts text module"
 msgid "Insert inline code"
-msgstr "Fügt Textbaustein ein"
+msgstr "Inline-Code einfügen"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:103
 msgid "Insert row above"
-msgstr ""
+msgstr "Zeile darüber einfügen"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:112
 msgid "Insert row below"
-msgstr ""
+msgstr "Zeile darunter einfügen"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
-#, fuzzy
-#| msgid "Inserts text module"
 msgid "Insert table"
-msgstr "Fügt Textbaustein ein"
+msgstr "Tabelle einfügen"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
 msgid "Insert text from Knowledge Base article"
@@ -8824,7 +8806,7 @@ msgstr "Ungültige client_id in Empfangsschleife!"
 msgid "Invalid client_id received!"
 msgstr "Ungültige client_id empfangen!"
 
-#: app/models/user.rb:636
+#: app/models/user.rb:554
 msgid "Invalid email '%{email}'"
 msgstr "Falsche E-Mail '%{email}'"
 
@@ -10016,10 +9998,8 @@ msgid "Merge"
 msgstr "Zusammenfassen"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:168
-#, fuzzy
-#| msgid "Merge tickets"
 msgid "Merge cells"
-msgstr "Tickets zusammenfassen"
+msgstr "Zellen verbinden"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:51
 msgid "Merge tickets"
@@ -10223,7 +10203,7 @@ msgstr "Stimmung"
 msgid "More information can be found here."
 msgstr "Weitere Informationen finden Sie hier."
 
-#: app/models/user.rb:704
+#: app/models/user.rb:622
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Mehr als 250 sekundäre Organisationen sind nicht zulässig."
 
@@ -11000,14 +10980,6 @@ msgstr "Nicht autorisiert (Funktion nicht möglich)"
 msgid "Not authorized (token expired)!"
 msgstr "Nicht autorisiert (Token abgelaufen)!"
 
-#: app/models/token.rb:71
-msgid "Not authorized (token)!"
-msgstr "Nicht autorisiert (Token)!"
-
-#: app/models/user.rb:251
-msgid "Not authorized (user)!"
-msgstr "Nicht autorisiert (Benutzer)!"
-
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:203
 msgid "Not available in selected language"
 msgstr "Nicht in der gewählten Sprache verfügbar"
@@ -11648,7 +11620,7 @@ msgstr "Veralteter Browser"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:246
 msgid "Outdent text"
-msgstr ""
+msgstr "Einrückung reduzieren"
 
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/models/group.coffee:47
@@ -13496,7 +13468,7 @@ msgstr "Suchen…"
 msgid "Secondary organizations"
 msgstr "Sekundäre Organisationen"
 
-#: app/models/user.rb:698
+#: app/models/user.rb:616
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -14423,10 +14395,8 @@ msgid "Split"
 msgstr "Abspalten"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:159
-#, fuzzy
-#| msgid "Split"
 msgid "Split cells"
-msgstr "Abspalten"
+msgstr "Zellen teilen"
 
 #: db/seeds/groups.rb:7
 msgid "Standard Group/Pool for Tickets."
@@ -14479,23 +14449,17 @@ msgid "Start typing to search in Knowledge Base…"
 msgstr "Beginnen Sie mit der Eingabe, um in der Knowledge Base zu suchen…"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:43
-#, fuzzy
-#| msgid "Search or enter phone number…"
 msgid "Start typing to search or enter a new tag…"
-msgstr "Suchen oder Telefonnummer angeben…"
+msgstr "Tippen Sie, um zu suchen oder geben Sie einen neuen Tag ein…"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:47
-#, fuzzy
-#| msgid "Search or enter phone number…"
 msgid "Start typing to search or enter a phone number…"
-msgstr "Suchen oder Telefonnummer angeben…"
+msgstr "Tippen Sie, um zu suchen, oder geben Sie eine Rufnummer ein…"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:94
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:48
-#, fuzzy
-#| msgid "Search or enter email address…"
 msgid "Start typing to search or enter an email address…"
-msgstr "Suchen oder E-Mail-Adresse angeben…"
+msgstr "Tippen Sie, um zu suchen, oder geben Sie eine E-Mail-Adresse ein…"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:70
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:41
@@ -17525,22 +17489,16 @@ msgid "Toggle dark mode"
 msgstr "Dunklen Modus umschalten"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:196
-#, fuzzy
-#| msgid "Toggle the overlay"
 msgid "Toggle header cell"
-msgstr "Overlay umschalten"
+msgstr "Zelle als Kopf umschalten"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:187
-#, fuzzy
-#| msgid "Toggle the overlay"
 msgid "Toggle header column"
-msgstr "Overlay umschalten"
+msgstr "Kopfspalte umschalten"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:178
-#, fuzzy
-#| msgid "Toggle dark mode"
 msgid "Toggle header row"
-msgstr "Dunklen Modus umschalten"
+msgstr "Kopfzeile umschalten"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:47
 msgid "Toggle the overlay"
@@ -17562,6 +17520,12 @@ msgstr "Token"
 #: db/seeds/permissions.rb:429
 msgid "Token Access"
 msgstr "Token-Zugriff"
+
+#: app/models/token/permissions.rb:20
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "Token authorization failed."
+msgstr "Autorisierung fehlgeschlagen"
 
 #: db/seeds/settings.rb:5114
 msgid "Token for CTI."
@@ -18376,6 +18340,12 @@ msgstr "Abweichender Benutzer"
 #: db/seeds/settings.rb:603
 msgid "User Organization Selector - email"
 msgstr "Benutzer-Organisationsauswahl - E-Mail"
+
+#: app/models/user/permissions.rb:48
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "User authorization failed."
+msgstr "Autorisierung fehlgeschlagen"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:104
 #: app/assets/javascripts/app/controllers/signup.coffee:98
@@ -19483,10 +19453,8 @@ msgid "Zammad"
 msgstr "Zammad"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:327
-#, fuzzy
-#| msgid "Zammad version"
 msgid "Zammad Features"
-msgstr "Zammad-Version"
+msgstr "Zammad-Features"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:148
 msgid ""
@@ -19608,22 +19576,16 @@ msgstr "hinzufügen"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/useAddUnknownValueAction.ts:28
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:27
-#, fuzzy
-#| msgid "Invalid email address."
 msgid "add new email address"
-msgstr "Fehlerhafte E-Mail-Adresse."
+msgstr "neue E-Mail-Adresse hinzufügen"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:26
-#, fuzzy
-#| msgid "Phone number"
 msgid "add new phone number"
-msgstr "Telefonnummer"
+msgstr "neue Telefonnummer hinzufügen"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:23
-#, fuzzy
-#| msgid "Add tags"
 msgid "add new tag"
-msgstr "Tags hinzufügen"
+msgstr "neues Tag hinzufügen"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "add option"
@@ -20325,7 +20287,7 @@ msgstr "hat die falsche Länge (sollte %{count} Zeichen haben)"
 msgid "is the wrong length (should be 1 character)"
 msgstr "hat die falsche Länge (sollte 1 Zeichen haben)"
 
-#: app/models/user.rb:916
+#: app/models/user.rb:820
 msgid "is too long"
 msgstr "ist zu lang"
 
@@ -21035,6 +20997,12 @@ msgstr "…des gesamten Textfelds"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Wartezeit heute"
+
+#~ msgid "Not authorized (token)!"
+#~ msgstr "Nicht autorisiert (Token)!"
+
+#~ msgid "Not authorized (user)!"
+#~ msgstr "Nicht autorisiert (Benutzer)!"
 
 #, fuzzy
 #~| msgid "Apply"

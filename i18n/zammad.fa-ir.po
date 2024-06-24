@@ -1461,7 +1461,7 @@ msgstr "نام کارشناس"
 msgid "Agent idle timeout"
 msgstr "وقت آزاد کارشناس"
 
-#: app/models/role.rb:153 app/models/user.rb:792
+#: app/models/role.rb:153 app/models/user.rb:696
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Agent limit exceeded, please check your account settings."
 
@@ -2032,7 +2032,7 @@ msgid ""
 "will be shown as unassigend."
 msgstr "رسیدگی کننده"
 
-#: app/models/user.rb:681
+#: app/models/user.rb:599
 #, fuzzy
 #| msgid ""
 #| "At least one identifier (firstname, lastname, phone or email) for user is "
@@ -2053,7 +2053,7 @@ msgstr "حداقل یک حرف الزامی است"
 msgid "At least one object must be selected."
 msgstr "حداقل یک آبجکت باید انتخاب گردد."
 
-#: app/models/role.rb:125 app/models/user.rb:766
+#: app/models/role.rb:125 app/models/user.rb:670
 msgid "At least one user needs to have admin permissions."
 msgstr "حداقل یک کاربر بایستی دسترسی ادمین داشته باشد."
 
@@ -6116,7 +6116,7 @@ msgstr "ایمیل خروجی"
 msgid "Email Verification"
 msgstr "اعلان از طریق ایمیل"
 
-#: app/models/user.rb:691
+#: app/models/user.rb:609
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -8684,7 +8684,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:636
+#: app/models/user.rb:554
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -10220,7 +10220,7 @@ msgstr "حس و حال ( موود)"
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:704
+#: app/models/user.rb:622
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -11026,14 +11026,6 @@ msgstr ""
 
 #: app/controllers/application_controller/authenticates.rb:83
 msgid "Not authorized (token expired)!"
-msgstr ""
-
-#: app/models/token.rb:71
-msgid "Not authorized (token)!"
-msgstr ""
-
-#: app/models/user.rb:251
-msgid "Not authorized (user)!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:203
@@ -13668,7 +13660,7 @@ msgstr "جستجو…"
 msgid "Secondary organizations"
 msgstr "سازمان به اشتراک گذاشته شده"
 
-#: app/models/user.rb:698
+#: app/models/user.rb:616
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -17950,6 +17942,12 @@ msgstr "توکن"
 msgid "Token Access"
 msgstr "دسترسی توکن"
 
+#: app/models/token/permissions.rb:20
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "Token authorization failed."
+msgstr "دادن مجوز موفقیت‌آمیز نبود"
+
 #: db/seeds/settings.rb:5114
 msgid "Token for CTI."
 msgstr ""
@@ -18753,6 +18751,12 @@ msgstr ""
 #: db/seeds/settings.rb:603
 msgid "User Organization Selector - email"
 msgstr ""
+
+#: app/models/user/permissions.rb:48
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "User authorization failed."
+msgstr "دادن مجوز موفقیت‌آمیز نبود"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:104
 #: app/assets/javascripts/app/controllers/signup.coffee:98
@@ -20712,7 +20716,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:916
+#: app/models/user.rb:820
 msgid "is too long"
 msgstr ""
 

@@ -1566,7 +1566,7 @@ msgstr "Agentchatt"
 msgid "Agent idle timeout"
 msgstr "Timeout för inaktiv agent"
 
-#: app/models/role.rb:153 app/models/user.rb:792
+#: app/models/role.rb:153 app/models/user.rb:696
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Handläggarbegränsning uppnådd, kontrollera dina kontoinställningar."
 
@@ -2114,7 +2114,7 @@ msgstr ""
 "Uppdragets timeout i minuter ifall tilldelad handläggare inte arbetar på "
 "den. Ärendet kommer att visas som ej tilldelad."
 
-#: app/models/user.rb:681
+#: app/models/user.rb:599
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2130,7 +2130,7 @@ msgstr "Åtminstone en regelmatchning krävs, men ingen var angiven."
 msgid "At least one object must be selected."
 msgstr "Åtminstone ett objekt måste väljas."
 
-#: app/models/role.rb:125 app/models/user.rb:766
+#: app/models/role.rb:125 app/models/user.rb:670
 msgid "At least one user needs to have admin permissions."
 msgstr "Minst en användare behöver ha admin-rättigheter."
 
@@ -6110,7 +6110,7 @@ msgstr "Utgående e-post"
 msgid "Email Verification"
 msgstr "E-postverifiering"
 
-#: app/models/user.rb:691
+#: app/models/user.rb:609
 msgid "Email address '%{email}' is already used for another user."
 msgstr "E-postadress '%{email}' används redan för en annan användare."
 
@@ -8664,7 +8664,7 @@ msgstr "Ogiltigt client_id i mottagningsloop!"
 msgid "Invalid client_id received!"
 msgstr "Ogiltigt client_id mottaget!"
 
-#: app/models/user.rb:636
+#: app/models/user.rb:554
 msgid "Invalid email '%{email}'"
 msgstr "Ogiltigt email '%{email}'"
 
@@ -10054,7 +10054,7 @@ msgstr "Tillstånd"
 msgid "More information can be found here."
 msgstr "Mer information finns här."
 
-#: app/models/user.rb:704
+#: app/models/user.rb:622
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Fler än 250 sekundära organisationer är inte tillåtet."
 
@@ -10828,14 +10828,6 @@ msgstr "Ej auktoriserad (funktionen är inte möjlig)"
 #: app/controllers/application_controller/authenticates.rb:83
 msgid "Not authorized (token expired)!"
 msgstr "Ej behörig (token har gått ut)!"
-
-#: app/models/token.rb:71
-msgid "Not authorized (token)!"
-msgstr "Ej behörig (token)!"
-
-#: app/models/user.rb:251
-msgid "Not authorized (user)!"
-msgstr "Ej behörig (användare)!"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:203
 msgid "Not available in selected language"
@@ -13289,7 +13281,7 @@ msgstr "Sök …"
 msgid "Secondary organizations"
 msgstr "Sekundära organisationer"
 
-#: app/models/user.rb:698
+#: app/models/user.rb:616
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -17261,6 +17253,12 @@ msgstr "Token"
 msgid "Token Access"
 msgstr "Token Access"
 
+#: app/models/token/permissions.rb:20
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "Token authorization failed."
+msgstr "Auktorisering misslyckades"
+
 #: db/seeds/settings.rb:5114
 msgid "Token for CTI."
 msgstr "Token för CTI."
@@ -18059,6 +18057,12 @@ msgstr "Användaren matchar inte"
 #: db/seeds/settings.rb:603
 msgid "User Organization Selector - email"
 msgstr "Användare Organisation Väljare - e-post"
+
+#: app/models/user/permissions.rb:48
+#, fuzzy
+#| msgid "Authorization failed"
+msgid "User authorization failed."
+msgstr "Auktorisering misslyckades"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:104
 #: app/assets/javascripts/app/controllers/signup.coffee:98
@@ -19979,7 +19983,7 @@ msgstr "har fel längd (ska vara %{antal} tecken)"
 msgid "is the wrong length (should be 1 character)"
 msgstr "har fel längd (ska vara 1 tecken)"
 
-#: app/models/user.rb:916
+#: app/models/user.rb:820
 msgid "is too long"
 msgstr "är för lång"
 
@@ -20688,6 +20692,12 @@ msgstr "... av hela textfältet"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Väntetid idag"
+
+#~ msgid "Not authorized (token)!"
+#~ msgstr "Ej behörig (token)!"
+
+#~ msgid "Not authorized (user)!"
+#~ msgstr "Ej behörig (användare)!"
 
 #, fuzzy
 #~| msgid "Apply"
