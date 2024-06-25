@@ -27,15 +27,31 @@ PreCommit:
     enabled: true
     on_warn: fail
     exclude: 'public/assets/chat/**/*'
-  CustomScript:
-    enabled: true
-    description: 'Perform custom Zammad code checks'
-    required_executable: 'bash'
-    flags: ['.overcommit.sh']
   Stylelint:
     enabled: true
     required_executable: 'yarn'
     command: ['yarn', '--silent', 'lint:css']
+  TranslationCatalogCheck:
+    required_executable: 'rails'
+    enabled: true
+    env:
+      ZAMMAD_SAFE_MODE: '1'
+    command: ['rails', 'generate', 'zammad:translation_catalog', '--check']
+  SettingsTypesCheck:
+    required_executable: 'rails'
+    enabled: true
+    env:
+      ZAMMAD_SAFE_MODE: '1'
+    command: ['rails', 'generate', 'zammad:setting_types', '--check']
+    include:
+      - 'db/seeds/settings.rb'
+  GraphQLAPICheck:
+    required_executable: '.gitlab/check_graphql_api_consistency.sh'
+    enabled: true
+    command: ['.gitlab/check_graphql_api_consistency.sh']
+    include:
+      - 'app/graphql/**/*'
+      - 'app/frontend/**/*.graphql'
   TypeCheck:
     required_executable: 'yarn'
     enabled: true
