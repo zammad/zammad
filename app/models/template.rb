@@ -3,6 +3,7 @@
 class Template < ApplicationModel
   include ChecksClientNotification
   include Template::Assets
+  include Template::TriggersSubscriptions
 
   scope :active, -> { where(active: true) }
 

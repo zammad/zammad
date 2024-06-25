@@ -9,14 +9,13 @@ import { nullableMock, waitUntil } from '#tests/support/utils.ts'
 
 import { mockOnlineNotificationSeenGql } from '#shared/composables/__tests__/mocks/online-notification.ts'
 import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
+import { UserDocument } from '#shared/entities/user/graphql/queries/user.api.ts'
 import { UserUpdatesDocument } from '#shared/graphql/subscriptions/userUpdates.api.ts'
 import type { UserQuery } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
 
 import { defaultOrganization } from '#mobile/entities/organization/__tests__/mocks/organization-mocks.ts'
-
-import { UserDocument } from '../../graphql/queries/user.api.ts'
 
 import managerAttributes from './managerAttributes.json'
 

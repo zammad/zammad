@@ -25,6 +25,7 @@ describe('FieldResolverAutocompletionCustomerOrganization', () => {
       required: false,
       props: {
         belongsToObjectField: 'organization',
+        clearable: true,
         noOptionsLabelTranslation: true,
       },
       type: 'organization',

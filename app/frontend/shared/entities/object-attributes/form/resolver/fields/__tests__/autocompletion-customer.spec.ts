@@ -25,6 +25,7 @@ describe('FieldResolverAutocompletionCustomer', () => {
       required: false,
       props: {
         belongsToObjectField: 'customer',
+        clearable: true,
         noOptionsLabelTranslation: true,
       },
       type: 'customer',

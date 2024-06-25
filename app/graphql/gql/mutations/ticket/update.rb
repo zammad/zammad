@@ -2,6 +2,8 @@
 
 module Gql::Mutations
   class Ticket::Update < BaseMutation
+    include Gql::Mutations::Ticket::Concerns::HandlesGroup
+
     description 'Update a ticket.'
 
     argument :ticket_id, GraphQL::Types::ID, loads: Gql::Types::TicketType, description: 'The ticket to be updated'
@@ -14,6 +16,8 @@ module Gql::Mutations
     end
 
     def resolve(ticket:, input:)
+      return group_has_no_email_error if !group_has_email?(input: input)
+
       {
         ticket: Service::Ticket::Update
           .new(current_user: context.current_user)

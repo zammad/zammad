@@ -45,13 +45,9 @@ class FormUpdater::Updater
   end
 
   def resolve
-    if self.class.included_modules.include?(FormUpdater::Concerns::ChecksCoreWorkflow)
-      validate_workflows
-    end
+    validate_workflows if self.class.included_modules.include?(FormUpdater::Concerns::ChecksCoreWorkflow)
 
-    if relation_fields.present?
-      resolve_relation_fields
-    end
+    resolve_relation_fields if relation_fields.present?
 
     result
   end

@@ -113,7 +113,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   #   find_autocomplete('Tags').search_for_option(tag_1)
   #
   #   # To wait for a custom GraphQL response, you can provide expected `gql_filename` and/or `gql_number`.
-  #   find_autocomplete('Custom').search_for_option('foo', gql_filename: 'apps/mobile/entities/user/graphql/queries/user.graphql', gql_number: 4)
+  #   find_autocomplete('Custom').search_for_option('foo', gql_filename: 'shared/entities/user/graphql/queries/user.graphql', gql_number: 4)
   #
   #   # To select an autocomplete option with a different text than the query, provide an optional `label` parameter.
   #   find autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)

@@ -53,6 +53,10 @@ export const useObjectAttributeFormData = (
         newValue = value.map((elem) => {
           return ensureRelationId(objectAttribute, elem) as Primitive
         })
+      }
+      // When the attribute has guess support and is a string count it as an guess (=unknown value).
+      else if (objectAttribute.dataOption.guess && typeof value === 'string') {
+        newValue = value
       } else {
         newValue = ensureRelationId(objectAttribute, value)
       }

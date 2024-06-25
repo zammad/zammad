@@ -5,18 +5,28 @@ import { computed, ref, watchEffect } from 'vue'
 
 import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
+import { useOrganizationDetail } from '#shared/entities/organization/composables/useOrganizationDetail.ts'
+import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
 
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import CommonTicketStateList from '#mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
 import OrganizationMembersList from '#mobile/components/Organization/OrganizationMembersList.vue'
-import { useOrganizationDetail } from '#mobile/entities/organization/composables/useOrganizationDetail.ts'
 import { useOrganizationEdit } from '#mobile/entities/organization/composables/useOrganizationEdit.ts'
 import { useOrganizationTicketsCount } from '#mobile/entities/organization/composables/useOrganizationTicketsCount.ts'
 
 import { useTicketInformation } from '../../composable/useTicketInformation.ts'
 
 const { ticket, updateRefetchingStatus } = useTicketInformation()
+
+const { createQueryErrorHandler } = useErrorHandler()
+
+const errorCallback = createQueryErrorHandler({
+  notFound: __(
+    'Organization with specified ID was not found. Try checking the URL for errors.',
+  ),
+  forbidden: __('You have insufficient rights to view this organization.'),
+})
 
 const {
   organization,
@@ -25,7 +35,7 @@ const {
   objectAttributes,
   loadAllMembers,
   loadOrganization,
-} = useOrganizationDetail()
+} = useOrganizationDetail(undefined, errorCallback)
 
 const error = ref('')
 organizationQuery.onError((apolloError) => {

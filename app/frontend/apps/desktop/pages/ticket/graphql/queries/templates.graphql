@@ -1,0 +1,6 @@
+query templates($onlyActive: Boolean = false) {
+  templates(onlyActive: $onlyActive) {
+    id
+    name
+  }
+}

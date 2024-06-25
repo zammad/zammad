@@ -35,7 +35,11 @@ import { parseGraphqlId } from '#shared/graphql/utils.ts'
 import { I18N, i18n } from '#shared/i18n.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type { EntityObject } from '#shared/types/entity.ts'
-import type { FormUpdaterTrigger } from '#shared/types/form.ts'
+import type {
+  FormUpdaterAdditionalParams,
+  FormUpdaterOptions,
+  FormUpdaterTrigger,
+} from '#shared/types/form.ts'
 import { camelize } from '#shared/utils/formatter.ts'
 import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
 import getUuid from '#shared/utils/getUuid.ts'
@@ -79,16 +83,18 @@ import type {
   FormKitMessageProps,
 } from '@formkit/core'
 import type { Except, SetRequired } from 'type-fest'
-import type { ConcreteComponent, Ref } from 'vue'
+import type { Component, Ref } from 'vue'
 
 export interface Props {
   id?: string
   schema?: FormSchemaNode[]
   schemaData?: Except<ReactiveFormSchemData, 'fields'>
+  schemaComponentLibrary?: Record<string, Component>
   handlers?: FormHandler[]
   changeFields?: Record<string, Partial<FormSchemaField>>
   formUpdaterId?: EnumFormUpdaterId
   formUpdaterInitialOnly?: boolean
+  formUpdaterAdditionalParams?: FormUpdaterAdditionalParams
   // Maybe in the future this is no longer needed, when FormKit supports group
   // without value grouping below group name (https://github.com/formkit/formkit/issues/461).
   flattenFormGroups?: string[]
@@ -104,7 +110,6 @@ export interface Props {
   initialValues?: Partial<FormValues>
   initialEntityObject?: EntityObject
 
-  queryParams?: Record<string, unknown>
   validationVisibility?: FormValidationVisibility
   disabled?: boolean
   shouldAutofocus?: boolean
@@ -120,9 +125,10 @@ export interface Props {
   // Or to have a button outside of form with "form" attribite with the same value as the form id.
   // After this method is called, form resets its values and state. If you need to call something afterwards,
   // like make route navigation, you can return a function from the submit handler, which will be called after the form reset.
+  // When you return "false" inside the submit function the handling will be stopped.
   onSubmit?: (
     values: FormSubmitData,
-  ) => Promise<void | (() => void)> | void | (() => void)
+  ) => Promise<void | (() => void) | false> | void | (() => void) | false
 }
 
 const formId = getUuid()
@@ -286,8 +292,6 @@ const onSubmitRaw = () => {
   }
 }
 
-// TODO: disable rule for now, because some code can be removed with FormKit-Update
-// eslint-disable-next-line sonarjs/cognitive-complexity
 const onSubmit = (values: FormSubmitData) => {
   // Needs to be checked, because the 'onSubmit' function is not required.
   if (!props.onSubmit) return undefined
@@ -300,9 +304,14 @@ const onSubmit = (values: FormSubmitData) => {
 
   const submitResult = props.onSubmit(flatValues)
 
+  if (submitResult !== undefined && submitResult === false) return
+
   if (submitResult instanceof Promise) {
     return submitResult
-      .then((afterReset) => {
+      .then((result) => {
+        // When false was returned the submit was skipped.
+        if (result !== undefined && result === false) return
+
         // it's possible to destroy Form before this is called and the reset should not run when errors exists.
         if (!formNode.value || formNode.value.context?.state.errors) return
 
@@ -323,14 +332,14 @@ const onSubmit = (values: FormSubmitData) => {
             }
           })
         }
-        afterReset?.()
+        result?.()
       })
       .catch((errors: UserError) => {
         if (formNode.value) setErrors(formNode.value, errors)
       })
   }
 
-  formNode.value?.reset(values)
+  formNode.value?.reset(!props.clearValuesAfterSubmit ? values : undefined)
 
   submitResult?.()
 
@@ -341,6 +350,10 @@ let formUpdaterQueryHandler: QueryHandler<
   FormUpdaterQuery,
   FormUpdaterQueryVariables
 >
+
+const triggerFormUpdater = (options?: FormUpdaterOptions) => {
+  handlesFormUpdater('manual', undefined, options)
+}
 
 const delayedSubmitPlugin = (node: FormKitNode) => {
   node.on('message-removed', async ({ payload }) => {
@@ -368,8 +381,9 @@ const formConfig = computed(() => {
 
 // Define the additional component library for the used components which are not form fields.
 const additionalComponentLibrary = {
-  FormLayout: markRaw(FormLayout) as ConcreteComponent,
-  FormGroup: markRaw(FormGroup) as ConcreteComponent,
+  FormLayout: markRaw(FormLayout),
+  FormGroup: markRaw(FormGroup),
+  ...props.schemaComponentLibrary,
 }
 
 // Define the static schema, which will be filled with the real fields from the `schemaData`.
@@ -620,13 +634,17 @@ const updateSchemaDataField = (
     show,
     updateFields,
     relation,
+    if: staticCondition,
     props: specificProps = {},
     ...fieldProps
   } = field
-  const showField = show ?? schemaData.fields[field.name]?.show ?? true
-
-  // Not needed in this context.
-  delete fieldProps.if
+  const showWithStaticCondition = Boolean(
+    staticCondition || schemaData.fields[field.name]?.staticCondition,
+  )
+  const showField =
+    show ??
+    schemaData.fields[field.name]?.show ??
+    (showWithStaticCondition ? undefined : true)
 
   // Special handling for the disabled prop, so that the form can handle also
   // the disable state from outside.
@@ -640,6 +658,7 @@ const updateSchemaDataField = (
     schemaData.fields[field.name] = {
       show: showField,
       updateFields: updateFields || false,
+      staticCondition: showWithStaticCondition,
       props: Object.assign(
         schemaData.fields[field.name].props,
         fieldProps,
@@ -675,6 +694,7 @@ const updateSchemaDataField = (
     schemaData.fields[field.name] = {
       show: showField,
       updateFields: updateFields || false,
+      staticCondition: showWithStaticCondition,
       props: combinedFieldProps,
     }
   }
@@ -709,8 +729,8 @@ const updateChangedFields = (
       name: fieldName,
     }
 
-    const showField =
-      !schemaData.fields[fieldName].show && changedFieldProps.show
+    const showField = !schemaData.fields[fieldName].show && field.show
+    const staticShowCondition = schemaData.fields[fieldName].staticCondition
 
     const pendingValueUpdate =
       !showField &&
@@ -727,7 +747,9 @@ const updateChangedFields = (
     handleUpdatedInitialFieldValue(
       fieldName,
       value ?? initialValue,
-      showField || initialValue !== undefined,
+      showField ||
+        initialValue !== undefined ||
+        (staticShowCondition && !getNodeByName(fieldName)),
       field,
     )
 
@@ -737,7 +759,7 @@ const updateChangedFields = (
     if (
       formKitInitialNodesSettled.value &&
       !schemaData.fields[fieldName].show &&
-      changedFieldProps.show &&
+      field.show &&
       !formNode.value?.isSettled
     ) {
       await formNode.value?.settled
@@ -749,9 +771,7 @@ const updateChangedFields = (
     if (!formKitInitialNodesSettled.value) return
 
     if (pendingValueUpdate) {
-      const node = changedFieldProps.id
-        ? getNode(changedFieldProps.id)
-        : getNodeByName(fieldName)
+      const node = field.id ? getNode(field.id) : getNodeByName(fieldName)
 
       // Update the value in the next tick, so that all other props are already updated.
       nextTick(() => {
@@ -834,10 +854,12 @@ const executeFormUpdaterRefetch = () => {
 const handlesFormUpdater = (
   trigger: FormUpdaterTrigger,
   changedField?: FormUpdaterChangedFieldInput,
+  options?: FormUpdaterOptions,
 ) => {
   if (!props.formUpdaterId || !formUpdaterQueryHandler) return
   // When formUpdaterInitial is set, trigger only on initial rendering and when the form was reseted.
   if (
+    trigger !== 'manual' &&
     trigger !== 'form-reset' &&
     (!changedField || props.formUpdaterInitialOnly)
   )
@@ -848,6 +870,28 @@ const handlesFormUpdater = (
     // are the same until the last request, because it could be that core workflow is setting a value back.
     requestId: getUuid(),
     formId,
+    additionalData: {
+      ...props.formUpdaterAdditionalParams,
+      ...options?.additionalParams,
+    },
+  }
+
+  if (options?.includeDirtyFields) {
+    const dirtyFields: string[] = []
+
+    Object.entries(schemaData.fields).forEach(([field, { props }]) => {
+      const formElement = props.id
+        ? getNode(props.id)
+        : getNodeByName(props.name)
+
+      if (!formElement) return
+
+      if (formElement.context?.state.dirty) {
+        dirtyFields.push(field)
+      }
+    })
+
+    meta.dirtyFields = dirtyFields
   }
 
   const data = {
@@ -1112,6 +1156,7 @@ const initializeFormSchema = () => {
       data: localInitialValues,
       meta: {
         initial: true,
+        additionalData: props.formUpdaterAdditionalParams,
         formId,
       },
       relationFields,
@@ -1228,6 +1273,7 @@ defineExpose({
   getNodeByName,
   findNodeByName,
   resetForm,
+  triggerFormUpdater,
 })
 </script>
 

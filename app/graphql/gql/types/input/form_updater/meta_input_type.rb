@@ -10,5 +10,7 @@ module Gql::Types::Input::FormUpdater
     argument :changed_field, Gql::Types::Input::FormUpdater::ChangedFieldInputType, required: false, description: 'Changed field information'
     argument :form_id, Gql::Types::FormIdType, required: true, description: 'Generated frontend form ID'
     argument :request_id, String, required: false, description: 'Generated frontend request ID'
+    argument :additional_data, GraphQL::Types::JSON, required: false, description: 'Additional data for form updater'
+    argument :dirty_fields, [String], required: false, description: 'List of dirty fields'
   end
 end

@@ -50,7 +50,7 @@ RSpec.describe 'Mobile > Ticket > Create with security options', app: :mobile, a
 
   def submit_form
     find_button('Create ticket', match: :first).click
-    wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/create.graphql')
+    wait_for_gql('shared/entities/ticket/graphql/mutations/create.graphql')
   end
 
   before do

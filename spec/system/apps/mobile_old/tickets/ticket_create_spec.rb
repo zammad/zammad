@@ -22,7 +22,7 @@ RSpec.describe 'Mobile > Ticket > Create', app: :mobile, authenticated_as: :user
 
   def submit_form
     find_button('Create').click
-    wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/create.graphql')
+    wait_for_gql('shared/entities/ticket/graphql/mutations/create.graphql')
   end
 
   def check_is_focused(element)

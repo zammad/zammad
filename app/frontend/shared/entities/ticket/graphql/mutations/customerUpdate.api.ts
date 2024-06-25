@@ -1,7 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import { TicketAttributesFragmentDoc } from '../../../../../apps/mobile/pages/ticket/graphql/fragments/ticketAttributes.api';
+import { TicketAttributesFragmentDoc } from '../fragments/ticketAttributes.api';
 import { ErrorsFragmentDoc } from '../../../../graphql/fragments/errors.api';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';

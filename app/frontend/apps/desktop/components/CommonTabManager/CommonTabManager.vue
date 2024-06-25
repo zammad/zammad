@@ -45,26 +45,32 @@ const isActiveTab = (tab: Tab) =>
     ? props.modelValue.some((activeTab) => activeTab === tab.key)
     : props.modelValue === tab.key
 
+const refreshActiveTabRefs = (el?: HTMLElement) => {
+  if (!el) return
+
+  requestAnimationFrame(() => {
+    nextTick(() => {
+      activeTabWidth.value = getElementWidth(el)
+      activeTabHeight.value = getElementHeight(el)
+      activeTabOffsetLeft.value = getElementOffsetLeft(el)
+    })
+  })
+}
+
 const onTabReady = (tab: Tab, el?: HTMLElement) => {
   if (props.multiple || !isActiveTab(tab)) return
   if (!el) return
 
-  requestAnimationFrame(() => {
-    activeTabWidth.value = getElementWidth(el)
-    activeTabHeight.value = getElementHeight(el)
-    activeTabOffsetLeft.value = getElementOffsetLeft(el)
-  })
+  refreshActiveTabRefs(el)
 }
 
 watch(activeTabIndex, (index) => {
+  if (!tabNodes.value) return
+
   const el = tabNodes.value?.[index].$el
   if (!el) return
 
-  requestAnimationFrame(() => {
-    activeTabWidth.value = getElementWidth(el)
-    activeTabHeight.value = getElementHeight(el)
-    activeTabOffsetLeft.value = getElementOffsetLeft(el)
-  })
+  refreshActiveTabRefs(el)
 })
 
 const updateModelValue = (tab: Tab) => {

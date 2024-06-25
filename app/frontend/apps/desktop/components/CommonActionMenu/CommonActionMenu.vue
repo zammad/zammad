@@ -4,6 +4,10 @@
 import { computed, ref, toRefs } from 'vue'
 
 import CommonPopover from '#shared/components/CommonPopover/CommonPopover.vue'
+import type {
+  Orientation,
+  Placement,
+} from '#shared/components/CommonPopover/types'
 import { usePopover } from '#shared/components/CommonPopover/usePopover.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 import getUuid from '#shared/utils/getUuid.ts'
@@ -11,11 +15,7 @@ import getUuid from '#shared/utils/getUuid.ts'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import type { ButtonSize } from '#desktop/components/CommonButton/types.ts'
 import CommonPopoverMenu from '#desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue'
-import type {
-  MenuItem,
-  Orientation,
-  Placement,
-} from '#desktop/components/CommonPopoverMenu/types.ts'
+import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import { usePopoverMenu } from '#desktop/components/CommonPopoverMenu/usePopoverMenu.ts'
 
 export interface Props {
@@ -30,7 +30,7 @@ export interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   buttonSize: 'medium',
-  placement: 'end',
+  placement: 'arrowStart',
   orientation: 'autoVertical',
 })
 

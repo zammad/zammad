@@ -12,7 +12,7 @@ RSpec.describe 'Mobile > Organization > Can edit organization', app: :mobile, ty
 
   def open_organization
     visit "/organizations/#{organization.id}"
-    wait_for_gql('apps/mobile/entities/organization/graphql/queries/organization.graphql')
+    wait_for_gql('shared/entities/organization/graphql/queries/organization.graphql')
   end
 
   def save_organization(form_updater_call_number = 2)

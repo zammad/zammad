@@ -33,6 +33,7 @@
 - `assets/crown-silver.svg`
 - `assets/dash-circle.svg`
 - `assets/download.svg`
+- `assets/envelope.svg`
 - `assets/exclamation-triangle.svg`
 - `assets/eye-slash.svg`
 - `assets/eye.svg`
@@ -66,6 +67,8 @@
 - `assets/spinner.svg`
 - `assets/square.svg`
 - `assets/sun.svg`
+- `assets/telephone-inbound.svg`
+- `assets/telephone-outbound.svg`
 - `assets/three-dots-vertical.svg`
 - `assets/trash3.svg`
 - `assets/unlock.svg`

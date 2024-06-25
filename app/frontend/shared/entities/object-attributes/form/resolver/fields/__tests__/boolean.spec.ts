@@ -32,6 +32,7 @@ describe('FieldResolverBoolean', () => {
       value: false,
       type: 'toggle',
       internal: true,
+      wrapperClass: 'mt-6',
     })
   })
 })

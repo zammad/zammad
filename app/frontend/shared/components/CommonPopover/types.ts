@@ -22,6 +22,6 @@ export type Orientation =
   | 'autoVertical'
   | 'autoHorizontal'
 
-export type Placement = 'start' | 'end'
+export type Placement = 'start' | 'arrowStart' | 'arrowEnd' | 'end'
 
 export type Variant = 'secondary' | 'danger'

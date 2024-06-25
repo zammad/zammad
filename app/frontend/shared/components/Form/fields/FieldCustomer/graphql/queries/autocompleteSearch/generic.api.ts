@@ -23,6 +23,7 @@ export const AutocompleteSearchGenericDocument = gql`
         firstname
         lastname
         fullname
+        email
         phone
         outOfOffice
         outOfOfficeStartAt
@@ -46,6 +47,7 @@ export const AutocompleteSearchGenericDocument = gql`
               firstname
               lastname
               fullname
+              email
               phone
               outOfOffice
               outOfOfficeStartAt

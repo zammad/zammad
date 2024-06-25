@@ -27,4 +27,14 @@ class EmailAddressValidation
 
     EmailAddressValidator.valid? email_address, host_validation: host_validation_type
   end
+
+  def valid!(check_mx: false)
+    raise InvalidEmailAddressError if !valid?(check_mx:)
+  end
+
+  class InvalidEmailAddressError < StandardError
+    def initialize
+      super(__('The email address is invalid.'))
+    end
+  end
 end

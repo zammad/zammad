@@ -10,8 +10,6 @@ import type { AlertVariant } from './types.ts'
 export interface Props {
   variant?: AlertVariant
   dismissible?: boolean
-  link?: string | null
-  linkText?: string | null
   id?: string
 }
 
@@ -48,24 +46,16 @@ const dismissed = ref(false)
     role="alert"
     data-test-id="common-alert"
   >
-    <CommonIcon class="mx-auto md:mx-0" :name="icon" size="tiny" decorative />
+    <CommonIcon
+      class="mx-auto mt-0.5 md:mx-0"
+      :name="icon"
+      size="tiny"
+      decorative
+    />
 
     <slot />
 
-    <div
-      v-if="props.link || props.dismissible"
-      class="flex items-center justify-start ltr:ml-auto rtl:mr-auto"
-    >
-      <CommonLink
-        v-if="props.link"
-        class="text-ellipsis ltr:mr-2 rtl:ml-2"
-        :class="classMap.link"
-        :link="props.link"
-        open-in-new-tab
-        rel="noopener noreferrer"
-        >{{ props.linkText || props.link }}</CommonLink
-      >
-
+    <div v-if="props.dismissible">
       <CommonIcon
         v-if="props.dismissible"
         size="tiny"

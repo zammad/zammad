@@ -15,7 +15,7 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
 
   def open_user
     visit "/users/#{user.id}"
-    wait_for_gql('apps/mobile/entities/user/graphql/queries/user.graphql')
+    wait_for_gql('shared/entities/user/graphql/queries/user.graphql')
   end
 
   def open_user_edit
@@ -105,7 +105,7 @@ RSpec.describe 'Mobile > Search > User > Edit', app: :mobile, authenticated_as: 
 
       click_on('Show 1 more')
 
-      wait_for_gql('apps/mobile/entities/user/graphql/queries/user.graphql', number: 2)
+      wait_for_gql('shared/entities/user/graphql/queries/user.graphql', number: 2)
 
       expect(page).to have_multiple_texts(organizations.map(&:name))
     end

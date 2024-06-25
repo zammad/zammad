@@ -4584,6 +4584,34 @@
                 "ofType": null
               },
               "defaultValue": null
+            },
+            {
+              "name": "additionalData",
+              "description": "Additional data for form updater",
+              "type": {
+                "kind": "SCALAR",
+                "name": "JSON",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "dirtyFields",
+              "description": "List of dirty fields",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              "defaultValue": null
             }
           ],
           "interfaces": null,
@@ -12777,7 +12805,7 @@
                     "name": "Boolean",
                     "ofType": null
                   },
-                  "defaultValue": null
+                  "defaultValue": "false"
                 }
               ],
               "type": {
@@ -13121,6 +13149,41 @@
                   "kind": "OBJECT",
                   "name": "SystemSetupInfo",
                   "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "templates",
+              "description": "Fetch ticket templates",
+              "args": [
+                {
+                  "name": "onlyActive",
+                  "description": "Fetch only active templates",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  },
+                  "defaultValue": "false"
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "Template",
+                      "ofType": null
+                    }
+                  }
                 }
               },
               "isDeprecated": false,
@@ -14467,6 +14530,33 @@
               "deprecationReason": null
             },
             {
+              "name": "templateUpdates",
+              "description": "Updates to ticket templates",
+              "args": [
+                {
+                  "name": "onlyActive",
+                  "description": "Fetch only active templates",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "Boolean",
+                    "ofType": null
+                  },
+                  "defaultValue": "false"
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "TemplateUpdatesPayload",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "ticketArticleUpdates",
               "description": "Changes to the list of ticket articles",
               "args": [
@@ -15434,6 +15524,147 @@
           ]
         },
         {
+          "kind": "OBJECT",
+          "name": "Template",
+          "description": "Ticket template",
+          "fields": [
+            {
+              "name": "active",
+              "description": null,
+              "args": [
+
+              ],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "createdAt",
+              "description": "Create date/time of the record",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ISO8601DateTime",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "createdBy",
+              "description": "User that created this record",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "id",
+              "description": null,
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ID",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "name",
+              "description": null,
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "options",
+              "description": null,
+              "args": [
+
+              ],
+              "type": {
+                "kind": "SCALAR",
+                "name": "JSON",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "updatedAt",
+              "description": "Last update date/time of the record",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "ISO8601DateTime",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "updatedBy",
+              "description": "Last user that updated this record",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "User",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
           "kind": "INPUT_OBJECT",
           "name": "TemplateRenderContextInput",
           "description": "Context data for template rendering, e.g. customer data.",
@@ -15491,6 +15722,41 @@
             }
           ],
           "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TemplateUpdatesPayload",
+          "description": "Autogenerated return type of TemplateUpdates.",
+          "fields": [
+            {
+              "name": "templates",
+              "description": "Current ticket templates",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Template",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+
+          ],
           "enumValues": null,
           "possibleTypes": null
         },
@@ -18143,11 +18409,11 @@
               "defaultValue": null
             },
             {
-              "name": "customerId",
+              "name": "customer",
               "description": "The customer of the ticket.",
               "type": {
-                "kind": "SCALAR",
-                "name": "ID",
+                "kind": "INPUT_OBJECT",
+                "name": "TicketCustomerInput",
                 "ofType": null
               },
               "defaultValue": null
@@ -18299,6 +18565,37 @@
           "interfaces": [
 
           ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "TicketCustomerInput",
+          "description": "Base ticket input customer type",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "id",
+              "description": "The customer of the ticket.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "email",
+              "description": "A customer email address.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
           "enumValues": null,
           "possibleTypes": null
         },
@@ -19509,11 +19806,11 @@
               "defaultValue": null
             },
             {
-              "name": "customerId",
+              "name": "customer",
               "description": "The customer of the ticket.",
               "type": {
-                "kind": "SCALAR",
-                "name": "ID",
+                "kind": "INPUT_OBJECT",
+                "name": "TicketCustomerInput",
                 "ofType": null
               },
               "defaultValue": null

@@ -5,10 +5,14 @@
 import { reset } from '@formkit/core'
 import gql from 'graphql-tag'
 import { storeToRefs } from 'pinia'
-import { computed, h, onMounted, reactive, ref, watch } from 'vue'
+import { computed, h, onMounted, reactive, ref, watch, type Ref } from 'vue'
 
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import CommonPopover from '#shared/components/CommonPopover/CommonPopover.vue'
+import type {
+  Orientation,
+  Placement,
+} from '#shared/components/CommonPopover/types.ts'
 import { usePopover } from '#shared/components/CommonPopover/usePopover.ts'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import Form from '#shared/components/Form/Form.vue'
@@ -822,11 +826,25 @@ const formSchema = defineFormSchema([
       ],
     },
   },
+
   {
     type: 'file',
     name: 'file',
     label: 'Attachment',
     multiple: true,
+  },
+  {
+    type: 'toggleButtons',
+    name: 'toggleButtons',
+    label: 'Toggle Buttons',
+    value: '1',
+    props: {
+      options: [
+        { value: '3', label: 'name only' },
+        { value: '33333', label: 'name onlyyyy' },
+        { value: '1', label: 'Long name', icon: 'sun' },
+      ],
+    },
   },
 ])
 
@@ -1054,6 +1072,56 @@ const changeRow = () => {
 const { activeTab } = useTabManager<string>()
 
 const { activeTab: activeFilters } = useTabManager<Tab[]>()
+
+const popoverOrientation: Ref<Orientation> = ref('autoVertical')
+const popoverOrientationOptions = [
+  {
+    value: 'autoVertical',
+    label: 'Auto vertical',
+  },
+  {
+    value: 'autoHorizontal',
+    label: 'Auto horizontal',
+  },
+  {
+    value: 'top',
+    label: 'Top',
+  },
+  {
+    value: 'bottom',
+    label: 'Bottom',
+  },
+  {
+    value: 'left',
+    label: 'Left',
+  },
+  {
+    value: 'right',
+    label: 'Right',
+  },
+]
+
+const popoverPlacement: Ref<Placement> = ref('start')
+const popoverPlacementOptions = [
+  {
+    value: 'start',
+    label: 'Start',
+  },
+  {
+    value: 'arrowStart',
+    label: 'Arrow Start',
+  },
+  {
+    value: 'arrowEnd',
+    label: 'Arrow End',
+  },
+  {
+    value: 'end',
+    label: 'End',
+  },
+]
+
+const popoverHideArrow = ref(false)
 </script>
 
 <template>
@@ -1134,16 +1202,21 @@ const { activeTab: activeFilters } = useTabManager<Tab[]>()
       <div class="w-1/2">
         <h2 class="text-xl">Alerts</h2>
 
-        <CommonAlert
-          variant="info"
-          dismissible
-          link="https://youtu.be/U6n2NcJ7rLc"
-          link-text="Party 🎉"
-          class="mb-2.5"
+        <CommonAlert variant="info" dismissible class="mb-2.5"
           >It's Friday!
         </CommonAlert>
-        <CommonAlert variant="success" class="mb-2.5"
-          >Hooray! Ticket got updated.
+        <CommonAlert variant="success" class="mb-2.5">
+          <div class="flex flex-col gap-1.5">
+            <CommonLabel class="text-yellow-600" size="large"
+              >Similar tickets found</CommonLabel
+            >
+            <CommonLabel class="text-yellow-600"
+              >Tickets with the same attributes were found.</CommonLabel
+            >
+            <ul class="list-inside list-disc">
+              <li>31001 Test Ticket</li>
+            </ul>
+          </div>
         </CommonAlert>
         <CommonAlert variant="warning" class="mb-2.5"
           >Heee! You're typing too fast.
@@ -1351,12 +1424,35 @@ const { activeTab: activeFilters } = useTabManager<Tab[]>()
       <div>
         <h2 class="text-lg">Popover</h2>
 
+        <div class="mb-2 flex gap-2">
+          <FormKit
+            v-model="popoverOrientation"
+            type="select"
+            name="orientation"
+            :options="popoverOrientationOptions"
+          />
+          <FormKit
+            v-model="popoverPlacement"
+            type="select"
+            name="placement"
+            :options="popoverPlacementOptions"
+          />
+          <FormKit
+            v-model="popoverHideArrow"
+            type="toggle"
+            name="placement"
+            label="Hide arrow"
+            :variants="{ true: 'yes', false: 'no' }"
+          />
+        </div>
+
         <template v-if="user">
           <CommonPopover
             ref="popover"
             :owner="popoverTarget"
-            orientation="autoVertical"
-            placement="start"
+            :orientation="popoverOrientation"
+            :placement="popoverPlacement"
+            :hide-arrow="popoverHideArrow"
           >
             <CommonPopoverMenu
               :popover="popover"

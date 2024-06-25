@@ -64,3 +64,9 @@ export interface TicketFormData {
   security?: EnumSecurityOption[]
   [index: string]: FormFieldValue
 }
+
+export type TicketDuplicateDetectionItem = [
+  id: number,
+  number: string,
+  title: string,
+]

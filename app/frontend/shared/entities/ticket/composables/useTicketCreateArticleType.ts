@@ -3,35 +3,39 @@
 import { computed } from 'vue'
 
 import type { FormFieldAdditionalProps } from '#shared/components/Form/types.ts'
+import { useAppName } from '#shared/composables/useAppName.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 import { TicketCreateArticleType } from '../types.ts'
+
+export const ticketCreateArticleType = {
+  [TicketCreateArticleType.PhoneIn]: {
+    icon: 'phone-in',
+    label: __('Received Call'),
+    title: __('Received Call: %s'),
+    sender: 'Customer',
+    type: 'phone',
+  },
+  [TicketCreateArticleType.PhoneOut]: {
+    icon: 'phone-out',
+    label: __('Outbound Call'),
+    title: __('Outbound Call: %s'),
+    sender: 'Agent',
+    type: 'phone',
+  },
+  [TicketCreateArticleType.EmailOut]: {
+    icon: 'mail-out',
+    label: __('Send Email'),
+    title: __('Send Email: %s'),
+    sender: 'Agent',
+    type: 'email',
+  },
+}
 
 export const useTicketCreateArticleType = (
   additionalProps: FormFieldAdditionalProps = {},
 ) => {
   const application = useApplicationStore()
-
-  const ticketCreateArticleType = {
-    [TicketCreateArticleType.PhoneIn]: {
-      icon: 'phone-in',
-      label: __('Received Call'),
-      sender: 'Customer',
-      type: 'phone',
-    },
-    [TicketCreateArticleType.PhoneOut]: {
-      icon: 'phone-out',
-      label: __('Outbound Call'),
-      sender: 'Agent',
-      type: 'phone',
-    },
-    [TicketCreateArticleType.EmailOut]: {
-      icon: 'mail-out',
-      label: __('Send Email'),
-      sender: 'Agent',
-      type: 'email',
-    },
-  }
 
   const availableTypes = computed(() => {
     let configuredAvailableTypes =
@@ -59,13 +63,12 @@ export const useTicketCreateArticleType = (
 
   const ticketArticleSenderTypeField = {
     name: 'articleSenderType',
-    type: 'radio',
+    type: useAppName() === 'mobile' ? 'radio' : 'toggleButtons',
     required: true,
     value: availableTypes.value.includes(defaultTicketCreateType)
       ? defaultTicketCreateType
       : availableTypes.value[0],
     props: {
-      buttons: true,
       options,
       ...additionalProps,
     },

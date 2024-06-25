@@ -10,6 +10,8 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useResizeWidthHandle } from '#desktop/components/ResizeHandle/composables/useResizeWidthHandle.ts'
 import ResizeHandle from '#desktop/components/ResizeHandle/ResizeHandle.vue'
 
+import { SidebarPosition } from './types.ts'
+
 interface Props {
   name: string
   /**
@@ -23,11 +25,15 @@ interface Props {
   maxWidth?: number
   collapsible?: boolean
   iconCollapsed?: string
+  position?: SidebarPosition
   resizable?: boolean
   id: string
+  noPadding?: boolean
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  position: SidebarPosition.Start,
+})
 
 const emit = defineEmits<{
   'resize-horizontal': [number]
@@ -72,6 +78,9 @@ const { startResizing, isResizingHorizontal } = useResizeWidthHandle(
   (positionX) => emit('resize-horizontal', positionX),
   resizeHandleComponent,
   handleKeyStroke,
+  {
+    calculateFromRight: props.position === SidebarPosition.End,
+  },
 )
 
 watch(isResizingHorizontal, (isResizing) => {
@@ -86,9 +95,11 @@ watch(isResizingHorizontal, (isResizing) => {
 <template>
   <aside
     :id="props.id"
-    class="group/sidebar -:bg-neutral-950 relative flex max-h-screen flex-col border-e border-neutral-100 dark:border-gray-900"
+    class="group/sidebar -:bg-neutral-950 relative flex max-h-screen flex-col border-neutral-100 dark:border-gray-900"
     :class="{
-      'py-3': isCollapsed,
+      'py-3': isCollapsed && !noPadding,
+      'border-e': position === SidebarPosition.Start,
+      'border-s': position === SidebarPosition.End,
     }"
   >
     <CollapseButton
@@ -96,13 +107,24 @@ watch(isResizingHorizontal, (isResizing) => {
       :is-collapsed="isCollapsed"
       :owner-id="id"
       group="sidebar"
-      class="absolute top-[49px] z-20 ltr:right-0 ltr:translate-x-1/2 rtl:left-0 rtl:-translate-x-1/2"
+      class="absolute top-[49px] z-20"
+      :inverse="position === SidebarPosition.End"
+      :class="{
+        'ltr:right-0 ltr:translate-x-1/2 rtl:left-0 rtl:-translate-x-1/2':
+          position === SidebarPosition.Start,
+        'ltr:left-0 ltr:-translate-x-1/2 rtl:right-0 rtl:translate-x-1/2':
+          position === SidebarPosition.End,
+      }"
       @toggle-collapse="toggleCollapse"
     />
     <ResizeHandle
       v-if="resizable && !isCollapsed"
       ref="resizeHandleComponent"
-      class="absolute top-1/2 -translate-y-1/2 ltr:right-0 rtl:left-0"
+      class="absolute top-1/2 -translate-y-1/2"
+      :class="{
+        'ltr:right-0 rtl:left-0': position === SidebarPosition.Start,
+        'ltr:left-0 rtl:right-0': position === SidebarPosition.End,
+      }"
       :aria-label="$t('Resize sidebar')"
       :aria-valuenow="currentWidth"
       :aria-valuemax="maxWidth?.toFixed(2)"
@@ -126,7 +148,7 @@ watch(isResizingHorizontal, (isResizing) => {
     <div
       v-else
       class="flex h-full flex-col overflow-y-auto"
-      :class="{ 'p-3': !isCollapsed }"
+      :class="{ 'p-3': !isCollapsed && !noPadding }"
     >
       <slot v-bind="{ isCollapsed }" />
     </div>

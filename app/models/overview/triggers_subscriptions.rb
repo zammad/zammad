@@ -1,6 +1,5 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-# Trigger GraphQL subscriptions on public link changes.
 module Overview::TriggersSubscriptions
   extend ActiveSupport::Concern
 

@@ -5,13 +5,13 @@ import { watchEffect, computed } from 'vue'
 
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
-import { normalizeEdges } from '#shared/utils/helpers.ts'
+import { useUserDetail } from '#shared/entities/user/composables/useUserDetail.ts'
+import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
 
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import CommonOrganizationsList from '#mobile/components/CommonOrganizationsList/CommonOrganizationsList.vue'
 import CommonTicketStateList from '#mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
-import { useUserDetail } from '#mobile/entities/user/composables/useUserDetail.ts'
 import { useUserEdit } from '#mobile/entities/user/composables/useUserEdit.ts'
 import { useUsersTicketsCount } from '#mobile/entities/user/composables/useUserTicketsCount.ts'
 
@@ -25,13 +25,23 @@ defineProps<Props>()
 
 const { ticket, updateRefetchingStatus } = useTicketInformation()
 
+const { createQueryErrorHandler } = useErrorHandler()
+
+const errorCallback = createQueryErrorHandler({
+  notFound: __(
+    'User with specified ID was not found. Try checking the URL for errors.',
+  ),
+  forbidden: __('You have insufficient rights to view this user.'),
+})
+
 const {
   user,
   loading,
   objectAttributes,
+  secondaryOrganizations,
   loadUser,
   loadAllSecondaryOrganizations,
-} = useUserDetail()
+} = useUserDetail(undefined, errorCallback)
 
 watchEffect(() => {
   if (ticket.value) {
@@ -47,10 +57,6 @@ const { openEditUserDialog } = useUserEdit()
 
 const { getTicketData } = useUsersTicketsCount()
 const ticketsData = computed(() => getTicketData(user.value))
-
-const secondaryOrganizations = computed(() =>
-  normalizeEdges(user.value?.secondaryOrganizations),
-)
 </script>
 
 <template>

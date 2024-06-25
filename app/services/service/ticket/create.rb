@@ -10,6 +10,7 @@ class Service::Ticket::Create < Service::BaseWithCurrentUser
       article_data = ticket_data.delete(:article)
       tag_data     = ticket_data.delete(:tags)
 
+      find_or_create_customer(ticket_data)
       preprocess_ticket_data! ticket_data
 
       Ticket.new(ticket_data).tap do |ticket|
@@ -42,6 +43,30 @@ class Service::Ticket::Create < Service::BaseWithCurrentUser
 
       ticket.tag_add(tag.strip)
     end
+  end
+
+  def find_or_create_customer(ticket_data)
+    return if ticket_data[:customer].blank? || ticket_data[:customer].is_a?(::User)
+
+    email_address = ticket_data[:customer]
+    EmailAddressValidation.new(email_address).valid!
+
+    customer = User.find_by(email: email_address.downcase)
+    if customer.present?
+      ticket_data[:customer] = customer
+      return
+    end
+
+    role_ids = Role.signup_role_ids
+    customer = User.create(
+      firstname: '',
+      lastname:  '',
+      email:     email_address,
+      password:  '',
+      active:    true,
+      role_ids:  role_ids,
+    )
+    ticket_data[:customer] = customer
   end
 
   # Desktop UI supplies this data from frontend

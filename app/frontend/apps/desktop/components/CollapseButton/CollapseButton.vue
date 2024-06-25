@@ -16,6 +16,7 @@ interface Props {
   isCollapsed?: boolean
   group?: 'heading' | 'sidebar'
   orientation?: 'horizontal' | 'vertical'
+  inverse?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -33,7 +34,10 @@ const collapseButtonIcon = computed(() => {
   if (props.orientation === 'vertical')
     return props.isCollapsed ? 'arrows-expand' : 'arrows-collapse'
 
-  if (locale.localeData?.dir === EnumTextDirection.Rtl)
+  if (
+    (props.inverse && locale.localeData?.dir !== EnumTextDirection.Rtl) ||
+    (!props.inverse && locale.localeData?.dir === EnumTextDirection.Rtl)
+  )
     return props.isCollapsed ? 'arrow-bar-left' : 'arrow-bar-right'
 
   return props.isCollapsed ? 'arrow-bar-right' : 'arrow-bar-left'

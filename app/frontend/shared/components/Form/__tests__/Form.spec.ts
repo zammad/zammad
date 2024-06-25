@@ -151,6 +151,36 @@ describe('Form.vue', () => {
     expect(error.closest('[data-errors="true"]')).toBeInTheDocument()
   })
 
+  it('stops submit handler when false is returned', async () => {
+    const wrapper = await renderForm({
+      props: {
+        clearValuesAfterSubmit: true,
+        onSubmit: (data: FormValues) => {
+          if (data.title === 'Other title') return () => {}
+
+          return false
+        },
+      },
+    })
+
+    const title = wrapper.getByLabelText('Title')
+    await wrapper.events.type(title, 'Example title')
+    await wrapper.events.type(title, '{Enter}')
+
+    expect(wrapper.emitted().submit).toBeTruthy()
+
+    expect(title).toHaveDisplayValue('Example title')
+
+    // For the other value it should run the complete submit flow,
+    // so also the reset of the values.
+    await wrapper.events.clear(title)
+    await wrapper.events.type(title, 'Other title')
+    await wrapper.events.type(title, '{Enter}')
+
+    expect(wrapper.emitted().submit).toBeTruthy()
+    expect(title).toHaveDisplayValue('')
+  })
+
   it('implements changed event', async () => {
     const wrapper = await renderForm()
 

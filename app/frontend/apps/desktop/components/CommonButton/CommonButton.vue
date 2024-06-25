@@ -137,7 +137,7 @@ const iconSizeClass = computed(() => {
 
 <template>
   <button
-    class="-:inline-flex h-min min-h-min flex-shrink-0 flex-nowrap items-center justify-center gap-x-1 border-0 font-normal shadow-none transition duration-200 hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:outline-none focus:outline-0 focus:outline-offset-0 focus:hover:outline focus:hover:outline-1 focus:hover:outline-offset-1 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 focus:active:scale-[95%] dark:hover:outline-blue-900"
+    class="-:inline-flex -:focus:outline-none -:focus:outline-0 -:focus:outline-offset-0 h-min min-h-min flex-shrink-0 flex-nowrap items-center justify-center gap-x-1 border-0 font-normal shadow-none transition duration-200 hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:hover:outline focus:hover:outline-1 focus:hover:outline-offset-1 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 focus:active:scale-[95%] dark:hover:outline-blue-900"
     :class="[
       ...variantClasses,
       ...sizeClasses,

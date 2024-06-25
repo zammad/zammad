@@ -5,7 +5,7 @@ module Gql::Queries
 
     description 'Locales available in the system'
 
-    argument :only_active, Boolean, required: false, description: 'Fetch only active locales'
+    argument :only_active, Boolean, required: false, default_value: false, description: 'Fetch only active locales'
 
     type [Gql::Types::LocaleType, { null: false }], null: false
 
@@ -13,7 +13,7 @@ module Gql::Queries
       true # This query should be available for all (including unauthenticated) users.
     end
 
-    def resolve(only_active: false)
+    def resolve(only_active:)
       return Locale.where(active: true) if only_active
 
       Locale.all

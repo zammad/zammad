@@ -1427,6 +1427,77 @@ describe('Form.vue - Form Updater - special situtations', () => {
     await checkSelectOptions(wrapper, 'Multi Select', ['Key 1', 'Key 4', '-'])
     await checkDisplayValue(wrapper, 'Multi Select', ['-', 'Key 1', 'Key 4'])
   })
+
+  test('check dependent fields, e.g. "Cc" is shown + contains the correct value when "Email outbound" got selected', async () => {
+    const { wrapper } = await renderForm(
+      {
+        formUpdater: {
+          articleSenderType: {
+            value: 'email-out',
+          },
+          cc: {
+            value: ['Nicole Braun'],
+            options: [
+              {
+                value: 'Nicole Braun',
+                label: 'Nicole Braun',
+                heading: null,
+              },
+            ],
+          },
+        },
+      },
+      {
+        props: {
+          schema: [
+            {
+              name: 'articleSenderType',
+              type: 'toggleButtons',
+              required: true,
+              value: 'phone-in',
+              props: {
+                options: [
+                  {
+                    value: 'phone-in',
+                    label: 'Phone in',
+                  },
+                  {
+                    value: 'phone-out',
+                    label: 'Phone outbound',
+                  },
+                  {
+                    value: 'email-out',
+                    label: 'Email outbound',
+                  },
+                ],
+              },
+            },
+            {
+              if: '$values.articleSenderType === "email-out"',
+              name: 'cc',
+              label: 'CC',
+              type: 'recipient',
+              props: {
+                multiple: true,
+                clearable: true,
+              },
+            },
+            {
+              type: 'submit',
+              name: 'submit',
+            },
+          ],
+        },
+      },
+    )
+
+    expect(
+      wrapper.getByRole('tab', { selected: true, name: 'Email outbound' }),
+    ).toBeInTheDocument()
+
+    expect(wrapper.getByLabelText('CC')).toBeInTheDocument()
+    expect(wrapper.getByLabelText('CC')).toHaveValue('Nicole Braun')
+  })
 })
 
 describe('Form.vue - Form Updater - reacts not on updates when it is in initial form updater', () => {

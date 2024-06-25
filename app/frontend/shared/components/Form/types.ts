@@ -2,6 +2,7 @@
 
 import type { Sizes } from '#shared/components/CommonIcon/types.ts'
 import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import type { FormUpdaterOptions } from '#shared/types/form.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
 import type {
@@ -183,6 +184,7 @@ export interface ReactiveFormSchemData {
     string,
     {
       show: boolean
+      staticCondition: boolean
       updateFields: boolean
       props: Except<
         SetOptional<FormSchemaField, 'type'>,
@@ -268,6 +270,8 @@ export interface FormRef {
     options?: FormResetOptions,
     groupNode?: FormKitNode,
   ): void
+
+  triggerFormUpdater(options?: FormUpdaterOptions): void
 }
 
 export interface FormStep {

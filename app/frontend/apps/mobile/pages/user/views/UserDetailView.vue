@@ -6,7 +6,8 @@ import { computed, ref } from 'vue'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
 import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotificationSeen.ts'
-import { normalizeEdges } from '#shared/utils/helpers.ts'
+import { useUserDetail } from '#shared/entities/user/composables/useUserDetail.ts'
+import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
 
 import CommonButtonGroup from '#mobile/components/CommonButtonGroup/CommonButtonGroup.vue'
 import type { CommonButtonOption } from '#mobile/components/CommonButtonGroup/types.ts'
@@ -15,7 +16,6 @@ import CommonOrganizationsList from '#mobile/components/CommonOrganizationsList/
 import CommonTicketStateList from '#mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
 import { useHeader } from '#mobile/composables/useHeader.ts'
 import { useOrganizationTicketsCount } from '#mobile/entities/organization/composables/useOrganizationTicketsCount.ts'
-import { useUserDetail } from '#mobile/entities/user/composables/useUserDetail.ts'
 import { useUserEdit } from '#mobile/entities/user/composables/useUserEdit.ts'
 import { useUsersTicketsCount } from '#mobile/entities/user/composables/useUserTicketsCount.ts'
 
@@ -25,14 +25,24 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const { createQueryErrorHandler } = useErrorHandler()
+
+const errorCallback = createQueryErrorHandler({
+  notFound: __(
+    'User with specified ID was not found. Try checking the URL for errors.',
+  ),
+  forbidden: __('You have insufficient rights to view this user.'),
+})
+
 const {
   user,
   userQuery,
   loading,
   objectAttributes,
+  secondaryOrganizations,
   loadUser,
   loadAllSecondaryOrganizations,
-} = useUserDetail()
+} = useUserDetail(undefined, errorCallback)
 
 loadUser(props.internalId)
 
@@ -92,10 +102,6 @@ const ticketsData = computed(() => {
 
   return getOrganizationTicketsData(organization)
 })
-
-const secondaryOrganizations = computed(() =>
-  normalizeEdges(user.value?.secondaryOrganizations),
-)
 </script>
 
 <template>

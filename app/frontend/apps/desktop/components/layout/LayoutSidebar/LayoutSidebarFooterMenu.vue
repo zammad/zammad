@@ -7,6 +7,7 @@ import { computed } from 'vue'
 import CommonPopover from '#shared/components/CommonPopover/CommonPopover.vue'
 import { usePopover } from '#shared/components/CommonPopover/usePopover.ts'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import { useTicketCreateView } from '#shared/entities/ticket/composables/useTicketCreateView.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
 import CommonPopoverMenu from '#desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue'
@@ -24,6 +25,8 @@ const { user } = storeToRefs(useSessionStore())
 const avatarSize = computed(() => (props.collapsed ? 'small' : 'normal'))
 
 const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
+
+const { ticketCreateEnabled } = useTicketCreateView()
 </script>
 
 <template>
@@ -37,7 +40,7 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
       :owner="popoverTarget"
       :hide-arrow="collapsed"
       orientation="autoVertical"
-      placement="start"
+      :placement="collapsed ? 'start' : 'arrowStart'"
     >
       <CommonPopoverMenu
         :popover="popover"
@@ -66,9 +69,15 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
         personal
       />
     </button>
-    <!-- <ul class="flex flex-row">
-      <li>T1</li>
-      <li>T2</li>
-    </ul> -->
+
+    <div v-if="!collapsed" class="flex gap-1.5 rounded-md bg-gray-700 p-4">
+      <CommonLink v-if="ticketCreateEnabled" link="/tickets/create">
+        <CommonIcon
+          class="text-blue-800"
+          size="small"
+          name="plus-square-fill"
+        />
+      </CommonLink>
+    </div>
   </section>
 </template>

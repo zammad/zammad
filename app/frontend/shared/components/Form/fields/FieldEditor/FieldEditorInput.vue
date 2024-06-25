@@ -150,7 +150,7 @@ const editor = useEditor({
       name: props.context.node.name,
       id: props.context.id,
       class: props.context.classes.input,
-      'data-value': editorValue.value,
+      'data-value': editorValue.value, // TODO: for which purpose?
     },
     // add inlined files
     handlePaste(view, event) {

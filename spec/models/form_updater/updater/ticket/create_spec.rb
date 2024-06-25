@@ -4,6 +4,8 @@ require 'rails_helper'
 
 require 'models/form_updater/concerns/checks_core_workflow_examples'
 require 'models/form_updater/concerns/has_security_options_examples'
+require 'models/form_updater/concerns/applies_ticket_template_examples'
+require 'models/form_updater/concerns/applies_ticket_shared_draft_examples'
 
 RSpec.describe(FormUpdater::Updater::Ticket::Create) do
   subject(:resolved_result) do
@@ -169,8 +171,35 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
         )
       end
     end
+
+    context 'when customer_id should be prefilled' do
+      let(:meta)     { { initial: true, form_id: SecureRandom.uuid, additional_data: { 'customer_id' => customer.id } } }
+      let(:customer) { create(:customer, organization: create(:organization)) }
+
+      it 'returns initial value for customer_id' do
+        expect(resolved_result.resolve).to include(
+          'customer_id' => include(
+            initialValue: customer.id,
+            options:      [{
+              value:   customer.id,
+              label:   customer.fullname,
+              heading: customer.organization.name,
+              object:  customer.attributes
+                        .slice('active', 'email', 'firstname', 'fullname', 'image', 'lastname', 'mobile', 'out_of_office', 'out_of_office_end_at', 'out_of_office_start_at', 'phone', 'source', 'vip')
+                        .merge({
+                                 '__typename' => 'User',
+                                 'id'         => Gql::ZammadSchema.id_from_internal_id('User', customer.id),
+                               })
+
+            }]
+          )
+        )
+      end
+    end
   end
 
   include_examples 'FormUpdater::ChecksCoreWorkflow', object_name: 'Ticket'
-  include_examples 'HasSecurityOptions', type: 'create'
+  include_examples 'FormUpdater::HasSecurityOptions', type: 'create'
+  include_examples 'FormUpdater::AppliesTicketTemplate'
+  include_examples 'FormUpdater::AppliesTicketSharedDraft'
 end

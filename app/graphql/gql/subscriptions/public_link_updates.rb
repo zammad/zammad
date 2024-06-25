@@ -5,6 +5,8 @@ module Gql::Subscriptions
 
     description 'Updates to public links'
 
+    broadcastable true
+
     argument :screen, Gql::Types::Enum::PublicLinksScreenType, required: true, description: 'Subscribe to public links for a specific screen'
 
     field :public_links, [Gql::Types::PublicLinkType], description: 'Current available public links'

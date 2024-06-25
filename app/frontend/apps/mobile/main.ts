@@ -17,7 +17,6 @@ import { useLocaleStore } from '#shared/stores/locale.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
 import { initializeForm, initializeFormFields } from '#mobile/form/index.ts'
-import { initializeGlobalComponentConfigurations } from '#mobile/initializer/initializeGlobalComponentConfigurations.ts'
 import { initializeGlobalComponentStyles } from '#mobile/initializer/initializeGlobalComponentStyles.ts'
 import { initializeMobileIcons } from '#mobile/initializer/initializeMobileIcons.ts'
 import { initializeMobileVisuals } from '#mobile/initializer/mobileVisuals.ts'
@@ -48,7 +47,6 @@ export default async function mountApp(): Promise<void> {
   initializeForm(app)
   initializeFormFields()
   initializeGlobalComponentStyles()
-  initializeGlobalComponentConfigurations()
   initializeGlobalComponents(app)
   initializeGlobalProperties(app)
   initializeMobileVisuals()

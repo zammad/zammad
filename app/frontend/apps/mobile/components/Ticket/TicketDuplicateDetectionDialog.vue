@@ -1,8 +1,9 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import type { TicketDuplicateDetectionItem } from '#shared/entities/ticket/types.ts'
+
 import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
-import type { TicketDuplicateDetectionItem } from '#mobile/pages/ticket/composable/useTicketDuplicateDetectionHandler.ts'
 
 defineProps<{
   name: string

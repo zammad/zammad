@@ -3,6 +3,7 @@
 import { computed, shallowRef } from 'vue'
 
 import type { MutationSendError } from '#shared/types/error.ts'
+import type { FormUpdaterOptions } from '#shared/types/form.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
 import { setErrors } from './utils.ts'
@@ -137,6 +138,10 @@ export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
     setErrors(node.value, errors)
   }
 
+  const triggerFormUpdater = (options?: FormUpdaterOptions) => {
+    form.value?.triggerFormUpdater(options)
+  }
+
   return {
     form,
     node,
@@ -158,5 +163,6 @@ export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
     waitForFormSettled,
     updateFieldValues,
     onChangedField,
+    triggerFormUpdater,
   }
 }

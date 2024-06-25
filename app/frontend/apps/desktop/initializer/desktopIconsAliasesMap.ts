@@ -78,7 +78,11 @@ export default {
   audio: 'file-music',
   video: 'file-play',
   calendar: 'file-calendar',
-  'mail-out': 'file-email',
+  'mail-file': 'file-email',
+
+  'phone-in': 'telephone-inbound',
+  'phone-out': 'telephone-outbound',
+  'mail-out': 'envelope',
 
   // these aliases are used in shared context, but they refer to the same name
   search: 'search',

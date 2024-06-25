@@ -58,6 +58,8 @@ export default {
 
   'form-field-link': 'external-link',
 
+  'mail-file': 'mail-out',
+
   // these aliases are used in shared context, but they refer to the same name
   search: 'search',
   loading: 'loading',

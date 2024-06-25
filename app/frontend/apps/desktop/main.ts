@@ -20,7 +20,6 @@ import { twoFactorConfigurationPluginLookup } from '#desktop/entities/two-factor
 import { initializeForm, initializeFormFields } from '#desktop/form/index.ts'
 import { initializeDesktopVisuals } from '#desktop/initializer/desktopVisuals.ts'
 import { initializeDesktopIcons } from '#desktop/initializer/initializeDesktopIcons.ts'
-import { initializeGlobalComponentConfigurations } from '#desktop/initializer/initializeGlobalComponentConfigurations.ts'
 import { initializeGlobalComponentStyles } from '#desktop/initializer/initializeGlobalComponentStyles.ts'
 import initializeGlobalDirectives from '#desktop/initializer/initializeGlobalDirectives.ts'
 import { ensureAfterAuth } from '#desktop/pages/authentication/after-auth/composable/useAfterAuthPlugins.ts'
@@ -41,7 +40,6 @@ export const mountApp = async () => {
   initializeForm(app)
   initializeFormFields()
   initializeGlobalComponentStyles()
-  initializeGlobalComponentConfigurations()
   initializeGlobalComponents(app)
   initializeGlobalProperties(app)
   initializeGlobalDirectives(app)

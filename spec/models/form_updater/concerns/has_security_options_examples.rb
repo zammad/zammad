@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-RSpec.shared_examples 'HasSecurityOptions' do |type:|
+RSpec.shared_examples 'FormUpdater::HasSecurityOptions' do |type:|
   context 'with security options' do
     let(:base_data) do
       case type

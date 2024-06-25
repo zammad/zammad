@@ -3,13 +3,15 @@
 import { setupCommonVisualConfig } from '#shared/composables/useSharedVisualConfig.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import CommonObjectAttribute from '#desktop/components/CommonObjectAttribute/CommonObjectAttribute.vue'
+import CommonObjectAttributeContainer from '#desktop/components/CommonObjectAttribute/CommonObjectAttributeContainer.vue'
 
 export const initializeDesktopVisuals = () => {
   setupCommonVisualConfig({
     // TODO: for later implementation
     objectAttributes: {
-      outer: 'div',
-      wrapper: 'section',
+      outer: CommonObjectAttributeContainer,
+      wrapper: CommonObjectAttribute,
       classes: {},
     },
     // TODO: should be moved to mobile only or renamed completley.

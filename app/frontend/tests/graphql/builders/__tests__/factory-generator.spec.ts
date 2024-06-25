@@ -2,11 +2,10 @@
 
 import { faker } from '@faker-js/faker'
 
+import { OrganizationDocument } from '#shared/entities/organization/graphql/queries/organization.api.ts'
+import { UserDocument } from '#shared/entities/user/graphql/queries/user.api.ts'
 import type { Ticket } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-
-import { OrganizationDocument } from '#mobile/entities/organization/graphql/queries/organization.api.ts'
-import { UserDocument } from '#mobile/entities/user/graphql/queries/user.api.ts'
 
 import { generateObjectData, mockOperation } from '../index.ts'
 

@@ -50,7 +50,19 @@ export interface FormDefaultProps {
   disabled?: boolean
 }
 
-export type FormUpdaterTrigger = 'direct' | 'delayed' | 'blur' | 'form-reset'
+export type FormUpdaterTrigger =
+  | 'direct'
+  | 'delayed'
+  | 'blur'
+  | 'form-reset'
+  | 'manual'
+
+export type FormUpdaterAdditionalParams = Record<string, unknown>
+
+export interface FormUpdaterOptions {
+  includeDirtyFields?: boolean
+  additionalParams?: FormUpdaterAdditionalParams
+}
 
 export interface FormDecoratorIcons {
   checkboxDecorator?: string

@@ -30,6 +30,7 @@ If you would like to specify the used browser for Capybara end-to-end tests, sim
 ```sh
 BROWSER=firefox bundle exec rspec spec/system/ticket/zoom_spec.rb
 ```
+
 Also running failed tests only is possible with the option `--only-failures`.
 
 ```sh
@@ -52,7 +53,7 @@ Manages logging in.
 
 Example usage: `Rspec.describe :example, authenticated_as: true`
 
-Takes boolean, symbol or lambda. Symbol is a method name to be executed. Works for  RSpec's `let` too! Lambda or referenced method are expected to return `User` object or a boolean.
+Takes boolean, symbol or lambda. Symbol is a method name to be executed. Works for RSpec's `let` too! Lambda or referenced method are expected to return `User` object or a boolean.
 
 `true` is the default value. It logs in with `admin@example.com` admin user. If a `User` is returned, it attempts to login with it. `false` causes to skip logging in altogether.
 
@@ -73,7 +74,7 @@ RSpec resets database using transaction after each example. But DBs can't handle
 
 ### `performs_jobs`
 
-ActiveJob background jobs are not performed automatically outside of `spec/jobs`! If you want to run `performs_jobs` in other  Specs, please do following:
+ActiveJob background jobs are not performed automatically outside of `spec/jobs`! If you want to run `performs_jobs` in other Specs, please do following:
 
 ```ruby
 context 'example', performs_jobs: true
@@ -237,7 +238,7 @@ find_toggle('Boolean').toggle_off
 To wait for a custom GraphQL response in autocomplete fields, you can provide expected `gql_filename` and/or `gql_number` arguments:
 
 ```ruby
-find_autocomplete('Custom').search_for_option('foo', gql_filename: 'apps/mobile/entities/user/graphql/queries/user.graphql', gql_number: 4)
+find_autocomplete('Custom').search_for_option('foo', gql_filename: 'shared/entities/user/graphql/queries/user.graphql', gql_number: 4)
 ```
 
 Clearing selections and input is also possible, if the field supports it:

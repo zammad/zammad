@@ -12,7 +12,7 @@ RSpec.describe 'Mobile > Ticket > Customer > Preview customer information', app:
   def open_user
     visit "/tickets/#{ticket.id}/information/customer"
     wait_for_gql('shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.graphql')
-    wait_for_gql('apps/mobile/entities/user/graphql/queries/user.graphql')
+    wait_for_gql('shared/entities/user/graphql/queries/user.graphql')
     wait_for_gql('apps/mobile/pages/ticket/graphql/queries/ticket.graphql')
   end
 
@@ -57,7 +57,7 @@ RSpec.describe 'Mobile > Ticket > Customer > Preview customer information', app:
 
       click('button', text: 'Show 2 more')
 
-      wait_for_gql('apps/mobile/entities/user/graphql/queries/user.graphql', number: 2)
+      wait_for_gql('shared/entities/user/graphql/queries/user.graphql', number: 2)
 
       expect(page).to have_text(organizations[3].name)
       expect(page).to have_text(organizations[4].name)

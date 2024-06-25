@@ -1,0 +1,8 @@
+subscription templateUpdates($onlyActive: Boolean!) {
+  templateUpdates(onlyActive: $onlyActive) {
+    templates {
+      id
+      name
+    }
+  }
+}

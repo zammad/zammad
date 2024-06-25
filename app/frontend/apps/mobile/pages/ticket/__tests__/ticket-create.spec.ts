@@ -18,6 +18,7 @@ import { nullableMock, waitUntil } from '#tests/support/utils.ts'
 import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
 import { FormUpdaterDocument } from '#shared/components/Form/graphql/queries/formUpdater.api.ts'
 import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
+import { TicketCreateDocument } from '#shared/entities/ticket/graphql/mutations/create.api.ts'
 
 import { defaultOrganization } from '#mobile/entities/organization/__tests__/mocks/organization-mocks.ts'
 import {
@@ -25,8 +26,6 @@ import {
   ticketArticleObjectAttributes,
   ticketPayload,
 } from '#mobile/entities/ticket/__tests__/mocks/ticket-mocks.ts'
-
-import { TicketCreateDocument } from '../graphql/mutations/create.api.ts'
 
 const visitTicketCreate = async (path = '/tickets/create') => {
   const mockObjectAttributes = mockGraphQLApi(

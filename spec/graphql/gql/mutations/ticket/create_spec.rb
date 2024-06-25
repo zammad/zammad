@@ -51,7 +51,7 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
       title:      'Ticket Create Mutation Test',
       groupId:    gql.id(group),
       priorityId: gql.id(priority),
-      customerId: gql.id(customer),
+      customer:   { id: gql.id(customer) },
       ownerId:    gql.id(agent),
       tags:       %w[foo bar],
       article:    article_payload
@@ -138,6 +138,37 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
         end
       end
 
+      context 'when customer is provided as an email address' do
+        let(:email_address) { Faker::Internet.email }
+        let(:input_payload) { input_base_payload.merge(customer: { email: email_address }) }
+
+        context 'with valid email address' do
+          it 'creates the ticket and a new customer' do
+            it_creates_ticket
+            expect(User.find_by(email: email_address)).to be_present
+            expect(gql.result.data['ticket']['customer']['fullname']).to eq(User.find_by(email: email_address).fullname)
+          end
+        end
+
+        context 'with invalid email address' do
+          let(:email_address) { 'invalid-email' }
+
+          it 'fails to create the ticket' do
+            it_fails_to_create_ticket
+            expect(gql.result.error_message).to include('The email address is invalid.')
+          end
+        end
+
+        context 'with valid email address of an existing customer' do
+          let(:email_address) { customer.email }
+
+          it 'creates the ticket' do
+            it_creates_ticket
+            expect(gql.result.data['ticket']['customer']['fullname']).to eq(customer.fullname)
+          end
+        end
+      end
+
       context 'when creating the ticket in a group with only :create permission' do
         let(:group)         { create(:group) }
         let(:owner)         { create(:agent, groups: [group]) }
@@ -154,6 +185,28 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
           expect(gql.result.payload['data']['ticketCreate']).to eq({ 'ticket' => nil, 'errors' => nil }) # Mutation did run, but data retrieval was not authorized.
           expect(gql.result.payload['errors'].first['message']).to eq('Access forbidden by Gql::Types::TicketType')
           expect(gql.result.payload['errors'].first['extensions']['type']).to eq('Exceptions::Forbidden')
+        end
+      end
+
+      context 'when creating the ticket in a group without email address' do
+        let(:group)           { create(:group, email_address: nil) }
+        let(:agent)           { create(:agent, groups: [group]) }
+        let(:article_payload) { { body: 'dummy', type: 'email' } }
+        let(:input_payload)   { input_base_payload.merge(groupId: gql.id(group)) }
+
+        it 'fails to create the ticket' do
+          it_fails_to_create_ticket
+          expect(gql.result.payload['data']['ticketCreate']).to eq(
+            {
+              'ticket' => nil,
+              'errors' => [
+                {
+                  'message' => 'Group has no email address.',
+                  'field'   => 'group_id'
+                }
+              ]
+            }
+          )
         end
       end
 
@@ -444,7 +497,7 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
     end
 
     context 'with a customer', authenticated_as: :customer do
-      let(:input_payload) { input_base_payload.tap { |h| h.delete(:customerId) } }
+      let(:input_payload) { input_base_payload.tap { |h| h.delete(:customer) } }
 
       let(:expected_response) do
         expected_base_response.merge(
@@ -462,11 +515,12 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
       end
 
       context 'when sending a different customerId' do
-        let(:input_payload) { input_base_payload.tap { |h| h[:customerId] = create(:customer).id } }
+        let(:input_payload) { input_base_payload.tap { |h| h[:customer][:id] = gql.id(create(:customer)) } }
 
-        it 'overrides the customerId' do
-          it_creates_ticket
-          expect(gql.result.data['ticket']).to eq(expected_response)
+        it 'fails creating a ticket with permission exception' do
+          it_fails_to_create_ticket
+          expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+          expect(gql.result.error_message).to eq('Access forbidden by Gql::Types::UserType')
         end
       end
 
@@ -538,10 +592,10 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
 
       let(:input_payload) do
         {
-          title:      'Test title for issue #4647',
-          groupId:    gql.id(Group.first),
-          customerId: gql.id(customer),
-          article:    article_payload,
+          title:    'Test title for issue #4647',
+          groupId:  gql.id(Group.first),
+          customer: { id: gql.id(customer) },
+          article:  article_payload,
         }
       end
 

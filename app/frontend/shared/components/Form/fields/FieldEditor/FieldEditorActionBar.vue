@@ -90,7 +90,7 @@ const handleSubMenuClick = () => {
     ref="popover"
     :owner="popoverTarget"
     orientation="autoVertical"
-    placement="start"
+    placement="arrowStart"
     no-auto-focus
   >
     <template v-if="Array.isArray(subMenuPopoverContent)">

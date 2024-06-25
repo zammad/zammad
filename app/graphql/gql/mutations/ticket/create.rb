@@ -2,6 +2,8 @@
 
 module Gql::Mutations
   class Ticket::Create < BaseMutation
+    include Gql::Mutations::Ticket::Concerns::HandlesGroup
+
     description 'Create a new ticket.'
 
     argument :input, Gql::Types::Input::Ticket::CreateInputType, description: 'The ticket data'
@@ -13,6 +15,8 @@ module Gql::Mutations
     end
 
     def resolve(input:)
+      return group_has_no_email_error if !group_has_email?(input: input)
+
       {
         ticket: Service::Ticket::Create
           .new(current_user: context.current_user)

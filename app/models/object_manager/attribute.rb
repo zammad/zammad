@@ -476,11 +476,9 @@ get the attribute model based on object and name
       data[:object_lookup_id] = ObjectLookup.by_name(data[:object])
     end
 
-    data[:name].downcase!
-
     ObjectManager::Attribute.find_by(
       object_lookup_id: data[:object_lookup_id],
-      name:             data[:name],
+      name:             data[:name].downcase,
     )
   end
 

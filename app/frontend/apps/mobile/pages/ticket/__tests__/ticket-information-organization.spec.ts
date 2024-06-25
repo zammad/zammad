@@ -9,6 +9,8 @@ import {
 } from '#tests/support/mock-graphql-api.ts'
 import { waitUntil } from '#tests/support/utils.ts'
 
+import { OrganizationDocument } from '#shared/entities/organization/graphql/queries/organization.api.ts'
+import { OrganizationUpdatesDocument } from '#shared/entities/organization/graphql/subscriptions/organizationUpdates.api.ts'
 import type { OrganizationQuery } from '#shared/graphql/types.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
 
@@ -16,8 +18,6 @@ import {
   defaultOrganization,
   mockOrganizationObjectAttributes,
 } from '#mobile/entities/organization/__tests__/mocks/organization-mocks.ts'
-import { OrganizationDocument } from '#mobile/entities/organization/graphql/queries/organization.api.ts'
-import { OrganizationUpdatesDocument } from '#mobile/entities/organization/graphql/subscriptions/organizationUpdates.api.ts'
 
 import { mockTicketDetailViewGql } from './mocks/detail-view.ts'
 

@@ -7,12 +7,13 @@ import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvata
 import type { AvatarOrganization } from '#shared/components/CommonOrganizationAvatar/index.ts'
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
 import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotificationSeen.ts'
+import { useOrganizationDetail } from '#shared/entities/organization/composables/useOrganizationDetail.ts'
+import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
 
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import CommonTicketStateList from '#mobile/components/CommonTicketStateList/CommonTicketStateList.vue'
 import OrganizationMembersList from '#mobile/components/Organization/OrganizationMembersList.vue'
 import { useHeader } from '#mobile/composables/useHeader.ts'
-import { useOrganizationDetail } from '#mobile/entities/organization/composables/useOrganizationDetail.ts'
 import { useOrganizationEdit } from '#mobile/entities/organization/composables/useOrganizationEdit.ts'
 import { useOrganizationTicketsCount } from '#mobile/entities/organization/composables/useOrganizationTicketsCount.ts'
 
@@ -22,6 +23,15 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const { createQueryErrorHandler } = useErrorHandler()
+
+const errorCallback = createQueryErrorHandler({
+  notFound: __(
+    'Organization with specified ID was not found. Try checking the URL for errors.',
+  ),
+  forbidden: __('You have insufficient rights to view this organization.'),
+})
+
 const {
   organization,
   loading,
@@ -29,7 +39,7 @@ const {
   organizationQuery,
   loadAllMembers,
   loadOrganization,
-} = useOrganizationDetail()
+} = useOrganizationDetail(undefined, errorCallback)
 
 loadOrganization(props.internalId)
 

@@ -8,7 +8,7 @@ export interface Props {
   iconColor?: string
   prefixIcon?: string
   suffixIcon?: string
-  tag?: 'span' | 'p'
+  tag?: 'span' | 'p' | 'h2'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -17,6 +17,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const fontSizeClassMap = {
+  xs: 'text-[10px] leading-[10px]',
   small: 'text-xs leading-snug',
   medium: 'text-sm leading-snug',
   large: 'text-base leading-snug',
@@ -24,6 +25,7 @@ const fontSizeClassMap = {
 }
 
 const iconClassMap = {
+  xs: 'xs',
   small: 'xs',
   medium: 'tiny',
   large: 'small',

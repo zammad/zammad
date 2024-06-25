@@ -50,6 +50,7 @@ const heading = computed(() => {
     v-model:state="localState"
     :messages="[item]"
     :heading="heading"
+    :cancel-label="confirmationOptions?.cancelLabel"
     @close="callCancelCallback"
   >
     <template #header>

@@ -1,4 +1,7 @@
-query autocompleteSearchGeneric($input: AutocompleteSearchGenericInput!, $membersCount: Int = 10)  {
+query autocompleteSearchGeneric(
+  $input: AutocompleteSearchGenericInput!
+  $membersCount: Int = 10
+) {
   autocompleteSearchGeneric(input: $input) {
     value
     label
@@ -15,6 +18,7 @@ query autocompleteSearchGeneric($input: AutocompleteSearchGenericInput!, $member
         firstname
         lastname
         fullname
+        email
         phone
         outOfOffice
         outOfOfficeStartAt
@@ -38,6 +42,7 @@ query autocompleteSearchGeneric($input: AutocompleteSearchGenericInput!, $member
               firstname
               lastname
               fullname
+              email
               phone
               outOfOffice
               outOfOfficeStartAt

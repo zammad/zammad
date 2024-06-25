@@ -20,10 +20,7 @@ import {
 import { useTransitionConfig } from '#shared/composables/useTransitionConfig.ts'
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
-import {
-  getPopoverClasses,
-  getPopoverPosition,
-} from '#shared/initializer/initializePopover.ts'
+import { getPopoverClasses } from '#shared/initializer/initializePopover.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 import stopEvent from '#shared/utils/events.ts'
 import testFlags from '#shared/utils/testFlags.ts'
@@ -96,16 +93,26 @@ const verticalOrientation = computed(() => {
   return autoOrientation.value === 'top' || autoOrientation.value === 'bottom'
 })
 
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const currentPlacement = computed(() => {
-  if (verticalOrientation.value) {
+  if (props.placement === 'arrowStart' || props.placement === 'arrowEnd') {
     if (locale.localeData?.dir === EnumTextDirection.Rtl) {
-      if (props.placement === 'start') return 'end'
-      return 'start'
+      if (props.placement === 'arrowStart') return 'arrowEnd'
+      return 'arrowStart'
     }
     return props.placement
   }
-  if (hasDirectionUp.value) return 'end'
-  return 'start'
+
+  if (verticalOrientation.value) {
+    if (locale.localeData?.dir === EnumTextDirection.Rtl) {
+      if (props.placement === 'start') return 'end'
+      if (props.placement === 'end') return 'start'
+      return props.hideArrow ? 'start' : 'arrowStart'
+    }
+    return props.placement
+  }
+  if (hasDirectionUp.value) return props.hideArrow ? 'end' : 'arrowEnd'
+  return props.hideArrow ? 'start' : 'arrowStart'
 })
 
 const BORDER_OFFSET = 2
@@ -114,11 +121,8 @@ const PLACEMENT_OFFSET_WITH_ARROW = 30
 const ORIENTATION_OFFSET_WO_ARROW = 6
 const ORIENTATION_OFFSET_WITH_ARROW = 16
 
-const positions = getPopoverPosition()
-
+// eslint-disable-next-line sonarjs/cognitive-complexity
 const popoverStyle = computed(() => {
-  if (positions === 'custom') return {}
-
   if (!targetElementBounds.value) return { top: 0, left: 0, maxHeight: 0 }
 
   const maxHeight = hasDirectionUp.value
@@ -135,14 +139,26 @@ const popoverStyle = computed(() => {
 
   const placementOffset = targetElementBounds.value.width / 2 - arrowOffset
 
-  if (verticalOrientation.value && currentPlacement.value === 'end') {
-    style.right = `${windowSize.width.value - targetElementBounds.value.right + placementOffset - BORDER_OFFSET}px`
-  } else if (verticalOrientation.value && currentPlacement.value === 'start') {
-    style.left = `${targetElementBounds.value.left + placementOffset + BORDER_OFFSET}px`
-  } else if (!verticalOrientation.value && currentPlacement.value === 'start') {
-    style.top = `${targetElementBounds.value.top + placementOffset + BORDER_OFFSET}px`
-  } else if (!verticalOrientation.value && currentPlacement.value === 'end') {
-    style.bottom = `${windowSize.height.value - targetElementBounds.value.bottom + placementOffset - BORDER_OFFSET}px`
+  if (verticalOrientation.value) {
+    if (currentPlacement.value === 'start') {
+      style.left = `${targetElementBounds.value.left - BORDER_OFFSET}px`
+    } else if (currentPlacement.value === 'arrowStart') {
+      style.left = `${targetElementBounds.value.left + placementOffset + BORDER_OFFSET}px`
+    } else if (currentPlacement.value === 'arrowEnd') {
+      style.right = `${windowSize.width.value - targetElementBounds.value.left + placementOffset - targetElementBounds.value.width - BORDER_OFFSET}px`
+    } else if (currentPlacement.value === 'end') {
+      style.right = `${windowSize.width.value - targetElementBounds.value.left - targetElementBounds.value.width - BORDER_OFFSET}px`
+    }
+  } else if (!verticalOrientation.value) {
+    if (currentPlacement.value === 'start') {
+      style.top = `${targetElementBounds.value.top - BORDER_OFFSET}px`
+    } else if (currentPlacement.value === 'arrowStart') {
+      style.top = `${targetElementBounds.value.bottom - targetElementBounds.value.height / 2 - arrowOffset + BORDER_OFFSET}px`
+    } else if (currentPlacement.value === 'arrowEnd') {
+      style.bottom = `${windowSize.height.value - targetElementBounds.value.bottom + targetElementBounds.value.height / 2 - arrowOffset - BORDER_OFFSET}px`
+    } else if (currentPlacement.value === 'end') {
+      style.bottom = `${windowSize.height.value - targetElementBounds.value.bottom - BORDER_OFFSET}px`
+    }
   }
 
   const orientationOffset = props.hideArrow
@@ -209,16 +225,32 @@ const arrowPlacementClasses = computed(() => {
     default:
   }
 
-  if (verticalOrientation.value && currentPlacement.value === 'end') {
-    // eslint-disable-next-line zammad/zammad-tailwind-ltr
-    classes['right-2'] = true
-  } else if (verticalOrientation.value && currentPlacement.value === 'start') {
-    // eslint-disable-next-line zammad/zammad-tailwind-ltr
-    classes['left-7'] = true
-  } else if (!verticalOrientation.value && currentPlacement.value === 'start') {
-    classes['top-7'] = true
-  } else if (!verticalOrientation.value && currentPlacement.value === 'end') {
-    classes['bottom-2'] = true
+  if (verticalOrientation.value) {
+    if (
+      currentPlacement.value === 'start' ||
+      currentPlacement.value === 'arrowStart'
+    ) {
+      // eslint-disable-next-line zammad/zammad-tailwind-ltr
+      classes['left-7'] = true
+    } else if (
+      currentPlacement.value === 'end' ||
+      currentPlacement.value === 'arrowEnd'
+    ) {
+      // eslint-disable-next-line zammad/zammad-tailwind-ltr
+      classes['right-2'] = true
+    }
+  } else if (!verticalOrientation.value) {
+    if (
+      currentPlacement.value === 'start' ||
+      currentPlacement.value === 'arrowStart'
+    ) {
+      classes['top-7'] = true
+    } else if (
+      currentPlacement.value === 'end' ||
+      currentPlacement.value === 'arrowEnd'
+    ) {
+      classes['bottom-2'] = true
+    }
   }
 
   return classes

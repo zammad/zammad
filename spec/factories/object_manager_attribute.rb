@@ -485,6 +485,42 @@ FactoryBot.define do
     end
   end
 
+  factory :object_manager_attribute_user_autocompletion, parent: :object_manager_attribute do
+    default { '' }
+
+    data_type { 'user_autocompletion' }
+    data_option do
+      {
+        'relation'       => 'User',
+        'autocapitalize' => false,
+        'multiple'       => false,
+        'guess'          => true,
+        'null'           => false,
+        'limit'          => 200,
+        'placeholder'    => 'Enter Person or Organization/Company',
+        'minLengt'       => 2,
+        'translate'      => false,
+        'permission'     => ['ticket.agent']
+      }
+    end
+  end
+
+  factory :object_manager_attribute_organization_autocompletion, parent: :object_manager_attribute do
+    default { '' }
+
+    data_type { 'autocompletion_ajax_customer_organization' }
+    data_option do
+      {
+        'relation'       => 'Organization',
+        'autocapitalize' => false,
+        'multiple'       => false,
+        'null'           => true,
+        'translate'      => false,
+        'permission'     => ['ticket.agent', 'ticket.customer']
+      }
+    end
+  end
+
   factory :object_manager_attribute_autocompletion_ajax_external_data_source, parent: :object_manager_attribute do
     transient do
       search_url   { 'http://example.search?q=#{search.term}' } # rubocop:disable Lint/InterpolationCheck

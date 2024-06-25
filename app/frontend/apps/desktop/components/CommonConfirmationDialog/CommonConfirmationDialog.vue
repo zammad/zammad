@@ -59,6 +59,7 @@ const confirmationVariant = computed<ConfirmationVariantOptions>(() => {
           actionButton: {
             variant: confirmationOptions.value?.buttonVariant || 'primary',
           },
+          cancelLabel: confirmationOptions.value?.cancelLabel,
         },
       }
   }

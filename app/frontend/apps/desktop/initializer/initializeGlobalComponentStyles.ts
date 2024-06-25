@@ -25,12 +25,11 @@ export const initializeGlobalComponentStyles = () => {
   })
 
   initializeAlertClasses({
-    base: 'grid gap-1.5 text-center md:text-start text-sm items-center justify-center md:justify-start grid-flow-row md:grid-flow-col md:grid-cols-[auto_minmax(auto,_1fr)] w-full md:w-auto',
+    base: 'grid gap-1.5 text-center md:text-start text-sm items-start justify-center md:justify-start grid-flow-row md:grid-flow-col md:grid-cols-[auto_minmax(auto,_1fr)] w-full md:w-auto',
     success: 'bg-green-300 dark:bg-green-900 text-green-500',
     info: 'bg-blue-500 dark:bg-blue-950 text-blue-800',
     warning: 'bg-yellow-50 dark:bg-yellow-900 text-yellow-600',
     danger: 'bg-pink-100 dark:bg-red-900 text-red-500',
-    link: 'hover:underline',
   })
 
   initializeAvatarClasses({

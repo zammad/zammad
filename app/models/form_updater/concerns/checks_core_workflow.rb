@@ -27,6 +27,14 @@ module FormUpdater::Concerns::ChecksCoreWorkflow
       params['id'] = object.id
     end
 
+    # Make sure that current values are used for the perform workflow.
+    # For example: Apply template can change the values.
+    result.each do |name, field|
+      next if !field.key?(:value)
+
+      params[name] = field[:value]
+    end
+
     # Currently we need to convert the relation field values (integer) to strings for the
     # current core workflow implementation.
     convert_relation_field_value(params)

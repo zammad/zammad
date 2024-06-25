@@ -16,6 +16,7 @@ export interface ConfirmationOptions {
   textPlaceholder?: string[]
   buttonLabel?: string
   buttonVariant?: ButtonVariant
+  cancelLabel?: string
   // TODO: should maybe also be implemented for mobile, so that we have a better alignment for the code
   confirmationVariant?: ConfirmationVariant
   confirmCallback: () => void

@@ -40,7 +40,7 @@ export const getIconByContentType = (type?: Maybe<string>) => {
     // code
     'text/html': 'template',
     'application/json': 'template',
-    'message/rfc822': 'mail-out',
+    'message/rfc822': 'mail-file',
     // text
     'text/plain': 'template',
     'text/rtf': 'template',

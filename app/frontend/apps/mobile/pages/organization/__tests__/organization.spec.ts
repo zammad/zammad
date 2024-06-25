@@ -11,14 +11,14 @@ import { setupView } from '#tests/support/mock-user.ts'
 import { nullableMock, waitUntil } from '#tests/support/utils.ts'
 
 import { mockOnlineNotificationSeenGql } from '#shared/composables/__tests__/mocks/online-notification.ts'
+import { OrganizationDocument } from '#shared/entities/organization/graphql/queries/organization.api.ts'
+import { OrganizationUpdatesDocument } from '#shared/entities/organization/graphql/subscriptions/organizationUpdates.api.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import {
   defaultOrganization,
   mockOrganizationObjectAttributes,
 } from '#mobile/entities/organization/__tests__/mocks/organization-mocks.ts'
-import { OrganizationDocument } from '#mobile/entities/organization/graphql/queries/organization.api.ts'
-import { OrganizationUpdatesDocument } from '#mobile/entities/organization/graphql/subscriptions/organizationUpdates.api.ts'
 
 const prepareMocks = () => {
   const organization = defaultOrganization()

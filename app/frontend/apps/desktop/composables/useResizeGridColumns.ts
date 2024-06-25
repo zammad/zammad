@@ -3,19 +3,38 @@
 import { useLocalStorage, useWindowSize } from '@vueuse/core'
 import { shallowRef, computed, type Ref } from 'vue'
 
-export const DEFAULT_SIDEBAR_WIDTH = 260
-export const MINIMUM_SIDEBAR_WIDTH = 200
+import { SidebarPosition } from '#desktop/components/layout/types.ts'
+
+export const DEFAULT_START_SIDEBAR_WIDTH = 260
+export const DEFAULT_END_SIDEBAR_WIDTH = 360
+export const MINIMUM_START_SIDEBAR_WIDTH = 200
+export const MINIMUM_END_SIDEBAR_WIDTH = 300
 export const SIDEBAR_COLLAPSED_WIDTH = 48
 
-export const useResizeGridColumns = (storageKey?: string) => {
+export const useResizeGridColumns = (
+  storageKey?: string,
+  position: SidebarPosition = SidebarPosition.Start,
+) => {
+  const defaultSidebarWidth =
+    position === SidebarPosition.Start
+      ? DEFAULT_START_SIDEBAR_WIDTH
+      : DEFAULT_END_SIDEBAR_WIDTH
+
+  const minSidebarWidth =
+    position === SidebarPosition.Start
+      ? MINIMUM_START_SIDEBAR_WIDTH
+      : MINIMUM_END_SIDEBAR_WIDTH
+
   const isSidebarCollapsed = shallowRef(false)
 
   let currentSidebarWidth: Ref<number>
+
   const storageId = `${storageKey}-sidebar-width`
+
   if (storageKey) {
-    currentSidebarWidth = useLocalStorage(storageId, DEFAULT_SIDEBAR_WIDTH)
+    currentSidebarWidth = useLocalStorage(storageId, defaultSidebarWidth)
   } else {
-    currentSidebarWidth = shallowRef(DEFAULT_SIDEBAR_WIDTH)
+    currentSidebarWidth = shallowRef(defaultSidebarWidth)
   }
 
   const { width: screenWidth } = useWindowSize()
@@ -26,13 +45,18 @@ export const useResizeGridColumns = (storageKey?: string) => {
       ? SIDEBAR_COLLAPSED_WIDTH
       : currentSidebarWidth.value
 
+    if (position === SidebarPosition.End)
+      return {
+        gridTemplateColumns: `1fr ${width}px`,
+      }
+
     return {
       gridTemplateColumns: `${width}px 1fr`,
     }
   })
 
   const resizeSidebar = (width: number) => {
-    if (width <= MINIMUM_SIDEBAR_WIDTH || width >= maxWidth.value) return
+    if (width <= minSidebarWidth || width >= maxWidth.value) return
 
     currentSidebarWidth.value = width
   }
@@ -46,13 +70,13 @@ export const useResizeGridColumns = (storageKey?: string) => {
   }
 
   const resetSidebarWidth = () => {
-    currentSidebarWidth.value = DEFAULT_SIDEBAR_WIDTH
+    currentSidebarWidth.value = defaultSidebarWidth
   }
 
   return {
     currentSidebarWidth,
     maxSidebarWidth: maxWidth,
-    minSidebarWidth: MINIMUM_SIDEBAR_WIDTH,
+    minSidebarWidth,
     gridColumns,
     isSidebarCollapsed,
     resizeSidebar,

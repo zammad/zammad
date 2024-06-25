@@ -21,7 +21,6 @@ export const initializeGlobalComponentStyles = () => {
     info: 'alert-info bg-white text-black',
     warning: 'alert-warning bg-yellow text-black',
     danger: 'alert-error bg-red/60 text-white',
-    link: 'hover:underline',
   })
 
   initializeAvatarClasses({

@@ -4,7 +4,10 @@ class FormUpdater::Relation::Owner < FormUpdater::Relation
   private
 
   def display_name(item)
-    "#{item.firstname} #{item.lastname}"
+    return item.fullname if item.fullname.present?
+    return item.phone if item.phone.present?
+
+    item.login
   end
 
   def relation_type

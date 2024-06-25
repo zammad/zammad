@@ -15,6 +15,7 @@ export class FieldResolverBoolean extends FieldResolver {
       props: {
         variants,
       },
+      wrapperClass: 'mt-6',
     }
   }
 }

@@ -10,13 +10,3 @@ export const initializePopoverClasses = (classes: typeof popoverClasses) => {
   popoverClasses = classes
 }
 export const getPopoverClasses = () => popoverClasses
-
-// Positioning
-type Positions = 'auto' | 'custom'
-
-let positions: Positions = 'auto'
-
-export const initializePopoverPosition = (configValue: Positions) => {
-  positions = configValue
-}
-export const getPopoverPosition = () => positions

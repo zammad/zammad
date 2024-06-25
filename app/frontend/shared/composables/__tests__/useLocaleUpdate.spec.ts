@@ -5,10 +5,11 @@ import { beforeEach, describe, expect, vi } from 'vitest'
 import { initializePiniaStore } from '#tests/support/components/renderComponent.ts'
 import { waitUntil } from '#tests/support/utils.ts'
 
-import { useLocaleUpdate } from '#shared/composables/useLocaleUpdate.ts'
 import { mockLocalesQuery } from '#shared/graphql/queries/locales.mocks.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
+
+import { useLocaleUpdate } from '../useLocaleUpdate.ts'
 
 const mockUpdateLocaleMutationHandler = () => {
   const sendMock = vi.fn()

@@ -18,13 +18,16 @@ export interface Props {
   noRefocus?: boolean
   zIndex?: number
   heading?: string
+  cancelLabel?: string
 }
 
 defineOptions({
   inheritAttrs: false,
 })
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  cancelLabel: __('Cancel'),
+})
 const emit = defineEmits<{
   close: [isCancel: boolean]
   'update:state': [state: boolean]
@@ -162,7 +165,7 @@ const getClassesByType = (type: PopupItemDescriptor['type']) => {
             class="mt-3 flex h-14 w-full items-center justify-center !bg-black"
             @click="hidePopup()"
           >
-            {{ $t('Cancel') }}
+            {{ $t(cancelLabel) }}
           </CommonButton>
         </div>
       </div>

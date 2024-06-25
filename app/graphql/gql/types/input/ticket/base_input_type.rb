@@ -16,7 +16,7 @@ module Gql::Types::Input::Ticket
     end
 
     argument :owner_id, GraphQL::Types::ID, required: false, description: 'The owner of the ticket.', loads: Gql::Types::UserType, prepare: only_for_ticket_agents
-    argument :customer_id, GraphQL::Types::ID, required: false, description: 'The customer of the ticket.', loads: Gql::Types::UserType, prepare: only_for_ticket_agents
+    argument :customer, Gql::Types::Input::Ticket::CustomerInputType, required: false, description: 'The customer of the ticket.', prepare: only_for_ticket_agents
     argument :organization_id, GraphQL::Types::ID, required: false, description: 'The organization of the ticket.', loads: Gql::Types::OrganizationType
     argument :priority_id, GraphQL::Types::ID, required: false, description: 'The priority of the ticket.', loads: Gql::Types::Ticket::PriorityType, prepare: only_for_ticket_agents
     argument :state_id, GraphQL::Types::ID, required: false, description: 'The state of the ticket.', loads: Gql::Types::Ticket::StateType

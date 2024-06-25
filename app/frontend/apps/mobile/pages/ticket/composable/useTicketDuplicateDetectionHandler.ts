@@ -7,12 +7,7 @@ import type {
   FormHandlerFunction,
   ReactiveFormSchemData,
 } from '#shared/components/Form/types.ts'
-
-export type TicketDuplicateDetectionItem = [
-  id: number,
-  number: string,
-  title: string,
-]
+import type { TicketDuplicateDetectionItem } from '#shared/entities/ticket/types.ts'
 
 export interface TicketDuplicateDetectionPayload {
   count: number

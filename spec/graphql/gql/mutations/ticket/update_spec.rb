@@ -51,7 +51,7 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
       title:      'Ticket Create Mutation Test',
       groupId:    gql.id(group),
       priorityId: gql.id(priority),
-      customerId: gql.id(customer),
+      customer:   { id: gql.id(customer) },
       ownerId:    gql.id(agent),
       article:    article_payload
       # pending_time: 10.minutes.from_now,
@@ -223,7 +223,7 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
     end
 
     context 'with a customer', authenticated_as: :customer do
-      let(:input_payload) { input_base_payload.tap { |h| h.delete(:customerId) } }
+      let(:input_payload) { input_base_payload.tap { |h| h.delete(:customer) } }
 
       let(:expected_response) do
         expected_base_response.merge(
@@ -240,11 +240,12 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
       end
 
       context 'when sending a different customerId' do
-        let(:input_payload) { input_base_payload.tap { |h| h[:customerId] = create(:customer).id } }
+        let(:input_payload) { input_base_payload.tap { |h| h[:customer][:id] = gql.id(create(:customer)) } }
 
-        it 'overrides the customerId' do
+        it 'fails creating a ticket with permission exception' do
           gql.execute(query, variables: variables)
-          expect(gql.result.data['ticket']).to eq(expected_response)
+          expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+          expect(gql.result.error_message).to eq('Access forbidden by Gql::Types::UserType')
         end
       end
 

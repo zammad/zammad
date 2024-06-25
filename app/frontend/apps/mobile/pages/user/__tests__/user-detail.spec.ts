@@ -6,11 +6,12 @@ import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import { setupView } from '#tests/support/mock-user.ts'
 import { waitUntil, waitUntilApisResolved } from '#tests/support/utils.ts'
 
+import { UserDocument } from '#shared/entities/user/graphql/queries/user.api.ts'
+
 import {
   defaultUser,
   mockUserDetailsApis,
 } from '#mobile/entities/user/__tests__/mocks/user-mocks.ts'
-import { UserDocument } from '#mobile/entities/user/graphql/queries/user.api.ts'
 
 describe('visiting user page', () => {
   test('view static content', async () => {

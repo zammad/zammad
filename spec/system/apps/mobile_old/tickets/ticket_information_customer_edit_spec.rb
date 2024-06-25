@@ -31,7 +31,7 @@ RSpec.describe 'Mobile > Ticket > Information > Customer Edit', app: :mobile, au
 
     click_on('Customer')
 
-    wait_for_gql('apps/mobile/entities/user/graphql/queries/user.graphql')
+    wait_for_gql('shared/entities/user/graphql/queries/user.graphql')
     wait_for_gql('shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.graphql', number: 2)
   end
 
@@ -45,7 +45,7 @@ RSpec.describe 'Mobile > Ticket > Information > Customer Edit', app: :mobile, au
 
     click_on('Show 1 more')
 
-    wait_for_gql('apps/mobile/entities/user/graphql/queries/user.graphql', number: 2)
+    wait_for_gql('shared/entities/user/graphql/queries/user.graphql', number: 2)
 
     secondary_organizations.each do |organization|
       expect(page).to have_text(organization.name)

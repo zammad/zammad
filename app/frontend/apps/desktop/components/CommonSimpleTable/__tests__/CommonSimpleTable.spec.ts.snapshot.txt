@@ -78,7 +78,7 @@
           entity="[object Object]"
           nosingleactionmode="false"
           orientation="autoVertical"
-          placement="end"
+          placement="arrowStart"
         />
         
       </td>

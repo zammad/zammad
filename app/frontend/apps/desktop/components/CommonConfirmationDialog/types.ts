@@ -6,5 +6,8 @@ export interface ConfirmationVariantOptions {
   headerTitle: string
   headerIcon?: string
   content: string
-  footerActionOptions: Pick<ActionFooterProps, 'actionLabel' | 'actionButton'>
+  footerActionOptions: Pick<
+    ActionFooterProps,
+    'actionLabel' | 'actionButton' | 'cancelLabel'
+  >
 }

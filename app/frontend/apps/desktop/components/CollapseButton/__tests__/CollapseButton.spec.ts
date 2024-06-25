@@ -12,30 +12,59 @@ describe('CollapseButton', () => {
     {
       isCollapsed: true,
       orientation: 'horizontal',
+      inverse: false,
       icon: 'arrow-bar-right',
     },
     {
       isCollapsed: false,
       orientation: 'horizontal',
+      inverse: false,
       icon: 'arrow-bar-left',
     },
     {
       isCollapsed: true,
       orientation: 'vertical',
+      inverse: false,
       icon: 'arrows-expand',
     },
     {
       isCollapsed: false,
       orientation: 'vertical',
+      inverse: false,
+      icon: 'arrows-collapse',
+    },
+    {
+      isCollapsed: true,
+      orientation: 'horizontal',
+      inverse: true,
+      icon: 'arrow-bar-left',
+    },
+    {
+      isCollapsed: false,
+      orientation: 'horizontal',
+      inverse: true,
+      icon: 'arrow-bar-right',
+    },
+    {
+      isCollapsed: true,
+      orientation: 'vertical',
+      inverse: true,
+      icon: 'arrows-expand',
+    },
+    {
+      isCollapsed: false,
+      orientation: 'vertical',
+      inverse: true,
       icon: 'arrows-collapse',
     },
   ])(
-    'displays correct LTR icon (isCollapsed: $isCollapsed, orientation: $orientation)',
-    async ({ isCollapsed, orientation, icon }) => {
+    'displays correct LTR icon (isCollapsed: $isCollapsed, orientation: $orientation, inverse: $inverse)',
+    async ({ isCollapsed, orientation, inverse, icon }) => {
       const wrapper = renderComponent(CollapseButton, {
         props: {
           ownerId: 'test',
           isCollapsed,
+          inverse,
           orientation,
         },
       })
@@ -48,26 +77,54 @@ describe('CollapseButton', () => {
     {
       isCollapsed: true,
       orientation: 'horizontal',
+      inverse: false,
       icon: 'arrow-bar-left',
     },
     {
       isCollapsed: false,
       orientation: 'horizontal',
+      inverse: false,
       icon: 'arrow-bar-right',
     },
     {
       isCollapsed: true,
       orientation: 'vertical',
+      inverse: false,
       icon: 'arrows-expand',
     },
     {
       isCollapsed: false,
       orientation: 'vertical',
+      inverse: false,
+      icon: 'arrows-collapse',
+    },
+    {
+      isCollapsed: true,
+      orientation: 'horizontal',
+      inverse: true,
+      icon: 'arrow-bar-right',
+    },
+    {
+      isCollapsed: false,
+      orientation: 'horizontal',
+      inverse: true,
+      icon: 'arrow-bar-left',
+    },
+    {
+      isCollapsed: true,
+      orientation: 'vertical',
+      inverse: true,
+      icon: 'arrows-expand',
+    },
+    {
+      isCollapsed: false,
+      orientation: 'vertical',
+      inverse: true,
       icon: 'arrows-collapse',
     },
   ])(
-    'displays correct RTL icon (isCollapsed: $isCollapsed, orientation: $orientation)',
-    async ({ isCollapsed, orientation, icon }) => {
+    'displays correct RTL icon (isCollapsed: $isCollapsed, orientation: $orientation, inverse: $inverse)',
+    async ({ isCollapsed, orientation, inverse, icon }) => {
       const locale = useLocaleStore()
 
       locale.localeData = {
@@ -78,6 +135,7 @@ describe('CollapseButton', () => {
         props: {
           ownerId: 'test',
           isCollapsed,
+          inverse,
           orientation,
         },
       })

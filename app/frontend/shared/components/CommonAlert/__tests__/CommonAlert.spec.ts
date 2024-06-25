@@ -56,26 +56,4 @@ describe('CommonAlert.vue', () => {
     expect(alert).toHaveClass('common-alert-info')
     expect(view.getByIconName('close')).toBeInTheDocument()
   })
-
-  it('renders an alert with a link', () => {
-    const view = renderComponent(CommonAlert, {
-      router: true,
-      props: {
-        link: 'https://zammad.com',
-        linkText: 'Zammad',
-      },
-      slots: {
-        default: 'Dummy',
-      },
-    })
-
-    const alert = view.getByTestId('common-alert')
-
-    expect(alert).toHaveTextContent('Dummy')
-    expect(alert).toHaveClass('common-alert-info')
-
-    const link = view.getByText('Zammad')
-    expect(link).toBeInTheDocument()
-    expect(link).toHaveAttribute('href', 'https://zammad.com')
-  })
 })
