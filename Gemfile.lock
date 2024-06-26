@@ -201,7 +201,7 @@ GEM
     diff-lcs (1.5.1)
     diffy (3.4.2)
     domain_name (0.6.20240107)
-    doorkeeper (5.7.0)
+    doorkeeper (5.7.1)
       railties (>= 5)
     dry-cli (1.0.0)
     dry-core (1.0.1)
