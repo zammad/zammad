@@ -43,3 +43,11 @@ in the related security advisory.
 
 Zammad does not offer financial compensation through a
 security bounty program.
+
+## Process Overview
+
+- Potential security issues can be reported via security@zammad.com.
+- We evaluate them and provide timely feedback to the reporter.
+- There may be security releases created if needed, e.g. https://zammad.com/en/releases/6-3-1.
+- We publish security advisories for every acknowledged issue, like https://zammad.com/en/advisories/zaa-2024-04.
+- After their publication, we request CVE identifiers to be assigned to the advisories.
