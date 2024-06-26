@@ -1,30 +1,21 @@
 #
-# Test the migration from the previous `stable` branch to `develop`.
+# Test the migration from the `stable-6.0` branch to `develop`.
 #
 .template_migration:
   stage: test
-  rules:
-    - if: $CI_COMMIT_TAG
-      when: never
-    - if: $CI_COMMIT_REF_NAME =~ /^stable/
-      when: never
-    - if: $CI_COMMIT_REF_NAME =~ /^(private|cherry-pick-)/
-      when: manual
-      allow_failure: true
-    - when: on_success
   before_script: []
   script:
     # First, checkout stable and set it up.
     - git fetch --unshallow
-    - git checkout stable
+    - git checkout stable-6.0
     - !reference [.scripts, source_rvm]
-    # - rvm use 3.2.3
+    - rvm use 3.1.3
     - !reference [.scripts, bundle_install]
     - !reference [.scripts, configure_environment]
     - !reference [.scripts, zammad_db_init]
     # Then, switch to the current commit, migrate to it and run a few selected tests.
     - git checkout $CI_COMMIT_SHA
-    # - rvm use 3.2.4
+    - rvm use 3.2.4
     - !reference [.scripts, bundle_install]
     # Force redis usage, even if it was disabled by the initial configure_environment script of stable.
     - export REDIS_URL=redis://redis
