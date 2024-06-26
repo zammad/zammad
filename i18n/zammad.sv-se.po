@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-13 01:08+0000\n"
+"PO-Revision-Date: 2024-06-26 08:21+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/sv/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.6\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1925,10 +1925,8 @@ msgid "Article - visibility confirmation dialog"
 msgstr "Arikel - bekräftadialog för synlighet"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
-#, fuzzy
-#| msgid "Article Type"
 msgid "Article > Text (HTML)"
-msgstr "Artikeltyp"
+msgstr "Artikel > Text (HTML)"
 
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
@@ -6820,15 +6818,6 @@ msgstr "T ex nyligen ändrade ärenden, användare eller organisationer."
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:10
 msgid "For more details, please check out our online documentation %l."
 msgstr "För mer detaljer, se vår dokumentation online %l."
-
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
-msgid ""
-"For privacy reasons, Zammad has blocked remote content in this message. You "
-"can retrieve it from the original formatting."
-msgstr ""
-"Av integritetsskäl har Zammad blockerat fjärrinnehåll i detta meddelande. Du "
-"kan hämta det från den ursprungliga formateringen."
 
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco:1
 msgid ""
@@ -15211,6 +15200,14 @@ msgstr ""
 "meddelandet nedan och öppna det via en e-postklient om du fortfarande vill "
 "se det."
 
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
+msgid ""
+"This message contains content hosted by an external source. The content has "
+"been blocked by Zammad, but you can retrieve it by downloading the original "
+"formatting."
+msgstr ""
+
 #: lib/secure_mailing/smime/incoming.rb:86
 msgid "This message was not signed by its sender."
 msgstr "Detta meddelande har inte signerats av avsändaren."
@@ -19309,6 +19306,13 @@ msgstr "... av hela textfältet"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Väntetid idag"
+
+#~ msgid ""
+#~ "For privacy reasons, Zammad has blocked remote content in this message. "
+#~ "You can retrieve it from the original formatting."
+#~ msgstr ""
+#~ "Av integritetsskäl har Zammad blockerat fjärrinnehåll i detta meddelande. "
+#~ "Du kan hämta det från den ursprungliga formateringen."
 
 #~ msgid "To see the updated translation, please reload your browser."
 #~ msgstr "För att se den uppdaterade översättningen, ladda om din webbläsare."

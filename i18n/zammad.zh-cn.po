@@ -7323,13 +7323,6 @@ msgstr "例如: 最近更改的工單，使用者或機構"
 msgid "For more details, please check out our online documentation %l."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
-msgid ""
-"For privacy reasons, Zammad has blocked remote content in this message. You "
-"can retrieve it from the original formatting."
-msgstr ""
-
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco:1
 #, fuzzy
 #| msgid ""
@@ -16524,6 +16517,14 @@ msgid ""
 msgstr ""
 "由于HTML处理问题，无法显示此消息。如果您仍然希望查看下面的原始消息，并通过电"
 "子邮件客户端通过电子邮件客户端打开它。"
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
+msgid ""
+"This message contains content hosted by an external source. The content has "
+"been blocked by Zammad, but you can retrieve it by downloading the original "
+"formatting."
+msgstr ""
 
 #: lib/secure_mailing/smime/incoming.rb:86
 msgid "This message was not signed by its sender."

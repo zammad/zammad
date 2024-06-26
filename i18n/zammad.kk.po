@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-13 01:08+0000\n"
+"PO-Revision-Date: 2024-06-26 08:21+0000\n"
 "Last-Translator: Darkey Zhanbolat <darzhankz@gmail.com>\n"
 "Language-Team: Kazakh <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/kk/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.6\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -179,6 +179,19 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Тұтынушымен жаңартылған #{current_user.longname} в "
+"#{ticket.updated_at}_\n"
+"<% if @objects[:changes].present? %>\n"
+"  <% @objects[:changes].each do |key, value| %>\n"
+"  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
+"  <% end %>\n"
+"<% end %>\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -194,6 +207,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Жоғарылату #{ticket.escalation_at}_\n"
+"Билет (#{ticket.title}) \"#{ticket.customer.longname}\"-ден \"#{ticket."
+"escalation_at}\"-қа өтеді!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/mailer/user_auth_provider/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -3665,7 +3687,7 @@ msgstr ""
 #: db/seeds/object_manager_attributes.rb:60 db/seeds/roles.rb:23
 #: db/seeds/ticket_article_senders.rb:4 lib/excel_sheet/ticket.rb:29
 msgid "Customer"
-msgstr "Өтініш беруші"
+msgstr "Тұтынушы"
 
 #: app/assets/javascripts/app/controllers/chat.coffee:125
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco:4
@@ -6270,13 +6292,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:10
 msgid "For more details, please check out our online documentation %l."
-msgstr ""
-
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
-msgid ""
-"For privacy reasons, Zammad has blocked remote content in this message. You "
-"can retrieve it from the original formatting."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco:1
@@ -14266,6 +14281,14 @@ msgid ""
 "it."
 msgstr ""
 
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
+msgid ""
+"This message contains content hosted by an external source. The content has "
+"been blocked by Zammad, but you can retrieve it by downloading the original "
+"formatting."
+msgstr ""
+
 #: lib/secure_mailing/smime/incoming.rb:86
 msgid "This message was not signed by its sender."
 msgstr ""
@@ -17803,33 +17826,33 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "set fixed to"
-msgstr ""
+msgstr "тұрақты орнату"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:164
 msgid "set mandatory"
-msgstr ""
+msgstr "міндетті түрге келтіру"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
 msgid "set optional"
-msgstr ""
+msgstr "қосымша орнату"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
 msgid "set readonly"
-msgstr ""
+msgstr "тек оқуға арналған"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee:14
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:41
 msgid "set to internal"
-msgstr ""
+msgstr "жабық күйге көшіру"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee:8
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:38
 msgid "set to public"
-msgstr ""
+msgstr "жалпыға ортақ"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:40
 msgid "show"
-msgstr ""
+msgstr "көрсету"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:10
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco:23
@@ -17838,84 +17861,84 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/organization.jst.eco:32
 #: app/assets/javascripts/app/views/widget/user.jst.eco:18
 msgid "show more"
-msgstr ""
+msgstr "Көбірек көрсет"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:110
 msgid "shown"
-msgstr ""
+msgstr "көрсетілген"
 
 #: db/seeds/settings.rb:5015
 msgid "sipgate.io Token"
-msgstr ""
+msgstr "sipgate.io токені"
 
 #: db/seeds/settings.rb:5049
 msgid "sipgate.io alternative FQDN"
-msgstr ""
+msgstr "Балама толық білікті домен атауы (FQDN) sipgate.io"
 
 #: db/seeds/settings.rb:5036
 msgid "sipgate.io config"
-msgstr ""
+msgstr "sipgate.io конфигурациясы"
 
 #: db/seeds/settings.rb:4987
 msgid "sipgate.io integration"
-msgstr ""
+msgstr "sipgate.io мен интеграцияланған"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:4
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:4
 msgid "skipped"
-msgstr ""
+msgstr "өткізіп жіберілген"
 
 #: db/seeds/ticket_article_types.rb:4
 msgid "sms"
-msgstr ""
+msgstr "смс"
 
 #: app/models/object_manager/attribute.rb:550
 msgid "spaces are not allowed"
-msgstr ""
+msgstr "бос орындарға рұқсат етілмейді"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:384
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:544
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:638
 msgid "specific organization"
-msgstr ""
+msgstr "арнайы ұйым"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:376
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:538
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:633
 msgid "specific user"
-msgstr ""
+msgstr "нақты пайдаланушы"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/split.coffee:7
 msgid "split"
-msgstr ""
+msgstr "бөлу"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
 msgid "starts with"
-msgstr ""
+msgstr "-ден басталады"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "starts with one of"
-msgstr ""
+msgstr "біреуінен басталады"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:16
 msgid "support@example.com"
-msgstr ""
+msgstr "support@example.com"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:268
 msgid "system"
-msgstr ""
+msgstr "жүйе"
 
 #: db/seeds/ticket_article_types.rb:14
 msgid "telegram personal-message"
-msgstr ""
+msgstr "телеграмдағы жеке хабарлама"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
 msgid "this ticket was merged into ticket %s"
-msgstr ""
+msgstr "бұл билет %s билетіне біріктірілді"
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue:53
 #: app/frontend/apps/mobile/components/User/UserItem.vue:29
@@ -17925,34 +17948,34 @@ msgstr "билет"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:114
 msgid "ticket %s was merged into this ticket"
-msgstr ""
+msgstr "билет %s осы билетпен біріктірілді"
 
 #: lib/calendar_subscriptions/tickets.rb:190
 msgid "ticket escalation"
-msgstr ""
+msgstr "билеттің өсуі"
 
 #: db/seeds/settings.rb:1131
 msgid "ticket.agent"
-msgstr ""
+msgstr "билет.агент"
 
 #: db/seeds/settings.rb:1139
 msgid "ticket.customer"
-msgstr ""
+msgstr "билет.тұтынушы"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:436
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "till (relative)"
-msgstr ""
+msgstr "дейін (туыс)"
 
 #: db/seeds/settings.rb:218
 msgid "timestamp - e. g. \"2018-08-30 14:30\""
-msgstr ""
+msgstr "уақыт белгісі - мысалы «30.08.2018 14:30»"
 
 #: app/views/knowledge_base/public/not_found.html.erb:8
 msgid "to go to the homepage."
-msgstr ""
+msgstr "басты бетке өту үшін."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
@@ -17961,46 +17984,46 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/chat.coffee:757
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:67
 msgid "today"
-msgstr ""
+msgstr "бүгін"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:101
 msgid "trigger '%s' was performed because pending reminder was reached"
-msgstr ""
+msgstr "триггерлері орындалды, себебі күтудегі еске салғышқа жетті"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:103
 msgid "trigger '%s' was performed because ticket was escalated"
-msgstr ""
+msgstr "триггері орындалды, себебі билет көтерілді"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:105
 msgid "trigger '%s' was performed because ticket will escalate soon"
-msgstr ""
+msgstr "триггерлері орындалды, себебі билет жақында көтеріледі"
 
 #: app/assets/javascripts/app/views/password/reset_failed.jst.eco:6
 msgid "try again"
-msgstr ""
+msgstr "қайтадан байқап көріңіз"
 
 #: db/seeds/ticket_article_types.rb:9
 msgid "twitter direct-message"
-msgstr ""
+msgstr "twitter тікелей хабарламасы"
 
 #: db/seeds/ticket_article_types.rb:8
 msgid "twitter status"
-msgstr ""
+msgstr "twitter күйі"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:379
 msgid "unassign user"
-msgstr ""
+msgstr "пайдаланушы тағайындаудан бас тарту"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
 msgid "unset readonly"
-msgstr ""
+msgstr "тек оқу үшін орнатылмаған"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:4
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:4
 msgid "untouched"
-msgstr ""
+msgstr "бүтін"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:86
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:113
@@ -18009,41 +18032,41 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:4
 msgid "updated"
-msgstr ""
+msgstr "жаңартылды"
 
 #: db/seeds/ticket_article_types.rb:13
 msgid "web"
-msgstr ""
+msgstr "web"
 
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:15
 msgid "welcome message"
-msgstr ""
+msgstr "сәлемдесу хабарламасы"
 
 #: db/seeds/ticket_article_types.rb:16
 msgid "whatsapp message"
-msgstr ""
+msgstr "whatsapp хабарламасы"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:71
 msgid "will be created"
-msgstr ""
+msgstr "құрылатын болады"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:73
 msgid "will be deleted"
-msgstr ""
+msgstr "жойылады"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:434
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within last (relative)"
-msgstr ""
+msgstr "соңғы кезеңде (салыстырмалы түрде)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:433
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within next (relative)"
-msgstr ""
+msgstr "Келесі (салыстырмалы түрде) ішінде"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee:9
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:22
@@ -18056,40 +18079,44 @@ msgstr ""
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:14
 #: db/seeds/object_manager_attributes.rb:1301 db/seeds/settings.rb:589
 msgid "yes"
-msgstr ""
+msgstr "иә"
 
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco:6
 msgid ""
 "|Increment| increases the ticket number. The SystemID and the counter are "
 "used with \"SystemID.Counter\" format (e.g. 1010138, 1010139)."
 msgstr ""
+"|Өсіру| билет номерін өсіреді. Жүйе идентификаторы (SystemID) мен есептегіш "
+"«SystemID.Counter» форматында пайдаланылады (мысалы, 1010138, 1010139)."
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco:6
 msgid "|Left| means |[Ticket#12345] Some Subject|"
-msgstr ""
+msgstr "|Сол жақта| білдіреді |[Билет#12345] Хат тақырыбы|"
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco:7
 msgid ""
 "|None| means |Some Subject| (without ticket number), in which case it "
 "recognizes follow-ups based on email headers."
 msgstr ""
+"| Ештеңе | Мәні | Қандайда бір тақырып | (билет номерінсіз), бұл жағдайда "
+"бақылау электронды хаттың тақырыбы негізінде жүзеге асады."
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco:5
 msgid "|Right| means |Some Subject [Ticket#12345]|"
-msgstr ""
+msgstr "|Оң жақта| білдіреді |Хат тақырыбы [Билет #12345]|"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:324
 msgid "…add object link URL"
-msgstr ""
+msgstr "... объектіге URL-сілтемені қосыңыз"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:318
 msgid "…add object title"
-msgstr ""
+msgstr "...объектінің атауын беріңіз"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:512
 msgid "…of whole text area"
-msgstr ""
+msgstr "...барлық текстік аумақты"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
-msgstr ""
+msgstr "∅ Күту уақыты бүгін"

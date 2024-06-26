@@ -6803,15 +6803,6 @@ msgstr "На пример, недавно измењени тикети, кор�
 msgid "For more details, please check out our online documentation %l."
 msgstr "За више детаља, молимо погледајте нашу онлајн документацију %l."
 
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
-msgid ""
-"For privacy reasons, Zammad has blocked remote content in this message. You "
-"can retrieve it from the original formatting."
-msgstr ""
-"Ради заштите ваше приватности, Zammad је блокирао удаљени садржај у овој "
-"поруци. Можете га прегледати преузимањем оригиналног формата."
-
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco:1
 msgid ""
 "For security reasons, the API token is shown only once. You'll need to save "
@@ -15188,6 +15179,14 @@ msgstr ""
 "изворну поруку испод и отворите је у имејл клијенту ако и даље желите да је "
 "прегледате."
 
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
+msgid ""
+"This message contains content hosted by an external source. The content has "
+"been blocked by Zammad, but you can retrieve it by downloading the original "
+"formatting."
+msgstr ""
+
 #: lib/secure_mailing/smime/incoming.rb:86
 msgid "This message was not signed by its sender."
 msgstr "Ова порука није потписана од стране пошиљаоца."
@@ -19278,6 +19277,13 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid ""
+#~ "For privacy reasons, Zammad has blocked remote content in this message. "
+#~ "You can retrieve it from the original formatting."
+#~ msgstr ""
+#~ "Ради заштите ваше приватности, Zammad је блокирао удаљени садржај у овој "
+#~ "поруци. Можете га прегледати преузимањем оригиналног формата."
 
 #~ msgid "To see the updated translation, please reload your browser."
 #~ msgstr "Да бисте видели нови превод, молимо освежите ваш претраживач."

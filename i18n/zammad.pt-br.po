@@ -6876,13 +6876,6 @@ msgstr ""
 msgid "For more details, please check out our online documentation %l."
 msgstr "Para mais detalhes, por favor, consulte nossa documentação online %l."
 
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
-msgid ""
-"For privacy reasons, Zammad has blocked remote content in this message. You "
-"can retrieve it from the original formatting."
-msgstr ""
-
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco:1
 msgid ""
 "For security reasons, the API token is shown only once. You'll need to save "
@@ -15347,6 +15340,14 @@ msgstr ""
 "Esta mensagem não pode ser exibida devido a problemas de processamento de "
 "HTML. Faça o download da mensagem bruta abaixo e abra-a por meio de um "
 "cliente de e-mail, se ainda desejar visualizá-la."
+
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
+msgid ""
+"This message contains content hosted by an external source. The content has "
+"been blocked by Zammad, but you can retrieve it by downloading the original "
+"formatting."
+msgstr ""
 
 #: lib/secure_mailing/smime/incoming.rb:86
 msgid "This message was not signed by its sender."
