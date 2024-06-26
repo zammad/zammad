@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-13 01:05+0000\n"
+"PO-Revision-Date: 2024-06-26 08:21+0000\n"
 "Last-Translator: Darkey Zhanbolat <darzhankz@gmail.com>\n"
 "Language-Team: Kazakh <https://translations.zammad.org/projects/zammad/"
 "zammad-development/kk/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.6\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -179,6 +179,19 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Тұтынушымен жаңартылған #{current_user.longname} в "
+"#{ticket.updated_at}_\n"
+"<% if @objects[:changes].present? %>\n"
+"  <% @objects[:changes].each do |key, value| %>\n"
+"  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
+"  <% end %>\n"
+"<% end %>\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -194,6 +207,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Жоғарылату #{ticket.escalation_at}_\n"
+"Билет (#{ticket.title}) \"#{ticket.customer.longname}\"-ден \"#{ticket."
+"escalation_at}\"-қа өтеді!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/mailer/user_auth_provider/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -585,11 +607,11 @@ msgstr ""
 msgid "%{model} can have full or granular access to group"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:572
+#: app/models/object_manager/attribute.rb:570
 msgid "%{name} already exists"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:561
+#: app/models/object_manager/attribute.rb:559
 msgid "%{name} is a reserved word"
 msgstr ""
 
@@ -1189,7 +1211,7 @@ msgstr ""
 msgid "Add a data privacy deletion task"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:277
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:276
 msgid "Add a message"
 msgstr ""
 
@@ -1280,7 +1302,7 @@ msgstr ""
 msgid "Additional follow-up detection"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:212
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:211
 msgid "Additional information"
 msgstr ""
 
@@ -1697,6 +1719,10 @@ msgstr ""
 msgid "Apply Shared Draft"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue:68
+msgid "Apply Template"
+msgstr ""
+
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:10
 msgid "Apply current defaults to all agents"
 msgstr ""
@@ -1807,7 +1833,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:44
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:45
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:514
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:417
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:223
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:51
 msgid "Are you sure? You have unsaved changes that will get lost."
@@ -1943,6 +1969,7 @@ msgid "Attach files"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
 msgid "Attached"
 msgstr ""
 
@@ -1952,8 +1979,10 @@ msgid "Attached Files"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:185
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:317
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
 msgid "Attachment"
 msgstr "Тіркеме"
 
@@ -2441,9 +2470,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:149
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:106
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:160
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:244
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:37
 #: db/seeds/object_manager_attributes.rb:508
 msgid "CC"
@@ -2582,7 +2612,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
-#: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:165
+#: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:259
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:284
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:227
@@ -2608,6 +2638,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:119
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:350
 msgid "Cancel & Go Back"
 msgstr ""
 
@@ -3097,7 +3128,7 @@ msgstr ""
 msgid "Closing time"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:71
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:75
 msgid "Collapse this element"
 msgstr ""
 
@@ -3371,7 +3402,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:49
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:53
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:142
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:629
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:540
 msgid "Continue"
 msgstr ""
 
@@ -3533,7 +3564,8 @@ msgstr "Мемлекет"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:577
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:365
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr ""
 
@@ -3588,7 +3620,7 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:65
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:577
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create Ticket"
 msgstr ""
 
@@ -3662,7 +3694,7 @@ msgstr ""
 msgid "Create tag"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:629
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:540
 msgid "Create ticket"
 msgstr ""
 
@@ -3756,7 +3788,7 @@ msgstr ""
 msgid "Created by"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:550
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:460
 msgid "Creating new tickets via web is disabled."
 msgstr ""
 
@@ -3849,12 +3881,14 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:9
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:11
 #: app/controllers/time_accountings_controller.rb:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:52
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/customer.ts:10
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts:6
 #: app/graphql/gql/types/overview_type.rb:61
 #: db/seeds/object_manager_attributes.rb:60 db/seeds/roles.rb:23
 #: db/seeds/ticket_article_senders.rb:4 lib/excel_sheet/ticket.rb:29
 msgid "Customer"
-msgstr "Өтініш беруші"
+msgstr "Тұтынушы"
 
 #: app/assets/javascripts/app/controllers/chat.coffee:125
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco:4
@@ -5151,6 +5185,10 @@ msgstr ""
 msgid "Did you know? You can help translating %s at:"
 msgstr ""
 
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
+msgid "Did you plan to include attachments with this message?"
+msgstr ""
+
 #: db/seeds/settings.rb:2048
 msgid "Digit required"
 msgstr ""
@@ -5205,6 +5243,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:347
 msgid "Discard Changes"
 msgstr ""
 
@@ -5219,7 +5258,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:81
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:47
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:516
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:419
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:225
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:53
 msgid "Discard changes"
@@ -5450,20 +5489,21 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:11
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:157
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:76
-#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:43
-#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:46
+#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:53
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:56
 msgid "Edit"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:16
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:26
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:89
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:39
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:95
 msgid "Edit Customer"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee:21
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee:11
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:78
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:88
 msgid "Edit Organization"
 msgstr ""
 
@@ -5872,10 +5912,12 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
 msgid "Enclosed"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
 msgid "Enclosure"
 msgstr ""
 
@@ -6278,7 +6320,7 @@ msgstr ""
 msgid "Existing tickets (open)"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:70
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:74
 msgid "Expand this element"
 msgstr ""
 
@@ -6590,13 +6632,6 @@ msgstr ""
 msgid "For more details, please check out our online documentation %l."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
-msgid ""
-"For privacy reasons, Zammad has blocked remote content in this message. You "
-"can retrieve it from the original formatting."
-msgstr ""
-
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco:1
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:142
 msgid ""
@@ -6604,7 +6639,7 @@ msgid ""
 "it somewhere secure before continuing."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:549
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:459
 #: app/frontend/shared/errors/useErrorHandler.ts:29
 #: app/frontend/shared/router/guards/before/permission.ts:37
 msgid "Forbidden"
@@ -7032,6 +7067,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:53
 msgid "Group Filter"
+msgstr ""
+
+#: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:23
+msgid "Group has no email address."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:535
@@ -9693,6 +9732,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:68
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
+#: app/frontend/apps/desktop/pages/ticket/routes.ts:13
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:90
 msgid "New Ticket"
 msgstr ""
 
@@ -9979,7 +10020,7 @@ msgstr ""
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:337
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:512
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:100
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:101
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:402
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:348
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue:98
@@ -10039,6 +10080,10 @@ msgstr ""
 
 #: app/models/channel/email_parser.rb:108
 msgid "No x-zammad-session-user-id, no sender set!"
+msgstr ""
+
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
+msgid "No, thanks"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
@@ -10490,6 +10535,7 @@ msgid "Open ticket indicator"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:38
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerButton.vue:55
 msgid "Open tickets"
 msgstr ""
 
@@ -10566,8 +10612,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco:9
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:12
 #: app/controllers/time_accountings_controller.rb:99
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganizationContent.vue:23
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:10
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
-#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:41
+#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
 #: app/graphql/gql/types/overview_type.rb:62
 #: db/seeds/object_manager_attributes.rb:94 db/seeds/settings.rb:140
@@ -10598,11 +10646,12 @@ msgstr ""
 msgid "Organization could not be updated."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:71
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:81
 msgid "Organization tickets"
 msgstr ""
 
-#: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts:34
+#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:26
 msgid ""
 "Organization with specified ID was not found. Try checking the URL for "
 "errors."
@@ -10694,8 +10743,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:133
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:141
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:22
-#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:24
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:21
 msgid "Outbound Call"
+msgstr ""
+
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:22
+msgid "Outbound Call: %s"
 msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco:16
@@ -11511,8 +11564,12 @@ msgid "Reauthenticate"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:18
-#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:18
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:14
 msgid "Received Call"
+msgstr ""
+
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:15
+msgid "Received Call: %s"
 msgstr ""
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco:5
@@ -11946,7 +12003,7 @@ msgstr ""
 msgid "Resize side panel"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:106
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:128
 msgid "Resize sidebar"
 msgstr ""
 
@@ -12443,8 +12500,9 @@ msgstr ""
 msgid "Search…"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:97
-#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:130
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:85
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:103
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:136
 #: db/seeds/object_manager_attributes.rb:962
 msgid "Secondary organizations"
 msgstr ""
@@ -12464,9 +12522,10 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:159
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:149
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:183
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:286
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
 #: db/seeds/permissions.rb:197
 msgid "Security"
 msgstr ""
@@ -12633,8 +12692,12 @@ msgid "Send"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:26
-#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:30
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:28
 msgid "Send Email"
+msgstr ""
+
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:29
+msgid "Send Email: %s"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:120
@@ -12955,6 +13018,7 @@ msgstr ""
 msgid "Show"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonShowMoreButton/CommonShowMoreButton.vue:21
 #: app/frontend/apps/mobile/components/CommonShowMoreButton/CommonShowMoreButton.vue:24
 msgid "Show %s more"
 msgstr ""
@@ -13393,7 +13457,7 @@ msgstr ""
 msgid "Start typing to search or enter a phone number…"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:94
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:95
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:48
 msgid "Start typing to search or enter an email address…"
 msgstr ""
@@ -14238,6 +14302,10 @@ msgstr ""
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
+#: lib/email_address_validation.rb:34
+msgid "The email address is invalid."
+msgstr ""
+
 #: app/services/service/auth/send_admin_token.rb:39
 #: app/services/service/user/password_reset/send.rb:37
 #: app/services/service/user/password_reset/update.rb:42
@@ -15005,7 +15073,7 @@ msgstr ""
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:66
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:76
 msgid "Their tickets"
 msgstr ""
 
@@ -15394,6 +15462,14 @@ msgid ""
 "it."
 msgstr ""
 
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
+msgid ""
+"This message contains content hosted by an external source. The content has "
+"been blocked by Zammad, but you can retrieve it by downloading the original "
+"formatting."
+msgstr ""
+
 #: lib/secure_mailing/smime/incoming.rb:86
 msgid "This message was not signed by its sender."
 msgstr ""
@@ -15688,7 +15764,7 @@ msgstr ""
 msgid "Ticket actions"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:386
+#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:58
 msgid "Ticket could not be created."
 msgstr ""
 
@@ -15714,7 +15790,7 @@ msgstr ""
 msgid "Ticket has %s viewers"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:370
+#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:40
 msgid "Ticket has been created successfully."
 msgstr ""
 
@@ -15861,6 +15937,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:8
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:115
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts:9
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:51
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue:173
@@ -16890,7 +16967,7 @@ msgstr ""
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:122
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:77
 #: app/frontend/apps/mobile/pages/user/routes.ts:7
-#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:44
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:32
 msgid "User"
 msgstr "Пайдаланушы"
 
@@ -16942,7 +17019,7 @@ msgid ""
 "permissions."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LayoutSidebarFooterMenu.vue:56
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LayoutSidebarFooterMenu.vue:59
 msgid "User menu"
 msgstr ""
 
@@ -16950,7 +17027,8 @@ msgstr ""
 msgid "User successfully unlocked!"
 msgstr ""
 
-#: app/frontend/apps/mobile/entities/user/composables/useUserDetail.ts:32
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:32
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:32
 msgid "User with specified ID was not found. Try checking the URL for errors."
 msgstr ""
 
@@ -17500,6 +17578,10 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
+msgid "Yes, add attachments now"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee:4
 msgid "Yes, start real import."
 msgstr ""
@@ -17697,7 +17779,8 @@ msgstr ""
 msgid "You have insufficient permissions to mention other users."
 msgstr ""
 
-#: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts:37
+#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:32
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:28
 msgid "You have insufficient rights to view this organization."
 msgstr ""
 
@@ -17705,7 +17788,8 @@ msgstr ""
 msgid "You have insufficient rights to view this ticket."
 msgstr ""
 
-#: app/frontend/apps/mobile/entities/user/composables/useUserDetail.ts:34
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:34
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:34
 msgid "You have insufficient rights to view this user."
 msgstr ""
 
@@ -18067,19 +18151,21 @@ msgstr ""
 msgid "at"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:556
+#: app/models/object_manager/attribute.rb:554
 msgid "at least one letter is required"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
 msgid "attached"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 msgid "attachment"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:585
+#: app/models/object_manager/attribute.rb:583
 msgid "attribute is not editable"
 msgstr ""
 
@@ -18113,11 +18199,11 @@ msgstr ""
 msgid "camera,image,photo,picture"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:632
+#: app/models/object_manager/attribute.rb:630
 msgid "can only be created on postgresql databases"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:625
+#: app/models/object_manager/attribute.rb:623
 msgid ""
 "can't be altered after creation (you can delete the attribute and create "
 "another with the desired value)"
@@ -18129,7 +18215,7 @@ msgstr ""
 msgid "can't be empty"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:547
+#: app/models/object_manager/attribute.rb:545
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr ""
 
@@ -18163,6 +18249,12 @@ msgstr ""
 #: db/seeds/ticket_state_types.rb:7 db/seeds/ticket_states.rb:23
 msgid "closed"
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:130
+#, fuzzy
+#| msgid "ticket"
+msgid "closed tickets"
+msgstr "билет"
 
 #: app/assets/javascripts/app/controllers/cti.coffee:157
 msgid "connected"
@@ -18385,10 +18477,12 @@ msgid "email sent to '%s'"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
 msgid "enclosed"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
 msgid "enclosure"
 msgstr ""
 
@@ -18938,7 +19032,7 @@ msgstr ""
 msgid "now"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:553
+#: app/models/object_manager/attribute.rb:551
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr ""
 
@@ -18946,6 +19040,12 @@ msgstr ""
 #: db/seeds/ticket_state_types.rb:4 db/seeds/ticket_states.rb:11
 msgid "open"
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:123
+#, fuzzy
+#| msgid "ticket"
+msgid "open tickets"
+msgstr "билет"
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:279
 msgid "optional"
@@ -19100,33 +19200,33 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "set fixed to"
-msgstr ""
+msgstr "тұрақты орнату"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:164
 msgid "set mandatory"
-msgstr ""
+msgstr "міндетті түрге келтіру"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
 msgid "set optional"
-msgstr ""
+msgstr "қосымша орнату"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
 msgid "set readonly"
-msgstr ""
+msgstr "тек оқуға арналған"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee:14
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:41
 msgid "set to internal"
-msgstr ""
+msgstr "жабық күйге көшіру"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee:8
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:38
 msgid "set to public"
-msgstr ""
+msgstr "жалпыға ортақ"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:40
 msgid "show"
-msgstr ""
+msgstr "көрсету"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:10
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco:23
@@ -19135,68 +19235,68 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/organization.jst.eco:32
 #: app/assets/javascripts/app/views/widget/user.jst.eco:18
 msgid "show more"
-msgstr ""
+msgstr "Көбірек көрсет"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:110
 msgid "shown"
-msgstr ""
+msgstr "көрсетілген"
 
 #: db/seeds/settings.rb:5015
 msgid "sipgate.io Token"
-msgstr ""
+msgstr "sipgate.io токені"
 
 #: db/seeds/settings.rb:5049
 msgid "sipgate.io alternative FQDN"
-msgstr ""
+msgstr "Балама толық білікті домен атауы (FQDN) sipgate.io"
 
 #: db/seeds/settings.rb:5036
 msgid "sipgate.io config"
-msgstr ""
+msgstr "sipgate.io конфигурациясы"
 
 #: db/seeds/settings.rb:4987
 msgid "sipgate.io integration"
-msgstr ""
+msgstr "sipgate.io мен интеграцияланған"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:4
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:4
 msgid "skipped"
-msgstr ""
+msgstr "өткізіп жіберілген"
 
 #: db/seeds/ticket_article_types.rb:4
 msgid "sms"
-msgstr ""
+msgstr "смс"
 
-#: app/models/object_manager/attribute.rb:550
+#: app/models/object_manager/attribute.rb:548
 msgid "spaces are not allowed"
-msgstr ""
+msgstr "бос орындарға рұқсат етілмейді"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:384
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:544
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:638
 msgid "specific organization"
-msgstr ""
+msgstr "арнайы ұйым"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:376
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:538
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:633
 msgid "specific user"
-msgstr ""
+msgstr "нақты пайдаланушы"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/split.coffee:7
 msgid "split"
-msgstr ""
+msgstr "бөлу"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
 msgid "starts with"
-msgstr ""
+msgstr "-ден басталады"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "starts with one of"
-msgstr ""
+msgstr "біреуінен басталады"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts:24
 msgid "subscription,calendars,ticket,ical"
@@ -19204,15 +19304,15 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:16
 msgid "support@example.com"
-msgstr ""
+msgstr "support@example.com"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:268
 msgid "system"
-msgstr ""
+msgstr "жүйе"
 
 #: db/seeds/ticket_article_types.rb:14
 msgid "telegram personal-message"
-msgstr ""
+msgstr "телеграмдағы жеке хабарлама"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:25
 msgid "theme,color,style,dark mode,night mode,light mode"
@@ -19220,7 +19320,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
 msgid "this ticket was merged into ticket %s"
-msgstr ""
+msgstr "бұл билет %s билетіне біріктірілді"
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue:56
 #: app/frontend/apps/mobile/components/User/UserItem.vue:32
@@ -19229,30 +19329,30 @@ msgstr "билет"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:114
 msgid "ticket %s was merged into this ticket"
-msgstr ""
+msgstr "билет %s осы билетпен біріктірілді"
 
 #: db/seeds/settings.rb:1131
 msgid "ticket.agent"
-msgstr ""
+msgstr "билет.агент"
 
 #: db/seeds/settings.rb:1139
 msgid "ticket.customer"
-msgstr ""
+msgstr "билет.тұтынушы"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:436
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "till (relative)"
-msgstr ""
+msgstr "дейін (туыс)"
 
 #: db/seeds/settings.rb:218
 msgid "timestamp - e. g. \"2018-08-30 14:30\""
-msgstr ""
+msgstr "уақыт белгісі - мысалы «30.08.2018 14:30»"
 
 #: app/views/knowledge_base/public/not_found.html.erb:8
 msgid "to go to the homepage."
-msgstr ""
+msgstr "басты бетке өту үшін."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
@@ -19261,7 +19361,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/chat.coffee:757
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:67
 msgid "today"
-msgstr ""
+msgstr "бүгін"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:26
 msgid "token access,token,api,access token,application"
@@ -19273,27 +19373,27 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:101
 msgid "trigger '%s' was performed because pending reminder was reached"
-msgstr ""
+msgstr "триггерлері орындалды, себебі күтудегі еске салғышқа жетті"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:103
 msgid "trigger '%s' was performed because ticket was escalated"
-msgstr ""
+msgstr "триггері орындалды, себебі билет көтерілді"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:105
 msgid "trigger '%s' was performed because ticket will escalate soon"
-msgstr ""
+msgstr "триггерлері орындалды, себебі билет жақында көтеріледі"
 
 #: app/assets/javascripts/app/views/password/reset_failed.jst.eco:6
 msgid "try again"
-msgstr ""
+msgstr "қайтадан байқап көріңіз"
 
 #: db/seeds/ticket_article_types.rb:9
 msgid "twitter direct-message"
-msgstr ""
+msgstr "twitter тікелей хабарламасы"
 
 #: db/seeds/ticket_article_types.rb:8
 msgid "twitter status"
-msgstr ""
+msgstr "twitter күйі"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:26
 msgid "twofactor,2fa,security key,passkey,authenticator app"
@@ -19301,18 +19401,18 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:379
 msgid "unassign user"
-msgstr ""
+msgstr "пайдаланушы тағайындаудан бас тарту"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
 msgid "unset readonly"
-msgstr ""
+msgstr "тек оқу үшін орнатылмаған"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:4
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:4
 msgid "untouched"
-msgstr ""
+msgstr "бүтін"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:86
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:113
@@ -19321,7 +19421,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:4
 msgid "updated"
-msgstr ""
+msgstr "жаңартылды"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts:25
 msgid "vacation,holiday,replacement,time off"
@@ -19329,37 +19429,37 @@ msgstr ""
 
 #: db/seeds/ticket_article_types.rb:13
 msgid "web"
-msgstr ""
+msgstr "web"
 
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:15
 msgid "welcome message"
-msgstr ""
+msgstr "сәлемдесу хабарламасы"
 
 #: db/seeds/ticket_article_types.rb:16
 msgid "whatsapp message"
-msgstr ""
+msgstr "whatsapp хабарламасы"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:71
 msgid "will be created"
-msgstr ""
+msgstr "құрылатын болады"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:73
 msgid "will be deleted"
-msgstr ""
+msgstr "жойылады"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:434
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within last (relative)"
-msgstr ""
+msgstr "соңғы кезеңде (салыстырмалы түрде)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:433
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within next (relative)"
-msgstr ""
+msgstr "Келесі (салыстырмалы түрде) ішінде"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee:9
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:22
@@ -19372,40 +19472,44 @@ msgstr ""
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:15
 #: db/seeds/object_manager_attributes.rb:1301 db/seeds/settings.rb:589
 msgid "yes"
-msgstr ""
+msgstr "иә"
 
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco:6
 msgid ""
 "|Increment| increases the ticket number. The SystemID and the counter are "
 "used with \"SystemID.Counter\" format (e.g. 1010138, 1010139)."
 msgstr ""
+"|Өсіру| билет номерін өсіреді. Жүйе идентификаторы (SystemID) мен есептегіш "
+"«SystemID.Counter» форматында пайдаланылады (мысалы, 1010138, 1010139)."
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco:6
 msgid "|Left| means |[Ticket#12345] Some Subject|"
-msgstr ""
+msgstr "|Сол жақта| білдіреді |[Билет#12345] Хат тақырыбы|"
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco:7
 msgid ""
 "|None| means |Some Subject| (without ticket number), in which case it "
 "recognizes follow-ups based on email headers."
 msgstr ""
+"| Ештеңе | Мәні | Қандайда бір тақырып | (билет номерінсіз), бұл жағдайда "
+"бақылау электронды хаттың тақырыбы негізінде жүзеге асады."
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco:5
 msgid "|Right| means |Some Subject [Ticket#12345]|"
-msgstr ""
+msgstr "|Оң жақта| білдіреді |Хат тақырыбы [Билет #12345]|"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:324
 msgid "…add object link URL"
-msgstr ""
+msgstr "... объектіге URL-сілтемені қосыңыз"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:318
 msgid "…add object title"
-msgstr ""
+msgstr "...объектінің атауын беріңіз"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:512
 msgid "…of whole text area"
-msgstr ""
+msgstr "...барлық текстік аумақты"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
-msgstr ""
+msgstr "∅ Күту уақыты бүгін"

@@ -683,11 +683,11 @@ msgstr "%s% har blitt gjenåpnet"
 msgid "%{model} can have full or granular access to group"
 msgstr "%{model} kan ha full eller granulær tilgang til gruppen"
 
-#: app/models/object_manager/attribute.rb:572
+#: app/models/object_manager/attribute.rb:570
 msgid "%{name} already exists"
 msgstr "%{name} eksisterer allerede"
 
-#: app/models/object_manager/attribute.rb:561
+#: app/models/object_manager/attribute.rb:559
 msgid "%{name} is a reserved word"
 msgstr "%{name} er et reservert ord"
 
@@ -1359,7 +1359,7 @@ msgstr "Legg til en personlig tilgangstoken"
 msgid "Add a data privacy deletion task"
 msgstr "Legg til en oppgave for sletting av personvernrelaterte data"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:277
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:276
 msgid "Add a message"
 msgstr "Legg til en beskjed"
 
@@ -1455,7 +1455,7 @@ msgstr "Ekstra kanaler"
 msgid "Additional follow-up detection"
 msgstr "Deteksjon av tilleggsoppfølging"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:212
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:211
 msgid "Additional information"
 msgstr "Ytterligere informasjon"
 
@@ -1967,6 +1967,12 @@ msgstr "Bruk kladd"
 msgid "Apply Shared Draft"
 msgstr "Bruk delt kladd"
 
+#: app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue:68
+#, fuzzy
+#| msgid "Templates"
+msgid "Apply Template"
+msgstr "Maler"
+
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:10
 msgid "Apply current defaults to all agents"
 msgstr "Aktiver gjeldende standardverdier for alle agenter"
@@ -2091,7 +2097,7 @@ msgstr "Er du sikker? Du har endringer som vil gå tapt."
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:44
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:45
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:514
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:417
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:223
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:51
 msgid "Are you sure? You have unsaved changes that will get lost."
@@ -2249,6 +2255,7 @@ msgid "Attach files"
 msgstr "Legg ved filer"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
 msgid "Attached"
 msgstr "Vedlagt"
 
@@ -2258,8 +2265,10 @@ msgid "Attached Files"
 msgstr "Vedlagte filer"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:185
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:317
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
 #, fuzzy
 #| msgid "Attachments"
 msgid "Attachment"
@@ -2812,9 +2821,10 @@ msgstr "CA"
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:149
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:106
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:160
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:244
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:37
 #: db/seeds/object_manager_attributes.rb:508
 msgid "CC"
@@ -2972,7 +2982,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
-#: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:165
+#: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:259
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:284
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:227
@@ -2998,6 +3008,7 @@ msgstr "Avbryt"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:119
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:350
 msgid "Cancel & Go Back"
 msgstr "Avbryt & gå tilbake"
 
@@ -3537,7 +3548,7 @@ msgstr "Stengte saker"
 msgid "Closing time"
 msgstr "Stengetid"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:71
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:75
 msgid "Collapse this element"
 msgstr ""
 
@@ -3882,7 +3893,7 @@ msgstr "Kontekst"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:49
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:53
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:142
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:629
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:540
 msgid "Continue"
 msgstr "Fortsett"
 
@@ -4082,7 +4093,8 @@ msgstr "Land"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:577
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:365
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Opprett"
 
@@ -4139,7 +4151,7 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:65
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:577
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Create Ticket"
@@ -4229,7 +4241,7 @@ msgstr "Opprett regler som fanger opp saker iht. SLA."
 msgid "Create tag"
 msgstr "Lagt til"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:629
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:540
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Create ticket"
@@ -4335,7 +4347,7 @@ msgstr "Lagt til"
 msgid "Created by"
 msgstr "Opprettet av"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:550
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:460
 #, fuzzy
 #| msgid "Tickets of Organization"
 msgid "Creating new tickets via web is disabled."
@@ -4432,6 +4444,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:9
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:11
 #: app/controllers/time_accountings_controller.rb:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:52
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/customer.ts:10
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts:6
 #: app/graphql/gql/types/overview_type.rb:61
 #: db/seeds/object_manager_attributes.rb:60 db/seeds/roles.rb:23
@@ -5892,6 +5906,10 @@ msgstr ""
 msgid "Did you know? You can help translating %s at:"
 msgstr ""
 
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
+msgid "Did you plan to include attachments with this message?"
+msgstr ""
+
 #: db/seeds/settings.rb:2048
 msgid "Digit required"
 msgstr "Tall kreves"
@@ -5948,6 +5966,7 @@ msgstr "Kast"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:347
 msgid "Discard Changes"
 msgstr "Kast endringer"
 
@@ -5966,7 +5985,7 @@ msgstr "Kast endringer"
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:81
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:47
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:516
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:419
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:225
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:53
 #, fuzzy
@@ -6228,20 +6247,21 @@ msgstr "Påskeferie"
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:11
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:157
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:76
-#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:43
-#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:46
+#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:53
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:56
 msgid "Edit"
 msgstr "Rediger"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:16
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:26
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:89
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:39
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:95
 msgid "Edit Customer"
 msgstr "Endre kunde"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee:21
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee:11
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:78
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:88
 msgid "Edit Organization"
 msgstr "Endre organisasjon"
 
@@ -6701,12 +6721,14 @@ msgid ""
 msgstr "Tillater brukerne dine å opprette sine egne kontoer gjennom nettsiden."
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
 #, fuzzy
 #| msgid "closed"
 msgid "Enclosed"
 msgstr "avsluttet"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
 #, fuzzy
 #| msgid "close"
 msgid "Enclosure"
@@ -7175,7 +7197,7 @@ msgstr "Ny sak"
 msgid "Existing tickets (open)"
 msgstr "Tildel sak"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:70
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:74
 msgid "Expand this element"
 msgstr ""
 
@@ -7525,13 +7547,6 @@ msgstr "F.eks. nylig endrede saker, brukere eller organisasjoner."
 msgid "For more details, please check out our online documentation %l."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
-msgid ""
-"For privacy reasons, Zammad has blocked remote content in this message. You "
-"can retrieve it from the original formatting."
-msgstr ""
-
 #: app/assets/javascripts/app/views/profile/token_access_created.jst.eco:1
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:142
 #, fuzzy
@@ -7545,7 +7560,7 @@ msgstr ""
 "Av sikkerhetsgrunner blir API-nøkkelen kun vist én gang. Du må kopiere den "
 "til et trygt sted før du fortsetter."
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:549
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:459
 #: app/frontend/shared/errors/useErrorHandler.ts:29
 #: app/frontend/shared/router/guards/before/permission.ts:37
 msgid "Forbidden"
@@ -8017,6 +8032,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:53
 msgid "Group Filter"
 msgstr ""
+
+#: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:23
+#, fuzzy
+#| msgid "Enter a valid email address."
+msgid "Group has no email address."
+msgstr "Skriv inn en gyldig e-postadresse."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:535
 msgid ""
@@ -11095,6 +11116,8 @@ msgstr "Maler"
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:68
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
+#: app/frontend/apps/desktop/pages/ticket/routes.ts:13
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:90
 msgid "New Ticket"
 msgstr "Ny sak"
 
@@ -11419,7 +11442,7 @@ msgstr ""
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:337
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:512
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:100
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:101
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:402
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:348
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue:98
@@ -11481,6 +11504,10 @@ msgstr ""
 
 #: app/models/channel/email_parser.rb:108
 msgid "No x-zammad-session-user-id, no sender set!"
+msgstr ""
+
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
+msgid "No, thanks"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
@@ -12004,6 +12031,7 @@ msgid "Open ticket indicator"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:38
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerButton.vue:55
 #, fuzzy
 #| msgid "Open Tickets"
 msgid "Open tickets"
@@ -12094,8 +12122,10 @@ msgstr "Oversikt"
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco:9
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:12
 #: app/controllers/time_accountings_controller.rb:99
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganizationContent.vue:23
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:10
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
-#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:41
+#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
 #: app/graphql/gql/types/overview_type.rb:62
 #: db/seeds/object_manager_attributes.rb:94 db/seeds/settings.rb:140
@@ -12128,13 +12158,14 @@ msgstr "Organisasjonsstøtte"
 msgid "Organization could not be updated."
 msgstr "Organisasjonen kunne ikke oppdateres."
 
-#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:71
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:81
 #, fuzzy
 #| msgid "My Organization Tickets"
 msgid "Organization tickets"
 msgstr "Min organisasjons saker"
 
-#: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts:34
+#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:26
 msgid ""
 "Organization with specified ID was not found. Try checking the URL for "
 "errors."
@@ -12232,8 +12263,14 @@ msgstr "Utgående"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:133
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:141
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:22
-#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:24
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:21
 msgid "Outbound Call"
+msgstr "Utgående samtale"
+
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:22
+#, fuzzy
+#| msgid "Outbound Call"
+msgid "Outbound Call: %s"
 msgstr "Utgående samtale"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco:16
@@ -13156,8 +13193,14 @@ msgid "Reauthenticate"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:18
-#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:18
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:14
 msgid "Received Call"
+msgstr "Mottatt anrop"
+
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:15
+#, fuzzy
+#| msgid "Received Call"
+msgid "Received Call: %s"
 msgstr "Mottatt anrop"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco:5
@@ -13739,7 +13782,7 @@ msgstr ""
 msgid "Resize side panel"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:106
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:128
 msgid "Resize sidebar"
 msgstr ""
 
@@ -14284,8 +14327,9 @@ msgstr "Notifikasjonslyd"
 msgid "Search…"
 msgstr "Søk"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:97
-#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:130
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:85
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:103
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:136
 #: db/seeds/object_manager_attributes.rb:962
 #, fuzzy
 #| msgid "Shared organization"
@@ -14308,9 +14352,10 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:159
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:149
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:183
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:286
+#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
 #: db/seeds/permissions.rb:197
 msgid "Security"
 msgstr "Sikkerhet"
@@ -14513,8 +14558,14 @@ msgid "Send"
 msgstr "Send"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:26
-#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:30
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:28
 msgid "Send Email"
+msgstr "Send e-post"
+
+#: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:29
+#, fuzzy
+#| msgid "Send Email"
+msgid "Send Email: %s"
 msgstr "Send e-post"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:120
@@ -14887,6 +14938,7 @@ msgstr ""
 msgid "Show"
 msgstr "Vis"
 
+#: app/frontend/apps/desktop/components/CommonShowMoreButton/CommonShowMoreButton.vue:21
 #: app/frontend/apps/mobile/components/CommonShowMoreButton/CommonShowMoreButton.vue:24
 #, fuzzy
 #| msgid "See more"
@@ -15407,7 +15459,7 @@ msgstr "Skriv inn brukernavnet eller e-postadressen din"
 msgid "Start typing to search or enter a phone number…"
 msgstr "Skriv inn brukernavnet eller e-postadressen din"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:94
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:95
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:48
 #, fuzzy
 #| msgid "Enter your username or email address"
@@ -16394,6 +16446,12 @@ msgstr "%s objekt(er) er opprettet."
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
+#: lib/email_address_validation.rb:34
+#, fuzzy
+#| msgid "Signature"
+msgid "The email address is invalid."
+msgstr "Signatur"
+
 #: app/services/service/auth/send_admin_token.rb:39
 #: app/services/service/user/password_reset/send.rb:37
 #: app/services/service/user/password_reset/update.rb:42
@@ -17275,7 +17333,7 @@ msgstr "Måten å kommunisere med oss på er via det vi kaller \"saker\"."
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:66
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:76
 #, fuzzy
 #| msgid "Tickets"
 msgid "Their tickets"
@@ -17755,6 +17813,14 @@ msgid ""
 "it."
 msgstr ""
 
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
+msgid ""
+"This message contains content hosted by an external source. The content has "
+"been blocked by Zammad, but you can retrieve it by downloading the original "
+"formatting."
+msgstr ""
+
 #: lib/secure_mailing/smime/incoming.rb:86
 msgid "This message was not signed by its sender."
 msgstr ""
@@ -18097,7 +18163,7 @@ msgstr ""
 msgid "Ticket actions"
 msgstr "Sak eskalering"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:386
+#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:58
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "Ticket could not be created."
@@ -18133,7 +18199,7 @@ msgstr "Saker tildelt meg:"
 msgid "Ticket has %s viewers"
 msgstr "Ny oversikt"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:370
+#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:40
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Ticket has been created successfully."
@@ -18298,6 +18364,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:8
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:115
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts:9
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:51
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue:173
@@ -19437,7 +19504,7 @@ msgstr "Brukes når du ser på en sak"
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:122
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:77
 #: app/frontend/apps/mobile/pages/user/routes.ts:7
-#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:44
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:32
 msgid "User"
 msgstr "Bruker"
 
@@ -19497,7 +19564,7 @@ msgid ""
 "permissions."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LayoutSidebarFooterMenu.vue:56
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LayoutSidebarFooterMenu.vue:59
 #, fuzzy
 #| msgid "Username"
 msgid "User menu"
@@ -19507,7 +19574,8 @@ msgstr "Brukernavn"
 msgid "User successfully unlocked!"
 msgstr ""
 
-#: app/frontend/apps/mobile/entities/user/composables/useUserDetail.ts:32
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:32
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:32
 msgid "User with specified ID was not found. Try checking the URL for errors."
 msgstr ""
 
@@ -20126,6 +20194,12 @@ msgstr "Gul"
 msgid "Yes"
 msgstr "Ja"
 
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
+#, fuzzy
+#| msgid "Add attachment option to upload."
+msgid "Yes, add attachments now"
+msgstr "Legg til vedleggsmulighet til opplasting."
+
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee:4
 msgid "Yes, start real import."
 msgstr "Ja, start ekte import."
@@ -20356,7 +20430,8 @@ msgstr ""
 msgid "You have insufficient permissions to mention other users."
 msgstr ""
 
-#: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts:37
+#: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:32
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:28
 msgid "You have insufficient rights to view this organization."
 msgstr ""
 
@@ -20364,7 +20439,8 @@ msgstr ""
 msgid "You have insufficient rights to view this ticket."
 msgstr ""
 
-#: app/frontend/apps/mobile/entities/user/composables/useUserDetail.ts:34
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:34
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:34
 msgid "You have insufficient rights to view this user."
 msgstr ""
 
@@ -20800,25 +20876,27 @@ msgstr "Tildel sak"
 msgid "at"
 msgstr "på"
 
-#: app/models/object_manager/attribute.rb:556
+#: app/models/object_manager/attribute.rb:554
 #, fuzzy
 #| msgid "At least one letter is required"
 msgid "at least one letter is required"
 msgstr "Minst én bokstav er påkrevd"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
 #, fuzzy
 #| msgid "reached"
 msgid "attached"
 msgstr "nådd"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 #, fuzzy
 #| msgid "Attachments"
 msgid "attachment"
 msgstr "Vedlegg"
 
-#: app/models/object_manager/attribute.rb:585
+#: app/models/object_manager/attribute.rb:583
 #, fuzzy
 #| msgid "Attribute not editable!"
 msgid "attribute is not editable"
@@ -20855,11 +20933,11 @@ msgstr "opptatt"
 msgid "camera,image,photo,picture"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:632
+#: app/models/object_manager/attribute.rb:630
 msgid "can only be created on postgresql databases"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:625
+#: app/models/object_manager/attribute.rb:623
 msgid ""
 "can't be altered after creation (you can delete the attribute and create "
 "another with the desired value)"
@@ -20871,7 +20949,7 @@ msgstr ""
 msgid "can't be empty"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:547
+#: app/models/object_manager/attribute.rb:545
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr ""
 
@@ -20906,6 +20984,12 @@ msgstr "lukk"
 #: db/seeds/ticket_state_types.rb:7 db/seeds/ticket_states.rb:23
 msgid "closed"
 msgstr "avsluttet"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:130
+#, fuzzy
+#| msgid "Closed Tickets"
+msgid "closed tickets"
+msgstr "Stengte saker"
 
 #: app/assets/javascripts/app/controllers/cti.coffee:157
 msgid "connected"
@@ -21146,12 +21230,14 @@ msgid "email sent to '%s'"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
 #, fuzzy
 #| msgid "closed"
 msgid "enclosed"
 msgstr "avsluttet"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
 #, fuzzy
 #| msgid "close"
 msgid "enclosure"
@@ -21760,7 +21846,7 @@ msgstr "Notifikasjoner"
 msgid "now"
 msgstr "nei"
 
-#: app/models/object_manager/attribute.rb:553
+#: app/models/object_manager/attribute.rb:551
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr ""
 
@@ -21768,6 +21854,12 @@ msgstr ""
 #: db/seeds/ticket_state_types.rb:4 db/seeds/ticket_states.rb:11
 msgid "open"
 msgstr "åpen"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:123
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "open tickets"
+msgstr "Åpne saker"
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:279
 msgid "optional"
@@ -22008,7 +22100,7 @@ msgstr "hoppet"
 msgid "sms"
 msgstr "sms"
 
-#: app/models/object_manager/attribute.rb:550
+#: app/models/object_manager/attribute.rb:548
 msgid "spaces are not allowed"
 msgstr ""
 
