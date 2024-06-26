@@ -117,7 +117,7 @@
   <% if @article.preferences?.remote_content_removed: %>
     <div class="alert alert--warning">
       <div class="alert-row">
-        <%- @Icon('danger') %> <%- @T('For privacy reasons, Zammad has blocked remote content in this message. You can retrieve it from the original formatting.') %>
+        <%- @Icon('danger') %> <%- @T('This message contains content hosted by an external source. The content has been blocked by Zammad, but you can retrieve it by downloading the original formatting.') %>
       </div>
       <div class="btn btn--action btn--small js-fetchOriginalFormatting"><%- @T('Original Formatting') %></div>
     </div>

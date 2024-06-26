@@ -53,7 +53,7 @@ const popupItems = computed(() =>
         <div>
           {{
             $t(
-              'For privacy reasons, Zammad has blocked remote content in this message. You can retrieve it from the original formatting.',
+              'This message contains content hosted by an external source. The content has been blocked by Zammad, but you can retrieve it by downloading the original formatting.',
             )
           }}
         </div>
