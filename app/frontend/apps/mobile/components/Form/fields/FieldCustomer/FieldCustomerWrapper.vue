@@ -5,7 +5,7 @@ import { markRaw, defineAsyncComponent, nextTick } from 'vue'
 import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
 import type { AutoCompleteProps } from '#shared/components/Form/fields/FieldAutocomplete/types.ts'
 import { AutocompleteSearchUserDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.api.ts'
-import type { AutoCompleteCustomerOption } from '#shared/components/Form/fields/FieldCustomer/types.ts'
+import type { AutoCompleteCustomerUserOption } from '#shared/components/Form/fields/FieldCustomer/types.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import type { User } from '#shared/graphql/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
@@ -25,7 +25,7 @@ const FieldAutoCompleteInput = defineAsyncComponent(
 interface Props {
   context: FormFieldContext<
     AutoCompleteProps & {
-      options?: AutoCompleteCustomerOption[]
+      options?: AutoCompleteCustomerUserOption[]
     }
   >
 }
@@ -47,7 +47,7 @@ const { openCreateUserDialog } = useUserCreate({
     // If the user is not in options, add it
     if (
       !nodeProps.options?.some(
-        (v: AutoCompleteCustomerOption) => v.value === user.internalId,
+        (v: AutoCompleteCustomerUserOption) => v.value === user.internalId,
       )
     ) {
       nodeProps.options = [

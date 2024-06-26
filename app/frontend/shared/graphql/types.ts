@@ -4752,7 +4752,7 @@ export type TicketArticleEmailForwardReplyMutationVariables = Exact<{
 }>;
 
 
-export type TicketArticleEmailForwardReplyMutation = { __typename?: 'Mutations', ticketArticleEmailForwardReply?: { __typename?: 'TicketArticleEmailForwardReplyPayload', quotableFrom?: string | null, quotableTo?: string | null, quotableCc?: string | null, attachments: Array<{ __typename?: 'StoredFile', internalId: number, name: string, size?: number | null, type?: string | null }>, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
+export type TicketArticleEmailForwardReplyMutation = { __typename?: 'Mutations', ticketArticleEmailForwardReply?: { __typename?: 'TicketArticleEmailForwardReplyPayload', quotableFrom?: string | null, quotableTo?: string | null, quotableCc?: string | null, attachments: Array<{ __typename?: 'StoredFile', id: string, internalId: number, name: string, size?: number | null, type?: string | null }>, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
 
 export type TicketArticleRetryMediaDownloadMutationVariables = Exact<{
   articleId: Scalars['ID']['input'];

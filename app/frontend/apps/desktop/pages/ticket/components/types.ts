@@ -19,6 +19,7 @@ export enum TicketSidebarButtonBadgeType {
 }
 
 export type TicketSidebarButtonBadgeDetails = {
+  label: string
   type?: TicketSidebarButtonBadgeType
   value: string | number
 }

@@ -118,10 +118,11 @@ describe('GuidedSetupActionFooter.vue', () => {
   })
 
   it('renders back button when event registration exists', async () => {
-    const onBack = vi.fn()
+    const onGoBack = vi.fn()
+
     const view = renderComponent(GuidedSetupActionFooter, {
       props: {
-        onBack,
+        onGoBack,
       },
       ...wrapperParameters,
     })
@@ -132,7 +133,7 @@ describe('GuidedSetupActionFooter.vue', () => {
 
     await view.events.click(goBackButton)
 
-    expect(onBack).toHaveBeenCalledOnce()
+    expect(onGoBack).toHaveBeenCalledOnce()
   })
 
   it('renders skip button when route is given', () => {

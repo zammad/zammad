@@ -3,10 +3,10 @@
 <script setup lang="ts">
 import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import type { AutoCompleteCustomerOption } from '#shared/components/Form/fields/FieldCustomer/types.ts'
+import type { AutoCompleteCustomerGenericOption } from '#shared/components/Form/fields/FieldCustomer/types.ts'
 
 defineProps<{
-  option: AutoCompleteCustomerOption
+  option: AutoCompleteCustomerGenericOption
 }>()
 </script>
 

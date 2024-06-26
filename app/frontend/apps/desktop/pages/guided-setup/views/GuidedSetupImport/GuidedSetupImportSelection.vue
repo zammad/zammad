@@ -55,6 +55,6 @@ const unlockCallback = () => {
     </template>
   </CommonButtonGroup>
   <GuidedSetupActionFooter
-    @back="systemSetupInfoStore.systemSetupUnlock(unlockCallback)"
+    @go-back="systemSetupInfoStore.systemSetupUnlock(unlockCallback)"
   />
 </template>

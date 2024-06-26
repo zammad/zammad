@@ -4,6 +4,7 @@ mutation ticketArticleEmailForwardReply($articleId: ID!, $formId: FormId!) {
     quotableTo
     quotableCc
     attachments {
+      id
       internalId
       name
       size

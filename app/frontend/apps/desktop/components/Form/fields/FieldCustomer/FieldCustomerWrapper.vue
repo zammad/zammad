@@ -5,7 +5,7 @@ import { markRaw } from 'vue'
 import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
 import type { AutoCompleteOption } from '#shared/components/Form/fields/FieldAutocomplete/types.ts'
 import { AutocompleteSearchGenericDocument } from '#shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/generic.api.ts'
-import type { AutoCompleteCustomerOption } from '#shared/components/Form/fields/FieldCustomer/types.ts'
+import type { AutoCompleteCustomerGenericOption } from '#shared/components/Form/fields/FieldCustomer/types.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import type { User } from '#shared/graphql/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
@@ -20,7 +20,7 @@ import type { AutoCompleteProps } from '../FieldAutoComplete/types.ts'
 interface Props {
   context: FormFieldContext<
     AutoCompleteProps & {
-      options?: AutoCompleteCustomerOption[]
+      options?: AutoCompleteCustomerGenericOption[]
     }
   >
 }
@@ -59,7 +59,8 @@ Object.assign(props.context, {
     onlyIn: ['User', 'Organization'],
   },
   autocompleteOptionsPreprocessor: (
-    autocompleteOptions: (AutoCompleteCustomerOption & AutoCompleteOption)[],
+    autocompleteOptions: (AutoCompleteCustomerGenericOption &
+      AutoCompleteOption)[],
   ) =>
     autocompleteOptions.map((autocompleteOption) => {
       if (

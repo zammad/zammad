@@ -55,7 +55,7 @@ const { form, debouncedLoading, onContinueButtonCallback } = useImportSource()
       :submit-button-type="onContinueButtonCallback ? 'button' : 'submit'"
       :submit-button-variant="onContinueButtonCallback ? 'primary' : 'submit'"
       :on-submit="onContinueButtonCallback"
-      @back="goBack()"
+      @go-back="goBack()"
       @submit="onContinueButtonCallback"
     />
   </div>

@@ -86,6 +86,6 @@ const unlockCallback = () => {
   <GuidedSetupActionFooter
     :form="form"
     :submit-button-text="__('Create account')"
-    @back="systemSetupUnlock(unlockCallback)"
+    @go-back="systemSetupUnlock(unlockCallback)"
   />
 </template>

@@ -7,7 +7,6 @@ let alertClasses: AlertClassMap = {
   base: 'common-alert',
   danger: 'common-alert-danger',
   info: 'common-alert-info',
-  link: 'common-alert-link',
   success: 'common-alert-success',
   warning: 'common-alert-warning',
 }

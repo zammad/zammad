@@ -24,7 +24,6 @@
     },
     "types": [
       "vite/client",
-      "vite-plugin-svg-icons/client",
       "node",
       "vite-plugin-pwa/client"
     ],

@@ -8,8 +8,8 @@ import type { ObjectAttributesConfig } from '#shared/components/ObjectAttributes
 export interface SharedVisualConfig {
   objectAttributes: ObjectAttributesConfig
   tooltip: TooltipVisualConfig
-  filePreview: FilePreviewVisualConfig
-  fieldFile: FieldFileVisualConfig
+  filePreview?: FilePreviewVisualConfig
+  fieldFile?: FieldFileVisualConfig
 }
 
 const currentVisualConfig: SharedVisualConfig = {

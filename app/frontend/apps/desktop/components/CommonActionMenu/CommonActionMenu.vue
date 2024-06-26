@@ -7,7 +7,7 @@ import CommonPopover from '#shared/components/CommonPopover/CommonPopover.vue'
 import type {
   Orientation,
   Placement,
-} from '#shared/components/CommonPopover/types'
+} from '#shared/components/CommonPopover/types.ts'
 import { usePopover } from '#shared/components/CommonPopover/usePopover.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 import getUuid from '#shared/utils/getUuid.ts'

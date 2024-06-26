@@ -31,7 +31,7 @@ import type {
   Placement,
   CommonPopoverInternalInstance,
   Orientation,
-} from './types'
+} from './types.ts'
 
 export interface Props {
   owner: HTMLElement | ComponentPublicInstance | undefined

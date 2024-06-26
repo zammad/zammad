@@ -141,7 +141,7 @@ const classMap = getFilePreviewClasses()
     </Component>
 
     <component
-      :is="filePreviewConfig.buttonComponent"
+      :is="filePreviewConfig?.buttonComponent"
       v-if="!noRemove"
       :class="{
         'opacity-0 transition-opacity': !isTouchDevice,
@@ -150,7 +150,7 @@ const classMap = getFilePreviewClasses()
       type="button"
       icon="remove-attachment"
       :aria-label="i18n.t('Remove %s', file.name)"
-      v-bind="filePreviewConfig.buttonProps"
+      v-bind="filePreviewConfig?.buttonProps"
       @click.stop.prevent="$emit('remove')"
       @keypress.space.prevent="$emit('remove')"
     />

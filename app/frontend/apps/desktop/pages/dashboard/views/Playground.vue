@@ -22,6 +22,7 @@ import type {
 } from '#shared/components/Form/types.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
+import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
@@ -39,7 +40,6 @@ import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import CommonProgressBar from '#desktop/components/CommonProgressBar/CommonProgressBar.vue'
 import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
 import CommonTabManager from '#desktop/components/CommonTabManager/CommonTabManager.vue'
-import type { Tab } from '#desktop/components/CommonTabManager/types.ts'
 import { useTabManager } from '#desktop/components/CommonTabManager/useTabManager.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import ThemeSwitch from '#desktop/components/ThemeSwitch/ThemeSwitch.vue'
@@ -642,7 +642,7 @@ const formSchema = defineFormSchema([
     type: 'externalDataSource',
     name: 'external_data_source',
     label: 'External Data Source',
-    object: 'Ticket',
+    object: EnumObjectManagerObjects.Ticket,
     help: 'Please add external_data_source attribute on Ticket object. Otherwise this field will not work.',
   },
   {
@@ -831,7 +831,9 @@ const formSchema = defineFormSchema([
     type: 'file',
     name: 'file',
     label: 'Attachment',
-    multiple: true,
+    props: {
+      multiple: true,
+    },
   },
   {
     type: 'toggleButtons',
@@ -1071,7 +1073,7 @@ const changeRow = () => {
 
 const { activeTab } = useTabManager<string>()
 
-const { activeTab: activeFilters } = useTabManager<Tab[]>()
+const { activeTab: activeFilters } = useTabManager<string[]>()
 
 const popoverOrientation: Ref<Orientation> = ref('autoVertical')
 const popoverOrientationOptions = [

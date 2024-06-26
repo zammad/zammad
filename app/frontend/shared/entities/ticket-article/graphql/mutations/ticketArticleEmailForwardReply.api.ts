@@ -13,6 +13,7 @@ export const TicketArticleEmailForwardReplyDocument = gql`
     quotableTo
     quotableCc
     attachments {
+      id
       internalId
       name
       size

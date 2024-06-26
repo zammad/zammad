@@ -56,6 +56,7 @@ const getFormContext = (): FormRef => {
     getNodeByName: vi.fn(),
     findNodeByName: vi.fn(),
     resetForm: vi.fn(),
+    triggerFormUpdater: vi.fn(),
   }
 }
 

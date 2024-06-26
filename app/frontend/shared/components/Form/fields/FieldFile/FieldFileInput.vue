@@ -297,7 +297,7 @@ const { isOverDropZone } = useDropZone(dropZoneRef, {
       </div>
       <div class="w-full p-1 text-center">
         <component
-          :is="fieldFileConfig.buttonComponent"
+          :is="fieldFileConfig?.buttonComponent"
           v-if="!reachedUploadLimit"
           :class="classMap.button"
           type="button"

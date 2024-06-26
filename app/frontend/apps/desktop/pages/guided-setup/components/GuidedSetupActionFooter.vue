@@ -21,7 +21,7 @@ interface Props {
   goBackRoute?: RouteLocationRaw
   onSkip?: () => void
   onContinue?: () => void
-  onBack?: () => void
+  onGoBack?: () => void
   onSubmit?: () => void
   submitButtonText?: string
   submitButtonVariant?: ButtonVariant
@@ -36,7 +36,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const emit = defineEmits<{
   submit: []
-  back: []
+  'go-back': []
   skip: []
   continue: []
 }>()
@@ -54,7 +54,7 @@ const localSubmitButtonText = computed(() => {
 })
 
 const goBack = () => {
-  if (props.onBack) emit('back')
+  if (props.onGoBack) emit('go-back')
 
   if (props.goBackRoute) router.push(props.goBackRoute)
 }
@@ -79,7 +79,7 @@ const submit = () => {
 <template>
   <LayoutPublicPageBoxActions>
     <CommonButton
-      v-if="goBackRoute || onBack"
+      v-if="goBackRoute || onGoBack"
       variant="secondary"
       size="large"
       :disabled="isDisabled"

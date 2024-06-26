@@ -30,6 +30,7 @@ const permittedEntries = computed(() => {
     (memo, entries, category) => {
       memo[category] = entries.filter((entry) => {
         if (
+          typeof entry.route === 'object' &&
           entry.route.meta?.requiredPermission &&
           !session.hasPermission(entry.route.meta.requiredPermission)
         )

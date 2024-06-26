@@ -253,7 +253,7 @@ const emailConfigurationCheck = computed(() => {
       :form="activeForm"
       :submit-button-variant="submitButtonVariant"
       :submit-button-text="submitButtonText"
-      @back="goBack"
+      @go-back="goBack"
     />
   </div>
 </template>

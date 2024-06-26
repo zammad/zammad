@@ -12,8 +12,7 @@ export interface FieldFileProps {
   allowedFiles?: AllowedFile[]
 }
 
-export type FileUploaded = Pick<StoredFile, 'name' | 'size' | 'type'> & {
-  id: string
+export type FileUploaded = Pick<StoredFile, 'id' | 'name' | 'size' | 'type'> & {
   preview?: string
   isProcessing?: boolean
 }
