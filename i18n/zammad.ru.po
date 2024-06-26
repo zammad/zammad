@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-26 08:21+0000\n"
-"Last-Translator: Nikita <nyakovlev@iko.tech>\n"
+"PO-Revision-Date: 2024-06-26 09:06+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
 "Language: ru\n"
@@ -2859,7 +2859,6 @@ msgid "Changed:"
 msgstr "Изменено:"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:17
-#: app/views/mailer/ticket_update/ru.html.erb:11
 #: app/views/mailer/ticket_update/zh-cn.html.erb:11
 #: app/views/mailer/ticket_update/zh-tw.html.erb:11
 msgid "Changes"
@@ -8187,10 +8186,8 @@ msgstr "Информация: %s"
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:9
-#: app/views/mailer/ticket_reminder_reached/ru.html.erb:9
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb:9
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb:9
-#: app/views/mailer/ticket_update/ru.html.erb:20
 #: app/views/mailer/ticket_update/zh-cn.html.erb:20
 #: app/views/mailer/ticket_update/zh-tw.html.erb:20
 msgid "Information"
@@ -15833,13 +15830,13 @@ msgstr ""
 "<div>Здравствуйте,  #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"Заявка (#{ticket.title}) была объединена с другой заявкой пользователем "
-"\"<b>#{current_user.longname}</b>\".\n"
+"Заявка (#{ticket.title}) была объединена с другой заявкой пользователем \""
+"<b>#{current_user.longname}</b>\".\n"
 "</div>\n"
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
-"target=\"zammad_app\">#{t('Посмотреть заявку в #{config.product_name}</a>\n"
+"target=\"zammad_app\">Посмотреть заявку в #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:24
@@ -17559,13 +17556,10 @@ msgstr "Вид от имени пользователя"
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:17
-#: app/views/mailer/ticket_reminder_reached/ru.html.erb:17
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb:17
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb:17
-#: app/views/mailer/ticket_update/ru.html.erb:28
 #: app/views/mailer/ticket_update/zh-cn.html.erb:28
 #: app/views/mailer/ticket_update/zh-tw.html.erb:28
-#: app/views/mailer/ticket_update_merged_into/ru.html.erb:10
 msgid "View this in Zammad"
 msgstr "Перейти к заявке в Zammad"
 
