@@ -1,14 +1,14 @@
-Тикет обновлен (#{ticket.title})
+Заявка обновлена (#{ticket.title})
 
-<div>Здравствуйте #{recipient.firstname},</div>
+<div>Здравствуйте, #{recipient.firstname},</div>
 <br>
 <div>
-Тикет (#{ticket.title}) был обновлен "<b>#{current_user.longname}</b>".
+Заявка (#{ticket.title}) была обновлена "<b>#{current_user.longname}</b>".
 </div>
 <br>
 <% if @objects[:changes].present? %>
   <div>
-  #{t('Changes')}:<br>
+  Изменения:<br>
   <% @objects[:changes].each do |key, value| %>
     <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>
   <% end %>
@@ -17,7 +17,7 @@
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+  Информация:
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
@@ -25,5 +25,5 @@
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% if @objects[:article] %>/#{article.id}<% end %>" target="zammad_app">#{t('View this in Zammad')}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% if @objects[:article] %>/#{article.id}<% end %>" target="zammad_app">Посмотреть заявку в #{config.product_name}</a>
 </div>

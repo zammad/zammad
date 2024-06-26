@@ -1,12 +1,12 @@
-Напоминание доставлено (#{ticket.title})
+Наступило напоминание о заявке (#{ticket.title})
 
-<div>Здравствуйте #{recipient.firstname},</div>
+<div>Здравствуйте, #{recipient.firstname},</div>
 <br>
-<div>Тикет требует внимания, напоминание доставленно для (#{ticket.title}) с клиентом "<b>#{ticket.customer.longname}</b>".</div>
+<div>Заявка требует внимания: наступило напоминание о заявке (#{ticket.title}) с клиентом "<b>#{ticket.customer.longname}</b>".</div>
 <br>
 <% if @objects[:article] %>
   <div>
-  #{t('Information')}:
+  Информация:
   <blockquote type="cite">
   #{article.body_as_html}
   </blockquote>
@@ -14,5 +14,5 @@
 <% end %>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Посмотреть заявку в #{config.product_name}</a>
 </div>

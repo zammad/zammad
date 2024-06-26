@@ -1,11 +1,11 @@
-Тикет (#{ticket.title}) был слит с другим тикетом
+Заявка (#{ticket.title}) была объединена с другой заявкой
 
-<div>Hi #{recipient.firstname},</div>
+<div>Здравствуйте,  #{recipient.firstname},</div>
 <br>
 <div>
-Тикет (#{ticket.title}) был слит с другим тикетом пользователем "<b>#{current_user.longname}</b>".
+Заявка (#{ticket.title}) была объединена с другой заявкой пользователем "<b>#{current_user.longname}</b>".
 </div>
 <br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">#{t('View this in Zammad')}</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Посмотреть заявку в #{config.product_name}</a>
 </div>
