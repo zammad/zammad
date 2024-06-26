@@ -84,11 +84,7 @@ const getCoreClasses: FormThemeExtension = (classes: FormThemeClasses) => {
     submit: addButtonVariants(classes.submit),
     security: addStaticFloatingLabel(
       extendClasses(classes.security, {
-        label: clean(`
-          scale-80
-          -translate-y-[0.4rem]
-          text-xs
-        `),
+        label: clean(`scale-80 -translate-y-[0.4rem] text-xs`),
       }),
     ),
     file: {
