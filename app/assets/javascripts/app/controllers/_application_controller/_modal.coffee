@@ -66,7 +66,7 @@ class App.ControllerModal extends App.Controller
 
   update: =>
     if @message
-      content = App.i18n.translateContent(@message)
+      content = App.Utils.htmlEscape( App.i18n.translatePlain(@message) )
     else if @contentInline
       content = @contentInline
     else
