@@ -520,7 +520,7 @@ RSpec.describe Channel::EmailBuild, type: :model do
       before { Setting.set('html_email_css_font', css_font) }
 
       it 'includes the configured css font' do
-        expect(generated_html).to match css_font
+        expect(generated_html).to include("#{css_font}\n")
       end
     end
   end
