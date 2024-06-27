@@ -1848,6 +1848,8 @@ export type OnlineNotificationsCountPayload = {
 export type Organization = ObjectAttributeValuesInterface & {
   __typename?: 'Organization';
   active?: Maybe<Scalars['Boolean']['output']>;
+  /** All assigned users */
+  allMembers?: Maybe<UserConnection>;
   /** Create date/time of the record */
   createdAt: Scalars['ISO8601DateTime']['output'];
   /** User that created this record */
@@ -1857,12 +1859,15 @@ export type Organization = ObjectAttributeValuesInterface & {
   id: Scalars['ID']['output'];
   /** Internal database ID */
   internalId: Scalars['Int']['output'];
+  /** Users assigned via primary organization */
   members?: Maybe<UserConnection>;
   name?: Maybe<Scalars['String']['output']>;
   /** Internal note */
   note?: Maybe<Scalars['String']['output']>;
   objectAttributeValues?: Maybe<Array<ObjectAttributeValue>>;
   policy: PolicyDefault;
+  /** Users assigned via secondary organization */
+  secondaryMembers?: Maybe<UserConnection>;
   shared?: Maybe<Scalars['Boolean']['output']>;
   ticketsCount?: Maybe<TicketCount>;
   /** Last update date/time of the record */
@@ -1874,7 +1879,25 @@ export type Organization = ObjectAttributeValuesInterface & {
 
 
 /** Organizations that users can belong to */
+export type OrganizationAllMembersArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** Organizations that users can belong to */
 export type OrganizationMembersArgs = {
+  after?: InputMaybe<Scalars['String']['input']>;
+  before?: InputMaybe<Scalars['String']['input']>;
+  first?: InputMaybe<Scalars['Int']['input']>;
+  last?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** Organizations that users can belong to */
+export type OrganizationSecondaryMembersArgs = {
   after?: InputMaybe<Scalars['String']['input']>;
   before?: InputMaybe<Scalars['String']['input']>;
   first?: InputMaybe<Scalars['Int']['input']>;

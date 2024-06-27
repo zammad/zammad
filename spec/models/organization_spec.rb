@@ -242,4 +242,13 @@ RSpec.describe Organization, type: :model do
     end
 
   end
+
+  describe '#all_members' do
+    let!(:primary_user) { create(:user, organization:) }
+    let!(:secondary_user) { create(:user, organization: create(:organization), organizations: [organization]) }
+
+    it 'lists all assigned members' do
+      expect(organization.all_members).to contain_exactly(primary_user, secondary_user)
+    end
+  end
 end

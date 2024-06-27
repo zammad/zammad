@@ -24,8 +24,38 @@ export default (parent: any): DeepPartial<Organization> => {
       },
       totalCount: 1,
     }
+
+    organization.secondaryMembers = {
+      edges: [{ __typename: 'UserEdge', node: parent, cursor: 'AB' }],
+      pageInfo: {
+        endCursor: 'AB',
+        startCursor: 'AB',
+        hasNextPage: false,
+        hasPreviousPage: false,
+      },
+      totalCount: 1,
+    }
+
+    organization.allMembers = {
+      edges: [{ __typename: 'UserEdge', node: parent, cursor: 'AB' }],
+      pageInfo: {
+        endCursor: 'AB',
+        startCursor: 'AB',
+        hasNextPage: false,
+        hasPreviousPage: false,
+      },
+      totalCount: 2,
+    }
   } else {
     organization.members = {
+      edges: [],
+      totalCount: 0,
+    }
+    organization.secondaryMembers = {
+      edges: [],
+      totalCount: 0,
+    }
+    organization.allMembers = {
       edges: [],
       totalCount: 0,
     }

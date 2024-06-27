@@ -50,6 +50,12 @@ class Organization < ApplicationModel
   validates :note, length: { maximum: 5000 }
   sanitized_html :note, no_images: true
 
+  def all_members
+    User
+      .left_outer_joins(:organization, :organizations_users)
+      .where('organizations.id = :id OR organizations_users.organization_id = :id', id:)
+  end
+
   def destroy(associations: false)
     if associations
       delete_associations
