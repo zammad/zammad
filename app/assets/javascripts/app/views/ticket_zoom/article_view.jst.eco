@@ -83,7 +83,7 @@
     </div>
   </div>
 </div>
-<% if encryptionSuccess || signSuccess || encryptionWarning || signWarning || @article.preferences?.whatsapp?.media_error || @article.preferences?.remote_content_removed: %>
+<% if encryptionSuccess || signSuccess || encryptionWarning || signWarning || @article.preferences?.whatsapp?.media_error: %>
   <div class="article-meta-permanent">
     <% if encryptionWarning || signWarning: %>
       <div class="alert alert--warning">
@@ -114,14 +114,6 @@
     </div>
   <% end %>
 
-  <% if @article.preferences?.remote_content_removed: %>
-    <div class="alert alert--warning">
-      <div class="alert-row">
-        <%- @Icon('danger') %> <%- @T('This message contains content hosted by an external source. The content has been blocked by Zammad, but you can retrieve it by downloading the original formatting.') %>
-      </div>
-      <div class="btn btn--action btn--small js-fetchOriginalFormatting"><%- @T('Original Formatting') %></div>
-    </div>
-  <% end %>
   </div>
 <% end %>
 <div class="article-content">
@@ -141,6 +133,11 @@
             <div class="textBubble-overflowContainer hide">
               <div class="btn btn--text js-toggleFold"><%- @T('See more') %></div>
             </div>
+          </div>
+        <% end %>
+        <% if @article.preferences?.remote_content_removed: %>
+          <div class="remote-content-message js-fetchOriginalFormatting" role="button">
+            <%- @Icon('danger') %> <%- @T('This message contains images or other content hosted by an external source. We blocked it, but you can download the original formatting here.') %>
           </div>
         <% end %>
         <%- @attachments %>

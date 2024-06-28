@@ -34,7 +34,7 @@ const popupItems = computed(() =>
   <button
     v-bind="$attrs"
     type="button"
-    class="bg-yellow inline-flex h-7 grow items-center gap-1 rounded-lg px-2 py-1 text-xs font-bold text-black"
+    class="inline-flex h-7 grow items-center gap-1 rounded-lg px-2 py-1 text-xs font-bold"
     @click.prevent="showPopup = !showPopup"
     @keydown.space.prevent="showPopup = !showPopup"
   >
@@ -46,14 +46,14 @@ const popupItems = computed(() =>
       <div
         class="flex flex-col items-center gap-2 border-b border-b-white/10 p-4"
       >
-        <div class="text-yellow flex w-full items-center justify-center gap-1">
+        <div class="flex w-full items-center justify-center gap-1">
           <CommonIcon name="warning" size="tiny" />
           {{ $t('Blocked Content') }}
         </div>
         <div>
           {{
             $t(
-              'This message contains content hosted by an external source. The content has been blocked by Zammad, but you can retrieve it by downloading the original formatting.',
+              'This message contains images or other content hosted by an external source. We blocked it, but you can download the original formatting here.',
             )
           }}
         </div>

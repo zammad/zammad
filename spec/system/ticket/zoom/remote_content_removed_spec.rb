@@ -17,7 +17,7 @@ RSpec.describe 'Ticket Zoom > Remote Content Removed', authenticated_as: :user, 
   context 'when a mail with an inline image is received' do
     it 'shows a message that the image was removed' do
       within(:active_content) do
-        expect(page).to have_text('This message contains content hosted by an external source. The content has been blocked by Zammad, but you can retrieve it by downloading the original formatting.')
+        expect(page).to have_text('This message contains images or other content hosted by an external source. We blocked it, but you can download the original formatting here.')
       end
     end
 
