@@ -4,12 +4,13 @@ import { NotificationTypes } from '#shared/components/CommonNotifications/types.
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import { populateEditorNewLines } from '#shared/components/Form/fields/FieldEditor/utils.ts'
 import type { FormRef, FormSubmitData } from '#shared/components/Form/types.ts'
+import { setErrors } from '#shared/components/Form/utils.ts'
 import { useCheckBodyAttachmentReference } from '#shared/composables/form/useCheckBodyAttachmentReference.ts'
 import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
 import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
 import { ticketCreateArticleType } from '#shared/entities/ticket/composables/useTicketCreateArticleType.ts'
 import { useTicketCreateMutation } from '#shared/entities/ticket/graphql/mutations/create.api.ts'
-import type UserError from '#shared/errors/UserError.ts'
+import UserError from '#shared/errors/UserError.ts'
 import {
   EnumObjectManagerObjects,
   type TicketCreateInput,
@@ -59,6 +60,11 @@ export const useTicketCreate = (
         type: NotificationTypes.Error,
       })
     } else {
+      if (error instanceof UserError && form.value?.formNode) {
+        setErrors(form.value?.formNode, error)
+        return
+      }
+
       notify({
         id: 'ticket-create-error',
         message: error.generalErrors[0],

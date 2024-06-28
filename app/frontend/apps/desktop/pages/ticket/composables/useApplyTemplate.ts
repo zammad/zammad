@@ -8,15 +8,21 @@ import {
   type TemplateUpdatesSubscriptionVariables,
 } from '#shared/graphql/types.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
 
 import { useTemplatesQuery } from '../graphql/queries/templates.api.ts'
 import { TemplateUpdatesDocument } from '../graphql/subscriptions/templateUpdates.api.ts'
 
 export const useApplyTemplate = () => {
+  const session = useSessionStore()
+
   const templateListQuery = new QueryHandler(
-    useTemplatesQuery({
-      onlyActive: true,
-    }),
+    useTemplatesQuery(
+      () => ({
+        onlyActive: true,
+      }),
+      () => ({ enabled: session.hasPermission('ticket.agent') }),
+    ),
   )
 
   templateListQuery.subscribeToMore<

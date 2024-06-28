@@ -201,7 +201,7 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
               'ticket' => nil,
               'errors' => [
                 {
-                  'message' => 'Group has no email address.',
+                  'message' => 'This group has no email address configured for outgoing communication.',
                   'field'   => 'group_id'
                 }
               ]

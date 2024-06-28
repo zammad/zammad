@@ -26,7 +26,6 @@ import {
 import { i18n } from '#shared/i18n.ts'
 import { useWalker } from '#shared/router/walker.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
-import { useSessionStore } from '#shared/stores/session.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonContentPanel from '#desktop/components/CommonContentPanel/CommonContentPanel.vue'
@@ -36,7 +35,6 @@ import ApplyTemplate from '../components/ApplyTemplate.vue'
 import TicketDuplicateDetectionAlert from '../components/TicketDuplicateDetectionAlert.vue'
 import TicketSidebar from '../components/TicketSidebar.vue'
 import { TicketSidebarScreenType } from '../components/types.ts'
-import { useApplyTemplate } from '../composables/useApplyTemplate.ts'
 import { useTicketSidebar } from '../composables/useTicketSidebar.ts'
 
 defineOptions({
@@ -58,7 +56,6 @@ const { form, isDisabled, isDirty, formNodeId, values, triggerFormUpdater } =
   useForm()
 
 const application = useApplicationStore()
-const { hasPermission } = useSessionStore()
 
 const redirectAfterCreate = (internalId?: number) => {
   if (internalId) {
@@ -260,8 +257,6 @@ const changedFields = reactive({
 
 const { signatureHandling } = useTicketSignature()
 
-const { templateList } = useApplyTemplate()
-
 const { setViewTitle } = useMetaTitle()
 
 const currentViewTitle = computed(() => {
@@ -292,18 +287,6 @@ const applyTemplate = (templateId: string) => {
     },
   })
 }
-
-const templateAccess = computed(() => {
-  if (
-    templateList &&
-    templateList.value.length > 0 &&
-    hasPermission('ticket.agent')
-  ) {
-    return true
-  }
-
-  return false
-})
 </script>
 
 <template>
@@ -350,11 +333,7 @@ const templateAccess = computed(() => {
         __('Cancel & Go Back')
       }}</CommonButton>
 
-      <ApplyTemplate
-        v-if="templateAccess"
-        :templates="templateList"
-        @select-template="applyTemplate"
-      />
+      <ApplyTemplate @select-template="applyTemplate" />
 
       <CommonButton
         size="large"

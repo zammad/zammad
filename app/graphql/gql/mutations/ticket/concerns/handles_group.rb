@@ -20,7 +20,7 @@ module Gql::Mutations::Ticket::Concerns::HandlesGroup
 
     def group_has_no_email_error
       error_response(
-        message: __('Group has no email address.'),
+        message: __('This group has no email address configured for outgoing communication.'),
         field:   'group_id'
       )
     end
