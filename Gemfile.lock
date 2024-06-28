@@ -261,7 +261,7 @@ GEM
     gli (2.21.1)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    graphql (2.3.6)
+    graphql (2.3.7)
       base64
     graphql-batch (0.6.0)
       graphql (>= 1.12.18, < 3)
