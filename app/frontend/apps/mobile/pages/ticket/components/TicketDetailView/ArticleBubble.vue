@@ -332,6 +332,7 @@ const onContextClick = () => {
           />
           <ArticleRemoteContentBadge
             v-if="remoteContentWarning"
+            :class="colorClasses"
             :original-formatting-url="remoteContentWarning"
           />
           <button

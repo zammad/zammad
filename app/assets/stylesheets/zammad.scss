@@ -7352,6 +7352,32 @@ a.list-group-item.active > .badge,
   border-color: var(--border-article-customer-selected);
 }
 
+.remote-content-message {
+  border-top: 1px solid var(--background-modifier-border);
+  white-space: normal;
+  margin: 10px -20px -10px;
+  padding: 10px 20px 10px 40px;
+  text-indent: -20px;
+  position: relative;
+  font-size: 13px;
+  cursor: pointer;
+
+  &:hover {
+    background-color: var(--background-modifier-hover);
+  }
+
+  .icon-danger {
+    vertical-align: text-bottom;
+    color: var(--text-normal);
+  }
+
+  @include phone {
+    margin-left: -10px;
+    margin-right: -10px;
+    padding: 10px 15px 10px 30px;
+  }
+}
+
 .attachments.attachments--list:not(:empty) {
   border-top: 1px solid var(--background-modifier-border);
   white-space: normal;
