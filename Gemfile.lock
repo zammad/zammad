@@ -109,8 +109,8 @@ GEM
     acts_as_list (1.2.1)
       activerecord (>= 6.1)
       activesupport (>= 6.1)
-    addressable (2.8.6)
-      public_suffix (>= 2.0.2, < 6.0)
+    addressable (2.8.7)
+      public_suffix (>= 2.0.2, < 7.0)
     android_key_attestation (0.3.0)
     argon2 (2.3.0)
       ffi (~> 1.15)
@@ -301,8 +301,9 @@ GEM
     jmespath (1.6.2)
     json (2.7.2)
     jwt (2.3.0)
-    koala (3.5.0)
+    koala (3.6.0)
       addressable
+      base64
       faraday
       faraday-multipart
       json (>= 1.8)
@@ -345,7 +346,7 @@ GEM
     multi_json (1.15.0)
     multi_xml (0.7.1)
       bigdecimal (~> 3.1)
-    multipart-post (2.4.0)
+    multipart-post (2.4.1)
     mysql2 (0.5.6)
     naught (1.1.0)
     nestful (1.1.4)
@@ -458,7 +459,7 @@ GEM
       pry (~> 0.13)
     pry-theme (1.3.1)
       coderay (~> 1.1)
-    public_suffix (5.0.5)
+    public_suffix (5.1.1)
     puma (6.4.2)
       nio4r (~> 2.0)
     pundit (2.3.2)
@@ -519,7 +520,7 @@ GEM
     rchardet (1.8.0)
     redis (4.8.1)
     regexp_parser (2.9.2)
-    rexml (3.3.0)
+    rexml (3.3.1)
       strscan
     rotp (6.3.0)
     rspec-core (3.13.0)

@@ -95,7 +95,7 @@ RSpec.describe 'External Credentials', type: :request do
               post '/api/v1/external_credentials/facebook/app_verify', params: invalid_credentials, as: :json
 
               expect(response).to have_http_status(:ok)
-              expect(json_response).to include('error' => 'type: OAuthException, code: 101, message: Error validating application. Cannot get application info due to a system error. [HTTP 400]')
+              expect(json_response).to include('error' => 'type: OAuthException, code: 101, message: Error validating application. Cannot get application info due to a system error., fbtrace_id: Ggs96Qoszeb [HTTP 400]')
             end
           end
 
@@ -106,7 +106,7 @@ RSpec.describe 'External Credentials', type: :request do
               post '/api/v1/external_credentials/facebook/app_verify', as: :json
 
               expect(response).to have_http_status(:ok)
-              expect(json_response).to include('error' => 'type: OAuthException, code: 101, message: Error validating application. Cannot get application info due to a system error. [HTTP 400]')
+              expect(json_response).to include('error' => 'type: OAuthException, code: 101, message: Error validating application. Cannot get application info due to a system error., fbtrace_id: GZPegj7a6Qi [HTTP 400]')
             end
           end
         end
@@ -139,7 +139,7 @@ RSpec.describe 'External Credentials', type: :request do
               get '/api/v1/external_credentials/facebook/link_account', as: :json
 
               expect(response).to have_http_status(:internal_server_error)
-              expect(json_response).to include('error' => 'type: OAuthException, code: 101, message: Error validating application. Cannot get application info due to a system error. [HTTP 400]')
+              expect(json_response).to include('error' => 'type: OAuthException, code: 101, message: Error validating application. Cannot get application info due to a system error., fbtrace_id: GHQfpOGoO6+ [HTTP 400]')
             end
           end
         end
@@ -172,7 +172,7 @@ RSpec.describe 'External Credentials', type: :request do
               get '/api/v1/external_credentials/facebook/callback', as: :json
 
               expect(response).to have_http_status(:internal_server_error)
-              expect(json_response).to include('error' => 'type: OAuthException, code: 101, message: Error validating application. Cannot get application info due to a system error. [HTTP 400]')
+              expect(json_response).to include('error' => 'type: OAuthException, code: 101, message: Error validating application. Cannot get application info due to a system error., fbtrace_id: FEdFTInow6l [HTTP 400]')
             end
           end
         end
