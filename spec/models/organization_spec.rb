@@ -244,7 +244,7 @@ RSpec.describe Organization, type: :model do
   end
 
   describe '#all_members' do
-    let!(:primary_user) { create(:user, organization:) }
+    let!(:primary_user) { create(:user, organization:, organizations: create_list(:organization, 3)) }
     let!(:secondary_user) { create(:user, organization: create(:organization), organizations: [organization]) }
 
     it 'lists all assigned members' do
