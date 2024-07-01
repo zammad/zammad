@@ -160,7 +160,7 @@
     "ua-parser-js": "^1.0.38",
     "uuid": "^10.0.0",
     "vite-bundle-visualizer": "^1.2.1",
-    "vue": "^3.4.30",
+    "vue": "^3.4.31",
     "vue-advanced-cropper": "^2.8.9",
     "vue-easy-lightbox": "1.19.0",
     "vue-router": "^4.4.0",
