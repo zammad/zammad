@@ -174,7 +174,7 @@
     "loader-utils": "^3.3.1",
     "postcss": "^8.4.39",
     "stylelint-config-recommended": "^14.0.1",
-    "prosemirror-model": "1.21.1",
+    "prosemirror-model": "1.21.3",
     "prosemirror-state": "1.4.3",
     "prosemirror-transform": "1.9.0",
     "prosemirror-view": "1.33.8"
