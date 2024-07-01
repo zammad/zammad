@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-14 14:38+0000\n"
+"PO-Revision-Date: 2024-06-28 22:16+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/sr_Cyrl/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.6\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1936,7 +1936,7 @@ msgstr "Број чланака"
 msgid "Article Type"
 msgstr "Тип чланка"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:351
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:352
 msgid "Article actions"
 msgstr "Радње чланака"
 
@@ -2844,7 +2844,7 @@ msgstr "Направљене измене захтевају освежење б
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:33
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:155
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:107
 msgid "Channel"
 msgstr "Канал"
@@ -10530,7 +10530,6 @@ msgid "Origin By"
 msgstr "Потиче од"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:89
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:122
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
@@ -12334,7 +12333,7 @@ msgstr "Погледајте HTTPLog за детаље."
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:444
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:342
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:343
 msgid "See less"
 msgstr "Прикажи мање"
 
@@ -12343,8 +12342,8 @@ msgstr "Прикажи мање"
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:116
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:142
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:342
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:343
 msgid "See more"
 msgstr "Прикажи више"
 
@@ -15176,13 +15175,19 @@ msgstr ""
 "изворну поруку испод и отворите је у имејл клијенту ако и даље желите да је "
 "прегледате."
 
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:140
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
+#, fuzzy
+#| msgid ""
+#| "This message contains content hosted by an external source. The content "
+#| "has been blocked by Zammad, but you can retrieve it by downloading the "
+#| "original formatting."
 msgid ""
-"This message contains content hosted by an external source. The content has "
-"been blocked by Zammad, but you can retrieve it by downloading the original "
-"formatting."
+"This message contains images or other content hosted by an external source. "
+"We blocked it, but you can download the original formatting here."
 msgstr ""
+"Ова порука има садржај који референцира удаљени систем. Садржај је блокиран "
+"од стране Zammad-а, али можете га прегледати преузимањем оригиналног формата."
 
 #: lib/secure_mailing/smime/incoming.rb:86
 msgid "This message was not signed by its sender."

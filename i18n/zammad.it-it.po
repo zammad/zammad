@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-20 04:52+0000\n"
+"PO-Revision-Date: 2024-07-01 05:17+0000\n"
 "Last-Translator: Random <random_r@users.noreply.translations.zammad.org>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/it/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.6\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1965,7 +1965,7 @@ msgstr "Numero note"
 msgid "Article Type"
 msgstr "Tipo articolo"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:351
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:352
 msgid "Article actions"
 msgstr "Azioni sull'articolo"
 
@@ -2880,7 +2880,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:33
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:155
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:107
 msgid "Channel"
 msgstr "Canale"
@@ -10661,7 +10661,6 @@ msgid "Origin By"
 msgstr "Origine da"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:89
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:122
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
@@ -12477,7 +12476,7 @@ msgstr "Vedi HTTPLog per i dettagli."
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:444
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:342
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:343
 msgid "See less"
 msgstr "Nascondi"
 
@@ -12486,8 +12485,8 @@ msgstr "Nascondi"
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:116
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:142
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:342
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:343
 msgid "See more"
 msgstr "Espandi"
 
@@ -15369,13 +15368,15 @@ msgstr ""
 "nell'elaborazione dell'HTML. Scarica il messaggio originale con il link "
 "sotto e aprilo tramite un programma di posta, se desideri vederlo."
 
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:140
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
 msgid ""
-"This message contains content hosted by an external source. The content has "
-"been blocked by Zammad, but you can retrieve it by downloading the original "
-"formatting."
+"This message contains images or other content hosted by an external source. "
+"We blocked it, but you can download the original formatting here."
 msgstr ""
+"Questo messaggio contiene immagini o altri contenuti ospitati da una fonte "
+"esterna. Li abbiamo bloccati, ma puoi scaricare la formattazione originale "
+"qui."
 
 #: lib/secure_mailing/smime/incoming.rb:86
 msgid "This message was not signed by its sender."

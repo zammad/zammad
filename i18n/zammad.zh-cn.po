@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-05-30 07:52+0000\n"
-"Last-Translator: allan-pm <ju@cicada-speech.com>\n"
+"PO-Revision-Date: 2024-06-28 22:16+0000\n"
+"Last-Translator: \"jingchun.xia\" <jingchun.xia@vesoft.com>\n"
 "Language-Team: Chinese (Simplified) <https://translations.zammad.org/"
 "projects/zammad/zammad-stable/zh_Hans/>\n"
 "Language: zh-cn\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.6\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -2201,7 +2201,7 @@ msgstr "文章数"
 msgid "Article Type"
 msgstr "文章"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:351
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:352
 #, fuzzy
 #| msgid "Article Count"
 msgid "Article actions"
@@ -3153,7 +3153,7 @@ msgstr "已更改需要数据库更新。"
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:33
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:155
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:107
 msgid "Channel"
 msgstr "渠道"
@@ -9039,7 +9039,7 @@ msgstr "John Smith"
 #: app/assets/javascripts/app/views/signup.jst.eco:4
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:50
 msgid "Join %s"
-msgstr "加入％s"
+msgstr "加入%s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 #: app/assets/javascripts/app/controllers/report.coffee:204
@@ -11392,7 +11392,6 @@ msgid "Origin By"
 msgstr "来源"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:89
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:122
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
@@ -13398,7 +13397,7 @@ msgstr "有关详细信息，请参见HTTPLOG。"
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:444
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:342
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:343
 msgid "See less"
 msgstr "显示更少"
 
@@ -13407,8 +13406,8 @@ msgstr "显示更少"
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:116
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:142
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:342
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:343
 msgid "See more"
 msgstr "显示更多..."
 
@@ -16515,12 +16514,11 @@ msgstr ""
 "由于HTML处理问题，无法显示此消息。如果您仍然希望查看下面的原始消息，并通过电"
 "子邮件客户端通过电子邮件客户端打开它。"
 
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:140
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
 msgid ""
-"This message contains content hosted by an external source. The content has "
-"been blocked by Zammad, but you can retrieve it by downloading the original "
-"formatting."
+"This message contains images or other content hosted by an external source. "
+"We blocked it, but you can download the original formatting here."
 msgstr ""
 
 #: lib/secure_mailing/smime/incoming.rb:86
