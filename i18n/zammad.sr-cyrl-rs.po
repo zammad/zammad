@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-19 01:05+0000\n"
+"PO-Revision-Date: 2024-06-27 05:56+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.6\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1885,11 +1885,9 @@ msgstr "Примени нацрт"
 msgid "Apply Shared Draft"
 msgstr "Примени заједнички нацрт"
 
-#: app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue:68
-#, fuzzy
-#| msgid "Template"
+#: app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue:81
 msgid "Apply Template"
-msgstr "Шаблон"
+msgstr "Примени шаблон"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:10
 msgid "Apply current defaults to all agents"
@@ -2052,7 +2050,7 @@ msgstr "Број чланака"
 msgid "Article Type"
 msgstr "Тип чланка"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:356
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:357
 msgid "Article actions"
 msgstr "Радње чланака"
 
@@ -2160,7 +2158,7 @@ msgid "Attached Files"
 msgstr "Attached Files"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:185
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:182
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
@@ -2674,7 +2672,7 @@ msgstr "CA"
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:149
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:146
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:106
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:160
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
@@ -2848,7 +2846,7 @@ msgstr "Откажи"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:119
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:350
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:333
 msgid "Cancel & Go Back"
 msgstr "Откажи и иди назад"
 
@@ -2977,7 +2975,6 @@ msgid "Changed:"
 msgstr "Измењено:"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:17
-#: app/views/mailer/ticket_update/ru.html.erb:11
 #: app/views/mailer/ticket_update/zh-cn.html.erb:11
 #: app/views/mailer/ticket_update/zh-tw.html.erb:11
 msgid "Changes"
@@ -3003,7 +3000,7 @@ msgstr "Направљене измене захтевају освежење б
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:33
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:155
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:110
 msgid "Channel"
 msgstr "Канал"
@@ -3803,7 +3800,7 @@ msgstr "Земља"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:365
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:344
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Додавање"
@@ -5595,7 +5592,7 @@ msgstr "Да ли сте знали? Овде можете помоћи са п�
 
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
 msgid "Did you plan to include attachments with this message?"
-msgstr ""
+msgstr "Да ли сте можда заборавили да убаците прилоге у ову поруку?"
 
 #: db/seeds/settings.rb:2048
 msgid "Digit required"
@@ -5653,7 +5650,7 @@ msgstr "Откажи"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:347
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:330
 msgid "Discard Changes"
 msgstr "Откажи промене"
 
@@ -7586,12 +7583,6 @@ msgstr "Група (читање)"
 msgid "Group Filter"
 msgstr "Филтер групе"
 
-#: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:23
-#, fuzzy
-#| msgid "add new email address"
-msgid "Group has no email address."
-msgstr "додај нову имејл адресу"
-
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:535
 msgid ""
 "Group information could not be retrieved, please check your bind user "
@@ -8468,10 +8459,8 @@ msgstr "Информације: %s"
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:9
-#: app/views/mailer/ticket_reminder_reached/ru.html.erb:9
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb:9
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb:9
-#: app/views/mailer/ticket_update/ru.html.erb:20
 #: app/views/mailer/ticket_update/zh-cn.html.erb:20
 #: app/views/mailer/ticket_update/zh-tw.html.erb:20
 msgid "Information"
@@ -10368,7 +10357,7 @@ msgstr "Нови шаблон"
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:13
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:90
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:87
 msgid "New Ticket"
 msgstr "Нови тикет"
 
@@ -10748,10 +10737,8 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Без x-zammad-session-user-id, пошиљалац није подешен!"
 
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
-#, fuzzy
-#| msgid "No Thanks!"
 msgid "No, thanks"
-msgstr "Не, хвала!"
+msgstr "Не, хвала"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
@@ -11370,7 +11357,6 @@ msgid "Origin By"
 msgstr "Потиче од"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:89
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:122
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:69
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
@@ -11433,10 +11419,8 @@ msgid "Outbound Call"
 msgstr "Одлазни позив"
 
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:22
-#, fuzzy
-#| msgid "Outbound Call"
 msgid "Outbound Call: %s"
-msgstr "Одлазни позив"
+msgstr "Одлазни позив: %s"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco:16
 msgid "Outbound:"
@@ -12281,10 +12265,8 @@ msgid "Received Call"
 msgstr "Примљен позив"
 
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:15
-#, fuzzy
-#| msgid "Received Call"
 msgid "Received Call: %s"
-msgstr "Примљен позив"
+msgstr "Примљен позив: %s"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco:5
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco:30
@@ -13292,7 +13274,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:159
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:156
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:149
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:183
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
@@ -13358,7 +13340,7 @@ msgstr "Погледајте HTTPLog за детаље."
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:444
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:347
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:348
 msgid "See less"
 msgstr "Прикажи мање"
 
@@ -13367,8 +13349,8 @@ msgstr "Прикажи мање"
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:116
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:142
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:347
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:348
 msgid "See more"
 msgstr "Прикажи више"
 
@@ -13473,10 +13455,8 @@ msgid "Send Email"
 msgstr "Пошаљи имејл поруку"
 
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:29
-#, fuzzy
-#| msgid "Send Email"
 msgid "Send Email: %s"
-msgstr "Пошаљи имејл поруку"
+msgstr "Пошаљи имејл поруку: %s"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:120
 msgid "Send Invitation"
@@ -15155,10 +15135,8 @@ msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr "Сепаратор између прикључка и броја тикета. Нпр. ’: ’."
 
 #: lib/email_address_validation.rb:34
-#, fuzzy
-#| msgid "The image is invalid."
 msgid "The email address is invalid."
-msgstr "Слика је неисправна."
+msgstr "Имејл адреса је неисправна."
 
 #: app/services/service/auth/send_admin_token.rb:39
 #: app/services/service/user/password_reset/send.rb:37
@@ -16335,6 +16313,10 @@ msgstr "Ово поље не сме садржати више од %s знак(�
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr "Ово поље је неисправно унето и не може бити послато."
 
+#: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:23
+msgid "This group has no email address configured for outgoing communication."
+msgstr ""
+
 #: app/models/group.rb:81
 msgid "This group or its children exceed the allowed nesting depth."
 msgstr ""
@@ -16390,13 +16372,19 @@ msgstr ""
 "изворну поруку испод и отворите је у имејл клијенту ако и даље желите да је "
 "прегледате."
 
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:140
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
+#, fuzzy
+#| msgid ""
+#| "This message contains content hosted by an external source. The content "
+#| "has been blocked by Zammad, but you can retrieve it by downloading the "
+#| "original formatting."
 msgid ""
-"This message contains content hosted by an external source. The content has "
-"been blocked by Zammad, but you can retrieve it by downloading the original "
-"formatting."
+"This message contains images or other content hosted by an external source. "
+"We blocked it, but you can download the original formatting here."
 msgstr ""
+"Ова порука има садржај који референцира удаљени систем. Садржај је блокиран "
+"од стране Zammad-а, али можете га прегледати преузимањем оригиналног формата."
 
 #: lib/secure_mailing/smime/incoming.rb:86
 msgid "This message was not signed by its sender."
@@ -16717,7 +16705,7 @@ msgstr "Заштита од петље при додавању чланака у
 msgid "Ticket actions"
 msgstr "Радње тикета"
 
-#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:58
+#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:59
 msgid "Ticket could not be created."
 msgstr "Није било могуће отворити тикет."
 
@@ -16743,7 +16731,7 @@ msgstr "Неуспешно снимање тикета: %s"
 msgid "Ticket has %s viewers"
 msgstr "Тикет има %s гледаоца"
 
-#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:40
+#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:41
 msgid "Ticket has been created successfully."
 msgstr "Тикет је успешно отворен."
 
@@ -17254,10 +17242,8 @@ msgid "Token Access"
 msgstr "Приступ путем кључа"
 
 #: app/models/token/permissions.rb:20
-#, fuzzy
-#| msgid "Authorization failed"
 msgid "Token authorization failed."
-msgstr "Неуспела ауторизација"
+msgstr "Неуспела ауторизација кључа."
 
 #: db/seeds/settings.rb:5114
 msgid "Token for CTI."
@@ -18055,10 +18041,8 @@ msgid "User Organization Selector - email"
 msgstr "Избор услова организације корисника - имејл"
 
 #: app/models/user/permissions.rb:48
-#, fuzzy
-#| msgid "Authorization failed"
 msgid "User authorization failed."
-msgstr "Неуспела ауторизација"
+msgstr "Неуспела ауторизација корисника."
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:104
 #: app/assets/javascripts/app/controllers/signup.coffee:98
@@ -18300,13 +18284,10 @@ msgstr "Погледај из перспективе корисника"
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:17
-#: app/views/mailer/ticket_reminder_reached/ru.html.erb:17
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb:17
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb:17
-#: app/views/mailer/ticket_update/ru.html.erb:28
 #: app/views/mailer/ticket_update/zh-cn.html.erb:28
 #: app/views/mailer/ticket_update/zh-tw.html.erb:28
-#: app/views/mailer/ticket_update_merged_into/ru.html.erb:10
 msgid "View this in Zammad"
 msgstr "Погледај у Zammad"
 
@@ -18684,10 +18665,8 @@ msgid "Yes"
 msgstr "Да"
 
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
-#, fuzzy
-#| msgid "Retry attachment download"
 msgid "Yes, add attachments now"
-msgstr "Покушај поново преузимање прилога"
+msgstr "Да, додај прилог одмах"
 
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee:4
 msgid "Yes, start real import."
@@ -19444,10 +19423,8 @@ msgid "closed"
 msgstr "затворено"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:130
-#, fuzzy
-#| msgid "Closed Tickets"
 msgid "closed tickets"
-msgstr "Затворени тикети"
+msgstr "затворени тикети"
 
 #: app/assets/javascripts/app/controllers/cti.coffee:157
 msgid "connected"
@@ -20239,10 +20216,8 @@ msgid "open"
 msgstr "отворено"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:123
-#, fuzzy
-#| msgid "Open tickets"
 msgid "open tickets"
-msgstr "Отворени тикети"
+msgstr "отворени тикети"
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:279
 msgid "optional"
@@ -20711,6 +20686,9 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "Group has no email address."
+#~ msgstr "Група нема имејл адресу."
 
 #~ msgid ""
 #~ "For privacy reasons, Zammad has blocked remote content in this message. "

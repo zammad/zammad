@@ -1891,7 +1891,7 @@ msgstr "Appliquer"
 msgid "Apply Shared Draft"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue:68
+#: app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue:81
 #, fuzzy
 #| msgid "Templates"
 msgid "Apply Template"
@@ -2066,7 +2066,7 @@ msgstr "Nombre d'articles"
 msgid "Article Type"
 msgstr "Article"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:356
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:357
 #, fuzzy
 #| msgid "Article Count"
 msgid "Article actions"
@@ -2183,7 +2183,7 @@ msgid "Attached Files"
 msgstr "Fichiers joints"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:185
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:182
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
@@ -2738,7 +2738,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:149
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:146
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:106
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:160
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
@@ -2928,7 +2928,7 @@ msgstr "Annuler"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:119
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:350
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:333
 msgid "Cancel & Go Back"
 msgstr "Annuler et revenir en arrière"
 
@@ -3081,7 +3081,6 @@ msgid "Changed:"
 msgstr "Changé"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:17
-#: app/views/mailer/ticket_update/ru.html.erb:11
 #: app/views/mailer/ticket_update/zh-cn.html.erb:11
 #: app/views/mailer/ticket_update/zh-tw.html.erb:11
 msgid "Changes"
@@ -3109,7 +3108,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:33
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:155
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:110
 msgid "Channel"
 msgstr "Canal"
@@ -3961,7 +3960,7 @@ msgstr "Pays"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:365
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:344
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Création"
@@ -5835,7 +5834,7 @@ msgstr "Écarter"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:347
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:330
 msgid "Discard Changes"
 msgstr "Annuler les modifications"
 
@@ -7923,12 +7922,6 @@ msgstr ""
 msgid "Group Filter"
 msgstr ""
 
-#: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:23
-#, fuzzy
-#| msgid "Enter your username or email address"
-msgid "Group has no email address."
-msgstr "Entrez votre nom d'utilisateur ou votre adresse courriel"
-
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:535
 msgid ""
 "Group information could not be retrieved, please check your bind user "
@@ -8885,10 +8878,8 @@ msgstr ""
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:9
-#: app/views/mailer/ticket_reminder_reached/ru.html.erb:9
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb:9
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb:9
-#: app/views/mailer/ticket_update/ru.html.erb:20
 #: app/views/mailer/ticket_update/zh-cn.html.erb:20
 #: app/views/mailer/ticket_update/zh-tw.html.erb:20
 msgid "Information"
@@ -10984,7 +10975,7 @@ msgstr "Modèles"
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:13
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:90
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:87
 msgid "New Ticket"
 msgstr "Nouveau Ticket"
 
@@ -12066,7 +12057,6 @@ msgid "Origin By"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:89
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:122
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:69
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
@@ -14127,7 +14117,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:159
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:156
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:149
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:183
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
@@ -14203,7 +14193,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:444
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:347
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:348
 msgid "See less"
 msgstr "Voir moins"
 
@@ -14212,8 +14202,8 @@ msgstr "Voir moins"
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:116
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:142
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:347
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:348
 msgid "See more"
 msgstr "Voir plus"
 
@@ -17496,6 +17486,10 @@ msgstr "Le champ ne dois pas contenir plus de %s caractères."
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr ""
 
+#: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:23
+msgid "This group has no email address configured for outgoing communication."
+msgstr ""
+
 #: app/models/group.rb:81
 msgid "This group or its children exceed the allowed nesting depth."
 msgstr ""
@@ -17544,12 +17538,11 @@ msgid ""
 "it."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:140
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
 msgid ""
-"This message contains content hosted by an external source. The content has "
-"been blocked by Zammad, but you can retrieve it by downloading the original "
-"formatting."
+"This message contains images or other content hosted by an external source. "
+"We blocked it, but you can download the original formatting here."
 msgstr ""
 
 #: lib/secure_mailing/smime/incoming.rb:86
@@ -17891,7 +17884,7 @@ msgstr ""
 msgid "Ticket actions"
 msgstr "Escalade du billet"
 
-#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:58
+#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:59
 #, fuzzy
 #| msgid "User could not be created."
 msgid "Ticket could not be created."
@@ -17927,7 +17920,7 @@ msgstr "Tickets assignés à moi: %s of %s"
 msgid "Ticket has %s viewers"
 msgstr "Nouvel aperçu"
 
-#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:40
+#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:41
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Ticket has been created successfully."
@@ -19515,13 +19508,10 @@ msgstr "Aperçu du point de vue de l'utilisateur"
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:17
-#: app/views/mailer/ticket_reminder_reached/ru.html.erb:17
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb:17
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb:17
-#: app/views/mailer/ticket_update/ru.html.erb:28
 #: app/views/mailer/ticket_update/zh-cn.html.erb:28
 #: app/views/mailer/ticket_update/zh-tw.html.erb:28
-#: app/views/mailer/ticket_update_merged_into/ru.html.erb:10
 msgid "View this in Zammad"
 msgstr "Voir ceci dans Zammad"
 
@@ -22085,6 +22075,11 @@ msgstr "... de toute la zone de texte"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ TEMPS D'ATTENTE AUJOURD'HUI"
+
+#, fuzzy
+#~| msgid "Enter your username or email address"
+#~ msgid "Group has no email address."
+#~ msgstr "Entrez votre nom d'utilisateur ou votre adresse courriel"
 
 #, fuzzy
 #~| msgid "Apply"

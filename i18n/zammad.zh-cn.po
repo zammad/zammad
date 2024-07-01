@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-05-31 01:05+0000\n"
-"Last-Translator: allan-pm <ju@cicada-speech.com>\n"
+"PO-Revision-Date: 2024-06-28 09:16+0000\n"
+"Last-Translator: \"jingchun.xia\" <jingchun.xia@vesoft.com>\n"
 "Language-Team: Chinese (Simplified) <https://translations.zammad.org/"
 "projects/zammad/zammad-development/zh_Hans/>\n"
 "Language: zh-cn\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.6\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -2155,7 +2155,7 @@ msgstr "应用草稿"
 msgid "Apply Shared Draft"
 msgstr "应用共享草稿"
 
-#: app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue:68
+#: app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue:81
 #, fuzzy
 #| msgid "Templates"
 msgid "Apply Template"
@@ -2350,7 +2350,7 @@ msgstr "文章数"
 msgid "Article Type"
 msgstr "文章"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:356
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:357
 #, fuzzy
 #| msgid "Article Count"
 msgid "Article actions"
@@ -2469,7 +2469,7 @@ msgid "Attached Files"
 msgstr "附件"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:185
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:182
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
@@ -3012,7 +3012,7 @@ msgstr "证书颁发机构"
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:149
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:146
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:106
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:160
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
@@ -3188,7 +3188,7 @@ msgstr "取消"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:119
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:350
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:333
 msgid "Cancel & Go Back"
 msgstr "取消并返回"
 
@@ -3339,7 +3339,6 @@ msgid "Changed:"
 msgstr "已修改"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:17
-#: app/views/mailer/ticket_update/ru.html.erb:11
 #: app/views/mailer/ticket_update/zh-cn.html.erb:11
 #: app/views/mailer/ticket_update/zh-tw.html.erb:11
 msgid "Changes"
@@ -3365,7 +3364,7 @@ msgstr "已更改需要数据库更新。"
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:33
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:155
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:110
 msgid "Channel"
 msgstr "渠道"
@@ -4262,7 +4261,7 @@ msgstr "国家"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:365
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:344
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "创建"
@@ -6170,7 +6169,7 @@ msgstr "放弃"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:347
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:330
 msgid "Discard Changes"
 msgstr "放弃更改"
 
@@ -8270,12 +8269,6 @@ msgstr "组（读）"
 msgid "Group Filter"
 msgstr "组过滤器"
 
-#: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:23
-#, fuzzy
-#| msgid "Enter your username or email address"
-msgid "Group has no email address."
-msgstr "请输入您的用户名或邮件地址"
-
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:535
 msgid ""
 "Group information could not be retrieved, please check your bind user "
@@ -9219,10 +9212,8 @@ msgstr "信息：％s"
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:9
-#: app/views/mailer/ticket_reminder_reached/ru.html.erb:9
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb:9
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb:9
-#: app/views/mailer/ticket_update/ru.html.erb:20
 #: app/views/mailer/ticket_update/zh-cn.html.erb:20
 #: app/views/mailer/ticket_update/zh-tw.html.erb:20
 msgid "Information"
@@ -9637,7 +9628,7 @@ msgstr "John Smith"
 #: app/assets/javascripts/app/views/signup.jst.eco:4
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:50
 msgid "Join %s"
-msgstr "加入％s"
+msgstr "加入%s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 #: app/assets/javascripts/app/controllers/report.coffee:204
@@ -11363,7 +11354,7 @@ msgstr "模板"
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:13
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:90
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:87
 msgid "New Ticket"
 msgstr "新的工单"
 
@@ -12503,7 +12494,6 @@ msgid "Origin By"
 msgstr "来源"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:89
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:122
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:69
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
@@ -14661,7 +14651,7 @@ msgstr "仅在给出主要组织时才允许二级组织。"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:159
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:156
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:149
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:183
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
@@ -14741,7 +14731,7 @@ msgstr "有关详细信息，请参见HTTPLOG。"
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:444
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:347
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:348
 msgid "See less"
 msgstr "显示更少"
 
@@ -14750,8 +14740,8 @@ msgstr "显示更少"
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:116
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:142
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:347
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:348
 msgid "See more"
 msgstr "显示更多..."
 
@@ -18044,6 +18034,10 @@ msgstr "密码无效，长度至少为%s个字符！"
 msgid "This field was configured incorrectly and can't be submitted."
 msgstr "该字段的配置不正确，无法提交。"
 
+#: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:23
+msgid "This group has no email address configured for outgoing communication."
+msgstr ""
+
 #: app/models/group.rb:81
 msgid "This group or its children exceed the allowed nesting depth."
 msgstr "该小组或其子女超过了允许的筑巢深度。"
@@ -18094,12 +18088,11 @@ msgstr ""
 "由于HTML处理问题，无法显示此消息。如果您仍然希望查看下面的原始消息，并通过电"
 "子邮件客户端通过电子邮件客户端打开它。"
 
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:120
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:140
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
 msgid ""
-"This message contains content hosted by an external source. The content has "
-"been blocked by Zammad, but you can retrieve it by downloading the original "
-"formatting."
+"This message contains images or other content hosted by an external source. "
+"We blocked it, but you can download the original formatting here."
 msgstr ""
 
 #: lib/secure_mailing/smime/incoming.rb:86
@@ -18480,7 +18473,7 @@ msgstr "售票扳机循环保护文章每张票"
 msgid "Ticket actions"
 msgstr "服务请求升级"
 
-#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:58
+#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:59
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "Ticket could not be created."
@@ -18514,7 +18507,7 @@ msgstr "\"指派给你有 %s 笔"
 msgid "Ticket has %s viewers"
 msgstr "新增工单概览"
 
-#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:40
+#: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:41
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Ticket has been created successfully."
@@ -20257,13 +20250,10 @@ msgstr "切换为该用户视角"
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:17
-#: app/views/mailer/ticket_reminder_reached/ru.html.erb:17
 #: app/views/mailer/ticket_reminder_reached/zh-cn.html.erb:17
 #: app/views/mailer/ticket_reminder_reached/zh-tw.html.erb:17
-#: app/views/mailer/ticket_update/ru.html.erb:28
 #: app/views/mailer/ticket_update/zh-cn.html.erb:28
 #: app/views/mailer/ticket_update/zh-tw.html.erb:28
-#: app/views/mailer/ticket_update_merged_into/ru.html.erb:10
 msgid "View this in Zammad"
 msgstr "到 Zammad 系统查看"
 
@@ -22830,6 +22820,11 @@ msgstr "...整个文本区域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅轮候时间"
+
+#, fuzzy
+#~| msgid "Enter your username or email address"
+#~ msgid "Group has no email address."
+#~ msgstr "请输入您的用户名或邮件地址"
 
 #~ msgid "Not authorized (token)!"
 #~ msgstr "未经授权（令牌）！"
