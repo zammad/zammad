@@ -4284,6 +4284,7 @@ footer {
   bottom: 0;
 
   @include bidi-style(left, $sidebarWidth + $navigationWidth, right, 0);
+  @include bidi-style(right, 0, left, $sidebarWidth + $navigationWidth);
 
   min-width: $minWidth - $sidebarWidth - $navigationWidth;
   background: var(--background-secondary);
@@ -4295,23 +4296,21 @@ footer {
 
   @include small-desktop {
     @include bidi-style(left, $navigationWidth, right, 0);
+    @include bidi-style(right, 0, left, $navigationWidth);
 
     min-width: $minWidth - $sidebarWidth;
   }
 
   @include desktop {
-    @include bidi-style(
-      left,
-      $desktopSidebarWidth + $navigationWidth,
-      right,
-      0
-    );
+    @include bidi-style(left, $sidebarWidth + $navigationWidth, right, 0);
+    @include bidi-style(right, 0, left, $sidebarWidth + $navigationWidth);
 
-    min-width: $minWidth - $desktopSidebarWidth;
+    min-width: $minWidth - $sidebarWidth;
   }
 
   &.no-sidebar {
     @include bidi-style(left, $navigationWidth, right, 0);
+    @include bidi-style(right, 0, left, $navigationWidth);
 
     min-width: $minWidth - $navigationWidth;
 
@@ -4322,11 +4321,12 @@ footer {
 
   @include phone {
     @include bidi-style(left, $mobileNavigationWidth, right, 0);
+    @include bidi-style(right, 0, left, $mobileNavigationWidth);
 
     min-width: 0;
 
-    .navigation.is-not-collapsed ~ & {
-      @include bidi-style(left, $mobileNavigationWidthOpen, right, 0);
+    .navigation.is-not-collapsed ~ .content & {
+      @include bidi-style(left, 0, right, 0);
     }
   }
 }

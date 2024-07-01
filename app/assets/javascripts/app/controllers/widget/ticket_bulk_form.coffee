@@ -33,7 +33,6 @@ class App.TicketBulkForm extends App.Controller
     App.TicketOverviewCollection.unbindById(@bindId)
 
   render: ->
-    @el.css('right', App.Utils.getScrollBarWidth())
     @el.addClass('no-sidebar') if @noSidebar
 
     @html(App.view('agent_ticket_view/bulk')())
