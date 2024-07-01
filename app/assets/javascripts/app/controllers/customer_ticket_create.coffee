@@ -174,6 +174,10 @@ class CustomerTicketCreate extends App.ControllerAppContent
       ticket.save(
         done: ->
 
+          # Reset article after ticket create, to avoid unwanted sideeffects at other places.
+          localTicket = App.Ticket.findNative(@id)
+          localTicket.article = undefined
+
           # add sidebar params
           if ui.sidebarWidget
             ui.sidebarWidget.commit(ticket_id: @id)
