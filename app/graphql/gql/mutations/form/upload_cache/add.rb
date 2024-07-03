@@ -2,6 +2,8 @@
 
 module Gql::Mutations
   class Form::UploadCache::Add < BaseMutation
+    include Gql::Mutations::Form::UploadCache::Concerns::HandlesAuthorization
+
     description 'Upload files for a form'
 
     argument :form_id, Gql::Types::FormIdType, 'FormID for the uploads.'

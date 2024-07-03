@@ -2,6 +2,8 @@
 
 module Gql::Mutations
   class Form::UploadCache::Remove < BaseMutation
+    include Gql::Mutations::Form::UploadCache::Concerns::HandlesAuthorization
+
     description 'Remove uploaded files for a form'
 
     argument :form_id, Gql::Types::FormIdType, 'FormID for the uploads.'

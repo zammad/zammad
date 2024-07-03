@@ -3,18 +3,31 @@
 require 'rails_helper'
 
 describe UploadCachePolicy do
-  subject { described_class.new(user, record) }
+  subject { described_class.new(effective_user, record) }
 
-  let(:record) { UploadCache.new(123) }
   let(:user)   { create(:user) }
+  let(:record) do
+    cache = UploadCache.new(123)
 
-  context 'without a user' do
-    let(:user) { nil }
+    cache.add(
+      filename:      'hello_world.txt',
+      data:          'Hello, World!',
+      preferences:   { 'Content-Type' => 'text/plain' },
+      created_by_id: user.id
+    )
 
-    it { is_expected.to permit_actions :show, :destroy }
+    cache
   end
 
-  context 'with a user' do
+  context 'with different user' do
+    let(:effective_user) { create(:user) }
+
+    it { is_expected.to forbid_actions :show, :destroy }
+  end
+
+  context 'with given user' do
+    let(:effective_user) { user }
+
     it { is_expected.to permit_actions :show, :destroy }
   end
 end
