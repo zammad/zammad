@@ -11,7 +11,7 @@
     "lint:js": "eslint --cache --cache-location ./tmp/eslintcache.js --cache-strategy content -c .eslintrc.js --ext .js,.ts,.vue",
     "lint:js:fix": "pnpm lint:js app/frontend/ .eslint-plugin-zammad/ --fix",
     "lint:css": "stylelint **/*.{css,vue,scss}",
-    "lint:css:fix": "yarn lint:css --fix",
+    "lint:css:fix": "pnpm lint:css --fix",
     "test": "VTL_SKIP_AUTO_CLEANUP=true TZ=utc vitest",
     "test:ct": "cd .dev/cypress; CY_OPEN=true pnpm cypress open --component --project ../../ --config-file .dev/cypress/cypress.config.mjs",
     "test:ci:ct": "cd .dev/cypress; CI=true pnpm cypress run --component --project ../../ --config-file .dev/cypress/cypress.config.mjs --browser electron",
