@@ -14,19 +14,17 @@ module Tasks
           'Execute all package related precompilations.'
         end
 
-        def self.yarn_compile
+        def self.setup_javascript_environment
           return if !::Package.app_frontend_files?
 
           if ::Package.app_package_installation?
-            exec_command('zammad run yarn install')
-            exec_command('zammad run yarn add npx')
-            exec_command('zammad run yarn generate-setting-types')
-            exec_command('zammad run yarn run generate-graphql-api')
+            exec_command('zammad run pnpm install --production=false')
+            exec_command('zammad run pnpm run generate-setting-types')
+            exec_command('zammad run pnpm run generate-graphql-api')
           else
-            exec_command('yarn install')
-            exec_command('yarn add npx')
-            exec_command('yarn generate-setting-types')
-            exec_command('yarn run generate-graphql-api')
+            exec_command('pnpm install --production=false')
+            exec_command('pnpm run generate-setting-types')
+            exec_command('pnpm run generate-graphql-api')
           end
         end
 
@@ -39,7 +37,7 @@ module Tasks
         end
 
         def self.task_handler
-          yarn_compile
+          setup_javascript_environment
           assets_precompile
 
           puts 'done.'

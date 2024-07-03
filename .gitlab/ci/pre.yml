@@ -13,9 +13,9 @@
   cache: !reference [.cache, read_write_nodejs]
   before_script: []
   script:
-    - !reference [.scripts, yarn_install_all]
-    - yarn cypress:install
-    - yarn --cwd ./.eslint-plugin-zammad install
+    - !reference [.scripts, pnpm_install_all]
+    - pnpm cypress:install
+    - pnpm --dir ./.eslint-plugin-zammad install
   after_script: []
 
 'push to github':

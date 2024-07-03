@@ -16,7 +16,7 @@ assets:build:test:
     VITE_TEST_MODE: 1
     ZAMMAD_SAFE_MODE: 1
   script:
-    - !reference [.scripts, yarn_install]
+    - !reference [.scripts, pnpm_install]
     - !reference [.scripts, zammad_db_unseeded]
     - node -v
     # Don't require Redis.
@@ -34,7 +34,7 @@ assets:build:production:
     RAILS_ENV: 'production'
     ZAMMAD_SAFE_MODE: 1
   script:
-    - !reference [.scripts, yarn_install]
+    - !reference [.scripts, pnpm_install]
     - !reference [.scripts, zammad_db_unseeded]
     - node -v
     # Don't require Redis.

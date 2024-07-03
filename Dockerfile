@@ -1,11 +1,13 @@
 FROM node:20-slim as node
+RUN npm -g install pnpm
+RUN rm /usr/local/bin/yarn /usr/local/bin/yarnpkg
 
 
 FROM ruby:3.2.4-slim AS builder
 ARG DEBIAN_FRONTEND=noninteractive
 ARG RAILS_ENV=production
 ARG ZAMMAD_DIR=/opt/zammad
-COPY --from=node /opt /opt
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 COPY --from=node /usr/local/bin /usr/local/bin
 SHELL ["/bin/bash", "-e", "-o", "pipefail", "-c"]
 WORKDIR ${ZAMMAD_DIR}

@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-// To update snapshots, run `yarn cypress:snapshots`
+// To update snapshots, run `pnpm cypress:snapshots`
 // DO NOT update snapshots, when running with --open flag (Cypress GUI)
 
 import { mountFormField, checkFormMatchesSnapshot } from '#cy/utils.ts'

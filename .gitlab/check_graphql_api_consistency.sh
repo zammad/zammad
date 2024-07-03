@@ -18,12 +18,12 @@ function serialize_graphql_api() {
 
 echo "Checking if auto-generated GraphQL API is up-to-date…"
 serialize_graphql_api $TMP_FILE_BEFORE
-yarn generate-graphql-api
+pnpm generate-graphql-api
 serialize_graphql_api $TMP_FILE_AFTER
 if ! cmp $TMP_FILE_BEFORE $TMP_FILE_AFTER
 then
   diff $TMP_FILE_BEFORE $TMP_FILE_AFTER
-  echo "Use the command 'yarn run generate-graphql-api' to re-generate the API files."
+  echo "Use the command 'pnpm run generate-graphql-api' to re-generate the API files."
   exit 1
 else
   echo "API files are up-to-date."

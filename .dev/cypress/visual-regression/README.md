@@ -6,20 +6,20 @@ This command only _updates_ snapshots. Cypress will run only tests with `*-visua
 
 ```sh
 # from the root directory
-$ yarn cypress:snapshots
+$ pnpm cypress:snapshots
 ```
 
 Please, make sure snapshot is actually correct before pushing your changes.
 
 ## Running Tests
 
-Although you may run visual tests using `yarn test:ci:ct` command, this will execute them in your current development environment. However, stored image snapshots were generated in Docker containers in order to achieve consistent environment every time. Due to multiple factors (i.e. screen density, font resolution, browser version, etc), your mileage may vary and you may receive false negatives.
+Although you may run visual tests using `pnpm test:ci:ct` command, this will execute them in your current development environment. However, stored image snapshots were generated in Docker containers in order to achieve consistent environment every time. Due to multiple factors (i.e. screen density, font resolution, browser version, etc), your mileage may vary and you may receive false negatives.
 
 It is therefore advisable to run the visual regression tests in the same environment where the image snapshots are normally updated. You can do this by setting an environment variable and running the snapshots command:
 
 ```sh
 # from the root directory
-$ CYPRESS_UPDATE_SNAPSHOTS=false yarn cypress:snapshots
+$ CYPRESS_UPDATE_SNAPSHOTS=false pnpm cypress:snapshots
 ```
 
 ## Multiple Architecture (AMD64 vs ARM)

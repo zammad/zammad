@@ -20,8 +20,13 @@ Linters can also be run manually:
 # Robocop
 $ bundle exec rubocop --parallel
 
+<<<<<<< HEAD
 # Type checks, ESLint & Stylelint
 $ yarn lint
+=======
+# ESLint
+$ pnpm lint
+>>>>>>> acc8ee47e4 (Maintenance: Switch from yarn to pnpm package manager for Node.js.)
 
 # Just type checking
 $ yarn lint:ts
@@ -30,7 +35,7 @@ $ yarn lint:ts
 $ yarn lint:js:fix
 
 # Stylelint
-$ yarn lint:css
+$ pnpm lint:css
 
 # Stylelint with automatic fixing
 $ yarn lint:css:fix

@@ -23,4 +23,4 @@ bundle exec rubocop --parallel
 echo "Coffeelint check…"
 coffeelint --rules ./.dev/coffeelint/rules/* app/
 echo "Type, ESLint & Stylelint checks…"
-yarn lint
+pnpm lint

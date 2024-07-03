@@ -1,8 +1,8 @@
 # Recreating the Static Zammad Chat Build
 
 ```
-$ yarn install
-$ npx gulp build
+$ pnpm install
+$ pnpm exec gulp build
 [11:13:03] Using gulpfile zammad/public/assets/chat/gulpfile.js
 [11:13:03] Starting 'build'...
 [11:13:03] Starting 'js'...
@@ -19,7 +19,7 @@ $ npx gulp build
 This is useful when developing. Gulp will watch the files for changes and start rebuilds automatically.
 
 ```
-npx gulp
+pnpm exec gulp
 [11:14:46] Using gulpfile ~/wz/zammad/public/assets/chat/gulpfile.js
 [11:14:46] Starting 'default'...
 ```

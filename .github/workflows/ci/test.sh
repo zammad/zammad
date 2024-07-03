@@ -12,8 +12,7 @@ echo "Checking assets generation…"
 bundle exec rake assets:precompile
 
 echo "Running front end tests…"
-yarn test
-yarn test:ci:ct
+pnpm test
 
 echo "Running basic rspec tests…"
 bundle exec rake zammad:db:init
