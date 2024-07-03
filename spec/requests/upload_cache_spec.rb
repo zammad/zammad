@@ -5,13 +5,14 @@ require 'rails_helper'
 RSpec.describe 'UploadCache', type: :request do
 
   let(:user)         { create(:customer) }
+  let(:auth)         { user }
   let(:form_id)      { SecureRandom.uuid }
   let(:upload_cache) { UploadCache.new(form_id) }
 
   # required for adding items to the Store
   before do
-    UserInfo.current_user_id = 1
-    authenticated_as(user)
+    UserInfo.current_user_id = user.id
+    authenticated_as(auth)
   end
 
   describe '/upload_caches/:id' do
@@ -56,6 +57,16 @@ RSpec.describe 'UploadCache', type: :request do
           delete "/api/v1/upload_caches/#{form_id}", as: :json
         end.to change(upload_cache, :attachments).to([])
       end
+
+      context 'with invalid user' do
+        let(:auth) { create(:customer) }
+
+        it 'returns forbidden' do
+          delete "/api/v1/upload_caches/#{form_id}", as: :json
+
+          expect(response).to have_http_status(:forbidden)
+        end
+      end
     end
   end
 
@@ -79,6 +90,17 @@ RSpec.describe 'UploadCache', type: :request do
         delete "/api/v1/upload_caches/#{form_id}/items/#{store_id}", as: :json
 
         expect(Store.exists?(store_id)).to be(false)
+      end
+
+      context 'with invalid user' do
+        let(:auth) { create(:customer) }
+
+        it 'returns forbidden' do
+          store_id = upload_cache.attachments.first.id
+          delete "/api/v1/upload_caches/#{form_id}/items/#{store_id}", as: :json
+
+          expect(response).to have_http_status(:forbidden)
+        end
       end
     end
   end

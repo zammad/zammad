@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class UploadCachesController < ApplicationController
-  prepend_before_action :authentication_check
+  prepend_before_action :authenticate_and_authorize!
 
   # POST /upload_caches/1
   def update
@@ -16,9 +16,10 @@ class UploadCachesController < ApplicationController
     }
 
     store = cache.add(
-      filename:    file.original_filename,
-      data:        file.read,
-      preferences: headers_store
+      filename:      file.original_filename,
+      data:          file.read,
+      preferences:   headers_store,
+      created_by_id: current_user.id
     )
 
     # return result

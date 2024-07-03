@@ -48,6 +48,8 @@ class Controllers::AttachmentsControllerPolicy < Controllers::ApplicationControl
   end
 
   def store_object_owner
+    return Store.find(download_file.id) if store_object_class == UploadCache
+
     store_object_class
       &.find download_file.o_id
   end
