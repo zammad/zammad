@@ -36,3 +36,31 @@ export const generateFingerprint = () => {
     }${getMajorVersion(os.version)}${windowResolution}${timezone}`,
   ).toString()
 }
+
+export const setCursorAtTextEnd = (element: HTMLElement) => {
+  const range = document.createRange()
+  const selection = window.getSelection()
+  range.selectNodeContents(element)
+  range.collapse(false)
+
+  if (!selection) return
+
+  selection.removeAllRanges()
+  selection.addRange(range)
+}
+
+export const setPastedTextToCurrentSelection = (
+  event: ClipboardEvent,
+  options = { format: 'text/plain' },
+) => {
+  const text = event.clipboardData?.getData(options.format)
+
+  const selection = window.getSelection()
+
+  if (!selection?.rangeCount || !text?.length) return false
+
+  selection.deleteFromDocument()
+  selection.getRangeAt(0).insertNode(document.createTextNode(text))
+
+  selection.collapseToEnd()
+}

@@ -45,7 +45,7 @@ RSpec.describe 'Mobile > Tickets', app: :mobile, authenticated_as: :agent, type:
 
       link.find('span', text: 'Test Ticket').click
 
-      wait_for_gql('apps/mobile/pages/ticket/graphql/queries/ticket.graphql')
+      wait_for_gql('shared/entities/ticket/graphql/queries/ticket.graphql')
 
       find_button('Go back').click
 

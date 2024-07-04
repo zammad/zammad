@@ -193,7 +193,7 @@ const handleTooltipAddEvent = (event: MouseEvent | TouchEvent) => {
       event: currentEvent as MouseEvent,
     })
     isTooltipInDom = true
-  }, 500) // Sets a 500ms delay before showing tooltip as native
+  }, 300) // Sets a delay before showing tooltip as native
 }
 
 const handleEvent = (event: MouseEvent | TouchEvent) => {

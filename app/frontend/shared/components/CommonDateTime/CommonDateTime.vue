@@ -40,6 +40,7 @@ const outputAbsoluteDate = computed(() => {
 
 <template>
   <time v-if="outputFormat === 'absolute'" data-test-id="date-time-absolute">
+    <slot />
     {{ outputAbsoluteDate }}
   </time>
   <time
@@ -48,6 +49,7 @@ const outputAbsoluteDate = computed(() => {
     :datetime="dateTime"
     data-test-id="date-time-relative"
   >
+    <slot name="prefix" />
     {{ i18n.relativeDateTime(dateTime) }}
   </time>
 </template>

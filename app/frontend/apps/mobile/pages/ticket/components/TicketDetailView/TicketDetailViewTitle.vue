@@ -4,14 +4,15 @@
 import { computed, toRef } from 'vue'
 
 import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
-import CommonTicketEscalationIndicator from '#shared/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue'
-import CommonTicketPriorityIndicator from '#shared/components/CommonTicketPriorityIndicator/CommonTicketPriorityIndicator.vue'
-import CommonTicketStateIndicator from '#shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import { useTicketChannel } from '#shared/entities/ticket/composables/useTicketChannel.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
+
+import CommonTicketEscalationIndicator from '#mobile/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue'
+import CommonTicketPriorityIndicator from '#mobile/components/CommonTicketPriorityIndicator/CommonTicketPriorityIndicator.vue'
+import CommonTicketStateIndicator from '#mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 
 interface Props {
   ticket: TicketById

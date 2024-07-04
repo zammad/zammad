@@ -30,10 +30,10 @@ import {
   ticketArticleObjectAttributes,
 } from '#mobile/entities/ticket/__tests__/mocks/ticket-mocks.ts'
 
+import { TicketDocument } from '../../../../../../shared/entities/ticket/graphql/queries/ticket.api.ts'
 import { TicketLiveUserDeleteDocument } from '../../graphql/mutations/live-user/delete.api.ts'
 import { TicketLiveUserUpsertDocument } from '../../graphql/mutations/live-user/ticketLiveUserUpsert.api.ts'
 import { TicketArticlesDocument } from '../../graphql/queries/ticket/articles.api.ts'
-import { TicketDocument } from '../../graphql/queries/ticket.api.ts'
 import { TicketLiveUserUpdatesDocument } from '../../graphql/subscriptions/live-user/ticketLiveUserUpdates.api.ts'
 import { TicketArticleUpdatesDocument } from '../../graphql/subscriptions/ticketArticlesUpdates.api.ts'
 import { TicketUpdatesDocument } from '../../graphql/subscriptions/ticketUpdates.api.ts'

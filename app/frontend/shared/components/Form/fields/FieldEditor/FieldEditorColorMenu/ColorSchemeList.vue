@@ -4,11 +4,11 @@
 import { computed } from 'vue'
 
 import { getEditorColorMenuClasses } from '#shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/initializeEditorColorMenu.ts'
+import { getFieldEditorClasses } from '#shared/components/Form/initializeFieldEditor.ts'
 import type {
   ColorGroup,
   ColorScheme,
-} from '#shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/types.ts'
-import { getFieldEditorClasses } from '#shared/components/Form/initializeFieldEditor.ts'
+} from '#shared/composables/useColorPallet/types.ts'
 
 import type { Editor } from '@tiptap/core'
 

@@ -27,6 +27,7 @@ import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
+import CommonBreadcrumb from '#desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonButtonGroup from '#desktop/components/CommonButtonGroup/CommonButtonGroup.vue'
 import type { CommonButtonItem } from '#desktop/components/CommonButtonGroup/types.ts'
@@ -34,6 +35,7 @@ import CommonDialog from '#desktop/components/CommonDialog/CommonDialog.vue'
 import { useDialog } from '#desktop/components/CommonDialog/useDialog.ts'
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
+import CommonInlineEdit from '#desktop/components/CommonInlineEdit/CommonInlineEdit.vue'
 import CommonInputCopyToClipboard from '#desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue'
 import CommonPopoverMenu from '#desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
@@ -44,6 +46,7 @@ import { useTabManager } from '#desktop/components/CommonTabManager/useTabManage
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import ThemeSwitch from '#desktop/components/ThemeSwitch/ThemeSwitch.vue'
 import type { ThemeSwitchInstance } from '#desktop/components/ThemeSwitch/types.ts'
+import { useCopyToClipboard } from '#desktop/composables/useCopyToClipboard.ts'
 
 const alphabetOptions = computed(() =>
   [...Array(26).keys()].map((i) => ({
@@ -52,6 +55,8 @@ const alphabetOptions = computed(() =>
     disabled: Math.random() < 0.5,
   })),
 )
+
+const { copyToClipboard } = useCopyToClipboard()
 
 const longOption = ref({
   value: 999,
@@ -1123,7 +1128,20 @@ const popoverPlacementOptions = [
   },
 ]
 
+const breadcrumbItems = [
+  {
+    label: 'Tickets',
+    icon: 'logo-flat',
+  },
+  {
+    label: '123456',
+    route: 'tickets/1',
+  },
+]
+
 const popoverHideArrow = ref(false)
+
+const inlineEditValue = ref('Edit me inline')
 </script>
 
 <template>
@@ -1199,6 +1217,19 @@ const popoverHideArrow = ref(false)
         <div class="w-1/2 space-x-3 space-y-2 py-2">
           <CommonButtonGroup :items="buttonGroupOptions" />
         </div>
+      </div>
+
+      <div class="flex">
+        <CommonBreadcrumb class="grow" :items="breadcrumbItems">
+          <template #trailing>
+            <CommonIcon
+              name="clipboard2"
+              size="xs"
+              class="text-blue-800"
+              @click="copyToClipboard('123456')"
+            />
+          </template>
+        </CommonBreadcrumb>
       </div>
 
       <div class="w-1/2">
@@ -1553,6 +1584,21 @@ const popoverHideArrow = ref(false)
           ]"
         />
       </section>
+
+      <div>
+        <span> Inline Edit </span>
+        <CommonInlineEdit
+          :value="inlineEditValue"
+          name="test"
+          @submit-edit="
+            (value) => {
+              inlineEditValue = value
+            }
+          "
+        >
+          <h1>${{ inlineEditValue }}</h1>
+        </CommonInlineEdit>
+      </div>
 
       <div class="w-1/2">
         <h2 class="mb-2 mt-8">Flyout and Dialog</h2>

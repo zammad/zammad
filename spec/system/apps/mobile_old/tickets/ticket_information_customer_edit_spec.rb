@@ -23,7 +23,7 @@ RSpec.describe 'Mobile > Ticket > Information > Customer Edit', app: :mobile, au
   before do
     visit "/tickets/#{ticket.id}"
 
-    wait_for_gql('apps/mobile/pages/ticket/graphql/queries/ticket.graphql')
+    wait_for_gql('shared/entities/ticket/graphql/queries/ticket.graphql')
     wait_for_gql('shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.graphql')
 
     # Switch to ticket information screen.

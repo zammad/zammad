@@ -24,7 +24,7 @@ RSpec.shared_examples 'mobile app: create article' do |type_label, internal: fal
     find_button('Done').click
     find_button('Save').click
 
-    wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/update.graphql')
+    wait_for_gql('shared/entities/ticket/graphql/mutations/update.graphql')
   end
 
   context 'when ticket was not created as the same type', if: conditional do

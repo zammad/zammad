@@ -42,7 +42,7 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
     it 'shows inline images and attachments correctly' do
       visit "/tickets/#{article.ticket_id}"
 
-      wait_for_gql 'apps/mobile/pages/ticket/graphql/queries/ticket.graphql'
+      wait_for_gql 'shared/entities/ticket/graphql/queries/ticket.graphql'
       expect(page).to have_text('Ticket Title')
 
       # Inline image is present with cid: replaced by REST API URL.

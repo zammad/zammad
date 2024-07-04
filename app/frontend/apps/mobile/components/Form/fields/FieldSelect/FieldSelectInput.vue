@@ -3,7 +3,6 @@
 <script setup lang="ts">
 import { ref, toRef } from 'vue'
 
-import CommonTicketStateIndicator from '#shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import type { SelectContext } from '#shared/components/Form/fields/FieldSelect/types.ts'
 import useSelectOptions from '#shared/composables/useSelectOptions.ts'
@@ -14,6 +13,7 @@ import { i18n } from '#shared/i18n.ts'
 
 import CommonSelect from '#mobile/components/CommonSelect/CommonSelect.vue'
 import type { CommonSelectInstance } from '#mobile/components/CommonSelect/types.ts'
+import CommonTicketStateIndicator from '#mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 
 interface Props {
   context: SelectContext

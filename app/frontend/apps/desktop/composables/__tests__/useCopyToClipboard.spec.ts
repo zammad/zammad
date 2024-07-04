@@ -52,7 +52,7 @@ describe('useCopyToClipboard', () => {
     await waitForNextTick()
 
     expect(notifyMock).toHaveBeenCalledWith(
-      expect.objectContaining({ message: 'Copied!' }),
+      expect.objectContaining({ message: 'Copied.' }),
     )
   })
 

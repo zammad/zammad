@@ -16,6 +16,26 @@ const route: RouteRecordRaw[] = [
       level: 2,
     },
   },
+  {
+    path: '/tickets/:internalId(\\d+)',
+    alias: ['/ticket/:internalId(\\d+)', '/ticket/zoom/:internalId(\\d+)'],
+    name: 'TicketDetail',
+    // :todo check/clarify for available ticket id
+    props: true,
+    component: () => import('./views/TicketDetailView.vue'),
+    // children: [] //:TODO add when we are ready
+    meta: {
+      title: __('Ticket Detail'),
+      requiresAuth: true,
+      requiredPermission: ['ticket.agent', 'ticket.customer'],
+      level: 2,
+    },
+  },
+  {
+    path: '/ticket/zoom/:internalId(\\d+)/:articleId(\\d+)',
+    redirect: (to) =>
+      `/tickets/${to.params.internalId}#article-${to.params.articleId}`,
+  },
 ]
 
 export default route

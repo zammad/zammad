@@ -34,6 +34,7 @@ export interface Props {
    */
   showInlineHelp?: boolean
   showSidebar?: boolean
+  noPadding?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -80,7 +81,10 @@ const { durations } = useTransitionConfig()
       }"
       :style="$slots.sideBar && showSidebar ? gridColumns : undefined"
     >
-      <LayoutMain :background-variant="backgroundVariant">
+      <LayoutMain
+        :no-padding="noPadding"
+        :background-variant="backgroundVariant"
+      >
         <div
           data-test-id="layout-wrapper"
           class="flex grow flex-col gap-3"

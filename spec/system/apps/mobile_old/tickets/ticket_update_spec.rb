@@ -26,7 +26,7 @@ RSpec.describe 'Mobile > Ticket > Update', app: :mobile, authenticated_as: :agen
 
   def submit_form
     find_button('Save').click
-    wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/update.graphql')
+    wait_for_gql('shared/entities/ticket/graphql/mutations/update.graphql')
   end
 
   #  - policy says that only agent with "read" access, but not "change" access can view this

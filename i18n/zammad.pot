@@ -414,7 +414,8 @@ msgstr ""
 msgid "%{name} is a reserved word"
 msgstr ""
 
-#: app/frontend/shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
+#: app/frontend/apps/desktop/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:47
+#: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
 msgstr ""
 
@@ -2086,7 +2087,7 @@ msgstr ""
 msgid "Branding"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue:17
+#: app/frontend/apps/desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue:33
 msgid "Breadcrumb navigation"
 msgstr ""
 
@@ -2315,6 +2316,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee:3
 msgid "Cancel & Sign out"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:76
+msgid "Cancel Update"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:20
@@ -3088,8 +3093,11 @@ msgid "Conversion of retweets into tickets is turned off."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_base.coffee:123
-#: app/frontend/apps/desktop/composables/useCopyToClipboard.ts:21
 msgid "Copied!"
+msgstr ""
+
+#: app/frontend/apps/desktop/composables/useCopyToClipboard.ts:21
+msgid "Copied."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee:30
@@ -3119,6 +3127,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:276
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:80
+msgid "Copy ticket number"
 msgstr ""
 
 #: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco:14
@@ -3350,6 +3362,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:14
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:100
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:104
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:144
 #: app/models/report.rb:22
 msgid "Created"
@@ -6695,6 +6708,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
 msgid "High priority"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/HighlightMenu.vue:70
+msgid "Highlight"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
@@ -14641,6 +14658,10 @@ msgstr ""
 msgid "Ticket Customer"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/routes.ts:28
+msgid "Ticket Detail"
+msgstr ""
+
 #: db/seeds/settings.rb:2141
 msgid "Ticket Hook"
 msgstr ""
@@ -14651,6 +14672,10 @@ msgstr ""
 
 #: db/seeds/settings.rb:2187
 msgid "Ticket Hook Position"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:8
+msgid "Ticket Information Injection Key"
 msgstr ""
 
 #: db/seeds/settings.rb:2219
@@ -14745,6 +14770,10 @@ msgstr ""
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:77
+msgid "Ticket Update"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:105
 msgid "Ticket actions"
 msgstr ""
@@ -14823,6 +14852,7 @@ msgstr ""
 msgid "Ticket update"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:135
 msgid "Ticket updated successfully."
 msgstr ""
@@ -14837,6 +14867,7 @@ msgstr ""
 msgid "Ticket will escalate (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>\" will escalate at \"#{ticket.escalation_at}\"!</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n  Information:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:36
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
 msgid "Ticket with specified ID was not found. Try checking the URL for errors."
 msgstr ""
@@ -16594,6 +16625,7 @@ msgstr ""
 msgid "You have insufficient rights to view this organization."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:38
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
 msgid "You have insufficient rights to view this ticket."
 msgstr ""
@@ -17259,7 +17291,8 @@ msgstr ""
 msgid "escalation"
 msgstr ""
 
-#: app/frontend/shared/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue:38
+#: app/frontend/apps/desktop/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue:31
+#: app/frontend/apps/mobile/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue:38
 msgid "escalation %s"
 msgstr ""
 
@@ -18083,6 +18116,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:114
 msgid "ticket %s was merged into this ticket"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:75
+msgid "ticket title"
 msgstr ""
 
 #: db/seeds/settings.rb:1131

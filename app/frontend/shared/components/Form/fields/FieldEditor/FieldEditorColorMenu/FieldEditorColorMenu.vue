@@ -5,8 +5,8 @@ import { toRef } from 'vue'
 
 import ColorSchemeList from '#shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/ColorSchemeList.vue'
 import { getEditorColorMenuClasses } from '#shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/initializeEditorColorMenu.ts'
-import { useColorPallet } from '#shared/components/Form/fields/FieldEditor/FieldEditorColorMenu/useColorPallet.ts'
 import { getFieldEditorClasses } from '#shared/components/Form/initializeFieldEditor.ts'
+import { useColorPallet } from '#shared/composables/useColorPallet/useColorPallet.ts'
 
 import type { Editor } from '@tiptap/vue-3'
 

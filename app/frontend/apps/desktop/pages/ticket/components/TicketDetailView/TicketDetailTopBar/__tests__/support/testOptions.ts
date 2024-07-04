@@ -1,0 +1,102 @@
+// Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+
+import { nullableMock } from '#tests/support/utils.ts'
+
+import type { TicketById } from '#shared/entities/ticket/types.ts'
+import { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
+export const testOptionsTopBar: TicketById = nullableMock({
+  __typename: 'Ticket',
+  createArticleType: {
+    __typename: 'TicketArticleType',
+    id: convertToGraphQLId('Article', 5),
+    name: 'phone',
+  },
+  mentions: { __typename: 'MentionConnection', totalCount: 0, edges: [] },
+  id: convertToGraphQLId('Article', 1),
+  internalId: 1,
+  number: '89001',
+  title: 'Welcome to Zammad!',
+  createdAt: '2024-06-12T06:08:40Z',
+  escalationAt: null,
+  updatedAt: '2024-06-27T11:56:48Z',
+  pendingTime: null,
+  owner: {
+    __typename: 'User',
+    id: convertToGraphQLId('User', 1),
+    internalId: 1,
+    firstname: '-',
+    lastname: '',
+  },
+  customer: {
+    __typename: 'User',
+    id: convertToGraphQLId('Article', 2),
+    internalId: 2,
+    firstname: 'Nicole',
+    lastname: 'Braun',
+    fullname: 'Nicole Braun',
+    phone: '',
+    mobile: '',
+    image: null,
+    vip: false,
+    active: true,
+    outOfOffice: false,
+    outOfOfficeStartAt: null,
+    outOfOfficeEndAt: null,
+    email: 'nicole.braun@zammad.org',
+    organization: {
+      __typename: 'Organization',
+      id: convertToGraphQLId('Organization', 1),
+      internalId: 1,
+      name: 'Zammad Foundation',
+      active: true,
+      objectAttributeValues: [],
+    },
+    hasSecondaryOrganizations: true,
+    policy: { __typename: 'PolicyDefault', update: true },
+  },
+  organization: {
+    __typename: 'Organization',
+    id: convertToGraphQLId('Organization', 1),
+    internalId: 1,
+    name: 'Zammad Foundation',
+    vip: false,
+    active: true,
+  },
+  state: {
+    __typename: 'TicketState',
+    id: convertToGraphQLId('Ticket', 1),
+    name: 'new',
+    stateType: { __typename: 'TicketStateType', name: 'new' },
+  },
+  group: {
+    __typename: 'Group',
+    id: convertToGraphQLId('Group', 1),
+    name: 'Users',
+    emailAddress: {
+      __typename: 'EmailAddressParsed',
+      name: 'Zammad Helpdesk',
+      emailAddress: 'zammad@localhost',
+    },
+  },
+  priority: {
+    __typename: 'TicketPriority',
+    id: convertToGraphQLId('Ticket', 2),
+    name: '2 normal',
+    defaultCreate: true,
+    uiColor: null,
+  },
+  objectAttributeValues: [],
+  policy: { __typename: 'PolicyTicket', update: true, agentReadAccess: true },
+  tags: [],
+  timeUnit: null,
+  timeUnitsPerType: [],
+  subscribed: false,
+  preferences: {},
+  stateColorCode: EnumTicketStateColorCode.Open,
+  firstResponseEscalationAt: null,
+  closeEscalationAt: null,
+  updateEscalationAt: null,
+  initialChannel: null,
+})

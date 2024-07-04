@@ -10,7 +10,7 @@ const routes: RouteRecordRaw[] = [
     name: 'TicketDetailView',
     props: true,
     component: () => import('./views/TicketDetailView.vue'),
-    alias: '/ticket/zoom/:internalId(\\d+)',
+    alias: ['/ticket/:internalId(\\d+)', '/ticket/zoom/:internalId(\\d+)'],
     children: [
       {
         path: '',

@@ -4,8 +4,9 @@
 import { computed } from 'vue'
 
 import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
-import CommonTicketStateIndicator from '#shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import { i18n } from '#shared/i18n.ts'
+
+import CommonTicketStateIndicator from '#mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 
 const props = defineProps<{
   option: SelectOption

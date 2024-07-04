@@ -61,7 +61,7 @@ RSpec.shared_examples 'mobile app: reply article' do |type_label, note, internal
     find_button('Done', wait: 20).click
     find_button('Save', wait: 20).click
 
-    wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/update.graphql')
+    wait_for_gql('shared/entities/ticket/graphql/mutations/update.graphql')
 
     if attachments
       attributes[:attachments] = result_attachments

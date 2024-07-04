@@ -12,6 +12,7 @@ import type {
 import { getNodeByName } from '#shared/components/Form/utils.ts'
 import { useObjectAttributeFormData } from '#shared/entities/object-attributes/composables/useObjectAttributeFormData.ts'
 import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
+import { useTicketUpdateMutation } from '#shared/entities/ticket/graphql/mutations/update.api.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import type { TicketArticleFormValues } from '#shared/entities/ticket-article/action/plugins/types.ts'
 import type { TicketUpdateInput } from '#shared/graphql/types.ts'
@@ -19,8 +20,6 @@ import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import type { PartialRequired } from '#shared/types/utils.ts'
 import { convertFilesToAttachmentInput } from '#shared/utils/files.ts'
-
-import { useTicketUpdateMutation } from '../graphql/mutations/update.api.ts'
 
 import type { ComputedRef, ShallowRef } from 'vue'
 

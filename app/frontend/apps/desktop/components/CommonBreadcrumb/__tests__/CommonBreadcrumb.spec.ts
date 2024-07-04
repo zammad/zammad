@@ -18,6 +18,9 @@ describe('breadcrumb', () => {
           },
         ],
       },
+      slots: {
+        trailing: 'trailing slot',
+      },
       router: true,
     })
 
@@ -26,6 +29,7 @@ describe('breadcrumb', () => {
     expect(link).toHaveTextContent('Dashboard')
     expect(link).toHaveAttribute('href', '/desktop/')
     expect(view.getByText('Settings')).toBeInTheDocument()
+    expect(view.getByText('trailing slot')).toBeInTheDocument()
   })
 
   it('renders icons', async () => {
@@ -48,5 +52,88 @@ describe('breadcrumb', () => {
     const icon = view.getByIconName('eye')
 
     expect(icon).toBeInTheDocument()
+  })
+
+  it('emphasizes the last item', async () => {
+    const view = renderComponent(CommonBreadcrumb, {
+      props: {
+        items: [
+          {
+            label: 'Dashboard',
+            route: '/',
+          },
+          {
+            label: 'Settings',
+          },
+        ],
+        emphasizeLastItem: true,
+      },
+      router: true,
+    })
+
+    const lastItem = view.getByText('Settings')
+
+    expect(lastItem.parentElement).toHaveClass(
+      'last:dark:text-white last:text-black',
+    )
+  })
+
+  it('supports different text sizes', async () => {
+    const view = renderComponent(CommonBreadcrumb, {
+      props: {
+        items: [
+          {
+            label: 'Dashboard',
+            route: '/',
+          },
+          {
+            label: 'Settings',
+          },
+        ],
+      },
+      router: true,
+    })
+
+    // Default size
+    expect(view.getByLabelText('Breadcrumb navigation')).toHaveClass(
+      'text-base',
+    )
+
+    await view.rerender({
+      items: [
+        {
+          label: 'Dashboard',
+          route: '/',
+        },
+        {
+          label: 'Settings',
+        },
+      ],
+      size: 'small',
+    })
+
+    expect(view.getByLabelText('Breadcrumb navigation')).toHaveClass('text-xs')
+  })
+
+  it('support trailing slot', async () => {
+    const view = renderComponent(CommonBreadcrumb, {
+      props: {
+        items: [
+          {
+            label: 'Dashboard',
+            route: '/',
+          },
+          {
+            label: 'Settings',
+          },
+        ],
+      },
+      slots: {
+        trailing: 'trailing slot',
+      },
+      router: true,
+    })
+
+    expect(view.getByText('trailing slot')).toBeInTheDocument()
   })
 })

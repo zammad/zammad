@@ -37,13 +37,13 @@ import { useCommonSelect } from '#mobile/components/CommonSelect/useCommonSelect
 import { getOpenedDialogs } from '#mobile/composables/useDialog.ts'
 import type { TicketInformation } from '#mobile/entities/ticket/types.ts'
 
+import { useTicketQuery } from '../../../../../shared/entities/ticket/graphql/queries/ticket.api.ts'
 import TicketDetailViewActions from '../components/TicketDetailView/TicketDetailViewActions.vue'
 import { useTicketArticleReply } from '../composable/useTicketArticleReply.ts'
 import { useTicketEdit } from '../composable/useTicketEdit.ts'
 import { useTicketEditForm } from '../composable/useTicketEditForm.ts'
 import { TICKET_INFORMATION_SYMBOL } from '../composable/useTicketInformation.ts'
 import { useTicketLiveUser } from '../composable/useTicketLiveUser.ts'
-import { useTicketQuery } from '../graphql/queries/ticket.api.ts'
 import { TicketUpdatesDocument } from '../graphql/subscriptions/ticketUpdates.api.ts'
 
 interface Props {

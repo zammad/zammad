@@ -8,6 +8,7 @@ export type BadgeVariant =
   | 'warning'
   | 'danger'
   | 'neutral'
+  | 'tertiary'
   | 'custom'
 
 export type BadgeClass = BadgeVariant | 'base'

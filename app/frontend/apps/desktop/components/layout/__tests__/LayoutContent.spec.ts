@@ -49,8 +49,12 @@ describe('LayoutContent', () => {
     const wrapper = renderLayoutContent({ default: () => 'Hello Test World!' })
 
     expect(wrapper.getByText('Hello Test World!')).toBeInTheDocument()
-    expect(wrapper.getByText('Test Profile')).toBeInTheDocument()
-    expect(wrapper.getByText('Test Foo')).toBeInTheDocument()
+    expect(
+      wrapper.getByRole('heading', { name: 'Test Profile' }),
+    ).toBeInTheDocument()
+    expect(
+      wrapper.getByRole('heading', { name: 'Test Foo' }),
+    ).toBeInTheDocument()
   })
 
   it('renders namespaced content', () => {

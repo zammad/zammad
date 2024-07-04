@@ -6,7 +6,6 @@ import { computed, nextTick, onMounted, ref, toRef, watch } from 'vue'
 
 import CommonInputSearch from '#shared/components/CommonInputSearch/CommonInputSearch.vue'
 import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
-import CommonTicketStateIndicator from '#shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import type {
   FlatSelectOption,
@@ -17,6 +16,7 @@ import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
 import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
+import CommonTicketStateIndicator from '#mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import { closeDialog } from '#mobile/composables/useDialog.ts'
 
 const props = defineProps<{

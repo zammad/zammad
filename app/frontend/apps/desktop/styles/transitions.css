@@ -10,6 +10,21 @@
   }
 }
 
+.fade-up {
+  &-enter-active,
+  &-leave-active {
+    transition:
+      opacity 0.3s ease,
+      transform 0.3s ease-in-out;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    opacity: 0;
+    transform: translateY(0.3rem);
+  }
+}
+
 .fade-move {
   &-enter-active,
   &-move,

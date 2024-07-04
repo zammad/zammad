@@ -10,3 +10,13 @@ export interface ColorGroup {
   name: string
   values: ColorScheme[]
 }
+
+export interface HightlightColor {
+  value: {
+    light: string
+    dark: string
+  }
+  label: string
+  name: string
+  id: string
+}

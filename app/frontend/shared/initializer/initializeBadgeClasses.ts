@@ -10,6 +10,7 @@ let badgeClasses: BadgeClassMap = {
   success: 'common-badge-success',
   warning: 'common-badge-warning',
   neutral: 'common-badge-neutral',
+  tertiary: 'common-badge-tertiary',
   custom: 'common-badge-custom',
 }
 

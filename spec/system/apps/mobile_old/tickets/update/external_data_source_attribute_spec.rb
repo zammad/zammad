@@ -15,7 +15,7 @@ RSpec.describe 'Ticket > Update > External Data Source Attribute', app: :mobile,
 
   def submit_form
     find_button('Save').click
-    wait_for_gql('apps/mobile/pages/ticket/graphql/mutations/update.graphql')
+    wait_for_gql('shared/entities/ticket/graphql/mutations/update.graphql')
   end
 
   before do

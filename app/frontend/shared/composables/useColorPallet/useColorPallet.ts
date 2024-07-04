@@ -5,6 +5,8 @@
 import { storeToRefs } from 'pinia'
 import { computed } from 'vue'
 
+import getUuid from '#shared/utils/getUuid.ts'
+
 // eslint-disable-next-line import/no-restricted-paths
 import { useThemeStore } from '#desktop/stores/theme.ts'
 
@@ -351,6 +353,51 @@ const accentColors = [
   },
 ]
 
+const highlightColors = [
+  {
+    value: { light: '#f7e7b2', dark: 'rgba(247,231,178,0.3)' },
+    name: 'Dairy Cream',
+    label: 'Yellow',
+    id: getUuid(),
+  },
+  {
+    value: {
+      light: '#bce7b6',
+      dark: 'rgba(188,231,182,0.3)',
+    },
+    name: 'Celadon',
+    label: 'Green',
+    id: getUuid(),
+  },
+  {
+    value: {
+      light: '#b3ddf9',
+      dark: 'rgba(179,221,249,0.3)',
+    },
+    name: 'Sail',
+    label: 'Blue',
+    id: getUuid(),
+  },
+  {
+    value: {
+      light: '#fea9c5',
+      dark: 'rgba(254,169,197,0.3)',
+    },
+    name: 'Carnation Pink',
+    label: 'Pink',
+    id: getUuid(),
+  },
+  {
+    value: {
+      light: '#eac5ee',
+      dark: 'rgba(234,197,238,0.3)',
+    },
+    name: 'French Lilac',
+    label: 'Purple',
+    id: getUuid(),
+  },
+]
+
 const getDarkScheme = (scheme: typeof accentColors) =>
   scheme.flatMap((color) => {
     return {
@@ -399,5 +446,5 @@ export const useColorPallet = () => {
     return getLightScheme(neutralColors)
   })
 
-  return { accentColorPallet, neutralColorPallet }
+  return { accentColorPallet, neutralColorPallet, highlightColors }
 }

@@ -4,7 +4,6 @@
 import { computed, nextTick, ref, toRef } from 'vue'
 
 import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
-import CommonTicketStateIndicator from '#shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import type {
   FlatSelectOption,
@@ -16,6 +15,7 @@ import useSelectPreselect from '#shared/composables/useSelectPreselect.ts'
 import { useFormBlock } from '#shared/form/useFormBlock.ts'
 import { i18n } from '#shared/i18n.ts'
 
+import CommonTicketStateIndicator from '#mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 import { useDialog } from '#mobile/composables/useDialog.ts'
 
 interface Props {
