@@ -30,7 +30,11 @@ PreCommit:
   Stylelint:
     enabled: true
     required_executable: 'pnpm'
-    command: ['pnpm', '--silent', 'lint:css']
+    command: ['pnpm', '--silent', 'lint:css:cmd']
+    include:
+      - '**/*.scss'
+      - '**/*.css'
+      - '**/*.vue'
   TranslationCatalogCheck:
     required_executable: 'rails'
     enabled: true
@@ -69,7 +73,7 @@ PreCommit:
   EsLint:
     required_executable: 'pnpm'
     enabled: true
-    command: ['pnpm', 'lint:js']
+    command: ['pnpm', 'lint:js:cmd']
     exclude:
       - 'app/assets/**/*'
       - 'public/assets/chat/**/*'

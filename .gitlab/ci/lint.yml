@@ -110,7 +110,7 @@
     - echo "TypeScript compiler check…"
     - pnpm lint:ts
     - echo "ESLint check…"
-    - pnpm lint:js app/frontend/ .eslint-plugin-zammad/
+    - pnpm lint:js
     - pnpm analyse:vite-bundle -t list -o ./tmp/vite-bundle-stats.yml
     - .gitlab/verify_vite_bundle_size.rb
     # Artifacts are stored for failed jobs

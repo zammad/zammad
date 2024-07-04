@@ -23,16 +23,22 @@ $ bundle exec rubocop --parallel
 # Type checks, ESLint & Stylelint
 $ pnpm lint
 
+# Type checks, ESLint & Stylelint with automatic fixing
+$ pnpm lint:fix
+
 # Just type checking
 $ pnpm lint:ts
 
-# ESLint checks with automatic fixing
+# Just ESLint checks
+$ pnpm lint:js
+
+# Just ESLint checks with automatic fixing
 $ pnpm lint:js:fix
 
-# Stylelint
+# Just Stylelint checks
 $ pnpm lint:css
 
-# Stylelint with automatic fixing
+# Just Stylelint checks with automatic fixing
 $ pnpm lint:css:fix
 
 # Coffeelint
