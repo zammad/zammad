@@ -155,7 +155,7 @@ const iconSizeClass = computed(() => {
   >
     <CommonIcon
       v-if="prefixIcon"
-      class="shrink-0"
+      class="pointer-events-none shrink-0"
       decorative
       :size="iconSizeClass"
       :name="prefixIcon"
@@ -163,7 +163,7 @@ const iconSizeClass = computed(() => {
 
     <CommonIcon
       v-if="icon"
-      class="shrink-0"
+      class="pointer-events-none shrink-0"
       decorative
       :size="iconSizeClass"
       :name="icon"
@@ -174,7 +174,7 @@ const iconSizeClass = computed(() => {
 
     <CommonIcon
       v-if="suffixIcon"
-      class="shrink-0"
+      class="pointer-events-none shrink-0"
       decorative
       :size="iconSizeClass"
       :name="suffixIcon"

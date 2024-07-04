@@ -38,6 +38,7 @@ export const testOptions: AutocompleteSearchGenericEntry[] = [
         destroy: false,
       },
       organization: null,
+      hasSecondaryOrganizations: false,
     }),
   },
   {
@@ -56,7 +57,7 @@ export const testOptions: AutocompleteSearchGenericEntry[] = [
       name: 'Zammad Foundation',
       active: true,
       vip: false,
-      members: {
+      allMembers: {
         edges: [
           {
             __typename: 'UserEdge',

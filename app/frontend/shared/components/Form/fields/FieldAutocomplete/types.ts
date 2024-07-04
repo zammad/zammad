@@ -36,6 +36,7 @@ export type AutoCompleteProps = FormFieldContext<{
   clearable?: boolean
   debounceInterval: number
   defaultFilter?: string
+  alwaysApplyDefaultFilter?: boolean
   filterInputPlaceholder?: string
   filterInputValidation?: string
   limit?: number

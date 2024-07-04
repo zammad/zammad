@@ -17,7 +17,6 @@ import {
   toRef,
 } from 'vue'
 
-import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import type {
   MatchedSelectOption,
   SelectOption,

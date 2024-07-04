@@ -45,9 +45,11 @@ export const useTicketSidebar = (context: Ref<TicketSidebarContext>) => {
     )
       return switchedSidebar.value
 
-    return Object.entries(availableSidebarPlugins.value).filter(
+    const sidebar = Object.entries(availableSidebarPlugins.value).filter(
       ([sidebar]) => shownSidebars.value[sidebar],
     )?.[0]?.[0]
+
+    return sidebar === undefined ? ' ' : sidebar // ' ' is a fallback value for a non-selectable sidebar to prevent flickering if sidebar is loading
   })
 
   const activeSidebarPlugin = computed<TicketSidebarPlugin | null>(() => {

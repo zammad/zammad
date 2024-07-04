@@ -31,7 +31,7 @@ const execute = () => {
 </script>
 
 <template>
-  <div class="flex items-center justify-end gap-2">
+  <div class="flex items-center justify-end gap-4">
     <CommonButton
       v-if="!hideCancelButton"
       size="large"

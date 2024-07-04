@@ -25,6 +25,18 @@ query autocompleteSearchGeneric(
         outOfOfficeEndAt
         active
         vip
+        organization {
+          id
+          internalId
+          name
+          active
+          vip
+          ticketsCount {
+            open
+            closed
+          }
+        }
+        hasSecondaryOrganizations
       }
       ... on Organization {
         id
@@ -32,7 +44,7 @@ query autocompleteSearchGeneric(
         name
         active
         vip
-        members(first: $membersCount) {
+        allMembers(first: $membersCount) {
           edges {
             node {
               id

@@ -65,23 +65,22 @@ module HasGroups
   #   #=> true
   #
   # @return [Boolean]
-  def group_access?(group_id, access)
-    Auth::RequestCache.fetch_value("group_access/#{cache_key_with_version}/#{group_id}/#{access}") do
-      group_access_uncached?(group_id, access)
+  def group_access?(group, access)
+    Auth::RequestCache.fetch_value("group_access/#{cache_key_with_version}/#{group.to_param}/#{access}") do
+      group_access_uncached?(group, access)
     end
   end
 
-  def group_access_uncached?(group_id, access)
+  def group_access_uncached?(group, access)
     return false if !active?
     return false if !groups_access_permission?
 
-    group_id = self.class.ensure_group_id_parameter(group_id)
-    access   = Array(access).map(&:to_sym) | [:full]
+    access = Array(access).map(&:to_sym) | [:full]
 
     # check direct access
     return true if group_through.klass.eager_load(:group).exists?(
       group_through.foreign_key => id,
-      group_id: group_id,
+      group_id: group,
       access: access,
       groups: {
         active: true
@@ -91,7 +90,7 @@ module HasGroups
     # check indirect access through Roles if possible
     return false if !respond_to?(:role_access?)
 
-    role_access?(group_id, access)
+    role_access?(group, access)
   end
 
   # Lists the Group IDs the instance has the given access(es) plus 'full' to.
@@ -318,20 +317,19 @@ module HasGroups
     #   #=> [#<User id: 1, ...>, ...]
     #
     # @return [Array<Class>]
-    def group_access(group_id, access)
-      group_id = ensure_group_id_parameter(group_id)
-      access   = Array(access).map(&:to_sym) | [:full]
+    def group_access(group, access)
+      access = Array(access).map(&:to_sym) | [:full]
 
       # check direct access
       instances = Permission.join_with(self, 'ticket.agent').joins(group_through.name)
-                  .where(group_through.table_name => { group_id: group_id, access: access }, active: true)
+                  .where(group_through.table_name => { group_id: group, access: access }, active: true)
 
       # check indirect access through roles if possible
       return instances if !respond_to?(:role_access)
 
       # combines and removes duplicates
       # and returns them in one statement
-      instances | role_access(group_id, access)
+      instances | role_access(group, access)
     end
 
     # The reflection instance containing the association data
@@ -354,12 +352,6 @@ module HasGroups
     # @return [Symbol] The relation identifier
     def group_through_identifier
       :"#{name.downcase}_groups"
-    end
-
-    def ensure_group_id_parameter(group_or_id)
-      return group_or_id if group_or_id.is_a?(Integer)
-
-      group_or_id.id
     end
   end
 end

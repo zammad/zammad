@@ -10,7 +10,7 @@ class FormUpdater::ApplyValue::OrganizationAutocomplete < FormUpdater::ApplyValu
     org = Organization.find_by(id: config['value'])
     return if !org
 
-    result[field][:value] = config['value']
+    result[field][:value] = org.id
     result[field][:options] = [{
       value: org.id,
       label: org.name,

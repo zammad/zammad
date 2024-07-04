@@ -1,0 +1,5 @@
+query ticketSharedDraftStartList($groupId: ID!) {
+  ticketSharedDraftStartList(groupId: $groupId) {
+    ...ticketSharedDraftStartAttributes
+  }
+}

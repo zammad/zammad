@@ -13,7 +13,7 @@ import { useTicketSignature } from '#shared/composables/useTicketSignature.ts'
 import { useTicketCreate } from '#shared/entities/ticket/composables/useTicketCreate.ts'
 import { useTicketCreateArticleType } from '#shared/entities/ticket/composables/useTicketCreateArticleType.ts'
 import { useTicketCreateView } from '#shared/entities/ticket/composables/useTicketCreateView.ts'
-import { useTicketFormOganizationHandler } from '#shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts'
+import { useTicketFormOrganizationHandler } from '#shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts'
 import type {
   TicketCreateArticleType,
   TicketFormData,
@@ -193,6 +193,10 @@ const formSchema = defineFormSchema([
               items: [],
             },
           },
+          {
+            name: 'shared_draft_id',
+            type: 'hidden',
+          },
         ],
       },
     ],
@@ -205,7 +209,7 @@ const formSchema = defineFormSchema([
         isLayout: true,
         element: 'div',
         attrs: {
-          class: 'grid grid-cols-2 gap-2.5',
+          class: 'grid grid-cols-2-uneven gap-2.5',
         },
         children: [
           {
@@ -274,6 +278,7 @@ watch(currentViewTitle, () => {
 
 const sidebarContext = computed(() => ({
   screenType: TicketSidebarScreenType.TicketCreate,
+  form: form.value,
   formValues: values.value,
 }))
 
@@ -294,6 +299,7 @@ const applyTemplate = (templateId: string) => {
     name="ticket-create"
     background-variant="primary"
     content-alignment="center"
+    hide-button-when-collapsed
     :show-sidebar="hasSidebar"
   >
     <div class="w-full max-w-screen-2xl px-28 pt-3.5">
@@ -307,7 +313,7 @@ const applyTemplate = (templateId: string) => {
         :schema-data="schemaData"
         :form-updater-id="EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate"
         :handlers="[
-          useTicketFormOganizationHandler(),
+          useTicketFormOrganizationHandler(),
           signatureHandling('body'),
         ]"
         :change-fields="changedFields"
@@ -317,8 +323,12 @@ const applyTemplate = (templateId: string) => {
         @submit="createTicket($event as FormSubmitData<TicketFormData>)"
       />
     </div>
-    <template #sideBar="{ isCollapsed }">
-      <TicketSidebar :context="sidebarContext" :is-collapsed="isCollapsed" />
+    <template #sideBar="{ isCollapsed, toggleCollapse }">
+      <TicketSidebar
+        :context="sidebarContext"
+        :is-collapsed="isCollapsed"
+        :toggle-collapse="toggleCollapse"
+      />
     </template>
     <template #bottomBar>
       <CommonButton

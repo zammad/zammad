@@ -17,7 +17,7 @@ class FormUpdater::ApplyValue::UserAutocomplete < FormUpdater::ApplyValue::Base
                'id'         => Gql::ZammadSchema.id_from_internal_id('User', user.id),
              })
 
-    result[field][:value] = config['value']
+    result[field][:value] = user.id
     result[field][:options] = [{
       value:   user.id,
       label:   user.fullname.presence || user.phone.presence || user.login,

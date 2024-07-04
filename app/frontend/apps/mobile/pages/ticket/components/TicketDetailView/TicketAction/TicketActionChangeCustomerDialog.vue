@@ -9,7 +9,7 @@ import Form from '#shared/components/Form/Form.vue'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
-import { useTicketFormOganizationHandler } from '#shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts'
+import { useTicketFormOrganizationHandler } from '#shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts'
 import { useTicketCustomerUpdateMutation } from '#shared/entities/ticket/graphql/mutations/customerUpdate.api.ts'
 import type {
   TicketById,
@@ -144,7 +144,7 @@ const changeCustomer = async (
       class="w-full p-4"
       should-autofocus
       :schema="formSchema"
-      :handlers="[useTicketFormOganizationHandler()]"
+      :handlers="[useTicketFormOrganizationHandler()]"
       :initial-entity-object="ticket"
       use-object-attributes
       @submit="

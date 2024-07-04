@@ -23,7 +23,7 @@ describe('correctly mocks operations', () => {
         convertToGraphQLId('Organization', 1),
       )
       // we don't have members by default because it might go into a loop
-      expect(mock.organization.members).toEqual({
+      expect(mock.organization.allMembers).toEqual({
         edges: [],
         totalCount: 0,
         __typename: 'UserConnection',
@@ -54,19 +54,19 @@ describe('correctly mocks operations', () => {
       const { organization } = mockOperation(OrganizationDocument, {})
 
       expect(user.organization).toBe(organization)
-      expect(organization.members.totalCount).toBe(1)
-      expect(organization.members.edges[0].node).toBe(user)
-      expect(organization.members.edges[0].node.organization.members).toBe(
-        organization.members,
-      )
+      expect(organization.allMembers.totalCount).toBe(2)
+      expect(organization.allMembers.edges[0].node).toBe(user)
+      expect(
+        organization.allMembers.edges[0].node.organization.allMembers,
+      ).toBe(organization.allMembers)
 
       const { user: user2 } = mockOperation(UserDocument, {})
       expect(user2.organization).toBe(organization)
-      expect(organization.members.totalCount).toBe(2)
-      expect(organization.members.edges[1].node).toBe(user2)
-      expect(organization.members.edges[1].node.organization.members).toBe(
-        organization.members,
-      )
+      expect(organization.allMembers.totalCount).toBe(3)
+      expect(organization.allMembers.edges[1].node).toBe(user2)
+      expect(
+        organization.allMembers.edges[1].node.organization.allMembers,
+      ).toBe(organization.allMembers)
     })
   })
 

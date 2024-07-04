@@ -34,7 +34,7 @@ export const defaultOrganization = (): ConfidentTake<
       open: 3,
       closed: 1,
     },
-    members: {
+    allMembers: {
       __typename: 'UserConnection',
       edges: [
         {

@@ -55,6 +55,13 @@ describe('LayoutSidebar', () => {
       await view.events.click(collapseButton)
       expect(view.queryByTestId('action-button')).toBeInTheDocument()
     })
+
+    it('hides collapse button if props is set and sidebar is collapsed', async () => {
+      await view.rerender({ hideButtonWhenCollapsed: true })
+      expect(
+        view.queryByLabelText('Expand this element'),
+      ).not.toBeInTheDocument()
+    })
   })
 
   describe('Feature: Resizable', () => {

@@ -14,7 +14,7 @@ import { useSessionStore } from '#shared/stores/session.ts'
 import type { UserData } from '#shared/types/store.ts' // TODO: remove this import
 
 // TODO: needs to be aligned, when auto completes has a final state.
-export const useTicketFormOganizationHandler = (): FormHandler => {
+export const useTicketFormOrganizationHandler = (): FormHandler => {
   const executeHandler = (
     execution: FormHandlerExecution,
     schemaData: ReactiveFormSchemData,
@@ -52,10 +52,17 @@ export const useTicketFormOganizationHandler = (): FormHandler => {
     const setCustomer = (): Maybe<UserData> | undefined => {
       if (session.hasPermission('ticket.agent')) {
         if (changedField?.newValue) {
+          // TODO: user <=> object ?!?!?
+          const optionValue = formNode?.find('customer_id', 'name')?.context
+            ?.optionValueLookup as Record<
+            number,
+            Record<'object' | 'user', UserData>
+          >
+          // ⚠️ :INFO mobile query retrieves .user and .object for desktop
           return (
-            formNode?.find('customer_id', 'name')?.context
-              ?.optionValueLookup as Record<number, { user: UserData }>
-          )[changedField.newValue as number].user as UserData
+            (optionValue[changedField.newValue as number].object as UserData) ||
+            (optionValue[changedField.newValue as number].user as UserData)
+          )
         }
 
         if (
@@ -87,6 +94,7 @@ export const useTicketFormOganizationHandler = (): FormHandler => {
         name: 'organization_id',
         props: {
           defaultFilter: '*',
+          alwaysApplyDefaultFilter: true,
           options: [currentValueOption],
           additionalQueryParams: {
             customerId,

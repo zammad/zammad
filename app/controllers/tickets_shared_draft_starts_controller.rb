@@ -23,8 +23,9 @@ class TicketsSharedDraftStartsController < ApplicationController
   end
 
   def create
-    object = scope.create! safe_params
-    object.attach_upload_cache params[:form_id]
+    object = Service::Ticket::SharedDraft::Start::Create
+      .new(current_user, params[:form_id], **safe_params)
+      .execute
 
     render json: {
       shared_draft_id: object.id,
@@ -35,8 +36,9 @@ class TicketsSharedDraftStartsController < ApplicationController
   def update
     object = scope.find params[:id]
 
-    object.update! safe_params
-    object.attach_upload_cache params[:form_id]
+    Service::Ticket::SharedDraft::Start::Update
+      .new(current_user, object, params[:form_id], **safe_params)
+      .execute
 
     render json: {
       shared_draft_id: object.id,
@@ -73,17 +75,10 @@ class TicketsSharedDraftStartsController < ApplicationController
   end
 
   def safe_params
-    safe_params = params.permit :name, :group_id, content: {}
-
-    safe_params[:content].delete :group_id
-
-    allowed_groups = current_user.groups_access('create').map { |x| x.id.to_s }
-    group_id       = safe_params[:group_id]&.to_s
-
-    if allowed_groups.exclude? group_id
-      raise Exceptions::UnprocessableEntity, __("User does not have access to one of given group IDs: #{group_id}")
-    end
-
-    safe_params
+    @safe_params ||= params
+      .permit(:name, :group_id, content: {})
+      .to_hash
+      .to_options
+      .tap { |elem| elem[:group] = Group.find_by(id: elem.delete(:group_id)) }
   end
 end

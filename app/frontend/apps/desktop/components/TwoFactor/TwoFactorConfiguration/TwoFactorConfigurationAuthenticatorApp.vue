@@ -77,6 +77,7 @@ const submitForm = async ({
     props.successCallback?.()
 
     notify({
+      id: 'two-factor-method-configured',
       type: NotificationTypes.Success,
       message: __('Two-factor method has been configured successfully.'),
     })

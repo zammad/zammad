@@ -1,0 +1,8 @@
+mutation ticketSharedDraftStartDelete($sharedDraftId: ID!) {
+  ticketSharedDraftStartDelete(sharedDraftId: $sharedDraftId) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

@@ -395,7 +395,7 @@ class App.TicketCreate extends App.Controller
       if !_.isEmpty(params['form_id'])
         @formId = params['form_id']
 
-    # Get template params
+    # Get template (and shared draft) params
     if template && !_.isEmpty(template.options)
       templateTags = null
 
@@ -433,10 +433,14 @@ class App.TicketCreate extends App.Controller
           )
         ),
 
-        # Pick only values for "non-dirty" fields.
-        #   Skip tags, as these will get processed later.
+        # In case of templates, pick only values for "non-dirty" fields.
+        #   In case of shared drafts, pick them all, since they are supposed to overwrite the existing form.
+        #   Skip tags in case of templates, as these support complex value format that will get processed later.
         # https://github.com/zammad/zammad/issues/2434
+        # https://github.com/zammad/zammad/issues/5244
         (value, field) =>
+          return true if template.shared_draft_id
+
           if field is 'tags'
             templateTags = value
             return
@@ -447,25 +451,28 @@ class App.TicketCreate extends App.Controller
         )
       )
 
-      # Process template tags, but only if they are "dirty".
-      if @dirty?.tags and params.tags
-        switch templateTags?['operator']
+      # Handle template tags only, since shared drafts support only the simple value format.
+      if not template.shared_draft_id
 
-          # Remove tags included in the template from the existing tags.
-          when 'remove'
-            params.tags = _.difference(params.tags.split(', '), templateTags?['value']?.split(', ')).join(', ')
+        # Process template tags, but only if they are "dirty".
+        if @dirty?.tags and params.tags
+          switch templateTags?['operator']
 
-          # Add tags included in the template by merging them with existing tags.
-          #   Do this also if the operator is missing from the template configuration (default behavior).
-          else
-            params.tags = _.uniq(_.union(params.tags.split(', '), templateTags?['value']?.split(', '))).join(', ')
+            # Remove tags included in the template from the existing tags.
+            when 'remove'
+              params.tags = _.difference(params.tags.split(', '), templateTags?['value']?.split(', ')).join(', ')
 
-      # Otherwise, simply replace the tags with the value from the template.
-      #   Do not do this if they are supposed to be removed only.
-      #   This allows switching between different templates without accumulating their tags.
-      #   Note that template might not contain tags, in which case the field will be reset.
-      else if templateTags?['operator'] != 'remove'
-        params.tags = templateTags?['value']
+            # Add tags included in the template by merging them with existing tags.
+            #   Do this also if the operator is missing from the template configuration (default behavior).
+            else
+              params.tags = _.uniq(_.union(params.tags.split(', '), templateTags?['value']?.split(', '))).join(', ')
+
+        # Otherwise, simply replace the tags with the value from the template.
+        #   Do not do this if they are supposed to be removed only.
+        #   This allows switching between different templates without accumulating their tags.
+        #   Note that template might not contain tags, in which case the field will be reset.
+        else if templateTags?['operator'] != 'remove'
+          params.tags = templateTags?['value']
 
     if !_.isEmpty(params)
       # only use form meta once so it will not get used on templates

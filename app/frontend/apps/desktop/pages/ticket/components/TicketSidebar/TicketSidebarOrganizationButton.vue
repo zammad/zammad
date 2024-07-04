@@ -1,29 +1,30 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { onMounted, toRef } from 'vue'
+import { computed, watch } from 'vue'
 
-import { useTicketSidebar } from '../../composables/useTicketSidebar.ts'
+import { useUserDetail } from '#shared/entities/user/composables/useUserDetail.ts'
 
 import TicketSidebarButton from './TicketSidebarButton.vue'
 
-import type { TicketSidebarPlugin } from './plugins/types'
-import type { TicketSidebarContext } from '../types.ts'
+import type {
+  TicketSidebarButtonProps,
+  TicketSidebarButtonEmits,
+} from '../types.ts'
 
-interface Props {
-  sidebar: string
-  sidebarPlugin: TicketSidebarPlugin
-  context: TicketSidebarContext
-  selected: boolean
-}
+const props = defineProps<TicketSidebarButtonProps>()
 
-const props = defineProps<Props>()
+const emit = defineEmits<TicketSidebarButtonEmits>()
 
-const { showSidebar } = useTicketSidebar(toRef(props, 'context'))
+const customerId = computed(() => Number(props.context.formValues.customer_id))
 
-onMounted(() => {
-  // TODO: Move this to proper place after the data query is implemented.
-  showSidebar(props.sidebar)
+const { user: customer } = useUserDetail(customerId, undefined, 'cache-first')
+
+watch(customer, (newValue) => {
+  if (!newValue?.organization) {
+    emit('hide')
+  }
+  emit('show')
 })
 </script>
 

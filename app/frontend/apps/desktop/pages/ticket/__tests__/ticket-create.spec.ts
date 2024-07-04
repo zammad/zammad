@@ -2,10 +2,12 @@
 
 import { waitFor, within } from '@testing-library/vue'
 
+import ticketCustomerObjectAttributes from '#tests/graphql/factories/fixtures/ticket-customer-object-attributes.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
+import { mockObjectManagerFrontendAttributesQuery } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
 import { waitForTicketCreateMutationCalls } from '#shared/entities/ticket/graphql/mutations/create.mocks.ts'
 
 import {
@@ -13,6 +15,7 @@ import {
   handleCustomerMock,
   handleMockFormUpdaterQuery,
   rendersFields,
+  handleMockOrganizationQuery,
 } from '#desktop/pages/ticket/__tests__/support/ticket-create-helpers.ts'
 
 vi.hoisted(() => {
@@ -20,21 +23,6 @@ vi.hoisted(() => {
 })
 
 describe('ticket create view', async () => {
-  describe('view with denied access', async () => {
-    beforeEach(() => {
-      mockApplicationConfig({
-        customer_ticket_create: false,
-      })
-      mockPermissions(['ticket.customer'])
-    })
-
-    it('redirects to error page', async () => {
-      const view = await visitView('/ticket/create')
-      // :TODO adapt as soon as we have real error page
-      expect(view.getByText('ERROR XYZ')).toBeInTheDocument()
-    })
-  })
-
   describe('view with granted access', async () => {
     beforeEach(() => {
       mockApplicationConfig({
@@ -43,7 +31,6 @@ describe('ticket create view', async () => {
           'phone-out',
           'email-out',
         ],
-        customer_ticket_create: true,
       })
       mockPermissions(['ticket.agent'])
     })
@@ -91,7 +78,7 @@ describe('ticket create view', async () => {
       expect(
         view.getByRole('tab', { selected: true, name: 'Send Email' }),
       ).toBeInTheDocument()
-      expect(view.getByRole('combobox', { name: 'CC' })).toBeInTheDocument()
+      expect(view.getByLabelText('CC')).toBeInTheDocument()
       rendersFields(view)
     })
 
@@ -257,13 +244,23 @@ describe('ticket create view', async () => {
         }),
       )
 
-      // Sidebar
+      // Sidebar CUSTOMER
       expect(view.getByLabelText('Avatar (Nicole Braun)')).toBeInTheDocument()
       expect(view.getByText('Zammad Foundation')).toBeInTheDocument()
       expect(view.getByText('open tickets')).toBeInTheDocument()
       expect(view.getByText('nicole.braun@zammad.org')).toBeInTheDocument()
       expect(view.getByText('closed tickets')).toBeInTheDocument()
       expect(view.getByLabelText('Open tickets')).toHaveTextContent('17')
+
+      // Sidebar Organization
+      handleMockOrganizationQuery()
+
+      await view.events.click(view.getByLabelText('Organization'))
+
+      expect(view.getByText('Organization')).toBeInTheDocument()
+
+      expect(view.getByText('Members')).toBeInTheDocument()
+      expect(view.getByLabelText('Avatar (Nicole Braun)')).toBeInTheDocument()
 
       // Text field
       await view.events.type(
@@ -272,20 +269,20 @@ describe('ticket create view', async () => {
       )
 
       // Group field
-      await view.events.click(view.getByRole('combobox', { name: 'Group' }))
+      await view.events.click(view.getByLabelText('Group'))
       await view.events.click(view.getByRole('option', { name: 'Users' }))
 
       // State field
-      await view.events.click(view.getByRole('combobox', { name: 'Priority' }))
+      await view.events.click(view.getByLabelText('Priority'))
       await view.events.click(view.getByRole('option', { name: '2 normal' }))
 
       // Priority Field
-      await view.events.click(view.getByRole('combobox', { name: 'State' }))
+      await view.events.click(view.getByLabelText('State'))
       await view.events.click(
         view.getByRole('option', { name: 'pending reminder' }),
       )
 
-      // Date selection Field ?
+      // Date selection Field on pending reminder
       await view.events.click(view.getByText('Pending till'))
 
       await waitFor(() => expect(view.getByRole('dialog')).toBeInTheDocument())
@@ -326,6 +323,89 @@ describe('ticket create view', async () => {
           view.getByText('Ticket has been created successfully.'),
         ).toBeInTheDocument(),
       )
+    })
+  })
+
+  describe('with customer permission', () => {
+    beforeEach(() => {
+      mockPermissions(['ticket.customer'])
+    })
+
+    describe('view disabled customer ticket create', async () => {
+      beforeEach(() => {
+        mockApplicationConfig({
+          customer_ticket_create: false,
+        })
+        mockPermissions(['ticket.customer'])
+      })
+
+      it('redirects to error page', async () => {
+        const view = await visitView('/ticket/create')
+        // :TODO adapt as soon as we have real error page
+        expect(view.getByText('ERROR XYZ')).toBeInTheDocument()
+      })
+    })
+
+    describe('view enabled customer ticket create', async () => {
+      beforeEach(() => {
+        mockApplicationConfig({
+          customer_ticket_create: true,
+        })
+      })
+
+      it('creates a new ticket', async () => {
+        // Mock frontend attributes for customer context.
+        // TODO: check if we can mock the query twice based on the variable?
+        mockObjectManagerFrontendAttributesQuery({
+          objectManagerFrontendAttributes: ticketCustomerObjectAttributes(),
+        })
+        handleMockFormUpdaterQuery()
+
+        const view = await visitView('/ticket/create')
+
+        await view.events.type(
+          view.getByLabelText('Title'),
+          'Test Customer Ticket',
+        )
+
+        // Text field
+        await view.events.type(
+          view.getByRole('textbox', { name: 'Text' }),
+          'Test customer ticket text',
+        )
+
+        await view.events.click(view.getByLabelText('Group'))
+        await view.events.click(view.getByRole('option', { name: 'Users' }))
+
+        // Submission
+        await view.events.click(view.getByRole('button', { name: 'Create' }))
+
+        const calls = await waitForTicketCreateMutationCalls()
+
+        expect(calls.at(-1)?.variables).toEqual({
+          input: {
+            article: {
+              body: 'Test customer ticket text',
+              cc: undefined,
+              contentType: 'text/html',
+              security: undefined,
+              sender: 'Customer',
+              type: 'web',
+            },
+            customer: undefined,
+            groupId: 'gid://zammad/Group/1',
+            objectAttributeValues: [],
+            stateId: 'gid://zammad/Ticket::State/2',
+            title: 'Test Customer Ticket',
+          },
+        })
+
+        await waitFor(() =>
+          expect(
+            view.getByText('Ticket has been created successfully.'),
+          ).toBeInTheDocument(),
+        )
+      })
     })
   })
 })

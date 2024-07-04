@@ -13,7 +13,7 @@ const textInputClasses = (classes: Classes = {}) => {
   const innerErrorsClasses = innerInvalidClasses.replace(/invalid/g, 'errors')
 
   return extendClasses(classes, {
-    wrapper: 'mb-1.5 flex flex-col items-start justify-start last:mb-0',
+    wrapper: 'flex flex-col items-start justify-start',
     input:
       'grow bg-transparent px-2.5 py-2 placeholder:text-stone-200 read-only:text-stone-200 dark:placeholder:text-neutral-500 dark:read-only:text-neutral-500',
     label: 'mb-1 block text-sm text-gray-100 dark:text-neutral-400',

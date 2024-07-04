@@ -4,7 +4,6 @@
 import { computed, ref, reactive } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import CommonLink from '#shared/components/CommonLink/CommonLink.vue'
 import Form from '#shared/components/Form/Form.vue'
 import type {

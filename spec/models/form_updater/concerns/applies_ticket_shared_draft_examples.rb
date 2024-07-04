@@ -32,6 +32,13 @@ RSpec.shared_examples 'FormUpdater::AppliesTicketSharedDraft' do
 
     context 'with a draft to be applied' do
 
+      context 'with implicit draft internal identifier' do
+        let(:field_name)   { 'shared_draft_id' }
+        let(:field_result) { { value: draft.id } }
+
+        include_examples 'sets the draft value for the field'
+      end
+
       context 'when the field is dirty and has a value' do
         let(:data)         { { field_name => 'previous value' } }
         let(:dirty_fields) { [field_name] }
@@ -85,7 +92,7 @@ RSpec.shared_examples 'FormUpdater::AppliesTicketSharedDraft' do
       end
 
       context 'with recipient autocomplete fields' do
-        let(:search_user)           { create(:user, organization: create(:organization)) }
+        let(:search_user)           { create(:user) }
         let(:object_name)           { 'article' }
         let(:field_name)            { 'cc' }
         let(:field_draft_value)     { search_user.email }
@@ -98,13 +105,30 @@ RSpec.shared_examples 'FormUpdater::AppliesTicketSharedDraft' do
 
         include_examples 'sets the draft value for the field'
 
-        context 'with unknown user' do
+        context 'with unknown email' do
           let(:search_user) { 'dummy@non-existing.com' }
           let(:field_draft_value) { search_user }
           let(:field_result) do
             {
               value:   [search_user],
-              options: [{ value: search_user, label: search_user, heading: nil }]
+              options: [{ value: search_user, label: search_user }]
+            }
+          end
+
+          include_examples 'sets the draft value for the field'
+        end
+
+        context 'with multiple recipients' do
+          let(:recipient_user)    { create(:user) }
+          let(:recipient_email)   { 'dummy@non-existing.com' }
+          let(:field_draft_value) { "#{recipient_user.email}, #{recipient_email}" }
+          let(:field_result) do
+            {
+              value:   [recipient_user.email, recipient_email],
+              options: [
+                { value: recipient_user.email, label: recipient_user.email, heading: recipient_user.fullname },
+                { value: recipient_email, label: recipient_email },
+              ],
             }
           end
 
@@ -112,11 +136,39 @@ RSpec.shared_examples 'FormUpdater::AppliesTicketSharedDraft' do
         end
       end
 
+      context 'with attachments' do
+        let(:object_name)           { 'article' }
+        let(:field_name)            { 'attachments' }
+        let(:field_draft_value)     { [] }
+        let(:original_attachment)   { create(:store, object: draft.class.name, o_id: draft.id) }
+        let(:form_id)               { SecureRandom.uuid }
+        let(:meta)                  { { additional_data:, dirty_fields:, form_id: } }
+
+        let(:field_result) do
+          {
+            value: [
+              {
+                id:   cloned_attachment.id,
+                name: cloned_attachment.filename,
+                size: cloned_attachment.size,
+                type: cloned_attachment.preferences['Content-Type'],
+              }
+            ]
+          }
+        end
+
+        let(:cloned_attachment) { Store.list(object: 'UploadCache', o_id: form_id).first }
+
+        before { original_attachment }
+
+        include_examples 'sets the draft value for the field'
+      end
+
       context 'with organization autocomplete fields' do
         let(:search_organization)   { create(:organization) }
         let(:object_attribute)      { create(:object_manager_attribute_organization_autocompletion) }
         let(:field_name)            { object_attribute.name }
-        let(:field_draft_value)     { search_organization.id }
+        let(:field_draft_value)     { search_organization.id.to_s }
         let(:field_result) do
           {
             value:   search_organization.id,
@@ -153,7 +205,7 @@ RSpec.shared_examples 'FormUpdater::AppliesTicketSharedDraft' do
 
         it 'sets the draft value for both fields', :aggregate_failures do
           expect(resolved_result.resolve['group_id']).to include(value: group.id)
-          expect(resolved_result.resolve['owner_id']).to include(value: user.id.to_s)
+          expect(resolved_result.resolve['owner_id']).to include(value: user.id)
         end
       end
     end

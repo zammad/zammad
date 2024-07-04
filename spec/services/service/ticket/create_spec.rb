@@ -21,14 +21,26 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
     end
 
     it 'creates a ticket with given metadata' do
-      service.execute(ticket_data:)
+      ticket = service.execute(ticket_data:)
 
-      expect(Ticket.last)
+      expect(ticket)
         .to have_attributes(
           title:    sample_title,
           group:    group,
           customer: customer
         )
+    end
+
+    it 'creates a ticket with customer email address' do
+      test_email = Faker::Internet.unique.email
+      ticket_data[:customer] = test_email
+
+      ticket = service.execute(ticket_data:)
+
+      expect(ticket.customer).to have_attributes(
+        email:    test_email,
+        role_ids: Role.signup_role_ids
+      )
     end
 
     it 'fails to create ticket without access' do
@@ -45,9 +57,9 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
         body: sample_body
       }
 
-      service.execute(ticket_data:)
+      ticket = service.execute(ticket_data:)
 
-      expect(Ticket.last.articles.first)
+      expect(ticket.articles.first)
         .to have_attributes(
           body: sample_body
         )
@@ -58,9 +70,9 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
 
       ticket_data[:tags] = sample_tags
 
-      service.execute(ticket_data:)
+      ticket = service.execute(ticket_data:)
 
-      expect(Ticket.last.tag_list)
+      expect(ticket.tag_list)
         .to eq sample_tags
     end
 
@@ -74,9 +86,37 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
 
         ticket_data[:tags] = sample_tags
 
+        ticket = service.execute(ticket_data:)
+
+        expect(ticket.tag_list).to be_empty
+      end
+    end
+
+    describe 'shared draft handling' do
+      let(:shared_draft) { create(:ticket_shared_draft_start, group:) }
+
+      before { ticket_data[:shared_draft] = shared_draft }
+
+      it 'destroys given shared draft' do
         service.execute(ticket_data:)
 
-        expect(Ticket.last.tag_list).to eq([])
+        expect(Ticket::SharedDraftStart).not_to exist(shared_draft.id)
+      end
+
+      it 'raises error if shared drafts are disabled on that group' do
+        group.update! shared_drafts: false
+
+        expect { service.execute(ticket_data:) }
+          .to raise_error(Exceptions::UnprocessableEntity)
+      end
+
+      it 'raises error if shared draft group does not match ticket group' do
+        shared_draft.update! group: create(:group)
+
+        group.update! shared_drafts: false
+
+        expect { service.execute(ticket_data:) }
+          .to raise_error(Exceptions::UnprocessableEntity)
       end
     end
   end

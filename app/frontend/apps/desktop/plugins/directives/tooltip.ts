@@ -7,7 +7,7 @@ import { useLocaleStore } from '#shared/stores/locale.ts'
 type Modifiers = Record<
   'modifiers',
   {
-    truncateOnly?: boolean
+    truncate?: boolean
   }
 >
 
@@ -47,7 +47,7 @@ const addModifierRecord = (
 const getModifierRecord = ($el: HTMLDivElement): TooltipTargetRecord => {
   return (
     tooltipTargetRecords.find(({ element }) => element === $el) || {
-      modifiers: { truncateOnly: undefined },
+      modifiers: { truncate: undefined },
       element: $el,
     }
   )
@@ -160,7 +160,7 @@ const evaluateModifiers = (
     isTruncated: false,
   }
 
-  if (options?.truncateOnly) {
+  if (options?.truncate) {
     modifications.isTruncated = isContentTruncated(element)
   }
 
@@ -183,7 +183,7 @@ const handleTooltipAddEvent = (event: MouseEvent | TouchEvent) => {
   )
 
   // If the content gets truncated and the modifier is set to only show the tooltip on truncation
-  if (!isTruncated && tooltipRecord?.modifiers.truncateOnly) return
+  if (!isTruncated && tooltipRecord?.modifiers.truncate) return
 
   if (tooltipTimeout) clearTimeout(tooltipTimeout)
   const message = tooltipTargetNode.getAttribute('aria-label')

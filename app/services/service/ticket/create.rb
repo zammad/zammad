@@ -5,6 +5,8 @@ class Service::Ticket::Create < Service::BaseWithCurrentUser
 
   def execute(ticket_data:)
     Transaction.execute do
+      handle_shared_draft(ticket_data)
+
       set_core_workflow_information(ticket_data, ::Ticket, 'create_middle')
 
       article_data = ticket_data.delete(:article)
@@ -57,14 +59,12 @@ class Service::Ticket::Create < Service::BaseWithCurrentUser
       return
     end
 
-    role_ids = Role.signup_role_ids
     customer = User.create(
       firstname: '',
       lastname:  '',
       email:     email_address,
       password:  '',
       active:    true,
-      role_ids:  role_ids,
     )
     ticket_data[:customer] = customer
   end
@@ -130,5 +130,17 @@ class Service::Ticket::Create < Service::BaseWithCurrentUser
     return if !customer
 
     Channel::EmailBuild.recipient_line "#{customer.firstname} #{customer.lastname}".presence, customer.email
+  end
+
+  def handle_shared_draft(ticket_data)
+    shared_draft = ticket_data.delete(:shared_draft)
+
+    return if !shared_draft
+
+    if shared_draft.group_id != ticket_data[:group].id || !shared_draft.group.shared_drafts?
+      raise Exceptions::UnprocessableEntity, __('Shared draft cannot be selected for this ticket.')
+    end
+
+    shared_draft.destroy!
   end
 end

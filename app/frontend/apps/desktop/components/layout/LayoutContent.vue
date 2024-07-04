@@ -28,6 +28,7 @@ export interface Props {
   width?: ContentWidth
   backgroundVariant?: BackgroundVariant
   contentAlignment?: ContentAlignment
+  hideButtonWhenCollapsed?: boolean
   helpText?: string[] | string
   /**
    * Hides `default slot` content and shows help text if provided
@@ -43,6 +44,7 @@ const props = withDefaults(defineProps<Props>(), {
   width: 'full',
   showInlineHelp: false,
   contentAlignment: 'start',
+  hideButtonWhenCollapsed: false,
 })
 
 const maxWidth = computed(() =>
@@ -73,7 +75,7 @@ const { durations } = useTransitionConfig()
 <template>
   <div class="flex h-full max-h-screen flex-col">
     <div
-      class="grid h-full duration-100"
+      class="grid h-full overflow-y-auto duration-100"
       :class="{
         'transition-none': noTransition,
         'max-h-[calc(100%-3.5rem)]': $slots.bottomBar,
@@ -122,13 +124,19 @@ const { durations } = useTransitionConfig()
         v-if="$slots.sideBar"
         v-show="showSidebar"
         id="content-sidebar"
-        #default="{ isCollapsed }"
+        #default="{ isCollapsed, toggleCollapse }"
         :name="storageKeyId"
         :position="SidebarPosition.End"
+        :hide-button-when-collapsed="hideButtonWhenCollapsed"
+        :aria-label="$t('Content sidebar')"
         collapsible
         resizable
         no-padding
+        no-scroll
         class="bg-white dark:bg-gray-500"
+        :class="{
+          'max-h-[calc(100dvh-3.5rem)]': $slots.bottomBar,
+        }"
         @collapse="collapseSidebar"
         @expand="expandSidebar"
         @resize-horizontal="resizeSidebar"
@@ -136,7 +144,7 @@ const { durations } = useTransitionConfig()
         @resize-horizontal-end="noTransition = false"
         @reset-width="resetSidebarWidth"
       >
-        <slot name="sideBar" v-bind="{ isCollapsed }" />
+        <slot name="sideBar" v-bind="{ isCollapsed, toggleCollapse }" />
       </LayoutSidebar>
     </div>
 

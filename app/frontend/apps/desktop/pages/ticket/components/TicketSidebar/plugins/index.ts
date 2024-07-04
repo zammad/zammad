@@ -22,12 +22,10 @@ export const pluginFiles = Object.entries(pluginModules)
 export const useTicketSidebarPlugins = () => {
   const { hasPermission } = useSessionStore()
 
-  const plugins = pluginFiles
+  return pluginFiles
     .filter(([, plugin]) => hasPermission(plugin.permissions))
     .reduce<Record<string, TicketSidebarPlugin>>((acc, [name, plugin]) => {
       acc[name] = plugin
       return acc
     }, {})
-
-  return plugins
 }

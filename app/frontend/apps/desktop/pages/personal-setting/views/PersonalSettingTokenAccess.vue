@@ -136,6 +136,7 @@ const deleteDevice = (accessToken: Token) => {
 
   accessTokenDeleteMutation.send().then(() => {
     notify({
+      id: 'personal-access-token-removed',
       type: NotificationTypes.Success,
       message: __('Personal access token has been deleted.'),
     })

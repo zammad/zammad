@@ -18,7 +18,7 @@ import { useTicketSignature } from '#shared/composables/useTicketSignature.ts'
 import { useTicketCreate } from '#shared/entities/ticket/composables/useTicketCreate.ts'
 import { useTicketCreateArticleType } from '#shared/entities/ticket/composables/useTicketCreateArticleType.ts'
 import { useTicketCreateView } from '#shared/entities/ticket/composables/useTicketCreateView.ts'
-import { useTicketFormOganizationHandler } from '#shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts'
+import { useTicketFormOrganizationHandler } from '#shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts'
 import type { TicketFormData } from '#shared/entities/ticket/types.ts'
 import { useUserQuery } from '#shared/entities/user/graphql/queries/user.api.ts'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
@@ -84,7 +84,7 @@ const { createTicket, isTicketCustomer } = useTicketCreate(
 const getFormSchemaGroupSection = (
   stepName: string,
   sectionTitle: string,
-  childrens: FormSchemaNode[],
+  children: FormSchemaNode[],
   itemsCenter = false,
 ) => {
   return {
@@ -115,7 +115,7 @@ const getFormSchemaGroupSection = (
             },
             children: i18n.t(sectionTitle),
           },
-          ...childrens,
+          ...children,
         ],
       },
     ],
@@ -509,7 +509,7 @@ export default {
       class="pb-32 text-left"
       :schema="formSchema"
       :handlers="[
-        useTicketFormOganizationHandler(),
+        useTicketFormOrganizationHandler(),
         signatureHandling('body'),
         useTicketDuplicateDetectionHandler(showTicketDuplicateDetectionDialog),
       ]"

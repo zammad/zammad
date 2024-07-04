@@ -28,27 +28,19 @@ const errorCallback = createQueryErrorHandler({
   forbidden: __('You have insufficient rights to view this organization.'),
 })
 
+const organizationId = computed(() => ticket.value?.organization?.internalId)
+
 const {
   organization,
   organizationQuery,
   loading: organizationLoading,
   objectAttributes,
   loadAllMembers,
-  loadOrganization,
-} = useOrganizationDetail(undefined, errorCallback)
+} = useOrganizationDetail(organizationId, errorCallback)
 
 const error = ref('')
 organizationQuery.onError((apolloError) => {
   error.value = apolloError.message
-})
-
-watchEffect(() => {
-  const organizationId = ticket.value?.organization?.internalId
-  if (!organizationId) {
-    return
-  }
-
-  loadOrganization(organizationId)
 })
 
 watchEffect(() => {

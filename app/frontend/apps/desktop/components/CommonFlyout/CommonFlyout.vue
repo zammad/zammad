@@ -253,19 +253,17 @@ onMounted(() => {
       }"
     >
       <slot name="header">
-        <div
-          class="flex items-center gap-2 text-base text-gray-100 dark:text-neutral-400"
+        <CommonLabel
+          v-if="headerTitle"
+          :id="`${flyoutId}-title`"
+          tag="h2"
+          class="min-h-7 grow"
+          size="large"
+          :prefix-icon="headerIcon"
+          icon-color="text-stone-200 dark:text-neutral-500"
         >
-          <CommonIcon
-            v-if="headerIcon"
-            class="flex-shrink-0"
-            size="small"
-            :name="headerIcon"
-          />
-          <h2 v-if="headerTitle" :id="`${flyoutId}-title`">
-            {{ headerTitle }}
-          </h2>
-        </div>
+          {{ $t(headerTitle) }}
+        </CommonLabel>
       </slot>
       <CommonButton
         class="ltr:ml-auto rtl:mr-auto"
@@ -295,7 +293,7 @@ onMounted(() => {
           !arrivedState.bottom && isContentOverflowing,
       }"
     >
-      <slot name="footer">
+      <slot name="footer" v-bind="{ action, close }">
         <CommonFlyoutActionFooter
           v-bind="footerActionOptions"
           @cancel="close()"

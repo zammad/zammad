@@ -30,6 +30,18 @@ export const AutocompleteSearchGenericDocument = gql`
         outOfOfficeEndAt
         active
         vip
+        organization {
+          id
+          internalId
+          name
+          active
+          vip
+          ticketsCount {
+            open
+            closed
+          }
+        }
+        hasSecondaryOrganizations
       }
       ... on Organization {
         id
@@ -37,7 +49,7 @@ export const AutocompleteSearchGenericDocument = gql`
         name
         active
         vip
-        members(first: $membersCount) {
+        allMembers(first: $membersCount) {
           edges {
             node {
               id

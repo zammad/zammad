@@ -3,7 +3,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref } from 'vue'
 
-import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import Form from '#shared/components/Form/Form.vue'
 import type {
   FormSubmitData,

@@ -172,6 +172,7 @@ const additionalQueryParams = () => {
 }
 
 const defaultFilter = computed(() => {
+  if (props.context.alwaysApplyDefaultFilter) return props.context.defaultFilter
   if (hasValue.value) return ''
   return props.context.defaultFilter
 })

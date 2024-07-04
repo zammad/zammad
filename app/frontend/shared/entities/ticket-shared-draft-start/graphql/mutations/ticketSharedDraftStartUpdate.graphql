@@ -1,0 +1,13 @@
+mutation ticketSharedDraftStartUpdate(
+  $sharedDraftId: ID!
+  $input: TicketSharedDraftStartInput!
+) {
+  ticketSharedDraftStartUpdate(input: $input, sharedDraftId: $sharedDraftId) {
+    sharedDraft {
+      ...ticketSharedDraftStartAttributes
+    }
+    errors {
+      ...errors
+    }
+  }
+}

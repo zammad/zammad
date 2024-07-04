@@ -107,8 +107,8 @@ describe('static organization', () => {
     const mockApi = mockGraphQLApi(OrganizationDocument).willResolve({
       organization: {
         ...organization,
-        members: {
-          ...organization.members,
+        allMembers: {
+          ...organization.allMembers,
           totalCount: 2,
         },
       },
@@ -130,7 +130,7 @@ describe('static organization', () => {
 
     expect(view.container).toHaveTextContent('Members')
 
-    const members = organization.members?.edges || []
+    const members = organization.allMembers?.edges || []
 
     expect(members).toHaveLength(1)
     expect(view.container).toHaveTextContent(members[0].node.fullname!)
@@ -140,8 +140,8 @@ describe('static organization', () => {
       data: {
         organization: {
           ...organization,
-          members: {
-            ...organization.members,
+          allMembers: {
+            ...organization.allMembers,
             edges: nullableMock([
               ...members,
               {
@@ -248,6 +248,9 @@ describe('static organization', () => {
 
     const mockApi =
       mockGraphQLApi(OrganizationDocument).willFailWithNotFoundError()
+
+    mockGraphQLSubscription(OrganizationUpdatesDocument)
+
     mockOrganizationObjectAttributes()
 
     const view = await visitView('/organizations/123')
@@ -262,6 +265,7 @@ describe('static organization', () => {
 
     const mockApi =
       mockGraphQLApi(OrganizationDocument).willFailWithForbiddenError()
+    mockGraphQLSubscription(OrganizationUpdatesDocument)
     mockOrganizationObjectAttributes()
 
     const view = await visitView('/organizations/123')

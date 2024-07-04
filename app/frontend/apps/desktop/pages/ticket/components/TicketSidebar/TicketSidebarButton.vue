@@ -14,7 +14,7 @@ interface Props {
   name: string
   label: string
   icon: string
-  selected: boolean
+  selected?: boolean
   badge?: TicketSidebarButtonBadgeDetails
 }
 

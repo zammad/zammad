@@ -44,6 +44,7 @@ export const autoCompleteProps = [
   'complexValue',
   'clearValue',
   'emptyInitialLabelText',
+  'alwaysApplyDefaultFilter',
 ]
 
 const fieldDefinition = createInput(

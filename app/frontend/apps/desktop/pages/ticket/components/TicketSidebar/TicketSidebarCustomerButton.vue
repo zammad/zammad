@@ -1,33 +1,26 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { watch, computed, toRef } from 'vue'
+import { watch, computed } from 'vue'
 
 import { useUserDetail } from '#shared/entities/user/composables/useUserDetail.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
-import { useTicketSidebar } from '../../composables/useTicketSidebar.ts'
 import {
   TicketSidebarScreenType,
-  type TicketSidebarContext,
   TicketSidebarButtonBadgeType,
   type TicketSidebarButtonBadgeDetails,
+  type TicketSidebarButtonProps,
+  type TicketSidebarButtonEmits,
 } from '../types.ts'
 
 import TicketSidebarButton from './TicketSidebarButton.vue'
 
-import type { TicketSidebarPlugin } from './plugins/types.ts'
-
-interface Props {
-  sidebar: string
-  sidebarPlugin: TicketSidebarPlugin
-  context: TicketSidebarContext
-  selected: boolean
-}
-
 const application = useApplicationStore()
 
-const props = defineProps<Props>()
+const props = defineProps<TicketSidebarButtonProps>()
+
+const emit = defineEmits<TicketSidebarButtonEmits>()
 
 const customerId = computed(() => Number(props.context.formValues.customer_id))
 
@@ -62,15 +55,13 @@ const badge = computed<TicketSidebarButtonBadgeDetails | undefined>(() => {
   return { label, value, type }
 })
 
-const { showSidebar, hideSidebar } = useTicketSidebar(toRef(props, 'context'))
-
 watch(customer, (newValue) => {
   if (!newValue) {
-    hideSidebar(props.sidebar)
+    emit('hide')
     return
   }
 
-  showSidebar(props.sidebar)
+  emit('show')
 })
 </script>
 

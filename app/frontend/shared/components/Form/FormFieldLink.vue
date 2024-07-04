@@ -7,11 +7,15 @@ import type { RouteLocationRaw } from 'vue-router'
 
 withDefaults(
   defineProps<{
+    id: string
     link: RouteLocationRaw
     linkIcon?: string
+    linkLabel?: string
+    onLinkClick?: (e: MouseEvent) => void
   }>(),
   {
     linkIcon: 'form-field-link',
+    linkLabel: __('Link'),
   },
 )
 
@@ -28,8 +32,10 @@ const classMap = getFieldLinkClasses()
         v-if="link"
         :link="link"
         :class="classMap.link"
+        :aria-label="$t(linkLabel)"
         class="flex items-center justify-center"
         open-in-new-tab
+        @click="onLinkClick"
       >
         <CommonIcon :name="linkIcon" size="small" decorative />
       </CommonLink>

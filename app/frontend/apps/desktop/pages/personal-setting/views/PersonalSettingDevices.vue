@@ -84,6 +84,7 @@ const deleteDevice = (device: UserDevice) => {
 
   deviceDeleteMutation.send().then(() => {
     notify({
+      id: 'device-revoked',
       type: NotificationTypes.Success,
       message: __('Device has been revoked.'),
     })

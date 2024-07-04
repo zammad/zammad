@@ -3,25 +3,21 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
 import { useUserDetail } from '#shared/entities/user/composables/useUserDetail.ts'
 
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
-import CommonShowMoreButton from '#desktop/components/CommonShowMoreButton/CommonShowMoreButton.vue'
+import CommonSimpleEntityList from '#desktop/components/CommonSimpleEntityList/CommonSimpleEntityList.vue'
+import { EntityType } from '#desktop/components/CommonSimpleEntityList/types.ts'
 import NavigationMenuList from '#desktop/components/NavigationMenu/NavigationMenuList.vue'
 import { NavigationMenuDensity } from '#desktop/components/NavigationMenu/types.ts'
 
 import TicketSidebarContent from './TicketSidebarContent.vue'
 
-import type { TicketSidebarContext } from '../types.ts'
+import type { TicketSidebarContentProps } from '../types.ts'
 
-interface Props {
-  context: TicketSidebarContext
-}
-
-const props = defineProps<Props>()
+const props = defineProps<TicketSidebarContentProps>()
 
 const customerId = computed(() => Number(props.context.formValues.customer_id))
 
@@ -29,7 +25,6 @@ const {
   user: customer,
   objectAttributes,
   secondaryOrganizations,
-  loading,
   loadAllSecondaryOrganizations,
 } = useUserDetail(customerId, undefined, 'cache-first')
 
@@ -77,38 +72,17 @@ const actions: MenuItem[] = [
       :skip-attributes="['firstname', 'lastname']"
     />
 
-    <div v-if="secondaryOrganizations.totalCount" class="flex flex-col gap-1.5">
-      <CommonLabel
-        size="small"
-        class="mt-2 text-stone-200 dark:text-neutral-500"
-      >
-        {{ $t('Secondary organizations') }}
-      </CommonLabel>
-
-      <CommonLink
-        v-for="secondaryOrganization of secondaryOrganizations.array"
-        :key="secondaryOrganization.id"
-        :link="`/organizations/${secondaryOrganization.internalId}`"
-        class="flex items-center gap-1.5 text-sm leading-snug"
-      >
-        <CommonOrganizationAvatar
-          :entity="secondaryOrganization"
-          size="small"
-        />
-        {{ secondaryOrganization.name }}
-      </CommonLink>
-
-      <CommonShowMoreButton
-        class="self-end"
-        :entities="secondaryOrganizations.array"
-        :total-count="secondaryOrganizations.totalCount"
-        :disabled="loading"
-        @click="loadAllSecondaryOrganizations"
-      />
-    </div>
+    <CommonSimpleEntityList
+      v-if="secondaryOrganizations.totalCount"
+      :type="EntityType.Organization"
+      :label="$t('Secondary organizations')"
+      :entity="secondaryOrganizations"
+      @load-more="loadAllSecondaryOrganizations"
+    />
 
     <div class="flex flex-col">
       <CommonLabel
+        id="customer-tickets"
         size="small"
         class="mt-2 text-stone-200 dark:text-neutral-500"
       >
@@ -117,6 +91,7 @@ const actions: MenuItem[] = [
 
       <NavigationMenuList
         class="mt-1"
+        aria-labelledby="customer-tickets"
         :density="NavigationMenuDensity.Dense"
         :items="[
           {

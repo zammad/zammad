@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import TicketSidebarOrganizationButton from '../TicketSidebarOrganizationButton.vue'
+// eslint-disable-next-line import/no-named-as-default,import/no-named-as-default-member
 import TicketSidebarOrganizationContent from '../TicketSidebarOrganizationContent.vue'
 
 import type { TicketSidebarPlugin } from './types.ts'
@@ -14,9 +15,14 @@ export default <TicketSidebarPlugin>{
   icon: 'buildings',
   order: 2000,
   available: (context: TicketSidebarContext) => {
-    // When customer_id is selected, then it's
-    // possible that organization sidebar needs to be shown.
-    if (context.formValues.customer_id) return true
+    // Consider the sidebar available only if a customer ID has been set to an integer ID.
+    //   In case of a string value, it's probably an unknown email address and therefore no organization to show.
+    if (
+      context.formValues.customer_id &&
+      typeof context.formValues.customer_id === 'number'
+    )
+      return true
+
     return false
   },
 }

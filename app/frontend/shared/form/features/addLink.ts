@@ -7,7 +7,7 @@ import type { FormKitNode } from '@formkit/core'
 const addLink = (node: FormKitNode) => {
   const { props } = node
 
-  node.addProps(['link', 'linkIcon'])
+  node.addProps(['link', 'linkIcon', 'linkLabel', 'onLinkClick'])
 
   // The padding below is specific to mobile field layout only.
   if (useAppName() !== 'mobile') return

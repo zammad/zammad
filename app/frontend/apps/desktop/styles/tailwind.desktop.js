@@ -106,6 +106,9 @@ module.exports = {
       maxWidth: {
         150: '600px',
       },
+      gridTemplateColumns: {
+        '2-uneven': 'repeat(2, minmax(0, 1fr))',
+      },
     },
   },
 }

@@ -50,18 +50,19 @@ export default (
     if (organization) {
       // if the organization already exists, add the user to it
       user.organization = organization
-      const members = organization.members.edges
+      const members = organization.allMembers.edges
       const lastCursor = members[members.length - 1]?.cursor
       const cursor = `${lastCursor || 'AB'}A`
-      organization.members.edges.push({
+      organization.allMembers.edges.push({
         __typename: 'UserEdge',
         cursor,
         node: userValue as any,
       })
-      organization.members.totalCount += 1
-      organization.members.pageInfo ??= {} as any
-      organization.members.pageInfo.startCursor = members[0]?.cursor || cursor
-      organization.members.pageInfo.endCursor = cursor
+      organization.allMembers.totalCount += 1
+      organization.allMembers.pageInfo ??= {} as any
+      organization.allMembers.pageInfo.startCursor =
+        members[0]?.cursor || cursor
+      organization.allMembers.pageInfo.endCursor = cursor
     } else {
       user.organization = {
         id: convertToGraphQLId('Organization', 1),

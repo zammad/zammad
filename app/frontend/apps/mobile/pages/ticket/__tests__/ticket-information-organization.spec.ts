@@ -107,9 +107,9 @@ describe('static organization', () => {
     organization.vip = true
     const { view, mockApi } = await visitTicketOrganization({
       ...organization,
-      members: {
-        ...organization.members,
-        edges: organization.members?.edges || [],
+      allMembers: {
+        ...organization.allMembers,
+        edges: organization.allMembers?.edges || [],
         totalCount: 2,
       },
     })
@@ -124,7 +124,7 @@ describe('static organization', () => {
 
     expect(view.container).toHaveTextContent('Members')
 
-    const members = organization.members?.edges || []
+    const members = organization.allMembers?.edges || []
 
     expect(members).toHaveLength(1)
     expect(view.container).toHaveTextContent(members[0].node.fullname!)
@@ -133,8 +133,8 @@ describe('static organization', () => {
       data: {
         organization: {
           ...organization,
-          members: {
-            ...organization.members,
+          allMembers: {
+            ...organization.allMembers,
             edges: [
               ...members,
               {
@@ -147,6 +147,8 @@ describe('static organization', () => {
                   vip: false,
                   lastname: 'Hunter',
                   fullname: 'Jane Hunter',
+                  email: 'jane.hunter@example.com',
+                  phone: null,
                   outOfOffice: false,
                   outOfOfficeStartAt: null,
                   outOfOfficeEndAt: null,

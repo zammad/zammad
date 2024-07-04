@@ -54,6 +54,10 @@
 }
 
 @layer components {
+  .grid-cols-2-uneven > *:nth-last-child(1):nth-child(odd) {
+    grid-column: span 2;
+  }
+
   input::placeholder,
   textarea::placeholder {
     @apply text-stone-200 dark:text-neutral-500;

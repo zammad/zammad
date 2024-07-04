@@ -20,7 +20,6 @@ const renderNewAccessTokenFlyout = (
     props,
     ...options,
     store: true,
-    fylout: true,
     form: true,
     router: true,
     global: {

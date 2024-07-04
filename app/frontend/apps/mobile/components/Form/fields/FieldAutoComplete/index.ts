@@ -15,6 +15,7 @@ export const autoCompleteProps = [
   'clearable',
   'debounceInterval',
   'defaultFilter',
+  'alwaysApplyDefaultFilter',
   'filterInputPlaceholder',
   'filterInputValidation',
   'limit',

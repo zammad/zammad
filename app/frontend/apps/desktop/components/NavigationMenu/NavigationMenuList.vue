@@ -3,8 +3,6 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
-
 import {
   NavigationMenuDensity,
   type NavigationMenuEntry,

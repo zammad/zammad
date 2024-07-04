@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, nextTick, ref, watch, type Ref } from 'vue'
+import { computed, nextTick, ref, type Ref } from 'vue'
 
 import { useUserLazyQuery } from '#shared/entities/user/graphql/queries/user.api.ts'
 import { useUserObjectAttributesStore } from '#shared/entities/user/stores/objectAttributes.ts'
@@ -9,6 +9,7 @@ import type {
   UserUpdatesSubscriptionVariables,
   UserUpdatesSubscription,
 } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type { GraphQLHandlerError } from '#shared/types/error.ts'
 import { normalizeEdges } from '#shared/utils/helpers.ts'
@@ -16,11 +17,12 @@ import { normalizeEdges } from '#shared/utils/helpers.ts'
 import type { WatchQueryFetchPolicy } from '@apollo/client'
 
 export const useUserDetail = (
-  userId?: Ref<number>,
+  internalIdRef?: Ref<number>,
   errorCallback?: (error: GraphQLHandlerError) => boolean,
   fetchPolicy?: WatchQueryFetchPolicy,
 ) => {
-  const internalId = userId || ref(0)
+  const internalId = internalIdRef || ref(0)
+  const userId = computed(() => convertToGraphQLId('User', internalId.value))
   const fetchSecondaryOrganizationsCount = ref<Maybe<number>>(3)
 
   const userQuery = new QueryHandler(
@@ -70,24 +72,16 @@ export const useUserDetail = (
     () => objectAttributesManager.viewScreenAttributes || [],
   )
 
-  watch(
-    () => user.value?.id,
-    (userId) => {
-      if (!userId) return
-
-      userQuery.subscribeToMore<
-        UserUpdatesSubscriptionVariables,
-        UserUpdatesSubscription
-      >(() => ({
-        document: UserUpdatesDocument,
-        variables: {
-          userId,
-          secondaryOrganizationsCount: fetchSecondaryOrganizationsCount.value,
-        },
-      }))
+  userQuery.subscribeToMore<
+    UserUpdatesSubscriptionVariables,
+    UserUpdatesSubscription
+  >(() => ({
+    document: UserUpdatesDocument,
+    variables: {
+      userId: userId.value,
+      secondaryOrganizationsCount: fetchSecondaryOrganizationsCount.value,
     },
-    { immediate: true },
-  )
+  }))
 
   const secondaryOrganizations = computed(() =>
     normalizeEdges(user.value?.secondaryOrganizations),

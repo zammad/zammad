@@ -74,7 +74,7 @@ Object.assign(props.context, {
       const heading = autocompleteOption.object.name
 
       autocompleteOption.children =
-        autocompleteOption.object.members?.edges.map(
+        autocompleteOption.object.allMembers?.edges.map(
           (member) =>
             ({
               value: member.node.internalId,

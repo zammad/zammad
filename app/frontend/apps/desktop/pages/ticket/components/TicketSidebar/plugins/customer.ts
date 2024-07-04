@@ -14,7 +14,14 @@ export default <TicketSidebarPlugin>{
   icon: 'person',
   order: 1000,
   available: (context: TicketSidebarContext) => {
-    if (context.formValues.customer_id) return true
+    // Consider the sidebar available only if a customer ID has been set to an integer ID.
+    //   In case of a string value, it's probably an unknown email address and therefore no customer to show.
+    if (
+      context.formValues.customer_id &&
+      typeof context.formValues.customer_id === 'number'
+    )
+      return true
+
     return false
   },
 }

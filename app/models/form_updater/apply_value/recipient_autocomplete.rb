@@ -7,27 +7,48 @@ class FormUpdater::ApplyValue::RecipientAutocomplete < FormUpdater::ApplyValue::
   end
 
   def map_value(field:, config:)
-    user = ::User.search(
-      query:        config['value'],
-      limit:        1,
-      current_user: context[:current_user],
-    )
+    metadata = config['value']
+      .split(',')
+      .each_with_object({ value: [], options: [] }) do |elem, memo|
+        (value, options) = user_or_email(elem.strip)
 
-    value   = config['value']
-    label   = value
-    heading = nil
+        memo[:value].push value
+        memo[:options].push options
+      end
 
-    if user.present?
-      value  = user.first.email
-      label  = user.first.email
-      heading = user.first.fullname
+    result[field].merge!(metadata)
+  end
+
+  private
+
+  def user_or_email(recipient)
+    user = find_user_by_recipient(recipient)
+
+    if !user
+      return [
+        recipient,
+        {
+          value: recipient,
+          label: recipient,
+        }
+      ]
     end
 
-    result[field][:value] = Array(value)
-    result[field][:options] = [{
-      value:   value,
-      label:   label,
-      heading: heading,
-    }]
+    [
+      user.email,
+      {
+        value:   user.email,
+        label:   user.email,
+        heading: user.fullname,
+      }
+    ]
+  end
+
+  def find_user_by_recipient(recipient)
+    ::User.search(
+      query:        recipient,
+      limit:        1,
+      current_user: context[:current_user],
+    ).first
   end
 end

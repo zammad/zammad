@@ -1,0 +1,13 @@
+mutation ticketSharedDraftStartCreate(
+  $name: String!
+  $input: TicketSharedDraftStartInput!
+) {
+  ticketSharedDraftStartCreate(name: $name, input: $input) {
+    sharedDraft {
+      ...ticketSharedDraftStartAttributes
+    }
+    errors {
+      ...errors
+    }
+  }
+}

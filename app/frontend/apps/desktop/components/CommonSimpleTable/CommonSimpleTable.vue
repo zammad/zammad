@@ -3,8 +3,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
-
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 
@@ -101,7 +99,7 @@ const getTooltipText = (item: TableItem, header: TableHeader) => {
           >
             <CommonLabel
               ref="contentCells"
-              v-tooltip.truncateOnly="getTooltipText(item, header)"
+              v-tooltip.truncate="getTooltipText(item, header)"
               class="inline text-black dark:text-white"
             >
               <template v-if="!item[header.key]">-</template>

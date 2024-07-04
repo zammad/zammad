@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { useActiveElement } from '@vueuse/core'
-import { ref, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vue'
 import { useCollapseHandler } from '#desktop/components/CollapseButton/composables/useCollapseHandler.ts'
@@ -23,8 +23,10 @@ interface Props {
   currentWidth?: number
   minWidth?: number
   maxWidth?: number
+  noScroll?: boolean
   collapsible?: boolean
   iconCollapsed?: string
+  hideButtonWhenCollapsed?: boolean // Adjust it used as a default for all sidebars
   position?: SidebarPosition
   resizable?: boolean
   id: string
@@ -33,6 +35,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   position: SidebarPosition.Start,
+  hideButtonWhenCollapsed: false,
 })
 
 const emit = defineEmits<{
@@ -46,6 +49,10 @@ const emit = defineEmits<{
 
 const { toggleCollapse, isCollapsed } = useCollapseHandler(emit, {
   storageKey: `${props.name}-sidebar-collapsed`,
+})
+
+const showCollapseButtonOnCollapse = computed(() => {
+  return props.hideButtonWhenCollapsed ? !isCollapsed.value : true
 })
 
 // a11y keyboard navigation
@@ -95,7 +102,7 @@ watch(isResizingHorizontal, (isResizing) => {
 <template>
   <aside
     :id="props.id"
-    class="group/sidebar -:bg-neutral-950 relative flex max-h-screen flex-col border-neutral-100 dark:border-gray-900"
+    class="group/sidebar -:bg-neutral-950 -:max-h-screen relative flex flex-col border-neutral-100 dark:border-gray-900"
     :class="{
       'py-3': isCollapsed && !noPadding,
       'border-e': position === SidebarPosition.Start,
@@ -103,7 +110,7 @@ watch(isResizingHorizontal, (isResizing) => {
     }"
   >
     <CollapseButton
-      v-if="collapsible"
+      v-if="collapsible && showCollapseButtonOnCollapse"
       :is-collapsed="isCollapsed"
       :owner-id="id"
       group="sidebar"
@@ -147,10 +154,14 @@ watch(isResizingHorizontal, (isResizing) => {
     />
     <div
       v-else
-      class="flex h-full flex-col overflow-y-auto"
-      :class="{ 'p-3': !isCollapsed && !noPadding }"
+      class="flex h-full flex-col"
+      :class="{
+        'p-3': !isCollapsed && !noPadding,
+        'overflow-y-hidden': noScroll,
+        'overflow-y-auto': !noScroll,
+      }"
     >
-      <slot v-bind="{ isCollapsed }" />
+      <slot v-bind="{ isCollapsed, toggleCollapse }" />
     </div>
   </aside>
 </template>

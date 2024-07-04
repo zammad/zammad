@@ -149,6 +149,7 @@ const unlinkAccount = async (providerTableItem: LinkedAccountTableItem) => {
 
     if (success)
       notify({
+        id: 'linked-account-removed',
         type: NotificationTypes.Success,
         message: __('The account link was successfully removed!'),
       })

@@ -1,5 +1,5 @@
 fragment organizationMembers on Organization {
-  members(first: $membersCount) {
+  allMembers(first: $membersCount) {
     edges {
       node {
         id
@@ -8,6 +8,8 @@ fragment organizationMembers on Organization {
         firstname
         lastname
         fullname
+        email
+        phone
         outOfOffice
         outOfOfficeStartAt
         outOfOfficeEndAt

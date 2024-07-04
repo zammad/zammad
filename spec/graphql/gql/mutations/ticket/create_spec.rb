@@ -494,6 +494,23 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
           expect(Ticket.last.articles.last).to have_attributes(to: 'to@example.com, to2@example.com', cc: 'cc@example.com, cc2@example.com')
         end
       end
+
+      context 'with a shared draft' do
+        let(:shared_draft)  { create(:ticket_shared_draft_start, group:) }
+        let(:input_payload) do
+          input_base_payload
+            .merge(sharedDraftId: Gql::ZammadSchema.id_from_object(shared_draft))
+        end
+
+        it 'passed to ticket create service' do
+          expect_any_instance_of(Service::Ticket::Create)
+            .to receive(:execute)
+            .with(ticket_data: include(shared_draft:))
+            .and_call_original
+
+          gql.execute(query, variables: variables)
+        end
+      end
     end
 
     context 'with a customer', authenticated_as: :customer do

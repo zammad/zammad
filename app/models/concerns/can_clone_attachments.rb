@@ -26,55 +26,47 @@ returns
       o_id:   object_id,
     )
 
-    is_html_content = false
-    if content_type.present? && content_type =~ %r{text/html}i
-      is_html_content = true
-    end
+    is_html_content = content_type.present? && content_type =~ %r{text/html}i
 
-    new_attachments = []
-    attachments.each do |new_attachment|
-      next if new_attachment.preferences['content-alternative'] == true
+    attachments
+      .select do |elem|
+        next if elem.preferences['content-alternative'] == true
 
-      # only_attached_attachments mode is used by apply attached attachments to forwared article
-      if options[:only_attached_attachments] == true && is_html_content == true
+        # only_attached_attachments mode is used by apply attached attachments to forwared article
+        if options[:only_attached_attachments] == true && is_html_content
 
-        content_id = new_attachment.preferences['Content-ID'] || new_attachment.preferences['content_id']
-        next if content_id.present? && body.present? && body.match?(%r{#{Regexp.quote(content_id)}}i)
+          content_id = elem.preferences['Content-ID'] || elem.preferences['content_id']
+          next if content_id.present? && body.present? && body.match?(%r{#{Regexp.quote(content_id)}}i)
+        end
+
+        # only_inline_attachments mode is used when quoting HTML mail with #{article.body_as_html}
+        if options[:only_inline_attachments] == true
+          next if !is_html_content
+          next if body.blank?
+
+          content_disposition = elem.preferences['Content-Disposition'] || elem.preferences['content_disposition']
+          next if content_disposition.present? && content_disposition.exclude?('inline')
+
+          content_id = elem.preferences['Content-ID'] || elem.preferences['content_id']
+          next if content_id.blank?
+          next if !body.match?(%r{#{Regexp.quote(content_id)}}i)
+        end
+
+        next if existing_attachments.any? do |existing_attachment|
+          existing_attachment.filename == elem.filename && existing_attachment.size == elem.size
+        end
+
+        true
       end
-
-      # only_inline_attachments mode is used when quoting HTML mail with #{article.body_as_html}
-      if options[:only_inline_attachments] == true
-        next if is_html_content == false
-        next if body.blank?
-
-        content_disposition = new_attachment.preferences['Content-Disposition'] || new_attachment.preferences['content_disposition']
-        next if content_disposition.present? && content_disposition.exclude?('inline')
-
-        content_id = new_attachment.preferences['Content-ID'] || new_attachment.preferences['content_id']
-        next if content_id.blank?
-        next if !body.match?(%r{#{Regexp.quote(content_id)}}i)
+      .map do |elem|
+        Store.create!(
+          object:      object_type,
+          o_id:        object_id,
+          data:        elem.content,
+          filename:    elem.filename,
+          preferences: elem.preferences,
+        )
       end
-
-      already_added = false
-      existing_attachments.each do |existing_attachment|
-        next if existing_attachment.filename != new_attachment.filename || existing_attachment.size != new_attachment.size
-
-        already_added = true
-        break
-      end
-      next if already_added == true
-
-      file = Store.create!(
-        object:      object_type,
-        o_id:        object_id,
-        data:        new_attachment.content,
-        filename:    new_attachment.filename,
-        preferences: new_attachment.preferences,
-      )
-      new_attachments.push file
-    end
-
-    new_attachments
   end
 
   def attach_upload_cache(form_id, source_object_name: 'UploadCache')

@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
 
 import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import type { AvatarOrganization } from '#shared/components/CommonOrganizationAvatar/index.ts'
@@ -38,10 +38,10 @@ const {
   objectAttributes,
   organizationQuery,
   loadAllMembers,
-  loadOrganization,
-} = useOrganizationDetail(undefined, errorCallback)
+  // loadOrganization,
+} = useOrganizationDetail(toRef(props, 'internalId'), errorCallback)
 
-loadOrganization(props.internalId)
+// loadOrganization(props.internalId)
 
 useOnlineNotificationSeen(organization)
 
