@@ -90,7 +90,7 @@
         <p class="js-messageFound"><%- @T('%s email(s) were found in your mailbox. They will all be moved from your mailbox into Zammad.', 'x') %></p>
 
         <div class="js-archiveMessage">
-          <p class="js-archiveMessageCount"><%- @T('In addition, we have found emails in your mailbox that are older than %s weeks. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.', 'x') %></p>
+          <p class="js-archiveMessageCount"><%- @T('In addition, emails were found in your mailbox that are older than %s weeks. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.', 'x') %></p>
 
           <p><%- @T('Should the emails from this mailbox be imported as an archive or as regular emails?') %></p>
 

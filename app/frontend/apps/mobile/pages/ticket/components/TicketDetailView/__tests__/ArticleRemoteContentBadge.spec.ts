@@ -40,7 +40,7 @@ describe('rendering remote content badge', () => {
     expect(within(popup).getByText('Blocked Content')).toBeInTheDocument()
     expect(
       within(popup).getByText(
-        'This message contains images or other content hosted by an external source. We blocked it, but you can download the original formatting here.',
+        'This message contains images or other content hosted by an external source. It was blocked, but you can download the original formatting here.',
       ),
     ).toBeInTheDocument()
 

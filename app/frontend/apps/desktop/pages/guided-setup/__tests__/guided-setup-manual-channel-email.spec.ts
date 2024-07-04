@@ -425,7 +425,7 @@ describe('guided setup manual channel email', () => {
       )
 
       expect(inboundMessagesForm).toHaveTextContent(
-        'In addition, we have found emails in your mailbox that are older than 2 weeks. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.',
+        'In addition, emails were found in your mailbox that are older than 2 weeks. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.',
       )
 
       expect(

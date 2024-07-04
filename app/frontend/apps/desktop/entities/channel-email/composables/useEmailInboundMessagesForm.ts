@@ -40,7 +40,7 @@ export const useEmailInboundMessagesForm = (
               isLayout: true,
               component: 'CommonLabel',
               children:
-                '$t(\'In addition, we have found emails in your mailbox that are older than %s weeks. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.\', $metaInformationInbound.archiveWeekRange)',
+                '$t(\'In addition, emails were found in your mailbox that are older than %s weeks. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.\', $metaInformationInbound.archiveWeekRange)',
             },
             {
               isLayout: true,

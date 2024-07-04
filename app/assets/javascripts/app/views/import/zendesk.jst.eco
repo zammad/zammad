@@ -61,7 +61,7 @@
     <div class="wizard-slide vertical hide" data-slide="zendesk-import">
       <h2><%- @T('%s Migration', 'Zendesk') %></h2>
       <div class="alert alert--danger hide js-error" role="alert"></div>
-      <div class="alert alert--info hide js-ticket-count-info" role="alert"><%- @T("There are more than 1000 tickets in the Zendesk system. Due to API rate limit restrictions we can't get the exact number of tickets yet and have to fetch them in batches of 1000. This might take some time, better grab a cup of coffee. The total number of tickets gets updated as soon as the currently known number is surpassed.") %></div>
+      <div class="alert alert--info hide js-ticket-count-info" role="alert"><%- @T("There are more than 1000 tickets in the Zendesk system. Due to API rate limit restrictions, Zammad can't get the exact number of tickets yet and has to fetch them in batches of 1000. This might take some time, better grab a cup of coffee. The total number of tickets gets updated as soon as the currently known number is surpassed.") %></div>
       <div class="wizard-body flex vertical justified">
         <table class="progressTable">
           <tr class="js-groups">
