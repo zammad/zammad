@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-28 09:16+0000\n"
-"Last-Translator: \"jingchun.xia\" <jingchun.xia@vesoft.com>\n"
+"PO-Revision-Date: 2024-07-04 05:48+0000\n"
+"Last-Translator: Phoenix <phoenix.yu@vesoft.com>\n"
 "Language-Team: Chinese (Simplified) <https://translations.zammad.org/"
 "projects/zammad/zammad-development/zh_Hans/>\n"
 "Language: zh-cn\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.6\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1765,7 +1765,7 @@ msgstr "安装、更新或卸载软件包后，需要在服务器上执行以下
 msgid ""
 "After the import is completed, the account associated with the API token "
 "will become your username, and the token itself will be your password."
-msgstr ""
+msgstr "完成导入后，和API令牌关联的账户将会变成你的用户名，令牌会变成你的密码。"
 
 #: app/assets/javascripts/app/views/session.jst.eco:11
 msgid "Age"
@@ -1847,7 +1847,8 @@ msgid ""
 "when this job is run. Once the data privacy task is executed, users and "
 "tickets will be deleted and a history entry preserved. There is no rollback "
 "of this deletion possible."
-msgstr ""
+msgstr "运行此作业时，将计划删除所有受影响的用户及其客户票证。一旦执行数据隐私任务，"
+"用户和工单将被删除，并保留历史条目。注意！此删除操作无法回滚。"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:462
 msgid "All agents"
@@ -2430,7 +2431,7 @@ msgstr "至少需要提供一种方式（名字，姓氏，电话或者电子邮
 msgid "At least one match rule is required, but none was provided."
 msgstr "至少需要一个字母"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:155
 msgid "At least one object must be selected."
 msgstr "至少必须选择一个对象。"
 
@@ -2959,7 +2960,7 @@ msgstr "批量操作已執行！"
 msgid "Bulk action failed"
 msgstr "批量操作失败"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:199
 msgid "Bulk action stopped by error(s): %s!"
 msgstr "批量操作报错 %s 并停止!"
 
@@ -3472,7 +3473,8 @@ msgid ""
 "Choose the default behavior of the PGP integration on per group basis. If "
 "signing or encrypting is not possible, the setting has no effect. Agents can "
 "always manually alter the behavior for each article."
-msgstr ""
+msgstr "按组选择 PGP 集成的默认行为。如果无法进行签名或加密，则该设置无效。代理人员始"
+"终可以手动更改每篇文章的行为。"
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco:11
 msgid ""
@@ -3746,7 +3748,7 @@ msgstr "侧边栏中打开工单指示器的颜色表示。"
 msgid "Combined subscription URL"
 msgstr "訂閱工單"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
 msgid "Comment"
 msgstr "注释"
 
@@ -5071,7 +5073,8 @@ msgid ""
 "Defines an optional highlight color of this priority in ticket tables. High "
 "priority will be rendered in an indian red, while low priority in a baby "
 "blue color."
-msgstr ""
+msgstr "在工单表中定义此优先级的可选突出显示颜色。高优先级将以印度红呈现，而低优先级"
+"将以淡蓝色呈现。"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:8
 msgid ""
@@ -5867,7 +5870,7 @@ msgstr "删除用户"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 msgid "Delete all child categories and answers, then try again."
-msgstr ""
+msgstr "删除所有的子类别和回答，并重试。"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:19
 msgid "Delete all existing records first."
@@ -6098,7 +6101,8 @@ msgid ""
 "Did you know that system translations can be contributed and shared with the "
 "community on our public platform %l? It sports a very convenient user "
 "interface based on Weblate, give it a try!"
-msgstr ""
+msgstr "您是否知道系统翻译可以在我们的公共平台 %l 上与社区贡献和共享？它具有基于 "
+"Weblate 的非常方便的用户界面，尝试一下！"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:36
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:165
@@ -6111,7 +6115,7 @@ msgstr "你可知道？您可以帮助转化％s："
 
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
 msgid "Did you plan to include attachments with this message?"
-msgstr ""
+msgstr "你是否计划在此邮件中添加附件？"
 
 #: db/seeds/settings.rb:2048
 msgid "Digit required"
@@ -6160,7 +6164,7 @@ msgstr "关闭提醒"
 msgid ""
 "Disabling the notifications from all groups will turn off the limit. "
 "Instead, to disable the notifications use the settings above."
-msgstr ""
+msgstr "禁用所有群组的通知将取消此限制。相反，若要禁用通知，请使用上面的设置。"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:279
 msgid "Discard"
@@ -6697,12 +6701,12 @@ msgstr "电子邮件发送和接收无法验证。请检查您的设置。"
 
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:47
 msgid "Email sent to \"%s\". Please let the user verify their email account."
-msgstr ""
+msgstr "电子邮件已发送至“%s”。请让用户验证他们的电子邮件帐户。"
 
 #: app/assets/javascripts/app/controllers/signup.coffee:118
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:91
 msgid "Email sent to \"%s\". Please verify your email account."
-msgstr ""
+msgstr "电子邮件已发送至“%s”。请让用户验证你的电子邮件帐户。"
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco:21
 #: app/assets/javascripts/app/views/knowledge_base/search_field_panel.jst.eco:5
@@ -6808,7 +6812,8 @@ msgid ""
 "Enable or disable the maintenance mode of Zammad. If enabled, all non-"
 "administrators get logged out and only administrators can start a new "
 "session."
-msgstr ""
+msgstr "启用或者禁用Zammad的维护模式。如果启用，非管理员身份的用户将会被注销登陆，只"
+"有管理员可以开启新的会话。"
 
 #: db/seeds/settings.rb:2417
 msgid "Enable ticket auto assignment."
@@ -7038,7 +7043,7 @@ msgstr "输入标题…"
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:125
 msgid ""
 "Enter a domain name that will be associated with this key, e.g. example.com."
-msgstr ""
+msgstr "输入和此密钥关联的域名，例如example.com。"
 
 #: app/assets/javascripts/app/views/generic/input.jst.eco:2
 #, fuzzy
@@ -7155,7 +7160,7 @@ msgstr "輸入您的電子郵件地址和您從管理界面獲得的 ％s API to
 #: app/assets/javascripts/app/views/profile/password.jst.eco:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:116
 msgid "Enter your current password, insert a new one and confirm it."
-msgstr ""
+msgstr "输入你当前的密码，输入你的新密码并确认。"
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:36
 msgid ""
@@ -7188,7 +7193,7 @@ msgstr "请输入您的用户名或邮件地址"
 
 #: app/models/system_report/plugin/entities/counts.rb:4
 msgid "Entity counts of database objects (e.g. ticket count, user count, etc.)"
-msgstr ""
+msgstr "数据库对象的实体计数（例如票数、用户数等）"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:6
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:165
@@ -7341,6 +7346,16 @@ msgid ""
 "Whatever it is, you can do it with triggers: actions that watch tickets for "
 "certain changes, and then fire off whenever those changes occur."
 msgstr ""
+"每次客户创建新工单时，他们都会自动收到一封确认电子邮件，以确保他们的问题已成"
+"功提交。此行为内置于 Zammad "
+"中，但它也是高度可定制的，您可以像它一样设置其他自动化操作。\n"
+"\n"
+"也许您想为任何标题中带有“紧急”一词的工单设置更高的优先级。也许您想避免向某些"
+"组织的客户发送自动回复电子邮件。每当有人向工单添加内部注释时，您可能希望将工"
+"单标记为“待处理”。\n"
+"\n"
+"无论是什么，您都可以使用触发器来完成：检测工单中某些更改的操作，然后在发生这"
+"些更改时触发。"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:28
 msgid "Example CSV file for download."
@@ -7577,7 +7592,7 @@ msgstr "功能已禁用，请联系您的管理员！"
 #: app/controllers/integration/placetel_controller.rb:55
 #: app/controllers/integration/sipgate_controller.rb:55
 msgid "Feature not configured, please contact your admin!"
-msgstr ""
+msgstr "功能未配置，请联系你的管理员！"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 #: app/assets/javascripts/app/controllers/report.coffee:204
@@ -7615,7 +7630,7 @@ msgstr "文件太大。％s必须为％s或更小。"
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee:79
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue:67
 msgid "File too big, max. %s MB allowed."
-msgstr ""
+msgstr "文件太大，最大%s MB。"
 
 #: app/models/system_report/plugin/rails_root.rb:4
 msgid "Filepath to Zammad directory"
@@ -7773,7 +7788,7 @@ msgstr "頁腳備註"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue:78
 msgid "For additional support, consult our migration guide."
-msgstr ""
+msgstr "如果需要更多支持，请参阅我们的迁移指南。"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco:13
 #, fuzzy
@@ -16960,7 +16975,7 @@ msgstr "％s 对象已更新。"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:64
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:794
-#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:189
+#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:267
 #: app/assets/javascripts/app/controllers/object_manager.coffee:261
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:94
@@ -19422,7 +19437,7 @@ msgstr "測試運行成功"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -20265,7 +20280,7 @@ msgstr "新的工单"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-27 05:56+0000\n"
+"PO-Revision-Date: 2024-07-03 09:16+0000\n"
 "Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fr/>\n"
@@ -1387,10 +1387,8 @@ msgid "Add first level heading"
 msgstr "Ajouter un titre de premier niveau"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Add heading"
-msgstr "Ajouter une étiquette"
+msgstr "Ajouter un titre"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:131
 msgid "Add image"
@@ -1924,10 +1922,8 @@ msgid "Apply Shared Draft"
 msgstr "Appliquer le brouillon partagé"
 
 #: app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue:81
-#, fuzzy
-#| msgid "Template"
 msgid "Apply Template"
-msgstr "Modèle"
+msgstr "Appliquer le modèle"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:10
 msgid "Apply current defaults to all agents"
@@ -2080,10 +2076,8 @@ msgid "Article - visibility confirmation dialog"
 msgstr "Article - fenêtre de confirmation de visibilité"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
-#, fuzzy
-#| msgid "Article Type"
 msgid "Article > Text (HTML)"
-msgstr "Type d'article"
+msgstr "Article > Texte (HTML)"
 
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
@@ -2170,7 +2164,7 @@ msgstr ""
 msgid "At least one match rule is required, but none was provided."
 msgstr "Au moins une règle est requise, mais aucune n'a été fournie."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:155
 msgid "At least one object must be selected."
 msgstr "Au moins un objet doit être sélectionné."
 
@@ -2242,7 +2236,7 @@ msgid ""
 "Attention! Changing the organization will update the user's most recent "
 "tickets to the new organization."
 msgstr ""
-"Attention ! Changer l'organisation va mettre à jour les tickets les plus "
+"Attention ! Modifier l'organisation va mettre à jour les tickets les plus "
 "récents de l'utilisateur vers la nouvelle organisation."
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:39
@@ -2668,7 +2662,7 @@ msgstr "Action en masse effectué !"
 msgid "Bulk action failed"
 msgstr "Action en masse échouée"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:199
 msgid "Bulk action stopped by error(s): %s!"
 msgstr "Action de masse arrêtée en erreur : %s !"
 
@@ -2817,7 +2811,7 @@ msgstr "URL de callback"
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee:7
 #: app/assets/javascripts/app/controllers/_integration/sipgate_io.coffee:7
 msgid "Caller ID of outbound calls can be changed as well."
-msgstr "L'ID de l'émetteur des appels sortants peut lui aussi être changé."
+msgstr "L'ID de l'émetteur des appels sortants peut également être modifié."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:31
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:47
@@ -3029,10 +3023,8 @@ msgid "Change personal account password."
 msgstr "Modifier le mot de passe de votre compte."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
-#, fuzzy
-#| msgid "Change date"
 msgid "Change text color"
-msgstr "Modifier la date"
+msgstr "Modifier la couleur du texte"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -3427,7 +3419,7 @@ msgstr "Indicateur de couleur des tickets ouverts dans la barre latérale."
 msgid "Combined subscription URL"
 msgstr "URL d'abonnement combinée"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
 msgid "Comment"
 msgstr "Commentaire"
 
@@ -3797,7 +3789,7 @@ msgid ""
 msgstr ""
 "Les Core Workflows sont des actions ou contraintes dans les formulaires. En "
 "fonction de l'action, il est possible de cacher ou interdire certains "
-"champs, ou encore de changer l'obligation de les remplir."
+"champs, ou encore de modifier l'obligation de les remplir."
 
 #: app/services/service/channel/whatsapp/base.rb:37
 msgid "Could not fetch WhatsApp phone number details."
@@ -5523,10 +5515,8 @@ msgid "Delete avatar"
 msgstr "Supprimer l'avatar"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:149
-#, fuzzy
-#| msgid "Delete Article"
 msgid "Delete column"
-msgstr "Supprimer l'article"
+msgstr "Supprimer la colonne"
 
 #: db/seeds/permissions.rb:252
 msgid "Delete existing data of your system."
@@ -5573,16 +5563,12 @@ msgid "Delete records"
 msgstr "Supprimer les enregistrements"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:121
-#, fuzzy
-#| msgid "Delete User"
 msgid "Delete row"
-msgstr "Supprimer l'utilisateur"
+msgstr "Supprimer la ligne"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:206
-#, fuzzy
-#| msgid "Delete File"
 msgid "Delete table"
-msgstr "Supprimer le fichier"
+msgstr "Supprimer le tableau"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:154
 msgid "Delete this access token"
@@ -5731,7 +5717,7 @@ msgstr "Le saviez-vous ? Vous pouvez aider à traduire %s ici :"
 
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
 msgid "Did you plan to include attachments with this message?"
-msgstr ""
+msgstr "Avez-vous prévu d'inclure des pièces jointes à ce message ?"
 
 #: db/seeds/settings.rb:2048
 msgid "Digit required"
@@ -6363,7 +6349,7 @@ msgid ""
 "Enable if you want a timestamped reply header to be automatically inserted "
 "in front of quoted messages."
 msgstr ""
-"Activez si vous voulez qu'un entête de réponse horodaté soit ajouté au début "
+"Activez si vous voulez qu'un entête de réponse horodaté soit inséré au début "
 "des messages cités."
 
 #: db/seeds/settings.rb:715
@@ -6727,7 +6713,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:116
 msgid "Enter your current password, insert a new one and confirm it."
 msgstr ""
-"Saisissez votre mot de passe actuel, insérez un nouveau mot de passe et "
+"Saisissez votre mot de passe actuel, saisissez un nouveau mot de passe et "
 "confirmez-le."
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:36
@@ -6906,8 +6892,8 @@ msgstr ""
 "quelqu'un ajoute une note interne à un ticket.\n"
 "\n"
 "Quoi qu'il en soit, vous pouvez l'accomplir avec les déclencheurs : des "
-"actions qui surveillent les tickets pour certains changements, puis se "
-"déclenchent lorsque ces changements se produisent."
+"actions qui surveillent les tickets pour certaines modifications, puis se "
+"déclenchent lorsque ces modifications se produisent."
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:28
 msgid "Example CSV file for download."
@@ -8006,7 +7992,7 @@ msgid ""
 "Here you can sign out, change the frontend language, and see your last "
 "viewed items."
 msgstr ""
-"ICi, vous pouvez vous déconnecter, changer la langue de l'interface et voir "
+"Ici, vous pouvez vous déconnecter, modifier la langue de l'interface et voir "
 "les derniers éléments que vous avez consultés."
 
 #: app/assets/javascripts/app/views/object_manager/attribute.jst.eco:4
@@ -8634,10 +8620,8 @@ msgid "Increment seconds value"
 msgstr "Incrémenter la valeur des secondes"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
-#, fuzzy
-#| msgid "Incident"
 msgid "Indent text"
-msgstr "Incident"
+msgstr "Indenter le texte"
 
 #: app/frontend/apps/desktop/components/CommonProgressBar/CommonProgressBar.vue:16
 msgid "Indicating progress"
@@ -8683,35 +8667,31 @@ msgstr "Le contenu en ligne n'a pas pu être généré."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
 msgid "Insert code block"
-msgstr ""
+msgstr "Insérer un bloc de code"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:140
 msgid "Insert column after"
-msgstr ""
+msgstr "Insérer une colonne après"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:131
 msgid "Insert column before"
-msgstr ""
+msgstr "Insérer une colonne avant"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
-#, fuzzy
-#| msgid "Inserts text module"
 msgid "Insert inline code"
-msgstr "Insérer un modèle de texte"
+msgstr "Insérer du code inline"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:103
 msgid "Insert row above"
-msgstr ""
+msgstr "Insérer une ligne au-dessus"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:112
 msgid "Insert row below"
-msgstr ""
+msgstr "Insérer une ligne au-dessous"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
-#, fuzzy
-#| msgid "Inserts text module"
 msgid "Insert table"
-msgstr "Insérer un modèle de texte"
+msgstr "Insérer un tableau"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
 msgid "Insert text from Knowledge Base article"
@@ -9221,7 +9201,7 @@ msgstr "Dernière utilisation"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:123
 msgid "Last change %s %s by %s"
-msgstr "Dernier changement %s %s par %s"
+msgstr "Dernière modification %s %s par %s"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:11
 msgid "Last changed"
@@ -10029,10 +10009,8 @@ msgid "Merge"
 msgstr "Fusionner"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:168
-#, fuzzy
-#| msgid "Merge tickets"
 msgid "Merge cells"
-msgstr "Fusionner les tickets"
+msgstr "Fusionner les cellules"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:51
 msgid "Merge tickets"
@@ -10955,10 +10933,8 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "\"x-zammad-session-user-id\" absent, aucun expéditeur défini !"
 
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
-#, fuzzy
-#| msgid "No Thanks!"
 msgid "No, thanks"
-msgstr "Non merci !"
+msgstr "Non merci"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
@@ -11654,10 +11630,8 @@ msgid "Outbound Call"
 msgstr "Appel sortant"
 
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:22
-#, fuzzy
-#| msgid "Outbound Call"
 msgid "Outbound Call: %s"
-msgstr "Appel sortant"
+msgstr "Appel sortant : %s"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco:16
 msgid "Outbound:"
@@ -11669,7 +11643,7 @@ msgstr "Navigateur obsolète"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:246
 msgid "Outdent text"
-msgstr ""
+msgstr "Désindenter le texte"
 
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/models/group.coffee:47
@@ -12461,7 +12435,7 @@ msgid ""
 "and change it in-line."
 msgstr ""
 "Mettre un message sur la page de connexion. Pour le modifier, cliquez sur la "
-"zone de texte ci-dessous et changez le directement."
+"zone de texte ci-dessous et modifiez le directement."
 
 #: db/seeds/settings.rb:3582
 msgid "Puts Zammad into import mode (disables some triggers)."
@@ -12513,10 +12487,8 @@ msgid "Received Call"
 msgstr "Appel reçu"
 
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:15
-#, fuzzy
-#| msgid "Received Call"
 msgid "Received Call: %s"
-msgstr "Appel reçu"
+msgstr "Appel reçu : %s"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco:5
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco:30
@@ -12933,8 +12905,8 @@ msgstr ""
 "<br>\n"
 "<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
-"<div>Ce lien vous permet d'accéder à la page pour changer votre mot de passe."
-"</div>\n"
+"<div>Ce lien vous permet d'accéder à la page pour modifier votre mot de "
+"passe.</div>\n"
 "<br>\n"
 "<div>Si vous ne souhaitez pas changer votre mot de passe, merci d'ignorer ce "
 "message. Votre mot de passe ne sera pas réinitialisé.</div>\n"
@@ -12978,8 +12950,8 @@ msgstr ""
 "<br>\n"
 "<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
-"<div>Ce lien vous permet d'accéder à la page pour changer votre mot de passe."
-"</div>\n"
+"<div>Ce lien vous permet d'accéder à la page pour modifier votre mot de "
+"passe.</div>\n"
 "<br>\n"
 "<div>Si vous ne souhaitez pas changer votre mot de passe, merci d'ignorer ce "
 "message. Votre mot de passe ne sera pas réinitialisé.</div>\n"
@@ -13719,10 +13691,8 @@ msgid "Send Email"
 msgstr "Envoyer un email"
 
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:29
-#, fuzzy
-#| msgid "Send Email"
 msgid "Send Email: %s"
-msgstr "Envoyer un email"
+msgstr "Envoyer un email : %s"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:120
 msgid "Send Invitation"
@@ -14393,7 +14363,7 @@ msgid ""
 "Some system settings have changed, Zammad is restarting. Please wait until "
 "Zammad is back again."
 msgstr ""
-"Certains paramètres du système ont changé, Zammad est en train de "
+"Certains paramètres du système ont été modifiés, Zammad est en train de "
 "redémarrer. Veuillez patienter jusqu'à ce que Zammad soit de nouveau "
 "disponible."
 
@@ -14403,9 +14373,9 @@ msgid ""
 "you want to do this automatically, set environment variable "
 "APP_RESTART_CMD=\"/path/to/your_app_script.sh restart\"."
 msgstr ""
-"Certains paramètres du système ont changé, veuillez redémarrer tous les "
-"processus Zammad ! Si vous voulez le faire automatiquement, définissez la "
-"variable d'environnement APP_RESTART_CMD=\"/path/to/your_app_script.sh "
+"Certains paramètres du système ont été modifiés, veuillez redémarrer tous "
+"les processus Zammad ! Si vous voulez le faire automatiquement, définissez "
+"la variable d'environnement APP_RESTART_CMD=\"/path/to/your_app_script.sh "
 "restart\"."
 
 #: app/frontend/shared/errors/useErrorHandler.ts:35
@@ -14459,10 +14429,8 @@ msgid "Split"
 msgstr "Séparer"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:159
-#, fuzzy
-#| msgid "Split"
 msgid "Split cells"
-msgstr "Séparer"
+msgstr "Séparer les cellules"
 
 #: db/seeds/groups.rb:7
 msgid "Standard Group/Pool for Tickets."
@@ -14519,8 +14487,6 @@ msgid "Start typing to search or enter a new tag…"
 msgstr "Commencez à taper pour rechercher ou saisir une nouvelle étiquette…"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:47
-#, fuzzy
-#| msgid "Start typing to search or enter an phone number…"
 msgid "Start typing to search or enter a phone number…"
 msgstr "Commencez à taper pour rechercher ou saisir un numéro de téléphone…"
 
@@ -15371,14 +15337,15 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:93
 msgid "The configuration of Zammad has changed, please reload your browser."
 msgstr ""
-"La configuration de Zammad a changé, veuillez actualiser votre navigateur."
+"La configuration de Zammad a été modifiée, veuillez actualiser votre "
+"navigateur."
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts:102
 msgid ""
 "The configuration of Zammad has changed. Please reload at your earliest."
 msgstr ""
-"La configuration de Zammad a changé, veuillez actualiser votre navigateur "
-"dès que possible."
+"La configuration de Zammad a été modifiée, veuillez actualiser votre "
+"navigateur dès que possible."
 
 #: app/frontend/shared/server/connection.ts:85
 msgid "The connection to the server was lost."
@@ -15438,10 +15405,8 @@ msgstr ""
 "Le séparateur entre TicketHook et le numéro de ticket. Par exemple. ' : '."
 
 #: lib/email_address_validation.rb:34
-#, fuzzy
-#| msgid "The image is invalid."
 msgid "The email address is invalid."
-msgstr "L'image n'est pas valide."
+msgstr "L'adresse e-mail est invalide."
 
 #: app/services/service/auth/send_admin_token.rb:39
 #: app/services/service/user/password_reset/send.rb:37
@@ -15516,11 +15481,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco:15
 msgid "The following changes have been made:"
-msgstr "Les changements suivants ont été faits :"
+msgstr "Les modifications suivantes ont été faites :"
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco:7
 msgid "The following changes will be made:"
-msgstr "Les changements suivants seront faits :"
+msgstr "Les modifications suivantes seront faites :"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal.coffee:196
 msgid ""
@@ -15652,7 +15617,7 @@ msgstr "La notification n'a pas pu être supprimée."
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:64
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:794
-#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:189
+#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:267
 #: app/assets/javascripts/app/controllers/object_manager.coffee:261
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:94
@@ -16655,6 +16620,8 @@ msgstr "Ce champ a été mal configuré et ne peut pas être soumis."
 #: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:23
 msgid "This group has no email address configured for outgoing communication."
 msgstr ""
+"Ce groupe n'a pas d'adresse e-mail configurée pour les communications "
+"sortantes."
 
 #: app/models/group.rb:81
 msgid "This group or its children exceed the allowed nesting depth."
@@ -16720,6 +16687,9 @@ msgid ""
 "This message contains images or other content hosted by an external source. "
 "We blocked it, but you can download the original formatting here."
 msgstr ""
+"Ce message contient des images ou tout autre contenu hébergé par une source "
+"externe. Nous l'avons bloqué, mais vous pouvez télécharger le formatage "
+"original ici."
 
 #: lib/secure_mailing/smime/incoming.rb:86
 msgid "This message was not signed by its sender."
@@ -17565,22 +17535,16 @@ msgid "Toggle dark mode"
 msgstr "Basculer en mode sombre"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:196
-#, fuzzy
-#| msgid "Toggle the overlay"
 msgid "Toggle header cell"
-msgstr "Basculer la superposition"
+msgstr "Activer/désactiver la cellule d'entête"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:187
-#, fuzzy
-#| msgid "Toggle the overlay"
 msgid "Toggle header column"
-msgstr "Basculer la superposition"
+msgstr "Activer/désactiver la colonne d'entête"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:178
-#, fuzzy
-#| msgid "Toggle dark mode"
 msgid "Toggle header row"
-msgstr "Basculer en mode sombre"
+msgstr "Changer de ligne d'entête"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:47
 msgid "Toggle the overlay"
@@ -17604,10 +17568,8 @@ msgid "Token Access"
 msgstr "Jeton d'accès"
 
 #: app/models/token/permissions.rb:20
-#, fuzzy
-#| msgid "Authorization failed"
 msgid "Token authorization failed."
-msgstr "Échec d'autorisation"
+msgstr "L'autorisation du jeton d'accès a échoué."
 
 #: db/seeds/settings.rb:5114
 msgid "Token for CTI."
@@ -17904,7 +17866,7 @@ msgstr "La méthode à deux facteurs a été configurée avec succès."
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -18302,7 +18264,7 @@ msgstr "Utiliser une option de tri personnalisée"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:546
 msgid "Use double click to change level of the row."
-msgstr "Utilisez le double clic pour changer le niveau de la ligne."
+msgstr "Utilisez le double clic pour modifier le niveau de la ligne."
 
 #: app/assets/javascripts/app/models/application.coffee:8
 msgid "Use one line per URI"
@@ -18419,10 +18381,8 @@ msgid "User Organization Selector - email"
 msgstr "Sélecteur de l'organisation d'un utilisateur - email"
 
 #: app/models/user/permissions.rb:48
-#, fuzzy
-#| msgid "Authorization failed"
 msgid "User authorization failed."
-msgstr "Échec d'autorisation"
+msgstr "L'autorisation de l'utilisateur a échoué."
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:104
 #: app/assets/javascripts/app/controllers/signup.coffee:98
@@ -18678,7 +18638,7 @@ msgstr "Voir le ticket"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
@@ -19018,7 +18978,7 @@ msgstr "Wahoo ! Votre adresse email a été vérifiée !"
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:116
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:129
 msgid "Woo hoo! Your password has been changed!"
-msgstr "Wahoo ! Votre mot de passe a été changé !"
+msgstr "Wahoo ! Votre mot de passe a été modifié !"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:16
 msgid "Workflow"
@@ -19051,10 +19011,8 @@ msgid "Yes"
 msgstr "Oui"
 
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
-#, fuzzy
-#| msgid "Retry attachment download"
 msgid "Yes, add attachments now"
-msgstr "Réessayer de télécharger la pièce jointe"
+msgstr "Oui, ajouter des pièces jointes maintenant"
 
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee:4
 msgid "Yes, start real import."
@@ -19395,15 +19353,15 @@ msgid ""
 "<br>\n"
 "<p>Your #{config.product_name} Team</p>\n"
 msgstr ""
-"Votre mot de passe pour #{config.product_name} a été changé !\n"
+"Votre mot de passe pour #{config.product_name} a été modifié !\n"
 "\n"
 "<p>Bonjour #{user.firstname},</p>\n"
 "<br>\n"
 "<p>Le mot de passe de votre compte sur #{config.product_name} <b>#{user."
-"login}</b> a été changé récemment.</p>\n"
+"login}</b> a été modifié récemment.</p>\n"
 "<br>\n"
-"<p>Êtes-vous à l'origine de cette demande ? Dans le cas contraire, merci de "
-"contacter votre administrateur.</p>\n"
+"<p>Êtes-vous à l'origine de cette demande ? Si non, merci de contacter votre "
+"administrateur.</p>\n"
 "<br>\n"
 "<p>L'équipe #{config.product_name}</p>\n"
 
@@ -19480,7 +19438,7 @@ msgstr "Votre avatar"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:238
 msgid "Your avatar has been changed."
-msgstr "Votre avatar à été changé."
+msgstr "Votre avatar à été modifié."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:270
 msgid "Your avatar has been deleted."
@@ -19538,10 +19496,8 @@ msgid "Zammad"
 msgstr "Zammad"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:327
-#, fuzzy
-#| msgid "Zammad version"
 msgid "Zammad Features"
-msgstr "Version de Zammad"
+msgstr "Fonctionnalités de Zammad"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:148
 msgid ""
@@ -19826,10 +19782,8 @@ msgid "closed"
 msgstr "clos"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:130
-#, fuzzy
-#| msgid "Closed Tickets"
 msgid "closed tickets"
-msgstr "Tickets fermés"
+msgstr "tickets fermés"
 
 #: app/assets/javascripts/app/controllers/cti.coffee:157
 msgid "connected"
@@ -19902,8 +19856,8 @@ msgid ""
 "current,new,confirm,change,current password,new password,confirm password,"
 "change password"
 msgstr ""
-"courant,nouveau,confirmé,changement,mot de passe actuel,nouveau mot de passe,"
-"confirmez le mot de passe,modifiez le mot de passe"
+"courant,nouveau,confirmé,modifié,mot de passe actuel,nouveau mot de "
+"passe,confirmer le mot de passe,modifier le mot de passe"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:269
 msgid "custom"
@@ -20158,7 +20112,7 @@ msgstr "a déjà été pris"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:70
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:75
 msgid "has changed"
-msgstr "a changé"
+msgstr "a été modifié"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:155
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:182
@@ -20624,10 +20578,8 @@ msgid "open"
 msgstr "ouvert"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:123
-#, fuzzy
-#| msgid "Open tickets"
 msgid "open tickets"
-msgstr "Tickets ouverts"
+msgstr "tickets ouverts"
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:279
 msgid "optional"
