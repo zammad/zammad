@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-01 05:17+0000\n"
+"PO-Revision-Date: 2024-07-03 22:16+0000\n"
 "Last-Translator: Random <random_r@users.noreply.translations.zammad.org>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/it/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -2042,7 +2042,7 @@ msgid "At least one match rule is required, but none was provided."
 msgstr ""
 "È richiesta almeno una regola di corrispondenza, ma nessuna è stata fornita."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:155
 msgid "At least one object must be selected."
 msgstr "È necessario selezionare almeno un oggetto."
 
@@ -2509,7 +2509,7 @@ msgstr "Azione massiva eseguita!"
 msgid "Bulk action failed"
 msgstr "Azione massiva non riuscita"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:199
 msgid "Bulk action stopped by error(s): %s!"
 msgstr "Azione di massa arrestata a causa di uno o più errori%s!"
 
@@ -3252,7 +3252,7 @@ msgstr "Chiuso il"
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee:120
 #: app/assets/javascripts/app/controllers/widget/user.coffee:80
 msgid "Closed Tickets"
-msgstr "Ticket Chiusi"
+msgstr "Ticket chiusi"
 
 #: app/assets/javascripts/app/models/ticket.coffee:25
 #: app/graphql/gql/types/overview_type.rb:78
@@ -3265,7 +3265,7 @@ msgstr ""
 "Rappresentazione dei colori dell'indicatore dei ticket aperti nella barra "
 "laterale."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
 msgid "Comment"
 msgstr "Commento"
 
@@ -7700,8 +7700,8 @@ msgid ""
 "How many escalated tickets do you have open? (Mr. Bubbles gets grumpy if you "
 "have too many…)"
 msgstr ""
-"Quanti ticket con escalation hai aperti? (Alberto si arrabbia se ce ne sono "
-"troppi...)"
+"Quanti ticket con escalation hai aperti? (Il Megadirettore Galattico si "
+"arrabbia se ce ne sono troppi...)"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_channel_distribution.coffee:27
 msgid ""
@@ -10502,7 +10502,7 @@ msgstr "Ticket aperto# %s"
 #: app/assets/javascripts/app/controllers/widget/user.coffee:70
 #: db/seeds/overviews.rb:109
 msgid "Open Tickets"
-msgstr "Ticket Aperti"
+msgstr "Ticket aperti"
 
 #: app/assets/javascripts/app/models/public_link.coffee:10
 msgid "Open in new tab"
@@ -14360,7 +14360,7 @@ msgstr "Impossibile eliminare la notifica."
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:64
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:794
-#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:189
+#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:267
 #: app/assets/javascripts/app/controllers/object_manager.coffee:261
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:94
@@ -16481,7 +16481,7 @@ msgstr "Metodo di autenticazione a due fattori configurato correttamente."
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -17218,7 +17218,7 @@ msgstr "Visualizzazione ticket"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3

@@ -1962,7 +1962,7 @@ msgstr ""
 msgid "At least one match rule is required, but none was provided."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:155
 msgid "At least one object must be selected."
 msgstr ""
 
@@ -2445,7 +2445,7 @@ msgstr ""
 msgid "Bulk action failed"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:199
 msgid "Bulk action stopped by error(s): %s!"
 msgstr ""
 
@@ -3184,7 +3184,7 @@ msgstr ""
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
 msgid "Comment"
 msgstr "Коментар"
 
@@ -14066,7 +14066,7 @@ msgstr "%s Обект(и) са обновени."
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:64
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:794
-#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:189
+#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:267
 #: app/assets/javascripts/app/controllers/object_manager.coffee:261
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:94
@@ -16150,7 +16150,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -16868,7 +16868,7 @@ msgstr "Нов билет"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3

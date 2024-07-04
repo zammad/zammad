@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-26 08:21+0000\n"
+"PO-Revision-Date: 2024-07-01 22:16+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/sv/>\n"
@@ -2012,7 +2012,7 @@ msgstr ""
 msgid "At least one match rule is required, but none was provided."
 msgstr "Åtminstone en regelmatchning krävs, men ingen var angiven."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:155
 msgid "At least one object must be selected."
 msgstr "Åtminstone ett objekt måste väljas."
 
@@ -2478,7 +2478,7 @@ msgstr "Bulkåtgärd utförd!"
 msgid "Bulk action failed"
 msgstr "Bulkåtgärden misslyckades"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:199
 msgid "Bulk action stopped by error(s): %s!"
 msgstr "Bulkåtgärden stoppades på grund av fel: %s!"
 
@@ -3221,7 +3221,7 @@ msgstr "Stängningstid"
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Färgrepresentation över öppna ärenden i sidopanelen."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -14214,7 +14214,7 @@ msgstr "Notifieringen kunde inte tas bort."
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:64
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:794
-#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:189
+#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:267
 #: app/assets/javascripts/app/controllers/object_manager.coffee:261
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:94
@@ -15202,6 +15202,9 @@ msgid ""
 "This message contains images or other content hosted by an external source. "
 "We blocked it, but you can download the original formatting here."
 msgstr ""
+"Det här meddelandet innehåller bilder eller annat innehåll som finns hos en "
+"extern källa. Vi har blockerat innehållet, men du kan ladda ner "
+"originalformateringen här."
 
 #: lib/secure_mailing/smime/incoming.rb:86
 msgid "This message was not signed by its sender."
@@ -16299,7 +16302,7 @@ msgstr "Konfiguration av tvåfaktorsautentiseringsmetoden lyckades."
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -17037,7 +17040,7 @@ msgstr "Tittar på ärende"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3

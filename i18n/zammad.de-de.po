@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-28 22:16+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2024-07-03 22:16+0000\n"
+"Last-Translator: Marcel Herrguth <github@thehomeofanime.de>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
 "Language: de-de\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -2048,7 +2048,7 @@ msgstr ""
 "Es ist mindestens eine Übereinstimmungsregel erforderlich, aber es wurde "
 "keine angegeben."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:156
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:155
 msgid "At least one object must be selected."
 msgstr "Wählen Sie mindestens ein Objekt aus."
 
@@ -2518,7 +2518,7 @@ msgstr "Sammelaktion ausgeführt!"
 msgid "Bulk action failed"
 msgstr "Sammelaktion fehlgeschlagen"
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:200
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:199
 msgid "Bulk action stopped by error(s): %s!"
 msgstr "Sammelaktion angehalten wegen Fehler: %s!"
 
@@ -3272,7 +3272,7 @@ msgstr "Schließzeit"
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Farbdarstellung des offenen Tickets in der Sidebar."
 
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:63
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
 msgid "Comment"
 msgstr "Kommentar"
 
@@ -14437,7 +14437,7 @@ msgstr "Die Benachrichtigung konnte nicht gelöscht werden."
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:64
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:794
-#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:189
+#: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:267
 #: app/assets/javascripts/app/controllers/object_manager.coffee:261
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:94
@@ -15452,18 +15452,13 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:140
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
-#, fuzzy
-#| msgid ""
-#| "This message contains content hosted by an external source. The content "
-#| "has been blocked by Zammad, but you can retrieve it by downloading the "
-#| "original formatting."
 msgid ""
 "This message contains images or other content hosted by an external source. "
 "We blocked it, but you can download the original formatting here."
 msgstr ""
-"Diese Nachricht enthält Inhalte, die von einer externen Quelle ausgeliefert "
-"werden. Der Inhalt wurde von Zammad blockiert, aber Sie können ihn abrufen, "
-"indem Sie die ursprüngliche Formatierung herunterladen."
+"Diese Nachricht enthält Bilder oder anderen Inhalt von externen Quellen. Wir "
+"haben das blockiert, aber Sie können die ursprüngliche Formatierung hier "
+"herunterladen."
 
 #: lib/secure_mailing/smime/incoming.rb:86
 msgid "This message was not signed by its sender."
@@ -16584,7 +16579,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
 #: app/assets/javascripts/app/controllers/translation.coffee:277
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:229
@@ -17328,7 +17323,7 @@ msgstr "Ticket ansehen"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
-#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:72
+#: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
