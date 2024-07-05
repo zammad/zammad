@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-04 05:48+0000\n"
-"Last-Translator: Marcel Herrguth <github@thehomeofanime.de>\n"
+"PO-Revision-Date: 2024-07-05 05:02+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -368,10 +368,10 @@ msgstr "%s (Methode)"
 msgid "%s (option)"
 msgstr "%s (Option)"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:302
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:524
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:301
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:525
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:229
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:365
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:364
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:109
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:135
@@ -682,7 +682,8 @@ msgstr "%{name} existiert bereits"
 msgid "%{name} is a reserved word"
 msgstr "%{name} ist ein reserviertes Wort"
 
-#: app/frontend/shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
+#: app/frontend/apps/desktop/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:47
+#: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
 msgstr "(Status: %s)"
 
@@ -1165,7 +1166,7 @@ msgstr "Schaltfläche Aktionsmenü für Sicherheits-Schlüssel"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:19
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:16
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
-#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:78
+#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:76
 msgid "Actions"
 msgstr "Aktionen"
 
@@ -1583,7 +1584,7 @@ msgstr "Name des Agenten + Von-Trenner + Anzeigename der Systemadresse"
 
 #: db/seeds/permissions.rb:296
 msgid "Agent chat"
-msgstr "Agent-Chat"
+msgstr "Agenten-Chat"
 
 #: db/seeds/settings.rb:3456
 msgid "Agent idle timeout"
@@ -1656,7 +1657,7 @@ msgstr "Alle Agenten"
 msgid "All colleagues are busy."
 msgstr "Alle Kollegen sind beschäftigt."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:143
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:144
 msgid ""
 "All computers and browsers from which you logged in to Zammad appear here."
 msgstr ""
@@ -1905,10 +1906,12 @@ msgid "Applications"
 msgstr "Anwendungen"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:8
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:107
 msgid "Apply"
 msgstr "Übernehmen"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:56
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:107
 msgid "Apply Draft"
 msgstr "Entwurf übernehmen"
 
@@ -2344,16 +2347,17 @@ msgstr "Anmeldung über %s"
 msgid "Authenticator App"
 msgstr "Authentifizierungs-App"
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:233
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:234
 msgid "Authenticator app QR code"
 msgstr "QR-Code der Authentifizierungs-App"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:24
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:244
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:245
 msgid "Authenticator app secret"
 msgstr "Geheimnis der Authentifizierungs-App"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:3
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:152
 msgid "Author"
 msgstr "Autor"
 
@@ -2362,7 +2366,7 @@ msgid "Authorization failed"
 msgstr "Autorisierung fehlgeschlagen"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:11
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:122
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:123
 msgid "Authy"
 msgstr "Authy"
 
@@ -2493,8 +2497,8 @@ msgid "BCC address for all outgoing emails"
 msgstr "BCC-Adresse für alle ausgehenden E-Mails"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:436
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:447
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:435
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:446
 msgid "Back"
 msgstr "Zurück"
 
@@ -2506,8 +2510,8 @@ msgstr "Zurück zu meiner Ansicht"
 msgid "Back to overview"
 msgstr "Zurück zur Übersicht"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:436
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:447
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:435
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:446
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:197
 msgid "Back to previous page"
 msgstr "Zurück zur vorherigen Seite"
@@ -2645,7 +2649,7 @@ msgstr "Bots"
 msgid "Branding"
 msgstr "Branding"
 
-#: app/frontend/apps/desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue:17
+#: app/frontend/apps/desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue:33
 msgid "Breadcrumb navigation"
 msgstr "Brotkrümel-Navigation"
 
@@ -2715,7 +2719,7 @@ msgid "CA"
 msgstr "CA"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:18
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:488
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:495
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
@@ -2886,12 +2890,13 @@ msgstr "Abbrechen"
 #: app/assets/javascripts/app/views/signup.jst.eco:7
 #: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue:19
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:14
-#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactorMethods.vue:57
+#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactorMethods.vue:56
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:125
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:119
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:333
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:188
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:343
 msgid "Cancel & Go Back"
 msgstr "Abbrechen & Zurück"
 
@@ -2902,6 +2907,12 @@ msgstr "Abbrechen & abmelden"
 #: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee:3
 msgid "Cancel & Sign out"
 msgstr "Abbrechen & abmelden"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:76
+#, fuzzy
+#| msgid "Cancel Upload"
+msgid "Cancel Update"
+msgstr "Hochladen abbrechen"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:20
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:111
@@ -3260,7 +3271,7 @@ msgid "Clear Search"
 msgstr "Suche löschen"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:600
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:601
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:292
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:352
@@ -3360,7 +3371,7 @@ msgstr "Aktuellen Tab schließen"
 msgid "Close dialog"
 msgstr "Dialog schließen"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:274
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:272
 msgid "Close side panel"
 msgstr "Seitenpanel schließen"
 
@@ -3644,7 +3655,7 @@ msgid "Connection test successful"
 msgstr "Verbindungstest erfolgreich"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco:8
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:295
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:294
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:177
 msgid "Contact the administrator if you have any problems logging in."
 msgstr "Kontaktieren Sie bei Anmelde-Problemen den Administrator."
@@ -3662,6 +3673,12 @@ msgstr "Inhalt konnte nicht geladen werden."
 #: app/models/store.rb:82
 msgid "Content preview could not be generated."
 msgstr "Die Inhaltsvorschau konnte nicht erzeugt werden."
+
+#: app/frontend/apps/desktop/components/layout/LayoutContent.vue:131
+#, fuzzy
+#| msgid "Contents"
+msgid "Content sidebar"
+msgstr "Inhalt"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:110
 msgid "Content was changed since loading"
@@ -3707,7 +3724,7 @@ msgstr "Weiter mit Desktop"
 
 #: app/assets/javascripts/app/controllers/_plugin/mobile_detection.coffee:56
 #: app/assets/javascripts/app/views/login.jst.eco:125
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:306
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:305
 msgid "Continue to mobile"
 msgstr "Weiter mit mobil"
 
@@ -3725,8 +3742,13 @@ msgid "Conversion of retweets into tickets is turned off."
 msgstr "Retweets werden nicht in Tickets umgewandelt."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_base.coffee:123
-#: app/frontend/apps/desktop/composables/useCopyToClipboard.ts:21
 msgid "Copied!"
+msgstr "Kopiert!"
+
+#: app/frontend/apps/desktop/composables/useCopyToClipboard.ts:21
+#, fuzzy
+#| msgid "Copied!"
+msgid "Copied."
 msgstr "Kopiert!"
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee:30
@@ -3738,7 +3760,7 @@ msgstr "Kopieren"
 msgid "Copy Codes"
 msgstr "Codes kopieren"
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:253
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:254
 msgid "Copy Secret"
 msgstr "Geheimnis kopieren"
 
@@ -3757,6 +3779,12 @@ msgstr "URL kopieren"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:276
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Kopiert aktuelle Objekt-Nummer (z. B. Ticket#) in Zwischenablage"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:80
+#, fuzzy
+#| msgid "Ticket Customer"
+msgid "Copy ticket number"
+msgstr "Ticket-Kunde"
 
 #: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco:14
 msgid "Copy to clipboard"
@@ -3861,7 +3889,7 @@ msgstr "Land"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:344
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:354
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Erstellen"
@@ -3886,6 +3914,12 @@ msgstr "Knowledge Base erstellen"
 #: app/controllers/first_steps_controller.rb:97
 msgid "Create Macros"
 msgstr "Makros erstellen"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:168
+#, fuzzy
+#| msgid "Create a shared draft"
+msgid "Create Shared Draft"
+msgstr "Gemeinsamen Entwurf erstellen"
 
 #: app/controllers/first_steps_controller.rb:92
 msgid "Create Text Modules"
@@ -3952,6 +3986,7 @@ msgid "Create a new template in the admin interface."
 msgstr "Eine neue Vorlage in der Administrations-Oberfläche erstellen."
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:163
 msgid "Create a shared draft"
 msgstr "Gemeinsamen Entwurf erstellen"
 
@@ -4047,6 +4082,7 @@ msgstr "Erstellen:"
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:14
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:100
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:104
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:144
 #: app/models/report.rb:22
 msgid "Created"
@@ -4205,7 +4241,7 @@ msgstr "Benutzerdefinierte Adresse nicht gesetzt"
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:9
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:11
 #: app/controllers/time_accountings_controller.rb:95
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:52
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:47
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/customer.ts:10
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts:6
 #: app/graphql/gql/types/overview_type.rb:61
@@ -4880,7 +4916,7 @@ msgid ""
 "Defines if the two-factor authentication method security keys is enabled or "
 "not."
 msgstr ""
-"Definiert, ob Methode \"Sicherheits-Schlüssel\" für Zwei-Faktor-"
+"Definiert, ob die Methode \"Sicherheits-Schlüssel\" für Zwei-Faktor-"
 "Authentifizierung aktiviert ist oder nicht."
 
 #: db/seeds/settings.rb:2907
@@ -5453,6 +5489,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:83
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:38
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:195
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:162
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:146
 msgid "Delete"
@@ -5560,7 +5597,7 @@ msgstr "Zeile löschen"
 msgid "Delete table"
 msgstr "Tabelle löschen"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:154
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:155
 msgid "Delete this access token"
 msgstr "Dieses Zugangs-Token löschen"
 
@@ -5568,7 +5605,7 @@ msgstr "Dieses Zugangs-Token löschen"
 msgid "Delete this avatar"
 msgstr "Diesen Avatar löschen"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:120
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:121
 msgid "Delete this device"
 msgstr "Dieses Gerät löschen"
 
@@ -5668,7 +5705,7 @@ msgstr "Entwicklersystem"
 msgid "Device"
 msgstr "Gerät"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:88
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:89
 msgid "Device has been revoked."
 msgstr "Das Gerät wurde widerrufen."
 
@@ -5765,7 +5802,7 @@ msgstr "Verwerfen"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:330
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:340
 msgid "Discard Changes"
 msgstr "Änderungen verwerfen"
 
@@ -5989,14 +6026,14 @@ msgstr "Dauer"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts:25
 msgid ""
-"Dynamic fields are not that common in Zammad, as we take a different "
+"Dynamic fields are not that common in Zammad, as it takes a different "
 "approach to ticket attributes. Zammad also uses tags in addition to custom "
 "fields to classify tickets. This difference can create a new philosophy of "
 "your ticket attributes/tags compared to your current use of dynamic fields "
 "in OTRS."
 msgstr ""
-"Dynamische Felder sind in Zammad nicht üblich, da wir einen anderen Ansatz "
-"für Ticket-Attribute verfolgen. Zammad verwendet zusätzlich zu "
+"Dynamische Felder sind in Zammad nicht üblich, da es einen anderen Ansatz "
+"für Ticket-Attribute verfolgt. Zammad verwendet zusätzlich zu "
 "benutzerdefinierten Feldern auch Tags, um Tickets zu klassifizieren. Dieser "
 "Unterschied kann zu einer neuen Strukturierung Ihrer Ticket-Attribute/Tags "
 "im Vergleich zu Ihrer derzeitigen Verwendung in OTRS führen."
@@ -6033,14 +6070,15 @@ msgstr "Bearbeiten"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:16
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:39
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:34
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:95
 msgid "Edit Customer"
 msgstr "Kunden bearbeiten"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee:21
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee:11
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:88
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganizationContent.vue:39
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:80
 msgid "Edit Organization"
 msgstr "Organisation bearbeiten"
 
@@ -6665,7 +6703,7 @@ msgstr ""
 "bereitstellt, um die beiden Systeme zu verknüpfen."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:28
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:262
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:263
 msgid "Enter the security code generated by the authenticator app:"
 msgstr "Geben Sie den Sicherheits-Code aus der Authentifizierungs-App ein:"
 
@@ -7073,7 +7111,7 @@ msgstr ""
 "Fehler beim Senden der E-Mail an \"%s\". Bitte kontaktieren Sie einen "
 "Administrator."
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:168
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:169
 msgid "Failed to set up QR code. Please try again."
 msgstr ""
 "QR-Code konnte nicht eingerichtet werden. Bitte versuchen Sie es erneut."
@@ -7311,7 +7349,7 @@ msgid "Forgot Password Screen"
 msgstr "Passwort-Vergessen-Ansicht"
 
 #: app/assets/javascripts/app/views/login.jst.eco:53
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:130
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:129
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:83
 msgid "Forgot password?"
 msgstr "Passwort vergessen?"
@@ -7664,7 +7702,7 @@ msgid "Google App Credentials"
 msgstr "Google App-Zugangsdaten"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:8
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:117
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:118
 msgid "Google Authenticator"
 msgstr "Google Authenticator"
 
@@ -7871,7 +7909,7 @@ msgid "Have a nice day."
 msgstr "Auf Wiedersehen."
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco:3
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:256
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:255
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:144
 msgid "Having problems?"
 msgstr "Gibt es Schwierigkeiten?"
@@ -8018,6 +8056,12 @@ msgstr "Geheimnis der Authentifizierungs-App verbergen"
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
 msgid "High priority"
 msgstr "Hohe Priorität"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/HighlightMenu.vue:70
+#, fuzzy
+#| msgid "Highlight icon"
+msgid "Highlight"
+msgstr "Highlight-Icon"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
 msgid "Highlight color"
@@ -8272,7 +8316,7 @@ msgstr ""
 "Spam, Social oder andere."
 
 #: app/assets/javascripts/app/views/login.jst.eco:105
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:281
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:280
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:161
 msgid ""
 "If you have problems with the third-party login you can request a one-time "
@@ -8488,12 +8532,12 @@ msgstr "Importiert"
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:117
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:93
 msgid ""
-"In addition, we have found emails in your mailbox that are older than %s "
-"weeks. You can import such emails as an \"archive\", which means that no "
+"In addition, emails were found in your mailbox that are older than %s weeks. "
+"You can import such emails as an \"archive\", which means that no "
 "notifications are sent and the tickets have the status \"closed\". However, "
 "you can find them in Zammad anytime using the search function."
 msgstr ""
-"Darüber hinaus haben wir in Ihrer Mailbox E-Mails gefunden, die älter als %s "
+"Darüber hinaus wurden in Ihrer Mailbox E-Mails gefunden, die älter als %s "
 "Wochen sind. Sie können solche E-Mails als \"Archiv\" importieren, d.h. es "
 "werden keine Benachrichtigungen verschickt und die Tickets haben den Status "
 "\"geschlossen\". Sie können sie jedoch jederzeit über die Suchfunktion in "
@@ -8561,8 +8605,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:140
 msgid "Include unassigned tickets in subscription for pending tickets."
 msgstr ""
-"Nicht zugewiesene Tickets in das Abonnement für ausstehende Tickets "
-"einbeziehen."
+"Nicht zugewiesene Tickets in das Abonnement für wartende Tickets einbeziehen."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:68
 msgid "Include your own tickets in subscription for escalated tickets."
@@ -8884,7 +8927,7 @@ msgstr ""
 "wirksam."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:93
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:106
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:107
 msgid "Invalid security code! Please try again with a new code."
 msgstr ""
 "Ungültiger Sicherheitscode! Bitte versuchen Sie es mit einem neuen Code noch "
@@ -9203,6 +9246,7 @@ msgid "Last change %s %s by %s"
 msgstr "Letzte Änderung %s %s durch %s"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:166
 msgid "Last changed"
 msgstr "Zuletzt geändert"
 
@@ -9309,6 +9353,7 @@ msgstr "Begrenze Tickets pro Tag"
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee:7
 #: app/assets/javascripts/app/models/overview.coffee:7
 #: app/assets/javascripts/app/models/public_link.coffee:6
+#: app/frontend/shared/components/Form/FormFieldLink.vue:18
 msgid "Link"
 msgstr "Link"
 
@@ -9341,7 +9386,7 @@ msgstr "Verknüpfen Sie GitLab-Issues mit Ihren Tickets."
 msgid "Link Related Answer"
 msgstr "Verknüpfe ähnliche Antwort"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:175
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:176
 msgid "Link account on %s"
 msgstr "Konto verknüpfen auf %s"
 
@@ -9463,7 +9508,7 @@ msgstr "Lokalisierung für ausgeführte Aktionen"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:6
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:13
 #: app/assets/javascripts/app/views/session.jst.eco:10
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:107
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:108
 msgid "Location"
 msgstr "Ort"
 
@@ -9984,6 +10029,7 @@ msgstr "Der Medien-Download war erfolgreich."
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco:20
 #: app/assets/javascripts/app/views/popover/organization.jst.eco:6
 #: app/assets/javascripts/app/views/widget/organization.jst.eco:29
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganizationContent.vue:83
 #: app/frontend/apps/mobile/components/Organization/OrganizationMembersList.vue:29
 msgid "Members"
 msgstr "Mitglieder"
@@ -10091,7 +10137,7 @@ msgid "Microsoft Application Registration Portal"
 msgstr "Microsoft Application Registration Portal"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:15
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:127
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:128
 msgid "Microsoft Authenticator"
 msgstr "Microsoft Authenticator"
 
@@ -10220,7 +10266,7 @@ msgid "More ticket overviews"
 msgstr "Weitere Ticket-Übersichten"
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:14
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:112
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:113
 msgid "Most recent activity"
 msgstr "Neueste Aktivität"
 
@@ -10367,8 +10413,10 @@ msgstr "Nagios-Integration"
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:30
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:100
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:31
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:102
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:103
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:142
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:164
 #: db/seeds/object_manager_attributes.rb:1507 public/assets/form/form.js:24
 msgid "Name"
 msgstr "Name"
@@ -10499,7 +10547,7 @@ msgid "New Overview"
 msgstr "Neue Übersicht"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:132
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:201
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:202
 msgid "New Personal Access Token"
 msgstr "Neuer persönlicher Zugangs-Token"
 
@@ -10543,7 +10591,7 @@ msgstr "Neue Vorlage"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:134
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:7
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:477
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:484
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:21
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:68
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
@@ -10666,7 +10714,7 @@ msgstr ""
 "target=\"zammad_app\">In #{config.product_name} anzeigen</a>\n"
 "</div>\n"
 
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:203
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:202
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:140
 msgid "New user?"
 msgstr "Neuer Benutzer?"
@@ -10846,6 +10894,18 @@ msgstr "Keine verknüpften Issues"
 msgid "No macros available."
 msgstr "Keine Makros verfügbar."
 
+#: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/user.ts:9
+#, fuzzy
+#| msgid "No camera found."
+msgid "No members found"
+msgstr "Keine Kamera gefunden."
+
+#: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/organization.ts:9
+#, fuzzy
+#| msgid "Organizations"
+msgid "No organizations found"
+msgstr "Organisationen"
+
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:297
 msgid "No previous searches"
 msgstr "Keine vorherigen Suchen vorhanden"
@@ -10865,8 +10925,8 @@ msgstr ""
 "bearbeiten."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:337
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:512
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:336
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:511
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:101
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:402
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:348
@@ -10890,6 +10950,12 @@ msgstr "Keine Sitzung verfügbar."
 #: lib/stats.rb:21
 msgid "No settings with area 'Dashboard::Stats' defined"
 msgstr "Keine Einstellungen mit Bereich 'Dashboard::Stats' definiert"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:218
+#, fuzzy
+#| msgid "Shared Drafts"
+msgid "No shared drafts yet"
+msgstr "Gemeinsame Entwürfe"
 
 #: app/controllers/organizations_controller.rb:160
 #: app/controllers/text_modules_controller.rb:71
@@ -11189,11 +11255,11 @@ msgstr "OTRS"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts:22
 msgid ""
-"OTRS BPM processes can't get imported into Zammad since we currently don't "
+"OTRS BPM processes can't get imported into Zammad since it currently doesn't "
 "support this kind of workflows."
 msgstr ""
-"OTRS-BPM-Prozesse können nicht in Zammad importiert werden, da wir diese Art "
-"von Workflows derzeit nicht unterstützen."
+"OTRS-BPM-Prozesse können nicht in Zammad importiert werden, da es diese Art "
+"von Workflows derzeit nicht unterstützt."
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:96
 msgid ""
@@ -11411,12 +11477,12 @@ msgid "Open ticket indicator"
 msgstr "Indikator für offenes Ticket"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:38
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerButton.vue:55
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerButton.vue:48
 msgid "Open tickets"
 msgstr "Offene Tickets"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:21
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:217
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:218
 msgid "Open your authenticator app and scan the QR code below:"
 msgstr ""
 "Öffnen Sie Ihre Authentifizierungs-App und scannen Sie den QR-Code unten:"
@@ -11452,7 +11518,7 @@ msgstr "Oder migrieren Sie von einem anderen System."
 msgid "Or sign in using"
 msgstr "oder Anmelden über"
 
-#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactorMethods.vue:52
+#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactorMethods.vue:51
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactorMethods.vue:36
 msgid "Or use one of your recovery codes."
 msgstr "Oder verwenden Sie einen Ihrer Wiederherstellungs-Codes."
@@ -11489,8 +11555,8 @@ msgstr "Reihenfolge der Ticket-Übersichten"
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco:9
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:12
 #: app/controllers/time_accountings_controller.rb:99
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganizationContent.vue:23
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:10
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganizationContent.vue:56
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:11
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
@@ -11665,6 +11731,12 @@ msgstr "Übersicht Bulk-Maske"
 msgid "Overviews"
 msgstr "Übersichten"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:108
+#, fuzzy
+#| msgid "Overwrite Draft"
+msgid "Overwrite Content"
+msgstr "Entwurf überschreiben"
+
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee:5
 msgid "Overwrite Draft"
 msgstr "Entwurf überschreiben"
@@ -11761,7 +11833,7 @@ msgstr "Übergeordnete Gruppe"
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:41
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:132
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:87
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:105
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:104
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:51
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:47
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:8
@@ -11798,7 +11870,7 @@ msgstr "Das Passwort konnte nicht geändert werden."
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:37
 msgid "Password could not be checked"
-msgstr "Passwort konnte nicht überprüft werden"
+msgstr "Das Passwort konnte nicht überprüft werden"
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco:15
 msgid "Password for proxy connection"
@@ -11907,7 +11979,7 @@ msgid "Permissions"
 msgstr "Berechtigungen"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:12
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:212
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:213
 msgid "Personal Access Tokens"
 msgstr "Persönliche Zugangs-Token"
 
@@ -11915,7 +11987,7 @@ msgstr "Persönliche Zugangs-Token"
 msgid "Personal Settings"
 msgstr "Persönliche Einstellungen"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:140
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:141
 msgid "Personal access token has been deleted."
 msgstr "Das persönliche Zugangs-Token wurde gelöscht."
 
@@ -11952,7 +12024,7 @@ msgstr ""
 "Die Telefonnummer wird bereits von einem anderen WhatsApp Konto verwendet."
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:7
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:182
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:183
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
 "Wählen Sie den Namen der Applikation, danach wird ein eindeutiger Token "
@@ -12197,7 +12269,7 @@ msgid "Prefer color scheme as indicated by the operating system."
 msgstr "Das vom Betriebssystem vorgegebenen Farbschema verwenden."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:34
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:284
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:285
 msgid "Press the button below to finish the setup."
 msgstr "Klicken Sie die untere Schaltfläche, um die Einrichtung abzuschließen."
 
@@ -12238,6 +12310,13 @@ msgstr "Vorschau"
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:86
 msgid "Preview %s"
 msgstr "Vorschau für %s"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:131
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:187
+#, fuzzy
+#| msgid "Select Shared Draft"
+msgid "Preview Shared Draft"
+msgstr "Gemeinsamen Entwurf auswählen"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:20
 msgid "Preview Width"
@@ -12564,7 +12643,7 @@ msgstr "Wiederherstellungs-Codes neu erzeugen"
 msgid "Regenerate recovery codes"
 msgstr "Wiederherstellungs-Codes neu erzeugen"
 
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:205
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:204
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:146
 msgid "Register"
 msgstr "Registrieren"
@@ -12592,7 +12671,7 @@ msgstr "Applikation neu laden"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco:43
 #: app/assets/javascripts/app/views/login.jst.eco:45
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:119
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:118
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:69
 msgid "Remember me"
 msgstr "An mich erinnern"
@@ -12644,7 +12723,7 @@ msgstr "Zwei-Faktor-Authentifizierung entfernen: %s"
 msgid "Remove a configured two-factor authentication method"
 msgstr "Eine konfigurierte Methode für Zwei-Faktor-Authentifizierung entfernen"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:166
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:167
 msgid "Remove account link on %s"
 msgstr "Kontoverbindung auf %s entfernen"
 
@@ -12789,7 +12868,7 @@ msgid "Request password login for admin?"
 msgstr "Passwort-Anmeldung für Administrator anfordern?"
 
 #: app/assets/javascripts/app/views/login.jst.eco:106
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:286
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:285
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:170
 msgid "Request the password login here."
 msgstr "Fordern Sie die Passwort-Anmeldung hier an."
@@ -12964,11 +13043,11 @@ msgstr ""
 msgid "Resize frame"
 msgstr "Rahmengröße ändern"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:311
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:309
 msgid "Resize side panel"
 msgstr "Größe des Seitenpanels ändern"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:128
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:135
 msgid "Resize sidebar"
 msgstr "Größe der Seitenleiste ändern"
 
@@ -12996,7 +13075,7 @@ msgstr "Ergebnis:"
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco:16
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue:62
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:63
-#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:178
+#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:177
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:140
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:177
 msgid "Retry"
@@ -13487,7 +13566,7 @@ msgstr "Der Schlüssel \"%s\" für Suchergebnis-Werte wurde nicht gefunden."
 msgid "Search…"
 msgstr "Suchen…"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:85
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:78
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:103
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:136
 #: db/seeds/object_manager_attributes.rb:962
@@ -13521,8 +13600,8 @@ msgstr "Sicherheit"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:28
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method.coffee:3
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:275
-#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:44
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:276
+#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:43
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:50
 msgid "Security Code"
 msgstr "Sicherheits-Code"
@@ -13673,8 +13752,8 @@ msgstr "Auswahl"
 msgid "Selects the ticket number generator module."
 msgstr "Wählt den Generator zum Erstellen der Ticketnummern aus."
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:472
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:476
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:471
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:475
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue:201
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:302
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:173
@@ -13830,7 +13909,7 @@ msgstr "Sitzungen"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:2
 #: app/assets/javascripts/app/views/profile/password.jst.eco:90
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:134
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:135
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:59
 msgid "Set Up"
 msgstr "Einrichten"
@@ -13995,12 +14074,39 @@ msgstr "Geteilt"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee:12
 #: app/assets/javascripts/app/models/group.coffee:17
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:158
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/shared-draft-start.ts:13
 #: db/seeds/object_manager_attributes.rb:2093
 msgid "Shared Drafts"
 msgstr "Gemeinsame Entwürfe"
 
 #: app/controllers/tickets_controller.rb:90
+#: app/services/service/ticket/create.rb:139
 msgid "Shared draft cannot be selected for this ticket."
+msgstr "Der gemeinsame Entwurf kann für dieses Ticket nicht ausgewählt werden."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:114
+#, fuzzy
+#| msgid "Ticket has been created successfully."
+msgid "Shared draft has been created successfully."
+msgstr "Das Ticket wurde erfolgreich erzeugt."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:93
+#, fuzzy
+#| msgid "Your avatar has been deleted."
+msgid "Shared draft has been deleted."
+msgstr "Ihr Avatar wurde gelöscht."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:139
+#, fuzzy
+#| msgid "Ticket has been created successfully."
+msgid "Shared draft has been updated successfully."
+msgstr "Das Ticket wurde erfolgreich erzeugt."
+
+#: app/graphql/gql/queries/ticket/shared_draft/start/list.rb:20
+#, fuzzy
+#| msgid "Shared draft cannot be selected for this ticket."
+msgid "Shared drafts are not activated for the selected group"
 msgstr "Der gemeinsame Entwurf kann für dieses Ticket nicht ausgewählt werden."
 
 #: app/assets/javascripts/app/models/organization.coffee:7
@@ -14145,7 +14251,7 @@ msgstr "Wird angezeigt wenn der Chat geschlossen ist."
 msgid "Side panel"
 msgstr "Seitenpanel"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:291
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:289
 msgid "Side panel footer"
 msgstr "Seitenpanel-Fußzeile"
 
@@ -14181,9 +14287,9 @@ msgstr "Signatur-Fehler"
 #: app/assets/javascripts/app/views/login.jst.eco:50
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_code.jst.eco:26
 #: app/frontend/apps/desktop/pages/authentication/components/LoginRecoveryCode.vue:83
-#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:149
+#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:148
 #: app/frontend/apps/desktop/pages/authentication/routes.ts:13
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:216
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:215
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:156
 #: app/frontend/apps/mobile/pages/authentication/components/LoginRecoveryCode.vue:86
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:152
@@ -14493,7 +14599,7 @@ msgstr "Tippen Sie, um zu suchen, oder geben Sie eine Rufnummer ein…"
 msgid "Start typing to search or enter an email address…"
 msgstr "Tippen Sie, um zu suchen, oder geben Sie eine E-Mail-Adresse ein…"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:70
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:69
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:41
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:409
 msgid "Start typing to search…"
@@ -14922,6 +15028,7 @@ msgstr "Überprüfen"
 #: app/assets/javascripts/app/models/signature.coffee:8
 #: app/assets/javascripts/app/models/ticket_article.coffee:11
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:20
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:178
 #: db/seeds/object_manager_attributes.rb:536
 msgid "Text"
 msgstr "Text"
@@ -15127,7 +15234,7 @@ msgstr "Die Nutzlast des WhatsApp-Webhooks konnte nicht validiert werden."
 msgid "The access token could not be created."
 msgstr "Das Zugangs-Token konnte nicht generiert werden."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:153
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:154
 msgid "The account link was successfully removed!"
 msgstr "Die Kontoverbindung wurde erfolgreich entfernt!"
 
@@ -15616,7 +15723,7 @@ msgstr "Die Benachrichtigung konnte nicht gelöscht werden."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:64
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:794
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:801
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:267
 #: app/assets/javascripts/app/controllers/object_manager.coffee:261
@@ -16225,16 +16332,16 @@ msgid ""
 "The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
 msgstr ""
-"Die Prüfung der TLS-Verbindung ist fehlgeschlagen. Bitte prüfen Sie das SAML "
-"IDP-Zertifikat."
+"Die Prüfung der TLS-Verbindung ist fehlgeschlagen. Bitte überprüfen Sie das "
+"SAML IDP-Zertifikat."
 
 #: app/models/setting/validation/saml/tls.rb:39
 msgid ""
 "The verification of the TLS connection is not possible. Please check the "
 "SAML IDP connection."
 msgstr ""
-"Die Überprüfung der TLS-Verbindung ist nicht möglich. Bitte prüfen Sie das "
-"SAML IDP-Zertifikat."
+"Die Überprüfung der TLS-Verbindung ist nicht möglich. Bitte überprüfen Sie "
+"das SAML IDP-Zertifikat."
 
 #: app/services/service/user/two_factor/verify_method_configuration.rb:21
 msgid ""
@@ -16263,15 +16370,15 @@ msgstr "Eigene Tickets"
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:11
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:69
 msgid "Theme"
-msgstr "Thema"
+msgstr "Farbschema"
 
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:64
 msgid ""
 "There are more than 1000 tickets in the Zendesk system. Due to API rate "
-"limit restrictions we can't get the exact number of tickets yet and have to "
-"fetch them in batches of 1000. This might take some time, better grab a cup "
-"of coffee. The total number of tickets gets updated as soon as the currently "
-"known number is surpassed."
+"limit restrictions, Zammad can't get the exact number of tickets yet and has "
+"to fetch them in batches of 1000. This might take some time, better grab a "
+"cup of coffee. The total number of tickets gets updated as soon as the "
+"currently known number is surpassed."
 msgstr ""
 "Es wurden mehr als 1000 Tickets im Zendesk System gefunden. Durch ein API-"
 "Ratenlimit kann die genaue Anzahl nicht ermittelt werden. Die Tickets müssen "
@@ -16300,6 +16407,7 @@ msgid "There is an existing draft. Do you want to overwrite it?"
 msgstr "Es ist bereits ein Entwurf vorhanden. Möchten Sie ihn überschreiben?"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:57
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:105
 msgid "There is existing content. Do you want to overwrite it?"
 msgstr "Es ist bereits Inhalt vorhanden. Möchten Sie diesen überschreiben?"
 
@@ -16453,8 +16561,8 @@ msgstr ""
 "Diese Klasse wird der Schaltfläche bei der Initialisierung hinzugefügt und "
 "wieder entfernt, sobald die Chat-Verbindung hergestellt wurde."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:169
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:221
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:170
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:222
 msgid "This device"
 msgstr "Dieses Gerät"
 
@@ -16690,10 +16798,10 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
 msgid ""
 "This message contains images or other content hosted by an external source. "
-"We blocked it, but you can download the original formatting here."
+"It was blocked, but you can download the original formatting here."
 msgstr ""
-"Diese Nachricht enthält Bilder oder anderen Inhalt von externen Quellen. Wir "
-"haben das blockiert, aber Sie können die ursprüngliche Formatierung hier "
+"Diese Nachricht enthält Bilder oder andere Inhalte von externen Quellen. "
+"Diese wurden blockiert, aber Sie können die ursprüngliche Formatierung hier "
 "herunterladen."
 
 #: lib/secure_mailing/smime/incoming.rb:86
@@ -16815,6 +16923,12 @@ msgstr ""
 "Dieser Text wird als sofortige Antwort auf neu eingehende WhatsApp-"
 "Nachrichten gesendet."
 
+#: app/policies/ticket/shared_draft_start_policy.rb:26
+#, fuzzy
+#| msgid "A mentioned user has no agent access to this ticket"
+msgid "This user does not have access to the given group"
+msgstr "Ein erwähnter Benutzer hat keinen Agenten-Zugriff auf dieses Ticket"
+
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:12
 msgid "This user has no access and will not receive notifications."
 msgstr ""
@@ -16855,7 +16969,7 @@ msgstr "Donnerstag"
 msgid "Ticket"
 msgstr "Ticket"
 
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:767
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:774
 msgid "Ticket %s created!"
 msgstr "Ticket %s erstellt!"
 
@@ -16915,6 +17029,12 @@ msgstr "Anzahl der Tickets"
 msgid "Ticket Customer"
 msgstr "Ticket-Kunde"
 
+#: app/frontend/apps/desktop/pages/ticket/routes.ts:28
+#, fuzzy
+#| msgid "Ticket title"
+msgid "Ticket Detail"
+msgstr "Ticket-Titel"
+
 #: db/seeds/settings.rb:2141
 msgid "Ticket Hook"
 msgstr "Ticket-Hook"
@@ -16926,6 +17046,12 @@ msgstr "Ticket-Hook-Trennzeichen"
 #: db/seeds/settings.rb:2187
 msgid "Ticket Hook Position"
 msgstr "Ticket-Hook-Position"
+
+#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:8
+#, fuzzy
+#| msgid "Ticket information"
+msgid "Ticket Information Injection Key"
+msgstr "Ticket-Information"
 
 #: db/seeds/settings.rb:2219
 msgid "Ticket Last Contact Behaviour"
@@ -17018,6 +17144,12 @@ msgstr "Ticket Trigger Loop Protection Artikel Gesamt"
 #: db/seeds/settings.rb:2740
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr "Ticket Trigger Loop Protection Artikel pro Ticket"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:77
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Ticket Update"
+msgstr "Ticket-Änderung"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:105
 msgid "Ticket actions"
@@ -17142,6 +17274,7 @@ msgstr "Ticket-Titel"
 msgid "Ticket update"
 msgstr "Ticket-Änderung"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:135
 msgid "Ticket updated successfully."
 msgstr "Ticket erfolgreich aktualisiert."
@@ -17196,6 +17329,7 @@ msgstr ""
 "target=\"zammad_app\">In #{config.product_name} anzeigen</a>\n"
 "</div>\n"
 
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:36
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
 msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
@@ -17241,7 +17375,7 @@ msgstr "Ticket-ID"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:115
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:89
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts:9
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:51
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue:173
@@ -17497,7 +17631,7 @@ msgstr ""
 "auszuwählen."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:2
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:193
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:194
 msgid "To set up Authenticator App for your account, follow the steps below:"
 msgstr ""
 "Folgen Sie den Schritten unten, um die Authentifizierungs-App für Ihr Konto "
@@ -17685,7 +17819,7 @@ msgid "Try again"
 msgstr "Erneut versuchen"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco:4
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:262
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:261
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:149
 msgid "Try another method"
 msgstr "Eine andere Methode verwenden"
@@ -17831,12 +17965,12 @@ msgid ""
 "Two-factor authentication is required, but you don't have sufficient "
 "permissions to set it up. Please contact your administrator."
 msgstr ""
-"Die Zwei-Faktor-Authentifizierung ist erforderlich, aber Sie haben nicht "
-"genügend Berechtigungen, um sie einzurichten. Bitte wenden Sie sich an Ihren "
+"Die Zwei-Faktor-Authentifizierung ist erforderlich, aber Sie haben für die "
+"Einrichtung nicht die Berechtigung. Bitte wenden Sie sich an Ihren "
 "Administrator."
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:189
-#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:107
+#: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:106
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:112
 msgid "Two-factor authentication method could not be initiated."
 msgstr ""
@@ -17866,7 +18000,7 @@ msgstr ""
 "Die Methode für Zwei-Faktor-Authentifizierung konnte nicht konfiguriert "
 "werden."
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:81
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:82
 msgid "Two-factor method has been configured successfully."
 msgstr ""
 "Die Methode für Zwei-Faktor-Authentifizierung wurde erfolgreich konfiguriert."
@@ -17944,7 +18078,7 @@ msgstr ""
 "Unbekannter Fehler: Es konnte kein Ticket aus dieser E-Mail erstellt werden."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:5
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:202
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:203
 msgid ""
 "Unless you already have it, install one of the following authenticator apps "
 "on your mobile device:"
@@ -17968,7 +18102,7 @@ msgstr "Ungelesene Benachrichtigungen"
 msgid "Unsaved Changes"
 msgstr "Nicht gespeicherte Änderungen"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:533
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:534
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:238
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:304
 msgid "Unselect Option"
@@ -18031,6 +18165,12 @@ msgstr "Aktualisierung Eskalation um"
 #: lib/excel_sheet/ticket.rb:67
 msgid "Update In Min"
 msgstr "Aktualisierung in Min"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:205
+#, fuzzy
+#| msgid "Apply Shared Draft"
+msgid "Update Shared Draft"
+msgstr "Gemeinsamen Entwurf übernehmen"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:32
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:11
@@ -18451,7 +18591,7 @@ msgid "Username"
 msgstr "Benutzername"
 
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:44
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:100
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:99
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:45
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:40
 msgid "Username / Email"
@@ -19153,7 +19293,7 @@ msgstr ""
 "Dokumentation %l."
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:4
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:180
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:181
 msgid ""
 "You can generate a personal access token for each application you use that "
 "needs access to the Zammad API."
@@ -19269,6 +19409,7 @@ msgstr ""
 msgid "You have insufficient rights to view this organization."
 msgstr "Sie haben nicht genug Rechte um diese Organisation anzuzeigen."
 
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:38
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
 msgid "You have insufficient rights to view this ticket."
 msgstr "Sie haben nicht genug Rechte um dieses Ticket anzuzeigen."
@@ -19326,7 +19467,7 @@ msgstr "Sie müssen die Zammad-Endpunkte im %s Webinterface hinterlegen:"
 msgid "You need to configure the Zammad endpoints in the %s:"
 msgstr "Diese Zammad-Endpunkte müssen in %s konfigurieren werden:"
 
-#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:747
+#: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:754
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:354
 msgid ""
 "You used %s in the text but no attachment could be found. Do you want to "
@@ -19484,7 +19625,7 @@ msgstr "Ihre Sprache"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:28
 msgid "Your theme has been updated."
-msgstr "Ihr Ansicht wurde aktualisiert."
+msgstr "Ihr Farbschema wurde aktualisiert."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:46
 msgid ""
@@ -19531,7 +19672,7 @@ msgstr "Zammad User Agent"
 
 #: app/assets/javascripts/app/views/generic/login_preview.jst.eco:4
 #: app/assets/javascripts/app/views/login.jst.eco:7
-#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:169
+#: app/frontend/apps/desktop/pages/authentication/views/Login.vue:168
 #: app/frontend/apps/mobile/pages/authentication/components/LoginHeader.vue:22
 msgid ""
 "Zammad is currently in maintenance mode. Only administrators can log in. "
@@ -19793,7 +19934,7 @@ msgstr "schließen"
 msgid "closed"
 msgstr "geschlossen"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:130
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:105
 msgid "closed tickets"
 msgstr "geschlossene Tickets"
 
@@ -20050,7 +20191,8 @@ msgstr "eskaliert"
 msgid "escalation"
 msgstr "Eskalation"
 
-#: app/frontend/shared/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue:38
+#: app/frontend/apps/desktop/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue:31
+#: app/frontend/apps/mobile/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue:38
 msgid "escalation %s"
 msgstr "Eskalation %s"
 
@@ -20589,7 +20731,7 @@ msgstr "es sind nur Kleinbuchstaben, Ziffern und '_' erlaubt"
 msgid "open"
 msgstr "offen"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:123
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:98
 msgid "open tickets"
 msgstr "offene Tickets"
 
@@ -20721,8 +20863,8 @@ msgstr "Makro ausführen"
 msgid "select"
 msgstr "auswählen"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:351
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:471
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:350
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:470
 msgid "select all options"
 msgstr "alle Optionen auswählen"
 
@@ -20731,7 +20873,7 @@ msgstr "alle Optionen auswählen"
 msgid "select attachment…"
 msgstr "Dateien wählen…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:470
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:469
 msgid "select visible options"
 msgstr "sichtbare Optionen auswählen"
 
@@ -20876,6 +21018,12 @@ msgstr "Ticket"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:114
 msgid "ticket %s was merged into this ticket"
 msgstr "Ticket %s wurde zu diesem Ticket zusammengefasst"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:75
+#, fuzzy
+#| msgid "Ticket title"
+msgid "ticket title"
+msgstr "Ticket-Titel"
 
 #: db/seeds/settings.rb:1131
 msgid "ticket.agent"
