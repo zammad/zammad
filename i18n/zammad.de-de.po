@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-03 22:16+0000\n"
-"Last-Translator: Marcel Herrguth <github@thehomeofanime.de>\n"
+"PO-Revision-Date: 2024-07-05 05:02+0000\n"
+"Last-Translator: Janosch Weber <info@janosch-weber.de>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
 "Language: de-de\n"
@@ -4639,7 +4639,7 @@ msgid ""
 "Defines if the two-factor authentication method security keys is enabled or "
 "not."
 msgstr ""
-"Definiert, ob Methode \"Sicherheits-Schlüssel\" für Zwei-Faktor-"
+"Definiert, ob die Methode \"Sicherheits-Schlüssel\" für Zwei-Faktor-"
 "Authentifizierung aktiviert ist oder nicht."
 
 #: db/seeds/settings.rb:2907
@@ -10536,7 +10536,7 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts:105
 msgid "Open"
-msgstr "Öffnen"
+msgstr "Offen"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:68
 msgid "Open %s"
@@ -15002,16 +15002,16 @@ msgid ""
 "The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
 msgstr ""
-"Die Prüfung der TLS-Verbindung ist fehlgeschlagen. Bitte prüfen Sie das SAML "
-"IDP-Zertifikat."
+"Die Prüfung der TLS-Verbindung ist fehlgeschlagen. Bitte überprüfen Sie das "
+"SAML IDP-Zertifikat."
 
 #: app/models/setting/validation/saml/tls.rb:39
 msgid ""
 "The verification of the TLS connection is not possible. Please check the "
 "SAML IDP connection."
 msgstr ""
-"Die Überprüfung der TLS-Verbindung ist nicht möglich. Bitte prüfen Sie das "
-"SAML IDP-Zertifikat."
+"Die Überprüfung der TLS-Verbindung ist nicht möglich. Bitte überprüfen Sie "
+"das SAML IDP-Zertifikat."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee:29
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:11
@@ -15031,7 +15031,7 @@ msgstr "Eigene Tickets"
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:63
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:11
 msgid "Theme"
-msgstr "Thema"
+msgstr "Farbschema"
 
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:64
 msgid ""

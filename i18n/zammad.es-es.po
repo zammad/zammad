@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-12 01:05+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2024-07-05 05:02+0000\n"
+"Last-Translator: Ricardo Sandoval Pérez <r.sandoval@itknow.es>\n"
 "Language-Team: Spanish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/es/>\n"
 "Language: es-es\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -805,7 +805,7 @@ msgstr "1 año atrás"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:22
 msgid "1. Ticket Create"
-msgstr "Ticket %s creado"
+msgstr "1. Ticket creado"
 
 #: db/seeds/settings.rb:1106
 msgid "2 hours"
@@ -885,9 +885,8 @@ msgstr ""
 "automáticamente."
 
 #: lib/validations/mention_validator.rb:7
-#, fuzzy
 msgid "A mentioned user has no agent access to this ticket"
-msgstr "Agente sin acceso a este ticket"
+msgstr "El usuario mencionado no tiene acceso de agente a este ticket"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:26
 msgid ""
@@ -1950,10 +1949,8 @@ msgid "Article - visibility confirmation dialog"
 msgstr "Artículo - cuadro de diálogo de confirmación de visibilidad"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
-#, fuzzy
-#| msgid "Article Type"
 msgid "Article > Text (HTML)"
-msgstr "Tipo de artículo"
+msgstr "Artículo > Text(HTML)"
 
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
@@ -2456,10 +2453,8 @@ msgstr ""
 "llamadas del remitente."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:42
-#, fuzzy
-#| msgid "Blocked countries"
 msgid "Blocked Content"
-msgstr "Países bloqueados"
+msgstr "Contenido bloqueados"
 
 #: app/assets/javascripts/app/models/chat.coffee:254
 msgid "Blocked IPs (separated by ;)"
@@ -7862,15 +7857,9 @@ msgstr ""
 "notificación."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:178
-#, fuzzy
-#| msgid ""
-#| "Zammad Chat requires jQuery. If you don't already use it on your website, "
-#| "you can add it like this:"
 msgid ""
 "If you don't already use jQuery on your website, you can add it like this:"
-msgstr ""
-"el Chat de Zammad requiere jQuery. Si usted no lo utiliza en su sitio web, "
-"puede agregarlo así:"
+msgstr "Si usted aún no utiliza jQuery en su sitio web, puede agregarlo así:"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:5
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco:5
@@ -9286,10 +9275,8 @@ msgid "Merge to Ticket#"
 msgstr "Unir con Ticket#"
 
 #: app/models/report.rb:75
-#, fuzzy
-#| msgid "Merge"
 msgid "Merged"
-msgstr "Fusionar"
+msgstr "Fusionado"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
 #: app/assets/javascripts/app/views/maintenance.jst.eco:32
@@ -13048,7 +13035,7 @@ msgstr "Mostrar cuando el chat está cerrado."
 
 #: app/frontend/apps/desktop/AppDesktop.vue:95
 msgid "Sidebar"
-msgstr ""
+msgstr "Barra lateral"
 
 #: db/seeds/settings.rb:793
 msgid "Sidebar Attachments"
@@ -14975,28 +14962,20 @@ msgid "The verification email could not be resent."
 msgstr "No se ha podido reenviar el correo electrónico de verificación."
 
 #: app/models/setting/validation/saml/tls.rb:37
-#, fuzzy
-#| msgid ""
-#| "The verification of the TLS connection failed. Please check the IDP "
-#| "certificate."
 msgid ""
 "The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
 msgstr ""
 "Ha fallado la verificación de la conexión TLS. Por favor, revisa el "
-"certificado IDP."
+"certificado SAML IDP."
 
 #: app/models/setting/validation/saml/tls.rb:39
-#, fuzzy
-#| msgid ""
-#| "The verification of the TLS connection failed. Please check the IDP "
-#| "certificate."
 msgid ""
 "The verification of the TLS connection is not possible. Please check the "
 "SAML IDP connection."
 msgstr ""
-"Ha fallado la verificación de la conexión TLS. Por favor, revisa el "
-"certificado IDP."
+"La verificación de la conexión TLS no es posible. Por favor verifique la "
+"conexión SAML IDP."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee:29
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:11
@@ -15436,6 +15415,9 @@ msgid ""
 "This message contains images or other content hosted by an external source. "
 "We blocked it, but you can download the original formatting here."
 msgstr ""
+"Este mensaje contiene imágenes u otro contenido hospedado en una fuente "
+"externa. Lo hemos bloqueado, pero usted puede descargar el formato original "
+"aquí."
 
 #: lib/secure_mailing/smime/incoming.rb:86
 msgid "This message was not signed by its sender."
