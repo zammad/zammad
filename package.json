@@ -96,7 +96,7 @@
     "vite-plugin-ruby": "^5.0.0",
     "vitest": "^1.6.0",
     "vitest-axe": "^0.1.0",
-    "vue-tsc": "^2.0.24"
+    "vue-tsc": "^2.0.26"
   },
   "dependencies": {
     "@apollo/client": "^3.10.8",
