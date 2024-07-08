@@ -177,8 +177,8 @@ importers:
         specifier: ^16.9.0
         version: 16.9.0
       graphql-ruby-client:
-        specifier: ^1.13.3
-        version: 1.13.3(@apollo/client@3.10.8(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0))(graphql@16.9.0)
+        specifier: ^1.14.0
+        version: 1.14.0(@apollo/client@3.10.8(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0))(graphql@16.9.0)
       graphql-tag:
         specifier: ^2.12.6
         version: 2.12.6(graphql@16.9.0)
@@ -3575,8 +3575,8 @@ packages:
     peerDependencies:
       graphql: 14 - 16
 
-  graphql-ruby-client@1.13.3:
-    resolution: {integrity: sha512-NbhjR3+/jvjDWJzasv8F4ldYljm80qEmsnqmOVGxPw9D9VYkQmhyDryfCeTemPjEGscpj9zdZuJkRReWlINsQg==}
+  graphql-ruby-client@1.14.0:
+    resolution: {integrity: sha512-F45uBF9sJrF+UtPUggKq+fnYImT2w/pH4k/rpq+LrvmkxYNnNA6asX8dsSWml3MDDGFDSVWioBtsffq6f09uTg==}
     engines: {node: '>=10'}
     hasBin: true
     peerDependencies:
@@ -10077,7 +10077,7 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  graphql-ruby-client@1.13.3(@apollo/client@3.10.8(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0))(graphql@16.9.0):
+  graphql-ruby-client@1.14.0(@apollo/client@3.10.8(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0))(graphql@16.9.0):
     dependencies:
       '@apollo/client': 3.10.8(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0)
       glob: 10.3.10
