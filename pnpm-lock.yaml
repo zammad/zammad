@@ -213,8 +213,8 @@ importers:
         specifier: ^0.3.1
         version: 0.3.1(@tiptap/core@2.4.0(@tiptap/pm@2.4.0))(@tiptap/pm@2.4.0)
       ts-essentials:
-        specifier: ^9.4.2
-        version: 9.4.2(typescript@5.5.3)
+        specifier: ^10.0.1
+        version: 10.0.1(typescript@5.5.3)
       tslib:
         specifier: ^2.6.3
         version: 2.6.3
@@ -5641,6 +5641,14 @@ packages:
     engines: {node: '>=16'}
     peerDependencies:
       typescript: '>=4.2.0'
+
+  ts-essentials@10.0.1:
+    resolution: {integrity: sha512-HPH+H2bkkO8FkMDau+hFvv7KYozzned9Zr1Urn7rRPXMF4mZmCKOq+u4AI1AAW+2bofIOXTuSdKo9drQuni2dQ==}
+    peerDependencies:
+      typescript: '>=4.5.0'
+    peerDependenciesMeta:
+      typescript:
+        optional: true
 
   ts-essentials@9.4.2:
     resolution: {integrity: sha512-mB/cDhOvD7pg3YCLk2rOtejHjjdSi9in/IBYE13S+8WA5FBSraYf4V/ws55uvs0IvQ/l0wBOlXy5yBNZ9Bl8ZQ==}
@@ -12169,6 +12177,10 @@ snapshots:
 
   ts-api-utils@1.3.0(typescript@5.5.3):
     dependencies:
+      typescript: 5.5.3
+
+  ts-essentials@10.0.1(typescript@5.5.3):
+    optionalDependencies:
       typescript: 5.5.3
 
   ts-essentials@9.4.2(typescript@5.5.3):
