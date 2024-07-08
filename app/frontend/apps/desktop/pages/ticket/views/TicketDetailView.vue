@@ -11,7 +11,7 @@ import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import TicketDetailTopBar from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue'
-import { TICKET_INFORMATINO_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
+import { TICKET_INFORMATION_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 interface Props {
   internalId: string // Passed from router
@@ -48,7 +48,7 @@ const isLoadingTicket = computed(() => {
   return ticketQuery.loading().value && !ticket.value
 })
 
-provide(TICKET_INFORMATINO_KEY, ticket)
+provide(TICKET_INFORMATION_KEY, ticket)
 </script>
 
 <template>

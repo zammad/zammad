@@ -14740,10 +14740,6 @@ msgstr ""
 msgid "Ticket Hook Position"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:8
-msgid "Ticket Information Injection Key"
-msgstr ""
-
 #: db/seeds/settings.rb:2219
 msgid "Ticket Last Contact Behaviour"
 msgstr ""

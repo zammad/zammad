@@ -10,7 +10,7 @@ import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { MAIN_LAYOUT_KEY } from '#desktop/components/layout/composables/useMainLayoutContainer.ts'
 import { testOptionsTopBar } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/__tests__/support/testOptions.ts'
 import TicketDetailTopBar from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue'
-import { TICKET_INFORMATINO_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
+import { TICKET_INFORMATION_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 const renderTopBar = () => {
   return renderComponent(
@@ -27,7 +27,7 @@ const renderTopBar = () => {
         )
 
         provide(
-          TICKET_INFORMATINO_KEY,
+          TICKET_INFORMATION_KEY,
           computed(() => testOptionsTopBar),
         )
         return {}
