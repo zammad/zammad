@@ -33,10 +33,14 @@ export const usePopoverMenu = (
 
   const session = useSessionStore()
 
-  const filteredMenuItems = computed(() => {
-    if (!items.value || !items.value.length) return
+  const filterItems = () => {
+    return items.value?.filter((item) => {
+      if (item.permission && item.show) {
+        return (
+          session.hasPermission(item.permission) && item.show(entity?.value)
+        )
+      }
 
-    return items.value.filter((item) => {
       if (item.permission) {
         return session.hasPermission(item.permission)
       }
@@ -44,9 +48,14 @@ export const usePopoverMenu = (
       if (item.show) {
         return item.show(entity?.value)
       }
-
       return true
     })
+  }
+
+  const filteredMenuItems = computed(() => {
+    if (!items.value || !items.value.length) return
+
+    return filterItems()
   })
 
   const singleMenuItemPresent = computed(() => {
@@ -56,7 +65,7 @@ export const usePopoverMenu = (
   const singleMenuItem = computed(() => {
     if (!singleMenuItemPresent.value) return
 
-    return filteredMenuItems.value?.[0]
+    return filterItems()?.at(0)
   })
 
   const providePopoverMenu = {

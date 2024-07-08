@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { computed, ref, toRefs } from 'vue'
 
+import type { Sizes } from '#shared/components/CommonIcon/types.ts'
 import CommonPopover from '#shared/components/CommonPopover/CommonPopover.vue'
 import type {
   Orientation,
@@ -13,7 +14,10 @@ import type { ObjectLike } from '#shared/types/utils.ts'
 import getUuid from '#shared/utils/getUuid.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import type { ButtonSize } from '#desktop/components/CommonButton/types.ts'
+import type {
+  ButtonSize,
+  ButtonVariant,
+} from '#desktop/components/CommonButton/types.ts'
 import CommonPopoverMenu from '#desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import { usePopoverMenu } from '#desktop/components/CommonPopoverMenu/usePopoverMenu.ts'
@@ -22,16 +26,21 @@ export interface Props {
   actions: MenuItem[]
   entity?: ObjectLike
   buttonSize?: ButtonSize
+  linkSize?: Sizes
   placement?: Placement
   orientation?: Orientation
+  hideArrow?: boolean
   noSingleActionMode?: boolean
   customMenuButtonLabel?: string
+  defaultIcon?: string
+  defaultButtonVariant?: ButtonVariant
 }
 
 const props = withDefaults(defineProps<Props>(), {
   buttonSize: 'medium',
   placement: 'arrowStart',
   orientation: 'autoVertical',
+  defaultButtonVariant: 'neutral',
 })
 
 const popoverMenu = ref<InstanceType<typeof CommonPopoverMenu>>()
@@ -39,6 +48,7 @@ const popoverMenu = ref<InstanceType<typeof CommonPopoverMenu>>()
 const { popover, isOpen: popoverIsOpen, popoverTarget, toggle } = usePopover()
 
 const { actions, entity } = toRefs(props)
+
 const { filteredMenuItems, singleMenuItemPresent, singleMenuItem } =
   usePopoverMenu(actions, entity, { provides: true })
 
@@ -59,7 +69,7 @@ const singleActionMode = computed(() => {
   return singleMenuItemPresent.value
 })
 
-const buttonVariantClass = computed(() => {
+const variantClasses = computed(() => {
   if (singleMenuItem.value?.variant === 'secondary') return 'text-blue-800'
   if (singleMenuItem.value?.variant === 'danger') return 'text-red-500'
   return 'text-stone-200 dark:text-neutral-500'
@@ -71,14 +81,32 @@ const buttonVariantClass = computed(() => {
     v-if="filteredMenuItems && filteredMenuItems.length > 0"
     class="inline-block"
   >
-    <CommonButton
-      v-if="singleActionMode"
-      :class="buttonVariantClass"
-      :size="buttonSize"
-      :aria-label="$t(singleActionAriaLabel)"
-      :icon="singleMenuItem?.icon"
-      @click="singleMenuItem?.onClick?.(entity as ObjectLike)"
-    />
+    <template v-if="singleActionMode">
+      <CommonLink
+        v-if="singleMenuItem?.link"
+        v-tooltip="$t(singleActionAriaLabel)"
+        class="flex"
+        :aria-label="$t(singleActionAriaLabel)"
+        :link="singleMenuItem.link"
+      >
+        <CommonIcon
+          :size="linkSize"
+          :class="variantClasses"
+          :name="singleMenuItem?.icon"
+        />
+      </CommonLink>
+      <CommonButton
+        v-else
+        v-tooltip="$t(singleActionAriaLabel)"
+        class="rounded-sm p-0"
+        :class="[variantClasses]"
+        :size="buttonSize"
+        :aria-label="$t(singleActionAriaLabel)"
+        :icon="singleMenuItem?.icon"
+        @click="singleMenuItem?.onClick?.(props.entity as ObjectLike)"
+      />
+    </template>
+
     <template v-else>
       <CommonButton
         :id="`action-menu-${entityId}`"
@@ -86,12 +114,13 @@ const buttonVariantClass = computed(() => {
         :aria-label="$t(customMenuButtonLabel || 'Action menu button')"
         aria-haspopup="true"
         :aria-controls="popoverIsOpen ? menuId : undefined"
-        class="text-stone-200 dark:text-neutral-500"
+        class="rounded-sm !p-0"
         :class="{
           'outline outline-1 outline-offset-1 outline-blue-800': popoverIsOpen,
         }"
+        :variant="defaultButtonVariant"
         :size="buttonSize"
-        icon="three-dots-vertical"
+        :icon="defaultIcon || 'three-dots-vertical'"
         @click="toggle"
       />
 
@@ -99,6 +128,7 @@ const buttonVariantClass = computed(() => {
         :id="menuId"
         ref="popover"
         :placement="placement"
+        :hide-arrow="hideArrow"
         :orientation="orientation"
         :owner="popoverTarget"
       >

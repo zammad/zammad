@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
+import type { Link } from '#shared/types/router.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
 import type { Variant } from '#desktop/components/CommonPopoverMenu/types.ts'
@@ -11,7 +12,7 @@ export interface Props {
   label?: string
   ariaLabel?: string | ((entity?: ObjectLike) => string)
   labelPlaceholder?: string[]
-  link?: string
+  link?: Link
   linkExternal?: boolean
   variant?: Variant
   icon?: string

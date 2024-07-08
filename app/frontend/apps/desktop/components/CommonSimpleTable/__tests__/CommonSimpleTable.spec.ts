@@ -68,11 +68,14 @@ describe('CommonSimpleTable.vue', () => {
   })
 
   it('displays the table with actions', async () => {
-    const view = renderTable({
-      headers: tableHeaders,
-      items: tableItems,
-      actions: tableActions,
-    })
+    const view = renderTable(
+      {
+        headers: tableHeaders,
+        items: tableItems,
+        actions: tableActions,
+      },
+      { router: true },
+    )
 
     expect(view.getByText('Actions')).toBeInTheDocument()
     expect(view.getByLabelText('Action menu button')).toBeInTheDocument()
@@ -86,6 +89,7 @@ describe('CommonSimpleTable.vue', () => {
         actions: tableActions,
       },
       {
+        router: true,
         slots: {
           'item-suffix-role': '<span>Additional Example</span>',
         },

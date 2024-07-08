@@ -138,13 +138,15 @@ describe('Left sidebar', () => {
         const view = await visitView('/')
 
         const aside = view.getByRole('complementary')
-        const avatarButton = getByRole(aside, 'button', { name: 'User menu' })
+        const avatarButton = getByRole(aside, 'button', {
+          name: 'Nicole Braun',
+        })
 
         expect(avatarButton).toHaveTextContent('NB')
 
         await view.events.click(avatarButton)
 
-        const popover = view.getByRole('region', { name: 'User menu' })
+        const popover = view.getByRole('region', { name: 'Nicole Braun' })
 
         expect(popover).toHaveTextContent('Nicole Braun')
 
@@ -161,7 +163,7 @@ describe('Left sidebar', () => {
       const view = await visitView('/')
 
       const aside = view.getByRole('complementary')
-      const avatarButton = getByRole(aside, 'button', { name: 'User menu' })
+      const avatarButton = getByRole(aside, 'button', { name: 'Nicole Braun' })
 
       await view.events.click(avatarButton)
 
@@ -187,7 +189,7 @@ describe('Left sidebar', () => {
       const view = await visitView('/')
 
       const aside = view.getByRole('complementary')
-      const avatarButton = getByRole(aside, 'button', { name: 'User menu' })
+      const avatarButton = getByRole(aside, 'button', { name: 'Nicole Braun' })
 
       await view.events.click(avatarButton)
 
@@ -214,7 +216,7 @@ describe('Left sidebar', () => {
       const view = await visitView('/')
 
       const aside = view.getByRole('complementary')
-      const avatarButton = getByRole(aside, 'button', { name: 'User menu' })
+      const avatarButton = getByRole(aside, 'button', { name: 'Nicole Braun' })
 
       await view.events.click(avatarButton)
 
@@ -240,7 +242,7 @@ describe('Left sidebar', () => {
       const view = await visitView('/')
 
       const aside = view.getByRole('complementary')
-      const avatarButton = getByRole(aside, 'button', { name: 'User menu' })
+      const avatarButton = getByRole(aside, 'button', { name: 'Nicole Braun' })
 
       await view.events.click(avatarButton)
 

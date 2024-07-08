@@ -1093,6 +1093,10 @@ msgstr ""
 msgid "Admin password login instructions were sent to your email address."
 msgstr ""
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/setting.ts:8
+msgid "Administration"
+msgstr ""
+
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/admin_password_auth/en.html.erb
@@ -1390,7 +1394,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:349
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee:3
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:3
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/appearance.ts:9
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:59
 #: db/seeds/permissions.rb:377
@@ -2796,7 +2800,7 @@ msgstr ""
 msgid "Closing time"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:75
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:66
 msgid "Collapse this element"
 msgstr ""
 
@@ -5739,7 +5743,7 @@ msgstr ""
 msgid "Existing tickets (open)"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:74
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:65
 msgid "Expand this element"
 msgstr ""
 
@@ -7614,7 +7618,7 @@ msgstr ""
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts:7
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts:7
 msgid "Keyboard shortcuts"
 msgstr ""
 
@@ -9102,6 +9106,7 @@ msgid "New text module"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
 msgid "New ticket"
 msgstr ""
 
@@ -10707,7 +10712,7 @@ msgstr ""
 msgid "Profile language updated successfully."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/personal-settings.ts:7
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
 #: db/seeds/permissions.rb:370
 msgid "Profile settings"
 msgstr ""
@@ -12399,7 +12404,7 @@ msgid "Sign in using"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/logout.coffee:6
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/logout.ts:7
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/logout.ts:7
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:189
 msgid "Sign out"
 msgstr ""
@@ -15994,7 +15999,7 @@ msgstr ""
 msgid "User information could not be retrieved, please check your bind user permissions."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LayoutSidebarFooterMenu.vue:59
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue:44
 msgid "User menu"
 msgstr ""
 

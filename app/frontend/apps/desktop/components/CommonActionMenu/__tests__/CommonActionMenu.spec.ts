@@ -38,6 +38,7 @@ describe('CommonActionMenu', () => {
     props?: Partial<Props>,
   ) => {
     return renderComponent(CommonActionMenu, {
+      router: true,
       props: {
         ...props,
         entity: {

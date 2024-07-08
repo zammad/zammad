@@ -29,9 +29,9 @@ RSpec.describe 'Desktop > Login', app: :desktop_view, authenticated_as: false, t
       find_input('Security Code').type(code)
       find_button('Sign in').click
 
-      expect(page).to have_css('[aria-label="User menu"]')
+      expect(page).to have_css("[aria-label=\"#{user.fullname}\"]")
 
-      find('[aria-label="User menu"]').click
+      find("[aria-label=\"#{user.fullname}\"]").click
       click_on('Sign out')
 
       expect(page).to have_text('Sign in')
@@ -62,9 +62,9 @@ RSpec.describe 'Desktop > Login', app: :desktop_view, authenticated_as: false, t
 
       # Workaround: SAML redirects in CI don't work because of missing HTTP referrer headers.
       visit '/'
-      expect(page).to have_css('[aria-label="User menu"]')
+      expect(page).to have_css('[aria-label="John Doe"]')
 
-      find('[aria-label="User menu"]').click
+      find('[aria-label="John Doe"]').click
       click_on('Sign out')
 
       expect(page).to have_current_path(%r{/login})

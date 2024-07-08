@@ -60,6 +60,11 @@ const parentGroupClass = computed(() => {
 <template>
   <div>
     <CommonButton
+      v-tooltip="
+        props.isCollapsed
+          ? $t('Expand this element')
+          : $t('Collapse this element')
+      "
       :class="[
         { 'opacity-0 transition-opacity': !isTouchDevice && parentGroupClass },
         'focus:opacity-100',

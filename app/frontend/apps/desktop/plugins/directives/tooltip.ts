@@ -4,16 +4,8 @@ import { type ObjectDirective } from 'vue'
 
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
-type Modifiers = Record<
-  'modifiers',
-  {
-    truncate?: boolean
-  }
->
-
-interface TooltipTargetRecord {
-  element: HTMLDivElement
-  modifiers: Modifiers['modifiers']
+interface Modifiers {
+  truncate?: boolean
 }
 
 let isListeningToEvents = false
@@ -22,10 +14,10 @@ let hasHoverOnNode = false
 let currentEvent: MouseEvent | TouchEvent | null = null
 let tooltipTimeout: NodeJS.Timeout | null = null
 
-let tooltipTargetRecords: {
-  element: HTMLDivElement
-  modifiers: Modifiers['modifiers']
-}[] = []
+let tooltipRecordsCount = 0
+
+let tooltipTargetRecords: WeakMap<HTMLElement, { modifiers: Modifiers }> =
+  new WeakMap()
 
 const removeTooltips = () => {
   document
@@ -34,23 +26,23 @@ const removeTooltips = () => {
   isTooltipInDom = false
 }
 
-const addModifierRecord = (
-  element: HTMLDivElement,
-  modifiers: Modifiers['modifiers'],
-) => {
-  tooltipTargetRecords.push({
-    element,
+const addModifierRecord = (element: HTMLDivElement, modifiers: Modifiers) => {
+  if (tooltipTargetRecords.has(element)) return
+
+  tooltipRecordsCount += 1
+  tooltipTargetRecords.set(element, {
     modifiers,
   })
 }
 
-const getModifierRecord = ($el: HTMLDivElement): TooltipTargetRecord => {
-  return (
-    tooltipTargetRecords.find(({ element }) => element === $el) || {
-      modifiers: { truncate: undefined },
-      element: $el,
-    }
-  )
+const removeModifierRecord = (element: HTMLDivElement) => {
+  if (!tooltipTargetRecords.has(element)) return
+  tooltipRecordsCount -= 1
+  tooltipTargetRecords.delete(element)
+}
+
+const getModifierRecord = ($el: HTMLDivElement) => {
+  return tooltipTargetRecords.get($el) || null
 }
 
 const createTooltip = (
@@ -129,8 +121,16 @@ const addTooltip = (
   } else {
     const { clientX, clientY } = event
     const verticalThreshold = 10 // native tooltip has an extra threshold of ~ 10px
+    const thresholdToBottom = 30
 
-    top = `${clientY + verticalThreshold}px`
+    const availableSpaceBelow = window.innerHeight - clientY - thresholdToBottom
+
+    // If the tooltip is to close to the bottom of the viewport, show it above the target
+    if (availableSpaceBelow < tooltipRectangle.height) {
+      top = `${clientY - verticalThreshold - tooltipRectangle.height}px`
+    } else {
+      top = `${clientY + verticalThreshold}px`
+    }
     left = getLeftBasedOnLanguage(clientX, tooltipRectangle)
   }
 
@@ -152,12 +152,10 @@ const isContentTruncated = (element: HTMLElement) => {
   return parentElement.offsetWidth < parentElement.scrollWidth
 }
 
-const evaluateModifiers = (
-  element: HTMLDivElement,
-  options?: TooltipTargetRecord['modifiers'],
-) => {
+const evaluateModifiers = (element: HTMLElement, options?: Modifiers) => {
   const modifications = {
     isTruncated: false,
+    top: false,
   }
 
   if (options?.truncate) {
@@ -167,19 +165,26 @@ const evaluateModifiers = (
   return modifications
 }
 
+const findTooltipTarget = (
+  element: HTMLDivElement | null,
+): HTMLDivElement | null => element?.closest('[data-tooltip]') || null
+
 const handleTooltipAddEvent = (event: MouseEvent | TouchEvent) => {
   if (isTooltipInDom) removeTooltips() // Remove tooltips if there is already one set in the DOM
-  if (!(event.target as HTMLDivElement)?.hasAttribute('data-tooltip')) return
+
+  if (!event.target) return
+
+  const tooltipTargetNode = findTooltipTarget(event.target as HTMLDivElement)
+
+  if (!tooltipTargetNode) return
 
   hasHoverOnNode = true // Set it to capture mousemove event
-
-  const tooltipTargetNode = event.target as HTMLDivElement
 
   const tooltipRecord = getModifierRecord(tooltipTargetNode)
 
   const { isTruncated } = evaluateModifiers(
     tooltipTargetNode,
-    tooltipRecord.modifiers,
+    tooltipRecord?.modifiers,
   )
 
   // If the content gets truncated and the modifier is set to only show the tooltip on truncation
@@ -255,15 +260,17 @@ export default {
     mounted: (element: HTMLDivElement, { value: message, modifiers }) => {
       if (!message) return
 
-      addModifierRecord(element, modifiers)
-
       element.setAttribute('aria-label', message)
+      // :TODO be careful to not override existing aria-label
+
       element.setAttribute('data-tooltip', 'true')
+
+      addModifierRecord(element, modifiers)
 
       if (!isListeningToEvents) {
         addEventListeners()
         isListeningToEvents = true
-        // Resize we can not add it into cleanup function
+        // Resize we cannot add it into the cleanup function
         window.addEventListener('resize', cleanupAndAddEventListeners)
       }
     },
@@ -274,23 +281,27 @@ export default {
         return
       }
 
-      // In some cases we update the aria-label on an interval f.e table time cells
+      // In some cases, we update the aria-label on an interval f.e table time cells
       // We don't want to write to the DOM on every update if nothing has changed
       if (element.getAttribute('aria-label') !== message)
         element.setAttribute('aria-label', message)
     },
     beforeUnmount(element) {
       // If we dynamically remove the element from the DOM, we need to remove it from the tooltipTargetRecords
-      tooltipTargetRecords = tooltipTargetRecords.filter(
-        (record) => record.element !== element,
-      )
+      removeModifierRecord(element)
+
       // If there are no more elements with the tooltip directive, remove event listeners
-      if (tooltipTargetRecords.length !== 1) return
+      if (tooltipRecordsCount !== 1) return
+
       // Cleanup only on the last element
       if (isTooltipInDom) removeTooltips()
+
       if (isListeningToEvents) cleanupEventHandlers()
+
       isListeningToEvents = false
-      tooltipTargetRecords = []
+      tooltipTargetRecords = new WeakMap()
+      tooltipRecordsCount = 0
+
       window.removeEventListener('resize', cleanupAndAddEventListeners)
     },
   },

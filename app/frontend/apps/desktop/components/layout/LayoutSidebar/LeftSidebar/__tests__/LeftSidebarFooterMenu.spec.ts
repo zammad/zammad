@@ -3,7 +3,7 @@
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 
-import LayoutSidebarFooterMenu from '../LayoutSidebarFooterMenu.vue'
+import LeftSidebarFooterMenu from '../LeftSidebarFooterMenu.vue'
 
 describe('layout sidebar footer menu', () => {
   beforeEach(() => {
@@ -14,7 +14,9 @@ describe('layout sidebar footer menu', () => {
   })
 
   it('renders user avatar', async () => {
-    const view = renderComponent(LayoutSidebarFooterMenu)
+    const view = renderComponent(LeftSidebarFooterMenu, {
+      router: true,
+    })
 
     expect(view.getByText('JD')).toBeInTheDocument()
 
@@ -23,7 +25,8 @@ describe('layout sidebar footer menu', () => {
   })
 
   it('renders small user avatar in collapsed mode', async () => {
-    const view = renderComponent(LayoutSidebarFooterMenu, {
+    const view = renderComponent(LeftSidebarFooterMenu, {
+      router: true,
       props: { collapsed: true },
     })
 

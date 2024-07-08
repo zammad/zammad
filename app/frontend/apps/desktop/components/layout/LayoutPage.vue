@@ -5,7 +5,7 @@ import { ref } from 'vue'
 
 import { useSessionStore } from '#shared/stores/session.ts'
 
-import LayoutSidebarFooterMenu from '#desktop/components/layout/LayoutSidebar/LayoutSidebarFooterMenu.vue'
+import LeftSidebarFooterMenu from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue'
 import LayoutSidebar from '#desktop/components/layout/LayoutSidebar.vue'
 import PageNavigation from '#desktop/components/PageNavigation/PageNavigation.vue'
 import { useResizeGridColumns } from '#desktop/composables/useResizeGridColumns.ts'
@@ -50,7 +50,7 @@ const {
     >
       <template #default="{ isCollapsed }">
         <PageNavigation :icon-only="isCollapsed" />
-        <LayoutSidebarFooterMenu :collapsed="isCollapsed" class="mt-auto" />
+        <LeftSidebarFooterMenu :collapsed="isCollapsed" class="mt-auto" />
       </template>
     </LayoutSidebar>
     <div id="page-main-content" class="relative">
