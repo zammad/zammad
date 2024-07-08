@@ -193,6 +193,25 @@ describe('CommonSelect.vue', () => {
     expect(view.getByText(/^Item A$/)).toBeInTheDocument()
   })
 
+  it('forces translation if placeholder is provided', async () => {
+    const options = [
+      {
+        value: 0,
+        label: 'Label (%s)',
+        labelPlaceholder: ['A'],
+        heading: 'Heading (%s)',
+        headingPlaceholder: ['B'],
+      },
+    ]
+
+    const view = renderSelect({ options, noOptionsLabelTranslation: true })
+
+    await view.events.click(view.getByText('Open Select'))
+    expect(
+      view.getByRole('option', { name: 'Label (A) – Heading (B)' }),
+    ).toBeInTheDocument()
+  })
+
   it('can use boolean as value', async () => {
     const modelValue = ref()
     const view = renderSelect(

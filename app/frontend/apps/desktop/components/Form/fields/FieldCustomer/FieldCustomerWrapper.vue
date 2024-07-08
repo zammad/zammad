@@ -1,5 +1,6 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
+import { pick } from 'lodash-es'
 import { markRaw } from 'vue'
 
 import type { SelectValue } from '#shared/components/CommonSelect/types.ts'
@@ -9,6 +10,7 @@ import type { AutoCompleteCustomerGenericOption } from '#shared/components/Form/
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import type { User } from '#shared/graphql/types.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
+import { normalizeEdges } from '#shared/utils/helpers.ts'
 
 import FieldAutoCompleteInput from '../FieldAutoComplete/FieldAutoCompleteInput.vue'
 import { useAddUnknownValueAction } from '../FieldAutoComplete/useAddUnknownValueAction.ts'
@@ -73,17 +75,28 @@ Object.assign(props.context, {
 
       const heading = autocompleteOption.object.name
 
+      const allMembers = normalizeEdges(autocompleteOption.object.allMembers)
+
       autocompleteOption.children =
-        autocompleteOption.object.allMembers?.edges.map(
+        allMembers.array.map(
           (member) =>
             ({
-              value: member.node.internalId,
-              label:
-                member.node.fullname ?? member.node.phone ?? member.node.login,
+              value: member.internalId,
+              label: member.fullname ?? member.phone ?? member.login,
               heading,
               object: {
-                ...member.node,
+                ...member,
                 __typename: 'User',
+
+                // Include the current organization only, so the organization field can be automatically pre-filled.
+                //   This can potentially be a secondary organization of the user, depending on the current navigation.
+                organization: pick(autocompleteOption.object, [
+                  '__typename',
+                  'id',
+                  'internalId',
+                  'name',
+                  'active',
+                ]),
               },
             }) as AutoCompleteOption,
         ) || []

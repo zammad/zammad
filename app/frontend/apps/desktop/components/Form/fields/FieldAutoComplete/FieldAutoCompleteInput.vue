@@ -564,6 +564,7 @@ useFormBlock(contextReactive, openSelectDropdown)
           ref="filterInput"
           v-model="filter"
           :class="{ 'pointer-events-none': !expanded }"
+          :tabindex="!expanded ? '-1' : undefined"
           :suggestion="suggestedOptionLabel"
           :alternative-background="context.alternativeBackground"
           @keypress.space.stop

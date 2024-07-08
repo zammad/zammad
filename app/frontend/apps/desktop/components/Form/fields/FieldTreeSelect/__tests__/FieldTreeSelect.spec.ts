@@ -878,10 +878,11 @@ describe('Form - Field - TreeSelect - Features', () => {
       },
       {
         value: 2,
-        label: 'Item C (%s)',
-        labelPlaceholder: [2],
+        label: 'Item C',
       },
     ]
+
+    i18n.setTranslationMap(new Map([['Item C', 'Translated Item C']]))
 
     const translatedOptions = untranslatedOptions.map((untranslatedOption) => ({
       ...untranslatedOption,
@@ -926,13 +927,18 @@ describe('Form - Field - TreeSelect - Features', () => {
     selectOptions = getAllByRole(listbox, 'option')
 
     selectOptions.forEach((selectOption, index) => {
-      expect(selectOption).toHaveTextContent(untranslatedOptions[index].label)
+      // Forces translation due to placeholder availability.
+      if (untranslatedOptions[index].labelPlaceholder) {
+        expect(selectOption).toHaveTextContent(translatedOptions[index].label)
+      } else {
+        expect(selectOption).toHaveTextContent(untranslatedOptions[index].label)
+      }
     })
 
-    await wrapper.events.click(selectOptions[1])
+    await wrapper.events.click(selectOptions[2])
 
     expect(wrapper.getByRole('listitem')).toHaveTextContent(
-      untranslatedOptions[1].label,
+      untranslatedOptions[2].label,
     )
   })
 

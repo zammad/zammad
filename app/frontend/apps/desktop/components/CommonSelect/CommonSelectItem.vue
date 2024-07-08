@@ -37,7 +37,8 @@ const select = (option: SelectOption) => {
 const label = computed(() => {
   const { option } = props
 
-  if (props.noLabelTranslate) return option.label || option.value.toString()
+  if (props.noLabelTranslate && !option.labelPlaceholder)
+    return option.label || option.value.toString()
 
   return (
     i18n.t(option.label, ...(option.labelPlaceholder || [])) ||
@@ -48,7 +49,11 @@ const label = computed(() => {
 const heading = computed(() => {
   const { option } = props
 
-  if (props.noLabelTranslate) return (option as AutoCompleteOption).heading
+  if (
+    props.noLabelTranslate &&
+    !(option as AutoCompleteOption).headingPlaceholder
+  )
+    return (option as AutoCompleteOption).heading
 
   return i18n.t(
     (option as AutoCompleteOption).heading,
@@ -129,7 +134,13 @@ const goToNextPage = (option: AutoCompleteOption, noFocus?: boolean) => {
         }"
         v-html="(option as MatchedSelectOption).matchedLabel"
       />
-      <span v-if="heading" class="text-stone-200 dark:text-neutral-500"
+      <span
+        v-if="heading"
+        class="text-stone-200 dark:text-neutral-500"
+        :class="{
+          'group-hover:text-black group-focus:text-black group-hover:dark:text-white group-focus:dark:text-white':
+            !option.disabled,
+        }"
         >&nbsp;– {{ heading }}</span
       >
     </div>
@@ -142,7 +153,13 @@ const goToNextPage = (option: AutoCompleteOption, noFocus?: boolean) => {
       :title="label + (heading ? ` – ${heading}` : '')"
     >
       {{ label }}
-      <span v-if="heading" class="text-stone-200 dark:text-neutral-500"
+      <span
+        v-if="heading"
+        class="text-stone-200 dark:text-neutral-500"
+        :class="{
+          'group-hover:text-black group-focus:text-black group-hover:dark:text-white group-focus:dark:text-white':
+            !option.disabled,
+        }"
         >– {{ heading }}</span
       >
     </span>

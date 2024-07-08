@@ -120,7 +120,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:109
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:135
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:315
-#: app/frontend/shared/composables/useSelectOptions.ts:138
+#: app/frontend/shared/composables/useSelectOptions.ts:140
 msgid "%s (unknown)"
 msgstr ""
 
@@ -2657,7 +2657,7 @@ msgid "Clear Search"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:601
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:602
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:292
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:352
@@ -6599,7 +6599,7 @@ msgstr ""
 msgid "Has processed"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:152
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:169
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:129
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:338
 msgid "Has submenu"
@@ -12667,7 +12667,7 @@ msgstr ""
 msgid "Start typing to search or enter a phone number…"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:95
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:108
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:48
 msgid "Start typing to search or enter an email address…"
 msgstr ""

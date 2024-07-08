@@ -12,6 +12,8 @@ import {
 import { renderComponent } from '#tests/support/components/index.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
+import { i18n } from '#shared/i18n.ts'
+
 const renderGroupPermissionsInput = async (
   props: Record<string, unknown> = {},
 ) => {
@@ -320,10 +322,11 @@ describe('Fields - FieldGroupPermissions', () => {
     const testOptions = [
       {
         value: 1,
-        label: 'Group name (%s)',
-        labelPlaceholder: ['translated'],
+        label: 'Group name',
       },
     ]
+
+    i18n.setTranslationMap(new Map([['Group name', 'Translated group name']]))
 
     const view = await renderGroupPermissionsInput({
       options: testOptions,

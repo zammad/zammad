@@ -61,6 +61,7 @@ query autocompleteSearchGeneric(
               outOfOfficeEndAt
               active
               vip
+              hasSecondaryOrganizations
             }
           }
         }

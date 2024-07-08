@@ -70,7 +70,7 @@ module Gql::Queries
     def heading_placeholder(object)
       case object
       when ::Organization
-        [object.members.size]
+        [object.all_members.size]
       else
         []
       end

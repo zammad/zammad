@@ -867,12 +867,17 @@ describe('Form - Field - AutoComplete - Features', () => {
       },
       {
         value: 2,
-        label: 'Item C (%s)',
-        labelPlaceholder: [2],
-        heading: 'autocomplete sample %s',
-        headingPlaceholder: [3],
+        label: 'Item C',
+        heading: 'autocomplete sample',
       },
     ]
+
+    i18n.setTranslationMap(
+      new Map([
+        ['Item C', 'Translated Item C'],
+        ['autocomplete sample', 'translated autocomplete sample'],
+      ]),
+    )
 
     const translatedOptions = untranslatedOptions.map((untranslatedOption) => ({
       ...untranslatedOption,
@@ -926,15 +931,22 @@ describe('Form - Field - AutoComplete - Features', () => {
     selectOptions = wrapper.getAllByRole('option')
 
     selectOptions.forEach((selectOption, index) => {
-      expect(selectOption).toHaveTextContent(
-        `${untranslatedOptions[index].label} – ${untranslatedOptions[index].heading}`,
-      )
+      // Forces translation due to placeholder availability.
+      if (untranslatedOptions[index].labelPlaceholder) {
+        expect(selectOption).toHaveTextContent(
+          `${translatedOptions[index].label} – ${translatedOptions[index].heading}`,
+        )
+      } else {
+        expect(selectOption).toHaveTextContent(
+          `${untranslatedOptions[index].label} – ${untranslatedOptions[index].heading}`,
+        )
+      }
     })
 
-    await wrapper.events.click(selectOptions[1])
+    await wrapper.events.click(selectOptions[2])
 
     expect(wrapper.getByRole('listitem')).toHaveTextContent(
-      untranslatedOptions[1].label,
+      untranslatedOptions[2].label,
     )
   })
 

@@ -55,14 +55,16 @@ const useSelectOptions = <
     const { noOptionsLabelTranslation } = context.value
 
     return availableOptions.value.map((option) => {
-      const label = noOptionsLabelTranslation
-        ? option.label || ''
-        : i18n.t(option.label, ...(option.labelPlaceholder || []))
+      const label =
+        noOptionsLabelTranslation && !option.labelPlaceholder
+          ? option.label || ''
+          : i18n.t(option.label, ...(option.labelPlaceholder || []))
 
       const variant = option as AutoCompleteOption
-      const heading = noOptionsLabelTranslation
-        ? variant.heading || ''
-        : i18n.t(variant.heading, ...(variant.headingPlaceholder || []))
+      const heading =
+        noOptionsLabelTranslation && !variant.headingPlaceholder
+          ? variant.heading || ''
+          : i18n.t(variant.heading, ...(variant.headingPlaceholder || []))
 
       return {
         ...option,
