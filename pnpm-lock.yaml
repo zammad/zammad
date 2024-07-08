@@ -156,7 +156,7 @@ importers:
         specifier: ^4.0.2
         version: 4.0.2(@apollo/client@3.10.8(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0))(graphql@16.9.0)(typescript@5.5.3)(vue@3.4.31(typescript@5.5.3))
       '@vue/runtime-core':
-        specifier: ^3.4.21
+        specifier: ^3.4.31
         version: 3.4.31
       '@vuepic/vue-datepicker':
         specifier: ^8.8.1
@@ -316,7 +316,7 @@ importers:
         specifier: ^5.0.5
         version: 5.0.5(vite@5.3.3(@types/node@18.11.4)(sass@1.77.6)(terser@5.31.0))(vue@3.4.31(typescript@5.5.3))
       '@vue/compiler-dom':
-        specifier: ^3.4.27
+        specifier: ^3.4.31
         version: 3.4.31
       '@vue/eslint-config-prettier':
         specifier: ^9.0.0
@@ -325,7 +325,7 @@ importers:
         specifier: ^13.0.0
         version: 13.0.0(eslint-plugin-vue@9.27.0(eslint@8.57.0))(eslint@8.57.0)(typescript@5.5.3)
       '@vue/server-renderer':
-        specifier: ^3.4.27
+        specifier: ^3.4.31
         version: 3.4.31(vue@3.4.31(typescript@5.5.3))
       '@vue/test-utils':
         specifier: ^2.4.6
