@@ -94,6 +94,32 @@ describe('TicketSidebarOrganizationButton.vue', () => {
 
     expect(wrapper.emitted('hide')).toHaveLength(1)
   })
+
+  it('hides sidebar when customer has no organization', async () => {
+    mockUserQuery({
+      user: {
+        firstname: 'Nicole',
+        lastname: 'Braun',
+        fullname: 'Nicole Braun',
+        image: null,
+        email: 'nicole.braun@zammad.org',
+        organization: null,
+        vip: false,
+        ticketsCount: {
+          open: 42,
+          closed: 10,
+        },
+      },
+    })
+
+    const wrapper = await renderTicketSidebarOrganizationButton({
+      formValues: {
+        customer_id: 2,
+      },
+    })
+
+    expect(wrapper.emitted('hide')).toHaveLength(1)
+  })
 })
 
 describe('TicketSidebarOrganizationContent.vue', () => {

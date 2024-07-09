@@ -23,6 +23,7 @@ const { user: customer } = useUserDetail(customerId, undefined, 'cache-first')
 watch(customer, (newValue) => {
   if (!newValue?.organization) {
     emit('hide')
+    return
   }
   emit('show')
 })
