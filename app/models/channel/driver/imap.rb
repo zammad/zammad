@@ -120,7 +120,7 @@ example
       ssl_settings = (ssl_verify ? true : { verify_mode: OpenSSL::SSL::VERIFY_NONE }) if ssl
       @imap = ::Net::IMAP.new(options[:host], port: port, ssl: ssl_settings)
       if starttls
-        @imap.starttls(nil, ssl_verify)
+        @imap.starttls(verify_mode: ssl_verify ? OpenSSL::SSL::VERIFY_PEER : OpenSSL::SSL::VERIFY_NONE)
       end
     end
 
