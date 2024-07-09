@@ -27,8 +27,8 @@ interface Props {
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  showArticleForm: []
-  hideArticleForm: []
+  'show-article-form': []
+  'hide-article-form': []
   discard: []
   done: []
 }>()
@@ -100,11 +100,11 @@ const discardDialog = async () => {
 }
 
 onMounted(() => {
-  emit('showArticleForm')
+  emit('show-article-form')
 })
 
 onUnmounted(() => {
-  emit('hideArticleForm')
+  emit('hide-article-form')
 })
 
 const close = () => {

@@ -97,7 +97,7 @@ describe('component for displaying text article', () => {
       }),
     )
 
-    expect(view.emitted()).toHaveProperty('showContext')
+    expect(view.emitted()).toHaveProperty('show-context')
 
     await view.rerender({
       position: 'left',

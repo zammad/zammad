@@ -37,7 +37,7 @@ const editor = toRef(props, 'editor')
 const emit = defineEmits<{
   hide: []
   blur: []
-  clickAction: [EditorButton, MouseEvent]
+  'click-action': [EditorButton, MouseEvent]
 }>()
 
 const classes = getFieldEditorClasses()
@@ -185,7 +185,7 @@ const leftgradientvalue = computed(() => classes.actionBar.leftGradient.left)
           @click="
             (event) => {
               action.command?.(event)
-              $emit('clickAction', action, event)
+              $emit('click-action', action, event)
             }
           "
         >

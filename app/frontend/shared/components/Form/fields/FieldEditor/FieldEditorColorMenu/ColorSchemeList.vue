@@ -23,7 +23,7 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  selectColor: [string]
+  'select-color': [string]
 }>()
 
 const orientationClass = computed(() => {
@@ -34,7 +34,7 @@ const setColor = (color: ColorScheme) => {
   if (!props.editor) return
   props.editor.commands.setColor(color.value)
 
-  emit('selectColor', color.value)
+  emit('select-color', color.value)
 }
 
 const checkActiveColor = (color: string) => {

@@ -153,6 +153,8 @@ module.exports = {
       },
     ],
 
+    'vue/custom-event-name-casing': ['error', 'kebab-case'],
+
     // Enforce ordering for imports
     'import/order': [
       'error',

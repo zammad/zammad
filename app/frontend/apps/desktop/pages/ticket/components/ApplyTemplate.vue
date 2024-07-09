@@ -16,7 +16,7 @@ import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types'
 import { useApplyTemplate } from '../composables/useApplyTemplate.ts'
 
 const emit = defineEmits<{
-  selectTemplate: [string]
+  'select-template': [string]
 }>()
 
 const { hasPermission } = useSessionStore()
@@ -47,7 +47,7 @@ const items = computed(() => {
       key: template.id,
       label: template.name,
       onClick: () => {
-        emit('selectTemplate', template.id)
+        emit('select-template', template.id)
       },
     })
   })

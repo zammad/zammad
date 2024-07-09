@@ -75,7 +75,7 @@ const emit = defineEmits<{
   push: [option: AutoCompleteOption]
   pop: []
   close: []
-  focusFilterInput: []
+  'focus-filter-input': []
 }>()
 
 const dropdownElement = ref<HTMLElement>()
@@ -289,7 +289,7 @@ const selectAll = (focusInput = false) => {
     .forEach((option) => select(option))
 
   if (focusInput === true) {
-    emit('focusFilterInput')
+    emit('focus-filter-input')
     return
   }
 

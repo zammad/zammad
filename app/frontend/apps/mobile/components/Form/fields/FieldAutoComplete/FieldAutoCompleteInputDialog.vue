@@ -42,7 +42,7 @@ const contextReactive = toRef(props, 'context')
 const { isCurrentValue } = useValue<AutocompleteSelectValue>(contextReactive)
 
 const emit = defineEmits<{
-  updateOptions: [AutoCompleteOption[]]
+  'update-options': [AutoCompleteOption[]]
   action: []
 }>()
 
@@ -86,7 +86,7 @@ onMounted(() => {
 
 const close = () => {
   if (props.context.multiple) {
-    emit('updateOptions', [...replacementLocalOptions.value])
+    emit('update-options', [...replacementLocalOptions.value])
     replacementLocalOptions.value = []
     areLocalOptionsReplaced = true
   }
@@ -219,7 +219,7 @@ const select = (option: AutoCompleteOption) => {
     return
   }
 
-  emit('updateOptions', [option])
+  emit('update-options', [option])
 
   if (!props.noCloseOnSelect) {
     close()

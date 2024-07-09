@@ -10,7 +10,7 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
 
 defineEmits<{
-  avatarCaptured: [void]
+  'avatar-captured': [void]
 }>()
 
 const image = ref<ImageFileData>()
@@ -123,7 +123,7 @@ const captureImage = () => {
     }"
     header-icon="camera"
     name="avatar-camera-capture"
-    @action="$emit('avatarCaptured', image)"
+    @action="$emit('avatar-captured', image)"
     @close="stop"
   >
     <div class="flex flex-col items-center gap-6 pb-10 pt-12">

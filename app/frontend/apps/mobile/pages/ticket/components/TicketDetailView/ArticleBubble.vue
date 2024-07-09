@@ -48,7 +48,7 @@ interface Props {
 
 const props = defineProps<Props>()
 const emit = defineEmits<{
-  showContext: []
+  'show-context': []
   seen: []
 }>()
 
@@ -226,7 +226,7 @@ onMounted(() => {
 useArticleSeen(bubbleElement, emit)
 
 const onContextClick = () => {
-  emit('showContext')
+  emit('show-context')
   nextTick(() => {
     // remove selection because pointerdown event will leave it as is,
     // all actions inside the context should already have accessed it synchronously

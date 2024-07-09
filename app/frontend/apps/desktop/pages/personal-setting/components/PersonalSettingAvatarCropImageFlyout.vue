@@ -17,7 +17,7 @@ interface Props {
 const props = defineProps<Props>()
 
 defineEmits<{
-  imageCropped: [void]
+  'image-cropped': [void]
 }>()
 
 const croppedImage = ref<ImageFileData>()
@@ -46,7 +46,7 @@ const discardImage = () => {
     }"
     header-icon="image"
     name="avatar-file-upload"
-    @action="$emit('imageCropped', croppedImage)"
+    @action="$emit('image-cropped', croppedImage)"
     @close="discardImage"
   >
     <div class="flex flex-col gap-3">

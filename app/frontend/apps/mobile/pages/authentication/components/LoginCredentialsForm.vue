@@ -20,7 +20,7 @@ import { ensureAfterAuth } from '../after-auth/composable/useAfterAuthPlugins.ts
 const emit = defineEmits<{
   error: [UserError]
   finish: []
-  askTwoFactor: [
+  'ask-two-factor': [
     twoFactor: Required<UserLoginTwoFactorMethods>,
     formData: FormSubmitData<LoginCredentials>,
   ]
@@ -110,7 +110,7 @@ const sendCredentials = (formData: FormSubmitData<LoginCredentials>) => {
         emit('finish')
       } else {
         emit(
-          'askTwoFactor',
+          'ask-two-factor',
           twoFactor as Required<UserLoginTwoFactorMethods>,
           formData,
         )

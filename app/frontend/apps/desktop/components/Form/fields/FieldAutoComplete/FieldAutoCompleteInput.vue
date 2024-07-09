@@ -54,13 +54,13 @@ interface Props {
 }
 
 const emit = defineEmits<{
-  searchInteractionUpdate: [
+  'search-interaction-update': [
     filter: string,
     optionValues: AutoCompleteOptionValueDictionary,
     selectOption: SelectOptionFunction,
     clearFilter: ClearFilterInputFunction,
   ]
-  keydownFilterInput: [
+  'keydown-filter-input': [
     event: KeyboardEvent,
     filter: string,
     optionValues: AutoCompleteOptionValueDictionary,
@@ -288,7 +288,7 @@ const availableOptions = computed<AutoCompleteOption[]>((oldValue) => {
 const emitResultUpdated = () => {
   nextTick(() => {
     emit(
-      'searchInteractionUpdate',
+      'search-interaction-update',
       debouncedFilter.value,
       { ...autocompleteOptionValueLookup.value, ...optionValueLookup.value },
       selectNewOption,
@@ -313,7 +313,7 @@ watch(autocompleteQueryHandler.loading(), (newValue, oldValue) => {
 const onKeydownFilterInput = (event: KeyboardEvent) => {
   nextTick(() => {
     emit(
-      'keydownFilterInput',
+      'keydown-filter-input',
       event,
       filter.value,
       { ...autocompleteOptionValueLookup.value, ...optionValueLookup.value },

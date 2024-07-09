@@ -41,7 +41,7 @@ const props = defineProps<Props>()
 const emit = defineEmits<{
   success: [data: unknown]
   error: []
-  changedField: [
+  'changed-field': [
     fieldName: string,
     newValue: FormFieldValue,
     oldValue: FormFieldValue,
@@ -94,7 +94,7 @@ const changedFormField = (
   newValue: FormFieldValue,
   oldValue: FormFieldValue,
 ) => {
-  emit('changedField', fieldName, newValue, oldValue)
+  emit('changed-field', fieldName, newValue, oldValue)
 }
 
 const saveObject = async (formData: FormSubmitData) => {
