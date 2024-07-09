@@ -140,6 +140,43 @@ RSpec.describe Transaction::Notification, type: :model do
     end
   end
 
+  describe 'SMTP errors' do
+    let(:group)    { create(:group) }
+    let(:user)     { create(:agent, groups: [group]) }
+    let(:ticket)   { create(:ticket, owner: user, state_name: 'open', pending_time: Time.current) }
+    let(:response) { Net::SMTP::Response.new(response_status_code, 'mocked SMTP response') }
+    let(:error)    { Net::SMTPFatalError.new(response) }
+
+    before do
+      allow_any_instance_of(Net::SMTP).to receive(:start).and_raise(error)
+
+      Service::System::SetEmailNotificationConfiguration
+        .new(
+          adapter:           'smtp',
+          new_configuration: {}
+        ).execute
+    end
+
+    context 'when there is a problem with the sending SMTP server' do
+      let(:response_status_code) { 535 }
+
+      it 'raises an eroror' do
+        expect { run(ticket, user, 'reminder_reached') }
+          .to raise_error(Channel::DeliveryError)
+      end
+    end
+
+    context 'when there is a problem with the receiving SMTP server' do
+      let(:response_status_code) { 550 }
+
+      it 'logs the information about failed email delivery' do
+        allow(Rails.logger).to receive(:info)
+        run(ticket, user, 'reminder_reached')
+        expect(Rails.logger).to have_received(:info)
+      end
+    end
+  end
+
   it_behaves_like 'ChecksHumanChanges'
 
   def run(ticket, user, type)

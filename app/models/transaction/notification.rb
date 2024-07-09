@@ -3,6 +3,15 @@
 class Transaction::Notification
   include ChecksHumanChanges
 
+  # Following SMTP error codes will be handled gracefully.
+  # They will be logged at info level only and the code will not propagate up the error.
+  # Other SMTP error codes will stop processing and exit with logging it at error level.
+  #
+  # 4xx - temporary issues.
+  # 52x - permanent receiving server errors.
+  # 55x - permanent receiving mailbox errors.
+  SILENCABLE_SMTP_ERROR_CODES = [400..499, 520..529, 550..559].freeze
+
 =begin
   {
     object: 'Ticket',
@@ -47,6 +56,15 @@ class Transaction::Notification
       end
     end
 
+    (recipients_and_channels, recipients_reason) = recipients_and_reasons(ticket)
+
+    # send notifications
+    recipients_and_channels.each do |item|
+      send_to_single_recipient(item, article, ticket, recipients_reason)
+    end
+  end
+
+  def recipients_and_reasons(ticket)
     # find recipients
     recipients_and_channels = []
     recipients_reason = {}
@@ -102,147 +120,161 @@ class Transaction::Notification
       recipients_reason[user.id] = __('You are receiving this because you are a member of the group of this ticket.')
     end
 
-    # send notifications
-    recipients_and_channels.each do |item|
-      user = item[:user]
-      channels = item[:channels]
-
-      # ignore user who changed it by him self via web
-      if @params[:interface_handle] == 'application_server'
-        next if article&.updated_by_id == user.id
-        next if !article && @item[:user_id] == user.id
-      end
-
-      # ignore inactive users
-      next if !user.active?
-
-      # ignore if no changes has been done
-      changes = human_changes(@item[:changes], ticket, user)
-      next if @item[:type] == 'update' && !article && changes.blank?
-
-      # check if today already notified
-      if @item[:type] == 'reminder_reached' || @item[:type] == 'escalation' || @item[:type] == 'escalation_warning'
-        identifier = user.email
-        if !identifier || identifier == ''
-          identifier = user.login
-        end
-
-        already_notified_cutoff = Time.use_zone(Setting.get('timezone_default')) { Time.current.beginning_of_day }
-
-        already_notified = History.where(
-          history_type_id:   History.type_lookup('notification').id,
-          history_object_id: History.object_lookup('Ticket').id,
-          o_id:              ticket.id
-        ).where('created_at > ?', already_notified_cutoff).exists?(['value_to LIKE ?', "%#{SqlHelper.quote_like(identifier)}(#{SqlHelper.quote_like(@item[:type])}:%"])
-
-        next if already_notified
-      end
-
-      # create online notification
-      used_channels = []
-      if channels['online']
-        used_channels.push 'online'
-
-        created_by_id = @item[:user_id] || 1
-
-        # delete old notifications
-        if @item[:type] == 'reminder_reached'
-          seen = false
-          created_by_id = 1
-          OnlineNotification.remove_by_type('Ticket', ticket.id, @item[:type], user)
-
-        elsif @item[:type] == 'escalation' || @item[:type] == 'escalation_warning'
-          seen = false
-          created_by_id = 1
-          OnlineNotification.remove_by_type('Ticket', ticket.id, 'escalation', user)
-          OnlineNotification.remove_by_type('Ticket', ticket.id, 'escalation_warning', user)
-
-        # on updates without state changes create unseen messages
-        elsif @item[:type] != 'create' && (@item[:changes].blank? || @item[:changes]['state_id'].blank?)
-          seen = false
-        else
-          seen = OnlineNotification.seen_state?(ticket, user.id)
-        end
-
-        OnlineNotification.add(
-          type:          @item[:type],
-          object:        'Ticket',
-          o_id:          ticket.id,
-          seen:          seen,
-          created_by_id: created_by_id,
-          user_id:       user.id,
-        )
-        Rails.logger.debug { "sent ticket online notifiaction to agent (#{@item[:type]}/#{ticket.id}/#{user.email})" }
-      end
-
-      # ignore email channel notification and empty emails
-      if !channels['email'] || user.email.blank?
-        add_recipient_list(ticket, user, used_channels, @item[:type])
-        next
-      end
-
-      used_channels.push 'email'
-      add_recipient_list(ticket, user, used_channels, @item[:type])
-
-      # get user based notification template
-      # if create, send create message / block update messages
-      template = case @item[:type]
-                 when 'create'
-                   'ticket_create'
-                 when 'update'
-                   'ticket_update'
-                 when 'reminder_reached'
-                   'ticket_reminder_reached'
-                 when 'escalation'
-                   'ticket_escalation'
-                 when 'escalation_warning'
-                   'ticket_escalation_warning'
-                 when 'update.merged_into'
-                   'ticket_update_merged_into'
-                 when 'update.received_merge'
-                   'ticket_update_received_merge'
-                 else
-                   raise "unknown type for notification #{@item[:type]}"
-                 end
-
-      current_user = User.lookup(id: @item[:user_id])
-      if !current_user
-        current_user = User.lookup(id: 1)
-      end
-
-      attachments = []
-      if article
-        attachments = article.attachments_inline
-      end
-      NotificationFactory::Mailer.notification(
-        template:    template,
-        user:        user,
-        objects:     {
-          ticket:       ticket,
-          article:      article,
-          recipient:    user,
-          current_user: current_user,
-          changes:      changes,
-          reason:       recipients_reason[user.id],
-        },
-        message_id:  "<notification.#{DateTime.current.to_fs(:number)}.#{ticket.id}.#{user.id}.#{SecureRandom.uuid}@#{Setting.get('fqdn')}>",
-        references:  ticket.get_references,
-        main_object: ticket,
-        attachments: attachments,
-      )
-      Rails.logger.debug { "sent ticket email notifiaction to agent (#{@item[:type]}/#{ticket.id}/#{user.email})" }
-    end
-
+    [recipients_and_channels, recipients_reason]
   end
 
-  def add_recipient_list(ticket, user, channels, type)
+  def send_to_single_recipient(item, article, ticket, recipients_reason)
+    user = item[:user]
+    channels = item[:channels]
+
+    # ignore user who changed it by him self via web
+    if @params[:interface_handle] == 'application_server'
+      return if article&.updated_by_id == user.id
+      return if !article && @item[:user_id] == user.id
+    end
+
+    # ignore inactive users
+    return if !user.active?
+
+    # ignore if no changes has been done
+    changes = human_changes(@item[:changes], ticket, user)
+    return if @item[:type] == 'update' && !article && changes.blank?
+
+    # check if today already notified
+    if @item[:type] == 'reminder_reached' || @item[:type] == 'escalation' || @item[:type] == 'escalation_warning'
+      identifier = user.email
+      if !identifier || identifier == ''
+        identifier = user.login
+      end
+
+      already_notified_cutoff = Time.use_zone(Setting.get('timezone_default')) { Time.current.beginning_of_day }
+
+      already_notified = History.where(
+        history_type_id:   History.type_lookup('notification').id,
+        history_object_id: History.object_lookup('Ticket').id,
+        o_id:              ticket.id
+      ).where('created_at > ?', already_notified_cutoff).exists?(['value_to LIKE ?', "%#{SqlHelper.quote_like(identifier)}(#{SqlHelper.quote_like(@item[:type])}:%"])
+
+      return if already_notified
+    end
+
+    # create online notification
+    used_channels = []
+    if channels['online']
+      used_channels.push 'online'
+
+      created_by_id = @item[:user_id] || 1
+
+      # delete old notifications
+      if @item[:type] == 'reminder_reached'
+        seen = false
+        created_by_id = 1
+        OnlineNotification.remove_by_type('Ticket', ticket.id, @item[:type], user)
+
+      elsif @item[:type] == 'escalation' || @item[:type] == 'escalation_warning'
+        seen = false
+        created_by_id = 1
+        OnlineNotification.remove_by_type('Ticket', ticket.id, 'escalation', user)
+        OnlineNotification.remove_by_type('Ticket', ticket.id, 'escalation_warning', user)
+
+      # on updates without state changes create unseen messages
+      elsif @item[:type] != 'create' && (@item[:changes].blank? || @item[:changes]['state_id'].blank?)
+        seen = false
+      else
+        seen = OnlineNotification.seen_state?(ticket, user.id)
+      end
+
+      OnlineNotification.add(
+        type:          @item[:type],
+        object:        'Ticket',
+        o_id:          ticket.id,
+        seen:          seen,
+        created_by_id: created_by_id,
+        user_id:       user.id,
+      )
+      Rails.logger.debug { "sent ticket online notification to agent (#{@item[:type]}/#{ticket.id}/#{user.email})" }
+    end
+
+    # ignore email channel notification and empty emails
+    if !channels['email'] || user.email.blank?
+      add_recipient_list_to_history(ticket, user, used_channels, @item[:type])
+      return
+    end
+
+    used_channels.push 'email'
+    add_recipient_list_to_history(ticket, user, used_channels, @item[:type])
+
+    # get user based notification template
+    # if create, send create message / block update messages
+    template = case @item[:type]
+               when 'create'
+                 'ticket_create'
+               when 'update'
+                 'ticket_update'
+               when 'reminder_reached'
+                 'ticket_reminder_reached'
+               when 'escalation'
+                 'ticket_escalation'
+               when 'escalation_warning'
+                 'ticket_escalation_warning'
+               when 'update.merged_into'
+                 'ticket_update_merged_into'
+               when 'update.received_merge'
+                 'ticket_update_received_merge'
+               else
+                 raise "unknown type for notification #{@item[:type]}"
+               end
+
+    current_user = User.lookup(id: @item[:user_id])
+    if !current_user
+      current_user = User.lookup(id: 1)
+    end
+
+    attachments = []
+    if article
+      attachments = article.attachments_inline
+    end
+    NotificationFactory::Mailer.notification(
+      template:    template,
+      user:        user,
+      objects:     {
+        ticket:       ticket,
+        article:      article,
+        recipient:    user,
+        current_user: current_user,
+        changes:      changes,
+        reason:       recipients_reason[user.id],
+      },
+      message_id:  "<notification.#{DateTime.current.to_fs(:number)}.#{ticket.id}.#{user.id}.#{SecureRandom.uuid}@#{Setting.get('fqdn')}>",
+      references:  ticket.get_references,
+      main_object: ticket,
+      attachments: attachments,
+    )
+    Rails.logger.debug { "sent ticket email notification to agent (#{@item[:type]}/#{ticket.id}/#{user.email})" }
+  rescue Channel::DeliveryError => e
+    status_code = begin
+      e.original_error.response.status.to_i
+    rescue
+      raise e
+    end
+
+    if SILENCABLE_SMTP_ERROR_CODES.any? { |elem| elem.include? status_code }
+      Rails.logger.info do
+        "could not send ticket email notification to agent (#{@item[:type]}/#{ticket.id}/#{user.email}) #{e.original_error}"
+      end
+
+      return
+    end
+
+    raise e
+  end
+
+  def add_recipient_list_to_history(ticket, user, channels, type)
     return if channels.blank?
 
-    identifier = user.email
-    if !identifier || identifier == ''
-      identifier = user.login
-    end
+    identifier     = user.email.presence || user.login
     recipient_list = "#{identifier}(#{type}:#{channels.join(',')})"
+
     History.add(
       o_id:           ticket.id,
       history_type:   'notification',

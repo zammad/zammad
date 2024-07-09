@@ -16537,19 +16537,19 @@ msgstr ""
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr ""
 
-#: app/models/transaction/notification.rb:81
+#: app/models/transaction/notification.rb:98
 msgid "You are receiving this because you are a member of the group of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:235
+#: app/models/transaction/notification.rb:267
 msgid "You are receiving this because you are out-of-office replacement for a participant of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:53
+#: app/models/transaction/notification.rb:70
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:47
+#: app/models/transaction/notification.rb:64
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr ""
 
