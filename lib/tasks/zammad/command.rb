@@ -1,5 +1,7 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+require 'English'
+
 module Tasks
   module Zammad
 
@@ -68,6 +70,7 @@ module Tasks
         puts "> #{cmd}"
         puts `#{cmd}`
         puts ''
+        raise if !$CHILD_STATUS.success?
       end
     end
   end
