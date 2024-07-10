@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-14 12:29+0000\n"
-"Last-Translator: MBekspert <michal.bosak@ekspert.biz>\n"
+"PO-Revision-Date: 2024-07-09 23:18+0000\n"
+"Last-Translator: Marcin M <github@mejor.pl>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/pl/>\n"
 "Language: pl\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -11187,8 +11187,9 @@ msgstr "Filtr postmastera"
 #: app/assets/javascripts/app/views/signup/verify.jst.eco:26
 #: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:65
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue:26
+#, fuzzy
 msgid "Powered by"
-msgstr "Zasilane przez"
+msgstr "Wspierane przez"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee:32
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:5
@@ -15322,6 +15323,8 @@ msgid ""
 "This message contains images or other content hosted by an external source. "
 "We blocked it, but you can download the original formatting here."
 msgstr ""
+"Ta wiadomość zawiera obrazki lub inną treść umieszczoną na zdalnym zasobie. "
+"Została ona zablokowana lecz możesz pobrać oryginał stąd."
 
 #: lib/secure_mailing/smime/incoming.rb:86
 msgid "This message was not signed by its sender."

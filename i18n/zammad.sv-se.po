@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-01 22:16+0000\n"
+"PO-Revision-Date: 2024-07-09 23:18+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/sv/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -6558,7 +6558,7 @@ msgstr "Externt datakällfält"
 
 #: lib/search_index_backend.rb:677
 msgid "Extract zammad-attachment information from arrays"
-msgstr "Extrahera zammad-attachment information från matriser"
+msgstr "Extrahera zammad bilageinformation från fält"
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:66
@@ -8073,7 +8073,7 @@ msgid ""
 "successfully finished."
 msgstr ""
 "Starta importprocessen för att överföra din data till Zammad. Håll koll på "
-"hur överföringen fortskrider på den här sidan, för att bli meddelad när "
+"hur överföringen fortskrider på den här sidan för att bli meddelad när "
 "importen är klar."
 
 #: app/models/store.rb:94
@@ -8082,7 +8082,7 @@ msgstr "Inline innehåll kunden inte genereras."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:223
 msgid "Insert text from Knowledge Base article"
-msgstr "Infoga text från kunskapsbas-artikeln"
+msgstr "Infoga text från kunskapsbasartikel"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:230
 msgid "Insert text from text module"
@@ -8107,7 +8107,7 @@ msgstr "Taggar en användare"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:445
 msgid "Inserts knowledge base answer"
-msgstr "Infoga ett kunskapsbas-svar"
+msgstr "Infoga ett kunskapsbankssvar"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:439
 msgid "Inserts text module"
@@ -8150,7 +8150,7 @@ msgstr "Internt fel"
 
 #: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco:2
 msgid "Internal Knowledge Base feed:"
-msgstr "Internt kunskapsbas-flöde:"
+msgstr "Internt kunskapsbanks-flöde:"
 
 #: app/models/import_job.rb:163
 msgid ""
@@ -8216,7 +8216,7 @@ msgstr "Ogiltig länkstruktur (Objekt → Länktyp)"
 
 #: app/controllers/tickets_controller.rb:194
 msgid "Invalid link structure (Object)"
-msgstr "Ogiltig länkstruktur (objekt)"
+msgstr "Ogiltig länkstruktur (Objekt)"
 
 #: app/models/concerns/checks_condition_validation.rb:12
 msgid "Invalid object selector conditions"
@@ -8320,9 +8320,9 @@ msgstr ""
 "<div>(#{current_user.firstname} #{current_user.lastname}) bjuder in dig till "
 "#{config.product_name} - vår supportplattform.</div>\n"
 "<br>\n"
-"<div>Klicka <a href=\"#{config.http_type}://#{config.fqdn}/"
-"#password_reset_verify/#{token.token}\">här</a> och bestäm ditt lösenord.</"
-"div>\n"
+"<div>Klicka <a href=\"#{config.http_type}://#{config.fqdn}/#"
+"password_reset_verify/#{token.token}\">här</a> och bestäm ditt "
+"lösenord.</div>\n"
 "<br>\n"
 "<div>Njut,</div>\n"
 "<br>\n"
@@ -8394,12 +8394,12 @@ msgstr "jan"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue:80
 msgid "January"
-msgstr "Januari"
+msgstr "januari"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:9
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:9
 msgid "Job is waiting to get started…"
-msgstr "Jobbet väntar på att komma igång …"
+msgstr "Jobbet väntar på att startas…"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:58
 msgid "John Smith"
@@ -8420,7 +8420,7 @@ msgstr "jul"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue:86
 msgid "July"
-msgstr "Juli"
+msgstr "juli"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 #: app/assets/javascripts/app/controllers/report.coffee:204
@@ -8432,7 +8432,7 @@ msgstr "jun"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue:85
 msgid "June"
-msgstr "Juni"
+msgstr "juni"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:13
 msgid ""
@@ -8489,7 +8489,7 @@ msgstr "Kunskapsbank Redaktör"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee:6
 msgid "Knowledge Base Feed"
-msgstr "Kunskapsbank-flöde"
+msgstr "Kunskapsbankflöde"
 
 #: db/seeds/permissions.rb:495
 msgid "Knowledge Base Reader"
@@ -8505,7 +8505,7 @@ msgstr "Kunskapsbank aktiv publikt"
 
 #: db/seeds/settings.rb:5393
 msgid "Knowledge Base multilingual support"
-msgstr "Flerspråkigt stöd för Knowledge Base"
+msgstr "Flerspråkigt stöd för kunskapsbank"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:24
@@ -8627,7 +8627,7 @@ msgstr "Senaste sökningar"
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:2
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:2
 msgid "Last sync"
-msgstr "Senast synkad"
+msgstr "Senast synkning"
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:25
 msgid "Last sync at:"
@@ -8793,7 +8793,7 @@ msgstr "Lokal MTA (Sendmail/Postfix/Exim/...) - använd serverinstallation"
 #: app/assets/javascripts/app/models/job.coffee:13
 #: app/assets/javascripts/app/models/trigger.coffee:12 db/seeds/settings.rb:163
 msgid "Locale"
-msgstr "Lokalisering"
+msgstr "Platsinställningar"
 
 #: app/graphql/gql/mutations/account/locale.rb:13
 msgid "Locale could not be found."
@@ -8871,7 +8871,7 @@ msgstr "Låg prioritet"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:3
 msgid "Macro"
-msgstr "Macro"
+msgstr "Makro"
 
 #: app/controllers/tickets_mass_controller.rb:16
 msgid "Macro group restrictions do not cover all tickets"
@@ -8881,7 +8881,7 @@ msgstr "Makrogruppsrestriktioner täcker inte alla ärenden"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:69
 #: db/seeds/permissions.rb:61
 msgid "Macros"
-msgstr "Macros"
+msgstr "Makros"
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid ""
@@ -8891,8 +8891,8 @@ msgid ""
 "(and nerves). This allows a combined sequence of actions on the ticket to be "
 "executed with just one click."
 msgstr ""
-"Makron gör det enkelt att automatisera uppgifter som har flera steg i "
-"Zammad.\n"
+"Makron gör det enkelt att automatisera uppgifter som har flera steg i Zammad."
+"\n"
 "\n"
 "Du kan använda makron i Zammad för att automatisera återkommande sekvenser "
 "och spara tid (och nerver). Detta gör det möjligt att utföra en sekvens av "
@@ -8919,7 +8919,7 @@ msgstr "Underhållsläge aktiverat!"
 #: app/assets/javascripts/app/controllers/manage.coffee:15
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:85
 msgid "Manage"
-msgstr "Administration"
+msgstr "Hantera"
 
 #: db/seeds/permissions.rb:10
 msgid "Manage %s"
@@ -8931,7 +8931,7 @@ msgstr "Hantera %s Inställningar"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:20
 msgid "Manage Tags"
-msgstr "Editera Taggar"
+msgstr "Hantera Taggar"
 
 #: app/assets/javascripts/app/controllers/user.coffee:162
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
@@ -8948,7 +8948,7 @@ msgstr ""
 
 #: app/views/mailer/application.html.erb:47
 msgid "Manage your notification settings"
-msgstr "Administrera dina notifieringsinställningar"
+msgstr "Hantera dina notifieringsinställningar"
 
 #: app/assets/javascripts/app/views/api.jst.eco:2
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:3
@@ -8958,11 +8958,11 @@ msgstr "Administrera dina notifieringsinställningar"
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
 #: app/assets/javascripts/app/views/user.jst.eco:3
 msgid "Management"
-msgstr "Hantering"
+msgstr "Administration"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:161
 msgid "Manually open chat"
-msgstr "Öppna en chatt manuellt"
+msgstr "Öppna chatt manuellt"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:97
 msgid ""
@@ -8973,10 +8973,10 @@ msgid ""
 "use of dynamic fields in OTRS."
 msgstr ""
 "Många dynamiska fält hittades. Detta är inte ett vanligt mönster i Zammad, "
-"som har en annan inställning till ärendeattribut. Zammad använder också "
-"taggar utöver anpassade fält för att klassificera ärenden. Denna skillnad "
-"kan skapa en ny filosofi för dina ärendeattribut/taggar jämfört med din "
-"nuvarande användning av dynamiska fält i OTRS."
+"som har en annan metodik för ärendeattribut. Zammad använder också taggar "
+"utöver anpassade fält för att klassificera ärenden. Denna skillnad kan skapa "
+"en ny filosofi för dina ärendeattribut/taggar jämfört med din nuvarande "
+"användning av dynamiska fält i OTRS."
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:22
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:57
@@ -8996,7 +8996,7 @@ msgstr "mar"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue:82
 msgid "March"
-msgstr "Mars"
+msgstr "mars"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:4
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:125
@@ -9009,7 +9009,7 @@ msgstr "Matcha alla (AND)"
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:9
 msgid "Match all of the following"
-msgstr "Matcha allt följande"
+msgstr "Matcha allt av följande"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:535
 msgid "Match any (OR)"
@@ -9051,7 +9051,7 @@ msgstr "Maximal längd"
 
 #: db/seeds/settings.rb:3028
 msgid "Max. length of the subject in an email reply."
-msgstr "Max. längd på ämnet i ett e-postsvar."
+msgstr "Maximal längd på ämnet i ett e-postsvar."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:387
 msgid "Maximal"
@@ -9130,11 +9130,11 @@ msgstr "Sammanfoga"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:48
 msgid "Merge tickets"
-msgstr "Slå ihop ärenden"
+msgstr "Sammanfoga ärenden"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco:2
 msgid "Merge to Ticket#"
-msgstr "Slå ihop Ärende#"
+msgstr "Sammanfoga till Ärende#"
 
 #: app/models/report.rb:75
 msgid "Merged"
@@ -9202,7 +9202,7 @@ msgstr "Microsoft 365"
 
 #: db/seeds/settings.rb:1720
 msgid "Microsoft 365 App Credentials"
-msgstr "Microsoft 365 App Användaruppgifter"
+msgstr "Microsoft 365 App Inloggningsuppgifter"
 
 #: db/seeds/settings.rb:1713
 msgid "Microsoft Application Registration Portal"
@@ -9214,7 +9214,7 @@ msgstr "Microsoft Authenticator"
 
 #: app/models/webhook/pre_defined/microsoft_teams.rb:5
 msgid "Microsoft Teams Notifications"
-msgstr "Inaktivera Microsoft Teams notifikationer"
+msgstr "Microsoft Teams notifikationer"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:56
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:60
@@ -9238,11 +9238,11 @@ msgstr "Migrator kan inte läsa OTRS-utdata!"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
 msgid "Milestone"
-msgstr "Milstolpe"
+msgstr "Milsten"
 
 #: db/seeds/settings.rb:2345
 msgid "Min. size of number"
-msgstr "Min. storlek på nummer"
+msgstr "Minimal storlek på nummer"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:378
 msgid "Minimal"
@@ -9254,7 +9254,7 @@ msgstr "Minsta längd"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco:21
 msgid "Minute"
-msgstr "minute"
+msgstr "minut"
 
 #: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee:5
 msgid "Minute(s)"
@@ -9275,7 +9275,7 @@ msgstr "Mobil"
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco:14
 msgid "Mode"
-msgstr "Underhållsläge"
+msgstr "Läge"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:103
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:66
@@ -9293,7 +9293,7 @@ msgstr "mån"
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:44
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue:56
 msgid "Monday"
-msgstr "Måndag"
+msgstr "måndag"
 
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee:3
 msgid "Monit"
