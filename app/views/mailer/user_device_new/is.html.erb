@@ -1,0 +1,19 @@
+#{config.product_name} innskráning úr nýju tæki
+
+<div>Hæ #{user.firstname},</div>
+<br>
+<div>Það lítur út fyrir að þú hafir skráð þig inn í reikninginn þinn <b>úr nýju tæki</b> þann "#{user_device.created_at}":</div>
+<br>
+<div>
+Tæki þitt: #{user_device.name}<br>
+Staðsetning þín (afstæð): #{user_device.location}<br>
+IP vistfang þitt: #{user_device.ip}<br>
+</div>
+<br>
+<div>Tækinu þínu hefur verið bætt á lista þinn yfir þekkt tæki, sem þú getur séð hér:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Ef þetta varst ekki þú, vinsamlega fjarlægðu tækið, breyttu lykilorðinu þínu og hafðu samband við kerfisstjórann. Einhver gæti hafa öðlast óleyfilegan aðgang að reikningnum þínum.</div>
+<br>
+<div>Your #{config.product_name} Team</div>

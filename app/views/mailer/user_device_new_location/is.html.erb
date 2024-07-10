@@ -1,0 +1,19 @@
+#{config.product_name} innskráning úr nýju landi
+
+<div>Hæ #{user.firstname},</div>
+<br>
+<div>Okkur sýnist þú hafa notað reikninginn á <b>þekktu tæki en úr nýju landi</b> þann "#{user_device.created_at}":</div>
+<br>
+<div>
+Tæki þitt: #{user_device.name}<br>
+Staðsetning þín (afstæð): #{user_device.location}<br>
+IP vistfang þitt: #{user_device.ip}<br>
+</div>
+<br>
+<div>Landinu hefur verið bætt við listann þinn yfir þekkt tæki, sem þú getur skoðað hér:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Ef þetta varst ekki þú, vinsamlegt fjarlægðu tækið, breyttu lykilorði þínu, og hafðu samband við kerfisstjórann. Einhver gæti hafa öðlast óleyfilegan aðgang að reikningi þínum.</div>
+<br>
+<div>#{config.product_name} Vinnuhópurinn þinn</div>
