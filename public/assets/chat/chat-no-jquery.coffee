@@ -429,7 +429,7 @@ do(window) ->
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': 'Поскольку Вы не ответили в течение последних %s минут, Ваш разговор с <strong>%s</strong> был закрыт.'
         'Start new conversation': 'Начать новый разговор'
         'Today': 'Сегодня'
-        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': ''
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Извините, получение свободного слота занимает больше времени, чем ожидалось. Пожалуйста, повторите попытку позже или отправьте нам электронное письмо. Благодарим Вас!'
         'You are on waiting list position <strong>%s</strong>.': 'Вы находитесь в списке ожидания <strong>%s</strong>.'
       'sr':
         '<strong>Chat</strong> with us!': '<strong>Ћаскајте</strong> са нама!'

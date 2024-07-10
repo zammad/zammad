@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Mun hækka forgang þann #{ticket.escalation_at}_
+Beiðni (#{ticket.title}) frá "#{ticket.customer.longname}" mun hækki í forgangi þann "#{ticket.escalation_at}"!
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>
