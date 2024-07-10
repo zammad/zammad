@@ -142,4 +142,25 @@ class App.UiElement.object_perform_action extends App.UiElement.ApplicationActio
           { value: 'email-out', name: __('Email') },
         ]
 
+    if attribute.object_name is 'Ticket'
+      elements['ticket.subscribe'] =
+        name: 'subscribe'
+        display: __('Subscribe')
+        tag: 'select'
+        null: false
+        translate: true
+        permission: ['ticket.agent']
+        relation: 'User'
+        relation_condition: {roles: 'Agent'}
+
+      elements['ticket.unsubscribe'] =
+        name: 'unsubscribe'
+        display: __('Unsubscribe')
+        tag: 'select'
+        null: true
+        translate: true
+        permission: ['ticket.agent']
+        relation: 'User'
+        relation_condition: {roles: 'Agent'}
+
     [defaults, groups, elements]

@@ -29,3 +29,20 @@ class App.Mention extends App.Model
           App.Collection.loadAssets(data.assets, targetModel: @className)
         callback(data)
     )
+
+  @findCurrentUserTicketMention: (ticket_id) ->
+    current_user_id = App.Session.get('id')
+    _.find(App.Mention.findAllByAttribute('mentionable_id', ticket_id), (mention) ->
+      mention.mentionable_type is 'Ticket' && mention.user_id is current_user_id
+    )
+
+  @createCurrentUserTicketMention: (ticket_id) ->
+    return if @findCurrentUserTicketMention(ticket_id)
+
+    (new App.Mention).load(
+      mentionable_type: 'Ticket'
+      mentionable_id: ticket_id
+    ).save()
+
+  @destroyCurrentUserTicketMention: (ticket_id) ->
+    @findCurrentUserTicketMention(ticket_id)?.destroy()

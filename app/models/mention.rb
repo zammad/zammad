@@ -49,8 +49,8 @@ class Mention < ApplicationModel
   end
 
   def update_mentionable
-    mentionable.update(updated_by: updated_by)
-    mentionable.touch # rubocop:disable Rails/SkipsModelValidations
+    # make sure mentionable is touched even if updated_by value stays the same
+    mentionable.update(updated_by: updated_by, updated_at: Time.current)
   end
 
   # Check if user is subscribed to given object
@@ -82,6 +82,13 @@ class Mention < ApplicationModel
       &.destroy!
 
     true
+  end
+
+  # Unsubscribe all users from changes of an object
+  # @param target to unsubscribe from
+  # @return Boolean
+  def self.unsubscribe_all!(object)
+    object.mentions.destroy_all
   end
 
   # Check if given user is able to subscribe to a given object

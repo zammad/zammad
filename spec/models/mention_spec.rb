@@ -60,6 +60,22 @@ RSpec.describe Mention, type: :model do
     end
   end
 
+  describe '.unsubscribe_all!', current_user_id: 1 do
+    it 'unsubscribes all users from a object' do
+      described_class.subscribe! ticket, user
+      described_class.subscribe! ticket, create(:agent_and_customer, groups: [ticket.group])
+
+      expect { described_class.unsubscribe_all! ticket }
+        .to change { ticket.mentions.count }
+        .by(-2)
+    end
+
+    it 'ignores if unsubscribing from a not-subscribed object' do
+      expect(described_class.unsubscribe!(ticket, user))
+        .to be_truthy
+    end
+  end
+
   describe '.mentionable?' do
     context 'with a ticket' do
       let(:other_ticket) { create(:ticket) }

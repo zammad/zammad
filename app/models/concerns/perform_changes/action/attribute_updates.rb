@@ -5,6 +5,8 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
     valid_attributes!
 
     execution_data.each do |key, value|
+      next if key.eql?('subscribe') && subscribe(value)
+      next if key.eql?('unsubscribe') && unsubscribe(value)
       next if key.eql?('tags') && tags(value)
       next if change_date(key, value, performable)
 
@@ -24,7 +26,7 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
   end
 
   def attribute_valid?(attribute)
-    return true if attribute.eql?('tags')
+    return true if %w[tags subscribe unsubscribe].include?(attribute)
 
     record.class.column_names.include?(attribute)
   end
@@ -61,6 +63,24 @@ class PerformChanges::Action::AttributeUpdates < PerformChanges::Action
     end
 
     operator
+  end
+
+  def subscribe(value)
+    if value['pre_condition'] == 'specific'
+      Mention.subscribe! record, User.find_by(id: value['value'])
+    else
+      Mention.subscribe! record, User.find_by(id: user_id)
+    end
+  end
+
+  def unsubscribe(value)
+    if value['pre_condition'] == 'specific'
+      Mention.unsubscribe! record, User.find_by(id: value['value'])
+    elsif value['pre_condition'] == 'not_set'
+      Mention.unsubscribe_all! record
+    else
+      Mention.unsubscribe! record, User.find_by(id: user_id)
+    end
   end
 
   def exchange_user_id(value)

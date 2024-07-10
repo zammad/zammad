@@ -1011,20 +1011,38 @@ RSpec.describe 'Ticket zoom', type: :system do
 
   describe 'mentions' do
     context 'when logged in as agent' do
-      let(:ticket)       { create(:ticket, group: Group.find_by(name: 'Users')) }
-      let!(:other_agent) { create(:agent, groups: [Group.find_by(name: 'Users')]) }
-      let!(:admin)       { User.find_by(email: 'admin@example.com') }
+      let(:ticket)        { create(:ticket, group: Group.find_by(name: 'Users')) }
+      let!(:other_agent)  { create(:agent, groups: [Group.find_by(name: 'Users')]) }
+      let!(:admin)        { User.find_by(email: 'admin@example.com') }
+
+      before do
+        create(:macro, name: 'Subscribe', ux_flow_next_up: 'none', perform: { 'ticket.subscribe': { value: 'current_user.id' } })
+        create(:macro, name: 'Unsubscribe', ux_flow_next_up: 'none', perform: { 'ticket.unsubscribe': { value: 'current_user.id' } })
+      end
 
       it 'can subscribe and unsubscribe' do
         ensure_websocket do
           visit "ticket/zoom/#{ticket.id}"
 
+          # subscribe via sidebar
           click '.js-subscriptions .js-subscribe input'
           expect(page).to have_css('.js-subscriptions .js-unsubscribe input')
           expect(page).to have_css('.js-subscriptions span.avatar')
 
+          # unsubscribe via sidebar
           click '.js-subscriptions .js-unsubscribe input'
           expect(page).to have_css('.js-subscriptions .js-subscribe input')
+          expect(page).to have_no_selector('.js-subscriptions span.avatar')
+
+          # subscribe via macro
+          click '.js-openDropdownMacro'
+          find(:macro, 2).click # Subscribe macro button
+          expect(page).to have_css('.js-subscriptions span.avatar')
+
+          # unsubscribe via macro
+          click '.js-openDropdownMacro'
+          find(:macro, 3).click # Unsubscribe macro button
+
           expect(page).to have_no_selector('.js-subscriptions span.avatar')
 
           create(:mention, mentionable: ticket, user: other_agent)

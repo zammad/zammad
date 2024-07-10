@@ -149,6 +149,14 @@ class App.Ticket extends App.Model
               else
                 @tagAdd(params.ticket.id, tag)
 
+        # apply mention changes
+        else if ['subscribe', 'unsubscribe'].includes(attributes[1])
+          switch attributes[1]
+            when 'subscribe'
+              App.Mention.createCurrentUserTicketMention(params.ticket.id)
+            when 'unsubscribe'
+              App.Mention.destroyCurrentUserTicketMention(params.ticket.id)
+
         # apply pending date changes
         else if isTimeTag(attributes[1]) && content.operator is 'relative'
           params.ticket[attributes[1]] = App.ViewHelpers.relative_time(content.value, content.range)

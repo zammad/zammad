@@ -4,8 +4,7 @@ class App.Macro extends App.Model
   @url: @apiPath + '/macros'
   @configure_attributes = [
     { name: 'name',            display: __('Name'),              tag: 'input', type: 'text', translate: true, limit: 100, null: false },
-    { name: 'perform',         display: __('Actions'),           tag: 'ticket_perform_action',           null: true
-    },
+    { name: 'perform',         display: __('Actions'),           tag: 'ticket_perform_action', macro: true, null: true},
     { name: 'ux_flow_next_up', display: __('Once completed…'), tag: 'select', default: 'none', translate: true, options: {
         none: __('Stay on tab'), next_task: __('Close tab'), next_task_on_close: __('Close tab on ticket close'), next_from_overview: __('Advance to next ticket from overview')
       }

@@ -70,7 +70,6 @@ class App.UiElement.ApplicationAction
         else if groupKey is 'article'
           elements["#{groupKey}.note"] = { name: 'note', display: __('Note') }
       else
-
         for row in App[groupMeta.model].configure_attributes
 
           # ignore all article attributes except body and cc
@@ -133,6 +132,48 @@ class App.UiElement.ApplicationAction
           { value: 'phone-out', name: __('Outbound Call') },
           { value: 'email-out', name: __('Email') },
         ]
+
+    if attribute.macro
+      elements['ticket.subscribe'] =
+        name: 'subscribe'
+        display: __('Subscribe')
+        tag: 'select'
+        null: false
+        translate: true
+        options: [
+          { value: 'current_user.id', name: __('current user') },
+        ]
+
+      elements['ticket.unsubscribe'] =
+        name: 'unsubscribe'
+        display: __('Unsubscribe')
+        tag: 'select'
+        null: false
+        translate: true
+        options: [
+          { value: 'current_user.id', name: __('current user') },
+        ]
+
+    if attribute.trigger
+      elements['ticket.subscribe'] =
+        name: 'subscribe'
+        display: __('Subscribe')
+        tag: 'select'
+        null: false
+        translate: true
+        permission: ['ticket.agent']
+        relation: 'User'
+        relation_condition: {roles: 'Agent'}
+
+      elements['ticket.unsubscribe'] =
+        name: 'unsubscribe'
+        display: __('Unsubscribe')
+        tag: 'select'
+        null: true
+        translate: true
+        permission: ['ticket.agent']
+        relation: 'User'
+        relation_condition: {roles: 'Agent'}
 
     [defaults, groups, elements]
 
@@ -376,7 +417,10 @@ class App.UiElement.ApplicationAction
         'specific': App.i18n.translateInline('specific user')
 
       if attributeSelected.null is true
-        options['not_set'] = App.i18n.translateInline('unassign user')
+        options['not_set'] = if groupAndAttribute == 'ticket.unsubscribe'
+          App.i18n.translateInline('all subscribers')
+        else
+          App.i18n.translateInline('unassign user')
 
     else if preCondition is 'org'
       options =

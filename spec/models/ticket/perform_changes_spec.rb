@@ -584,6 +584,86 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
     end
   end
 
+  context 'with a "ticket.subscribe" trigger', current_user_id: 1 do
+    let(:user) { create(:agent, groups: [group]) }
+
+    let(:perform) do
+      { 'ticket.subscribe' => { 'pre_condition' => 'current_user.id', 'value' => '', 'value_completion' => '' } }
+    end
+
+    it 'subscribes current user to ticket' do
+      object.perform_changes(performable, 'trigger', object, user.id)
+
+      expect(Mention.last).to have_attributes(
+        mentionable: object,
+        user:        user,
+      )
+    end
+
+    context 'with specific user' do
+      let(:agent) { create(:agent, groups: [group]) }
+      let(:perform) do
+        { 'ticket.subscribe' => { 'pre_condition' => 'specific', 'value' => agent.id, 'value_completion' => '' } }
+      end
+
+      it 'subscribes specific user to ticket' do
+        object.perform_changes(performable, 'trigger', object, user.id)
+
+        expect(Mention.last).to have_attributes(
+          mentionable: object,
+          user:        agent,
+        )
+      end
+    end
+  end
+
+  context 'with a "ticket.unsubscribe" trigger', current_user_id: 1 do
+    let(:user)       { create(:agent, groups: [group]) }
+    let(:other_user) { create(:agent, groups: [group]) }
+    let!(:mention) do
+      Mention.subscribe!(object, user)
+      Mention.last
+    end
+    let!(:other_mention) do
+      Mention.subscribe!(object, other_user)
+      Mention.last
+    end
+
+    let(:perform) do
+      { 'ticket.unsubscribe' => { 'pre_condition' => 'current_user.id', 'value' => '', 'value_completion' => '' } }
+    end
+
+    it 'unsubscribes current user from ticket' do
+      object.perform_changes(performable, 'trigger', object, user.id)
+
+      expect(Mention).not_to exist(mention.id)
+    end
+
+    context 'with specific user' do
+      let(:perform) do
+        { 'ticket.unsubscribe' => { 'pre_condition' => 'specific', 'value' => other_user.id, 'value_completion' => '' } }
+      end
+
+      it 'un subscribes specific user from ticket' do
+        object.perform_changes(performable, 'trigger', object, other_user.id)
+
+        expect(Mention).not_to exist(other_mention.id)
+      end
+    end
+
+    context 'when unsubscribing all users' do
+      let(:perform) do
+        { 'ticket.unsubscribe' => { 'pre_condition' => 'not_set', 'value' => '', 'value_completion' => '' } }
+      end
+
+      it 'unsubscribes all users from ticket' do
+        expect { object.perform_changes(performable, 'trigger', object, user.id) }
+          .to change { object.mentions.exists? }
+          .to false
+      end
+    end
+  end
+
   describe 'Check if blocking notifications works' do
     context 'when mail delivery failed' do
       let(:ticket)   { create(:ticket) }
