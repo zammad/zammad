@@ -512,6 +512,8 @@ returns
         thread_client(client_id, try_count, try_run_time, node_id)
       end
       raise "STOP thread_client for client #{node_id}.#{client_id} after #{try_run_max} tries"
+    ensure
+      ActiveSupport::CurrentAttributes.clear_all
     end
     log('debug', "/LOOP #{node_id}.#{client_id} - #{try_count}")
   end
