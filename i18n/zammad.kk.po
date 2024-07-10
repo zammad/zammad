@@ -315,7 +315,7 @@ msgstr "%s (опция)"
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:109
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:135
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:315
-#: app/frontend/shared/composables/useSelectOptions.ts:138
+#: app/frontend/shared/composables/useSelectOptions.ts:140
 msgid "%s (unknown)"
 msgstr "%s (белгісіз)"
 
@@ -1346,6 +1346,10 @@ msgstr ""
 msgid "Admin password login instructions were sent to your email address."
 msgstr ""
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/setting.ts:8
+msgid "Administration"
+msgstr ""
+
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/admin_password_auth/en.html.erb
@@ -1688,7 +1692,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:349
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee:3
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:3
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/appearance.ts:9
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:59
 #: db/seeds/permissions.rb:377
@@ -2999,7 +3003,7 @@ msgid "Clear Search"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:601
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:602
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:292
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:352
@@ -3138,7 +3142,7 @@ msgstr ""
 msgid "Closing time"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:75
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:66
 msgid "Collapse this element"
 msgstr ""
 
@@ -6351,7 +6355,7 @@ msgstr ""
 msgid "Existing tickets (open)"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:74
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:65
 msgid "Expand this element"
 msgstr ""
 
@@ -7212,7 +7216,7 @@ msgstr ""
 msgid "Has processed"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:152
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:169
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:129
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:338
 msgid "Has submenu"
@@ -8318,7 +8322,7 @@ msgstr ""
 msgid "Keyboard Shortcuts"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts:7
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts:7
 msgid "Keyboard shortcuts"
 msgstr ""
 
@@ -9823,6 +9827,7 @@ msgid "New text module"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
 msgid "New ticket"
 msgstr ""
 
@@ -11489,7 +11494,7 @@ msgstr ""
 msgid "Profile language updated successfully."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/personal-settings.ts:7
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
 #: db/seeds/permissions.rb:370
 msgid "Profile settings"
 msgstr ""
@@ -13255,7 +13260,7 @@ msgid "Sign in using"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/logout.coffee:6
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/logout.ts:7
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/logout.ts:7
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:189
 msgid "Sign out"
 msgstr ""
@@ -13532,7 +13537,7 @@ msgstr ""
 msgid "Start typing to search or enter a phone number…"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:95
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:108
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:48
 msgid "Start typing to search or enter an email address…"
 msgstr ""
@@ -15758,10 +15763,6 @@ msgstr ""
 msgid "Ticket Hook Position"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:8
-msgid "Ticket Information Injection Key"
-msgstr ""
-
 #: db/seeds/settings.rb:2219
 msgid "Ticket Last Contact Behaviour"
 msgstr ""
@@ -17125,7 +17126,7 @@ msgid ""
 "permissions."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LayoutSidebarFooterMenu.vue:59
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue:44
 msgid "User menu"
 msgstr ""
 
@@ -17693,22 +17694,22 @@ msgstr ""
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr ""
 
-#: app/models/transaction/notification.rb:81
+#: app/models/transaction/notification.rb:98
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:235
+#: app/models/transaction/notification.rb:267
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:53
+#: app/models/transaction/notification.rb:70
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:47
+#: app/models/transaction/notification.rb:64
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr ""
 

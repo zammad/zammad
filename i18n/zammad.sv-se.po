@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-05 05:02+0000\n"
+"PO-Revision-Date: 2024-07-10 06:32+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
@@ -375,7 +375,7 @@ msgstr "%s (val)"
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:109
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:135
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:315
-#: app/frontend/shared/composables/useSelectOptions.ts:138
+#: app/frontend/shared/composables/useSelectOptions.ts:140
 msgid "%s (unknown)"
 msgstr "%s (okänd)"
 
@@ -1461,6 +1461,10 @@ msgstr ""
 "Instruktioner för inloggning med administratörslösenord skickades till din e-"
 "postadress."
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/setting.ts:8
+msgid "Administration"
+msgstr "Administration"
+
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/admin_password_auth/en.html.erb
@@ -1854,7 +1858,7 @@ msgstr "App secret"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:349
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee:3
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:3
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/appearance.ts:9
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:59
 #: db/seeds/permissions.rb:377
@@ -2864,10 +2868,8 @@ msgid "Cancel & Sign out"
 msgstr "Avbryt & Logga ut"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:76
-#, fuzzy
-#| msgid "Cancel Upload"
 msgid "Cancel Update"
-msgstr "Avbryt uppladdning"
+msgstr "Avbryt uppdatering"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:20
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:111
@@ -3216,7 +3218,7 @@ msgid "Clear Search"
 msgstr "Rensa sökningar"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:601
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:602
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:292
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:352
@@ -3355,7 +3357,7 @@ msgstr "Stängda ärenden"
 msgid "Closing time"
 msgstr "Stängningstid"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:75
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:66
 msgid "Collapse this element"
 msgstr "Fäll ihop element"
 
@@ -3618,10 +3620,8 @@ msgid "Content preview could not be generated."
 msgstr "Innehållsförvisning kunde inte genereras."
 
 #: app/frontend/apps/desktop/components/layout/LayoutContent.vue:131
-#, fuzzy
-#| msgid "Contents"
 msgid "Content sidebar"
-msgstr "Innehåll"
+msgstr "Sidofält för innehåll"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:110
 msgid "Content was changed since loading"
@@ -3688,10 +3688,8 @@ msgid "Copied!"
 msgstr "Kopierat!"
 
 #: app/frontend/apps/desktop/composables/useCopyToClipboard.ts:21
-#, fuzzy
-#| msgid "Copied!"
 msgid "Copied."
-msgstr "Kopierat!"
+msgstr "Kopierat."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee:30
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee:11
@@ -3723,10 +3721,8 @@ msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Kopiera aktuellt objektnummer (e. x. Ärende#) till urklipp"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:80
-#, fuzzy
-#| msgid "Ticket Customer"
 msgid "Copy ticket number"
-msgstr "Ärende Kund"
+msgstr "Kopiera ärendenummer"
 
 #: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco:14
 msgid "Copy to clipboard"
@@ -3855,10 +3851,8 @@ msgid "Create Macros"
 msgstr "Skapa makron"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:168
-#, fuzzy
-#| msgid "Create a shared draft"
 msgid "Create Shared Draft"
-msgstr "Skapa ett delat utkast"
+msgstr "Skapa delat utkast"
 
 #: app/controllers/first_steps_controller.rb:92
 msgid "Create Text Modules"
@@ -6887,7 +6881,7 @@ msgstr "Nuvarande ärenden"
 msgid "Existing tickets (open)"
 msgstr "Nuvarande ärenden (Öppna)"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:74
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:65
 msgid "Expand this element"
 msgstr "Expandera element"
 
@@ -6933,7 +6927,7 @@ msgstr "Externt datakällfält"
 
 #: lib/search_index_backend.rb:674
 msgid "Extract zammad-attachment information from arrays"
-msgstr "Extrahera zammad-attachment information från matriser"
+msgstr "Extrahera zammad bilageinformation från fält"
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:66
@@ -7753,7 +7747,7 @@ msgstr "Hårdvara (t.ex CPU kärnor, minne, hårddiskutrymme)"
 msgid "Has processed"
 msgstr "Har bearbetat"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:152
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:169
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:129
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:338
 msgid "Has submenu"
@@ -7918,10 +7912,8 @@ msgid "High priority"
 msgstr "Hög prioritet"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/HighlightMenu.vue:70
-#, fuzzy
-#| msgid "Highlight icon"
 msgid "Highlight"
-msgstr "Markeringsikon"
+msgstr "Markering"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
 msgid "Highlight color"
@@ -8541,7 +8533,7 @@ msgid ""
 "successfully finished."
 msgstr ""
 "Starta importprocessen för att överföra din data till Zammad. Håll koll på "
-"hur överföringen fortskrider på den här sidan, för att bli meddelad när "
+"hur överföringen fortskrider på den här sidan för att bli meddelad när "
 "importen är klar."
 
 #: app/models/store.rb:94
@@ -8578,7 +8570,7 @@ msgstr "Infoga tabell"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
 msgid "Insert text from Knowledge Base article"
-msgstr "Infoga text från kunskapsbas-artikeln"
+msgstr "Infoga text från kunskapsbasartikel"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:350
 msgid "Insert text from text module"
@@ -8603,7 +8595,7 @@ msgstr "Taggar en användare"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:445
 msgid "Inserts knowledge base answer"
-msgstr "Infoga ett kunskapsbas-svar"
+msgstr "Infoga ett kunskapsbankssvar"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:439
 msgid "Inserts text module"
@@ -8646,7 +8638,7 @@ msgstr "Internt fel"
 
 #: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco:2
 msgid "Internal Knowledge Base feed:"
-msgstr "Internt kunskapsbas-flöde:"
+msgstr "Internt kunskapsbanks-flöde:"
 
 #: app/models/import_job.rb:163
 msgid ""
@@ -8712,7 +8704,7 @@ msgstr "Ogiltig länkstruktur (Objekt → Länktyp)"
 
 #: app/controllers/tickets_controller.rb:191
 msgid "Invalid link structure (Object)"
-msgstr "Ogiltig länkstruktur (objekt)"
+msgstr "Ogiltig länkstruktur (Objekt)"
 
 #: app/models/concerns/checks_condition_validation.rb:12
 msgid "Invalid object selector conditions"
@@ -8889,12 +8881,12 @@ msgstr "jan"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 msgid "January"
-msgstr "Januari"
+msgstr "januari"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:9
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:9
 msgid "Job is waiting to get started…"
-msgstr "Jobbet väntar på att komma igång …"
+msgstr "Jobbet väntar på att startas…"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:58
 msgid "John Smith"
@@ -8913,7 +8905,7 @@ msgstr "jul"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 msgid "July"
-msgstr "Juli"
+msgstr "juli"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 #: app/assets/javascripts/app/controllers/report.coffee:204
@@ -8923,7 +8915,7 @@ msgstr "jun"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 msgid "June"
-msgstr "Juni"
+msgstr "juni"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:13
 msgid ""
@@ -8959,7 +8951,7 @@ msgstr "Key ID"
 msgid "Keyboard Shortcuts"
 msgstr "Tangentbordsgenvägar"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts:7
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts:7
 msgid "Keyboard shortcuts"
 msgstr "Tangentbordsgenvägar"
 
@@ -8984,7 +8976,7 @@ msgstr "Kunskapsbank Redaktör"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee:6
 msgid "Knowledge Base Feed"
-msgstr "Kunskapsbank-flöde"
+msgstr "Kunskapsbankflöde"
 
 #: db/seeds/permissions.rb:332
 msgid "Knowledge Base Reader"
@@ -9000,7 +8992,7 @@ msgstr "Kunskapsbank aktiv publikt"
 
 #: db/seeds/settings.rb:5393
 msgid "Knowledge Base multilingual support"
-msgstr "Flerspråkigt stöd för Knowledge Base"
+msgstr "Flerspråkigt stöd för kunskapsbank"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:24
@@ -9135,7 +9127,7 @@ msgstr "Senaste sökningar"
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:2
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:2
 msgid "Last sync"
-msgstr "Senast synkad"
+msgstr "Senast synkning"
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:25
 msgid "Last sync at:"
@@ -9168,7 +9160,7 @@ msgstr "Begränsa grupper"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:61
 msgid "Limit notifications to specific groups"
-msgstr "Begränsa meddelanden till specifika Grupper"
+msgstr "Begränsa notifieringar till specifika Grupper"
 
 #: db/seeds/settings.rb:2982
 msgid "Limit tickets by IP per day"
@@ -9325,7 +9317,7 @@ msgstr "Lokal MTA (Sendmail/Postfix/Exim/...) - använd serverinstallation"
 #: app/assets/javascripts/app/models/job.coffee:13
 #: app/assets/javascripts/app/models/trigger.coffee:12 db/seeds/settings.rb:163
 msgid "Locale"
-msgstr "Lokalisering"
+msgstr "Platsinställningar"
 
 #: app/graphql/gql/mutations/user/current/locale.rb:17
 msgid "Locale could not be found."
@@ -9408,7 +9400,7 @@ msgstr "MAC adress (Unik identifierare för rapporten)"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:3
 msgid "Macro"
-msgstr "Macro"
+msgstr "Makro"
 
 #: app/controllers/tickets_mass_controller.rb:16
 msgid "Macro group restrictions do not cover all tickets"
@@ -9418,7 +9410,7 @@ msgstr "Makrogruppsrestriktioner täcker inte alla ärenden"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:69
 #: db/seeds/permissions.rb:47
 msgid "Macros"
-msgstr "Macros"
+msgstr "Makros"
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid ""
@@ -9460,7 +9452,7 @@ msgstr "Underhållsläge aktiverat!"
 #: app/assets/javascripts/app/controllers/manage.coffee:15
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:85
 msgid "Manage"
-msgstr "Administration"
+msgstr "Hantera"
 
 #: db/seeds/permissions.rb:216
 msgid "Manage API of your system."
@@ -9488,7 +9480,7 @@ msgstr "Hantera servicenivåavtal för ditt system."
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:20
 msgid "Manage Tags"
-msgstr "Editera Taggar"
+msgstr "Hantera Taggar"
 
 #: db/seeds/permissions.rb:174
 msgid "Manage Telegram channel of your system."
@@ -9629,7 +9621,7 @@ msgstr "Hantera personliga metoder för tvåfaktorsautentisering."
 
 #: db/seeds/permissions.rb:84
 msgid "Manage public links of your system."
-msgstr "Hantera publikalänkar i ditt system."
+msgstr "Hantera publika länkar i ditt system."
 
 #: db/seeds/permissions.rb:102
 msgid "Manage report profiles of your system."
@@ -9705,7 +9697,7 @@ msgstr "Hantera webhooks i ditt system."
 
 #: app/views/mailer/application.html.erb:47
 msgid "Manage your notification settings"
-msgstr "Administrera dina notifieringsinställningar"
+msgstr "Hantera dina notifieringsinställningar"
 
 #: app/assets/javascripts/app/views/api.jst.eco:2
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:3
@@ -9715,11 +9707,11 @@ msgstr "Administrera dina notifieringsinställningar"
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
 #: app/assets/javascripts/app/views/user.jst.eco:3
 msgid "Management"
-msgstr "Hantering"
+msgstr "Administration"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:161
 msgid "Manually open chat"
-msgstr "Öppna en chatt manuellt"
+msgstr "Öppna chatt manuellt"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:97
 msgid ""
@@ -9730,10 +9722,10 @@ msgid ""
 "use of dynamic fields in OTRS."
 msgstr ""
 "Många dynamiska fält hittades. Detta är inte ett vanligt mönster i Zammad, "
-"som har en annan inställning till ärendeattribut. Zammad använder också "
-"taggar utöver anpassade fält för att klassificera ärenden. Denna skillnad "
-"kan skapa en ny filosofi för dina ärendeattribut/taggar jämfört med din "
-"nuvarande användning av dynamiska fält i OTRS."
+"som har en annan metodik för ärendeattribut. Zammad använder också taggar "
+"utöver anpassade fält för att klassificera ärenden. Denna skillnad kan skapa "
+"en ny filosofi för dina ärendeattribut/taggar jämfört med din nuvarande "
+"användning av dynamiska fält i OTRS."
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:22
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:57
@@ -9751,7 +9743,7 @@ msgstr "mar"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 msgid "March"
-msgstr "Mars"
+msgstr "mars"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:4
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:131
@@ -9764,7 +9756,7 @@ msgstr "Matcha alla (AND)"
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:9
 msgid "Match all of the following"
-msgstr "Matcha allt följande"
+msgstr "Matcha allt av följande"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:535
 msgid "Match any (OR)"
@@ -9806,7 +9798,7 @@ msgstr "Maximal längd"
 
 #: db/seeds/settings.rb:3028
 msgid "Max. length of the subject in an email reply."
-msgstr "Max. längd på ämnet i ett e-postsvar."
+msgstr "Maximal längd på ämnet i ett e-postsvar."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:387
 msgid "Maximal"
@@ -9889,11 +9881,11 @@ msgstr "Sammanfoga celler"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:51
 msgid "Merge tickets"
-msgstr "Slå ihop ärenden"
+msgstr "Sammanfoga ärenden"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco:2
 msgid "Merge to Ticket#"
-msgstr "Slå ihop Ärende#"
+msgstr "Sammanfoga till Ärende#"
 
 #: app/models/report.rb:75
 msgid "Merged"
@@ -9962,7 +9954,7 @@ msgstr "Microsoft 365"
 
 #: db/seeds/settings.rb:1720
 msgid "Microsoft 365 App Credentials"
-msgstr "Microsoft 365 App Användaruppgifter"
+msgstr "Microsoft 365 App Inloggningsuppgifter"
 
 #: db/seeds/settings.rb:1713
 msgid "Microsoft Application Registration Portal"
@@ -9975,7 +9967,7 @@ msgstr "Microsoft Authenticator"
 
 #: app/models/webhook/pre_defined/microsoft_teams.rb:5
 msgid "Microsoft Teams Notifications"
-msgstr "Inaktivera Microsoft Teams notifikationer"
+msgstr "Microsoft Teams notifikationer"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:56
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:60
@@ -9999,11 +9991,11 @@ msgstr "Migrator kan inte läsa OTRS-utdata!"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
 msgid "Milestone"
-msgstr "Milstolpe"
+msgstr "Milsten"
 
 #: db/seeds/settings.rb:2345
 msgid "Min. size of number"
-msgstr "Min. storlek på nummer"
+msgstr "Minimal storlek på nummer"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:378
 msgid "Minimal"
@@ -10015,7 +10007,7 @@ msgstr "Minsta längd"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco:21
 msgid "Minute"
-msgstr "minute"
+msgstr "minut"
 
 #: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee:5
 msgid "Minute(s)"
@@ -10036,7 +10028,7 @@ msgstr "Mobil"
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco:14
 msgid "Mode"
-msgstr "Underhållsläge"
+msgstr "Läge"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:103
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:66
@@ -10052,7 +10044,7 @@ msgstr "mån"
 #: app/assets/javascripts/app/lib/app_post/business_hours.coffee:15
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:44
 msgid "Monday"
-msgstr "Måndag"
+msgstr "måndag"
 
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee:3
 msgid "Monit"
@@ -10485,6 +10477,7 @@ msgid "New text module"
 msgstr "Ny textmodul"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
 msgid "New ticket"
 msgstr "Nytt ärende"
 
@@ -10726,16 +10719,12 @@ msgid "No macros available."
 msgstr "Inga macros tillgängliga."
 
 #: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/user.ts:9
-#, fuzzy
-#| msgid "No camera found."
 msgid "No members found"
-msgstr "Ingen kamera hittades."
+msgstr "Ingen medlemmar hittades"
 
 #: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/organization.ts:9
-#, fuzzy
-#| msgid "Organizations"
 msgid "No organizations found"
-msgstr "Organisationer"
+msgstr "Inga organisationer hittades"
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:297
 msgid "No previous searches"
@@ -10782,10 +10771,8 @@ msgid "No settings with area 'Dashboard::Stats' defined"
 msgstr "Inga inställningar för området 'Dashboard::Stats' definierade"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:218
-#, fuzzy
-#| msgid "Shared Drafts"
 msgid "No shared drafts yet"
-msgstr "Delade utkast"
+msgstr "Inga delade utkast ännu"
 
 #: app/controllers/organizations_controller.rb:160
 #: app/controllers/text_modules_controller.rb:71
@@ -11554,10 +11541,8 @@ msgid "Overviews"
 msgstr "Översikter"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:108
-#, fuzzy
-#| msgid "Overwrite Draft"
 msgid "Overwrite Content"
-msgstr "Skriv över utkast"
+msgstr "Skriv över innehåll"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee:5
 msgid "Overwrite Draft"
@@ -12122,10 +12107,8 @@ msgstr "Förhandsgranska %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:131
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:187
-#, fuzzy
-#| msgid "Select Shared Draft"
 msgid "Preview Shared Draft"
-msgstr "Välj Delat utkast"
+msgstr "Förhandsgranska delat utkast"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:20
 msgid "Preview Width"
@@ -12234,7 +12217,7 @@ msgstr "Profil"
 msgid "Profile language updated successfully."
 msgstr "Profilspråket har uppdaterats."
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/personal-settings.ts:7
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
 #: db/seeds/permissions.rb:370
 msgid "Profile settings"
 msgstr "Profilinställningar"
@@ -13873,28 +13856,20 @@ msgid "Shared draft cannot be selected for this ticket."
 msgstr "Delat utkast kan inte väljas för detta ärende."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:114
-#, fuzzy
-#| msgid "Ticket has been created successfully."
 msgid "Shared draft has been created successfully."
-msgstr "Ärendet skapades."
+msgstr "Delat utkast har skapats."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:93
-#, fuzzy
-#| msgid "Your avatar has been deleted."
 msgid "Shared draft has been deleted."
-msgstr "Din avatar har tagits bort."
+msgstr "Delat utkast har raderats."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:139
-#, fuzzy
-#| msgid "Ticket has been created successfully."
 msgid "Shared draft has been updated successfully."
-msgstr "Ärendet skapades."
+msgstr "Delat utkast har uppdaterats."
 
 #: app/graphql/gql/queries/ticket/shared_draft/start/list.rb:20
-#, fuzzy
-#| msgid "Shared draft cannot be selected for this ticket."
 msgid "Shared drafts are not activated for the selected group"
-msgstr "Delat utkast kan inte väljas för detta ärende."
+msgstr "Delat utkast är inte aktiverat för vald grupp"
 
 #: app/assets/javascripts/app/models/organization.coffee:7
 #: db/seeds/object_manager_attributes.rb:1547
@@ -14088,7 +14063,7 @@ msgid "Sign in using"
 msgstr "Logga in med"
 
 #: app/assets/javascripts/app/controllers/logout.coffee:6
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/logout.ts:7
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/logout.ts:7
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:189
 msgid "Sign out"
 msgstr "Logga ut"
@@ -14373,7 +14348,7 @@ msgstr "Börja skriva för att söka eller ange en ny tagg…"
 msgid "Start typing to search or enter a phone number…"
 msgstr "Börja skriva för att söka eller ange ett telefonnummer…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:95
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:108
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:48
 msgid "Start typing to search or enter an email address…"
 msgstr "Börja skriva för att söka eller ange en e-postadress…"
@@ -16641,10 +16616,8 @@ msgstr ""
 "WhatsApp-meddelanden."
 
 #: app/policies/ticket/shared_draft_start_policy.rb:26
-#, fuzzy
-#| msgid "A mentioned user has no agent access to this ticket"
 msgid "This user does not have access to the given group"
-msgstr "En nämnd användare har ingen agentåtkomst till detta ärende"
+msgstr "Den här användaren har inte tillgång till den angivna gruppen"
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:12
 msgid "This user has no access and will not receive notifications."
@@ -16746,10 +16719,8 @@ msgid "Ticket Customer"
 msgstr "Ärende Kund"
 
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:28
-#, fuzzy
-#| msgid "Ticket title"
 msgid "Ticket Detail"
-msgstr "Ärendetitel"
+msgstr "Ärendedetaljer"
 
 #: db/seeds/settings.rb:2141
 msgid "Ticket Hook"
@@ -16762,12 +16733,6 @@ msgstr "Ärende Hook Avdelare"
 #: db/seeds/settings.rb:2187
 msgid "Ticket Hook Position"
 msgstr "Ärendekrokens possition"
-
-#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:8
-#, fuzzy
-#| msgid "Ticket information"
-msgid "Ticket Information Injection Key"
-msgstr "Ärendeinformation"
 
 #: db/seeds/settings.rb:2219
 msgid "Ticket Last Contact Behaviour"
@@ -16862,8 +16827,6 @@ msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr "Ärende Trigger Loop Skydd Artiklar Per Ärende"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:77
-#, fuzzy
-#| msgid "Ticket update"
 msgid "Ticket Update"
 msgstr "Ärendeuppdatering"
 
@@ -17857,10 +17820,8 @@ msgid "Update In Min"
 msgstr "Uppdatering i min"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:205
-#, fuzzy
-#| msgid "Apply Shared Draft"
 msgid "Update Shared Draft"
-msgstr "Använd delat utkast"
+msgstr "Uppdatera delat utkast"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:32
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:11
@@ -18251,7 +18212,7 @@ msgid ""
 msgstr ""
 "Användarinformation kunde inte hämtas, kontrollera dina användarrättigheter."
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LayoutSidebarFooterMenu.vue:59
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue:44
 msgid "User menu"
 msgstr "Användarmeny"
 
@@ -18853,12 +18814,12 @@ msgstr "Ja, starta verklig import."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Du är på väntelistan som position <strong>%s</strong>."
 
-#: app/models/transaction/notification.rb:81
+#: app/models/transaction/notification.rb:98
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Du får detta eftersom du är medlem i gruppen för detta ärende."
 
-#: app/models/transaction/notification.rb:235
+#: app/models/transaction/notification.rb:267
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -18866,11 +18827,11 @@ msgstr ""
 "Du får detta eftersom du är en out-of-office ersättare för en deltagare i "
 "detta ärende."
 
-#: app/models/transaction/notification.rb:53
+#: app/models/transaction/notification.rb:70
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "Du får detta eftersom du är ägare till detta ärende."
 
-#: app/models/transaction/notification.rb:47
+#: app/models/transaction/notification.rb:64
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Du får detta eftersom du nämndes i detta ärende."
 
@@ -20683,8 +20644,6 @@ msgid "ticket %s was merged into this ticket"
 msgstr "Ärendet %s slogs ihop med det här ärendet"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:75
-#, fuzzy
-#| msgid "Ticket title"
 msgid "ticket title"
 msgstr "Ärendetitel"
 
@@ -20870,6 +20829,9 @@ msgstr "... av hela textfältet"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Väntetid idag"
+
+#~ msgid "Ticket Information Injection Key"
+#~ msgstr "Ärendeinformation injektionsnyckel"
 
 #, fuzzy
 #~| msgid "add new email address"

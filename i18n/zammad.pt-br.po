@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-05 05:02+0000\n"
-"Last-Translator: Andrius Gabriel da Luz <gabluz_gh@riseup.net>\n"
+"PO-Revision-Date: 2024-07-10 06:32+0000\n"
+"Last-Translator: \"Decio E. Silva\" <decio@verinatec.com.br>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/pt_BR/>\n"
 "Language: pt-br\n"
@@ -377,7 +377,7 @@ msgstr "%s (opção)"
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:109
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:135
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:315
-#: app/frontend/shared/composables/useSelectOptions.ts:138
+#: app/frontend/shared/composables/useSelectOptions.ts:140
 msgid "%s (unknown)"
 msgstr "%s (desconhecido)"
 
@@ -1036,34 +1036,24 @@ msgid "Access the knowledge base reader features."
 msgstr "Acesse os recursos do leitor da base de conhecimento."
 
 #: db/seeds/permissions.rb:355
-#, fuzzy
-#| msgid "Access to Agent Tickets based on Group Access"
 msgid "Access the tickets as agent based on group access."
-msgstr "Access to Agent Tickets based on Group Access"
+msgstr "Acesse os tickets como agente com base no acesso do grupo."
 
 #: db/seeds/permissions.rb:364
-#, fuzzy
-#| msgid "ticket.customer"
 msgid "Access tickets as customer."
-msgstr "ticket.customer"
+msgstr "Acesse os tickets como cliente."
 
 #: db/seeds/permissions.rb:288
-#, fuzzy
-#| msgid "Access to customer tickets"
 msgid "Access to the chat interface."
-msgstr "Acesso a chamados de clientes"
+msgstr "Acesso à interface de chat."
 
 #: db/seeds/permissions.rb:318
-#, fuzzy
-#| msgid "Inserts knowledge base answer"
 msgid "Access to the knowledge base interface."
-msgstr "Inserir uma resposta da base de conhecimento"
+msgstr "Acesso à interface da base de conhecimento."
 
 #: db/seeds/permissions.rb:303
-#, fuzzy
-#| msgid "Access to customer tickets"
 msgid "Access to the phone interface."
-msgstr "Acesso a chamados de clientes"
+msgstr "Acesso à interface telefônica."
 
 #: db/seeds/permissions.rb:340
 msgid "Access to the report interface."
@@ -1166,16 +1156,12 @@ msgid "Action execution"
 msgstr "Execução da ação"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts:12
-#, fuzzy
-#| msgid "Action execution"
 msgid "Action menu button for authenticator app"
-msgstr "Execução da ação"
+msgstr "Botão de menu de ações para o aplicativo autenticador"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts:14
-#, fuzzy
-#| msgid "Action execution"
 msgid "Action menu button for security keys"
-msgstr "Execução da ação"
+msgstr "Botão de menu de ações para chaves de segurança"
 
 #: app/assets/javascripts/app/models/macro.coffee:7
 #: app/assets/javascripts/app/models/template.coffee:7
@@ -1369,10 +1355,8 @@ msgid "Add agreement text before submit."
 msgstr "Adicione o texto do contrato antes de enviar."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:316
-#, fuzzy
-#| msgid "Add alarm to pending reminder and escalated tickets."
 msgid "Add alarm to pending reminder and escalated tickets"
-msgstr "Adicionar alarme em chamados pendentes e escalonados."
+msgstr "Adicionar alarme para lembretes pendentes e tickets escalados"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:34
 msgid "Add alarm to pending reminder and escalated tickets."
@@ -1400,10 +1384,8 @@ msgid "Add first level heading"
 msgstr "Adicionar título de primeiro nível"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Add heading"
-msgstr "Adicionar Tag"
+msgstr "Adicionar título"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:131
 msgid "Add image"
@@ -1490,10 +1472,8 @@ msgid "Admin Password Login"
 msgstr "Senha de Login de Administrador"
 
 #: db/seeds/permissions.rb:5
-#, fuzzy
-#| msgid "Admin Interface"
 msgid "Admin interface"
-msgstr "Interface de Admin"
+msgstr "Interface de administração"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:4
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:57
@@ -1501,6 +1481,10 @@ msgid "Admin password login instructions were sent to your email address."
 msgstr ""
 "As instruções de login com senha de administrador foram enviadas para o seu "
 "endereço de e-mail."
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/setting.ts:8
+msgid "Administration"
+msgstr "Administração"
 
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -1551,14 +1535,9 @@ msgid "Advance to next ticket from overview"
 msgstr "Avance para o próximo ticket da Visão Geral"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:62
-#, fuzzy
-#| msgid ""
-#| "Here you find your ticket overviews for open, assigned, and escalated "
-#| "tickets."
 msgid "Affects only notifications for not assigned and all tickets."
 msgstr ""
-"Aqui você encontra suas visões para chamados abertos, atribuídos ou "
-"escalonados."
+"Afeta apenas notificações para tickets não atribuídos e todos os tickets."
 
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco:4
 msgid "After approval, please re-connect your Exchange account."
@@ -1605,10 +1584,8 @@ msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr "Nome do Atendente + Separador From + Endereço do sistema"
 
 #: db/seeds/permissions.rb:296
-#, fuzzy
-#| msgid "Agent Name"
 msgid "Agent chat"
-msgstr "Nome do Atendente"
+msgstr "Chat do agente"
 
 #: db/seeds/settings.rb:3456
 msgid "Agent idle timeout"
@@ -1619,16 +1596,12 @@ msgid "Agent limit exceeded, please check your account settings."
 msgstr "Agent limit exceeded, please check your account settings."
 
 #: db/seeds/permissions.rb:311
-#, fuzzy
-#| msgid "Agent Name"
 msgid "Agent phone"
-msgstr "Nome do Atendente"
+msgstr "Telefone do agente"
 
 #: db/seeds/permissions.rb:354
-#, fuzzy
-#| msgid "Open tickets"
 msgid "Agent tickets"
-msgstr "Tickets em Abertos"
+msgstr "Tickets do agente"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:109
 msgid "Agents"
@@ -1685,13 +1658,11 @@ msgid "All colleagues are busy."
 msgstr "Nossos atendentes estão ocupados."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:144
-#, fuzzy
-#| msgid ""
-#| "All computers and browsers that have access to your Zammad appear here."
 msgid ""
 "All computers and browsers from which you logged in to Zammad appear here."
 msgstr ""
-"Todos computadores e navegadores que tem acesso ao seu Zammad aparecem aqui."
+"Todos os computadores e navegadores dos quais você fez login no Zammad "
+"aparecem aqui."
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:7
 msgid "All computers and browsers that have access to your Zammad appear here."
@@ -1913,7 +1884,7 @@ msgstr "App secret"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:349
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee:3
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:3
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/appearance.ts:9
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:59
 #: db/seeds/permissions.rb:377
@@ -1948,20 +1919,16 @@ msgid "Apply Shared Draft"
 msgstr "Aplicar Rascunho Compartilhado"
 
 #: app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue:81
-#, fuzzy
-#| msgid "Template"
 msgid "Apply Template"
-msgstr "Modelo"
+msgstr "Aplicar Modelo"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:10
 msgid "Apply current defaults to all agents"
 msgstr "Aplicar as configurações padrão atuais a todos os agentes"
 
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:76
-#, fuzzy
-#| msgid "Apply Draft"
 msgid "Apply filter…"
-msgstr "Aplicar rascunho"
+msgstr "Aplicar filtro…"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 #: app/assets/javascripts/app/controllers/report.coffee:204
@@ -1994,10 +1961,8 @@ msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Tem certeza de que deseja excluir \"%s\"?"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:31
-#, fuzzy
-#| msgid "Do you really want to delete this object?"
 msgid "Are you sure you want to delete this object?"
-msgstr "Tem certeza que deseja apagar este objeto?"
+msgstr "Você tem certeza de que deseja excluir este objeto?"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts:67
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
@@ -2108,10 +2073,8 @@ msgid "Article - visibility confirmation dialog"
 msgstr "Artigo - caixa de confirmação de visibilidade"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
-#, fuzzy
-#| msgid "Article Type"
 msgid "Article > Text (HTML)"
-msgstr "Tipo de Artigo"
+msgstr "Artigo > Texto (HTML)"
 
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
@@ -2186,16 +2149,12 @@ msgstr ""
 "será exibido como não atribuído."
 
 #: app/models/user.rb:599
-#, fuzzy
-#| msgid ""
-#| "At least one identifier (firstname, lastname, phone or email) for user is "
-#| "required."
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
 msgstr ""
-"Pelo menos um identificador (nome, sobrenome, telefone ou e-mail) para o "
-"usuário é requerido."
+"É necessário pelo menos um identificador (nome, sobrenome, telefone, celular "
+"ou e-mail) para o usuário."
 
 #: app/models/postmaster_filter.rb:29
 msgid "At least one match rule is required, but none was provided."
@@ -2376,10 +2335,8 @@ msgid "Authenticator App"
 msgstr "Aplicativo de Autenticação"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:234
-#, fuzzy
-#| msgid "Authenticator app secret"
 msgid "Authenticator app QR code"
-msgstr "Segredo do aplicativo de autenticação"
+msgstr "Código QR do aplicativo autenticador"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:24
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:245
@@ -2474,10 +2431,8 @@ msgid "Available for the following roles"
 msgstr "Disponível para as seguintes regras"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:191
-#, fuzzy
-#| msgid "Remove all methods"
 msgid "Available methods"
-msgstr "Remover todos os métodos"
+msgstr "Métodos disponíveis"
 
 #: db/seeds/settings.rb:891
 msgid "Available types for a new ticket"
@@ -3312,7 +3267,7 @@ msgid "Clear Search"
 msgstr "Limpar Busca"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:601
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:602
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:292
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:352
@@ -3457,7 +3412,7 @@ msgstr "chamados fechados"
 msgid "Closing time"
 msgstr "Horário de Fechamento"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:75
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:66
 msgid "Collapse this element"
 msgstr "Recolher este elemento"
 
@@ -7083,7 +7038,7 @@ msgstr "Tickets existentes"
 msgid "Existing tickets (open)"
 msgstr "Tickets existentes (abertos)"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:74
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:65
 msgid "Expand this element"
 msgstr "Expandir este elemento"
 
@@ -7970,7 +7925,7 @@ msgstr "Hardware (ex: núcleos de CPU, memória, espaço em disco)"
 msgid "Has processed"
 msgstr "Foi processado"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:152
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelectItem.vue:169
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:129
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:338
 msgid "Has submenu"
@@ -9212,7 +9167,7 @@ msgstr "ID da Chave"
 msgid "Keyboard Shortcuts"
 msgstr "Atalhos de teclado"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts:7
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts:7
 msgid "Keyboard shortcuts"
 msgstr "Atalhos de teclado"
 
@@ -10855,6 +10810,7 @@ msgid "New text module"
 msgstr "Novo Modulo de Texto"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
 #, fuzzy
 #| msgid "New Ticket"
 msgid "New ticket"
@@ -12686,7 +12642,7 @@ msgstr "Perfil"
 msgid "Profile language updated successfully."
 msgstr "Etiquetas do tickets atualizadas com sucesso."
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/personal-settings.ts:7
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
 #: db/seeds/permissions.rb:370
 msgid "Profile settings"
 msgstr "Configurações de perfil"
@@ -14609,7 +14565,7 @@ msgid "Sign in using"
 msgstr "Faça login usando"
 
 #: app/assets/javascripts/app/controllers/logout.coffee:6
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/AvatarMenu/plugins/logout.ts:7
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/logout.ts:7
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:189
 msgid "Sign out"
 msgstr "Deslogar"
@@ -14903,7 +14859,7 @@ msgstr "Pesquise ou digite o número de telefone…"
 msgid "Start typing to search or enter a phone number…"
 msgstr "Pesquise ou digite o número de telefone…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:95
+#: app/frontend/apps/desktop/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:108
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:48
 #, fuzzy
 #| msgid "Search or enter email address…"
@@ -17378,12 +17334,6 @@ msgstr "Divisor de Hook de Ticket"
 msgid "Ticket Hook Position"
 msgstr "Posição da amarração"
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:8
-#, fuzzy
-#| msgid "Ticket information"
-msgid "Ticket Information Injection Key"
-msgstr "Informações do Ticket"
-
 #: db/seeds/settings.rb:2219
 msgid "Ticket Last Contact Behaviour"
 msgstr "Procedimento do último contato do ticket"
@@ -18911,7 +18861,7 @@ msgstr ""
 "As informações do usuário não puderam ser recuperadas, verifique suas "
 "permissões de usuário de vinculação."
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LayoutSidebarFooterMenu.vue:59
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue:44
 msgid "User menu"
 msgstr "Menu do usuário"
 
@@ -19521,12 +19471,12 @@ msgstr "Sim, comece a importa de verdade."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Você está na posição <strong>%s</strong> da lista de espera."
 
-#: app/models/transaction/notification.rb:81
+#: app/models/transaction/notification.rb:98
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Você está recebendo isso porque é membro do grupo deste ticket."
 
-#: app/models/transaction/notification.rb:235
+#: app/models/transaction/notification.rb:267
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -19534,11 +19484,11 @@ msgstr ""
 "Você está recebendo isso porque é um substituto de alguém que está fora do "
 "escritório deste ticket."
 
-#: app/models/transaction/notification.rb:53
+#: app/models/transaction/notification.rb:70
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "Você está recebendo isso porque é o proprietário deste ticket."
 
-#: app/models/transaction/notification.rb:47
+#: app/models/transaction/notification.rb:64
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Você está recebendo isso porque foi mencionado neste ticket."
 
@@ -21581,6 +21531,11 @@ msgstr "...da area de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ tempo de espera hoje"
+
+#, fuzzy
+#~| msgid "Ticket information"
+#~ msgid "Ticket Information Injection Key"
+#~ msgstr "Informações do Ticket"
 
 #, fuzzy
 #~| msgid "Invalid email address."
