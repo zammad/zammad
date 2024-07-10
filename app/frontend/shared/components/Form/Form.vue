@@ -285,9 +285,13 @@ const formUpdaterProcessing = computed(
   () => formNode.value?.context?.state.formUpdaterProcessing || false,
 )
 
+const uploadProcessing = computed(
+  () => formNode.value?.context?.state.uploadProcessing || false,
+)
+
 let delayedSubmit = false
 const onSubmitRaw = () => {
-  if (formUpdaterProcessing.value) {
+  if (formUpdaterProcessing.value || uploadProcessing.value) {
     delayedSubmit = true
   }
 }
@@ -357,7 +361,11 @@ const triggerFormUpdater = (options?: FormUpdaterOptions) => {
 
 const delayedSubmitPlugin = (node: FormKitNode) => {
   node.on('message-removed', async ({ payload }) => {
-    if (payload.key === 'formUpdaterProcessing' && delayedSubmit) {
+    if (
+      (payload.key === 'formUpdaterProcessing' ||
+        payload.key === 'uploadProcessing') &&
+      delayedSubmit
+    ) {
       // We need to wait on the "next tick", so that the validation for updated fields is ready.
       setTimeout(() => {
         delayedSubmit = false

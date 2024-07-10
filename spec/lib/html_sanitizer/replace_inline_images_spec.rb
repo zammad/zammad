@@ -35,10 +35,18 @@ RSpec.describe HtmlSanitizer::ReplaceInlineImages do
         )
       end
 
-      let(:input) { "<img src='api/v1/users/image/#{avatar.store_hash}' width='100' height='100' data-user-avatar='true'>" }
+      let(:input) { "<img src='/api/v1/users/image/#{avatar.store_hash}' width='100' height='100' data-user-avatar='true'>" }
 
       it { expect(sanitized.first).to match(target) }
       it { expect(sanitized.last).to include(include(filename: 'avatar')) }
+
+      context 'when data-user-avatar is missing' do
+        let(:input)  { "<img src='/api/v1/users/image/#{avatar.store_hash}' width='100' height='100'>" }
+        let(:target) { "<img src=\"/api/v1/users/image/#{avatar.store_hash}\" width=\"100\" height=\"100\">" }
+
+        it { expect(sanitized.first).to match(target) }
+        it { expect(sanitized.last).not_to include(include(filename: 'avatar')) }
+      end
     end
   end
 end

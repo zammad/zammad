@@ -1,5 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { mockApolloClient } from '#cy/utils.ts'
+
+import { FormUploadCacheAddDocument } from '#shared/components/Form/fields/FieldFile/graphql/mutations/uploadCache/add.api.ts'
+
 import { mountEditor } from './utils.ts'
 
 const testAction = (
@@ -174,6 +178,26 @@ describe('testing actions', { retries: { runMode: 2 } }, () => {
   })
 
   it('inline image', () => {
+    const client = mockApolloClient()
+    client.setRequestHandler(FormUploadCacheAddDocument, async () => ({
+      data: {
+        formUploadCacheAdd: {
+          __typename: 'FormUploadCacheAddPayload',
+          uploadedFiles: [
+            {
+              __typename: 'StoredFile',
+              id: 'gid://zammad/Store/2062',
+              name: 'file.png',
+              size: 12393,
+              type: 'image/png',
+            },
+          ],
+        },
+      },
+    }))
+
+    cy.intercept('GET', '/api/v1/attachments/2062', { fixture: 'example.png' })
+
     mountEditor()
 
     const imageBuffer = Cypress.Buffer.from('some image')
@@ -196,11 +220,7 @@ describe('testing actions', { retries: { runMode: 2 } }, () => {
 
     cy.findByRole('textbox')
       .find('img')
-      .should(
-        'have.attr',
-        'src',
-        `data:image/png;base64,${btoa(imageBuffer.toString())}`,
-      )
+      .should('have.attr', 'src', '/api/v1/attachments/2062')
   })
 
   describe('table', () => {
@@ -221,7 +241,7 @@ describe('testing actions', { retries: { runMode: 2 } }, () => {
       cy.findByRole('table').find('tr').should('have.length', 3)
     })
 
-    describe.only('actions', () => {
+    describe('actions', () => {
       testTableAction('Insert row above', { trCount: 4, tdCount: 9 })
       testTableAction('Insert row below', { trCount: 4, tdCount: 9 })
       testTableAction('Delete row', { trCount: 2, tdCount: 3 })

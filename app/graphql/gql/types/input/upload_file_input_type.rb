@@ -8,5 +8,6 @@ module Gql::Types::Input
     argument :name, String, description: 'File name.'
     argument :type, String, required: false, description: "File's content-type."
     argument :content, Gql::Types::BinaryStringType, required: false, description: 'File content'
+    argument :inline, Boolean, required: false, description: 'Content-Disposition: inline flag'
   end
 end

@@ -362,6 +362,18 @@ RSpec.describe Store, type: :model do
         end
       end
     end
+
+    describe '#inline?' do
+      context 'when Content-Disposition is inline' do
+        let(:preferences) { { 'Content-Disposition' => 'inline' } }
+
+        it { is_expected.to be_inline }
+      end
+
+      context 'when Content-Disposition not inline' do
+        it { is_expected.not_to be_inline }
+      end
+    end
   end
 
   context 'when preferences exceed storage size' do

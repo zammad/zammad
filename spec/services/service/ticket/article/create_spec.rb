@@ -151,6 +151,32 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
 
         expect(article.attachments).to be_one
       end
+
+      context 'when attachment is uploaded' do
+        before do
+          form_id = SecureRandom.uuid
+
+          file_name    = 'file1.png'
+          file_type    = 'image/png'
+          file_content = Base64.strict_encode64('file1')
+
+          UploadCache.new(form_id).tap do |cache|
+            cache.add(
+              data:          file_content,
+              filename:      file_name,
+              preferences:   { 'Content-Type' => file_type },
+              created_by_id: 1,
+            )
+          end
+        end
+
+        it 'adds attachments with inlines' do
+          payload[:content_type] = 'text/html'
+          payload[:body] = "some body <img src='/api/v1/attachments/#{Store.last.id}'> alt='Red dot' />"
+
+          expect(article.attachments).to be_one
+        end
+      end
     end
 
     describe 'mentions', aggregate_failures: true do

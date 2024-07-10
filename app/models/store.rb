@@ -172,6 +172,10 @@ returns
     input.match? RESIZABLE_MIME_REGEXP
   end
 
+  def inline?
+    preferences['Content-Disposition'] == 'inline'
+  end
+
   private
 
   def generate_previews

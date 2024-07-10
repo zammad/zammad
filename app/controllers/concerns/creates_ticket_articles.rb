@@ -64,7 +64,12 @@ module CreatesTicketArticles # rubocop:disable Metrics/ModuleLength
     # find attachments in upload cache
     attachments = []
     if form_id
-      attachments += UploadCache.new(form_id).attachments
+      attachments += UploadCache
+        .new(form_id)
+        .attachments
+        .reject do |elem|
+          UploadCache.files_include_attachment?(attachments_inline, elem)
+        end
     end
 
     # store inline attachments
@@ -148,5 +153,4 @@ module CreatesTicketArticles # rubocop:disable Metrics/ModuleLength
 
     article
   end
-
 end

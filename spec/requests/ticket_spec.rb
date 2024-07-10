@@ -748,6 +748,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['created_by_id']).to eq(agent.id)
 
       ticket = Ticket.find(json_response['id'])
+
       expect(ticket.articles.count).to eq(1)
       expect(ticket.articles.first.attachments.count).to eq(2)
       file = ticket.articles.first.attachments[0]
@@ -756,11 +757,13 @@ RSpec.describe 'Ticket', type: :request do
       expect(file.preferences['Mime-Type']).to eq('image/jpeg')
       expect(file.preferences['Content-ID']).to be_truthy
       expect(file.preferences['Content-ID']).to match(%r{#{ticket.id}\..+?@zammad.example.com})
+      expect(file).to be_inline
       file = ticket.articles.first.attachments[1]
       expect(Digest::MD5.hexdigest(file.content)).to eq('39d0d586a701e199389d954f2d592720')
       expect(file.filename).to eq('some_file.txt')
       expect(file.preferences['Mime-Type']).to eq('text/plain')
       expect(file.preferences['Content-ID']).to be_falsey
+      expect(file).not_to be_inline
     end
 
     it 'does ticket create with agent (02.02)' do

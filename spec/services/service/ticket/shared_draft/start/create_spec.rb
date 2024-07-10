@@ -32,6 +32,20 @@ RSpec.describe Service::Ticket::SharedDraft::Start::Create do
       expect(Store.list(object: draft.class.name, o_id: draft.id))
         .to contain_exactly(have_attributes(filename: 'test.txt'))
     end
+
+    it 'copies inline attachment and keeps it inline' do
+      content = attributes_for(:ticket_shared_draft_start, :with_inline_image)[:content]
+
+      draft = described_class
+        .new(user, form_id, name:, content:, group:)
+        .execute
+
+      expect(Store.list(object: draft.class.name, o_id: draft.id))
+        .to contain_exactly(have_attributes(
+                              filename:    'image1.jpeg',
+                              preferences: include('Content-Disposition' => 'inline')
+                            ))
+    end
   end
 
   context 'when user has insufficient access to the draft group' do

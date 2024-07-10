@@ -15,8 +15,9 @@ FactoryBot.define do
     end
 
     trait :image do
-      filename { '1x1.png' }
-      data     { Rails.root.join('test/data/image/1x1.png').binread }
+      filename    { '1x1.png' }
+      preferences { { 'Content-Type' => "image/#{File.extname(filename).delete_prefix('.')}" } }
+      data        { Rails.root.join('test/data/image/1x1.png').binread }
     end
   end
 end

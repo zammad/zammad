@@ -174,7 +174,6 @@ const formSchema = defineFormSchema([
                 },
               },
             },
-            triggerFormUpdater: false,
           },
           {
             type: 'file',

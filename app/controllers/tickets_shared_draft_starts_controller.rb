@@ -17,7 +17,7 @@ class TicketsSharedDraftStartsController < ApplicationController
 
     render json: {
       shared_draft_id:      object.id,
-      shared_draft_content: object.content,
+      shared_draft_content: object.content_with_base64,
       assets:               object.assets,
     }
   end
@@ -59,7 +59,7 @@ class TicketsSharedDraftStartsController < ApplicationController
   def import_attachments
     object = scope.find params[:id]
 
-    new_attachments = object.clone_attachments 'UploadCache', params[:form_id]
+    new_attachments = object.clone_attachments 'UploadCache', params[:form_id], only_attached_attachments: true
 
     render json: {
       attachments: new_attachments

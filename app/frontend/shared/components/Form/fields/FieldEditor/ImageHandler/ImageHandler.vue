@@ -2,39 +2,66 @@
 
 <script setup lang="ts">
 import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
-import { computed, reactive, ref } from 'vue'
+import { computed, nextTick, reactive, ref, type ComputedRef } from 'vue'
 import DraggableResizable from 'vue3-draggable-resizable'
-
-import { loadImageIntoBase64 } from '#shared/utils/files.ts'
-import log from '#shared/utils/log.ts'
 import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
+
 import testFlags from '#shared/utils/testFlags.ts'
+
+import { useImageUpload } from '../useImageUpload.ts'
+
+import ImageFailedUploadOverlay from './ImageFailedUploadOverlay.vue'
 
 const props = defineProps(nodeViewProps)
 const initialHeight = props.node.attrs.height
 const initialWidth = props.node.attrs.width
 
-const needBase64Convert = (src: string) => {
-  return !(src.startsWith('data:') || src.startsWith('cid:'))
-}
+const editorAttributes = computed(
+  () => props.editor.options.editorProps.attributes,
+) as ComputedRef<Record<string, unknown>>
 
 const isResized = ref(false)
 const isResizing = ref(false)
 const imageLoaded = ref(false)
 const isDraggable = computed(() => props.node.attrs.isDraggable)
+const uploadCacheExists = computed(() =>
+  props.node.attrs.src.startsWith('/api/v1/attachments/'),
+)
+const uploadFailed = ref(false)
 const src = computed(() => props.node.attrs.src)
-if (needBase64Convert(src.value)) {
-  loadImageIntoBase64(
-    src.value,
-    props.node.attrs.type,
-    props.node.attrs.alt,
-  ).then((base64) => {
-    if (base64) {
-      props.updateAttributes({ src: base64 })
-    } else {
-      log.error(`Could not load image ${src.value}`)
-      props.deleteNode()
-    }
+
+if (!props.node.attrs.src.startsWith('/api/v1/attachments/')) {
+  const { uploadImage } = useImageUpload(
+    editorAttributes.value['data-form-id'] as string,
+    editorAttributes.value.name as string,
+    true,
+  )
+
+  uploadImage(
+    [
+      {
+        name: props.node.attrs.alt || 'untitled',
+        type:
+          props.node.attrs.type ||
+          props.node.attrs.src?.match(/^data:(.+);base64/)?.at(1),
+        content: props.node.attrs.content || props.node.attrs.src,
+      },
+    ],
+    (files) => {
+      // Remember the preview src before updating the src in the node.
+      const previewSrc = props.node.attrs.src
+
+      props.updateAttributes({ src: files[0].src, content: null })
+
+      nextTick(() => {
+        URL.revokeObjectURL(previewSrc)
+        testFlags.set('editor.inlineImagesLoaded')
+      })
+    },
+  ).catch(() => {
+    uploadFailed.value = true
+
+    nextTick(() => testFlags.set('editor.inlineImagesFailure'))
   })
 }
 
@@ -52,12 +79,7 @@ const dimensions = reactive({
 })
 
 const onLoadImage = (e: Event) => {
-  if (
-    imageLoaded.value ||
-    needBase64Convert(src.value) ||
-    props.editor.isDestroyed ||
-    !props.editor.isEditable
-  )
+  if (imageLoaded.value || props.editor.isDestroyed || !props.editor.isEditable)
     return
 
   const img = e.target as HTMLImageElement
@@ -97,16 +119,28 @@ const wrapperStyle = computed(() => {
 </script>
 
 <template>
-  <NodeViewWrapper as="div" class="inline-block" :style="wrapperStyle">
+  <NodeViewWrapper
+    as="div"
+    class="relative inline-block"
+    :style="wrapperStyle"
+    :class="{
+      'opacity-50': !uploadCacheExists,
+    }"
+  >
     <button
       v-if="!isResizing && src"
-      class="inline-block"
+      class="relative inline-block"
+      :disabled="uploadFailed"
       @click="isResizing = true"
       @keydown.space.prevent="isResizing = true"
       @keydown.enter.prevent="isResizing = true"
     >
+      <ImageFailedUploadOverlay
+        v-if="uploadFailed"
+        :width="`${isResized ? `${dimensions.width}px` : '100%'}`"
+        :height="`${isResized ? `${dimensions.height}px` : 'auto'}`"
+      />
       <img
-        v-if="!isResizing && src"
         class="inline-block"
         :style="style"
         :src="src"
@@ -123,6 +157,7 @@ const wrapperStyle = computed(() => {
       v-model:active="isResizing"
       :h="dimensions.height"
       :w="dimensions.width"
+      :handles="['br', 'mr', 'tr']"
       :draggable="false"
       lock-aspect-ratio
       parent

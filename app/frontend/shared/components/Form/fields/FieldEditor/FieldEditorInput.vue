@@ -3,15 +3,7 @@
 <script setup lang="ts">
 import { useEditor, EditorContent } from '@tiptap/vue-3'
 import { useEventListener } from '@vueuse/core'
-import {
-  computed,
-  onMounted,
-  onUnmounted,
-  ref,
-  toRef,
-  watch,
-  nextTick,
-} from 'vue'
+import { computed, onMounted, onUnmounted, ref, toRef, watch } from 'vue'
 
 import { getFieldEditorClasses } from '#shared/components/Form/initializeFieldEditor.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
@@ -86,10 +78,9 @@ interface LoadImagesOptions {
 }
 
 const inlineImagesInEditor = (editor: Editor, files: File[]) => {
-  convertInlineImages(files, editor.view.dom).then((urls) => {
+  convertInlineImages(files, editor.view.dom).then(async (urls) => {
     if (editor?.isDestroyed) return
     editor?.commands.setImages(urls)
-    nextTick(() => testFlags.set('editor.inlineImagesLoaded'))
   })
 }
 
@@ -150,7 +141,8 @@ const editor = useEditor({
       name: props.context.node.name,
       id: props.context.id,
       class: props.context.classes.input,
-      'data-value': editorValue.value, // TODO: for which purpose?
+      'data-value': editorValue.value, // for testing, do not delete
+      'data-form-id': props.context.formId,
     },
     // add inlined files
     handlePaste(view, event) {
@@ -218,22 +210,25 @@ const editor = useEditor({
   },
 })
 
-watch(
-  () => [props.context.id, editorValue.value],
-  ([id, value]) => {
-    editor.value?.setOptions({
-      editorProps: {
-        attributes: {
-          role: 'textbox',
-          name: props.context.node.name,
-          id,
-          class: props.context.classes.input,
-          'data-value': value,
+if (VITE_TEST_MODE) {
+  watch(
+    () => [props.context.id, editorValue.value],
+    ([id, value]) => {
+      editor.value?.setOptions({
+        editorProps: {
+          attributes: {
+            role: 'textbox',
+            name: props.context.node.name,
+            id,
+            class: props.context.classes.input,
+            'data-value': value,
+            'data-form-id': props.context.formId,
+          },
         },
-      },
-    })
-  },
-)
+      })
+    },
+  )
+}
 
 watch(
   () => props.context.disabled,
@@ -425,6 +420,7 @@ const classes = getFieldEditorClasses()
       v-if="editor"
       :editor="editor"
       :content-type="contentType"
+      :form-id="context.formId"
     />
   </div>
 
@@ -434,6 +430,7 @@ const classes = getFieldEditorClasses()
     :content-type="contentType"
     :visible="showActionBar"
     :disabled-plugins="disabledPlugins"
+    :form-id="context.formId"
     @hide="showActionBar = false"
     @blur="focusEditor"
   />

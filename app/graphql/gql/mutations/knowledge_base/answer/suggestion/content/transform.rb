@@ -28,37 +28,9 @@ module Gql::Mutations
     def convert_body(translation)
       return if translation.content.blank?
 
-      Loofah.scrub_fragment(translation.content.body, inline_image_scrubber(translation.content.attachments)).to_s
-    end
+      scrubber = HtmlSanitizer::Scrubber::InsertInlineImages.new(translation.content.attachments)
 
-    def inline_image_scrubber(attachments)
-      Loofah::Scrubber.new do |node|
-        next if !contains_inline_images?(node)
-
-        lookup_cids = inline_images_cids(node)
-
-        attachment = attachments.find { |file| lookup_cids.include?(file.preferences&.dig('Content-ID')) }
-        next if !attachment
-
-        node['cid'] = nil
-        node['src'] = base64_data_url(attachment)
-      end
-    end
-
-    def contains_inline_images?(node)
-      return false if node.name != 'img'
-      return false if !node['src']&.start_with?('cid:')
-
-      true
-    end
-
-    def inline_images_cids(node)
-      cid = node['src'].sub(%r{^cid:}, '')
-      [cid, "<#{cid}>"]
-    end
-
-    def base64_data_url(attachment)
-      "data:#{attachment.preferences['Content-Type']};base64,#{Base64.strict_encode64(attachment.content)}"
+      Loofah.scrub_fragment(translation.content.body, scrubber).to_s
     end
 
     def extract_and_copy_attachments(translation, form_id)

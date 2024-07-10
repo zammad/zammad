@@ -23,6 +23,7 @@ RSpec.describe Gql::Mutations::Form::UploadCache::Add, type: :graphql do
     let(:file_name)    { 'my_testfile.pdf' }
     let(:file_type)    { 'application/pdf' }
     let(:file_content) { 'some test content' }
+    let(:inline)       { nil }
     let(:variables) do
       {
         formId: form_id,
@@ -31,7 +32,8 @@ RSpec.describe Gql::Mutations::Form::UploadCache::Add, type: :graphql do
             name:    file_name,
             type:    file_type,
             content: Base64.strict_encode64(file_content),
-          }
+            inline:  inline
+          }.compact
         ]
       }
     end
@@ -50,6 +52,42 @@ RSpec.describe Gql::Mutations::Form::UploadCache::Add, type: :graphql do
 
     it 'creates Store entry' do
       expect(gql.result.data['uploadedFiles']).to eq(expected_response)
+    end
+
+    it 'does not mark uploaded file as inline' do
+      attachment = UploadCache.new(form_id).attachments.first
+
+      expect(attachment).not_to be_inline
+    end
+
+    context 'when inline flag is given' do
+      context 'when flag is true' do
+        let(:inline) { true }
+
+        it 'creates Store entry' do
+          expect(gql.result.data['uploadedFiles']).to eq(expected_response)
+        end
+
+        it 'marks uploaded file as inline' do
+          attachment = UploadCache.new(form_id).attachments.first
+
+          expect(attachment).to be_inline
+        end
+      end
+
+      context 'when flag is false' do
+        let(:inline) { false }
+
+        it 'creates Store entry' do
+          expect(gql.result.data['uploadedFiles']).to eq(expected_response)
+        end
+
+        it 'does not mark uploaded file as inline' do
+          attachment = UploadCache.new(form_id).attachments.first
+
+          expect(attachment).not_to be_inline
+        end
+      end
     end
 
     it_behaves_like 'graphql responds with error if unauthenticated'

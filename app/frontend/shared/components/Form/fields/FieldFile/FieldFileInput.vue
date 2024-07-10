@@ -13,6 +13,8 @@ import { useTraverseOptions } from '#shared/composables/useTraverseOptions.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { convertFileList } from '#shared/utils/files.ts'
 
+import { useFileUploadProcessing } from '../../composables/useFileUploadProcessing.ts'
+
 import { useFileValidation } from './composable/useFileValidation.ts'
 import { useFormUploadCacheAddMutation } from './graphql/mutations/uploadCache/add.api.ts'
 import { useFormUploadCacheRemoveMutation } from './graphql/mutations/uploadCache/remove.api.ts'
@@ -67,6 +69,9 @@ const canInteract = computed(
     !removeFileLoading.value,
 )
 
+const { setFileUploadProcessing, removeFileUploadProcessing } =
+  useFileUploadProcessing(props.context.formId, props.context.node.name)
+
 const fileInput = ref<HTMLInputElement>()
 const reset = () => {
   loadingFiles.value = []
@@ -74,6 +79,8 @@ const reset = () => {
   if (!input) return
   input.value = ''
   input.files = null
+
+  removeFileUploadProcessing()
 }
 
 const loadFiles = async (files: FileList | File[]) => {
@@ -82,6 +89,8 @@ const loadFiles = async (files: FileList | File[]) => {
     size: file.size,
     type: file.type,
   }))
+
+  setFileUploadProcessing()
 
   const uploads = await convertFileList(files)
 

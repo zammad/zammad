@@ -41,32 +41,11 @@ Checks if file is used inline
   def has_rich_text_parse_attribute(attr) # rubocop:disable Naming/PredicateName
     image_prefix = "#{self.class.name}_#{attr}"
     raw = send(attr)
+    return if raw.blank?
 
-    scrubber = Loofah::Scrubber.new do |node|
-      next if node.name != 'img'
-      next if !(cid = node.delete 'cid')
-
-      node['src'] = "cid:#{cid}"
-    end
-
-    parsed = Loofah.scrub_fragment(raw, scrubber).to_s
+    parsed = Loofah.scrub_fragment(raw, HtmlSanitizer::CidToSrc.new).to_s
     parsed = HtmlSanitizer.strict(parsed)
-
-    line_breaks = ["\n", "\r", "\r\n"]
-    scrubber_cleaner = Loofah::Scrubber.new(direction: :bottom_up) do |node|
-      case node.name
-      when 'span'
-        node.children.reject { |t| line_breaks.include?(t.text) }.each { |child| node.before child }
-
-        node.remove
-      when 'div'
-        node.children.to_a.select { |t| t.text.match?(%r{\A([\n\r]+)\z}) }.each(&:remove)
-
-        node.remove if node.children.none? && node.classes.none?
-      end
-    end
-
-    parsed = Loofah.scrub_fragment(parsed, scrubber_cleaner).to_s
+    parsed = Loofah.scrub_fragment(parsed, HtmlSanitizer::RemoveLineBreaks.new).to_s
 
     (parsed, attachments_inline) = HtmlSanitizer.replace_inline_images(parsed, image_prefix)
 
@@ -111,7 +90,7 @@ Checks if file is used inline
 
   def has_rich_text_cleanup_unused_attachments # rubocop:disable Naming/PredicateName
     active_cids = has_rich_text_attributes.each_with_object([]) do |elem, memo|
-      memo.concat self.class.has_rich_text_inline_cids(self, elem)
+      memo.concat self.class.has_rich_text_inline_cids(self, send(elem))
     end
 
     attachments
@@ -126,14 +105,12 @@ Checks if file is used inline
 
       attrs.each do |attr|
         define_method :"#{attr}_with_urls" do
-          self.class.has_rich_text_insert_urls(self, attr)
+          self.class.has_rich_text_insert_urls(self, send(attr))
         end
       end
     end
 
-    def has_rich_text_insert_urls(object, attr) # rubocop:disable Naming/PredicateName
-      raw = object.send(attr)
-
+    def has_rich_text_insert_urls(object, raw) # rubocop:disable Naming/PredicateName
       attachments = object.attachments
 
       scrubber = Loofah::Scrubber.new do |node|
@@ -157,9 +134,7 @@ Checks if file is used inline
 
     end
 
-    def has_rich_text_inline_cids(object, attr) # rubocop:disable Naming/PredicateName
-      raw = object.send(attr)
-
+    def has_rich_text_inline_cids(_object, raw) # rubocop:disable Naming/PredicateName
       inline_cids = []
 
       scrubber = Loofah::Scrubber.new do |node|

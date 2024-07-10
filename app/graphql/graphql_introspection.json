@@ -21137,6 +21137,16 @@
                 "ofType": null
               },
               "defaultValue": null
+            },
+            {
+              "name": "inline",
+              "description": "Content-Disposition: inline flag",
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "defaultValue": null
             }
           ],
           "interfaces": null,

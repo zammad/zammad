@@ -20,9 +20,9 @@ const removeQuotingFromBody = (body: string) => {
   const parser = new DOMParser()
   const document = parser.parseFromString(body, 'text/html')
 
-  // Select all blockquote elements
-  const foundBlockquotes = document.querySelectorAll('blockquote')
-  foundBlockquotes.forEach((blockquote) => blockquote.remove())
+  // Remove blockquotes and images
+  // To not detect matchwords which are not part of the user-written article
+  document.querySelectorAll('blockquote, img').forEach((elem) => elem.remove())
 
   // Return the modified HTML content as a string.
   return document.body.innerHTML

@@ -70,10 +70,13 @@ returns
   end
 
   def attach_upload_cache(form_id, source_object_name: 'UploadCache')
-    attachments_remove_all
+    attachments
+      .reject(&:inline?)
+      .each { |attachment| Store.remove_item(attachment.id) }
 
     Store
       .list(object: source_object_name, o_id: form_id)
+      .reject(&:inline?)
       .map do |old_attachment|
         Store.create!(
           object:      self.class.name,

@@ -14,11 +14,17 @@ class HtmlSanitizer
 
       def scrub(node)
         return CONTINUE if node.name != 'img'
+        return CONTINUE if node['src'].blank?
 
-        if node['src'] && node['src'] =~ %r{^(data:image/(jpeg|png);base64,.+?)$}i
+        case node['src']
+        when %r{^(data:image/(jpeg|png);base64,.+?)$}i
           process_inline_image(node, $1)
-        elsif node['data-user-avatar'] && node['src'] && node['src'] =~ %r{users/image/(.+)}
+        when %r{^(?:/api/v1/attachments/)(\d+)$}
+          process_uploaded_image(node, $1)
+        when %r{users/image/(.+)}
           process_user_avatar_image(node, $1)
+        when %r{^(?:blob:)}
+          node.remove
         end
 
         STOP
@@ -44,8 +50,17 @@ class HtmlSanitizer
         node['src'] = "cid:#{cid}"
       end
 
+      def process_uploaded_image(node, attachment_id)
+        cid        = generate_cid
+        attachment = Store.find(attachment_id)
+
+        @attachments_inline.push attachment(attachment.content, attachment.filename, cid, mime_type: attachment.preferences['Mime-Type'], content_type: attachment.preferences['Content-Type'])
+        node['src'] = "cid:#{cid}"
+      end
+
       def process_user_avatar_image(node, image_hash)
-        return if hash.blank?
+        return if !node['data-user-avatar']
+        return if image_hash.blank?
 
         cid = generate_cid
         file = avatar_file(image_hash)

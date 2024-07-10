@@ -43,7 +43,7 @@ Rails.application.config.content_security_policy do |policy|
 
   policy.default_src :self, :ws, :wss, 'https://images.zammad.com'
   policy.font_src    :self, :data
-  policy.img_src     '*', :data
+  policy.img_src     '*', :data, :blob
   policy.object_src  :none
   policy.script_src  :self, :unsafe_eval
   policy.style_src   :self, :unsafe_inline

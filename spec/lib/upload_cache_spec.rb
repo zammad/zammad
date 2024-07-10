@@ -106,4 +106,47 @@ RSpec.describe UploadCache do
       expect { upload_cache.remove_item(form_id) }.to raise_error(ActiveRecord::RecordNotFound)
     end
   end
+
+  describe '.files_include_attachment?' do
+    let(:files) do
+      [
+        { name: 'name.jpg', type: 'image/jpg' },
+        { name: 'name.png', type: 'wrong' },
+        { name: 'name2.exe' },
+        { name: 'other.jpg' }
+      ]
+    end
+
+    context 'when one of files match by name' do
+      let(:attachment) { create(:store, :image, filename: 'other.jpg') }
+
+      it 'returns true' do
+        expect(described_class).to be_files_include_attachment files, attachment
+      end
+    end
+
+    context 'when one of files match by name but not type' do
+      let(:attachment) { create(:store, :image, filename: 'name.png') }
+
+      it 'returns false' do
+        expect(described_class).not_to be_files_include_attachment files, attachment
+      end
+    end
+
+    context 'when one of files match by name and type' do
+      let(:attachment) { create(:store, :image, filename: 'name.jpg') }
+
+      it 'returns true' do
+        expect(described_class).to be_files_include_attachment files, attachment
+      end
+    end
+
+    context 'when no files match' do
+      let(:attachment) { create(:store, :txt) }
+
+      it 'returns false' do
+        expect(described_class).not_to be_files_include_attachment files, attachment
+      end
+    end
+  end
 end

@@ -21,6 +21,7 @@ const props = defineProps<{
   contentType: EditorContentType
   visible: boolean
   disabledPlugins: EditorCustomPlugins[]
+  formId: string
 }>()
 
 defineEmits<{

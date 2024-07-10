@@ -13,19 +13,27 @@ module Gql::Mutations
 
     def resolve(form_id:, files:)
 
-      cache = UploadCache.new(form_id)
-
-      result = files.map do |file|
-        cache.add(
-          data:          file.content,
-          filename:      file.name,
-          preferences:   { 'Content-Type' => file.type },
-          created_by_id: context.current_user.id
-        )
-      end
+      cache  = UploadCache.new(form_id)
+      result = files.map { |elem| add_single_file(cache, elem) }
 
       { uploaded_files: result }
     end
 
+    private
+
+    def add_single_file(cache, file)
+      preferences = { 'Content-Type' => file.type }
+
+      if file.inline
+        preferences['Content-Disposition'] = 'inline'
+      end
+
+      cache.add(
+        data:          file.content,
+        filename:      file.name,
+        preferences:   preferences,
+        created_by_id: context.current_user.id
+      )
+    end
   end
 end

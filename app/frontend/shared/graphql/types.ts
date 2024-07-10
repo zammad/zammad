@@ -3511,6 +3511,8 @@ export type TwoFactorRecoveryInput = {
 export type UploadFileInput = {
   /** File content */
   content?: InputMaybe<Scalars['BinaryString']['input']>;
+  /** Content-Disposition: inline flag */
+  inline?: InputMaybe<Scalars['Boolean']['input']>;
   /** File name. */
   name: Scalars['String']['input'];
   /** File's content-type. */

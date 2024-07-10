@@ -2,8 +2,8 @@
 
 require 'rails_helper'
 
-RSpec.describe Ticket::SharedDraftStart, type: :model do
-  subject(:shared_draft_start) { create(:ticket_shared_draft_start) }
+RSpec.describe Ticket::SharedDraftStart, current_user_id: 1, type: :model do
+  subject(:shared_draft_start) { create(:ticket_shared_draft_start, :with_inline_image) }
 
   it { is_expected.to belong_to :group }
   it { is_expected.to validate_presence_of :name }
@@ -83,6 +83,56 @@ RSpec.describe Ticket::SharedDraftStart, type: :model do
               arguments: include(
                 group_id: Gql::ZammadSchema.id_from_object(shared_draft_start.group)
               ))
+    end
+  end
+
+  describe '#body' do
+    let(:test) { Faker::Lorem.sentence }
+
+    it 'reads value from content' do
+      shared_draft_start.content[:body] = test
+
+      expect(shared_draft_start.body).to eq(test)
+    end
+
+    it 'sets value to content' do
+      shared_draft_start.body = test
+
+      expect(shared_draft_start.content).to include(body: test, title: '123')
+    end
+  end
+
+  describe '#body_with_base64' do
+    it 'returns inline images in base64' do
+      expect(shared_draft_start.body_with_base64).to start_with('text and <img src="data:image/jpeg;base64,')
+    end
+  end
+
+  describe '#content_with_base64' do
+    it 'returns inline images in base64' do
+      expect(shared_draft_start.content_with_base64)
+        .to include(body: start_with('text and <img src="data:image/jpeg;base64,'))
+    end
+  end
+
+  describe '#content_with_body_urls' do
+    it 'returns inline images with URLs' do
+      expect(shared_draft_start.content_with_body_urls)
+        .to include(body: start_with('text and <img src="/api/v1/attachments'))
+    end
+  end
+
+  describe '#content_with_form_id_body_urls' do
+    let(:new_form_id) { '123' }
+
+    it 'returns inline images referencing copied assets' do
+      shared_draft_start.clone_attachments('UploadCache', new_form_id)
+
+      new_attachments = Store.list(object: 'UploadCache', o_id: new_form_id)
+
+      expect(shared_draft_start.content_with_form_id_body_urls(new_form_id)).to include(
+        body: start_with("text and <img src=\"/api/v1/attachments/#{new_attachments.last.id}")
+      )
     end
   end
 end

@@ -167,6 +167,7 @@ const openFlyout = (sharedDraftStartId: string) => {
       link-icon="plus-square-fill"
       :link-label="__('Create Shared Draft')"
       @link-click.prevent="createSharedDraft"
+      @keypress.enter.prevent="createSharedDraft"
     />
 
     <div class="py-1">

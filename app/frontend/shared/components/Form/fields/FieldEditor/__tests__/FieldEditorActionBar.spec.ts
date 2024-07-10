@@ -2,6 +2,8 @@
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
+import getUuid from '#shared/utils/getUuid.ts'
+
 import FieldEditorActionBar from '../FieldEditorActionBar.vue'
 
 // not actually executed in a unit test, should speed up tests
@@ -24,6 +26,7 @@ describe('keyboard interactions', () => {
         visible: true,
         contentType: 'text/html',
         disabledPlugins: [],
+        formId: getUuid(),
       },
     })
 
@@ -53,6 +56,7 @@ describe('keyboard interactions', () => {
         visible: true,
         contentType: 'text/html',
         disabledPlugins: [],
+        formId: getUuid(),
       },
     })
 
@@ -73,6 +77,7 @@ describe('keyboard interactions', () => {
         contentType: 'text/html',
         visible: true,
         disabledPlugins: [],
+        formId: getUuid(),
       },
     })
 
@@ -88,6 +93,7 @@ describe('keyboard interactions', () => {
         contentType: 'text/html',
         visible: true,
         disabledPlugins: [],
+        formId: getUuid(),
       },
     })
 
@@ -104,6 +110,7 @@ describe('keyboard interactions', () => {
         contentType: 'text/html',
         visible: true,
         disabledPlugins: [],
+        formId: getUuid(),
       },
     })
 
@@ -120,6 +127,7 @@ describe('basic toolbar testing', () => {
         contentType: 'text/html',
         visible: true,
         disabledPlugins: ['mentionUser'],
+        formId: getUuid(),
       },
     })
 
@@ -137,6 +145,7 @@ describe('basic toolbar testing', () => {
         contentType: 'text/plain',
         visible: true,
         disabledPlugins: [],
+        formId: getUuid(),
       },
     })
 

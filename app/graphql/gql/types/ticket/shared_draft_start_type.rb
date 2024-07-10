@@ -12,6 +12,6 @@ module Gql::Types::Ticket
     belongs_to :group, Gql::Types::GroupType
 
     field :name, String
-    field :content, ::GraphQL::Types::JSON
+    field :content, ::GraphQL::Types::JSON, method: :content_with_body_urls
   end
 end

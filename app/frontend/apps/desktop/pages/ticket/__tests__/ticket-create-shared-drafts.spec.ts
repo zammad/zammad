@@ -54,6 +54,9 @@ describe('ticket create view - shared drafts sidebar', async () => {
 
       await view.events.type(view.getByLabelText('Text'), 'foobar')
 
+      const formUpdaterCalls = await waitForFormUpdaterQueryCalls()
+      await vi.waitUntil(() => formUpdaterCalls.length === 2)
+
       mockTicketSharedDraftStartListQuery({
         ticketSharedDraftStartList: [],
       })

@@ -100,16 +100,8 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
       .new(form_id)
       .attachments
       .select do |elem|
-        file_meta.any? { |file| check_attachment_match(elem, file) }
+        UploadCache.files_include_attachment?(file_meta, elem)
       end
-  end
-
-  def check_attachment_match(attachment, file)
-    if file[:type].present? && attachment[:preferences].present? && attachment[:preferences]['Content-Type'].present?
-      file[:name] == attachment[:filename] && file[:type] == attachment[:preferences]['Content-Type']
-    end
-
-    file[:name] == attachment[:filename]
   end
 
   def time_accounting(article, time_unit)
