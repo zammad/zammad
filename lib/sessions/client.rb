@@ -23,6 +23,7 @@ class Sessions::Client
     user_updated_at_last_run = nil
     loop_count               = 0
     loop do
+      ActiveSupport::CurrentAttributes.clear_all
 
       # check if session still exists
       return if !Sessions.session_exists?(@client_id)

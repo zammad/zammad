@@ -508,4 +508,27 @@ RSpec.describe 'Ticket views', authenticated_as: :authenticate, type: :system do
       end
     end
   end
+
+  context 'Overview is not refreshing #5260', authenticated_as: :agent, sessions_jobs: true do
+    let(:agent)       { create(:agent, groups: Group.all) }
+    let(:ticket)      { Ticket.first }
+    let(:new_title_1) { SecureRandom.uuid }
+    let(:new_title_2) { SecureRandom.uuid }
+    let(:new_title_3) { SecureRandom.uuid }
+
+    before do
+      visit '#ticket/view/all_open'
+      ensure_websocket
+    end
+
+    it 'does refresh the ticket after the title has changed' do
+      expect(page).to have_text(ticket.title)
+      ticket.update(title: new_title_1)
+      expect(page).to have_text(ticket.title)
+      ticket.update(title: new_title_2)
+      expect(page).to have_text(ticket.title)
+      ticket.update(title: new_title_3)
+      expect(page).to have_text(ticket.title)
+    end
+  end
 end
