@@ -11,17 +11,12 @@
     - |
       echo "Creating docker compose files…"
       curl https://raw.githubusercontent.com/zammad/zammad-docker-compose/master/docker-compose.yml > docker-compose.yml
-      curl https://raw.githubusercontent.com/zammad/zammad-docker-compose/master/.env > .env
       cat - <<YML_FILE > docker-compose.review-app.yml
       ---
-      version: '3'
+      version: '3.8'
       services:
         zammad-init:
           environment:
-            - MEMCACHE_SERVERS=\${MEMCACHE_SERVERS}
-            - POSTGRESQL_USER=\${POSTGRES_USER}
-            - POSTGRESQL_PASS=\${POSTGRES_PASS}
-            - REDIS_URL=\${REDIS_URL}
             - ZAMMAD_HTTP_TYPE=https
             - ZAMMAD_FQDN=${APP_FQDN}
         zammad-railsserver:
