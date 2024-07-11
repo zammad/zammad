@@ -6,7 +6,7 @@ class App.KnowledgeBasePermissionsDialog extends App.ControllerModal
   head: 'Permissions'
   includeForm: true
   buttonSubmit: true
-  accessLevels: { editor: 'Editor', reader: 'Reader', none: 'None' }
+  accessLevels: { editor: __('Editor'), reader: __('Reader'), none: __('None') }
 
   cellBackgroundClicked: (e) ->
     return if e.target != e.currentTarget

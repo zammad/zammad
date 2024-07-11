@@ -3,7 +3,12 @@ class App.KnowledgeBaseAddForm extends App.ControllerModal
     for key, value of params
       @[key] = value
 
-    @head = @object.objectActionName()
+    @head = switch @object.constructor
+      when App.KnowledgeBaseAnswer
+        __('New Answer')
+      when App.KnowledgeBaseCategory
+        __('New Category')
+
     super(params)
 
   buttonSubmit: __('Create')

@@ -5,7 +5,7 @@
 <div class="main flex vertical end">
   <div class="page-header">
     <div class="page-header-title">
-      <h2><%- @T(@object.objectActionName()) %></h2>
+      <h2><%- @T(@header()) %></h2>
       <% if @object.constructor.canBePublished?(): %>
         <%- @V('knowledge_base/content_can_be_published_header_suffix', object: @object) %>
       <% end %>

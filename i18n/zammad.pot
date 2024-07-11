@@ -3222,7 +3222,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:19
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:81
-#: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:9
+#: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:14
 #: app/assets/javascripts/app/models/group.coffee:45
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:56
 #: app/assets/javascripts/app/views/agent_user_create.jst.eco:13
@@ -5001,11 +5001,23 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:173
+msgid "Edit Answer"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:175
+msgid "Edit Category"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:16
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:26
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:34
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:95
 msgid "Edit Customer"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:171
+msgid "Edit Knowledge Base"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee:21
@@ -5038,6 +5050,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:38
 msgid "Editing on Desktop"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
+msgid "Editor"
 msgstr ""
 
 #: db/seeds/settings.rb:3533
@@ -8971,6 +8987,10 @@ msgstr ""
 msgid "New Activity Type"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:8
+msgid "New Answer"
+msgstr ""
+
 #: app/assets/javascripts/app/views/api.jst.eco:52
 msgid "New Application"
 msgstr ""
@@ -8981,6 +9001,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:10
 msgid "New Calendar"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:10
+msgid "New Category"
 msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:8
@@ -9391,6 +9415,7 @@ msgstr ""
 msgid "No, thanks"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
 #: app/graphql/gql/types/ticket_type.rb:98
@@ -10826,6 +10851,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/group.coffee:44
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:40
 msgid "Read"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
+msgid "Reader"
 msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:6

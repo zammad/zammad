@@ -72,10 +72,6 @@ InstanceMethods =
     params['translations_attributes'] = [translation_params]
     params
 
-  objectActionName: ->
-    action = if @isNew() then 'New' else 'Edit'
-    "#{action} #{@objectName()}"
-
   removeTranslations: (options = {}) ->
     for translation in @translations()
       translation.remove(options)

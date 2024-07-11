@@ -164,3 +164,12 @@ class App.KnowledgeBaseContentController extends App.Controller
 
     # add delay to give it time to rerender before showing prompt
     App.Delay.set => @rerenderIfConfirmed()
+
+  header: ->
+    switch @object.constructor
+      when App.KnowledgeBase
+        __('Edit Knowledge Base')
+      when App.KnowledgeBaseAnswer
+        __('Edit Answer')
+      when App.KnowledgeBaseCategory
+        __('Edit Category')
