@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { password as passwordDefinition } from '@formkit/inputs'
+import { useEventListener } from '@vueuse/core'
 import { cloneDeep } from 'lodash-es'
 
 import initializeFieldDefinition from '#shared/form/core/initializeFieldDefinition.ts'
@@ -18,6 +19,20 @@ const switchPasswordVisibility = (node: FormKitNode) => {
   props.onSuffixIconClick = () => {
     props.type = props.type === 'password' ? 'text' : 'password'
   }
+
+  node.on('mounted', ({ origin }) => {
+    if (origin.name !== 'password' && !props.id) return
+
+    const suffixIcon = document.getElementById(
+      props.id as string,
+    )?.nextElementSibling
+
+    if (suffixIcon)
+      useEventListener(suffixIcon, 'keydown', (event: KeyboardEvent) => {
+        if (event.code === 'Space')
+          props.type = props.type === 'password' ? 'text' : 'password'
+      })
+  })
 
   node.on('prop:type', ({ payload, origin }) => {
     const { props } = origin

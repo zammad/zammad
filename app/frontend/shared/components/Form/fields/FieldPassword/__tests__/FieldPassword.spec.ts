@@ -2,37 +2,41 @@
 
 import { getNode } from '@formkit/core'
 import { FormKit } from '@formkit/vue'
+import { fireEvent } from '@testing-library/vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
-import type { ExtendedRenderResult } from '#tests/support/components/index.ts'
 import { waitForNextTick, waitForTimeout } from '#tests/support/utils.ts'
 
 const wrapperParameters = {
   form: true,
   formField: true,
-  unmount: false,
 }
 
+const defaultProps: {
+  name?: string
+  type?: string
+  id?: string
+  label?: string
+  placeholder?: string
+  help?: string
+  maxlength?: number
+  minlength?: number
+} = {
+  name: 'password',
+  type: 'password',
+  id: 'password',
+  label: 'Password',
+}
+
+const renderFieldPassword = (props = defaultProps) =>
+  renderComponent(FormKit, {
+    ...wrapperParameters,
+    props,
+  })
+
 describe('Form - Field - Password (Formkit-BuildIn)', () => {
-  let wrapper: ExtendedRenderResult
-
-  beforeAll(() => {
-    wrapper = renderComponent(FormKit, {
-      ...wrapperParameters,
-      props: {
-        name: 'password',
-        type: 'password',
-        id: 'password',
-        label: 'Password',
-      },
-    })
-  })
-
-  afterAll(() => {
-    wrapper.unmount()
-  })
-
   it('can render an input', () => {
+    const wrapper = renderFieldPassword()
     const input = wrapper.getByLabelText('Password')
 
     expect(input).toHaveAttribute('id', 'password')
@@ -44,7 +48,7 @@ describe('Form - Field - Password (Formkit-BuildIn)', () => {
   })
 
   it('set some props', async () => {
-    await wrapper.rerender({
+    const wrapper = renderFieldPassword({
       label: 'Password',
       help: 'This is the help text',
       placeholder: 'Enter your password',
@@ -62,6 +66,8 @@ describe('Form - Field - Password (Formkit-BuildIn)', () => {
   })
 
   it('check for the input event', async () => {
+    const wrapper = renderFieldPassword()
+
     const input = wrapper.getByLabelText('Password')
 
     await wrapper.events.type(input, 'Test1234!')
@@ -73,6 +79,8 @@ describe('Form - Field - Password (Formkit-BuildIn)', () => {
   })
 
   it('can be disabled', async () => {
+    const wrapper = renderFieldPassword()
+
     const input = wrapper.getByLabelText('Password')
 
     expect(input).toBeEnabled()
@@ -93,45 +101,44 @@ describe('Form - Field - Password (Formkit-BuildIn)', () => {
 })
 
 describe('toggling visibility', () => {
-  let wrapper: ExtendedRenderResult
+  it('can show and hide password', async () => {
+    const wrapper = renderFieldPassword()
 
-  beforeAll(() => {
-    wrapper = renderComponent(FormKit, {
-      ...wrapperParameters,
-      props: {
-        type: 'password',
-        label: 'Password',
-      },
-    })
-  })
-
-  afterAll(() => {
-    wrapper.unmount()
-  })
-
-  it('can show password', async () => {
     const input = wrapper.getByLabelText('Password')
 
-    const iconToggle = wrapper.getByIconName('show')
+    const toggleButton = wrapper.getByRole('button')
 
-    await wrapper.events.click(iconToggle)
+    // Mouse
+    // Show
+    await wrapper.events.click(toggleButton)
     await waitForNextTick(true)
 
     expect(input).toHaveAttribute('type', 'text')
     expect(wrapper.getByIconName('hide')).toBeInTheDocument()
-  })
 
-  it('can hide password', async () => {
-    const input = wrapper.getByLabelText('Password')
+    // Hide
+    await wrapper.events.click(toggleButton)
 
-    const iconToggle = wrapper.getByIconName('hide')
-
-    await wrapper.events.click(iconToggle)
-    await waitForNextTick(true)
-
-    await waitForNextTick(true)
-
-    expect(input).toHaveAttribute('type', 'password')
     expect(wrapper.getByIconName('show')).toBeInTheDocument()
+    expect(input).toHaveAttribute('type', 'password')
+
+    // Keystroke
+    // Show
+    await fireEvent.keyDown(toggleButton, {
+      key: 'Space',
+      code: 'Space',
+    })
+
+    expect(wrapper.getByIconName('hide')).toBeInTheDocument()
+    expect(input).toHaveAttribute('type', 'text')
+
+    // Hide
+    await fireEvent.keyDown(toggleButton, {
+      key: 'Space',
+      code: 'Space',
+    })
+
+    expect(wrapper.getByIconName('show')).toBeInTheDocument()
+    expect(input).toHaveAttribute('type', 'password')
   })
 })
