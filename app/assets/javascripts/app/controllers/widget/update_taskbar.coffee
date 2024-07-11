@@ -1,4 +1,4 @@
-class App.UpdateTastbar extends App.Controller
+class App.UpdateTaskbar extends App.Controller
   constructor: ->
     super
 

@@ -71,7 +71,7 @@ class App.OrganizationProfile extends App.Controller
 
     @html elLocal
 
-    new App.UpdateTastbar(
+    new App.UpdateTaskbar(
       genericObject: organization
     )
 

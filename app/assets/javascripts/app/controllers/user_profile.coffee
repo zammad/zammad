@@ -68,7 +68,7 @@ class App.UserProfile extends App.Controller
 
     @html elLocal
 
-    new App.UpdateTastbar(
+    new App.UpdateTaskbar(
       genericObject: user
     )
 
