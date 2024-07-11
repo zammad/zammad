@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-20 04:52+0000\n"
+"PO-Revision-Date: 2024-07-11 05:19+0000\n"
 "Last-Translator: Mantas Masalskis <mantas@idev.lt>\n"
 "Language-Team: Lithuanian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/lt/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n % 10 == 1 && (n % 100 < 11 || n % 100 > "
 "19)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? "
 "1 : 2);\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -590,7 +590,7 @@ msgstr "%s subdomenas"
 #: app/assets/javascripts/app/models/user.coffee:208
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts:30
 msgid "%s switched to |%s|!"
-msgstr ""
+msgstr "%s prisijungė kaip „%s“!"
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue:54
 #: app/frontend/apps/mobile/components/User/UserItem.vue:30
@@ -13206,7 +13206,7 @@ msgstr ""
 #: app/views/messaging/ticket_info/pt-br.md.erb:5
 #: db/seeds/object_manager_attributes.rb:248 lib/excel_sheet/ticket.rb:25
 msgid "State"
-msgstr "Būsena"
+msgstr "Būklė"
 
 #: db/seeds/settings.rb:5309
 msgid "Stats Backend"

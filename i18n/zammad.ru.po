@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-09 23:18+0000\n"
+"PO-Revision-Date: 2024-07-11 05:19+0000\n"
 "Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
@@ -2032,8 +2032,8 @@ msgid ""
 "Assignment timeout in minutes if assigned agent is not working on it. Ticket "
 "will be shown as unassigend."
 msgstr ""
-"Назначьте времени ожидания в минутах, если назначенный агент не работает над "
-"заявкой, заявка будет показана как «не назначенная»."
+"Время ожидания назначения в минутах, если назначенный агент не работает над "
+"заявкой. Заявка будет отображаться как «не назначенная»."
 
 #: app/models/user.rb:715
 msgid ""
@@ -4001,7 +4001,7 @@ msgstr "Чат с сайта"
 
 #: db/seeds/settings.rb:3246
 msgid "Customer selection based on sender and receiver list"
-msgstr "Customer selection based on sender and receiver list"
+msgstr "Выбор клиента на основе списка отправителей и получателей"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:7
 msgid ""
@@ -4029,11 +4029,11 @@ msgstr "Вырезать"
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:19
 msgid "Dark"
-msgstr "Темный"
+msgstr "Тёмная"
 
 #: app/assets/javascripts/app/controllers/dark_mode.coffee:33
 msgid "Dark Mode"
-msgstr "Темный режим"
+msgstr "Тёмный режим"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:5
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:95
@@ -8781,7 +8781,7 @@ msgstr "Библиотека"
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:25
 msgid "Light"
-msgstr "Справа"
+msgstr "Светлая"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:17
 msgid "Limit Groups"
@@ -8959,7 +8959,7 @@ msgstr "Войдите в %s"
 #: app/controllers/time_accountings_controller.rb:109
 #: db/seeds/object_manager_attributes.rb:569
 msgid "Login"
-msgstr "Вход"
+msgstr "Логин"
 
 #: app/assets/javascripts/app/models/public_link.coffee:9
 msgid "Login Screen"
@@ -10469,7 +10469,7 @@ msgid ""
 "Only available for users which are absence replacements for other users."
 msgstr ""
 "Доступно только для пользователей, которые замещают других пользователей в "
-"их отсутствие."
+"их отсутствие"
 
 #: app/assets/javascripts/app/models/overview.coffee:10
 msgid "Only available for users with shared organizations"
@@ -11066,7 +11066,7 @@ msgstr "Пожалуйста, добавьте категории и/или от
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:12
 msgid "Please click on the button below to create your first one."
-msgstr "Пожалуйста, нажмите на кнопку ниже, чтобы создать свою первую."
+msgstr "Пожалуйста, нажмите на кнопку ниже, чтобы создать свою первую заявку."
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco:6
 msgid "Please click on the link in the verification email."
@@ -12893,7 +12893,7 @@ msgstr "Общий черновик не может быть выбран для
 #: app/assets/javascripts/app/models/organization.coffee:7
 #: db/seeds/object_manager_attributes.rb:1547
 msgid "Shared organization"
-msgstr "общий доступ"
+msgstr "Общий доступ"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:19
 msgid "Sharing draft…"
@@ -12901,7 +12901,7 @@ msgstr "Совместное использование черновика…"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:236
 msgid "Shoot"
-msgstr "Стрелять"
+msgstr "Сделать снимок"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:119
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:95
@@ -13224,7 +13224,7 @@ msgstr "Интеграция с Slack"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:43
 msgid "Sms"
-msgstr "SMS"
+msgstr "Sms"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:71
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:17
@@ -13363,7 +13363,7 @@ msgstr "Запущенный"
 
 #: app/assets/javascripts/app/views/getting_started/finish.jst.eco:8
 msgid "Starting Zammad"
-msgstr "Starting Zammad"
+msgstr "Запуск Zammad"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualFinish.vue:25
 msgid "Starting Zammad…"
@@ -15160,7 +15160,7 @@ msgstr "Они поддерживаются:"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:13
 msgid "Third-party Applications"
-msgstr "Third-party Applications"
+msgstr "Сторонние приложения"
 
 #: lib/secure_mailing/pgp/incoming.rb:80
 msgid ""
@@ -17148,7 +17148,8 @@ msgstr ""
 "одного человека, но и **представление всей их организации**.\n"
 "2. Как **клиент** Вы также можете проверять **заявки, созданные Вашими "
 "коллегами**, и изменять их заявки (если для Вашей организации установлено "
-"значение «общий», которое можно определить для каждой организации)."
+"значение «да» в поле «общий доступ», которое можно определить для каждой "
+"организации)."
 
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:105
 #: db/seeds/object_manager_attributes.rb:1293
@@ -17591,7 +17592,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/template.coffee
 msgid "With templates it is possible to pre-fill tickets quickly and easily."
-msgstr "С помощью шаблонов можно быстро и легко заполнить заявки."
+msgstr "С помощью шаблонов можно быстро и легко заполнять заявки."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:15
 msgid "With templates you can pre-fill ticket attributes."
@@ -17703,8 +17704,9 @@ msgid ""
 "You can also create overviews and limit them to specific agents or to groups "
 "of agents."
 msgstr ""
-"Вы можете создавать **представления** для своих агентов и клиентов. У них "
-"много целей, например, они служат списком дел для Ваших агентов.\n"
+"Вы можете создавать **представления** для Ваших агентов и клиентов. Они "
+"могут использоваться для разных целей, например, как список задач для Ваших "
+"агентов.\n"
 "\n"
 "Вы также можете создавать представления и ограничивать их определенными "
 "агентами или группами агентов."
@@ -18271,14 +18273,14 @@ msgstr "Автоматический выбор"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "before (absolute)"
-msgstr "before (absolute)"
+msgstr "до (абсолютно)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:432
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "before (relative)"
-msgstr "before (relative)"
+msgstr "до (относительно)"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:41
 #: app/assets/javascripts/app/views/sla/index.jst.eco:45
@@ -18362,7 +18364,7 @@ msgstr "содержит все"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
 msgid "contains all not"
-msgstr "contains all not"
+msgstr "не содержит все"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
@@ -18380,7 +18382,7 @@ msgstr "содержит один"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:78
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
 msgid "contains one not"
-msgstr "contains one not"
+msgstr "не содержит один"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:85
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:112
@@ -18641,7 +18643,7 @@ msgstr "от"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "from (relative)"
-msgstr "from (relative)"
+msgstr "от (относительно)"
 
 #: app/controllers/integration/pgp_controller.rb:48
 msgid "gpg (GnuPG) 2.2.0 or newer is required"
@@ -18799,7 +18801,7 @@ msgstr "внутренняя база данных"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:67
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:55
 msgid "is"
-msgstr "is"
+msgstr "соответствует"
 
 #: app/models/knowledge_base/has_unique_title.rb:21
 msgid "is already used"
@@ -18837,7 +18839,7 @@ msgstr "не является ни одним из"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:55
 msgid "is not"
-msgstr "не"
+msgstr "не соответствует"
 
 #: lib/validations/color_validator.rb:13
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
@@ -19325,7 +19327,7 @@ msgstr "пропущено"
 
 #: db/seeds/ticket_article_types.rb:4
 msgid "sms"
-msgstr "SMS"
+msgstr "sms"
 
 #: app/models/object_manager/attribute.rb:550
 msgid "spaces are not allowed"
@@ -19400,7 +19402,7 @@ msgstr "заявка.клиент (ticket.customer)"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "till (relative)"
-msgstr "до (родственник)"
+msgstr "до (относительно)"
 
 #: db/seeds/settings.rb:218
 msgid "timestamp - e. g. \"2018-08-30 14:30\""

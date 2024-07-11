@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-09 23:18+0000\n"
+"PO-Revision-Date: 2024-07-11 05:19+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/sv/>\n"
@@ -993,7 +993,7 @@ msgstr "Åtkomst till %s"
 
 #: db/seeds/permissions.rb:430
 msgid "Access to Agent Tickets based on Group Access"
-msgstr "Åtkomst till Handläggare-ärenden baserat på gruppåtkomst"
+msgstr "Åtkomst till Agent ärenden baserat på gruppåtkomst"
 
 #: db/seeds/permissions.rb:437
 msgid "Access to customer tickets"
@@ -1380,7 +1380,7 @@ msgstr "Godkännande av administratör"
 
 #: db/seeds/permissions.rb:5
 msgid "Admin Interface"
-msgstr "Admin-gränssnitt"
+msgstr "Adminstrationsgränssnitt"
 
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee:23
 #: app/frontend/apps/desktop/pages/authentication/routes.ts:26
@@ -2005,8 +2005,8 @@ msgid ""
 "At least one identifier (firstname, lastname, phone or email) for user is "
 "required."
 msgstr ""
-"Åtminstone en av identifierarna (förnamn, efternamn, telefon eller mejl) för "
-"användaren krävs."
+"Åtminstone en av identifierarna (förnamn, efternamn, telefon eller email) "
+"för användaren krävs."
 
 #: app/models/postmaster_filter.rb:29
 msgid "At least one match rule is required, but none was provided."
@@ -2855,7 +2855,7 @@ msgstr "Kanal - Chatt"
 
 #: db/seeds/permissions.rb:124
 msgid "Channel - Email"
-msgstr "Kanal - Mejl"
+msgstr "Kanal - E-post"
 
 #: db/seeds/permissions.rb:138
 msgid "Channel - Facebook"
@@ -3343,8 +3343,8 @@ msgstr ""
 "\n"
 "<div>Hej #{user.firstname},</div>\n"
 "<br>\n"
-"<div>bekräfta din mejladress för att slutföra ditt #{config.product_name}-"
-"konto. Det går snabbt. Klicka på länken nedan.</div>\n"
+"<div>bekräfta din mejladress för att slutföra registreringen av ditt #{config"
+".product_name}-konto. Det går snabbt. Klicka på länken nedan.</div>\n"
 "<br>\n"
 "<div><a href=\"#{url}\">#{url}</a></div>\n"
 "<br>\n"
@@ -13341,7 +13341,7 @@ msgstr "Ämne"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:53
 #: app/frontend/shared/form/i18n/locales.ts:40
 msgid "Submit"
-msgstr "Spara"
+msgstr "Skicka"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:176
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:204
