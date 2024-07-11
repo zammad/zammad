@@ -1266,7 +1266,7 @@ var bind = function(fn, me){ return function(){ return fn.apply(me, arguments); 
       'zh-cn': {
         '<strong>Chat</strong> with us!': '发起<strong>即时对话</strong>!',
         'All colleagues are busy.': '所有同事都很忙。',
-        'Chat closed by %s': '对话被 %s 终止',
+        'Chat closed by %s': '对话已被 %s 关闭',
         'Compose your message…': '编辑您的信息…',
         'Connecting': '连接中',
         'Connection lost': '连接丢失',

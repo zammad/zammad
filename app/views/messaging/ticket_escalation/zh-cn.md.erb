@@ -1,6 +1,6 @@
 # #{ticket.title}
 _<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: 在 #{ticket.escalation_at} 升级_
-来自 "#{ticket.customer.longname}" 的票据（#{ticket.title}）自 "#{ticket.escalation_at}" 起已被升级！
+来自 "#{ticket.customer.longname}" 的工单（#{ticket.title}）自 "#{ticket.escalation_at}" 起已被升级！
 
 <% if @objects[:article] %>
 #{article.body_as_text}
