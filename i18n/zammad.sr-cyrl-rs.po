@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-08 07:00+0000\n"
+"PO-Revision-Date: 2024-07-10 09:07+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -1101,7 +1101,7 @@ msgid "Accounts"
 msgstr "Налози"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:718
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:116
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:115
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:80
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:109
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:107
@@ -1174,7 +1174,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/group.coffee:16
 #: app/assets/javascripts/app/models/job.coffee:16
 #: app/assets/javascripts/app/models/ldap_source.coffee:7
-#: app/assets/javascripts/app/models/macro.coffee:16
+#: app/assets/javascripts/app/models/macro.coffee:15
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:9
 #: app/assets/javascripts/app/models/overview.coffee:67
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:13
@@ -1349,7 +1349,7 @@ msgstr "Додај све вредности"
 msgid "Add attachment option to upload."
 msgstr "Додај опцију прилога за отпремање."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:270
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:271
 msgid "Add bullet list"
 msgstr "Додај листу са тачкама"
 
@@ -1358,11 +1358,11 @@ msgstr "Додај листу са тачкама"
 msgid "Add condition"
 msgstr "Додај услов"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:193
 msgid "Add first level heading"
 msgstr "Додај наслов првог реда"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:186
 msgid "Add heading"
 msgstr "Додај наслов"
 
@@ -1370,11 +1370,11 @@ msgstr "Додај наслов"
 msgid "Add image"
 msgstr "Додај слику"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:153
 msgid "Add link"
 msgstr "Додај везу"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:257
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:258
 msgid "Add ordered list"
 msgstr "Додај листу са бројевима"
 
@@ -1383,7 +1383,7 @@ msgstr "Додај листу са бројевима"
 msgid "Add reply"
 msgstr "Додај одговор"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:203
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:204
 msgid "Add second level heading"
 msgstr "Додај наслов другог реда"
 
@@ -1400,7 +1400,7 @@ msgstr "Додај иницијале пошиљаоца на крај твит�
 msgid "Add subclause"
 msgstr "Додај потклаузулу"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:214
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:215
 msgid "Add third level heading"
 msgstr "Додај наслов трећег реда"
 
@@ -1462,10 +1462,8 @@ msgstr ""
 "вашу имејл адресу."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/setting.ts:8
-#, fuzzy
-#| msgid "Administrator Account"
 msgid "Administration"
-msgstr "Налог администратора"
+msgstr "Администрација"
 
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -1511,7 +1509,7 @@ msgstr ""
 msgid "Administrator Account"
 msgstr "Налог администратора"
 
-#: app/assets/javascripts/app/models/macro.coffee:10
+#: app/assets/javascripts/app/models/macro.coffee:9
 msgid "Advance to next ticket from overview"
 msgstr "Иди на следећи тикет из прегледа"
 
@@ -1626,7 +1624,7 @@ msgstr ""
 "података, корисници и тикети ће бити избрисани са запамћеним историјатом. "
 "Брисање је неповратно."
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:462
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:506
 msgid "All agents"
 msgstr "Сви оператери"
 
@@ -1932,7 +1930,7 @@ msgstr "Архивирано у"
 msgid "Are you sure to remove this article?"
 msgstr "Да ли сте сигурни да желите да уклоните овај чланак?"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:143
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:152
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Да ли сте сигурни да желите да обришете „%s”?"
 
@@ -2144,15 +2142,15 @@ msgstr "Неопходно је одабрати бар један објека�
 msgid "At least one user needs to have admin permissions."
 msgstr "Неопходно је да бар један корисник има администраторске дозволе."
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:181
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:190
 msgid "Attach another file"
 msgstr "Приложи још једну датотеку"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:176
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:185
 msgid "Attach file"
 msgstr "Приложи датотеку"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:179
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:188
 msgid "Attach files"
 msgstr "Приложи датотеке"
 
@@ -2167,7 +2165,7 @@ msgid "Attached Files"
 msgstr "Attached Files"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:182
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:181
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
@@ -2857,7 +2855,7 @@ msgstr "Откажи"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:343
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:342
 msgid "Cancel & Go Back"
 msgstr "Откажи и иди назад"
 
@@ -2981,7 +2979,7 @@ msgstr "Измени редослед"
 msgid "Change personal account password."
 msgstr "Измена личне лозинке налога."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:228
 msgid "Change text color"
 msgstr "Измени боју текста"
 
@@ -3322,13 +3320,13 @@ msgstr "Затвори дијалог"
 msgid "Close side panel"
 msgstr "Затвори бочни панел"
 
-#: app/assets/javascripts/app/models/macro.coffee:10
+#: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:32
 #: db/seeds/settings.rb:2887
 msgid "Close tab"
 msgstr "Затвори прозор"
 
-#: app/assets/javascripts/app/models/macro.coffee:10
+#: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:37
 #: db/seeds/settings.rb:2888
 msgid "Close tab on ticket close"
@@ -3816,7 +3814,7 @@ msgstr "Земља"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:19
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:81
-#: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:9
+#: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:14
 #: app/assets/javascripts/app/models/group.coffee:45
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:56
 #: app/assets/javascripts/app/views/agent_user_create.jst.eco:13
@@ -3826,7 +3824,7 @@ msgstr "Земља"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:354
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:353
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Додавање"
@@ -4103,7 +4101,7 @@ msgstr "Тренутно стање"
 msgid "Current Token"
 msgstr "Тренутни кључ"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:592
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:636
 #: app/assets/javascripts/app/models/signature.coffee:21
 #: app/assets/javascripts/app/models/text_module.coffee:21
 msgid "Current User"
@@ -4157,7 +4155,7 @@ msgid "Custom address is not set"
 msgstr "Прилагођена адреса није подешена"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:461
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:505
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:14
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:14
@@ -5376,7 +5374,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:195
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:162
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:146
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:155
 msgid "Delete"
 msgstr "Избриши"
 
@@ -5424,7 +5422,7 @@ msgstr "Најпре избриши све постојеће записе."
 msgid "Delete avatar"
 msgstr "Избриши аватар"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:149
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:150
 msgid "Delete column"
 msgstr "Уклони колону"
 
@@ -5472,11 +5470,11 @@ msgstr "Избриши организацију?"
 msgid "Delete records"
 msgstr "Избриши записе"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:121
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:122
 msgid "Delete row"
 msgstr "Уклони ред"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:206
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:207
 msgid "Delete table"
 msgstr "Уклони табелу"
 
@@ -5683,7 +5681,7 @@ msgstr "Откажи"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:340
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:339
 msgid "Discard Changes"
 msgstr "Откажи промене"
 
@@ -5727,11 +5725,11 @@ msgstr "Прикажи"
 msgid "Display name"
 msgstr "Назив за приказ"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:618
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:662
 msgid "Do not encrypt email"
 msgstr "Без шифровања имејл поруке"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:604
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:648
 msgid "Do not sign email"
 msgstr "Без потписивања имејл поруке"
 
@@ -5872,7 +5870,7 @@ msgstr "Превуци за промену редоследа"
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:28
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:44
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:119
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:342
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:351
 msgid "Drop files here"
 msgstr "Испустите датотеке овде"
 
@@ -5942,12 +5940,30 @@ msgstr "Ускршњи празници"
 msgid "Edit"
 msgstr "Измена"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:173
+#, fuzzy
+#| msgid "Link Answer"
+msgid "Edit Answer"
+msgstr "Повежи чланак"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:175
+#, fuzzy
+#| msgid "Category"
+msgid "Edit Category"
+msgstr "Категорија"
+
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:16
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:26
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:34
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:95
 msgid "Edit Customer"
 msgstr "Измени клијента"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:171
+#, fuzzy
+#| msgid "Knowledge Base"
+msgid "Edit Knowledge Base"
+msgstr "База знања"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee:21
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee:11
@@ -5980,6 +5996,12 @@ msgstr "Мења"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:38
 msgid "Editing on Desktop"
 msgstr "Мења у основном приказу"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
+#, fuzzy
+#| msgid "Edit"
+msgid "Editor"
+msgstr "Измена"
 
 #: db/seeds/settings.rb:3533
 msgid "Elasticsearch Attachment Extensions"
@@ -6420,11 +6442,11 @@ msgstr "Прилог"
 msgid "Encrypt"
 msgstr "Шифровање"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:619
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:663
 msgid "Encrypt email (if not possible, discard notification)"
 msgstr "Шифровање имејл поруке (уколико није могуће, откажи обавештење)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:620
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:664
 msgid "Encrypt email (if not possible, send notification anyway)"
 msgstr ""
 "Шифровање имејл поруке (уколико није могуће, свеједно пошаљи обавештење)"
@@ -6515,7 +6537,7 @@ msgstr "Унеси исправну имејл адресу."
 msgid "Enter credentials"
 msgstr "Унеси креденцијале"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:158
 msgid "Enter link URL"
 msgstr "Унеси URL линка"
 
@@ -6964,6 +6986,12 @@ msgstr ""
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:169
 msgid "Failed to set up QR code. Please try again."
 msgstr "Није било могуће приказати QR код. Молимо покушајте поново."
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageFailedUploadOverlay.vue:23
+#, fuzzy
+#| msgid "File '%s' is uploading"
+msgid "Failed to upload."
+msgstr "Датотека ’%s’ се отпрема"
 
 #: db/seeds/object_manager_attributes.rb:877
 msgid "Fax"
@@ -7659,7 +7687,7 @@ msgid "Grouping order"
 msgstr "Редослед груписања"
 
 #: app/assets/javascripts/app/controllers/group.coffee:3
-#: app/assets/javascripts/app/models/macro.coffee:15
+#: app/assets/javascripts/app/models/macro.coffee:14
 #: app/assets/javascripts/app/models/text_module.coffee:28
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:67
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:71
@@ -8394,7 +8422,7 @@ msgstr "Искључено"
 msgid "Inbound"
 msgstr "Долазнo"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:132
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:131
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:140
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:34
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:6
@@ -8472,7 +8500,7 @@ msgstr "Увећај вредност минута"
 msgid "Increment seconds value"
 msgstr "Увећај вредност секунди"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:236
 msgid "Indent text"
 msgstr "Увуци текст"
 
@@ -8518,39 +8546,39 @@ msgstr ""
 msgid "Inline content could not be generated."
 msgstr "Није било могуће генерисати непосредни садржај."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:320
 msgid "Insert code block"
 msgstr "Додај блок кôда"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:140
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:141
 msgid "Insert column after"
 msgstr "Додај колону после"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:131
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:132
 msgid "Insert column before"
 msgstr "Додај колону пре"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:309
 msgid "Insert inline code"
 msgstr "Додај уметнути кôд"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:103
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:104
 msgid "Insert row above"
 msgstr "Додај ред изнад"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:112
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:113
 msgid "Insert row below"
 msgstr "Додај ред испод"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:292
 msgid "Insert table"
 msgstr "Додај табелу"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:343
 msgid "Insert text from Knowledge Base article"
 msgstr "Убаци текст из чланка базе знања"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:350
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:351
 msgid "Insert text from text module"
 msgstr "Убаци текст из текстуалног исечка"
 
@@ -9837,7 +9865,7 @@ msgstr "Успешно преузимање медијског прилога."
 msgid "Members"
 msgstr "Чланови"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:335
 msgid "Mention user"
 msgstr "Помени корисника"
 
@@ -9854,7 +9882,7 @@ msgstr "Група помињања"
 msgid "Merge"
 msgstr "Споји"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:168
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:169
 msgid "Merge cells"
 msgstr "Споји ћелије"
 
@@ -10317,6 +10345,12 @@ msgstr "Нови приступни кључ је"
 msgid "New Activity Type"
 msgstr "Нова врста активности"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:8
+#, fuzzy
+#| msgid "New User"
+msgid "New Answer"
+msgstr "Нови корисник"
+
 #: app/assets/javascripts/app/views/api.jst.eco:52
 msgid "New Application"
 msgstr "Нова апликација"
@@ -10328,6 +10362,12 @@ msgstr "Нови атрибут"
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:10
 msgid "New Calendar"
 msgstr "Нови календар"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:10
+#, fuzzy
+#| msgid "Category"
+msgid "New Category"
+msgstr "Категорија"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:8
 msgid "New Deletion Task"
@@ -10748,7 +10788,7 @@ msgstr "Нема доступне сесије."
 msgid "No settings with area 'Dashboard::Stats' defined"
 msgstr "Нема подешавања за ’Dashboard::Stats’ површину"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:218
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:219
 msgid "No shared drafts yet"
 msgstr "Без заједничких нацрта"
 
@@ -10796,6 +10836,7 @@ msgstr "Без x-zammad-session-user-id, пошиљалац није подеш�
 msgid "No, thanks"
 msgstr "Не, хвала"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
 #: app/graphql/gql/types/ticket_type.rb:98 db/seeds/settings.rb:1931
@@ -10843,7 +10884,7 @@ msgstr "Недодељени"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:158
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:110
 #: app/controllers/application_controller/handles_errors.rb:60
-#: app/services/service/ticket/article/create.rb:127
+#: app/services/service/ticket/article/create.rb:119
 msgid "Not authorized"
 msgstr "Без ауторизације"
 
@@ -10873,7 +10914,7 @@ msgstr "Није пронађено"
 #: app/assets/javascripts/app/models/email_address.coffee:35
 #: app/assets/javascripts/app/models/group.coffee:14
 #: app/assets/javascripts/app/models/job.coffee:15
-#: app/assets/javascripts/app/models/macro.coffee:14
+#: app/assets/javascripts/app/models/macro.coffee:13
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:11
 #: app/assets/javascripts/app/models/role.coffee:10
 #: app/assets/javascripts/app/models/signature.coffee:26
@@ -11106,7 +11147,7 @@ msgstr "У %s, %s је написао/ла:"
 msgid "On-screen Translation"
 msgstr "Непосредни превод на екрану"
 
-#: app/assets/javascripts/app/models/macro.coffee:9
+#: app/assets/javascripts/app/models/macro.coffee:8
 msgid "Once completed…"
 msgstr "Када се заврши…"
 
@@ -11467,7 +11508,7 @@ msgstr "Замена за ван канцеларије"
 msgid "Outbound"
 msgstr "Одлазнo"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:133
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:132
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:141
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:22
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:21
@@ -11486,7 +11527,7 @@ msgstr "Одлазнo:"
 msgid "Outdated Browser"
 msgstr "Застарео претраживач"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:246
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:247
 msgid "Outdent text"
 msgstr "Развуци текст"
 
@@ -11520,7 +11561,7 @@ msgstr "Преиначи садржај"
 msgid "Overwrite Draft"
 msgstr "Преиначи нацрт"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:460
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:504
 #: app/assets/javascripts/app/models/ticket.coffee:11
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:42
 #: app/graphql/gql/types/overview_type.rb:64
@@ -12079,7 +12120,7 @@ msgid "Preview %s"
 msgstr "Прикажи %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:131
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:187
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:188
 msgid "Preview Shared Draft"
 msgstr "Преглед заједничког нацрта"
 
@@ -12310,6 +12351,12 @@ msgstr "Сирово"
 msgid "Read"
 msgstr "Читање"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
+#, fuzzy
+#| msgid "Header"
+msgid "Reader"
+msgstr "Заглавље"
+
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:6
 msgid "Real-time"
 msgstr "У реалном времену"
@@ -12505,7 +12552,7 @@ msgstr "Избриши све вредности"
 msgid "Remove authenticator app"
 msgstr "Уклони апликацију за аутентификацију"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:283
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:284
 msgid "Remove formatting"
 msgstr "Уклони форматирање"
 
@@ -12797,7 +12844,7 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr "Поништавање редоследа ваших прегледа тикета није успело."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/ImageResizable.vue:134
+#: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageHandler.vue:169
 msgid "Resize frame"
 msgstr "Промени ширину рама"
 
@@ -13576,7 +13623,7 @@ msgstr "Формат пошиљаоца"
 msgid "Sender Format Separator"
 msgstr "Сепаратор формата пошиљаоца"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:127
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:126
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:135
 msgid "Sender Type"
 msgstr "Тип пошиљаоца"
@@ -13585,7 +13632,7 @@ msgstr "Тип пошиљаоца"
 msgid "Sender based on Reply-To header"
 msgstr "Пошиљалац на основу Reply-To заглавља"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:459
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:503
 msgid "Sender of last article"
 msgstr "Пошиљалац последњег чланка"
 
@@ -14002,11 +14049,11 @@ msgstr "Трака са стране прилога"
 msgid "Sign"
 msgstr "Потписивање"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:605
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:649
 msgid "Sign email (if not possible, discard notification)"
 msgstr "Потписивање имејл поруке (уколико није могуће, откажи обавештење)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:606
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:650
 msgid "Sign email (if not possible, send notification anyway)"
 msgstr ""
 "Потписивање имејл поруке (уколико није могуће, свеједно пошаљи обавештење)"
@@ -14264,7 +14311,7 @@ msgstr "Неопходан специјални знак"
 msgid "Split"
 msgstr "Раздели"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:159
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:160
 msgid "Split cells"
 msgstr "Раздели ћелије"
 
@@ -14397,7 +14444,7 @@ msgstr "Тип статуса"
 msgid "Status:"
 msgstr "Статус:"
 
-#: app/assets/javascripts/app/models/macro.coffee:10
+#: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:49
 #: db/seeds/settings.rb:2890
 msgid "Stay on tab"
@@ -14495,8 +14542,10 @@ msgstr "Предмет"
 msgid "Submit"
 msgstr "Пошаљи"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:139
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:176
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:204
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:148
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:204
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:4
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:57
@@ -15778,7 +15827,7 @@ msgstr "Није пронађен обавезни параметар ’signup�
 msgid "The required parameter 'ticket_number' is missing."
 msgstr "Није пронађен обавезни параметар ’ticket_number’."
 
-#: app/models/concerns/perform_changes/action/attribute_updates.rb:74
+#: app/models/concerns/perform_changes/action/attribute_updates.rb:94
 msgid "The required parameter 'user_id' is missing."
 msgstr "Није пронађен обавезни параметар ’user_id’."
 
@@ -17303,15 +17352,15 @@ msgstr "Укључи/искључи групу"
 msgid "Toggle dark mode"
 msgstr "Укључи/искључи тамни изглед"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:196
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:197
 msgid "Toggle header cell"
 msgstr "Укључи/искључи насловну ћелију"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:187
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:188
 msgid "Toggle header column"
 msgstr "Укључи/искључи насловну колону"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:178
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:179
 msgid "Toggle header row"
 msgstr "Укључи/искључи насловни ред"
 
@@ -17727,6 +17776,8 @@ msgstr "Опозови избор опције"
 msgid "Unset default"
 msgstr "Поништи подразумевано"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:149
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:158
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:7
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:57
 msgid "Unsubscribe"
@@ -17781,7 +17832,7 @@ msgstr "Ескалација освежавања у"
 msgid "Update In Min"
 msgstr "Освежавање у мин"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:205
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:206
 msgid "Update Shared Draft"
 msgstr "Освежи заједнички нацрт"
 
@@ -17837,7 +17888,7 @@ msgstr "Освежи недавне тикете."
 #: app/assets/javascripts/app/models/group.coffee:15
 #: app/assets/javascripts/app/models/job.coffee:24
 #: app/assets/javascripts/app/models/ldap_source.coffee:10
-#: app/assets/javascripts/app/models/macro.coffee:13
+#: app/assets/javascripts/app/models/macro.coffee:12
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:11
 #: app/assets/javascripts/app/models/overview.coffee:70
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:12
@@ -18092,7 +18143,7 @@ msgstr "Користи се приликом гледања тикета"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:413
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:355
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:165
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:24
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:14
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:15
@@ -18297,7 +18348,7 @@ msgstr "Неуспешна валидација: %{errors}"
 msgid "Value"
 msgstr "Вредност"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:503
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:547
 msgid "Variables"
 msgstr "Променљиве"
 
@@ -18394,7 +18445,7 @@ msgstr "Погледај у Zammad"
 msgid "Viewing ticket"
 msgstr "Гледају тикета"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:683
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
@@ -18755,7 +18806,7 @@ msgstr "Жута"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee:4
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee:47
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:563
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:607
 #: app/assets/javascripts/app/controllers/tag.coffee:133
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:121
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:23
@@ -19237,7 +19288,7 @@ msgstr ""
 msgid "Zammad"
 msgstr "Zammad"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:327
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:328
 msgid "Zammad Features"
 msgstr "Zammad функције"
 
@@ -19383,7 +19434,7 @@ msgstr "admin"
 msgid "after (absolute)"
 msgstr "након (апсолутно)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:435
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:479
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -19394,6 +19445,12 @@ msgstr "након (релативно)"
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco:8
 msgid "again"
 msgstr "поново"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:421
+#, fuzzy
+#| msgid "Subscribers"
+msgid "all subscribers"
+msgstr "Претплатници"
 
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:139
 msgid "and"
@@ -19449,7 +19506,7 @@ msgstr "аутоматски избор"
 msgid "before (absolute)"
 msgstr "пре (апсолутно)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:432
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:476
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -19580,13 +19637,13 @@ msgstr "додато"
 msgid "created %s"
 msgstr "додато %s"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:375
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:144
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:537
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:632
 msgid "current user"
 msgstr "тренутни корисник"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:383
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:427
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:543
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:637
 msgid "current user organization"
@@ -19830,7 +19887,7 @@ msgstr "проследи"
 msgid "from"
 msgstr "од"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:437
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:481
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -19980,7 +20037,7 @@ msgstr "у обради"
 msgid "inactive"
 msgstr "искључено"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:554
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:598
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:91
 msgid "internal"
 msgstr "интерно"
@@ -20152,7 +20209,7 @@ msgstr "спојено"
 msgid "merged into"
 msgstr "спојено са"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:573
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:617
 msgid "message"
 msgstr "порука"
 
@@ -20362,7 +20419,7 @@ msgstr "чека на подсетник"
 msgid "phone"
 msgstr "позив"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:554
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:598
 msgid "public"
 msgstr "јавно"
 
@@ -20393,7 +20450,7 @@ msgstr "примљено спајање"
 msgid "recovery codes"
 msgstr "шифри за опоравак"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:104
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:103
 msgid "relative"
 msgstr "релативно"
 
@@ -20545,13 +20602,13 @@ msgstr "sms"
 msgid "spaces are not allowed"
 msgstr "размаци нису дозвољени"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:384
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:428
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:544
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:638
 msgid "specific organization"
 msgstr "конкретна организација"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:376
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:417
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:538
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:633
 msgid "specific user"
@@ -20616,7 +20673,7 @@ msgstr "ticket.agent"
 msgid "ticket.customer"
 msgstr "ticket.customer"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:436
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:480
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -20677,7 +20734,7 @@ msgid "twofactor,2fa,security key,passkey,authenticator app"
 msgstr ""
 "други фактор,2fa,безбедносни кључ,passkey,апликација за аутентификацију"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:379
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:423
 msgid "unassign user"
 msgstr "скини доделу корисника"
 
@@ -20725,14 +20782,14 @@ msgstr "биће додато"
 msgid "will be deleted"
 msgstr "биће обрисано"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:434
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:478
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within last (relative)"
 msgstr "у последњих (релативно)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:433
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:477
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52

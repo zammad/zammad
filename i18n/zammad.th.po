@@ -1135,7 +1135,7 @@ msgid "Accounts"
 msgstr "บัญชี"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:718
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:116
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:115
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:80
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:109
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:107
@@ -1212,7 +1212,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/group.coffee:16
 #: app/assets/javascripts/app/models/job.coffee:16
 #: app/assets/javascripts/app/models/ldap_source.coffee:7
-#: app/assets/javascripts/app/models/macro.coffee:16
+#: app/assets/javascripts/app/models/macro.coffee:15
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:9
 #: app/assets/javascripts/app/models/overview.coffee:67
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:13
@@ -1391,7 +1391,7 @@ msgstr "เพิ่มค่าทั้งหมด"
 msgid "Add attachment option to upload."
 msgstr "เพิ่มตัวเลือกไฟล์แนบเพื่ออัปโหลด"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:270
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:271
 msgid "Add bullet list"
 msgstr "เพิ่มรายการหัวข้อย่อย"
 
@@ -1400,11 +1400,11 @@ msgstr "เพิ่มรายการหัวข้อย่อย"
 msgid "Add condition"
 msgstr "เพิ่มเงื่อนไข"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:193
 msgid "Add first level heading"
 msgstr "เพิ่มหัวเรื่องระดับแรก"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:186
 #, fuzzy
 #| msgid "Add Tag"
 msgid "Add heading"
@@ -1414,11 +1414,11 @@ msgstr "เพิ่มแทค"
 msgid "Add image"
 msgstr "เพิ่มรูป"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:153
 msgid "Add link"
 msgstr "เพิ่ม ลิ้ง"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:257
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:258
 msgid "Add ordered list"
 msgstr "เพิ่มรายการสั่งซื้อ"
 
@@ -1427,7 +1427,7 @@ msgstr "เพิ่มรายการสั่งซื้อ"
 msgid "Add reply"
 msgstr "เพิ่ม ตอบกลับ"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:203
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:204
 msgid "Add second level heading"
 msgstr "เพิ่มหัวเรื่องระดับที่สอง"
 
@@ -1444,7 +1444,7 @@ msgstr "เพิ่มชื่อย่อของผู้ส่งที่
 msgid "Add subclause"
 msgstr "เพิ่ม subclause"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:214
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:215
 msgid "Add third level heading"
 msgstr "เพิ่มหัวเรื่องระดับที่สาม"
 
@@ -1583,7 +1583,7 @@ msgstr ""
 msgid "Administrator Account"
 msgstr "Administrator Account"
 
-#: app/assets/javascripts/app/models/macro.coffee:10
+#: app/assets/javascripts/app/models/macro.coffee:9
 msgid "Advance to next ticket from overview"
 msgstr "เลื่อนไปยัง ticket ถัดไปจากภาพรวม"
 
@@ -1693,7 +1693,7 @@ msgid ""
 "of this deletion possible."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:462
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:506
 msgid "All agents"
 msgstr "เจ้าหน้าที่ทั้งหมด"
 
@@ -2010,7 +2010,7 @@ msgstr "จัดเก็บที่"
 msgid "Are you sure to remove this article?"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการโหลดซ้ำ? คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึกที่จะสูญหาย"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:143
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:152
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "คุณต้องการลบ \"%s\" หรือไม่?"
 
@@ -2237,17 +2237,17 @@ msgstr "ต้องเลือกวัตถุอย่างน้อยห
 msgid "At least one user needs to have admin permissions."
 msgstr "ผู้ใช้อย่างน้อยหนึ่งรายต้องมีสิทธิ์ของผู้ดูแลระบบ."
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:181
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:190
 msgid "Attach another file"
 msgstr "แนบไฟล์อื่น"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:176
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:185
 #, fuzzy
 #| msgid "Attach files"
 msgid "Attach file"
 msgstr "ไฟล์แนบ"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:179
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:188
 msgid "Attach files"
 msgstr "ไฟล์แนบ"
 
@@ -2262,7 +2262,7 @@ msgid "Attached Files"
 msgstr "ไฟล์แนบ"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:182
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:181
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
@@ -2973,7 +2973,7 @@ msgstr "ยกเลิก"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:343
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:342
 msgid "Cancel & Go Back"
 msgstr "ยกเลิก & ย้อนกลับ"
 
@@ -3111,7 +3111,7 @@ msgstr "การเปลี่ยนแปลงการสั่งซื้
 msgid "Change personal account password."
 msgstr "เปลี่ยนรหัสผ่านของคุณ"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:228
 #, fuzzy
 #| msgid "Change order"
 msgid "Change text color"
@@ -3464,13 +3464,13 @@ msgstr "ยืนยัน/ส่งกล่องโต้ตอบ"
 msgid "Close side panel"
 msgstr "ปิดแท็บ"
 
-#: app/assets/javascripts/app/models/macro.coffee:10
+#: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:32
 #: db/seeds/settings.rb:2887
 msgid "Close tab"
 msgstr "ปิดแท็บ"
 
-#: app/assets/javascripts/app/models/macro.coffee:10
+#: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:37
 #: db/seeds/settings.rb:2888
 msgid "Close tab on ticket close"
@@ -3997,7 +3997,7 @@ msgstr "ประเทศ"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:19
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:81
-#: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:9
+#: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:14
 #: app/assets/javascripts/app/models/group.coffee:45
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:56
 #: app/assets/javascripts/app/views/agent_user_create.jst.eco:13
@@ -4007,7 +4007,7 @@ msgstr "ประเทศ"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:354
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:353
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "สร้าง"
@@ -4306,7 +4306,7 @@ msgstr "สถานะปัจจุบัน"
 msgid "Current Token"
 msgstr "โทเค็นปัจจุบัน"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:592
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:636
 #: app/assets/javascripts/app/models/signature.coffee:21
 #: app/assets/javascripts/app/models/text_module.coffee:21
 msgid "Current User"
@@ -4362,7 +4362,7 @@ msgid "Custom address is not set"
 msgstr "ไม่ได้ตั้งค่าที่อยู่ที่กำหนดเอง"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:461
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:505
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:14
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:14
@@ -5530,7 +5530,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:195
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:162
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:146
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:155
 msgid "Delete"
 msgstr "ลบ"
 
@@ -5584,7 +5584,7 @@ msgstr "ลบระเบียนที่มีอยู่ทั้งหม
 msgid "Delete avatar"
 msgstr "‎ลบ อวตาร‎"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:149
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:150
 #, fuzzy
 #| msgid "Delete File"
 msgid "Delete column"
@@ -5638,13 +5638,13 @@ msgstr "ลบองค์กร?"
 msgid "Delete records"
 msgstr "ลบบันทึก"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:121
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:122
 #, fuzzy
 #| msgid "Delete User"
 msgid "Delete row"
 msgstr "ลบ ผู้ใช้"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:206
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:207
 #, fuzzy
 #| msgid "Delete File"
 msgid "Delete table"
@@ -5860,7 +5860,7 @@ msgstr "ทิ้ง"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:340
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:339
 msgid "Discard Changes"
 msgstr "ยกเลิกการเปลี่ยนแปลง"
 
@@ -5912,11 +5912,11 @@ msgstr "จอแสดงผล"
 msgid "Display name"
 msgstr "ชื่อที่แสดง"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:618
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:662
 msgid "Do not encrypt email"
 msgstr "อย่าเข้ารหัสอีเมล"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:604
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:648
 msgid "Do not sign email"
 msgstr "อย่าเซ็นอีเมล"
 
@@ -6066,7 +6066,7 @@ msgstr "ลากเพื่อจัดลำดับใหม่"
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:28
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:44
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:119
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:342
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:351
 msgid "Drop files here"
 msgstr "วางไฟล์ที่นี่"
 
@@ -6135,12 +6135,30 @@ msgstr "วันหยุดอีสเตอร์"
 msgid "Edit"
 msgstr "แก้ไข"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:173
+#, fuzzy
+#| msgid "Link Answer"
+msgid "Edit Answer"
+msgstr "ลิงค์คำตอบ"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:175
+#, fuzzy
+#| msgid "Category"
+msgid "Edit Category"
+msgstr "หมวดหมู่"
+
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:16
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:26
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:34
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:95
 msgid "Edit Customer"
 msgstr "แก้ไขลูกค้า"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:171
+#, fuzzy
+#| msgid "Knowledge Base"
+msgid "Edit Knowledge Base"
+msgstr "ศูนย์การเรียนรู้"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee:21
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee:11
@@ -6183,6 +6201,12 @@ msgstr "แก้ไข"
 #| msgid "Editing ticket"
 msgid "Editing on Desktop"
 msgstr "แก้ไข tickets"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
+#, fuzzy
+#| msgid "Edit"
+msgid "Editor"
+msgstr "แก้ไข"
 
 #: db/seeds/settings.rb:3533
 msgid "Elasticsearch Attachment Extensions"
@@ -6609,11 +6633,11 @@ msgstr "สิ่งที่ส่งมาด้วย"
 msgid "Encrypt"
 msgstr "เข้ารหัสลับ"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:619
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:663
 msgid "Encrypt email (if not possible, discard notification)"
 msgstr "เข้ารหัสอีเมล (ถ้าทำไม่ได้ ให้ยกเลิกการแจ้งเตือน)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:620
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:664
 msgid "Encrypt email (if not possible, send notification anyway)"
 msgstr "เข้ารหัสอีเมล (ถ้าทำไม่ได้ ส่งการแจ้งเตือนต่อไป)"
 
@@ -6710,7 +6734,7 @@ msgstr "กรุณาใส่อีเมลที่ใช้งานได
 msgid "Enter credentials"
 msgstr "ป้อนข้อมูลประจำตัว"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:158
 msgid "Enter link URL"
 msgstr "ป้อน URL ลิงค์"
 
@@ -7169,6 +7193,10 @@ msgstr "ไม่สามารถส่งอีเมลไปที่ \"%s\
 #| msgid "Invalid security code! Please try again with a new code."
 msgid "Failed to set up QR code. Please try again."
 msgstr "รหัสความปลอดภัยไม่ถูกต้อง! โปรดลองอีกครั้งด้วยรหัสใหม่"
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageFailedUploadOverlay.vue:23
+msgid "Failed to upload."
+msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:877
 msgid "Fax"
@@ -7908,7 +7936,7 @@ msgid "Grouping order"
 msgstr "การจัดกลุ่มคำสั่ง"
 
 #: app/assets/javascripts/app/controllers/group.coffee:3
-#: app/assets/javascripts/app/models/macro.coffee:15
+#: app/assets/javascripts/app/models/macro.coffee:14
 #: app/assets/javascripts/app/models/text_module.coffee:28
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:67
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:71
@@ -8648,7 +8676,7 @@ msgstr "ไม่ได้ใช้งาน"
 msgid "Inbound"
 msgstr "ขาเข้า"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:132
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:131
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:140
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:34
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:6
@@ -8732,7 +8760,7 @@ msgstr "การเพิ่มขึ้น (SystemID.Counter)"
 msgid "Increment seconds value"
 msgstr "การเพิ่มขึ้น (SystemID.Counter)"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:236
 #, fuzzy
 #| msgid "Incident"
 msgid "Indent text"
@@ -8779,43 +8807,43 @@ msgstr ""
 msgid "Inline content could not be generated."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:320
 msgid "Insert code block"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:140
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:141
 msgid "Insert column after"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:131
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:132
 msgid "Insert column before"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:309
 #, fuzzy
 #| msgid "Inserts text module"
 msgid "Insert inline code"
 msgstr "แทรกโมดูลข้อความ"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:103
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:104
 msgid "Insert row above"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:112
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:113
 msgid "Insert row below"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:292
 #, fuzzy
 #| msgid "Inserts text module"
 msgid "Insert table"
 msgstr "แทรกโมดูลข้อความ"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:343
 msgid "Insert text from Knowledge Base article"
 msgstr "แทรกข้อความจากบทความศูนย์การเรียนรู้"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:350
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:351
 msgid "Insert text from text module"
 msgstr "แทรกข้อความจากโมดูลข้อความ"
 
@@ -10222,7 +10250,7 @@ msgstr "ถอดรหัสสำเร็จ"
 msgid "Members"
 msgstr "สมาชิก"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:335
 msgid "Mention user"
 msgstr "ยกเลิกการมอบหมายผู้ใช้"
 
@@ -10239,7 +10267,7 @@ msgstr "กล่าวถึงกลุ่ม"
 msgid "Merge"
 msgstr "ผสาน"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:168
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:169
 #, fuzzy
 #| msgid "Merge to Ticket#"
 msgid "Merge cells"
@@ -10732,6 +10760,12 @@ msgstr "โทเค็นการเข้าถึงใหม่คือ"
 msgid "New Activity Type"
 msgstr "กิจกรรม"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:8
+#, fuzzy
+#| msgid "New User"
+msgid "New Answer"
+msgstr "ผู้ใช้ใหม่"
+
 #: app/assets/javascripts/app/views/api.jst.eco:52
 msgid "New Application"
 msgstr "แอปพลิเคชั่นใหม่"
@@ -10743,6 +10777,12 @@ msgstr "คุณสมบัติใหม่"
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:10
 msgid "New Calendar"
 msgstr "ปฏิทินใหม่"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:10
+#, fuzzy
+#| msgid "Category"
+msgid "New Category"
+msgstr "หมวดหมู่"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:8
 msgid "New Deletion Task"
@@ -11169,7 +11209,7 @@ msgstr ""
 msgid "No settings with area 'Dashboard::Stats' defined"
 msgstr "ไม่มีการตั้งค่าที่มีการกำหนดพื้นที่ 'Dashboard::Stats'"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:218
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:219
 #, fuzzy
 #| msgid "Shared Drafts"
 msgid "No shared drafts yet"
@@ -11219,6 +11259,7 @@ msgstr ""
 msgid "No, thanks"
 msgstr "ไม่เป็นไรขอบคุณ!"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
 #: app/graphql/gql/types/ticket_type.rb:98 db/seeds/settings.rb:1931
@@ -11266,7 +11307,7 @@ msgstr "ไม่ได้รับมอบหมาย"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:158
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:110
 #: app/controllers/application_controller/handles_errors.rb:60
-#: app/services/service/ticket/article/create.rb:127
+#: app/services/service/ticket/article/create.rb:119
 msgid "Not authorized"
 msgstr "ไม่ได้รับอนุญาต"
 
@@ -11298,7 +11339,7 @@ msgstr "ไม่พบ"
 #: app/assets/javascripts/app/models/email_address.coffee:35
 #: app/assets/javascripts/app/models/group.coffee:14
 #: app/assets/javascripts/app/models/job.coffee:15
-#: app/assets/javascripts/app/models/macro.coffee:14
+#: app/assets/javascripts/app/models/macro.coffee:13
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:11
 #: app/assets/javascripts/app/models/role.coffee:10
 #: app/assets/javascripts/app/models/signature.coffee:26
@@ -11545,7 +11586,7 @@ msgstr "เมื่อ %s %s เขียนว่า:"
 msgid "On-screen Translation"
 msgstr "สร้างคำแปล"
 
-#: app/assets/javascripts/app/models/macro.coffee:9
+#: app/assets/javascripts/app/models/macro.coffee:8
 msgid "Once completed…"
 msgstr "เมื่อเสร็จแล้ว…"
 
@@ -11944,7 +11985,7 @@ msgstr "ลางาน รับหน้าที่แทน"
 msgid "Outbound"
 msgstr "ขาออก"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:133
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:132
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:141
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:22
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:21
@@ -11965,7 +12006,7 @@ msgstr "ขาออก:"
 msgid "Outdated Browser"
 msgstr "เบราว์เซอร์"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:246
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:247
 msgid "Outdent text"
 msgstr ""
 
@@ -12001,7 +12042,7 @@ msgstr "เขียนทับ Draft"
 msgid "Overwrite Draft"
 msgstr "เขียนทับ Draft"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:460
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:504
 #: app/assets/javascripts/app/models/ticket.coffee:11
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:42
 #: app/graphql/gql/types/overview_type.rb:64
@@ -12581,7 +12622,7 @@ msgid "Preview %s"
 msgstr "ดูตัวอย่าง %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:131
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:187
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:188
 #, fuzzy
 #| msgid "Select Shared Draft"
 msgid "Preview Shared Draft"
@@ -12834,6 +12875,12 @@ msgstr "ข้อมูลดิบ"
 msgid "Read"
 msgstr "อ่าน"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
+#, fuzzy
+#| msgid "Header"
+msgid "Reader"
+msgstr "หัวกระดาษ"
+
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:6
 msgid "Real-time"
 msgstr "เรียลไทม์"
@@ -13047,7 +13094,7 @@ msgstr "ลบทั้งหมด"
 msgid "Remove authenticator app"
 msgstr "การยึนยันตน"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:283
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:284
 msgid "Remove formatting"
 msgstr "เอารูปแบบออก"
 
@@ -13414,7 +13461,7 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/ImageResizable.vue:134
+#: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageHandler.vue:169
 msgid "Resize frame"
 msgstr ""
 
@@ -14225,7 +14272,7 @@ msgstr ""
 msgid "Sender Format Separator"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:127
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:126
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:135
 msgid "Sender Type"
 msgstr ""
@@ -14234,7 +14281,7 @@ msgstr ""
 msgid "Sender based on Reply-To header"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:459
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:503
 msgid "Sender of last article"
 msgstr ""
 
@@ -14682,11 +14729,11 @@ msgstr "ไฟล์แนบแถบด้านข้าง"
 msgid "Sign"
 msgstr "เซ็นกำกับ"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:605
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:649
 msgid "Sign email (if not possible, discard notification)"
 msgstr "ลงชื่ออีเมล (ถ้าทำไม่ได้ ให้ยกเลิกการแจ้งเตือน)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:606
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:650
 msgid "Sign email (if not possible, send notification anyway)"
 msgstr "ลงชื่ออีเมล (ถ้าทำไม่ได้ส่งการแจ้งเตือนต่อไป)"
 
@@ -14957,7 +15004,7 @@ msgstr ""
 msgid "Split"
 msgstr "แยก"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:159
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:160
 #, fuzzy
 #| msgid "Split"
 msgid "Split cells"
@@ -15110,7 +15157,7 @@ msgstr ""
 msgid "Status:"
 msgstr "สถานะ:"
 
-#: app/assets/javascripts/app/models/macro.coffee:10
+#: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:49
 #: db/seeds/settings.rb:2890
 msgid "Stay on tab"
@@ -15212,8 +15259,10 @@ msgstr "หัวเรื่อง"
 msgid "Submit"
 msgstr "ส่ง"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:139
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:176
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:204
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:148
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:204
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:4
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:57
@@ -16620,7 +16669,7 @@ msgstr ""
 msgid "The required parameter 'ticket_number' is missing."
 msgstr ""
 
-#: app/models/concerns/perform_changes/action/attribute_updates.rb:74
+#: app/models/concerns/perform_changes/action/attribute_updates.rb:94
 #, fuzzy
 #| msgid "The required parameter 'payload->class_name' is missing."
 msgid "The required parameter 'user_id' is missing."
@@ -18194,19 +18243,19 @@ msgstr "หลัก"
 msgid "Toggle dark mode"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:196
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:197
 #, fuzzy
 #| msgid "Open note box"
 msgid "Toggle header cell"
 msgstr "เปิดกล่องโน้ต"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:187
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:188
 #, fuzzy
 #| msgid "Open note box"
 msgid "Toggle header column"
 msgstr "เปิดกล่องโน้ต"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:178
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:179
 #, fuzzy
 #| msgid "Open note box"
 msgid "Toggle header row"
@@ -18676,6 +18725,8 @@ msgstr "ตั้งค่าตัวเลือก"
 msgid "Unset default"
 msgstr "เรียกคืนค่าเริ่มต้น"
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:149
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:158
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:7
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:57
 msgid "Unsubscribe"
@@ -18728,7 +18779,7 @@ msgstr ""
 msgid "Update In Min"
 msgstr "อัพเดทในเวลา"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:205
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:206
 #, fuzzy
 #| msgid "Apply Shared Draft"
 msgid "Update Shared Draft"
@@ -18788,7 +18839,7 @@ msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 #: app/assets/javascripts/app/models/group.coffee:15
 #: app/assets/javascripts/app/models/job.coffee:24
 #: app/assets/javascripts/app/models/ldap_source.coffee:10
-#: app/assets/javascripts/app/models/macro.coffee:13
+#: app/assets/javascripts/app/models/macro.coffee:12
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:11
 #: app/assets/javascripts/app/models/overview.coffee:70
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:12
@@ -19011,7 +19062,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:413
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:355
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:165
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:24
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:14
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:15
@@ -19219,7 +19270,7 @@ msgstr ""
 msgid "Value"
 msgstr "ค่า"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:503
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:547
 msgid "Variables"
 msgstr "ตัวแปร"
 
@@ -19332,7 +19383,7 @@ msgstr "ดูสิ่งนี้ใน Zammad"
 msgid "Viewing ticket"
 msgstr "Ticket ใหม่"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:683
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
@@ -19696,7 +19747,7 @@ msgstr "เหลือง"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee:4
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee:47
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:563
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:607
 #: app/assets/javascripts/app/controllers/tag.coffee:133
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:121
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:23
@@ -20192,7 +20243,7 @@ msgstr "บทบาทผู้ใช้ของคุณไม่ได้ร
 msgid "Zammad"
 msgstr "Zammad"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:327
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:328
 #, fuzzy
 #| msgid "This is Zammad version %s"
 msgid "Zammad Features"
@@ -20331,7 +20382,7 @@ msgstr "แอดมิน"
 msgid "after (absolute)"
 msgstr "หลัง (absolute)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:435
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:479
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -20342,6 +20393,12 @@ msgstr "หลัง (relative)"
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco:8
 msgid "again"
 msgstr "อีกครั้ง"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:421
+#, fuzzy
+#| msgid "Subscribe"
+msgid "all subscribers"
+msgstr "บอกรับ"
 
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:139
 msgid "and"
@@ -20403,7 +20460,7 @@ msgstr ""
 msgid "before (absolute)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:432
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:476
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -20534,13 +20591,13 @@ msgstr "สร้าง"
 msgid "created %s"
 msgstr "สร้าง %s"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:375
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:144
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:537
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:632
 msgid "current user"
 msgstr "ผู้ใช้ปัจจุบัน"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:383
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:427
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:543
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:637
 msgid "current user organization"
@@ -20800,7 +20857,7 @@ msgstr "ส่งต่อ"
 msgid "from"
 msgstr "จาก"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:437
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:481
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -20954,7 +21011,7 @@ msgstr "อยู่ในระหว่างการดำเนินงา
 msgid "inactive"
 msgstr "ไม่ได้ใช้งาน"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:554
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:598
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:91
 msgid "internal"
 msgstr "ภายใน"
@@ -21146,7 +21203,7 @@ msgstr "ผสาน"
 msgid "merged into"
 msgstr "ผสาน"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:573
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:617
 msgid "message"
 msgstr "ข้อความ"
 
@@ -21366,7 +21423,7 @@ msgstr "รอการเตือน"
 msgid "phone"
 msgstr "โทรศัพท์"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:554
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:598
 msgid "public"
 msgstr "สาธารณะ"
 
@@ -21399,7 +21456,7 @@ msgstr ""
 msgid "recovery codes"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:104
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:103
 msgid "relative"
 msgstr "สัมพันธ์"
 
@@ -21565,13 +21622,13 @@ msgstr "sms"
 msgid "spaces are not allowed"
 msgstr "ไม่ได้เปิดใช้งานคุณสมบัติ!"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:384
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:428
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:544
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:638
 msgid "specific organization"
 msgstr "เฉพาะองค์กร"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:376
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:417
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:538
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:633
 msgid "specific user"
@@ -21640,7 +21697,7 @@ msgstr "ticket.agent"
 msgid "ticket.customer"
 msgstr "ticket.customer"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:436
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:480
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -21700,7 +21757,7 @@ msgstr "สถานะทวิตเตอร์"
 msgid "twofactor,2fa,security key,passkey,authenticator app"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:379
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:423
 msgid "unassign user"
 msgstr "ยกเลิกการมอบหมายผู้ใช้"
 
@@ -21750,14 +21807,14 @@ msgstr "จะถูกสร้างขึ้น"
 msgid "will be deleted"
 msgstr "จะถูกลบ"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:434
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:478
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within last (relative)"
 msgstr "ภายในสุดท้าย (เกี่ยวข้อง)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:433
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:477
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52

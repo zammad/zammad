@@ -990,7 +990,7 @@ msgid "Accounts"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:718
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:116
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:115
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:80
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:109
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:107
@@ -1061,7 +1061,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/group.coffee:16
 #: app/assets/javascripts/app/models/job.coffee:16
 #: app/assets/javascripts/app/models/ldap_source.coffee:7
-#: app/assets/javascripts/app/models/macro.coffee:16
+#: app/assets/javascripts/app/models/macro.coffee:15
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:9
 #: app/assets/javascripts/app/models/overview.coffee:67
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:13
@@ -1236,7 +1236,7 @@ msgstr ""
 msgid "Add attachment option to upload."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:270
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:271
 msgid "Add bullet list"
 msgstr ""
 
@@ -1245,11 +1245,11 @@ msgstr ""
 msgid "Add condition"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:193
 msgid "Add first level heading"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:186
 msgid "Add heading"
 msgstr ""
 
@@ -1257,11 +1257,11 @@ msgstr ""
 msgid "Add image"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:153
 msgid "Add link"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:257
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:258
 msgid "Add ordered list"
 msgstr ""
 
@@ -1270,7 +1270,7 @@ msgstr ""
 msgid "Add reply"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:203
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:204
 msgid "Add second level heading"
 msgstr ""
 
@@ -1287,7 +1287,7 @@ msgstr ""
 msgid "Add subclause"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:214
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:215
 msgid "Add third level heading"
 msgstr ""
 
@@ -1377,7 +1377,7 @@ msgstr ""
 msgid "Administrator Account"
 msgstr ""
 
-#: app/assets/javascripts/app/models/macro.coffee:10
+#: app/assets/javascripts/app/models/macro.coffee:9
 msgid "Advance to next ticket from overview"
 msgstr ""
 
@@ -1479,7 +1479,7 @@ msgid ""
 "of this deletion possible."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:462
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:506
 msgid "All agents"
 msgstr ""
 
@@ -1764,7 +1764,7 @@ msgstr ""
 msgid "Are you sure to remove this article?"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:143
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:152
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr ""
 
@@ -1963,15 +1963,15 @@ msgstr ""
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:181
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:190
 msgid "Attach another file"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:176
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:185
 msgid "Attach file"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:179
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:188
 msgid "Attach files"
 msgstr ""
 
@@ -1986,7 +1986,7 @@ msgid "Attached Files"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:182
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:181
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
@@ -2647,7 +2647,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:343
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:342
 msgid "Cancel & Go Back"
 msgstr ""
 
@@ -2773,7 +2773,7 @@ msgstr ""
 msgid "Change personal account password."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:228
 msgid "Change text color"
 msgstr ""
 
@@ -3106,13 +3106,13 @@ msgstr ""
 msgid "Close side panel"
 msgstr ""
 
-#: app/assets/javascripts/app/models/macro.coffee:10
+#: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:32
 #: db/seeds/settings.rb:2887
 msgid "Close tab"
 msgstr ""
 
-#: app/assets/javascripts/app/models/macro.coffee:10
+#: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:37
 #: db/seeds/settings.rb:2888
 msgid "Close tab on ticket close"
@@ -3581,7 +3581,7 @@ msgstr "Мемлекет"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:19
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:81
-#: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:9
+#: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:14
 #: app/assets/javascripts/app/models/group.coffee:45
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:56
 #: app/assets/javascripts/app/views/agent_user_create.jst.eco:13
@@ -3591,7 +3591,7 @@ msgstr "Мемлекет"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:354
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:353
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr ""
@@ -3846,7 +3846,7 @@ msgstr ""
 msgid "Current Token"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:592
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:636
 #: app/assets/javascripts/app/models/signature.coffee:21
 #: app/assets/javascripts/app/models/text_module.coffee:21
 msgid "Current User"
@@ -3898,7 +3898,7 @@ msgid "Custom address is not set"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:461
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:505
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:14
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:14
@@ -4975,7 +4975,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:195
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:162
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:146
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:155
 msgid "Delete"
 msgstr ""
 
@@ -5023,7 +5023,7 @@ msgstr ""
 msgid "Delete avatar"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:149
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:150
 msgid "Delete column"
 msgstr ""
 
@@ -5071,11 +5071,11 @@ msgstr ""
 msgid "Delete records"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:121
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:122
 msgid "Delete row"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:206
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:207
 msgid "Delete table"
 msgstr ""
 
@@ -5277,7 +5277,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:340
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:339
 msgid "Discard Changes"
 msgstr ""
 
@@ -5321,11 +5321,11 @@ msgstr ""
 msgid "Display name"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:618
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:662
 msgid "Do not encrypt email"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:604
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:648
 msgid "Do not sign email"
 msgstr ""
 
@@ -5463,7 +5463,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:28
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:44
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:119
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:342
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:351
 msgid "Drop files here"
 msgstr ""
 
@@ -5528,12 +5528,26 @@ msgstr ""
 msgid "Edit"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:173
+msgid "Edit Answer"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:175
+msgid "Edit Category"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:16
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:26
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:34
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:95
 msgid "Edit Customer"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:171
+#, fuzzy
+#| msgid "Knowledge Base"
+msgid "Edit Knowledge Base"
+msgstr "Білім Базасы"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee:21
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee:11
@@ -5565,6 +5579,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:38
 msgid "Editing on Desktop"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
+msgid "Editor"
 msgstr ""
 
 #: db/seeds/settings.rb:3533
@@ -5963,11 +5981,11 @@ msgstr ""
 msgid "Encrypt"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:619
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:663
 msgid "Encrypt email (if not possible, discard notification)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:620
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:664
 msgid "Encrypt email (if not possible, send notification anyway)"
 msgstr ""
 
@@ -6056,7 +6074,7 @@ msgstr ""
 msgid "Enter credentials"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:158
 msgid "Enter link URL"
 msgstr ""
 
@@ -6454,6 +6472,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:169
 msgid "Failed to set up QR code. Please try again."
+msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageFailedUploadOverlay.vue:23
+msgid "Failed to upload."
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:877
@@ -7144,7 +7166,7 @@ msgid "Grouping order"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/group.coffee:3
-#: app/assets/javascripts/app/models/macro.coffee:15
+#: app/assets/javascripts/app/models/macro.coffee:14
 #: app/assets/javascripts/app/models/text_module.coffee:28
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:67
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:71
@@ -7817,7 +7839,7 @@ msgstr ""
 msgid "Inbound"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:132
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:131
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:140
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:34
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:6
@@ -7895,7 +7917,7 @@ msgstr ""
 msgid "Increment seconds value"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:236
 msgid "Indent text"
 msgstr ""
 
@@ -7938,39 +7960,39 @@ msgstr ""
 msgid "Inline content could not be generated."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:320
 msgid "Insert code block"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:140
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:141
 msgid "Insert column after"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:131
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:132
 msgid "Insert column before"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:309
 msgid "Insert inline code"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:103
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:104
 msgid "Insert row above"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:112
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:113
 msgid "Insert row below"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:292
 msgid "Insert table"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:343
 msgid "Insert text from Knowledge Base article"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:350
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:351
 msgid "Insert text from text module"
 msgstr ""
 
@@ -9210,7 +9232,7 @@ msgstr ""
 msgid "Members"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:335
 msgid "Mention user"
 msgstr ""
 
@@ -9227,7 +9249,7 @@ msgstr ""
 msgid "Merge"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:168
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:169
 msgid "Merge cells"
 msgstr ""
 
@@ -9688,6 +9710,10 @@ msgstr ""
 msgid "New Activity Type"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:8
+msgid "New Answer"
+msgstr ""
+
 #: app/assets/javascripts/app/views/api.jst.eco:52
 msgid "New Application"
 msgstr ""
@@ -9698,6 +9724,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:10
 msgid "New Calendar"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:10
+msgid "New Category"
 msgstr ""
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:8
@@ -10093,7 +10123,7 @@ msgstr ""
 msgid "No settings with area 'Dashboard::Stats' defined"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:218
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:219
 msgid "No shared drafts yet"
 msgstr ""
 
@@ -10139,6 +10169,7 @@ msgstr ""
 msgid "No, thanks"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
 #: app/graphql/gql/types/ticket_type.rb:98 db/seeds/settings.rb:1931
@@ -10184,7 +10215,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:158
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:110
 #: app/controllers/application_controller/handles_errors.rb:60
-#: app/services/service/ticket/article/create.rb:127
+#: app/services/service/ticket/article/create.rb:119
 msgid "Not authorized"
 msgstr ""
 
@@ -10214,7 +10245,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/email_address.coffee:35
 #: app/assets/javascripts/app/models/group.coffee:14
 #: app/assets/javascripts/app/models/job.coffee:15
-#: app/assets/javascripts/app/models/macro.coffee:14
+#: app/assets/javascripts/app/models/macro.coffee:13
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:11
 #: app/assets/javascripts/app/models/role.coffee:10
 #: app/assets/javascripts/app/models/signature.coffee:26
@@ -10439,7 +10470,7 @@ msgstr ""
 msgid "On-screen Translation"
 msgstr ""
 
-#: app/assets/javascripts/app/models/macro.coffee:9
+#: app/assets/javascripts/app/models/macro.coffee:8
 msgid "Once completed…"
 msgstr ""
 
@@ -10792,7 +10823,7 @@ msgstr ""
 msgid "Outbound"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:133
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:132
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:141
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:22
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:21
@@ -10811,7 +10842,7 @@ msgstr ""
 msgid "Outdated Browser"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:246
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:247
 msgid "Outdent text"
 msgstr ""
 
@@ -10845,7 +10876,7 @@ msgstr ""
 msgid "Overwrite Draft"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:460
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:504
 #: app/assets/javascripts/app/models/ticket.coffee:11
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:42
 #: app/graphql/gql/types/overview_type.rb:64
@@ -11383,7 +11414,7 @@ msgid "Preview %s"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:131
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:187
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:188
 msgid "Preview Shared Draft"
 msgstr ""
 
@@ -11610,6 +11641,10 @@ msgstr ""
 msgid "Read"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
+msgid "Reader"
+msgstr ""
+
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:6
 msgid "Real-time"
 msgstr ""
@@ -11801,7 +11836,7 @@ msgstr ""
 msgid "Remove authenticator app"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:283
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:284
 msgid "Remove formatting"
 msgstr ""
 
@@ -12056,7 +12091,7 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/ImageResizable.vue:134
+#: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageHandler.vue:169
 msgid "Resize frame"
 msgstr ""
 
@@ -12811,7 +12846,7 @@ msgstr ""
 msgid "Sender Format Separator"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:127
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:126
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:135
 msgid "Sender Type"
 msgstr ""
@@ -12820,7 +12855,7 @@ msgstr ""
 msgid "Sender based on Reply-To header"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:459
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:503
 msgid "Sender of last article"
 msgstr ""
 
@@ -13224,11 +13259,11 @@ msgstr ""
 msgid "Sign"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:605
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:649
 msgid "Sign email (if not possible, discard notification)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:606
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:650
 msgid "Sign email (if not possible, send notification anyway)"
 msgstr ""
 
@@ -13475,7 +13510,7 @@ msgstr ""
 msgid "Split"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:159
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:160
 msgid "Split cells"
 msgstr ""
 
@@ -13608,7 +13643,7 @@ msgstr ""
 msgid "Status:"
 msgstr ""
 
-#: app/assets/javascripts/app/models/macro.coffee:10
+#: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:49
 #: db/seeds/settings.rb:2890
 msgid "Stay on tab"
@@ -13706,8 +13741,10 @@ msgstr ""
 msgid "Submit"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:139
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:176
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:204
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:148
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:204
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:4
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:57
@@ -14916,7 +14953,7 @@ msgstr ""
 msgid "The required parameter 'ticket_number' is missing."
 msgstr ""
 
-#: app/models/concerns/perform_changes/action/attribute_updates.rb:74
+#: app/models/concerns/perform_changes/action/attribute_updates.rb:94
 msgid "The required parameter 'user_id' is missing."
 msgstr ""
 
@@ -16308,15 +16345,15 @@ msgstr ""
 msgid "Toggle dark mode"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:196
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:197
 msgid "Toggle header cell"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:187
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:188
 msgid "Toggle header column"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:178
+#: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:179
 msgid "Toggle header row"
 msgstr ""
 
@@ -16722,6 +16759,8 @@ msgstr ""
 msgid "Unset default"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:149
+#: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:158
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:7
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:57
 msgid "Unsubscribe"
@@ -16774,7 +16813,7 @@ msgstr ""
 msgid "Update In Min"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:205
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:206
 msgid "Update Shared Draft"
 msgstr ""
 
@@ -16830,7 +16869,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/group.coffee:15
 #: app/assets/javascripts/app/models/job.coffee:24
 #: app/assets/javascripts/app/models/ldap_source.coffee:10
-#: app/assets/javascripts/app/models/macro.coffee:13
+#: app/assets/javascripts/app/models/macro.coffee:12
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:11
 #: app/assets/javascripts/app/models/overview.coffee:70
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:12
@@ -17047,7 +17086,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:413
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:355
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:165
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:24
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:14
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:15
@@ -17241,7 +17280,7 @@ msgstr ""
 msgid "Value"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:503
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:547
 msgid "Variables"
 msgstr ""
 
@@ -17338,7 +17377,7 @@ msgstr ""
 msgid "Viewing ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:683
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:71
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
@@ -17674,7 +17713,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm.coffee:4
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee:47
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:563
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:607
 #: app/assets/javascripts/app/controllers/tag.coffee:133
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:121
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:23
@@ -18094,7 +18133,7 @@ msgstr ""
 msgid "Zammad"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:327
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:328
 msgid "Zammad Features"
 msgstr ""
 
@@ -18218,7 +18257,7 @@ msgstr ""
 msgid "after (absolute)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:435
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:479
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -18228,6 +18267,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:8
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco:8
 msgid "again"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:421
+msgid "all subscribers"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:139
@@ -18284,7 +18327,7 @@ msgstr ""
 msgid "before (absolute)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:432
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:476
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -18415,13 +18458,13 @@ msgstr ""
 msgid "created %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:375
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:144
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:537
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:632
 msgid "current user"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:383
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:427
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:543
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:637
 msgid "current user organization"
@@ -18663,7 +18706,7 @@ msgstr ""
 msgid "from"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:437
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:481
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -18811,7 +18854,7 @@ msgstr ""
 msgid "inactive"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:554
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:598
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:91
 msgid "internal"
 msgstr ""
@@ -18983,7 +19026,7 @@ msgstr ""
 msgid "merged into"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:573
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:617
 msgid "message"
 msgstr ""
 
@@ -19195,7 +19238,7 @@ msgstr "күтілетін еске салғыш"
 msgid "phone"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:554
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:598
 msgid "public"
 msgstr ""
 
@@ -19226,7 +19269,7 @@ msgstr ""
 msgid "recovery codes"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:104
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:103
 msgid "relative"
 msgstr ""
 
@@ -19378,13 +19421,13 @@ msgstr "смс"
 msgid "spaces are not allowed"
 msgstr "бос орындарға рұқсат етілмейді"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:384
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:428
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:544
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:638
 msgid "specific organization"
 msgstr "арнайы ұйым"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:376
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:417
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:538
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:633
 msgid "specific user"
@@ -19451,7 +19494,7 @@ msgstr "билет.агент"
 msgid "ticket.customer"
 msgstr "билет.тұтынушы"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:436
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:480
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -19511,7 +19554,7 @@ msgstr "twitter күйі"
 msgid "twofactor,2fa,security key,passkey,authenticator app"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:379
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:423
 msgid "unassign user"
 msgstr "пайдаланушы тағайындаудан бас тарту"
 
@@ -19559,14 +19602,14 @@ msgstr "құрылатын болады"
 msgid "will be deleted"
 msgstr "жойылады"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:434
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:478
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within last (relative)"
 msgstr "соңғы кезеңде (салыстырмалы түрде)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:433
+#: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:477
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
