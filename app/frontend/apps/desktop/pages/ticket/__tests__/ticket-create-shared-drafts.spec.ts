@@ -52,7 +52,10 @@ describe('ticket create view - shared drafts sidebar', async () => {
     it('supports creating shared drafts', async () => {
       const view = await visitView('/ticket/create')
 
-      await view.events.type(view.getByLabelText('Text'), 'foobar')
+      await view.events.type(
+        view.getByLabelText('Text'),
+        'foobar<div data-signature="true">Signature here</div>',
+      )
 
       const formUpdaterCalls = await waitForFormUpdaterQueryCalls()
       await vi.waitUntil(() => formUpdaterCalls.length === 2)

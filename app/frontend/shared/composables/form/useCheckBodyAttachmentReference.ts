@@ -2,6 +2,7 @@
 
 import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
 import { i18n } from '#shared/i18n.ts'
+import { domFrom } from '#shared/utils/dom.ts'
 
 import { useConfirmation } from '../useConfirmation.ts'
 
@@ -17,15 +18,14 @@ const referenceMatchwords = [
 ]
 
 const removeQuotingFromBody = (body: string) => {
-  const parser = new DOMParser()
-  const document = parser.parseFromString(body, 'text/html')
+  const dom = domFrom(body)
 
   // Remove blockquotes and images
   // To not detect matchwords which are not part of the user-written article
-  document.querySelectorAll('blockquote, img').forEach((elem) => elem.remove())
+  dom.querySelectorAll('blockquote, img').forEach((elem) => elem.remove())
 
   // Return the modified HTML content as a string.
-  return document.body.innerHTML
+  return dom.innerHTML
 }
 
 const bodyAttachmentReferenceMatchwordExists = (body: string) => {

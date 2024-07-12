@@ -8,6 +8,7 @@ import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
+import type { FormFieldValue } from '#shared/components/Form/types.ts'
 import { useTicketSharedDraftStart } from '#shared/entities/ticket-shared-draft-start/composables/useTicketSharedDraftStart.ts'
 import { useTicketSharedDraftStartCreateMutation } from '#shared/entities/ticket-shared-draft-start/graphql/mutations/ticketSharedDraftStartCreate.api.ts'
 import { useTicketSharedDraftStartUpdateMutation } from '#shared/entities/ticket-shared-draft-start/graphql/mutations/ticketSharedDraftStartUpdate.api.ts'
@@ -17,6 +18,7 @@ import {
   GraphQLErrorTypes,
   type GraphQLHandlerError,
 } from '#shared/types/error.ts'
+import { domFrom } from '#shared/utils/dom.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
@@ -73,11 +75,26 @@ const supportedFields = () =>
     ),
   )
 
+const prepareSharedDraftBody = (input: FormFieldValue) => {
+  if (!input || typeof input !== 'string') {
+    return input
+  }
+
+  const dom = domFrom(input)
+
+  dom
+    .querySelectorAll('div[data-signature="true"]')
+    .forEach((elem) => elem.remove())
+
+  return dom.innerHTML
+}
+
 const sharedDraftContent = () => ({
   ...supportedFields(),
   formSenderType: props.context.formValues.articleSenderType, // different key
   cc: ((props.context.formValues.cc as string[]) || []).join(', '),
   tags: ((props.context.formValues.tags as string[]) || []).join(', '),
+  body: prepareSharedDraftBody(props.context.formValues.body),
 })
 
 const createSharedDraft = () => {
