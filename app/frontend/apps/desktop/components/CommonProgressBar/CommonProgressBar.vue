@@ -21,7 +21,7 @@ defineProps<Props>()
 
 <style scoped>
 .progress {
-  @apply h-2 rounded-2xl bg-blue-200 dark:bg-gray-700;
+  @apply h-2 overflow-clip rounded-2xl bg-blue-200 dark:bg-gray-700;
 
   &::-moz-progress-bar {
     @apply rounded-none bg-blue-800;
