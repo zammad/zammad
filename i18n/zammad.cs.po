@@ -2259,7 +2259,7 @@ msgid "Attach files"
 msgstr "Přiložit soubory"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
 msgid "Attached"
 msgstr "Přiloženo"
 
@@ -2272,7 +2272,7 @@ msgstr "Přiložené soubory"
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:181
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 msgid "Attachment"
 msgstr "Příloha"
 
@@ -4062,7 +4062,7 @@ msgstr "Vytvořit Znalostní bázi"
 msgid "Create Macros"
 msgstr "Vytvořit Makra"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:168
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:185
 #, fuzzy
 #| msgid "Create a shared draft"
 msgid "Create Shared Draft"
@@ -4133,7 +4133,7 @@ msgid "Create a new template in the admin interface."
 msgstr "Vytvořte novou šablonu v rozhraní pro správu."
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:163
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:180
 msgid "Create a shared draft"
 msgstr "Vytvořit sdílený koncept"
 
@@ -6745,12 +6745,12 @@ msgstr ""
 "Nastavení je platné pouze, je-li povoleno přihlášení heslem."
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
 msgid "Enclosed"
 msgstr "Přiloženo"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
 msgid "Enclosure"
 msgstr "Příloha"
 
@@ -10828,7 +10828,7 @@ msgstr "Integrace Nagiosu"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:103
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:90
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:142
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:164
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:181
 #: db/seeds/object_manager_attributes.rb:1507 public/assets/form/form.js:24
 msgid "Name"
 msgstr "Jméno"
@@ -11401,7 +11401,7 @@ msgstr "Není k dispozici žádné sezení."
 msgid "No settings with area 'Dashboard::Stats' defined"
 msgstr "Nejsou definována žádná nastavení s oblastí 'Dashboard::Stats'"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:219
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:236
 #, fuzzy
 #| msgid "Shared Drafts"
 msgid "No shared drafts yet"
@@ -12822,7 +12822,7 @@ msgid "Preview %s"
 msgstr "Náhled %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:131
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:188
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:205
 #, fuzzy
 #| msgid "Select Shared Draft"
 msgid "Preview Shared Draft"
@@ -14740,7 +14740,7 @@ msgstr "Sdílené"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee:12
 #: app/assets/javascripts/app/models/group.coffee:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:158
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:175
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/shared-draft-start.ts:13
 #: db/seeds/object_manager_attributes.rb:2093
 msgid "Shared Drafts"
@@ -14751,7 +14751,7 @@ msgstr "Sdílené koncepty"
 msgid "Shared draft cannot be selected for this ticket."
 msgstr "Sdílený koncept není možné pro tento ticket vybrat."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:114
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:131
 #, fuzzy
 #| msgid "Ticket has been created successfully."
 msgid "Shared draft has been created successfully."
@@ -14763,7 +14763,7 @@ msgstr "Ticket byl úspěšně vytvořen."
 msgid "Shared draft has been deleted."
 msgstr "Avatar se nepodařilo smazat."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:139
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:156
 #, fuzzy
 #| msgid "Ticket has been created successfully."
 msgid "Shared draft has been updated successfully."
@@ -19057,7 +19057,7 @@ msgstr "Eskalace aktualizace v"
 msgid "Update In Min"
 msgstr "Aktualizace v min"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:206
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:223
 #, fuzzy
 #| msgid "Apply Shared Draft"
 msgid "Update Shared Draft"
@@ -20717,7 +20717,7 @@ msgstr "Telefon (příchozí)"
 msgid "add new tag"
 msgstr "Přidat tag"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
 msgid "add option"
 msgstr "přidat možnost"
 
@@ -20782,12 +20782,12 @@ msgid "at least one letter is required"
 msgstr "je vyžadováno nejméně jedno písmeno"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
 msgid "attached"
 msgstr "přiloženo"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
 msgid "attachment"
 msgstr "příloha"
 
@@ -20795,7 +20795,7 @@ msgstr "příloha"
 msgid "attribute is not editable"
 msgstr "atribut není upravitelný"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:172
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
 msgid "auto select"
 msgstr "auto výběr"
 
@@ -21115,12 +21115,12 @@ msgid "email sent to '%s'"
 msgstr "e-mail odeslán '%s'"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
 msgid "enclosed"
 msgstr "přiloženo"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
 msgid "enclosure"
 msgstr "příloha"
 
@@ -21175,11 +21175,11 @@ msgstr "selhal"
 msgid "fax"
 msgstr "fax"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
 msgid "fill in"
 msgstr "vyplnit"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:175
 msgid "fill in empty"
 msgstr "vyplnit prázdné"
 
@@ -21791,7 +21791,7 @@ msgstr ""
 msgid "remove"
 msgstr "odstranit"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "remove option"
 msgstr "odstranit možnost"
 
@@ -21862,19 +21862,19 @@ msgstr "Vytvořit nového Zákazníka"
 msgid "session,sessions,computer,computers,browser,browsers,access"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:171
 msgid "set fixed to"
 msgstr "nastavit fixované na"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:164
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
 msgid "set mandatory"
 msgstr "nastavit povinné"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
 msgid "set optional"
 msgstr "nastavit volitelné"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
 msgid "set readonly"
 msgstr "nastavit pouze pro čtení"
 
@@ -22077,7 +22077,7 @@ msgstr ""
 msgid "unassign user"
 msgstr "zrušit přiřazení uživatele"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "unset readonly"
 msgstr "zrušit nastavení pouze pro čtení"
 

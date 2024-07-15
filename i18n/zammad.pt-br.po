@@ -2182,7 +2182,7 @@ msgid "Attach files"
 msgstr "Anexar arquivos"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
 msgid "Attached"
 msgstr "Anexado"
 
@@ -2195,7 +2195,7 @@ msgstr "Arquivo(s) Anexado"
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:181
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 msgid "Attachment"
 msgstr "Anexo"
 
@@ -3913,7 +3913,7 @@ msgstr "Criar Base de Conhecimento"
 msgid "Create Macros"
 msgstr "Criar Macros"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:168
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:185
 msgid "Create Shared Draft"
 msgstr "Criar Rascunho Compartilhado"
 
@@ -3981,7 +3981,7 @@ msgid "Create a new template in the admin interface."
 msgstr "Criar um novo modelo na interface de administração."
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:163
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:180
 msgid "Create a shared draft"
 msgstr "Criar um rascunho compartilhado"
 
@@ -6555,12 +6555,12 @@ msgstr ""
 "configuração só é efetiva se o login por senha estiver ativado."
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
 msgid "Enclosed"
 msgstr "Incluso"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
 msgid "Enclosure"
 msgstr "Anexo"
 
@@ -10553,7 +10553,7 @@ msgstr "Integração do Nagios"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:103
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:90
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:142
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:164
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:181
 #: db/seeds/object_manager_attributes.rb:1507 public/assets/form/form.js:24
 msgid "Name"
 msgstr "Nome"
@@ -11112,7 +11112,7 @@ msgstr "Nenhuma sessão disponível."
 msgid "No settings with area 'Dashboard::Stats' defined"
 msgstr "Nenhuma configuração com a área 'Dashboard::Stats' definida"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:219
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:236
 #, fuzzy
 #| msgid "Shared Drafts"
 msgid "No shared drafts yet"
@@ -12520,7 +12520,7 @@ msgid "Preview %s"
 msgstr "Visualizar %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:131
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:188
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:205
 #, fuzzy
 #| msgid "Select Shared Draft"
 msgid "Preview Shared Draft"
@@ -14336,7 +14336,7 @@ msgstr "Compartilhado"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee:12
 #: app/assets/javascripts/app/models/group.coffee:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:158
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:175
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/shared-draft-start.ts:13
 #: db/seeds/object_manager_attributes.rb:2093
 msgid "Shared Drafts"
@@ -14347,7 +14347,7 @@ msgstr "Rascunhos Compartilhados"
 msgid "Shared draft cannot be selected for this ticket."
 msgstr "O rascunho compartilhado não pode ser selecionado para este ticket."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:114
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:131
 #, fuzzy
 #| msgid "Ticket has been created successfully."
 msgid "Shared draft has been created successfully."
@@ -14359,7 +14359,7 @@ msgstr "O ticket foi criado com sucesso."
 msgid "Shared draft has been deleted."
 msgstr "O avatar não pôde ser excluído."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:139
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:156
 #, fuzzy
 #| msgid "Ticket has been created successfully."
 msgid "Shared draft has been updated successfully."
@@ -18470,7 +18470,7 @@ msgstr "Atualizar escalação em"
 msgid "Update In Min"
 msgstr "Atualizar em Min"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:206
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:223
 #, fuzzy
 #| msgid "Apply Shared Draft"
 msgid "Update Shared Draft"
@@ -20102,7 +20102,7 @@ msgstr "Número de telefone"
 msgid "add new tag"
 msgstr "Adicionar Tag"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
 msgid "add option"
 msgstr "adicionar opção"
 
@@ -20167,12 +20167,12 @@ msgid "at least one letter is required"
 msgstr "pelo menos uma letra é necessária"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
 msgid "attached"
 msgstr "anexado"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
 msgid "attachment"
 msgstr "anexo"
 
@@ -20180,7 +20180,7 @@ msgstr "anexo"
 msgid "attribute is not editable"
 msgstr "atributo não é editável"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:172
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
 msgid "auto select"
 msgstr "auto seleção"
 
@@ -20494,12 +20494,12 @@ msgid "email sent to '%s'"
 msgstr "email enviado para '%s'"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
 msgid "enclosed"
 msgstr "anexo"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
 msgid "enclosure"
 msgstr "recinto"
 
@@ -20554,11 +20554,11 @@ msgstr "falhou"
 msgid "fax"
 msgstr "fax"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
 msgid "fill in"
 msgstr "preencha"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:175
 msgid "fill in empty"
 msgstr "preencher vazio"
 
@@ -21157,7 +21157,7 @@ msgstr "relativo - ex. \"2 horas atrás\" ou \"2 dias e 15 minutos atrás\""
 msgid "remove"
 msgstr "remover"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "remove option"
 msgstr "remover opção"
 
@@ -21223,19 +21223,19 @@ msgid "session,sessions,computer,computers,browser,browsers,access"
 msgstr ""
 "sessão, sessões, computador, computadores, navegador, navegadores, acesso"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:171
 msgid "set fixed to"
 msgstr "conjunto fixo para"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:164
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
 msgid "set mandatory"
 msgstr "definir obrigatório"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
 msgid "set optional"
 msgstr "definir opcional"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
 msgid "set readonly"
 msgstr "definir somente leitura"
 
@@ -21436,7 +21436,7 @@ msgstr ""
 msgid "unassign user"
 msgstr "desassociar usuário"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "unset readonly"
 msgstr "não definido somente leitura"
 

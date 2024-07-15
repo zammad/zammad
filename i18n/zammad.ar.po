@@ -2173,7 +2173,7 @@ msgid "Attach files"
 msgstr "الملفات المرفقة"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
 #, fuzzy
 #| msgid "Attachments"
 msgid "Attached"
@@ -2188,7 +2188,7 @@ msgstr "الملفات المرفقة"
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:181
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 #, fuzzy
 #| msgid "Attachments"
 msgid "Attachment"
@@ -4044,7 +4044,7 @@ msgstr ""
 msgid "Create Macros"
 msgstr "إنشاء وحدات ماكرو"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:168
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:185
 #, fuzzy
 #| msgid "Created at"
 msgid "Create Shared Draft"
@@ -4095,7 +4095,7 @@ msgid "Create a new template in the admin interface."
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:163
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:180
 #, fuzzy
 #| msgid "Created at"
 msgid "Create a shared draft"
@@ -6684,14 +6684,14 @@ msgid ""
 msgstr "تمكن المستخدمين من إنشاء حساباتهم الخاصة عبر واجهة الويب."
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
 #, fuzzy
 #| msgid "closed"
 msgid "Enclosed"
 msgstr "مغلق"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
 #, fuzzy
 #| msgid "close"
 msgid "Enclosure"
@@ -10894,7 +10894,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:103
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:90
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:142
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:164
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:181
 #: db/seeds/object_manager_attributes.rb:1507 public/assets/form/form.js:24
 msgid "Name"
 msgstr "اسم"
@@ -11469,7 +11469,7 @@ msgstr ""
 msgid "No settings with area 'Dashboard::Stats' defined"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:219
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:236
 #, fuzzy
 #| msgid "Shared"
 msgid "No shared drafts yet"
@@ -12936,7 +12936,7 @@ msgid "Preview %s"
 msgstr "معاينة"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:131
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:188
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:205
 #, fuzzy
 #| msgid "Shared"
 msgid "Preview Shared Draft"
@@ -14854,7 +14854,7 @@ msgstr "مشترك"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee:12
 #: app/assets/javascripts/app/models/group.coffee:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:158
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:175
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/shared-draft-start.ts:13
 #: db/seeds/object_manager_attributes.rb:2093
 #, fuzzy
@@ -14867,7 +14867,7 @@ msgstr "مشترك"
 msgid "Shared draft cannot be selected for this ticket."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:114
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:131
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Shared draft has been created successfully."
@@ -14879,7 +14879,7 @@ msgstr "تم تشغيل الاختبار بنجاح."
 msgid "Shared draft has been deleted."
 msgstr "يتم تحديث كائن (كائنات)%s."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:139
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:156
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Shared draft has been updated successfully."
@@ -19191,7 +19191,7 @@ msgstr ""
 msgid "Update In Min"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:206
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:223
 #, fuzzy
 #| msgid "Shared"
 msgid "Update Shared Draft"
@@ -20799,7 +20799,7 @@ msgstr "شهر نوفمبر"
 msgid "add new tag"
 msgstr "إضافة علامة"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
 msgid "add option"
 msgstr ""
 
@@ -20866,14 +20866,14 @@ msgid "at least one letter is required"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
 #, fuzzy
 #| msgid "reached"
 msgid "attached"
 msgstr "وصلت"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
 #, fuzzy
 #| msgid "Attachments"
 msgid "attachment"
@@ -20883,7 +20883,7 @@ msgstr "المرفقات"
 msgid "attribute is not editable"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:172
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
 msgid "auto select"
 msgstr ""
 
@@ -21211,14 +21211,14 @@ msgid "email sent to '%s'"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
 #, fuzzy
 #| msgid "closed"
 msgid "enclosed"
 msgstr "مغلق"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
 #, fuzzy
 #| msgid "close"
 msgid "enclosure"
@@ -21278,11 +21278,11 @@ msgstr "فشل"
 msgid "fax"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
 msgid "fill in"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:175
 msgid "fill in empty"
 msgstr ""
 
@@ -21931,7 +21931,7 @@ msgstr ""
 msgid "remove"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "remove option"
 msgstr ""
 
@@ -22008,19 +22008,19 @@ msgstr "إنشاء عميل جديد"
 msgid "session,sessions,computer,computers,browser,browsers,access"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:171
 msgid "set fixed to"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:164
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
 msgid "set mandatory"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
 msgid "set optional"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
 msgid "set readonly"
 msgstr ""
 
@@ -22233,7 +22233,7 @@ msgstr ""
 msgid "unassign user"
 msgstr "إلغاء تعيين المستخدم "
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "unset readonly"
 msgstr ""
 

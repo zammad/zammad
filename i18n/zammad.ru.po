@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-11 05:05+0000\n"
+"PO-Revision-Date: 2024-07-12 09:16+0000\n"
 "Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ru/>\n"
@@ -753,20 +753,20 @@ msgid ""
 "displayed in a separate view in your overviews. You can also configure "
 "**email notifications**."
 msgstr ""
-"** Соглашение об уровне предоставления услуги ** (англ. Service Level "
-"Agreement, ** SLA **), поможет Вам уложиться в определенные сроки "
-"реагирования на запросы Ваших клиентов. Таким образом, Вы можете определить "
-"такие цели, как ответ на каждый запрос в течение восьми часов. Если Вы "
-"рискуете пропустить эту цель, Zammad предупредит Вас.\n"
+"**Соглашение об уровне предоставления услуги** (англ. Service Level "
+"Agreement, **SLA**), поможет Вам соблюдать определенные сроки реагирования "
+"на запросы Ваших клиентов. Таким образом, Вы можете определить такие цели, "
+"как ответ на каждый запрос в течение восьми часов. Если Вы рискуете "
+"пропустить эту цель, Zammad предупредит Вас.\n"
 "\n"
-"Вы можете определить цели для трех разных показателей: ** время отклика ** "
-"(время между созданием заявки и первой реакцией агента), ** время обновления "
-"** (время между запросом клиента и реакцией агента), и ** время решения ** "
-"(время между созданием и закрытием заявки).\n"
+"Вы можете определить цели для трех разных показателей: **время отклика** "
+"(время между созданием заявки и первой реакцией агента), **время "
+"обновления** (время между запросом клиента и реакцией агента), и **время "
+"решения** (время между созданием и закрытием заявки).\n"
 "\n"
 "Любые эскалированные заявки (т. е. заявки, которые не достигли определенной "
-"цели) отображаются в отдельном представлении в Ваших обзорах. Вы также "
-"можете настроить ** уведомления по электронной почте **."
+"цели) отображаются в отдельном представлении в Ваших представлениях. Вы "
+"также можете настроить **уведомления по электронной почте**."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:296
 msgid "1 attached file"
@@ -878,10 +878,10 @@ msgid ""
 "calendars. Tickets are linked to calendars using **SLAs**."
 msgstr ""
 "** Календарь ** необходим для расчета эскалаций на основе рабочих часов и "
-"отправки уведомлений о эскалации.\n"
+"отправки уведомлений об эскалации.\n"
 "\n"
 "Определите ** \"стандартный\" ** календарь, который действителен для всей "
-"системы. Уведомления о эскалации будут отправляться Вашим агентам только в "
+"системы. Уведомления об эскалации будут отправляться Вашим агентам только в "
 "определенные рабочие часы.\n"
 "\n"
 "Если у Вас есть клиенты с разными рабочими часами, Вы можете создать "
@@ -2194,7 +2194,7 @@ msgid "Attach files"
 msgstr "Прикрепить файлы"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
 msgid "Attached"
 msgstr "Вложенный"
 
@@ -2207,7 +2207,7 @@ msgstr "Прикрепленные файлы"
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:181
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 msgid "Attachment"
 msgstr "Вложение"
 
@@ -3898,7 +3898,7 @@ msgstr "Создать Базу Знаний"
 msgid "Create Macros"
 msgstr "Создать макросы"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:168
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:185
 msgid "Create Shared Draft"
 msgstr "Создать общий черновик"
 
@@ -3967,7 +3967,7 @@ msgid "Create a new template in the admin interface."
 msgstr "Создайте новый шаблон в интерфейсе администратора."
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:163
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:180
 msgid "Create a shared draft"
 msgstr "Создать общий черновик"
 
@@ -4024,7 +4024,7 @@ msgstr "Создавать организации автоматически е�
 msgid ""
 "Create rules that single out the tickets for the Service Level Agreement."
 msgstr ""
-"Создайте правила, которые выделяют заявки для соглашения об уровне "
+"Создайте правила, которые отбирают заявки для соглашения об уровне "
 "обслуживания (SLA)."
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:156
@@ -6047,10 +6047,8 @@ msgid "Edit Answer"
 msgstr "Править ответ"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:175
-#, fuzzy
-#| msgid "Category"
 msgid "Edit Category"
-msgstr "Категория"
+msgstr "Редактирование категории"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:16
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:26
@@ -6060,10 +6058,8 @@ msgid "Edit Customer"
 msgstr "Редактировать клиента"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:171
-#, fuzzy
-#| msgid "Knowledge Base"
 msgid "Edit Knowledge Base"
-msgstr "База знаний"
+msgstr "Редактирование базы знаний"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee:21
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee:11
@@ -6098,10 +6094,8 @@ msgid "Editing on Desktop"
 msgstr "Редактирование на рабочем столе"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
-#, fuzzy
-#| msgid "Edit"
 msgid "Editor"
-msgstr "Редактировать"
+msgstr "Редактор"
 
 #: db/seeds/settings.rb:3533
 msgid "Elasticsearch Attachment Extensions"
@@ -6534,12 +6528,12 @@ msgstr ""
 "паролю."
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
 msgid "Enclosed"
 msgstr "Приложенный"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
 msgid "Enclosure"
 msgstr "Вложение"
 
@@ -7108,10 +7102,8 @@ msgid "Failed to set up QR code. Please try again."
 msgstr "Не удалось установить QR-код. Пожалуйста, попробуйте еще раз."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageFailedUploadOverlay.vue:23
-#, fuzzy
-#| msgid "File '%s' is uploading"
 msgid "Failed to upload."
-msgstr "Файл \"%s\" загружается"
+msgstr "Не удалось загрузить."
 
 #: db/seeds/object_manager_attributes.rb:877
 msgid "Fax"
@@ -10408,7 +10400,7 @@ msgstr "Интеграция с Nagios"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:103
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:90
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:142
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:164
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:181
 #: db/seeds/object_manager_attributes.rb:1507 public/assets/form/form.js:24
 msgid "Name"
 msgstr "Имя"
@@ -10509,10 +10501,8 @@ msgid "New Activity Type"
 msgstr "Новый тип деятельности"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:8
-#, fuzzy
-#| msgid "New User"
 msgid "New Answer"
-msgstr "Новый пользователь"
+msgstr "Новая статья"
 
 #: app/assets/javascripts/app/views/api.jst.eco:52
 msgid "New Application"
@@ -10527,10 +10517,8 @@ msgid "New Calendar"
 msgstr "Новый календарь"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:10
-#, fuzzy
-#| msgid "Category"
 msgid "New Category"
-msgstr "Категория"
+msgstr "Новая категория"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:8
 msgid "New Deletion Task"
@@ -10952,7 +10940,7 @@ msgstr "Нет доступных сеансов."
 msgid "No settings with area 'Dashboard::Stats' defined"
 msgstr "Не определены настройки с областью 'Показатели::Статистика'"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:219
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:236
 msgid "No shared drafts yet"
 msgstr "Пока нет общих черновиков"
 
@@ -11363,7 +11351,7 @@ msgid ""
 "Only available for users which are absence replacements for other users."
 msgstr ""
 "Доступно только для пользователей, которые замещают других пользователей в "
-"их отсутствие"
+"их отсутствие."
 
 #: app/assets/javascripts/app/models/overview.coffee:10
 msgid "Only available for users with shared organizations"
@@ -12302,7 +12290,7 @@ msgid "Preview %s"
 msgstr "Предпросмотр %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:131
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:188
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:205
 msgid "Preview Shared Draft"
 msgstr "Предварительный просмотр общего черновика"
 
@@ -12533,10 +12521,8 @@ msgid "Read"
 msgstr "Только чтение"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
-#, fuzzy
-#| msgid "Header"
 msgid "Reader"
-msgstr "Заголовок"
+msgstr "Читатель"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:6
 msgid "Real-time"
@@ -14059,7 +14045,7 @@ msgstr "Общий"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee:12
 #: app/assets/javascripts/app/models/group.coffee:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:158
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:175
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/shared-draft-start.ts:13
 #: db/seeds/object_manager_attributes.rb:2093
 msgid "Shared Drafts"
@@ -14070,7 +14056,7 @@ msgstr "Общие черновики"
 msgid "Shared draft cannot be selected for this ticket."
 msgstr "Общий черновик не может быть выбран для этой заявки."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:114
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:131
 msgid "Shared draft has been created successfully."
 msgstr "Общий черновик успешно создан."
 
@@ -14078,7 +14064,7 @@ msgstr "Общий черновик успешно создан."
 msgid "Shared draft has been deleted."
 msgstr "Общий черновик был удален."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:139
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:156
 msgid "Shared draft has been updated successfully."
 msgstr "Общий черновик успешно обновлен."
 
@@ -18110,7 +18096,7 @@ msgstr "Обновление эскалации в"
 msgid "Update In Min"
 msgstr "Обновление через (минут)"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:206
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:223
 msgid "Update Shared Draft"
 msgstr "Обновить общий черновик"
 
@@ -18119,7 +18105,7 @@ msgstr "Обновить общий черновик"
 #: app/assets/javascripts/app/views/sla/index.jst.eco:41
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:190
 msgid "Update Time"
-msgstr "Время Обновления"
+msgstr "Время обновления"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:418
 msgid "Update as closed"
@@ -19719,7 +19705,7 @@ msgstr "добавить новый номер телефона"
 msgid "add new tag"
 msgstr "добавить новый тег"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
 msgid "add option"
 msgstr "добавить вариант"
 
@@ -19746,10 +19732,8 @@ msgid "again"
 msgstr "снова"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:421
-#, fuzzy
-#| msgid "Subscribers"
 msgid "all subscribers"
-msgstr "Подписчики"
+msgstr "все подписчики"
 
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:139
 msgid "and"
@@ -19782,12 +19766,12 @@ msgid "at least one letter is required"
 msgstr "необходим хотя бы один символ"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
 msgid "attached"
 msgstr "прикрепленный"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
 msgid "attachment"
 msgstr "вложение"
 
@@ -19795,7 +19779,7 @@ msgstr "вложение"
 msgid "attribute is not editable"
 msgstr "атрибут недоступен для редактирования"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:172
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
 msgid "auto select"
 msgstr "Автоматический выбор"
 
@@ -20106,12 +20090,12 @@ msgid "email sent to '%s'"
 msgstr "письмо отправлено на '%s'"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
 msgid "enclosed"
 msgstr "приложенный"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
 msgid "enclosure"
 msgstr "приложение"
 
@@ -20166,11 +20150,11 @@ msgstr "Неудача"
 msgid "fax"
 msgstr "факс"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
 msgid "fill in"
 msgstr "Заполнить"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:175
 msgid "fill in empty"
 msgstr "заполнить пустой"
 
@@ -20765,7 +20749,7 @@ msgstr "относительное - например, «2 часа назад»
 msgid "remove"
 msgstr "Удалить"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "remove option"
 msgstr "удалить вариант"
 
@@ -20830,19 +20814,19 @@ msgstr "отправить клиенту"
 msgid "session,sessions,computer,computers,browser,browsers,access"
 msgstr "сессия, сессии, компьютер, компьютеры, браузер, браузеры, доступ"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:171
 msgid "set fixed to"
 msgstr "установить фиксированный"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:164
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
 msgid "set mandatory"
 msgstr "установить обязательный"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
 msgid "set optional"
 msgstr "установить необязательный"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
 msgid "set readonly"
 msgstr "установить только для чтения"
 
@@ -21040,7 +21024,7 @@ msgstr ""
 msgid "unassign user"
 msgstr "отменить назначение пользователя"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "unset readonly"
 msgstr "снять только для чтения"
 
