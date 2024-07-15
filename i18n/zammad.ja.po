@@ -18619,7 +18619,7 @@ msgstr "アクティブ"
 msgid "add"
 msgstr "追加"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
 msgid "add option"
 msgstr "オプションの追加"
 
@@ -18689,7 +18689,7 @@ msgstr "添付"
 msgid "attribute is not editable"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:172
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
 msgid "auto select"
 msgstr "自動選択"
 
@@ -19063,11 +19063,11 @@ msgstr "失敗"
 msgid "fax"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
 msgid "fill in"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:175
 msgid "fill in empty"
 msgstr ""
 
@@ -19694,7 +19694,7 @@ msgstr ""
 msgid "remove"
 msgstr "削除"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "remove option"
 msgstr ""
 
@@ -19767,19 +19767,19 @@ msgstr "選択"
 msgid "sent to the customer"
 msgstr "新規顧客を作成"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:171
 msgid "set fixed to"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:164
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
 msgid "set mandatory"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
 msgid "set optional"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
 msgid "set readonly"
 msgstr ""
 
@@ -19971,7 +19971,7 @@ msgstr "ツイッターのステータス"
 msgid "unassign user"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "unset readonly"
 msgstr ""
 

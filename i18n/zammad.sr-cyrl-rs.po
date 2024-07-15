@@ -17918,7 +17918,7 @@ msgstr "укључено"
 msgid "add"
 msgstr "додај"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
 msgid "add option"
 msgstr "додај опцију"
 
@@ -17982,7 +17982,7 @@ msgstr "прилог"
 msgid "attribute is not editable"
 msgstr "није могуће изменити атрибут"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:172
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
 msgid "auto select"
 msgstr "аутоматски избор"
 
@@ -18333,11 +18333,11 @@ msgstr "неуспело"
 msgid "fax"
 msgstr "факс"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
 msgid "fill in"
 msgstr "попуни"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:175
 msgid "fill in empty"
 msgstr "попуни празно"
 
@@ -18914,7 +18914,7 @@ msgstr "релативно - нпр „пре 2 сата” или „пре 2 �
 msgid "remove"
 msgstr "уклони"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "remove option"
 msgstr "уклони опцију"
 
@@ -18975,19 +18975,19 @@ msgstr "изабери видљиве опције"
 msgid "sent to the customer"
 msgstr "послато клијенту"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:171
 msgid "set fixed to"
 msgstr "постави на вредност"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:164
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
 msgid "set mandatory"
 msgstr "постави обавезно"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
 msgid "set optional"
 msgstr "постави необавезно"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
 msgid "set readonly"
 msgstr "укључи само за преглед"
 
@@ -19165,7 +19165,7 @@ msgstr "twitter статус"
 msgid "unassign user"
 msgstr "скини доделу корисника"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "unset readonly"
 msgstr "искључи само за преглед"
 

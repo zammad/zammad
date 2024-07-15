@@ -18081,7 +18081,7 @@ msgstr "aktywny"
 msgid "add"
 msgstr "Dodać"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
 msgid "add option"
 msgstr "dodaj opcje"
 
@@ -18145,7 +18145,7 @@ msgstr "załącznik"
 msgid "attribute is not editable"
 msgstr "atrybutu nie można edytować"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:172
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
 msgid "auto select"
 msgstr "auto wybór"
 
@@ -18498,11 +18498,11 @@ msgstr "chybiony"
 msgid "fax"
 msgstr "faks"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
 msgid "fill in"
 msgstr "wypełnij"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:175
 msgid "fill in empty"
 msgstr "wypełnij puste"
 
@@ -19079,7 +19079,7 @@ msgstr "względny - np. g. „2 godziny temu” lub „2 dni i 15 minut temu”"
 msgid "remove"
 msgstr "usunąć"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "remove option"
 msgstr "usuń opcje"
 
@@ -19140,19 +19140,19 @@ msgstr "wybierz widoczne opcje"
 msgid "sent to the customer"
 msgstr "wysłane do klienta"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:171
 msgid "set fixed to"
 msgstr "ustawione na stałe"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:164
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
 msgid "set mandatory"
 msgstr "zestaw obowiązkowy"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
 msgid "set optional"
 msgstr "zestaw opcjonalny"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
 msgid "set readonly"
 msgstr "ustaw tylko do odczytu"
 
@@ -19333,7 +19333,7 @@ msgstr "twitter status"
 msgid "unassign user"
 msgstr "użytkownik nieprzypisany"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "unset readonly"
 msgstr "nieustawiony tylko do odczytu"
 

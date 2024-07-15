@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-03 22:16+0000\n"
+"PO-Revision-Date: 2024-07-15 05:59+0000\n"
 "Last-Translator: Random <random_r@users.noreply.translations.zammad.org>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/it/>\n"
@@ -10725,7 +10725,6 @@ msgid "Overview"
 msgstr "Panoramica"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:56
-#, fuzzy
 msgid "Overview bulk mask"
 msgstr "Maschera panoramiche"
 
@@ -18132,7 +18131,7 @@ msgstr "attivo"
 msgid "add"
 msgstr "aggiungi"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
 msgid "add option"
 msgstr "aggiungi opzione"
 
@@ -18196,7 +18195,7 @@ msgstr "allegato"
 msgid "attribute is not editable"
 msgstr "l'attributo non è modificabile"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:172
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
 msgid "auto select"
 msgstr "auto selezione"
 
@@ -18547,11 +18546,11 @@ msgstr "fallito"
 msgid "fax"
 msgstr "fax"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
 msgid "fill in"
 msgstr "riempi"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:175
 msgid "fill in empty"
 msgstr "riempi elementi in bianco"
 
@@ -19128,7 +19127,7 @@ msgstr "relativo - ad es. \"2 ore fa\" o \"2 giorni e 15 minuti fa\""
 msgid "remove"
 msgstr "rimuovi"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "remove option"
 msgstr "rimuovi opzioni"
 
@@ -19189,19 +19188,19 @@ msgstr "seleziona opzioni visibili"
 msgid "sent to the customer"
 msgstr "inviato al cliente"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:171
 msgid "set fixed to"
 msgstr "imposta fisso a"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:164
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
 msgid "set mandatory"
 msgstr "imposta obbligatorio"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
 msgid "set optional"
 msgstr "imposta opzionale"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
 msgid "set readonly"
 msgstr "imposta sola lettura"
 
@@ -19382,7 +19381,7 @@ msgstr "stato di twitter"
 msgid "unassign user"
 msgstr "Utente non assegnato"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "unset readonly"
 msgstr "rimuovi sola lettura"
 

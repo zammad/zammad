@@ -17944,7 +17944,7 @@ msgstr "aktivno"
 msgid "add"
 msgstr "dodaj"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
 msgid "add option"
 msgstr "dodaj opciju"
 
@@ -18008,7 +18008,7 @@ msgstr "privitak"
 msgid "attribute is not editable"
 msgstr "atribut se ne može uređivati"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:172
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
 msgid "auto select"
 msgstr "automatski odabir"
 
@@ -18359,11 +18359,11 @@ msgstr "neuspjelo"
 msgid "fax"
 msgstr "faks"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
 msgid "fill in"
 msgstr "popuni sa"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:175
 msgid "fill in empty"
 msgstr "popuni sa (ako je prazno)"
 
@@ -18940,7 +18940,7 @@ msgstr "relativno - npr. \"prije 2 sata\" ili \"prije 2 dana i 15 minuta\""
 msgid "remove"
 msgstr "ukloni"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "remove option"
 msgstr "ukloni opciju"
 
@@ -19001,19 +19001,19 @@ msgstr "odaberi vidljive opcije"
 msgid "sent to the customer"
 msgstr "poslano klijentu"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:171
 msgid "set fixed to"
 msgstr "postavljeno fiksno na"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:164
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
 msgid "set mandatory"
 msgstr "postavi kao obavezno"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
 msgid "set optional"
 msgstr "postavi kao neobavezno"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
 msgid "set readonly"
 msgstr "samo za čitanje"
 
@@ -19191,7 +19191,7 @@ msgstr "Twitter status"
 msgid "unassign user"
 msgstr "Ukloni dodjelu korisnika"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "unset readonly"
 msgstr "isključi samo za pregled"
 

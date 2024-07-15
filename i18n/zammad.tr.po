@@ -19521,7 +19521,7 @@ msgstr "active"
 msgid "add"
 msgstr "Ekle"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
 msgid "add option"
 msgstr "seçenek ekle"
 
@@ -19597,7 +19597,7 @@ msgstr "Attachments"
 msgid "attribute is not editable"
 msgstr "Öznitelik değiştirilemez!"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:172
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
 msgid "auto select"
 msgstr "otomatik seç"
 
@@ -19988,11 +19988,11 @@ msgstr "failed"
 msgid "fax"
 msgstr "True"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
 msgid "fill in"
 msgstr "doldur"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:175
 msgid "fill in empty"
 msgstr "boşluğu doldur"
 
@@ -20663,7 +20663,7 @@ msgstr "True"
 msgid "remove"
 msgstr "sil"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "remove option"
 msgstr "ayarı sil"
 
@@ -20737,19 +20737,19 @@ msgstr "True"
 msgid "sent to the customer"
 msgstr "Yeni Müşteri Oluştur"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:171
 msgid "set fixed to"
 msgstr "sabitle"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:164
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
 msgid "set mandatory"
 msgstr "zorunlu yap"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
 msgid "set optional"
 msgstr "opsiyonel yap"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
 #, fuzzy
 msgid "set readonly"
 msgstr "True"
@@ -20949,7 +20949,7 @@ msgstr "twitter status"
 msgid "unassign user"
 msgstr "kullanıcının atamasını kaldır"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 #, fuzzy
 msgid "unset readonly"
 msgstr "True"

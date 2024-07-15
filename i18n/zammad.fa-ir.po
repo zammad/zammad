@@ -18203,7 +18203,7 @@ msgstr "فعال"
 msgid "add"
 msgstr "افزودن"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
 msgid "add option"
 msgstr "افزودن گزینه"
 
@@ -18277,7 +18277,7 @@ msgstr "ضمایم"
 msgid "attribute is not editable"
 msgstr "مقدار قابل ویرایش نیست!"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:172
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
 msgid "auto select"
 msgstr "انتخاب خودکار"
 
@@ -18656,11 +18656,11 @@ msgstr "ناموفق"
 msgid "fax"
 msgstr "فکس"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
 msgid "fill in"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:174
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:175
 msgid "fill in empty"
 msgstr ""
 
@@ -19289,7 +19289,7 @@ msgstr ""
 msgid "remove"
 msgstr "حذف"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:169
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "remove option"
 msgstr "حذف گزینه"
 
@@ -19360,19 +19360,19 @@ msgstr "انتخاب همه"
 msgid "sent to the customer"
 msgstr "ایجاد مشتری جدید"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:171
 msgid "set fixed to"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:164
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
 msgid "set mandatory"
 msgstr "ست کردن بصورت اجباری"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
 msgid "set optional"
 msgstr "ست کردن بصورت اختیاری"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
 msgid "set readonly"
 msgstr "ست کردن بصورت فقط خواندنی"
 
@@ -19560,7 +19560,7 @@ msgstr "وضعیت توییتر"
 msgid "unassign user"
 msgstr "عدم تخصیص کاربر"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "unset readonly"
 msgstr "خارج کردن از حالت فقط خواندنی"
 
