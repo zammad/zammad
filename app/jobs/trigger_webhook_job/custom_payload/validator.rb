@@ -88,6 +88,8 @@ module TriggerWebhookJob::CustomPayload::Validator
   # Validate the next method to be called.
   def validate_method!(method, reference, display)
     return "\#{#{display} / missing method}" if method.blank?
+    # Inspecting a symbol quotes invalid method names.
+    return "\#{#{display} / no such method}" if method.to_sym.inspect.start_with?(%r{:"@?})
     return "\#{#{display} / no such method}" if !allowed_class_method?(method, reference)
     return "\#{#{display} / no such method}" if !reference.respond_to?(method.to_sym)
 

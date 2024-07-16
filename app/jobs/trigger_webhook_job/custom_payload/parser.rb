@@ -69,7 +69,7 @@ module TriggerWebhookJob::CustomPayload::Parser
 
   # Scan the custom payload for replacement variables.
   def scan(record)
-    placeholders = record.scan(%r{(#\{[a-z_.?!]+\})}).flatten.uniq
+    placeholders = record.scan(%r{(#\{[a-z0-9_.?!]+\})}).flatten.uniq
 
     return [] if placeholders.blank?
 
