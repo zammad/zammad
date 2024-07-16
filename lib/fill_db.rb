@@ -596,7 +596,7 @@ or if you only want to create 100 tickets
     }
   end
 
-  def self.create_object_attribute_type_datettime(params)
+  def self.create_object_attribute_type_datetime(params)
     {
       attribute_params: params.merge(
         data_type:   'datetime',
