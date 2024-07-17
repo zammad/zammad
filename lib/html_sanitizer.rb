@@ -57,7 +57,7 @@ sanitize style of img tags
 
 =begin
 
-Adjust height + width of img tags
+Adjust image size in html email for MS Outlook to always contain `width` and `height` as tags, not only as part of the `style`.
 
   string = HtmlSanitizer.adjust_inline_image_size(article.body)
 
