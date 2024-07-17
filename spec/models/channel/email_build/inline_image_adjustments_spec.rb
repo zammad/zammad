@@ -37,7 +37,33 @@ RSpec.describe 'Channel::EmailBuild > Inline Images Adjustments', aggregate_fail
 
   context 'when an email is built with inline images' do
     it 'adjusts the inline images width and height' do
+      expect(mail.html_part.body.to_s).to include('<!DOCTYPE html>')
+      expect(mail.html_part.body.to_s).to include('font-family:Geneva,Helvetica,Arial,sans-serif; font-size: 12px;')
       expect(mail.html_part.body.to_s).to include('<img style="width: 125px; max-width: 100%; height: 187.5px;" src="cid:1.e83460e9-7e36-48f7-97db-dc7f0ba7c51f@zammad.example.com" height="187.5" width="125">')
     end
+  end
+
+  context 'when no complete HTML document is provided' do
+    let(:html_body) do
+      <<~HTML.chomp
+        <img style="width: 125px; max-width: 100%; height: 187.5px;" src="cid:1.e83460e9-7e36-48f7-97db-dc7f0ba7c51f@zammad.example.com">
+        <br><br>
+        <div data-signature="true" data-signature-id="1">
+          Test Admin Agent<br><br>
+          --<br>
+          Super Support - Waterford Business Park<br>
+          5201 Blue Lagoon Drive - 8th Floor &amp; 9th Floor - Miami, 33126 USA<br>
+          Email: hot@example.com - Web: <a href="http://www.example.com/" rel="nofollow noreferrer noopener" target="_blank">http://www.example.com/</a><br>
+          --
+        </div>
+      HTML
+    end
+
+    it 'completes the HTML document and adjusts the inline images width and height' do
+      expect(mail.html_part.body.to_s).to include('<!DOCTYPE html>')
+      expect(mail.html_part.body.to_s).to include("font-family:'Helvetica Neue', Helvetica, Arial, Geneva, sans-serif; font-size: 12px;")
+      expect(mail.html_part.body.to_s).to include('<img style="width: 125px; max-width: 100%; height: 187.5px;" src="cid:1.e83460e9-7e36-48f7-97db-dc7f0ba7c51f@zammad.example.com" height="187.5" width="125">')
+    end
+
   end
 end
