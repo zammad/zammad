@@ -1,0 +1,5 @@
+query userCurrentTaskbarItemList($app: EnumTaskbarApp!) {
+  userCurrentTaskbarItemList(app: $app) {
+    ...userCurrentTaskbarItemAttributes
+  }
+}

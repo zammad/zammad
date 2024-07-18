@@ -9,7 +9,15 @@ import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { mockObjectManagerFrontendAttributesQuery } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
 import { waitForTicketCreateMutationCalls } from '#shared/entities/ticket/graphql/mutations/create.mocks.ts'
+import {
+  EnumTaskbarEntity,
+  EnumTaskbarEntityAccess,
+} from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import getUuid from '#shared/utils/getUuid.ts'
 
+import { waitForUserCurrentTaskbarItemUpdateMutationCalls } from '#desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemUpdate.mocks.ts'
+import { mockUserCurrentTaskbarItemListQuery } from '#desktop/entities/user/current/graphql/queries/userCurrentTaskbarItemList.mocks.ts'
 import {
   handleMockUserQuery,
   handleCustomerMock,
@@ -181,9 +189,7 @@ describe('ticket create view', async () => {
 
       // should not be in the document anymore
       await waitFor(() =>
-        expect(view.getByLabelText('Title')).not.toHaveTextContent(
-          'Test Ticket',
-        ),
+        expect(view.getByLabelText('Title')).not.toHaveValue('Test Ticket'),
       )
     })
 
@@ -209,6 +215,49 @@ describe('ticket create view', async () => {
       )
 
       expect(view.getByText('Test Ticket')).toBeInTheDocument()
+    })
+
+    it('supports updating dirty flag in the associated taskbar tab', async () => {
+      const uid = getUuid()
+
+      mockUserCurrentTaskbarItemListQuery({
+        userCurrentTaskbarItemList: [
+          {
+            __typename: 'UserTaskbarItem',
+            id: convertToGraphQLId('Taskbar', 1),
+            key: `TicketCreateScreen-${uid}`,
+            callback: EnumTaskbarEntity.TicketCreate,
+            entityAccess: EnumTaskbarEntityAccess.Granted,
+            entity: {
+              __typename: 'UserTaskbarItemEntityTicketCreate',
+              uid,
+              title: '',
+              createArticleTypeKey: 'phone-in',
+            },
+            dirty: false,
+          },
+        ],
+      })
+
+      handleMockFormUpdaterQuery()
+
+      const view = await visitView(`/ticket/create/${uid}`)
+
+      expect(
+        await view.findByRole('button', { name: 'Cancel & Go Back' }),
+      ).toBeInTheDocument()
+
+      await view.events.type(view.getByLabelText('Title'), 'Test Ticket')
+
+      const calls = await waitForUserCurrentTaskbarItemUpdateMutationCalls()
+
+      expect(calls.at(-1)?.variables).toEqual(
+        expect.objectContaining({
+          input: expect.objectContaining({
+            dirty: true,
+          }),
+        }),
+      )
     })
 
     it('creates a new ticket', async () => {

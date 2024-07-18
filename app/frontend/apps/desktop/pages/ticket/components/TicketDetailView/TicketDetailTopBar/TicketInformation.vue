@@ -29,8 +29,8 @@ const { updateTitle } = useTicketEditTitle(ticket)
 
 <template>
   <div
-    class="grid grid-cols-[max-content_1fr] gap-1"
-    :class="{ 'items-center': hideDetails }"
+    class="-:gap-4 grid grid-cols-[max-content_1fr]"
+    :class="{ 'items-center gap-3': hideDetails }"
   >
     <div class="flex" :class="{ 'mt-1': !hideDetails }">
       <CommonUserAvatar

@@ -12,13 +12,14 @@ import { nullableMock, waitUntil } from '#tests/support/utils.ts'
 import { FormUpdaterDocument } from '#shared/components/Form/graphql/queries/formUpdater.api.ts'
 import { mockOnlineNotificationSeenGql } from '#shared/composables/__tests__/mocks/online-notification.ts'
 import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
+import { TicketUpdatesDocument } from '#shared/entities/ticket/graphql/subscriptions/ticketUpdates.api.ts'
 import type { TicketView } from '#shared/entities/ticket/types.ts'
 import { TicketState } from '#shared/entities/ticket/types.ts'
 import {
   type TicketArticlesQuery,
   type TicketLiveUserDeletePayload,
   type TicketLiveUserUpsertPayload,
-  type TicketQuery,
+  type TicketWithMentionLimitQuery,
   type PolicyTicket,
   EnumTicketStateColorCode,
 } from '#shared/graphql/types.ts'
@@ -29,14 +30,13 @@ import {
   ticketObjectAttributes,
   ticketArticleObjectAttributes,
 } from '#mobile/entities/ticket/__tests__/mocks/ticket-mocks.ts'
+import { TicketWithMentionLimitDocument } from '#mobile/entities/ticket/graphql/queries/ticketWithMentionLimit.api.ts'
 
-import { TicketDocument } from '../../../../../../shared/entities/ticket/graphql/queries/ticket.api.ts'
 import { TicketLiveUserDeleteDocument } from '../../graphql/mutations/live-user/delete.api.ts'
 import { TicketLiveUserUpsertDocument } from '../../graphql/mutations/live-user/ticketLiveUserUpsert.api.ts'
 import { TicketArticlesDocument } from '../../graphql/queries/ticket/articles.api.ts'
 import { TicketLiveUserUpdatesDocument } from '../../graphql/subscriptions/live-user/ticketLiveUserUpdates.api.ts'
 import { TicketArticleUpdatesDocument } from '../../graphql/subscriptions/ticketArticlesUpdates.api.ts'
-import { TicketUpdatesDocument } from '../../graphql/subscriptions/ticketUpdates.api.ts'
 
 const ticketDate = new Date(2022, 0, 29, 0, 0, 0, 0)
 
@@ -47,7 +47,7 @@ export const defaultTicket = (
 ) => {
   initializeStore()
 
-  return nullableMock<TicketQuery>({
+  return nullableMock<TicketWithMentionLimitQuery>({
     ticket: {
       __typename: 'Ticket',
       id: convertToGraphQLId('Ticket', 1),
@@ -283,7 +283,7 @@ export const defaultArticles = (): TicketArticlesQuery =>
 interface MockOptions {
   mockSubscription?: boolean
   mockFrontendObjectAttributes?: boolean
-  ticket?: TicketQuery
+  ticket?: TicketWithMentionLimitQuery
   articles?: TicketArticlesQuery | TicketArticlesQuery[]
   ticketView?: TicketView
 }
@@ -318,8 +318,12 @@ export const mockTicketLiveUsersGql = () => {
   }
 }
 
-export const mockTicketGql = (ticket: TicketQuery = defaultTicket()) => {
-  const mockApiTicket = mockGraphQLApi(TicketDocument).willResolve(ticket)
+export const mockTicketGql = (
+  ticket: TicketWithMentionLimitQuery = defaultTicket(),
+) => {
+  const mockApiTicket = mockGraphQLApi(
+    TicketWithMentionLimitDocument,
+  ).willResolve(ticket)
 
   const waitUntilTicketLoaded = async () => {
     await waitUntil(() => mockApiTicket.calls.resolve)
@@ -366,7 +370,9 @@ export const mockTicketDetailViewGql = (options: MockOptions = {}) => {
 
   const ticket = options.ticket || defaultTicket()
 
-  const mockApiTicket = mockGraphQLApi(TicketDocument).willResolve(ticket)
+  const mockApiTicket = mockGraphQLApi(
+    TicketWithMentionLimitDocument,
+  ).willResolve(ticket)
   const mockApiArticles = mockGraphQLApi(TicketArticlesDocument).willResolve(
     options.articles || defaultArticles(),
   )

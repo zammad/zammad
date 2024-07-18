@@ -1,0 +1,10 @@
+mutation userCurrentTaskbarItemUpdate($id: ID!, $input: UserTaskbarItemInput!) {
+  userCurrentTaskbarItemUpdate(id: $id, input: $input) {
+    taskbarItem {
+      ...userCurrentTaskbarItemAttributes
+    }
+    errors {
+      ...errors
+    }
+  }
+}

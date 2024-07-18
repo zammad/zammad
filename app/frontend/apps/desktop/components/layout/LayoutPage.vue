@@ -8,6 +8,7 @@ import { useSessionStore } from '#shared/stores/session.ts'
 import LeftSidebarFooterMenu from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue'
 import LayoutSidebar from '#desktop/components/layout/LayoutSidebar.vue'
 import PageNavigation from '#desktop/components/PageNavigation/PageNavigation.vue'
+import UserTaskbarTabs from '#desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue'
 import { useResizeGridColumns } from '#desktop/composables/useResizeGridColumns.ts'
 
 const noTransition = ref(false)
@@ -31,7 +32,6 @@ const {
     :class="{ 'transition-none': noTransition }"
     :style="gridColumns"
   >
-    <!-- :TODO fix est-lint ltr/rtl right rule to avoid complaining about left id    -->
     <LayoutSidebar
       id="main-sidebar"
       :name="storageKeyId"
@@ -41,6 +41,7 @@ const {
       :min-width="minSidebarWidth"
       collapsible
       resizable
+      no-scroll
       @collapse="collapseSidebar"
       @expand="expandSidebar"
       @resize-horizontal="resizeSidebar"
@@ -49,7 +50,8 @@ const {
       @reset-width="resetSidebarWidth"
     >
       <template #default="{ isCollapsed }">
-        <PageNavigation :icon-only="isCollapsed" />
+        <PageNavigation :collapsed="isCollapsed" />
+        <UserTaskbarTabs :collapsed="isCollapsed" />
         <LeftSidebarFooterMenu :collapsed="isCollapsed" class="mt-auto" />
       </template>
     </LayoutSidebar>

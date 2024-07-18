@@ -21,6 +21,8 @@ import { ConfigUpdatesDocument } from '#shared/graphql/subscriptions/configUpdat
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 
+import { UserCurrentTaskbarItemUpdatesDocument } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemUpdates.api.ts'
+
 // TODO: import '#tests/graphql/builders/mocks.ts'
 
 vi.mock('#shared/server/apollo/client.ts', () => {
@@ -35,6 +37,7 @@ beforeEach(() => {
   mockPublicLinks([])
   mockPublicLinksSubscription()
   mockApplicationConfig({ product_name: 'Zammad' })
+  mockGraphQLSubscription(UserCurrentTaskbarItemUpdatesDocument)
 })
 
 describe('testing login maintenance mode', () => {

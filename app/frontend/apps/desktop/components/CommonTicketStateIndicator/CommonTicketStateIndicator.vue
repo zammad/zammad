@@ -5,6 +5,8 @@ import { computed } from 'vue'
 
 import { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
 
+import CommonTicketStateIndicatorIcon from '../CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue'
+
 export interface Props {
   colorCode: EnumTicketStateColorCode
   label: string
@@ -25,28 +27,14 @@ const badgeVariant = computed(() => {
       return 'warning'
   }
 })
-
-const circleIcon = computed(() => {
-  switch (props.colorCode) {
-    case EnumTicketStateColorCode.Closed:
-      return 'check-circle-outline'
-    case EnumTicketStateColorCode.Pending:
-      return 'check-circle-outline-dashed'
-    case EnumTicketStateColorCode.Escalating:
-    case EnumTicketStateColorCode.Open:
-    default:
-      return 'check-circle-no'
-  }
-})
 </script>
 
 <template>
   <CommonBadge :variant="badgeVariant" role="group" class="uppercase">
-    <CommonIcon
-      size="xs"
-      :label="$t('(state: %s)', $t(label))"
-      :name="circleIcon"
+    <CommonTicketStateIndicatorIcon
       class="ltr:mr-1.5 rtl:ml-1.5"
+      :color-code="props.colorCode"
+      :label="label"
     />
     {{ $t(label) }}
   </CommonBadge>

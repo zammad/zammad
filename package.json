@@ -102,6 +102,7 @@
     "@apollo/client": "^3.10.8",
     "@formkit/core": "^1.6.5",
     "@formkit/dev": "^1.6.5",
+    "@formkit/drag-and-drop": "^0.1.6",
     "@formkit/i18n": "^1.6.5",
     "@formkit/inputs": "^1.6.5",
     "@formkit/rules": "^1.6.5",
@@ -174,7 +175,6 @@
     "vue-easy-lightbox": "1.19.0",
     "vue-router": "^4.4.0",
     "vue3-draggable-resizable": "^1.6.5",
-    "vuedraggable": "^4.1.0",
     "workbox-core": "^7.1.0",
     "workbox-precaching": "^7.1.0",
     "workbox-window": "^7.1.0"

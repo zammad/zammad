@@ -16,6 +16,7 @@ import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { nullableMock, waitUntil } from '#tests/support/utils.ts'
 
+import { TicketUpdatesDocument } from '#shared/entities/ticket/graphql/subscriptions/ticketUpdates.api.ts'
 import { TicketState } from '#shared/entities/ticket/types.ts'
 import { TicketArticleRetrySecurityProcessDocument } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.api.ts'
 import {
@@ -25,13 +26,13 @@ import {
 } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
-import { TicketDocument } from '../../../../../shared/entities/ticket/graphql/queries/ticket.api.ts'
+import { TicketWithMentionLimitDocument } from '#mobile/entities/ticket/graphql/queries/ticketWithMentionLimit.api.ts'
+
 import { clearTicketArticlesLoadedState } from '../composable/useTicketArticlesVariables.ts'
 import { TicketLiveUserDeleteDocument } from '../graphql/mutations/live-user/delete.api.ts'
 import { TicketLiveUserUpsertDocument } from '../graphql/mutations/live-user/ticketLiveUserUpsert.api.ts'
 import { TicketArticlesDocument } from '../graphql/queries/ticket/articles.api.ts'
 import { TicketArticleUpdatesDocument } from '../graphql/subscriptions/ticketArticlesUpdates.api.ts'
-import { TicketUpdatesDocument } from '../graphql/subscriptions/ticketUpdates.api.ts'
 
 import { mockArticleQuery } from './mocks/articles.ts'
 import {
@@ -258,9 +259,9 @@ describe('user avatars', () => {
 })
 
 test("redirects to error page, if can't find ticket", async () => {
-  const { calls } = mockGraphQLApi(TicketDocument).willFailWithNotFoundError(
-    'The ticket 9866 could not be found',
-  )
+  const { calls } = mockGraphQLApi(
+    TicketWithMentionLimitDocument,
+  ).willFailWithNotFoundError('The ticket 9866 could not be found')
   mockGraphQLApi(TicketLiveUserDeleteDocument).willFailWithNotFoundError(
     'The ticket 9866 could not be found',
   )

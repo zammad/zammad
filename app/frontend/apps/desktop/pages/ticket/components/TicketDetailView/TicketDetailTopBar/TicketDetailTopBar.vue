@@ -1,10 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
-import { computed, type ComputedRef, ref } from 'vue'
-
-import { useApplicationStore } from '#shared/stores/application.ts'
+import { computed, type ComputedRef, ref, toRef } from 'vue'
 
 import CommonBreadcrumb from '#desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue'
 import { useMainLayoutContainer } from '#desktop/components/layout/composables/useMainLayoutContainer.ts'
@@ -13,6 +10,7 @@ import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
 import HighlightMenu from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/HighlightMenu.vue'
 import TicketInformation from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
+import { useTicketNumber } from '#desktop/pages/ticket/composables/useTicketNumber.ts'
 
 const { ticket } = useTicketInformation()
 
@@ -20,12 +18,8 @@ const { copyToClipboard } = useCopyToClipboard()
 
 const headerNode = ref<HTMLElement>()
 
-const ticketNumber = computed(() => ticket?.value?.number.toString())
-
-const { config } = storeToRefs(useApplicationStore())
-
-const hookedTicketNumber = computed(
-  () => `${config.value.ticket_hook}${ticketNumber.value}`, // ticket_hook has to be set with a value
+const { ticketNumber, ticketNumberWithTicketHook } = useTicketNumber(
+  toRef(ticket?.value),
 )
 
 const items = computed(() => [
@@ -35,7 +29,7 @@ const items = computed(() => [
     to: { name: 'ticket-list' },
   },
   {
-    label: hookedTicketNumber,
+    label: ticketNumberWithTicketHook.value || '',
     noOptionLabelTranslation: true,
     to: { name: 'ticket-list' },
   },
@@ -63,7 +57,7 @@ const detailViewActiveClasses = computed(() => {
 <template>
   <header
     ref="headerNode"
-    class="-:p-3 sticky top-0 grid border border-neutral-100 bg-white transition-[height] duration-75 dark:border-gray-900 dark:bg-gray-500"
+    class="-:p-3 sticky top-0 grid border-b border-neutral-100 bg-white transition-[height] duration-75 dark:border-gray-900 dark:bg-gray-500"
     :class="detailViewActiveClasses"
   >
     <CommonBreadcrumb
@@ -83,7 +77,7 @@ const detailViewActiveClasses = computed(() => {
           name="clipboard2"
           size="xs"
           class="cursor-pointer text-blue-800 ltr:ml-2 rtl:mr-2"
-          @click="copyToClipboard(ticketNumber)"
+          @click="copyToClipboard(ticketNumberWithTicketHook)"
         />
       </template>
     </CommonBreadcrumb>

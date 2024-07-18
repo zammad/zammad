@@ -16,9 +16,9 @@ class FormUpdater::ApplyValue
     'formSenderType' => 'articleSenderType',
   }.freeze
 
-  def perform(field:, config:)
+  def perform(field:, config:, include_blank: false)
     # Skip fields without a configured value
-    return if config['value'].blank?
+    return if config['value'].blank? && !include_blank
 
     field = FIELD_RENAMING_MAP[field] || field
     result[field] ||= {}

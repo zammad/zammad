@@ -16,8 +16,8 @@
 - `assets/camera-video-off.svg`
 - `assets/camera-video.svg`
 - `assets/camera.svg`
+- `assets/card-list.svg`
 - `assets/check-all.svg`
-- `assets/check-circle-outline.svg`
 - `assets/check-square.svg`
 - `assets/check2-all.svg`
 - `assets/check2.svg`

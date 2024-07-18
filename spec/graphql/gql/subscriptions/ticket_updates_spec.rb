@@ -9,8 +9,8 @@ RSpec.describe Gql::Subscriptions::TicketUpdates, type: :graphql do
   let(:mock_channel) { build_mock_channel }
   let(:subscription) do
     <<~QUERY
-      subscription ticketUpdates($ticketId: ID!) {
-        ticketUpdates(ticketId: $ticketId) {
+      subscription ticketUpdates($ticketId: ID!, $initial: Boolean = false) {
+        ticketUpdates(ticketId: $ticketId, initial: $initial) {
           ticket {
             title
           }
@@ -29,6 +29,14 @@ RSpec.describe Gql::Subscriptions::TicketUpdates, type: :graphql do
 
       it 'subscribes' do
         expect(gql.result.data).to eq({ 'ticket' => nil })
+      end
+
+      context 'with initial data' do
+        let(:variables) { { ticketId: gql.id(ticket), initial: true } }
+
+        it 'subscribes with initial data' do
+          expect(gql.result.data['ticket']['title']).to eq(ticket.title)
+        end
       end
 
       it 'receives ticket updates' do

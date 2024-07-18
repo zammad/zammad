@@ -8,7 +8,7 @@ import { sortedFirstLevelRoutes } from '#desktop/components/PageNavigation/first
 import CommonButton from '../CommonButton/CommonButton.vue'
 
 interface Props {
-  iconOnly?: boolean
+  collapsed?: boolean
 }
 
 //*
@@ -22,7 +22,7 @@ const router = useRouter()
 <template>
   <div class="py-2 pt-14">
     <CommonLabel
-      v-if="!iconOnly"
+      v-if="!collapsed"
       class="mb-2 px-2 text-neutral-500"
       size="small"
     >
@@ -36,7 +36,7 @@ const router = useRouter()
           class="flex justify-center"
         >
           <CommonButton
-            v-if="iconOnly"
+            v-if="collapsed"
             class="text-neutral-400 hover:outline-blue-900"
             :class="{
               '!bg-blue-800 !text-white':

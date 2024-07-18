@@ -22,12 +22,19 @@ class Gql::ZammadSchema < GraphQL::Schema
   max_depth 15
 
   TYPE_MAP = {
-    ::Store => ::Gql::Types::StoredFileType
+    ::Store   => ::Gql::Types::StoredFileType,
+    ::Taskbar => ::Gql::Types::User::TaskbarItemType,
+  }.freeze
+
+  ABSTRACT_TYPE_MAP = {
+    ::Gql::Types::User::TaskbarItemEntityType => ::Gql::Types::User::TaskbarItemEntity::TicketCreateType,
   }.freeze
 
   # Union and Interface Resolution
-  def self.resolve_type(_abstract_type, obj, _ctx)
+  def self.resolve_type(abstract_type, obj, _ctx)
     TYPE_MAP[obj.class] || "Gql::Types::#{obj.class.name}Type".constantize
+  rescue NameError
+    ABSTRACT_TYPE_MAP[abstract_type]
   rescue
     raise GraphQL::RequiredImplementationMissingError, "Cannot resolve type for '#{obj.class.name}'."
   end

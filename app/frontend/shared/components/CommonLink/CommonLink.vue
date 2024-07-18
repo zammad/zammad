@@ -93,6 +93,11 @@ const onClick = (event: MouseEvent) => {
     stopEvent(event, { propagation: false })
   }
 }
+
+defineExpose({
+  isActive,
+  isExactActive,
+})
 </script>
 
 <template>

@@ -7,6 +7,13 @@ class Taskbar < ApplicationModel
   include Taskbar::TriggersSubscriptions
 
   TASKBAR_APPS = %w[desktop mobile].freeze
+  TASKBAR_ENTITIES = %w[
+    OrganizationProfile
+    Search
+    TicketCreate
+    TicketZoom
+    UserProfile
+  ].freeze
 
   store           :state
   store           :params
@@ -142,6 +149,7 @@ class Taskbar < ApplicationModel
       taskbar.with_lock do
         taskbar.preferences = preferences
         taskbar.local_update = true
+        taskbar.skip_trigger = true
         taskbar.save!
       end
     end

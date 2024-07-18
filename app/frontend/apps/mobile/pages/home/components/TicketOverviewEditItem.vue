@@ -34,9 +34,10 @@ const icon = computed(() => {
   <div
     class="flex min-h-[54px] items-center border-b border-gray-300 last:border-0"
     data-test-id="overviewItem"
+    :draggable="draggable ? 'true' : undefined"
   >
     <div
-      class="shrink-0 cursor-pointer items-center justify-center ltr:mr-2 rtl:ml-2"
+      class="ms-3 shrink-0 cursor-pointer items-center justify-center ltr:mr-2 rtl:ml-2"
       :class="icon.class"
       role="button"
       tabindex="0"

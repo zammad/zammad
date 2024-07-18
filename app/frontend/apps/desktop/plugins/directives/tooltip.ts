@@ -105,6 +105,8 @@ const addTooltip = (
     event: MouseEvent | TouchEvent
   },
 ) => {
+  if (!event) return
+
   const tooltipNode = createTooltip({ top: '0px', left: '0px' }, message)
   document.body.appendChild(tooltipNode) // Temporarily add to DOM to calculate dimensions
 
@@ -175,8 +177,11 @@ const handleTooltipAddEvent = (event: MouseEvent | TouchEvent) => {
   if (!event.target) return
 
   const tooltipTargetNode = findTooltipTarget(event.target as HTMLDivElement)
-
   if (!tooltipTargetNode) return
+
+  // Do not show the tooltip if it was temporarily suspended.
+  //   This is signaled by any ancestors having a special CSS class assigned.
+  if (tooltipTargetNode.closest('.no-tooltip')) return
 
   hasHoverOnNode = true // Set it to capture mousemove event
 

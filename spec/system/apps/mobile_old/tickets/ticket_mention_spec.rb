@@ -9,7 +9,7 @@ RSpec.describe 'Mobile > Ticket > Mentions', app: :mobile, authenticated_as: :ag
 
   def visit_information
     visit "/tickets/#{ticket.id}/information"
-    wait_for_gql 'shared/entities/ticket/graphql/queries/ticket.graphql'
+    wait_for_gql('apps/mobile/entities/ticket/graphql/queries/ticketWithMentionLimit.graphql')
   end
 
   it 'can subscribe to a ticket inside the ticket action dialog' do

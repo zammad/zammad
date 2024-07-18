@@ -5,31 +5,40 @@ import { computed, provide } from 'vue'
 
 import { useTicketQuery } from '#shared/entities/ticket/graphql/queries/ticket.api.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
+import { EnumTaskbarEntity } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
+import { useTaskbarTab } from '#desktop/entities/user/current/composables/useTaskbarTab.ts'
 import TicketDetailTopBar from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue'
 import { TICKET_INFORMATION_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 interface Props {
-  internalId: string // Passed from router
+  internalId: string
 }
 
 const props = defineProps<Props>()
 
-const ticketId = computed(() => convertToGraphQLId('Ticket', props.internalId))
+useTaskbarTab(EnumTaskbarEntity.TicketZoom)
 
-const MENTIONS_LIMIT = 5
+// TODO: create a useTicketInformation-Data composable which provides/inject support
+// This could handle then the different data what is needed (e.g. ticket, articles, customer, ...)
+
+const ticketId = computed(() => convertToGraphQLId('Ticket', props.internalId))
 
 const { createQueryErrorHandler } = useErrorHandler()
 
 const ticketQuery = new QueryHandler(
-  useTicketQuery(() => ({
-    ticketId: ticketId.value,
-    mentionsCount: MENTIONS_LIMIT,
-  })),
+  useTicketQuery(
+    () => ({
+      ticketId: ticketId.value,
+    }),
+    {
+      fetchPolicy: 'cache-first',
+    },
+  ),
   {
     errorCallback: createQueryErrorHandler({
       notFound: __(
@@ -63,6 +72,9 @@ provide(TICKET_INFORMATION_KEY, ticket)
         <TicketDetailTopBar />
 
         <!--    :TODO Build the real shell -->
+        <CommonLink class="mx-auto max-w-xl" link="/tickets/1"
+          >Testing Ticket-Link</CommonLink
+        >
         <CommonLabel tag="p" class="mx-auto max-w-xl">
           Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci aut
           cumque deleniti deserunt earum eligendi error, facere fugiat hic iure

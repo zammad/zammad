@@ -6,15 +6,18 @@ import type {
   TicketLiveAppUser,
 } from '#shared/entities/ticket/types.ts'
 import type {
-  TicketQuery,
-  TicketQueryVariables,
+  TicketWithMentionLimitQuery,
+  TicketWithMentionLimitQueryVariables,
 } from '#shared/graphql/types.ts'
 import type { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
 import type { ComputedRef, Ref, ShallowRef } from 'vue'
 
 export interface TicketInformation {
-  ticketQuery: QueryHandler<TicketQuery, TicketQueryVariables>
+  ticketQuery: QueryHandler<
+    TicketWithMentionLimitQuery,
+    TicketWithMentionLimitQueryVariables
+  >
   initialFormTicketValue: FormValues
   ticket: ComputedRef<TicketById | undefined>
   newTicketArticleRequested: Ref<boolean>

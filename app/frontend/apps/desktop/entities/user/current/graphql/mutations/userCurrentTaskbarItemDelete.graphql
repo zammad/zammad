@@ -1,0 +1,8 @@
+mutation userCurrentTaskbarItemDelete($id: ID!) {
+  userCurrentTaskbarItemDelete(id: $id) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

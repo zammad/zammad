@@ -1,0 +1,8 @@
+mutation userCurrentTaskbarItemListPrio($list: [UserTaskbarItemListPrioInput!]!) {
+  userCurrentTaskbarItemListPrio(list: $list) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

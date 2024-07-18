@@ -13,6 +13,7 @@ import {
 } from '#shared/entities/ticket-shared-draft-start/graphql/queries/ticketSharedDraftStartList.mocks.ts'
 import { waitForUserQueryCalls } from '#shared/entities/user/graphql/queries/user.mocks.ts'
 
+import { mockUserCurrentTaskbarItemListQuery } from '#desktop/entities/user/current/graphql/queries/userCurrentTaskbarItemList.mocks.ts'
 import {
   handleMockFormUpdaterQuery,
   handleMockOrganizationQuery,
@@ -26,6 +27,9 @@ describe('testing tickets create a11y view', async () => {
       customer_ticket_create: true,
     })
     mockPermissions(['ticket.agent'])
+    mockUserCurrentTaskbarItemListQuery({
+      userCurrentTaskbarItemList: [],
+    })
   })
 
   afterEach(() => {

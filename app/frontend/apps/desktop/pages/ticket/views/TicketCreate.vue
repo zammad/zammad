@@ -1,52 +1,72 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, markRaw, reactive, watch } from 'vue'
+import { watchOnce } from '@vueuse/shared'
+import { computed, markRaw, reactive } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 import Form from '#shared/components/Form/Form.vue'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
-import useMetaTitle from '#shared/composables/useMetaTitle.ts'
 import { useTicketSignature } from '#shared/composables/useTicketSignature.ts'
 import { useTicketCreate } from '#shared/entities/ticket/composables/useTicketCreate.ts'
 import { useTicketCreateArticleType } from '#shared/entities/ticket/composables/useTicketCreateArticleType.ts'
 import { useTicketCreateView } from '#shared/entities/ticket/composables/useTicketCreateView.ts'
 import { useTicketFormOrganizationHandler } from '#shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts'
-import type {
-  TicketCreateArticleType,
-  TicketFormData,
-} from '#shared/entities/ticket/types.ts'
+import type { TicketFormData } from '#shared/entities/ticket/types.ts'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
+  EnumTaskbarEntity,
 } from '#shared/graphql/types.ts'
-import { i18n } from '#shared/i18n.ts'
 import { useWalker } from '#shared/router/walker.ts'
+import SubscriptionHandler from '#shared/server/apollo/handler/SubscriptionHandler.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonContentPanel from '#desktop/components/CommonContentPanel/CommonContentPanel.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
+import { useTaskbarTab } from '#desktop/entities/user/current/composables/useTaskbarTab.ts'
+import { useUserCurrentTaskbarItemStateUpdatesSubscription } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemStateUpdates.api.ts'
+import type { TaskbarTabContext } from '#desktop/entities/user/current/types.ts'
 
 import ApplyTemplate from '../components/ApplyTemplate.vue'
 import TicketDuplicateDetectionAlert from '../components/TicketDuplicateDetectionAlert.vue'
 import TicketSidebar from '../components/TicketSidebar.vue'
-import { TicketSidebarScreenType } from '../components/types.ts'
+import {
+  TicketSidebarScreenType,
+  type TicketSidebarContext,
+} from '../components/types.ts'
 import { useTicketSidebar } from '../composables/useTicketSidebar.ts'
 
+interface Props {
+  tabId?: string
+}
+
+// - handover context to useTaskbarTab composable
+// - Default output for TicketCreate-TabEntity without a "entity/state"
+
 defineOptions({
-  beforeRouteEnter() {
-    const { ticketCreateEnabled } = useTicketCreateView()
+  beforeRouteEnter(to) {
+    const { ticketCreateEnabled, checkUniqueTicketCreateRoute } =
+      useTicketCreateView()
 
     // TODO: Add real handling, when error page is available (see mobile).
     if (!ticketCreateEnabled.value) return '/error'
 
-    return true
+    return checkUniqueTicketCreateRoute(to)
+  },
+  beforeRouteUpdate(to) {
+    // When route is updated we need to check again of the unique identifier.
+    const { checkUniqueTicketCreateRoute } = useTicketCreateView()
+
+    return checkUniqueTicketCreateRoute(to)
   },
 })
+
+defineProps<Props>()
 
 const router = useRouter()
 const walker = useWalker()
@@ -76,8 +96,7 @@ const discardChanges = async () => {
   if (confirm) goBack()
 }
 
-const { ticketCreateArticleType, ticketArticleSenderTypeField } =
-  useTicketCreateArticleType()
+const { ticketArticleSenderTypeField } = useTicketCreateArticleType()
 
 const { createTicket, isTicketCustomer } = useTicketCreate(
   form,
@@ -260,22 +279,7 @@ const changedFields = reactive({
 
 const { signatureHandling } = useTicketSignature()
 
-const { setViewTitle } = useMetaTitle()
-
-const currentViewTitle = computed(() => {
-  return i18n.t(
-    ticketCreateArticleType[
-      values.value.articlarticleSenderTypeeSenderType as TicketCreateArticleType
-    ]?.title,
-    (values.value.title as string) || defaultTitle,
-  )
-})
-
-watch(currentViewTitle, () => {
-  setViewTitle(currentViewTitle.value, false)
-})
-
-const sidebarContext = computed(() => ({
+const sidebarContext = computed<TicketSidebarContext>(() => ({
   screenType: TicketSidebarScreenType.TicketCreate,
   form: form.value,
   formValues: values.value,
@@ -283,12 +287,60 @@ const sidebarContext = computed(() => ({
 
 const { hasSidebar } = useTicketSidebar(sidebarContext)
 
+const tabContext = computed<TaskbarTabContext>(() => ({
+  form: form.value,
+  formValues: values.value,
+  formIsDirty: isDirty.value,
+}))
+
+// TODO: create a useTicketCreateInformation-Data composable which provides/inject support
+
+const { activeTaskbarTab, activeTaskbarTabFormId, activeTaskbarTabDelete } =
+  useTaskbarTab(EnumTaskbarEntity.TicketCreate, tabContext)
+
+watchOnce(activeTaskbarTab, (tab) => {
+  if (tab && tab.taskbarTabId) {
+    const stateUpdatesSubscription = new SubscriptionHandler(
+      useUserCurrentTaskbarItemStateUpdatesSubscription({
+        taskbarItemId: tab.taskbarTabId,
+      }),
+    )
+
+    stateUpdatesSubscription.onResult((result) => {
+      if (result.data?.userCurrentTaskbarItemStateUpdates.stateChanged) {
+        triggerFormUpdater({
+          additionalParams: {
+            taskbarId: tab.taskbarTabId,
+            applyTaskbarState: true,
+          },
+        })
+      }
+    })
+  }
+})
+
 const applyTemplate = (templateId: string) => {
   triggerFormUpdater({
     includeDirtyFields: true,
     additionalParams: {
       templateId,
     },
+  })
+}
+
+const formAdditionalRouteQueryParams = computed(() => {
+  return {
+    taskbarId: activeTaskbarTab.value?.taskbarTabId,
+    ...(route.query || {}),
+  }
+})
+
+const submitCreateTicket = async (event: FormSubmitData<TicketFormData>) => {
+  createTicket(event).then((result) => {
+    if (!result || result === null || result === undefined) return
+    if (typeof result === 'function') result()
+
+    activeTaskbarTabDelete()
   })
 }
 </script>
@@ -304,6 +356,8 @@ const applyTemplate = (templateId: string) => {
     <div class="w-full max-w-screen-2xl px-28 pt-3.5">
       <Form
         ref="form"
+        :key="tabId"
+        :form-id="activeTaskbarTabFormId"
         :schema="formSchema"
         :schema-component-library="{
           CommonContentPanel: markRaw(CommonContentPanel),
@@ -316,10 +370,10 @@ const applyTemplate = (templateId: string) => {
           signatureHandling('body'),
         ]"
         :change-fields="changedFields"
-        :form-updater-additional-params="route.query"
+        :form-updater-additional-params="formAdditionalRouteQueryParams"
         use-object-attributes
         form-class="flex flex-col gap-3"
-        @submit="createTicket($event as FormSubmitData<TicketFormData>)"
+        @submit="submitCreateTicket($event as FormSubmitData<TicketFormData>)"
       />
     </div>
     <template #sideBar="{ isCollapsed, toggleCollapse }">

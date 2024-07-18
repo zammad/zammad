@@ -374,8 +374,9 @@ class MockLink extends ApolloLink {
   }
 }
 
+// Include both shared and app-specific cache initializer modules.
 const cacheInitializerModules: CacheInitializerModules = import.meta.glob(
-  '../../../shared/server/apollo/cache/initializer/*.ts',
+  '../../../**/server/apollo/cache/initializer/*.ts',
   { eager: true },
 )
 

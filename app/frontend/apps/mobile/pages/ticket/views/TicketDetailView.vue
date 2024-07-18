@@ -21,6 +21,7 @@ import { useForm } from '#shared/components/Form/useForm.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotificationSeen.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
+import { TicketUpdatesDocument } from '#shared/entities/ticket/graphql/subscriptions/ticketUpdates.api.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
 import UserError from '#shared/errors/UserError.ts'
 import type {
@@ -35,16 +36,15 @@ import { useApplicationStore } from '#shared/stores/application.ts'
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import { useCommonSelect } from '#mobile/components/CommonSelect/useCommonSelect.ts'
 import { getOpenedDialogs } from '#mobile/composables/useDialog.ts'
+import { useTicketWithMentionLimitQuery } from '#mobile/entities/ticket/graphql/queries/ticketWithMentionLimit.api.ts'
 import type { TicketInformation } from '#mobile/entities/ticket/types.ts'
 
-import { useTicketQuery } from '../../../../../shared/entities/ticket/graphql/queries/ticket.api.ts'
 import TicketDetailViewActions from '../components/TicketDetailView/TicketDetailViewActions.vue'
 import { useTicketArticleReply } from '../composable/useTicketArticleReply.ts'
 import { useTicketEdit } from '../composable/useTicketEdit.ts'
 import { useTicketEditForm } from '../composable/useTicketEditForm.ts'
 import { TICKET_INFORMATION_SYMBOL } from '../composable/useTicketInformation.ts'
 import { useTicketLiveUser } from '../composable/useTicketLiveUser.ts'
-import { TicketUpdatesDocument } from '../graphql/subscriptions/ticketUpdates.api.ts'
 
 interface Props {
   internalId: string
@@ -58,7 +58,7 @@ const MENTIONS_LIMIT = 5
 const { createQueryErrorHandler } = useErrorHandler()
 
 const ticketQuery = new QueryHandler(
-  useTicketQuery(() => ({
+  useTicketWithMentionLimitQuery(() => ({
     ticketId: ticketId.value,
     mentionsCount: MENTIONS_LIMIT,
   })),

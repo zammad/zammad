@@ -650,9 +650,13 @@ class _taskManagerSingleton extends App.Controller
   tasksInitial: =>
     @init()
 
+    isCustomer = App.Session.get().permission('ticket.customer') && !App.Session.get().permission('ticket.agent')
+
     # set taskbar collection stored in database
     tasks = App.Taskbar.all()
     for task in tasks
+      continue if task.callback is 'TicketCreate' && isCustomer
+
       task.active = false
       @allTasksByKey[task.key] = task.attributes()
       @tasksPreferences[task.key] = task.preferences
@@ -686,6 +690,8 @@ class _taskManagerSingleton extends App.Controller
 
     # initial load of taskbar collection
     for key, task of @allTasksByKey
+      continue if task.callback is 'TicketCreate' && isCustomer
+
       taskCount += 1
       do (task, taskCount) =>
         App.Delay.set(

@@ -92,6 +92,7 @@ export interface Props {
   schemaComponentLibrary?: Record<string, Component>
   handlers?: FormHandler[]
   changeFields?: Record<string, Partial<FormSchemaField>>
+  formId?: string
   formUpdaterId?: EnumFormUpdaterId
   formUpdaterInitialOnly?: boolean
   formUpdaterAdditionalParams?: FormUpdaterAdditionalParams
@@ -131,8 +132,6 @@ export interface Props {
   ) => Promise<void | (() => void) | false> | void | (() => void) | false
 }
 
-const formId = getUuid()
-
 const props = withDefaults(defineProps<Props>(), {
   schema: () => {
     return []
@@ -143,6 +142,8 @@ const props = withDefaults(defineProps<Props>(), {
   validationVisibility: FormValidationVisibility.Submit,
   useObjectAttributes: false,
 })
+
+const formId = props.formId ? props.formId : getUuid()
 
 const slots = useSlots()
 

@@ -83,7 +83,7 @@
   */
 
   .tooltip {
-    @apply fixed w-fit -translate-y-2 select-none text-wrap rounded-md border border-neutral-100 bg-blue-200 px-2 py-1 text-xs leading-snug text-gray-100 opacity-0 transition-all dark:border-gray-900 dark:bg-gray-700 dark:text-neutral-400;
+    @apply fixed z-50 w-fit -translate-y-2 select-none text-wrap rounded-md border border-neutral-100 bg-blue-200 px-2 py-1 text-xs leading-snug text-gray-100 opacity-0 transition-all dark:border-gray-900 dark:bg-gray-700 dark:text-neutral-400;
 
     &-animate {
       @apply translate-y-0 opacity-100;

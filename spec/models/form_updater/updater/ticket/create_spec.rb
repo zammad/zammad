@@ -6,6 +6,8 @@ require 'models/form_updater/concerns/checks_core_workflow_examples'
 require 'models/form_updater/concerns/has_security_options_examples'
 require 'models/form_updater/concerns/applies_ticket_template_examples'
 require 'models/form_updater/concerns/applies_ticket_shared_draft_examples'
+require 'models/form_updater/concerns/stores_taskbar_state_examples'
+require 'models/form_updater/concerns/applies_taskbar_state_examples'
 
 RSpec.describe(FormUpdater::Updater::Ticket::Create) do
   subject(:resolved_result) do
@@ -202,4 +204,6 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
   include_examples 'FormUpdater::HasSecurityOptions', type: 'create'
   include_examples 'FormUpdater::AppliesTicketTemplate'
   include_examples 'FormUpdater::AppliesTicketSharedDraft'
+  include_examples 'FormUpdater::StoresTaskbarState', taskbar_key: 'TicketCreateScreen-1234', taskbar_callback: 'TicketCreate'
+  include_examples 'FormUpdater::AppliesTaskbarState', taskbar_key: 'TicketCreateScreen-1234', taskbar_callback: 'TicketCreate'
 end

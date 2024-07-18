@@ -26,6 +26,9 @@ importers:
       '@formkit/dev':
         specifier: ^1.6.5
         version: 1.6.5
+      '@formkit/drag-and-drop':
+        specifier: ^0.1.6
+        version: 0.1.6
       '@formkit/i18n':
         specifier: ^1.6.5
         version: 1.6.5
@@ -242,9 +245,6 @@ importers:
       vue3-draggable-resizable:
         specifier: ^1.6.5
         version: 1.6.5
-      vuedraggable:
-        specifier: ^4.1.0
-        version: 4.1.0(vue@3.4.31(typescript@5.5.3))
       workbox-core:
         specifier: ^7.1.0
         version: 7.1.0
@@ -1281,6 +1281,9 @@ packages:
 
   '@formkit/dev@1.6.5':
     resolution: {integrity: sha512-dg62HTehLPi9lLBShixr9AoYgIv13gpxTZgiHEvf1UZz2HQq0Lcp63d0a+XT/tQ2HTz2ewLUGeXSN9dUVkYFSg==}
+
+  '@formkit/drag-and-drop@0.1.6':
+    resolution: {integrity: sha512-wZyxvk7WTbQ12q8ZGvLoYner1ktBOUf+lCblJT3P0LyqpjGCKTfQMKJtwToKQzJgTbhvow4LBu+yP92Mux321w==}
 
   '@formkit/i18n@1.6.5':
     resolution: {integrity: sha512-mM1UKGSa0Mdd8a8AAF+6BCNFnf8gUD1nOzU6dJ9UoPE8M/qA+hmcPR3PJm39p6e3OaT5O0Gn/J6JxgccPyWmGA==}
@@ -5280,9 +5283,6 @@ packages:
     resolution: {integrity: sha512-FtyOnWN/wCHTVXOMwvSv26d+ko5vWlIDD6zoUJ7LW8vh+ZBC8QdljveRP+crNrtBwioEUWy/4dMtbBjA4ioNlg==}
     engines: {node: '>=0.10.0'}
 
-  sortablejs@1.14.0:
-    resolution: {integrity: sha512-pBXvQCs5/33fdN1/39pPL0NZF20LeRbLQ5jtnheIPN9JQAaufGjKdWduZn4U7wCtVuzKhmRkI0DFYHYRbB2H1w==}
-
   source-map-js@1.2.0:
     resolution: {integrity: sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg==}
     engines: {node: '>=0.10.0'}
@@ -5994,11 +5994,6 @@ packages:
     peerDependenciesMeta:
       typescript:
         optional: true
-
-  vuedraggable@4.1.0:
-    resolution: {integrity: sha512-FU5HCWBmsf20GpP3eudURW3WdWTKIbEIQxh9/8GE806hydR9qZqRRxRE3RjqX7PkuLuMQG/A7n3cfj9rCEchww==}
-    peerDependencies:
-      vue: ^3.0.1
 
   w3c-keyname@2.2.6:
     resolution: {integrity: sha512-f+fciywl1SJEniZHD6H+kUO8gOnwIr7f4ijKA6+ZvJFjeGi1r4PDLl53Ayud9O/rk64RqgoQine0feoeOU0kXg==}
@@ -7141,6 +7136,8 @@ snapshots:
     dependencies:
       '@formkit/core': 1.6.5
       '@formkit/utils': 1.6.5
+
+  '@formkit/drag-and-drop@0.1.6': {}
 
   '@formkit/i18n@1.6.5':
     dependencies:
@@ -11759,8 +11756,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  sortablejs@1.14.0: {}
-
   source-map-js@1.2.0: {}
 
   source-map-resolve@0.5.3:
@@ -12545,11 +12540,6 @@ snapshots:
       '@vue/shared': 3.4.31
     optionalDependencies:
       typescript: 5.5.3
-
-  vuedraggable@4.1.0(vue@3.4.31(typescript@5.5.3)):
-    dependencies:
-      sortablejs: 1.14.0
-      vue: 3.4.31(typescript@5.5.3)
 
   w3c-keyname@2.2.6: {}
 

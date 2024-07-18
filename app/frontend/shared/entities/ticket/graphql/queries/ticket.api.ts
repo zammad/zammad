@@ -8,7 +8,7 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const TicketDocument = gql`
-    query ticket($ticketId: ID, $ticketInternalId: Int, $ticketNumber: String, $mentionsCount: Int) {
+    query ticket($ticketId: ID, $ticketInternalId: Int, $ticketNumber: String) {
   ticket(
     ticket: {ticketId: $ticketId, ticketInternalId: $ticketInternalId, ticketNumber: $ticketNumber}
   ) {
@@ -17,7 +17,7 @@ export const TicketDocument = gql`
       id
       name
     }
-    mentions(first: $mentionsCount) {
+    mentions {
       totalCount
       edges {
         node {

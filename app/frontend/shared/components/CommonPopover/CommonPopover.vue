@@ -346,6 +346,10 @@ onUnmounted(() => {
 
 defineExpose(exposedInstance)
 
+defineOptions({
+  inheritAttrs: false,
+})
+
 const { durations } = useTransitionConfig()
 
 const classes = getPopoverClasses()
@@ -363,8 +367,9 @@ const classes = getPopoverClasses()
         :class="[classes.base]"
         :style="popoverStyle"
         :aria-labelledby="owner && '$el' in owner ? owner.$el?.id : owner?.id"
+        v-bind="$attrs"
       >
-        <div class="overflow-y-auto">
+        <div class="w-full overflow-y-auto">
           <slot />
         </div>
         <div

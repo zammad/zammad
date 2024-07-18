@@ -58,15 +58,15 @@ export const useTicketCreateArticleType = (
     }))
   })
 
-  const defaultTicketCreateType = application.config
+  const defaultTicketCreateArticleType = application.config
     .ui_ticket_create_default_type as TicketCreateArticleType
 
   const ticketArticleSenderTypeField = {
     name: 'articleSenderType',
     type: useAppName() === 'mobile' ? 'radio' : 'toggleButtons',
     required: true,
-    value: availableTypes.value.includes(defaultTicketCreateType)
-      ? defaultTicketCreateType
+    value: availableTypes.value.includes(defaultTicketCreateArticleType)
+      ? defaultTicketCreateArticleType
       : availableTypes.value[0],
     props: {
       options,
@@ -74,5 +74,9 @@ export const useTicketCreateArticleType = (
     },
   }
 
-  return { ticketCreateArticleType, ticketArticleSenderTypeField }
+  return {
+    ticketCreateArticleType,
+    ticketArticleSenderTypeField,
+    defaultTicketCreateArticleType,
+  }
 }

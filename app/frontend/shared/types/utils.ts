@@ -51,6 +51,10 @@ export interface ObjectWithId {
   id: Scalars['ID']['output']
 }
 
+export interface ObjectWithUid {
+  uid: Scalars['String']['output']
+}
+
 export declare type DeepPartial<T> = {
   [K in keyof T]?: T[K] extends object | null | undefined
     ? DeepPartial<T[K]> | undefined | null

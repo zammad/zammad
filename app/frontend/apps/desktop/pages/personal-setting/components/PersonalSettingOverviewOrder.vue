@@ -1,7 +1,12 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import Draggable from 'vuedraggable'
+import { animations, parents } from '@formkit/drag-and-drop'
+import { dragAndDrop } from '@formkit/drag-and-drop/vue'
+import { cloneDeep, isEqual } from 'lodash-es'
+import { ref, watch } from 'vue'
+
+import { startAndEndEventsDNDPlugin } from '#shared/utils/startAndEndEventsDNDPlugin.ts'
 
 export interface OverviewItem {
   id: string
@@ -9,6 +14,33 @@ export interface OverviewItem {
 }
 
 const localValue = defineModel<OverviewItem[]>('modelValue')
+
+const dndEndCallback = (parent: HTMLElement) => {
+  const parentData = parents.get(parent)
+  if (!parentData) return
+
+  localValue.value = cloneDeep(parentData.getValues(parent))
+}
+
+const dndParentRef = ref()
+const dndLocalValue = ref(localValue.value || [])
+
+watch(localValue, (newValue) => {
+  if (isEqual(dndLocalValue.value, newValue)) return
+
+  dndLocalValue.value = cloneDeep(newValue || [])
+})
+
+dragAndDrop({
+  parent: dndParentRef,
+  values: dndLocalValue,
+  plugins: [
+    startAndEndEventsDNDPlugin(undefined, dndEndCallback),
+    animations(),
+  ],
+  dropZoneClass: 'opacity-0',
+  touchDropZoneClass: 'opacity-0',
+})
 </script>
 
 <template>
@@ -19,33 +51,23 @@ const localValue = defineModel<OverviewItem[]>('modelValue')
       {{ $t('Drag and drop to reorder ticket overview list items.') }}
     </span>
 
-    <div class="flex flex-col p-1">
-      <Draggable
-        v-model="localValue"
-        :animation="100"
-        draggable=".draggable"
-        role="list"
-        ghost-class="invisible"
-        item-key="id"
+    <ul ref="dndParentRef" class="flex flex-col p-1">
+      <li
+        v-for="value in dndLocalValue"
+        :key="value.id"
+        class="draggable flex min-h-9 cursor-grab items-start gap-2.5 p-2.5 active:cursor-grabbing"
+        draggable="true"
+        aria-describedby="drag-and-drop-ticket-overviews"
       >
-        <template #item="{ element }">
-          <div
-            role="listitem"
-            draggable="true"
-            aria-describedby="drag-and-drop-ticket-overviews"
-            class="draggable flex min-h-9 cursor-grab items-start gap-2.5 p-2.5 active:cursor-grabbing"
-          >
-            <CommonIcon
-              class="fill-stone-200 dark:fill-neutral-500"
-              name="grip-vertical"
-              size="tiny"
-            />
-            <CommonLabel class="w-full text-black dark:text-white">
-              {{ $t(element.name) }}
-            </CommonLabel>
-          </div>
-        </template>
-      </Draggable>
-    </div>
+        <CommonIcon
+          class="fill-stone-200 dark:fill-neutral-500"
+          name="grip-vertical"
+          size="tiny"
+        />
+        <CommonLabel class="w-full text-black dark:text-white">
+          {{ $t(value.name) }}
+        </CommonLabel>
+      </li>
+    </ul>
   </div>
 </template>

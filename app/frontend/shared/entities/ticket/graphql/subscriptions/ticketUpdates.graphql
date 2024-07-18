@@ -1,7 +1,11 @@
-subscription ticketUpdates($ticketId: ID!) {
-  ticketUpdates(ticketId: $ticketId) {
+subscription ticketUpdates($ticketId: ID!, $initial: Boolean = false) {
+  ticketUpdates(ticketId: $ticketId, initial: $initial) {
     ticket {
       ...ticketAttributes
+      createArticleType {
+        id
+        name
+      }
       mentions {
         totalCount
         edges {

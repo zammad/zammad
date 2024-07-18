@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { onBeforeMount, onBeforeUnmount } from 'vue'
+import { onBeforeMount, onBeforeUnmount, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 import CommonImageViewer from '#shared/components/CommonImageViewer/CommonImageViewer.vue'
@@ -15,13 +15,16 @@ import usePushMessages from '#shared/composables/usePushMessages.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useAuthenticationStore } from '#shared/stores/authentication.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
 import emitter from '#shared/utils/emitter.ts'
 
 import { initializeConfirmationDialog } from '#desktop/components/CommonConfirmationDialog/initializeConfirmationDialog.ts'
+import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
 
 const router = useRouter()
 
 const authentication = useAuthenticationStore()
+const session = useSessionStore()
 
 useMetaTitle().initializeMetaTitle()
 
@@ -60,17 +63,17 @@ emitter.on('sessionInvalid', async () => {
 
 initializeConfirmationDialog()
 
-// Initialize the ticket overview store after a valid session is present on
+// Initialize the user taskbar tabs store after a valid session is present on
 // the app level, so that the query keeps alive.
-// watch(
-//   () => session.initialized,
-//   (newValue, oldValue) => {
-//     if (!oldValue && newValue) {
-//       useTicketOverviewsStore()
-//     }
-//   },
-//   { immediate: true },
-// )
+watch(
+  () => session.initialized,
+  (newValue, oldValue) => {
+    if (!oldValue && newValue) {
+      useUserCurrentTaskbarTabsStore()
+    }
+  },
+  { immediate: true },
+)
 
 const transition = VITE_TEST_MODE
   ? undefined

@@ -1,17 +1,21 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import { TicketAttributesFragmentDoc } from '../../../../../../shared/entities/ticket/graphql/fragments/ticketAttributes.api';
-import { TicketMentionFragmentDoc } from '../../../../../../shared/entities/ticket/graphql/fragments/ticketMention.api';
+import { TicketAttributesFragmentDoc } from '../fragments/ticketAttributes.api';
+import { TicketMentionFragmentDoc } from '../fragments/ticketMention.api';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const TicketUpdatesDocument = gql`
-    subscription ticketUpdates($ticketId: ID!) {
-  ticketUpdates(ticketId: $ticketId) {
+    subscription ticketUpdates($ticketId: ID!, $initial: Boolean = false) {
+  ticketUpdates(ticketId: $ticketId, initial: $initial) {
     ticket {
       ...ticketAttributes
+      createArticleType {
+        id
+        name
+      }
       mentions {
         totalCount
         edges {

@@ -1,0 +1,10 @@
+mutation userCurrentTaskbarItemAdd($input: UserTaskbarItemInput!) {
+  userCurrentTaskbarItemAdd(input: $input) {
+    taskbarItem {
+      ...userCurrentTaskbarItemAttributes
+    }
+    errors {
+      ...errors
+    }
+  }
+}

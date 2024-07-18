@@ -4,6 +4,9 @@ import { computed } from 'vue'
 
 import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
+import getUuid from '#shared/utils/getUuid.ts'
+
+import type { RouteLocationNormalized } from 'vue-router'
 
 export const useTicketCreateView = () => {
   const application = useApplicationStore()
@@ -24,8 +27,20 @@ export const useTicketCreateView = () => {
     )
   })
 
+  const checkUniqueTicketCreateRoute = (to: RouteLocationNormalized) => {
+    if (!to.params.tabId) {
+      return {
+        path: `/tickets/create/${getUuid()}`,
+        query: to.query,
+      }
+    }
+
+    return true
+  }
+
   return {
     ticketCreateEnabled,
     isTicketCustomer,
+    checkUniqueTicketCreateRoute,
   }
 }

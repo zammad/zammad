@@ -1,0 +1,34 @@
+import * as Types from '#shared/graphql/types.ts';
+
+import gql from 'graphql-tag';
+import { TicketTaskbarTabAttributesFragmentDoc } from '../../../../../../../shared/entities/ticket/graphql/fragments/ticketTaskbarTabAttributes.api';
+export const UserCurrentTaskbarItemAttributesFragmentDoc = gql`
+    fragment userCurrentTaskbarItemAttributes on UserTaskbarItem {
+  id
+  key
+  callback
+  formId
+  entity {
+    ... on Ticket {
+      ...ticketTaskbarTabAttributes
+    }
+    ... on UserTaskbarItemEntityTicketCreate {
+      uid
+      title
+      createArticleTypeKey
+    }
+    ... on User {
+      id
+      internalId
+    }
+    ... on Organization {
+      id
+      internalId
+    }
+  }
+  entityAccess
+  prio
+  lastContact
+  dirty
+}
+    ${TicketTaskbarTabAttributesFragmentDoc}`;

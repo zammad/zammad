@@ -4,6 +4,8 @@ declare type LogLevel = 'trace' | 'debug' | 'info' | 'warn' | 'error' | 'silent'
 
 declare type Maybe<T> = T | null
 
+declare type ID = string
+
 declare global {
   interface Window {
     Router: import('vue-router').Router

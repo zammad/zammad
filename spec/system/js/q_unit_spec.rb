@@ -58,7 +58,7 @@ RSpec.describe 'QUnit', time_zone: 'Europe/London', type: :system do
   files.each do |elem|
     context "when testing #{elem.humanize}", authenticated_as: :user do
       # Some tests require an authenticated session.
-      let(:needs_user) { elem.include?('form') }
+      let(:needs_user) { elem.include?('form') || elem.include?('taskbar') }
       let(:user)       { needs_user ? create(:agent) : false }
 
       it "#{elem.humanize} qunit tests" do

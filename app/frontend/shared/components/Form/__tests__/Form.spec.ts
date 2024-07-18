@@ -244,6 +244,19 @@ describe('Form.vue', () => {
     const textarea = wrapper.getByLabelText('Textarea')
     expect(textarea).toHaveDisplayValue('A other text.')
   })
+
+  it('uses a passed over form id', async () => {
+    await renderForm({
+      props: {
+        id: '4711',
+      },
+    })
+
+    const formNode = getNode('4711')
+
+    await formNode?.settled
+    expect(formNode).toBeDefined()
+  })
 })
 
 describe('Form.vue - Edge Cases', () => {
