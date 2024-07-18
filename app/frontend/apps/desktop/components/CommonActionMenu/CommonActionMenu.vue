@@ -85,7 +85,7 @@ const variantClasses = computed(() => {
       <CommonLink
         v-if="singleMenuItem?.link"
         v-tooltip="$t(singleActionAriaLabel)"
-        class="flex"
+        class="flex focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
         :aria-label="$t(singleActionAriaLabel)"
         :link="singleMenuItem.link"
       >

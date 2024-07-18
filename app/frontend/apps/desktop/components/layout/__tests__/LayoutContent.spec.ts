@@ -48,13 +48,12 @@ describe('LayoutContent', () => {
   it('renders component with default slot content', () => {
     const wrapper = renderLayoutContent({ default: () => 'Hello Test World!' })
 
+    wrapper.debug()
     expect(wrapper.getByText('Hello Test World!')).toBeInTheDocument()
     expect(
-      wrapper.getByRole('heading', { name: 'Test Profile' }),
+      wrapper.getByRole('link', { name: 'Test Profile' }),
     ).toBeInTheDocument()
-    expect(
-      wrapper.getByRole('heading', { name: 'Test Foo' }),
-    ).toBeInTheDocument()
+    expect(wrapper.getByRole('link', { name: 'Test Foo' })).toBeInTheDocument()
   })
 
   it('renders namespaced content', () => {

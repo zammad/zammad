@@ -27,7 +27,7 @@ const paddingClasses = computed(() =>
     <ul class="m-0 flex basis-full flex-col gap-1 p-0">
       <li v-for="entry in items" :key="entry.label">
         <CommonLink
-          class="flex gap-2 rounded-md text-sm text-gray-100 hover:bg-blue-600 hover:text-black hover:no-underline dark:text-neutral-400 dark:hover:bg-blue-900 dark:hover:text-white"
+          class="flex gap-2 rounded-md text-sm text-gray-100 hover:bg-blue-600 hover:text-black hover:no-underline focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-neutral-400 dark:hover:bg-blue-900 dark:hover:text-white"
           :class="[paddingClasses]"
           exact-active-class="!bg-blue-800 w-full !text-white"
           internal

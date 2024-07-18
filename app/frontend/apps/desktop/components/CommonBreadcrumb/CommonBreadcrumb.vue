@@ -47,7 +47,12 @@ const sizeClasses = computed(() => {
           class="shrink-0 ltr:mr-1 rtl:ml-1"
         />
 
-        <CommonLink v-if="item.route" :link="item.route" internal>
+        <CommonLink
+          v-if="item.route"
+          class="focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
+          :link="item.route"
+          internal
+        >
           <CommonLabel size="large" class="line-clamp-1 hover:underline">{{
             item.noOptionLabelTranslation
               ? $t(item.label as string)
@@ -55,7 +60,7 @@ const sizeClasses = computed(() => {
           }}</CommonLabel>
         </CommonLink>
 
-        <h1 class="line-clamp-1" aria-current="page">
+        <h1 v-else class="line-clamp-1" aria-current="page">
           {{
             item.noOptionLabelTranslation
               ? $t(item.label as string)
