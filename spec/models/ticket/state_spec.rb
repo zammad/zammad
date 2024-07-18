@@ -238,6 +238,22 @@ RSpec.describe Ticket::State, type: :model do
           )
       end
 
+      it 'updated state_id attribute does not include inactive states (#5268)' do
+        state.update! active: false
+
+        expect(attr.screens)
+          .to include(
+            'create_middle' => include(
+              'ticket.agent'    => include('filter' => not_include(state.id)),
+              'ticket.customer' => include('filter' => not_include(state.id))
+            ),
+            'edit'          => include(
+              'ticket.agent'    => include('filter' => not_include(state.id)),
+              'ticket.customer' => include('filter' => not_include(state.id))
+            )
+          )
+      end
+
       it 'updates state_id attribute when a state is destroyed' do
         state.destroy!
 

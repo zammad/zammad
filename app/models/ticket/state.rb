@@ -73,25 +73,30 @@ returns:
     end
   end
 
+  def self.update_state_field_configuration
+    attr = ObjectManager::Attribute.get(
+      object: 'Ticket',
+      name:   'state_id',
+    )
+
+    active_states = Ticket::State.where(active: true)
+
+    attr.data_option[:filter]                                = active_states.by_category_ids(:viewable)
+    attr.screens[:create_middle]['ticket.agent'][:filter]    = active_states.by_category_ids(:viewable_agent_new)
+    attr.screens[:create_middle]['ticket.customer'][:filter] = active_states.by_category_ids(:viewable_customer_new)
+    attr.screens[:edit]['ticket.agent'][:filter]             = active_states.by_category_ids(:viewable_agent_edit)
+    attr.screens[:edit]['ticket.customer'][:filter]          = active_states.by_category_ids(:viewable_customer_edit)
+    attr.screens[:overview_bulk]['ticket.agent'][:filter]    = active_states.by_category_ids(:viewable_agent_edit)
+
+    attr.save!
+  end
+
   private
 
   def update_object_manager_attribute
     return if !Setting.get('system_init_done')
     return if callback_loop
 
-    attr = ObjectManager::Attribute.get(
-      object: 'Ticket',
-      name:   'state_id',
-    )
-
-    attr.data_option[:filter]                                = Ticket::State.by_category_ids(:viewable)
-    attr.screens[:create_middle]['ticket.agent'][:filter]    = Ticket::State.by_category_ids(:viewable_agent_new)
-    attr.screens[:create_middle]['ticket.customer'][:filter] = Ticket::State.by_category_ids(:viewable_customer_new)
-    attr.screens[:edit]['ticket.agent'][:filter]             = Ticket::State.by_category_ids(:viewable_agent_edit)
-    attr.screens[:edit]['ticket.customer'][:filter]          = Ticket::State.by_category_ids(:viewable_customer_edit)
-    attr.screens[:overview_bulk]['ticket.agent'][:filter]    = Ticket::State.by_category_ids(:viewable_agent_edit)
-
-    attr.save!
+    self.class.update_state_field_configuration
   end
-
 end
