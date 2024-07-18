@@ -613,11 +613,11 @@ RSpec.describe 'Ticket Create', type: :system do
         object: 'Ticket',
         name:   'state_id',
       )
-      attribute.data_option[:filter] = Ticket::State.by_category_ids(:viewable)
-      attribute.screens[:create_middle]['ticket.agent'][:filter] = Ticket::State.by_category_ids(:viewable_agent_new)
-      attribute.screens[:create_middle]['ticket.customer'][:filter] = Ticket::State.by_category_ids(:viewable_customer_new)
-      attribute.screens[:edit]['ticket.agent'][:filter] = Ticket::State.by_category_ids(:viewable_agent_edit)
-      attribute.screens[:edit]['ticket.customer'][:filter] = Ticket::State.by_category_ids(:viewable_customer_edit)
+      attribute.data_option[:filter] = Ticket::State.where(active: true).by_category_ids(:viewable)
+      attribute.screens[:create_middle]['ticket.agent'][:filter] = Ticket::State.where(active: true).by_category_ids(:viewable_agent_new)
+      attribute.screens[:create_middle]['ticket.customer'][:filter] = Ticket::State.where(active: true).by_category_ids(:viewable_customer_new)
+      attribute.screens[:edit]['ticket.agent'][:filter] = Ticket::State.where(active: true).by_category_ids(:viewable_agent_edit)
+      attribute.screens[:edit]['ticket.customer'][:filter] = Ticket::State.where(active: true).by_category_ids(:viewable_customer_edit)
       attribute.save!
     end
 
