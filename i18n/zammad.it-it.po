@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-15 05:59+0000\n"
+"PO-Revision-Date: 2024-07-18 22:16+0000\n"
 "Last-Translator: Random <random_r@users.noreply.translations.zammad.org>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/it/>\n"
@@ -3675,7 +3675,7 @@ msgstr "Crea Canale"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/new_controller.coffee:17
 msgid "Create Knowledge Base"
-msgstr "Crea Knowledge Base"
+msgstr "Crea base di conoscenza"
 
 #: app/controllers/first_steps_controller.rb:97
 msgid "Create Macros"
@@ -4454,14 +4454,14 @@ msgid ""
 "Defines if Knowledge Base navbar button is enabled for users without "
 "Knowledge Base permission."
 msgstr ""
-"Definisce se il pulsante Knowledge Base nella barra di navigazione è "
-"abilitato per gli utenti senza permessi alla Knowledge Base."
+"Definisce se il pulsante \"base di conoscenza\" nella barra di navigazione è "
+"abilitato per gli utenti senza permessi alla base di conoscenza."
 
 #: db/seeds/settings.rb:5407
 msgid "Defines if Knowledge Base navbar button is enabled."
 msgstr ""
-"Definisce se il pulsante nella barra di navigazione per la Knowledge Base è "
-"abilitato."
+"Definisce se il pulsante nella barra di navigazione per la base di "
+"conoscenza è abilitato."
 
 #: db/seeds/settings.rb:4709
 msgid "Defines if LDAP is enabled or not."
@@ -5221,7 +5221,7 @@ msgstr "Elimina file"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:40
 msgid "Delete Knowledge Base"
-msgstr "Elimina knowledge base"
+msgstr "Elimina base di conoscenza"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:9
 msgid "Delete Ticket"
@@ -6488,7 +6488,7 @@ msgid ""
 "choose from, but beware: You can't mix and match different icons from "
 "different sets. Choose carefully!"
 msgstr ""
-"Ad ogni categoria della tua knowledge base dovrebbe essere assegnata "
+"Ad ogni categoria della tua base di conoscenza dovrebbe essere assegnata "
 "un'icona per aumentare la leggibilità. Ogni gruppo di icone dispone di "
 "diversi simboli e immagini, ma fai attenzione: puoi utilizzare le icone di "
 "un solo gruppo. Scegli attentamente!"
@@ -8178,7 +8178,7 @@ msgstr "Impossibile generare contenuto in linea."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:223
 msgid "Insert text from Knowledge Base article"
-msgstr "Inserisci il testo dall'articolo della Knowledge Base"
+msgstr "Inserisci il testo dall'articolo della base di conoscenza"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:230
 msgid "Insert text from text module"
@@ -8204,7 +8204,7 @@ msgstr "Inserisce un'indicazione per un utente"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:445
 msgid "Inserts knowledge base answer"
-msgstr "Inserisci risposta nella knowledge base"
+msgstr "Inserisce risposta nella base di conoscenza"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:439
 msgid "Inserts text module"
@@ -8249,7 +8249,7 @@ msgstr "Errore interno"
 
 #: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco:2
 msgid "Internal Knowledge Base feed:"
-msgstr "Flusso interno Knowledge Base:"
+msgstr "Flusso interno della base di conoscenza:"
 
 #: app/models/import_job.rb:163
 msgid ""
@@ -8581,35 +8581,35 @@ msgstr "Parole chiave"
 #: app/assets/javascripts/app/models/knowledge_base.coffee:75
 #: app/models/knowledge_base.rb:199 db/seeds/permissions.rb:475
 msgid "Knowledge Base"
-msgstr "Knowledge Base"
+msgstr "Base di conoscenza"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:71
 msgid "Knowledge Base Answer"
-msgstr "Risposta della Knowledge Base"
+msgstr "Risposta della base di conoscenza"
 
 #: db/seeds/permissions.rb:489
 msgid "Knowledge Base Editor"
-msgstr "Knowledge Base Editor"
+msgstr "Editor della base di conoscenza"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee:6
 msgid "Knowledge Base Feed"
-msgstr "Flusso Knowledge Base"
+msgstr "Flusso della base di conoscenza"
 
 #: db/seeds/permissions.rb:495
 msgid "Knowledge Base Reader"
-msgstr "Lettore della Knowledge Base"
+msgstr "Lettore della base di conoscenza"
 
 #: db/seeds/settings.rb:5404
 msgid "Knowledge Base active"
-msgstr "Knowledge Base attiva"
+msgstr "Base di conoscenza attiva"
 
 #: db/seeds/settings.rb:5419
 msgid "Knowledge Base active publicly"
-msgstr "Knowledge Base attiva pubblicamente"
+msgstr "Base di conoscenza attiva pubblicamente"
 
 #: db/seeds/settings.rb:5393
 msgid "Knowledge Base multilingual support"
-msgstr "Supporto multilingue per la Knowledge Base"
+msgstr "Supporto multilingua per la base di conoscenza"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:24
@@ -9042,19 +9042,19 @@ msgstr "Gestisci le etichette"
 #: app/assets/javascripts/app/controllers/user.coffee:162
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
 msgid "Manage Two-Factor Authentication"
-msgstr "Gestisci autenticazione a due fattori"
+msgstr "Gestisci l'autenticazione a due fattori"
 
 #: app/assets/javascripts/app/views/api.jst.eco:48
 msgid ""
 "Manage applications that can use Zammad as an OAuth provider and "
 "applications that you've authorized to use your account."
 msgstr ""
-"Gestisci le applicazioni che possono utilizzare Zammad come provider OAuth e "
-"le applicazioni che hai autorizzato a utilizzare il tuo account."
+"Gestisci le applicazioni che possono usare Zammad come fornitore OAuth e le "
+"applicazioni che hai autorizzato a usare il tuo account."
 
 #: app/views/mailer/application.html.erb:47
 msgid "Manage your notification settings"
-msgstr "Gestisci le tue impostazioni delle notifiche"
+msgstr "Gestisci le tue impostazioni di notifica"
 
 #: app/assets/javascripts/app/views/api.jst.eco:2
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:3
@@ -10942,7 +10942,7 @@ msgstr "Esegui azioni"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:49
 msgid "Permanently Delete Knowledge Base"
-msgstr "Cancella permanentemente la Conoscenza Base"
+msgstr "Elimina permanentemente la base di conoscenza"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: db/seeds/settings.rb:2653
@@ -13311,7 +13311,7 @@ msgstr "Inizia a digitare per cercare gli utenti…"
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:641
 msgid "Start typing to search in Knowledge Base…"
-msgstr "Inizia a digitare per cercare nella knowledge base…"
+msgstr "Inizia a digitare per cercare nella base di conoscenza…"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:405
 msgid "Start typing to search…"
@@ -13522,7 +13522,7 @@ msgstr "Domenica"
 
 #: db/seeds/settings.rb:5396
 msgid "Support of multilingual Knowledge Base."
-msgstr "Supporto per knowledge base multilingua."
+msgstr "Supporto per base di conoscenza multilingua."
 
 #: db/seeds/schedulers.rb:142
 msgid "Sync calendars with iCal feeds."
@@ -13568,8 +13568,8 @@ msgid ""
 "System supports only one locale for knowledge base. Upgrade your plan to use "
 "more locales."
 msgstr ""
-"Il sistema supporta una sola lingua per la knowledge base. Aggiorna il tuo "
-"piano per usare più lingue."
+"Il sistema supporta una sola lingua per la base di conoscenza. Aggiorna il "
+"tuo piano per usare più lingue."
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:5
 msgid ""
@@ -13808,7 +13808,7 @@ msgstr "Impossibile trovare il token API."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/new_controller.coffee:56
 msgid "The Knowledge Base could not be created."
-msgstr "Non è stato possibile creare la Knowledge Base."
+msgstr "Non è stato possibile creare la base di conoscenza."
 
 #: app/services/service/avatar/image_validate.rb:14
 msgid "The MIME type of the image is invalid."
@@ -14157,11 +14157,11 @@ msgid ""
 "g., \"/support\", \"example.com\", or \"example.com/support\"). Then, follow "
 "the directions under \"Web Server Configuration\" to complete the process."
 msgstr ""
-"L'URL predefinito per la tua knowledge base è ad esempio example.com o "
+"L'URL predefinito per la tua base di conoscenza è ad esempio example.com o "
 "example.com/help. Per renderla accessibile da un URL personalizzato, "
-"inserisci la destinazione sotto (ad es. \"/supporto\", \"example.com\" o "
-"\"example.com/supporto\"). Poi, segui le istruzioni sotto \"Configurazione "
-"del server web\" per finalizzare il processo."
+"inserisci la destinazione sotto (ad es. \"/supporto\", \"esempio.it\" o "
+"\"esempio.it/supporto\"). Poi, segui le istruzioni sotto \"Configurazione "
+"del server web\" per completare il processo."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:118
 msgid "The default font size is 12px."
@@ -15055,7 +15055,7 @@ msgstr "Riscontrato un errore PGP sconosciuto."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:181
 msgid "There was no Knowledge Base created."
-msgstr "Non è stata creata alcuna Knowledge Base."
+msgstr "Non è stata creata alcuna base di conoscenza."
 
 #: lib/secure_mailing/pgp/security_options.rb:12
 msgid "There was no PGP key found."
@@ -17747,9 +17747,9 @@ msgid ""
 "locales. Add a language below, then select it in the Knowledge Base Editor "
 "to add your translations."
 msgstr ""
-"Puoi fornire versioni differenti della tua knowledge base per differenti "
-"localizzazioni. Aggiungi una lingua di seguito, quindi selezionala "
-"nell'editor della Knowledge Base per aggiungere le tue traduzioni."
+"Puoi fornire versioni differenti della tua base di conoscenza per diverse "
+"lingue. Aggiungi una lingua di seguito, quindi selezionala nell'editor della "
+"base di conoscenza per aggiungere le tue traduzioni."
 
 #: app/assets/javascripts/app/views/login.jst.eco:98
 msgid "You can request your password"
