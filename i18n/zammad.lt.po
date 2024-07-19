@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-13 09:16+0000\n"
+"PO-Revision-Date: 2024-07-18 08:00+0000\n"
 "Last-Translator: Mantas Masalskis <mantas@idev.lt>\n"
 "Language-Team: Lithuanian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/lt/>\n"
@@ -427,7 +427,7 @@ msgstr "%s prisegti failai"
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:32
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:39
 msgid "%s completed data privacy task to delete user ID |%s|"
-msgstr "%s užbaigė duomenų apsaugos užduotį ištrinti naudotoją ID |%s|"
+msgstr "%s užbaigė duomenų privatumo užduotį ištrinti naudotoją ID |%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:49
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:25
@@ -437,7 +437,7 @@ msgstr "%s sukūrė naują įrašą triktyje „%s“"
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:28
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:27
 msgid "%s created data privacy task to delete user ID |%s|"
-msgstr "%s sukūrė duomenų apsaugos užduotį ištrinti naudotoją ID |%s|"
+msgstr "%s sukūrė duomenų privatumo užduotį ištrinti naudotoją ID |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee:30
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts:26
@@ -611,7 +611,7 @@ msgstr "%s atnaujino vieną iš „%s“ įrašų"
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:30
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:33
 msgid "%s updated data privacy task to delete user ID |%s|"
-msgstr "%s atnaujino duomenų apsaugos užduotį ištrinti naudotoją ID „%s“"
+msgstr "%s atnaujino duomenų privatumo užduotį ištrinti naudotoją ID „%s“"
 
 #: app/assets/javascripts/app/models/group.coffee:32
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts:28
@@ -683,7 +683,7 @@ msgstr ""
 msgid "%{name} is a reserved word"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:47
+#: app/frontend/apps/desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue:51
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 #, fuzzy
 #| msgid "Total: %s"
@@ -714,6 +714,15 @@ msgid ""
 "take some additional time depending on the number of objects that will be "
 "deleted."
 msgstr ""
+"**Duomenų privatumas** padeda ištrinti duomenis iš sistemos ir patikrinti ar "
+"jie tikrai buvo ištrinti.\n"
+"\n"
+"Tai gali būti naudojama trikčių, organizacijų ir naudotojų ištrinimui. "
+"Savininko priskyrimas bus nunulintas jei ištrintasis naudotojas buvo "
+"agentas.\n"
+"\n"
+"Duomenų privatumo užduotys bus vykdomos kas 10 minučių. Pats veiksmas gali "
+"užtrikti priklausomai nuo ištrinamų duomenų kiekio."
 
 #: app/assets/javascripts/app/models/sla.coffee
 msgid ""
@@ -967,6 +976,12 @@ msgstr "API žetonas"
 #: app/assets/javascripts/app/views/channel/form.jst.eco:127
 msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr "Sutinku su duomenų privatumo ir priimtino naudojimo taisyklėmis"
+
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:18
+#, fuzzy
+#| msgid "Access token"
+msgid "Access denied"
+msgstr "Prieigos žetonas"
 
 #: db/seeds/permissions.rb:297
 msgid "Access the agent chat features."
@@ -1595,6 +1610,9 @@ msgid ""
 "Once the data privacy task is executed, tickets will be deleted and a "
 "history entry preserved. There is no rollback of this deletion possible."
 msgstr ""
+"Šis darbas pažymės visus susijusias triktis ištryinimui. Kai Duomenų "
+"privatumo užduotis bus paleista, triktys bus ištrintos, bet istorijos įrašai "
+"išliks. Šio veiksmo bus neįmanoma atstatyti."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:129
 msgid ""
@@ -1603,6 +1621,10 @@ msgid ""
 "tickets will be deleted and a history entry preserved. There is no rollback "
 "of this deletion possible."
 msgstr ""
+"Šis darbas pažymės visus susijusius naudotojus ir jų kliento triktis "
+"ištryinimui. Kai Duomenų privatumo užduotis bus paleista, naudotojai ir "
+"triktys bus ištrinti, bet istorijos įrašai išliks. Šio veiksmo bus neįmanoma "
+"atstatyti."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:506
 #, fuzzy
@@ -2147,7 +2169,7 @@ msgid "Attached Files"
 msgstr "Prisegtukai"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:181
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:200
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
@@ -2687,7 +2709,7 @@ msgstr "CA"
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:146
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:165
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:106
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:160
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
@@ -2866,7 +2888,7 @@ msgstr "Atšaukti"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:342
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:396
 msgid "Cancel & Go Back"
 msgstr "Atšaukti ir algal"
 
@@ -3214,7 +3236,7 @@ msgstr ""
 
 #: db/seeds/schedulers.rb:187
 msgid "Clean up 'DataPrivacyTask'."
-msgstr ""
+msgstr "Išvalyti Duomenų privatumo užduotis."
 
 #: db/seeds/schedulers.rb:169
 msgid "Clean up 'HttpLog'."
@@ -3372,6 +3394,12 @@ msgstr "Uždaryti skirtuką uždarant triktį"
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:53
 msgid "Close the time picker"
 msgstr "Uždaryti laiko dialogą"
+
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabRemove.vue:46
+#, fuzzy
+#| msgid "Close tab"
+msgid "Close this tab"
+msgstr "Uždaryti skirtuką"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:16
 #: app/models/report.rb:30
@@ -3762,7 +3790,7 @@ msgstr "Kopijuoti"
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Kopijuoti atidaryto objekto numerį (pvz. trikties numerį) į iškarpinę"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:80
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:74
 #, fuzzy
 #| msgid "Invite Customer"
 msgid "Copy ticket number"
@@ -3868,7 +3896,7 @@ msgstr "Valstybė"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:353
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:407
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Sukurti"
@@ -4018,7 +4046,7 @@ msgstr "Sukurti naują abonentą"
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationTicketsCount.ts:17
 msgid "Create new ticket for this organization"
-msgstr ""
+msgstr "Sukurti naują triktį šiai organizacijai"
 
 #: app/frontend/apps/mobile/entities/user/composables/useUserTicketsCount.ts:16
 #, fuzzy
@@ -4028,7 +4056,7 @@ msgstr "Sukurti naują įrašą"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:65
 msgid "Create organizations automatically if record has one."
-msgstr ""
+msgstr "Sukurti organizacijas automatiškai jei įrašas jas turi."
 
 #: app/assets/javascripts/app/models/sla.coffee:7
 msgid ""
@@ -4272,6 +4300,8 @@ msgstr ""
 #: db/seeds/object_manager_attributes.rb:1552
 msgid "Customers in the organization can view each other's items."
 msgstr ""
+"Klientai priklausantys tai pačiai organizacijai gali matyti vienas kito "
+"triktis."
 
 #: app/assets/javascripts/app/models/job.coffee:12
 #: app/assets/javascripts/app/models/trigger.coffee:11
@@ -4306,19 +4336,19 @@ msgstr "Skydelis"
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:3
 #: db/seeds/permissions.rb:251
 msgid "Data Privacy"
-msgstr ""
+msgstr "Duomenų privatumas"
 
 #: lib/validations/data_privacy_task_validator.rb:23
 msgid "Data privacy task allows to delete a user or a ticket only."
-msgstr ""
+msgstr "Duomenų privatumo užduotis leidžia ištrinti naudotoją ar triktį."
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:96
 msgid "DataPrivacyTask"
-msgstr ""
+msgstr "Duomenų privatumo užduotis"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:97
 msgid "DataPrivacyTasks"
-msgstr ""
+msgstr "Duomenų privatumo užduotys"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:7
 #: db/seeds/settings.rb:353
@@ -4827,6 +4857,8 @@ msgid ""
 "Defines if the email should be displayed in the result of the user/"
 "organization widget."
 msgstr ""
+"Nurodo ar el. paštas rodomas naudotojų/organizacijų valdiklio rezultatų "
+"sąraše."
 
 #: db/seeds/settings.rb:4789
 msgid ""
@@ -5075,7 +5107,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:375
 msgid "Defines the backend for user and organization image lookups."
-msgstr ""
+msgstr "Nurodo naudotojų ir organizacijų avatarų paieškos šaltinį."
 
 #: db/seeds/settings.rb:2762
 msgid ""
@@ -5273,6 +5305,8 @@ msgid ""
 "Defines the transaction backend which will enrich customer and organization "
 "information from Clearbit (http://www.clearbit.com)."
 msgstr ""
+"Nurodo transakcijos servisą, kuris praturtins klientų ir organizacijų "
+"informaciją Clearbit (http://www.clearbit.com) duomenimis."
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:14
 #: db/seeds/settings.rb:3952
@@ -5441,7 +5475,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:186
 msgid "Delete organization?"
-msgstr ""
+msgstr "Ištrinti organizaciją?"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:18
 msgid "Delete records"
@@ -5669,7 +5703,7 @@ msgstr "Atmesti"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:339
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:393
 msgid "Discard Changes"
 msgstr ""
 
@@ -5848,8 +5882,12 @@ msgstr "Juodraštis"
 msgid "Draft available"
 msgstr "Yra juodraštis"
 
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:19
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:51
 msgid "Drag and drop to reorder ticket overview list items."
+msgstr ""
+
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:235
+msgid "Drag and drop to reorder your tabs."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:2
@@ -6751,6 +6789,18 @@ msgid ""
 "Whatever it is, you can do it with triggers: actions that watch tickets for "
 "certain changes, and then fire off whenever those changes occur."
 msgstr ""
+"Kiekvieną kartą kai klientas sukuria naują triktį, jis automatiškai tai "
+"patvirtintį el. laišką, patvirtinantį, kad triktis buvo gauta. Šis "
+"funkcionalumas yra Zammad dalis. Ją galima pritaikyti savo poreikiams ir "
+"sukurti daugiau panašių automatizuotų veiksmų.\n"
+"\n"
+"Gal norite nustatyti aukštesnį prioritetą bet kuriai trikčiai su žodžiu "
+"„svarbu“ antraštėjė? Arba norite, kad autoatsakiklis nesiųstų laiškų "
+"klientams iš tam tikrų organizacijų? Gal norite pažymėti triktį kaip "
+"„laukiančią“ kai kas nors prideda vidinę pastabą?\n"
+"\n"
+"Kas tai bebūtų, galite tai pasidaryti su paleistukais, stebinčiais triktis "
+"ir, kai jos atitinka tam tikras sąlygas, vykdančiais nurodytus veiksmus."
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:28
 msgid "Example CSV file for download."
@@ -7168,7 +7218,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco:13
 msgid "For example, recently changed tickets, users, or organizations."
-msgstr ""
+msgstr "Pavyzdžiui, neseniai keistos triktys, organizacijos ar naudotojai."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:10
 msgid "For more details, please check out our online documentation %l."
@@ -7744,7 +7794,7 @@ msgstr ""
 
 #: db/seeds/schedulers.rb:214
 msgid "Handle data privacy tasks."
-msgstr ""
+msgstr "Vykdo duomenų privatumo užduotis."
 
 #: app/models/system_report/plugin/hardware.rb:4
 msgid "Hardware (e.g. CPU cores, memory, disk space)"
@@ -7763,6 +7813,12 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:51
 msgid "Has ticket open in tabs, but is not actively looking at the ticket."
 msgstr "Yra atidaręs triktį, bet šiuo metu nežiūri į ją."
+
+#: app/frontend/apps/desktop/components/CommonUpdateIndicator/CommonUpdateIndicator.vue:8
+#, fuzzy
+#| msgid "updated"
+msgid "Has update"
+msgstr "atnaujinta(s)"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:12
 msgid "Hash"
@@ -7837,6 +7893,8 @@ msgid ""
 "Here you can create new tickets, customers and organizations (depending on "
 "your configured permissions)."
 msgstr ""
+"Čia galite sukurti naujas triktis, klientus ir organizacija (priklausomai "
+"nuo jūsų sukonfigūruotų leidimų)."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee:29
 msgid "Here you can create one."
@@ -7856,6 +7914,9 @@ msgid ""
 "asterisk §*§ to find anything, e.g. §smi*§ or §rosent*l§. You also can use ||"
 "quotation marks|| for searching phrases: §\"some phrase\"§."
 msgstr ""
+"Čia galite ieškoti trikčių, klientų ir organizacijų. Naudokite žvaigdžutę "
+"„*“ norėdami rasti panašias frazes. Pavyzdžiui „pavyz*“ arba „pav*dys“. Taip "
+"pat galite naudoti kabutes ieškant frazės, pavyzdžiui „du žodžiui“."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:23
 msgid ""
@@ -8424,7 +8485,7 @@ msgstr ""
 msgid "Include your own tickets in subscription for pending tickets."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:102
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:114
 #, fuzzy
 #| msgid "Overviews"
 msgid "Included ticket overviews"
@@ -9241,6 +9302,10 @@ msgstr ""
 msgid "Links"
 msgstr "Sąsajos"
 
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:217
+msgid "List of all user taskbar tabs"
+msgstr ""
+
 #: app/models/system_report/plugin/addons.rb:4
 msgid "List of installed addons"
 msgstr ""
@@ -9508,7 +9573,7 @@ msgstr "Įveskite savo %s sistemos subdomeną"
 
 #: db/seeds/permissions.rb:30
 msgid "Manage all organizations of your system."
-msgstr ""
+msgstr "Tvarkyti visas jūsų sistemoje esančias organizacijas."
 
 #: db/seeds/permissions.rb:12
 #, fuzzy
@@ -10171,9 +10236,9 @@ msgstr ""
 
 #: app/models/user.rb:622
 msgid "More than 250 secondary organizations are not allowed."
-msgstr ""
+msgstr "Galima pridėti iki 250 papildomų organizacijų."
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:130
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:137
 #, fuzzy
 #| msgid "Overviews"
 msgid "More ticket overviews"
@@ -10400,7 +10465,7 @@ msgstr ""
 
 #: app/controllers/tickets_controller.rb:469
 msgid "Need user_id or organization_id as param"
-msgstr ""
+msgstr "Reikia user_id arba organization_id kaip parametro"
 
 #: db/seeds/settings.rb:2055
 msgid "Needed"
@@ -10540,8 +10605,9 @@ msgstr "Naujas šablonas"
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:68
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:30
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:13
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:87
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:106
 msgid "New Ticket"
 msgstr "Nauja triktis"
 
@@ -10549,6 +10615,12 @@ msgstr "Nauja triktis"
 #, fuzzy
 #| msgid "New Ticket"
 msgid "New Ticket State"
+msgstr "Nauja triktis"
+
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:33
+#, fuzzy
+#| msgid "New Ticket"
+msgid "New Ticket: %s"
 msgstr "Nauja triktis"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco:11
@@ -10585,7 +10657,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:66
 msgid "New organizations are shared."
-msgstr ""
+msgstr "Naujos organizacijos yra bendrinančios."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:76
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:58
@@ -10783,7 +10855,7 @@ msgstr "Nėra juodraščių"
 msgid "No email!"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:124
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:131
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:117
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:267
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:150
@@ -10832,10 +10904,8 @@ msgid "No members found"
 msgstr "Gavėjas"
 
 #: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/organization.ts:9
-#, fuzzy
-#| msgid "Organizations"
 msgid "No organizations found"
-msgstr "Organizacijos"
+msgstr "Organizacijų nerasta"
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:297
 msgid "No previous searches"
@@ -10996,6 +11066,7 @@ msgstr "Turinys nepasiekiamas pasirinkta kalba"
 msgid "Not configured"
 msgstr "Nesukonfigūruota"
 
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:18
 #: app/frontend/shared/errors/useErrorHandler.ts:25
 msgid "Not found"
 msgstr "Nerasta"
@@ -11294,7 +11365,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/overview.coffee:10
 msgid "Only available for users with shared organizations"
-msgstr ""
+msgstr "Galima tik naudotojams su bendrinančiomis organizacijomis"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:30
 msgid "Only for these groups."
@@ -11507,10 +11578,8 @@ msgid "Organization & Department Name"
 msgstr "Organizacijos irba skyriaus pavadinimas"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:47
-#, fuzzy
-#| msgid "Organization"
 msgid "Organization Logo"
-msgstr "Organizacija"
+msgstr "Organizacijos logo"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:9
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:40
@@ -11528,10 +11597,8 @@ msgid "Organization could not be updated."
 msgstr "Nepavyko atnaujinti organizacijos."
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:81
-#, fuzzy
-#| msgid "My Organization Tickets"
 msgid "Organization tickets"
-msgstr "Mano organizacijos Bilietai"
+msgstr "Organizacijos triktys"
 
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:26
@@ -11556,10 +11623,8 @@ msgid "Organizations"
 msgstr "Organizacijos"
 
 #: app/frontend/apps/mobile/pages/search/plugins/organization.ts:10
-#, fuzzy
-#| msgid "My Organization Tickets"
 msgid "Organizations with \"%s\""
-msgstr "Mano organizacijos Bilietai"
+msgstr "Organizacijos su „%s“"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:22
 #, fuzzy
@@ -12148,7 +12213,7 @@ msgstr "Pasirinkite prie kurios trikties prijungti."
 msgid "Please select at least one folder."
 msgstr "Pasirinkite bent vieną aplanką."
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:63
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:75
 msgid "Please select at least one ticket overview"
 msgstr "Pasirinkite bent vieną trikčių apžvalgą"
 
@@ -13316,7 +13381,7 @@ msgstr "Šeštadienis"
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:58
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:70
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:138
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:100
 msgid "Save"
@@ -13562,10 +13627,8 @@ msgstr "Ieškoti…"
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:103
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:136
 #: db/seeds/object_manager_attributes.rb:962
-#, fuzzy
-#| msgid "Organizations"
 msgid "Secondary organizations"
-msgstr "Organizacijos"
+msgstr "Papildomos organizacijos"
 
 #: app/models/user.rb:616
 msgid ""
@@ -13584,7 +13647,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:156
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:175
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:149
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:183
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
@@ -14964,6 +15027,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:133
 msgid "Tab has changed, do you really want to close it?"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:231
+msgid "Tabs"
 msgstr ""
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:115
@@ -16890,7 +16957,7 @@ msgid "This might take some time during which the system can't be used."
 msgstr ""
 
 #: app/controllers/application_controller/handles_errors.rb:98
-#: app/graphql/gql/zammad_schema.rb:76
+#: app/graphql/gql/zammad_schema.rb:83
 msgid "This object already exists."
 msgstr ""
 
@@ -16980,6 +17047,12 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue:11
 msgid "This system is configured for automated setup."
 msgstr ""
+
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:15
+#, fuzzy
+#| msgid "%s% have been reopened"
+msgid "This tab could not be found."
+msgstr "%s% iš naujo atidarytas"
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:31
 msgid ""
@@ -17077,7 +17150,7 @@ msgstr ""
 msgid "Ticket Customer"
 msgstr "Pakviesti Klientus"
 
-#: app/frontend/apps/desktop/pages/ticket/routes.ts:28
+#: app/frontend/apps/desktop/pages/ticket/routes.ts:27
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket Detail"
@@ -17120,14 +17193,14 @@ msgid "Ticket Organization Reassignment"
 msgstr "Trikčių organizacijos pakeitimas"
 
 #: app/frontend/apps/mobile/pages/home/routes.ts:35
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:55
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:67
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:22
 #, fuzzy
 #| msgid "New Overview"
 msgid "Ticket Overview"
 msgstr "Nauja apžvalga"
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:72
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:84
 #, fuzzy
 #| msgid "Overviews"
 msgid "Ticket Overview settings are saved."
@@ -17360,7 +17433,7 @@ msgid ""
 "</div>\n"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:36
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:45
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
 msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
@@ -17731,7 +17804,7 @@ msgstr "Sipgate žetonas."
 
 #: db/seeds/settings.rb:3410
 msgid "Token for monitoring."
-msgstr "Monitoringo žetonas"
+msgstr "Monitoringo žetonas."
 
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:59
 msgid "Token is invalid!"
@@ -19221,6 +19294,8 @@ msgid ""
 "screen. These have many purposes, such as displaying a data privacy page for "
 "all people using your Zammad instance."
 msgstr ""
+"Galite pridėti nuorodas, kurios rodomos Zammad prisijungimo lango apačioje. "
+"Pavyzdžiui, galite pridėti nuorodą į duomenų privatumo taisykles."
 
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco:3
 #: app/assets/javascripts/app/views/google/app_config.jst.eco:3
@@ -19258,7 +19333,7 @@ msgstr ""
 
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:19
 msgid "You can no longer see the data privacy task."
-msgstr "Nebegalite matyti šios duomenų apsaugos užduoties."
+msgstr "Nebegalite matyti šios duomenų privatumo užduoties."
 
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts:19
 msgid "You can no longer see the group."
@@ -19343,12 +19418,18 @@ msgstr ""
 msgid "You have insufficient permissions to mention other users."
 msgstr ""
 
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:15
+#, fuzzy
+#| msgid "You have insufficient rights to view this organization."
+msgid "You have insufficient rights to open this tab."
+msgstr "Neturite prieigos prie šios organizacijos."
+
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:32
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:28
 msgid "You have insufficient rights to view this organization."
 msgstr "Neturite prieigos prie šios organizacijos."
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:38
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:47
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
 msgid "You have insufficient rights to view this ticket."
 msgstr ""

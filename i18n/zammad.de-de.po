@@ -682,7 +682,7 @@ msgstr "%{name} existiert bereits"
 msgid "%{name} is a reserved word"
 msgstr "%{name} ist ein reserviertes Wort"
 
-#: app/frontend/apps/desktop/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:47
+#: app/frontend/apps/desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue:51
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
 msgstr "(Status: %s)"
@@ -1015,6 +1015,12 @@ msgstr "API-Token"
 #: app/assets/javascripts/app/views/channel/form.jst.eco:127
 msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr "Datenschutzrichtlinie und Nutzungsbedingungen akzeptieren"
+
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:18
+#, fuzzy
+#| msgid "Access token"
+msgid "Access denied"
+msgstr "Zugangs-Token"
 
 #: db/seeds/permissions.rb:297
 msgid "Access the agent chat features."
@@ -2205,7 +2211,7 @@ msgid "Attached Files"
 msgstr "anhängende Datei(en)"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:181
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:200
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
@@ -2727,7 +2733,7 @@ msgstr "CA"
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:146
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:165
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:106
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:160
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
@@ -2900,7 +2906,7 @@ msgstr "Abbrechen"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:342
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:396
 msgid "Cancel & Go Back"
 msgstr "Abbrechen & Zurück"
 
@@ -3393,6 +3399,12 @@ msgstr "Tab schließen nach Ticket-Schließung"
 msgid "Close the time picker"
 msgstr "Zeitauswahl schließen"
 
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabRemove.vue:46
+#, fuzzy
+#| msgid "Close tab"
+msgid "Close this tab"
+msgstr "Tab schließen"
+
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:16
 #: app/models/report.rb:30
 msgid "Closed"
@@ -3778,7 +3790,7 @@ msgstr "URL kopieren"
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Kopiert aktuelle Objekt-Nummer (z. B. Ticket#) in Zwischenablage"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:80
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:74
 msgid "Copy ticket number"
 msgstr "Ticket-Nummer kopieren"
 
@@ -3885,7 +3897,7 @@ msgstr "Land"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:353
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:407
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Erstellen"
@@ -5796,7 +5808,7 @@ msgstr "Verwerfen"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:339
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:393
 msgid "Discard Changes"
 msgstr "Änderungen verwerfen"
 
@@ -5977,8 +5989,16 @@ msgstr "Entwurf"
 msgid "Draft available"
 msgstr "Entwurf verfügbar"
 
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:19
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:51
 msgid "Drag and drop to reorder ticket overview list items."
+msgstr ""
+"Durch Ziehen und Ablegen kann die Reihenfolge der Übersichten neu angeordnet "
+"werden."
+
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:235
+#, fuzzy
+#| msgid "Drag and drop to reorder ticket overview list items."
+msgid "Drag and drop to reorder your tabs."
 msgstr ""
 "Durch Ziehen und Ablegen kann die Reihenfolge der Übersichten neu angeordnet "
 "werden."
@@ -7913,6 +7933,12 @@ msgid "Has ticket open in tabs, but is not actively looking at the ticket."
 msgstr ""
 "Hat das Ticket in den Tabs geöffnet, schaut jedoch nicht aktiv ins Ticket."
 
+#: app/frontend/apps/desktop/components/CommonUpdateIndicator/CommonUpdateIndicator.vue:8
+#, fuzzy
+#| msgid "Latest updates"
+msgid "Has update"
+msgstr "Aktuellste Änderungen"
+
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:12
 msgid "Hash"
 msgstr "Hash"
@@ -8635,7 +8661,7 @@ msgid "Include your own tickets in subscription for pending tickets."
 msgstr ""
 "Nehmen Sie Ihre eigenen Tickets in das Abonnement für wartende Tickets auf."
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:102
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:114
 msgid "Included ticket overviews"
 msgstr "Enthaltene Ticket-Übersichten"
 
@@ -9441,6 +9467,10 @@ msgstr "LinkedIn-Entwickler-Seite"
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:1
 msgid "Links"
 msgstr "Verknüpfungen"
+
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:217
+msgid "List of all user taskbar tabs"
+msgstr ""
 
 #: app/models/system_report/plugin/addons.rb:4
 msgid "List of installed addons"
@@ -10273,7 +10303,7 @@ msgstr "Weitere Informationen finden Sie hier."
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "Mehr als 250 sekundäre Organisationen sind nicht zulässig."
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:130
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:137
 msgid "More ticket overviews"
 msgstr "Weitere Ticket-Übersichten"
 
@@ -10616,14 +10646,21 @@ msgstr "Neue Vorlage"
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:68
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:30
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:13
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:87
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:106
 msgid "New Ticket"
 msgstr "Neues Ticket"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:21
 msgid "New Ticket State"
 msgstr "Neuer Ticketstatus"
+
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:33
+#, fuzzy
+#| msgid "New Ticket"
+msgid "New Ticket: %s"
+msgstr "Neues Ticket"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco:11
 msgid "New Translation"
@@ -10875,7 +10912,7 @@ msgstr "Keine Entwürfe"
 msgid "No email!"
 msgstr "Keine E-Mail!"
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:124
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:131
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:117
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:267
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:150
@@ -11084,6 +11121,7 @@ msgstr "Nicht in der gewählten Sprache verfügbar"
 msgid "Not configured"
 msgstr "Nicht konfiguriert"
 
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:18
 #: app/frontend/shared/errors/useErrorHandler.ts:25
 msgid "Not found"
 msgstr "Nicht gefunden"
@@ -12195,7 +12233,7 @@ msgstr "Bitte wählen Sie ein Ticket zum Zusammenfassen aus."
 msgid "Please select at least one folder."
 msgstr "Bitte wählen Sie mindestens einen Ordner."
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:63
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:75
 msgid "Please select at least one ticket overview"
 msgstr "Bitte wählen Sie mindestens eine Ticket-Übersicht aus"
 
@@ -13352,7 +13390,7 @@ msgstr "Samstag"
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:58
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:70
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:138
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:100
 msgid "Save"
@@ -13606,7 +13644,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:156
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:175
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:149
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:183
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
@@ -14905,6 +14943,10 @@ msgid "Tab has changed, do you really want to close it?"
 msgstr ""
 "Inhalte des Tabs haben sich geändert, wollen Sie diese Änderungen wirklich "
 "verwerfen?"
+
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:231
+msgid "Tabs"
+msgstr ""
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:115
 msgid "Tag \"%s\" already exists."
@@ -16825,7 +16867,7 @@ msgstr ""
 "nicht benutzt werden."
 
 #: app/controllers/application_controller/handles_errors.rb:98
-#: app/graphql/gql/zammad_schema.rb:76
+#: app/graphql/gql/zammad_schema.rb:83
 msgid "This object already exists."
 msgstr "Dieses Objekt ist bereits vorhanden."
 
@@ -16924,6 +16966,12 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue:11
 msgid "This system is configured for automated setup."
 msgstr "Dieses System ist für die automatische Einrichtung konfiguriert."
+
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:15
+#, fuzzy
+#| msgid "The hostname could not be found."
+msgid "This tab could not be found."
+msgstr "Der Hostname konnte nicht gefunden werden."
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:31
 msgid ""
@@ -17037,7 +17085,7 @@ msgstr "Anzahl der Tickets"
 msgid "Ticket Customer"
 msgstr "Ticket-Kunde"
 
-#: app/frontend/apps/desktop/pages/ticket/routes.ts:28
+#: app/frontend/apps/desktop/pages/ticket/routes.ts:27
 msgid "Ticket Detail"
 msgstr "Ticket-Details"
 
@@ -17078,12 +17126,12 @@ msgid "Ticket Organization Reassignment"
 msgstr "Neuzuweisung der Ticket-Organisation"
 
 #: app/frontend/apps/mobile/pages/home/routes.ts:35
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:55
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:67
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:22
 msgid "Ticket Overview"
 msgstr "Ticket-Übersicht"
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:72
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:84
 msgid "Ticket Overview settings are saved."
 msgstr "Einstellungen zu Ticket-Übersichten werden gespeichert."
 
@@ -17327,7 +17375,7 @@ msgstr ""
 "target=\"zammad_app\">In #{config.product_name} anzeigen</a>\n"
 "</div>\n"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:36
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:45
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
 msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
@@ -19402,12 +19450,18 @@ msgid "You have insufficient permissions to mention other users."
 msgstr ""
 "Sie haben nicht genügend Berechtigungen, um andere Benutzer zu erwähnen."
 
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:15
+#, fuzzy
+#| msgid "You have insufficient rights to view this ticket."
+msgid "You have insufficient rights to open this tab."
+msgstr "Sie haben nicht genug Rechte um dieses Ticket anzuzeigen."
+
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:32
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:28
 msgid "You have insufficient rights to view this organization."
 msgstr "Sie haben nicht genug Rechte um diese Organisation anzuzeigen."
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:38
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:47
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
 msgid "You have insufficient rights to view this ticket."
 msgstr "Sie haben nicht genug Rechte um dieses Ticket anzuzeigen."
@@ -21910,9 +21964,6 @@ msgstr "∅ Wartezeit heute"
 
 #~ msgid "Karma Trends"
 #~ msgstr "Karma-Trends"
-
-#~ msgid "Latest updates"
-#~ msgstr "Aktuellste Änderungen"
 
 #~ msgid "Master"
 #~ msgstr "Meister"

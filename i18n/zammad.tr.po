@@ -690,7 +690,7 @@ msgstr "%{name} zaten mevcut"
 msgid "%{name} is a reserved word"
 msgstr "%{name} ayrılmış bir sözcüktür"
 
-#: app/frontend/apps/desktop/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:47
+#: app/frontend/apps/desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue:51
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
 msgstr "(durum: %s)"
@@ -1018,6 +1018,12 @@ msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr ""
 "Veri Gizliliği Politikası ve Kabul Edilebilir Kullanım Politikasını Kabul "
 "Ediyorum"
+
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:18
+#, fuzzy
+#| msgid "Access token"
+msgid "Access denied"
+msgstr "Erişim belirteci"
 
 #: db/seeds/permissions.rb:297
 msgid "Access the agent chat features."
@@ -2240,7 +2246,7 @@ msgid "Attached Files"
 msgstr "Eklenmiş Dosyalar"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:181
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:200
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
@@ -2770,7 +2776,7 @@ msgstr "CA"
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:146
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:165
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:106
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:160
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
@@ -2943,7 +2949,7 @@ msgstr "İptal"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:342
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:396
 msgid "Cancel & Go Back"
 msgstr "İptal Et & Geri Dön"
 
@@ -3447,6 +3453,12 @@ msgstr "Destek talebi kapandığında sekmeyi kapat"
 msgid "Close the time picker"
 msgstr "Kapalı Destek Talepleri"
 
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabRemove.vue:46
+#, fuzzy
+#| msgid "Close tab"
+msgid "Close this tab"
+msgstr "Sekmeyi kapat"
+
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:16
 #: app/models/report.rb:30
 msgid "Closed"
@@ -3855,7 +3867,7 @@ msgstr "Kopyala"
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Geçerli nesne numarasını (örn. DestekTalebi#) panoya kopyala"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:80
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:74
 #, fuzzy
 msgid "Copy ticket number"
 msgstr "True"
@@ -3962,7 +3974,7 @@ msgstr "Ülke"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:353
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:407
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Oluştur"
@@ -5893,7 +5905,7 @@ msgstr "Discard"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:339
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:393
 msgid "Discard Changes"
 msgstr "Evet"
 
@@ -6075,9 +6087,15 @@ msgstr "Draft"
 msgid "Draft available"
 msgstr "Taslak mevcut"
 
-#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:19
+#: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:51
 msgid "Drag and drop to reorder ticket overview list items."
 msgstr ""
+
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:235
+#, fuzzy
+#| msgid "Drag to reorder"
+msgid "Drag and drop to reorder your tabs."
+msgstr "Drag to reorder"
 
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:2
 msgid "Drag to reorder"
@@ -8150,6 +8168,12 @@ msgstr "%s alt etki alanı"
 msgid "Has ticket open in tabs, but is not actively looking at the ticket."
 msgstr "True"
 
+#: app/frontend/apps/desktop/components/CommonUpdateIndicator/CommonUpdateIndicator.vue:8
+#, fuzzy
+#| msgid "Latest updates"
+msgid "Has update"
+msgstr "Latest updates"
+
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:12
 #, fuzzy
 msgid "Hash"
@@ -8942,7 +8966,7 @@ msgstr ""
 msgid "Include your own tickets in subscription for pending tickets."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:102
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:114
 #, fuzzy
 #| msgid "Overviews"
 msgid "Included ticket overviews"
@@ -9832,6 +9856,10 @@ msgstr "True"
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:1
 msgid "Links"
 msgstr "Linkler"
+
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:217
+msgid "List of all user taskbar tabs"
+msgstr ""
 
 #: app/models/system_report/plugin/addons.rb:4
 msgid "List of installed addons"
@@ -10840,7 +10868,7 @@ msgstr "Daha fazla bilgiye buradan ulaşabilirsiniz."
 msgid "More than 250 secondary organizations are not allowed."
 msgstr "True"
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:130
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:137
 #, fuzzy
 #| msgid "Overviews"
 msgid "More ticket overviews"
@@ -11231,8 +11259,9 @@ msgstr "Yeni Şablon"
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:68
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:30
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:13
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:87
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:106
 msgid "New Ticket"
 msgstr "Yeni Destek Talebi"
 
@@ -11240,6 +11269,12 @@ msgstr "Yeni Destek Talebi"
 #, fuzzy
 #| msgid "New Ticket"
 msgid "New Ticket State"
+msgstr "Yeni Destek Talebi"
+
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:33
+#, fuzzy
+#| msgid "New Ticket"
+msgid "New Ticket: %s"
 msgstr "Yeni Destek Talebi"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco:11
@@ -11516,7 +11551,7 @@ msgstr "taslak"
 msgid "No email!"
 msgstr "True"
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:124
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:131
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:117
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:267
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:150
@@ -11753,6 +11788,7 @@ msgstr "Not available in selected language"
 msgid "Not configured"
 msgstr "Not configured"
 
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:18
 #: app/frontend/shared/errors/useErrorHandler.ts:25
 #, fuzzy
 #| msgid "No results found"
@@ -13034,7 +13070,7 @@ msgstr "True"
 msgid "Please select at least one folder."
 msgstr "Lütfen en az bir klasör seçiniz."
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:63
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:75
 #, fuzzy
 msgid "Please select at least one ticket overview"
 msgstr "True"
@@ -14350,7 +14386,7 @@ msgstr "Cumartesi"
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:58
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:70
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:138
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:100
 msgid "Save"
@@ -14642,7 +14678,7 @@ msgstr "True"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:156
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:175
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:149
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:183
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
@@ -16132,6 +16168,10 @@ msgstr "True"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:133
 msgid "Tab has changed, do you really want to close it?"
 msgstr "Bazı değişiklikler yaptınız, kapatmak istediğinize emin misiniz?"
+
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:231
+msgid "Tabs"
+msgstr ""
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:115
 #, fuzzy
@@ -18351,7 +18391,7 @@ msgid "This might take some time during which the system can't be used."
 msgstr "This might take some time where the system can't be used."
 
 #: app/controllers/application_controller/handles_errors.rb:98
-#: app/graphql/gql/zammad_schema.rb:76
+#: app/graphql/gql/zammad_schema.rb:83
 #, fuzzy
 #| msgid "Account already exists!"
 msgid "This object already exists."
@@ -18457,6 +18497,12 @@ msgstr "Bu sistem zaten yapılandırılmıştır ve bir yönetici hesabı mevcut
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue:11
 msgid "This system is configured for automated setup."
 msgstr "Bu sistem otomatik kurulum için yapılandırılmıştır."
+
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:15
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "This tab could not be found."
+msgstr "%s Object(s) are updated."
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:31
 msgid ""
@@ -18566,7 +18612,7 @@ msgstr "True"
 msgid "Ticket Customer"
 msgstr "True"
 
-#: app/frontend/apps/desktop/pages/ticket/routes.ts:28
+#: app/frontend/apps/desktop/pages/ticket/routes.ts:27
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket Detail"
@@ -18614,14 +18660,14 @@ msgid "Ticket Organization Reassignment"
 msgstr "Tickets of Organization"
 
 #: app/frontend/apps/mobile/pages/home/routes.ts:35
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:55
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:67
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:22
 #, fuzzy
 #| msgid "New Overview"
 msgid "Ticket Overview"
 msgstr "New Overview"
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:72
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:84
 #, fuzzy
 #| msgid "Overviews"
 msgid "Ticket Overview settings are saved."
@@ -18869,7 +18915,7 @@ msgid ""
 "</div>\n"
 msgstr "True\n"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:36
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:45
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
 msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
@@ -21089,12 +21135,18 @@ msgstr "True"
 msgid "You have insufficient permissions to mention other users."
 msgstr "Diğer kullanıcılardan bahsetmek için yeterli izniniz yok."
 
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:15
+#, fuzzy
+#| msgid "You have insufficient rights to view this ticket."
+msgid "You have insufficient rights to open this tab."
+msgstr "Bu bileti görüntülemek için yeterli hakkınız yok."
+
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:32
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:28
 msgid "You have insufficient rights to view this organization."
 msgstr "Bu organizasyonu görüntülemek için yeterli hakkınız yok."
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:38
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:47
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
 msgid "You have insufficient rights to view this ticket."
 msgstr "Bu bileti görüntülemek için yeterli hakkınız yok."
@@ -23816,9 +23868,6 @@ msgstr "Bugünkü bekleme süresi"
 
 #~ msgid "Karma Trends"
 #~ msgstr "Karma Trends"
-
-#~ msgid "Latest updates"
-#~ msgstr "Latest updates"
 
 #~ msgid "Master"
 #~ msgstr "Master"
