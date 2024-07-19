@@ -23,6 +23,7 @@ module.exports = {
       alpha: {
         100: '#EDF1F280',
         800: '#33343880',
+        900: '#00000080',
       },
       black: '#000000',
       white: '#FFFFFF',

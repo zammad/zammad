@@ -10,9 +10,9 @@ import CommonConfirmationDialog from '../CommonConfirmationDialog.vue'
 const { confirmationOptions } = useConfirmation()
 
 beforeAll(() => {
-  const main = document.createElement('main')
-  main.id = 'page-main-content'
-  document.body.appendChild(main)
+  const app = document.createElement('div')
+  app.id = 'app'
+  document.body.appendChild(app)
 })
 
 afterAll(() => {

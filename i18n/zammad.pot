@@ -2760,7 +2760,7 @@ msgstr ""
 msgid "Close current tab"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:112
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:113
 msgid "Close dialog"
 msgstr ""
 

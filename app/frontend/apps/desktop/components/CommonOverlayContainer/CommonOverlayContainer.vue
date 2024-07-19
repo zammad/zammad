@@ -12,10 +12,11 @@ withDefaults(
     tag: 'div' | 'aside'
     showBackdrop?: boolean
     noCloseOnBackdropClick?: boolean
+    backdropClass?: string
   }>(),
   {
     showBackdrop: true,
-    teleportTo: '#page-main-content',
+    teleportTo: '#app',
   },
 )
 
@@ -30,7 +31,8 @@ defineEmits<{
 
     <teleport v-if="showBackdrop" :to="teleportTo">
       <div
-        class="bg-alpha-100 dark:bg-alpha-800 absolute bottom-0 left-0 right-0 top-0 z-10 h-full w-full"
+        class="bg-alpha-900 -:z-10 absolute bottom-0 left-0 right-0 top-0 h-full w-full"
+        :class="backdropClass"
         role="presentation"
         tabindex="-1"
         aria-hidden="true"

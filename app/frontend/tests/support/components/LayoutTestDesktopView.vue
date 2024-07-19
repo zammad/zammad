@@ -15,7 +15,7 @@ initializeConfirmationDialog()
 </script>
 
 <template>
-  <div>
+  <div id="app">
     <DynamicInitializer name="dialog" />
     <DynamicInitializer name="flyout" />
     <CommonNotifications />

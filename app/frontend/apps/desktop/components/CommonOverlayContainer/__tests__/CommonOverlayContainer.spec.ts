@@ -9,16 +9,16 @@ import CommonOverlayContainer from '#desktop/components/CommonOverlayContainer/C
 const html = String.raw
 
 describe('CommonOverlayContainer', () => {
-  let main: HTMLElement
+  let app: HTMLElement
   let wrapper: ReturnType<typeof renderComponent>
 
   beforeEach(() => {
-    main = document.createElement('main')
-    main.id = 'page-main-content'
-    document.body.appendChild(main)
+    app = document.createElement('div')
+    app.id = 'app'
+    document.body.appendChild(app)
     wrapper = renderComponent(CommonOverlayContainer, {
       props: { tag: 'div' },
-      attachTo: main,
+      attachTo: app,
     })
   })
 
@@ -28,7 +28,7 @@ describe('CommonOverlayContainer', () => {
 
   it('renders correctly with a11y specification', async () => {
     expect(wrapper.getByRole('dialog')).toBeInTheDocument()
-    expect(main.querySelector('[role=presentation]')).toBeInTheDocument()
+    expect(app.querySelector('[role=presentation]')).toBeInTheDocument()
 
     await wrapper.rerender({ tag: 'aside' })
 
@@ -37,7 +37,7 @@ describe('CommonOverlayContainer', () => {
 
   it('hides background when showBackdrop is false', async () => {
     await wrapper.rerender({ showBackdrop: false })
-    expect(main.querySelector('[role=presentation]')).not.toBeInTheDocument()
+    expect(app.querySelector('[role=presentation]')).not.toBeInTheDocument()
   })
 
   it('should emit close event when backdrop is clicked, by default', async () => {

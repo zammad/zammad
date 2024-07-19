@@ -36,9 +36,9 @@ const renderLayoutContent = (
 
 describe('LayoutContent', () => {
   beforeAll(() => {
-    const main = document.createElement('main')
-    main.id = 'page-main-content'
-    document.body.appendChild(main)
+    const app = document.createElement('div')
+    app.id = 'app'
+    document.body.appendChild(app)
   })
 
   afterAll(() => {
@@ -48,7 +48,6 @@ describe('LayoutContent', () => {
   it('renders component with default slot content', () => {
     const wrapper = renderLayoutContent({ default: () => 'Hello Test World!' })
 
-    wrapper.debug()
     expect(wrapper.getByText('Hello Test World!')).toBeInTheDocument()
     expect(
       wrapper.getByRole('link', { name: 'Test Profile' }),

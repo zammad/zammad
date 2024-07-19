@@ -12,9 +12,9 @@ const html = String.raw
 
 describe('visuals for common dialog', () => {
   beforeAll(() => {
-    const main = document.createElement('main')
-    main.id = 'page-main-content'
-    document.body.appendChild(main)
+    const app = document.createElement('div')
+    app.id = 'app'
+    document.body.appendChild(app)
   })
 
   beforeEach(() => {

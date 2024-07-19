@@ -55,7 +55,7 @@ const {
         <LeftSidebarFooterMenu :collapsed="isCollapsed" class="mt-auto" />
       </template>
     </LayoutSidebar>
-    <div id="page-main-content" class="relative">
+    <div class="relative">
       <RouterView />
     </div>
   </div>
