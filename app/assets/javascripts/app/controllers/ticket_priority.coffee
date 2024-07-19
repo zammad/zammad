@@ -38,10 +38,10 @@ class TicketPriority extends App.ControllerSubContent
   formHandler: (params, attribute, attributes, classname, form, ui) ->
     form.find('[data-attribute-name="ui_icon"]').show()
 
-    return if App.Config.get('ui_ticket_overview_priority_icon') and form.find('[name="ui_color"]').val()
+    return if App.Config.get('ui_ticket_priority_icons') and form.find('[name="ui_color"]').val()
 
     # Hide the "highlight icon" selection in case:
-    #   - `ui_ticket_overview_priority_icon` setting is disabled
+    #   - `ui_ticket_priority_icons` setting is disabled
     #   - `ui_color` form field is not set
     form.find('[data-attribute-name="ui_icon"]').hide()
 

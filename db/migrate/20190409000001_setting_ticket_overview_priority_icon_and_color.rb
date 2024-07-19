@@ -2,6 +2,9 @@
 
 class SettingTicketOverviewPriorityIconAndColor < ActiveRecord::Migration[5.1]
   def change
+    # return if it's a new setup
+    return if !Setting.exists?(name: 'system_init_done')
+
     Setting.create_if_not_exists(
       title:       'Priority Icons in Overviews',
       name:        'ui_ticket_overview_priority_icon',

@@ -970,16 +970,16 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
-  title:       __('Priority Icons in Overviews'),
-  name:        'ui_ticket_overview_priority_icon',
-  area:        'UI::TicketOverview::PriorityIcons',
-  description: __('Enables priority icons in ticket overviews.'),
+  title:       __('Ticket Priority Icons'),
+  name:        'ui_ticket_priority_icons',
+  area:        'UI::Ticket::Priority',
+  description: __('Enables display of ticket priority icons in UI.'),
   options:     {
     form: [
       {
         display:   '',
         null:      true,
-        name:      'ui_ticket_overview_priority_icon',
+        name:      'ui_ticket_priority_icons',
         tag:       'boolean',
         translate: true,
         options:   {

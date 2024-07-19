@@ -72,9 +72,9 @@ RSpec.describe 'Manage > Ticket Priorities', type: :system do
       end
     end
 
-    context 'with ui_ticket_overview_priority_icon enabled', authenticated_as: :authenticate do
+    context 'with ui_ticket_priority_icons enabled', authenticated_as: :authenticate do
       def authenticate
-        Setting.set('ui_ticket_overview_priority_icon', true)
+        Setting.set('ui_ticket_priority_icons', true)
         true
       end
 
@@ -121,9 +121,9 @@ RSpec.describe 'Manage > Ticket Priorities', type: :system do
       end
     end
 
-    context 'with ui_ticket_overview_priority_icon enabled', authenticated_as: :authenticate do
+    context 'with ui_ticket_priority_icons enabled', authenticated_as: :authenticate do
       def authenticate
-        Setting.set('ui_ticket_overview_priority_icon', true)
+        Setting.set('ui_ticket_priority_icons', true)
         true
       end
 

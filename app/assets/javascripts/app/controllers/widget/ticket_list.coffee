@@ -104,7 +104,7 @@ class App.TicketList extends App.Controller
       number:
         [ callbackLinkToTicket, callbackTicketTitleAdd ]
 
-    if App.Config.get('ui_ticket_overview_priority_icon') == true
+    if App.Config.get('ui_ticket_priority_icons') == true
       callbackHeader = [ callbackIconHeader, callbackIconPriorityHeader ]
       callbackAttributes.icon_priority = [ callbackIconPriority ]
 

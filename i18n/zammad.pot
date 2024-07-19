@@ -5356,12 +5356,12 @@ msgstr ""
 msgid "Enables console logging."
 msgstr ""
 
-#: db/seeds/settings.rb:796
-msgid "Enables preview of attachments."
+#: db/seeds/settings.rb:976
+msgid "Enables display of ticket priority icons in UI."
 msgstr ""
 
-#: db/seeds/settings.rb:976
-msgid "Enables priority icons in ticket overviews."
+#: db/seeds/settings.rb:796
+msgid "Enables preview of attachments."
 msgstr ""
 
 #: db/seeds/settings.rb:1277
@@ -10717,10 +10717,6 @@ msgstr ""
 msgid "Priority"
 msgstr ""
 
-#: db/seeds/settings.rb:973
-msgid "Priority Icons in Overviews"
-msgstr ""
-
 #: db/seeds/settings.rb:1945
 msgid "Private key (PEM)"
 msgstr ""
@@ -14863,6 +14859,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee:3
 msgid "Ticket Priority"
+msgstr ""
+
+#: db/seeds/settings.rb:973
+msgid "Ticket Priority Icons"
 msgstr ""
 
 #: app/assets/javascripts/app/models/sla.coffee:7
