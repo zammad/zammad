@@ -208,21 +208,21 @@ RSpec.describe CoreWorkflow, mariadb: true, type: :model do
   end
 
   describe 'Add clear selection action or has changed condition #3821' do
-    let!(:workflow_has_changed) do
+    let!(:workflow_just_changed) do
       create(:core_workflow,
              object:             'Ticket',
              condition_selected: {
                'ticket.priority_id': {
-                 operator: 'has_changed',
+                 operator: 'just_changed',
                },
              })
     end
-    let!(:workflow_changed_to) do
+    let!(:workflow_just_changed_to) do
       create(:core_workflow,
              object:             'Ticket',
              condition_selected: {
                'ticket.priority_id': {
-                 operator: 'changed_to',
+                 operator: 'just_changed_to',
                  value:    [ Ticket::Priority.find_by(name: '3 high').id.to_s ]
                },
              })
@@ -234,21 +234,21 @@ RSpec.describe CoreWorkflow, mariadb: true, type: :model do
       end
 
       it 'does match on condition has changed' do
-        expect(result[:matched_workflows]).to include(workflow_has_changed.id)
+        expect(result[:matched_workflows]).to include(workflow_just_changed.id)
       end
 
       it 'does match on condition changed to' do
-        expect(result[:matched_workflows]).to include(workflow_changed_to.id)
+        expect(result[:matched_workflows]).to include(workflow_just_changed_to.id)
       end
     end
 
     context 'when nothing changed' do
       it 'does not match on condition has changed' do
-        expect(result[:matched_workflows]).not_to include(workflow_has_changed.id)
+        expect(result[:matched_workflows]).not_to include(workflow_just_changed.id)
       end
 
       it 'does not match on condition changed to' do
-        expect(result[:matched_workflows]).not_to include(workflow_changed_to.id)
+        expect(result[:matched_workflows]).not_to include(workflow_just_changed_to.id)
       end
     end
 
@@ -258,11 +258,11 @@ RSpec.describe CoreWorkflow, mariadb: true, type: :model do
       end
 
       it 'does not match on condition has changed' do
-        expect(result[:matched_workflows]).not_to include(workflow_has_changed.id)
+        expect(result[:matched_workflows]).not_to include(workflow_just_changed.id)
       end
 
       it 'does not match on condition changed to' do
-        expect(result[:matched_workflows]).not_to include(workflow_changed_to.id)
+        expect(result[:matched_workflows]).not_to include(workflow_just_changed_to.id)
       end
     end
   end

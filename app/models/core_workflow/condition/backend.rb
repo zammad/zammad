@@ -19,6 +19,10 @@ class CoreWorkflow::Condition::Backend
     @condition_object.attributes.instance_of?(object)
   end
 
+  def selected
+    @condition_object.attribute_object.selected
+  end
+
   def condition_value
     Array.wrap(@condition['value']).map do |v|
       if v.is_a?(Hash)

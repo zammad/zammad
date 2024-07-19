@@ -7,7 +7,7 @@ class App.CoreWorkflow extends App.Model
     { name: 'object', display: __('Object'), tag: 'select', null: false, nulloption: true, translate: true },
     { name: 'preferences::screen', display: __('Context'), tag: 'multiselect', translate: true, null: true, nulloption: true, multiple: true },
     { name: 'condition_selected', display: __('Selected conditions'), tag: 'core_workflow_condition', disable_objects: ['article'], null: true, preview: false },
-    { name: 'condition_saved', display: __('Saved conditions'), tag: 'core_workflow_condition', disable_objects: ['article'], null: true, preview: false },
+    { name: 'condition_saved', display: __('Saved conditions'), tag: 'core_workflow_condition', disable_objects: ['article'], disable_operators: ['is modified', 'is modified to', 'just changed', 'just changed to'], null: true, preview: false },
     { name: 'perform', display: __('Action'), tag: 'core_workflow_perform', null: true, preview: false },
     { name: 'stop_after_match', display: __('Stop after match'), tag: 'boolean', null: false, default: false },
     { name: 'priority', display: __('Priority'), tag: 'integer', type: 'text', limit: 100, null: false, default: 500 },

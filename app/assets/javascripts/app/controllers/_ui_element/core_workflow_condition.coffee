@@ -61,25 +61,180 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
         delete groups[key]
 
     operatorsType =
-      '^datetime$': [__('today'), __('before (absolute)'), __('after (absolute)'), __('before (relative)'), __('after (relative)'), __('within next (relative)'), __('within last (relative)'), __('till (relative)'), __('from (relative)')]
-      '^timestamp$': [__('today'), __('before (absolute)'), __('after (absolute)'), __('before (relative)'), __('after (relative)'), __('within next (relative)'), __('within last (relative)'), __('till (relative)'), __('from (relative)')]
-      '^date$': [__('today'), 'before (absolute)', 'after (absolute)', 'before (relative)', 'after (relative)', 'within next (relative)', 'within last (relative)']
-      'active$': [__('is')]
-      'boolean$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
-      'integer$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
-      'radio$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
-      '^select$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
-      '^multiselect$': [__('contains'), __('contains not'), __('contains all'), __('contains all not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
-      '^tree_select$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
-      '^multi_tree_select$': [__('contains'), __('contains not'), __('contains all'), __('contains all not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
-      '^autocompletion_ajax_external_data_source$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
-      '^input$': [__('is any of'), __('is none of'), __('starts with one of'), __('ends with one of'), __('matches regex'), __('does not match regex'), __('is set'), __('not set'), __('has changed'), __('changed to')]
-      '^(textarea|richtext)$': [__('is'), __('is not'), __('starts with'), __('ends with'), __('matches regex'), __('does not match regex'), __('is set'), __('not set'), __('has changed'), __('changed to')]
-      '^tag$': [__('contains all'), __('contains one'), __('contains all not'), __('contains one not')]
+      '^datetime$': [
+        __('today'),
+        __('before (absolute)'),
+        __('after (absolute)'),
+        __('before (relative)'),
+        __('after (relative)'),
+        __('within next (relative)'),
+        __('within last (relative)'),
+        __('till (relative)'),
+        __('from (relative)')
+      ]
+      '^timestamp$': [
+        __('today'),
+        __('before (absolute)'),
+        __('after (absolute)'),
+        __('before (relative)'),
+        __('after (relative)'),
+        __('within next (relative)'),
+        __('within last (relative)'),
+        __('till (relative)'),
+        __('from (relative)')
+      ]
+      '^date$': [
+        __('today'),
+        __('before (absolute)'),
+        __('after (absolute)'),
+        __('before (relative)'),
+        __('after (relative)'),
+        __('within next (relative)'),
+        __('within last (relative)')
+      ]
+      'active$': [
+        __('is')
+      ]
+      'boolean$': [
+        __('is'),
+        __('is not'),
+        __('is set'),
+        __('not set'),
+        __('is modified'),
+        __('is modified to'),
+        __('just changed'),
+        __('just changed to')
+      ]
+      'integer$': [
+        __('is'),
+        __('is not'),
+        __('is set'),
+        __('not set'),
+        __('is modified'),
+        __('is modified to'),
+        __('just changed'),
+        __('just changed to')
+      ]
+      'radio$': [
+        __('is'),
+        __('is not'),
+        __('is set'),
+        __('not set'),
+        __('is modified'),
+        __('is modified to'),
+        __('just changed'),
+        __('just changed to')
+      ]
+      '^select$': [
+        __('is'),
+        __('is not'),
+        __('is set'),
+        __('not set'),
+        __('is modified'),
+        __('is modified to'),
+        __('just changed'),
+        __('just changed to')
+      ]
+      '^multiselect$': [
+        __('contains'),
+        __('contains not'),
+        __('contains all'),
+        __('contains all not'),
+        __('is set'),
+        __('not set'),
+        __('is modified'),
+        __('is modified to'),
+        __('just changed'),
+        __('just changed to')
+      ]
+      '^tree_select$': [
+        __('is'),
+        __('is not'),
+        __('is set'),
+        __('not set'),
+        __('is modified'),
+        __('is modified to'),
+        __('just changed'),
+        __('just changed to')
+        ]
+      '^multi_tree_select$': [
+        __('contains'),
+        __('contains not'),
+        __('contains all'),
+        __('contains all not'),
+        __('is set'),
+        __('not set'),
+        __('is modified'),
+        __('is modified to'),
+        __('just changed'),
+        __('just changed to')
+      ]
+      '^autocompletion_ajax_external_data_source$': [
+        __('is'),
+        __('is not'),
+        __('is set'),
+        __('not set'),
+        __('is modified'),
+        __('is modified to'),
+        __('just changed'),
+        __('just changed to')
+      ]
+      '^input$': [
+        __('is any of'),
+        __('is none of'),
+        __('starts with one of'),
+        __('ends with one of'),
+        __('matches regex'),
+        __('does not match regex'),
+        __('is set'),
+        __('not set'),
+        __('is modified'),
+        __('is modified to'),
+        __('just changed'),
+        __('just changed to')
+      ]
+      '^(textarea|richtext)$': [
+        __('is'),
+        __('is not'),
+        __('starts with'),
+        __('ends with'),
+        __('matches regex'),
+        __('does not match regex'),
+        __('is set'),
+        __('not set'),
+        __('is modified'),
+        __('is modified to'),
+        __('just changed'),
+        __('just changed to')
+      ]
+      '^tag$': [
+        __('contains all'),
+        __('contains one'),
+        __('contains all not'),
+        __('contains one not')
+      ]
 
     operatorsName =
-      '_id$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
-      '_ids$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
+      '_id$': [
+        __('is'),
+        __('is not'),
+        __('is set'),
+        __('not set'),
+        __('is modified'),
+        __('is modified to'),
+        __('just changed'),
+        __('just changed to')
+      ]
+      '_ids$': [
+        __('is'),
+        __('is not'),
+        __('is set'),
+        __('not set'),
+        __('is modified'),
+        __('is modified to'),
+        __('just changed'),
+        __('just changed to')
+      ]
 
     if attribute.disable_operators
       for key, value of operatorsType

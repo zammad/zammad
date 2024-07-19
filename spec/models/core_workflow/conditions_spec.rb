@@ -2144,7 +2144,7 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
     end
   end
 
-  describe '.perform - Condition - changed to' do
+  describe '.perform - Condition - just changed to' do
     let(:payload) do
       base_payload.merge('params' => { 'id' => ticket.id }, 'screen' => 'edit', 'last_changed_attribute' => 'group_id')
     end
@@ -2155,7 +2155,7 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
                object:             'Ticket',
                condition_selected: {
                  'ticket.group_id': {
-                   operator: 'changed to',
+                   operator: 'just changed to',
                    value:    [ticket.group.id.to_s],
                  },
                })
@@ -2172,7 +2172,7 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
                object:             'Ticket',
                condition_selected: {
                  'ticket.group_id': {
-                   operator: 'changed to',
+                   operator: 'just changed to',
                    value:    [Group.first.id],
                  },
                })
@@ -2213,7 +2213,7 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
                  object:             'Ticket',
                  condition_selected: {
                    condition_field_name => {
-                     operator: 'changed to',
+                     operator: 'just changed to',
                      value:    [
                        {
                          value: 123,
@@ -2235,7 +2235,7 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
                  object:             'Ticket',
                  condition_selected: {
                    condition_field_name => {
-                     operator: 'changed to',
+                     operator: 'just changed to',
                      value:    [
                        {
                          value: 986,
@@ -2249,6 +2249,69 @@ RSpec.describe 'CoreWorkflow > Conditions', mariadb: true, type: :model do
         it 'does not match' do
           expect(result[:matched_workflows]).not_to include(workflow.id)
         end
+      end
+    end
+  end
+
+  describe '.perform - Condition - is modified' do
+    let(:payload) do
+      base_payload.merge('params' => { 'id' => ticket.id, 'priority_id' => Ticket::Priority.find_by(name: '3 high').id.to_s }, 'screen' => 'edit')
+    end
+    let!(:workflow) do
+      create(:core_workflow,
+             object:             'Ticket',
+             condition_selected: {
+               'ticket.priority_id': {
+                 operator: 'is modified',
+               },
+             })
+    end
+
+    context 'when match' do
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+
+    context 'when mismatch' do
+      let(:payload) do
+        base_payload.merge('params' => { 'id' => ticket.id }, 'screen' => 'edit')
+      end
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
+      end
+    end
+  end
+
+  describe '.perform - Condition - is modified to' do
+    let(:payload) do
+      base_payload.merge('params' => { 'id' => ticket.id, 'priority_id' => Ticket::Priority.find_by(name: '3 high').id.to_s }, 'screen' => 'edit')
+    end
+    let!(:workflow) do
+      create(:core_workflow,
+             object:             'Ticket',
+             condition_selected: {
+               'ticket.priority_id': {
+                 operator: 'is modified to',
+                 value:    [Ticket::Priority.find_by(name: '3 high').id.to_s],
+               },
+             })
+    end
+
+    context 'when match' do
+      it 'does match' do
+        expect(result[:matched_workflows]).to include(workflow.id)
+      end
+    end
+
+    context 'when mismatch' do
+      let(:payload) do
+        base_payload.merge('params' => { 'id' => ticket.id, 'priority_id' => Ticket::Priority.find_by(name: '1 low').id.to_s }, 'screen' => 'edit')
+      end
+
+      it 'does not match' do
+        expect(result[:matched_workflows]).not_to include(workflow.id)
       end
     end
   end

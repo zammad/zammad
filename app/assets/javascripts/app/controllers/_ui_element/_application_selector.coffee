@@ -473,7 +473,7 @@ class App.UiElement.ApplicationSelector
       for operator in attributeConfig.operator
         operatorName = App.i18n.translateInline(@mapOperatorDisplayName(operator))
         selected = ''
-        if !groupAndAttribute.match(/^ticket/) && operator is 'has changed'
+        if !groupAndAttribute.match(/^ticket/) && _.contains(['has changed', 'just changed', 'is modified'], operator)
           # do nothing, only show "has changed" in ticket attributes
         else
           if meta.operator is operator
@@ -613,7 +613,7 @@ class App.UiElement.ApplicationSelector
     #   - has reached
     #   - has reached warning
     #   - changed to
-    if _.contains(['has reached', 'has reached warning', 'has changed', 'not set', 'is set'], meta.operator)
+    if _.contains(['has reached', 'has reached warning', 'has changed', 'just changed', 'is modified', 'not set', 'is set'], meta.operator)
       elementRow.find('.js-value').addClass('hide')
       elementRow.find('.js-preCondition').closest('.controls').addClass('hide')
     else
