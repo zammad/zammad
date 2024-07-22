@@ -291,4 +291,73 @@ RSpec.describe Channel::Filter::Database, type: :channel_filter do
       end
     end
   end
+
+  describe 'Mail filter logs "contains not" instead of "contains" #5271', db_strategy: :reset do
+    let(:postmaster_filter) do
+      create(
+        :postmaster_filter,
+        match: {
+          key => {
+            'operator' => operator,
+            'value'    => value,
+          },
+        },
+      )
+    end
+
+    before do
+      postmaster_filter
+      allow(Rails.logger).to receive(:info)
+      allow(Rails.logger).to receive(:debug)
+      filter(mail_hash)
+    end
+
+    context 'with a matching contains operator' do
+      let(:key)      { 'subject' }
+      let(:operator) { 'contains' }
+      let(:value)    { 'Anvil' }
+
+      it 'logs info message', aggregate_failures: true do
+        expect(Rails.logger).to have_received(:info).with(no_args) do |&block|
+          expect(block.call).to match(%r{matching: key 'subject' contains 'Anvil'})
+        end
+      end
+    end
+
+    context 'with a matching contains not operator' do
+      let(:key)      { 'from' }
+      let(:operator) { 'contains not' }
+      let(:value)    { 'buggs' }
+
+      it 'logs info message', aggregate_failures: true do
+        expect(Rails.logger).to have_received(:info).with(no_args) do |&block|
+          expect(block.call).to match(%r{matching: key 'from' contains not 'buggs'})
+        end
+      end
+    end
+
+    context 'with a non matching contains operator' do
+      let(:key)      { 'from' }
+      let(:operator) { 'contains' }
+      let(:value)    { 'buggs' }
+
+      it 'logs debug messages', aggregate_failures: true do
+        expect(Rails.logger).to have_received(:debug).twice.with(no_args) do |&block|
+          expect(block.call).to match(%r{process filter}).or match(%r{not matching: key 'from' contains 'buggs'})
+        end
+      end
+    end
+
+    context 'with a non matching contains not operator' do
+      let(:key)      { 'subject' }
+      let(:operator) { 'contains not' }
+      let(:value)    { 'Anvil' }
+
+      it 'logs debug messages', aggregate_failures: true do
+        expect(Rails.logger).to have_received(:debug).twice.with(no_args) do |&block|
+          expect(block.call).to match(%r{process filter}).or match(%r{not matching: key 'subject' contains not 'Anvil'})
+        end
+      end
+    end
+  end
 end
