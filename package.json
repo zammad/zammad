@@ -86,7 +86,7 @@
     "stylelint-scss": "^6.4.1",
     "svg-baker": "^1.7.0",
     "svgo": "^3.3.2",
-    "tailwindcss": "^3.4.4",
+    "tailwindcss": "^3.4.6",
     "tailwindcss-unimportant": "^2.1.1",
     "timezone-mock": "^1.3.6",
     "type-fest": "^4.22.1",
