@@ -298,7 +298,7 @@ GEM
     httpclient (2.8.3)
     i18n (1.14.5)
       concurrent-ruby (~> 1.0)
-    icalendar (2.10.1)
+    icalendar (2.10.2)
       ice_cube (~> 0.16)
     icalendar-recurrence (1.2.0)
       icalendar (~> 2.0)
