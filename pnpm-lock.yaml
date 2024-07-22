@@ -314,7 +314,7 @@ importers:
         version: 7.16.1(eslint@8.57.0)(typescript@5.5.3)
       '@vitejs/plugin-vue':
         specifier: ^5.0.5
-        version: 5.0.5(vite@5.3.3(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0))(vue@3.4.31(typescript@5.5.3))
+        version: 5.0.5(vite@5.3.4(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0))(vue@3.4.31(typescript@5.5.3))
       '@vue/compiler-dom':
         specifier: ^3.4.31
         version: 3.4.31
@@ -442,14 +442,14 @@ importers:
         specifier: ^5.5.3
         version: 5.5.3
       vite:
-        specifier: ^5.3.3
-        version: 5.3.3(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0)
+        specifier: ^5.3.4
+        version: 5.3.4(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0)
       vite-plugin-pwa:
         specifier: ^0.20.0
-        version: 0.20.0(vite@5.3.3(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.1.0)
+        version: 0.20.0(vite@5.3.4(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.1.0)
       vite-plugin-ruby:
         specifier: ^5.0.0
-        version: 5.0.0(vite@5.3.3(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0))
+        version: 5.0.0(vite@5.3.4(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0))
       vitest:
         specifier: ^1.6.0
         version: 1.6.0(@types/node@18.11.4)(jsdom@24.1.1)(sass@1.77.8)(terser@5.31.0)
@@ -5883,8 +5883,8 @@ packages:
     peerDependencies:
       vite: '>=5.0.0'
 
-  vite@5.3.3:
-    resolution: {integrity: sha512-NPQdeCU0Dv2z5fu+ULotpuq5yfCS1BzKUIPhNbP3YBfAMGJXbt2nS+sbTFu+qchaqWTD+H3JK++nRwr6XIcp6A==}
+  vite@5.3.4:
+    resolution: {integrity: sha512-Cw+7zL3ZG9/NZBB8C+8QbQZmR54GwqIz+WMI4b3JgdYJvX+ny9AjJXqkGQlDXSXRP9rP0B4tbciRMOVEKulVOA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -8386,9 +8386,9 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vitejs/plugin-vue@5.0.5(vite@5.3.3(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0))(vue@3.4.31(typescript@5.5.3))':
+  '@vitejs/plugin-vue@5.0.5(vite@5.3.4(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0))(vue@3.4.31(typescript@5.5.3))':
     dependencies:
-      vite: 5.3.3(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0)
+      vite: 5.3.4(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0)
       vue: 3.4.31(typescript@5.5.3)
 
   '@vitest/expect@1.6.0':
@@ -12420,7 +12420,7 @@ snapshots:
       debug: 4.3.5
       pathe: 1.1.1
       picocolors: 1.0.1
-      vite: 5.3.3(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0)
+      vite: 5.3.4(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -12431,26 +12431,26 @@ snapshots:
       - supports-color
       - terser
 
-  vite-plugin-pwa@0.20.0(vite@5.3.3(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.1.0):
+  vite-plugin-pwa@0.20.0(vite@5.3.4(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.1.0):
     dependencies:
       debug: 4.3.4
       fast-glob: 3.3.2
       pretty-bytes: 6.1.1
-      vite: 5.3.3(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0)
+      vite: 5.3.4(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0)
       workbox-build: 7.1.0
       workbox-window: 7.1.0
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-ruby@5.0.0(vite@5.3.3(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0)):
+  vite-plugin-ruby@5.0.0(vite@5.3.4(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0)):
     dependencies:
       debug: 4.3.4
       fast-glob: 3.3.2
-      vite: 5.3.3(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0)
+      vite: 5.3.4(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0)
     transitivePeerDependencies:
       - supports-color
 
-  vite@5.3.3(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0):
+  vite@5.3.4(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.39
@@ -12490,7 +12490,7 @@ snapshots:
       strip-literal: 2.0.0
       tinybench: 2.5.1
       tinypool: 0.8.3
-      vite: 5.3.3(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0)
+      vite: 5.3.4(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0)
       vite-node: 1.6.0(@types/node@18.11.4)(sass@1.77.8)(terser@5.31.0)
       why-is-node-running: 2.2.2
     optionalDependencies:
