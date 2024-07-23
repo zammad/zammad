@@ -224,9 +224,7 @@ group :development, :test do
 
   # code QA
   gem 'brakeman', require: false
-  # TODO: switch back to released gem once 0.64.0 has been relased with
-  #   https://github.com/sds/overcommit/issues/823
-  gem 'overcommit', git: 'https://github.com/sds/overcommit', branch: 'main'
+  gem 'overcommit'
   gem 'rubocop'
   gem 'rubocop-capybara'
   gem 'rubocop-factory_bot'
