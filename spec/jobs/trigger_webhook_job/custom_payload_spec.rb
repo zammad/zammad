@@ -6,7 +6,7 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
 
   # rubocop:disable Lint/InterpolationCheck
   describe '.generate' do
-    subject(:generate) { described_class.generate(record, { ticket:, article:, notification: }) }
+    subject(:generate) { described_class.generate(record, { ticket:, article:, notification:, config: }) }
 
     let(:ticket)  { create(:ticket) }
     let(:article) { create(:ticket_article, body: "Text with\nnew line.") }
@@ -19,6 +19,7 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
       }
     end
     let(:notification) { TriggerWebhookJob::CustomPayload::Track::Notification.generate({ ticket:, article: }, { event: }) }
+    let(:config)       { TriggerWebhookJob::CustomPayload::Track::Config.generate({ ticket:, article: }, {}) }
 
     context 'when the payload is empty' do
       let(:record)    { {}.to_json }
@@ -194,6 +195,7 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
       let(:record) do
         {
           'current_user' => '#{current_user.fullname}',
+          'fqdn'         => '#{config.fqdn}',
           'ticket'       => {
             'id'      => '#{ticket.id}',
             'owner'   => '#{ticket.owner.fullname}',
@@ -212,6 +214,7 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
       let(:json_data) do
         {
           'current_user' => '#{current_user / no such object}',
+          'fqdn'         => Setting.get('fqdn'),
           'ticket'       => {
             'id'      => ticket.id,
             'owner'   => ticket.owner.fullname.to_s,
@@ -230,7 +233,6 @@ RSpec.describe TriggerWebhookJob::CustomPayload do
 
       it 'returns a valid JSON payload' do
         expect(generate).to eq(json_data)
-
       end
     end
 

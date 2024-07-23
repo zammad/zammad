@@ -5,9 +5,9 @@ http_interactions:
     uri: "<MS_TEAMS_CI_WEBHOOK_URL>"
     body:
       encoding: UTF-8
-      string: '{"@type":"MessageCard","@context":"http://schema.org/extensions","themeColor":"#faab00","title":"MS
-        Teams Webhook Test","text":"Created by - at 11/23/2023  6:04 am (UTC)","sections":[{"text":"*
-        Group: Users\n* Owner: -\n* State: new"},{"text":""}],"potentialAction":[{"targets":[{"os":"default","uri":"http://zammad.example.com/#ticket/zoom/5"}],"@type":"OpenUri","name":"Ticket#66002"}]}'
+      string: '{"type":"message","attachments":[{"contentType":"application/vnd.microsoft.card.adaptive","contentUrl":null,"content":{"$schema":"http://adaptivecards.io/schemas/adaptive-card.json","type":"AdaptiveCard","version":"1.0","body":[{"type":"TextBlock","text":"MS
+        Teams Webhook Test","style":"heading","color":"warning"},{"type":"TextBlock","text":"*
+        Group: Users\n* Owner: -\n* State: new","wrap":true},{"type":"TextBlock","text":"","wrap":true},{"type":"ActionSet","actions":[{"type":"Action.OpenUrl","title":"Ticket#87002","url":"http://zammad.example.com/#ticket/zoom/14"}]}]}}]}'
     headers:
       Accept-Encoding:
       - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
@@ -20,7 +20,7 @@ http_interactions:
       X-Zammad-Trigger:
       - Test trigger 1
       X-Zammad-Delivery:
-      - 169b37e6-4ca8-4e4c-9e84-cc8040a9ce85
+      - 81bed896-ea6c-40d7-a440-121adcc83357
       Content-Type:
       - application/json; charset=utf-8
   response:
@@ -29,23 +29,23 @@ http_interactions:
       message: OK
     headers:
       Content-Length:
-      - '1'
+      - '114'
       Content-Type:
       - text/plain; charset=utf-8
       Server:
       - Microsoft-HTTPAPI/2.0
       X-Beserver:
-      - AS8P190MB1912
+      - AS1P190MB1752
       X-Nanoproxy:
       - '1,1'
       Request-Id:
-      - 4a682049-32ba-c8e2-e119-87e24e405bcc
+      - a56c227f-71c2-22b8-0609-fba49dba60ce
       X-Calculatedfetarget:
-      - AM6PR10CU001.internal.outlook.com
+      - AS9PR06CU006.internal.outlook.com
       Alt-Svc:
-      - h3=":443",h3-29=":443"
+      - h3=":443";ma=2592000,h3-29=":443";ma=2592000
       Ms-Cv:
-      - SSBoSroy4sjhGYfiTkBbzA.1.1
+      - fyJspcJxuCIGCfuknbpgzg.1.1
       X-Backendhttpstatus:
       - '200,200'
       X-Bepartition:
@@ -53,15 +53,15 @@ http_interactions:
       X-Besku:
       - Unknown
       X-Calculatedbetarget:
-      - AS8P190MB1912.EURP190.PROD.OUTLOOK.COM
+      - AS1P190MB1752.EURP190.PROD.OUTLOOK.COM
       X-End2endlatencyms:
-      - '804'
+      - '613'
       X-Feefzinfo:
       - DHR
       X-Feproxyinfo:
-      - AM6PR10CA0017
+      - AS9PR06CA0151
       X-Feserver:
-      - FR4P281CA0272
+      - FR4P281CA0398
       X-Proxy-Backendserverstatus:
       - '200'
       X-Proxy-Routingcorrectness:
@@ -71,9 +71,10 @@ http_interactions:
       Strict-Transport-Security:
       - max-age=31536000; includeSubDomains
       Date:
-      - Thu, 23 Nov 2023 06:04:14 GMT
+      - Fri, 19 Jul 2024 10:17:34 GMT
     body:
       encoding: UTF-8
-      string: '1'
-  recorded_at: Thu, 23 Nov 2023 06:04:15 GMT
+      string: 'Webhook message delivery failed with error: Microsoft Teams endpoint
+        returned HTTP error 403 with ContextId 01=2..'
+  recorded_at: Fri, 19 Jul 2024 10:17:34 GMT
 recorded_with: VCR 6.2.0

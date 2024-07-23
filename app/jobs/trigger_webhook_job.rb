@@ -116,7 +116,13 @@ class TriggerWebhookJob < ApplicationJob
     payload = webhook.customized_payload ? webhook.custom_payload : pre_defined_webhook_payload
     return default_payload if payload.nil?
 
-    TriggerWebhookJob::CustomPayload.generate(payload, tracks)
+    hash = TriggerWebhookJob::CustomPayload.generate(payload, tracks)
+    return hash if webhook.customized_payload
+
+    pre_defined_webhook = "Webhook::PreDefined::#{webhook.pre_defined_webhook_type}".constantize.new
+    return hash if !pre_defined_webhook.respond_to?(:post_replace)
+
+    pre_defined_webhook.post_replace(hash, tracks)
   end
 
   def add_custom_tracks(tracks)

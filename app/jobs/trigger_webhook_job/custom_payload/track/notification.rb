@@ -26,7 +26,7 @@ class TriggerWebhookJob::CustomPayload::Track::Notification < TriggerWebhookJob:
       }
     end
 
-    Notification = Struct.new('Notification', :subject, :message, :link, :changes, :body)
+    Struct.new('Notification', :subject, :message, :link, :changes, :body) if !defined?(Struct::Notification)
 
     def generate(tracks, data)
       return if data[:event].blank?
@@ -74,7 +74,7 @@ class TriggerWebhookJob::CustomPayload::Track::Notification < TriggerWebhookJob:
       }
 
       sanitize(notification)
-      Notification.new(*notification.values)
+      Struct::Notification.new(*notification.values)
     end
 
     def regex(extended)
