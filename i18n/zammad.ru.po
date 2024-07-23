@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-12 22:16+0000\n"
+"PO-Revision-Date: 2024-07-23 11:00+0000\n"
 "Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
@@ -5485,7 +5485,7 @@ msgstr "Отмените Ваши несохраненные изменения"
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:25
 msgid "Discard your unsaved changes."
-msgstr "Отмените Ваши несохраненные изменения."
+msgstr "Отменить Ваши несохраненные изменения"
 
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:7
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:7

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-05 05:02+0000\n"
-"Last-Translator: Ricardo Sandoval Pérez <r.sandoval@itknow.es>\n"
+"PO-Revision-Date: 2024-07-23 11:00+0000\n"
+"Last-Translator: Daniel Macías <danielmaciasm@gmail.com>\n"
 "Language-Team: Spanish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/es/>\n"
 "Language: es-es\n"
@@ -9038,7 +9038,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/maintenance.jst.eco:3
 #: db/seeds/permissions.rb:285
 msgid "Maintenance"
-msgstr "Mantención"
+msgstr "Mantenimiento"
 
 #: db/seeds/settings.rb:49
 msgid "Maintenance Login"
