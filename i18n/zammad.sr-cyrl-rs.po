@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-15 05:59+0000\n"
+"PO-Revision-Date: 2024-07-23 09:16+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -1000,10 +1000,8 @@ msgstr ""
 "Прихватите политику приватности података и политику прихватљиве употребе"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:18
-#, fuzzy
-#| msgid "Access token"
 msgid "Access denied"
-msgstr "Приступни кључ"
+msgstr "Недозвољен приступ"
 
 #: db/seeds/permissions.rb:297
 msgid "Access the agent chat features."
@@ -3318,7 +3316,7 @@ msgstr "Затвори сесије ћаскања где су учесници 
 msgid "Close current tab"
 msgstr "Затвори тренутни прозор"
 
-#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:112
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:113
 msgid "Close dialog"
 msgstr "Затвори дијалог"
 
@@ -3343,10 +3341,8 @@ msgid "Close the time picker"
 msgstr "Затвори одабир времена"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabRemove.vue:46
-#, fuzzy
-#| msgid "Close tab"
 msgid "Close this tab"
-msgstr "Затвори прозор"
+msgstr "Затвори овај прозор"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:16
 #: app/models/report.rb:30
@@ -5876,10 +5872,8 @@ msgid "Drag and drop to reorder ticket overview list items."
 msgstr "Превуци и пусти за промену редоследа прегледа тикета."
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:235
-#, fuzzy
-#| msgid "Drag and drop to reorder ticket overview list items."
 msgid "Drag and drop to reorder your tabs."
-msgstr "Превуци и пусти за промену редоследа прегледа тикета."
+msgstr "Превуци и пусти за промену редоследа прозора."
 
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:2
 msgid "Drag to reorder"
@@ -6360,13 +6354,13 @@ msgstr ""
 msgid "Enables console logging."
 msgstr "Укључује конзолну евиденцију."
 
+#: db/seeds/settings.rb:976
+msgid "Enables display of ticket priority icons in UI."
+msgstr "Укључује иконице приоритета тикета у корисничком интерфејсу."
+
 #: db/seeds/settings.rb:796
 msgid "Enables preview of attachments."
 msgstr "Укључује приказ прилога."
-
-#: db/seeds/settings.rb:976
-msgid "Enables priority icons in ticket overviews."
-msgstr "Укључује иконице приоритета у прегледима тикета."
 
 #: db/seeds/settings.rb:1277
 msgid ""
@@ -7629,23 +7623,23 @@ msgstr "Поздрав"
 msgid "Group"
 msgstr "Група"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:141
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:296
 msgid "Group (change)"
 msgstr "Група (измена)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:132
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:287
 msgid "Group (create)"
 msgstr "Група (отварање)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:159
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:314
 msgid "Group (full)"
 msgstr "Група (све)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:150
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:305
 msgid "Group (overview)"
 msgstr "Група (преглед)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:123
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:278
 msgid "Group (read)"
 msgstr "Група (читање)"
 
@@ -7778,10 +7772,8 @@ msgid "Has ticket open in tabs, but is not actively looking at the ticket."
 msgstr "Има тикет отворен у прозорима, али није активан."
 
 #: app/frontend/apps/desktop/components/CommonUpdateIndicator/CommonUpdateIndicator.vue:8
-#, fuzzy
-#| msgid "updated"
 msgid "Has update"
-msgstr "освежено"
+msgstr "Освежено"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:12
 msgid "Hash"
@@ -9278,7 +9270,7 @@ msgstr "Везе"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:217
 msgid "List of all user taskbar tabs"
-msgstr ""
+msgstr "Листа свих корисничких прозора"
 
 #: app/models/system_report/plugin/addons.rb:4
 msgid "List of installed addons"
@@ -10055,7 +10047,7 @@ msgstr "Мобилни"
 msgid "Mode"
 msgstr "Режим"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:103
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:258
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:66
 msgid "Module"
 msgstr "Модул"
@@ -10464,10 +10456,8 @@ msgid "New Ticket State"
 msgstr "Ново стање тикета"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:33
-#, fuzzy
-#| msgid "New Ticket"
 msgid "New Ticket: %s"
-msgstr "Нови тикет"
+msgstr "Нови тикет: %s"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco:11
 msgid "New Translation"
@@ -11809,7 +11799,7 @@ msgstr "Трајно обриши базу знања"
 msgid "Permission level for looking up tickets"
 msgstr "Ниво дозвола при претраживању тикета"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:168
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:323
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:96
 #: app/assets/javascripts/app/models/role.coffee:7
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:5
@@ -12202,10 +12192,6 @@ msgstr "Приоритет"
 #: db/seeds/object_manager_attributes.rb:350 lib/excel_sheet/ticket.rb:26
 msgid "Priority"
 msgstr "Приоритет"
-
-#: db/seeds/settings.rb:973
-msgid "Priority Icons in Overviews"
-msgstr "Иконице приоритета у прегледима"
 
 #: db/seeds/settings.rb:1945
 msgid "Private key (PEM)"
@@ -12931,7 +12917,7 @@ msgstr "Тикети ће бити отварани на ретвитове."
 msgid "Rocket Chat Notifications"
 msgstr "Rocket Chat обавештења"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:114
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:269
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:214
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:81
@@ -14564,7 +14550,7 @@ msgstr "Пошаљи"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:139
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:176
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:204
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:359
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:148
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:204
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:4
@@ -14697,7 +14683,7 @@ msgstr "Прозор има промене, да ли заиста желите 
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:231
 msgid "Tabs"
-msgstr ""
+msgstr "Прозори"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:115
 msgid "Tag \"%s\" already exists."
@@ -16645,10 +16631,8 @@ msgid "This system is configured for automated setup."
 msgstr "Овај систем је подешен за аутоматску поставку."
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:15
-#, fuzzy
-#| msgid "The hostname could not be found."
 msgid "This tab could not be found."
-msgstr "Није пронађен сервер."
+msgstr "Овај прозор није пронађен."
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:31
 msgid ""
@@ -16827,6 +16811,10 @@ msgstr "Приоритети тикета"
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee:3
 msgid "Ticket Priority"
 msgstr "Приоритет тикета"
+
+#: db/seeds/settings.rb:973
+msgid "Ticket Priority Icons"
+msgstr "Иконице приоритета тикета"
 
 #: app/assets/javascripts/app/models/sla.coffee:7
 msgid "Ticket Selector"
@@ -19081,10 +19069,8 @@ msgid "You have insufficient permissions to mention other users."
 msgstr "Немате одговарајуће дозволе за помињање других корисника."
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:15
-#, fuzzy
-#| msgid "You have insufficient rights to view this ticket."
 msgid "You have insufficient rights to open this tab."
-msgstr "Немате дозволу за приступ овом тикету."
+msgstr "Немате дозволу за приступ овом прозору."
 
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:32
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:28
@@ -19465,14 +19451,14 @@ msgid "admin"
 msgstr "admin"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:67
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "after (absolute)"
 msgstr "након (апсолутно)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:479
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "after (relative)"
 msgstr "након (релативно)"
@@ -19535,14 +19521,14 @@ msgid "auto select"
 msgstr "аутоматски избор"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "before (absolute)"
 msgstr "пре (апсолутно)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:476
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "before (relative)"
 msgstr "пре (релативно)"
@@ -19586,10 +19572,6 @@ msgstr "није могућа употреба зато што _id и *_ids ни
 msgid "cannot be a subcategory of the parent category"
 msgstr "није могуће да буде подређени надређеног"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
-msgid "changed to"
-msgstr "промењено у"
-
 #: db/seeds/ticket_article_types.rb:5
 msgid "chat"
 msgstr "ћаскање"
@@ -19622,37 +19604,37 @@ msgid "connected"
 msgstr "повезано"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:139
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
 msgid "contains"
 msgstr "садржи"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:141
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
 msgid "contains all"
 msgstr "садржи све"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:142
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
 msgid "contains all not"
 msgstr "не садржи све"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:140
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "contains not"
 msgstr "не садржи"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:78
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:212
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
 msgid "contains one"
 msgstr "садржи једно"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:78
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:214
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
 msgid "contains one not"
 msgstr "не садржи једно"
@@ -19778,7 +19760,7 @@ msgid "does not exist"
 msgstr "не постоји"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:60
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:188
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:87
 msgid "does not match regex"
 msgstr "не задовољава регуларни израз"
@@ -19849,12 +19831,12 @@ msgstr "приложено"
 msgid "enclosure"
 msgstr "прилог"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 msgid "ends with"
 msgstr "завршава са"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "ends with one of"
 msgstr "завршава се са једним од"
@@ -19923,7 +19905,7 @@ msgstr "од"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:481
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "from (relative)"
 msgstr "од (релативно)"
@@ -19940,7 +19922,6 @@ msgid "has already been taken"
 msgstr "је већ заузето"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:43
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:70
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:75
 msgid "has changed"
@@ -20081,7 +20062,7 @@ msgid "internal database"
 msgstr "интерна база података"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:67
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:96
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:55
 msgid "is"
 msgstr "је"
@@ -20091,7 +20072,7 @@ msgid "is already used"
 msgstr "већ се користи"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:183
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "is any of"
 msgstr "је један од"
@@ -20112,14 +20093,22 @@ msgstr "је веће од највеће дозвољене вредности 
 msgid "is longer than the allowed length %{maxlength}"
 msgstr "је дуже од дозвољене дужине %{maxlength}"
 
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:103
+msgid "is modified"
+msgstr "је измењено"
+
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:104
+msgid "is modified to"
+msgstr "је измењено на"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:184
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "is none of"
 msgstr "није ниједан од"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:100
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:55
 msgid "is not"
 msgstr "није"
@@ -20152,7 +20141,7 @@ msgid "is reserved"
 msgstr "је резервисано"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:111
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:101
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:138
 msgid "is set"
 msgstr "је постављено"
@@ -20183,6 +20172,14 @@ msgstr "је прекратко (најмање дозвољено %{count} зн
 msgid "is too short (minimum is 1 character)"
 msgstr "је прекратко (најмање дозвољено један знак)"
 
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:105
+msgid "just changed"
+msgstr "управо измењено"
+
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:106
+msgid "just changed to"
+msgstr "управо измењено на"
+
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:30
 msgid "just now"
 msgstr "малопре"
@@ -20204,15 +20201,15 @@ msgstr "учитај још %s"
 msgid "m"
 msgstr "м"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:108
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:263
 msgid "match all modules"
 msgstr "да се сви модули подударају"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:108
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:263
 msgid "match no modules"
 msgstr "да се ниједан модул не подудара"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:108
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:263
 msgid "match one module"
 msgstr "да се један модул подудара"
 
@@ -20223,7 +20220,7 @@ msgid "matches found"
 msgstr "пронађен(a/их) резултат(а)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:60
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:187
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:87
 msgid "matches regex"
 msgstr "задовољава регуларни израз"
@@ -20371,7 +20368,7 @@ msgid "not reached"
 msgstr "није достигнуто"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:111
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:102
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:138
 msgid "not set"
 msgstr "није постављено"
@@ -20652,12 +20649,12 @@ msgstr "конкретан корисник"
 msgid "split"
 msgstr "раздели"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:185
 msgid "starts with"
 msgstr "почиње са"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:185
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "starts with one of"
 msgstr "почиње са једним од"
@@ -20709,7 +20706,7 @@ msgstr "ticket.customer"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:480
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "till (relative)"
 msgstr "до (релативно)"
@@ -20724,7 +20721,7 @@ msgstr "за повратак на почетну страну."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 #: app/assets/javascripts/app/controllers/chat.coffee:757
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:67
@@ -20818,14 +20815,14 @@ msgstr "биће обрисано"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:478
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within last (relative)"
 msgstr "у последњих (релативно)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:477
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:70
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within next (relative)"
 msgstr "у следећих (релативно)"
@@ -20882,6 +20879,9 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "Priority Icons in Overviews"
+#~ msgstr "Иконице приоритета у прегледима"
 
 #, fuzzy
 #~| msgid "Ticket information"

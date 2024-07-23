@@ -3447,7 +3447,7 @@ msgstr ""
 msgid "Close current tab"
 msgstr "Tanca pestanya actual"
 
-#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:112
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:113
 #, fuzzy
 #| msgid "Confirm/submit dialog"
 msgid "Close dialog"
@@ -6616,12 +6616,12 @@ msgstr ""
 msgid "Enables console logging."
 msgstr "Habilita els logs per consola"
 
-#: db/seeds/settings.rb:796
-msgid "Enables preview of attachments."
+#: db/seeds/settings.rb:976
+msgid "Enables display of ticket priority icons in UI."
 msgstr ""
 
-#: db/seeds/settings.rb:976
-msgid "Enables priority icons in ticket overviews."
+#: db/seeds/settings.rb:796
+msgid "Enables preview of attachments."
 msgstr ""
 
 #: db/seeds/settings.rb:1277
@@ -7992,23 +7992,23 @@ msgstr "Salutacions"
 msgid "Group"
 msgstr "Grup"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:141
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:296
 msgid "Group (change)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:132
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:287
 msgid "Group (create)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:159
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:314
 msgid "Group (full)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:150
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:305
 msgid "Group (overview)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:123
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:278
 msgid "Group (read)"
 msgstr ""
 
@@ -10663,7 +10663,7 @@ msgstr "Mòbil"
 msgid "Mode"
 msgstr "Mode"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:103
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:258
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:66
 msgid "Module"
 msgstr ""
@@ -12603,7 +12603,7 @@ msgstr "Elimina permanentment la Base de coneixement"
 msgid "Permission level for looking up tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:168
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:323
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:96
 #: app/assets/javascripts/app/models/role.coffee:7
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:5
@@ -13015,10 +13015,6 @@ msgstr "Prioritat"
 #: db/seeds/object_manager_attributes.rb:350 lib/excel_sheet/ticket.rb:26
 msgid "Priority"
 msgstr "Prioritat"
-
-#: db/seeds/settings.rb:973
-msgid "Priority Icons in Overviews"
-msgstr ""
 
 #: db/seeds/settings.rb:1945
 msgid "Private key (PEM)"
@@ -13803,7 +13799,7 @@ msgstr ""
 msgid "Rocket Chat Notifications"
 msgstr "Bloqueja les notificacions"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:114
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:269
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:214
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:81
@@ -15621,7 +15617,7 @@ msgstr "Enviar"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:139
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:176
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:204
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:359
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:148
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:204
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:4
@@ -18116,6 +18112,12 @@ msgstr "Tiquet actualitzat"
 #, fuzzy
 #| msgid "Priority"
 msgid "Ticket Priority"
+msgstr "Prioritat"
+
+#: db/seeds/settings.rb:973
+#, fuzzy
+#| msgid "Priority"
+msgid "Ticket Priority Icons"
 msgstr "Prioritat"
 
 #: app/assets/javascripts/app/models/sla.coffee:7
@@ -20851,14 +20853,14 @@ msgid "admin"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:67
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "after (absolute)"
 msgstr "després"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:479
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "after (relative)"
 msgstr "després (relatiu)"
@@ -20931,14 +20933,14 @@ msgid "auto select"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "before (absolute)"
 msgstr "abans (absolut)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:476
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "before (relative)"
 msgstr "abans (relatiu)"
@@ -20981,11 +20983,6 @@ msgstr ""
 msgid "cannot be a subcategory of the parent category"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
-#, fuzzy
-msgid "changed to"
-msgstr "Canviat"
-
 #: db/seeds/ticket_article_types.rb:5
 msgid "chat"
 msgstr "chat"
@@ -21020,37 +21017,37 @@ msgid "connected"
 msgstr "connectat"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:139
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
 msgid "contains"
 msgstr "conté"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:141
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
 msgid "contains all"
 msgstr "ho conte tot"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:142
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
 msgid "contains all not"
 msgstr "no ho conte tot"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:140
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "contains not"
 msgstr "no conté"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:78
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:212
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
 msgid "contains one"
 msgstr "en conte un"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:78
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:214
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
 msgid "contains one not"
 msgstr "en conte un que no"
@@ -21188,7 +21185,7 @@ msgid "does not exist"
 msgstr "no existeix"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:60
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:188
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:87
 #, fuzzy
 #| msgid "not exist"
@@ -21267,12 +21264,12 @@ msgstr "tancat"
 msgid "enclosure"
 msgstr "tancar"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 msgid "ends with"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "ends with one of"
 msgstr ""
@@ -21344,7 +21341,7 @@ msgstr "de"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:481
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "from (relative)"
 msgstr ""
@@ -21361,7 +21358,6 @@ msgid "has already been taken"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:43
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:70
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:75
 msgid "has changed"
@@ -21522,7 +21518,7 @@ msgid "internal database"
 msgstr "intern"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:67
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:96
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:55
 msgid "is"
 msgstr "és"
@@ -21532,7 +21528,7 @@ msgid "is already used"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:183
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "is any of"
 msgstr ""
@@ -21553,8 +21549,18 @@ msgstr ""
 msgid "is longer than the allowed length %{maxlength}"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:103
+#, fuzzy
+#| msgid "Account not verified"
+msgid "is modified"
+msgstr "Compte no verificat"
+
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:104
+msgid "is modified to"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:184
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 #, fuzzy
 #| msgid "is not"
@@ -21562,7 +21568,7 @@ msgid "is none of"
 msgstr "no és"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:100
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:55
 msgid "is not"
 msgstr "no és"
@@ -21601,7 +21607,7 @@ msgid "is reserved"
 msgstr "%s es requerit!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:111
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:101
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:138
 msgid "is set"
 msgstr ""
@@ -21632,6 +21638,17 @@ msgstr ""
 msgid "is too short (minimum is 1 character)"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:105
+#, fuzzy
+#| msgid "has changed"
+msgid "just changed"
+msgstr "ha canviat"
+
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:106
+#, fuzzy
+msgid "just changed to"
+msgstr "Canviat"
+
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:30
 msgid "just now"
 msgstr "just ara"
@@ -21655,15 +21672,15 @@ msgstr "Veure més"
 msgid "m"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:108
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:263
 msgid "match all modules"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:108
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:263
 msgid "match no modules"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:108
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:263
 msgid "match one module"
 msgstr ""
 
@@ -21676,7 +21693,7 @@ msgid "matches found"
 msgstr "trobats"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:60
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:187
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:87
 #, fuzzy
 #| msgid "matches"
@@ -21834,7 +21851,7 @@ msgid "not reached"
 msgstr "no arribat"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:111
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:102
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:138
 msgid "not set"
 msgstr ""
@@ -22143,14 +22160,14 @@ msgstr "usuari específic"
 msgid "split"
 msgstr "dividir"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:185
 #, fuzzy
 #| msgid "Start new"
 msgid "starts with"
 msgstr "Comença de nou"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:185
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 #, fuzzy
 #| msgid "Start new"
@@ -22208,7 +22225,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:480
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "till (relative)"
 msgstr ""
@@ -22223,7 +22240,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 #: app/assets/javascripts/app/controllers/chat.coffee:757
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:67
@@ -22318,14 +22335,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:478
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within last (relative)"
 msgstr "en l'anterior (relatiu)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:477
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:70
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within next (relative)"
 msgstr "en el següent (relatiu)"

@@ -3237,7 +3237,7 @@ msgstr "参与者离线，关闭会话。"
 msgid "Close current tab"
 msgstr "关闭当前标签"
 
-#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:112
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:113
 #, fuzzy
 #| msgid "Confirm/submit dialog"
 msgid "Close dialog"
@@ -6205,13 +6205,15 @@ msgstr ""
 msgid "Enables console logging."
 msgstr "启用控制台日志记录。"
 
+#: db/seeds/settings.rb:976
+#, fuzzy
+#| msgid "Enables priority icons in ticket overviews."
+msgid "Enables display of ticket priority icons in UI."
+msgstr "在票务概述中启用优先图标。"
+
 #: db/seeds/settings.rb:796
 msgid "Enables preview of attachments."
 msgstr "启用附件预览。"
-
-#: db/seeds/settings.rb:976
-msgid "Enables priority icons in ticket overviews."
-msgstr "在票务概述中启用优先图标。"
 
 #: db/seeds/settings.rb:1277
 msgid ""
@@ -7556,23 +7558,23 @@ msgstr "问候语"
 msgid "Group"
 msgstr "组"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:141
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:296
 msgid "Group (change)"
 msgstr "组（更改）"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:132
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:287
 msgid "Group (create)"
 msgstr "组（创建）"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:159
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:314
 msgid "Group (full)"
 msgstr "组（完整）"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:150
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:305
 msgid "Group (overview)"
 msgstr "组（概述）"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:123
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:278
 msgid "Group (read)"
 msgstr "组（读）"
 
@@ -10220,7 +10222,7 @@ msgstr "手机"
 msgid "Mode"
 msgstr "维护模式"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:103
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:258
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:66
 msgid "Module"
 msgstr "模块"
@@ -12206,7 +12208,7 @@ msgstr "永久刪除知識庫"
 msgid "Permission level for looking up tickets"
 msgstr "查找机票的许可级别"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:168
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:323
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:96
 #: app/assets/javascripts/app/models/role.coffee:7
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:5
@@ -12626,10 +12628,6 @@ msgstr "里奧"
 #: db/seeds/object_manager_attributes.rb:350 lib/excel_sheet/ticket.rb:26
 msgid "Priority"
 msgstr "优先级"
-
-#: db/seeds/settings.rb:973
-msgid "Priority Icons in Overviews"
-msgstr "概述中的优先图标"
 
 #: db/seeds/settings.rb:1945
 #, fuzzy
@@ -13509,7 +13507,7 @@ msgstr "转推将转换为票证"
 msgid "Rocket Chat Notifications"
 msgstr "阻止通知"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:114
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:269
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:214
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:81
@@ -15305,7 +15303,7 @@ msgstr "提交"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:139
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:176
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:204
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:359
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:148
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:204
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:4
@@ -17849,6 +17847,12 @@ msgstr "工單更新"
 #, fuzzy
 #| msgid "Priority"
 msgid "Ticket Priority"
+msgstr "优先级"
+
+#: db/seeds/settings.rb:973
+#, fuzzy
+#| msgid "Priority"
+msgid "Ticket Priority Icons"
 msgstr "优先级"
 
 #: app/assets/javascripts/app/models/sla.coffee:7
@@ -20763,14 +20767,14 @@ msgid "admin"
 msgstr "行政"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:67
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "after (absolute)"
 msgstr "之後 (絕對)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:479
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "after (relative)"
 msgstr "之後 (相對)"
@@ -20847,14 +20851,14 @@ msgid "auto select"
 msgstr "自动选择"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "before (absolute)"
 msgstr "之前 (絕對)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:476
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "before (relative)"
 msgstr "之前 (相對)"
@@ -20896,10 +20900,6 @@ msgstr "无法使用，因为 *_id和 *_id不允许"
 msgid "cannot be a subcategory of the parent category"
 msgstr "不能是父类别的子类别"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
-msgid "changed to"
-msgstr "已修改"
-
 #: db/seeds/ticket_article_types.rb:5
 msgid "chat"
 msgstr "文字對話"
@@ -20934,37 +20934,37 @@ msgid "connected"
 msgstr "已连接"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:139
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
 msgid "contains"
 msgstr "含有"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:141
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
 msgid "contains all"
 msgstr "全部含有"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:142
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
 msgid "contains all not"
 msgstr "全部都不含"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:140
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "contains not"
 msgstr "不含有"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:78
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:212
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
 msgid "contains one"
 msgstr "含有一個"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:32
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:78
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:214
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:59
 msgid "contains one not"
 msgstr "一個都不含"
@@ -21104,7 +21104,7 @@ msgid "does not exist"
 msgstr "不存在"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:60
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:188
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:87
 #, fuzzy
 #| msgid "not exist"
@@ -21183,12 +21183,12 @@ msgstr "已关闭"
 msgid "enclosure"
 msgstr "关闭"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 msgid "ends with"
 msgstr "以。。结束"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "ends with one of"
 msgstr "以其中之一结尾"
@@ -21259,7 +21259,7 @@ msgstr "從"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:481
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "from (relative)"
 msgstr "来自（相对）"
@@ -21276,7 +21276,6 @@ msgid "has already been taken"
 msgstr "已有人带走了"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:43
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:70
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:75
 msgid "has changed"
@@ -21443,7 +21442,7 @@ msgid "internal database"
 msgstr "内部"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:67
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:96
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:55
 msgid "is"
 msgstr "是"
@@ -21455,7 +21454,7 @@ msgid "is already used"
 msgstr "帐号已经存在！"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:183
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "is any of"
 msgstr "是"
@@ -21476,8 +21475,20 @@ msgstr "大于允许的最大值％{max_value}"
 msgid "is longer than the allowed length %{maxlength}"
 msgstr "长于允许的长度％{maxlength}"
 
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:103
+#, fuzzy
+#| msgid "Account not verified"
+msgid "is modified"
+msgstr "账号尚未通过验证"
+
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:104
+#, fuzzy
+#| msgid "set fixed to"
+msgid "is modified to"
+msgstr "设置为固定"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:184
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 #, fuzzy
 #| msgid "is not"
@@ -21485,7 +21496,7 @@ msgid "is none of"
 msgstr "非"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:100
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:55
 msgid "is not"
 msgstr "非"
@@ -21524,7 +21535,7 @@ msgid "is reserved"
 msgstr "需要 ％s！"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:111
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:101
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:138
 msgid "is set"
 msgstr "已设置"
@@ -21555,6 +21566,18 @@ msgstr "太短（最小值为％{count}字符）"
 msgid "is too short (minimum is 1 character)"
 msgstr "太短（最少是1个字符）"
 
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:105
+#, fuzzy
+#| msgid "has changed"
+msgid "just changed"
+msgstr "已更改"
+
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:106
+#, fuzzy
+#| msgid "changed to"
+msgid "just changed to"
+msgstr "已修改"
+
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:30
 msgid "just now"
 msgstr "刚刚"
@@ -21578,15 +21601,15 @@ msgstr "显示更多..."
 msgid "m"
 msgstr "m"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:108
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:263
 msgid "match all modules"
 msgstr "匹配所有模块"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:108
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:263
 msgid "match no modules"
 msgstr "不匹配模块"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:108
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:263
 msgid "match one module"
 msgstr "匹配一个模块"
 
@@ -21599,7 +21622,7 @@ msgid "matches found"
 msgstr "匹配"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:60
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:187
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:87
 #, fuzzy
 #| msgid "matches"
@@ -21757,7 +21780,7 @@ msgid "not reached"
 msgstr "還沒到"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:111
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:102
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:138
 msgid "not set"
 msgstr "未设置"
@@ -22066,14 +22089,14 @@ msgstr "指定用户"
 msgid "split"
 msgstr "拆分"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:185
 #, fuzzy
 #| msgid "Start new"
 msgid "starts with"
 msgstr "重新開始"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:185
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 #, fuzzy
 #| msgid "Start new"
@@ -22135,7 +22158,7 @@ msgstr "ticket.customer"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:480
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "till (relative)"
 msgstr "直到（相对）"
@@ -22150,7 +22173,7 @@ msgstr "转到主页。"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 #: app/assets/javascripts/app/controllers/chat.coffee:757
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:67
@@ -22245,14 +22268,14 @@ msgstr "将被删除"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:478
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within last (relative)"
 msgstr "在最後內 (相對)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:477
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:70
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within next (relative)"
 msgstr "在下一個 (相對)"
@@ -22325,6 +22348,9 @@ msgstr "...整个文本区域"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅轮候时间"
+
+#~ msgid "Priority Icons in Overviews"
+#~ msgstr "概述中的优先图标"
 
 #, fuzzy
 #~| msgid "Block Notifications"
