@@ -29,7 +29,7 @@ class Setting::Validation::Saml::TLS < Setting::Validation::Base
     )
 
     return nil if resp.error.nil?
-    return nil if resp.error.starts_with?('#<Net::HTTP')
+    return nil if resp.error.include?('#<Net::HTTP')
 
     Rails.logger.error("SAML: TLS verification failed for '#{url}': #{resp.error}")
 

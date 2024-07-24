@@ -53,7 +53,7 @@ RSpec.describe Setting::Validation::Saml::TLS do
 
       context 'with a HTTP error' do
         it 'raises no error' do
-          result = UserAgent::Result.new(success: false, error: '#<Net::HTTPNotFound')
+          result = UserAgent::Result.new(success: false, error: 'Client Error: #<Net::HTTPNotFound')
           allow(UserAgent).to receive(:get).and_return(result)
 
           expect { Setting.set(setting_name, setting_value) }.not_to raise_error
