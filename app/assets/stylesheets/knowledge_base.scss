@@ -258,11 +258,19 @@ b {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    column-gap: 1em;
+
+    @include phone {
+      flex-direction: column;
+    }
   }
 
   .menu {
     justify-content: flex-end;
-    margin-right: -1em;
+
+    @include phone {
+      justify-content: center;
+    }
   }
 }
 
@@ -1146,15 +1154,20 @@ b {
   font-size: 12px;
 
   &-menu {
-    padding: 10px;
+    padding: 1em;
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    @include phone {
+      flex-direction: column;
+    }
   }
 
   .menu {
     justify-content: center;
     flex-grow: 1;
+    min-height: 1em;
   }
 }
 
