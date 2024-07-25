@@ -12,13 +12,6 @@ import type { TaskbarTabContext } from '#desktop/entities/user/current/types.ts'
 import type { DocumentNode } from 'graphql'
 import type { Component } from 'vue'
 
-export interface UserTaskbarTabEntityProps<T = ObjectWithId> {
-  entity: T
-  taskbarTabId?: ID
-  taskbarTabLink?: string
-  context?: TaskbarTabContext
-}
-
 export interface UserTaskbarTab<T = Maybe<ObjectWithId | ObjectWithUid>> {
   type: EnumTaskbarEntity
   entity?: T
@@ -26,9 +19,18 @@ export interface UserTaskbarTab<T = Maybe<ObjectWithId | ObjectWithUid>> {
   tabEntityKey: string
   taskbarTabId?: ID
   lastContact: Scalars['ISO8601DateTime']['output']
+  updatedAt?: Scalars['ISO8601DateTime']['output']
   order: number
   formId?: Maybe<Scalars['FormId']['input']>
+  changed?: boolean
   dirty?: boolean
+  notify?: boolean
+}
+
+export interface UserTaskbarTabEntityProps<T = ObjectWithId> {
+  taskbarTab: UserTaskbarTab<T>
+  taskbarTabLink?: string
+  context?: TaskbarTabContext
 }
 
 export interface UserTaskbarTabPlugin {

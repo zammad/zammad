@@ -4,12 +4,12 @@ require 'rails_helper'
 
 RSpec.describe Gql::Subscriptions::User::Current::TaskbarItem::ListUpdates, type: :graphql do
   let(:user)         { create(:agent) }
-  let(:variables)    { { userId: gql.id(user) } }
+  let(:variables)    { { userId: gql.id(user), app: 'desktop' } }
   let(:mock_channel) { build_mock_channel }
   let(:subscription) do
     <<~QUERY
-      subscription userCurrentTaskbarItemListUpdates($userId: ID!) {
-        userCurrentTaskbarItemListUpdates(userId: $userId) {
+      subscription userCurrentTaskbarItemListUpdates($userId: ID!, $app: EnumTaskbarApp!) {
+        userCurrentTaskbarItemListUpdates(userId: $userId, app: $app) {
           taskbarItemList {
             id
           }

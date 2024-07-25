@@ -64,6 +64,7 @@ describe('UserTaskbarTabs.vue', () => {
   beforeAll(() => {
     mockApplicationConfig({
       ticket_hook: 'Ticket#',
+      ui_task_mananger_max_task_count: 30,
     })
   })
 
@@ -382,11 +383,17 @@ describe('UserTaskbarTabs.vue', () => {
             createArticleTypeKey: 'phone-in',
           },
           prio: 1,
+          formId: 'foo',
+          changed: false,
+          dirty: false,
+          notify: false,
+          lastContact: '2024-07-25T07:20:32.146Z',
+          updatedAt: '2024-07-24T15:42:28.212Z',
         },
         {
           __typename: 'UserTaskbarItem',
           id: convertToGraphQLId('Taskbar', 2),
-          key: 'TicketCreateScreen-998',
+          key: 'Ticket-42',
           callback: EnumTaskbarEntity.TicketZoom,
           entityAccess: EnumTaskbarEntityAccess.Granted,
           entity: {
@@ -402,6 +409,12 @@ describe('UserTaskbarTabs.vue', () => {
             },
           },
           prio: 2,
+          formId: 'bar',
+          changed: false,
+          dirty: false,
+          notify: false,
+          lastContact: '2024-07-25T07:20:32.146Z',
+          updatedAt: '2024-07-24T15:42:28.212Z',
         },
       ],
     })
@@ -419,39 +432,16 @@ describe('UserTaskbarTabs.vue', () => {
     // Reorder tabs.
     await getUserCurrentTaskbarItemListUpdatesSubscriptionHandler().trigger({
       userCurrentTaskbarItemListUpdates: {
+        __typename: 'UserCurrentTaskbarItemListUpdatesPayload',
         taskbarItemList: [
           {
             __typename: 'UserTaskbarItem',
             id: convertToGraphQLId('Taskbar', 2),
-            key: 'TicketCreateScreen-998',
-            callback: EnumTaskbarEntity.TicketZoom,
-            entityAccess: EnumTaskbarEntityAccess.Granted,
-            entity: {
-              __typename: 'Ticket',
-              id: convertToGraphQLId('Ticket', 42),
-              internalId: 42,
-              number: '53042',
-              title: 'Second ticket',
-              stateColorCode: EnumTicketStateColorCode.Pending,
-              state: {
-                __typename: 'TicketState',
-                name: 'pending reminder',
-              },
-            },
             prio: 1,
           },
           {
             __typename: 'UserTaskbarItem',
             id: convertToGraphQLId('Taskbar', 1),
-            key: 'TicketCreateScreen-999',
-            callback: EnumTaskbarEntity.TicketCreate,
-            entityAccess: EnumTaskbarEntityAccess.Granted,
-            entity: {
-              __typename: 'UserTaskbarItemEntityTicketCreate',
-              uid: '999',
-              title: 'First ticket',
-              createArticleTypeKey: 'phone-in',
-            },
             prio: 2,
           },
         ],

@@ -23,12 +23,12 @@ module Taskbar::List
           taskbar.skip_trigger = true
           taskbar.update!(prio: relation[:prio])
         end
-        trigger_list_update(user)
+        trigger_list_update(user, 'desktop')
       end
 
-      def trigger_list_update(user)
+      def trigger_list_update(user, app)
         user_id = Gql::ZammadSchema.id_from_internal_id('User', user.id)
-        Gql::Subscriptions::User::Current::TaskbarItem::ListUpdates.trigger(nil, arguments: { user_id: })
+        Gql::Subscriptions::User::Current::TaskbarItem::ListUpdates.trigger(nil, arguments: { user_id:, app: })
       end
 
     end

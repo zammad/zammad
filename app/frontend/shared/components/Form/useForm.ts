@@ -31,6 +31,10 @@ export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
 
   const isValid = computed(() => !!state.value?.valid)
 
+  const isSettled = computed(() => !!state.value?.settled)
+
+  const isInitialSettled = computed(() => !!state.value?.initialSettled)
+
   const isDirty = computed(() => !!state.value?.dirty)
 
   const isComplete = computed(() => !!state.value?.complete)
@@ -151,6 +155,8 @@ export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
     state,
     isValid,
     isDirty,
+    isSettled,
+    isInitialSettled,
     isComplete,
     isSubmitted,
     isDisabled,

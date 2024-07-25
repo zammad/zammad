@@ -2690,6 +2690,7 @@ export type SubscriptionsUserCurrentOverviewOrderingUpdatesArgs = {
 
 /** All available subscriptions */
 export type SubscriptionsUserCurrentTaskbarItemListUpdatesArgs = {
+  app: EnumTaskbarApp;
   userId: Scalars['ID']['input'];
 };
 
@@ -4355,6 +4356,7 @@ export type UserTaskbarItem = {
   active: Scalars['Boolean']['output'];
   app: EnumTaskbarApp;
   callback: EnumTaskbarEntity;
+  changed: Scalars['Boolean']['output'];
   /** Create date/time of the record */
   createdAt: Scalars['ISO8601DateTime']['output'];
   /** User that created this record */
@@ -4401,7 +4403,7 @@ export type UserTaskbarItemInput = {
   /** Additional custom attributes (names + values) */
   objectAttributeValues?: InputMaybe<Array<ObjectAttributeValueInput>>;
   /** The taskbar item related object parameters */
-  params: Scalars['JSON']['input'];
+  params?: InputMaybe<Scalars['JSON']['input']>;
   /** The taskbar item sorting priority */
   prio: Scalars['Int']['input'];
 };
@@ -4483,7 +4485,7 @@ export type EmailAddressesQueryVariables = Exact<{
 
 export type EmailAddressesQuery = { __typename?: 'Queries', emailAddresses: Array<{ __typename?: 'EmailAddress', name: string, email: string, active: boolean }> };
 
-export type UserCurrentTaskbarItemAttributesFragment = { __typename?: 'UserTaskbarItem', id: string, key: string, callback: EnumTaskbarEntity, formId?: string | null, entityAccess?: EnumTaskbarEntityAccess | null, prio: number, lastContact: string, dirty: boolean, entity?: { __typename?: 'Organization', id: string, internalId: number } | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', name: string } } | { __typename?: 'User', id: string, internalId: number } | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null } | null };
+export type UserCurrentTaskbarItemAttributesFragment = { __typename?: 'UserTaskbarItem', id: string, key: string, callback: EnumTaskbarEntity, formId?: string | null, entityAccess?: EnumTaskbarEntityAccess | null, prio: number, lastContact: string, changed: boolean, dirty: boolean, notify: boolean, updatedAt: string, entity?: { __typename?: 'Organization', id: string, internalId: number } | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', name: string } } | { __typename?: 'User', id: string, internalId: number } | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null } | null };
 
 export type UserCurrentPasswordCheckMutationVariables = Exact<{
   password: Scalars['String']['input'];
@@ -4497,7 +4499,7 @@ export type UserCurrentTaskbarItemAddMutationVariables = Exact<{
 }>;
 
 
-export type UserCurrentTaskbarItemAddMutation = { __typename?: 'Mutations', userCurrentTaskbarItemAdd?: { __typename?: 'UserCurrentTaskbarItemAddPayload', taskbarItem?: { __typename?: 'UserTaskbarItem', id: string, key: string, callback: EnumTaskbarEntity, formId?: string | null, entityAccess?: EnumTaskbarEntityAccess | null, prio: number, lastContact: string, dirty: boolean, entity?: { __typename?: 'Organization', id: string, internalId: number } | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', name: string } } | { __typename?: 'User', id: string, internalId: number } | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null } | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
+export type UserCurrentTaskbarItemAddMutation = { __typename?: 'Mutations', userCurrentTaskbarItemAdd?: { __typename?: 'UserCurrentTaskbarItemAddPayload', taskbarItem?: { __typename?: 'UserTaskbarItem', id: string, key: string, callback: EnumTaskbarEntity, formId?: string | null, entityAccess?: EnumTaskbarEntityAccess | null, prio: number, lastContact: string, changed: boolean, dirty: boolean, notify: boolean, updatedAt: string, entity?: { __typename?: 'Organization', id: string, internalId: number } | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', name: string } } | { __typename?: 'User', id: string, internalId: number } | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null } | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
 
 export type UserCurrentTaskbarItemDeleteMutationVariables = Exact<{
   id: Scalars['ID']['input'];
@@ -4519,21 +4521,22 @@ export type UserCurrentTaskbarItemUpdateMutationVariables = Exact<{
 }>;
 
 
-export type UserCurrentTaskbarItemUpdateMutation = { __typename?: 'Mutations', userCurrentTaskbarItemUpdate?: { __typename?: 'UserCurrentTaskbarItemUpdatePayload', taskbarItem?: { __typename?: 'UserTaskbarItem', id: string, key: string, callback: EnumTaskbarEntity, formId?: string | null, entityAccess?: EnumTaskbarEntityAccess | null, prio: number, lastContact: string, dirty: boolean, entity?: { __typename?: 'Organization', id: string, internalId: number } | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', name: string } } | { __typename?: 'User', id: string, internalId: number } | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null } | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
+export type UserCurrentTaskbarItemUpdateMutation = { __typename?: 'Mutations', userCurrentTaskbarItemUpdate?: { __typename?: 'UserCurrentTaskbarItemUpdatePayload', taskbarItem?: { __typename?: 'UserTaskbarItem', id: string, key: string, callback: EnumTaskbarEntity, formId?: string | null, entityAccess?: EnumTaskbarEntityAccess | null, prio: number, lastContact: string, changed: boolean, dirty: boolean, notify: boolean, updatedAt: string, entity?: { __typename?: 'Organization', id: string, internalId: number } | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', name: string } } | { __typename?: 'User', id: string, internalId: number } | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null } | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
 
 export type UserCurrentTaskbarItemListQueryVariables = Exact<{
   app: EnumTaskbarApp;
 }>;
 
 
-export type UserCurrentTaskbarItemListQuery = { __typename?: 'Queries', userCurrentTaskbarItemList?: Array<{ __typename?: 'UserTaskbarItem', id: string, key: string, callback: EnumTaskbarEntity, formId?: string | null, entityAccess?: EnumTaskbarEntityAccess | null, prio: number, lastContact: string, dirty: boolean, entity?: { __typename?: 'Organization', id: string, internalId: number } | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', name: string } } | { __typename?: 'User', id: string, internalId: number } | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null } | null }> | null };
+export type UserCurrentTaskbarItemListQuery = { __typename?: 'Queries', userCurrentTaskbarItemList?: Array<{ __typename?: 'UserTaskbarItem', id: string, key: string, callback: EnumTaskbarEntity, formId?: string | null, entityAccess?: EnumTaskbarEntityAccess | null, prio: number, lastContact: string, changed: boolean, dirty: boolean, notify: boolean, updatedAt: string, entity?: { __typename?: 'Organization', id: string, internalId: number } | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', name: string } } | { __typename?: 'User', id: string, internalId: number } | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null } | null }> | null };
 
 export type UserCurrentTaskbarItemListUpdatesSubscriptionVariables = Exact<{
   userId: Scalars['ID']['input'];
+  app: EnumTaskbarApp;
 }>;
 
 
-export type UserCurrentTaskbarItemListUpdatesSubscription = { __typename?: 'Subscriptions', userCurrentTaskbarItemListUpdates: { __typename?: 'UserCurrentTaskbarItemListUpdatesPayload', taskbarItemList?: Array<{ __typename?: 'UserTaskbarItem', id: string, key: string, callback: EnumTaskbarEntity, formId?: string | null, entityAccess?: EnumTaskbarEntityAccess | null, prio: number, lastContact: string, dirty: boolean, entity?: { __typename?: 'Organization', id: string, internalId: number } | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', name: string } } | { __typename?: 'User', id: string, internalId: number } | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null } | null }> | null } };
+export type UserCurrentTaskbarItemListUpdatesSubscription = { __typename?: 'Subscriptions', userCurrentTaskbarItemListUpdates: { __typename?: 'UserCurrentTaskbarItemListUpdatesPayload', taskbarItemList?: Array<{ __typename?: 'UserTaskbarItem', id: string, prio: number }> | null } };
 
 export type UserCurrentTaskbarItemStateUpdatesSubscriptionVariables = Exact<{
   taskbarItemId: Scalars['ID']['input'];
@@ -4548,7 +4551,7 @@ export type UserCurrentTaskbarItemUpdatesSubscriptionVariables = Exact<{
 }>;
 
 
-export type UserCurrentTaskbarItemUpdatesSubscription = { __typename?: 'Subscriptions', userCurrentTaskbarItemUpdates: { __typename?: 'UserCurrentTaskbarItemUpdatesPayload', removeItem?: string | null, addItem?: { __typename?: 'UserTaskbarItem', id: string, key: string, callback: EnumTaskbarEntity, formId?: string | null, entityAccess?: EnumTaskbarEntityAccess | null, prio: number, lastContact: string, dirty: boolean, entity?: { __typename?: 'Organization', id: string, internalId: number } | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', name: string } } | { __typename?: 'User', id: string, internalId: number } | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null } | null } | null, updateItem?: { __typename?: 'UserTaskbarItem', id: string, key: string, callback: EnumTaskbarEntity, formId?: string | null, entityAccess?: EnumTaskbarEntityAccess | null, prio: number, lastContact: string, dirty: boolean, entity?: { __typename?: 'Organization', id: string, internalId: number } | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', name: string } } | { __typename?: 'User', id: string, internalId: number } | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null } | null } | null } };
+export type UserCurrentTaskbarItemUpdatesSubscription = { __typename?: 'Subscriptions', userCurrentTaskbarItemUpdates: { __typename?: 'UserCurrentTaskbarItemUpdatesPayload', removeItem?: string | null, addItem?: { __typename?: 'UserTaskbarItem', id: string, key: string, callback: EnumTaskbarEntity, formId?: string | null, entityAccess?: EnumTaskbarEntityAccess | null, prio: number, lastContact: string, changed: boolean, dirty: boolean, notify: boolean, updatedAt: string, entity?: { __typename?: 'Organization', id: string, internalId: number } | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', name: string } } | { __typename?: 'User', id: string, internalId: number } | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null } | null } | null, updateItem?: { __typename?: 'UserTaskbarItem', id: string, key: string, callback: EnumTaskbarEntity, formId?: string | null, entityAccess?: EnumTaskbarEntityAccess | null, prio: number, lastContact: string, changed: boolean, dirty: boolean, notify: boolean, updatedAt: string, entity?: { __typename?: 'Organization', id: string, internalId: number } | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', name: string } } | { __typename?: 'User', id: string, internalId: number } | { __typename?: 'UserTaskbarItemEntityTicketCreate', uid: string, title: string, createArticleTypeKey?: string | null } | null } | null } };
 
 export type UserCurrentTwoFactorUpdatesSubscriptionVariables = Exact<{
   userId: Scalars['ID']['input'];

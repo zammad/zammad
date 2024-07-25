@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { watchOnce } from '@vueuse/shared'
+import { isEqual } from 'lodash-es'
 import { computed, markRaw, reactive } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
@@ -72,8 +72,15 @@ const router = useRouter()
 const walker = useWalker()
 const route = useRoute()
 
-const { form, isDisabled, isDirty, formNodeId, values, triggerFormUpdater } =
-  useForm()
+const {
+  form,
+  isDisabled,
+  isDirty,
+  isInitialSettled,
+  formNodeId,
+  values,
+  triggerFormUpdater,
+} = useForm()
 
 const application = useApplicationStore()
 
@@ -87,13 +94,6 @@ const redirectAfterCreate = (internalId?: number) => {
 
 const goBack = () => {
   walker.back('/') // TODO: check what is the best fallback route path.
-}
-
-const { waitForVariantConfirmation } = useConfirmation()
-const discardChanges = async () => {
-  const confirm = await waitForVariantConfirmation('unsaved')
-
-  if (confirm) goBack()
 }
 
 const { ticketArticleSenderTypeField } = useTicketCreateArticleType()
@@ -287,37 +287,62 @@ const sidebarContext = computed<TicketSidebarContext>(() => ({
 
 const { hasSidebar } = useTicketSidebar(sidebarContext)
 
-const tabContext = computed<TaskbarTabContext>(() => ({
-  form: form.value,
-  formValues: values.value,
-  formIsDirty: isDirty.value,
-}))
+const tabContext = computed<TaskbarTabContext>((currentContext) => {
+  if (!isInitialSettled.value) return {}
+
+  const newContext = {
+    formValues: values.value,
+    formIsDirty: isDirty.value,
+  }
+
+  if (currentContext && isEqual(newContext, currentContext))
+    return currentContext
+
+  return newContext
+})
 
 // TODO: create a useTicketCreateInformation-Data composable which provides/inject support
 
 const { activeTaskbarTab, activeTaskbarTabFormId, activeTaskbarTabDelete } =
   useTaskbarTab(EnumTaskbarEntity.TicketCreate, tabContext)
 
-watchOnce(activeTaskbarTab, (tab) => {
-  if (tab && tab.taskbarTabId) {
-    const stateUpdatesSubscription = new SubscriptionHandler(
-      useUserCurrentTaskbarItemStateUpdatesSubscription({
-        taskbarItemId: tab.taskbarTabId,
-      }),
-    )
+const stateUpdatesSubscription = new SubscriptionHandler(
+  useUserCurrentTaskbarItemStateUpdatesSubscription(
+    () => ({
+      taskbarItemId: activeTaskbarTab.value?.taskbarTabId as string,
+    }),
+    () => ({
+      fetchPolicy: 'no-cache',
+      enabled: !!activeTaskbarTab.value?.taskbarTabId,
+    }),
+  ),
+)
 
-    stateUpdatesSubscription.onResult((result) => {
-      if (result.data?.userCurrentTaskbarItemStateUpdates.stateChanged) {
-        triggerFormUpdater({
-          additionalParams: {
-            taskbarId: tab.taskbarTabId,
-            applyTaskbarState: true,
-          },
-        })
-      }
+stateUpdatesSubscription.onResult((result) => {
+  const taskbarTabId = activeTaskbarTab.value?.taskbarTabId
+
+  if (
+    taskbarTabId &&
+    result.data?.userCurrentTaskbarItemStateUpdates.stateChanged
+  ) {
+    triggerFormUpdater({
+      additionalParams: {
+        taskbarId: taskbarTabId,
+        applyTaskbarState: true,
+      },
     })
   }
 })
+
+const { waitForVariantConfirmation } = useConfirmation()
+const discardChanges = async () => {
+  const confirm = await waitForVariantConfirmation('unsaved')
+
+  if (confirm) {
+    goBack()
+    activeTaskbarTabDelete()
+  }
+}
 
 const applyTemplate = (templateId: string) => {
   triggerFormUpdater({
@@ -384,17 +409,19 @@ const submitCreateTicket = async (event: FormSubmitData<TicketFormData>) => {
       />
     </template>
     <template #bottomBar>
-      <CommonButton
-        v-if="isDirty"
-        size="large"
-        variant="danger"
-        :disabled="isDisabled"
-        @click="discardChanges"
-        >{{ __('Discard Changes') }}</CommonButton
-      >
-      <CommonButton v-else size="large" variant="secondary" @click="goBack">{{
-        __('Cancel & Go Back')
-      }}</CommonButton>
+      <template v-if="isInitialSettled">
+        <CommonButton
+          v-if="isDirty"
+          size="large"
+          variant="danger"
+          :disabled="isDisabled"
+          @click="discardChanges"
+          >{{ __('Discard Changes') }}</CommonButton
+        >
+        <CommonButton v-else size="large" variant="secondary" @click="goBack">{{
+          __('Cancel & Go Back')
+        }}</CommonButton>
+      </template>
 
       <ApplyTemplate @select-template="applyTemplate" />
 

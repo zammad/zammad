@@ -79,13 +79,19 @@ export const visitView = async (
     })
   }
 
+  // TODO: disable some stuff for now, because it will break a lot of test.
   // const routerBeforeGuards = [authenticationGuard, permissionGuard]
-  // if (isDesktop) {
-  //   const { default: systemSetupInfo } = await import(
-  //     '#desktop/router/guards/before/systemSetupInfo.ts'
-  //   )
-  //   routerBeforeGuards.push(systemSetupInfo)
-  // }
+  const routerBeforeGuards = []
+  if (isDesktop) {
+    //   const { default: systemSetupInfo } = await import(
+    //     '#desktop/router/guards/before/systemSetupInfo.ts'
+    //   )
+    //   routerBeforeGuards.push(systemSetupInfo)
+    const { default: activeTaskbarTab } = await import(
+      '#desktop/router/guards/before/activeTaskbarTab.ts'
+    )
+    routerBeforeGuards.push(activeTaskbarTab)
+  }
 
   const testKey = random()
 
@@ -105,8 +111,7 @@ export const visitView = async (
       form: true,
       unmount: true,
       routerRoutes: routes,
-      // TODO: disable for now and handle in seperate change
-      // routerBeforeGuards,
+      routerBeforeGuards,
       propsData: {
         testKey,
       },

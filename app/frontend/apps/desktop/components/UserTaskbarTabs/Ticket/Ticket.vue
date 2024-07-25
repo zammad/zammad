@@ -9,55 +9,73 @@ import SubscriptionHandler from '#shared/server/apollo/handler/SubscriptionHandl
 
 import CommonTicketStateIndicatorIcon from '#desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue'
 import CommonUpdateIndicator from '#desktop/components/CommonUpdateIndicator/CommonUpdateIndicator.vue'
+import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
 import { useTicketNumber } from '#desktop/pages/ticket/composables/useTicketNumber.ts'
 
 import type { UserTaskbarTabEntityProps } from '../types.ts'
 
 const props = defineProps<UserTaskbarTabEntityProps<Ticket>>()
 
-const { ticketNumberWithTicketHook } = useTicketNumber(toRef(props, 'entity'))
+const { ticketNumberWithTicketHook } = useTicketNumber(
+  toRef(props.taskbarTab, 'entity'),
+)
 
 const ticketUpdatesSubscription = new SubscriptionHandler(
-  useTicketUpdatesSubscription({ ticketId: props.entity.id, initial: true }), // TODO: maybe only true, when it's not the current active tab, but is it really a overhead?
+  useTicketUpdatesSubscription({
+    ticketId: props.taskbarTab.entity!.id,
+    initial: true,
+  }),
 )
 
 const ticketLink = ref()
 
-const isTicketUpdated = ref(false)
+const isTicketUpdated = computed(() => {
+  if (ticketLink.value?.isExactActive) return false
+  return props.taskbarTab.notify
+})
 
-// TODO: currently after reload the information is gone, in the old interface the "notify" column in the taskbar model was used to remember this.
-// TODO: Idea for the future: Could we not use taskbar.lastContact < ticket.updatedAt instead of a flag?!
-// Not relevant for the initial subscription request.
+const { updateTaskbarTab } = useUserCurrentTaskbarTabsStore()
+
+const updateNotifyFlag = (notify: boolean) => {
+  if (!props.taskbarTab.taskbarTabId) return
+
+  updateTaskbarTab(props.taskbarTab.taskbarTabId, {
+    ...props.taskbarTab,
+    notify,
+  })
+}
+
+// Set the notify flag whenever the result is received from the subscription.
 ticketUpdatesSubscription.onSubscribed().then(() => {
-  // Set the updated flag whenever the result is received from the subscription.
   ticketUpdatesSubscription.onResult(() => {
-    // Skip flagging currently active tab.
-    if (ticketLink.value?.isExactActive) return
+    if (props.taskbarTab.notify) return
 
-    isTicketUpdated.value = true
+    updateNotifyFlag(true)
   })
 })
 
-// Reset the updated flag when the tab becomes active.
+// Reset the notify flag when the tab becomes active.
 watch(
   () => ticketLink.value?.isExactActive,
   (isExactActive) => {
-    if (!isTicketUpdated.value || !isExactActive) return
+    if (!isExactActive && !props.taskbarTab.notify) return
 
-    isTicketUpdated.value = false
+    updateNotifyFlag(false)
   },
 )
 
 const currentState = computed(() => {
-  return props.entity.state.name
+  return props.taskbarTab.entity?.state?.name || ''
 })
 
 const currentTitle = computed(() => {
-  return props.entity.title
+  return props.taskbarTab.entity?.title || ''
 })
 
 const currentStateColorCode = computed(() => {
-  return props.entity.stateColorCode
+  return (
+    props.taskbarTab.entity?.stateColorCode || EnumTicketStateColorCode.Open
+  )
 })
 
 const activeBackgroundColor = computed(() => {
@@ -75,7 +93,7 @@ const activeBackgroundColor = computed(() => {
 })
 
 const currentViewTitle = computed(
-  () => `${ticketNumberWithTicketHook.value} - ${props.entity.title}`,
+  () => `${ticketNumberWithTicketHook.value} - ${currentTitle.value}`,
 )
 </script>
 
@@ -97,7 +115,7 @@ const currentViewTitle = computed(
       />
     </div>
     <CommonLabel
-      class="-:text-gray-300 -:dark:text-neutral-400 line-clamp-1 group-hover/tab:dark:text-white"
+      class="-:text-gray-300 -:dark:text-neutral-400 block truncate group-hover/tab:dark:text-white"
     >
       {{ currentTitle }}
     </CommonLabel>

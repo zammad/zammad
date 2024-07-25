@@ -1894,6 +1894,14 @@ msgstr ""
 msgid "Automatically loads the chat.css file. If you want to use your own css, just set it to false."
 msgstr ""
 
+#: app/frontend/shared/components/Form/Form.vue:1214
+msgid "Autosave in progress…"
+msgstr ""
+
+#: app/frontend/shared/components/Form/Form.vue:1223
+msgid "Autosaving is taking longer than expected…"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:35
 #: app/assets/javascripts/app/models/overview.coffee:8
 msgid "Available for the following roles"
@@ -2318,7 +2326,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:396
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:422
 msgid "Cancel & Go Back"
 msgstr ""
 
@@ -3240,7 +3248,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:407
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:434
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr ""
@@ -4766,7 +4774,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:393
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:419
 msgid "Discard Changes"
 msgstr ""
 
@@ -9097,8 +9105,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:68
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:30
-#: app/frontend/apps/desktop/pages/ticket/routes.ts:13
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:26
+#: app/frontend/apps/desktop/pages/ticket/routes.ts:15
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:106
 msgid "New Ticket"
 msgstr ""
@@ -9107,7 +9115,7 @@ msgstr ""
 msgid "New Ticket State"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:33
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:29
 msgid "New Ticket: %s"
 msgstr ""
 
@@ -14794,7 +14802,7 @@ msgstr ""
 msgid "Ticket Customer"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/routes.ts:27
+#: app/frontend/apps/desktop/pages/ticket/routes.ts:29
 msgid "Ticket Detail"
 msgstr ""
 

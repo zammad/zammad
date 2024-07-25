@@ -1,9 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { tryOnScopeDispose } from '@vueuse/shared'
-import { keyBy } from 'lodash-es'
+import { isEqual, keyBy } from 'lodash-es'
 import { acceptHMRUpdate, defineStore } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 
 import {
@@ -21,6 +21,7 @@ import {
   MutationHandler,
   QueryHandler,
 } from '#shared/server/apollo/handler/index.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import type { ObjectWithId } from '#shared/types/utils.ts'
 import log from '#shared/utils/log.ts'
@@ -43,6 +44,7 @@ import type { TaskbarTabContext } from '../types.ts'
 export const useUserCurrentTaskbarTabsStore = defineStore(
   'userCurrentTaskbarTabs',
   () => {
+    const application = useApplicationStore()
     const session = useSessionStore()
     const router = useRouter()
 
@@ -63,22 +65,7 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
       )
 
       if (!removedItem) return
-
-      const removedItemPlugin = getTaskbarTabTypePlugin(removedItem.callback)
-      if (typeof removedItemPlugin.buildTaskbarTabLink !== 'function') return
-
-      const removedItemLink = removedItemPlugin.buildTaskbarTabLink(
-        removedItem.entity,
-      )
-      if (!removedItemLink) return
-
-      const removedItemRoute = router.resolve(removedItemLink)
-
-      if (
-        !removedItemRoute?.name ||
-        router.currentRoute.value.name !== removedItemRoute.name
-      )
-        return
+      if (removedItem.key !== activeTaskbarTabEntityKey.value) return
 
       // If the active taskbar tab was removed, redirect to the default route.
       //   TODO: Clarify and define the default or contextual route.
@@ -150,72 +137,88 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
       document: UserCurrentTaskbarItemListUpdatesDocument,
       variables: {
         userId: session.userId,
-      },
-      updateQuery(previous, { subscriptionData }) {
-        const updates = subscriptionData.data.userCurrentTaskbarItemListUpdates
-
-        if (!updates) return previous
-
-        return {
-          userCurrentTaskbarItemList: updates.taskbarItemList,
-        }
+        app: EnumTaskbarApp.Desktop,
       },
     })
 
     const taskbarTabsRaw = taskbarTabsQuery.result()
     const taskbarTabsLoading = taskbarTabsQuery.loading()
 
-    const taskbarTabList = computed<UserTaskbarTab[]>(() => {
-      if (!taskbarTabsRaw.value?.userCurrentTaskbarItemList) return []
+    const taskbarTabList = computed<UserTaskbarTab[]>(
+      (currentTaskbarTabList) => {
+        if (!taskbarTabsRaw.value?.userCurrentTaskbarItemList) return []
 
-      const taskbarTabs: UserTaskbarTab[] =
-        taskbarTabsRaw.value.userCurrentTaskbarItemList
-          .filter(
-            (taskbarTab) =>
-              !taskbarTabIDsInDeletion.value.includes(taskbarTab.id),
-          )
-          .flatMap((taskbarTab) => {
-            const type = taskbarTab.callback
+        const taskbarTabs: UserTaskbarTab[] =
+          taskbarTabsRaw.value.userCurrentTaskbarItemList
+            .filter(
+              (taskbarTab) =>
+                !taskbarTabIDsInDeletion.value.includes(taskbarTab.id),
+            )
+            .flatMap((taskbarTab) => {
+              const type = taskbarTab.callback
 
-            if (!userTaskbarTabPluginByType[type]) {
-              log.warn(`Unknown taskbar tab type: ${type}.`)
-              return []
-            }
+              if (!userTaskbarTabPluginByType[type]) {
+                log.warn(`Unknown taskbar tab type: ${type}.`)
+                return []
+              }
 
-            return {
-              type,
-              entity: taskbarTab.entity,
-              entityAccess: taskbarTab.entityAccess,
-              tabEntityKey: taskbarTab.key,
-              taskbarTabId: taskbarTab.id,
-              lastContact: taskbarTab.lastContact,
-              order: taskbarTab.prio,
-              formId: taskbarTab.formId,
-              dirty: taskbarTab.dirty,
-            }
-          })
+              return {
+                type,
+                entity: taskbarTab.entity,
+                entityAccess: taskbarTab.entityAccess,
+                tabEntityKey: taskbarTab.key,
+                taskbarTabId: taskbarTab.id,
+                lastContact: taskbarTab.lastContact,
+                order: taskbarTab.prio,
+                formId: taskbarTab.formId,
+                changed: taskbarTab.changed,
+                dirty: taskbarTab.dirty,
+                notify: taskbarTab.notify,
+                updatedAt: taskbarTab.updatedAt,
+              }
+            })
 
-      const existingTabEntityKeys = new Set(
-        taskbarTabs.map((taskbarTab) => taskbarTab.tabEntityKey),
-      )
-
-      return taskbarTabs
-        .concat(
-          taskbarTabsInCreation.value.filter(
-            (taskbarTab) => !existingTabEntityKeys.has(taskbarTab.tabEntityKey),
-          ),
+        const existingTabEntityKeys = new Set(
+          taskbarTabs.map((taskbarTab) => taskbarTab.tabEntityKey),
         )
-        .sort((a, b) => a.order - b.order)
-    })
 
-    const activeTaskbarTab = computed<UserTaskbarTab | undefined>(() => {
-      if (!activeTaskbarTabEntityKey.value) return
+        const newTaskbarTabList = taskbarTabs
+          .concat(
+            taskbarTabsInCreation.value.filter(
+              (taskbarTab) =>
+                !existingTabEntityKeys.has(taskbarTab.tabEntityKey),
+            ),
+          )
+          .sort((a, b) => a.order - b.order)
 
-      return taskbarTabList.value.find(
-        (taskbarTab) =>
-          taskbarTab.tabEntityKey === activeTaskbarTabEntityKey.value,
-      )
-    })
+        if (
+          currentTaskbarTabList &&
+          isEqual(currentTaskbarTabList, newTaskbarTabList)
+        )
+          return currentTaskbarTabList
+
+        return newTaskbarTabList
+      },
+    )
+
+    const activeTaskbarTab = computed<UserTaskbarTab | undefined>(
+      (currentActiveTaskbarTab) => {
+        if (!activeTaskbarTabEntityKey.value) return
+
+        const newActiveTaskbarTab = taskbarTabList.value.find(
+          (taskbarTab) =>
+            taskbarTab.tabEntityKey === activeTaskbarTabEntityKey.value,
+        )
+
+        if (
+          currentActiveTaskbarTab &&
+          isEqual(newActiveTaskbarTab, currentActiveTaskbarTab)
+        )
+          return currentActiveTaskbarTab
+
+        return newActiveTaskbarTab
+      },
+    )
 
     const hasTaskbarTabs = computed(() => taskbarTabList.value?.length > 0)
 
@@ -325,7 +328,7 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
             app: EnumTaskbarApp.Desktop,
             callback: taskbarTabEntity,
             key: tabEntityKey,
-            notify: false, // TODO: check use case? maybe we can remove it.
+            notify: false,
             params: buildTaskbarTabParams(tabEntityInternalId),
             prio: order,
           },
@@ -374,16 +377,13 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
     )
 
     const updateTaskbarTab = (taskbarTabId: ID, taskbarTab: UserTaskbarTab) => {
-      const { buildTaskbarTabParams } = getTaskbarTabTypePlugin(taskbarTab.type)
-
       taskbarUpdateMutation.send({
         id: taskbarTabId,
         input: {
           app: EnumTaskbarApp.Desktop,
           callback: taskbarTab.type,
           key: taskbarTab.tabEntityKey,
-          notify: false, // TODO: check use case? maybe we can remove it.
-          params: buildTaskbarTabParams(taskbarTab.tabEntityKey),
+          notify: taskbarTab.notify ?? false,
           prio: taskbarTab.order,
           dirty: taskbarTab.dirty,
         },
@@ -408,24 +408,69 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
 
     // TODO: Do we need to handle anything else?!
 
+    let silenceTaskbarDeleteError = false
+
     const taskbarDeleteMutation = new MutationHandler(
       useUserCurrentTaskbarItemDeleteMutation(),
+      {
+        errorCallback: () => {
+          if (silenceTaskbarDeleteError) return false
+        },
+      },
     )
-    const deleteTaskbarTab = (taskbarTabId: ID) => {
+
+    const deleteTaskbarTab = (taskbarTabId: ID, silenceError?: boolean) => {
       taskbarTabIDsInDeletion.value.push(taskbarTabId)
+
+      if (silenceError) silenceTaskbarDeleteError = true
 
       taskbarDeleteMutation
         .send({
           id: taskbarTabId,
         })
-        .catch((error) => {
+        .catch(() => {
           taskbarTabIDsInDeletion.value = taskbarTabIDsInDeletion.value.filter(
             (inDeletionTaskbarTabId) => inDeletionTaskbarTabId !== taskbarTabId,
           )
-          // TODO: Toast message or more the notifcaiotn error message needs to be added?
-          log.error('Failed to delete taskbar tab.', error)
+        })
+        .finally(() => {
+          if (silenceError) silenceTaskbarDeleteError = false
         })
     }
+
+    watch(taskbarTabList, (newTaskbarTabList) => {
+      if (
+        !newTaskbarTabList ||
+        newTaskbarTabList.length <=
+          application.config.ui_task_mananger_max_task_count
+      )
+        return
+
+      const sortedTaskbarTabList = newTaskbarTabList
+        .filter(
+          (taskbarTab) =>
+            taskbarTab.taskbarTabId !== activeTaskbarTab.value?.taskbarTabId &&
+            taskbarTab.updatedAt &&
+            !taskbarTab.changed &&
+            !taskbarTab.dirty,
+        )
+        .sort(
+          (a, b) =>
+            new Date(a.updatedAt!).getTime() - new Date(b.updatedAt!).getTime(),
+        )
+
+      if (!sortedTaskbarTabList.length) return
+
+      const oldestTaskbarTab = sortedTaskbarTabList.at(0)
+      if (!oldestTaskbarTab?.taskbarTabId) return
+
+      log.info(
+        `More than the allowed maximum number of tasks are open (${application.config.ui_task_mananger_max_task_count}), closing the oldest untouched task now.`,
+        oldestTaskbarTab.tabEntityKey,
+      )
+
+      deleteTaskbarTab(oldestTaskbarTab.taskbarTabId, true)
+    })
 
     const waitForTaskbarListLoaded = () => {
       return new Promise<void>((resolve) => {

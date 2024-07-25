@@ -24,5 +24,8 @@ fragment userCurrentTaskbarItemAttributes on UserTaskbarItem {
   entityAccess
   prio
   lastContact
+  changed
   dirty
+  notify
+  updatedAt
 }

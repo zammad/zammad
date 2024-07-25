@@ -24,10 +24,10 @@ export default {
   'common-alert-success': 'check-circle-outline',
   'common-alert-warning': 'exclamation-triangle',
 
-  'common-notification-warn': 'info-circle',
+  'common-notification-warn': 'exclamation-triangle',
   'common-notification-success': 'check-circle-outline',
-  'common-notification-error': 'exclamation-triangle',
-  'common-notification-info': 'x-circle',
+  'common-notification-error': 'x-circle',
+  'common-notification-info': 'info-circle',
 
   'ticket-escalating': 'warning-triangle',
   'ticket-state-circle': 'check-circle-no',

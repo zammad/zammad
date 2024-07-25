@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { EnumTaskbarEntity } from '#shared/graphql/types.ts'
+
 import type { RouteRecordRaw } from 'vue-router'
 
 const route: RouteRecordRaw[] = [
@@ -13,6 +15,7 @@ const route: RouteRecordRaw[] = [
       title: __('New Ticket'),
       requiresAuth: true,
       requiredPermission: ['ticket.agent', 'ticket.customer'],
+      taskbarTabEntity: EnumTaskbarEntity.TicketCreate,
       level: 2,
     },
   },
@@ -20,13 +23,13 @@ const route: RouteRecordRaw[] = [
     path: '/tickets/:internalId(\\d+)',
     alias: ['/ticket/:internalId(\\d+)', '/ticket/zoom/:internalId(\\d+)'],
     name: 'TicketDetail',
-    // :todo check/clarify for available ticket id
     props: true,
     component: () => import('./views/TicketDetailView.vue'),
     meta: {
       title: __('Ticket Detail'),
       requiresAuth: true,
       requiredPermission: ['ticket.agent', 'ticket.customer'],
+      taskbarTabEntity: EnumTaskbarEntity.TicketZoom,
       level: 2,
     },
   },

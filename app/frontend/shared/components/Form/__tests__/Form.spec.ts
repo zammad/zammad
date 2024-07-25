@@ -12,6 +12,7 @@ import type {
 import { mockGraphQLApi } from '#tests/support/mock-graphql-api.ts'
 import { waitForNextTick, waitUntil } from '#tests/support/utils.ts'
 
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import Form from '#shared/components/Form/Form.vue'
 import type { Props } from '#shared/components/Form/Form.vue'
 import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
@@ -21,6 +22,8 @@ import {
   EnumFormUpdaterId,
   EnumObjectManagerObjects,
 } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import type { FormUpdaterAdditionalParams } from '#shared/types/form.ts'
 
 import { FormUpdaterDocument } from '../graphql/queries/formUpdater.api.ts'
 import {
@@ -64,6 +67,82 @@ const renderForm = async (options: ExtendedMountingOptions<Props> = {}) => {
   await waitUntil(() => wrapper.emitted().settled)
 
   return wrapper
+}
+
+const renderTicketCreateForm = async ({
+  formUpdaterId,
+  onSubmit,
+  clearValuesAfterSubmit,
+  formUpdaterAdditionalParams,
+}: {
+  formUpdaterId?: EnumFormUpdaterId
+  onSubmit?: () => unknown
+  clearValuesAfterSubmit?: boolean
+  formUpdaterAdditionalParams?: FormUpdaterAdditionalParams
+} = {}) => {
+  return new Promise<{
+    view: ExtendedRenderResult
+    form: Ref<FormRef>
+  }>((resolve) => {
+    const view = renderComponent(
+      {
+        template: `<div><Form ref="form" id="form-ticket-create" :schema="schema" :form-updater-id="formUpdaterId" :form-updater-additional-params="formUpdaterAdditionalParams" :clear-values-after-submit="clearValuesAfterSubmit" @submit="onSubmit" /></div>`,
+        components: {
+          Form,
+        },
+        setup() {
+          const schema = [
+            {
+              type: 'text',
+              name: 'title',
+              label: 'Title',
+            },
+            {
+              type: 'textarea',
+              name: 'text',
+              label: 'Textarea',
+              value: 'Some text',
+            },
+            {
+              type: 'submit',
+              name: 'submit',
+              label: 'Submit',
+            },
+            {
+              type: 'group',
+              name: 'group',
+              isGroupOrList: true,
+              children: [
+                {
+                  type: 'text',
+                  name: 'example',
+                  label: 'Example',
+                  value: 'Some example',
+                },
+              ],
+            },
+          ]
+          const form = ref<FormRef>()
+          onMounted(() => {
+            nextTick(() => {
+              resolve({ view, form: form as Ref<FormRef> })
+            })
+          })
+          return {
+            schema,
+            form,
+            formUpdaterId,
+            formUpdaterAdditionalParams,
+            clearValuesAfterSubmit,
+            onSubmit,
+          }
+        },
+      } as any,
+      {
+        form: true,
+      },
+    )
+  })
 }
 
 describe('Form.vue', () => {
@@ -866,79 +945,6 @@ describe('Form.vue - Empty', () => {
 })
 
 describe('Form.vue - Reset', () => {
-  const renderForm = async ({
-    formUpdaterId,
-    onSubmit,
-    clearValuesAfterSubmit,
-  }: {
-    formUpdaterId?: EnumFormUpdaterId
-    onSubmit?: () => unknown
-    clearValuesAfterSubmit?: boolean
-  } = {}) => {
-    return new Promise<{
-      view: ExtendedRenderResult
-      form: Ref<FormRef>
-    }>((resolve) => {
-      const view = renderComponent(
-        {
-          template: `<div><Form ref="form" id="form-ticket-create" :schema="schema" :form-updater-id="formUpdaterId" :clear-values-after-submit="clearValuesAfterSubmit" @submit="onSubmit" /></div>`,
-          components: {
-            Form,
-          },
-          setup() {
-            const schema = [
-              {
-                type: 'text',
-                name: 'title',
-                label: 'Title',
-              },
-              {
-                type: 'textarea',
-                name: 'text',
-                label: 'Textarea',
-                value: 'Some text',
-              },
-              {
-                type: 'submit',
-                name: 'submit',
-                label: 'Submit',
-              },
-              {
-                type: 'group',
-                name: 'group',
-                isGroupOrList: true,
-                children: [
-                  {
-                    type: 'text',
-                    name: 'example',
-                    label: 'Example',
-                    value: 'Some example',
-                  },
-                ],
-              },
-            ]
-            const form = ref<FormRef>()
-            onMounted(() => {
-              nextTick(() => {
-                resolve({ view, form: form as Ref<FormRef> })
-              })
-            })
-            return {
-              schema,
-              form,
-              formUpdaterId,
-              clearValuesAfterSubmit,
-              onSubmit,
-            }
-          },
-        } as any,
-        {
-          form: true,
-        },
-      )
-    })
-  }
-
   const assertDirty = (element: HTMLElement) => {
     expect(element.closest('.formkit-outer')).toHaveAttribute(
       'data-dirty',
@@ -954,7 +960,7 @@ describe('Form.vue - Reset', () => {
   }
 
   it('resets all values to original ones', async () => {
-    const { view, form } = await renderForm()
+    const { view, form } = await renderTicketCreateForm()
 
     const input = view.getByLabelText('Title')
     const textarea = view.getByLabelText('Textarea')
@@ -972,7 +978,7 @@ describe('Form.vue - Reset', () => {
   })
 
   it('resets all values to provided values', async () => {
-    const { view, form } = await renderForm()
+    const { view, form } = await renderTicketCreateForm()
     const input = view.getByLabelText('Title')
     const textarea = view.getByLabelText('Textarea')
     const example = view.getByLabelText('Example')
@@ -993,7 +999,7 @@ describe('Form.vue - Reset', () => {
   })
 
   it("doesn't reset dirty values, if asked to", async () => {
-    const { view, form } = await renderForm()
+    const { view, form } = await renderTicketCreateForm()
     const input = view.getByLabelText('Title')
     const textarea = view.getByLabelText('Textarea')
     const example = view.getByLabelText('Example')
@@ -1016,7 +1022,7 @@ describe('Form.vue - Reset', () => {
   })
 
   it('resets only specific group node', async () => {
-    const { view, form } = await renderForm()
+    const { view, form } = await renderTicketCreateForm()
 
     const input = view.getByLabelText('Title')
     const textarea = view.getByLabelText('Textarea')
@@ -1062,7 +1068,7 @@ describe('Form.vue - Reset', () => {
       },
     )
 
-    const { view, form } = await renderForm({
+    const { view, form } = await renderTicketCreateForm({
       formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
     })
 
@@ -1101,7 +1107,7 @@ describe('Form.vue - Reset', () => {
 
   it('correctly resets state to dirty when form is submitted', async () => {
     const onSubmit = vi.fn().mockResolvedValue(true)
-    const { view, form } = await renderForm({ onSubmit })
+    const { view, form } = await renderTicketCreateForm({ onSubmit })
 
     const input = view.getByLabelText('Title')
     await view.events.type(input, 'New title')
@@ -1129,7 +1135,7 @@ describe('Form.vue - Reset', () => {
 
   it('clear values after submit (instead of remembering existing values)', async () => {
     const onSubmit = vi.fn().mockResolvedValue(true)
-    const { view } = await renderForm({
+    const { view } = await renderTicketCreateForm({
       onSubmit,
       clearValuesAfterSubmit: true,
     })
@@ -1144,5 +1150,105 @@ describe('Form.vue - Reset', () => {
     expect(onSubmit).toHaveBeenCalledTimes(1)
 
     expect(input).toHaveValue('')
+  })
+})
+
+describe('Form.vue - Autosave notification', () => {
+  const notifications = useNotifications()
+
+  vi.spyOn(notifications, 'notify')
+
+  beforeEach(() => {
+    vi.useFakeTimers()
+
+    mockGraphQLApi(FormUpdaterDocument).willBehave(async (variables) => {
+      if (!variables.meta.initial && !variables.meta.additionalData.skipSleep) {
+        await new Promise((r) => setTimeout(r, 6000))
+      }
+
+      return {
+        data: {
+          formUpdater: {},
+        },
+      }
+    })
+  })
+
+  afterEach(() => {
+    vi.useRealTimers()
+  })
+
+  it('triggers autosave notification for slow form updater queries', async () => {
+    const { view } = await renderTicketCreateForm({
+      formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
+      formUpdaterAdditionalParams: {
+        taskbarId: convertToGraphQLId('Taskbar', 1),
+      },
+    })
+
+    await vi.runAllTimersAsync()
+
+    const input = view.getByLabelText('Title')
+    await view.events.type(input, 'New title')
+
+    await vi.advanceTimersByTimeAsync(1500)
+
+    expect(notifications.notify).toHaveBeenCalledWith({
+      id: 'form-updater-autosave',
+      message: 'Autosave in progress…',
+      persistent: true,
+      type: 'info',
+    })
+
+    await vi.advanceTimersByTimeAsync(4000)
+
+    expect(notifications.notify).toHaveBeenCalledWith({
+      id: 'form-updater-autosave',
+      message: 'Autosaving is taking longer than expected…',
+      persistent: true,
+      type: 'warn',
+    })
+  })
+
+  it('does not trigger autosave notification for fast form updater queries', async () => {
+    const { view } = await renderTicketCreateForm({
+      formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
+      formUpdaterAdditionalParams: {
+        taskbarId: convertToGraphQLId('Taskbar', 1),
+        skipSleep: true,
+      },
+    })
+
+    await vi.runAllTimersAsync()
+
+    const input = view.getByLabelText('Title')
+    await view.events.type(input, 'New title')
+
+    await vi.advanceTimersByTimeAsync(1500)
+
+    expect(notifications.notify).not.toHaveBeenCalled()
+
+    await vi.advanceTimersByTimeAsync(4000)
+
+    expect(notifications.notify).not.toHaveBeenCalled()
+  })
+
+  it('does not trigger autosave notification without associated taskbar tab', async () => {
+    const { view } = await renderTicketCreateForm({
+      formUpdaterId: EnumFormUpdaterId.FormUpdaterUpdaterTicketCreate,
+    })
+
+    await vi.runAllTimersAsync()
+
+    const input = view.getByLabelText('Title')
+    await view.events.type(input, 'New title')
+
+    await vi.advanceTimersByTimeAsync(1500)
+
+    expect(notifications.notify).not.toHaveBeenCalled()
+
+    await vi.advanceTimersByTimeAsync(4000)
+
+    expect(notifications.notify).not.toHaveBeenCalled()
   })
 })

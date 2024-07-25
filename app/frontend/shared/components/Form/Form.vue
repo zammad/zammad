@@ -16,8 +16,11 @@ import {
   watch,
   markRaw,
   useSlots,
+  onBeforeUnmount,
 } from 'vue'
 
+import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import { useObjectAttributeFormFields } from '#shared/entities/object-attributes/composables/useObjectAttributeFormFields.ts'
 import { useObjectAttributeLoadFormFields } from '#shared/entities/object-attributes/composables/useObjectAttributeLoadFormFields.ts'
 import UserError from '#shared/errors/UserError.ts'
@@ -241,6 +244,18 @@ const setFormNode = (node: FormKitNode) => {
       const formName = node.context?.id || node.name
       testFlags.set(`${formName}.settled`)
       emit('settled')
+
+      // Set the initial settled flag when all things are executed.
+      // This means form is settled and also the initial form updater values are set.
+      node.store.set(
+        createMessage({
+          blocking: false,
+          key: 'initialSettled',
+          value: true,
+          visible: false,
+        }),
+      )
+
       executeFormHandler(FormHandlerExecution.InitialSettled, values.value)
 
       if (props.shouldAutofocus) autofocusFirstInput(node)
@@ -1155,6 +1170,67 @@ const setFormSchemaInitialized = () => {
   }
 }
 
+const { notify, removeNotification } = useNotifications()
+
+let formUpdaterQueryLoadingTimeoutId: NodeJS.Timeout | null
+
+const clearFormUpdaterQueryLoadingTimeout = () => {
+  if (!formUpdaterQueryLoadingTimeoutId) return
+
+  clearTimeout(formUpdaterQueryLoadingTimeoutId)
+  formUpdaterQueryLoadingTimeoutId = null
+}
+
+const cleanupFormUpdaterAutosaveNotification = () => {
+  removeNotification('form-updater-autosave')
+  clearFormUpdaterQueryLoadingTimeout()
+}
+
+const handleFormUpdaterAutosaveNotification = () => {
+  if (
+    !formUpdaterVariables.value?.meta.additionalData?.taskbarId &&
+    !formUpdaterVariables.value?.meta.additionalData?.applyTaskbarState
+  )
+    return
+
+  // Clean up previous notification and timeout.
+  cleanupFormUpdaterAutosaveNotification()
+
+  const formUpdaterQueryLoading = formUpdaterQueryHandler.loading()
+
+  watch(formUpdaterQueryLoading, (isLoading) => {
+    if (!isLoading) {
+      cleanupFormUpdaterAutosaveNotification()
+      return
+    }
+
+    // Clear previous timeout.
+    clearFormUpdaterQueryLoadingTimeout()
+
+    formUpdaterQueryLoadingTimeoutId = setTimeout(() => {
+      // Show info notification if the request takes longer than a second.
+      notify({
+        id: 'form-updater-autosave',
+        message: __('Autosave in progress…'),
+        type: NotificationTypes.Info,
+        persistent: true,
+      })
+
+      // Show warning notification if the request takes longer than five seconds.
+      formUpdaterQueryLoadingTimeoutId = setTimeout(() => {
+        notify({
+          id: 'form-updater-autosave',
+          message: __('Autosaving is taking longer than expected…'),
+          type: NotificationTypes.Warn,
+          persistent: true,
+        })
+      }, 4000)
+    }, 1000)
+  })
+}
+
+onBeforeUnmount(cleanupFormUpdaterAutosaveNotification)
+
 const initializeFormSchema = () => {
   buildStaticSchema()
 
@@ -1179,6 +1255,8 @@ const initializeFormSchema = () => {
         },
       ),
     )
+
+    handleFormUpdaterAutosaveNotification()
 
     formUpdaterQueryHandler.onResult((queryResult) => {
       // Execute the form handler function so that they can manipulate the form updater result.

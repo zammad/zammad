@@ -181,7 +181,7 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
                     ? activeTaskbarTabContext
                     : undefined
                 "
-                :taskbar-tab-id="userTaskbarTab.taskbarTabId"
+                :taskbar-tab="userTaskbarTab"
                 :taskbar-tab-link="
                   getTaskbarTabLink(userTaskbarTab.tabEntityKey)
                 "
@@ -255,9 +255,7 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
                   ? activeTaskbarTabContext
                   : undefined
               "
-              :taskbar-tab-id="
-                taskbarTabListByTabEntityKey[tabEntityKey].taskbarTabId
-              "
+              :taskbar-tab="taskbarTabListByTabEntityKey[tabEntityKey]"
               :taskbar-tab-link="getTaskbarTabLink(tabEntityKey)"
               class="active:cursor-grabbing"
             />

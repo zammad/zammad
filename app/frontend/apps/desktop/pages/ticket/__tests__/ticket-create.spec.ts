@@ -34,6 +34,7 @@ describe('ticket create view', async () => {
   describe('view with granted access', async () => {
     beforeEach(() => {
       mockApplicationConfig({
+        ui_task_mananger_max_task_count: 30,
         ui_ticket_create_available_types: [
           'phone-in',
           'phone-out',
@@ -41,6 +42,51 @@ describe('ticket create view', async () => {
         ],
       })
       mockPermissions(['ticket.agent'])
+    })
+
+    // FIXME: This test example has to be first, otherwise it will start to fail.
+    //   This is probably due to the leftover router instance, which has to be set up in a different way for this test.
+    it('supports updating dirty flag in the associated taskbar tab', async () => {
+      const uid = getUuid()
+
+      mockUserCurrentTaskbarItemListQuery({
+        userCurrentTaskbarItemList: [
+          {
+            __typename: 'UserTaskbarItem',
+            id: convertToGraphQLId('Taskbar', 1),
+            key: `TicketCreateScreen-${uid}`,
+            callback: EnumTaskbarEntity.TicketCreate,
+            entityAccess: EnumTaskbarEntityAccess.Granted,
+            entity: {
+              __typename: 'UserTaskbarItemEntityTicketCreate',
+              uid,
+              title: '',
+              createArticleTypeKey: 'phone-in',
+            },
+            dirty: false,
+          },
+        ],
+      })
+
+      handleMockFormUpdaterQuery()
+
+      const view = await visitView(`/ticket/create/${uid}`)
+
+      expect(
+        await view.findByRole('button', { name: 'Cancel & Go Back' }),
+      ).toBeInTheDocument()
+
+      await view.events.type(view.getByLabelText('Title'), 'Test Ticket')
+
+      const calls = await waitForUserCurrentTaskbarItemUpdateMutationCalls()
+
+      expect(calls.at(-1)?.variables).toEqual(
+        expect.objectContaining({
+          input: expect.objectContaining({
+            dirty: true,
+          }),
+        }),
+      )
     })
 
     it('renders view correctly', async () => {
@@ -215,49 +261,6 @@ describe('ticket create view', async () => {
       )
 
       expect(view.getByText('Test Ticket')).toBeInTheDocument()
-    })
-
-    it('supports updating dirty flag in the associated taskbar tab', async () => {
-      const uid = getUuid()
-
-      mockUserCurrentTaskbarItemListQuery({
-        userCurrentTaskbarItemList: [
-          {
-            __typename: 'UserTaskbarItem',
-            id: convertToGraphQLId('Taskbar', 1),
-            key: `TicketCreateScreen-${uid}`,
-            callback: EnumTaskbarEntity.TicketCreate,
-            entityAccess: EnumTaskbarEntityAccess.Granted,
-            entity: {
-              __typename: 'UserTaskbarItemEntityTicketCreate',
-              uid,
-              title: '',
-              createArticleTypeKey: 'phone-in',
-            },
-            dirty: false,
-          },
-        ],
-      })
-
-      handleMockFormUpdaterQuery()
-
-      const view = await visitView(`/ticket/create/${uid}`)
-
-      expect(
-        await view.findByRole('button', { name: 'Cancel & Go Back' }),
-      ).toBeInTheDocument()
-
-      await view.events.type(view.getByLabelText('Title'), 'Test Ticket')
-
-      const calls = await waitForUserCurrentTaskbarItemUpdateMutationCalls()
-
-      expect(calls.at(-1)?.variables).toEqual(
-        expect.objectContaining({
-          input: expect.objectContaining({
-            dirty: true,
-          }),
-        }),
-      )
     })
 
     it('creates a new ticket', async () => {

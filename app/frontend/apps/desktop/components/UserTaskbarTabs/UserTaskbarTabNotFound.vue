@@ -13,7 +13,7 @@
 
     <CommonLabel
       v-tooltip="$t('This tab could not be found.')"
-      class="line-clamp-1 text-gray-300 dark:text-neutral-400"
+      class="block truncate text-gray-300 dark:text-neutral-400"
     >
       {{ $t('Not found') }}
     </CommonLabel>

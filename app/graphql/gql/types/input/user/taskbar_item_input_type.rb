@@ -8,7 +8,7 @@ module Gql::Types::Input::User
 
     argument :key, String, required: true, description: 'The itaskbar item related object key identifier'
     argument :callback, Gql::Types::Enum::TaskbarEntityType, required: true, description: 'The taskbar item related object callback'
-    argument :params, GraphQL::Types::JSON, required: true, description: 'The taskbar item related object parameters'
+    argument :params, GraphQL::Types::JSON, required: false, description: 'The taskbar item related object parameters'
     argument :prio, Integer, required: true, description: 'The taskbar item sorting priority'
     argument :notify, Boolean, required: true, description: 'The taskbar item notification about changes'
     argument :app, Gql::Types::Enum::TaskbarAppType, required: true, description: 'The taskbar item application'

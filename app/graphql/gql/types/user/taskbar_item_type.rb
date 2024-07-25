@@ -21,6 +21,7 @@ module Gql::Types::User
     field :form_id, String
     field :entity, Gql::Types::User::TaskbarItemEntityType
     field :entity_access, Gql::Types::Enum::TaskbarEntityAccessType
+    field :changed, Boolean, null: false
     field :dirty, Boolean, null: false
 
     def self.authorize(_object, ctx)
@@ -47,6 +48,10 @@ module Gql::Types::User
 
     def form_id
       @object.state&.dig('article', 'form_id') || @object.state&.dig('form_id')
+    end
+
+    def changed
+      @object.state_changed?
     end
 
     def dirty

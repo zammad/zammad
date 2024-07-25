@@ -1,7 +1,11 @@
-subscription userCurrentTaskbarItemListUpdates($userId: ID!) {
-  userCurrentTaskbarItemListUpdates(userId: $userId) {
+subscription userCurrentTaskbarItemListUpdates(
+  $userId: ID!
+  $app: EnumTaskbarApp!
+) {
+  userCurrentTaskbarItemListUpdates(userId: $userId, app: $app) {
     taskbarItemList {
-      ...userCurrentTaskbarItemAttributes
+      id
+      prio
     }
   }
 }

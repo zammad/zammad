@@ -15403,6 +15403,20 @@
                     }
                   },
                   "defaultValue": null
+                },
+                {
+                  "name": "app",
+                  "description": "Taskbar app to filter for.",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "EnumTaskbarApp",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
                 }
               ],
               "type": {
@@ -26139,6 +26153,24 @@
               "deprecationReason": null
             },
             {
+              "name": "changed",
+              "description": null,
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "createdAt",
               "description": "Create date/time of the record",
               "args": [
@@ -26539,13 +26571,9 @@
               "name": "params",
               "description": "The taskbar item related object parameters",
               "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "SCALAR",
-                  "name": "JSON",
-                  "ofType": null
-                }
+                "kind": "SCALAR",
+                "name": "JSON",
+                "ofType": null
               },
               "defaultValue": null
             },
