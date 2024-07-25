@@ -58,7 +58,7 @@ ticketUpdatesSubscription.onSubscribed().then(() => {
 watch(
   () => ticketLink.value?.isExactActive,
   (isExactActive) => {
-    if (!isExactActive && !props.taskbarTab.notify) return
+    if (!isExactActive || !props.taskbarTab.notify) return
 
     updateNotifyFlag(false)
   },
