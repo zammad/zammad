@@ -1,0 +1,7 @@
+subscription userCurrentTaskbarItemListUpdates($userId: ID!) {
+  userCurrentTaskbarItemListUpdates(userId: $userId) {
+    taskbarItemList {
+      ...userCurrentTaskbarItemAttributes
+    }
+  }
+}

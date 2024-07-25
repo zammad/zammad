@@ -38,6 +38,9 @@ module Taskbar::TriggersSubscriptions
   end
 
   def trigger_taskbar_item_update_subscriptions
+    # See specific subscription for prio changes / list sorting.
+    return true if saved_change_to_attribute?('prio')
+
     Gql::Subscriptions::User::Current::TaskbarItemUpdates.trigger_after_update(self)
   end
 

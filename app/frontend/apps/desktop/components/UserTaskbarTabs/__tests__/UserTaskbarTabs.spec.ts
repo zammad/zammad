@@ -24,6 +24,7 @@ import {
   mockUserCurrentTaskbarItemListQuery,
   waitForUserCurrentTaskbarItemListQueryCalls,
 } from '#desktop/entities/user/current/graphql/queries/userCurrentTaskbarItemList.mocks.ts'
+import { getUserCurrentTaskbarItemListUpdatesSubscriptionHandler } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemListUpdates.mocks.ts'
 import { getUserCurrentTaskbarItemUpdatesSubscriptionHandler } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemUpdates.mocks.ts'
 
 import UserTaskbarTabs, { type Props } from '../UserTaskbarTabs.vue'
@@ -363,6 +364,105 @@ describe('UserTaskbarTabs.vue', () => {
     })
 
     expect(wrapper.queryByText('New ticket title')).not.toBeInTheDocument()
+  })
+
+  it('supports updating the tabs after they got reordered', async () => {
+    mockUserCurrentTaskbarItemListQuery({
+      userCurrentTaskbarItemList: [
+        {
+          __typename: 'UserTaskbarItem',
+          id: convertToGraphQLId('Taskbar', 1),
+          key: 'TicketCreateScreen-999',
+          callback: EnumTaskbarEntity.TicketCreate,
+          entityAccess: EnumTaskbarEntityAccess.Granted,
+          entity: {
+            __typename: 'UserTaskbarItemEntityTicketCreate',
+            uid: '999',
+            title: 'First ticket',
+            createArticleTypeKey: 'phone-in',
+          },
+          prio: 1,
+        },
+        {
+          __typename: 'UserTaskbarItem',
+          id: convertToGraphQLId('Taskbar', 2),
+          key: 'TicketCreateScreen-998',
+          callback: EnumTaskbarEntity.TicketZoom,
+          entityAccess: EnumTaskbarEntityAccess.Granted,
+          entity: {
+            __typename: 'Ticket',
+            id: convertToGraphQLId('Ticket', 42),
+            internalId: 42,
+            number: '53042',
+            title: 'Second ticket',
+            stateColorCode: EnumTicketStateColorCode.Pending,
+            state: {
+              __typename: 'TicketState',
+              name: 'pending reminder',
+            },
+          },
+          prio: 2,
+        },
+      ],
+    })
+
+    const wrapper = await renderUserTaskbarTabs()
+
+    expect(wrapper.getByText('Tabs')).toBeInTheDocument()
+
+    let tabs = wrapper.getAllByRole('listitem')
+
+    expect(tabs).toHaveLength(2)
+    expect(tabs[0]).toHaveTextContent('First ticket')
+    expect(tabs[1]).toHaveTextContent('Second ticket')
+
+    // Reorder tabs.
+    await getUserCurrentTaskbarItemListUpdatesSubscriptionHandler().trigger({
+      userCurrentTaskbarItemListUpdates: {
+        taskbarItemList: [
+          {
+            __typename: 'UserTaskbarItem',
+            id: convertToGraphQLId('Taskbar', 2),
+            key: 'TicketCreateScreen-998',
+            callback: EnumTaskbarEntity.TicketZoom,
+            entityAccess: EnumTaskbarEntityAccess.Granted,
+            entity: {
+              __typename: 'Ticket',
+              id: convertToGraphQLId('Ticket', 42),
+              internalId: 42,
+              number: '53042',
+              title: 'Second ticket',
+              stateColorCode: EnumTicketStateColorCode.Pending,
+              state: {
+                __typename: 'TicketState',
+                name: 'pending reminder',
+              },
+            },
+            prio: 1,
+          },
+          {
+            __typename: 'UserTaskbarItem',
+            id: convertToGraphQLId('Taskbar', 1),
+            key: 'TicketCreateScreen-999',
+            callback: EnumTaskbarEntity.TicketCreate,
+            entityAccess: EnumTaskbarEntityAccess.Granted,
+            entity: {
+              __typename: 'UserTaskbarItemEntityTicketCreate',
+              uid: '999',
+              title: 'First ticket',
+              createArticleTypeKey: 'phone-in',
+            },
+            prio: 2,
+          },
+        ],
+      },
+    })
+
+    tabs = wrapper.getAllByRole('listitem')
+
+    expect(tabs).toHaveLength(2)
+    expect(tabs[0]).toHaveTextContent('Second ticket')
+    expect(tabs[1]).toHaveTextContent('First ticket')
   })
 
   it('supports closing tabs', async () => {

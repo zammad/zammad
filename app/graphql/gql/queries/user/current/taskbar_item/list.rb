@@ -10,10 +10,7 @@ module Gql::Queries
     type [Gql::Types::User::TaskbarItemType], null: true
 
     def resolve(app: nil)
-      clause = { user_id: context[:current_user].id }
-      clause[:app] = app if app
-
-      Taskbar.where(clause).reorder(:prio)
+      Taskbar.list(context[:current_user], app: app)
     end
   end
 end

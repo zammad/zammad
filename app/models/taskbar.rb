@@ -5,6 +5,7 @@ class Taskbar < ApplicationModel
   include ::Taskbar::HasAttachments
   include Taskbar::Assets
   include Taskbar::TriggersSubscriptions
+  include Taskbar::List
 
   TASKBAR_APPS = %w[desktop mobile].freeze
   TASKBAR_ENTITIES = %w[

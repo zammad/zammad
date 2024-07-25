@@ -10,6 +10,8 @@ import {
   EnumTaskbarApp,
   EnumTaskbarEntity,
   type UserCurrentTaskbarItemListQuery,
+  type UserCurrentTaskbarItemListUpdatesSubscription,
+  type UserCurrentTaskbarItemListUpdatesSubscriptionVariables,
   type UserCurrentTaskbarItemUpdatesSubscription,
   type UserCurrentTaskbarItemUpdatesSubscriptionVariables,
 } from '#shared/graphql/types.ts'
@@ -33,6 +35,7 @@ import {
   UserCurrentTaskbarItemListDocument,
   useUserCurrentTaskbarItemListQuery,
 } from '../graphql/queries/userCurrentTaskbarItemList.api.ts'
+import { UserCurrentTaskbarItemListUpdatesDocument } from '../graphql/subscriptions/userCurrentTaskbarItemListUpdates.api.ts'
 import { UserCurrentTaskbarItemUpdatesDocument } from '../graphql/subscriptions/userCurrentTaskbarItemUpdates.api.ts'
 
 import type { TaskbarTabContext } from '../types.ts'
@@ -137,6 +140,25 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
         }
 
         return previous
+      },
+    })
+
+    taskbarTabsQuery.subscribeToMore<
+      UserCurrentTaskbarItemListUpdatesSubscriptionVariables,
+      UserCurrentTaskbarItemListUpdatesSubscription
+    >({
+      document: UserCurrentTaskbarItemListUpdatesDocument,
+      variables: {
+        userId: session.userId,
+      },
+      updateQuery(previous, { subscriptionData }) {
+        const updates = subscriptionData.data.userCurrentTaskbarItemListUpdates
+
+        if (!updates) return previous
+
+        return {
+          userCurrentTaskbarItemList: updates.taskbarItemList,
+        }
       },
     })
 
