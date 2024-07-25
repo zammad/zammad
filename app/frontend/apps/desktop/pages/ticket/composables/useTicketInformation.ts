@@ -9,7 +9,7 @@ export const TICKET_INFORMATION_KEY = Symbol(
 ) as InjectionKey<ComputedRef<TicketById | undefined>>
 
 export const useTicketInformation = () => {
-  const ticket = inject(TICKET_INFORMATION_KEY, null)
+  const ticket = inject(TICKET_INFORMATION_KEY) as ComputedRef<TicketById>
 
   return {
     ticket,

@@ -3,3 +3,5 @@
 export interface LinkClassMap {
   base: string
 }
+
+export type Sizes = 'xs' | 'small' | 'medium' | 'large' | 'xl'

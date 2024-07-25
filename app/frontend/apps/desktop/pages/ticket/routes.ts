@@ -26,7 +26,7 @@ const route: RouteRecordRaw[] = [
     props: true,
     component: () => import('./views/TicketDetailView.vue'),
     meta: {
-      title: __('Ticket Detail'),
+      title: __('Ticket'),
       requiresAuth: true,
       requiredPermission: ['ticket.agent', 'ticket.customer'],
       taskbarTabEntity: EnumTaskbarEntity.TicketZoom,
@@ -35,6 +35,11 @@ const route: RouteRecordRaw[] = [
   },
   {
     path: '/ticket/zoom/:internalId(\\d+)/:articleId(\\d+)',
+    redirect: (to) =>
+      `/tickets/${to.params.internalId}#article-${to.params.articleId}`,
+  },
+  {
+    path: '/tickets/:internalId(\\d+)/:articleId(\\d+)',
     redirect: (to) =>
       `/tickets/${to.params.internalId}#article-${to.params.articleId}`,
   },

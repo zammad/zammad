@@ -23,11 +23,11 @@ RSpec.describe 'Mobile > Ticket > Articles List subscription', app: :mobile, aut
   end
 
   def wait_for_ticket_article_updates(number: 1)
-    wait_for_gql('apps/mobile/pages/ticket/graphql/subscriptions/ticketArticlesUpdates.graphql', number: number)
+    wait_for_gql('shared/entities/ticket/graphql/subscriptions/ticketArticlesUpdates.graphql', number: number)
   end
 
   def wait_for_ticket_articles(number: 1)
-    wait_for_gql('apps/mobile/pages/ticket/graphql/queries/ticket/articles.graphql', number: number)
+    wait_for_gql('shared/entities/ticket/graphql/queries/ticket/articles.graphql', number: number)
   end
 
   it 'shows a newly created article' do

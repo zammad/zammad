@@ -2,7 +2,10 @@
 
 import { faker } from '@faker-js/faker'
 
-import type { TicketArticle } from '#shared/graphql/types.ts'
+import {
+  EnumTicketArticleSenderName,
+  type TicketArticle,
+} from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import type { DeepPartial } from '#shared/types/utils.ts'
 
@@ -16,7 +19,11 @@ export default (): DeepPartial<TicketArticle> => {
     attachmentsWithoutInline: [],
     sender: {
       id: convertToGraphQLId('TicketArticleSender', senderNumber + 1),
-      name: ['Agent', 'Customer', 'System'][senderNumber],
+      name: [
+        EnumTicketArticleSenderName.Agent,
+        EnumTicketArticleSenderName.Customer,
+        EnumTicketArticleSenderName.System,
+      ][senderNumber],
     },
     // possible types: db/seeds/ticket_article_types.rb
     // we only generate emails to have consistent articles

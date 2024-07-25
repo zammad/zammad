@@ -3,6 +3,9 @@
 <script setup lang="ts">
 import { computed, type ComputedRef, ref, toRef } from 'vue'
 
+import { useTicketChannel } from '#shared/entities/ticket/composables/useTicketChannel.ts'
+import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
+
 import CommonBreadcrumb from '#desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue'
 import { useMainLayoutContainer } from '#desktop/components/layout/composables/useMainLayoutContainer.ts'
 import { useCopyToClipboard } from '#desktop/composables/useCopyToClipboard.ts'
@@ -52,12 +55,20 @@ const detailViewActiveClasses = computed(() => {
     ]
   return [' ticket-detail-grid-full grid-cols-2 gap-y-2.5 h-[8.75rem]']
 })
+
+const alertViewActiveClasses = computed(() => {
+  if (hideDetails.value) return ['top-[3.6rem]']
+  return ['top-[8.75rem]']
+})
+
+const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
+const { hasChannelAlert, channelAlert } = useTicketChannel(ticket)
 </script>
 
 <template>
   <header
     ref="headerNode"
-    class="-:p-3 sticky top-0 grid border-b border-neutral-100 bg-white transition-[height] duration-75 dark:border-gray-900 dark:bg-gray-500"
+    class="-:p-3 sticky top-0 z-10 grid border-b border-neutral-100 bg-white transition-[height] duration-75 dark:border-gray-900 dark:bg-gray-500"
     :class="detailViewActiveClasses"
   >
     <CommonBreadcrumb
@@ -95,6 +106,14 @@ const detailViewActiveClasses = computed(() => {
       :class="{ 'mx-10': !hideDetails }"
     />
   </header>
+  <CommonAlert
+    v-if="isTicketAgent && isTicketEditable && hasChannelAlert"
+    class="center sticky rounded-none px-14 transition-[top] duration-75 md:grid-cols-none md:justify-center"
+    :class="alertViewActiveClasses"
+    :variant="channelAlert?.variant"
+  >
+    {{ $t(channelAlert?.text, channelAlert?.textPlaceholder) }}
+  </CommonAlert>
 </template>
 
 <style scoped>

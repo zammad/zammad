@@ -2,6 +2,8 @@
 
 import { setupView } from '#tests/support/mock-user.ts'
 
+import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
+
 import {
   createTicketArticle,
   createTestArticleActions,
@@ -48,7 +50,7 @@ describe('email permissions', () => {
       }
       article.sender = {
         __typename: 'TicketArticleSender',
-        name: 'Customer',
+        name: EnumTicketArticleSenderName.Customer,
       }
       const actions = createTestArticleActions(ticket, article)
       expect(actions.find((action) => action.name === type)).toBeDefined()
@@ -67,7 +69,7 @@ describe('email permissions', () => {
       }
       article.sender = {
         __typename: 'TicketArticleSender',
-        name: 'Agent',
+        name: EnumTicketArticleSenderName.Agent,
       }
       const actions = createTestArticleActions(ticket, article)
       expect(actions.find((action) => action.name === type)).toBeDefined()
@@ -85,7 +87,7 @@ describe('email permissions', () => {
       }
       article.sender = {
         __typename: 'TicketArticleSender',
-        name: 'Agent',
+        name: EnumTicketArticleSenderName.Agent,
       }
       return {
         ticket,
@@ -137,7 +139,7 @@ describe('email permissions', () => {
       const { ticket, article } = setupAction()
       article.sender = {
         __typename: 'TicketArticleSender',
-        name: 'Customer',
+        name: EnumTicketArticleSenderName.Customer,
       }
       article.to = {
         raw: '',
@@ -161,7 +163,7 @@ describe('email permissions', () => {
       const { ticket, article } = setupAction()
       article.sender = {
         __typename: 'TicketArticleSender',
-        name: 'Agent',
+        name: EnumTicketArticleSenderName.Agent,
       }
       article.to = {
         raw: 'zammad1@example.com',
@@ -187,7 +189,7 @@ describe('email permissions', () => {
       const { ticket, article } = setupAction()
       article.sender = {
         __typename: 'TicketArticleSender',
-        name: 'Agent',
+        name: EnumTicketArticleSenderName.Agent,
       }
       article.to = {
         raw: '',
@@ -211,7 +213,7 @@ describe('email permissions', () => {
       const { ticket, article } = setupAction()
       article.sender = {
         __typename: 'TicketArticleSender',
-        name: 'Agent',
+        name: EnumTicketArticleSenderName.Agent,
       }
       article.to = {
         raw: '',

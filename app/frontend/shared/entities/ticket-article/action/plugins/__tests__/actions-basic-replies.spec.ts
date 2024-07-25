@@ -2,7 +2,10 @@
 
 import { setupView } from '#tests/support/mock-user.ts'
 
-import type { PolicyTicket } from '#shared/graphql/types.ts'
+import {
+  EnumTicketArticleSenderName,
+  type PolicyTicket,
+} from '#shared/graphql/types.ts'
 
 import {
   createEligibleTicketArticleReplyData,
@@ -35,7 +38,7 @@ describe.each([
       () => {
         setupView('agent')
         const { ticket, article } = createEligibleData()
-        article.sender!.name = 'Agent'
+        article.sender!.name = EnumTicketArticleSenderName.Agent
         const actions = createTestArticleActions(ticket, article)
         expect(actions.find((a) => a.name === name)).toBeUndefined()
       },

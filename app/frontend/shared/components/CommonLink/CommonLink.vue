@@ -9,6 +9,8 @@ import { useApplicationStore } from '#shared/stores/application.ts'
 import type { Link } from '#shared/types/router.ts'
 import stopEvent from '#shared/utils/events.ts'
 
+import type { Sizes } from './types.ts'
+
 export interface Props {
   link: Link
   external?: boolean
@@ -21,6 +23,7 @@ export interface Props {
   replace?: boolean
   activeClass?: string
   exactActiveClass?: string
+  size?: Sizes
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -32,6 +35,7 @@ const props = withDefaults(defineProps<Props>(), {
   disabled: false,
   activeClass: 'router-link-active',
   exactActiveClass: 'router-link-exact-active',
+  size: 'large',
 })
 
 const emit = defineEmits<{
@@ -49,6 +53,14 @@ const linkClass = computed(() => {
   if (props.disabled) return `${base} pointer-events-none`
   return base
 })
+
+const fontSizeClassMap = {
+  xs: 'text-[10px] leading-[10px]',
+  small: 'text-xs leading-snug',
+  medium: 'text-sm leading-snug',
+  large: 'text-base leading-snug',
+  xl: 'text-xl leading-snug',
+}
 
 const { href, route, navigate, isActive, isExactActive } = useLink({
   to: toRef(props, 'link'),
@@ -108,6 +120,7 @@ defineExpose({
     :rel="rel"
     :class="[
       linkClass,
+      fontSizeClassMap[props.size],
       {
         [activeClass]: isActive,
         [exactActiveClass]: isExactActive,

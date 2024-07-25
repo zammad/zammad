@@ -1,8 +1,10 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
 
+import { useArticleSecurity } from '#shared/composables/useArticleSecurity.ts'
+import { useWhatsapp } from '#shared/entities/ticket/channel/composables/useWhatsapp.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { getArticleChannelIcon } from '#shared/entities/ticket-article/composables/getArticleChannelIcon.ts'
 import { translateArticleSecurity } from '#shared/entities/ticket-article/composables/translateArticleSecurity.ts'
@@ -27,23 +29,7 @@ const channelIcon = computed(() => {
   return undefined
 })
 
-const articleDeliveryStatus = computed(() => {
-  const { article } = props
-
-  if (article.preferences?.whatsapp?.timestamp_read) {
-    return { message: __('read by the customer'), icon: 'check-double-circle' }
-  }
-
-  if (article.preferences?.whatsapp?.timestamp_delivered) {
-    return { message: __('delivered to the customer'), icon: 'check-double' }
-  }
-
-  if (article.preferences?.whatsapp?.timestamp_sent) {
-    return { message: __('sent to the customer'), icon: 'check' }
-  }
-
-  return undefined
-})
+const { articleDeliveryStatus } = useWhatsapp(toRef(props.article))
 
 const links = computed(() => {
   const { article } = props
@@ -75,23 +61,17 @@ const links = computed(() => {
   return links
 })
 
-const isEncrypted = computed(
-  () =>
-    props.article.securityState?.encryptionSuccess ||
-    (props.article.securityState?.encryptionSuccess === false &&
-      props.article.securityState?.encryptionMessage),
-)
-
-const isSigned = computed(
-  () =>
-    props.article.securityState?.signingSuccess ||
-    (props.article.securityState?.signingSuccess === false &&
-      props.article.securityState?.signingMessage),
-)
-
-const hasSecurityAttribute = computed(
-  () => props.article.securityState && (isEncrypted.value || isSigned.value),
-)
+const {
+  signingIcon,
+  signingMessage,
+  encryptionMessage,
+  isEncrypted,
+  isSigned,
+  hasSecurityAttribute,
+  encryptionIcon,
+  encryptedStatusMessage,
+  signedStatusMessage,
+} = useArticleSecurity(toRef(props.article))
 </script>
 
 <template>
@@ -152,46 +132,24 @@ const hasSecurityAttribute = computed(
           <span v-if="article.securityState?.type">
             {{ translateArticleSecurity(article.securityState.type) }}
           </span>
+
           <span v-if="isEncrypted">
             <CommonIcon
               class="mb-1 inline"
               size="tiny"
-              :name="
-                article.securityState?.encryptionSuccess
-                  ? 'lock'
-                  : 'encryption-error'
-              "
+              :name="encryptionIcon"
             />
-            {{
-              article.securityState?.encryptionSuccess
-                ? $t('Encrypted')
-                : $t('Encryption error')
-            }}
-            <div
-              v-if="article.securityState?.encryptionMessage"
-              class="ms-5 break-all"
-            >
-              {{ $t(article.securityState.encryptionMessage) }}
+            {{ $t(encryptedStatusMessage) }}
+            <div v-if="encryptionMessage" class="ms-5 break-all">
+              {{ $t(encryptionMessage) }}
             </div>
           </span>
+
           <span v-if="isSigned">
-            <CommonIcon
-              class="mb-1 inline"
-              size="tiny"
-              :name="
-                article.securityState?.signingSuccess ? 'signed' : 'not-signed'
-              "
-            />
-            {{
-              article.securityState?.signingSuccess
-                ? $t('Signed')
-                : $t('Sign error')
-            }}
-            <div
-              v-if="article.securityState?.signingMessage"
-              class="ms-5 break-all"
-            >
-              {{ $t(article.securityState.signingMessage) }}
+            <CommonIcon class="mb-1 inline" size="tiny" :name="signingIcon" />
+            {{ $t(signedStatusMessage) }}
+            <div v-if="signingMessage" class="ms-5 break-all">
+              {{ $t(signingMessage) }}
             </div>
           </span>
         </div>

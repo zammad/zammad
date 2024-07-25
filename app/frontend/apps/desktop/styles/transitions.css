@@ -10,6 +10,19 @@
   }
 }
 
+.fade-absolute {
+  &-enter-active,
+  &-leave-active {
+    transition: opacity 0.3s ease;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    position: absolute;
+    opacity: 0;
+  }
+}
+
 .fade-up {
   &-enter-active,
   &-leave-active {

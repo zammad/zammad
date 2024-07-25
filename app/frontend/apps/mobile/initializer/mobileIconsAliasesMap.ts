@@ -65,4 +65,15 @@ export default {
   loading: 'loading',
   show: 'show',
   hide: 'hide',
+
+  // WhatsApp status icons
+  read: 'check-double-circle',
+  delivered: 'check-double',
+  send: 'check',
+
+  // Icons in shared article security composables
+  'signing-success': 'signed',
+  'signing-fail': 'not-signed',
+  'encryption-success': 'lock',
+  'encryption-fail': 'encryption-error',
 }

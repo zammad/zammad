@@ -14,10 +14,18 @@ interface AttachmentsOptions {
   attachments: ComputedRef<TicketArticleAttachment[]>
 }
 
+export interface TicketArticleAttachmentWithUrls
+  extends TicketArticleAttachment {
+  preview: string
+  inline: string
+  canDownload: boolean
+  downloadUrl: string
+}
+
 export const useArticleAttachments = (options: AttachmentsOptions) => {
   const application = useApplicationStore()
 
-  const attachments = computed(() => {
+  const attachments = computed<TicketArticleAttachmentWithUrls[]>(() => {
     return options.attachments.value.map((attachment) => {
       const { previewUrl, inlineUrl, canDownload, downloadUrl } =
         getArticleAttachmentsLinks(

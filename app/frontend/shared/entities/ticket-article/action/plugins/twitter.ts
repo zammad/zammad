@@ -4,6 +4,7 @@ import { isArray, isObject, uniq } from 'lodash-es'
 
 import type { FieldEditorProps } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import type { FormValues } from '#shared/components/Form/types.ts'
+import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import type { ConfigList } from '#shared/types/store.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
@@ -51,8 +52,8 @@ const replyToTwitterDm = ((ticket, article, { openReplyDialog }) => {
   const sender = article.sender?.name
 
   let to: string | undefined | null
-  if (sender === 'Customer') to = article.from?.raw
-  else if (sender === 'Agent') to = article.to?.raw
+  if (sender === EnumTicketArticleSenderName.Customer) to = article.from?.raw
+  else if (sender === EnumTicketArticleSenderName.Agent) to = article.to?.raw
 
   if (!to) {
     const autorization = article.author.authorizations?.find(

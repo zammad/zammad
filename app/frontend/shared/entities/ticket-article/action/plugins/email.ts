@@ -7,6 +7,7 @@ import type {
   TicketArticle,
   TicketById,
 } from '#shared/entities/ticket/types.ts'
+import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
 import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import { textCleanup } from '#shared/utils/helpers.ts'
 
@@ -23,7 +24,7 @@ import type {
 
 const canReplyAll = (article: TicketArticle) => {
   const addresses = [article.to, article.cc]
-  if (article.sender?.name === 'Customer') {
+  if (article.sender?.name === EnumTicketArticleSenderName.Customer) {
     addresses.push(article.from)
   }
   const foreignRecipients = addresses
@@ -70,7 +71,9 @@ const actionPlugin: TicketArticleActionPlugin = {
 
     const isEmail = type === 'email' || type === 'web'
     const isPhone =
-      type === 'phone' && (sender === 'Customer' || sender === 'Agent')
+      type === 'phone' &&
+      (sender === EnumTicketArticleSenderName.Customer ||
+        sender === EnumTicketArticleSenderName.Agent)
 
     if (isEmail || isPhone) {
       actions.push(

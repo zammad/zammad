@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
+
 import type {
   TicketArticleAction,
   TicketArticleActionPlugin,
@@ -10,7 +12,10 @@ const actionPlugin: TicketArticleActionPlugin = {
   order: 300,
 
   addActions(ticket, article) {
-    if (article.sender?.name !== 'Customer' || article.type?.name !== 'sms')
+    if (
+      article.sender?.name !== EnumTicketArticleSenderName.Customer ||
+      article.type?.name !== 'sms'
+    )
       return []
     const action: TicketArticleAction = {
       apps: ['mobile'],

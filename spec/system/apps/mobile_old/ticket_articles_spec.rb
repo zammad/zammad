@@ -80,7 +80,7 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
     it 'deleting article if every article is loaded', current_user_id: -> { agent.id } do
       click('button', text: 'load 4 more')
 
-      wait_for_gql('apps/mobile/pages/ticket/graphql/queries/ticket/articles.graphql')
+      wait_for_gql('shared/entities/ticket/graphql/queries/ticket/articles.graphql')
 
       expect(page).to have_text(articles.last.body)
 
@@ -108,7 +108,7 @@ RSpec.describe 'Mobile > Ticket > Articles', app: :mobile, authenticated_as: :ag
 
       click('button', text: 'load 4 more')
 
-      wait_for_gql('apps/mobile/pages/ticket/graphql/queries/ticket/articles.graphql')
+      wait_for_gql('shared/entities/ticket/graphql/queries/ticket/articles.graphql')
 
       (1..5).each do |number|
         expect(page).to have_text("Article #{number}.", count: 1)

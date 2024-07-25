@@ -2,21 +2,18 @@
 
 <script setup lang="ts">
 import { useEventListener } from '@vueuse/core'
-import { noop } from 'lodash-es'
-import { computed, watch, nextTick } from 'vue'
+import { computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { useStickyHeader } from '#shared/composables/useStickyHeader.ts'
-import type {
-  PageInfo,
-  TicketArticleUpdatesSubscription,
-  TicketArticleUpdatesSubscriptionVariables,
-} from '#shared/graphql/types.ts'
+import {
+  type AddArticleCallbackArgs,
+  useArticleDataHandler,
+} from '#shared/entities/ticket-article/composables/useArticleDataHandler.ts'
 import {
   convertToGraphQLId,
   getIdFromGraphQLId,
 } from '#shared/graphql/utils.ts'
-import { getApolloClient } from '#shared/server/apollo/client.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import { edgesToArray, waitForElement } from '#shared/utils/helpers.ts'
@@ -29,8 +26,6 @@ import TicketHeader from '../components/TicketDetailView/TicketDetailViewHeader.
 import TicketTitle from '../components/TicketDetailView/TicketDetailViewTitle.vue'
 import { useTicketArticlesQueryVariables } from '../composable/useTicketArticlesVariables.ts'
 import { useTicketInformation } from '../composable/useTicketInformation.ts'
-import { useTicketArticlesQuery } from '../graphql/queries/ticket/articles.api.ts'
-import { TicketArticleUpdatesDocument } from '../graphql/subscriptions/ticketArticlesUpdates.api.ts'
 
 interface Props {
   internalId: string
@@ -40,58 +35,10 @@ const props = defineProps<Props>()
 
 const ticketId = computed(() => convertToGraphQLId('Ticket', props.internalId))
 
-const {
-  ticketArticlesMin,
-  markTicketArticlesLoaded,
-  getTicketArticlesQueryVariables,
-} = useTicketArticlesQueryVariables()
-
-const articlesQuery = new QueryHandler(
-  useTicketArticlesQuery(() => getTicketArticlesQueryVariables(ticketId.value)),
-  { errorShowNotification: false },
-)
-
-const result = articlesQuery.result()
-
-const allArticleLoaded = computed(() => {
-  if (!result.value?.articles.totalCount) return false
-  return result.value?.articles.edges.length < result.value?.articles.totalCount
-})
-
-const refetchArticlesQuery = (pageSize: Maybe<number>) => {
-  articlesQuery.refetch({
-    ticketId: ticketId.value,
-    pageSize,
-  })
-}
-
-const loadPreviousArticles = async () => {
-  markTicketArticlesLoaded(ticketId.value)
-  await articlesQuery.fetchMore({
-    variables: {
-      pageSize: null,
-      loadDescription: false,
-      beforeCursor: result.value?.articles.pageInfo.startCursor,
-    },
-  })
-}
-
 // When the last article is deleted, cursor has to be adjusted
 //  to show newly created articles in the list (if any).
 // Cursor is offset-based, so the old cursor is pointing to an unavailable article,
 //  thus using the cursor for the last article of the already filtered edges.
-const adjustPageInfoAfterDeletion = (nextEndCursorEdge?: Maybe<string>) => {
-  const newPageInfo: Pick<PageInfo, 'startCursor' | 'endCursor'> = {}
-
-  if (nextEndCursorEdge) {
-    newPageInfo.endCursor = nextEndCursorEdge
-  } else {
-    newPageInfo.startCursor = null
-    newPageInfo.endCursor = null
-  }
-
-  return newPageInfo
-}
 
 const {
   ticket,
@@ -147,89 +94,59 @@ const hasScroll = () => {
   return scrollHeight > window.innerHeight
 }
 
-articlesQuery.subscribeToMore<
-  TicketArticleUpdatesSubscriptionVariables,
-  TicketArticleUpdatesSubscription
->(() => ({
-  document: TicketArticleUpdatesDocument,
-  variables: {
-    ticketId: ticketId.value,
-  },
-  onError: noop,
-  updateQuery(previous, { subscriptionData }) {
-    const updates = subscriptionData.data.ticketArticleUpdates
+const onAddArticleCallback = ({
+  updates,
+  previousArticlesEdges,
+  previousArticlesEdgesCount,
+  articlesQuery,
+  result,
+  allArticleLoaded,
+  refetchArticlesQuery,
+}: AddArticleCallbackArgs) => {
+  scrollDownState.value = hasScroll()
+  newArticlesIds.add(updates?.addArticle?.id as string)
+  scheduleMyArticleScroll(getIdFromGraphQLId(updates?.addArticle?.id as string))
 
-    if (!previous.articles || updates.updateArticle) return previous
+  const needRefetch =
+    !previousArticlesEdges[previousArticlesEdgesCount - 1] ||
+    (updates?.addArticle?.createdAt as string) <=
+      previousArticlesEdges[previousArticlesEdgesCount - 1].node.createdAt
 
-    const previousArticlesEdges = previous.articles.edges
-    const previousArticlesEdgesCount = previousArticlesEdges.length
+  if (!allArticleLoaded.value || needRefetch) {
+    refetchArticlesQuery(null)
+  } else {
+    ;(articlesQuery as QueryHandler).fetchMore({
+      variables: {
+        pageSize: 100,
+        loadFirstArticles: false,
+        afterCursor: result.value?.articles.pageInfo.endCursor,
+      },
+    })
+  }
+}
 
-    if (updates.removeArticleId) {
-      const edges = previousArticlesEdges.filter(
-        (edge) => edge.node.id !== updates.removeArticleId,
-      )
+const {
+  ticketArticlesMin,
+  markTicketArticlesLoaded,
+  getTicketArticlesQueryVariables,
+} = useTicketArticlesQueryVariables()
 
-      const removedArticleVisible = edges.length !== previousArticlesEdgesCount
+const { articlesQuery, articleResult } = useArticleDataHandler(ticketId, {
+  firstArticlesCount: ticketArticlesMin,
+  pageSize: getTicketArticlesQueryVariables(ticketId.value).pageSize as number,
+  onAddArticleCallback,
+})
 
-      if (removedArticleVisible && !allArticleLoaded.value) {
-        refetchArticlesQuery(ticketArticlesMin.value)
-
-        return previous
-      }
-
-      const result = {
-        ...previous,
-        articles: {
-          ...previous.articles,
-          edges,
-          totalCount: previous.articles.totalCount - 1,
-        },
-      }
-
-      if (removedArticleVisible) {
-        const nextEndCursorEdge =
-          previousArticlesEdges[previousArticlesEdgesCount - 2]
-
-        result.articles.pageInfo = {
-          ...previous.articles.pageInfo,
-          ...adjustPageInfoAfterDeletion(nextEndCursorEdge.cursor),
-        }
-      }
-
-      // Trigger cache garbage collection after the returned article deletion subscription
-      //  updated the article list.
-      nextTick(() => {
-        getApolloClient().cache.gc()
-      })
-
-      return result
-    }
-
-    if (updates.addArticle) {
-      scrollDownState.value = hasScroll()
-      newArticlesIds.add(updates.addArticle.id)
-      scheduleMyArticleScroll(getIdFromGraphQLId(updates.addArticle.id))
-
-      const needRefetch =
-        !previousArticlesEdges[previousArticlesEdgesCount - 1] ||
-        updates.addArticle.createdAt <=
-          previousArticlesEdges[previousArticlesEdgesCount - 1].node.createdAt
-
-      if (!allArticleLoaded.value || needRefetch) {
-        refetchArticlesQuery(null)
-      } else {
-        articlesQuery.fetchMore({
-          variables: {
-            pageSize: null,
-            loadDescription: false,
-            afterCursor: result.value?.articles.pageInfo.endCursor,
-          },
-        })
-      }
-    }
-    return previous
-  },
-}))
+const loadPreviousArticles = async () => {
+  markTicketArticlesLoaded(ticketId.value)
+  await articlesQuery.fetchMore({
+    variables: {
+      pageSize: 100,
+      loadFirstArticles: false,
+      beforeCursor: articleResult.value?.articles.pageInfo.startCursor,
+    },
+  })
+}
 
 const isLoadingTicket = computed(() => {
   return ticketQuery.loading().value && !ticket.value
@@ -239,17 +156,18 @@ const isRefetchingTicket = computed(
   () => ticketQuery.loading().value && !!ticket.value,
 )
 
-const totalCount = computed(() => result.value?.articles.totalCount || 0)
+const totalCount = computed(() => articleResult.value?.articles.totalCount || 0)
 
 const toMs = (date: string) => new Date(date).getTime()
+
 const articles = computed(() => {
-  if (!result.value) {
+  if (!articleResult.value) {
     return []
   }
-  const nodes = edgesToArray(result.value.articles)
-  const totalCount = result.value.articles.totalCount || 0
+  const nodes = edgesToArray(articleResult.value.articles)
+  const totalCount = articleResult.value.articles.totalCount || 0
   // description might've returned with "articles"
-  const description = result.value.description?.edges[0]?.node
+  const description = articleResult.value.firstArticles?.edges[0]?.node
   if (totalCount > nodes.length && description) {
     nodes.unshift(description)
   }
@@ -268,7 +186,7 @@ useHeader({
 // and there is a saved scroll position
 // otherwise if we only check the scroll position we will never scroll to the bottom
 // because it can be defined when we open the page the first time
-if (result.value && window.history?.state?.scroll) {
+if (articleResult.value && window.history?.state?.scroll) {
   scrolledToBottom.value = true
 }
 

@@ -16,7 +16,7 @@ const renderTopBar = () => {
   return renderComponent(
     {
       components: { TicketDetailTopBar },
-      template: `<div ref="parent"><TicketDetailTopBar internal-id="1"/></div>`,
+      template: `<div ref="parent"><TicketDetailTopBar /></div>`,
       setup() {
         const parent = ref<HTMLElement>()
         const parentContainer = computed(() => parent.value)

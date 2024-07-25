@@ -158,6 +158,10 @@
     @apply rounded-3xl bg-white p-5 text-black dark:bg-gray-500 dark:text-white;
   }
 
+  .backface-hidden {
+    backface-visibility: hidden;
+  }
+
   @media print {
     [data-print-mode='true'] body {
       @apply invisible;

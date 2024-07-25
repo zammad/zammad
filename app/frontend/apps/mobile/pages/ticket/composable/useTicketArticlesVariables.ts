@@ -21,8 +21,8 @@ export const useTicketArticlesQueryVariables = () => {
     if (ticketArticlesLoaded.has(ticketId)) {
       return {
         ticketId,
-        loadDescription: false,
-        pageSize: null,
+        loadFirstArticles: false,
+        pageSize: 100,
       }
     }
 

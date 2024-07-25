@@ -4,10 +4,13 @@
 /* eslint-disable vue/no-v-html */
 
 import { computed, nextTick, onMounted, ref, watch } from 'vue'
-import { useRouter } from 'vue-router'
 
 import CommonFilePreview from '#shared/components/CommonFilePreview/CommonFilePreview.vue'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import { useArticleAttachments } from '#shared/composables/useArticleAttachments.ts'
+import { useArticleToggleMore } from '#shared/composables/useArticleToggleMore.ts'
+import { useHtmlInlineImages } from '#shared/composables/useHtmlInlineImages.ts'
+import { useHtmlLinks } from '#shared/composables/useHtmlLinks.ts'
 import type { ImageViewerFile } from '#shared/composables/useImageViewer.ts'
 import { useImageViewer } from '#shared/composables/useImageViewer.ts'
 import type { TicketArticleAttachment } from '#shared/entities/ticket/types.ts'
@@ -17,16 +20,12 @@ import type {
 } from '#shared/graphql/types.ts'
 import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import { i18n } from '#shared/i18n.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
 import stopEvent from '#shared/utils/events.ts'
 import { textToHtml } from '#shared/utils/helpers.ts'
-import { isStandalone } from '#shared/utils/pwa.ts'
 
-import { useArticleAttachments } from '../../composable/useArticleAttachments.ts'
 import { useArticleSeen } from '../../composable/useArticleSeen.ts'
-import { useArticleToggleMore } from '../../composable/useArticleToggleMore.ts'
 
 import ArticleRemoteContentBadge from './ArticleRemoteContentBadge.vue'
 import ArticleSecurityBadge from './ArticleSecurityBadge.vue'
@@ -117,10 +116,10 @@ const { attachments: articleAttachments } = useArticleAttachments({
   attachments: computed(() => props.attachments),
 })
 
-const inlineAttachments = ref<ImageViewerFile[]>([])
+const inlineImages = ref<ImageViewerFile[]>([])
 
 const { showImage } = useImageViewer(
-  computed(() => [...inlineAttachments.value, ...articleAttachments.value]),
+  computed(() => [...inlineImages.value, ...articleAttachments.value]),
 )
 
 const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
@@ -128,82 +127,10 @@ const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
   showImage(attachment)
 }
 
-const router = useRouter()
-const app = useApplicationStore()
-
-const getRedirectRoute = (url: URL): string | undefined => {
-  if (url.pathname.startsWith('/mobile')) {
-    return url.href.slice(`${url.origin}/mobile`.length)
-  }
-
-  const route = router.resolve(`/${url.hash.slice(1)}${url.search}`)
-  if (route.name !== 'Error') {
-    return route.fullPath
-  }
-}
-
-const openLink = (target: string, path: string) => {
-  // keep links inside PWA inside the app
-  if (!isStandalone() && target && target !== '_self') {
-    window.open(`/mobile${path}`, target)
-  } else {
-    router.push(path)
-  }
-}
-
-const handleLinkClick = (link: HTMLAnchorElement, event: Event) => {
-  const fqdnOrigin = `${window.location.protocol}//${app.config.fqdn}${
-    window.location.port ? `:${window.location.port}` : ''
-  }`
-  try {
-    const url = new URL(link.href)
-    if (url.origin === window.location.origin || url.origin === fqdnOrigin) {
-      const redirectRoute = getRedirectRoute(url)
-      if (redirectRoute) {
-        openLink(link.target, redirectRoute)
-        event.preventDefault()
-      }
-    }
-  } catch {
-    // skip
-  }
-}
-
-// user links has fqdn in its href, but if it changes the link becomes invalid
-// to bypass that we replace the href with the correct one
-const patchUserMentionLinks = (link: HTMLAnchorElement) => {
-  const userId = link.dataset.mentionUserId
-  if (userId) {
-    link.href = `${window.location.origin}/mobile/users/${userId}`
-  }
-}
-
-const setupLinksHandlers = (element: HTMLDivElement) => {
-  const links = element.querySelectorAll('a')
-  links.forEach((link) => {
-    if ('__handled' in link) return
-    Object.defineProperty(link, '__handled', { value: true })
-    patchUserMentionLinks(link)
-    link.addEventListener('click', (event) => handleLinkClick(link, event))
-  })
-}
-
-const populateInlineAttachments = (element: HTMLDivElement) => {
-  const images = element.querySelectorAll('img')
-  inlineAttachments.value = []
-
-  images.forEach((image) => {
-    const mime = image.alt?.match(/\.(jpe?g)$/i) ? 'image/jpeg' : 'image/png'
-    const preview: ImageViewerFile = {
-      name: image.alt,
-      inline: image.src,
-      type: mime,
-    }
-    image.classList.add('cursor-pointer')
-    const index = inlineAttachments.value.push(preview) - 1
-    image.onclick = () => showImage(inlineAttachments.value[index])
-  })
-}
+const { setupLinksHandlers } = useHtmlLinks('/mobile')
+const { populateInlineImages } = useHtmlInlineImages(inlineImages, (index) =>
+  showImage(inlineImages.value[index]),
+)
 
 watch(
   () => props.content,
@@ -211,7 +138,7 @@ watch(
     await nextTick()
     if (bubbleElement.value) {
       setupLinksHandlers(bubbleElement.value)
-      populateInlineAttachments(bubbleElement.value)
+      populateInlineImages(bubbleElement.value)
     }
   },
 )
@@ -219,7 +146,7 @@ watch(
 onMounted(() => {
   if (bubbleElement.value) {
     setupLinksHandlers(bubbleElement.value)
-    populateInlineAttachments(bubbleElement.value)
+    populateInlineImages(bubbleElement.value)
   }
 })
 

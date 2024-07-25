@@ -5,16 +5,17 @@ query ticketArticles(
   $beforeCursor: String
   $afterCursor: String
   $pageSize: Int
-  $loadDescription: Boolean = true
+  $loadFirstArticles: Boolean = true
+  $firstArticlesCount: Int = 1
 ) {
-  description: ticketArticles(
+  firstArticles: ticketArticles(
     ticket: {
       ticketId: $ticketId
       ticketInternalId: $ticketInternalId
       ticketNumber: $ticketNumber
     }
-    first: 1
-  ) @include(if: $loadDescription) {
+    first: $firstArticlesCount
+  ) @include(if: $loadFirstArticles) {
     edges {
       node {
         ...ticketArticleAttributes

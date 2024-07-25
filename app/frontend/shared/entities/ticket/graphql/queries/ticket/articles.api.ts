@@ -7,11 +7,11 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const TicketArticlesDocument = gql`
-    query ticketArticles($ticketId: ID, $ticketInternalId: Int, $ticketNumber: String, $beforeCursor: String, $afterCursor: String, $pageSize: Int, $loadDescription: Boolean = true) {
-  description: ticketArticles(
+    query ticketArticles($ticketId: ID, $ticketInternalId: Int, $ticketNumber: String, $beforeCursor: String, $afterCursor: String, $pageSize: Int, $loadFirstArticles: Boolean = true, $firstArticlesCount: Int = 1) {
+  firstArticles: ticketArticles(
     ticket: {ticketId: $ticketId, ticketInternalId: $ticketInternalId, ticketNumber: $ticketNumber}
-    first: 1
-  ) @include(if: $loadDescription) {
+    first: $firstArticlesCount
+  ) @include(if: $loadFirstArticles) {
     edges {
       node {
         ...ticketArticleAttributes

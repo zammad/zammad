@@ -33,7 +33,9 @@ export interface Props {
   noSingleActionMode?: boolean
   customMenuButtonLabel?: string
   defaultIcon?: string
-  defaultButtonVariant?: ButtonVariant
+  defaultButtonVariant?: ButtonVariant | 'neutral-light' | 'neutral-dark'
+  noPaddedDefaultButton?: boolean
+  noSmallRoundingDefaultButton?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -41,6 +43,7 @@ const props = withDefaults(defineProps<Props>(), {
   placement: 'arrowStart',
   orientation: 'autoVertical',
   defaultButtonVariant: 'neutral',
+  noPaddedDefaultButton: true,
 })
 
 const popoverMenu = ref<InstanceType<typeof CommonPopoverMenu>>()
@@ -61,6 +64,16 @@ const singleActionAriaLabel = computed(() => {
   }
 
   return singleMenuItem.value?.ariaLabel || singleMenuItem.value?.label
+})
+
+const buttonVariantClassExtension = computed(() => {
+  if (props.defaultButtonVariant === 'neutral-dark')
+    return 'border border-neutral-100 !outline-transparent  hover:border-blue-700 dark:hover:border-blue-700 hover:border-blue-800 bg-white hover:bg-white text-gray-100 dark:border-gray-900 dark:bg-gray-500 dark:text-neutral-400'
+
+  if (props.defaultButtonVariant === 'neutral-light')
+    return 'border border-neutral-100 !outline-transparent  hover:border-blue-700 dark:hover:border-blue-700 hover:border-blue-800 hover:bg-white bg-blue-100 text-gray-100 dark:border-gray-900 dark:bg-stone-500 dark:text-neutral-400'
+
+  return ''
 })
 
 const singleActionMode = computed(() => {
@@ -114,11 +127,16 @@ const variantClasses = computed(() => {
         :aria-label="$t(customMenuButtonLabel || 'Action menu button')"
         aria-haspopup="true"
         :aria-controls="popoverIsOpen ? menuId : undefined"
-        class="rounded-sm !p-0"
-        :class="{
-          'outline outline-1 outline-offset-1 outline-blue-800': popoverIsOpen,
-        }"
-        :variant="defaultButtonVariant"
+        :class="[
+          {
+            'outline outline-1 outline-offset-1 outline-blue-800':
+              popoverIsOpen,
+            'p-0': noPaddedDefaultButton,
+            'rounded-sm': !noSmallRoundingDefaultButton,
+          },
+          buttonVariantClassExtension,
+        ]"
+        :variant="defaultButtonVariant as ButtonVariant"
         :size="buttonSize"
         :icon="defaultIcon || 'three-dots-vertical'"
         @click="toggle"

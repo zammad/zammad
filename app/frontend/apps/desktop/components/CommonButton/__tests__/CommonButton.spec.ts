@@ -11,7 +11,11 @@ describe('CommonButton.vue', () => {
     const button = view.getByRole('button')
 
     expect(button).toHaveAttribute('type', 'button')
-    expect(button).toHaveClasses(['-:inline-flex', 'bg-transparent', 'btn-sm'])
+    expect(button).toHaveClasses([
+      '-:inline-flex',
+      '-:bg-transparent',
+      'btn-sm',
+    ])
   })
 
   it('renders default slot as the button label', async () => {
@@ -71,7 +75,7 @@ describe('CommonButton.vue', () => {
     },
     {
       variant: 'secondary',
-      classes: ['bg-transparent'],
+      classes: ['-:bg-transparent'],
     },
     {
       variant: 'tertiary',

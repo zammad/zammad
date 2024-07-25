@@ -11,6 +11,7 @@ import {
 import { getNodeId } from '#shared/components/Form/utils.ts'
 import { getTicketChannelPlugin } from '#shared/entities/ticket/channel/plugins/index.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
+import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 import { getAcceptableFileTypesString } from '#shared/utils/files.ts'
 
@@ -69,10 +70,14 @@ const actionPlugin: TicketArticleActionPlugin = {
   order: 300,
 
   addActions(ticket, article) {
-    const sender = article.sender?.name // Customer || Agent
+    const sender = article.sender?.name
     const type = article.type?.name // 'whatsapp message'
 
-    if (sender !== 'Customer' || type !== 'whatsapp message') return []
+    if (
+      sender !== EnumTicketArticleSenderName.Customer ||
+      type !== 'whatsapp message'
+    )
+      return []
     if (!canUseWhatsapp(ticket)) return []
 
     const action: TicketArticleAction = {

@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
+
 import type {
   TicketArticleAction,
   TicketArticleActionPlugin,
@@ -13,7 +15,11 @@ const actionPlugin: TicketArticleActionPlugin = {
     const sender = article.sender?.name
     const type = article.type?.name
 
-    if (sender !== 'Customer' || type !== 'telegram personal-message') return []
+    if (
+      sender !== EnumTicketArticleSenderName.Customer ||
+      type !== 'telegram personal-message'
+    )
+      return []
 
     const action: TicketArticleAction = {
       apps: ['mobile'],

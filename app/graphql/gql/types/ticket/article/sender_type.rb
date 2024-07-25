@@ -6,6 +6,6 @@ module Gql::Types::Ticket::Article
 
     description 'Ticket article senders'
 
-    field :name, String
+    field :name, Gql::Types::Enum::TicketArticleSenderNameType
   end
 end

@@ -16,6 +16,8 @@ import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { nullableMock, waitUntil } from '#tests/support/utils.ts'
 
+import { TicketArticlesDocument } from '#shared/entities/ticket/graphql/queries/ticket/articles.api.ts'
+import { TicketArticleUpdatesDocument } from '#shared/entities/ticket/graphql/subscriptions/ticketArticlesUpdates.api.ts'
 import { TicketUpdatesDocument } from '#shared/entities/ticket/graphql/subscriptions/ticketUpdates.api.ts'
 import { TicketState } from '#shared/entities/ticket/types.ts'
 import { TicketArticleRetrySecurityProcessDocument } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleRetrySecurityProcess.api.ts'
@@ -31,8 +33,6 @@ import { TicketWithMentionLimitDocument } from '#mobile/entities/ticket/graphql/
 import { clearTicketArticlesLoadedState } from '../composable/useTicketArticlesVariables.ts'
 import { TicketLiveUserDeleteDocument } from '../graphql/mutations/live-user/delete.api.ts'
 import { TicketLiveUserUpsertDocument } from '../graphql/mutations/live-user/ticketLiveUserUpsert.api.ts'
-import { TicketArticlesDocument } from '../graphql/queries/ticket/articles.api.ts'
-import { TicketArticleUpdatesDocument } from '../graphql/subscriptions/ticketArticlesUpdates.api.ts'
 
 import { mockArticleQuery } from './mocks/articles.ts'
 import {
@@ -200,7 +200,7 @@ describe('user avatars', () => {
 
   it('renders article user image when he is inactive', async () => {
     const articles = defaultArticles()
-    const { author } = articles.description!.edges[0].node
+    const { author } = articles.firstArticles!.edges[0].node
     author.active = false
     author.image = 'avatar.png'
     author.firstname = 'Max'
@@ -228,7 +228,7 @@ describe('user avatars', () => {
 
   it('renders article user when he is out of office', async () => {
     const articles = defaultArticles()
-    const { author } = articles.description!.edges[0].node
+    const { author } = articles.firstArticles!.edges[0].node
 
     author.outOfOffice = true
     author.outOfOfficeStartAt = '2021-12-01'
@@ -344,7 +344,7 @@ test('change content on subscription', async () => {
 describe('calling API to retry encryption', () => {
   it('updates ticket description', async () => {
     const articlesQuery = defaultArticles()
-    const article = articlesQuery.description!.edges[0].node
+    const article = articlesQuery.firstArticles!.edges[0].node
     article.securityState = {
       __typename: 'TicketArticleSecurityState',
       encryptionMessage: '',
@@ -464,7 +464,7 @@ describe('calling API to retry encryption', () => {
 describe('remote content removal', () => {
   it('shows blocked content badge', async () => {
     const articlesQuery = defaultArticles()
-    const article = articlesQuery.description!.edges[0].node
+    const article = articlesQuery.firstArticles!.edges[0].node
     article.preferences = {
       remote_content_removed: true,
     }
@@ -1044,7 +1044,7 @@ describe('with ticket on a whatsapp channel', () => {
     const testDate = new Date()
 
     const articles = defaultArticles()
-    articles.description!.edges[0].node.type!.name = 'whatsapp message'
+    articles.firstArticles!.edges[0].node.type!.name = 'whatsapp message'
 
     const ticket = defaultTicket(
       {},
@@ -1089,7 +1089,7 @@ describe('with ticket on a whatsapp channel', () => {
     const testDate = new Date()
 
     const articles = defaultArticles()
-    articles.description!.edges[0].node.type!.name = 'whatsapp message'
+    articles.firstArticles!.edges[0].node.type!.name = 'whatsapp message'
 
     const ticket = defaultTicket(
       {},
@@ -1135,7 +1135,7 @@ describe('with ticket on a whatsapp channel', () => {
     const testDate = new Date()
 
     const articles = defaultArticles()
-    articles.description!.edges[0].node.type!.name = 'whatsapp message'
+    articles.firstArticles!.edges[0].node.type!.name = 'whatsapp message'
 
     const ticket = defaultTicket(
       {},

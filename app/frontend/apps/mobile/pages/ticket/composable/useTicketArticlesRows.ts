@@ -3,6 +3,7 @@
 import { controlledComputed } from '@vueuse/shared'
 
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
+import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
@@ -81,7 +82,7 @@ export const useTicketArticleRows = (
           key: article.id,
         })
       } else if (
-        article.sender?.name === 'System' &&
+        article.sender?.name === EnumTicketArticleSenderName.System &&
         article.type?.name !== 'note'
       ) {
         rows.push({

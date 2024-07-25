@@ -30,7 +30,7 @@ useArticleSeen(articleElement, emit)
       >
         <CommonIcon name="warning" size="small" />
       </div>
-      <div>{{ $t('Delivery failed:') }} "{{ content }}"</div>
+      <div>{{ $t('Delivery failed: "%s"', content) }}</div>
     </div>
   </div>
 </template>

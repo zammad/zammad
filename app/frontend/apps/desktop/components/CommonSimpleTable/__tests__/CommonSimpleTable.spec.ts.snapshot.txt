@@ -78,7 +78,9 @@
           defaultbuttonvariant="neutral"
           entity="[object Object]"
           hidearrow="false"
+          nopaddeddefaultbutton="true"
           nosingleactionmode="false"
+          nosmallroundingdefaultbutton="false"
           orientation="autoVertical"
           placement="arrowStart"
         />

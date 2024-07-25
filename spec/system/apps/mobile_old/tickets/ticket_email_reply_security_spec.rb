@@ -45,7 +45,7 @@ RSpec.describe 'Mobile > Ticket > Email reply with security options', app: :mobi
   before do
     visit "/tickets/#{ticket.id}"
 
-    wait_for_gql('apps/mobile/pages/ticket/graphql/queries/ticket/articles.graphql')
+    wait_for_gql('shared/entities/ticket/graphql/queries/ticket/articles.graphql')
     wait_for_form_to_settle('form-ticket-edit')
   end
 

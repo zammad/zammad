@@ -6,7 +6,10 @@ import type {
   TicketById,
   TicketArticle,
 } from '#shared/entities/ticket/types.ts'
-import type { AddressesField } from '#shared/graphql/types.ts'
+import {
+  EnumTicketArticleSenderName,
+  type AddressesField,
+} from '#shared/graphql/types.ts'
 import type { ConfigList } from '#shared/types/store.ts'
 
 import { getArticleSelection, getReplyQuoteHeader } from './selection.ts'
@@ -43,7 +46,7 @@ const getPhoneArticle = (ticket: TicketById, article: TicketArticle) => {
   const sender = article.sender?.name
 
   // the article we are replying to is an outbound call
-  if (sender === 'Agent') {
+  if (sender === EnumTicketArticleSenderName.Agent) {
     if (article.to?.raw.includes('@')) {
       newArticle.to = getEmailAddresses(article.to)
     }
@@ -137,7 +140,7 @@ const getRecipientArticle = (
   const senderEmail = article.author.email
   const isSystem =
     !recipientIsSystem &&
-    sender === 'Agent' &&
+    sender === EnumTicketArticleSenderName.Agent &&
     senderEmail &&
     article.from?.parsed?.some((address) =>
       address.emailAddress?.toLowerCase().includes(senderEmail),

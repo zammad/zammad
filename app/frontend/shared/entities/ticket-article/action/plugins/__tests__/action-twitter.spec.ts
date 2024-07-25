@@ -10,6 +10,7 @@ import type {
   TicketArticle,
   TicketById,
 } from '#shared/entities/ticket/types.ts'
+import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { createArticleTypes } from '../index.ts'
@@ -140,7 +141,7 @@ describe('twitter article action', () => {
         (ticket, article) => {
           article.from = { raw: 'res-from' }
           article.to = { raw: 'res-to' }
-          article.sender = { name: 'Customer' }
+          article.sender = { name: EnumTicketArticleSenderName.Customer }
         },
       )
       action.perform!(ticket, article, options)
@@ -156,7 +157,7 @@ describe('twitter article action', () => {
         (ticket, article) => {
           article.from = { raw: 'res-from' }
           article.to = { raw: 'res-to' }
-          article.sender = { name: 'Agent' }
+          article.sender = { name: EnumTicketArticleSenderName.Agent }
         },
       )
       action.perform!(ticket, article, options)

@@ -7,6 +7,7 @@ import type {
   TicketArticle,
   TicketById,
 } from '#shared/entities/ticket/types.ts'
+import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
 
 import CommonSectionPopup from '#mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
 
@@ -87,7 +88,11 @@ const markSeen = (id: string) => {
         :user="row.article.author"
         :internal="row.article.internal"
         :content-type="row.article.contentType"
-        :position="row.article.sender?.name !== 'Customer' ? 'left' : 'right'"
+        :position="
+          row.article.sender?.name !== EnumTicketArticleSenderName.Customer
+            ? 'left'
+            : 'right'
+        "
         :media-error="row.article.mediaErrorState?.error"
         :security="row.article.securityState"
         :ticket-internal-id="ticket.internalId"
