@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-23 11:00+0000\n"
+"PO-Revision-Date: 2024-07-25 05:27+0000\n"
 "Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
@@ -9062,7 +9062,7 @@ msgstr "Управление %s"
 
 #: db/seeds/permissions.rb:192
 msgid "Manage %s Settings"
-msgstr "Управление %s настройками"
+msgstr "Управление настройками: %s"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:20
 msgid "Manage Tags"
