@@ -136,4 +136,47 @@ RSpec.describe 'Knowledge Base search with details', searchindex: true, type: :r
       expect(json_response['result'].count).to be 7
     end
   end
+
+  context 'when sorting' do
+    let(:answers) do
+      Array.new(3) do |nth|
+        travel nth.seconds do
+          create(:knowledge_base_answer, :published, :with_attachment,
+                 category:               category,
+                 translation_attributes: { title: "#{search_phrase} #{nth}" })
+        end
+      end
+    end
+
+    let(:search_phrase) { 'paging test' }
+
+    before do |example|
+      answers
+
+      travel(3.hours) { answers[1].translations.first.touch }
+
+      next if !example.metadata[:searchindex]
+
+      searchindex_model_reload([KnowledgeBase::Translation, KnowledgeBase::Category::Translation, KnowledgeBase::Answer::Translation])
+    end
+
+    shared_examples 'test sorting' do
+      it 'sorts answers from most up-to-date to oldest' do
+        post endpoint, params: { query: search_phrase }
+
+        returned_ids = json_response['details'].pluck('id')
+        expected_ids = [answers[1], answers[2], answers[0]].map { |elem| elem.translations.first.id }
+
+        expect(returned_ids).to eq expected_ids
+      end
+    end
+
+    context 'with elasticsearch' do
+      include_examples 'test sorting'
+    end
+
+    context 'with no elasticsearch', searchindex: false do
+      include_examples 'test sorting'
+    end
+  end
 end
