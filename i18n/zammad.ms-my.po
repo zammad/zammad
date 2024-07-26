@@ -297,7 +297,8 @@ msgstr "%s URL"
 msgid "%s ago"
 msgstr "%s sebelum ini"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:297
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:224
 #, fuzzy
 #| msgid "Attached Files"
 msgid "%s attached files"
@@ -641,7 +642,8 @@ msgid ""
 "**email notifications**."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:296
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:29
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:223
 #, fuzzy
 #| msgid "Attached Files"
 msgid "1 attached file"
@@ -1952,7 +1954,7 @@ msgstr "Kiraan Artikel"
 msgid "Article Type"
 msgstr "Artikel"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:357
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:284
 #, fuzzy
 #| msgid "Article Count"
 msgid "Article actions"
@@ -1964,7 +1966,21 @@ msgstr "Kiraan Artikel"
 msgid "Article could not be deleted."
 msgstr "%s% telah dibuka kembali"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:118
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:27
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Article meta information"
+msgstr "Blok Pemberitahuan"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:39
+#, fuzzy
+#| msgid "Article"
+msgid "Article permalink"
+msgstr "Artikel"
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:77
+#: app/frontend/shared/composables/useArticleSecurity.ts:95
 msgid "Article uses different security mechanism."
 msgstr ""
 
@@ -2150,7 +2166,7 @@ msgid "Attributes to compare"
 msgstr "Atribut"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:60
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:25
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:26
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:8
 msgid "Audio file"
 msgstr ""
@@ -2305,6 +2321,14 @@ msgstr ""
 msgid ""
 "Automatically loads the chat.css file. If you want to use your own css, just "
 "set it to false."
+msgstr ""
+
+#: app/frontend/shared/components/Form/Form.vue:1214
+msgid "Autosave in progress…"
+msgstr ""
+
+#: app/frontend/shared/components/Form/Form.vue:1223
+msgid "Autosaving is taking longer than expected…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:35
@@ -2596,7 +2620,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:165
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:106
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:86
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:160
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:37
@@ -2770,7 +2794,7 @@ msgstr "Batal"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:396
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:422
 msgid "Cancel & Go Back"
 msgstr "Batal & Kembali"
 
@@ -2955,7 +2979,8 @@ msgstr ""
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:110
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:86
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
 msgid "Channel"
 msgstr "Saluran"
 
@@ -2970,7 +2995,9 @@ msgstr "Saluran"
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:3
 #: app/assets/javascripts/app/controllers/chat.coffee:98
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:7
-#: app/controllers/first_steps_controller.rb:122 db/seeds/permissions.rb:143
+#: app/controllers/first_steps_controller.rb:122
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/chat.ts:6
+#: db/seeds/permissions.rb:143
 msgid "Chat"
 msgstr "Sembang"
 
@@ -3713,7 +3740,7 @@ msgstr ""
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:74
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:85
 #, fuzzy
 #| msgid "Edit Customer"
 msgid "Copy ticket number"
@@ -3814,7 +3841,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:407
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:434
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Buat"
@@ -4008,7 +4035,7 @@ msgstr "Buat"
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:104
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:144
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
 msgstr "Dicipta"
@@ -4047,6 +4074,7 @@ msgstr "Buat Tiket Ujian"
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
 #: app/controllers/time_accountings_controller.rb:122
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:55
 #: app/graphql/gql/types/overview_type.rb:80
 msgid "Created at"
 msgstr "Dicipta pada"
@@ -4348,6 +4376,7 @@ msgid "Decryption failed!"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:113
+#: app/frontend/shared/composables/useArticleSecurity.ts:126
 #, fuzzy
 #| msgid "Delivery failed"
 msgid "Decryption failed! %s"
@@ -4355,6 +4384,7 @@ msgstr "Penghantaran gagal"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:288
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:107
+#: app/frontend/shared/composables/useArticleSecurity.ts:120
 #, fuzzy
 #| msgid "Update successful!"
 msgid "Decryption was successful."
@@ -5433,10 +5463,16 @@ msgid "Deletion failed."
 msgstr "Penghantaran gagal"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view_delivery_failed.jst.eco:4
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleDeliveryMessage.vue:33
 #, fuzzy
 #| msgid "Delivery failed"
 msgid "Delivery failed:"
+msgstr "Penghantaran gagal"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/DeliveryMessage.vue:13
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleDeliveryMessage.vue:33
+#, fuzzy
+#| msgid "Delivery failed"
+msgid "Delivery failed: \"%s\""
 msgstr "Penghantaran gagal"
 
 #: db/seeds/object_manager_attributes.rb:1009
@@ -5608,7 +5644,7 @@ msgstr "Buang"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:393
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:419
 msgid "Discard Changes"
 msgstr "Buang Perubahan"
 
@@ -5703,7 +5739,7 @@ msgid "Do you want to continue?"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:64
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:45
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:46
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:12
 msgid "Document file"
 msgstr ""
@@ -5778,6 +5814,14 @@ msgstr ""
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:8
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:104
 msgid "Download and install the %s Migration Plugin on your %s instance."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:44
+msgid "Download original email"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:59
+msgid "Download raw email"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:316
@@ -6020,7 +6064,8 @@ msgstr "Nama Pertama"
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:129
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:9
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:132
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
 #: public/assets/form/form.js:32
 msgid "Email"
@@ -6371,8 +6416,8 @@ msgid "Encrypt email (if not possible, send notification anyway)"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:62
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:167
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:165
+#: app/frontend/shared/composables/useArticleSecurity.ts:159
 msgid "Encrypted"
 msgstr ""
 
@@ -6382,13 +6427,14 @@ msgid "Encryption"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:65
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:168
+#: app/frontend/shared/composables/useArticleSecurity.ts:159
 #, fuzzy
 #| msgid "Description"
 msgid "Encryption error"
 msgstr "Penerangan"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue:27
 #: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:201
 #, fuzzy
@@ -6868,6 +6914,22 @@ msgstr "Sambungkan Aplikasi Facebook"
 msgid "Facebook Developer Site"
 msgstr "Sambungkan Aplikasi Facebook"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/facebookDirectMessage.ts:7
+msgid "Facebook Direct Message"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/facebookFeedComment.ts:6
+#, fuzzy
+#| msgid "Connect Facebook App"
+msgid "Facebook Feed Comment"
+msgstr "Sambungkan Aplikasi Facebook"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/facebookFeedPost.ts:7
+#, fuzzy
+#| msgid "Connect Facebook App"
+msgid "Facebook Feed Post"
+msgstr "Sambungkan Aplikasi Facebook"
+
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:24
 msgid "Failed Tasks"
 msgstr ""
@@ -6894,6 +6956,7 @@ msgstr ""
 msgid "Failed to upload."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/fax.ts:7
 #: db/seeds/object_manager_attributes.rb:877
 msgid "Fax"
 msgstr "Faks"
@@ -7207,7 +7270,8 @@ msgstr ""
 msgid "Format as ||italic||"
 msgstr ""
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:89
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:74
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:92
 msgid "Forward"
 msgstr ""
 
@@ -7238,7 +7302,8 @@ msgstr "Jumaat"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:11
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:100
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:66
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:80
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:35
 msgid "From"
 msgstr ""
@@ -8139,7 +8204,7 @@ msgid "Image Service"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:61
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:35
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:36
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:9
 #, fuzzy
 #| msgid "Drop files here"
@@ -9766,7 +9831,7 @@ msgstr ""
 msgid "May"
 msgstr "Mei"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:80
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:79
 msgid "Me"
 msgstr ""
 
@@ -9840,7 +9905,8 @@ msgid "Message"
 msgstr "Mesej"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:46
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:135
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/whatsappMessage.ts:15
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:115
 #, fuzzy
 #| msgid "Message"
 msgid "Message Status"
@@ -9875,7 +9941,7 @@ msgstr ""
 msgid "Messaging Username"
 msgstr "Nama Pengguna"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:98
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:78
 msgid "Meta Data"
 msgstr ""
 
@@ -10410,8 +10476,8 @@ msgstr "Templat"
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:68
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:30
-#: app/frontend/apps/desktop/pages/ticket/routes.ts:13
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:26
+#: app/frontend/apps/desktop/pages/ticket/routes.ts:15
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:106
 msgid "New Ticket"
 msgstr ""
@@ -10422,7 +10488,7 @@ msgstr ""
 msgid "New Ticket State"
 msgstr "Gambaran Keseluruhan"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:33
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:29
 #, fuzzy
 #| msgid "assign tickets"
 msgid "New Ticket: %s"
@@ -10619,7 +10685,7 @@ msgstr ""
 msgid "No Thanks!"
 msgstr ""
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:117
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:122
 msgid ""
 "No additional text can be sent with this media type. Please remove the text."
 msgstr ""
@@ -10755,6 +10821,7 @@ msgstr ""
 msgid "No results were found."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue:30
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:204
 msgid "No security information available."
 msgstr ""
@@ -10909,6 +10976,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:32
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:48
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:35
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/note.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:12
 #: db/seeds/object_manager_attributes.rb:1335
 msgid "Note"
@@ -11469,7 +11537,8 @@ msgid "Origin By"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:89
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:69
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:39
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:55
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
 msgstr ""
@@ -11861,6 +11930,7 @@ msgid "Personal overview order was reset."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee:322
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:12
 #: db/seeds/object_manager_attributes.rb:797 db/seeds/permissions.rb:302
 msgid "Phone"
@@ -12384,7 +12454,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:68
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:54
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:40
 msgid "Raw"
 msgstr ""
 
@@ -12562,6 +12632,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:61
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:132
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:177
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:80
 #: app/frontend/shared/form/i18n/locales.ts:29
 msgid "Remove"
 msgstr "Buang"
@@ -12689,18 +12760,19 @@ msgstr ""
 msgid "Replacement agent"
 msgstr "Tiket yang diberikan"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:81
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:85
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:84
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
-#: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:17
-#: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:20
-#: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts:96
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:80
+#: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
+#: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:26
+#: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts:97
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:85
 #, fuzzy
 #| msgid "reply"
 msgid "Reply"
 msgstr "jawab"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:101
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:104
 #, fuzzy
 #| msgid "reply"
 msgid "Reply All"
@@ -12715,7 +12787,7 @@ msgid "Reply to last article"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:22
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:103
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:83
 msgid "Reply-To"
 msgstr ""
 
@@ -12945,6 +13017,12 @@ msgstr ""
 msgid "Retry"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue:37
+#, fuzzy
+#| msgid "Security"
+msgid "Retry Security Process"
+msgstr "Keselamatan"
+
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:112
 msgid "Retry attachment download"
 msgstr ""
@@ -13090,6 +13168,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:68
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:48
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/sms.ts:7
 #: db/seeds/permissions.rb:137
 msgid "SMS"
 msgstr ""
@@ -13456,8 +13535,9 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:16
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:175
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:149
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:183
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
 #: db/seeds/permissions.rb:197
@@ -13475,6 +13555,7 @@ msgid "Security Code"
 msgstr "Keselamatan"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue:24
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:149
 msgid "Security Error"
 msgstr ""
@@ -13532,7 +13613,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:444
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:348
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:115
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
 msgid "See less"
 msgstr ""
 
@@ -13542,7 +13624,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:348
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:115
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue:17
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
 msgid "See more"
 msgstr ""
 
@@ -13877,6 +13961,13 @@ msgid ""
 "limits"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:90
+#, fuzzy
+#| msgid "internal"
+msgid "Set to external"
+msgstr "dalaman"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:95
 #: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts:33
 #, fuzzy
 #| msgid "internal"
@@ -14172,7 +14263,7 @@ msgid "Sign email (if not possible, send notification anyway)"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:76
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:188
+#: app/frontend/shared/composables/useArticleSecurity.ts:156
 #, fuzzy
 #| msgid "Sign out"
 msgid "Sign error"
@@ -14214,6 +14305,7 @@ msgid "Sign up"
 msgstr "Daftar"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:92
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue:25
 #: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:87
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:192
 #, fuzzy
@@ -14232,6 +14324,7 @@ msgid "Signature verification failed!"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:96
+#: app/frontend/shared/composables/useArticleSecurity.ts:110
 #, fuzzy
 #| msgid "Bulk action executed!"
 msgid "Signature verification failed! %s"
@@ -14244,8 +14337,8 @@ msgid "Signatures"
 msgstr "Tandatangan"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:73
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:187
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:171
+#: app/frontend/shared/composables/useArticleSecurity.ts:156
 msgid "Signed"
 msgstr ""
 
@@ -14354,7 +14447,7 @@ msgstr ""
 msgid "Slack integration"
 msgstr ""
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:43
+#: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:48
 #, fuzzy
 #| msgid "sms"
 msgid "Sms"
@@ -14434,6 +14527,7 @@ msgstr ""
 msgid "Special character required"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:100
 #: app/frontend/shared/entities/ticket-article/action/plugins/split.ts:12
 #, fuzzy
 #| msgid "split"
@@ -14608,7 +14702,7 @@ msgid "Step 3 of 3: WhatsApp Business Webhook"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:63
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:30
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:31
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:11
 #, fuzzy
 #| msgid "Overview"
@@ -14652,7 +14746,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:11
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:64
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:40
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:107
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:87
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:171
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:33
 msgid "Subject"
@@ -14871,7 +14966,8 @@ msgstr "Bahasa"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:163
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:3
-#: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:46
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/telegramPersonalMessage.ts:7
+#: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:52
 #: db/seeds/permissions.rb:173
 msgid "Telegram"
 msgstr "Telegram"
@@ -16069,6 +16165,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:299
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:67
+#: app/frontend/shared/composables/useArticleSecurity.ts:85
 msgid "The retried security process failed!"
 msgstr ""
 
@@ -16137,6 +16234,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:277
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:90
+#: app/frontend/shared/composables/useArticleSecurity.ts:104
 msgid "The signature was successfully verified."
 msgstr ""
 
@@ -16728,6 +16826,12 @@ msgid ""
 "It was blocked, but you can download the original formatting here."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:28
+msgid ""
+"This message contains images or other content hosted by an external source. "
+"It was blocked, but you can download the original formatting."
+msgstr ""
+
 #: lib/secure_mailing/smime/incoming.rb:86
 msgid "This message was not signed by its sender."
 msgstr ""
@@ -16877,6 +16981,7 @@ msgstr "Khamis"
 #: app/assets/javascripts/app/models/signature.coffee:15
 #: app/assets/javascripts/app/models/text_module.coffee:15
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:19
+#: app/frontend/apps/desktop/pages/ticket/routes.ts:10
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:10
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/ticket.ts:6
 #: db/seeds/permissions.rb:203
@@ -16935,12 +17040,6 @@ msgstr ""
 #| msgid "Edit Customer"
 msgid "Ticket Customer"
 msgstr "Sunting Pelanggan"
-
-#: app/frontend/apps/desktop/pages/ticket/routes.ts:27
-#, fuzzy
-#| msgid "Overview"
-msgid "Ticket Detail"
-msgstr "Gambaran Keseluruhan"
 
 #: db/seeds/settings.rb:2141
 msgid "Ticket Hook"
@@ -17239,8 +17338,8 @@ msgid ""
 "</div>\n"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:45
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
+#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:32
 msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
 msgstr ""
@@ -17463,7 +17562,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:76
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:85
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:148
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:36
 #: db/seeds/object_manager_attributes.rb:482
@@ -17785,7 +17885,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:3
 #: app/controllers/first_steps_controller.rb:27
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:26
-#: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts:123
+#: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts:124
 #: db/seeds/permissions.rb:161 db/seeds/settings.rb:766
 msgid "Twitter"
 msgstr "Twitter"
@@ -17834,6 +17934,10 @@ msgstr ""
 msgid "Twitter Developer Site"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/twitterDirectMessage.ts:7
+msgid "Twitter Direct Message"
+msgstr ""
+
 #: db/seeds/settings.rb:1336
 msgid "Twitter Key"
 msgstr ""
@@ -17841,6 +17945,12 @@ msgstr ""
 #: db/seeds/settings.rb:1342
 msgid "Twitter Secret"
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/twitterStatus.ts:7
+#, fuzzy
+#| msgid "Twitter"
+msgid "Twitter Status"
+msgstr "Twitter"
 
 #: app/frontend/apps/mobile/pages/authentication/after-auth/plugins/twoFactorSetup.ts:12
 msgid "Two-Factor Authentication Configuration Is Required"
@@ -18648,7 +18758,7 @@ msgid "Video"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:62
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:40
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:41
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:10
 msgid "Video file"
 msgstr ""
@@ -18741,6 +18851,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee:3
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/web.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts:12
 #: db/seeds/object_manager_attributes.rb:757 db/seeds/permissions.rb:89
 msgid "Web"
@@ -18875,7 +18986,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:37
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:3
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:195
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:200
 #: db/seeds/permissions.rb:179
 msgid "WhatsApp"
 msgstr ""
@@ -18889,6 +19000,12 @@ msgstr "Akaun Emel"
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:10
 msgid "WhatsApp Business Account ID"
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/whatsappMessage.ts:10
+#, fuzzy
+#| msgid "Add Tag"
+msgid "WhatsApp Message"
+msgstr "Tambah Tag"
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
 msgid ""
@@ -19241,8 +19358,8 @@ msgstr ""
 msgid "You have insufficient rights to view this organization."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:47
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
+#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:34
 msgid "You have insufficient rights to view this ticket."
 msgstr ""
 
@@ -19878,7 +19995,7 @@ msgid "delete"
 msgstr "padam"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:153
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:38
+#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:20
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "delivered to the customer"
@@ -20686,7 +20803,7 @@ msgid "reached"
 msgstr "dicapai"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:150
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:34
+#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:13
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "read by the customer"
@@ -20781,7 +20898,7 @@ msgid "select visible options"
 msgstr "jawab"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:156
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:42
+#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:24
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "sent to the customer"
@@ -21040,6 +21157,7 @@ msgstr ""
 msgid "welcome message"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/ArticleMetaWhatsappMessageStatus.vue:31
 #: db/seeds/ticket_article_types.rb:16
 #, fuzzy
 #| msgid "Add Tag"
@@ -21116,6 +21234,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "Masa menuggungu hari ini"
+
+#, fuzzy
+#~| msgid "Overview"
+#~ msgid "Ticket Detail"
+#~ msgstr "Gambaran Keseluruhan"
 
 #, fuzzy
 #~| msgid "Block Notifications"

@@ -427,7 +427,8 @@ msgstr "%s URL"
 msgid "%s ago"
 msgstr "ezelőtt: %s"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:297
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:224
 msgid "%s attached files"
 msgstr "%s csatolt fájl"
 
@@ -762,7 +763,8 @@ msgstr ""
 "nézetben jelennek meg az áttekintésekben. Beállíthatja az **E-mail "
 "értesítések** beállítását is."
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:296
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:29
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:223
 msgid "1 attached file"
 msgstr "1 mellékelt fájl"
 
@@ -2105,7 +2107,7 @@ msgstr "Cikkek száma"
 msgid "Article Type"
 msgstr "Cikk típusa"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:357
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:284
 msgid "Article actions"
 msgstr "Cikk műveletek"
 
@@ -2113,7 +2115,21 @@ msgstr "Cikk műveletek"
 msgid "Article could not be deleted."
 msgstr "A cikket nem lehetett törölni."
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:118
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:27
+#, fuzzy
+#| msgid "Ticket information"
+msgid "Article meta information"
+msgstr "Jegyinformáció"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:39
+#, fuzzy
+#| msgid "Article Type"
+msgid "Article permalink"
+msgstr "Cikk típusa"
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:77
+#: app/frontend/shared/composables/useArticleSecurity.ts:95
 msgid "Article uses different security mechanism."
 msgstr "A cikk különböző biztonsági mechanizmusokat használ."
 
@@ -2305,7 +2321,7 @@ msgid "Attributes to compare"
 msgstr "Összehasonlítandó tulajdonságok"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:60
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:25
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:26
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:8
 msgid "Audio file"
 msgstr "Hangfájl"
@@ -2451,6 +2467,14 @@ msgid ""
 msgstr ""
 "Automatikusan betölti a chat.css fájlt. Amennyiben a saját css fájlját "
 "szeretné használni, csak állítsa hamisra."
+
+#: app/frontend/shared/components/Form/Form.vue:1214
+msgid "Autosave in progress…"
+msgstr ""
+
+#: app/frontend/shared/components/Form/Form.vue:1223
+msgid "Autosaving is taking longer than expected…"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:35
 #: app/assets/javascripts/app/models/overview.coffee:8
@@ -2744,7 +2768,7 @@ msgstr "CA"
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:165
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:106
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:86
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:160
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:37
@@ -2916,7 +2940,7 @@ msgstr "Mégse"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:396
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:422
 msgid "Cancel & Go Back"
 msgstr "Mégse és visszalépés"
 
@@ -3082,7 +3106,8 @@ msgstr "Olyan változások történtek, amelyek adatbázis-frissítést igényel
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:110
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:86
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
 msgid "Channel"
 msgstr "Csatorna"
 
@@ -3097,7 +3122,9 @@ msgstr "Csatornák"
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:3
 #: app/assets/javascripts/app/controllers/chat.coffee:98
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:7
-#: app/controllers/first_steps_controller.rb:122 db/seeds/permissions.rb:143
+#: app/controllers/first_steps_controller.rb:122
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/chat.ts:6
+#: db/seeds/permissions.rb:143
 msgid "Chat"
 msgstr "Csevegés"
 
@@ -3807,7 +3834,7 @@ msgstr "URL másolása"
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Az aktuális objektumszám (pl. Jegy#) másolása a vágólapra"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:74
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:85
 #, fuzzy
 #| msgid "Ticket Customer"
 msgid "Copy ticket number"
@@ -3915,7 +3942,7 @@ msgstr "Ország"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:407
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:434
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Létrehozás"
@@ -4112,7 +4139,7 @@ msgstr "Létrehozás:"
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:100
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:104
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:144
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
 msgstr "Létrehozva"
@@ -4145,6 +4172,7 @@ msgstr "Létrehozott belső cikk"
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
 #: app/controllers/time_accountings_controller.rb:122
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:55
 #: app/graphql/gql/types/overview_type.rb:80
 msgid "Created at"
 msgstr "Létrehozva ekkor"
@@ -4434,11 +4462,13 @@ msgid "Decryption failed!"
 msgstr "A dekódolás nem sikerült!"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:113
+#: app/frontend/shared/composables/useArticleSecurity.ts:126
 msgid "Decryption failed! %s"
 msgstr "A dekódolás nem sikerült! %s"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:288
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:107
+#: app/frontend/shared/composables/useArticleSecurity.ts:120
 msgid "Decryption was successful."
 msgstr "A dekódolás sikeres volt."
 
@@ -5704,8 +5734,14 @@ msgid "Deletion failed."
 msgstr "A törlés nem sikerült."
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view_delivery_failed.jst.eco:4
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleDeliveryMessage.vue:33
 msgid "Delivery failed:"
+msgstr "A kézbesítés sikertelen:"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/DeliveryMessage.vue:13
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleDeliveryMessage.vue:33
+#, fuzzy
+#| msgid "Delivery failed:"
+msgid "Delivery failed: \"%s\""
 msgstr "A kézbesítés sikertelen:"
 
 #: db/seeds/object_manager_attributes.rb:1009
@@ -5876,7 +5912,7 @@ msgstr "Elvet"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:393
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:419
 msgid "Discard Changes"
 msgstr "Változások elvetése"
 
@@ -5966,7 +6002,7 @@ msgid "Do you want to continue?"
 msgstr "Szeretné folytatni?"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:64
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:45
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:46
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:12
 msgid "Document file"
 msgstr "Dokumentum fájl"
@@ -6041,6 +6077,18 @@ msgstr "Az összes bejegyzés letöltése"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:104
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Töltse le és telepítse a %s migrációs bővítményt a %s példányára."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:44
+#, fuzzy
+#| msgid "Do not sign email"
+msgid "Download original email"
+msgstr "Ne írja alá az e-mailt"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:59
+#, fuzzy
+#| msgid "Download Private Key"
+msgid "Download raw email"
+msgstr "Privát kulcs letöltése"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:316
 msgid "Downloading attachments…"
@@ -6280,7 +6328,8 @@ msgstr "Elasticsearch verzió"
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:129
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:9
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:132
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
 #: public/assets/form/form.js:32
 msgid "Email"
@@ -6673,8 +6722,8 @@ msgid "Encrypt email (if not possible, send notification anyway)"
 msgstr "E-mail titkosítása (ha nem lehetséges, akkor is küldjön értesítést)"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:62
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:167
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:165
+#: app/frontend/shared/composables/useArticleSecurity.ts:159
 msgid "Encrypted"
 msgstr "Titkosított"
 
@@ -6684,11 +6733,12 @@ msgid "Encryption"
 msgstr "Titkosítás"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:65
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:168
+#: app/frontend/shared/composables/useArticleSecurity.ts:159
 msgid "Encryption error"
 msgstr "Titkosítási hiba"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue:27
 #: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:201
 msgid "Encryption:"
@@ -7191,6 +7241,24 @@ msgstr "Facebook alkalmazás titok"
 msgid "Facebook Developer Site"
 msgstr "Facebook fejlesztői oldal"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/facebookDirectMessage.ts:7
+#, fuzzy
+#| msgid "facebook direct-message"
+msgid "Facebook Direct Message"
+msgstr "facebook közvetlen üzenet"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/facebookFeedComment.ts:6
+#, fuzzy
+#| msgid "facebook feed comment"
+msgid "Facebook Feed Comment"
+msgstr "facebook hírfolyam hozzászólás"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/facebookFeedPost.ts:7
+#, fuzzy
+#| msgid "facebook feed post"
+msgid "Facebook Feed Post"
+msgstr "facebook hírfolyam bejegyzés"
+
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:24
 msgid "Failed Tasks"
 msgstr "Sikertelen feladatok"
@@ -7221,6 +7289,7 @@ msgstr "Nem sikerült beállítani a QR-kódot. Kérjük, próbálja újra."
 msgid "Failed to upload."
 msgstr "A következő fájl feltöltése folyamatban van: '%s'"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/fax.ts:7
 #: db/seeds/object_manager_attributes.rb:877
 msgid "Fax"
 msgstr "Fax"
@@ -7534,7 +7603,8 @@ msgstr "Formázás |félkövérként|"
 msgid "Format as ||italic||"
 msgstr "Formázás ||dőltként||"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:89
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:74
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:92
 msgid "Forward"
 msgstr "Továbbítás"
 
@@ -7565,7 +7635,8 @@ msgstr "péntek"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:11
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:100
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:66
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:80
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:35
 msgid "From"
 msgstr "Ettől"
@@ -8500,7 +8571,7 @@ msgid "Image Service"
 msgstr "Kép szolgáltatás"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:61
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:35
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:36
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:9
 msgid "Image file"
 msgstr "Képfájl"
@@ -10177,7 +10248,7 @@ msgstr "Az áttekintésekben megjelenített jegyek maximális száma"
 msgid "May"
 msgstr "május"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:80
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:79
 msgid "Me"
 msgstr "Én"
 
@@ -10243,7 +10314,8 @@ msgid "Message"
 msgstr "Üzenet"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:46
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:135
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/whatsappMessage.ts:15
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:115
 msgid "Message Status"
 msgstr "Üzenet állapota"
 
@@ -10272,7 +10344,7 @@ msgstr "Üzenetküldő ikon URL"
 msgid "Messaging Username"
 msgstr "Üzenetküldő felhasználónév"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:98
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:78
 msgid "Meta Data"
 msgstr "Meta adatok"
 
@@ -10779,8 +10851,8 @@ msgstr "Új sablon"
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:68
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:30
-#: app/frontend/apps/desktop/pages/ticket/routes.ts:13
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:26
+#: app/frontend/apps/desktop/pages/ticket/routes.ts:15
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:106
 msgid "New Ticket"
 msgstr "Új jegy"
@@ -10789,7 +10861,7 @@ msgstr "Új jegy"
 msgid "New Ticket State"
 msgstr "Új jegy állapot"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:33
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:29
 #, fuzzy
 #| msgid "New Ticket"
 msgid "New Ticket: %s"
@@ -11000,7 +11072,7 @@ msgstr "Nincs SSL"
 msgid "No Thanks!"
 msgstr "Nem, köszönöm!"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:117
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:122
 msgid ""
 "No additional text can be sent with this media type. Please remove the text."
 msgstr ""
@@ -11126,6 +11198,7 @@ msgstr "Nincs eredmény"
 msgid "No results were found."
 msgstr "Nem található eredmény."
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue:30
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:204
 msgid "No security information available."
 msgstr "Nem áll rendelkezésre biztonsági információ."
@@ -11285,6 +11358,7 @@ msgstr "Nem található"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:32
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:48
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:35
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/note.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:12
 #: db/seeds/object_manager_attributes.rb:1335
 msgid "Note"
@@ -11841,7 +11915,8 @@ msgid "Origin By"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:89
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:69
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:39
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:55
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
 msgstr "Eredeti formázás"
@@ -12208,6 +12283,7 @@ msgid "Personal overview order was reset."
 msgstr "A személyes áttekintési sorrend alaphelyzetbe került."
 
 #: app/assets/javascripts/app/controllers/cti.coffee:322
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:12
 #: db/seeds/object_manager_attributes.rb:797 db/seeds/permissions.rb:302
 msgid "Phone"
@@ -12737,7 +12813,7 @@ msgstr ""
 "jelenleg letiltva van. Kérjük, lépjen kapcsolatba a rendszergazdával."
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:68
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:54
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:40
 msgid "Raw"
 msgstr "Nyers"
 
@@ -12913,6 +12989,7 @@ msgstr "Távoli"
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:61
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:132
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:177
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:80
 #: app/frontend/shared/form/i18n/locales.ts:29
 msgid "Remove"
 msgstr "Eltávolítás"
@@ -13012,16 +13089,17 @@ msgstr "Helyettesítő"
 msgid "Replacement agent"
 msgstr "Helyettesítő ügynök"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:81
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:85
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:84
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
-#: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:17
-#: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:20
-#: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts:96
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:80
+#: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
+#: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:26
+#: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts:97
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:85
 msgid "Reply"
 msgstr "Válasz"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:101
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:104
 msgid "Reply All"
 msgstr "Válasz mindenkinek"
 
@@ -13034,7 +13112,7 @@ msgid "Reply to last article"
 msgstr "Válasz az utolsó cikkre"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:22
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:103
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:83
 msgid "Reply-To"
 msgstr "Válasz cím"
 
@@ -13294,6 +13372,12 @@ msgstr "Eredmény:"
 msgid "Retry"
 msgstr "Újrapróbálkozás"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue:37
+#, fuzzy
+#| msgid "Retry security process"
+msgid "Retry Security Process"
+msgstr "Biztonsági folyamat megismétlése"
+
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:112
 msgid "Retry attachment download"
 msgstr "A melléklet letöltésének megismétlése"
@@ -13438,6 +13522,7 @@ msgstr "SLAs"
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:68
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:48
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/sms.ts:7
 #: db/seeds/permissions.rb:137
 msgid "SMS"
 msgstr "SMS"
@@ -13790,8 +13875,9 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:16
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:175
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:149
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:183
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
 #: db/seeds/permissions.rb:197
@@ -13807,6 +13893,7 @@ msgid "Security Code"
 msgstr "Biztonsági kód"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue:24
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:149
 msgid "Security Error"
 msgstr "Biztonsági hiba"
@@ -13856,7 +13943,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:444
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:348
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:115
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
 msgid "See less"
 msgstr "Kevesebb"
 
@@ -13866,7 +13954,9 @@ msgstr "Kevesebb"
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:348
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:115
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue:17
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
 msgid "See more"
 msgstr "Több"
 
@@ -14187,6 +14277,13 @@ msgstr ""
 "Időkeret beállítása másodpercekben. Amennyiben 0-ra van állítva, akkor a "
 "megjegyzéseket időkorlátozás nélkül törölheti"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:90
+#, fuzzy
+#| msgid "Set to internal"
+msgid "Set to external"
+msgstr "beállítás belsőként"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:95
 #: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts:33
 msgid "Set to internal"
 msgstr "beállítás belsőként"
@@ -14472,7 +14569,7 @@ msgstr ""
 "E-mail aláírása (amennyiben nem lehetséges, akkor is küldjön értesítést)"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:76
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:188
+#: app/frontend/shared/composables/useArticleSecurity.ts:156
 msgid "Sign error"
 msgstr "Aláírási hiba"
 
@@ -14510,6 +14607,7 @@ msgid "Sign up"
 msgstr "Regisztráció"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:92
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue:25
 #: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:87
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:192
 msgid "Sign:"
@@ -14526,6 +14624,7 @@ msgid "Signature verification failed!"
 msgstr "Az aláírás ellenőrzése nem sikerült!"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:96
+#: app/frontend/shared/composables/useArticleSecurity.ts:110
 msgid "Signature verification failed! %s"
 msgstr "Az aláírás ellenőrzése nem sikerült! %s"
 
@@ -14536,8 +14635,8 @@ msgid "Signatures"
 msgstr "Aláírások"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:73
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:187
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:171
+#: app/frontend/shared/composables/useArticleSecurity.ts:156
 msgid "Signed"
 msgstr "Aláírva"
 
@@ -14642,7 +14741,7 @@ msgstr "Slack konfiguráció"
 msgid "Slack integration"
 msgstr "Slack integráció"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:43
+#: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:48
 msgid "Sms"
 msgstr "Sms"
 
@@ -14721,6 +14820,7 @@ msgstr "Források"
 msgid "Special character required"
 msgstr "Különleges karakter szükséges"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:100
 #: app/frontend/shared/entities/ticket-article/action/plugins/split.ts:12
 msgid "Split"
 msgstr "Felosztás"
@@ -14886,7 +14986,7 @@ msgid "Step 3 of 3: WhatsApp Business Webhook"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:63
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:30
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:31
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:11
 msgid "Sticker file"
 msgstr "Címke fájl"
@@ -14928,7 +15028,8 @@ msgstr "Utca"
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:11
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:64
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:40
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:107
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:87
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:171
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:33
 msgid "Subject"
@@ -15135,7 +15236,8 @@ msgstr "Célnyelv"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:163
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:3
-#: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:46
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/telegramPersonalMessage.ts:7
+#: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:52
 #: db/seeds/permissions.rb:173
 msgid "Telegram"
 msgstr "Telegram"
@@ -16397,6 +16499,7 @@ msgstr "Az ismételten megpróbált mellékletletöltés sikertelen volt."
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:299
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:67
+#: app/frontend/shared/composables/useArticleSecurity.ts:85
 msgid "The retried security process failed!"
 msgstr "Az ismételten megkísérelt biztonsági folyamat sikertelen volt!"
 
@@ -16467,6 +16570,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:277
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:90
+#: app/frontend/shared/composables/useArticleSecurity.ts:104
 msgid "The signature was successfully verified."
 msgstr "Az aláírás ellenőrzése sikeresen megtörtént."
 
@@ -17102,6 +17206,12 @@ msgid ""
 "It was blocked, but you can download the original formatting here."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:28
+msgid ""
+"This message contains images or other content hosted by an external source. "
+"It was blocked, but you can download the original formatting."
+msgstr ""
+
 #: lib/secure_mailing/smime/incoming.rb:86
 msgid "This message was not signed by its sender."
 msgstr "Ezt az üzenetet nem a feladó írta alá."
@@ -17267,6 +17377,7 @@ msgstr "csütörtök"
 #: app/assets/javascripts/app/models/signature.coffee:15
 #: app/assets/javascripts/app/models/text_module.coffee:15
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:19
+#: app/frontend/apps/desktop/pages/ticket/routes.ts:10
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:10
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/ticket.ts:6
 #: db/seeds/permissions.rb:203
@@ -17334,12 +17445,6 @@ msgstr "Jegyszám"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:22
 msgid "Ticket Customer"
 msgstr "Jegy Ügyfél"
-
-#: app/frontend/apps/desktop/pages/ticket/routes.ts:27
-#, fuzzy
-#| msgid "Ticket title"
-msgid "Ticket Detail"
-msgstr "Jegy címe"
 
 #: db/seeds/settings.rb:2141
 msgid "Ticket Hook"
@@ -17625,8 +17730,8 @@ msgstr ""
 "id}\" target=\"zammad_app\" >Tekintse meg itt: #{config.product_name}</a> \n"
 "</div>\n"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:45
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
+#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:32
 msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
 msgstr ""
@@ -17838,7 +17943,8 @@ msgstr "Az űrlap címe"
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:76
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:85
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:148
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:36
 #: db/seeds/object_manager_attributes.rb:482
@@ -18184,7 +18290,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:3
 #: app/controllers/first_steps_controller.rb:27
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:26
-#: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts:123
+#: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts:124
 #: db/seeds/permissions.rb:161 db/seeds/settings.rb:766
 msgid "Twitter"
 msgstr "Twitter"
@@ -18233,6 +18339,12 @@ msgstr "Twitter fejlesztői környezet címke"
 msgid "Twitter Developer Site"
 msgstr "Twitter fejlesztői oldal"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/twitterDirectMessage.ts:7
+#, fuzzy
+#| msgid "twitter direct-message"
+msgid "Twitter Direct Message"
+msgstr "twitter közvetlen üzenet"
+
 #: db/seeds/settings.rb:1336
 msgid "Twitter Key"
 msgstr "Twitter Kulcs"
@@ -18240,6 +18352,12 @@ msgstr "Twitter Kulcs"
 #: db/seeds/settings.rb:1342
 msgid "Twitter Secret"
 msgstr "Twitter Titok"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/twitterStatus.ts:7
+#, fuzzy
+#| msgid "twitter status"
+msgid "Twitter Status"
+msgstr "twitter státusz"
 
 #: app/frontend/apps/mobile/pages/authentication/after-auth/plugins/twoFactorSetup.ts:12
 msgid "Two-Factor Authentication Configuration Is Required"
@@ -19066,7 +19184,7 @@ msgid "Video"
 msgstr "Videó"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:62
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:40
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:41
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:10
 msgid "Video file"
 msgstr "Videó fájl"
@@ -19157,6 +19275,7 @@ msgstr ""
 "próbálja meg később újra, vagy küldjön nekünk egy e-mailt. Köszönjük!"
 
 #: app/assets/javascripts/app/controllers/_channel/web.coffee:3
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/web.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts:12
 #: db/seeds/object_manager_attributes.rb:757 db/seeds/permissions.rb:89
 msgid "Web"
@@ -19301,7 +19420,7 @@ msgstr "A %s milyen értékeit kell szinkronizálni a felhasználókkal."
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:37
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:3
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:195
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:200
 #: db/seeds/permissions.rb:179
 msgid "WhatsApp"
 msgstr "WhatsApp"
@@ -19313,6 +19432,12 @@ msgstr "WhatsApp fiók"
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:10
 msgid "WhatsApp Business Account ID"
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/whatsappMessage.ts:10
+#, fuzzy
+#| msgid "whatsapp message"
+msgid "WhatsApp Message"
+msgstr "whatsapp üzenet"
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
 msgid ""
@@ -19722,8 +19847,8 @@ msgstr ""
 "Ön nem rendelkezik elegendő jogosultsággal ennek a szervezetnek a "
 "megtekintéséhez."
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:47
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
+#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:34
 msgid "You have insufficient rights to view this ticket."
 msgstr ""
 "Ön nem rendelkezik elegendő jogosultsággal ennek a jegynek a megtekintéséhez."
@@ -20399,7 +20524,7 @@ msgid "delete"
 msgstr "törlés"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:153
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:38
+#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:20
 #, fuzzy
 #| msgid "Delete Customer"
 msgid "delivered to the customer"
@@ -21177,7 +21302,7 @@ msgid "reached"
 msgstr "elérte"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:150
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:34
+#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:13
 msgid "read by the customer"
 msgstr "az ügyfél által olvasott"
 
@@ -21263,7 +21388,7 @@ msgid "select visible options"
 msgstr "látható lehetőségek kiválasztása"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:156
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:42
+#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:24
 msgid "sent to the customer"
 msgstr "az ügyfélnek elküldve"
 
@@ -21517,6 +21642,7 @@ msgstr "web"
 msgid "welcome message"
 msgstr "üdvözlő üzenet"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/ArticleMetaWhatsappMessageStatus.vue:31
 #: db/seeds/ticket_article_types.rb:16
 msgid "whatsapp message"
 msgstr "whatsapp üzenet"
@@ -21596,6 +21722,11 @@ msgstr "...a teljes szövegterületből"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "Várakozási idő ma"
+
+#, fuzzy
+#~| msgid "Ticket title"
+#~ msgid "Ticket Detail"
+#~ msgstr "Jegy címe"
 
 #~ msgid "Priority Icons in Overviews"
 #~ msgstr "Prioritás ikonok az áttekintésekben"
