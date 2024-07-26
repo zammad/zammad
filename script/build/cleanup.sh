@@ -37,3 +37,6 @@ rm -rf .yard
 
 # developer manual
 rm -rf doc/developer_manual
+
+# Delete node_modules folder - only required during building
+rm -rf node_modules
