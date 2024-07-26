@@ -144,7 +144,7 @@ class App.TicketCreate extends App.Controller
       @updateSecurityOptions()
     )
 
-    @listenTo(App.Group, 'refresh', =>
+    @controllerBind('Group:create Group:update Group:touch Group:destroy', =>
       @sidebarWidget.render(@params())
     )
 

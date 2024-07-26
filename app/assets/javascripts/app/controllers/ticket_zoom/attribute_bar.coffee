@@ -37,7 +37,7 @@ class App.TicketZoomAttributeBar extends App.Controller
       @render(data)
     )
 
-    @listenTo(App.Group, 'refresh', (refreshed_group) =>
+    @controllerBind('Group:create Group:update Group:touch Group:destroy', (refreshed_group) =>
       selected_group_id = @el.closest('.content').find('[name=group_id]').val()
       selected_group    = App.Group.find selected_group_id
 
