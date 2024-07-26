@@ -29,3 +29,6 @@ rm -rf doc/developer_manual
 
 # Various development files
 rm -rf .dev
+
+# Delete node_modules folder - only required during building
+rm -rf node_modules

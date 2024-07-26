@@ -10,5 +10,5 @@ set -eux
 # delete asset cache
 rm -r tmp/cache
 
-# delete node_modules folder - only required for building
+# delete node_modules folder - only required during building
 rm -rf node_modules
