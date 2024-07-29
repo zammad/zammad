@@ -367,8 +367,8 @@ importers:
         specifier: ^9.27.0
         version: 9.27.0(eslint@8.57.0)
       eslint-plugin-vuejs-accessibility:
-        specifier: ^2.4.0
-        version: 2.4.0(eslint@8.57.0)
+        specifier: ^2.4.1
+        version: 2.4.1(eslint@8.57.0)
       eslint-plugin-zammad:
         specifier: file:.eslint-plugin-zammad
         version: file:.eslint-plugin-zammad(eslint@8.57.0)
@@ -3281,8 +3281,8 @@ packages:
     peerDependencies:
       eslint: ^6.2.0 || ^7.0.0 || ^8.0.0 || ^9.0.0
 
-  eslint-plugin-vuejs-accessibility@2.4.0:
-    resolution: {integrity: sha512-c0X0DPLjb74Y4tB9Mpwytq1hYI1NVf7ZMVliFL/CxLr9xxU5zoYTt/x4rFRyDpMCDxEIdVm48SaVTMsOINCMxg==}
+  eslint-plugin-vuejs-accessibility@2.4.1:
+    resolution: {integrity: sha512-ZRZhPdslplZXSF71MtSG+zXYRAT5KiHR4JVuo/DERQf9noAkDvi5W418VOE1qllmJd7wTenndxi1q8XeDMxdHw==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
       eslint: ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0 || ^9.0.0
@@ -9736,7 +9736,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  eslint-plugin-vuejs-accessibility@2.4.0(eslint@8.57.0):
+  eslint-plugin-vuejs-accessibility@2.4.1(eslint@8.57.0):
     dependencies:
       aria-query: 5.3.0
       emoji-regex: 10.3.0
