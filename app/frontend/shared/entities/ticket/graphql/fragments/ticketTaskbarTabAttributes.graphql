@@ -7,4 +7,5 @@ fragment ticketTaskbarTabAttributes on Ticket {
     name
   }
   stateColorCode
+  updatedAt
 }

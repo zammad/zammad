@@ -6,6 +6,9 @@ fragment ticketAttributes on Ticket {
   createdAt
   escalationAt
   updatedAt
+  updatedBy {
+    id
+  }
   pendingTime
   owner {
     id

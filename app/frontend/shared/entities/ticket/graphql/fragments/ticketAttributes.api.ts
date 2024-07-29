@@ -11,6 +11,9 @@ export const TicketAttributesFragmentDoc = gql`
   createdAt
   escalationAt
   updatedAt
+  updatedBy {
+    id
+  }
   pendingTime
   owner {
     id

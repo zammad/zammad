@@ -166,6 +166,7 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
           orientation="autoHorizontal"
           placement="start"
           hide-arrow
+          persistent
         >
           <ul>
             <li
@@ -185,7 +186,7 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
                 :taskbar-tab-link="
                   getTaskbarTabLink(userTaskbarTab.tabEntityKey)
                 "
-                class="rounded-none group-first/tab:rounded-t-[10px] group-last/tab:rounded-b-[10px]"
+                class="group/link rounded-none focus-visible:bg-blue-800 focus-visible:outline-0 group-first/tab:rounded-t-[10px] group-last/tab:rounded-b-[10px]"
               />
 
               <UserTaskbarTabRemove

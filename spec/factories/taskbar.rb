@@ -2,7 +2,7 @@
 
 FactoryBot.define do
   factory :taskbar do
-    key                      { 'Ticket-1234' }
+    key                      { "Ticket-#{Faker::Number.unique.number(digits: 5)}" }
     add_attribute(:callback) { 'TicketZoom' }
     params                   { {} }
     state                    { nil }

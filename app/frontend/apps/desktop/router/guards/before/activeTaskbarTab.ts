@@ -19,7 +19,15 @@ const activeTaskbarTab: NavigationGuard = async (
     !to.meta?.taskbarTabEntity ||
     (!to.params.internalId && !to.params.tabId)
   ) {
+    if (to.meta?.requiresAuth) {
+      // Reset the previously active tab state if the new route does not support the taskbar.
+      //   This needs to be handled here, since the activation of the next tab state happens below in the same guard,
+      //   and it may get overwritten if it's executed from a separate place (e.g. a component lifecycle method).
+      useUserCurrentTaskbarTabsStore().resetActiveTaskbarTab()
+    }
+
     next()
+
     return
   }
 

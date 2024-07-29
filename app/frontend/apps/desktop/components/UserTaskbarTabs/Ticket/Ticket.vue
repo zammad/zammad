@@ -6,6 +6,7 @@ import { computed, ref, toRef, watch } from 'vue'
 import { useTicketUpdatesSubscription } from '#shared/entities/ticket/graphql/subscriptions/ticketUpdates.api.ts'
 import { EnumTicketStateColorCode, type Ticket } from '#shared/graphql/types.ts'
 import SubscriptionHandler from '#shared/server/apollo/handler/SubscriptionHandler.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
 
 import CommonTicketStateIndicatorIcon from '#desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue'
 import CommonUpdateIndicator from '#desktop/components/CommonUpdateIndicator/CommonUpdateIndicator.vue'
@@ -45,22 +46,43 @@ const updateNotifyFlag = (notify: boolean) => {
   })
 }
 
+const { user } = useSessionStore()
+
 // Set the notify flag whenever the result is received from the subscription.
 ticketUpdatesSubscription.onSubscribed().then(() => {
-  ticketUpdatesSubscription.onResult(() => {
-    if (props.taskbarTab.notify) return
+  ticketUpdatesSubscription.onResult((result) => {
+    if (
+      !result.data?.ticketUpdates ||
+      !props.taskbarTab.entity ||
+      props.taskbarTab.notify
+    )
+      return
+
+    const { ticket } = result.data.ticketUpdates
+
+    // Skip setting the notify flag if:
+    //   - the ticket entity is in the same state
+    //   - the ticket was updated by the current user
+    if (
+      props.taskbarTab.entity.updatedAt === ticket?.updatedAt ||
+      ticket?.updatedBy?.id === user?.id
+    )
+      return
 
     updateNotifyFlag(true)
   })
 })
 
-// Reset the notify flag when the tab becomes active.
 watch(
   () => ticketLink.value?.isExactActive,
   (isExactActive) => {
-    if (!isExactActive || !props.taskbarTab.notify) return
+    if (!isExactActive) return
 
-    updateNotifyFlag(false)
+    // Reset the notify flag when the tab becomes active.
+    if (props.taskbarTab.notify) updateNotifyFlag(false)
+
+    // Scroll the tab into view when it becomes active.
+    ticketLink.value?.$el?.scrollIntoView?.()
   },
 )
 
@@ -110,13 +132,14 @@ const currentViewTitle = computed(
     <div class="relative">
       <CommonUpdateIndicator v-if="isTicketUpdated" />
       <CommonTicketStateIndicatorIcon
+        class="group-focus-visible/link:text-white"
         :color-code="currentStateColorCode"
         :label="currentState"
         icon-size="small"
       />
     </div>
     <CommonLabel
-      class="-:text-gray-300 -:dark:text-neutral-400 block truncate group-hover/tab:dark:text-white"
+      class="-:text-gray-300 -:dark:text-neutral-400 block truncate group-focus-visible/link:text-white group-hover/tab:dark:text-white"
     >
       {{ currentTitle }}
     </CommonLabel>

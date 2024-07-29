@@ -11,5 +11,6 @@ export const TicketTaskbarTabAttributesFragmentDoc = gql`
     name
   }
   stateColorCode
+  updatedAt
 }
     `;

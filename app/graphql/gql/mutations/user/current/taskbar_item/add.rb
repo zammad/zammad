@@ -16,8 +16,16 @@ module Gql::Mutations
         preferences: { dirty: input[:dirty].presence || false }
       )
 
+      begin
+        taskbar_item = Taskbar.create!(hash)
+      rescue ActiveRecord::RecordInvalid
+        # noop
+      end
+
+      taskbar_item ||= Taskbar.where(user: context.current_user, app: input[:app], key: input[:key]).first
+
       {
-        taskbar_item: Taskbar.create!(hash)
+        taskbar_item:
       }
     end
   end

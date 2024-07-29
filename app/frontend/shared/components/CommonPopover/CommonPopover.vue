@@ -40,6 +40,7 @@ export interface Props {
   hideArrow?: boolean
   id?: string
   noAutoFocus?: boolean
+  persistent?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -359,7 +360,28 @@ const classes = getPopoverClasses()
   <Teleport to="body">
     <Transition name="fade" :duration="durations.normal">
       <div
-        v-if="showPopover"
+        v-if="persistent"
+        v-show="showPopover"
+        :id="id"
+        ref="popoverElement"
+        role="region"
+        class="popover fixed z-50 flex"
+        :class="[classes.base]"
+        :style="popoverStyle"
+        :aria-labelledby="owner && '$el' in owner ? owner.$el?.id : owner?.id"
+        v-bind="$attrs"
+      >
+        <div class="w-full overflow-y-auto">
+          <slot />
+        </div>
+        <div
+          v-if="!hideArrow"
+          class="absolute -z-10 -rotate-45 transform"
+          :class="[arrowPlacementClasses, classes.arrow]"
+        />
+      </div>
+      <div
+        v-else-if="showPopover"
         :id="id"
         ref="popoverElement"
         role="region"

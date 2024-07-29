@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { storeToRefs } from 'pinia'
-import { computed, onBeforeUnmount, watch, type Ref } from 'vue'
+import { computed, watch, type Ref } from 'vue'
 
 import type { EnumTaskbarEntity } from '#shared/graphql/types.ts'
 
@@ -13,11 +13,9 @@ export const useTaskbarTab = (
   tabEntityType: EnumTaskbarEntity,
   context?: Ref<TaskbarTabContext>,
 ) => {
-  const {
-    activeTaskbarTabContext,
-    activeTaskbarTab,
-    activeTaskbarTabEntityKey,
-  } = storeToRefs(useUserCurrentTaskbarTabsStore())
+  const { activeTaskbarTabContext, activeTaskbarTab } = storeToRefs(
+    useUserCurrentTaskbarTabsStore(),
+  )
 
   const { updateTaskbarTab, deleteTaskbarTab } =
     useUserCurrentTaskbarTabsStore()
@@ -46,11 +44,6 @@ export const useTaskbarTab = (
       })
     },
   )
-
-  onBeforeUnmount(() => {
-    // Reset active taskbar tab before unmounting the component.
-    activeTaskbarTabEntityKey.value = undefined
-  })
 
   const activeTaskbarTabFormId = computed(
     () => activeTaskbarTab.value?.formId || undefined,

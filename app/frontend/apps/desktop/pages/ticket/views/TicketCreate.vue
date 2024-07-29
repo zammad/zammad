@@ -353,12 +353,10 @@ const applyTemplate = (templateId: string) => {
   })
 }
 
-const formAdditionalRouteQueryParams = computed(() => {
-  return {
-    taskbarId: activeTaskbarTab.value?.taskbarTabId,
-    ...(route.query || {}),
-  }
-})
+const formAdditionalRouteQueryParams = computed(() => ({
+  taskbarId: activeTaskbarTab.value?.taskbarTabId,
+  ...(route.query || {}),
+}))
 
 const submitCreateTicket = async (event: FormSubmitData<TicketFormData>) => {
   createTicket(event).then((result) => {

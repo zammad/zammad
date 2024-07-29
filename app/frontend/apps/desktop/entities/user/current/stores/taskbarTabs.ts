@@ -406,7 +406,9 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
       console.log('HERE-SOMETHING-FOR-EXISTING-TABS')
     }
 
-    // TODO: Do we need to handle anything else?!
+    const resetActiveTaskbarTab = () => {
+      activeTaskbarTabEntityKey.value = undefined
+    }
 
     let silenceTaskbarDeleteError = false
 
@@ -503,6 +505,7 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
       updateTaskbarTab,
       upsertTaskbarTab,
       deleteTaskbarTab,
+      resetActiveTaskbarTab,
       waitForTaskbarListLoaded,
       loading: taskbarTabsLoading,
       hasTaskbarTabs,

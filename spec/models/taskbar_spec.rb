@@ -12,41 +12,23 @@ RSpec.describe Taskbar, type: :model do
     it { is_expected.to validate_inclusion_of(:app).in_array(%w[desktop mobile]) }
   end
 
-  context 'key = Search' do
+  context 'create and update' do
+    let(:user) { create(:user) }
 
-    context 'multiple taskbars', current_user_id: 1 do
-      let(:key)           { 'Search' }
-      let(:other_taskbar) { create(:taskbar, key: key) }
+    context 'when creating' do
+      it 'validates uniqueness of key + app' do
+        create(:taskbar, user: user, key: 'Ticket-1234', app: 'desktop')
 
-      describe '#create' do
-
-        it "doesn't update other taskbar" do
-          expect do
-            create(:taskbar, key: key)
-          end.not_to change { other_taskbar.reload.updated_at }
-        end
+        expect { create(:taskbar, user: user, key: 'Ticket-1234', app: 'desktop') }.to raise_error(ActiveRecord::RecordInvalid)
       end
+    end
 
-      context 'existing taskbar' do
+    context 'when updating' do
+      it 'validates uniqueness of key + app' do
+        create(:taskbar, user: user, key: 'Ticket-1234', app: 'desktop')
+        taskbar = create(:taskbar, user: user, key: 'Ticket-1234', app: 'mobile')
 
-        subject(:taskbar) { create(:taskbar, key: key) }
-
-        describe '#update' do
-
-          it "doesn't update other taskbar" do
-            expect do
-              taskbar.update!(state: { foo: :bar })
-            end.not_to change { other_taskbar.reload.updated_at }
-          end
-        end
-
-        describe '#destroy' do
-          it "doesn't update other taskbar" do
-            expect do
-              taskbar.destroy!
-            end.not_to change { other_taskbar.reload.updated_at }
-          end
-        end
+        expect { taskbar.update!(app: 'desktop') }.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
   end
@@ -58,9 +40,7 @@ RSpec.describe Taskbar, type: :model do
       described_class.destroy_all
       UserInfo.current_user_id = 1
 
-      create(:taskbar, params: {
-               id: 1234,
-             })
+      create(:taskbar, params: { id: 1234 }, key: 'Ticket-1234')
     end
 
     it 'existing key' do
@@ -126,13 +106,14 @@ RSpec.describe Taskbar, type: :model do
     end
   end
 
-  context 'multiple creation' do
+  context 'multiple creation', :aggregate_failures do
 
     it 'create tasks' do
+      # skip 'What does this test?'
 
       described_class.destroy_all
       UserInfo.current_user_id = 1
-      taskbar1 = described_class.create(
+      taskbar1 = described_class.create!(
         key:      'Ticket-1234',
         callback: 'TicketZoom',
         params:   {
@@ -145,7 +126,7 @@ RSpec.describe Taskbar, type: :model do
       )
 
       UserInfo.current_user_id = 2
-      taskbar2 = described_class.create(
+      taskbar2 = described_class.create!(
         key:      'Ticket-1234',
         callback: 'TicketZoom',
         params:   {

@@ -136,7 +136,7 @@ const stripQueryData = (
     if (!fieldName) {
       return
     }
-    const resultValue = resultData[fieldName]
+    const resultValue = resultData?.[fieldName]
     if ('selectionSet' in node && node.selectionSet) {
       if (Array.isArray(resultValue)) {
         newData[fieldName] = resultValue.map((item) =>
@@ -151,7 +151,7 @@ const stripQueryData = (
         )
       }
     } else {
-      newData[fieldName] = resultValue
+      newData[fieldName] = resultValue ?? null
     }
   }
   definition.selectionSet?.selections.forEach(processNode)
