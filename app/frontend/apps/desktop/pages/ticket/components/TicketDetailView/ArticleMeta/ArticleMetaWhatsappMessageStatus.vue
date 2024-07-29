@@ -31,7 +31,12 @@ const { articleDeliveryStatus } = useWhatsapp(toRef(props.context, 'article'))
       {{ $t('whatsapp message') }}
     </CommonLabel>
 
-    <CommonIcon width="16" height="16" :name="articleDeliveryStatus?.icon" />
+    <CommonIcon
+      v-if="articleDeliveryStatus?.icon"
+      width="16"
+      height="16"
+      :name="articleDeliveryStatus?.icon"
+    />
     <CommonLabel>{{ articleDeliveryStatus?.message }}</CommonLabel>
   </div>
 </template>

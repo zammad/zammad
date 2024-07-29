@@ -56,6 +56,7 @@ const currentViewTitle = computed(() => {
 
 <template>
   <CommonLink
+    v-if="taskbarTabLink"
     v-tooltip="currentViewTitle"
     class="flex grow gap-2 rounded-md px-2 py-3 hover:no-underline focus-visible:rounded-md focus-visible:outline-none group-hover/tab:bg-blue-600 group-hover/tab:dark:bg-blue-900"
     :link="taskbarTabLink"

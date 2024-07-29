@@ -103,6 +103,7 @@ const variantClasses = computed(() => {
         :link="singleMenuItem.link"
       >
         <CommonIcon
+          v-if="singleMenuItem?.icon"
           :size="linkSize"
           :class="variantClasses"
           :name="singleMenuItem?.icon"
