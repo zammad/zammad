@@ -96,7 +96,7 @@
     "vite-plugin-ruby": "^5.0.0",
     "vitest": "^1.6.0",
     "vitest-axe": "^0.1.0",
-    "vue-tsc": "^2.0.26"
+    "vue-tsc": "^2.0.29"
   },
   "dependencies": {
     "@apollo/client": "^3.10.8",
@@ -161,7 +161,7 @@
     "loglevel": "^1.9.1",
     "lowlight": "^3.1.0",
     "mitt": "^3.0.1",
-    "pinia": "^2.1.7",
+    "pinia": "^2.2.0",
     "qrcode": "^1.5.3",
     "tippy.js": "^6.3.7",
     "tiptap-text-direction": "^0.3.1",
