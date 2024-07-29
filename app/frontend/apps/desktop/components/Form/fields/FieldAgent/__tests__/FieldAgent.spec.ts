@@ -158,7 +158,9 @@ describe('Form - Field - Agent - Query', () => {
 
     expect(filterElement).toBeInTheDocument()
 
-    expect(wrapper.queryByText('Start typing to search…')).toBeInTheDocument()
+    expect(
+      await wrapper.findByText('Start typing to search…'),
+    ).toBeInTheDocument()
 
     mockAutocompleteSearchAgentQuery({
       autocompleteSearchAgent: [testOptions[0]],
@@ -189,7 +191,9 @@ describe('Form - Field - Agent - Query', () => {
 
     expect(filterElement).toHaveValue('')
 
-    expect(wrapper.queryByText('Start typing to search…')).toBeInTheDocument()
+    expect(
+      await wrapper.findByText('Start typing to search…'),
+    ).toBeInTheDocument()
 
     mockAutocompleteSearchAgentQuery({
       autocompleteSearchAgent: [testOptions[1]],
@@ -214,7 +218,9 @@ describe('Form - Field - Agent - Query', () => {
 
     await wrapper.events.clear(filterElement)
 
-    expect(wrapper.queryByText('Start typing to search…')).toBeInTheDocument()
+    expect(
+      await wrapper.findByText('Start typing to search…'),
+    ).toBeInTheDocument()
 
     mockAutocompleteSearchAgentQuery({
       autocompleteSearchAgent: [testOptions[2]],

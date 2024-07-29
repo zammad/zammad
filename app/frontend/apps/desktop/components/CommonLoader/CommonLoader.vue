@@ -3,14 +3,19 @@
 <script setup lang="ts">
 /* eslint-disable vue/no-v-html */
 
+import type { Sizes } from '#shared/components/CommonIcon/types.ts'
 import { markup } from '#shared/utils/markup.ts'
 
 interface Props {
   loading?: boolean
   error?: string | null
+  size?: Sizes
+  noTransition?: boolean
 }
 
-defineProps<Props>()
+withDefaults(defineProps<Props>(), {
+  size: 'medium',
+})
 </script>
 
 <script lang="ts">
@@ -20,7 +25,7 @@ export default {
 </script>
 
 <template>
-  <Transition name="fade" mode="out-in">
+  <Transition :name="noTransition ? 'none' : 'fade'" mode="out-in">
     <div
       v-if="loading"
       v-bind="$attrs"
@@ -30,6 +35,7 @@ export default {
       <CommonIcon
         class="fill-yellow-300"
         name="spinner"
+        :size="size"
         animation="spin"
         :label="__('Loading…')"
       />

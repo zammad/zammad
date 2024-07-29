@@ -206,11 +206,11 @@ const checkSelectOptions = async (
 const selectValue = async (
   wrapper: ExtendedRenderResult,
   label: string,
-  dsiaplyValue: string,
+  displayValue: string,
 ) => {
   await wrapper.events.click(wrapper.getByLabelText(label))
 
-  wrapper.events.click(wrapper.getByText(dsiaplyValue))
+  await wrapper.events.click(wrapper.getByLabelText(displayValue))
 
   await waitFor(() => {
     expect(wrapper.emitted().changed).toBeTruthy()

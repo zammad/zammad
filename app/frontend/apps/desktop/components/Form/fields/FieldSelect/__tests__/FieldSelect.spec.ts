@@ -576,6 +576,8 @@ describe('Form - Field - Select - Options', () => {
       wrapper.getByRole('button', { name: 'Clear Search' }),
     )
 
+    // Because of clicking outside the input is a toggle, we need to click twice
+    await wrapper.events.click(wrapper.getByLabelText('Select'))
     await wrapper.events.click(wrapper.getByLabelText('Select'))
 
     search = wrapper.getByRole('searchbox')
@@ -1162,7 +1164,7 @@ describe('Form - Field - Select - Accessibility', () => {
     })
   })
 
-  it('restores focus on close', async () => {
+  it('keeps focus on select', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {

@@ -36,6 +36,7 @@ RSpec.describe 'Desktop > Personal Setting > Profile', app: :desktop_view, authe
 
       find('label', text: 'Your language').click
       find('span', text: 'Deutsch').click
+
       expect(page).to have_text('Sprache')
     end
   end

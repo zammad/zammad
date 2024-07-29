@@ -227,7 +227,9 @@ describe('Form - Field - AutoComplete - Query', () => {
 
     expect(filterElement).toHaveValue('')
 
-    expect(wrapper.queryByText('Start typing to search…')).toBeInTheDocument()
+    expect(
+      await wrapper.findByText('Start typing to search…'),
+    ).toBeInTheDocument()
 
     mockAutocompleteSearchUserQuery({
       autocompleteSearchUser: [testOptions[1]],
@@ -248,7 +250,9 @@ describe('Form - Field - AutoComplete - Query', () => {
 
     await wrapper.events.clear(filterElement)
 
-    expect(wrapper.queryByText('Start typing to search…')).toBeInTheDocument()
+    expect(
+      await wrapper.findByText('Start typing to search…'),
+    ).toBeInTheDocument()
 
     mockAutocompleteSearchUserQuery({
       autocompleteSearchUser: [testOptions[2]],
@@ -1077,7 +1081,7 @@ describe('Form - Field - AutoComplete - Accessibility', () => {
     })
   })
 
-  it('restores focus on close', async () => {
+  it('keeps focus after select', async () => {
     const wrapper = renderComponent(FormKit, {
       ...wrapperParameters,
       props: {

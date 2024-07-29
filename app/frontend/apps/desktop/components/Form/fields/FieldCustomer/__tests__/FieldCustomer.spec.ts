@@ -60,7 +60,7 @@ describe('Form - Field - Customer - Features', () => {
       wrapper.queryByRole('button', { name: 'add new email address' }),
     ).not.toBeInTheDocument()
 
-    expect(wrapper.getByRole('option')).toHaveTextContent('No results found')
+    expect(wrapper.getByRole('option')).toHaveTextContent('Loading…')
 
     await wrapper.events.type(filterElement, '@bar.tld')
 

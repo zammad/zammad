@@ -66,7 +66,9 @@ describe('Form - Field - Recipient - Features', () => {
     })
 
     expect(
-      wrapper.queryByText('Start typing to search or enter an email address…'),
+      await wrapper.findByText(
+        'Start typing to search or enter an email address…',
+      ),
     ).toBeInTheDocument()
 
     await wrapper.events.type(filterElement, 'foo@bar.tld')
@@ -112,7 +114,9 @@ describe('Form - Field - Recipient - Features', () => {
     await wrapper.events.click(await wrapper.findByLabelText('Recipient'))
 
     expect(
-      wrapper.queryByText('Start typing to search or enter a phone number…'),
+      await wrapper.findByText(
+        'Start typing to search or enter a phone number…',
+      ),
     ).toBeInTheDocument()
 
     const filterElement = wrapper.getByRole('searchbox')
@@ -163,7 +167,9 @@ describe('Form - Field - Recipient - Query', () => {
     expect(filterElement).toHaveValue('')
 
     expect(
-      wrapper.queryByText('Start typing to search or enter an email address…'),
+      await wrapper.findByText(
+        'Start typing to search or enter an email address…',
+      ),
     ).toBeInTheDocument()
 
     mockAutocompleteSearchRecipientQuery({

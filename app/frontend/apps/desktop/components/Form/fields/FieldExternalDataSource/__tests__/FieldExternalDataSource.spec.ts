@@ -64,7 +64,9 @@ describe('Form - Field - External Data Source - Query', () => {
 
     const filterElement = wrapper.getByRole('searchbox')
 
-    expect(wrapper.queryByText('Start typing to search…')).toBeInTheDocument()
+    expect(
+      await wrapper.findByText('Start typing to search…'),
+    ).toBeInTheDocument()
 
     // Search is always case-insensitive.
     await wrapper.events.type(filterElement, 'A')
@@ -100,7 +102,9 @@ describe('Form - Field - External Data Source - Query', () => {
 
     expect(filterElement).toHaveValue('')
 
-    expect(wrapper.queryByText('Start typing to search…')).toBeInTheDocument()
+    expect(
+      await wrapper.findByText('Start typing to search…'),
+    ).toBeInTheDocument()
   })
 
   it('correctly renders default value', async () => {

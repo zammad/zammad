@@ -200,6 +200,17 @@ const onPathPop = () => {
   currentPath.value.pop()
 }
 
+const onHandleToggleDropdown = (event: MouseEvent) => {
+  if ((event.target as HTMLElement)?.closest('input')) return
+
+  if (select.value?.isOpen) {
+    select.value.closeDropdown()
+    return onCloseDropdown()
+  }
+
+  openSelectDropdown()
+}
+
 useFormBlock(contextReactive, openSelectDropdown)
 
 useSelectPreselect(flatOptions, contextReactive)
@@ -267,6 +278,7 @@ setupMissingOrDisabledOptionHandling()
         @keydown.up.prevent="openOrMoveFocusToDropdown(true)"
         @keypress.space.prevent="openSelectDropdown()"
         @blur="context.handlers.blur"
+        @click.stop="onHandleToggleDropdown"
       >
         <div
           v-if="hasValue && context.multiple"

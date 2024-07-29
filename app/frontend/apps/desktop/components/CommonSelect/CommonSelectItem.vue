@@ -122,8 +122,8 @@ const goToNextPage = (option: AutoCompleteOption, noFocus?: boolean) => {
     />
     <div
       v-if="filter"
+      v-tooltip="label + (heading ? ` – ${heading}` : '')"
       class="grow truncate"
-      :title="label + (heading ? ` – ${heading}` : '')"
     >
       <span
         :class="{
@@ -146,11 +146,11 @@ const goToNextPage = (option: AutoCompleteOption, noFocus?: boolean) => {
     </div>
     <span
       v-else
+      v-tooltip="label + (heading ? ` – ${heading}` : '')"
       :class="{
         'text-stone-200 dark:text-neutral-500': option.disabled,
       }"
       class="grow truncate"
-      :title="label + (heading ? ` – ${heading}` : '')"
     >
       {{ label }}
       <span

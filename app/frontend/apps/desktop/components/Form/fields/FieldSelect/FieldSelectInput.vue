@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useElementBounding, useWindowSize } from '@vueuse/core'
+import { useDebounceFn, useElementBounding, useWindowSize } from '@vueuse/core'
 import { escapeRegExp } from 'lodash-es'
 import { computed, nextTick, ref, toRef, watch } from 'vue'
 
@@ -105,7 +105,7 @@ const isBelowHalfScreen = computed(() => {
 })
 
 const openSelectDropdown = () => {
-  if (select.value?.isOpen || props.context.disabled) return
+  if (props.context.disabled) return
 
   select.value?.openDropdown(inputElementBounds, windowSize.height)
 
@@ -118,8 +118,7 @@ const openSelectDropdown = () => {
 
 const openOrMoveFocusToDropdown = (lastOption = false) => {
   if (!select.value?.isOpen) {
-    openSelectDropdown()
-    return
+    return openSelectDropdown()
   }
 
   deactivateTabTrap()
@@ -136,7 +135,26 @@ const onCloseDropdown = () => {
   deactivateTabTrap()
 }
 
-useFormBlock(contextReactive, openSelectDropdown)
+const foldDropdown = (event: MouseEvent) => {
+  if ((event?.target as HTMLElement).tagName !== 'INPUT' && select.value) {
+    select.value.closeDropdown()
+
+    return onCloseDropdown()
+  }
+}
+
+const handleToggleDropdown = (event: MouseEvent) => {
+  if (select.value?.isOpen) return foldDropdown(event)
+  openSelectDropdown()
+}
+
+useFormBlock(
+  contextReactive,
+  useDebounceFn((event) => {
+    if (select.value?.isOpen) foldDropdown(event)
+    openSelectDropdown()
+  }, 500),
+)
 
 useSelectPreselect(sortedOptions, contextReactive)
 setupMissingOrDisabledOptionHandling()
@@ -195,6 +213,7 @@ setupMissingOrDisabledOptionHandling()
         @keydown.up.prevent="openOrMoveFocusToDropdown(true)"
         @keypress.space.prevent="openSelectDropdown()"
         @blur="context.handlers.blur"
+        @click.stop="handleToggleDropdown"
       >
         <div
           v-if="hasValue && context.multiple"

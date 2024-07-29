@@ -114,7 +114,7 @@ const addTooltip = (
 
   let top: string
   let left: string
-
+  if (!event) return
   if ('touches' in event) {
     const { clientX, clientY } = event.touches[0]
 

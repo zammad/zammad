@@ -144,7 +144,9 @@ describe('Form - Field - Organization - Query', () => {
 
     expect(filterElement).toBeInTheDocument()
 
-    expect(wrapper.queryByText('Start typing to search…')).toBeInTheDocument()
+    expect(
+      await wrapper.findByText('Start typing to search…'),
+    ).toBeInTheDocument()
 
     mockAutocompleteSearchOrganizationQuery({
       autocompleteSearchOrganization: [testOptions[0]],
@@ -175,7 +177,9 @@ describe('Form - Field - Organization - Query', () => {
 
     expect(filterElement).toHaveValue('')
 
-    expect(wrapper.queryByText('Start typing to search…')).toBeInTheDocument()
+    expect(
+      await wrapper.findByText('Start typing to search…'),
+    ).toBeInTheDocument()
 
     mockAutocompleteSearchOrganizationQuery({
       autocompleteSearchOrganization: [testOptions[1]],

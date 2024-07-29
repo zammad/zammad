@@ -161,9 +161,11 @@ describe('Fields - FieldGroupPermissions', () => {
     ).toBeInTheDocument()
 
     await view.events.click(options[0])
+    // Because of clicking outside the input is a toggle, we need to click twice
+    await view.events.click(view.getAllByRole('combobox')[1])
     await view.events.click(view.getAllByRole('combobox')[1])
 
-    listbox = view.getByRole('listbox')
+    listbox = await view.findByRole('listbox')
 
     await view.events.click(
       getByRole(listbox, 'button', { name: 'Has submenu' }),
