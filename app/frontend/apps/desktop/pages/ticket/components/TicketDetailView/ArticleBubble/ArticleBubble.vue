@@ -45,7 +45,9 @@ const position = computed(() =>
     : 'left',
 )
 
-const isArticleTypeNote = computed(() => props.article.type?.name === 'note')
+const hasInternalNote = computed(
+  () => props.article.type?.name === 'note' && props.article.internal,
+)
 
 const {
   frameBorderClass,
@@ -53,7 +55,7 @@ const {
   bodyClasses,
   headerAndIconBarBackgroundClass,
   articleWrapperBorderClass,
-} = useBubbleStyleGuide(position, isArticleTypeNote)
+} = useBubbleStyleGuide(position, hasInternalNote)
 
 const filteredAttachments = computed(() => {
   return props.article.attachmentsWithoutInline.filter(
@@ -80,7 +82,7 @@ const { showImage } = useImageViewer(
     :class="[
       {
         'bg-stripes relative z-0 rounded-xl outline outline-1 outline-blue-700 ltr:rounded-bl-none rtl:rounded-br-none':
-          isArticleTypeNote,
+          hasInternalNote,
         'ltr:rounded-bl-xl rtl:rounded-br-xl': position === 'right',
         'ltr:rounded-br-xl rtl:rounded-bl-xl': position === 'left',
       },
@@ -138,8 +140,18 @@ const { showImage } = useImageViewer(
       <ArticleBubbleBody
         tabindex="0"
         :data-test-id="`article-bubble-body-${article.internalId}`"
-        class="focus:outline-none focus-visible:-outline-offset-2 focus-visible:outline-blue-800"
-        :class="[bodyClasses, { 'pt-3': showMetaInformation }]"
+        class="last:rounded-b-2xl focus:outline-none focus-visible:-outline-offset-2 focus-visible:outline-blue-800"
+        :class="[
+          bodyClasses,
+          {
+            'pt-3': showMetaInformation,
+            '[&:nth-child(2)]:rounded-t-xl': !showMetaInformation,
+            'rtl:rounded-br-none [&:nth-child(2)]:ltr:rounded-br-none':
+              position === 'right',
+            'rtl:rounded-br-none [&:nth-child(2)]:ltr:rounded-bl-none':
+              position === 'left',
+          },
+        ]"
         :position="position"
         :show-meta-information="showMetaInformation"
         :inline-images="inlineImages"

@@ -4,10 +4,7 @@ import { describe } from 'vitest'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
-import {
-  createDummyArticle,
-  defaultFromAddress,
-} from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
+import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { EnumSecurityStateType } from '#shared/graphql/types.ts'
 
 import { mockDetailViewSetup } from '#desktop/pages/ticket/components/TicketDetailView/__tests__/support/article-detail-view-mocks.ts'
@@ -17,7 +14,7 @@ import ArticleMetaWhatsappMessageStatus from '#desktop/pages/ticket/components/T
 
 describe('Article Meta', () => {
   describe('Address', () => {
-    it('renders content for ArticleMetaAddress from address correctly', async () => {
+    it('shows customer content for `from` field correctly', async () => {
       const dummyAddress = {
         raw: 'Customer Foo ',
         parsed: [
@@ -44,20 +41,21 @@ describe('Article Meta', () => {
       expect(wrapper.getByText(/customer@foo.org/i)).toBeInTheDocument()
     })
 
-    it('renders content for ArticleMetaAddress for default to address correctly', async () => {
+    it('renders content for agent `from` field correctly', async () => {
       const wrapper = renderComponent(ArticleMetaAddress, {
         props: {
           context: {
-            article: createDummyArticle(),
+            article: createDummyArticle({
+              from: {
+                parsed: null,
+                raw: 'Foo Braun',
+              },
+            }),
           },
         },
       })
 
-      expect(
-        wrapper.getByText(defaultFromAddress.parsed[0].name),
-      ).toBeInTheDocument()
-
-      expect(wrapper.getByText(/nicole.braun@zammad.org/i)).toBeInTheDocument()
+      expect(wrapper.getByText('Foo Braun')).toBeInTheDocument()
     })
   })
 
@@ -80,7 +78,10 @@ describe('Article Meta', () => {
             })
             return { article }
           },
-          template: `<div><ArticleMetaSecurity :context="{article}"/></div>`,
+          template: `
+          <div>
+            <ArticleMetaSecurity :context="{article}" />
+          </div>`,
           components: { ArticleMetaSecurity },
         },
         {
@@ -117,7 +118,10 @@ describe('Article Meta', () => {
             })
             return { article }
           },
-          template: `<div><ArticleMetaSecurity :context="{article}"/></div>`,
+          template: `
+          <div>
+            <ArticleMetaSecurity :context="{article}" />
+          </div>`,
           components: { ArticleMetaSecurity },
         },
         {
@@ -155,7 +159,10 @@ describe('Article Meta', () => {
           })
           return { article }
         },
-        template: `<div><ArticleMetaSecurity :context="{article}"/></div>`,
+        template: `
+        <div>
+          <ArticleMetaSecurity :context="{article}" />
+        </div>`,
         components: { ArticleMetaSecurity },
       },
       {
@@ -192,7 +199,10 @@ describe('Article Meta', () => {
           })
           return { article }
         },
-        template: `<div><ArticleMetaSecurity :context="{article}"/></div>`,
+        template: `
+        <div>
+          <ArticleMetaSecurity :context="{article}" />
+        </div>`,
         components: { ArticleMetaSecurity },
       },
       {
@@ -228,7 +238,10 @@ describe('Article Meta', () => {
             })
             return { article }
           },
-          template: `<div><ArticleMetaWhatsappMessageStatus :context="{article}"/></div>`,
+          template: `
+          <div>
+            <ArticleMetaWhatsappMessageStatus :context="{article}" />
+          </div>`,
           components: { ArticleMetaWhatsappMessageStatus },
         },
         {
@@ -259,7 +272,10 @@ describe('Article Meta', () => {
             })
             return { article }
           },
-          template: `<div><ArticleMetaWhatsappMessageStatus :context="{article}"/></div>`,
+          template: `
+          <div>
+            <ArticleMetaWhatsappMessageStatus :context="{article}" />
+          </div>`,
           components: { ArticleMetaWhatsappMessageStatus },
         },
         {
@@ -290,7 +306,10 @@ describe('Article Meta', () => {
             })
             return { article }
           },
-          template: `<div><ArticleMetaWhatsappMessageStatus :context="{article}"/></div>`,
+          template: `
+          <div>
+            <ArticleMetaWhatsappMessageStatus :context="{article}" />
+          </div>`,
           components: { ArticleMetaWhatsappMessageStatus },
         },
         {

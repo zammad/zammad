@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, type Ref } from 'vue'
+import { computed, type ComputedRef, toValue } from 'vue'
 
 import CommonDateTime from '#shared/components/CommonDateTime/CommonDateTime.vue'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
@@ -8,6 +8,8 @@ import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { lookupArticlePlugin } from '#desktop/pages/ticket/components/TicketDetailView/article-type/index.ts'
 import ArticleMetaFieldAddress from '#desktop/pages/ticket/components/TicketDetailView/ArticleMeta/ArticleMetaAddress.vue'
 import type { ChannelMetaField } from '#desktop/pages/ticket/components/TicketDetailView/ArticleMeta/types.ts'
+
+import type { MaybeRefOrGetter } from '@vueuse/core'
 
 const getNestedProperty = (article: TicketArticle, nestedKeys: string[]) => {
   return nestedKeys.reduce((accumulator, currentKey) => {
@@ -18,32 +20,37 @@ const getNestedProperty = (article: TicketArticle, nestedKeys: string[]) => {
   }, article)
 }
 
-export const useArticleMeta = (article: Ref<TicketArticle>) => {
-  const addNewFields = (fields: ChannelMetaField[]) => {
-    const plugin = lookupArticlePlugin(article.value.type?.name as string)
+const addNewFields = (
+  fields: ChannelMetaField[],
+  article: ComputedRef<TicketArticle>,
+) => {
+  const plugin = lookupArticlePlugin(article.value.type?.name as string)
+  if (!plugin?.additionalFields?.length) return fields
 
-    if (!plugin?.additionalFields?.length) return fields
+  plugin.additionalFields.forEach((field) => {
+    const nestedKeys = field.name.split('.')
 
-    plugin.additionalFields.forEach((field) => {
-      const nestedKeys = field.name.split('.')
+    const fieldValue = getNestedProperty(article.value, nestedKeys)
 
-      const fieldValue = getNestedProperty(article.value, nestedKeys)
+    if (field.show !== undefined && !field.show?.(article.value)) return fields
 
-      if (field.show !== undefined && !field.show?.(article.value))
-        return fields
+    if (fieldValue)
+      fields.push({
+        label: field.label || (article.value.type?.name as string),
+        name: field.name,
+        component: field.component,
+        order: field.order,
+        value: fieldValue,
+      })
+  })
 
-      if (fieldValue)
-        fields.push({
-          label: field.label || (article.value.type?.name as string),
-          name: field.name,
-          component: field.component,
-          order: field.order,
-          value: fieldValue,
-        })
-    })
+  return fields
+}
 
-    return fields
-  }
+export const useArticleMeta = (
+  ticketArticle: MaybeRefOrGetter<TicketArticle>,
+) => {
+  const article = computed(() => toValue(ticketArticle))
 
   const links = computed(() => article.value.preferences?.links || [])
 
@@ -69,7 +76,8 @@ export const useArticleMeta = (article: Ref<TicketArticle>) => {
         props: {
           type: 'from',
         },
-        show: () => article.value.from?.parsed?.[0]?.name,
+        show: () =>
+          !!(article.value.from?.parsed?.[0]?.name || article.value.from?.raw),
         order: 200,
       },
       {
@@ -79,7 +87,8 @@ export const useArticleMeta = (article: Ref<TicketArticle>) => {
         props: {
           type: 'to',
         },
-        show: () => article.value.to?.parsed?.[0]?.name,
+        show: () =>
+          !!(article.value.to?.parsed?.[0]?.name || article.value.to?.raw),
         order: 300,
       },
       {
@@ -93,7 +102,7 @@ export const useArticleMeta = (article: Ref<TicketArticle>) => {
       },
     ]
 
-    return addNewFields(base as ChannelMetaField[])
+    return addNewFields(base as ChannelMetaField[], article)
       .filter((field) => (field.show ? field.show(article.value) : true))
       .sort((a, b) => a.order - b.order)
   })

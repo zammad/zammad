@@ -14,9 +14,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const article = toRef(props, 'article')
-
-const { fields } = useArticleMeta(article)
+const { fields } = useArticleMeta(toRef(props, 'article'))
 </script>
 
 <template>

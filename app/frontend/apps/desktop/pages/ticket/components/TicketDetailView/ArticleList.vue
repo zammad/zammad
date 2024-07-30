@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { unionBy } from 'lodash-es'
 import { computed, watch, ref, nextTick } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute } from 'vue-router'
 
 import { edgesToArray, waitForElement } from '#shared/utils/helpers.ts'
 
@@ -16,7 +16,7 @@ import { useTicketArticleRows } from '#desktop/pages/ticket/composables/useTicke
 
 import { useTicketInformation } from '../../composables/useTicketInformation.ts'
 
-const router = useRouter()
+const route = useRoute()
 const { context } = useArticleContext()
 
 const totalCount = computed(
@@ -84,23 +84,21 @@ const getPreviousArticleElement = async (
 
 const initialScroll = async () => {
   let targetElement
-  if (router.currentRoute.value.hash) {
-    const articleInternalId = router.currentRoute.value.hash?.replace(
-      '#article-',
-      '',
-    )
+  if (route.hash) {
+    const articleInternalId = route.hash?.replace('#article-', '')
 
     targetElement = await getPreviousArticleElement(articleInternalId)
   }
 
   if (!targetElement) {
     const targetRow = rows.value[rows.value.length - 1]
-    targetElement = await waitForElement(`#article-list-row-${targetRow.key}`)
+
+    targetElement = await waitForElement(`#article-list-row-${targetRow?.key}`)
   }
 
   if (!targetElement) return false
 
-  targetElement?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  targetElement?.scrollIntoView({ behavior: 'instant', block: 'start' })
 }
 
 const didScrollInitially = ref(false)
@@ -117,54 +115,52 @@ watch(
   rows,
   async () => {
     if (didScrollInitially.value) return
-    didScrollInitially.value = true
     await nextTick()
-    initialScroll()
+    await initialScroll()
+    didScrollInitially.value = true
   },
-  { immediate: true },
+  { flush: 'post', immediate: true },
 )
 </script>
 
 <template>
   <section class="mx-auto w-full max-w-6xl px-12 py-4">
-    <TransitionGroup
-      v-if="context.articles.value?.articles.edges"
-      tag="div"
-      name="list"
-      class="space-y-10"
-      enter-from-class="opacity-0"
-      enter-active-class="duration-500"
+    <ul
+      v-if="context.articles.value?.articles.edges && rows"
+      class="scroll-mt-[12rem] space-y-10"
     >
-      <template v-for="(row, rowIndex) in rows" :key="row.key">
-        <div :id="`article-list-row-${row.key}`" class="scroll-mt-[12rem]">
-          <ArticleBubble
-            v-if="row.type === 'article-bubble'"
-            :aria-setsize="totalCount"
-            :aria-posinset="getArticleOrderNumber(rowIndex)"
-            :article="row.article"
-          />
-          <ArticleMore
-            v-else-if="row.type === 'more'"
-            :disabled="isLoading"
-            @click="loadPrevious()"
-          />
-          <DeliveryMessage
-            v-else-if="row.type === 'delivery' && row.content"
-            role="article"
-            :aria-setsize="totalCount"
-            :aria-posinset="getArticleOrderNumber(rowIndex)"
-            :content="row.content"
-          />
-          <SystemMessage
-            v-else-if="row.type === 'system' && row.subject"
-            role="article"
-            :aria-setsize="totalCount"
-            :aria-posinset="getArticleOrderNumber(rowIndex)"
-            :subject="row.subject"
-            :to="row.to"
-          />
-        </div>
-      </template>
-    </TransitionGroup>
+      <li
+        v-for="(row, rowIndex) in rows"
+        :id="`article-list-row-${row.key}`"
+        :key="row.key"
+      >
+        <ArticleBubble
+          v-if="row.type === 'article-bubble'"
+          :aria-setsize="totalCount"
+          :aria-posinset="getArticleOrderNumber(rowIndex)"
+          :article="row.article"
+        />
+        <ArticleMore
+          v-else-if="row.type === 'more'"
+          :disabled="isLoading"
+          @click="loadPrevious()"
+        />
+        <DeliveryMessage
+          v-else-if="row.type === 'delivery' && row.content"
+          role="article"
+          :aria-setsize="totalCount"
+          :aria-posinset="getArticleOrderNumber(rowIndex)"
+          :content="row.content"
+        />
+        <SystemMessage
+          v-else-if="row.type === 'system' && row.subject"
+          role="article"
+          :aria-setsize="totalCount"
+          :aria-posinset="getArticleOrderNumber(rowIndex)"
+          :subject="row.subject"
+          :to="row.to"
+        />
+      </li>
+    </ul>
   </section>
 </template>

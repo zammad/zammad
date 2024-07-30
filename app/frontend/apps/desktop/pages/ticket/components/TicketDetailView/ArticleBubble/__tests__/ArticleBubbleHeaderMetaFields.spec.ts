@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { expect } from 'vitest'
+
 import {
   type ExtendedRenderResult,
   renderComponent,
@@ -19,6 +21,18 @@ const hasBaseInformation = (wrapper: ExtendedRenderResult) => {
   expect(wrapper.getByText('From')).toBeInTheDocument()
   expect(wrapper.getByText('Nicole Braun')).toBeInTheDocument()
   expect(wrapper.getByText(/nicole.braun@zammad.org/i)).toBeInTheDocument()
+}
+
+const hasAdditionalFields = (
+  wrapper: ExtendedRenderResult,
+  field: ArticleTypeName,
+) => {
+  if (field === 'email') {
+    expect(wrapper.getByText('Subject')).toBeInTheDocument()
+    expect(wrapper.getByText('Test subject')).toBeInTheDocument()
+    expect(wrapper.getByText('To')).toBeInTheDocument()
+    expect(wrapper.getByText('Test Agents')).toBeInTheDocument()
+  }
 }
 
 const renderWrapper = (
@@ -47,13 +61,22 @@ describe('ArticleBubbleMetaFields', () => {
   it.each(articleTypeModules)(
     'displays meta field for channel $name',
     ({ name, icon }) => {
-      const wrapper = renderWrapper(name as ArticleTypeName)
+      const wrapper = renderWrapper(name as ArticleTypeName, {
+        articleData: {
+          subject: 'Test subject',
+          to: {
+            raw: 'Test Agents',
+          },
+        },
+      })
 
       hasBaseInformation(wrapper)
 
       expect(wrapper.getByText('Channel')).toBeInTheDocument()
       expect(wrapper.getByText(name)).toBeInTheDocument()
       expect(wrapper.getByIconName(icon)).toBeInTheDocument()
+
+      hasAdditionalFields(wrapper, name as ArticleTypeName)
     },
   )
 

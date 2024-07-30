@@ -116,6 +116,7 @@ onMounted(() => {
     </CommonButton>
   </div>
 </template>
+
 <style scoped>
 .BubbleGradient::before {
   content: '';

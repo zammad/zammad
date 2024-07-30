@@ -19,7 +19,7 @@ const { signingIcon, encryptionIcon, hasError } = useArticleSecurity(
 
 <template>
   <div
-    v-if="props.article.securityState && !hasError"
+    v-if="article.securityState && !hasError"
     role="list"
     class="flex gap-3 p-3 dark:bg-gray-500"
   >

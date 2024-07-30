@@ -67,7 +67,7 @@ export const createDummyArticle = (options?: {
     internalId: options?.articleId || 1,
     from: options?.from === undefined ? defaultFromAddress : options?.from,
     messageId: null,
-    to: options?.from === undefined ? null : options?.from,
+    to: options?.to === undefined ? null : options?.to,
     cc: options?.cc === undefined ? null : options?.cc,
     subject: options?.subject === undefined ? null : options?.subject,
     replyTo: options?.replyTo || null,

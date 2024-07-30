@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, type ComputedRef, ref, toRef } from 'vue'
+import { computed, type ComputedRef, ref } from 'vue'
 
 import { useTicketChannel } from '#shared/entities/ticket/composables/useTicketChannel.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
@@ -21,9 +21,7 @@ const { copyToClipboard } = useCopyToClipboard()
 
 const headerNode = ref<HTMLElement>()
 
-const { ticketNumber, ticketNumberWithTicketHook } = useTicketNumber(
-  toRef(ticket?.value),
-)
+const { ticketNumber, ticketNumberWithTicketHook } = useTicketNumber(ticket)
 
 const items = computed(() => [
   // :TODO Adjust navigations currently two h1 are present

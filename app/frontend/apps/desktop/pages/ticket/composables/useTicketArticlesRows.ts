@@ -27,7 +27,7 @@ interface SystemRaw {
   to?: Maybe<string>
 }
 
-type TicketArticleRow = (
+export type TicketArticleRow = (
   | ArticleRow
   | SystemRaw
   | MoreRow
