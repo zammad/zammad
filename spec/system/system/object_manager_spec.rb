@@ -549,17 +549,18 @@ RSpec.describe 'System > Objects', type: :system do
 
         page.find('.js-submit').click
 
-        expect(page).to have_text 'Data option max must be lower than 2147483648'
+        expect(page).to have_text 'Maximal value must be lower than 2147483648'
       end
     end
 
     it 'verifies max value does not go below limit' do
       in_modal do
+        fill_in 'Minimal', with: '-9999999999999'
         fill_in 'Maximal', with: '-999999999999'
 
         page.find('.js-submit').click
 
-        expect(page).to have_text 'Data option max must be higher than -2147483648'
+        expect(page).to have_text 'Maximal value must be higher than -2147483648'
       end
     end
 
@@ -587,10 +588,11 @@ RSpec.describe 'System > Objects', type: :system do
     it 'verifies min value does not go above limit' do
       in_modal do
         fill_in 'Minimal', with: '999999999999'
+        fill_in 'Maximal', with: '123'
 
         page.find('.js-submit').click
 
-        expect(page).to have_text 'Data option min must be lower than 2147483648'
+        expect(page).to have_text 'Minimal value must be lower than 2147483648'
       end
     end
 
@@ -600,7 +602,7 @@ RSpec.describe 'System > Objects', type: :system do
 
         page.find('.js-submit').click
 
-        expect(page).to have_text 'Data option min must be higher than -2147483648'
+        expect(page).to have_text 'Minimal value must be higher than -2147483648'
       end
     end
 
@@ -631,7 +633,7 @@ RSpec.describe 'System > Objects', type: :system do
 
         page.find('.js-submit').click
 
-        expect(page).to have_text 'Data option min must be lower than max'
+        expect(page).to have_text 'Maximal value must be higher than or equal to minimal value'
       end
     end
   end

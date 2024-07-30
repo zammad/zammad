@@ -407,11 +407,11 @@ msgstr ""
 msgid "%{model} can have full or granular access to group"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:570
+#: app/models/object_manager/attribute.rb:567
 msgid "%{name} already exists"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:559
+#: app/models/object_manager/attribute.rb:556
 msgid "%{name} is a reserved word"
 msgstr ""
 
@@ -1233,8 +1233,16 @@ msgstr ""
 msgid "Allow future"
 msgstr ""
 
+#: app/models/object_manager/attribute/data_option_validator.rb:65
+msgid "Allow future dates toggle value is required."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:334
 msgid "Allow past"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:71
+msgid "Allow past dates toggle value is required."
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:1967
@@ -3793,6 +3801,10 @@ msgstr ""
 
 #: db/seeds/settings.rb:863
 msgid "Default type for a new ticket"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:47
+msgid "Default value is required."
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:15
@@ -7352,6 +7364,10 @@ msgstr ""
 msgid "Inline content could not be generated."
 msgstr ""
 
+#: app/models/object_manager/attribute/data_option_validator.rb:41
+msgid "Input field must be text, password, tel, fax, email or url type."
+msgstr ""
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:320
 msgid "Insert code block"
 msgstr ""
@@ -8510,6 +8526,10 @@ msgstr ""
 msgid "Mattermost, RocketChat"
 msgstr ""
 
+#: app/models/object_manager/attribute/data_option_validator.rb:35
+msgid "Max length must be an integer."
+msgstr ""
+
 #: app/assets/javascripts/app/models/chat.coffee:253
 #: app/assets/javascripts/app/views/channel/topics.jst.eco:7
 msgid "Max. clients on waitlist"
@@ -8529,6 +8549,22 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:387
 msgid "Maximal"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:109
+msgid "Maximal value must be an integer"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:114
+msgid "Maximal value must be higher than -2147483648"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:132
+msgid "Maximal value must be higher than or equal to minimal value"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:119
+msgid "Maximal value must be lower than 2147483648"
 msgstr ""
 
 #: db/seeds/settings.rb:3140
@@ -8727,6 +8763,18 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:378
 msgid "Minimal"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:87
+msgid "Minimal value must be an integer"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:93
+msgid "Minimal value must be higher than -2147483648"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:98
+msgid "Minimal value must be lower than 2147483648"
 msgstr ""
 
 #: db/seeds/settings.rb:1982
@@ -9960,6 +10008,14 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/ticket_number_date.jst.eco:2
 #: app/assets/javascripts/app/views/settings/ticket_number_increment.jst.eco:2
 msgid "Options"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:59
+msgid "Options are required."
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:53
+msgid "Options or relation is required."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue:76
@@ -17191,7 +17247,7 @@ msgstr ""
 msgid "at"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:554
+#: app/models/object_manager/attribute.rb:551
 msgid "at least one letter is required"
 msgstr ""
 
@@ -17205,7 +17261,7 @@ msgstr ""
 msgid "attachment"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:583
+#: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"
 msgstr ""
 
@@ -17239,11 +17295,11 @@ msgstr ""
 msgid "camera,image,photo,picture"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:630
+#: app/models/object_manager/attribute.rb:629
 msgid "can only be created on postgresql databases"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:623
+#: app/models/object_manager/attribute.rb:622
 msgid "can't be altered after creation (you can delete the attribute and create another with the desired value)"
 msgstr ""
 
@@ -17253,7 +17309,7 @@ msgstr ""
 msgid "can't be empty"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:545
+#: app/models/object_manager/attribute.rb:542
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr ""
 
@@ -18079,7 +18135,7 @@ msgstr ""
 msgid "now"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:551
+#: app/models/object_manager/attribute.rb:548
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr ""
 
@@ -18315,7 +18371,7 @@ msgstr ""
 msgid "sms"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:548
+#: app/models/object_manager/attribute.rb:545
 msgid "spaces are not allowed"
 msgstr ""
 

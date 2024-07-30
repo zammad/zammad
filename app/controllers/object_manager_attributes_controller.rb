@@ -135,6 +135,8 @@ class ObjectManagerAttributesController < ApplicationController
     object_manager_attribute = ObjectManager::Attribute.add(attributes)
 
     render json: object_manager_attribute.attributes_with_association_ids, status: status
+  rescue ActiveRecord::RecordInvalid => e
+    raise e
   rescue => e
     logger.error e
     raise Exceptions::UnprocessableEntity, e

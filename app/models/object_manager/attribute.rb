@@ -29,10 +29,6 @@ class ObjectManager::Attribute < ApplicationModel
     active
   ].freeze
 
-  VALIDATE_INTEGER_MIN    = -2_147_483_647
-  VALIDATE_INTEGER_MAX    = 2_147_483_647
-  VALIDATE_INTEGER_REGEXP = %r{^-?\d+$}
-
   self.table_name = 'object_manager_attributes'
 
   belongs_to :object_lookup, optional: true
@@ -40,9 +36,10 @@ class ObjectManager::Attribute < ApplicationModel
   validates :name, presence: true
   validates :data_type, inclusion: { in: DATA_TYPES, msg: '%{value} is not a valid data type' }
   validate :inactive_must_be_unused_by_references, unless: :active?
-  validate :data_option_must_have_appropriate_values
   validate :data_type_must_not_change, on: :update
   validate :json_field_only_on_postgresql, on: :create
+
+  validates_with ObjectManager::Attribute::DataOptionValidator
 
   store :screens
   store :data_option
@@ -943,6 +940,14 @@ is certain attribute used by triggers, overviews or schedulers
     raise ActiveRecord::RecordInvalid, self
   end
 
+  def local_data_option
+    send(local_data_attr)
+  end
+
+  def local_data_option=(val)
+    send(:"#{local_data_attr}=", val)
+  end
+
   private
 
   # when setting default values for boolean fields,
@@ -957,12 +962,6 @@ is certain attribute used by triggers, overviews or schedulers
     when 'autocompletion_ajax_external_data_source'
       local_data_option[:nulloption] = true if local_data_option[:nulloption].nil?
     end
-  end
-
-  def data_option_must_have_appropriate_values
-    data_option_validations
-      .select { |validation| validation[:failed] }
-      .each { |validation| errors.add(local_data_attr, validation[:message]) }
   end
 
   def inactive_must_be_unused_by_references
@@ -991,78 +990,8 @@ is certain attribute used by triggers, overviews or schedulers
     errors.add(:data_type, __('can only be created on postgresql databases'))
   end
 
-  def local_data_option
-    @local_data_option ||= send(local_data_attr)
-  end
-
   def local_data_attr
     @local_data_attr ||= to_config ? :data_option_new : :data_option
-  end
-
-  def local_data_option=(val)
-    send(:"#{local_data_attr}=", val)
-  end
-
-  def data_option_maxlength_check
-    [{ failed: !local_data_option[:maxlength].to_s.match?(%r{^\d+$}), message: 'must have integer for :maxlength' }]
-  end
-
-  def data_option_type_check
-    [{ failed: %w[text password tel fax email url].exclude?(local_data_option[:type]), message: 'must have one of text/password/tel/fax/email/url for :type' }]
-  end
-
-  def data_option_min_max_check
-    min = local_data_option[:min]
-    max = local_data_option[:max]
-
-    [
-      { failed:  !VALIDATE_INTEGER_REGEXP.match?(min.to_s), message: 'must have integer for :min' },
-      { failed:  !VALIDATE_INTEGER_REGEXP.match?(max.to_s), message: 'must have integer for :max' },
-      { failed:  !(min.is_a?(Integer) && min >= VALIDATE_INTEGER_MIN), message: 'min must be higher than -2147483648' },
-      { failed:  !(min.is_a?(Integer) && min <= VALIDATE_INTEGER_MAX), message: 'min must be lower than 2147483648' },
-      { failed:  !(max.is_a?(Integer) && max >= VALIDATE_INTEGER_MIN), message: 'max must be higher than -2147483648' },
-      { failed:  !(max.is_a?(Integer) && max <= VALIDATE_INTEGER_MAX), message: 'max must be lower than 2147483648' },
-      { failed:  !(max.is_a?(Integer) && min.is_a?(Integer) && min <= max), message: 'min must be lower than max' }
-    ]
-  end
-
-  def data_option_default_check
-    [{ failed: !local_data_option.key?(:default), message: 'must have value for :default' }]
-  end
-
-  def data_option_relation_check
-    [{ failed: local_data_option[:options].nil? && local_data_option[:relation].nil?, message: 'must have non-nil value for either :options or :relation' }]
-  end
-
-  def data_option_nil_check
-    [{ failed: local_data_option[:options].nil?, message: 'must have non-nil value for :options' }]
-  end
-
-  def data_option_future_check
-    [{ failed: local_data_option[:future].nil?, message: 'must have boolean value for :future' }]
-  end
-
-  def data_option_past_check
-    [{ failed: local_data_option[:past].nil?, message: 'must have boolean value for :past' }]
-  end
-
-  def data_option_validations
-    case data_type
-    when 'input'
-      data_option_type_check + data_option_maxlength_check
-    when %r{^(textarea|richtext)$}
-      data_option_maxlength_check
-    when 'integer'
-      data_option_min_max_check
-    when %r{^((multi_)?tree_select|(multi)?select|checkbox)$}
-      data_option_default_check + data_option_relation_check
-    when 'boolean'
-      data_option_default_check + data_option_nil_check
-    when 'datetime'
-      data_option_future_check + data_option_past_check
-    else
-      []
-    end
   end
 
   def ensure_multiselect
