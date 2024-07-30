@@ -52,6 +52,38 @@ RSpec.describe 'Admin password auth', type: :system do
 
         expect(page).to have_css '#username'
       end
+
+      context 'with enabled two factor authentication' do
+        let(:password)         { 'some_test_password' }
+        let(:user)             { create(:admin, password: password) }
+        let(:token)            { two_factor_pref.configuration[:code] }
+        let!(:two_factor_pref) { create(:user_two_factor_preference, :authenticator_app, user: user) }
+
+        before do
+          Setting.set('two_factor_authentication_method_authenticator_app', true)
+        end
+
+        it 'logs in the admin user (#5283)' do
+          expect(page).to have_text 'Admin password login instructions were sent'
+          expect(generated_tokens.count).to eq 1
+          expect(generated_tokens.first.persistent).to be false
+
+          visit "/#login/admin/#{generated_tokens.first.token}"
+
+          within('#login') do
+            fill_in 'username', with: username
+            fill_in 'password', with: password
+
+            click_on('Sign in')
+
+            fill_in 'security_code', with: token
+
+            click_on('Sign in')
+          end
+
+          expect(page).to have_no_selector('#login')
+        end
+      end
     end
   end
 
