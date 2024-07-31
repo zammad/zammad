@@ -36,7 +36,7 @@ def build_chrome_driver(app, user_agent: nil)
       'profile.default_content_setting_values.notifications' => 1, # ALLOW notifications
     },
     # Disable shared memory usage as it does not really provide a performance gain but cause resource limit issues in CI.
-    args:             %w[--enable-logging --v=1 --disable-dev-shm-usage],
+    args:             %w[--enable-logging --v=1 --disable-dev-shm-usage --disable-search-engine-choice-screen],
     # Disable the "Chrome is being controlled by automated test software." info bar.
     exclude_switches: ['enable-automation'],
   )

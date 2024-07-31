@@ -92,8 +92,8 @@ const { isDarkMode } = storeToRefs(useThemeStore())
       :action-row="actionRow"
       :config="config"
       :aria-labels="ariaLabels"
+      :text-input="{ openMenu: 'toggle' }"
       auto-apply
-      text-input
       offset="12"
       @blur="context.handlers.blur"
     >
@@ -192,7 +192,7 @@ const { isDarkMode } = storeToRefs(useThemeStore())
   --dp-input-background-color: theme(colors.blue.200);
 
   .dp {
-    &__clear_icon:hover {
+    &--clear-btn:hover {
       color: theme(colors.black);
     }
 
@@ -246,7 +246,7 @@ const { isDarkMode } = storeToRefs(useThemeStore())
   --dp-input-background-color: theme(colors.gray.700);
 
   .dp {
-    &__clear_icon:hover {
+    &--clear-btn:hover {
       color: theme(colors.white);
     }
 
@@ -316,7 +316,7 @@ const { isDarkMode } = storeToRefs(useThemeStore())
       }
     }
 
-    &__clear_icon {
+    &--clear-btn {
       right: theme(space.6);
 
       &:where([dir='rtl'], [dir='rtl'] *) {
@@ -429,6 +429,10 @@ const { isDarkMode } = storeToRefs(useThemeStore())
       }
     }
 
+    &__overlay_container {
+      padding-bottom: theme(padding.2);
+    }
+
     &__overlay_container + .dp__button,
     &__overlay_row + .dp__button {
       width: auto;
@@ -436,7 +440,7 @@ const { isDarkMode } = storeToRefs(useThemeStore())
     }
 
     &__overlay_container + .dp__button {
-      width: calc(var(--dp-menu-min-width) - theme(margin[1.5]) * 2);
+      width: calc(var(--dp-menu-min-width));
     }
 
     &__time_display {

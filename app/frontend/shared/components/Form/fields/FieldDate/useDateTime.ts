@@ -47,8 +47,6 @@ export const useDateTime = (context: Ref<DateTimeContext>) => {
     toggleOverlay: i18n.t('Toggle the overlay'),
     menu: i18n.t('Datepicker menu'),
     input: i18n.t('Datepicker input field'),
-    calendarWrap: i18n.t('Area for calendar month display'),
-    calendarDays: i18n.t('Area for calendar days display'),
     openTimePicker: i18n.t('Open the time picker'),
     closeTimePicker: i18n.t('Close the time picker'),
     incrementValue: (type: string) => {
@@ -91,6 +89,24 @@ export const useDateTime = (context: Ref<DateTimeContext>) => {
     prevMonth: i18n.t('Previous month'),
     nextYear: i18n.t('Next year'),
     prevYear: i18n.t('Previous year'),
+    clearInput: i18n.t('Clear the value'),
+    calendarIcon: i18n.t('The calendar icon'),
+    timePicker: i18n.t('The time picker'),
+    monthPicker: (overlay: boolean) =>
+      overlay ? i18n.t('The month picker overlay') : i18n.t('The month picker'),
+    yearPicker: (overlay: boolean) =>
+      overlay ? i18n.t('The year picker overlay') : i18n.t('The year picker'),
+    timeOverlay: (type: 'hours' | 'minutes' | 'seconds') => {
+      switch (type) {
+        case 'hours':
+          return i18n.t('The hours overlay')
+        case 'minutes':
+          return i18n.t('The minutes overlay')
+        case 'seconds':
+        default:
+          return i18n.t('The seconds overlay')
+      }
+    },
   }))
 
   return {
