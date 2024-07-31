@@ -6,7 +6,7 @@ echo "Zammad S/MIME test certificate generation"
 touch /tmp/index.txt
 echo 1000 > /tmp/serial
 
-if [[ ! -e "$CERT_DIR/RootCA.key" ]] || [[ ! -e "$CERT_DIR/RootCA.crt" ]] || [[ -n "$FORCE_REGENERATE" ]]
+if [[ ! -e "$CERT_DIR/RootCA.key" ]] || [[ ! -e "$CERT_DIR/RootCA.crt" ]] || [[ -z "$SKIP_REGENERATE" ]]
 then
     export CA="RootCA"
 
@@ -22,7 +22,7 @@ then
     unset CA
 fi
 
-if [[ ! -e "$CERT_DIR/IntermediateCA.key" ]] || [[ ! -e "$CERT_DIR/IntermediateCA.crt" ]] || [[ -n "$FORCE_REGENERATE" ]]
+if [[ ! -e "$CERT_DIR/IntermediateCA.key" ]] || [[ ! -e "$CERT_DIR/IntermediateCA.crt" ]] || [[ -z "$SKIP_REGENERATE" ]]
 then
     export CA="RootCA"
     export ICA="IntermediateCA"
@@ -45,7 +45,7 @@ then
     unset ICA
 fi
 
-if [[ ! -e "$CERT_DIR/ChainCA.crt" ]] || [[ -n "$FORCE_REGENERATE" ]]
+if [[ ! -e "$CERT_DIR/ChainCA.crt" ]] || [[ -z "$SKIP_REGENERATE" ]]
 then
     echo "Generating ChainCA.key and ChainCA.csr"
     cp $CERT_DIR/IntermediateCA.key $CERT_DIR/ChainCA.key
@@ -57,7 +57,7 @@ fi
 
 for EMAIL_ADDRESS in smime1@example.com smime2@example.com smime3@example.com smimedouble@example.com CaseInsenstive@eXample.COM pgp+smime-sender@example.com pgp+smime-recipient@example.com chain@example.com
 do
-    if [[ ! -e "$CERT_DIR/$EMAIL_ADDRESS.crt" ]] || [[ -n "$FORCE_REGENERATE" ]]
+    if [[ ! -e "$CERT_DIR/$EMAIL_ADDRESS.crt" ]] || [[ -z "$SKIP_REGENERATE" ]]
     then
         export CA="RootCA"
         export ICA="IntermediateCA"
@@ -97,7 +97,7 @@ done
 
 echo "Generating a combo of private key and certificate for issue #3727"
 
-if [[ ! -e "$CERT_DIR/issue_3727.key" ]] || [[ -n "$FORCE_REGENERATE" ]]
+if [[ ! -e "$CERT_DIR/issue_3727.key" ]] || [[ -z "$SKIP_REGENERATE" ]]
 then
     cat "$CERT_DIR/smime1@example.com.key" "$CERT_DIR/smime1@example.com.crt" > "$CERT_DIR/issue_3727.key"
     cp "$CERT_DIR/smime1@example.com.secret" "$CERT_DIR/issue_3727.secret"
@@ -110,7 +110,7 @@ fi
 echo "Generating expired"
 FAKETIME=-10y date
 
-if [[ ! -e "$CERT_DIR/ExpiredCA.key" ]] || [[ ! -e "$CERT_DIR/ExpiredCA.crt" ]] || [[ -n "$FORCE_REGENERATE" ]]
+if [[ ! -e "$CERT_DIR/ExpiredCA.key" ]] || [[ ! -e "$CERT_DIR/ExpiredCA.crt" ]] || [[ -z "$SKIP_REGENERATE" ]]
 then
     export CA="ExpiredCA"
 
@@ -127,7 +127,7 @@ then
     unset CA
 fi
 
-if [[ ! -e "$CERT_DIR/ExpiredIntermediateCA.key" ]] || [[ ! -e "$CERT_DIR/ExpiredIntermediateCA.crt" ]] || [[ -n "$FORCE_REGENERATE" ]]
+if [[ ! -e "$CERT_DIR/ExpiredIntermediateCA.key" ]] || [[ ! -e "$CERT_DIR/ExpiredIntermediateCA.crt" ]] || [[ -z "$SKIP_REGENERATE" ]]
 then
     export CA="ExpiredCA"
     export ICA="ExpiredIntermediateCA"
@@ -154,7 +154,7 @@ fi
 
 for EMAIL_ADDRESS in expiredsmime1@example.com expiredsmime2@example.com
 do
-    if [[ ! -e "$CERT_DIR/$EMAIL_ADDRESS.crt" ]] || [[ -n "$FORCE_REGENERATE" ]]
+    if [[ ! -e "$CERT_DIR/$EMAIL_ADDRESS.crt" ]] || [[ -z "$SKIP_REGENERATE" ]]
     then
         export CA="ExpiredCA"
         export ICA="ExpiredIntermediateCA"
@@ -187,7 +187,7 @@ do
     fi
 done
 
-if [[ ! -e "$CERT_DIR/SenderCA.key" ]] || [[ ! -e "$CERT_DIR/SenderCA.crt" ]] || [[ -n "$FORCE_REGENERATE" ]]
+if [[ ! -e "$CERT_DIR/SenderCA.key" ]] || [[ ! -e "$CERT_DIR/SenderCA.crt" ]] || [[ -z "$SKIP_REGENERATE" ]]
 then
     export CA="SenderCA"
 
@@ -203,7 +203,7 @@ then
     unset CA
 fi
 
-if [[ ! -e "$CERT_DIR/SenderIntermediateCA.key" ]] || [[ ! -e "$CERT_DIR/SenderIntermediateCA.crt" ]] || [[ -n "$FORCE_REGENERATE" ]]
+if [[ ! -e "$CERT_DIR/SenderIntermediateCA.key" ]] || [[ ! -e "$CERT_DIR/SenderIntermediateCA.crt" ]] || [[ -z "$SKIP_REGENERATE" ]]
 then
     export CA="SenderCA"
     export ICA="SenderIntermediateCA"
@@ -228,7 +228,7 @@ fi
 
 EMAIL_ADDRESS="smime-sender-ca@example.com"
 
-if [[ ! -e "$CERT_DIR/$EMAIL_ADDRESS.crt" ]] || [[ -n "$FORCE_REGENERATE" ]]
+if [[ ! -e "$CERT_DIR/$EMAIL_ADDRESS.crt" ]] || [[ -z "$SKIP_REGENERATE" ]]
 then
     export CA="SenderCA"
     export ICA="SenderIntermediateCA"
@@ -272,15 +272,15 @@ do
     TEST_MAIL=${TEST_MAIL_SIGNER%,*}
     TEST_SIGNER=${TEST_MAIL_SIGNER#*,}
 
-    if [[ ! -e "$CERT_DIR/$TEST_MAIL.eml" ]] || [[ -n "$FORCE_REGENERATE" ]]
+    if [[ ! -e "$CERT_DIR/$TEST_MAIL.eml" ]] || [[ -z "$SKIP_REGENERATE" ]]
     then
-        if [[ ! -e "$CERT_DIR/$TEST_MAIL.eml.head.txt" ]] || [[ ! -e "$CERT_DIR/$TEST_MAIL.eml.body.txt" ]] || [[ -z "$FORCE_REGENERATE" ]]
+        if [[ ! -e "$CERT_DIR/$TEST_MAIL.eml.head.txt" ]] || [[ ! -e "$CERT_DIR/$TEST_MAIL.eml.body.txt" ]] || [[ -n "$SKIP_REGENERATE" ]]
         then
             echo "$CERT_DIR/$TEST_MAIL.eml.head.txt or $CERT_DIR/$TEST_MAIL.eml.body.txt not found, skipping..."
             continue
         fi
 
-        if [[ ! -e "$CERT_DIR/$TEST_SIGNER.crt" ]] || [[ ! -e "$CERT_DIR/$TEST_SIGNER.key" ]] || [[ ! -e "$CERT_DIR/$TEST_SIGNER.secret" ]] || [[ -z "$FORCE_REGENERATE" ]]
+        if [[ ! -e "$CERT_DIR/$TEST_SIGNER.crt" ]] || [[ ! -e "$CERT_DIR/$TEST_SIGNER.key" ]] || [[ ! -e "$CERT_DIR/$TEST_SIGNER.secret" ]] || [[ -n "$SKIP_REGENERATE" ]]
         then
             echo "$CERT_DIR/$TEST_SIGNER.secret or $CERT_DIR/$TEST_SIGNER.secret or $CERT_DIR/$TEST_SIGNER.secret not found, skipping..."
             continue
@@ -312,11 +312,11 @@ certs=(
     "alice@acme.corp,true,true,true,false,alice@acme.corp+sign+encrypt+future,rsa"
 )
 
-email sign encrypt expired effective filename algorithm
+# email sign encrypt expired effective filename algorithm
 for cert in "${certs[@]}"; do
     IFS=$',' read -r email sign encrypt expired effective filename algorithm <<< "$cert"
 
-    if [[ -e "$CERT_DIR/$filename.crt" ]] && [[ -z "$FORCE_REGENERATE" ]]
+    if [[ -e "$CERT_DIR/$filename.crt" ]] && [[ -n "$SKIP_REGENERATE" ]]
     then
         continue
     fi
@@ -365,7 +365,7 @@ for cert in "${certs[@]}"; do
     export KU
     export FAKETIME
     openssl ca -batch -config intermediate.cnf \
-        -extensions smime -days 365 -notext -md sha256 \
+        -extensions smime -days 3285 -notext -md sha256 \
         -in $CERT_DIR/${filename}.csr -out $CERT_DIR/${filename}.crt
     unset SAN
     unset KU
