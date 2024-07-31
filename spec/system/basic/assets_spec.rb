@@ -12,12 +12,6 @@ RSpec.describe 'Assets', db_strategy: :reset, type: :system do
   end
   let(:admin)        { create(:admin, groups: [Group.find_by(name: 'Users')], note: 'hello', last_login: Time.zone.now, login_failed: 1) }
   let(:ticket)       { create(:ticket, owner: agent, group: Group.find_by(name: 'Users'), customer: customer, created_by: admin) }
-  let(:agent_groups) { create_list(:group, 3) }
-
-  before do
-    agent_groups
-    Setting.set('customer_ticket_create_group_ids', [Group.first.id])
-  end
 
   context 'groups' do
     before do
@@ -141,50 +135,96 @@ RSpec.describe 'Assets', db_strategy: :reset, type: :system do
       ].compact
     end
 
-    before do
-      visit "#ticket/zoom/#{ticket.id}"
-    end
-
     describe 'when customer', authenticated_as: :customer do
-      it 'can access customer email' do
-        expect(customer_email).not_to be_nil
-      end
+      let(:agent_groups) { create_list(:group, 3) }
 
-      it 'can not access customer note' do
-        expect(customer_note).to be_nil
-      end
-
-      it 'can not access owner details' do
-        expect(owner_details).to be_empty
-      end
-
-      it 'can access owner firstname' do
-        expect(owner_firstname).not_to be_nil
-      end
-
-      it 'can access not owner owner accounts' do
-        expect(owner_accounts).to be_nil
-      end
-
-      context 'when groups are restricted' do
-        it 'can not access agent groups' do
-          expect(customer_available_group_count).to eq(1)
+      context 'when zoom' do
+        before do
+          visit "#ticket/zoom/#{ticket.id}"
         end
 
-        context 'when there are old tickets for the customer', authenticated_as: :authenticate do
+        it 'can access customer email' do
+          expect(customer_email).not_to be_nil
+        end
+
+        it 'can not access customer note' do
+          expect(customer_note).to be_nil
+        end
+
+        it 'can not access owner details' do
+          expect(owner_details).to be_empty
+        end
+
+        it 'can access owner firstname' do
+          expect(owner_firstname).not_to be_nil
+        end
+
+        it 'can access not owner owner accounts' do
+          expect(owner_accounts).to be_nil
+        end
+
+        context 'when groups are restricted', authenticated_as: :authenticate do
           def authenticate
-            create(:ticket, group: agent_groups.first, customer: customer)
+            agent_groups
+            Setting.set('customer_ticket_create_group_ids', [Group.first.id])
             customer
           end
 
-          it 'can access one of the agent groups' do
-            expect(customer_available_group_count).to eq(2)
+          it 'can not access agent groups' do
+            expect(customer_available_group_count).to eq(1)
+          end
+
+          context 'when there are old tickets for the customer', authenticated_as: :authenticate do
+            def authenticate
+              agent_groups
+              create(:ticket, group: agent_groups.first, customer: customer)
+              Setting.set('customer_ticket_create_group_ids', [Group.first.id])
+              customer
+            end
+
+            it 'can access one of the agent groups' do
+              expect(customer_available_group_count).to eq(2)
+            end
+          end
+        end
+      end
+
+      context 'when ticket create' do
+        before do
+          visit '#customer_ticket_new'
+        end
+
+        context 'when there are no customer groups', authenticated_as: :authenticate do
+          def authenticate
+            agent_groups
+            Setting.set('customer_ticket_create_group_ids', [])
+            customer
+          end
+
+          it 'can create tickets in all groups' do
+            expect(customer_available_group_count).to eq(5)
+          end
+        end
+
+        context 'when there are customer groups', authenticated_as: :authenticate do
+          def authenticate
+            agent_groups
+            Setting.set('customer_ticket_create_group_ids', [Group.first.id])
+            customer
+          end
+
+          it 'can create tickets in configured groups' do
+            expect(customer_available_group_count).to eq(1)
           end
         end
       end
     end
 
     describe 'when agent', authenticated_as: :agent do
+      before do
+        visit "#ticket/zoom/#{ticket.id}"
+      end
+
       it 'can access customer email' do
         expect(customer_email).not_to be_nil
       end
@@ -207,6 +247,10 @@ RSpec.describe 'Assets', db_strategy: :reset, type: :system do
     end
 
     describe 'when admin', authenticated_as: :admin do
+      before do
+        visit "#ticket/zoom/#{ticket.id}"
+      end
+
       it 'can access customer email' do
         expect(customer_email).not_to be_nil
       end

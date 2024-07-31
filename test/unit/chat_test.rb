@@ -66,7 +66,7 @@ class ChatTest < ActiveSupport::TestCase
     message = Sessions::Event.run(
       event:     'login',
       payload:   {},
-      session:   123,
+      session:   {},
       remote_ip: '127.0.0.1',
       client_id: '123',
       clients:   {
@@ -85,7 +85,7 @@ class ChatTest < ActiveSupport::TestCase
     message = Sessions::Event.run(
       event:     'chat_status_customer',
       payload:   {},
-      session:   123,
+      session:   {},
       remote_ip: '127.0.0.1',
       client_id: '123',
       clients:   {
@@ -107,7 +107,7 @@ class ChatTest < ActiveSupport::TestCase
     message = Sessions::Event.run(
       event:     'login',
       payload:   {},
-      session:   123,
+      session:   {},
       remote_ip: '127.0.0.1',
       client_id: '123',
       clients:   {},
@@ -119,7 +119,7 @@ class ChatTest < ActiveSupport::TestCase
     message = Sessions::Event.run(
       event:     'chat_status_customer',
       payload:   {},
-      session:   123,
+      session:   {},
       remote_ip: '127.0.0.1',
       client_id: '123',
       clients:   {},
