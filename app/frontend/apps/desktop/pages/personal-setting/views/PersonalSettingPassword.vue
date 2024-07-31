@@ -1,6 +1,8 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router'
+
 import {
   NotificationTypes,
   useNotifications,
@@ -8,6 +10,7 @@ import {
 import Form from '#shared/components/Form/Form.vue'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
+import { redirectToError } from '#shared/router/error.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
@@ -23,12 +26,9 @@ defineOptions({
   beforeRouteEnter() {
     const { canChangePassword } = useCheckChangePassword()
 
-    if (!canChangePassword.value) {
-      // TODO: Redirect to error page using redirectToError or something similar.
-      return '/error'
-    }
+    if (canChangePassword.value) return true
 
-    return true
+    return redirectToError(useRouter())
   },
 })
 

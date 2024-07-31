@@ -393,8 +393,9 @@ describe('ticket create view', async () => {
 
       it('redirects to error page', async () => {
         const view = await visitView('/ticket/create')
-        // :TODO adapt as soon as we have real error page
-        expect(view.getByText('ERROR XYZ')).toBeInTheDocument()
+
+        expect(view.getByText('Not Found')).toBeInTheDocument()
+        expect(view.getByText("This page doesn't exist.")).toBeInTheDocument()
       })
     })
 

@@ -22,7 +22,7 @@ export const useErrorHandler = () => {
       let statusCode: number
 
       if (errorHandler.type === GraphQLErrorTypes.RecordNotFound) {
-        title = __('Not found')
+        title = __('Not Found')
         message = messages.notFound
         statusCode = ErrorStatusCodes.NotFound
       } else if (errorHandler.type === GraphQLErrorTypes.Forbidden) {

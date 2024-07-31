@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue'
+import { useRouter } from 'vue-router'
 
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
 import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
@@ -15,6 +16,7 @@ import type {
   UserCurrentAccessTokenListQuery,
 } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n/index.ts'
+import { redirectToError } from '#shared/router/error.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
 import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
@@ -38,12 +40,9 @@ defineOptions({
   beforeRouteEnter() {
     const { canUseAccessToken } = useCheckTokenAccess()
 
-    if (!canUseAccessToken.value) {
-      // TODO: Redirect to error page using redirectToError or something similar.
-      return '/error'
-    }
+    if (canUseAccessToken.value) return true
 
-    return true
+    redirectToError(useRouter())
   },
 })
 

@@ -56,7 +56,7 @@ const {
       </template>
     </LayoutSidebar>
     <div class="relative">
-      <RouterView />
+      <slot><RouterView /></slot>
     </div>
   </div>
 </template>

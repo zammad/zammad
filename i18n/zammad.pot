@@ -3412,7 +3412,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:18
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:14
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:100
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:104
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
@@ -4606,7 +4606,7 @@ msgstr ""
 msgid "Delete table"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:155
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:154
 msgid "Delete this access token"
 msgstr ""
 
@@ -5680,6 +5680,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:51
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:119
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:6
+#: app/frontend/apps/desktop/pages/error/views/Error.vue:37
 #: app/frontend/apps/mobile/pages/error/views/Error.vue:39
 msgid "Error"
 msgstr ""
@@ -5846,7 +5847,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:19
 #: app/assets/javascripts/app/views/profile/token_access_create.jst.eco:10
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:15
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:105
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:104
 msgid "Expires"
 msgstr ""
 
@@ -7835,7 +7836,7 @@ msgstr ""
 msgid "Last Internal Article"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:110
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:109
 msgid "Last Used"
 msgstr ""
 
@@ -9010,7 +9011,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:100
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:31
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:103
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:90
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:142
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:181
 #: db/seeds/object_manager_attributes.rb:1507
@@ -9148,7 +9149,7 @@ msgid "New Overview"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:132
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:202
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:201
 msgid "New Personal Access Token"
 msgstr ""
 
@@ -9566,6 +9567,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:160
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:240
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:114
+#: app/frontend/shared/errors/useErrorHandler.ts:25
 #: app/frontend/shared/router/error.ts:18
 #: app/helpers/knowledge_base_public_page_title_helper.rb:25
 msgid "Not Found"
@@ -9608,7 +9610,6 @@ msgid "Not configured"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:18
-#: app/frontend/shared/errors/useErrorHandler.ts:25
 msgid "Not found"
 msgstr ""
 
@@ -10473,12 +10474,12 @@ msgstr ""
 #: app/assets/javascripts/app/models/role.coffee:7
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:5
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:17
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:95
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:94
 msgid "Permissions"
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:12
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:213
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:212
 msgid "Personal Access Tokens"
 msgstr ""
 
@@ -10486,7 +10487,7 @@ msgstr ""
 msgid "Personal Settings"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:141
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:140
 msgid "Personal access token has been deleted."
 msgstr ""
 
@@ -10524,7 +10525,7 @@ msgid "Phone number is already in use by another WhatsApp account."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:7
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:183
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:182
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
 
@@ -10626,6 +10627,10 @@ msgstr ""
 
 #: db/seeds/settings.rb:1896
 msgid "Please note that this attribute is deprecated within one of the next versions of Zammad. Use the IDP certificate instead."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/error/views/Error.vue:54
+msgid "Please proceed to login"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:383
@@ -13922,7 +13927,7 @@ msgstr ""
 msgid "The password reset request was successful."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:132
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:131
 msgid "The personal access token could not be deleted."
 msgstr ""
 
@@ -14591,7 +14596,7 @@ msgid "This class gets added to the button on initialization and will be removed
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:170
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:222
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:221
 msgid "This device"
 msgstr ""
 
@@ -15502,7 +15507,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/api.jst.eco:12
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:52
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:51
 #: db/seeds/permissions.rb:429
 msgid "Token Access"
 msgstr ""
@@ -16865,7 +16870,7 @@ msgid "You can find a tutorial on how to manage an %s in our online documentatio
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:4
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:181
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:180
 msgid "You can generate a personal access token for each application you use that needs access to the Zammad API."
 msgstr ""
 

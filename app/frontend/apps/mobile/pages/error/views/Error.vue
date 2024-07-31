@@ -11,12 +11,12 @@ import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButt
 const errorImage = computed(() => {
   switch (errorOptions.value.statusCode) {
     case ErrorStatusCodes.Forbidden:
-      return '/assets/error/error-mobile-403.svg'
+      return '/assets/error/error-403.svg'
     case ErrorStatusCodes.NotFound:
-      return '/assets/error/error-mobile-404.svg'
+      return '/assets/error/error-404.svg'
     case ErrorStatusCodes.InternalError:
     default:
-      return '/assets/error/error-mobile-500.svg'
+      return '/assets/error/error-500.svg'
   }
 })
 </script>

@@ -53,7 +53,7 @@ describe('static organization', () => {
 
     await waitUntil(() => mockApi.calls.resolve)
 
-    expect(view.getByText(organization.name || 'not found')).toBeInTheDocument()
+    expect(view.getByText(organization.name || 'Not Found')).toBeInTheDocument()
 
     expect(
       view.getByLabelText(`Avatar (${organization.name})`),
@@ -257,7 +257,7 @@ describe('static organization', () => {
 
     await waitUntil(() => mockApi.calls.error)
 
-    await expect(view.findByText('Not found')).resolves.toBeInTheDocument()
+    await expect(view.findByText('Not Found')).resolves.toBeInTheDocument()
   })
 
   it('redirects to error page if access to organization is forbidden', async () => {
