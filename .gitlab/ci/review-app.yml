@@ -25,9 +25,6 @@
         zammad-websocket:
           ports:
             - "127.0.0.1:${WS_PORT}:6042"
-        zammad-nginx:
-          ports:
-            - "127.0.0.1:${ASSETS_PORT}:8080"
         zammad-backup:
           profiles:
             - do-not-start
@@ -35,6 +32,7 @@
       cat - <<ENV_FILE >> .env
       IMAGE_REPO=${CI_REGISTRY}/${CI_PROJECT_PATH}
       VERSION=${APP_NAME}
+      NGINX_EXPOSE_PORT="127.0.0.1:${ASSETS_PORT}"
       ENV_FILE
       # cat docker-compose* .env
     # Check if containers were previously created, so that this is an update deployment
@@ -277,6 +275,8 @@ review-app:stop:
 review-app:restart:
   extends:
     - .review-app
+  variables:
+    GIT_STRATEGY: none
   script:
     - echo "Restart review app…"
     - ${DOCKER_COMPOSE_COMMAND} restart
