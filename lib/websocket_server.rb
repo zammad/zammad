@@ -118,8 +118,6 @@ class WebsocketServer
     else
       log 'error', "unknown message '#{data.inspect}'", client_id
     end
-  ensure
-    ActiveSupport::CurrentAttributes.clear_all
   end
 
   def self.websocket_send(client_id, data)

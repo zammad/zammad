@@ -22,6 +22,8 @@ class Sessions::Event
       Rails.logger.error e.backtrace
       { event: 'error', data: { error: e.message, payload: params[:payload] } }
     end
+  ensure
+    UserInfo.current_user_id = nil
+    ActiveSupport::CurrentAttributes.clear_all
   end
-
 end

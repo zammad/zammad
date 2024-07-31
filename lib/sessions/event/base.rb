@@ -20,6 +20,18 @@ class Sessions::Event::Base
       @reused_connection = false
       ActiveRecord::Base.establish_connection
     end
+
+    session_user_info
+  end
+
+  def session_user_info
+    return if !@session
+    return if !@session['id']
+
+    user = User.lookup(id: @session['id'])
+    return if user.blank?
+
+    UserInfo.current_user_id = user.id
   end
 
   def self.inherited(subclass)
