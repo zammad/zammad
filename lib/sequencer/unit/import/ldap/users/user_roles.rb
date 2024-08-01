@@ -9,7 +9,8 @@ class Sequencer::Unit::Import::Ldap::Users::UserRoles < Sequencer::Unit::Base
     state.provide(:dn_roles) do
 
       group_config = {
-        filter: ldap_config[:group_filter]
+        filter:      ldap_config[:group_filter],
+        user_filter: ldap_config[:user_filter],
       }
 
       ldap_group = ::Ldap::Group.new(group_config, ldap: ldap_connection)
