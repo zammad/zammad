@@ -127,10 +127,14 @@ class Ldap
 
       @uid_attribute = config[:uid_attribute]
       @filter        = config[:filter]
+      @user_filter   = config[:user_filter]
     end
 
     def group_user_dns(entry)
       return entry[:member] if entry[:member].present?
+      # workaround for windows ad's with more than 1500 group users
+      # https://metacpan.org/dist/perl-ldap/view/lib/Net/LDAP/FAQ.pod#How-do-I-search-for-all-members-of-a-large-group-in-AD
+      return group_user_memberof(entry) if entry.to_h.keys.any? { |key| key.to_s.include?('member;range') }
       return group_user_dns_memberuid(entry) if entry[:memberuid].present?
 
       entry[:uniquemember].presence
@@ -139,11 +143,19 @@ class Ldap
     def group_user_dns_memberuid(entry)
       entry[:memberuid].filter_map do |uid|
         dn = nil
-        @ldap.search("(&(uid=#{uid})#{Import::Ldap.config[:user_filter]})", attributes: %w[dn]) do |user|
+        @ldap.search("(&(uid=#{uid})#{@user_filter})", attributes: %w[dn]) do |user|
           dn = user.dn
         end
         dn
       end
+    end
+
+    def group_user_memberof(entry)
+      result = []
+      @ldap.search("(&(memberOf=#{entry.dn})#{@user_filter})", attributes: %w[dn]) do |user|
+        result << user.dn
+      end
+      result
     end
   end
 end
