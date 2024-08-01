@@ -70,7 +70,7 @@ export default function buildMentionExtension<T>(
           ;[popup] = tippy('body', {
             getReferenceClientRect: props.clientRect as GetReferenceClientRect,
             appendTo: () => document.body,
-            content: component.element,
+            content: component.element || undefined,
             showOnCreate: true,
             interactive: true,
             trigger: 'manual',
