@@ -26,6 +26,9 @@ class App.ArticleViewItem extends App.ControllerObserver
     'click .js-retryWhatsAppAttachmentDownload': 'retryWhatsAppAttachmentDownload'
     'click .js-fetchOriginalFormatting':         'fetchOriginalFormatting'
 
+  @SEE_MORE_MIN_HEIGHT: 90
+  @SEE_MORE_MAX_HEIGHT: 560
+
   constructor: ->
     super
     @seeMoreOpen = false
@@ -201,8 +204,8 @@ class App.ArticleViewItem extends App.ControllerObserver
     @measureSeeMore()
 
   measureSeeMore: =>
-    maxHeight               = 560
-    minHeight               = 90
+    maxHeight               = @constructor.SEE_MORE_MAX_HEIGHT
+    minHeight               = @constructor.SEE_MORE_MIN_HEIGHT
     bubbleContent           = @textBubbleContent
     bubbleOverflowContainer = @textBubbleOverflowContainer
 
