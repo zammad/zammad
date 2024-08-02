@@ -24,14 +24,14 @@ rescue Redis::CannotConnectError => e
   Zammad::SafeMode.continue_or_exit!
 end
 
-if Rails.env.production?
-  Rails.application.reloader.to_prepare do
-    begin
-      request_origins = ['http://localhost:3000']
-      request_origins << "#{Setting.get('http_type')}://#{Setting.get('fqdn')}"
-      Rails.application.config.action_cable.allowed_request_origins = request_origins
-    rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid
-      Rails.logger.debug("Database doesn't exist. Skipping allowed_request_origins configuration.")
-    end
+Rails.application.reloader.to_prepare do
+  begin
+    request_origins = ['http://localhost:3000']
+    request_origins << "#{Setting.get('http_type')}://#{Setting.get('fqdn')}"
+    Rails.application.config.action_cable.allowed_request_origins = request_origins
+    Rails.application.config.action_cable.disable_request_forgery_protection = true if !Rails.env.production?
+    Rails.logger.info { "ActionCable is configured to accept requests from #{request_origins.join(', ')}." }
+  rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid
+    Rails.logger.warn { "Database doesn't exist. Skipping allowed_request_origins configuration." }
   end
 end
