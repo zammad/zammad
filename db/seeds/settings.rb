@@ -3269,6 +3269,32 @@ Setting.create_if_not_exists(
 )
 
 Setting.create_if_not_exists(
+  title:       __('Advanced follow-ups detection based on subject and refereces header'),
+  name:        'postmaster_follow_up_detection_subject_references',
+  area:        'Email::Base',
+  description: __('This is an advanced follow-up detection. If no follow-up was recognized by the regular settings, but in Zammad an article with the same subject and a message id, which is present in the References header of the incoming email - this email is recognized as a follow-up.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'postmaster_follow_up_detection_subject_references',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  state:       true,
+  preferences: {
+    permission: ['admin.channel_email', 'admin.channel_google', 'admin.channel_microsoft365'],
+  },
+  frontend:    false
+)
+
+Setting.create_if_not_exists(
   title:       __('Send postmaster mail if mail too large'),
   name:        'postmaster_send_reject_if_mail_too_large',
   area:        'Email::Base',
