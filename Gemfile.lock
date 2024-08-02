@@ -521,7 +521,7 @@ GEM
     rchardet (1.8.0)
     redis (4.8.1)
     regexp_parser (2.9.2)
-    rexml (3.3.2)
+    rexml (3.3.4)
       strscan
     rotp (6.3.0)
     rspec-core (3.13.0)
