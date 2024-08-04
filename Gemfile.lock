@@ -564,7 +564,7 @@ GEM
     rubocop-faker (1.1.0)
       faker (>= 2.12.0)
       rubocop (>= 0.82.0)
-    rubocop-graphql (1.5.3)
+    rubocop-graphql (1.5.4)
       rubocop (>= 1.50, < 2)
     rubocop-inflector (0.2.1)
       activesupport
