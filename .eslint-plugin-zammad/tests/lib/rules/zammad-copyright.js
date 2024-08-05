@@ -9,9 +9,11 @@
 // Requirements
 //------------------------------------------------------------------------------
 
+/* eslint-disable @typescript-eslint/no-require-imports */
 const { RuleTester } = require('eslint')
 
 const rule = require('../../../lib/rules/zammad-copyright.js')
+/* eslint-enable @typescript-eslint/no-require-imports */
 
 //------------------------------------------------------------------------------
 // Tests

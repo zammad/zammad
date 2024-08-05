@@ -36,7 +36,7 @@ export default {
             credential: publicKeyCredential,
           },
         }
-      } catch (err) {
+      } catch {
         return {
           success: false,
           retry: true,

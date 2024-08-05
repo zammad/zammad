@@ -9,6 +9,7 @@
 // Requirements
 //------------------------------------------------------------------------------
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const requireIndex = require('requireindex')
 
 //------------------------------------------------------------------------------

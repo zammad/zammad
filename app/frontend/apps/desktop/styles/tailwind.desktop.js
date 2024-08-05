@@ -1,11 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+/* eslint-disable @typescript-eslint/no-require-imports */
 const path = require('path')
 
 const formKitTailwind = require('@formkit/themes/tailwindcss')
 const unimportantTailwind = require('tailwindcss-unimportant')
 
 const zammadTailwind = require('../../../build/zammadTailwindPlugin.js')
+/* eslint-enable @typescript-eslint/no-require-imports */
 
 const desktopDir = path.resolve(__dirname, '..')
 const sharedDir = path.resolve(__dirname, '../../../shared')

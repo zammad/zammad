@@ -281,7 +281,7 @@ const closePopover = (isInteractive = false) => {
 
   nextTick(() => {
     if (!isInteractive && props.owner) {
-      // eslint-disable-next-line no-unused-expressions
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
       '$el' in props.owner ? props.owner.$el?.focus?.() : props.owner?.focus?.()
     }
     updateOwnerAriaExpandedState()

@@ -4,7 +4,7 @@ import { type App, type Directive } from 'vue'
 
 import type { ImportGlobEagerDefault } from '#shared/types/utils.ts'
 
-import vTooltip from '#desktop/plugins/directives/tooltip.ts'
+import type vTooltip from '#desktop/plugins/directives/tooltip.ts'
 
 interface DirectiveModule {
   name: string

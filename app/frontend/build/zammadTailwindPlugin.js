@@ -1,7 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+/* eslint-disable @typescript-eslint/no-require-imports */
 const defaultTheme = require('tailwindcss/defaultTheme')
 const plugin = require('tailwindcss/plugin')
+/* eslint-enable @typescript-eslint/no-require-imports */
 
 module.exports = plugin(
   ({ addVariant, matchUtilities, theme }) => {

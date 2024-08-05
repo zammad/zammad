@@ -1,11 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 /* eslint-disable no-nested-ternary */
 
+/* eslint-disable @typescript-eslint/no-require-imports */
 const { basename } = require('path')
 
 const { convertFactory } = require('@graphql-codegen/visitor-plugin-common')
 const camelCase = require('lodash/camelCase.js')
 const startCase = require('lodash/startCase.js')
+/* eslint-enable @typescript-eslint/no-require-imports */
 
 /** @typedef {import('graphql').OperationDefinitionNode} OperationDefinitionNode */
 

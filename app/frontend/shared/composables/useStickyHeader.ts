@@ -4,7 +4,7 @@ import { useScroll } from '@vueuse/core'
 import { watch, ref, computed } from 'vue'
 
 // eslint-disable-next-line import/no-restricted-paths
-import LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
+import type LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
 
 import type { CSSProperties, WatchSource } from 'vue'
 

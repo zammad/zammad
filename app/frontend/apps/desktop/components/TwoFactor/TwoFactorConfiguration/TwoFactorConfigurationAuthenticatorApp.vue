@@ -98,7 +98,7 @@ const submitForm = async ({
     }
 
     props.formSubmitCallback?.({})
-  } catch (err) {
+  } catch {
     formSetErrors(
       new UserError([
         {

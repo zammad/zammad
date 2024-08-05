@@ -62,7 +62,7 @@ const createStyle = (o: CreateStyleOptions) => {
                   if (parseFloat(attr) === 0) {
                     return {}
                   }
-                } catch (e) {
+                } catch {
                   //
                 }
                 return {

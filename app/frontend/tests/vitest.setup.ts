@@ -251,7 +251,7 @@ declare module 'vitest' {
 }
 
 declare module 'vitest' {
-  // eslint-disable-next-line @typescript-eslint/no-empty-interface, @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-empty-object-type, @typescript-eslint/no-unused-vars
   interface Assertion<T> extends matchers.AxeMatchers {}
 }
 

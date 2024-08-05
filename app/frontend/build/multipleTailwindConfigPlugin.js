@@ -1,10 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+/* eslint-disable @typescript-eslint/no-require-imports */
 const { minimatch } = require('minimatch')
 const tailwindcss = require('tailwindcss')
 
 const desktopConfig = require('../apps/desktop/styles/tailwind.desktop.js')
 const mobileConfig = require('../apps/mobile/styles/tailwind.mobile.js')
+/* eslint-enable @typescript-eslint/no-require-imports */
 
 /** @type {import('postcss').TransformCallback} */
 module.exports = (root, result) => {
