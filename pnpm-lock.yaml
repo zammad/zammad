@@ -169,7 +169,7 @@ importers:
         version: 10.11.0(vue@3.4.34(typescript@5.5.4))
       '@vueuse/router':
         specifier: ^10.11.0
-        version: 10.11.0(vue-router@4.4.0(vue@3.4.34(typescript@5.5.4)))(vue@3.4.34(typescript@5.5.4))
+        version: 10.11.0(vue-router@4.4.2(vue@3.4.34(typescript@5.5.4)))(vue@3.4.34(typescript@5.5.4))
       '@vueuse/shared':
         specifier: ^10.11.0
         version: 10.11.0(vue@3.4.34(typescript@5.5.4))
@@ -240,8 +240,8 @@ importers:
         specifier: 1.19.0
         version: 1.19.0(vue@3.4.34(typescript@5.5.4))
       vue-router:
-        specifier: ^4.4.0
-        version: 4.4.0(vue@3.4.34(typescript@5.5.4))
+        specifier: ^4.4.2
+        version: 4.4.2(vue@3.4.34(typescript@5.5.4))
       vue3-draggable-resizable:
         specifier: ^1.6.5
         version: 1.6.5
@@ -2247,9 +2247,6 @@ packages:
 
   '@vue/compiler-vue2@2.7.16':
     resolution: {integrity: sha512-qYC3Psj9S/mfu9uVi5WvNZIzq+xnXMhOwbTFKKDD7b1lhpnn71jXSFdTQ+WsIEk0ONCd7VV2IMm7ONl6tbQ86A==}
-
-  '@vue/devtools-api@6.6.1':
-    resolution: {integrity: sha512-LgPscpE3Vs0x96PzSSB4IGVSZXZBZHpfxs+ZA1d+VEPwHdOXowy/Y2CsvCAIFrf+ssVU1pD1jidj505EpUnfbA==}
 
   '@vue/devtools-api@6.6.3':
     resolution: {integrity: sha512-0MiMsFma/HqA6g3KLKn+AGpL1kgKhFWszC9U29NfpWK5LE7bjeXxySWJrOJ77hBz+TBrBQ7o4QJqbPbqbs8rJw==}
@@ -6040,8 +6037,8 @@ packages:
     peerDependencies:
       eslint: '>=6.0.0'
 
-  vue-router@4.4.0:
-    resolution: {integrity: sha512-HB+t2p611aIZraV2aPSRNXf0Z/oLZFrlygJm+sZbdJaW6lcFqEDQwnzUBXn+DApw+/QzDU/I9TeWx9izEjTmsA==}
+  vue-router@4.4.2:
+    resolution: {integrity: sha512-1qNybkn2L7QsLzaXs8nvlQmRKp8XF8DCxZys/Jr1JpQcHsKUxTKzTxCVA1G7NfBfwRIBgCJPoujOG5lHCCNUxw==}
     peerDependencies:
       vue: ^3.2.0
 
@@ -8561,8 +8558,6 @@ snapshots:
       de-indent: 1.0.2
       he: 1.2.0
 
-  '@vue/devtools-api@6.6.1': {}
-
   '@vue/devtools-api@6.6.3': {}
 
   '@vue/eslint-config-prettier@9.0.0(eslint@8.57.0)(prettier@3.3.3)':
@@ -8647,11 +8642,11 @@ snapshots:
 
   '@vueuse/metadata@10.11.0': {}
 
-  '@vueuse/router@10.11.0(vue-router@4.4.0(vue@3.4.34(typescript@5.5.4)))(vue@3.4.34(typescript@5.5.4))':
+  '@vueuse/router@10.11.0(vue-router@4.4.2(vue@3.4.34(typescript@5.5.4)))(vue@3.4.34(typescript@5.5.4))':
     dependencies:
       '@vueuse/shared': 10.11.0(vue@3.4.34(typescript@5.5.4))
       vue-demi: 0.14.8(vue@3.4.34(typescript@5.5.4))
-      vue-router: 4.4.0(vue@3.4.34(typescript@5.5.4))
+      vue-router: 4.4.2(vue@3.4.34(typescript@5.5.4))
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
@@ -12685,9 +12680,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vue-router@4.4.0(vue@3.4.34(typescript@5.5.4)):
+  vue-router@4.4.2(vue@3.4.34(typescript@5.5.4)):
     dependencies:
-      '@vue/devtools-api': 6.6.1
+      '@vue/devtools-api': 6.6.3
       vue: 3.4.34(typescript@5.5.4)
 
   vue-tsc@2.0.29(typescript@5.5.4):

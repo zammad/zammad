@@ -173,7 +173,7 @@
     "vue": "^3.4.34",
     "vue-advanced-cropper": "^2.8.9",
     "vue-easy-lightbox": "1.19.0",
-    "vue-router": "^4.4.0",
+    "vue-router": "^4.4.2",
     "vue3-draggable-resizable": "^1.6.5",
     "workbox-core": "^7.1.0",
     "workbox-precaching": "^7.1.0",
