@@ -51,7 +51,7 @@ class EmailReply extends App.Controller
               foreignRecipients.push recipient
 
       # check if reply all is needed
-      if foreignRecipients.length > 1 or recipientsHasCC
+      if foreignRecipients.length > 1 || recipientsHasCC
         actions.push {
           name: __('reply all')
           type: 'emailReplyAll'
