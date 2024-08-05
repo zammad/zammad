@@ -30,7 +30,7 @@ class EmailReply extends App.Controller
         localRecipients = emailAddresses.parseAddressList(article.cc)
         if localRecipients
           recipients = recipients.concat localRecipients
-          recipientsCC = recipients.concat localRecipients
+          recipientsCC = recipientsCC.concat localRecipients
 
       # remove system addresses
       localAddresses = App.EmailAddress.all()
