@@ -70,6 +70,7 @@ class ExcelSheet::Ticket < ExcelSheet
       { display: __('Created At'), name: 'created_at', width: 18, data_type: 'datetime' },
       { display: __('Updated At'), name: 'updated_at', width: 18, data_type: 'datetime' },
       { display: __('Closed At'), name: 'close_at', width: 18, data_type: 'datetime' },
+      { display: __('Last Closed At'), name: 'last_close_at', width: 18, data_type: 'datetime' },
       { display: __('Close Escalation At'), name: 'close_escalation_at', width: 18, data_type: 'datetime' },
       { display: __('Close In Min'), name: 'close_in_min', width: 10, data_type: 'integer' },
       { display: __('Close Diff In Min'), name: 'close_diff_in_min', width: 10, data_type: 'integer' },
