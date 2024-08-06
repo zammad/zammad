@@ -31,6 +31,11 @@ ActiveRecord::ConnectionAdapters::AbstractMysqlAdapter.class_eval do
     field = quote(field_name)
     scope = quoted_scope(table_name)
 
+    # As we are among other OSes supporting Ubuntu 20.04 LTS, which ships with
+    # MariaDB 10.3, we need to check explicit for json (array) columns via
+    # table name and field name.
+    return true if mariadb_column_array?(table_name, field_name)
+
     # for older versions
     if database_version < '10.4' && %w[tickets users groups organizations].include?(table_name)
       class_name = table_name.classify
@@ -42,5 +47,15 @@ ActiveRecord::ConnectionAdapters::AbstractMysqlAdapter.class_eval do
     execute_and_free("SELECT 1 FROM INFORMATION_SCHEMA.CHECK_CONSTRAINTS WHERE TABLE_NAME = #{scope[:name]} AND CONSTRAINT_SCHEMA = #{scope[:schema]} AND CONSTRAINT_NAME = #{field} AND CHECK_CLAUSE LIKE '%json_valid%'") do |r|
       return r.to_a.present?
     end
+  end
+
+  def mariadb_column_array?(table_name, field_name)
+    column_array = {
+      'smime_certificates' => 'email_addresses',
+      'pgp_keys'           => 'email_addresses',
+      'public_links'       => 'screen',
+    }
+
+    column_array[table_name] == field_name
   end
 end
