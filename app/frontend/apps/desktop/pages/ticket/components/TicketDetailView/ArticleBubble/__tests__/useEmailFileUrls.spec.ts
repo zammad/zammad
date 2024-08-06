@@ -2,7 +2,6 @@
 
 import { ref } from 'vue'
 
-import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 
@@ -28,7 +27,7 @@ describe('useEmailFileUrls', () => {
               name: 'test.txt',
             },
           ],
-        }) as TicketArticle,
+        }),
       ),
     )
 

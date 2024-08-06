@@ -4,7 +4,6 @@ import { computed, provide } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
-import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 
@@ -23,7 +22,7 @@ const renderBody = (
         provide(
           TICKET_INFORMATION_KEY,
           computed(() => {
-            return createDummyTicket() as unknown as TicketById
+            return createDummyTicket()
           }),
         )
         return {

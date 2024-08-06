@@ -889,7 +889,7 @@ export const mockOperation = (
         query,
         rootName,
         getFieldInformation(operationType.type),
-        defaults?.[rootName],
+        defaults?.[fieldName] ?? defaults?.[rootName],
         {
           document,
           variables,

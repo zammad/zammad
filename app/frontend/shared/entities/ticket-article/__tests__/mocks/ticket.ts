@@ -151,5 +151,5 @@ export const createDummyTicket = (options?: {
     updateEscalationAt: null,
     initialChannel: null,
     mentions: options?.mentions || defaultMentions,
-  })
+  }) as TicketQuery['ticket']
 }

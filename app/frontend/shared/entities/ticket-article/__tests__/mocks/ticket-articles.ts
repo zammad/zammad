@@ -92,5 +92,5 @@ export const createDummyArticle = (options?: {
       options?.securityState === undefined ? null : options.securityState,
     mediaErrorState:
       options?.mediaErrorState === undefined ? null : options.mediaErrorState,
-  })
+  }) as ArticleNode
 }

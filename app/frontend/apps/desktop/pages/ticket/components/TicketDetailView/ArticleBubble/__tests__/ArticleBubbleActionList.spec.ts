@@ -6,7 +6,6 @@ import { renderComponent } from '#tests/support/components/index.ts'
 
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
-import type { TicketQuery } from '#shared/graphql/types.ts'
 import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
 
 import ArticleBubbleActionList from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue'
@@ -36,11 +35,10 @@ const renderArticleBubbleActionList = () =>
 
         provide(
           TICKET_INFORMATION_KEY,
-          computed(
-            () =>
-              createDummyTicket({
-                defaultPolicy: { update: true, agentReadAccess: true },
-              }) as TicketQuery['ticket'],
+          computed(() =>
+            createDummyTicket({
+              defaultPolicy: { update: true, agentReadAccess: true },
+            }),
           ),
         )
 

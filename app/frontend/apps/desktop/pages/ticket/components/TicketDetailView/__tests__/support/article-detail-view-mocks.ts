@@ -5,7 +5,6 @@ import { computed, type ComputedRef, provide } from 'vue'
 import { getQueryHandler } from '#tests/graphql/builders/__tests__/utils.ts'
 
 import { TicketArticlesDocument } from '#shared/entities/ticket/graphql/queries/ticket/articles.api.ts'
-import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import type {
@@ -24,7 +23,7 @@ export const mockDetailViewSetup = (data?: {
 
   provide(
     TICKET_INFORMATION_KEY,
-    computed(() => createDummyTicket(data?.ticket) as unknown as TicketById),
+    computed(() => createDummyTicket(data?.ticket)),
   )
 
   const handler = getQueryHandler<
