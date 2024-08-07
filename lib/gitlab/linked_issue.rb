@@ -7,11 +7,13 @@ class GitLab
       'opened' => 'open'
     }.freeze
 
-    QUERY = <<-GRAPHQL.freeze
+    FETCH_INITIAL_ISSUE_QUERY = <<-GRAPHQL.freeze
       query($fullpath: ID!, $issue_id: String) {
         project(fullPath: $fullpath) {
           issue(iid: $issue_id) {
+            id
             iid
+            webUrl
             title
             state
             milestone {
@@ -39,25 +41,67 @@ class GitLab
       }
     GRAPHQL
 
+    FETCH_ISSUE_QUERY = <<-GRAPHQL.freeze
+      query($issue_id: IssueID!) {
+        issue(id: $issue_id) {
+          id
+          iid
+          webUrl
+          title
+          state
+          milestone {
+            title
+          }
+          assignees {
+            edges {
+              node {
+                name
+              }
+            }
+          }
+          labels {
+            edges {
+              node {
+                title
+                color
+                textColor
+                description
+              }
+            }
+          }
+        }
+      }
+    GRAPHQL
+
     attr_reader :client
 
     def initialize(client)
       @client = client
     end
 
-    def find_by(url)
-      @result = query_by_url(url)
+    # def find_by(url)
+    def find_issue_by_url(url)
+      @result = query_issue_by_url(url)
       return if @result.blank?
 
-      to_h.merge(url: url)
+      to_h
+    end
+
+    def get_issue(gid)
+      @result = query_issue_by_gid(gid)
+      return if @result.blank?
+
+      to_h
     end
 
     private
 
     def to_h
       {
+        gid:        @result['id'],
         id:         @result['iid'],
         title:      @result['title'],
+        url:        @result['webUrl'],
         icon_state: STATES_MAPPING.fetch(@result['state'], @result['state']),
         milestone:  milestone,
         assignees:  assignees,
@@ -85,16 +129,29 @@ class GitLab
       @result.dig('milestone', 'title')
     end
 
-    def query_by_url(url)
+    def query_issue_by_url(url)
       variables = variables(url)
       return if variables.blank?
 
       response = client.perform(
-        query:     GitLab::LinkedIssue::QUERY,
+        query:     GitLab::LinkedIssue::FETCH_INITIAL_ISSUE_QUERY,
         variables: variables
       )
 
       response.dig('data', 'project', 'issue')
+    end
+
+    def query_issue_by_gid(gid)
+      return if gid.nil?
+
+      response = client.perform(
+        query:     GitLab::LinkedIssue::FETCH_ISSUE_QUERY,
+        variables: {
+          issue_id: gid
+        }
+      )
+
+      response.dig('data', 'issue')
     end
 
     def variables(url)

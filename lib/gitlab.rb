@@ -22,6 +22,20 @@ class GitLab
 
   def issue_by_url(url)
     issue = GitLab::LinkedIssue.new(client)
-    issue.find_by(url)&.to_h
+    issue.find_issue_by_url(url)&.to_h
+  end
+
+  def issues_by_gids(gids)
+    gids.uniq.each_with_object([]) do |gid, result|
+      issue = issue_by_gid(gid)
+      next if issue.blank?
+
+      result << issue
+    end
+  end
+
+  def issue_by_gid(gid)
+    issue = GitLab::LinkedIssue.new(client)
+    issue.get_issue(gid)&.to_h
   end
 end

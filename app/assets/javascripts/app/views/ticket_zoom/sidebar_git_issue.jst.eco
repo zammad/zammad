@@ -1,6 +1,6 @@
 <% for issue in @issues: %>
   <div class="sidebar-git-issue-delete">
-    <span class="list-item-delete js-delete" data-issue-id="<%= issue.url %>" data-type="remove">
+    <span class="list-item-delete js-delete" data-issue-id="<%= issue.gid %>" data-type="remove">
       <%- @Icon('diagonal-cross') %>
     </span>
   </div>
