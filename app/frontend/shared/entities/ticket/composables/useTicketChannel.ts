@@ -7,12 +7,14 @@ import { type TicketById } from '#shared/entities/ticket/types.ts'
 import { getTicketChannelPlugin } from '../channel/plugins/index.ts'
 
 export const useTicketChannel = (ticket: Ref<TicketById | undefined>) => {
-  const channelPlugin = getTicketChannelPlugin(ticket.value?.initialChannel)
+  const channelPlugin = computed(() =>
+    getTicketChannelPlugin(ticket.value?.initialChannel),
+  )
 
   const channelAlert = computed(() => {
     if (!ticket.value) return null
 
-    return channelPlugin?.channelAlert(ticket.value)
+    return channelPlugin.value?.channelAlert(ticket.value)
   })
 
   const hasChannelAlert = computed(
