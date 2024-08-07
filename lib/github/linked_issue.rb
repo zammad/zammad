@@ -8,13 +8,15 @@ class GitHub
       'CLOSED' => 'closed'
     }.freeze
 
-    QUERY = <<-GRAPHQL.freeze
+    FETCH_INITIAL_ISSUE_QUERY = <<-GRAPHQL.freeze
       query($repositor_owner: String!, $repository_name: String!, $issue_id: Int!) {
        repository(owner: $repositor_owner, name: $repository_name) {
          issue(number: $issue_id) {
+           id
            number
            title
            state
+           url
            milestone {
              title
            }
@@ -38,25 +40,66 @@ class GitHub
      }
     GRAPHQL
 
+    FETCH_ISSUE_QUERY = <<-GRAPHQL.freeze
+      query($issue_id: ID!) {
+        node(id: $issue_id) {
+          ... on Issue {
+            id
+            number
+            title
+            state
+            url
+            milestone {
+              title
+            }
+            assignees(last: 100) {
+              edges {
+                node {
+                  name
+                }
+              }
+            }
+            labels(last: 100) {
+              edges {
+                node {
+                  name
+                  color
+                }
+              }
+            }
+          }
+        }
+      }
+    GRAPHQL
+
     attr_reader :client
 
     def initialize(client)
       @client = client
     end
 
-    def find_by(url)
-      @result = query_by_url(url)
+    def find_issue_by_url(url)
+      @result = query_issue_by_url(url)
       return if @result.blank?
 
-      to_h.merge(url: url)
+      to_h
+    end
+
+    def get_issue(gid)
+      @result = query_issue_by_gid(gid)
+      return if @result.blank?
+
+      to_h
     end
 
     private
 
     def to_h
       {
+        gid:        @result['id'],
         id:         @result['number'].to_s,
         title:      @result['title'],
+        url:        @result['url'],
         icon_state: STATES_MAPPING.fetch(@result['state'], @result['state']),
         milestone:  milestone,
         assignees:  assignees,
@@ -88,13 +131,26 @@ class GitHub
       @result.dig('milestone', 'title')
     end
 
-    def query_by_url(url)
+    def query_issue_by_url(url)
       response = client.perform(
-        query:     GitHub::LinkedIssue::QUERY,
+        query:     GitHub::LinkedIssue::FETCH_INITIAL_ISSUE_QUERY,
         variables: variables!(url)
       )
 
       response.dig('data', 'repository', 'issue')
+    end
+
+    def query_issue_by_gid(gid)
+      return if gid.nil?
+
+      response = client.perform(
+        query:     GitHub::LinkedIssue::FETCH_ISSUE_QUERY,
+        variables: {
+          issue_id: gid
+        }
+      )
+
+      response.dig('data', 'node')
     end
 
     def variables!(url)

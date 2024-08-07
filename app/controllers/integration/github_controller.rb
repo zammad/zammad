@@ -25,10 +25,17 @@ class Integration::GitHubController < ApplicationController
 
     github = ::GitHub.new(config['endpoint'], config['api_token'])
 
-    render json: {
-      result:   'ok',
-      response: github.issues_by_urls(params[:links]),
-    }
+    if params[:links]
+      render json: {
+        result:   'ok',
+        response: github.issues_by_urls(params[:links]),
+      }
+    else
+      render json: {
+        result:   'ok',
+        response: github.issues_by_gids(params[:gids]),
+      }
+    end
   rescue => e
     logger.error e
 
@@ -43,7 +50,13 @@ class Integration::GitHubController < ApplicationController
     ticket.with_lock do
       authorize!(ticket, :show?)
       ticket.preferences[:github] ||= {}
-      ticket.preferences[:github][:issue_links] = Array(params[:issue_links]).uniq
+      ticket.preferences[:github][:gids] = Array(params[:gids]).uniq
+
+      # do array length comparison to check whether issue_links got already migrated to gids before deleting the issue_links field
+      if Array(ticket.preferences[:github][:issue_links]).uniq.length == Array(params[:gids]).uniq.length
+        ticket.preferences[:github].delete(:issue_links)
+      end
+
       ticket.save!
     end
 

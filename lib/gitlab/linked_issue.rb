@@ -79,7 +79,6 @@ class GitLab
       @client = client
     end
 
-    # def find_by(url)
     def find_issue_by_url(url)
       @result = query_issue_by_url(url)
       return if @result.blank?
