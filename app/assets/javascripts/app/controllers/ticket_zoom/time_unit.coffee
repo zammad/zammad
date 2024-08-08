@@ -9,7 +9,7 @@ class App.TicketZoomTimeUnit extends App.Controller
 
     @controllerBind('config_update', (data) =>
       return if not /^time_accounting_unit/.test(data.name)
-      @rerenderCallback()
+      @render()
     )
 
     @showAllEntries = false
