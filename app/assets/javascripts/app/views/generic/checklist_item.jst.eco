@@ -1,0 +1,42 @@
+<div>
+  <div class="checklist-item-container">
+    <% if @attribute.items: %>
+      <% for item in @attribute.items: %>
+        <div class="checklist-item">
+          <div class="checklist-item-draggable">
+            <%- @Icon('draggable') %>
+          </div>
+
+          <input name="items" class="form-control form-control--small checklist-item-text" type="text" placeholder="<%- @T('Checklist Item Label') %>" value="<%= item.text %>" required />
+
+          <button class="btn btn--text btn--danger checklist-item-remove-button">
+            <%- @Icon('trash') %>
+          </button>
+        </div>
+      <% end %>
+    <% end %>
+  </div>
+
+  <!-- This is the add button for the checklist item -->
+  <div class="checklist-item-add-container">
+    <input class="form-control form-control--small checklist-item-add-item-text" type="text" placeholder="<%- @T('Checklist Item Label') %>" />
+
+    <button class="btn btn--action btn--secondary btn--positive checklist-item-add-button" type="button">
+      <%- @Icon('plus-small') %>
+      <span><%- @T('Add') %></span>
+    </button>
+  </div>
+
+  <!-- This is a dummy template for the checklist item -->
+  <div class="checklist-item checklist-item-template hidden">
+    <div class="checklist-item-draggable">
+      <%- @Icon('draggable') %>
+    </div>
+
+    <input name="items" class="form-control form-control--small checklist-item-text" type="text" />
+
+    <button class="btn btn--text btn--danger checklist-item-remove-button" type="button">
+      <%- @Icon('trash') %>
+    </button>
+  </div>
+</div>

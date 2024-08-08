@@ -43,7 +43,7 @@ describe('ArticleBubble', () => {
       senderName: EnumTicketArticleSenderName.Agent,
     })
 
-    expect(wrapper.baseElement.querySelector('article')).toHaveClass(
+    expect(wrapper.getByTestId('article-bubble-container-1')).toHaveClass(
       'ltr:rounded-br-xl',
     )
   })
@@ -53,7 +53,7 @@ describe('ArticleBubble', () => {
       senderName: EnumTicketArticleSenderName.System,
     })
 
-    expect(wrapper.baseElement.querySelector('article')).toHaveClass(
+    expect(wrapper.getByTestId('article-bubble-container-1')).toHaveClass(
       'ltr:rounded-br-xl',
     )
   })
@@ -63,7 +63,7 @@ describe('ArticleBubble', () => {
       senderName: EnumTicketArticleSenderName.Customer,
     })
 
-    expect(wrapper.baseElement.querySelector('article')).toHaveClass(
+    expect(wrapper.getByTestId('article-bubble-container-1')).toHaveClass(
       'ltr:rounded-bl-xl',
     )
   })

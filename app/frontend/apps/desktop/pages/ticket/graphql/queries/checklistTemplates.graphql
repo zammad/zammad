@@ -1,0 +1,7 @@
+query checklistTemplates($onlyActive: Boolean = false) {
+  checklistTemplates(onlyActive: $onlyActive) {
+    id
+    name
+    active
+  }
+}

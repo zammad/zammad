@@ -11,6 +11,9 @@ class App.Sidebar extends App.Controller
   constructor: ->
     super
 
+    for item in @items
+      item.parentSidebar = @
+
     @render()
 
     # get active tab by name
@@ -55,14 +58,23 @@ class App.Sidebar extends App.Controller
       if item.sidebarCallback
         el = localEl.filter('.sidebar[data-tab="' + item.name + '"]')
         item.sidebarCallback(el.find('.sidebar-content'))
-        if !_.isEmpty(item.sidebarActions)
-          new ActionRow(
-            el:    el.find('.js-actions')
-            items: item.sidebarActions
-            type:  'small'
-          )
+        @sidebarActionsRender(item.name, item.sidebarActions, el.find('.js-actions'))
 
     @html(localEl)
+
+  sidebarActionsRender: (name, sidebarActions, el = undefined) =>
+    if !el
+      el = @el.find('.sidebar[data-tab="' + name + '"] .js-actions')
+
+    @actionsRows ||= {}
+    @actionsRows[name]?.releaseController()
+    return if _.isEmpty(sidebarActions)
+
+    @actionsRows[name] = new SidebarActionRow(
+      el:    el
+      items: sidebarActions
+      type:  'small'
+    )
 
   badgeRender: (el, item) =>
     @badgeEl = el
@@ -140,7 +152,7 @@ class App.Sidebar extends App.Controller
     # show sidebar if not shown
     @showSidebar()
 
-class ActionRow extends App.Controller
+class SidebarActionRow extends App.Controller
   constructor: ->
     super
     @render()
@@ -153,7 +165,7 @@ class ActionRow extends App.Controller
 
     for item in @items
       do (item) =>
-        @$('[data-type="' + item.name + '"]').on(
+        @$('[data-type="' + item.name + '"]').off('click').on(
           'click'
           (e) ->
             e.preventDefault()

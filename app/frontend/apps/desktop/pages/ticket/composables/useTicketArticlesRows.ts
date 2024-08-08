@@ -77,10 +77,8 @@ export const useTicketArticleRows = (
           count: totalCount.value - articles.value.length,
         })
       }
-
       return memo
     }, [] as TicketArticleRow[])
   })
-
   return { rows }
 }

@@ -16,6 +16,7 @@ export interface ConfigList {
   auth_weibo?: boolean | null
   chat?: boolean | null
   chat_agent_idle_timeout: string
+  checklist?: boolean | null
   core_workflow_ajax_mode?: boolean | null
   cti_integration?: boolean | null
   customer_ticket_create?: boolean | null

@@ -369,8 +369,8 @@ class App.Controller extends Spine.Controller
     e.stopPropagation()
 
   preventDefaultAndStopPropagation: (e) ->
-    e.preventDefault()
-    e.stopPropagation()
+    e?.preventDefault()
+    e?.stopPropagation()
 
   startLoading: (el) =>
     return if @initLoadingDone && !el

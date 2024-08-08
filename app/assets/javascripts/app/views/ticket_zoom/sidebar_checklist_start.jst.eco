@@ -1,0 +1,22 @@
+<div class="checklistStart">
+  <% if @readOnly: %>
+    <span><%- @T('No checklist added to this ticket yet.') %></span>
+  <% else: %>
+    <button class="btn btn--primary js-add-empty"><%- @T('Add empty checklist') %></button>
+
+    <% if @activeTemplateCount: %>
+      <span><%- @T('Or choose a checklist template.') %></span>
+      <form>
+        <div id="form-checklist-template"></div>
+        <button class="btn btn--fullWidth js-add-from-template"><%- @T('Add from a template') %></button>
+      </form>
+    <% else: %>
+      <span><%- @T('No checklist templates have been created yet.') %></span>
+      <span><%- @T('With checklist templates you can pre-fill your checklists.') %></span>
+
+      <% if @showManageLink: %>
+      <a class="u-clickable" href="#manage/checklists"><%- @T('Create a new checklist template in the admin interface.') %></a>
+      <% end %>
+    <% end %>
+  <% end %>
+</div>

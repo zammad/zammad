@@ -31,7 +31,7 @@ export const useBubbleStyleGuide = (
   const headerAndIconBarBackgroundClass = computed(() =>
     position.value === 'right'
       ? ['dark:bg-stone-700', 'bg-blue-300']
-      : ['dark:bg-gray-500 bg-neutral-100 '],
+      : ['dark:bg-gray-500', 'bg-neutral-50'],
   )
 
   // We need this class otherwise on a transition the edges of children are shown

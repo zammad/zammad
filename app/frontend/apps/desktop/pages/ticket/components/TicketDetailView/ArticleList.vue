@@ -53,9 +53,6 @@ const loadPrevious = async () => {
 
 const isLoading = computed(() => context.articlesQuery.loading().value)
 
-const getArticleOrderNumber = (index: number) =>
-  Math.abs(totalCount.value - (rows.value.length - (index + 1)))
-
 const getArticleElement = async (key: string): Promise<Element | null> => {
   const row = rows.value.find(
     (elem) =>
@@ -124,43 +121,38 @@ watch(
 </script>
 
 <template>
-  <section class="mx-auto w-full max-w-6xl px-12 py-4">
-    <ul
-      v-if="context.articles.value?.articles.edges && rows"
-      class="scroll-mt-[12rem] space-y-10"
+  <section
+    v-if="context.articles.value?.articles.edges && rows"
+    role="feed"
+    class="mx-auto w-full max-w-6xl scroll-mt-[12rem] space-y-10 px-12 py-4"
+  >
+    <article
+      v-for="(row, rowIndex) in rows"
+      :id="`article-list-row-${row.key}`"
+      :key="row.key"
+      :aria-setsize="totalCount"
+      :aria-posinset="rowIndex + 1"
     >
-      <li
-        v-for="(row, rowIndex) in rows"
-        :id="`article-list-row-${row.key}`"
-        :key="row.key"
-      >
-        <ArticleBubble
-          v-if="row.type === 'article-bubble'"
-          :aria-setsize="totalCount"
-          :aria-posinset="getArticleOrderNumber(rowIndex)"
-          :article="row.article"
-        />
-        <ArticleMore
-          v-else-if="row.type === 'more'"
-          :disabled="isLoading"
-          @click="loadPrevious()"
-        />
-        <DeliveryMessage
-          v-else-if="row.type === 'delivery' && row.content"
-          role="article"
-          :aria-setsize="totalCount"
-          :aria-posinset="getArticleOrderNumber(rowIndex)"
-          :content="row.content"
-        />
-        <SystemMessage
-          v-else-if="row.type === 'system' && row.subject"
-          role="article"
-          :aria-setsize="totalCount"
-          :aria-posinset="getArticleOrderNumber(rowIndex)"
-          :subject="row.subject"
-          :to="row.to"
-        />
-      </li>
-    </ul>
+      <ArticleBubble
+        v-if="row.type === 'article-bubble'"
+        :article="row.article"
+      />
+      <ArticleMore
+        v-else-if="row.type === 'more'"
+        :disabled="isLoading"
+        @click="loadPrevious()"
+      />
+      <DeliveryMessage
+        v-else-if="row.type === 'delivery' && row.content"
+        role="article"
+        :content="row.content"
+      />
+      <SystemMessage
+        v-else-if="row.type === 'system' && row.subject"
+        role="article"
+        :subject="row.subject"
+        :to="row.to"
+      />
+    </article>
   </section>
 </template>

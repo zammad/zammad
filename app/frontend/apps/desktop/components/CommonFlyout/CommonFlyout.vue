@@ -235,7 +235,7 @@ onMounted(() => {
     ref="commonOverlayContainer"
     tag="aside"
     tabindex="-1"
-    class="overflow-clip-x fixed bottom-0 top-0 z-40 flex max-h-dvh min-w-min flex-col border-y border-neutral-100 bg-white ltr:right-0 ltr:rounded-l-xl ltr:border-l rtl:left-0 rtl:rounded-r-xl rtl:border-r dark:border-gray-900 dark:bg-gray-500"
+    class="overflow-clip-x fixed bottom-0 top-0 z-40 flex max-h-dvh min-w-min flex-col border-y border-neutral-100 bg-neutral-50 ltr:right-0 ltr:rounded-l-xl ltr:border-l rtl:left-0 rtl:rounded-r-xl rtl:border-r dark:border-gray-900 dark:bg-gray-500"
     :no-close-on-backdrop-click="noCloseOnBackdropClick"
     :show-backdrop="showBackdrop"
     :style="{ width: `${flyoutContainerWidth}px` }"
@@ -246,7 +246,7 @@ onMounted(() => {
   >
     <header
       ref="headerElement"
-      class="sticky top-0 flex items-center border-b border-neutral-100 border-b-transparent bg-white p-3 ltr:rounded-tl-xl rtl:rounded-tr-xl dark:bg-gray-500"
+      class="sticky top-0 flex items-center border-b border-neutral-100 border-b-transparent bg-neutral-50 p-3 ltr:rounded-tl-xl rtl:rounded-tr-xl dark:bg-gray-500"
       :class="{
         'border-b-neutral-100 dark:border-b-gray-900':
           !arrivedState.top && isContentOverflowing,
@@ -287,7 +287,7 @@ onMounted(() => {
       v-if="$slots.footer || !hideFooter"
       ref="footerElement"
       :aria-label="$t('Side panel footer')"
-      class="sticky bottom-0 border-t border-t-transparent bg-white p-3 ltr:rounded-bl-xl rtl:rounded-br-xl dark:bg-gray-500"
+      class="sticky bottom-0 border-t border-t-transparent bg-neutral-50 p-3 ltr:rounded-bl-xl rtl:rounded-br-xl dark:bg-gray-500"
       :class="{
         'border-t-neutral-100 dark:border-t-gray-900':
           !arrivedState.bottom && isContentOverflowing,

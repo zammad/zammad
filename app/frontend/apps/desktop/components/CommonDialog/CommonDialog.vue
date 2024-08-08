@@ -94,9 +94,11 @@ onMounted(() => {
       :is="wrapperTag"
       ref="dialogElement"
       data-common-dialog
-      class="flex flex-col gap-3 rounded-xl border border-neutral-100 bg-white p-3 dark:border-gray-900 dark:bg-gray-500"
+      class="flex flex-col gap-3 rounded-xl border border-neutral-100 bg-neutral-50 p-3 dark:border-gray-900 dark:bg-gray-500"
     >
-      <div class="flex items-center justify-between bg-white dark:bg-gray-500">
+      <div
+        class="flex items-center justify-between bg-neutral-50 dark:bg-gray-500"
+      >
         <slot name="header">
           <div
             class="flex items-center gap-2 text-xl leading-snug text-gray-100 dark:text-neutral-400"

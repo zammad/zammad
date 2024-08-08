@@ -19,7 +19,6 @@ const useHtmlLinks = (urlPrefix: '/desktop' | '/mobile') => {
       return route.fullPath
     }
   }
-
   const openLink = (target: string, path: string) => {
     // keep links inside PWA inside the app
     if (!isStandalone() && target && target !== '_self') {
@@ -35,12 +34,20 @@ const useHtmlLinks = (urlPrefix: '/desktop' | '/mobile') => {
     }`
     try {
       const url = new URL(link.href)
+
       if (url.origin === window.location.origin || url.origin === fqdnOrigin) {
         const redirectRoute = getRedirectRoute(url)
         if (redirectRoute) {
-          openLink(link.target, redirectRoute)
           event.preventDefault()
+          return openLink(link.target, redirectRoute)
         }
+      }
+
+      if (link.hasAttribute('external')) return
+
+      if (!link.target) {
+        event.preventDefault()
+        window.open(link.href)
       }
     } catch {
       // skip

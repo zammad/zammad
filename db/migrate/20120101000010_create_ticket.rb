@@ -562,9 +562,57 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.column :updated_by_id, :integer, null: false
       t.timestamps limit: 3
     end
+
+    create_table :checklists do |t|
+      t.string  :name,      limit: 250,     null: false
+      t.boolean :active,    default: true,  null: false
+      if Rails.application.config.db_column_array
+        t.string :sorted_item_ids, null: false, array: true, default: []
+      else
+        t.json :sorted_item_ids, null: false
+      end
+      t.references :created_by, null: false, foreign_key: { to_table: :users }
+      t.references :updated_by, null: false, foreign_key: { to_table: :users }
+      t.references :ticket, null: true, foreign_key: true, index: { unique: true }
+      t.timestamps limit: 3, null: false
+    end
+
+    create_table :checklist_items do |t|
+      t.text    :text,          null: false
+      t.boolean :checked,       null: false, default: false
+      t.references :checklist,  null: false, foreign_key: true
+      t.references :created_by, null: false, foreign_key: { to_table: :users }
+      t.references :updated_by, null: false, foreign_key: { to_table: :users }
+      t.timestamps limit: 3, null: false
+    end
+
+    create_table :checklist_templates do |t|
+      t.string  :name,      limit: 250,     null: false
+      t.boolean :active,    default: true,  null: false
+      if Rails.application.config.db_column_array
+        t.string :sorted_item_ids, null: false, array: true, default: []
+      else
+        t.json :sorted_item_ids, null: false
+      end
+      t.references :created_by, null: false, foreign_key: { to_table: :users }
+      t.references :updated_by, null: false, foreign_key: { to_table: :users }
+      t.timestamps limit: 3, null: false
+    end
+
+    create_table :checklist_template_items do |t|
+      t.text :text,          null: false
+      t.references :checklist_template,  null: false, foreign_key: true
+      t.references :created_by, null: false, foreign_key: { to_table: :users }
+      t.references :updated_by, null: false, foreign_key: { to_table: :users }
+      t.timestamps limit: 3, null: false
+    end
   end
 
   def self.down
+    drop_table :checklist_template_items
+    drop_table :checklist_templates
+    drop_table :checklist_items
+    drop_table :checklists
     drop_table :report_profiles
     drop_table :chat_sessions
     drop_table :chat_messages

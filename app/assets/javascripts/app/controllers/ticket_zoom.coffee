@@ -66,6 +66,11 @@ class App.TicketZoom extends App.Controller
       return if !@sidebarWidget
       @sidebarWidget.render(@formCurrent())
     )
+    @controllerBind('config_update', (data) =>
+      return if data.name isnt 'checklist'
+      @renderDone = false
+      @render()
+    )
 
   fetchMayBe: (data) =>
     return if @ticketUpdatedAtLastCall && new Date(data.updated_at).getTime() <= new Date(@ticketUpdatedAtLastCall).getTime()

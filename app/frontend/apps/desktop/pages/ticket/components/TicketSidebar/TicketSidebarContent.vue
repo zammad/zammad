@@ -39,6 +39,6 @@ defineProps<Props>()
   </div>
 
   <div class="flex flex-col gap-3 overflow-y-auto p-3">
-    <slot></slot>
+    <slot />
   </div>
 </template>

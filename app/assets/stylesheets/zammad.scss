@@ -1024,7 +1024,7 @@ pre code {
   }
 }
 
-.btn + .btn,
+.btn + .btn:not(.btn--no-margin),
 .btn + .buttonDropdown,
 .buttonDropdown + .buttonDropdown {
   @include bidi-style(margin-left, 10px, margin-right, 0);
@@ -1584,6 +1584,10 @@ td.align-right {
   }
 }
 
+.table.table--no-borders > tbody > tr:not(:first-child) > td {
+  border-color: transparent;
+}
+
 .table > tbody > tr.u-center > td {
   vertical-align: middle;
 }
@@ -1823,6 +1827,29 @@ td .icon-cog {
   }
 }
 
+.checkbox-replacement-readonly {
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  > .icon {
+    vertical-align: middle;
+    margin-top: -2px;
+  }
+
+  .icon-checkbox-checked-readonly.icon {
+    fill: var(--text-muted);
+    color: var(--interactive-primary);
+  }
+
+  .icon-checkbox-readonly.icon {
+    fill: var(--text-muted);
+  }
+}
+
 .radio-replacement {
   input:focus ~ .icon-checked,
   input:focus ~ .icon-unchecked {
@@ -1835,6 +1862,7 @@ td .icon-cog {
 }
 
 .table .checkbox-replacement,
+.table .checkbox-replacement-readonly,
 .table .radio-replacement {
   height: 40px;
   width: 40px;
@@ -14822,4 +14850,187 @@ div.accounted-time-value {
 
     @include bidi-style(margin-right, 6px, margin-left, 0);
   }
+}
+
+.checklistShowRowContent {
+  display: flex;
+  align-items: stretch;
+
+  .checklistItemValue {
+    flex-grow: 1;
+    padding-left: 4px;
+    padding-right: 4px;
+    padding-top: 9px;
+    padding-bottom: 6px; // make sure the value is aligned vertically with the checkbox and the dropdown menu
+
+    &.edit-widget-active {
+      padding-top: 5px;
+      padding-bottom: 3px;
+
+      @include bidi-style(padding-left, 0, padding-right, 4px);
+    }
+  }
+
+  .checkbox-replacement-readonly,
+  .checkbox-replacement {
+    width: 40px;
+    flex-shrink: 0;
+  }
+
+  .draggable {
+    width: 40px;
+    height: 28px;
+    text-align: center;
+    cursor: move;
+    flex-shrink: 0;
+    display: flex;
+    align-items: start;
+    justify-content: center;
+    margin-top: 12px;
+  }
+
+  .dropdown-container {
+    flex-shrink: 0;
+
+    .icon-checkmark {
+      fill: white;
+    }
+  }
+}
+
+.checklistShow .table {
+  margin-bottom: 0;
+
+  &:not(.table--no-borders) {
+    border-bottom: 1px solid var(--background-modifier-accent);
+  }
+
+  > thead > tr > th {
+    height: 40px;
+    vertical-align: middle;
+    padding-top: 4px;
+    padding-bottom: 3px;
+  }
+
+  > tbody > tr > td {
+    vertical-align: middle;
+
+    &.checklistShowRowContentCell {
+      height: 40px;
+      padding: 0;
+    }
+
+    &.checklistShowRowContentCellNoItems {
+      height: 40px;
+      font-size: 12px;
+      text-transform: uppercase;
+      text-align: center;
+    }
+
+    .icon {
+      margin-top: 0;
+    }
+  }
+}
+
+.checklistShowButtons {
+  display: flex;
+  justify-content: space-between;
+  padding: 5px;
+
+  .btn {
+    margin: 0;
+  }
+
+  .btn--create {
+    @include ltr(margin-left, auto);
+    @include rtl(margin-right, auto);
+  }
+}
+
+.input-group--small {
+  height: 30px;
+
+  .input-group-btn {
+    .btn--action {
+      padding: 0 9px !important;
+    }
+
+    .btn--icon-only {
+      height: 30px;
+      width: 30px;
+
+      .icon {
+        height: 10px;
+        width: 10px;
+      }
+    }
+  }
+}
+
+.checklistItemEdit,
+.checklistTitleEdit {
+  flex-grow: 1;
+}
+
+.checklistStart {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+
+.checklist-item-container {
+  .checklist-item {
+    display: flex;
+    flex: 0 1 auto;
+    align-items: center;
+    margin-bottom: 4px;
+    padding-left: 6px;
+    padding-right: 6px;
+    padding-bottom: 5px;
+    border-bottom: 1px solid var(--background-modifier-accent);
+
+    &-draggable {
+      cursor: move;
+      margin-right: 8px;
+      margin-left: 8px;
+      padding-top: 6px;
+    }
+
+    &-text {
+      @include ltr(margin-right, 8px);
+      @include rtl(margin-left, 8px);
+    }
+  }
+}
+
+.checklist-item-add-container {
+  display: flex;
+  flex-direction: row;
+  margin-top: 5px;
+  padding-left: 13px;
+  padding-right: 13px;
+
+  .checklist-item-add-item-text {
+    flex: 1 1 0%;
+
+    @include ltr(margin-right, 8px);
+    @include rtl(margin-left, 8px);
+  }
+}
+
+.checklist_item .controls .help-inline {
+  padding-left: 13px;
+  padding-right: 13px;
+}
+
+.checklist-item-template {
+  display: flex;
+  flex: 0 1 auto;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+#form-checklist-template .form-group {
+  margin-bottom: 10px;
 }

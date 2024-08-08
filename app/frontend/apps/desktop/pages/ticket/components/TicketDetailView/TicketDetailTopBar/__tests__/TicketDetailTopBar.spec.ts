@@ -12,7 +12,7 @@ import { testOptionsTopBar } from '#desktop/pages/ticket/components/TicketDetail
 import TicketDetailTopBar from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue'
 import { TICKET_INFORMATION_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
-const renderTopBar = () => {
+const renderTopBar = (options = testOptionsTopBar) => {
   return renderComponent(
     {
       components: { TicketDetailTopBar },
@@ -28,12 +28,12 @@ const renderTopBar = () => {
 
         provide(
           TICKET_INFORMATION_KEY,
-          computed(() => testOptionsTopBar),
+          computed(() => options),
         )
         return {}
       },
     },
-    { form: true },
+    { form: true, router: true },
   )
 }
 describe('TicketDetailTopBar', () => {
@@ -90,5 +90,21 @@ describe('TicketDetailTopBar', () => {
       expect(wrapper.getByText('Highlight')).toBeInTheDocument()
       expect(wrapper.getByIconName('highlighter')).toBeInTheDocument()
     })
+  })
+
+  it('displays in readonly mode if update permission is not granted', () => {
+    const readOnlyOptions = { ...testOptionsTopBar }
+    testOptionsTopBar.policy.update = false
+
+    const wrapper = renderTopBar(readOnlyOptions)
+
+    expect(wrapper.queryByText('Highlight')).not.toBeInTheDocument()
+    expect(
+      wrapper.queryByRole('button', { name: 'Welcome to Zammad!' }),
+    ).not.toBeInTheDocument()
+
+    expect(
+      wrapper.getByRole('heading', { name: 'Welcome to Zammad!', level: 2 }),
+    ).toBeInTheDocument()
   })
 })

@@ -1,0 +1,5 @@
+mutation ticketChecklistTitleUpdate($checklistId: ID!, $title: String) {
+  ticketChecklistTitleUpdate(checklistId: $checklistId, title: $title) {
+    success
+  }
+}

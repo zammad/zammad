@@ -96,7 +96,7 @@ export const defaultMentions = {
  * Make sure to set old values as defaults to be backwards compatible
  * * */
 export const createDummyTicket = (options?: {
-  ticketId?: 1
+  ticketId?: string
   owner?: TicketQuery['ticket']['owner']
   customer?: TicketQuery['ticket']['customer']
   organization?: TicketQuery['ticket']['organization']

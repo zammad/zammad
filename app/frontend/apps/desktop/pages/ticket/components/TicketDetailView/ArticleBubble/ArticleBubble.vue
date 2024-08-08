@@ -77,8 +77,9 @@ const { showImage } = useImageViewer(
 </script>
 
 <template>
-  <article
+  <div
     class="backface-hidden relative rounded-t-xl"
+    :data-test-id="`article-bubble-container-${article.internalId}`"
     :class="[
       {
         'bg-stripes relative z-0 rounded-xl outline outline-1 outline-blue-700 ltr:rounded-bl-none rtl:rounded-br-none':
@@ -140,7 +141,7 @@ const { showImage } = useImageViewer(
       <ArticleBubbleBody
         tabindex="0"
         :data-test-id="`article-bubble-body-${article.internalId}`"
-        class="last:rounded-b-2xl focus:outline-none focus-visible:-outline-offset-2 focus-visible:outline-blue-800"
+        class="last:rounded-b-xl focus:outline-none focus-visible:-outline-offset-2 focus-visible:outline-blue-800"
         :class="[
           bodyClasses,
           {
@@ -180,7 +181,7 @@ const { showImage } = useImageViewer(
     </div>
 
     <ArticleBubbleActionList :article="article" :position="position" />
-  </article>
+  </div>
 </template>
 
 <style scoped>

@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import linkifyStr from 'linkify-string'
+import { isEqual } from 'lodash-es'
 
 export { htmlCleanup } from './htmlCleanup.ts'
 
@@ -102,3 +103,15 @@ export const waitForElement = async (
   await new Promise((resolve) => requestAnimationFrame(resolve))
   return waitForElement(query, tries - 1)
 }
+
+/**
+ * **Note:** @Generic T supports comparing arrays, array buffers, booleans,
+ * date objects, error objects, maps, numbers, `Object` objects, regexes,
+ * sets, strings, symbols, and typed arrays.
+ * `Object` objects are compared
+ * by their own, not inherited, enumerable properties.
+ * Functions and DOM
+ * nodes are **not** supported.
+ * */
+export const findChangedIndex = <T>(oldArray: T[], newArray: T[]) =>
+  oldArray.findIndex((item, index) => !isEqual(item, newArray[index]))

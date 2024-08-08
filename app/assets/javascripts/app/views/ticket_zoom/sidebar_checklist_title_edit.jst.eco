@@ -1,0 +1,16 @@
+<div class="checklistTitleEdit input-group input-group--small">
+  <input
+    class="form-control form-control--small js-input"
+    id="checklistTitleEditText"
+    type="text"
+    placeholder="<%- @T('%s Checklist', @C('ticket_hook') + @ticketNumber) %>"
+    value="<%= @value %>">
+  <span class="input-group-btn">
+    <button class="btn btn--action btn--icon-only btn--no-margin danger-color js-cancel">
+      <%- @Icon('diagonal-cross') %>
+    </button>
+    <button class="btn btn--action btn--icon-only btn--no-margin js-confirm">
+      <%- @Icon('checkmark') %>
+    </button>
+  </span>
+</div>

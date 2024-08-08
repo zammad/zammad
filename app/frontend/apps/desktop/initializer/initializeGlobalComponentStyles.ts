@@ -22,7 +22,8 @@ export const initializeGlobalComponentStyles = () => {
     warning:
       'bg-yellow-50 text-yellow-600 dark:bg-yellow-900 dark:text-yellow-600',
     danger: 'bg-pink-100 text-red-500 dark:bg-red-900 dark:text-red-500',
-    neutral: 'text-gray-100 bg-white dark:text-neutral-400 dark:bg-gray-500',
+    neutral:
+      'text-gray-100 bg-neutral-50 dark:text-neutral-400 dark:bg-gray-500',
     custom: 'badge-custom',
   })
 
@@ -58,7 +59,7 @@ export const initializeGlobalComponentStyles = () => {
   })
 
   initializeLinkClasses({
-    base: 'cursor-pointer no-underline hover:underline text-blue-800 focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800',
+    base: 'cursor-pointer no-underline hover:underline text-blue-800 focus-visible:rounded-sm focus-visible:outline-1 focus-visible:outline-none focus-visible:outline-offset-1 focus-visible:outline-blue-800',
   })
 
   initializeNotificationClasses({
@@ -72,9 +73,9 @@ export const initializeGlobalComponentStyles = () => {
   })
 
   initializePopoverClasses({
-    base: 'min-h-9 rounded-xl border border-neutral-100 bg-white antialiased dark:border-gray-900 dark:bg-gray-500',
+    base: 'min-h-9 rounded-xl border border-neutral-100 bg-neutral-50 antialiased dark:border-gray-900 dark:bg-gray-500',
     arrow:
-      'h-[22px] w-[22px] border border-neutral-100 bg-white dark:border-gray-900 dark:bg-gray-500',
+      'h-[22px] w-[22px] border border-neutral-100 bg-neutral-50 dark:border-gray-900 dark:bg-gray-500',
   })
 
   initializeEditorColorMenuClasses({

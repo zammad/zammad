@@ -133,7 +133,7 @@ const { durations } = useTransitionConfig()
         resizable
         no-padding
         no-scroll
-        class="bg-white dark:bg-gray-500"
+        class="bg-neutral-50 dark:bg-gray-500"
         :class="{
           'max-h-[calc(100dvh-3.5rem)]': $slots.bottomBar,
         }"

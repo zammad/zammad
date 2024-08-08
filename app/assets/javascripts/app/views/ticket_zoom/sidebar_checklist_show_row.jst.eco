@@ -1,0 +1,74 @@
+<tr data-id="<%= @object.id %>">
+  <td class="noTruncate checklistShowRowContentCell">
+    <div class="checklistShowRowContent">
+      <% if !@readOnly: %>
+        <div class="hide draggable">
+          <%- @Icon('draggable') %>
+        </div>
+      <% end %>
+
+      <% if @readOnly: %>
+        <div class="checkbox-replacement-readonly">
+          <% if @object.checked: %>
+            <%- @Icon('checkbox-checked-readonly') %>
+          <% else: %>
+            <%- @Icon('checkbox-readonly') %>
+          <% end %>
+        </div>
+      <% else: %>
+        <label class="checkbox-replacement">
+          <input type="checkbox" class="js-checkbox" value="<%= @object.id %>" <% if @object.checked: %>checked<% end %>>
+          <%- @Icon('checkbox', 'icon-unchecked') %>
+          <%- @Icon('checkbox-checked', 'icon-checked') %>
+        </label>
+      <% end %>
+
+      <div class="checklistItemValue <% if !@readOnly: %>js-checklist-item-edit u-clickable<% end %>" <% if !@readOnly: %>data-table-action="edit"<% end %>>
+        <%- App.Utils.linkify(@object.text) %>
+      </div>
+
+      <% if !@readOnly: %>
+        <div class="dropdown-container">
+          <div class="dropdown dropdown--actions">
+            <div class="btn btn--table btn--text btn--secondary js-action" data-toggle="dropdown">
+              <%- @Icon('overflow-button') %>
+            </div>
+            <ul class="dropdown-menu dropdown-menu-right js-table-action-menu" role="menu">
+              <% if !@object.checked: %>
+              <li role="presentation" class="" data-table-action="check">
+                <a role="menuitem" tabindex="-1">
+                  <span class="dropdown-iconSpacer">
+                    <%- @Icon('checkmark') %>
+                  </span>
+                  <%- @T('Check item') %>
+                </a>
+              <% else: %>
+              <li role="presentation" class="" data-table-action="uncheck">
+                <a role="menuitem" tabindex="-1">
+                  <span class="dropdown-iconSpacer">
+                    <%- @Icon('checkmark') %>
+                  </span>
+                  <%- @T('Uncheck item') %>
+                </a>
+              <% end %>
+              <li role="presentation" class="" data-table-action="edit">
+                <a role="menuitem" tabindex="-1">
+                  <span class="dropdown-iconSpacer">
+                    <%- @Icon('pen') %>
+                  </span>
+                  <%- @T('Edit item') %>
+                </a>
+              <li role="presentation" class="danger" data-table-action="delete">
+                <a role="menuitem" tabindex="-1">
+                  <span class="dropdown-iconSpacer">
+                    <%- @Icon('trash') %>
+                  </span>
+                  <%- @T('Remove item') %>
+                </a>
+            </ul>
+          <div>
+        <div>
+      <% end %>
+    </div>
+  </td>
+</tr>

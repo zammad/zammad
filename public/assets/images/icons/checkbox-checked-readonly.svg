@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="11px" height="11px" viewBox="0 0 11 11" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>checkbox-checked-readonly</title>
+    <g id="checkbox-checked-readonly" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <polygon id="background" fill="#50E3C2" points="10 1 1 1 1 10 10 10"></polygon>
+        <path d="M11,0 L11,11 L0,11 L0,0 L11,0 Z M10,1 L1,1 L1,10 L10,10 L10,1 Z" id="border" fill="#50E3C2" fill-rule="nonzero"></path>
+        <path d="M4.27323943,6.76760563 L2.23802816,4.97183098 L1.39999999,5.80985915 L4.87183098,10 C5.47042253,8.20422535 7.38591549,4.73239436 9.66056338,2.21830985 L9.42112676,1.49999999 C6.90704225,3.29577464 4.99154929,5.57042253 4.27323943,6.76760563 L4.27323943,6.76760563 L4.27323943,6.76760563 Z" id="checkmark" fill="#BD10E0"></path>
+    </g>
+</svg>

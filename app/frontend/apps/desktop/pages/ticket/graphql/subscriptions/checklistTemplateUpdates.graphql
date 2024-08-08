@@ -1,0 +1,9 @@
+subscription checklistTemplateUpdates($onlyActive: Boolean = false) {
+  checklistTemplateUpdates(onlyActive: $onlyActive) {
+    checklistTemplates {
+      id
+      name
+      active
+    }
+  }
+}

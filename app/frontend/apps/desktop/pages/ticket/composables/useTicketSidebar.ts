@@ -37,7 +37,6 @@ export const useTicketSidebar = (context: Ref<TicketSidebarContext>) => {
 
   const activeSidebar = computed<string | null>(() => {
     if (!Object.keys(availableSidebarPlugins.value)?.length) return null
-
     if (
       switchedSidebar.value &&
       availableSidebarPlugins.value[switchedSidebar.value] &&

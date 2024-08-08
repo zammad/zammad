@@ -1588,16 +1588,14 @@ const inlineEditValue = ref('Edit me inline')
       <div>
         <span> Inline Edit </span>
         <CommonInlineEdit
+          id="test"
           :value="inlineEditValue"
-          name="test"
           @submit-edit="
             (value) => {
               inlineEditValue = value
             }
           "
-        >
-          <h1>${{ inlineEditValue }}</h1>
-        </CommonInlineEdit>
+        />
       </div>
 
       <div class="w-1/2">

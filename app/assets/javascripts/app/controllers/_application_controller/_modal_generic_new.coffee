@@ -39,7 +39,7 @@ class App.ControllerGenericNew extends App.ControllerModal
     )
 
     if @validateOnSubmit
-      errors = Object.assign({}, errors, @validateOnSubmit(params))
+      errors = _.extend({}, errors, @validateOnSubmit(params))
 
     if !_.isEmpty(errors)
       @log 'error', errors

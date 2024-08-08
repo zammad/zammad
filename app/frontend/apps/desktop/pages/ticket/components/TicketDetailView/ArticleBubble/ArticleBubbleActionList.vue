@@ -26,12 +26,10 @@ const { isTouchDevice } = useTouchDevice()
 
 const buttonVariantClassExtension = computed(() => {
   if (props.position === 'left')
-    return 'border border-neutral-100 !outline-transparent hover:border-blue-700 dark:hover:border-blue-700 hover:border-blue-800  bg-white hover:bg-white  text-gray-100 dark:border-gray-900 dark:bg-gray-500 dark:text-neutral-400'
+    return 'border border-neutral-100 !outline-transparent hover:border-blue-700 dark:hover:border-blue-700 hover:border-blue-800 bg-neutral-50 hover:bg-white text-gray-100 dark:border-gray-900 dark:bg-gray-500 dark:text-neutral-400'
 
   return 'border border-neutral-100 !outline-transparent hover:border-blue-700 dark:hover:border-blue-700 bg-blue-100 bg-blue-100  text-gray-100 dark:border-gray-900 dark:bg-stone-500 dark:text-neutral-400'
 })
-
-// :TODO draw or redraw the rest of the owl
 
 const popoverActions: MenuItem[] = [
   {

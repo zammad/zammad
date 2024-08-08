@@ -1,0 +1,18 @@
+query ticketChecklist($ticketId: ID, $ticketInternalId: Int, $ticketNumber: String) {
+  ticketChecklist(
+    ticket: {
+      ticketId: $ticketId
+      ticketInternalId: $ticketInternalId
+      ticketNumber: $ticketNumber
+    }
+  ) {
+    id
+    name
+    completed
+    items {
+      id
+      text
+      checked
+    }
+  }
+}

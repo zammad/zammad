@@ -1356,15 +1356,19 @@ RSpec.describe Ticket, type: :model do
       end
 
       it 'destroys all related dependencies' do
-        refs_known = { 'Ticket::Article'         => { 'ticket_id'=>1 },
-                       'Ticket::TimeAccounting'  => { 'ticket_id'=>1 },
-                       'Ticket::SharedDraftZoom' => { 'ticket_id'=>0 },
-                       'Ticket::Flag'            => { 'ticket_id'=>1 } }
+        refs_known = {
+          'Ticket::Article'         => { 'ticket_id' => 1 },
+          'Ticket::TimeAccounting'  => { 'ticket_id' => 1 },
+          'Ticket::SharedDraftZoom' => { 'ticket_id' => 0 },
+          'Ticket::Flag'            => { 'ticket_id' => 1 },
+          'Checklist'               => { 'ticket_id' => 1 },
+        }
 
         ticket     = create(:ticket)
         article    = create(:ticket_article, ticket: ticket)
         accounting = create(:ticket_time_accounting, ticket: ticket)
         flag       = create(:ticket_flag, ticket: ticket)
+        checklist  = create(:checklist, ticket: ticket)
 
         refs_ticket = Models.references('Ticket', ticket.id, true)
         expect(refs_ticket).to eq(refs_known)
@@ -1375,6 +1379,7 @@ RSpec.describe Ticket, type: :model do
         expect { article.reload }.to raise_exception(ActiveRecord::RecordNotFound)
         expect { accounting.reload }.to raise_exception(ActiveRecord::RecordNotFound)
         expect { flag.reload }.to raise_exception(ActiveRecord::RecordNotFound)
+        expect { checklist.reload }.to raise_exception(ActiveRecord::RecordNotFound)
       end
 
       context 'when ticket is generated from email (with attachments)' do

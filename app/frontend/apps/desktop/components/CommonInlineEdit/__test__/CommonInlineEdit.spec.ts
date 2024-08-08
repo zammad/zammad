@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
-import { h } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -20,18 +19,25 @@ const renderInlineEdit = (props: Partial<Props> = {}) => {
       ...props,
     },
     form: true,
-    slots: {
-      default: () => h('h2', 'test value'),
-    },
+    router: true,
   })
 }
 
 describe('CommonInlineEdit', async () => {
-  it('shows by default slot content', () => {
+  it('shows by default non editable node', () => {
     const wrapper = renderInlineEdit()
 
     expect(wrapper.getByText('test value')).toBeInTheDocument()
     expect(wrapper.queryByDisplayValue('test value')).not.toBeInTheDocument()
+  })
+
+  it('supports placeholder on edit input', async () => {
+    const wrapper = renderInlineEdit({ placeholder: 'test placeholder' })
+    await wrapper.events.click(wrapper.getByRole('button'))
+
+    expect(
+      await wrapper.findByPlaceholderText('test placeholder'),
+    ).toBeInTheDocument()
   })
 
   it('submits edit on button click', async () => {
@@ -49,7 +55,9 @@ describe('CommonInlineEdit', async () => {
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Submit' }))
 
-    expect(wrapper.emitted()['submit-edit']).toBeTruthy()
+    expect(wrapper.emitted()['submit-edit'].at(-1)).toStrictEqual([
+      'test value update',
+    ])
 
     // KEYDOWN ENTER
 
@@ -63,9 +71,11 @@ describe('CommonInlineEdit', async () => {
       ).toBeInTheDocument(),
     )
 
-    await wrapper.events.keyboard('{enter}')
+    await wrapper.events.keyboard(' update {enter}')
 
-    expect(wrapper.emitted()['submit-edit']).toBeTruthy()
+    expect(wrapper.emitted()['submit-edit'].at(-1)).toEqual([
+      'test value update 2 update',
+    ])
   })
 
   it('submits edit on enter key', async () => {
@@ -143,7 +153,7 @@ describe('CommonInlineEdit', async () => {
       ).toBeInTheDocument(),
     )
 
-    await wrapper.events.type(wrapper.getByRole('textbox'), ' ')
+    await wrapper.events.clear(wrapper.getByRole('textbox'))
 
     expect(wrapper.emitted()['submit-edit']).toBeFalsy()
 
@@ -154,23 +164,77 @@ describe('CommonInlineEdit', async () => {
     ).toBeInTheDocument()
   })
 
-  it('disables submit if input has not changed', async () => {
-    const wrapper = renderInlineEdit()
+  it('supports adding attributes on label', () => {
+    const wrapper = renderInlineEdit({
+      labelAttrs: {
+        role: 'heading',
+        'aria-level': '1',
+      },
+    })
 
-    await wrapper.events.click(wrapper.getByRole('button'))
+    expect(wrapper.getByRole('heading', { level: 1 })).toBeInTheDocument()
+  })
 
-    await waitFor(() =>
-      expect(
-        wrapper.getByRole('textbox', { name: 'Inline Edit Label' }),
-      ).toBeInTheDocument(),
-    )
+  it('allows inline edit to be take up full width if set to block', () => {
+    const wrapper = renderInlineEdit({
+      block: true,
+    })
+    expect(wrapper.getByRole('button')).toHaveClass('w-full')
+  })
 
-    expect(wrapper.emitted()['submit-edit']).toBeFalsy()
+  it('disables input if disabled prop is true', async () => {
+    const wrapper = renderInlineEdit({ disabled: true })
 
-    expect(wrapper.getByRole('button', { name: 'Submit' })).toBeDisabled()
+    expect(wrapper.getByText('test value')).toBeInTheDocument()
+
+    await wrapper.events.click(wrapper.getByText('test value'))
+
+    expect(wrapper.queryByRole('textbox')).not.toBeInTheDocument()
+  })
+
+  it('detects links if set to true and renders it as link only in label', async () => {
+    const wrapper = renderInlineEdit({
+      detectLinks: true,
+      value: 'https://zammad.com/en',
+    })
 
     expect(
-      wrapper.getByRole('textbox', { name: 'Inline Edit Label' }),
+      wrapper.getByRole('link', { name: 'https://zammad.com/en' }),
     ).toBeInTheDocument()
+  })
+
+  it('displays initial edit value if editing got activated', async () => {
+    const wrapper = renderInlineEdit({
+      initialEditValue: 'initial Value',
+      value: 'default Value',
+    })
+
+    await wrapper.events.click(wrapper.getByText('default Value'))
+
+    expect(wrapper.getByRole('textbox')).toHaveValue('initial Value')
+  })
+
+  it('supports adding alternative background color', async () => {
+    const wrapper = renderInlineEdit({
+      alternativeBackground: true,
+    })
+
+    await wrapper.events.click(wrapper.getByText('test value'))
+
+    expect(wrapper.html()).toContain(
+      'before:bg-neutral-50 before:dark:bg-gray-500',
+    )
+
+    await wrapper.rerender({
+      alternativeBackground: false,
+    })
+
+    expect(wrapper.html()).toContain(
+      'before:bg-blue-200 before:dark:bg-gray-700',
+    )
+
+    expect(wrapper.html()).not.toContain(
+      'before:bg-neutral-50 before:dark:bg-gray-500',
+    )
   })
 })

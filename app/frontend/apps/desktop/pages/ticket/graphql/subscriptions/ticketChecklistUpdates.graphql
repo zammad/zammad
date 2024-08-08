@@ -1,0 +1,14 @@
+subscription ticketChecklistUpdates($ticketId: ID!) {
+  ticketChecklistUpdates(ticketId: $ticketId) {
+    ticketChecklist {
+      id
+      name
+      completed
+      items {
+        id
+        text
+        checked
+      }
+    }
+  }
+}

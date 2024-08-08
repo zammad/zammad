@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import TicketSidebarOrganizationButton from '../TicketSidebarOrganizationButton.vue'
-// eslint-disable-next-line import/no-named-as-default,import/no-named-as-default-member
 import TicketSidebarOrganizationContent from '../TicketSidebarOrganizationContent.vue'
 
 import type { TicketSidebarPlugin } from './types.ts'

@@ -5764,3 +5764,30 @@ Setting.create_if_not_exists(
   },
   frontend:    true
 )
+
+Setting.create_if_not_exists(
+  title:       __('Checklists'),
+  name:        'checklist',
+  area:        'Web::Base',
+  description: __('Allow users to create new checklists.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'checklist',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    authentication: true,
+    permission:     ['admin.checklist'],
+  },
+  state:       true,
+  frontend:    true
+)

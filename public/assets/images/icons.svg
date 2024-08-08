@@ -33,6 +33,13 @@
 </symbol><symbol id="icon-chat" viewBox="0 0 24 24">
     <title>chat</title>
     <path d="M2 5.006C2 3.898 2.898 3 3.99 3h16.02C21.108 3 22 3.897 22 5.006v9.988A2.003 2.003 0 0 1 20.01 17H3.99C2.892 17 2 16.103 2 14.994V5.006ZM12 17l6 4v-4h-6Z" fill-rule="evenodd"/>
+</symbol><symbol id="icon-checkbox-checked-readonly" viewBox="0 0 11 11">
+    <title>checkbox-checked-readonly</title>
+    <g fill-rule="evenodd">
+        <path d="M10 1H1v9h9z"/>
+        <path d="M11 0v11H0V0h11Zm-1 1H1v9h9V1Z" fill-rule="nonzero"/>
+        <path d="M4.273 6.768 2.238 4.972 1.4 5.81 4.872 10C5.47 8.204 7.386 4.732 9.66 2.218L9.42 1.5c-2.514 1.796-4.43 4.07-5.148 5.268Z" fill="currentColor"/>
+    </g>
 </symbol><symbol id="icon-checkbox-checked" viewBox="0 0 11 11">
     <title>checkbox-checked</title>
     <g fill-rule="evenodd">
@@ -47,12 +54,21 @@
         <path d="M11 0v11H0V0h11Zm-1 1H1v9h9V1Z" fill="currentColor" fill-rule="nonzero"/>
         <path fill="currentColor" d="M3 5h5v1H3z"/>
     </g>
+</symbol><symbol id="icon-checkbox-readonly" viewBox="0 0 11 11">
+    <title>checkbox-readonly</title>
+    <g fill-rule="evenodd">
+        <path d="M10 1H1v9h9z"/>
+        <path d="M11 0v11H0V0h11Zm-1 1H1v9h9V1Z" fill-rule="nonzero"/>
+    </g>
 </symbol><symbol id="icon-checkbox" viewBox="0 0 11 11">
     <title>checkbox</title>
     <g fill-rule="evenodd">
         <path d="M10 1H1v9h9z"/>
         <path d="M11 0v11H0V0h11Zm-1 1H1v9h9V1Z" fill="currentColor" fill-rule="nonzero"/>
     </g>
+</symbol><symbol id="icon-checklist" viewBox="0 0 16 14">
+    <path d="M1 1c0-.552.449-1 1.007-1h12.985C15.55 0 16 .444 16 1c0 .552-.449 1-1.008 1H2.008A1.001 1.001 0 0 1 1 1ZM8 5c0-.552.446-1 .998-1h6.005c.55 0 .997.444.997 1 0 .552-.446 1-.998 1H8.998A.996.996 0 0 1 8 5ZM8 9c0-.552.446-1 .998-1h6.005c.55 0 .997.444.997 1 0 .552-.446 1-.998 1H8.998A.996.996 0 0 1 8 9ZM1 13c0-.552.449-1 1.007-1h12.985c.557 0 1.008.444 1.008 1 0 .552-.449 1-1.008 1H2.008A1.001 1.001 0 0 1 1 13ZM1.292 6.608l1.056.905c.373-.604 1.366-1.75 2.67-2.656l.125.362c-1.18 1.268-2.174 3.018-2.485 3.924L.858 7.03l.434-.422Z"/>
+    <path fill-rule="evenodd" clip-rule="evenodd" d="M6 4v6H0V4h6Zm-.545.545H.545v4.91h4.91v-4.91Z"/>
 </symbol><symbol id="icon-checkmark-outline" viewBox="0 0 16 14">
     <path fill-rule="evenodd" clip-rule="evenodd" d="M0 7.235a124.391 124.391 0 0 0 6.477 6.602c.115-.246.232-.489.35-.728 3.792-7.653 9.036-11.513 9.036-11.513V0s-.274.12-.75.371c-1.66.875-5.778 3.33-9.282 7.749-.156.197-.31.397-.463.602 0 0-.207-.223-.528-.547-.71-.718-1.985-1.935-2.824-2.328C.798 5.277 0 7.235 0 7.235Zm4.817 1.996.611.66.54-.72c2.23-2.976 4.788-5.103 6.792-6.486a27.61 27.61 0 0 1 2.353-1.462v.007c-.166.134-.395.324-.676.571a31.24 31.24 0 0 0-2.392 2.358 37.438 37.438 0 0 0-5.761 8.36A132.921 132.921 0 0 0 .929 7.082c.058-.091.124-.184.196-.27.137-.163.26-.257.353-.296.063-.026.12-.035.22.012.483.226 1.239.859 1.936 1.517a28.744 28.744 0 0 1 1.162 1.164l.016.018.004.004.001.001ZM.694 7.521Z"/>
 </symbol><symbol id="icon-checkmark" viewBox="0 0 16 14">
@@ -114,6 +130,8 @@
         <path d="M5.325 0 2 5.975l.014 3.009H5.5L9 2.979V0z"/>
         <path d="M6.978 1.058c-.206-.142-.477-.074-.606.152l-.322.56 1.56 1.073.322-.56a.509.509 0 0 0-.138-.664l-.816-.561ZM4.834 7.685l2.543-4.434-1.561-1.074-2.543 4.435 1.561 1.073ZM3 8.984l.815-.472.756-.438-1.505-1.036-.032.938L3 8.984Z" fill="currentColor"/>
     </g>
+</symbol><symbol id="icon-draggable-small" viewBox="0 0 11 11">
+    <path d="M10.7 3.7H.7v.77h10V3.7ZM10.7.623H.7v.77h10v-.77ZM10.7 6.777H.7v.77h10v-.77ZM10.7 9.854H.7v.769h10v-.77Z"/>
 </symbol><symbol id="icon-draggable" viewBox="0 0 16 16">
     <title>draggable</title>
     <g fill-rule="evenodd">
@@ -699,9 +717,6 @@
 </g></symbol><symbol id="icon-status-modified-outer-circle" viewBox="0 0 16 16">
     <title>status-modified-outer-circle</title>
     <path d="M8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12Zm0-1A5 5 0 1 0 8 3a5 5 0 0 0 0 10Z" fill-rule="evenodd"/>
-</symbol><symbol id="icon-status-report" viewBox="0 0 22 22">
-    <path fill-rule="evenodd" clip-rule="evenodd" d="m12.4 21.9-1.7-.7c-.7-.3-1.1-1-1.1-1.8v-.5H4.1c-.5 0-1-.4-1-.8s.4-.8 1-.8h3.1L6.7 16c-.2-.6-.1-1.3.3-1.8H4c-.5 0-1-.4-1-.8s.4-.8 1-.8h2.7c-.2-.5-.2-1 0-1.5l.7-1.7H4.1c-.5 0-1-.4-1-.8s.4-.8 1-.8h5.8v-.1c0-.8.4-1.4 1.1-1.7l1.7-.7c.2-.1.4-.1.7-.1.2 0 .5 0 .7.1.2.1.5.3.6.5l.4.5.4-.5c.3-.4.8-.6 1.3-.6.2 0 .5 0 .7.1l1.4.7V1c0-.6-.4-1-1-1H1C.4 0 0 .4 0 1v20c0 .6.4 1 1 1h12c-.2 0-.4-.1-.6-.1zM4.2 3.1h7.3c.6 0 1 .4 1 .8s-.5.8-1 .8H4.2c-.6 0-1-.4-1-.8-.1-.4.4-.8 1-.8z"/>
-    <path fill-rule="evenodd" clip-rule="evenodd" d="m21.8 15.2-.8-.7c-.2-.2-.3-.4-.3-.7 0-.3.1-.6.3-.7l.8-.7c.2-.2.2-.4.2-.5l-.7-1.7c0-.1-.1-.2-.2-.2h-1.2c-.2 0-.3 0-.4-.1-.1-.1-.2-.1-.3-.2-.2-.2-.3-.5-.3-.8l.1-1c0-.2-.1-.3-.2-.4L17 6.8c-.2-.1-.3 0-.4.1l-.7.8c-.2.2-.5.3-.8.3-.1 0-.3 0-.4-.1-.1-.1-.3-.2-.4-.3l-.7-.8-.1-.1h-.3l-1.7.7c-.2.1-.3.2-.2.4v1c0 .3-.1.6-.3.8-.2.2-.5.3-.8.3l-1-.1c-.2 0-.3 0-.4.2l-.7 1.7c-.1.2 0 .3.1.4l.8.7c.2.2.3.5.3.7v.1c0 .3-.1.5-.3.7l-.9.7c-.1.1-.1.3-.1.5l.7 1.7c0 .1.1.2.2.2h1.2c.1 0 .3 0 .4.1.1.1.2.1.3.2.2.2.3.5.3.7l-.1 1c0 .2.1.3.2.4l1.7.7c.2.1.3 0 .4-.1l.7-.8c.2-.2.5-.3.8-.3.1 0 .3 0 .4.1.1.1.3.1.4.3l.7.8.1.1h.3l1.7-.7c.2-.1.3-.2.2-.4v-1c0-.3.1-.5.3-.7.2-.2.5-.3.8-.3l1 .1c.2 0 .3-.1.4-.2l.7-1.7c.2-.2.1-.4 0-.5zm-7.6.4c-1.1-.5-1.5-1.7-1.1-2.7.5-1.1 1.7-1.5 2.7-1.1 1.1.5 1.5 1.7 1.1 2.7-.4 1.1-1.7 1.5-2.7 1.1z"/>
 </symbol><symbol id="icon-status" viewBox="0 0 16 16">
     <title>status</title>
     <circle cx="8" cy="8" r="4" fill-rule="evenodd"/>

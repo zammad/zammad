@@ -17,8 +17,14 @@ import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import { useTaskbarTab } from '#desktop/entities/user/current/composables/useTaskbarTab.ts'
 import ArticleList from '#desktop/pages/ticket/components/TicketDetailView/ArticleList.vue'
 import TicketDetailTopBar from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue'
+import TicketSidebar from '#desktop/pages/ticket/components/TicketSidebar.vue'
+import {
+  type TicketSidebarContext,
+  TicketSidebarScreenType,
+} from '#desktop/pages/ticket/components/types.ts'
 import { ARTICLES_INFORMATION_KEY } from '#desktop/pages/ticket/composables/useArticleContext.ts'
 import { TICKET_INFORMATION_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
+import { useTicketSidebar } from '#desktop/pages/ticket/composables/useTicketSidebar.ts'
 
 interface Props {
   internalId: string
@@ -48,21 +54,39 @@ provide(ARTICLES_INFORMATION_KEY, {
   articles: computed(() => articleResult.value),
   articlesQuery,
 })
+
+const sidebarContext = computed<TicketSidebarContext>(() => ({
+  screenType: TicketSidebarScreenType.TicketDetailView,
+  formValues: {},
+}))
+
+const { hasSidebar } = useTicketSidebar(sidebarContext)
 </script>
 
 <template>
   <LayoutContent
-    name="ticket-create"
+    name="ticket-detail"
     no-padding
     background-variant="primary"
+    :show-sidebar="hasSidebar"
+    hide-button-when-collapsed
     content-alignment="center"
   >
     <CommonLoader class="mt-8" :loading="isLoadingTicket">
       <div class="relative flex w-full flex-col">
         <TicketDetailTopBar />
 
-        <ArticleList role="feed" :aria-busy="isLoadingArticles.value" />
+        <ArticleList :aria-busy="isLoadingArticles.value" />
       </div>
     </CommonLoader>
+
+    <template #sideBar="{ isCollapsed, toggleCollapse }">
+      <TicketSidebar
+        :is-collapsed="isCollapsed"
+        :toggle-collapse="toggleCollapse"
+        :context="sidebarContext"
+        :cache="['ChecklistContent']"
+      />
+    </template>
   </LayoutContent>
 </template>

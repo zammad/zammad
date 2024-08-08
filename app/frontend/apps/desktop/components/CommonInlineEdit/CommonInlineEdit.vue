@@ -6,32 +6,43 @@ import {
   computed,
   defineAsyncComponent,
   ref,
-  useSlots,
-  type ComponentPublicInstance,
+  nextTick,
+  watch,
+  onMounted,
 } from 'vue'
 
-import {
-  setCursorAtTextEnd,
-  setPastedTextToCurrentSelection,
-} from '#shared/utils/browser.ts'
+import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
+import { useHtmlLinks } from '#shared/composables/useHtmlLinks.ts'
+import { i18n } from '#shared/i18n/index.ts'
+import { textToHtml } from '#shared/utils/helpers.ts'
 
 const CommonButton = defineAsyncComponent(
   () => import('#desktop/components/CommonButton/CommonButton.vue'),
 )
 
 export interface Props {
-  name: string
   value: string
+  initialEditValue?: string
+  id?: string
   disabled?: boolean
   required?: boolean
-  validationVisibility?: 'live' | 'lazy'
+  placeholder?: string
+  size?: 'xs' | 'small' | 'medium' | 'large' | 'xl'
+  alternativeBackground?: boolean
   submitLabel?: string
   cancelLabel?: string
+  detectLinks?: boolean
+  labelAttrs?: Record<string, string>
   label?: string
+  block?: boolean
+  classes?: {
+    label?: string
+    input?: string
+  }
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  validationVisibility: 'live',
+  size: 'medium',
 })
 
 const emit = defineEmits<{
@@ -41,51 +52,30 @@ const emit = defineEmits<{
 
 const target = ref<HTMLElement>()
 
+const isHoverTargetLink = ref(false)
+
 const isValid = ref(false) // default user made no changes
+const labelComponent = ref<InstanceType<typeof CommonLabel>>()
+const newEditValue = ref(props.value)
 
 const isEditing = defineModel<boolean>('editing', {
   default: false,
 })
 
-const editableComponent = ref<ComponentPublicInstance | HTMLElement>()
-
 const activeEditingMode = computed(() => {
   return !props.disabled && isEditing.value
 })
 
-const baseFocusClasses =
-  'rounded-md focus-within:outline-1 focus-within:outline-offset-1  focus-within:outline-blue-600 focus-within:dark:outline-blue-900 outline-none hover:outline hover:outline-1 hover:outline-offset-1 hover:outline-blue-600 focus:hover:outline focus:hover:outline-1 focus:hover:outline-offset-1 focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:hover:outline-blue-900'
+const contentTooltip = computed(() => {
+  if (props.disabled) return
 
-const baseNonEditClasses = computed(() => ({
-  [baseFocusClasses]: !isEditing.value && !props.disabled,
-}))
+  if (isHoverTargetLink.value) return i18n.t('Open link')
 
-const disabledClasses = computed(() => ({
-  'cursor-text': props.disabled,
-}))
-
-const editedContent = computed(() => {
-  if (editableComponent.value instanceof HTMLElement) {
-    return editableComponent.value.textContent?.trim()
-  }
-
-  return editableComponent.value?.$el.textContent?.trim() || ''
+  return props.label || i18n.t('Start Editing')
 })
 
-const stopEditing = (emitCancel = true) => {
-  isEditing.value = false
-  if (emitCancel) emit('cancel-edit')
-}
-
-const activateEditing = () => {
-  if (isEditing.value) return
-  isEditing.value = true
-}
-
 const checkValidity = (edit: string) => {
-  if (props.value === edit) {
-    isValid.value = false
-  } else if (props.required) {
+  if (props.required) {
     isValid.value = edit.length >= 1
   } else {
     isValid.value = true
@@ -94,99 +84,250 @@ const checkValidity = (edit: string) => {
   return isValid.value
 }
 
-const submitEdit = () => {
-  if (!checkValidity(editedContent.value)) return // :TODO rethink validation
+const inputValue = computed({
+  get: () => newEditValue.value,
+  set: (value: string) => {
+    newEditValue.value = value
+    isValid.value = checkValidity(newEditValue.value)
+  },
+})
 
-  emit('submit-edit', editedContent.value)
+const stopEditing = (emitCancel = true) => {
+  isEditing.value = false
+  if (emitCancel) emit('cancel-edit')
+
+  if (!newEditValue.value.length)
+    newEditValue.value = props.initialEditValue ?? props.value
+}
+
+const activateEditing = (event?: MouseEvent | KeyboardEvent) => {
+  if (props.detectLinks && (event?.target as HTMLElement)?.closest('a')) return // guard to prevent editing when clicking on a link
+
+  if (isEditing.value || props.disabled) return
+  isEditing.value = true
+}
+
+const submitEdit = () => {
+  if (!checkValidity(inputValue.value)) return
+
+  emit('submit-edit', inputValue.value)
+
   stopEditing(false)
+}
+
+const handleMouseOver = (event: MouseEvent) => {
+  if (!props.detectLinks) return
+
+  if ((event.target as HTMLElement).closest('a')) {
+    isHoverTargetLink.value = true
+    return
+  }
+  isHoverTargetLink.value = false
+}
+
+const handleMouseLeave = () => {
+  if (!props.detectLinks) return
+  isHoverTargetLink.value = false
 }
 
 onClickOutside(target, () => stopEditing())
 
-const slots = useSlots()
+const { setupLinksHandlers } = useHtmlLinks('/desktop')
 
-const vFocus = (el: HTMLElement) => {
-  el.focus()
-  setCursorAtTextEnd(el)
+const handleEnterKey = (event: KeyboardEvent) => {
+  event.preventDefault()
+  submitEdit()
 }
 
-const component = computed(() => {
-  const vNode = slots.default?.()
+const handleFocusOut = (event: FocusEvent) => {
+  // Handles quiting editing mode for screen readers who navigate with tab
+  if (
+    !target.value?.contains(event.relatedTarget as Node) &&
+    event.relatedTarget
+  )
+    stopEditing()
+}
 
-  if (!vNode) return null
-
-  if (vNode.length > 1)
-    console.warn('CommonInlineEdit component works only with one root node')
-
-  return vNode[0]
+const processedContent = computed(() => {
+  if (props.detectLinks) return textToHtml(props.value)
+  return props.value
 })
 
-const handleEditInput = ({ target }: InputEvent) => {
-  if (props.validationVisibility === 'live') {
-    const newEdit = (target as HTMLElement).textContent?.trim()
-    isValid.value = checkValidity(newEdit!)
-  } else {
-    isValid.value = true
-  }
+watch(
+  () => props.value,
+  () => {
+    if (props.detectLinks && labelComponent.value?.$el)
+      setupLinksHandlers(labelComponent.value?.$el)
+  },
+  {
+    flush: 'post',
+  },
+)
+
+onMounted(() => {
+  nextTick(() => {
+    if (props.detectLinks && labelComponent.value?.$el)
+      setupLinksHandlers(labelComponent.value?.$el)
+  })
+})
+
+watch(isEditing, () => {
+  newEditValue.value = props.initialEditValue ?? props.value
+})
+
+const vFocus = (el: HTMLElement) => {
+  nextTick(() => el.focus())
+  checkValidity(inputValue.value)
 }
+
+// Styling
+const focusClasses = computed(() => {
+  let classes =
+    'group-focus-within:before:absolute group-focus-within:before:-left-[5px] group-focus-within:before:top-1/2 group-focus-within:before:z-0 group-focus-within:before:h-[calc(100%+10px)] group-focus-within:before:w-[calc(100%+10px)] group-focus-within:before:-translate-y-1/2 group-focus-within:before:rounded-md'
+
+  if (props.alternativeBackground) {
+    classes +=
+      'group-focus-within:before:bg-neutral-50 group-focus-within:before:dark:bg-gray-500'
+  } else {
+    classes +=
+      'group-focus-within:before:bg-blue-200 group-focus-within:before:dark:bg-gray-700'
+  }
+  return classes
+})
+
+const focusNonEditClasses = computed(() => ({
+  [focusClasses.value]: !isEditing.value && !props.disabled,
+}))
+
+const disabledClasses = computed(() => ({
+  'cursor-text': props.disabled,
+}))
+
+const fontSizeClassMap = {
+  xs: 'text-[10px] leading-[10px]',
+  small: 'text-xs leading-snug',
+  medium: 'text-sm leading-snug',
+  large: 'text-base leading-snug',
+  xl: 'text-xl leading-snug',
+}
+
+const minHeightClassMap = {
+  xs: 'min-h-2',
+  small: 'min-h-3',
+  medium: 'min-h-4',
+  large: 'min-h-5',
+  xl: 'min-h-6',
+}
+
+const editBackgroundClass = computed(() =>
+  props.alternativeBackground
+    ? 'before:bg-neutral-50 before:dark:bg-gray-500'
+    : 'before:bg-blue-200 before:dark:bg-gray-700',
+)
+
+const hoverClasses = computed(() => {
+  let classes =
+    'before:absolute before:-left-[5px] before:top-1/2 before:-translate-y-1/2 before:-z-10 before:h-[calc(100%+10px)] before:w-[calc(100%+10px)] before:rounded-md'
+
+  if (props.alternativeBackground) {
+    classes += ' hover:before:bg-neutral-50 hover:before:dark:bg-gray-500'
+  } else {
+    classes += ' hover:before:bg-blue-200 hover:before:dark:bg-gray-700' // default background
+  }
+
+  return props.disabled ? '' : classes
+})
+
+defineExpose({
+  activateEditing,
+  isEditing,
+})
 </script>
 
 <template>
-  <!-- eslint-disable vuejs-accessibility/no-static-element-interactions-->
+  <!-- eslint-disable vuejs-accessibility/no-static-element-interactions,vuejs-accessibility/mouse-events-have-key-events-->
   <div
     ref="target"
-    :role="activeEditingMode ? undefined : 'button'"
-    class="-:w-fit flex items-center gap-1"
-    :class="[baseNonEditClasses, disabledClasses]"
+    :role="activeEditingMode || disabled ? undefined : 'button'"
+    class="-:w-fit group relative flex items-center gap-1 focus:outline-none"
+    :class="[disabledClasses, { 'w-full': block }]"
     :aria-disabled="disabled"
-    :tabindex="activeEditingMode ? undefined : 0"
+    :tabindex="activeEditingMode || disabled ? undefined : 0"
     @click.capture="activateEditing"
     @keydown.enter.capture="activateEditing"
+    @mouseover="handleMouseOver"
+    @mouseleave="handleMouseLeave"
+    @focusout="handleFocusOut"
   >
-    <div v-show="!isEditing" class="flex gap-1">
-      <slot />
-    </div>
     <div
-      v-if="isEditing"
-      class="flex items-center gap-2 rounded-md bg-blue-200 px-1.5 py-1 dark:bg-gray-700"
-      :class="baseFocusClasses"
+      v-if="!isEditing"
+      v-tooltip="contentTooltip"
+      class="Content relative z-0 flex grow items-center"
+      :class="[
+        {
+          grow: block,
+          'invisible opacity-0': isEditing,
+        },
+        focusNonEditClasses,
+        hoverClasses,
+      ]"
     >
-      <div class="relative flex max-h-[4ch] overflow-y-auto">
-        <component
-          :is="component"
+      <!--   eslint-disable vue/no-v-text-v-html-on-component vue/no-v-html   -->
+      <CommonLabel
+        :id="id"
+        ref="labelComponent"
+        class="z-10 break-all"
+        v-bind="labelAttrs"
+        :size="size"
+        :class="[classes?.label, minHeightClassMap[size]]"
+        v-html="processedContent"
+      />
+    </div>
+
+    <div
+      v-else
+      ref="inputContainer"
+      class="flex max-w-full items-center gap-2 before:absolute before:-left-[5px] before:top-1/2 before:z-0 before:h-[calc(100%+10px)] before:w-[calc(100%+10px)] before:-translate-y-1/2 before:rounded-md"
+      :class="[
+        { 'w-full': block },
+        editBackgroundClass,
+        fontSizeClassMap[size],
+      ]"
+    >
+      <div class="relative z-10 w-full ltr:pr-14 rtl:pl-14">
+        <input
           key="editable-content-key"
-          ref="editableComponent"
+          v-model.trim="inputValue"
           v-focus
           :aria-label="label"
           tabindex="0"
-          class="line-clamp-none max-w-full outline-none"
-          role="textbox"
-          contenteditable="true"
-          @input="handleEditInput"
-          @paste.prevent="setPastedTextToCurrentSelection"
-          @keydown.enter.prevent="submitEdit"
-          @keydown.esc="stopEditing"
+          class="-:text-gray-100 -:dark:text-neutral-400 block w-full flex-shrink-0 bg-transparent outline-none"
+          :class="[{ grow: block }, classes?.input || '']"
+          :disabled="disabled"
+          :placeholder="placeholder"
+          @keydown.stop.enter="handleEnterKey"
+          @keydown.stop.esc="stopEditing()"
         />
       </div>
 
-      <Transition name="fade-up" appear>
-        <div class="flex gap-1 rtl:-order-1">
-          <CommonButton
-            icon="x-lg"
-            :aria-label="cancelLabel"
-            variant="danger"
-            @click="stopEditing"
-          />
-          <CommonButton
-            class="rtl:-order-1"
-            icon="check2"
-            :aria-label="submitLabel"
-            :disabled="!isValid"
-            variant="submit"
-            @click="submitEdit"
-          />
-        </div>
-      </Transition>
+      <div class="absolute z-10 flex gap-1 ltr:right-0 rtl:left-0 rtl:-order-1">
+        <CommonButton
+          v-tooltip="cancelLabel || $t('Cancel')"
+          icon="x-lg"
+          variant="danger"
+          @click="stopEditing()"
+          @keydown.enter.stop="stopEditing()"
+        />
+        <CommonButton
+          v-tooltip="submitLabel || $t('Save changes')"
+          class="rtl:-order-1"
+          icon="check2"
+          :disabled="!isValid"
+          variant="submit"
+          @click="submitEdit"
+          @keydown.enter.stop="submitEdit"
+        />
+      </div>
     </div>
   </div>
 </template>

@@ -17,7 +17,7 @@ const props = defineProps<Props>()
 const metaFieldContainerClasses = computed(() =>
   props.position === 'right'
     ? ['dark:bg-stone-700', 'bg-blue-300']
-    : ['dark:bg-gray-500 bg-neutral-100 '],
+    : ['dark:bg-gray-500', 'bg-neutral-50'],
 )
 </script>
 

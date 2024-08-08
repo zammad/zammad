@@ -283,6 +283,12 @@ Permission.create_if_not_exists(
   preferences: { prio: 1460 }
 )
 Permission.create_if_not_exists(
+  name:        'admin.checklist',
+  label:       __('Checklists'),
+  description: __('Manage ticket checklists of your system.'),
+  preferences: { prio: 1465 }
+)
+Permission.create_if_not_exists(
   name:        'chat',
   label:       __('Chat'),
   description: __('Access to the chat interface.'),

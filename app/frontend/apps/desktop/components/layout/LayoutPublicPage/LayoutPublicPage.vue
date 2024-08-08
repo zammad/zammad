@@ -39,7 +39,7 @@ const hoverPoweredByLogo = ref(false)
   >
     <div :class="boxSizeClass" class="m-auto w-full">
       <main
-        class="flex flex-col gap-2.5 rounded-3xl bg-white p-5 text-black dark:bg-gray-500 dark:text-white"
+        class="flex flex-col gap-2.5 rounded-3xl bg-neutral-50 p-5 text-black dark:bg-gray-500 dark:text-white"
       >
         <div v-if="showLogo" class="flex justify-center">
           <CommonLogo />

@@ -6,9 +6,12 @@
 .icon-bold { width: 12px; height: 12px; }
 .icon-chain { width: 16px; height: 16px; }
 .icon-chat { width: 24px; height: 24px; }
+.icon-checkbox-checked-readonly { width: 11px; height: 11px; }
 .icon-checkbox-checked { width: 11px; height: 11px; }
 .icon-checkbox-indeterminate { width: 11px; height: 11px; }
+.icon-checkbox-readonly { width: 11px; height: 11px; }
 .icon-checkbox { width: 11px; height: 11px; }
+.icon-checklist { width: 16px; height: 14px; }
 .icon-checkmark-outline { width: 16px; height: 14px; }
 .icon-checkmark { width: 16px; height: 14px; }
 .icon-clipboard { width: 16px; height: 16px; }
@@ -27,6 +30,7 @@
 .icon-double-checkmark { width: 23px; height: 14px; }
 .icon-download { width: 14px; height: 13px; }
 .icon-draft-modifier { width: 9px; height: 9px; }
+.icon-draggable-small { width: 11px; height: 11px; }
 .icon-draggable { width: 16px; height: 16px; }
 .icon-dropdown-list { width: 19px; height: 14px; }
 .icon-email-button { width: 29px; height: 24px; }
@@ -142,7 +146,6 @@
 .icon-split { width: 16px; height: 17px; }
 .icon-sso-button { width: 29px; height: 24px; }
 .icon-status-modified-outer-circle { width: 16px; height: 16px; }
-.icon-status-report { width: 22px; height: 22px; }
 .icon-status { width: 16px; height: 16px; }
 .icon-stopwatch { width: 77px; height: 83px; }
 .icon-strikethrough { width: 12px; height: 12px; }

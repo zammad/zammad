@@ -243,7 +243,8 @@ class App.Utils
     attributes = {
       title: href,
     }
-    if /^https?:/.test(href) then attributes.target = '_blank'
+    if /^https?:/.test(href) && !href.startsWith("#{App.Config.get('http_type')}://#{App.Config.get('fqdn')}")
+      attributes.target = '_blank'
     return attributes
 
   # htmlEscapedAndPhoneified = App.Utils.phoneify(rawText)

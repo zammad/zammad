@@ -221,6 +221,7 @@ RSpec.describe SystemReport, current_user_id: 1, type: :model do
           'two_factor_authentication_method_authenticator_app',
           'two_factor_authentication_enforce_role_ids',
           'ticket_organization_reassignment',
+          'checklist',
         ]
       end
 

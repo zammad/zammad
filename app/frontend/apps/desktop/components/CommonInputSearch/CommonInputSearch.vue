@@ -92,7 +92,7 @@ export default {
           class="w-full min-w-16 text-black outline-none dark:text-white"
           :class="{
             'bg-blue-200 dark:bg-gray-700': !alternativeBackground,
-            'bg-white dark:bg-gray-500': alternativeBackground,
+            'bg-neutral-50 dark:bg-gray-500': alternativeBackground,
           }"
           type="text"
           role="searchbox"

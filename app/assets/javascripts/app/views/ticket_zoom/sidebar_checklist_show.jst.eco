@@ -1,0 +1,31 @@
+<div class="tableContainer checklistShow">
+  <table class="table <% if @readOnly: %>table--no-borders<% end %>">
+    <thead>
+      <tr>
+        <th class="<% if !@readOnly: %>js-title u-clickable<% end %>">
+          <%- @checklistTitle %>
+    <tbody>
+  </table>
+
+  <% if !@readOnly: %>
+    <div class="checklistShowButtons">
+      <div class="btn btn--secondary btn--action js-reorder">
+        <%- @Icon 'draggable-small' %>
+        <span><%- @T('Reorder') %></span>
+      </div>
+
+      <div class="btn btn--secondary btn--action btn--create js-add">
+        <%- @Icon 'plus-small' %>
+        <span><%- @T('Add') %></span>
+      </div>
+
+      <div class="btn btn--secondary btn--action btn--no-margin js-reset-order hide">
+        <span><%- @T('Cancel') %></span>
+      </div>
+
+      <div class="btn btn--secondary btn--action btn--create js-save-order hide">
+        <span><%- @T('Save') %></span>
+      </div>
+    </div>
+  <% end %>
+</div>

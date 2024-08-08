@@ -51,9 +51,11 @@ ActiveRecord::ConnectionAdapters::AbstractMysqlAdapter.class_eval do
 
   def mariadb_column_array?(table_name, field_name)
     column_array = {
-      'smime_certificates' => 'email_addresses',
-      'pgp_keys'           => 'email_addresses',
-      'public_links'       => 'screen',
+      'smime_certificates'  => 'email_addresses',
+      'pgp_keys'            => 'email_addresses',
+      'public_links'        => 'screen',
+      'checklists'          => 'sorted_item_ids',
+      'checklist_templates' => 'sorted_item_ids',
     }
 
     column_array[table_name] == field_name

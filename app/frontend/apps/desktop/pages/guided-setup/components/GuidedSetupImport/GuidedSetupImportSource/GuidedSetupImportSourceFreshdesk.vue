@@ -36,7 +36,7 @@ const formSchema = [
         //     children: 'https://',
         //     attrs: {
         //       class:
-        //         'py-2.5 px-2.5 outline outline-1 -outline-offset-1 outline-blue-200 dark:outline-gray-700 bg-white dark:bg-gray-500 rounded-s-md text-stone-200 dark:text-neutral-500',
+        //         'py-2.5 px-2.5 outline outline-1 -outline-offset-1 outline-blue-200 dark:outline-gray-700 bg-neutral-50 dark:bg-gray-500 rounded-s-md text-stone-200 dark:text-neutral-500',
         //       readonly: 'readonly',
         //     },
         //   },
@@ -45,7 +45,7 @@ const formSchema = [
         //     children: '.freshdesk.com',
         //     attrs: {
         //       class:
-        //         'py-2.5 px-2.5 outline outline-1 -outline-offset-1 outline-blue-200 dark:outline-gray-700 bg-white dark:bg-gray-500 rounded-e-md text-stone-200 dark:text-neutral-500',
+        //         'py-2.5 px-2.5 outline outline-1 -outline-offset-1 outline-blue-200 dark:outline-gray-700 bg-neutral-50 dark:bg-gray-500 rounded-e-md text-stone-200 dark:text-neutral-500',
         //       readonly: 'readonly',
         //     },
         //   },

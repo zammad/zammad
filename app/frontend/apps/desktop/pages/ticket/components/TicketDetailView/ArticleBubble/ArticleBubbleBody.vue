@@ -41,7 +41,7 @@ const body = computed(() => {
   return props.article.bodyWithUrls
 })
 
-const { setupLinksHandlers } = useHtmlLinks('/mobile')
+const { setupLinksHandlers } = useHtmlLinks('/desktop')
 const { populateInlineImages } = useHtmlInlineImages(
   toRef(props, 'inlineImages'),
   (index) => emit('preview', props.inlineImages[index]),
@@ -81,7 +81,10 @@ onMounted(() => {
       class="absolute top-3 flex w-full px-3 ltr:left-0 rtl:right-0"
     >
       <CommonLabel class="font-bold" size="small" variant="neutral">
-        {{ article.author.fullname }}
+        {{
+          article.author.fullname ||
+          `${article.author.firstname} ${article.author.lastname}`
+        }}
       </CommonLabel>
 
       <CommonDateTime

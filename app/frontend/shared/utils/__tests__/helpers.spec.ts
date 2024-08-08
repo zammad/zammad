@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { textToHtml, debouncedQuery } from '../helpers.ts'
+import { textToHtml, debouncedQuery, findChangedIndex } from '../helpers.ts'
 
 describe('textToHtml', () => {
   it('adds links to URL-like text', () => {
@@ -42,5 +42,31 @@ describe('debouncedQuery', () => {
     // cancels the first call, and returns the last value in that case
     expect(await res4).toBe(1)
     expect(await res5).toBe(2)
+  })
+})
+
+describe('findChangedIndex', () => {
+  it('returns the index of the first changed item', () => {
+    const a = [1, 2, 3, 4, 5]
+    const b = [1, 2, 3, 5, 5]
+
+    expect(findChangedIndex(a, b)).toBe(3)
+
+    const c = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 4 }, { id: 5 }]
+    const d = [{ id: 1 }, { id: 2 }, { id: 3 }, { id: 5 }, { id: 5 }]
+
+    expect(findChangedIndex(c, d)).toBe(3)
+
+    const e = [[1], [2], [3], [4], [5]]
+    const f = [[1], [2], [3], [5], [5]]
+
+    expect(findChangedIndex(e, f)).toBe(3)
+  })
+
+  it('returns -1 if no item changed', () => {
+    const a = [1, 2, 3, 4, 5]
+    const b = [1, 2, 3, 4, 5]
+
+    expect(findChangedIndex(a, b)).toBe(-1)
   })
 })

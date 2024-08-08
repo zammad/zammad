@@ -36,6 +36,10 @@
     @apply antialiased;
   }
 
+  a {
+    @apply outline-none focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800;
+  }
+
   @keyframes onAutoFillStart {
     from {
     }
@@ -155,7 +159,7 @@
 
 @layer utilities {
   .group-block {
-    @apply rounded-3xl bg-white p-5 text-black dark:bg-gray-500 dark:text-white;
+    @apply rounded-3xl bg-neutral-50 p-5 text-black dark:bg-gray-500 dark:text-white;
   }
 
   .backface-hidden {

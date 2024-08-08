@@ -1,0 +1,5 @@
+mutation ticketChecklistDelete($checklistId: ID!) {
+  ticketChecklistDelete(checklistId: $checklistId) {
+    success
+  }
+}

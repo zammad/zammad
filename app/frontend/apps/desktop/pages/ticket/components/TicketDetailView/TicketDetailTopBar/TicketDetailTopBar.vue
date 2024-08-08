@@ -49,9 +49,9 @@ const { isScrollingDown: hideDetails } = useElementScroll(
 const detailViewActiveClasses = computed(() => {
   if (hideDetails.value)
     return [
-      'ticket-detail-grid-compact gap-x-2 grid-cols-[1fr_max-content] h-[3.6rem] items-center p-2 px-10',
+      'ticket-detail-grid-compact gap-x-2 grid-cols-[1fr_max-content] items-center p-2 px-10',
     ]
-  return [' ticket-detail-grid-full grid-cols-2 gap-y-2.5 h-[8.75rem]']
+  return [' ticket-detail-grid-full grid-cols-2 gap-y-2.5']
 })
 
 const alertViewActiveClasses = computed(() => {
@@ -66,7 +66,7 @@ const { hasChannelAlert, channelAlert } = useTicketChannel(ticket)
 <template>
   <header
     ref="headerNode"
-    class="-:p-3 sticky top-0 z-10 grid border-b border-neutral-100 bg-white transition-[height] duration-75 dark:border-gray-900 dark:bg-gray-500"
+    class="-:p-3 sticky top-0 z-10 grid border-b border-neutral-100 bg-neutral-50 dark:border-gray-900 dark:bg-gray-500"
     :class="detailViewActiveClasses"
   >
     <CommonBreadcrumb
@@ -92,6 +92,7 @@ const { hasChannelAlert, channelAlert } = useTicketChannel(ticket)
     </CommonBreadcrumb>
 
     <HighlightMenu
+      v-if="ticket?.policy.update"
       class="justify-self-end"
       :style="{ gridTemplate: 'actions' }"
     />

@@ -228,7 +228,7 @@ setupMissingOrDisabledOptionHandling()
         'rounded-t-lg': select?.isOpen && !isBelowHalfScreen,
         'rounded-b-lg': select?.isOpen && isBelowHalfScreen,
         'bg-blue-200 dark:bg-gray-700': !context.alternativeBackground,
-        'bg-white dark:bg-gray-500': context.alternativeBackground,
+        'bg-neutral-50 dark:bg-gray-500': context.alternativeBackground,
       },
     ]"
     data-test-id="field-treeselect"

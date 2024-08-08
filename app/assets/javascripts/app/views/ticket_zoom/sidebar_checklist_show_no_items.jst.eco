@@ -1,0 +1,5 @@
+<tr>
+  <td class="settings-list-control-cell text-muted checklistShowRowContentCellNoItems">
+      <%- @T('No Entry') %>
+  </td>
+</tr>

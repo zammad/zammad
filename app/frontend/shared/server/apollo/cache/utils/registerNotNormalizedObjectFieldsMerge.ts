@@ -5,7 +5,7 @@ import type { InMemoryCacheConfig } from '@apollo/client/cache/inmemory/types'
 
 // You can use a merge function to intelligently combine nested objects that
 // are not normalized in your cache, assuming those objects are nested within the same normalized parent.
-export default function registerNotNormalizedObjectFields(
+export default function registerNotNormalizedObjectFieldsMerge(
   config: InMemoryCacheConfig,
   type: string,
   fields: string[],

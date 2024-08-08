@@ -423,7 +423,7 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
       >
         <div class="w-full" role="menu">
           <div
-            class="flex h-full flex-col items-start border-x border-neutral-100 bg-white dark:border-gray-900 dark:bg-gray-500"
+            class="flex h-full flex-col items-start border-x border-neutral-100 bg-neutral-50 dark:border-gray-900 dark:bg-gray-500"
             :class="{
               'rounded-t-lg border-t': hasDirectionUp,
               'rounded-b-lg border-b': !hasDirectionUp,

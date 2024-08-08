@@ -1,0 +1,5 @@
+mutation ticketChecklistItemOrderUpdate($checklistId: ID!, $order: [ID!]!) {
+  ticketChecklistItemOrderUpdate(checklistId: $checklistId, order: $order) {
+    success
+  }
+}

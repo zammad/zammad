@@ -48,19 +48,21 @@ const { updateTitle } = useTicketEditTitle(ticket)
 
     <div class="grow basis-full">
       <div
-        class="flex h-10 flex-col justify-center transition-transform duration-300"
+        class="flex flex-col justify-center duration-300"
         :class="{
-          '-translate-y-1': isUpdatingTitle && !hideDetails,
           'mb-3.5': !hideDetails,
         }"
       >
-        <div v-if="!hideDetails" class="flex items-center gap-1">
+        <div v-if="!hideDetails" class="mb-1 flex items-center gap-1">
           <CommonLabel
             tag="p"
             class="flex items-center gap-1"
-            :class="{ dot: ticket.customer.organization }"
+            :class="{
+              'after:inline-block after:h-[.12rem] after:w-[.12rem] after:shrink-0 after:rounded-full after:bg-current':
+                ticket.customer.organization,
+            }"
           >
-            <span>{{ ticket?.customer.fullname }}</span>
+            {{ ticket?.customer.fullname }}
           </CommonLabel>
           <CommonLabel v-if="ticket?.customer.organization?.name">{{
             ticket?.customer.organization?.name
@@ -68,23 +70,25 @@ const { updateTitle } = useTicketEditTitle(ticket)
         </div>
 
         <CommonInlineEdit
+          :id="`ticketTitle-${ticket.id}`"
           v-model:editing="isUpdatingTitle"
+          size="xl"
+          required
+          block
+          :disabled="!ticket.policy.update"
           :value="ticket.title"
           :parent="$refs.parentContainer as HTMLElement"
-          required
-          :label="$t('ticket title')"
-          :cancel-label="$t('Cancel Update')"
-          :submit-label="$t('Ticket Update')"
-          name="ticketTitle"
+          :classes="{
+            label: 'dark:text-white font-medium line-clamp-4',
+            input: 'dark:text-white font-medium',
+          }"
+          :label-attrs="{
+            role: 'heading',
+            'aria-level': '2',
+          }"
+          :label="$t('Edit ticket title')"
           @submit-edit="updateTitle"
-        >
-          <h2
-            ref="ticketHeadingTitle"
-            class="line-clamp-1 h-full text-xl font-medium leading-snug text-black dark:text-white"
-          >
-            {{ ticket.title }}
-          </h2>
-        </CommonInlineEdit>
+        />
       </div>
 
       <div v-if="!hideDetails" class="flex h-7 gap-2.5">
@@ -109,11 +113,3 @@ const { updateTitle } = useTicketEditTitle(ticket)
     </div>
   </div>
 </template>
-
-<style scoped>
-.dot::after {
-  @apply inline-block h-[.12rem] w-[.12rem] shrink-0 rounded-full bg-current;
-
-  content: '';
-}
-</style>
