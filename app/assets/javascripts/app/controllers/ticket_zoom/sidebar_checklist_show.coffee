@@ -111,6 +111,7 @@ class App.SidebarChecklistShow extends App.Controller
         object.load(checked: upcomingState)
 
         checkboxElem.disabled = false
+        @renderTable()
       error: ->
         checkboxElem.checked = !upcomingState
         checkboxElem.disabled = false

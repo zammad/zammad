@@ -11,11 +11,15 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type:
   end
 
   def click_checklist_action(id, action)
-    wait.until { page.has_css?(".checklistShow tr[data-id='#{id}'] li[data-table-action='#{action}']", visible: :all) }
-    page.find(".checklistShow tr[data-id='#{id}'] .js-action").click
-    page.find(".checklistShow tr[data-id='#{id}'] li[data-table-action='#{action}']").click
+    page.find(".checklistShow tr[data-id='#{id}'] .js-action", wait: 0).click
+    page.find(".checklistShow tr[data-id='#{id}'] li[data-table-action='#{action}']", wait: 0).click
+  rescue => e
+    retry_click ||= 5
+    retry_click -= 1
+    sleep 1
+    raise e if retry_click < 1
 
-    true
+    retry
   end
 
   before do
@@ -44,6 +48,7 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type:
       checklist
       click '.tabsSidebar-tab[data-tab=checklist]'
       wait.until { page.text.include?(checklist.name) }
+      await_empty_ajax_queue
     end
 
     it 'does show handle subscriptions' do
@@ -58,7 +63,8 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type:
 
     it 'does add item' do
       item_text = SecureRandom.uuid
-      click '.js-add'
+      expect(page).to have_css('.checklistShowButtons .js-add')
+      find('.checklistShowButtons .js-add').click
       expect(page).to have_css('#checklistItemEditText')
       fill_in 'Text or ticket identifier', with: item_text
       click '.js-confirm'
@@ -116,6 +122,7 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type:
       click '.tabsSidebar-tab[data-tab=checklist]'
       checklist_template
       wait.until { page.find('[name="checklist_template_id"]') }
+      await_empty_ajax_queue
     end
 
     it 'does add checklist from template' do
