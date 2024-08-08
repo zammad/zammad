@@ -51,11 +51,12 @@ class Integration::GitLabController < ApplicationController
       authorize!(ticket, :show?)
       ticket.preferences[:gitlab] ||= {}
       ticket.preferences[:gitlab][:gids] = Array(params[:gids]).uniq
+      ticket.preferences[:gitlab][:issue_links] = Array(params[:issue_links]).uniq
 
-      # do array length comparison to check whether issue_links got already migrated to gids before deleting the issue_links field
-      if Array(ticket.preferences[:gitlab][:issue_links]).uniq.length == Array(params[:gids]).uniq.length
+      if Array(ticket.preferences[:gitlab][:issue_links]).uniq.empty?
         ticket.preferences[:gitlab].delete(:issue_links)
       end
+
       ticket.save!
     end
 

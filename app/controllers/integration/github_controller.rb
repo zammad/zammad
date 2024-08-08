@@ -51,9 +51,9 @@ class Integration::GitHubController < ApplicationController
       authorize!(ticket, :show?)
       ticket.preferences[:github] ||= {}
       ticket.preferences[:github][:gids] = Array(params[:gids]).uniq
+      ticket.preferences[:github][:issue_links] = Array(params[:issue_links]).uniq
 
-      # do array length comparison to check whether issue_links got already migrated to gids before deleting the issue_links field
-      if Array(ticket.preferences[:github][:issue_links]).uniq.length == Array(params[:gids]).uniq.length
+      if Array(ticket.preferences[:github][:issue_links]).uniq.empty?
         ticket.preferences[:github].delete(:issue_links)
       end
 

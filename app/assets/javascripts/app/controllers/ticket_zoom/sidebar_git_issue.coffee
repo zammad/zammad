@@ -4,8 +4,10 @@ class App.SidebarGitIssue extends App.Controller
 
   constructor: ->
     super
+    @issueLinks     = []
     @issueGids      = []
     @issueData      = []
+    @error          = ''
     @providerIdentifier = @provider.toLowerCase()
 
   sidebarItem: =>
@@ -38,7 +40,7 @@ class App.SidebarGitIssue extends App.Controller
 
   metaBadge: =>
     counter = ''
-    counter = @issueGids.length
+    counter = @issueGids.length + @issueLinks.length
 
     {
       name: 'customer'
@@ -73,6 +75,7 @@ class App.SidebarGitIssue extends App.Controller
               @saveIssues(
                 ticket_id: @ticket.id
                 gids: @issueGids
+                issue_links: @issueLinks
                 success: =>
                   ui.close()
                   @renderIssues()
@@ -91,46 +94,20 @@ class App.SidebarGitIssue extends App.Controller
         )
     )
 
-  migrateIssueLinksToGids: (links) =>
-    @getIssuesByUrls(
-      links: links
-      success: (result) =>
-        for data from result
-          if !_.contains(@issueGids, data.gid)
-            @issueGids.push(data.gid)
-            @issueData = @issueData.concat(data)
-
-        if @ticket && @ticket.id
-          @saveIssues(
-            ticket_id: @ticket.id
-            gids: @issueGids
-            success: =>
-              # issue_links of ticket preferences at this point already deleted by the backends issue update logic, delete it here to preserve data consistence
-              delete @ticket?.preferences?[@providerIdentifier]?['issue_links']
-            error: (message = __('The issue could not be saved.')) =>
-              # that's really bad, but don't worry - issue_links data won't be deleted until migration was once successful
-          )
-      error: (message = __('Loading failed.')) =>
-        # can't even migrate (already?) broken links to gids, how dare it
-        console.error('Possibly non-accessible git links can\'t be migrated');
-    )
-
   reloadIssues: (el) =>
     if el
       @el = el
 
+    @error = ''
+
     return @renderIssues() if !@ticket
 
-    if @ticket?.preferences?[@providerIdentifier]?.issue_links
-      # array assignments required to prevent rendering issues in case the server pushes old ticket issue_links state into the frontend
-      @issueData = []
-      @issueGids = []
-      @migrateIssueLinksToGids(@ticket?.preferences?[@providerIdentifier]?.issue_links)
-
     ticketGids = @ticket?.preferences?[@providerIdentifier]?.gids || []
-    return @renderIssues() if _.isEqual(@issueGids, ticketGids)
+    ticketLinks = @ticket?.preferences?[@providerIdentifier]?.issue_links || []
+    return @renderIssues() if _.isEqual(@issueGids, ticketGids) && _.isEqual(@issueLinks, ticketLinks)
 
     @issueGids = ticketGids
+    @issueLinks = ticketLinks
     @listIssues(true)
 
   renderIssues: =>
@@ -139,12 +116,17 @@ class App.SidebarGitIssue extends App.Controller
       return
 
     list = $(App.view('ticket_zoom/sidebar_git_issue')(
+      error: @error
       issues: @issueData
     ))
     list.on('click', '.js-delete', (e) =>
       e.preventDefault()
       issueGid = $(e.currentTarget).attr 'data-issue-id'
-      @deleteIssue(issueGid)
+      if issueGid
+        @deleteIssueByGid(issueGid)
+      else
+        issueUrl = $(e.currentTarget).attr 'data-issue-url'
+        @deleteIssueByUrl(issueUrl)
     )
     @html(list)
     @badgeRenderLocal()
@@ -153,17 +135,37 @@ class App.SidebarGitIssue extends App.Controller
     return @renderIssues() if !force && @fetchFullActive && @fetchFullActive > new Date().getTime() - 5000
     @fetchFullActive = new Date().getTime()
 
-    return @renderIssues() if _.isEmpty(@issueGids)
+    return @renderIssues() if _.isEmpty(@issueGids) && _.isEmpty(@issueLinks)
 
     @getIssuesByGids(
       gids: @issueGids
       success: (result) =>
         @issueGids = result.map((element) -> element.gid)
         @issueData = result
-        @renderIssues()
-      error: =>
-        @showError(App.i18n.translateInline('Loading failed.'))
+
+        @getIssuesByUrlsForListing()
+      error: (message = __('Loading issues failed.')) =>
+        @showError(message)
+
+        @issueGids = []
+        @issueData = []
+        @getIssuesByUrlsForListing()
     )
+
+  getIssuesByUrlsForListing: () ->
+    if !_.isEmpty(@issueLinks)
+      @getIssuesByUrls(
+        links: @issueLinks
+        success: (urls_result) =>
+          @issueLinks = urls_result.map((element) -> element.url)
+          for data from urls_result
+            delete data.gid
+            @issueData = @issueData.concat(data)
+
+          @renderIssues()
+        error: (message = __('Loading legacy issues failed.')) =>
+          @showError(message)
+      )
 
   getIssuesByUrls: (params) ->
     @ajax(
@@ -177,7 +179,7 @@ class App.SidebarGitIssue extends App.Controller
           # some issues redirect to pull requests like
           # https://github.com/zammad/zammad/issues/1574
           # in this case throw error
-          return params.error(__('Loading failed.')) if _.isEmpty(data.response)
+          return params.error('') if _.isEmpty(data.response)
 
           params.success(data.response)
         else
@@ -200,7 +202,7 @@ class App.SidebarGitIssue extends App.Controller
           # some issues redirect to pull requests like
           # https://github.com/zammad/zammad/issues/1574
           # in this case throw error
-          return params.error(__('Loading failed.')) if _.isEmpty(data.response)
+          return params.error('') if _.isEmpty(data.response)
 
           params.success(data.response)
         else
@@ -216,7 +218,7 @@ class App.SidebarGitIssue extends App.Controller
       id:    "#{@providerIdentifier}-update-#{params.ticket_id}"
       type:  'POST'
       url:   "#{@apiPath}/integration/#{@providerIdentifier}_ticket_update"
-      data:  JSON.stringify(ticket_id: params.ticket_id, gids: params.gids)
+      data:  JSON.stringify(ticket_id: params.ticket_id, gids: params.gids, issue_links: params.issue_links)
       success: (data, status, xhr) ->
         params.success(data)
       error: (xhr, status, details) ->
@@ -225,14 +227,12 @@ class App.SidebarGitIssue extends App.Controller
         params.error()
     )
 
-  deleteIssue: (gid) ->
-    @issueGids    = _.filter(@issueGids, (element) -> element isnt gid)
-    @issueData = _.filter(@issueData, (element) -> element.gid isnt gid)
-
+  deleteIssue: (issueGids, issueLinks) ->
     if @ticket && @ticket.id
       @saveIssues(
         ticket_id: @ticket.id
-        gids: @issueGids
+        gids: issueGids
+        issue_links: issueLinks
         success: =>
           @renderIssues()
         error: (message = __('The issue could not be saved.')) =>
@@ -241,12 +241,25 @@ class App.SidebarGitIssue extends App.Controller
     else
       @renderIssues()
 
+  deleteIssueByGid: (gid) ->
+    @issueGids = _.filter(@issueGids, (element) -> element isnt gid)
+    @issueData = _.filter(@issueData, (element) -> element.gid isnt gid)
+
+    @deleteIssue(@issueGids, @issueLinks)
+
+  deleteIssueByUrl: (issueUrl) ->
+    @issueLinks = _.filter(@issueLinks, (element) -> element isnt issueUrl)
+    @issueData = _.filter(@issueData, (element) -> element.url isnt issueUrl)
+
+    @deleteIssue(@issueGids, @issueLinks)
+
   showEmpty: ->
     @html("<div>#{App.i18n.translateInline('No linked issues')}</div>")
     @badgeRenderLocal()
 
   showError: (message) =>
-    @html App.i18n.translateInline(message)
+    @error = App.i18n.translateInline(message)
+    @renderIssues()
 
   reload: =>
     @reloadIssues()

@@ -1,8 +1,19 @@
+<% if @error != '': %>
+  <div class="sidebar-block">
+    <%- @error %>
+  </div>
+<% end %>
 <% for issue in @issues: %>
   <div class="sidebar-git-issue-delete">
-    <span class="list-item-delete js-delete" data-issue-id="<%= issue.gid %>" data-type="remove">
-      <%- @Icon('diagonal-cross') %>
-    </span>
+    <% if issue.gid: %>
+      <span class="list-item-delete js-delete" data-issue-id="<%= issue.gid %>" data-type="remove">
+        <%- @Icon('diagonal-cross') %>
+      </span>
+    <% else: %>
+      <span class="list-item-delete js-delete" data-issue-url="<%= issue.url %>" data-type="remove">
+        <%- @Icon('diagonal-cross') %>
+      </span>
+    <% end %>
   </div>
   <div class="sidebar-git-issue-content">
     <div class="sidebar-block">
