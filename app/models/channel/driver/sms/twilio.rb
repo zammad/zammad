@@ -90,7 +90,8 @@ class Channel::Driver::Sms::Twilio < Channel::Driver::Sms::Base
           AccountSid: attr['AccountSid'],
           From:       attr['From'],
           To:         attr['To'],
-        }
+          NumMedia:   attr['NumMedia'],
+        },
       }
     )
   end
