@@ -2100,6 +2100,11 @@ fieldset > .form-group {
   &.is-readonly .controls:not(.ignore-readonly) {
     pointer-events: none;
     cursor: not-allowed !important;
+
+    input:read-only.form-control {
+      pointer-events: auto;
+      cursor: not-allowed;
+    }
   }
 
   &.form-group--nested {
