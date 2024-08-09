@@ -62,13 +62,8 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type:
     end
 
     it 'does add item' do
-      item_text = SecureRandom.uuid
-      expect(page).to have_css('.checklistShowButtons .js-add')
       find('.checklistShowButtons .js-add').click
-      expect(page).to have_css('#checklistItemEditText')
-      fill_in 'Text or ticket identifier', with: item_text
-      click '.js-confirm'
-      wait.until { checklist.items.last.text == item_text }
+      wait.until { checklist.items.last.text == '' }
     end
 
     it 'does check item' do
