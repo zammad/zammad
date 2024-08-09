@@ -8,7 +8,7 @@ import type { MockGraphQLInstance } from './mock-graphql-api'
 import type { Mock } from 'vitest'
 import type { Ref } from 'vue'
 
-const state = Symbol('test:state')
+const state = Symbol('test-state')
 
 interface TestState {
   imageViewerOptions: Ref<ViewerOptions>

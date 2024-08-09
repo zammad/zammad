@@ -1,6 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const fs = require('fs')
+// eslint-disable-next-line @typescript-eslint/no-require-imports
 const path = require('path')
 
 const mobilePagesDir = path.resolve(__dirname, 'app/frontend/apps/mobile/pages')
@@ -45,6 +47,7 @@ module.exports = {
     'zammad/zammad-copyright': 'error',
     'zammad/zammad-detect-translatable-string': 'error',
     'zammad/zammad-tailwind-ltr': 'error',
+    'zammad/zammad-symbol-description': 'error',
 
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
