@@ -3,20 +3,12 @@
 require 'rails_helper'
 
 RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
-
   describe 'request handling' do
+    let(:group) { create(:group) }
+    let(:agent) { create(:agent, groups: [group]) }
 
-    let(:agent) do
-      create(:agent, groups: Group.all)
-    end
-
-    it 'does basic call' do
-
-      # configure twilio channel
-      group_id = Group.find_by(name: 'Users').id
-
-      UserInfo.current_user_id = 1
-      channel = create(
+    let(:channel) do
+      create(
         :channel,
         area:     'Sms::Account',
         options:  {
@@ -26,23 +18,16 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
           token:         '223',
           sender:        '333',
         },
-        group_id: nil,
+        group_id: group&.id,
       )
+    end
 
-      # process inbound sms
-      post '/api/v1/sms_webhook', params: read_message('inbound_sms1'), as: :json
-      expect(response).to have_http_status(:not_found)
+    before do
+      channel
+      UserInfo.current_user_id = 1
+    end
 
-      post '/api/v1/sms_webhook/not_existing', params: read_message('inbound_sms1'), as: :json
-      expect(response).to have_http_status(:not_found)
-
-      post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms1'), as: :json
-      expect(response).to have_http_status(:unprocessable_entity)
-      expect(json_response['error']).to eq('Can\'t use Channel::Driver::Sms::Twilio: #<Exceptions::UnprocessableEntity: Group needed in channel definition!>')
-
-      channel.group_id = Group.first.id
-      channel.save!
-
+    it 'does basic call' do
       post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms1'), as: :json
       expect(response).to have_http_status(:ok)
       xml_response = REXML::Document.new(response.body)
@@ -54,7 +39,7 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
       expect(ticket.articles.count).to eq(1)
       expect(ticket.title).to eq('Ldfhxhcuffufuf. Fifififig.  Fifififiif F...')
       expect(ticket.state.name).to eq('new')
-      expect(ticket.group_id).to eq(group_id)
+      expect(ticket.group_id).to eq(group.id)
       expect(ticket.customer_id).to eq(customer.id)
       expect(ticket.created_by_id).to eq(customer.id)
       expect(article.from).to eq('+491710000000')
@@ -115,7 +100,7 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
       customer = User.last
       expect(ticket.articles.count).to eq(1)
       expect(ticket.title).to eq('new 2')
-      expect(ticket.group_id).to eq(group_id)
+      expect(ticket.group_id).to eq(group.id)
       expect(ticket.customer_id).to eq(customer.id)
       expect(ticket.created_by_id).to eq(customer.id)
       expect(article.from).to eq('+491710000000')
@@ -166,60 +151,83 @@ RSpec.describe 'Twilio SMS', performs_jobs: true, type: :request do
       article = Ticket::Article.find(json_response['id'])
       expect(article.preferences[:delivery_retry]).to eq(1)
       expect(article.preferences[:delivery_status]).to eq('success')
-
     end
 
-    it 'does customer based on already existing mobile attibute' do
+    context 'when channel is not configured correctly' do
+      let(:group) { nil }
 
-      customer = create(
-        :customer,
-        email:  'me@example.com',
-        mobile: '01710000000',
-      )
+      it 'does basic call' do
+        # process inbound sms
+        post '/api/v1/sms_webhook', params: read_message('inbound_sms1'), as: :json
+        expect(response).to have_http_status(:not_found)
 
-      perform_enqueued_jobs commit_transaction: true
+        post '/api/v1/sms_webhook/not_existing', params: read_message('inbound_sms1'), as: :json
+        expect(response).to have_http_status(:not_found)
 
-      UserInfo.current_user_id = 1
-      create(
-        :channel,
-        area:    'Sms::Account',
-        options: {
-          adapter:       'sms/twilio',
-          webhook_token: 'secret_webhook_token',
-          account_id:    '111',
-          token:         '223',
-          sender:        '333',
-        },
-      )
-
-      post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms1'), as: :json
-      expect(response).to have_http_status(:ok)
-      xml_response = REXML::Document.new(response.body)
-      expect(xml_response.elements.count).to eq(1)
-
-      expect(customer.id).to eq(User.last.id)
+        post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms1'), as: :json
+        expect(response).to have_http_status(:unprocessable_entity)
+        expect(json_response['error']).to eq('Can\'t use Channel::Driver::Sms::Twilio: #<Exceptions::UnprocessableEntity: Group needed in channel definition!>')
+      end
     end
 
-    it 'does basic call when ticket has a custom attribute', db_strategy: :reset do
-      create(:object_manager_attribute_text, :required_screen)
-      ObjectManager::Attribute.migration_execute
+    context 'when customer is based on already existing mobile attribute' do
+      let(:group) { Group.first }
 
-      UserInfo.current_user_id = 1
-      create(
-        :channel,
-        area:     'Sms::Account',
-        options:  {
-          adapter:       'sms/twilio',
-          webhook_token: 'secret_webhook_token',
-          account_id:    '111',
-          token:         '223',
-          sender:        '333',
-        },
-        group_id: Group.first.id,
-      )
+      it 'does basic call' do
+        customer = create(
+          :customer,
+          email:  'me@example.com',
+          mobile: '01710000000',
+        )
 
-      post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms1'), as: :json
-      expect(response).to have_http_status(:ok)
+        perform_enqueued_jobs commit_transaction: true
+
+        post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms1'), as: :json
+        expect(response).to have_http_status(:ok)
+        xml_response = REXML::Document.new(response.body)
+        expect(xml_response.elements.count).to eq(1)
+
+        expect(customer.id).to eq(User.last.id)
+      end
+    end
+
+    context 'when ticket has a custom attribute' do
+      let(:group) { Group.first }
+
+      it 'does basic call', db_strategy: :reset do
+        create(:object_manager_attribute_text, :required_screen)
+        ObjectManager::Attribute.migration_execute
+
+        post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms1'), as: :json
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when incoming message is of an unsupported type (#5289)' do
+      it 'does basic call' do
+        post '/api/v1/sms_webhook/secret_webhook_token', params: read_message('inbound_sms4'), as: :json
+        expect(response).to have_http_status(:ok)
+        xml_response = REXML::Document.new(response.body)
+        expect(xml_response.elements.count).to eq(1)
+
+        ticket = Ticket.last
+        article = Ticket::Article.last
+        customer = User.last
+        expect(ticket.articles.count).to eq(1)
+        expect(ticket.title).to eq('')
+        expect(ticket.state.name).to eq('new')
+        expect(ticket.group_id).to eq(group.id)
+        expect(ticket.customer_id).to eq(customer.id)
+        expect(ticket.created_by_id).to eq(customer.id)
+        expect(article.from).to eq('+491710000000')
+        expect(article.to).to eq('+4915700000000')
+        expect(article.cc).to be_nil
+        expect(article.subject).to be_nil
+        expect(article.body).to eq('')
+        expect(article.created_by_id).to eq(customer.id)
+        expect(article.sender.name).to eq('Customer')
+        expect(article.type.name).to eq('sms')
+      end
     end
 
     def read_message(file)
