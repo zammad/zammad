@@ -12,8 +12,7 @@ class Checklist < ApplicationModel
   belongs_to :ticket, optional: true
   has_many :items, inverse_of: :checklist, dependent: :destroy
 
-  scope :templates, -> { where(template: true) }
-  scope :for_user, ->(user) { joins(:ticket).where(ticket: { group: user.group_ids_access('read') }).or(Checklist.where(template: true)) }
+  scope :for_user, ->(user) { joins(:ticket).where(ticket: { group: user.group_ids_access('read') }) }
 
   validates :name,      presence: { allow_blank: true }
   validates :ticket_id, presence: true, uniqueness: { allow_nil: true }

@@ -6,7 +6,6 @@ class App.Checklist extends App.Model
   @configure_attributes = [
     { name: 'name', display: __('Name'),    tag: 'input', type: 'text', maxlength: 255 },
     { name: 'sorted_item_ids', display: __('Items'),   tag: 'checklist_item',  type: 'text' },
-    { name: 'active', display: __('Active'),  tag: 'active', default: true },
     { name: 'created_at', display: __('Created at'), tag: 'datetime', readonly: 1 },
     { name: 'updated_at', display: __('Updated at'), tag: 'datetime', readonly: 1 },
   ]

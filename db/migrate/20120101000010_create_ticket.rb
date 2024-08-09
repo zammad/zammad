@@ -564,8 +564,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     end
 
     create_table :checklists do |t|
-      t.string  :name,      limit: 250,     null: false
-      t.boolean :active,    default: true,  null: false
+      t.string :name,      limit: 250,     null: false
       if Rails.application.config.db_column_array
         t.string :sorted_item_ids, null: false, array: true, default: []
       else

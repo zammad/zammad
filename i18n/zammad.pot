@@ -815,7 +815,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:320
 #: app/assets/javascripts/app/models/chat.coffee:257
-#: app/assets/javascripts/app/models/checklist.coffee:9
 #: app/assets/javascripts/app/models/checklist_template.coffee:9
 #: app/assets/javascripts/app/models/core_workflow.coffee:14
 #: app/assets/javascripts/app/models/email_address.coffee:37
@@ -3514,7 +3513,7 @@ msgid "Created Internal Article"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:53
-#: app/assets/javascripts/app/models/checklist.coffee:10
+#: app/assets/javascripts/app/models/checklist.coffee:9
 #: app/assets/javascripts/app/models/checklist_item.coffee:8
 #: app/assets/javascripts/app/models/checklist_template.coffee:10
 #: app/assets/javascripts/app/models/checklist_template_item.coffee:8
@@ -16216,7 +16215,7 @@ msgid "Updated At"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:242
-#: app/assets/javascripts/app/models/checklist.coffee:11
+#: app/assets/javascripts/app/models/checklist.coffee:10
 #: app/assets/javascripts/app/models/checklist_item.coffee:9
 #: app/assets/javascripts/app/models/checklist_template.coffee:11
 #: app/assets/javascripts/app/models/checklist_template_item.coffee:9

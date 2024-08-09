@@ -5,7 +5,6 @@ FactoryBot.define do
     name            { '' }
     updated_by_id   { 1 }
     created_by_id   { 1 }
-    active          { true }
     sorted_item_ids { [] }
 
     ticket { association :ticket, **{ group: Group.first }.compact }
