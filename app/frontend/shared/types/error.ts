@@ -3,7 +3,6 @@
 import type { UserError } from '#shared/graphql/types.ts'
 
 import type { ApolloError } from '@apollo/client'
-import type { GraphQLErrorExtensions } from 'graphql'
 import type { Except } from 'type-fest'
 
 export enum GraphQLErrorTypes {
@@ -23,10 +22,6 @@ export interface GraphQLErrorExtensionsHandler {
   backtrace: string
 }
 
-export interface GraphQLErrorReport {
-  message: string
-  extensions: GraphQLErrorExtensions
-}
 export interface GraphQLHandlerError {
   type: GraphQLErrorTypes
   message?: string

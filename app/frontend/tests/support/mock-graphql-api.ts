@@ -9,13 +9,12 @@ import {
 } from 'mock-apollo-client'
 
 import type { UserError } from '#shared/graphql/types.ts'
-import type { GraphQLErrorReport } from '#shared/types/error.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import createMockClient from './mock-apollo-client.ts'
 import { waitForNextTick } from './utils.ts'
 
-import type { DocumentNode } from 'graphql'
+import type { DocumentNode, GraphQLFormattedError } from 'graphql'
 import type { SpyInstance } from 'vitest'
 
 interface Result {
@@ -32,7 +31,7 @@ export interface MockGraphQLInstance {
   willBehave<T>(handler: (variables: any) => T): MockGraphQLInstance
   willResolve<T>(result: T): MockGraphQLInstance
   willFailWithError(
-    errors: GraphQLErrorReport[],
+    errors: GraphQLFormattedError[],
     networkStatus?: NetworkStatus,
   ): MockGraphQLInstance
   willFailWithUserError(
@@ -95,7 +94,7 @@ export const mockGraphQLApi = (
   }
 
   const willFailWithError = (
-    errors: GraphQLErrorReport[],
+    errors: GraphQLFormattedError[],
     networkStatus?: NetworkStatus,
   ) => {
     errorSpy.mockResolvedValue({

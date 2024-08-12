@@ -4,10 +4,7 @@ import {
   useNotifications,
   NotificationTypes,
 } from '#shared/components/CommonNotifications/index.ts'
-import type {
-  GraphQLErrorReport,
-  GraphQLHandlerError,
-} from '#shared/types/error.ts'
+import type { GraphQLHandlerError } from '#shared/types/error.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
 import type {
   BaseHandlerOptions,
@@ -19,6 +16,7 @@ import type {
 import getUuid from '#shared/utils/getUuid.ts'
 
 import type { ApolloError, OperationVariables } from '@apollo/client/core'
+import type { GraphQLFormattedError } from 'graphql'
 import type { Ref } from 'vue'
 
 export default abstract class BaseHandler<
@@ -82,7 +80,7 @@ export default abstract class BaseHandler<
     let errorHandler: GraphQLHandlerError
 
     if (graphQLErrors.length > 0) {
-      const { message, extensions }: GraphQLErrorReport = graphQLErrors[0]
+      const { message, extensions }: GraphQLFormattedError = graphQLErrors[0]
       let type =
         (extensions?.type as GraphQLErrorTypes) ||
         GraphQLErrorTypes.UnknownError

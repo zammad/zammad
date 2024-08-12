@@ -1332,7 +1332,7 @@ msgstr ""
 msgid "An error has occurred"
 msgstr ""
 
-#: app/frontend/shared/server/apollo/handler/BaseHandler.ts:152
+#: app/frontend/shared/server/apollo/handler/BaseHandler.ts:150
 msgid "An error occured during the operation."
 msgstr ""
 
