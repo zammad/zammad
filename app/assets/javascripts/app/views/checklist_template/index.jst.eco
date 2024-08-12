@@ -18,18 +18,6 @@
     <p><%- @T('Allow users to add new checklists.') %></p>
   </div>
 
-  <div class="settings-entry settings-entry--stretched vertical">
-    <div class="page-header">
-      <div class="page-header-title">
-        <h2><%- @T('Manage Checklist Templates') %></h2>
-      </div>
-
-      <div class="page-header-meta">
-        <button type="button" class="btn js-description hidden"><%- @T('Description') %></button>
-        <button type="button" class="btn btn--success js-checklistNew"><%- @T('New Checklist Template') %></button>
-      </div>
-    </div>
-    <p id="no-templates-hint" class="hidden"><%- @T('With checklist templates it is possible to pre-fill new checklists with initial items.') %></p>
-    <div class="js-checklistTemplatesTable"></div>
+  <div class="settings-entry settings-entry--stretched vertical js-checklistTemplatesTable">
   </div>
 </div>

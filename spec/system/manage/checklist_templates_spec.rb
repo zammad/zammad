@@ -24,12 +24,12 @@ RSpec.describe 'Manage > Checklists', type: :system do
 
     it 'shows a help text' do
       expect(page).to have_content('With checklist templates it is possible to pre-fill new checklists with initial items.')
-      expect(page).to have_no_button('Description')
+      expect(page).to have_no_css('.js-description')
     end
 
     context 'when items are empty' do
       it 'shows an error message' do
-        expect(page).to have_button('New Checklist Template')
+        expect(page).to have_link('New Checklist Template')
 
         click_on('New Checklist Template')
 
@@ -43,7 +43,7 @@ RSpec.describe 'Manage > Checklists', type: :system do
 
     context 'when items are present' do
       it 'adds a new checklist' do
-        expect(page).to have_button('New Checklist Template')
+        expect(page).to have_link('New Checklist Template')
 
         click_on('New Checklist Template')
 
@@ -68,9 +68,9 @@ RSpec.describe 'Manage > Checklists', type: :system do
 
     it 'shows a description button' do
       expect(page).to have_no_content('With checklist templates it is possible to pre-fill new checklists with initial items.')
-      expect(page).to have_button('Description')
+      expect(page).to have_css('.js-description')
 
-      click_on('Description')
+      page.find('.js-description').click
 
       in_modal do
         expect(page).to have_content('With checklist templates it is possible to pre-fill new checklists with initial items.')

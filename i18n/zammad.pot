@@ -1274,7 +1274,7 @@ msgstr ""
 msgid "Allow reopening of tickets within a certain time."
 msgstr ""
 
-#: app/assets/javascripts/app/views/checklist/index.jst.eco:18
+#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:18
 msgid "Allow users to add new checklists."
 msgstr ""
 
@@ -2617,20 +2617,16 @@ msgstr ""
 msgid "Checklist Item Label"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/checklist.coffee:59
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:29
 msgid "Checklist Template"
-msgstr ""
-
-#: app/assets/javascripts/app/controllers/checklist.coffee:60
-msgid "Checklist Templates"
 msgstr ""
 
 #: app/controllers/ticket_checklist_controller.rb:17
 msgid "Checklist is already created for this ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/checklist.coffee:3
-#: app/assets/javascripts/app/views/checklist/index.jst.eco:3
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:3
+#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:3
 #: db/seeds/permissions.rb:287
 #: db/seeds/settings.rb:5763
 msgid "Checklists"
@@ -4739,7 +4735,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:6
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:8
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:230
-#: app/assets/javascripts/app/views/checklist/index.jst.eco:28
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:7
 #: app/assets/javascripts/app/views/generic/admin/index.jst.eco:7
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:9
@@ -5409,7 +5404,7 @@ msgstr ""
 msgid "Enable Chat"
 msgstr ""
 
-#: app/assets/javascripts/app/views/checklist/index.jst.eco:16
+#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:16
 msgid "Enable Checklists"
 msgstr ""
 
@@ -8318,7 +8313,11 @@ msgstr ""
 msgid "Manage API of your system."
 msgstr ""
 
-#: app/assets/javascripts/app/views/checklist/index.jst.eco:24
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:30
+msgid "Manage Checklist Template"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:31
 msgid "Manage Checklist Templates"
 msgstr ""
 
@@ -9246,7 +9245,7 @@ msgstr ""
 msgid "New Category"
 msgstr ""
 
-#: app/assets/javascripts/app/views/checklist/index.jst.eco:29
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:38
 msgid "New Checklist Template"
 msgstr ""
 
@@ -10709,7 +10708,7 @@ msgstr ""
 msgid "Please accept the %s."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/checklist.coffee:85
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:48
 msgid "Please add at least one item to the checklist."
 msgstr ""
 
@@ -16922,8 +16921,8 @@ msgstr ""
 msgid "With Checksum, a checksum will be appended to the counter. The format looks like \"%s\" (e. g. %s)."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:35
 #: app/assets/javascripts/app/models/checklist_template.coffee:23
-#: app/assets/javascripts/app/views/checklist/index.jst.eco:32
 msgid "With checklist templates it is possible to pre-fill new checklists with initial items."
 msgstr ""
 
@@ -16932,7 +16931,7 @@ msgstr ""
 msgid "With checklist templates you can pre-fill your checklists."
 msgstr ""
 
-#: app/assets/javascripts/app/views/checklist/index.jst.eco:8
+#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:8
 msgid "With checklists you can keep track of the progress of your ticket related tasks."
 msgstr ""
 
