@@ -71,6 +71,7 @@ Zammad::Application.routes.draw do
   match api_path + '/ticket_articles/:id/retry_whatsapp_attachment_download', to: 'ticket_articles#retry_whatsapp_attachment_download',        via: :post
 
   # ticket checklist
+  match api_path + '/tickets/:ticket_id/checklist/completed', to: 'ticket_checklist#completed', via: :get
   scope Rails.configuration.api_path do
     scope 'tickets/:ticket_id' do
       resource 'checklist', controller: 'ticket_checklist', only: %i[show create destroy update] do

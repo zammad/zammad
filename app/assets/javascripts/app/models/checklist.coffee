@@ -12,3 +12,12 @@ class App.Checklist extends App.Model
 
   sorted_items: =>
     App.ChecklistItem.findAll(@sorted_item_ids)
+
+  @completedForTicketId: (ticket_id, callback) =>
+    App.Ajax.request(
+      id: 'checklist_completed'
+      type: 'GET'
+      url:  "#{@apiPath}/tickets/#{ticket_id}/checklist/completed"
+      success: (data, status, xhr) ->
+        callback(data)
+    )

@@ -1,0 +1,5 @@
+<div>
+  <%- @T('You have unchecked items in the checklist.') %>
+  <br /><br />
+  <%- @T('Do you want to handle them before closing this ticket?') %>
+</div>

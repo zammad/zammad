@@ -38,6 +38,12 @@ class TicketChecklistController < ApplicationController
     render json: { success: true }
   end
 
+  def completed
+    render json: {
+      completed: checklist&.completed?
+    }
+  end
+
   private
 
   def checklist

@@ -17,6 +17,10 @@ class Controllers::TicketChecklistControllerPolicy < Controllers::ApplicationCon
     update_access_via_ticket?
   end
 
+  def completed?
+    update_access_via_ticket?
+  end
+
   private
 
   def ticket_policy

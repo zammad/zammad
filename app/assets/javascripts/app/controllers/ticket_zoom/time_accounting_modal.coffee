@@ -1,4 +1,4 @@
-class App.TicketZoomTimeAccounting extends App.ControllerModal
+class App.TicketZoomTimeAccountingModal extends App.ControllerModal
   @include App.TimeAccountingUnitMixin
 
   buttonClose: true

@@ -956,6 +956,27 @@ class App.TicketZoom extends App.Controller
     if @sidebarWidget && @sidebarWidget.postParams
       @sidebarWidget.postParams(ticket: ticket)
 
+    @submitChecklist(e, ticket, macro, editContollerForm)
+
+  submitChecklist: (e, ticket, macro, editContollerForm) =>
+    return @submitTimeAccounting(e, ticket, macro, editContollerForm) if ticket.currentView() isnt 'agent'
+    return @submitTimeAccounting(e, ticket, macro, editContollerForm) if !App.Config.get('checklist')
+    return @submitTimeAccounting(e, ticket, macro, editContollerForm) if !_.contains(['closed', 'pending action'], App.TicketState.find(ticket.state_id).state_type.name)
+
+    App.Checklist.completedForTicketId(ticket.id, (data) =>
+      return @submitTimeAccounting(e, ticket, macro, editContollerForm) if !data || data.completed is null || data.completed
+
+      new App.TicketZoomChecklistModal(
+        container: @el.closest('.content')
+        ticket: ticket
+        cancelCallback: =>
+          @submitEnable(e)
+        submitCallback: =>
+          @submitTimeAccounting(e, ticket, macro, editContollerForm)
+      )
+    )
+
+  submitTimeAccounting: (e, ticket, macro, editContollerForm) =>
     if !ticket.article
       @submitPost(e, ticket, macro)
       return
@@ -965,7 +986,7 @@ class App.TicketZoom extends App.Controller
       @submitPost(e, ticket, macro)
       return
 
-    new App.TicketZoomTimeAccounting(
+    new App.TicketZoomTimeAccountingModal(
       container: @el.closest('.content')
       ticket: ticket
       cancelCallback: =>

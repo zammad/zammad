@@ -139,4 +139,93 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type:
       end
     end
   end
+
+  context 'when checklist modal on submit' do
+    let(:checklist) { create(:checklist, ticket: ticket, name: SecureRandom.uuid) }
+
+    def authenticate
+      pre_auth
+      true
+    end
+
+    context 'when activated and set' do
+      let(:pre_auth) do
+        Setting.set('checklist', true)
+        checklist
+      end
+
+      it 'does show modal' do
+        select 'closed', from: 'State'
+        click '.js-submit'
+        expect(page).to have_text('You have unchecked items in the checklist')
+      end
+
+      it 'does switch to sidebar' do
+        select 'closed', from: 'State'
+        click '.js-submit'
+        page.find('.modal-footer .js-submit').click
+        expect(page).to have_text(checklist.name.upcase)
+      end
+
+      context 'when time accounting is also activated' do
+        let(:pre_auth) do
+          Setting.set('checklist', true)
+          Setting.set('time_accounting', true)
+          checklist
+        end
+
+        it 'does show both modals' do
+          find('.articleNewEdit-body').send_keys('Forwarding with the attachment')
+          select 'closed', from: 'State'
+          click '.js-submit'
+          expect(page.find('.modal-body')).to have_text('You have unchecked items in the checklist')
+          page.find('.modal-footer .js-skip').click
+          expect(page.find('.modal-body')).to have_text('Accounted Time'.upcase)
+          page.find('.modal-footer .js-skip').click
+          wait.until { ticket.reload.state.name == 'closed' }
+        end
+      end
+    end
+
+    context 'when deactivated and set' do
+      let(:pre_auth) do
+        Setting.set('checklist', false)
+        checklist
+      end
+
+      it 'does not show modal' do
+        select 'closed', from: 'State'
+        click '.js-submit'
+        wait.until { ticket.reload.state.name == 'closed' }
+        expect(page).to have_no_text('You have unchecked items in the checklist')
+      end
+    end
+
+    context 'when activated and completed' do
+      let(:pre_auth) do
+        Setting.set('checklist', true)
+        checklist.items.map { |item| item.update(checked: true) }
+      end
+
+      it 'does not show modal' do
+        select 'closed', from: 'State'
+        click '.js-submit'
+        wait.until { ticket.reload.state.name == 'closed' }
+        expect(page).to have_no_text('You have unchecked items in the checklist')
+      end
+    end
+
+    context 'when activated and no checklist' do
+      let(:pre_auth) do
+        Setting.set('checklist', true)
+      end
+
+      it 'does not show modal' do
+        select 'closed', from: 'State'
+        click '.js-submit'
+        wait.until { ticket.reload.state.name == 'closed' }
+        expect(page).to have_no_text('You have unchecked items in the checklist')
+      end
+    end
+  end
 end
