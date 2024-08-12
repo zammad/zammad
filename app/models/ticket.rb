@@ -84,7 +84,7 @@ class Ticket < ApplicationModel
                              :article_count,
                              :preferences
 
-  history_relation_object 'Ticket::Article', 'Mention', 'Ticket::SharedDraftZoom'
+  history_relation_object 'Ticket::Article', 'Mention', 'Ticket::SharedDraftZoom', 'Checklist', 'Checklist::Item'
 
   validates :note, length: { maximum: 250 }
   sanitized_html :note

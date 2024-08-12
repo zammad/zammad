@@ -56,6 +56,8 @@ class App.GenericHistory extends App.ControllerModal
           item.value_to   = App.Utils.html2text(item.value_to)
       if item.object is 'Ticket::SharedDraftZoom'
         item.object = 'Draft'
+      if item.object is 'Checklist::Item'
+        item.object = __('Checklist Item')
 
       currentItemTime = new Date( item.created_at )
       lastItemTime    = new Date( new Date( lastTime ).getTime() + (15 * 1000) )
@@ -140,7 +142,7 @@ class App.GenericHistory extends App.ControllerModal
           if item.value_from || item.object is 'Mention'
             content += ' &rarr;'
           content += " '#{ @translateItemValue(item, item.value_to) }'"
-        else if item.value_from
+        else if item.value_from && item.type isnt 'removed'
           content += " &rarr; '-'"
 
       recordsUser.records.push content

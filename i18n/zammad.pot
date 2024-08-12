@@ -2613,6 +2613,10 @@ msgstr ""
 msgid "Checklist"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:60
+msgid "Checklist Item"
+msgstr ""
+
 #: app/assets/javascripts/app/views/generic/checklist_item.jst.eco:10
 msgid "Checklist Item Label"
 msgstr ""
@@ -17828,7 +17832,7 @@ msgstr ""
 msgid "email"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:97
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:99
 msgid "email sent to '%s'"
 msgstr ""
 
@@ -17910,7 +17914,7 @@ msgstr ""
 msgid "forward"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:136
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:138
 msgid "from"
 msgstr ""
 
@@ -18392,7 +18396,7 @@ msgstr ""
 msgid "note"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:95
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:97
 msgid "notification sent to '%s'"
 msgstr ""
 
@@ -18690,7 +18694,7 @@ msgstr ""
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:123
 msgid "this ticket was merged into ticket %s"
 msgstr ""
 
@@ -18699,7 +18703,7 @@ msgstr ""
 msgid "ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:114
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:116
 msgid "ticket %s was merged into this ticket"
 msgstr ""
 
@@ -18743,15 +18747,15 @@ msgstr ""
 msgid "translation,locale,localization"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:101
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:103
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:103
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:105
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:105
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:107
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr ""
 

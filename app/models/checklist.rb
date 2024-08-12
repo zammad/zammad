@@ -3,6 +3,7 @@
 class Checklist < ApplicationModel
   include HasDefaultModelUserRelations
   include ChecksClientNotification
+  include HasHistory
   include Checklist::TriggersSubscriptions
   include Checklist::Assets
   include CanChecklistSortedItems
@@ -16,6 +17,23 @@ class Checklist < ApplicationModel
 
   validates :name,      presence: { allow_blank: true }
   validates :ticket_id, presence: true, uniqueness: { allow_nil: true }
+
+  history_attributes_ignored :sorted_item_ids
+
+  def history_log_attributes
+    {
+      related_o_id:           ticket_id,
+      related_history_object: 'Ticket',
+    }
+  end
+
+  def history_create
+    history_log('created', created_by_id, { value_to: name })
+  end
+
+  def history_destroy
+    history_log('removed', updated_by_id, { value_to: name })
+  end
 
   def notify_clients_data_attributes
     {
