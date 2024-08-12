@@ -39,6 +39,6 @@ const email = computed(() => getEmailAddress(props.context.article))
     <CommonLabel v-if="name" class="text-black dark:text-white">{{
       $t(name)
     }}</CommonLabel>
-    <CommonLabel v-if="email">{{ `<${email}>` }}</CommonLabel>
+    <CommonLabel v-if="email && email !== '-'">{{ `<${email}>` }}</CommonLabel>
   </div>
 </template>

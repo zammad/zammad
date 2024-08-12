@@ -39,14 +39,23 @@ const { ticket } = useTicketInformation()
 
 const { showMetaInformation, toggleHeader } = useBubbleHeader()
 
-const position = computed(() =>
-  props.article.sender?.name === EnumTicketArticleSenderName.Customer
-    ? 'right'
-    : 'left',
-)
+const position = computed(() => {
+  switch (props.article.sender?.name) {
+    case EnumTicketArticleSenderName.Customer:
+      return 'right'
+    case EnumTicketArticleSenderName.System:
+      return 'left'
+    case EnumTicketArticleSenderName.Agent:
+      return 'left'
+    default:
+      return 'left'
+  }
+})
 
 const hasInternalNote = computed(
-  () => props.article.type?.name === 'note' && props.article.internal,
+  () =>
+    (props.article.type?.name === 'note' && props.article.internal) ||
+    props.article.internal,
 )
 
 const {
@@ -55,6 +64,7 @@ const {
   bodyClasses,
   headerAndIconBarBackgroundClass,
   articleWrapperBorderClass,
+  internalNoteClass,
 } = useBubbleStyleGuide(position, hasInternalNote)
 
 const filteredAttachments = computed(() => {
@@ -82,12 +92,11 @@ const { showImage } = useImageViewer(
     :data-test-id="`article-bubble-container-${article.internalId}`"
     :class="[
       {
-        'bg-stripes relative z-0 rounded-xl outline outline-1 outline-blue-700 ltr:rounded-bl-none rtl:rounded-br-none':
-          hasInternalNote,
         'ltr:rounded-bl-xl rtl:rounded-br-xl': position === 'right',
         'ltr:rounded-br-xl rtl:rounded-bl-xl': position === 'left',
       },
       frameBorderClass,
+      internalNoteClass,
     ]"
   >
     <CommonUserAvatar
@@ -113,7 +122,7 @@ const { showImage } = useImageViewer(
     >
       <div
         :aria-hidden="!showMetaInformation"
-        class="grid w-full grid-rows-[0fr] overflow-hidden rounded-t-xl"
+        class="grid w-full grid-rows-[0fr] overflow-hidden"
       >
         <Transition name="pseudo-transition">
           <ArticleBubbleHeader
@@ -186,8 +195,6 @@ const { showImage } = useImageViewer(
 
 <style scoped>
 .bg-stripes::before {
-  @apply rounded-2xl ltr:rounded-bl-none rtl:rounded-br-none;
-
   content: '';
   background-image: repeating-linear-gradient(
     45deg,
