@@ -277,8 +277,8 @@ importers:
         specifier: ^4.1.1
         version: 4.1.1(graphql-tag@2.12.6(graphql@16.9.0))(graphql@16.9.0)
       '@pinia/testing':
-        specifier: ^0.1.4
-        version: 0.1.4(pinia@2.2.0(typescript@5.5.4)(vue@3.4.34(typescript@5.5.4)))(vue@3.4.34(typescript@5.5.4))
+        specifier: ^0.1.5
+        version: 0.1.5(pinia@2.2.0(typescript@5.5.4)(vue@3.4.34(typescript@5.5.4)))(vue@3.4.34(typescript@5.5.4))
       '@testing-library/jest-dom':
         specifier: ^6.4.8
         version: 6.4.8
@@ -1676,10 +1676,10 @@ packages:
     resolution: {integrity: sha512-U58N44b2m3OuTgpmKgf0LPDOmP3bhwNz01vAnj1mBwxBASRhptWYK+M3zG+HBkDqGQM+bFsoIihTW8MdmPXEqg==}
     engines: {node: '>=10.12.0'}
 
-  '@pinia/testing@0.1.4':
-    resolution: {integrity: sha512-DJ3oXYqVa6SfAngZoUmKKBp+WmQ50XV41NWThgX49p66ptTeR756QRXd0lg42FC17sIWlAbtc9EEiu1T8Yzoig==}
+  '@pinia/testing@0.1.5':
+    resolution: {integrity: sha512-AcGzuotkzhRoF00htuxLfIPBBHVE6HjjB3YC5Y3os8vRgKu6ipknK5GBQq9+pduwYQhZ+BcCZDC9TyLAUlUpoQ==}
     peerDependencies:
-      pinia: '>=2.2.0'
+      pinia: '>=2.2.1'
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -6070,6 +6070,17 @@ packages:
   vue-component-type-helpers@2.0.6:
     resolution: {integrity: sha512-qdGXCtoBrwqk1BT6r2+1Wcvl583ZVkuSZ3or7Y1O2w5AvWtlvvxwjGhmz5DdPJS9xqRdDlgTJ/38ehWnEi0tFA==}
 
+  vue-demi@0.14.10:
+    resolution: {integrity: sha512-nMZBOwuzabUO0nLgIcc6rycZEebF6eeUfaiQx9+WSk8e29IbLvPU9feI6tqW4kTo3hvoYAJkMh8n8D0fuISphg==}
+    engines: {node: '>=12'}
+    hasBin: true
+    peerDependencies:
+      '@vue/composition-api': ^1.0.0-rc.1
+      vue: ^3.0.0-0 || ^2.6.0
+    peerDependenciesMeta:
+      '@vue/composition-api':
+        optional: true
+
   vue-demi@0.14.8:
     resolution: {integrity: sha512-Uuqnk9YE9SsWeReYqK2alDI5YzciATE0r2SkA6iMAtuXvNTMNACJLJEXNXaEy94ECuBe4Sk6RzRU80kjdbIo1Q==}
     engines: {node: '>=12'}
@@ -7989,10 +8000,10 @@ snapshots:
       tslib: 2.6.3
       webcrypto-core: 1.7.5
 
-  '@pinia/testing@0.1.4(pinia@2.2.0(typescript@5.5.4)(vue@3.4.34(typescript@5.5.4)))(vue@3.4.34(typescript@5.5.4))':
+  '@pinia/testing@0.1.5(pinia@2.2.0(typescript@5.5.4)(vue@3.4.34(typescript@5.5.4)))(vue@3.4.34(typescript@5.5.4))':
     dependencies:
       pinia: 2.2.0(typescript@5.5.4)(vue@3.4.34(typescript@5.5.4))
-      vue-demi: 0.14.8(vue@3.4.34(typescript@5.5.4))
+      vue-demi: 0.14.10(vue@3.4.34(typescript@5.5.4))
     transitivePeerDependencies:
       - '@vue/composition-api'
       - vue
@@ -12789,6 +12800,10 @@ snapshots:
       vue: 3.4.34(typescript@5.5.4)
 
   vue-component-type-helpers@2.0.6: {}
+
+  vue-demi@0.14.10(vue@3.4.34(typescript@5.5.4)):
+    dependencies:
+      vue: 3.4.34(typescript@5.5.4)
 
   vue-demi@0.14.8(vue@3.4.34(typescript@5.5.4)):
     dependencies:
