@@ -86,7 +86,7 @@ class SidebarChecklist extends App.Controller
             data.id,
             (item) =>
               return if item.updated_by_id is App.Session.get().id
-              return if @widget.actionController
+              return if @widget?.actionController
               @shown()
           )
         else
@@ -101,7 +101,7 @@ class SidebarChecklist extends App.Controller
     @controllerBind('Checklist:create Checklist:destroy', (data) =>
       return if @ticket_id && @ticket_id isnt data.ticket_id
       return if data.updated_by_id is App.Session.get().id
-      return if @widget.actionController
+      return if @widget?.actionController
       @shown()
     )
 
