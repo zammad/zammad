@@ -961,7 +961,11 @@ class App.TicketZoom extends App.Controller
   submitChecklist: (e, ticket, macro, editContollerForm) =>
     return @submitTimeAccounting(e, ticket, macro, editContollerForm) if ticket.currentView() isnt 'agent'
     return @submitTimeAccounting(e, ticket, macro, editContollerForm) if !App.Config.get('checklist')
-    return @submitTimeAccounting(e, ticket, macro, editContollerForm) if !_.contains(['closed', 'pending action'], App.TicketState.find(ticket.state_id).state_type.name)
+
+    ticketState    = App.TicketState.find(ticket.state_id)
+    isClosed       = ticketState.state_type.name is 'closed'
+    isPendingClose = ticketState.state_type.name is 'pending action' && App.TicketState.find(ticketState.next_state_id).state_type.name is 'closed'
+    return @submitTimeAccounting(e, ticket, macro, editContollerForm) if !isClosed && !isPendingClose
 
     App.Checklist.completedForTicketId(ticket.id, (data) =>
       return @submitTimeAccounting(e, ticket, macro, editContollerForm) if !data || data.completed is null || data.completed
