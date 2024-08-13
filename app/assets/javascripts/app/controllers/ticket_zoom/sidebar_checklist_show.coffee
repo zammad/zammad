@@ -18,69 +18,54 @@ class App.SidebarChecklistShow extends App.Controller
 
   constructor: ->
     super
-
-    @objects = @checklist.sorted_items()
     @render()
 
   render: ->
+
     @html App.view('ticket_zoom/sidebar_checklist_show')(
       checklistTitle: @checklistTitle()
       readOnly: @readOnly
     )
 
-    @el.parent().off('click').on('click', (e) =>
-      if @itemEditInProgress
-        @clearEditWidget()
-        @itemEditInProgress = false
+    $('body').off('click').on('click', (e) =>
+      return if @actionController && @actionController.constructor.name is 'ChecklistReorder'
+      return if $(e.target).closest('.js-actions').length > 0
+      return if $(e.target).closest('.checklistShowButtons div.btn').length > 0
+      return if $(e.target).closest('.checkbox-replacement').length > 0
 
-      if @titleChangeInProgress
-        @clearRenameWidget()
-        @titleChangeInProgress = false
+      @actionController?.releaseController()
     )
 
     @renderTable()
-
-    if @enterEditMode
-      cell = @table.find('tr:last-of-type').find('.checklistItemValue')[0]
-      row  = $(cell).closest('tr')
-
-      @activateItemEditMode(cell, row, row.data('id'))
 
   checklistTitle: =>
     @checklist.name || App.i18n.translateInline('%s Checklist', App.Config.get('ticket_hook') + @parentVC.ticket.number)
 
   onReorder: (e) =>
-    @clearEditWidget()
-    @toggleReorder(true)
+    @preventDefaultAndStopPropagation(e)
+    @actionController?.releaseController()
+    @actionController = new ChecklistReorder(parentVC: @)
 
   onAdd: (e) =>
     @addButton.attr('disabled', true)
-    @itemEditInProgress = true
 
-    @ajax(
-      id:   'checklist_item_create'
-      type: 'POST'
-      url:  "#{@apiPath}/tickets/#{@parentVC.ticket.id}/checklist/items"
-      data: JSON.stringify({text: ''})
-      processData: true
-      success: (data, status, xhr) =>
-        App.Collection.loadAssets(data.assets)
-        @objects = @checklist.sorted_items()
+    callbackDone = (data) =>
+      @enterEditModeId = data.id
+      @renderTable()
+      @addButton.attr('disabled', false)
 
-        @clearEditWidget()
+    item = new App.ChecklistItem
+    item.checklist_id = @checklist.id
+    item.text = ''
+    item.save(
+      done: ->
+        App.ChecklistItem.full(@id, callbackDone, force: true)
+      fail: =>
         @renderTable()
-        cell = @table.find('tr:last-of-type').find('.checklistItemValue')[0]
-        row  = $(cell).closest('tr')
-
-        @activateItemEditMode(cell, row, data.id)
-
-        @addButton.attr('disabled', false)
-      error: =>
         @addButton.attr('disabled', false)
     )
 
   onCheckboxClick: (e) =>
-    @clearEditWidget()
     upcomingState = e.currentTarget.checked
     id = parseInt(e.currentTarget.value)
 
@@ -92,7 +77,6 @@ class App.SidebarChecklistShow extends App.Controller
     row  = $(e.currentTarget).closest('tr')
     checkbox = row.find('.js-checkbox')[0]
 
-    @clearEditWidget()
     upcomingState = !checkbox.checked
 
     checkbox.disabled = true
@@ -100,21 +84,14 @@ class App.SidebarChecklistShow extends App.Controller
     @updateChecklistItem(id, upcomingState, checkbox)
 
   updateChecklistItem: (id, upcomingState, checkboxElem) =>
-    @ajax(
-      id:   'checklist_item_update_checked'
-      type: 'PATCH'
-      url:  "#{@apiPath}/tickets/#{@parentVC.ticket.id}/checklist/items/#{id}"
-      data: JSON.stringify({checked: upcomingState})
-      success: (data, status, xhr) =>
-        object = _.find @objects, (elem) -> elem.id == id
-
-        object.load(checked: upcomingState)
-
+    item = App.ChecklistItem.find(id)
+    item.checked = upcomingState
+    item.save(
+      done: =>
         checkboxElem.disabled = false
         @renderTable()
-      error: ->
-        checkboxElem.checked = !upcomingState
-        checkboxElem.disabled = false
+      fail: ->
+        @renderTable()
     )
 
   onSaveOrder: (e) =>
@@ -122,60 +99,43 @@ class App.SidebarChecklistShow extends App.Controller
 
     sorted_item_ids = @table.find('tbody tr').toArray().map (elem) -> elem.dataset.id
 
-    @ajax(
-      id:   'checklist_update'
-      type: 'PATCH'
-      url:  "#{@apiPath}/tickets/#{@parentVC.ticket.id}/checklist"
-      data: JSON.stringify({sorted_item_ids: sorted_item_ids})
-      processData: true
-      success: (data, status, xhr) =>
-        App.Collection.loadAssets(data.assets)
-        @toggleReorder(false)
-        @saveOrderButton.attr('disabled', false)
-      error: =>
-        @saveOrderButton.attr('disabled', false)
+    item = @checklist
+    item.sorted_item_ids = sorted_item_ids
+    item.save(
+      done: (data) =>
+        @actionController?.completed()
+      fail: =>
+        @actionController?.releaseController()
     )
 
   onResetOrder: (e) =>
-    @toggleReorder(false, 'cancel')
+    @actionController?.releaseController()
 
   onAction: (e) =>
     e.stopPropagation()
 
-    if @itemEditInProgress
-      @clearEditWidget()
-      @itemEditInProgress = false
-
-    if @titleChangeInProgress
-      @clearRenameWidget()
-      @titleChangeInProgress = false
-
     dropdown = $(e.currentTarget).closest('td').find('.js-table-action-menu')
     dropdown.dropdown('toggle')
-    dropdown.on('click.dropdown', '[data-table-action]', @onActionButtonClicked)
+    dropdown.off('click.dropdown').on('click.dropdown', '[data-table-action]', @onActionButtonClicked)
 
   onTitleChange: (e) =>
     e?.stopPropagation()
+    return if @actionController && @actionController.constructor.name is 'ChecklistReorder'
 
     # Close any open dropdowns
     @el.find('.dropdown--actions.open').dropdown('toggle')
-
-    if @itemEditInProgress
-      @clearEditWidget()
-      @itemEditInProgress = false
-
-    return if @titleChangeInProgress
 
     if e
       elem = e.currentTarget
     else
       elem = @el.find('.js-title')[0]
 
-    @clearRenameWidget()
-    @renameWidget = new ChecklistRenameEdit(el: elem, parentVC: @, originalValue: @checklistTitle())
+    @actionController?.releaseController()
+    @actionController = new ChecklistRenameEdit(el: elem, parentVC: @, originalValue: @checklistTitle())
 
   onActionButtonClicked: (e) =>
     e?.stopPropagation()
+    return if @actionController && @actionController.constructor.name is 'ChecklistReorder'
 
     id = $(e.currentTarget).parents('tr').data('id')
     name = e.currentTarget.getAttribute('data-table-action')
@@ -207,16 +167,10 @@ class App.SidebarChecklistShow extends App.Controller
   onEditChecklistItem: (id, e) =>
     @preventDefaultAndStopPropagation(e)
 
-    if @titleChangeInProgress
-      @clearRenameWidget()
-      @titleChangeInProgress = false
-
-    return if @itemEditInProgress && @itemEditInProgress == id
+    return if @actionController && @actionController.constructor.name is 'ChecklistItemEdit' && @actionController.id == id
 
     row  = $(e.currentTarget).closest('tr')
     cell = row.find('.checklistItemValue')[0]
-
-    @clearEditWidget()
 
     @activateItemEditMode(cell, row, id)
 
@@ -231,17 +185,8 @@ class App.SidebarChecklistShow extends App.Controller
     item = App.ChecklistItem.find(id)
 
     deleteCallback = =>
-      @ajax(
-        id:   'checklist_item_delete'
-        type: 'DELETE'
-        url:  "#{@apiPath}/tickets/#{@parentVC.ticket.id}/checklist/items/#{id}"
-        processData: true
-        success: (data, status, xhr) =>
-          App.ChecklistItem.find(id).remove(clear: true)
-
-          @objects = @checklist.sorted_items()
-
-          @clearEditWidget()
+      item.destroy(
+        done: =>
           @renderTable()
       )
 
@@ -257,34 +202,20 @@ class App.SidebarChecklistShow extends App.Controller
     )
 
   activateItemEditMode: (cell, row, id) =>
-    $(cell).addClass('edit-widget-active')
-    $(row).find('.dropdown').addClass('hide')
-
-    @editWidget = new ChecklistItemEdit(
+    @actionController?.releaseController()
+    @actionController = new ChecklistItemEdit(
       el: cell
       parentVC: @
       originalValue: cell.textContent.trim()
       id: id
-      cancelCallback: ->
-        $(cell).removeClass('edit-widget-active')
-        $(row).find('.dropdown').removeClass('hide')
-
-        if $(row).find('.dropdown--actions').hasClass('open')
-          $(row).find('.js-table-action-menu').dropdown('toggle')
     )
-
-  clearEditWidget: =>
-    @editWidget?.onCancel()
-    @editWidget = undefined
-
-  clearRenameWidget: =>
-    @renameWidget?.onCancel()
-    @renameWidget = undefined
 
   renderTable: ->
     @table.find('tbody').empty()
 
-    for object in @objects
+    sorted_items = @checklist.sorted_items()
+
+    for object in sorted_items
       html = App.view('ticket_zoom/sidebar_checklist_show_row')(
         object: object
         readOnly: @readOnly
@@ -292,7 +223,7 @@ class App.SidebarChecklistShow extends App.Controller
 
       @table.find('tbody').append(html)
 
-    if !@objects.length
+    if !sorted_items.length
       html = App.view('ticket_zoom/sidebar_checklist_show_no_items')()
       @table.find('tbody').append(html)
 
@@ -305,7 +236,17 @@ class App.SidebarChecklistShow extends App.Controller
     @table.find('tbody').sortable(dndOptions)
     @table.find('tbody').sortable('disable')
 
-    @reorderButton.toggleClass('hide', !@objects.length || @objects.length < 2)
+    @reorderButton.toggleClass('hide', !sorted_items.length || sorted_items.length < 2)
+
+    if @enterEditMode
+      @enterEditMode   = undefined
+      @enterEditModeId = @table.find('tr:last-of-type').data('id')
+
+    if @enterEditModeId
+      cell                = @table.find("tr[data-id='" + @enterEditModeId + "']").find('.checklistItemValue')[0]
+      row                 = $(cell).closest('tr')
+      @enterEditModeId = undefined
+      @activateItemEditMode(cell, row, row.data('id'))
 
 class ChecklistItemEdit extends App.Controller
   elements:
@@ -318,47 +259,50 @@ class ChecklistItemEdit extends App.Controller
   constructor: ->
     super
 
-    @parentVC.itemEditInProgress = @id
-
     @render()
+
+  releaseController: =>
+    super
+
+    @el.text(@originalValue)
+    @el.removeClass('edit-widget-active')
+    @el.closest('tr').find('.dropdown').removeClass('hide')
+
+    if @el.closest('tr').find('.dropdown--actions').hasClass('open')
+      @el.closest('tr').find('.js-table-action-menu').dropdown('toggle')
+
+    @parentVC.actionController = undefined
 
   render: =>
     @html App.view('ticket_zoom/sidebar_checklist_item_edit')(value: @object()?.text)
+
+    @el.addClass('edit-widget-active')
+    @el.closest('tr').find('.dropdown').addClass('hide')
     @input.focus().val('').val(@object()?.text)
 
   object: =>
-    _.find @parentVC.objects, (elem) => elem.id == @id
+    App.ChecklistItem.find(@id)
 
   onCancel: (e) =>
     @preventDefaultAndStopPropagation(e)
-
-    @release()
-    @el.html(App.Utils.linkify(@originalValue))
-    @parentVC.itemEditInProgress = null
-
-    @cancelCallback() if @cancelCallback
+    @releaseController()
 
   onConfirm: (e) =>
     @preventDefaultAndStopPropagation(e)
 
-    @ajax(
-      id:   'checklist_item_update_text'
-      type: 'PATCH'
-      url:  "#{@apiPath}/tickets/#{@parentVC.parentVC.ticket.id}/checklist/items/#{@id}"
-      data: JSON.stringify({text: @input.val()})
-      processData: true
-      success: (data, status, xhr) =>
-        @object().load(text: @input.val())
-
-        @parentVC.clearEditWidget()
+    item = @object()
+    item.text = @input.val()
+    item.save(
+      done: =>
         @parentVC.renderTable()
-        @parentVC.itemEditInProgress = null
+      fail: =>
+        @parentVC.renderTable()
     )
 
   onKeyUp: (e) =>
     switch e.key
       when 'Enter' then @onConfirm()
-      when 'Escape' then @onCancel()
+      when 'Escape' then @releaseController()
 
 class ChecklistRenameEdit extends App.Controller
   elements:
@@ -370,10 +314,12 @@ class ChecklistRenameEdit extends App.Controller
 
   constructor: ->
     super
-
-    @parentVC.titleChangeInProgress = true
-
     @render()
+
+  releaseController: =>
+    super
+    @el.text(@originalValue)
+    @parentVC.actionController = undefined
 
   render: =>
     @html App.view('ticket_zoom/sidebar_checklist_title_edit')(
@@ -387,32 +333,40 @@ class ChecklistRenameEdit extends App.Controller
 
   onCancel: (e) =>
     @preventDefaultAndStopPropagation(e)
-
-    @release()
-    @el.text(@originalValue)
-    @parentVC.titleChangeInProgress = false
+    @releaseController()
 
   onConfirm: (e) =>
     @preventDefaultAndStopPropagation(e)
 
-    @ajax(
-      id:   'checklist_title_update'
-      type: 'PATCH'
-      url:  "#{@apiPath}/tickets/#{@parentVC.parentVC.ticket.id}/checklist"
-      data: JSON.stringify({name: @input.val()})
-      processData: true
-      success: (data, status, xhr) =>
-        @object().load(name: @input.val())
-
-        @parentVC.clearRenameWidget()
+    checklist = @object()
+    checklist.name = @input.val()
+    checklist.save(
+      done: =>
         @parentVC.render()
-        @parentVC.titleChangeInProgress = false
     )
 
   onKeyUp: (e) =>
     switch e.key
       when 'Enter' then @onConfirm()
       when 'Escape' then @onCancel()
+
+class ChecklistReorder extends App.Controller
+  constructor: ->
+    super
+    @render()
+
+  releaseController: =>
+    @parentVC.toggleReorder(false, 'cancel')
+    @parentVC.saveOrderButton.attr('disabled', false)
+    @parentVC.actionController = undefined
+
+  completed: =>
+    @parentVC.toggleReorder(false)
+    @parentVC.saveOrderButton.attr('disabled', false)
+    @parentVC.actionController = undefined
+
+  render: =>
+    @parentVC.toggleReorder(true)
 
 class ChecklistItemRemoveModal extends App.ControllerGenericDestroyConfirm
   onSubmit: =>

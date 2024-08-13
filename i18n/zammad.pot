@@ -134,7 +134,7 @@ msgstr ""
 msgid "%s Attribute"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:50
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/composables/useTicketChecklist.ts:133
 msgid "%s Checklist"
@@ -2607,7 +2607,7 @@ msgstr ""
 msgid "Check this box if you want to customise how options are sorted. If the box is not checked, values are sorted in alphabetical order."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:57
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:53
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklistContent.vue:20
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:12
 msgid "Checklist"
@@ -10820,7 +10820,7 @@ msgstr ""
 msgid "Please save your recovery codes listed below somewhere safe. You can use them to sign in if you lose access to another two-factor method:"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:74
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:72
 msgid "Please select a checklist template."
 msgstr ""
 

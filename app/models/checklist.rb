@@ -37,10 +37,10 @@ class Checklist < ApplicationModel
 
   def notify_clients_data_attributes
     {
-      id:         id,
-      ticket_id:  ticket_id,
-      updated_at: updated_at,
-      updated_by: updated_by_id,
+      id:            id,
+      ticket_id:     ticket_id,
+      updated_at:    updated_at,
+      updated_by_id: updated_by_id,
     }
   end
 

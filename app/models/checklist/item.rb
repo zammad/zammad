@@ -12,6 +12,7 @@ class Checklist::Item < ApplicationModel
   scope :for_user, ->(user) { joins(checklist: :ticket).where(tickets: { group: user.group_ids_access('read') }) }
 
   after_create :update_checklist
+  after_update :update_checklist
   after_destroy :update_checklist
 
   validates :text, presence: { allow_blank: true }
@@ -42,12 +43,13 @@ class Checklist::Item < ApplicationModel
   private
 
   def update_checklist
-    if persisted? && checklist.sorted_item_ids.exclude?(id.to_s)
-      checklist.sorted_item_ids << id
+    if persisted?
+      checklist.sorted_item_ids |= [id.to_s]
+    else
+      checklist.sorted_item_ids -= [id.to_s]
     end
-    if !persisted?
-      checklist.sorted_item_ids = checklist.sorted_item_ids.reject { |sid| sid.to_s == id.to_s }
-    end
+    checklist.updated_at    = Time.zone.now
+    checklist.updated_by_id = UserInfo.current_user_id || updated_by_id
     checklist.save!
   end
 end

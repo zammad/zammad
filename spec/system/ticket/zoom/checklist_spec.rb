@@ -3,16 +3,29 @@
 require 'rails_helper'
 
 RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type: :system do
-  let(:ticket) { create(:ticket, group: Group.first) }
+  let(:other_agent) { create(:agent, groups: Group.all) }
+  let(:ticket)      { create(:ticket, group: Group.first) }
 
   def authenticate
     Setting.set('checklist', true)
     true
   end
 
-  def click_checklist_action(id, action)
+  def perform_item_action(id, action)
     page.find(".checklistShow tr[data-id='#{id}'] .js-action", wait: 0).click
     page.find(".checklistShow tr[data-id='#{id}'] li[data-table-action='#{action}']", wait: 0).click
+  rescue => e
+    retry_click ||= 5
+    retry_click -= 1
+    sleep 1
+    raise e if retry_click < 1
+
+    retry
+  end
+
+  def perform_checklist_action(text)
+    click '.sidebar[data-tab=checklist] .js-actions'
+    click_on text
   rescue => e
     retry_click ||= 5
     retry_click -= 1
@@ -61,33 +74,70 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type:
       expect(page).to have_button('Add empty checklist')
     end
 
+    it 'does remove the checklist' do
+      perform_checklist_action('Remove checklist')
+      click_on 'delete'
+      expect(page).to have_text('Add empty checklist')
+    end
+
+    it 'does rename the checklist' do
+      perform_checklist_action('Rename checklist')
+      checklist_name = SecureRandom.uuid
+      find('#checklistTitleEditText').fill_in with: checklist_name, fill_options: { clear: :backspace }
+      page.find('.js-confirm').click
+      wait.until { checklist.reload.name == checklist_name }
+    end
+
     it 'does add item' do
       find('.checklistShowButtons .js-add').click
       wait.until { checklist.items.last.text == '' }
     end
 
     it 'does check item' do
-      click_checklist_action(item.id, 'check')
+      perform_item_action(item.id, 'check')
 
       wait.until { item.reload.checked == true }
     end
 
     it 'does uncheck item' do
       item.update(checked: true)
-      click_checklist_action(item.id, 'uncheck')
+      perform_item_action(item.id, 'uncheck')
       wait.until { item.reload.checked == false }
     end
 
     it 'does edit item' do
-      click_checklist_action(item.id, 'edit')
+      perform_item_action(item.id, 'edit')
       item_text = SecureRandom.uuid
       find(".checklistShow tr[data-id='#{item.id}'] .js-input").fill_in with: item_text, fill_options: { clear: :backspace }
       page.find('.js-confirm').click
       wait.until { item.reload.text == item_text }
     end
 
+    it 'does not abort edit when subscription is updating but including it afterwards' do
+      perform_item_action(item.id, 'edit')
+      item_text = SecureRandom.uuid
+      find(".checklistShow tr[data-id='#{item.id}'] .js-input").fill_in with: item_text, fill_options: { clear: :backspace }
+
+      # simulate other users change
+      other_item_text = SecureRandom.uuid
+      checklist.items.create!(text: other_item_text, created_by: other_agent, updated_by: other_agent)
+
+      # not really another way to be absolutely sure that this works
+      sleep 5
+
+      # the new item will be synced after saving
+      expect(page).to have_no_text(other_item_text)
+
+      # it's important that the old edit mode does not abort
+      page.find('.js-confirm').click
+
+      # then both items arrive in the UI
+      expect(page).to have_text(item_text)
+      expect(page).to have_text(other_item_text)
+    end
+
     it 'does delete item' do
-      click_checklist_action(item.id, 'delete')
+      perform_item_action(item.id, 'delete')
       click_on 'delete'
       wait.until { Checklist::Item.find_by(id: item.id).blank? }
     end
@@ -101,7 +151,7 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type:
 
       it 'does edit item with link' do
         expect(page).to have_link('google.de')
-        click_checklist_action(item.id, 'edit')
+        perform_item_action(item.id, 'edit')
         item_text = SecureRandom.uuid
         find(".checklistShow tr[data-id='#{item.id}'] .js-input").fill_in with: item_text, fill_options: { clear: :backspace }
         page.find('.js-confirm').click
@@ -128,7 +178,7 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type:
       expect(page).to have_text('Please select a checklist template.')
 
       select checklist_template.name, from: 'checklist_template_id'
-      expect(page).to have_no_text('Please select a checklist template.')
+      wait.until { page.has_no_content?('Please select a checklist template.') }
       click_on('Add from a template')
 
       wait.until { Checklist.where(ticket: ticket).present? }

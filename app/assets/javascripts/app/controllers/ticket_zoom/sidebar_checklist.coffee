@@ -32,12 +32,8 @@ class SidebarChecklist extends App.Controller
     new ChecklistRemoveModal(
       container: @elSidebar.closest('.content')
       callback:  =>
-        @ajax(
-          id:   'checklist_ticket_remove_checklist'
-          type: 'DELETE'
-          url:  "#{@apiPath}/tickets/#{@ticket.id}/checklist"
-          processData: true
-          success: (data, status, xhr) =>
+        @checklist.destroy(
+          done: =>
             @clearWidget()
 
             @widget = new App.SidebarChecklistStart(el: @elSidebar, parentVC: @)
@@ -64,10 +60,7 @@ class SidebarChecklist extends App.Controller
 
     @startLoading()
 
-  delayedShown: =>
-    @delay(@shown, 250, 'sidebar-checklist')
-
-  shown: =>
+  shown: (enterEditMode = false) =>
     @startLoading()
 
     @ajax(
@@ -84,7 +77,18 @@ class SidebarChecklist extends App.Controller
 
           @checklist = App.Checklist.find(data.id)
 
-          @widget = new App.SidebarChecklistShow(el: @elSidebar, parentVC: @, checklist: @checklist, readOnly: !@changeable, enterEditMode: false)
+          @widget = new App.SidebarChecklistShow(el: @elSidebar, parentVC: @, checklist: @checklist, readOnly: !@changeable, enterEditMode: enterEditMode)
+
+          if @subscribeId
+            App.Checklist.unsubscribeItem(@subscribeId)
+
+          @subscribeId = App.Checklist.subscribeItem(
+            data.id,
+            (item) =>
+              return if item.updated_by_id is App.Session.get().id
+              return if @widget.actionController
+              @shown()
+          )
         else
           @widget = new App.SidebarChecklistStart(el: @elSidebar, parentVC: @, readOnly: !@changeable)
 
@@ -93,16 +97,12 @@ class SidebarChecklist extends App.Controller
 
     return if @subcribed
     @subcribed = true
-    @controllerBind('Checklist:destroy', (data) =>
-      return if @ticket_id && @ticket_id isnt data.ticket_id
-      @delayedShown()
-    )
-    @controllerBind('Checklist:create Checklist:update Checklist:touch ChecklistItem:create ChecklistItem:update ChecklistItem:touch ChecklistItem:destroy', (data) =>
+
+    @controllerBind('Checklist:create Checklist:destroy', (data) =>
       return if @ticket_id && @ticket_id isnt data.ticket_id
       return if data.updated_by_id is App.Session.get().id
-      return if @widget?.itemEditInProgress
-      return if @widget?.titleChangeInProgress
-      @delayedShown()
+      return if @widget.actionController
+      @shown()
     )
 
   clearWidget: =>
@@ -111,15 +111,6 @@ class SidebarChecklist extends App.Controller
 
     @checklist = undefined
     @renderActions()
-
-  switchToChecklist: (id, enterEditMode = false) =>
-    @clearWidget()
-
-    @checklist = App.Checklist.find(id)
-
-    @renderActions()
-
-    @widget = new App.SidebarChecklistShow(el: @elSidebar, parentVC: @, checklist: @checklist, enterEditMode: enterEditMode)
 
 class ChecklistRemoveModal extends App.ControllerGenericDestroyConfirm
   onSubmit: =>
