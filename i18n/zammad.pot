@@ -1636,7 +1636,7 @@ msgstr ""
 msgid "Assigned"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:24
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:35
 msgid "Assignee"
 msgstr ""
 
@@ -7482,7 +7482,7 @@ msgstr ""
 msgid "Invalid GitHub GraphQL API token"
 msgstr ""
 
-#: lib/github/linked_issue.rb:102
+#: lib/github/linked_issue.rb:158
 msgid "Invalid GitHub issue link format"
 msgstr ""
 
@@ -7490,7 +7490,7 @@ msgstr ""
 msgid "Invalid GitLab GraphQL API token"
 msgstr ""
 
-#: lib/gitlab/linked_issue.rb:102
+#: lib/gitlab/linked_issue.rb:158
 msgid "Invalid GitLab issue link format"
 msgstr ""
 
@@ -7788,7 +7788,7 @@ msgstr ""
 msgid "Label"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:30
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:41
 msgid "Labels"
 msgstr ""
 
@@ -7986,7 +7986,7 @@ msgstr ""
 msgid "Link account on %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:26
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:28
 msgid "Link issue"
 msgstr ""
 
@@ -8063,11 +8063,19 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:183
 #: app/assets/javascripts/app/controllers/knowledge_base/search_field_widget.coffee:103
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:46
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:87
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:90
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:76
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:34
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:51
 msgid "Loading failed."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:147
+msgid "Loading issues failed."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:166
+msgid "Loading legacy issues failed."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee:151
@@ -8750,7 +8758,7 @@ msgstr ""
 msgid "Migrator can't read OTRS output!"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:29
 msgid "Milestone"
 msgstr ""
 
@@ -9438,7 +9446,7 @@ msgstr ""
 msgid "No import in progress."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:192
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:257
 msgid "No linked issues"
 msgstr ""
 
@@ -13814,7 +13822,7 @@ msgstr ""
 msgid "The installed attachment plugin could not handle the request payload. Ensure that the correct attachment plugin is installed (ingest-attachment)."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:79
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:82
 msgid "The issue could not be saved."
 msgstr ""
 
