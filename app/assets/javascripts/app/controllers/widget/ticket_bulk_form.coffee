@@ -152,7 +152,7 @@ class App.TicketBulkForm extends App.Controller
     if @bulkCount is 0
       App.Event.trigger('notify', {
         type: 'error'
-        msg: App.i18n.translateContent('At least one object must be selected.')
+        msg: __('At least one object must be selected.')
       })
       return
 

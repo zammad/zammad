@@ -196,7 +196,7 @@ class User extends App.ControllerSubContent
                 App.User.full(id,
                 => @notify(
                   type: 'success'
-                  msg:  App.i18n.translateContent('User successfully unlocked!')
+                  msg:  __('User successfully unlocked!')
 
                   @renderResult(user_ids)
                 ),

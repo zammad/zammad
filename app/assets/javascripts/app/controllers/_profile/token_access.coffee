@@ -73,7 +73,7 @@ class ProfileTokenAccess extends App.ControllerSubContent
     data = JSON.parse(xhr.responseText)
     @notify(
       type: 'error'
-      msg:  App.i18n.translateContent(data.message || data.error)
+      msg:  data.message || data.error
     )
 
 class Create extends App.ControllerModal
@@ -109,7 +109,7 @@ class Create extends App.ControllerModal
     if _.isEmpty(params['permission'])
       @notify(
         type: 'error'
-        msg:  App.i18n.translateContent("The required parameter 'permission' is missing.")
+        msg:  __("The required parameter 'permission' is missing.")
       )
       return
 
@@ -160,7 +160,7 @@ class Create extends App.ControllerModal
     data = JSON.parse(xhr.responseText)
     @notify(
       type: 'error'
-      msg:  App.i18n.translateContent(data.message || data.error)
+      msg:  data.message || data.error
     )
 
 App.Config.set('Token Access', {

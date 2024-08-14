@@ -277,7 +277,7 @@ class App.ArticleViewItem extends App.ControllerObserver
           if data.sign.success
             @notify
               type: 'success'
-              msg:  App.i18n.translateContent('The signature was successfully verified.')
+              msg: __('The signature was successfully verified.')
           else if data.sign.comment
             comment = App.i18n.translateContent('Signature verification failed!') + ' ' + App.i18n.translateContent(data.sign.comment || '', data.sign.commentPlaceholders)
             @notify
@@ -288,7 +288,7 @@ class App.ArticleViewItem extends App.ControllerObserver
           if data.encryption.success
             @notify
               type: 'success'
-              msg:  App.i18n.translateContent('Decryption was successful.')
+              msg:  __('Decryption was successful.')
           else if data.encryption.comment
             comment = App.i18n.translateContent('Decryption failed!') + ' ' + App.i18n.translateContent(data.encryption.comment || '', data.encryption.commentPlaceholders)
             @notify
@@ -299,7 +299,7 @@ class App.ArticleViewItem extends App.ControllerObserver
       error: (xhr) =>
         @notify
           type: 'error'
-          msg:  App.i18n.translateContent('The retried security process failed!')
+          msg:  __('The retried security process failed!')
     )
 
   retryWhatsAppAttachmentDownload: (e) ->
@@ -316,13 +316,13 @@ class App.ArticleViewItem extends App.ControllerObserver
       success: (data, status, xhr) =>
         @notify
           type: 'success'
-          msg:  App.i18n.translateContent('Downloading attachments…')
+          msg:  __('Downloading attachments…')
 
       error: (data, status, xhr) =>
         details = data.responseJSON || {}
         @notify
           type: 'error'
-          msg:  App.i18n.translateContent(details.error)
+          msg:  details.error
     )
 
   fetchOriginalFormatting: (e) ->

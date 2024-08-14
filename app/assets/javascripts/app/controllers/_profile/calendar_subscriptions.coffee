@@ -78,7 +78,7 @@ class ProfileCalendarSubscriptions extends App.ControllerSubContent
       =>
         @notify(
           type: 'success'
-          msg:  App.i18n.translateContent('Update successful.')
+          msg:  __('Update successful.')
         )
       true
     )
@@ -88,7 +88,7 @@ class ProfileCalendarSubscriptions extends App.ControllerSubContent
     data = JSON.parse(xhr.responseText)
     @notify(
       type: 'error'
-      msg:  App.i18n.translateContent(data.message)
+      msg:  data.message
     )
 
 App.Config.set('CalendarSubscriptions', { prio: 3000, name: __('Calendar'), parent: '#profile', target: '#profile/calendar_subscriptions', permission: ['user_preferences.calendar+ticket.agent'], controller: ProfileCalendarSubscriptions }, 'NavBarProfile')

@@ -31,6 +31,6 @@ class App.WidgetPayloadExample extends App.ControllerModal
         details = data.responseJSON || {}
         @notify
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || __('Loading failed.'))
+          msg:     details.error_human || details.error || __('Loading failed.')
           timeout: 6000
     )

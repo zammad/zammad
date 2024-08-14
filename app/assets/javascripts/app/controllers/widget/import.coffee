@@ -61,7 +61,7 @@ class App.Import extends App.ControllerModal
         details = data.responseJSON || {}
         @notify
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || __('The import failed.'))
+          msg:     details.error_human || details.error || __('The import failed.')
           timeout: 6000
         @formEnable(e)
     )

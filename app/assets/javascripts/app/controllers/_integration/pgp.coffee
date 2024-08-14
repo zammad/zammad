@@ -191,7 +191,7 @@ class List extends App.Controller
 
         @notify(
           type: 'error'
-          msg:  App.i18n.translateContent(error_message)
+          msg:  error_message
         )
     )
 
@@ -249,7 +249,7 @@ class List extends App.Controller
             details = data.responseJSON || {}
             @notify(
               type: 'error'
-              msg:  App.i18n.translateContent(details.error_human || details.error || __('Server operation failed.'))
+              msg:  details.error_human || details.error || __('Server operation failed.')
             )
         )
       container: @el.closest('.content')

@@ -52,7 +52,7 @@ class ProfileDevices extends App.ControllerSubContent
     data = JSON.parse(xhr.responseText)
     @notify(
       type: 'error'
-      msg:  App.i18n.translateContent(data.message)
+      msg:  data.message
     )
 
 App.Config.set('Devices', { prio: 3100, name: __('Devices'), parent: '#profile', target: '#profile/devices', controller: ProfileDevices, permission: ['user_preferences.device'] }, 'NavBarProfile')

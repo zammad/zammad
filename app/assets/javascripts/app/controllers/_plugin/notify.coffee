@@ -74,11 +74,14 @@ class App.Notify extends App.Controller
 
     if data['removeAll']
       $.noty.closeAll()
+
+    translatedMessage = App.i18n.translateContent(data.msg)
+
     if data.link
-      data.msg = '<a href="' + data.link + '">' + data.msg + '</a>'
+      translatedMessage = '<a href="' + data.link + '">' + translatedMessage + '</a>'
 
     $('#notify').noty(
-      text:      data.msg
+      text:      translatedMessage
       type:      data.type
       template:  App.view('notify')
         type: data.type

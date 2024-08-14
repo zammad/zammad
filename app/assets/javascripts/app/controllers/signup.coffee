@@ -130,7 +130,7 @@ class Signup extends App.ControllerFullPage
 
     @notify(
       type:      'error'
-      msg:       App.i18n.translateContent(details.error || 'Could not process your request')
+      msg:       details.error || __('Could not process your request')
       removeAll: true
     )
 App.Config.set('signup', Signup, 'Routes')

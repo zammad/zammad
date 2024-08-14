@@ -100,7 +100,7 @@ class App.TicketMerge extends App.ControllerModal
           # notify UI
           @notify
             type:    'error'
-            msg:     App.i18n.translateContent(data['message'])
+            msg:     data['message']
             timeout: 6000
           @formEnable(e)
 
@@ -108,7 +108,7 @@ class App.TicketMerge extends App.ControllerModal
         details = data.responseJSON || {}
         @notify
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || __('The tickets could not be merged.'))
+          msg:     details.error_human || details.error || __('The tickets could not be merged.')
           timeout: 6000
         @formEnable(e)
     )

@@ -131,7 +131,7 @@ class ProfileOutOfOffice extends App.ControllerSubContent
       @render()
       @notify(
         type: 'success'
-        msg:  App.i18n.translateContent('Update successful.')
+        msg:  __('Update successful.')
         timeout: 1000
       )
     else

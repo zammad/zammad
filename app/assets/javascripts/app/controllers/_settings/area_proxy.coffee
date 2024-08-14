@@ -43,7 +43,7 @@ class App.SettingsAreaProxy extends App.Controller
           @$('.js-submit').removeClass('hide')
           App.Event.trigger 'notify', {
             type:    'success'
-            msg:     App.i18n.translateContent('Connection test successful')
+            msg:     __('Connection test successful')
             timeout: 2000
           }
           return

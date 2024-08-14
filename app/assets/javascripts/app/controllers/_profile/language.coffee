@@ -55,7 +55,7 @@ class ProfileLanguage extends App.ControllerSubContent
         App.Event.trigger('ui:rerender')
         @notify(
           type: 'success'
-          msg:  App.i18n.translateContent('Update successful.')
+          msg:  __('Update successful.')
         )
       ,
       true
@@ -66,7 +66,7 @@ class ProfileLanguage extends App.ControllerSubContent
     data = JSON.parse(xhr.responseText)
     @notify(
       type: 'error'
-      msg:  App.i18n.translateContent(data.message)
+      msg:  data.message
     )
 
 App.Config.set('Language', { prio: 1000, name: __('Language'), parent: '#profile', target: '#profile/language', controller: ProfileLanguage, permission: ['user_preferences.language'] }, 'NavBarProfile')

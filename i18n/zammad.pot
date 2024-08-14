@@ -3283,6 +3283,10 @@ msgstr ""
 msgid "Could not load the two-factor authentication configuration for this user."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/signup.coffee:133
+msgid "Could not process your request"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:135
 msgid "Could not remove all two-factor authentication methods for this user."
 msgstr ""
@@ -3303,6 +3307,11 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:228
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:77
 msgid "Could not set two-factor authentication method as default"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/widget/link.coffee:69
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:106
+msgid "Couldn't save changes"
 msgstr ""
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco:5
@@ -7687,6 +7696,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:39
 msgid "Invalid video URL"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/layout_ref.coffee:650
+msgid "Invitation sent to %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee:78

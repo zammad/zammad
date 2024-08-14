@@ -60,7 +60,7 @@ class Form extends App.Controller
         details = data.responseJSON || {}
         App.Event.trigger 'notify', {
           type: 'error'
-          msg:  App.i18n.translateContent(details.error_human || details.error || __('Saving failed.'))
+          msg:  details.error_human || details.error || __('Saving failed.')
         }
     )
 

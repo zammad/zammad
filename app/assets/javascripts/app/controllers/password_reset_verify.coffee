@@ -76,7 +76,7 @@ class PasswordResetVerify extends App.ControllerFullPage
       @$('[name=password_confirm]').val('')
       @notify(
         type:      'error'
-        msg:       __('Can\'t update password, your entered passwords do not match. Please try again.')
+        msg:       __("Can't update password, your entered passwords do not match. Please try again.")
         removeAll: true
       )
       return

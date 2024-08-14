@@ -58,7 +58,7 @@ class Delete
           ui.log 'errors', details
           ui.notify(
             type:    'error'
-            msg:     App.i18n.translateContent(details.error_human || details.error || __('Article could not be deleted.'))
+            msg:     details.error_human || details.error || __('Article could not be deleted.')
             timeout: 6000
         )
       )

@@ -205,14 +205,14 @@ class Form extends App.Controller
     if _.isEmpty(queue)
       @notify(
         type:    'error'
-        msg:     App.i18n.translateContent('A queue is required!')
+        msg:     __('A queue is required!')
         timeout: 6000
       )
       return
     if _.isEmpty(user_ids)
       @notify(
         type:    'error'
-        msg:     App.i18n.translateContent('A user is required!')
+        msg:     __('A user is required!')
         timeout: 6000
       )
       return
@@ -221,7 +221,7 @@ class Form extends App.Controller
       if row.queue is queue
         @notify(
           type:    'error'
-          msg:     App.i18n.translateContent('Queue already exists!')
+          msg:     __('Queue already exists!')
           timeout: 6000
         )
         return

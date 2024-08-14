@@ -1111,7 +1111,7 @@ class App.TicketZoom extends App.Controller
           error = settings.responseJSON.error
         App.Event.trigger 'notify', {
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || error || __('Saving failed.'))
+          msg:     details.error_human || details.error || error || __('Saving failed.')
           timeout: 2000
         }
         @autosaveStart()

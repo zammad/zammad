@@ -97,7 +97,7 @@ class App.TicketLinkAdd extends App.ControllerModal
           details = JSON.parse(detailsRaw)
         @notify(
           type:      'error'
-          msg:       App.i18n.translateContent(details.error)
+          msg:       details.error
           removeAll: true
         )
     )

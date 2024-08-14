@@ -139,7 +139,7 @@ class SidebarIdoit extends App.Controller
         @log 'errors', details
         @notify(
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || __('The object could not be updated.'))
+          msg:     details.error_human || details.error || __('The object could not be updated.')
           timeout: 6000
         )
     )

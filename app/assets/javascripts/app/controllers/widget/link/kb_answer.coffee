@@ -103,7 +103,7 @@ class App.WidgetLinkKbAnswer extends App.WidgetLink
         @setInputVisible(false)
         @notify(
           type:      'error'
-          msg:       App.i18n.translateContent(xhr.responseJSON?.error || "Couldn't save changes")
+          msg:       xhr.responseJSON?.error || __("Couldn't save changes")
           removeAll: true
         )
     )

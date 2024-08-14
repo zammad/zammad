@@ -75,7 +75,7 @@ class GettingStartedAgent extends App.ControllerWizardFullScreen
       done: (r) =>
         App.Event.trigger('notify', {
           type:    'success'
-          msg:     App.i18n.translateContent('Invitation sent!')
+          msg:     __('Invitation sent!')
           timeout: 3500
         })
 
@@ -84,7 +84,7 @@ class GettingStartedAgent extends App.ControllerWizardFullScreen
 
       fail: (settings, details) =>
         @formEnable(e)
-        @form.showAlert(details.error_human || __('Can\'t create user!'))
+        @form.showAlert(details.error_human || __("Can't create user!"))
     )
 
 App.Config.set('getting_started/agents', GettingStartedAgent, 'Routes')

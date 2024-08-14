@@ -43,7 +43,7 @@ class List extends App.Controller
         details = data.responseJSON || {}
         @notify(
           type: 'error'
-          msg:  App.i18n.translateContent(details.error_human || details.error || __('Loading failed.'))
+          msg:  details.error_human || details.error || __('Loading failed.')
         )
     )
 
@@ -75,7 +75,7 @@ class List extends App.Controller
 
             @notify(
               type: 'error'
-              msg:  App.i18n.translateContent(details.error_human || details.error || __('Server operation failed.'))
+              msg:  details.error_human || details.error || __('Server operation failed.')
             )
         )
     )

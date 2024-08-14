@@ -798,7 +798,7 @@ class App.TicketCreate extends App.Controller
         ui.submitEnable(e)
         ui.notify(
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || __('The object could not be created.'))
+          msg:     details.error_human || details.error || __('The object could not be created.')
           timeout: 6000
         )
     )

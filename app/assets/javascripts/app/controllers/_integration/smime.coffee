@@ -108,7 +108,7 @@ class Certificate extends App.ControllerModal
         details = data.responseJSON || {}
         @notify
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || __('The import failed.'))
+          msg:     details.error_human || details.error || __('The import failed.')
           timeout: 6000
     )
 
@@ -151,7 +151,7 @@ class PrivateKey extends App.ControllerModal
         details = data.responseJSON || {}
         @notify
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || __('The import failed.'))
+          msg:     details.error_human || details.error || __('The import failed.')
           timeout: 6000
     )
 
@@ -180,7 +180,7 @@ class List extends App.Controller
         details = data.responseJSON || {}
         @notify(
           type: 'error'
-          msg:  App.i18n.translateContent(details.error_human || details.error || __('Loading failed.'))
+          msg:  details.error_human || details.error || __('Loading failed.')
         )
 
         # do something
@@ -212,7 +212,7 @@ class List extends App.Controller
         details = data.responseJSON || {}
         @notify(
           type: 'error'
-          msg:  App.i18n.translateContent(details.error_human || details.error || __('Server operation failed.'))
+          msg:  details.error_human || details.error || __('Server operation failed.')
         )
     )
 

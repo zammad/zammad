@@ -93,7 +93,7 @@ class GettingStartedAdmin extends App.ControllerWizardFullScreen
           error: ->
             App.Event.trigger('notify', {
               type:    'error'
-              msg:     App.i18n.translateContent('The sign-in failed. Please contact the Support team.')
+              msg:     __('The sign-in failed. Please contact the Support team.')
               timeout: 2500
             })
         )

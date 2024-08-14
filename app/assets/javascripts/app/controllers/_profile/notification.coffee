@@ -168,7 +168,7 @@ class ProfileNotification extends App.ControllerSubContent
         App.Event.trigger('ui:rerender')
         @notify(
           type: 'success'
-          msg:  App.i18n.translateContent('Update successful.')
+          msg:  __('Update successful.')
         )
       ,
       true
@@ -179,7 +179,7 @@ class ProfileNotification extends App.ControllerSubContent
     data = JSON.parse(xhr.responseText)
     @notify(
       type: 'error'
-      msg:  App.i18n.translateContent(data.message)
+      msg:  data.message
     )
 
   previewSound: (e) =>

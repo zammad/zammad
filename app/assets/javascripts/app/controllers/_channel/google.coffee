@@ -324,7 +324,7 @@ class ChannelInboundEdit extends App.ControllerModal
         details = xhr.responseJSON || {}
         @notify
           type:    'error'
-          msg:     App.i18n.translateContent(details.error_human || details.error || __('The changes could not be saved.'))
+          msg:     details.error_human || details.error || __('The changes could not be saved.')
           timeout: 6000
     )
 

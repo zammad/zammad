@@ -45,7 +45,7 @@ class ProfileLinkedAccounts extends App.ControllerSubContent
   success: (data, status, xhr) =>
     @notify(
       type: 'success'
-      msg:  App.i18n.translateContent('Update successful.')
+      msg:  __('Update successful.')
     )
     update = =>
       @render()
@@ -56,7 +56,7 @@ class ProfileLinkedAccounts extends App.ControllerSubContent
     data = JSON.parse(xhr.responseText)
     @notify(
       type: 'error'
-      msg:  App.i18n.translateContent(data.message)
+      msg:  data.message
     )
 
 App.Config.set('LinkedAccounts', { prio: 4000, name: __('Linked Accounts'), parent: '#profile', target: '#profile/linked', controller: ProfileLinkedAccounts, permission: ['user_preferences.linked_accounts'] }, 'NavBarProfile')

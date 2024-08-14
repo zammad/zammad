@@ -56,7 +56,7 @@ class App.TwoFactorConfigurationModal extends App.ControllerModal
   onSubmit: ->
     @notify
       type:      'success'
-      msg:       App.i18n.translateContent('Two-factor authentication method was set up successfully.')
+      msg:       __('Two-factor authentication method was set up successfully.')
       removeAll: true
 
     @successCallback() if @successCallback

@@ -17,7 +17,7 @@ class App.Setting extends App.Model
         if options.notify
           App.Event.trigger 'notify', {
             type:    'success'
-            msg:     App.i18n.translateContent('Update successful.')
+            msg:     __('Update successful.')
             timeout: 2000
           }
         App.Setting.preferencesPost(@)
@@ -28,7 +28,7 @@ class App.Setting extends App.Model
       options.fail = (settings, details) ->
         App.Event.trigger 'notify', {
           type:    'error'
-          msg:     App.i18n.translateContent(details?.error_human || details?.error || __('The setting could not be updated.'))
+          msg:     details?.error_human || details?.error || __('The setting could not be updated.')
           timeout: 3000
         }
         if options.failLocal
@@ -57,7 +57,7 @@ class App.Setting extends App.Model
         if options.notify
           App.Event.trigger 'notify', {
             type:    'success'
-            msg:     App.i18n.translateContent('Reset successful.')
+            msg:     __('Reset successful.')
             timeout: 2000
           }
       error: (xhr, statusText, error) ->
@@ -65,7 +65,7 @@ class App.Setting extends App.Model
 
         App.Event.trigger 'notify', {
           type:    'error'
-          msg:     App.i18n.translateContent(given_error || __('The setting could not be reset.'))
+          msg:     given_error || __('The setting could not be reset.')
           timeout: 3000
         }
     )

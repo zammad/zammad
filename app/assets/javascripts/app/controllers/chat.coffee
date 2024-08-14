@@ -368,7 +368,7 @@ class App.CustomerChat extends App.Controller
       @switch(false)
       @notify(
         type: 'notice'
-        msg:  App.i18n.translateContent('Chat not answered, automatically set to offline.')
+        msg:  __('Chat not answered, automatically set to offline.')
       )
     @idleTimeoutId = @delay(switchOff, @idleTimeout * 1000)
 
@@ -930,7 +930,7 @@ class Setting extends App.ControllerModal
     data = JSON.parse(xhr.responseText)
     @notify(
       type: 'error'
-      msg:  App.i18n.translateContent(data.message)
+      msg:  data.message
     )
 
 class CustomerChatRouter extends App.ControllerPermanent

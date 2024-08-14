@@ -647,7 +647,7 @@ class ReferenceSetupWizard extends App.ControllerWizard
 
     App.Event.trigger 'notify', {
       type:    'success'
-      msg:     App.i18n.translateContent( "Invitation sent to #{ firstname } #{ lastname }" )
+      msg:     App.i18n.translateContent('Invitation sent to %s', "#{firstname} #{lastname}")
       timeout: 3500
     }
 

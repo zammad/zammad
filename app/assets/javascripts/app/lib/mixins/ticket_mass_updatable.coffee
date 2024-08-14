@@ -19,7 +19,7 @@ InstanceMethods =
         App.Event.trigger('overview:fetch')
         App.Event.trigger('notify', {
           type: 'success'
-          msg: App.i18n.translateContent(__('Bulk action executed!'))
+          msg: __('Bulk action executed!')
         })
 
         success?()
