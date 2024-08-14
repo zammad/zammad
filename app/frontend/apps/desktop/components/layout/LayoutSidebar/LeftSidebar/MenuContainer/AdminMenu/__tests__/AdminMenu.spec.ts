@@ -34,7 +34,7 @@ describe('AdminMenu', () => {
     })
 
     it('does not renders setting button if user has not permission', () => {
-      mockPermissions(['agent'])
+      mockPermissions(['ticket.agent'])
 
       const wrapper = renderAdminMenu()
 

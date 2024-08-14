@@ -120,7 +120,7 @@ describe('testing login maintenance mode', () => {
       maintenance_mode: false,
     })
     mockAuthentication(true)
-    mockPermissions(['agent'])
+    mockPermissions(['ticket.agent'])
 
     mockGraphQLApi(LogoutDocument).willResolve({
       logout: {

@@ -284,7 +284,7 @@ describe('TicketSidebarChecklistContent', () => {
 
   describe('actions', () => {
     beforeEach(() => {
-      mockPermissions(['agent'])
+      mockPermissions(['ticket.agent'])
 
       mockTicketChecklistQuery({
         ticketChecklist: {

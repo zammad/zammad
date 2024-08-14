@@ -34,7 +34,7 @@ describe('ChecklistEmptyTemplates', () => {
   })
 
   it('hides content for an agent', () => {
-    mockPermissions(['agent'])
+    mockPermissions(['ticket.agent'])
 
     const wrapper = renderChecklistContent()
 
