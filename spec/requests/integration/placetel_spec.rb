@@ -512,6 +512,52 @@ RSpec.describe 'Integration Placetel', type: :request do
       expect(log.duration_waiting_time).to be_nil
       expect(log.duration_talking_time).to be_nil
 
+      travel 1.second
+
+      # inbound - IIV - new call
+      params = 'event=IncomingCall&to=030600000000&from=anonymous&call_id=1234567890-8'
+      post "/api/v1/placetel/#{token}", params: params
+      expect(response).to have_http_status(:ok)
+      log = Cti::Log.find_by(call_id: '1234567890-8')
+      expect(log).to be_truthy
+      expect(log.to).to eq('030600000000')
+      expect(log.from).to eq('anonymous')
+      expect(log.direction).to eq('in')
+      expect(log.to_comment).to be_nil
+      expect(log.from_comment).to be_nil
+      expect(log.preferences['to']).to be_falsey
+      expect(log.preferences['from']).to be_falsey
+      expect(log.comment).to be_nil
+      expect(log.state).to eq('newCall')
+      expect(log.done).to be(false)
+      expect(log.initialized_at).to be_truthy
+      expect(log.start_at).to be_nil
+      expect(log.end_at).to be_nil
+      expect(log.duration_waiting_time).to be_nil
+      expect(log.duration_talking_time).to be_nil
+
+      travel 1.second
+
+      # inbound - IIV - hangup by anonymous
+      params = 'event=HungUp&call_id=1234567890-8&type=accepted&to=030600000000&from=anonymous'
+      post "/api/v1/placetel/#{token}", params: params
+      expect(response).to have_http_status(:ok)
+      log = Cti::Log.find_by(call_id: '1234567890-8')
+      expect(log).to be_truthy
+      expect(log.to).to eq('030600000000')
+      expect(log.from).to eq('anonymous')
+      expect(log.direction).to eq('in')
+      expect(log.to_comment).to be_nil
+      expect(log.from_comment).to be_nil
+      expect(log.comment).to eq('normalClearing')
+      expect(log.state).to eq('hangup')
+      expect(log.done).to be(false)
+      expect(log.initialized_at).to be_truthy
+      expect(log.start_at).to be_nil
+      expect(log.end_at).to be_truthy
+      expect(log.duration_waiting_time).to be_truthy
+      expect(log.duration_talking_time).to be_nil
+
       # get caller list
       get '/api/v1/cti/log'
       expect(response).to have_http_status(:forbidden)
@@ -520,25 +566,26 @@ RSpec.describe 'Integration Placetel', type: :request do
       get '/api/v1/cti/log', as: :json
       expect(response).to have_http_status(:ok)
       expect(json_response['list']).to be_a(Array)
-      expect(json_response['list'].count).to eq(7)
+      expect(json_response['list'].count).to eq(8)
       expect(json_response['assets']).to be_truthy
       expect(json_response['assets']['User']).to be_truthy
       expect(json_response['assets']['User'][customer2.id.to_s]).to be_truthy
       expect(json_response['assets']['User'][customer3.id.to_s]).to be_truthy
-      expect(json_response['list'][0]['call_id']).to eq('1234567890-7')
-      expect(json_response['list'][1]['call_id']).to eq('1234567890-6')
-      expect(json_response['list'][2]['call_id']).to eq('1234567890-5')
-      expect(json_response['list'][3]['call_id']).to eq('1234567890-4')
-      expect(json_response['list'][4]['call_id']).to eq('1234567890-3')
-      expect(json_response['list'][5]['call_id']).to eq('1234567890-2')
-      expect(json_response['list'][5]['state']).to eq('hangup')
-      expect(json_response['list'][5]['from']).to eq('4930777000000')
-      expect(json_response['list'][5]['from_comment']).to be_nil
-      expect(json_response['list'][5]['to']).to eq('01114100300')
-      expect(json_response['list'][5]['to_comment']).to eq('CallerId Customer1')
-      expect(json_response['list'][5]['comment']).to eq('normalClearing')
-      expect(json_response['list'][5]['state']).to eq('hangup')
-      expect(json_response['list'][6]['call_id']).to eq('1234567890-1')
+      expect(json_response['list'][0]['call_id']).to eq('1234567890-8')
+      expect(json_response['list'][1]['call_id']).to eq('1234567890-7')
+      expect(json_response['list'][2]['call_id']).to eq('1234567890-6')
+      expect(json_response['list'][3]['call_id']).to eq('1234567890-5')
+      expect(json_response['list'][4]['call_id']).to eq('1234567890-4')
+      expect(json_response['list'][5]['call_id']).to eq('1234567890-3')
+      expect(json_response['list'][6]['call_id']).to eq('1234567890-2')
+      expect(json_response['list'][6]['state']).to eq('hangup')
+      expect(json_response['list'][6]['from']).to eq('4930777000000')
+      expect(json_response['list'][6]['from_comment']).to be_nil
+      expect(json_response['list'][6]['to']).to eq('01114100300')
+      expect(json_response['list'][6]['to_comment']).to eq('CallerId Customer1')
+      expect(json_response['list'][6]['comment']).to eq('normalClearing')
+      expect(json_response['list'][6]['state']).to eq('hangup')
+      expect(json_response['list'][7]['call_id']).to eq('1234567890-1')
     end
 
     it 'does log call with peer' do
@@ -569,7 +616,7 @@ RSpec.describe 'Integration Placetel', type: :request do
       config[:outbound][:default_caller_id] = ''
       Setting.set('placetel_config', config)
 
-      stub_request(:get, 'https://api.placetel.de/v2/sip_users')
+      stub_request(:get, Cti::Driver::Placetel::PLACETEL_SIP_USERS_URL)
         .to_return(status: 200, body: [{ 'callerid' => '03055571600', 'did' => 10, 'name' => 'Bob Smith', 'type' => 'standard', 'sipuid' => '777008478072@example.com' }, { 'callerid' => '03055571600', 'did' => 12, 'name' => 'Josef Müller', 'type' => 'standard', 'sipuid' => '777042617425@example.com' }].to_json)
 
       params = 'event=OutgoingCall&direction=out&to=099999222222&call_id=1234567890-2&from=777008478072@example.com'
@@ -615,6 +662,26 @@ RSpec.describe 'Integration Placetel', type: :request do
 
       # check if cache is filled
       expect(Rails.cache.read('placetelGetVoipUsers')['777008478072@example.com']).to eq('Bob Smith')
+    end
+
+    it 'does catch failed sip user response with http error status' do
+      stub_request(:get, Cti::Driver::Placetel::PLACETEL_SIP_USERS_URL).to_return(status: 400, body: '')
+      expect(Cti::Driver::Placetel.new({ params: { event: 'test_event' } }).load_voip_users).to eq({})
+    end
+
+    it 'does catch failed sip user response with empty body' do
+      stub_request(:get, Cti::Driver::Placetel::PLACETEL_SIP_USERS_URL).to_return(status: 200, body: {}.to_json)
+      expect(Cti::Driver::Placetel.new({ params: { event: 'test_event' } }).load_voip_users).to eq({})
+    end
+
+    it 'does catch failed sip user response with failed result state in body' do
+      stub_request(:get, Cti::Driver::Placetel::PLACETEL_SIP_USERS_URL).to_return(status: 200, body: { result: '-1' }.to_json)
+      expect(Cti::Driver::Placetel.new({ params: { event: 'test_event' } }).load_voip_users).to eq({})
+    end
+
+    it 'does catch failed sip user response with invalid response format' do
+      stub_request(:get, Cti::Driver::Placetel::PLACETEL_SIP_USERS_URL).to_return(status: 200, body: { foo: 123 }.to_json)
+      expect(Cti::Driver::Placetel.new({ params: { event: 'test_event' } }).load_voip_users).to eq({})
     end
   end
 end
