@@ -18,10 +18,10 @@ RSpec.describe ExcelSheet::Ticket do
       expect(tags_count).to eq 1
     end
 
-    it 'has 31 column in default configuration' do
+    it 'has 32 column in default configuration' do
       tags_count = instance.ticket_header.count
 
-      expect(tags_count).to eq 31
+      expect(tags_count).to eq 32
     end
 
     it 'all elements have width attribute' do

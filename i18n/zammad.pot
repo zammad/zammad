@@ -1609,7 +1609,7 @@ msgstr ""
 msgid "Article > Text (HTML)"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:72
+#: lib/excel_sheet/ticket.rb:73
 msgid "Article Count"
 msgstr ""
 
@@ -2836,15 +2836,15 @@ msgstr ""
 msgid "Close & Tag as Spam"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:61
+#: lib/excel_sheet/ticket.rb:62
 msgid "Close Diff In Min"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:59
+#: lib/excel_sheet/ticket.rb:60
 msgid "Close Escalation At"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:60
+#: lib/excel_sheet/ticket.rb:61
 msgid "Close In Min"
 msgstr ""
 
@@ -5804,7 +5804,7 @@ msgstr ""
 msgid "Escalated ticket (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>The ticket (#{ticket.title}) from \"<b>#{ticket.customer.longname}</b>\" has been escalated since \"#{ticket.escalation_at}\"!</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n  Information:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:73
+#: lib/excel_sheet/ticket.rb:74
 msgid "Escalation At"
 msgstr ""
 
@@ -6147,19 +6147,19 @@ msgstr ""
 msgid "Finish Setup"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:62
+#: lib/excel_sheet/ticket.rb:63
 msgid "First Response At"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:65
+#: lib/excel_sheet/ticket.rb:66
 msgid "First Response Diff In Min"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:63
+#: lib/excel_sheet/ticket.rb:64
 msgid "First Response Escalation At"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:64
+#: lib/excel_sheet/ticket.rb:65
 msgid "First Response In Min"
 msgstr ""
 
@@ -7929,15 +7929,19 @@ msgstr ""
 msgid "Last Article"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:70
-msgid "Last Contact Agent At"
-msgstr ""
-
-#: lib/excel_sheet/ticket.rb:69
-msgid "Last Contact At"
+#: lib/excel_sheet/ticket.rb:59
+msgid "Last Closed At"
 msgstr ""
 
 #: lib/excel_sheet/ticket.rb:71
+msgid "Last Contact Agent At"
+msgstr ""
+
+#: lib/excel_sheet/ticket.rb:70
+msgid "Last Contact At"
+msgstr ""
+
+#: lib/excel_sheet/ticket.rb:72
 msgid "Last Contact Customer At"
 msgstr ""
 
@@ -16144,15 +16148,15 @@ msgstr ""
 msgid "Update Database"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:68
+#: lib/excel_sheet/ticket.rb:69
 msgid "Update Diff In Min"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:66
+#: lib/excel_sheet/ticket.rb:67
 msgid "Update Escalation At"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:67
+#: lib/excel_sheet/ticket.rb:68
 msgid "Update In Min"
 msgstr ""
 
