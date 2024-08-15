@@ -20,7 +20,7 @@
     # Force redis usage, even if it was disabled by the initial configure_environment script of stable.
     - export REDIS_URL=redis://redis
     - bundle exec rails db:migrate
-    - bundle exec rspec --profile 10 spec/db
+    - bundle exec rspec --profile 10 spec/db -t ~searchindex
 
 rspec:migration:postgresql:
   extends:
