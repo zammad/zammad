@@ -2,6 +2,8 @@
 
 class Cti::Driver::Placetel < Cti::Driver::Base
 
+  PLACETEL_SIP_USERS_URL = 'https://api.placetel.de/v2/sip_users'.freeze
+
   def config
     Setting.get('placetel_config')
   end
@@ -89,7 +91,7 @@ class Cti::Driver::Placetel < Cti::Driver::Base
     return list if list
 
     response = UserAgent.get(
-      'https://api.placetel.de/v2/sip_users',
+      PLACETEL_SIP_USERS_URL,
       {},
       {
         headers:       {
@@ -107,23 +109,23 @@ class Cti::Driver::Placetel < Cti::Driver::Base
     )
 
     if !response.success?
-      Rails.logger.error "Can't fetch getVoipUsers from '#{url}', http code: #{response.code}"
+      Rails.logger.error "Can't fetch getVoipUsers from '#{PLACETEL_SIP_USERS_URL}', http code: #{response.code}"
       Rails.cache.write('placetelGetVoipUsers', {}, { expires_in: 1.hour })
       return {}
     end
     result = response.data
     if result.blank?
-      Rails.logger.error "Can't fetch getVoipUsers from '#{url}', result: #{response.inspect}"
+      Rails.logger.error "Can't fetch getVoipUsers from '#{PLACETEL_SIP_USERS_URL}', result: #{response.inspect}"
       Rails.cache.write('placetelGetVoipUsers', {}, { expires_in: 1.hour })
       return {}
     end
     if result.is_a?(Hash) && (result['result'] == '-1' || result['result_code'] == 'error')
-      Rails.logger.error "Can't fetch getVoipUsers from '#{url}', result: #{result.inspect}"
+      Rails.logger.error "Can't fetch getVoipUsers from '#{PLACETEL_SIP_USERS_URL}', result: #{result.inspect}"
       Rails.cache.write('placetelGetVoipUsers', {}, { expires_in: 1.hour })
       return {}
     end
     if !result.is_a?(Array)
-      Rails.logger.error "Can't fetch getVoipUsers from '#{url}', result: #{result.inspect}"
+      Rails.logger.error "Can't fetch getVoipUsers from '#{PLACETEL_SIP_USERS_URL}', result: #{result.inspect}"
       Rails.cache.write('placetelGetVoipUsers', {}, { expires_in: 1.hour })
       return {}
     end
