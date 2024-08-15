@@ -26,6 +26,10 @@ RSpec.describe 'Assets', db_strategy: :reset, type: :system do
       page.execute_script('return App.Group.first().name_last')
     end
 
+    def group_parent_id
+      page.execute_script('return App.Group.first().parent_id')
+    end
+
     describe 'when customer', authenticated_as: :customer do
       it 'can not access group details' do
         expect(group_note).to be_nil
@@ -33,6 +37,18 @@ RSpec.describe 'Assets', db_strategy: :reset, type: :system do
 
       it 'can access name_last attribute (#4981)' do
         expect(group_name_last).not_to be_nil
+      end
+
+      context 'when group has parent', authenticated_as: :authenticate do
+        def authenticate
+          Group.first.update(parent_id: create(:group, name: 'Parent').id)
+
+          customer
+        end
+
+        it 'can access parent_id attribute' do
+          expect(group_parent_id).not_to be_nil
+        end
       end
     end
 
