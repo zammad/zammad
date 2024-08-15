@@ -497,6 +497,7 @@ returns
         error:   "No such file #{uri}, 404!",
         success: false,
         code:    response.code,
+        body:    response.body,
         header:  response.each_header.to_h,
       )
     when Net::HTTPClientError
@@ -512,6 +513,7 @@ returns
         error:   "Server Error: #{response.inspect}!",
         success: false,
         code:    response.code,
+        body:    response.body,
         header:  response.each_header.to_h,
       )
     when Net::HTTPRedirection

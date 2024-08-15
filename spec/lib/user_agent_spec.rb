@@ -90,10 +90,11 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
       include_examples 'successful request with json body'
     end
 
-    shared_examples 'unsuccessful request' do
+    shared_examples 'unsuccessful request with body' do
       it 'returns a response' do
         expect(response).not_to be_success
         expect(response.code).to eq(code)
+        expect(response.body).to be_present
       end
     end
 
@@ -159,7 +160,7 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
           let(:code)        { '404' }
           let(:request_url) { "#{host}/test/not_existing" }
 
-          include_examples 'unsuccessful request'
+          include_examples 'unsuccessful request with body'
         end
       end
 
@@ -270,7 +271,7 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
           let(:request_params)  { { submitted: { key: 'some value' } } }
           let(:request_options) { { json: true } }
 
-          include_examples 'unsuccessful request'
+          include_examples 'unsuccessful request with body'
         end
       end
     end
@@ -299,7 +300,7 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
           let(:request_url)    { "#{host}/test/not_existing" }
           let(:request_params) { { submitted: 'some value' } }
 
-          include_examples 'unsuccessful request without body'
+          include_examples 'unsuccessful request with body'
         end
       end
 
@@ -436,7 +437,7 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
           let(:request_url)    { "#{host}/test/not_existing" }
           let(:request_params) { { submitted: 'some value' } }
 
-          include_examples 'unsuccessful request without body'
+          include_examples 'unsuccessful request with body'
         end
       end
 
@@ -533,7 +534,7 @@ RSpec.describe UserAgent, :aggregate_failures, integration: true do
           let(:code)        { '404' }
           let(:request_url) { "#{host}/test/not_existing" }
 
-          include_examples 'unsuccessful request without body'
+          include_examples 'unsuccessful request with body'
         end
       end
 
