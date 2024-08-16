@@ -13,6 +13,7 @@ import {
 
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
 import { useHtmlLinks } from '#shared/composables/useHtmlLinks.ts'
+import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { i18n } from '#shared/i18n/index.ts'
 import { textToHtml } from '#shared/utils/helpers.ts'
 
@@ -39,6 +40,9 @@ export interface Props {
     label?: string
     input?: string
   }
+  onSubmitEdit?: (
+    value: string,
+  ) => Promise<void | (() => void)> | void | (() => void)
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -46,7 +50,6 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  'submit-edit': [string]
   'cancel-edit': []
 }>()
 
@@ -104,13 +107,29 @@ const activateEditing = (event?: MouseEvent | KeyboardEvent) => {
   if (props.detectLinks && (event?.target as HTMLElement)?.closest('a')) return // guard to prevent editing when clicking on a link
 
   if (isEditing.value || props.disabled) return
+
   isEditing.value = true
 }
 
 const submitEdit = () => {
+  // Needs to be checked, because the 'onSubmit' function is not required.
+  if (!props.onSubmitEdit) return undefined
+
   if (!checkValidity(inputValue.value)) return
 
-  emit('submit-edit', inputValue.value)
+  const submitEditResult = props.onSubmitEdit(inputValue.value)
+
+  if (submitEditResult instanceof Promise) {
+    return submitEditResult
+      .then((result) => {
+        result?.()
+
+        stopEditing(false)
+      })
+      .catch(() => {})
+  }
+
+  submitEditResult?.()
 
   stopEditing(false)
 }
@@ -139,19 +158,12 @@ const handleEnterKey = (event: KeyboardEvent) => {
   submitEdit()
 }
 
-const handleFocusOut = (event: FocusEvent) => {
-  // Handles quiting editing mode for screen readers who navigate with tab
-  if (
-    !target.value?.contains(event.relatedTarget as Node) &&
-    event.relatedTarget
-  )
-    stopEditing()
-}
-
 const processedContent = computed(() => {
   if (props.detectLinks) return textToHtml(props.value)
   return props.value
 })
+
+useTrapTab(target)
 
 watch(
   () => props.value,
@@ -177,6 +189,7 @@ watch(isEditing, () => {
 
 const vFocus = (el: HTMLElement) => {
   nextTick(() => el.focus())
+
   checkValidity(inputValue.value)
 }
 
@@ -187,10 +200,10 @@ const focusClasses = computed(() => {
 
   if (props.alternativeBackground) {
     classes +=
-      'group-focus-within:before:bg-neutral-50 group-focus-within:before:dark:bg-gray-500'
+      ' group-focus-within:before:bg-neutral-50 group-focus-within:before:dark:bg-gray-500'
   } else {
     classes +=
-      'group-focus-within:before:bg-blue-200 group-focus-within:before:dark:bg-gray-700'
+      ' group-focus-within:before:bg-blue-200 group-focus-within:before:dark:bg-gray-700'
   }
   return classes
 })
@@ -250,14 +263,19 @@ defineExpose({
     ref="target"
     :role="activeEditingMode || disabled ? undefined : 'button'"
     class="-:w-fit group relative flex items-center gap-1 focus:outline-none"
-    :class="[disabledClasses, { 'w-full': block }]"
+    :class="[
+      disabledClasses,
+      {
+        'w-full': block,
+      },
+    ]"
     :aria-disabled="disabled"
     :tabindex="activeEditingMode || disabled ? undefined : 0"
     @click.capture="activateEditing"
     @keydown.enter.capture="activateEditing"
     @mouseover="handleMouseOver"
     @mouseleave="handleMouseLeave"
-    @focusout="handleFocusOut"
+    @keydown.esc="stopEditing()"
   >
     <div
       v-if="!isEditing"
@@ -276,7 +294,8 @@ defineExpose({
       <CommonLabel
         :id="id"
         ref="labelComponent"
-        class="z-10 break-all"
+        class="z-10 break-words"
+        style="word-break: break-word"
         v-bind="labelAttrs"
         :size="size"
         :class="[classes?.label, minHeightClassMap[size]]"
@@ -306,7 +325,6 @@ defineExpose({
           :disabled="disabled"
           :placeholder="placeholder"
           @keydown.stop.enter="handleEnterKey"
-          @keydown.stop.esc="stopEditing()"
         />
       </div>
 

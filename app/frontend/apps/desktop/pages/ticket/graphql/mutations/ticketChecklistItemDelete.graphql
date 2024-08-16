@@ -1,5 +1,8 @@
 mutation ticketChecklistItemDelete($checklistId: ID!, $checklistItemId: ID!) {
   ticketChecklistItemDelete(checklistId: $checklistId, checklistItemId: $checklistItemId) {
     success
+    errors {
+      ...errors
+    }
   }
 }

@@ -26,10 +26,10 @@ const renderTopBar = (options = testOptionsTopBar) => {
           computed(() => parentContainer.value),
         )
 
-        provide(
-          TICKET_INFORMATION_KEY,
-          computed(() => options),
-        )
+        provide(TICKET_INFORMATION_KEY, {
+          ticket: computed(() => options),
+          ticketId: computed(() => options.id),
+        })
         return {}
       },
     },

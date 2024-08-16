@@ -13,7 +13,13 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::TitleUpdate, type: :graphql do
     <<~QUERY
       mutation ticketChecklistTitleUpdate($checklistId: ID!, $title: String) {
         ticketChecklistTitleUpdate(checklistId: $checklistId, title: $title) {
-          success
+          checklist {
+            id
+            name
+          }
+          errors {
+            message
+          }
         }
       }
     QUERY
@@ -27,14 +33,13 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::TitleUpdate, type: :graphql do
 
   shared_examples 'updating the ticket checklist title' do
     it 'updates the ticket checklist title' do
-      expect(gql.result.data['success']).to be(true)
+      expect(gql.result.data['checklist']['name']).to eq(title)
     end
   end
 
-  shared_examples 'returning an error payload' do |error_message, error_type|
-    it 'returns an error payload', aggregate_failures: true do
-      expect(gql.result.payload['errors'].first['message']).to eq(error_message)
-      expect(gql.result.payload['errors'].first['extensions']['type']).to eq(error_type)
+  shared_examples 'raising an error' do |error_type|
+    it 'raises an error' do
+      expect(gql.result.error_type).to eq(error_type)
     end
   end
 
@@ -44,13 +49,13 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::TitleUpdate, type: :graphql do
     context 'without access to the ticket' do
       let(:agent) { create(:agent) }
 
-      it_behaves_like 'returning an error payload', 'not allowed to update? this Ticket', 'Pundit::NotAuthorizedError'
+      it_behaves_like 'raising an error', Pundit::NotAuthorizedError
     end
 
     context 'with ticket read permission' do
       let(:agent) { create(:agent, groups: [group], group_names_access_map: { group.name => 'read' }) }
 
-      it_behaves_like 'returning an error payload', 'not allowed to update? this Ticket', 'Pundit::NotAuthorizedError'
+      it_behaves_like 'raising an error', Pundit::NotAuthorizedError
     end
 
     context 'with ticket read+change permissions' do
@@ -62,7 +67,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::TitleUpdate, type: :graphql do
     context 'when ticket checklist does not exist' do
       let(:variables) { { checklistId: 'gid://Zammad/Checklist/0', title: title } }
 
-      it_behaves_like 'returning an error payload', "Couldn't find Checklist with 'id'=0", 'ActiveRecord::RecordNotFound'
+      it_behaves_like 'raising an error', ActiveRecord::RecordNotFound
     end
   end
 

@@ -3237,9 +3237,13 @@
 
               ],
               "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -3295,21 +3299,43 @@
               "deprecationReason": null
             },
             {
+              "name": "incomplete",
+              "description": null,
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "items",
               "description": null,
               "args": [
 
               ],
               "type": {
-                "kind": "LIST",
+                "kind": "NON_NULL",
                 "name": null,
                 "ofType": {
-                  "kind": "NON_NULL",
+                  "kind": "LIST",
                   "name": null,
                   "ofType": {
-                    "kind": "OBJECT",
-                    "name": "ChecklistItem",
-                    "ofType": null
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "ChecklistItem",
+                      "ofType": null
+                    }
                   }
                 }
               },
@@ -3382,9 +3408,13 @@
 
               ],
               "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -3446,8 +3476,40 @@
 
               ],
               "type": {
-                "kind": "SCALAR",
-                "name": "String",
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ticket",
+              "description": null,
+              "args": [
+
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Ticket",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ticketAccess",
+              "description": null,
+              "args": [
+
+              ],
+              "type": {
+                "kind": "ENUM",
+                "name": "EnumChecklistItemTicketAccess",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -4357,6 +4419,29 @@
             {
               "name": "starttls",
               "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "kind": "ENUM",
+          "name": "EnumChecklistItemTicketAccess",
+          "description": "All checklist item ticket access type values",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "Granted",
+              "description": "Access to this ticket is granted",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "Forbidden",
+              "description": "Access to this ticket is forbidden",
               "isDeprecated": false,
               "deprecationReason": null
             }
@@ -9158,14 +9243,14 @@
               "description": "Create an empty checklist or a checklist based on a template for a ticket.",
               "args": [
                 {
-                  "name": "ticket",
+                  "name": "ticketId",
                   "description": "Ticket to create the new checklist for.",
                   "type": {
                     "kind": "NON_NULL",
                     "name": null,
                     "ofType": {
-                      "kind": "INPUT_OBJECT",
-                      "name": "LocatorTicketInput",
+                      "kind": "SCALAR",
+                      "name": "ID",
                       "ofType": null
                     }
                   },
@@ -20073,14 +20158,14 @@
           "description": "Autogenerated return type of TicketChecklistItemUpsert.",
           "fields": [
             {
-              "name": "checklistItemId",
-              "description": "ID of the updated or created checklist item.",
+              "name": "checklistItem",
+              "description": "Updated or created checklist item.",
               "args": [
 
               ],
               "type": {
-                "kind": "SCALAR",
-                "name": "ID",
+                "kind": "OBJECT",
+                "name": "ChecklistItem",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -20104,20 +20189,6 @@
                     "ofType": null
                   }
                 }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "success",
-              "description": "Was the mutation succcessful?",
-              "args": [
-
-              ],
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null
@@ -20136,6 +20207,20 @@
           "description": "Autogenerated return type of TicketChecklistTitleUpdate.",
           "fields": [
             {
+              "name": "checklist",
+              "description": "Created checklist",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Checklist",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "errors",
               "description": "Errors encountered during execution of the mutation.",
               "args": [
@@ -20153,20 +20238,6 @@
                     "ofType": null
                   }
                 }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "success",
-              "description": "Was the mutation succcessful?",
-              "args": [
-
-              ],
-              "type": {
-                "kind": "SCALAR",
-                "name": "Boolean",
-                "ofType": null
               },
               "isDeprecated": false,
               "deprecationReason": null

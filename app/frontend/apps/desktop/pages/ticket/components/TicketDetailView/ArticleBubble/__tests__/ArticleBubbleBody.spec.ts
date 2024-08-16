@@ -19,12 +19,12 @@ const renderBody = (
       components: { ArticleBubbleBody },
 
       setup: () => {
-        provide(
-          TICKET_INFORMATION_KEY,
-          computed(() => {
-            return createDummyTicket()
-          }),
-        )
+        const dummyTicket = createDummyTicket()
+
+        provide(TICKET_INFORMATION_KEY, {
+          ticketId: computed(() => dummyTicket.id),
+          ticket: computed(() => dummyTicket),
+        })
         return {
           article,
           showMetaInformation,

@@ -21,10 +21,22 @@ RSpec.describe Gql::Queries::Ticket::Checklist, type: :graphql do
           id
           name
           completed
+          incomplete
           items {
             id
             text
             checked
+            ticket {
+              id
+              internalId
+              number
+              title
+              state {
+                name
+              }
+              stateColorCode
+            }
+            ticketAccess
           }
         }
       }
@@ -35,14 +47,17 @@ RSpec.describe Gql::Queries::Ticket::Checklist, type: :graphql do
 
   let(:response) do
     {
-      'id'        => gql.id(checklist),
-      'name'      => checklist.name,
-      'completed' => false,
-      'items'     => checklist.items.map do |item|
+      'id'         => gql.id(checklist),
+      'name'       => checklist.name,
+      'completed'  => false,
+      'incomplete' => 5,
+      'items'      => checklist.items.map do |item|
         {
-          'id'      => gql.id(item),
-          'text'    => item.text,
-          'checked' => item.checked,
+          'id'           => gql.id(item),
+          'text'         => item.text,
+          'checked'      => item.checked,
+          'ticket'       => nil,
+          'ticketAccess' => nil,
         }
       end,
     }
@@ -104,6 +119,106 @@ RSpec.describe Gql::Queries::Ticket::Checklist, type: :graphql do
         let(:variables) { {} }
 
         it_behaves_like 'raising an error', GraphQL::Schema::Validator::ValidationFailedError
+      end
+    end
+
+    context 'with ticket checklist item', authenticated_as: :authenticate do
+      let(:checklist) { create(:checklist, name: 'foobar', ticket: ticket, item_count: 1) }
+
+      def authenticate
+        checklist.items.last.update!(text: "Ticket##{another_ticket.number}", ticket_id: another_ticket.id)
+        checklist.reload
+        agent
+      end
+
+      context 'with an open ticket' do
+        let(:another_ticket) { create(:ticket, group: group, state: Ticket::State.find_by(name: 'open')) }
+
+        let(:response) do
+          {
+            'id'         => gql.id(checklist),
+            'name'       => checklist.name,
+            'completed'  => false,
+            'incomplete' => 1,
+            'items'      => [
+              {
+                'id'           => gql.id(checklist.items.last),
+                'text'         => checklist.items.last.text,
+                'checked'      => checklist.items.last.checked,
+                'ticket'       => {
+                  'id'             => gql.id(another_ticket),
+                  'internalId'     => another_ticket.id,
+                  'number'         => another_ticket.number,
+                  'title'          => another_ticket.title,
+                  'state'          => {
+                    'name' => another_ticket.state.name,
+                  },
+                  'stateColorCode' => 'open',
+                },
+                'ticketAccess' => 'Granted',
+              },
+            ],
+          }
+        end
+
+        it_behaves_like 'returning checklist data'
+      end
+
+      context 'with a closed ticket' do
+        let(:another_ticket) { create(:ticket, group: group, state: Ticket::State.find_by(name: 'closed')) }
+
+        let(:response) do
+          {
+            'id'         => gql.id(checklist),
+            'name'       => checklist.name,
+            'completed'  => true,
+            'incomplete' => 0,
+            'items'      => [
+              {
+                'id'           => gql.id(checklist.items.last),
+                'text'         => checklist.items.last.text,
+                'checked'      => checklist.items.last.checked,
+                'ticket'       => {
+                  'id'             => gql.id(another_ticket),
+                  'internalId'     => another_ticket.id,
+                  'number'         => another_ticket.number,
+                  'title'          => another_ticket.title,
+                  'state'          => {
+                    'name' => another_ticket.state.name,
+                  },
+                  'stateColorCode' => 'closed',
+                },
+                'ticketAccess' => 'Granted',
+              },
+            ],
+          }
+        end
+
+        it_behaves_like 'returning checklist data'
+      end
+
+      context 'when the agent has no access to the linked ticket' do
+        let(:another_ticket) { create(:ticket, state: Ticket::State.find_by(name: 'new')) }
+
+        let(:response) do
+          {
+            'id'         => gql.id(checklist),
+            'name'       => checklist.name,
+            'completed'  => false,
+            'incomplete' => 1,
+            'items'      => [
+              {
+                'id'           => gql.id(checklist.items.last),
+                'text'         => checklist.items.last.text,
+                'checked'      => checklist.items.last.checked,
+                'ticket'       => nil,
+                'ticketAccess' => 'Forbidden',
+              },
+            ],
+          }
+        end
+
+        it_behaves_like 'returning checklist data'
       end
     end
   end

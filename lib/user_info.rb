@@ -5,6 +5,10 @@ module UserInfo
     Thread.current[:user_id]
   end
 
+  def self.current_user
+    User.find_by(id: Thread.current[:user_id])
+  end
+
   def self.current_user_id=(user_id)
     Thread.current[:user_id] = user_id
     Thread.current[:assets]  = UserInfo::Assets.new(user_id)

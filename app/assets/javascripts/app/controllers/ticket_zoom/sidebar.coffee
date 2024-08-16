@@ -4,6 +4,12 @@ class App.TicketZoomSidebar extends App.ControllerObserver
     customer_id: true
     organization_id: true
 
+  release: =>
+    super
+    if @sidebarBackends
+      for key, value of @sidebarBackends
+        @sidebarBackends[key]?.releaseController()
+
   get: (key) ->
     return @sidebarBackends[key]
 

@@ -43,12 +43,20 @@ const iconColor = computed(() => {
       return 'text-yellow-500'
   }
 })
+
+const isEscalating = computed(
+  () => props.colorCode === EnumTicketStateColorCode.Escalating,
+  // assertive is used for screen readers to announce the change immediately only for escalating state
+  // polite is used for screen readers to announce the change after the current announcement
+)
 </script>
 
 <template>
   <CommonIcon
+    role="status"
+    :aria-live="isEscalating ? 'assertive' : 'polite'"
+    :aria-roledescription="$t('(ticket status: %s)', $t(colorCode))"
     :class="iconColor"
-    :label="$t('(state: %s)', $t(label))"
     :name="iconName"
     :size="iconSize"
   />

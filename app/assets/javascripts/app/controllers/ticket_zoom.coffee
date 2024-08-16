@@ -326,18 +326,20 @@ class App.TicketZoom extends App.Controller
     return if !@attributeBar
     @attributeBar.stop()
 
-  changed: =>
+  changed: (object, field) =>
     return false if !@ticket
     currentParams = @formCurrent()
     currentStore = @currentStore()
     modelDiff = @formDiff(currentParams, currentStore)
     return false if !modelDiff || _.isEmpty(modelDiff)
     return false if _.isEmpty(modelDiff.ticket) && _.isEmpty(modelDiff.article)
+    return not _.isUndefined(modelDiff[object]?[field]) if object and field
     return true
 
   release: =>
     @autosaveStop()
     @positionPageHeaderStop()
+    @sidebarWidget?.releaseController()
 
   muteTask: =>
     App.TaskManager.mute(@taskKey)
@@ -961,6 +963,9 @@ class App.TicketZoom extends App.Controller
   submitChecklist: (e, ticket, macro, editContollerForm) =>
     return @submitTimeAccounting(e, ticket, macro, editContollerForm) if ticket.currentView() isnt 'agent'
     return @submitTimeAccounting(e, ticket, macro, editContollerForm) if !App.Config.get('checklist')
+
+    # Warning modal should be considered only if the ticket state was changed.
+    return @submitTimeAccounting(e, ticket, macro, editContollerForm) if not @changed('ticket', 'state_id')
 
     ticketState    = App.TicketState.find(ticket.state_id)
     isClosed       = ticketState.state_type.name is 'closed'

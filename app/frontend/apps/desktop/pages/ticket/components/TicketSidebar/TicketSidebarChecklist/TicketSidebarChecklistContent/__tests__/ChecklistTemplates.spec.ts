@@ -6,7 +6,7 @@ import renderComponent from '#tests/support/components/renderComponent.ts'
 
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
-import ChecklistTemplates from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklistContent/ChecklistTemplates.vue'
+import ChecklistTemplates from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue'
 
 const templates = [
   { label: 'Test', key: convertToGraphQLId('Checklist', 1) },

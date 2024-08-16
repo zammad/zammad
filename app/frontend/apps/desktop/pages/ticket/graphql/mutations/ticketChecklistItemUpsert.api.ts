@@ -1,6 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
+import { ErrorsFragmentDoc } from '../../../../../../shared/graphql/fragments/errors.api';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
@@ -12,11 +13,28 @@ export const TicketChecklistItemUpsertDocument = gql`
     checklistItemId: $checklistItemId
     input: $input
   ) {
-    success
-    checklistItemId
+    checklistItem {
+      id
+      text
+      checked
+      ticket {
+        id
+        internalId
+        number
+        title
+        state {
+          name
+        }
+        stateColorCode
+      }
+      ticketAccess
+    }
+    errors {
+      ...errors
+    }
   }
 }
-    `;
+    ${ErrorsFragmentDoc}`;
 export function useTicketChecklistItemUpsertMutation(options: VueApolloComposable.UseMutationOptions<Types.TicketChecklistItemUpsertMutation, Types.TicketChecklistItemUpsertMutationVariables> | ReactiveFunction<VueApolloComposable.UseMutationOptions<Types.TicketChecklistItemUpsertMutation, Types.TicketChecklistItemUpsertMutationVariables>> = {}) {
   return VueApolloComposable.useMutation<Types.TicketChecklistItemUpsertMutation, Types.TicketChecklistItemUpsertMutationVariables>(TicketChecklistItemUpsertDocument, options);
 }

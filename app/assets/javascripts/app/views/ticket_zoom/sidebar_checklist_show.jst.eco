@@ -9,23 +9,23 @@
 
   <% if !@readOnly: %>
     <div class="checklistShowButtons">
-      <div class="btn btn--secondary btn--action js-reorder">
+      <button class="btn btn--secondary btn--action js-reorder">
         <%- @Icon 'draggable-small' %>
         <span><%- @T('Reorder') %></span>
-      </div>
+      </button>
 
-      <div class="btn btn--secondary btn--action btn--create js-add">
+      <button class="btn btn--secondary btn--action btn--create js-add">
         <%- @Icon 'plus-small' %>
         <span><%- @T('Add') %></span>
-      </div>
+      </button>
 
-      <div class="btn btn--secondary btn--action btn--no-margin js-reset-order hide">
+      <button class="btn btn--secondary btn--action btn--no-margin js-reset-order hide">
         <span><%- @T('Cancel') %></span>
-      </div>
+      </button>
 
-      <div class="btn btn--secondary btn--action btn--create js-save-order hide">
+      <button class="btn btn--secondary btn--action btn--create js-save-order hide">
         <span><%- @T('Save') %></span>
-      </div>
+      </button>
     </div>
   <% end %>
 </div>

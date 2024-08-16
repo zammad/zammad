@@ -9,15 +9,8 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::Add, type: :graphql do
 
   let(:query) do
     <<~QUERY
-      mutation ticketChecklistAdd($ticketId: ID, $ticketInternalId: Int, $ticketNumber: String, $templateId: ID) {
-        ticketChecklistAdd(
-          ticket: {
-            ticketId: $ticketId
-            ticketInternalId: $ticketInternalId
-            ticketNumber: $ticketNumber
-          },
-          templateId: $templateId
-        ) {
+      mutation ticketChecklistAdd($ticketId: ID!, $templateId: ID) {
+        ticketChecklistAdd(ticketId: $ticketId, templateId: $templateId) {
           checklist {
             id
             name
@@ -90,7 +83,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::Add, type: :graphql do
         agent
       end
 
-      it_behaves_like 'returning an error message', 'Validation failed: Ticket has already been taken'
+      it_behaves_like 'returning an error message', 'This field has already been taken'
     end
 
     context 'when creating from a checklist template', authenticated_as: :authenticate do

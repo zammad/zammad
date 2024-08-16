@@ -74,7 +74,7 @@ const filteredAttachments = computed(() => {
 })
 
 const { attachments: articleAttachments } = useArticleAttachments({
-  ticketInternalId: ticket.value?.internalId,
+  ticketInternalId: ticket.value?.internalId as number,
   articleInternalId: props.article?.internalId,
   attachments: filteredAttachments,
 })

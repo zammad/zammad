@@ -43,7 +43,7 @@ import {
 } from '../graphql/queries/userCurrentAvatarList.api.ts'
 import { UserCurrentAvatarUpdatesDocument } from '../graphql/subscriptions/userCurrentAvatarUpdates.api.ts'
 
-import type { ApolloCache, NormalizedCacheObject } from '@apollo/client'
+import type { ApolloCache, NormalizedCacheObject } from '@apollo/client/core'
 
 const { user } = storeToRefs(useSessionStore())
 

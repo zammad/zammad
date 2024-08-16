@@ -52,15 +52,23 @@ class App.SidebarChecklistShow extends App.Controller
     callbackDone = (data) =>
       @enterEditModeId = data.id
       @renderTable()
+      @parentVC.subscribe()
       @addButton.attr('disabled', false)
 
     item = new App.ChecklistItem
     item.checklist_id = @checklist.id
     item.text = ''
+
+    @parentVC.increaseCounter()
+
     item.save(
       done: ->
         App.ChecklistItem.full(@id, callbackDone, force: true)
-      fail: =>
+      fail: (settings, details) =>
+        @notify(
+          type: 'error'
+          msg:  App.i18n.translateContent(details.error)
+        )
         @renderTable()
         @addButton.attr('disabled', false)
     )
@@ -86,11 +94,15 @@ class App.SidebarChecklistShow extends App.Controller
   updateChecklistItem: (id, upcomingState, checkboxElem) =>
     item = App.ChecklistItem.find(id)
     item.checked = upcomingState
+
+    @parentVC.increaseCounter() if upcomingState is false
+    @parentVC.decreaseCounter() if upcomingState is true
+
     item.save(
       done: =>
         checkboxElem.disabled = false
         @renderTable()
-      fail: ->
+      fail: =>
         @renderTable()
     )
 
@@ -105,7 +117,11 @@ class App.SidebarChecklistShow extends App.Controller
       done: (data) =>
         @actionController?.completed()
       fail: =>
-        @actionController?.releaseController()
+        @notify(
+          type: 'error'
+          msg:  App.i18n.translateInline('Failed to save the order of the checklist items. Please try again.')
+        )
+        @saveOrderButton.attr('disabled', false)
     )
 
   onResetOrder: (e) =>
@@ -117,6 +133,7 @@ class App.SidebarChecklistShow extends App.Controller
     dropdown = $(e.currentTarget).closest('td').find('.js-table-action-menu')
     dropdown.dropdown('toggle')
     dropdown.off('click.dropdown').on('click.dropdown', '[data-table-action]', @onActionButtonClicked)
+    dropdown.off('keyup.dropdown').on('keyup.dropdown', '[data-table-action]', @onActionButtonKeyup)
 
   onTitleChange: (e) =>
     e?.stopPropagation()
@@ -132,6 +149,11 @@ class App.SidebarChecklistShow extends App.Controller
 
     @actionController?.releaseController()
     @actionController = new ChecklistRenameEdit(el: elem, parentVC: @, originalValue: @checklistTitle())
+
+  onActionButtonKeyup: (e) =>
+    return if e.key isnt 'Enter'
+
+    @onActionButtonClicked(e)
 
   onActionButtonClicked: (e) =>
     e?.stopPropagation()
@@ -157,6 +179,7 @@ class App.SidebarChecklistShow extends App.Controller
 
     @table.find('.draggable').toggleClass('hide', !isReordering)
     @table.find('.checkbox-replacement').toggleClass('hide', isReordering)
+    @table.find('.checkbox-replacement-readonly').toggleClass('hide', !isReordering)
     @table.find('.dropdown').toggleClass('hide', isReordering)
 
     @reorderButton.toggleClass('hide', isReordering)
@@ -185,9 +208,12 @@ class App.SidebarChecklistShow extends App.Controller
     item = App.ChecklistItem.find(id)
 
     deleteCallback = =>
+      @parentVC.decreaseCounter() if not item.checked
+
       item.destroy(
         done: =>
           @renderTable()
+          @parentVC.subscribe()
       )
 
     # Skip confirmation dialog if the item has no text.
@@ -216,8 +242,16 @@ class App.SidebarChecklistShow extends App.Controller
     sorted_items = @checklist.sorted_items()
 
     for object in sorted_items
+      ticket = undefined
+      ticketAccess = undefined
+      if object.ticket_id
+        ticket = App.Ticket.find(object.ticket_id)
+        ticketAccess = if ticket then ticket.userGroupAccess('read') else false
+
       html = App.view('ticket_zoom/sidebar_checklist_show_row')(
         object: object
+        ticket: ticket
+        ticketAccess: ticketAccess
         readOnly: @readOnly
       )
 
@@ -240,13 +274,15 @@ class App.SidebarChecklistShow extends App.Controller
 
     if @enterEditMode
       @enterEditMode   = undefined
-      @enterEditModeId = @table.find('tr:last-of-type').data('id')
+      @enterEditModeId = @table.find('tbody tr:last-of-type').data('id')
 
     if @enterEditModeId
-      cell                = @table.find("tr[data-id='" + @enterEditModeId + "']").find('.checklistItemValue')[0]
+      cell                = @table.find("tbody tr[data-id='" + @enterEditModeId + "']").find('.checklistItemValue')[0]
       row                 = $(cell).closest('tr')
       @enterEditModeId = undefined
       @activateItemEditMode(cell, row, row.data('id'))
+
+    @parentVC.badgeRenderLocal()
 
 class ChecklistItemEdit extends App.Controller
   elements:
@@ -295,8 +331,15 @@ class ChecklistItemEdit extends App.Controller
     item.save(
       done: =>
         @parentVC.renderTable()
-      fail: =>
-        @parentVC.renderTable()
+        @parentVC.parentVC.subscribe()
+      fail: (settings, details) =>
+        App.ChecklistItem.fetch(id: item.id)
+
+        @notify(
+          type: 'error'
+          msg:  App.i18n.translateContent(details.error)
+        )
+        @releaseController()
     )
 
   onKeyUp: (e) =>

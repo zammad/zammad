@@ -40,8 +40,12 @@ describe('CommonInlineEdit', async () => {
     ).toBeInTheDocument()
   })
 
-  it('submits edit on button click', async () => {
-    const wrapper = renderInlineEdit()
+  it('submits edit on button click and enter', async () => {
+    const submitEditCallbackSpy = vi.fn()
+
+    const wrapper = renderInlineEdit({
+      onSubmitEdit: (newValue: string) => submitEditCallbackSpy(newValue),
+    })
 
     await wrapper.events.click(wrapper.getByRole('button'))
 
@@ -55,31 +59,19 @@ describe('CommonInlineEdit', async () => {
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Submit' }))
 
-    expect(wrapper.emitted()['submit-edit'].at(-1)).toStrictEqual([
-      'test value update',
-    ])
+    expect(submitEditCallbackSpy).toHaveBeenCalledWith('test value update')
 
-    // KEYDOWN ENTER
-
-    await wrapper.events.click(wrapper.getByRole('button'))
-
-    await wrapper.events.type(wrapper.getByRole('textbox'), ' update 2')
-
-    await waitFor(() =>
-      expect(
-        wrapper.getByRole('textbox', { name: 'Inline Edit Label' }),
-      ).toBeInTheDocument(),
-    )
-
-    await wrapper.events.keyboard(' update {enter}')
-
-    expect(wrapper.emitted()['submit-edit'].at(-1)).toEqual([
-      'test value update 2 update',
-    ])
+    expect(
+      wrapper.queryByRole('textbox', { name: 'Inline Edit Label' }),
+    ).not.toBeInTheDocument()
   })
 
   it('submits edit on enter key', async () => {
-    const wrapper = renderInlineEdit()
+    const submitEditCallbackSpy = vi.fn()
+
+    const wrapper = renderInlineEdit({
+      onSubmitEdit: (value: string) => submitEditCallbackSpy(value),
+    })
 
     await wrapper.events.click(wrapper.getByRole('button'))
 
@@ -93,7 +85,33 @@ describe('CommonInlineEdit', async () => {
 
     await wrapper.events.keyboard('{enter}')
 
-    expect(wrapper.emitted()['submit-edit']).toBeTruthy()
+    expect(submitEditCallbackSpy).toHaveBeenCalledWith('test value update 2')
+  })
+
+  it('do not stop edit mode when submit promise failed', async () => {
+    const wrapper = renderInlineEdit({
+      onSubmitEdit: (): Promise<void> => {
+        return new Promise((resolve, reject) => {
+          reject()
+        })
+      },
+    })
+
+    await wrapper.events.click(wrapper.getByRole('button'))
+
+    await wrapper.events.type(wrapper.getByRole('textbox'), ' update')
+
+    await waitFor(() =>
+      expect(
+        wrapper.getByRole('textbox', { name: 'Inline Edit Label' }),
+      ).toBeInTheDocument(),
+    )
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Submit' }))
+
+    expect(
+      wrapper.getByRole('textbox', { name: 'Inline Edit Label' }),
+    ).toBeInTheDocument()
   })
 
   it('focuses field on edit', async () => {

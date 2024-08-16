@@ -18,7 +18,7 @@ class ChecklistTemplate < ApplicationModel
 
     # Inherit only the text property from related checklist items.
     items.each do |item|
-      new_checklist.items.build(text: item.text)
+      new_checklist.items.build(text: item.text, initial_clone: true)
     end
 
     new_checklist.save!

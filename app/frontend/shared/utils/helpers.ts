@@ -115,3 +115,20 @@ export const waitForElement = async (
  * */
 export const findChangedIndex = <T>(oldArray: T[], newArray: T[]) =>
   oldArray.findIndex((item, index) => !isEqual(item, newArray[index]))
+
+// :TODO figure how to type this
+export const subscriptionUpdateHandler = <T>(
+  subscriptionData: { data: T },
+  keys: string,
+  options?: {
+    callback?: (arg: T) => void
+  },
+) => {
+  const [mainKey, childKey] = keys.split('.') as [keyof T, keyof T[keyof T]]
+
+  if (!subscriptionData.data[mainKey]) return null as unknown as T
+
+  options?.callback?.(subscriptionData.data)
+
+  return { [childKey]: subscriptionData.data[mainKey][childKey] } as T
+}

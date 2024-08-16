@@ -38,7 +38,7 @@ export default abstract class BaseHandler<
 
   public handlerOptions!: CommonHandlerOptions<THandlerOptions>
 
-  private handlerId: string
+  protected handlerId: string
 
   constructor(
     operationResult: TOperationReturn,

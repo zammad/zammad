@@ -16,7 +16,7 @@ import type { GraphQLHandlerError } from '#shared/types/error.ts'
 import { useOrganizationLazyQuery } from '../graphql/queries/organization.api.ts'
 import { OrganizationUpdatesDocument } from '../graphql/subscriptions/organizationUpdates.api.ts'
 
-import type { WatchQueryFetchPolicy } from '@apollo/client'
+import type { WatchQueryFetchPolicy } from '@apollo/client/core'
 
 export const useOrganizationDetail = (
   internalId: Ref<number | undefined>,

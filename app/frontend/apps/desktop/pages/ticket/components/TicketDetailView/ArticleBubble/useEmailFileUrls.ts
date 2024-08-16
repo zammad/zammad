@@ -9,7 +9,7 @@ import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicke
 
 export const useEmailFileUrls = (ticketArticle: MaybeRef<TicketArticle>) => {
   const article = computed(() => toValue(ticketArticle))
-  const { ticket } = useTicketInformation()
+  const ticketInformation = useTicketInformation()
 
   const originalFormattingUrl = computed(() => {
     const originalFormattingFile = find(
@@ -21,7 +21,7 @@ export const useEmailFileUrls = (ticketArticle: MaybeRef<TicketArticle>) => {
 
     if (!originalFormattingFile) return
 
-    return `/ticket_attachment/${ticket.value.internalId}/${article.value.internalId}/${originalFormattingFile.internalId}?disposition=attachment`
+    return `/ticket_attachment/${ticketInformation?.ticket?.value?.internalId}/${article.value.internalId}/${originalFormattingFile.internalId}?disposition=attachment`
   })
 
   const rawMessageUrl = computed(

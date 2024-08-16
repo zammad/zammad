@@ -13,8 +13,25 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemUpsert, type: :graphql do
     <<~QUERY
       mutation ticketChecklistItemUpsert($checklistId: ID!, $checklistItemId: ID, $input: TicketChecklistItemInput!) {
         ticketChecklistItemUpsert(checklistId: $checklistId, checklistItemId: $checklistItemId, input: $input) {
-          success
-          checklistItemId
+          checklistItem {
+            id
+            text
+            checked
+            ticket {
+              id
+              internalId
+              number
+              title
+              state {
+                name
+              }
+              stateColorCode
+            }
+            ticketAccess
+          }
+          errors {
+            message
+          }
         }
       }
     QUERY
@@ -27,23 +44,27 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemUpsert, type: :graphql do
   end
 
   shared_examples 'creating the ticket checklist item' do
-    it 'creates the ticket checklist item', aggregate_failures: true do
-      expect(gql.result.data['success']).to be(true)
-      expect(gql.result.data['checklistItemId']).to a_kind_of(String)
+    it 'creates the ticket checklist item' do
+      expect(gql.result.data['checklistItem']).to include(
+        'text'    => variables[:input]['text'],
+        'checked' => variables[:input]['checked'] || false,
+      )
     end
   end
 
   shared_examples 'updating the ticket checklist item' do
-    it 'updates the ticket checklist item', aggregate_failures: true do
-      expect(gql.result.data['success']).to be(true)
-      expect(gql.result.data['checklistItemId']).to eq(variables[:checklistItemId])
+    it 'updates the ticket checklist item' do
+      expect(gql.result.data['checklistItem']).to include(
+        'id'      => variables[:checklistItemId],
+        'text'    => variables[:input]['text'] || checklist.items.last.text,
+        'checked' => variables[:input]['checked'] || false,
+      )
     end
   end
 
-  shared_examples 'returning an error payload' do |error_message, error_type|
-    it 'returns an error payload', aggregate_failures: true do
-      expect(gql.result.payload['errors'].first['message']).to eq(error_message)
-      expect(gql.result.payload['errors'].first['extensions']['type']).to eq(error_type)
+  shared_examples 'raising an error' do |error_type|
+    it 'raises an error' do
+      expect(gql.result.error_type).to eq(error_type)
     end
   end
 
@@ -84,13 +105,13 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemUpsert, type: :graphql do
     context 'without access to the ticket' do
       let(:agent) { create(:agent) }
 
-      it_behaves_like 'returning an error payload', 'not allowed to update? this Ticket', 'Pundit::NotAuthorizedError'
+      it_behaves_like 'raising an error', Pundit::NotAuthorizedError
     end
 
     context 'with ticket read permission' do
       let(:agent) { create(:agent, groups: [group], group_names_access_map: { group.name => 'read' }) }
 
-      it_behaves_like 'returning an error payload', 'not allowed to update? this Ticket', 'Pundit::NotAuthorizedError'
+      it_behaves_like 'raising an error', Pundit::NotAuthorizedError
     end
 
     context 'with ticket read+change permissions' do
@@ -102,7 +123,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemUpsert, type: :graphql do
     context 'when ticket checklist does not exist' do
       let(:variables) { { checklistId: 'gid://Zammad/Checklist/0', input: input } }
 
-      it_behaves_like 'returning an error payload', "Couldn't find Checklist with 'id'=0", 'ActiveRecord::RecordNotFound'
+      it_behaves_like 'raising an error', ActiveRecord::RecordNotFound
     end
   end
 

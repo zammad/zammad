@@ -8,12 +8,13 @@ class Checklist < ApplicationModel
   include Checklist::Assets
   include CanChecklistSortedItems
 
-  after_create :ensure_at_least_one_item
-
   belongs_to :ticket, optional: true
   has_many :items, inverse_of: :checklist, dependent: :destroy
 
   scope :for_user, ->(user) { joins(:ticket).where(ticket: { group: user.group_ids_access('read') }) }
+
+  after_update :update_ticket
+  after_destroy :update_ticket
 
   validates :name,      presence: { allow_blank: true }
   validates :ticket_id, presence: true, uniqueness: { allow_nil: true }
@@ -45,14 +46,18 @@ class Checklist < ApplicationModel
   end
 
   def completed?
-    !items.exists?(checked: false)
+    incomplete.zero?
   end
 
-  private
+  def incomplete
+    Auth::RequestCache.fetch_value("Checklist/#{id}/incomplete") do
+      items.count(&:incomplete?)
+    end
+  end
 
-  def ensure_at_least_one_item
-    return if items.any?
-
-    items.create!(text: '', created_by: created_by, updated_by: updated_by)
+  def update_ticket
+    ticket.updated_at    = Time.zone.now
+    ticket.updated_by_id = UserInfo.current_user_id || updated_by_id
+    ticket.save!
   end
 end

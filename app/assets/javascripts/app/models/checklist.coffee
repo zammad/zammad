@@ -21,3 +21,4 @@ class App.Checklist extends App.Model
       success: (data, status, xhr) ->
         callback(data)
     )
+

@@ -21,8 +21,6 @@ module Gql::Mutations
       {
         success: true,
       }
-    rescue => e
-      error_response({ message: e.message })
     end
 
     def authorized?(checklist:, order:)

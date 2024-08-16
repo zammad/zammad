@@ -17,12 +17,11 @@ describe('ArticleBubbleBlockedContentWarning', () => {
         article: {},
       },
       setup: () => {
-        provide(
-          TICKET_INFORMATION_KEY,
-          computed(() => {
-            return createDummyTicket()
-          }),
-        )
+        const ticket = createDummyTicket()
+        provide(TICKET_INFORMATION_KEY, {
+          ticket: computed(() => ticket),
+          ticketId: computed(() => ticket.id),
+        })
       },
     })
     expect(
@@ -42,12 +41,11 @@ describe('ArticleBubbleBlockedContentWarning', () => {
         },
       },
       setup: () => {
-        provide(
-          TICKET_INFORMATION_KEY,
-          computed(() => {
-            return createDummyTicket()
-          }),
-        )
+        const ticket = createDummyTicket()
+        provide(TICKET_INFORMATION_KEY, {
+          ticket: computed(() => ticket),
+          ticketId: computed(() => ticket.id),
+        })
       },
     })
     console.log(wrapper.html())

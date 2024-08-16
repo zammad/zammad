@@ -13,6 +13,10 @@ import { mockTicketQuery } from '#shared/entities/ticket/graphql/queries/ticket.
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import type { TicketArticleEdge } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
+import { mockTicketChecklistQuery } from '#desktop/pages/ticket/graphql/queries/ticketChecklist.mocks.ts'
+import { getTicketChecklistUpdatesSubscriptionHandler } from '#desktop/pages/ticket/graphql/subscriptions/ticketChecklistUpdates.mocks.ts'
 
 describe('ticket detail view', () => {
   describe('errors', () => {
@@ -149,6 +153,7 @@ describe('ticket detail view', () => {
 
   it('shows checklist if it is enabled and user is agent', async () => {
     mockPermissions(['ticket.agent'])
+
     await mockApplicationConfig({ checklist: true })
 
     const view = await visitView('/tickets/1')
@@ -177,6 +182,85 @@ describe('ticket detail view', () => {
 
     expect(
       view.queryByRole('heading', { name: 'Checklist', level: 2 }),
+    ).not.toBeInTheDocument()
+  })
+
+  it('shows checklist ticket link for readonly agent', async () => {
+    await mockApplicationConfig({ checklist: true })
+    mockPermissions(['ticket.agent'])
+
+    mockTicketChecklistQuery({
+      ticketChecklist: {
+        id: convertToGraphQLId('Checklist', 1),
+        name: 'Checklist title',
+        items: [
+          {
+            __typename: 'ChecklistItem',
+            id: convertToGraphQLId('Checklist::Item', 2),
+            text: 'Checklist item B',
+            ticketAccess: null,
+            checked: false,
+            ticket: createDummyTicket(),
+          },
+        ],
+      },
+    })
+
+    const view = await visitView('/tickets/1')
+
+    const checklist = view.getByRole('heading', { name: 'Checklist', level: 2 })
+    expect(checklist).toBeInTheDocument()
+
+    // Checking display  of ticket link
+    expect(view.getByRole('link', { name: 'Test Ticket' })).toBeInTheDocument()
+
+    // Ticket link has single item menu, hence we have to test it does not exist in readonly
+    expect(
+      within(checklist).queryByRole('button', { name: 'Remove item' }),
+    ).not.toBeInTheDocument()
+  })
+
+  it('updates incomplete checklist item count', async () => {
+    mockPermissions(['ticket.agent'])
+
+    await mockApplicationConfig({ checklist: true })
+
+    mockTicketChecklistQuery({
+      ticketChecklist: {
+        name: 'Checklist title',
+        items: [
+          { text: 'Item 1', checked: true, ticketAccess: null, ticket: null },
+          { text: 'Item 2', checked: false, ticketAccess: null, ticket: null },
+        ],
+        incomplete: 1,
+      },
+    })
+
+    const view = await visitView('/tickets/1')
+
+    expect(
+      view.getByRole('status', { name: 'Incomplete checklist items' }),
+    ).toHaveTextContent('1')
+
+    const checklistCheckboxes = view.getAllByRole('checkbox')
+
+    await getTicketChecklistUpdatesSubscriptionHandler().trigger({
+      ticketChecklistUpdates: {
+        ticketChecklist: {
+          name: 'Checklist title',
+          items: [
+            { text: 'Item 1', checked: true },
+            { text: 'Item 2', checked: true },
+          ],
+          incomplete: 0,
+        },
+      },
+    })
+
+    await view.events.click(checklistCheckboxes[0])
+
+    expect(
+      view.queryByRole('status', { name: 'Incomplete checklist items' }),
     ).not.toBeInTheDocument()
   })
 })

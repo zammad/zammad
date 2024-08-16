@@ -12,7 +12,7 @@ import type { ComputedRef } from 'vue'
 export const useTicketEditTitle = (ticket: ComputedRef<TicketById>) => {
   const { notify } = useNotifications()
 
-  const mutationUpdate = new MutationHandler(useTicketUpdateMutation({}))
+  const mutationUpdate = new MutationHandler(useTicketUpdateMutation())
 
   const updateTitle = async (title: string) => {
     return mutationUpdate

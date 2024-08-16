@@ -7,7 +7,8 @@ module Gql::Types
     description 'Ticket checklist'
 
     field :name, String
-    field :items, [Gql::Types::Checklist::ItemType], method: :sorted_items
-    field :completed, Boolean, method: :completed?
+    field :completed, Boolean, method: :completed?, null: false
+    field :incomplete, Integer, null: false
+    field :items, [Gql::Types::Checklist::ItemType], method: :sorted_items, null: false
   end
 end

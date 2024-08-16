@@ -12,10 +12,22 @@ export const TicketChecklistUpdatesDocument = gql`
       id
       name
       completed
+      incomplete
       items {
         id
         text
         checked
+        ticket {
+          id
+          internalId
+          number
+          title
+          state {
+            name
+          }
+          stateColorCode
+        }
+        ticketAccess
       }
     }
   }

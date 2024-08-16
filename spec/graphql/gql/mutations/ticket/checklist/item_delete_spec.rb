@@ -14,6 +14,9 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemDelete, type: :graphql do
       mutation ticketChecklistItemDelete($checklistId: ID!, $checklistItemId: ID!) {
         ticketChecklistItemDelete(checklistId: $checklistId, checklistItemId: $checklistItemId) {
           success
+          errors {
+            message
+          }
         }
       }
     QUERY
@@ -31,10 +34,9 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemDelete, type: :graphql do
     end
   end
 
-  shared_examples 'returning an error payload' do |error_message, error_type|
-    it 'returns an error payload', aggregate_failures: true do
-      expect(gql.result.payload['errors'].first['message']).to eq(error_message)
-      expect(gql.result.payload['errors'].first['extensions']['type']).to eq(error_type)
+  shared_examples 'raising an error' do |error_type|
+    it 'raises an error' do
+      expect(gql.result.error_type).to eq(error_type)
     end
   end
 
@@ -44,13 +46,13 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemDelete, type: :graphql do
     context 'without access to the ticket' do
       let(:agent) { create(:agent) }
 
-      it_behaves_like 'returning an error payload', 'not allowed to update? this Ticket', 'Pundit::NotAuthorizedError'
+      it_behaves_like 'raising an error', Pundit::NotAuthorizedError
     end
 
     context 'with ticket read permission' do
       let(:agent) { create(:agent, groups: [group], group_names_access_map: { group.name => 'read' }) }
 
-      it_behaves_like 'returning an error payload', 'not allowed to update? this Ticket', 'Pundit::NotAuthorizedError'
+      it_behaves_like 'raising an error', Pundit::NotAuthorizedError
     end
 
     context 'with ticket read+change permissions' do
@@ -62,13 +64,13 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemDelete, type: :graphql do
     context 'when ticket checklist does not exist' do
       let(:variables) { { checklistId: 'gid://Zammad/Checklist/0', checklistItemId: gql.id(checklist_item) } }
 
-      it_behaves_like 'returning an error payload', "Couldn't find Checklist with 'id'=0", 'ActiveRecord::RecordNotFound'
+      it_behaves_like 'raising an error', ActiveRecord::RecordNotFound
     end
 
     context 'when ticket checklist item does not exist' do
       let(:variables) { { checklistId: gql.id(checklist), checklistItemId: 'gid://Zammad/Checklist::Item/0' } }
 
-      it_behaves_like 'returning an error payload', "Couldn't find Checklist::Item with 'id'=0", 'ActiveRecord::RecordNotFound'
+      it_behaves_like 'raising an error', ActiveRecord::RecordNotFound
     end
   end
 

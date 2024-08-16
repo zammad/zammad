@@ -2,7 +2,7 @@
 
 import type { UserError } from '#shared/graphql/types.ts'
 
-import type { ApolloError } from '@apollo/client'
+import type { ApolloError } from '@apollo/client/core'
 import type { Except } from 'type-fest'
 
 export enum GraphQLErrorTypes {

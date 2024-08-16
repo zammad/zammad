@@ -11,7 +11,7 @@ import { fileURLToPath } from 'node:url'
 import { homedir } from 'os'
 import svgIconsPlugin from './app/frontend/build/iconsPlugin.mjs'
 import ManualChunksPlugin from './app/frontend/build/manualChunks.mjs'
-import tsconfig from './tsconfig.base.json' assert { type: 'json' }
+import tsconfig from './tsconfig.base.json' with { type: 'json' }
 
 const dir = dirname(fileURLToPath(import.meta.url))
 

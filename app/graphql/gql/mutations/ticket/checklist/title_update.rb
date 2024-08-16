@@ -7,16 +7,14 @@ module Gql::Mutations
     argument :checklist_id, GraphQL::Types::ID, required: true, loads: Gql::Types::ChecklistType, description: 'ID of the ticket checklist to update.'
     argument :title, String, required: false, description: 'New value for the ticket checklist title.'
 
-    field :success, Boolean, description: 'Was the mutation succcessful?'
+    field :checklist, Gql::Types::ChecklistType, null: true, description: 'Created checklist'
 
     def resolve(checklist:, title: '')
       checklist.update!(name: title)
 
       {
-        success: true,
+        checklist: checklist,
       }
-    rescue => e
-      error_response({ message: e.message })
     end
 
     def authorized?(checklist:, title: '')

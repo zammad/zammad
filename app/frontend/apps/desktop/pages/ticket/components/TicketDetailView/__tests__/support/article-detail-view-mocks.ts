@@ -21,10 +21,12 @@ export const mockDetailViewSetup = (data?: {
 }) => {
   const article = createDummyArticle(data?.article)
 
-  provide(
-    TICKET_INFORMATION_KEY,
-    computed(() => createDummyTicket(data?.ticket)),
-  )
+  const dummyTicket = createDummyTicket(data?.ticket)
+
+  provide(TICKET_INFORMATION_KEY, {
+    ticketId: computed(() => dummyTicket.id),
+    ticket: computed(() => dummyTicket),
+  })
 
   const handler = getQueryHandler<
     TicketArticlesQuery,

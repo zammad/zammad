@@ -106,6 +106,7 @@ export const createDummyTicket = (options?: {
   defaultPriority?: TicketQuery['ticket']['priority']
   defaultPolicy?: TicketQuery['ticket']['policy']
   mentions?: TicketQuery['ticket']['mentions']
+  colorCode?: EnumTicketStateColorCode
 }) => {
   return nullableMock({
     __typename: 'Ticket',
@@ -145,7 +146,7 @@ export const createDummyTicket = (options?: {
     timeUnitsPerType: [],
     subscribed: false,
     preferences: {},
-    stateColorCode: EnumTicketStateColorCode.Open,
+    stateColorCode: options?.colorCode || EnumTicketStateColorCode.Open,
     firstResponseEscalationAt: null,
     closeEscalationAt: null,
     updateEscalationAt: null,

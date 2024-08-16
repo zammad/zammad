@@ -20,8 +20,12 @@ class TicketChecklistController < ApplicationController
     new_checklist = if params[:template_id].present?
                       ChecklistTemplate.find_by(id: params[:template_id]).create_from_template!(ticket_id: params[:ticket_id])
                     else
-                      Checklist.create!(name: '', ticket_id: params[:ticket_id])
+                      Checklist.create!(name: '', ticket_id: params[:ticket_id]).tap do |checklist|
+                        Checklist::Item.create!(checklist_id: checklist.id, text: '')
+                      end
                     end
+
+    new_checklist.reload
 
     render json: { id: new_checklist.id, assets: new_checklist.assets({}) }
   end

@@ -38,10 +38,9 @@ const ticketId = computed(() => convertToGraphQLId('Ticket', props.internalId))
 
 const { ticketResult, isLoadingTicket } = useTicketDataHandler(ticketId)
 
-provide(
-  TICKET_INFORMATION_KEY,
-  computed(() => ticketResult.value?.ticket),
-)
+const ticket = computed(() => ticketResult.value?.ticket)
+
+provide(TICKET_INFORMATION_KEY, { ticket, ticketId })
 
 const onAddArticleCallback = ({ articlesQuery }: AddArticleCallbackArgs) => {
   return (articlesQuery as QueryHandler).refetch()

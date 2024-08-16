@@ -16,10 +16,22 @@ RSpec.describe Gql::Subscriptions::Ticket::ChecklistUpdates, type: :graphql do
             id
             name
             completed
+            incomplete
             items {
               id
               text
               checked
+              ticket {
+                id
+                internalId
+                number
+                title
+                state {
+                  name
+                }
+                stateColorCode
+              }
+              ticketAccess
             }
           }
         }
@@ -48,12 +60,14 @@ RSpec.describe Gql::Subscriptions::Ticket::ChecklistUpdates, type: :graphql do
       result = mock_channel.mock_broadcasted_messages.first[:result]['data']['ticketChecklistUpdates']
 
       expect(result).to include('ticketChecklist' => include(
-        'id' => gql.id(checklist),
+        'id'         => gql.id(checklist),
+        'completed'  => true,
+        'incomplete' => 0,
       ))
     end
 
     context 'with an existing checklist', authenticated_as: :authenticate do
-      let(:checklist) { create(:checklist, ticket: ticket, item_count: nil) }
+      let(:checklist) { create(:checklist, ticket: ticket, item_count: 1) }
 
       def authenticate
         checklist

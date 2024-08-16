@@ -33,14 +33,12 @@ const renderArticleBubbleActionList = () =>
           ],
         })
 
-        provide(
-          TICKET_INFORMATION_KEY,
-          computed(() =>
-            createDummyTicket({
-              defaultPolicy: { update: true, agentReadAccess: true },
-            }),
-          ),
-        )
+        const ticket = createDummyTicket()
+
+        provide(TICKET_INFORMATION_KEY, {
+          ticket: computed(() => ticket),
+          ticketId: computed(() => ticket.id),
+        })
 
         return { position, article }
       },

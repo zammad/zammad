@@ -53,6 +53,11 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type:
     wait.until { Checklist.where(ticket: ticket).present? }
   end
 
+  it 'does show handle subscriptions for badge when sidebar is not opened' do
+    create(:checklist, ticket: ticket)
+    expect(page).to have_css(".tabsSidebar-tab[data-tab='checklist'] .js-tabCounter", text: ticket.checklist.items.count)
+  end
+
   context 'when checklist exists' do
     let(:checklist) { create(:checklist, ticket: ticket) }
     let(:item) { checklist.items.last }
@@ -113,6 +118,14 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type:
       wait.until { item.reload.text == item_text }
     end
 
+    it 'does edit item with a ticket link' do
+      perform_item_action(item.id, 'edit')
+      item_text = "Ticket##{Ticket.first.number}"
+      find(".checklistShow tr[data-id='#{item.id}'] .js-input").fill_in with: item_text, fill_options: { clear: :backspace }
+      page.find('.js-confirm').click
+      expect(page).to have_link(Ticket.first.title)
+    end
+
     it 'does not abort edit when subscription is updating but including it afterwards' do
       perform_item_action(item.id, 'edit')
       item_text = SecureRandom.uuid
@@ -156,6 +169,34 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type:
         find(".checklistShow tr[data-id='#{item.id}'] .js-input").fill_in with: item_text, fill_options: { clear: :backspace }
         page.find('.js-confirm').click
         wait.until { item.reload.text == item_text }
+      end
+    end
+
+    context 'with ticket links' do
+      context 'with access' do
+        let(:ticket_link) { create(:ticket, title: SecureRandom.uuid, group: Group.first) }
+        let(:checklist) do
+          checklist = create(:checklist, ticket: ticket)
+          checklist.items.last.update(text: "Ticket##{ticket_link.number}")
+          checklist
+        end
+
+        it 'does show link to the ticket' do
+          expect(page).to have_link(ticket_link.title)
+        end
+      end
+
+      context 'without access' do
+        let(:ticket_link) { create(:ticket, title: SecureRandom.uuid) }
+        let(:checklist) do
+          checklist = create(:checklist, ticket: ticket)
+          checklist.items.last.update(text: "Ticket##{ticket_link.number}")
+          checklist
+        end
+
+        it 'does show the not authorized for the item' do
+          expect(page).to have_text('Not authorized')
+        end
       end
     end
   end
@@ -215,6 +256,23 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type:
         click '.js-submit'
         page.find('.modal-footer .js-submit').click
         expect(page).to have_text(checklist.name.upcase)
+      end
+
+      context 'when ticket is closed' do
+        let(:pre_auth) do
+          Setting.set('checklist', true)
+          checklist
+          other_agent
+
+          ticket.update(state: Ticket::State.find_by(name: 'closed'))
+        end
+
+        it 'does not show modal' do
+          select other_agent.fullname, from: 'Owner'
+          click '.js-submit'
+          wait.until { ticket.reload.owner.fullname == other_agent.fullname }
+          expect(page).to have_no_text('You have unchecked items in the checklist')
+        end
       end
 
       context 'when time accounting is also activated' do

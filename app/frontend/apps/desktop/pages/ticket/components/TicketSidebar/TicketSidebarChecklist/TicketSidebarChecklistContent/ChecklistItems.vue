@@ -5,28 +5,32 @@ import { animations } from '@formkit/drag-and-drop'
 import { dragAndDrop } from '@formkit/drag-and-drop/vue'
 import { computed, ref } from 'vue'
 
-import type { ChecklistItem as ChecklistItemType } from '#shared/graphql/types.ts'
+import {
+  type ChecklistItem as ChecklistItemType,
+  EnumChecklistItemTicketAccess,
+} from '#shared/graphql/types.ts'
 import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonInlineEdit from '#desktop/components/CommonInlineEdit/CommonInlineEdit.vue'
-import ChecklistItem from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklistContent/ChecklistItem.vue'
-// import ChecklistTicketItem from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklistContent/ChecklistTicketItem.vue'
+import ChecklistItem from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue'
+import ChecklistTicketItem from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTicketItem.vue'
+import { verifyAccess } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/utils.ts'
 
 interface Props {
   title: string
   items: ChecklistItemType[]
   readOnly: boolean
   noDefaultTitle: boolean
+  onEditItem: (item: ChecklistItemType) => Promise<void>
+  onUpdateTitle: (title: string) => Promise<void>
 }
 
 const emit = defineEmits<{
   'add-item': []
   'remove-item': [ChecklistItemType]
   'set-item-checked': [ChecklistItemType]
-  'edit-item': [ChecklistItemType]
-  'save-order': [Array<ChecklistItemType>]
-  'update-title': [string]
+  'save-order': [Array<ChecklistItemType>, stopReordering: () => void]
 }>()
 
 const props = defineProps<Props>()
@@ -49,20 +53,26 @@ dragAndDrop({
   parent: checklistContainer,
   values: checklistCopy,
   plugins: [animations()],
-  draggable() {
+  draggable: (el) => {
+    // Library bug: The draggable attribute is not set always
+    // Workaround to set the attribute manually
+    el.setAttribute('draggable', isReordering.value.toString())
     return isReordering.value
   },
   dropZoneClass: 'opacity-0',
   touchDropZoneClass: 'opacity-0',
 })
 
-// Actions
 const focusNewItem = () => {
   checklistNodes.value?.at(-1)?.focusInput()
 }
 
-const onAddNewItem = () => {
+const addNewItem = () => {
   emit('add-item')
+}
+
+const editItem = async (item: ChecklistItemType) => {
+  return props.onEditItem(item)
 }
 
 const resetOrder = () => {
@@ -71,9 +81,7 @@ const resetOrder = () => {
 }
 
 const saveOrder = () => {
-  emit('save-order', checklistCopy.value)
-  isReordering.value = false
-  checklistCopy.value = []
+  emit('save-order', checklistCopy.value, resetOrder)
 }
 
 const startReordering = () => {
@@ -104,7 +112,7 @@ defineExpose({
       }"
       :label="$t('Edit checklist title')"
       class="col-span-2 mb-3 w-full"
-      @submit-edit="$emit('update-title', $event)"
+      @submit-edit="onUpdateTitle"
     />
 
     <TransitionGroup
@@ -115,28 +123,44 @@ defineExpose({
       class="col-span-2 mb-2 space-y-2"
     >
       <template v-for="item in checklistItems" :key="item.id">
-        <div v-if="readOnly" class="flex gap-2 py-2">
-          <CommonIcon
-            tabindex="0"
-            class="mt-1 text-gray-100 outline-none focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-neutral-400"
-            size="xs"
-            role="checkbox"
-            aria-readonly="true"
-            :aria-checked="item.checked"
-            :aria-labelledby="`checklist-item-${getIdFromGraphQLId(item.id)}`"
-            :name="item.checked ? 'check-square-fill' : 'square-fill'"
-          />
-          <CommonInlineEdit
-            :id="`checklist-item-${getIdFromGraphQLId(item.id)}`"
-            detect-links
+        <li v-if="readOnly" class="flex gap-2 py-2">
+          <template
+            v-if="
+              item.ticketAccess !== EnumChecklistItemTicketAccess.Forbidden &&
+              !item.ticket
+            "
+          >
+            <CommonIcon
+              tabindex="0"
+              class="mt-1 text-gray-100 outline-none focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-neutral-400"
+              size="xs"
+              role="checkbox"
+              aria-readonly="true"
+              :aria-checked="item.checked"
+              :aria-labelledby="`checklist-item-${getIdFromGraphQLId(item.id)}`"
+              :name="item.checked ? 'check-square-fill' : 'square-fill'"
+            />
+            <CommonInlineEdit
+              :id="`checklist-item-${getIdFromGraphQLId(item.id)}`"
+              detect-links
+              :classes="{
+                label: 'dark:text-white text-black',
+              }"
+              disabled
+              :value="item.text || '-'"
+            />
+          </template>
+          <!-- No CommonLabel to preserve the link detection -->
+          <ChecklistTicketItem
+            v-else
             :classes="{
-              label: 'dark:text-white text-black',
+              indicator: 'my-1.5',
             }"
-            disabled
-            :value="item.text as string"
+            :unauthorized="!verifyAccess(item)"
+            :ticket="item.ticket"
           />
-        </div>
-        <!--        <ChecklistTicketItem v-else-if="true" :item="item" />-->
+        </li>
+
         <ChecklistItem
           v-else
           ref="checklistNodes"
@@ -147,7 +171,7 @@ defineExpose({
           :is-reordering="isReordering"
           @remove-item="$emit('remove-item', $event)"
           @set-item-checked="$emit('set-item-checked', $event)"
-          @edit-item="$emit('edit-item', $event)"
+          @edit-item="editItem"
         />
       </template>
     </TransitionGroup>
@@ -181,7 +205,7 @@ defineExpose({
           size="medium"
           class="col-end-3 justify-self-end ltr:mr-2 rtl:ml-2"
           icon="plus-square-fill"
-          @click="onAddNewItem"
+          @click="addNewItem"
         />
         <CommonButton
           v-else

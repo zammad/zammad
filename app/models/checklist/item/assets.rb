@@ -14,6 +14,7 @@ class Checklist::Item
 
       data[ app_model ][ id ] = attributes_with_association_ids
       checklist.assets(data)
+      ticket&.assets(data) if ticket&.authorized_asset?
       data
     end
   end

@@ -23,7 +23,7 @@ import { convertFilesToAttachmentInput } from '#shared/utils/files.ts'
 import { useTicketCreateView } from './useTicketCreateView.ts'
 
 import type { TicketFormData } from '../types.ts'
-import type { ApolloError } from '@apollo/client'
+import type { ApolloError } from '@apollo/client/core'
 import type { Ref } from 'vue'
 
 export const useTicketCreate = (

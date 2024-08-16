@@ -1,5 +1,5 @@
 class App.ChecklistItem extends App.Model
-  @configure 'ChecklistItem', 'text', 'checked', 'checklist_id', 'updated_at'
+  @configure 'ChecklistItem', 'text', 'checked', 'ticket_id', 'checklist_id', 'updated_at'
   @extend Spine.Model.Ajax
   @url: @apiPath + '/checklist_items'
 

@@ -1,18 +1,21 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { computed, ref } from 'vue'
 
-import type { ChecklistItem as ChecklistItemType } from '#shared/graphql/types.ts'
+import { type ChecklistItem as ChecklistItemType } from '#shared/graphql/types.ts'
 import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import CommonInlineEdit from '#desktop/components/CommonInlineEdit/CommonInlineEdit.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
+import ChecklistTicketItem from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTicketItem.vue'
+import { verifyAccess } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/utils.ts'
 
 interface Props {
   item: ChecklistItemType
   isReordering: boolean
+  onEditItem: (item: ChecklistItemType) => Promise<void>
 }
 
 const props = defineProps<Props>()
@@ -20,8 +23,11 @@ const props = defineProps<Props>()
 const emit = defineEmits<{
   'remove-item': [ChecklistItemType]
   'set-item-checked': [ChecklistItemType]
-  'edit-item': [ChecklistItemType]
 }>()
+
+const isTicketItem = computed(() => !!props.item.ticket)
+
+const noAccessToLinkedTicket = computed(() => !verifyAccess(props.item))
 
 const inlineEditComponent = ref<InstanceType<typeof CommonInlineEdit>>()
 
@@ -34,8 +40,8 @@ const setItemCheckedState = (newValue: boolean) => {
   emit('set-item-checked', { ...props.item, checked: newValue })
 }
 
-const editItem = (newValue: string) => {
-  emit('edit-item', { ...props.item, text: newValue })
+const editItem = async (newValue: string) => {
+  return props.onEditItem({ ...props.item, text: newValue })
 }
 
 const isEditing = ref(false)
@@ -46,19 +52,22 @@ const actions: MenuItem[] = [
     label: __('Check item'),
     icon: 'check2-square',
     onClick: () => setItemCheckedState(true),
-    show: (entity) => !entity?.checked,
+    show: (entity) =>
+      !entity?.checked && !isTicketItem.value && !noAccessToLinkedTicket.value,
   },
   {
     key: 'uncheck',
     label: __('Uncheck item'),
     icon: 'check2-square',
     onClick: () => setItemCheckedState(false),
-    show: (entity) => entity?.checked,
+    show: (entity) =>
+      entity?.checked && !isTicketItem.value && !noAccessToLinkedTicket.value,
   },
   {
     key: 'edit',
     icon: 'pencil',
     label: __('Edit item'),
+    show: () => !isTicketItem.value && !noAccessToLinkedTicket.value,
     onClick: () => inlineEditComponent.value?.activateEditing(),
   },
   {
@@ -83,35 +92,56 @@ defineExpose({
     class="flex min-h-10 gap-2 overflow-x-clip rounded-lg bg-blue-200 p-2 text-stone-200 dark:bg-gray-700 dark:text-neutral-500"
     :class="{ 'items-center': isEditing }"
   >
-    <Transition name="none" mode="out-in">
+    <template v-if="isReordering">
       <CommonIcon
-        v-if="isReordering"
         name="grip-vertical"
         class="mt-1.5 inline-block shrink-0"
         size="xs"
       />
+      <CommonIcon
+        tabindex="0"
+        class="mt-1.5 shrink-0 text-gray-100 outline-none focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-neutral-400"
+        size="xs"
+        role="checkbox"
+        aria-readonly="true"
+        :aria-checked="item.checked"
+        :aria-labelledby="`checklist-item-${getIdFromGraphQLId(item.id)}`"
+        :name="item.checked ? 'check-square-fill' : 'square-fill'"
+      />
+    </template>
+    <template v-else>
       <FormKit
-        v-else
+        v-if="!isTicketItem && !noAccessToLinkedTicket"
         :id="`checked_${item.id}`"
         type="checkbox"
         :classes="{
           outer: 'flex items-center shrink-0 self-start mt-0.5',
           inner: 'rtl:ml-0 ltr:mr-0',
         }"
-        :model-value="item.checked as boolean"
+        :model-value="item.checked"
         :name="`checkbox-checklist-item-${getIdFromGraphQLId(item.id)}`"
         :aria-label="item.text"
         @update:model-value="setItemCheckedState($event as boolean)"
       />
-    </Transition>
+    </template>
+
+    <ChecklistTicketItem
+      v-if="isTicketItem || noAccessToLinkedTicket"
+      :classes="{
+        indicator: 'mt-1',
+      }"
+      :unauthorized="noAccessToLinkedTicket"
+      :ticket="item.ticket"
+    />
 
     <CommonInlineEdit
+      v-else
       ref="inlineEditComponent"
       v-model:editing="isEditing"
       detect-links
       alternative-background
       block
-      :value="item.text as string"
+      :value="item.text"
       :placeholder="$t('Text or ticket identifier')"
       :class="{ 'pointer-events-none': isReordering }"
       :classes="{

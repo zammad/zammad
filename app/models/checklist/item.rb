@@ -4,12 +4,19 @@ class Checklist::Item < ApplicationModel
   include ChecksClientNotification
   include HasHistory
   include HasDefaultModelUserRelations
-  include Checklist::TriggersSubscriptions
   include Checklist::Item::Assets
 
+  attr_accessor :initial_clone
+
   belongs_to :checklist
+  belongs_to :ticket, optional: true
 
   scope :for_user, ->(user) { joins(checklist: :ticket).where(tickets: { group: user.group_ids_access('read') }) }
+
+  before_validation :detect_ticket_reference, on: %i[create update], unless: :initial_clone
+
+  validate :detect_ticket_loop_reference, on: %i[create update], unless: -> { ticket.blank? || checklist.blank? }
+  validate :validate_item_count, on: :create
 
   after_create :update_checklist
   after_update :update_checklist
@@ -40,6 +47,12 @@ class Checklist::Item < ApplicationModel
     }
   end
 
+  def incomplete?
+    return ticket_incomplete? if ticket.present?
+
+    !checked
+  end
+
   private
 
   def update_checklist
@@ -51,5 +64,33 @@ class Checklist::Item < ApplicationModel
     checklist.updated_at    = Time.zone.now
     checklist.updated_by_id = UserInfo.current_user_id || updated_by_id
     checklist.save!
+  end
+
+  def detect_ticket_reference
+    return if changes.key?(:ticket_id)
+
+    ticket = Ticket::Number.check(text)
+    return if ticket.blank?
+
+    self.ticket = ticket
+  end
+
+  def detect_ticket_loop_reference
+    return if ticket.id != checklist.ticket.id
+
+    errors.add(:ticket, __('reference must not be the checklist ticket.'))
+  end
+
+  def validate_item_count
+    return if checklist.items.count < 100
+
+    errors.add(:base, __('Checklist items are limited to 100 items per checklist.'))
+  end
+
+  def ticket_incomplete?
+    # Consider the following ticket state types as incomplete:
+    #   - closed
+    #   - merged
+    !ticket.state.state_type.name.match?(%r{^(closed|merged)$}i)
   end
 end

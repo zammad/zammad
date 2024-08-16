@@ -14,7 +14,7 @@ import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type { GraphQLHandlerError } from '#shared/types/error.ts'
 import { normalizeEdges } from '#shared/utils/helpers.ts'
 
-import type { WatchQueryFetchPolicy } from '@apollo/client'
+import type { WatchQueryFetchPolicy } from '@apollo/client/core'
 
 export const useUserDetail = (
   internalIdRef?: Ref<number>,

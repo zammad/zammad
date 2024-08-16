@@ -66,7 +66,7 @@ const badgeColor = computed(() => {
     <CommonLabel
       v-if="badge"
       size="xs"
-      class="pointer-events-none absolute -bottom-2 block min-w-4 max-w-10 truncate rounded-full border-2 border-white px-0.5 py-0.5 text-center text-white ltr:-right-1.5 rtl:-left-1.5 dark:border-gray-500"
+      class="pointer-events-none absolute -bottom-2 block min-w-4 max-w-10 truncate rounded-full border-2 border-white px-0.5 py-0.5 text-center font-bold text-white ltr:-right-1.5 rtl:-left-1.5 dark:border-gray-500"
       :class="[badgeColor]"
       :aria-label="$t(badge.label)"
       role="status"

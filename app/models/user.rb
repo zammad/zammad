@@ -984,7 +984,7 @@ raise 'At least one user need to have admin permissions'
     # set the user's locale to the one of the "executing" user
     return true if !UserInfo.current_user_id
 
-    user = User.find_by(id: UserInfo.current_user_id)
+    user = UserInfo.current_user
     return true if !user
     return true if !user.preferences[:locale]
 

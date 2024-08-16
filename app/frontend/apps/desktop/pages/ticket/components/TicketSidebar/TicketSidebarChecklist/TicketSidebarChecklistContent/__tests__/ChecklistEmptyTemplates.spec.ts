@@ -3,7 +3,7 @@
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
-import ChecklistEmptyTemplates from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue'
+import ChecklistEmptyTemplates from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue'
 
 const renderChecklistContent = () => {
   return renderComponent(ChecklistEmptyTemplates, {
@@ -12,8 +12,8 @@ const renderChecklistContent = () => {
 }
 
 describe('ChecklistEmptyTemplates', () => {
-  it('shows content for an admin', () => {
-    mockPermissions(['admin'])
+  it('shows template information for an agent', () => {
+    mockPermissions(['ticket.agent'])
 
     const wrapper = renderChecklistContent()
 
@@ -26,6 +26,13 @@ describe('ChecklistEmptyTemplates', () => {
         'With checklist templates you can pre-fill your checklists.',
       ),
     ).toBeInTheDocument()
+  })
+
+  it('shows the link to the admin interface for an admin', () => {
+    mockPermissions(['admin'])
+
+    const wrapper = renderChecklistContent()
+
     expect(
       wrapper.getByRole('link', {
         name: 'Create a new checklist template in the admin interface.',
@@ -33,20 +40,10 @@ describe('ChecklistEmptyTemplates', () => {
     ).toBeInTheDocument()
   })
 
-  it('hides content for an agent', () => {
+  it('hides the link to the admin interface for an agent', () => {
     mockPermissions(['ticket.agent'])
 
     const wrapper = renderChecklistContent()
-
-    expect(
-      wrapper.queryByText('No checklist templates have been created yet.'),
-    ).not.toBeInTheDocument()
-
-    expect(
-      wrapper.queryByText(
-        'With checklist templates you can pre-fill your checklists.',
-      ),
-    ).not.toBeInTheDocument()
 
     expect(
       wrapper.queryByRole('link', {

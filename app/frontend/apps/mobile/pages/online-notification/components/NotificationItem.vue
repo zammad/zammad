@@ -10,7 +10,7 @@ import type {
 } from '#shared/graphql/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 
-import type { ApolloCache, InMemoryCache } from '@apollo/client'
+import type { ApolloCache, InMemoryCache } from '@apollo/client/core'
 
 export interface Props {
   itemId: Scalars['ID']['output']

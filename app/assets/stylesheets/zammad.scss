@@ -1842,7 +1842,7 @@ td .icon-cog {
 
   .icon-checkbox-checked-readonly.icon {
     fill: var(--text-muted);
-    color: var(--interactive-primary);
+    color: var(--background-primary);
   }
 
   .icon-checkbox-readonly.icon {
@@ -14856,12 +14856,14 @@ div.accounted-time-value {
   display: flex;
   align-items: stretch;
 
+  .checklistItemTicketTitle,
   .checklistItemValue {
     flex-grow: 1;
     padding-left: 4px;
     padding-right: 4px;
-    padding-top: 9px;
-    padding-bottom: 6px; // make sure the value is aligned vertically with the checkbox and the dropdown menu
+    padding-top: 10px;
+    padding-bottom: 5px; // make sure the value is aligned vertically with the checkbox and the dropdown menu
+    word-break: break-all;
 
     &.edit-widget-active {
       padding-top: 5px;
@@ -14877,6 +14879,14 @@ div.accounted-time-value {
     flex-shrink: 0;
   }
 
+  .checklistItemTicketStateIndicator {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .draggable {
     width: 40px;
     height: 28px;
@@ -14887,6 +14897,11 @@ div.accounted-time-value {
     align-items: start;
     justify-content: center;
     margin-top: 12px;
+  }
+
+  .draggable:not(.hide) + .checklistItemTicketStateIndicator,
+  .draggable:not(.hide) + .checkbox-replacement-readonly {
+    width: 20px;
   }
 
   .dropdown-container {

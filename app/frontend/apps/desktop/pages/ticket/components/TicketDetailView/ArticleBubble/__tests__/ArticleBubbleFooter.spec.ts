@@ -16,12 +16,11 @@ describe('ArticleBubbleFooter', () => {
       components: { ArticleBubbleFooter },
       router: true,
       setup: () => {
-        provide(
-          TICKET_INFORMATION_KEY,
-          computed(() => {
-            return createDummyTicket()
-          }),
-        )
+        const ticket = createDummyTicket()
+        provide(TICKET_INFORMATION_KEY, {
+          ticket: computed(() => ticket),
+          ticketId: computed(() => ticket.id),
+        })
         return {
           article: createDummyArticle(),
           articleAttachments: [],
@@ -38,12 +37,11 @@ describe('ArticleBubbleFooter', () => {
       {
         components: { ArticleBubbleFooter },
         setup: () => {
-          provide(
-            TICKET_INFORMATION_KEY,
-            computed(() => {
-              return createDummyTicket()
-            }),
-          )
+          const ticket = createDummyTicket()
+          provide(TICKET_INFORMATION_KEY, {
+            ticket: computed(() => ticket),
+            ticketId: computed(() => ticket.id),
+          })
           return {
             article: createDummyArticle({
               attachmentsWithoutInline: [

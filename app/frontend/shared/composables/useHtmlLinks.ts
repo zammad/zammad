@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { useEventListener } from '@vueuse/core'
 import { useRouter } from 'vue-router'
 
 import { useApplicationStore } from '#shared/stores/application.ts'
@@ -69,7 +70,8 @@ const useHtmlLinks = (urlPrefix: '/desktop' | '/mobile') => {
       if ('__handled' in link) return
       Object.defineProperty(link, '__handled', { value: true })
       patchUserMentionLinks(link)
-      link.addEventListener('click', (event) => handleLinkClick(link, event))
+
+      useEventListener(link, 'click', (event) => handleLinkClick(link, event))
     })
   }
 

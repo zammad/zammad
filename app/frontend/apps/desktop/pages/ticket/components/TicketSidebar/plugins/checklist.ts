@@ -3,8 +3,8 @@
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 import { TicketSidebarScreenType } from '../../types.ts'
-import TicketSidebarChecklistButton from '../TicketSidebarChecklistButton.vue'
-import TicketSidebarChecklistContent from '../TicketSidebarChecklistContent.vue'
+import TicketSidebarChecklistButton from '../TicketSidebarChecklist/TicketSidebarChecklistButton.vue'
+import TicketSidebarChecklistContent from '../TicketSidebarChecklist/TicketSidebarChecklistContent.vue'
 
 import type { TicketSidebarPlugin } from './types.ts'
 

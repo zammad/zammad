@@ -1,5 +1,11 @@
 mutation ticketChecklistTitleUpdate($checklistId: ID!, $title: String) {
   ticketChecklistTitleUpdate(checklistId: $checklistId, title: $title) {
-    success
+    checklist {
+      id
+      name
+    }
+    errors {
+      ...errors
+    }
   }
 }
