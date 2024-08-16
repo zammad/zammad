@@ -205,8 +205,8 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type:
     let(:checklist_template) { create(:checklist_template) }
 
     before do
-      click '.tabsSidebar-tab[data-tab=checklist]'
       checklist_template
+      click '.tabsSidebar-tab[data-tab=checklist]'
       wait.until { page.find('[name="checklist_template_id"]') }
       await_empty_ajax_queue
     end
@@ -215,8 +215,10 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type:
       expect(page).to have_button('Add from a template')
       expect(page).to have_select('checklist_template_id')
 
+      # Sometimes, by clicking the button, nothing happens.
+      sleep 0.1
       click_on('Add from a template')
-      expect(page).to have_text('Please select a checklist template.')
+      wait.until { page.has_content?('Please select a checklist template.') }
 
       select checklist_template.name, from: 'checklist_template_id'
       wait.until { page.has_no_content?('Please select a checklist template.') }
