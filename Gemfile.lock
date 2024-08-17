@@ -433,7 +433,7 @@ GEM
       childprocess (>= 0.6.3, < 6)
       iniparse (~> 1.4)
       rexml (~> 3.2)
-    parallel (1.26.2)
+    parallel (1.26.3)
     parser (3.3.4.0)
       ast (~> 2.4.1)
       racc
