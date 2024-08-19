@@ -33,16 +33,16 @@ jobs:
           tags: ${{ steps.meta.outputs.tags }}
           outputs: type=docker,dest=/tmp/zammad-local.tar
 
-      - name: Checkout docker-compose files
+      - name: Checkout docker compose files
         uses: actions/checkout@v4
         with:
           repository: zammad/zammad-docker-compose
           path: zammad-docker-compose
 
-      - name: Run docker-compose tests
+      - name: Run docker compose tests
         run: |
           cd zammad-docker-compose
           docker load --input /tmp/zammad-local.tar
-          docker-compose -f docker-compose.yml -f docker-compose.override-local.yml up --detach
-          docker cp .github/auto_wizard.json zammad-docker-compose_zammad-railsserver_1:/opt/zammad/tmp
+          docker compose -f docker-compose.yml -f docker-compose.override-local.yml up --detach
+          docker cp .github/auto_wizard.json zammad-docker-compose-zammad-railsserver-1:/opt/zammad/tmp
           .github/tests.sh
