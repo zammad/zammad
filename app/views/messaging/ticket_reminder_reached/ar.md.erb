@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|تذكرة##{ticket.number}>: حان وقت التذكير!_
+التذكرة تتطلب الانتباه: حان وقت التذكير لـ (#{ticket.title}) مع العميل "*#{ticket.customer.longname}*".
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

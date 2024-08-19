@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|تذكرة##{ticket.number}>: سيتم تصعيدها في #{ticket.escalation_at}_
+التذكرة (#{ticket.title}) من "#{ticket.customer.longname}" سيتم تصعيدها في "#{ticket.escalation_at}"!
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>
