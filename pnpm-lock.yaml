@@ -18,8 +18,8 @@ importers:
   .:
     dependencies:
       '@apollo/client':
-        specifier: ^3.11.1
-        version: 3.11.1(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0)
+        specifier: ^3.11.4
+        version: 3.11.4(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0)
       '@formkit/core':
         specifier: ^1.6.5
         version: 1.6.5
@@ -157,7 +157,7 @@ importers:
         version: 2.5.9(@tiptap/core@2.5.9(@tiptap/pm@2.5.9))(@tiptap/pm@2.5.9)(vue@3.4.38(typescript@5.5.4))
       '@vue/apollo-composable':
         specifier: ^4.0.2
-        version: 4.0.2(@apollo/client@3.11.1(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0))(graphql@16.9.0)(typescript@5.5.4)(vue@3.4.38(typescript@5.5.4))
+        version: 4.0.2(@apollo/client@3.11.4(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0))(graphql@16.9.0)(typescript@5.5.4)(vue@3.4.38(typescript@5.5.4))
       '@vue/runtime-core':
         specifier: ^3.4.38
         version: 3.4.38
@@ -181,7 +181,7 @@ importers:
         version: 16.9.0
       graphql-ruby-client:
         specifier: ^1.14.0
-        version: 1.14.0(@apollo/client@3.11.1(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0))(graphql@16.9.0)
+        version: 1.14.0(@apollo/client@3.11.4(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0))(graphql@16.9.0)
       graphql-tag:
         specifier: ^2.12.6
         version: 2.12.6(graphql@16.9.0)
@@ -380,7 +380,7 @@ importers:
         version: 10.0.1
       mock-apollo-client:
         specifier: ^1.3.1
-        version: 1.3.1(@apollo/client@3.11.1(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0))
+        version: 1.3.1(@apollo/client@3.11.4(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0))
       postcss:
         specifier: ^8.4.41
         version: 8.4.41
@@ -483,8 +483,8 @@ packages:
     peerDependencies:
       ajv: '>=8'
 
-  '@apollo/client@3.11.1':
-    resolution: {integrity: sha512-fVuAi7ufRt2apIEYV18upvykw5JD+CwHAThxZkclby4phWCXtO4LD39Z0sk0+4i+j7oZ+jOofEkO1XGDDomZvQ==}
+  '@apollo/client@3.11.4':
+    resolution: {integrity: sha512-bmgYKkULpym8wt8aXlAZ1heaYo0skLJ5ru0qJ+JCRoo03Pe+yIDbBCnqlDw6Mjj76hFkDw3HwFMgZC2Hxp30Mg==}
     peerDependencies:
       graphql: ^15.0.0 || ^16.0.0
       graphql-ws: ^5.5.5
@@ -6403,7 +6403,7 @@ snapshots:
       jsonpointer: 5.0.1
       leven: 3.1.0
 
-  '@apollo/client@3.11.1(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0)':
+  '@apollo/client@3.11.4(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0)':
     dependencies:
       '@graphql-typed-document-node/core': 3.2.0(graphql@16.9.0)
       '@wry/caches': 1.0.1
@@ -8652,9 +8652,9 @@ snapshots:
       path-browserify: 1.0.1
       vscode-uri: 3.0.8
 
-  '@vue/apollo-composable@4.0.2(@apollo/client@3.11.1(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0))(graphql@16.9.0)(typescript@5.5.4)(vue@3.4.38(typescript@5.5.4))':
+  '@vue/apollo-composable@4.0.2(@apollo/client@3.11.4(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0))(graphql@16.9.0)(typescript@5.5.4)(vue@3.4.38(typescript@5.5.4))':
     dependencies:
-      '@apollo/client': 3.11.1(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0)
+      '@apollo/client': 3.11.4(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0)
       graphql: 16.9.0
       throttle-debounce: 5.0.0
       ts-essentials: 9.4.2(typescript@5.5.4)
@@ -10409,9 +10409,9 @@ snapshots:
     transitivePeerDependencies:
       - encoding
 
-  graphql-ruby-client@1.14.0(@apollo/client@3.11.1(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0))(graphql@16.9.0):
+  graphql-ruby-client@1.14.0(@apollo/client@3.11.4(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0))(graphql@16.9.0):
     dependencies:
-      '@apollo/client': 3.11.1(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0)
+      '@apollo/client': 3.11.4(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0)
       glob: 10.3.10
       graphql: 16.9.0
       minimist: 1.2.7
@@ -11178,9 +11178,9 @@ snapshots:
       pkg-types: 1.0.3
       ufo: 1.3.2
 
-  mock-apollo-client@1.3.1(@apollo/client@3.11.1(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0)):
+  mock-apollo-client@1.3.1(@apollo/client@3.11.4(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0)):
     dependencies:
-      '@apollo/client': 3.11.1(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0)
+      '@apollo/client': 3.11.4(graphql-ws@5.13.1(graphql@16.9.0))(graphql@16.9.0)
 
   ms@2.0.0: {}
 
