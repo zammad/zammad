@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-14 09:16+0000\n"
+"PO-Revision-Date: 2024-08-19 08:43+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
@@ -689,10 +689,8 @@ msgid "(state: %s)"
 msgstr "(status: %s)"
 
 #: app/frontend/apps/desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue:58
-#, fuzzy
-#| msgid "(state: %s)"
 msgid "(ticket status: %s)"
-msgstr "(status: %s)"
+msgstr "(ärendets status: %s)"
 
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 msgid ""
@@ -3178,18 +3176,15 @@ msgstr "Mall för checklista"
 
 #: app/models/checklist_template/item.rb:32
 msgid "Checklist Template items are limited to 100 items per checklist."
-msgstr ""
+msgstr "Checklistmallen är begränsade till 100 poster per checklista."
 
 #: app/controllers/ticket_checklist_controller.rb:17
 msgid "Checklist is already created for this ticket"
 msgstr "Checklistan är redan skapad för detta ärende"
 
 #: app/models/checklist/item.rb:87
-#, fuzzy
-#| msgid "The given checklist item does not belong to the given checklist."
 msgid "Checklist items are limited to 100 items per checklist."
-msgstr ""
-"Den angivna posten i checklistan hör inte till den angivna checklistan."
+msgstr "Checklistan är begränsade till 100 poster per checklista."
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:3
@@ -3890,7 +3885,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/signup.coffee:133
 msgid "Could not process your request"
-msgstr ""
+msgstr "Det gick inte att behandla din förfrågan"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:135
 msgid "Could not remove all two-factor authentication methods for this user."
@@ -3920,9 +3915,8 @@ msgstr "Kunde inte sätta upp två-faktorautentiseringsmetoden som standard"
 
 #: app/assets/javascripts/app/controllers/widget/link.coffee:69
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:106
-#, fuzzy
 msgid "Couldn't save changes"
-msgstr "Kan ej spara ändringar."
+msgstr "Det gick inte att spara ändringar"
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco:5
 msgid "Count"
@@ -7186,16 +7180,12 @@ msgid "Failed Tasks"
 msgstr "Misslyckade uppgifter"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:162
-#, fuzzy
-#| msgid "Create a new checklist item"
 msgid "Failed to add new checklist item."
-msgstr "Skapa en ny post i checklistan"
+msgstr "Det gick inte att lägga till poster till checklistan."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:183
-#, fuzzy
-#| msgid "Create a new checklist item"
 msgid "Failed to delete checklist item."
-msgstr "Skapa en ny post i checklistan"
+msgstr "Det gick inte att radera post från checklistan."
 
 #: app/controllers/channels_google_controller.rb:96
 #: app/controllers/channels_microsoft365_controller.rb:96
@@ -7209,13 +7199,11 @@ msgstr "Misslyckades med att rulla tillbaka kanalens migrering!"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:169
 msgid "Failed to save checklist order."
-msgstr ""
+msgstr "Checklistordningen sparades inte."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:122
-#, fuzzy
-#| msgid "Failed to set up QR code. Please try again."
 msgid "Failed to save the order of the checklist items. Please try again."
-msgstr "Misslyckades med att ställa in QR-kod. Vänligen försök igen."
+msgstr "Det gick inte att spara checklistordningen. Vänligen försök igen."
 
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:52
 msgid "Failed to send email to \"%s\". Please contact an administrator."
@@ -7226,10 +7214,8 @@ msgid "Failed to set up QR code. Please try again."
 msgstr "Misslyckades med att ställa in QR-kod. Vänligen försök igen."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:176
-#, fuzzy
-#| msgid "Create a new checklist item"
 msgid "Failed to update checklist item."
-msgstr "Skapa en ny post i checklistan"
+msgstr "Checklistposten kunde inte uppdateras."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageFailedUploadOverlay.vue:23
 msgid "Failed to upload."
@@ -8737,8 +8723,6 @@ msgid "Incomplete Ticket Checklist"
 msgstr "Checklistan i ärendet är ofullständig"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistButton.vue:22
-#, fuzzy
-#| msgid "Incomplete Ticket Checklist"
 msgid "Incomplete checklist items"
 msgstr "Checklistan i ärendet är ofullständig"
 
@@ -8784,7 +8768,6 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_escalation/de.html.erb:9
 #: app/views/mailer/ticket_escalation/fr.html.erb:9
 #: app/views/mailer/ticket_escalation/it.html.erb:9
-#: app/views/mailer/ticket_escalation/zh-cn.html.erb:9
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:9
@@ -9053,10 +9036,8 @@ msgid "Invalid video URL"
 msgstr "Ogiltig URL för video"
 
 #: app/assets/javascripts/app/controllers/layout_ref.coffee:650
-#, fuzzy
-#| msgid "Invitation sent!"
 msgid "Invitation sent to %s"
-msgstr "Inbjudan skickad!"
+msgstr "Inbjudan skickad till %s"
 
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee:78
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:100
@@ -9333,10 +9314,8 @@ msgid "Last Article"
 msgstr "Senaste Artikel"
 
 #: lib/excel_sheet/ticket.rb:59
-#, fuzzy
-#| msgid "Closed At"
 msgid "Last Closed At"
-msgstr "Stängd vid"
+msgstr "Senast stängt vid"
 
 #: lib/excel_sheet/ticket.rb:71
 msgid "Last Contact Agent At"
@@ -18976,7 +18955,6 @@ msgstr "Utsikt från användarens perspektiv"
 #: app/views/mailer/ticket_create/zh-cn.html.erb:23
 #: app/views/mailer/ticket_create/zh-tw.html.erb:23
 #: app/views/mailer/ticket_escalation/it.html.erb:17
-#: app/views/mailer/ticket_escalation/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:17
@@ -21040,10 +21018,8 @@ msgid "recovery codes"
 msgstr "återställningskoder"
 
 #: app/models/checklist/item.rb:81
-#, fuzzy
-#| msgid "The article does not belong to the specified ticket."
 msgid "reference must not be the checklist ticket."
-msgstr "Artikeln tillhör inte det angivna ärendet."
+msgstr "referens får inte vara checklist ärende."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:103
 msgid "relative"

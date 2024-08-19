@@ -751,7 +751,8 @@ msgstr ""
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts:74
 msgid ""
 "A newer version of the app is available. Please reload at your earliest."
-msgstr "نسخه جدید از برنامه در دسترس است. لطفا در اسرع وقت دوباره بارگیری کنید."
+msgstr ""
+"نسخه جدید از برنامه در دسترس است. لطفا در اسرع وقت دوباره بارگیری کنید."
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:156
 msgid "A powerful service to get more information about your customers."
@@ -8688,7 +8689,6 @@ msgstr "اطلاعات: %s"
 #: app/views/mailer/ticket_escalation/de.html.erb:9
 #: app/views/mailer/ticket_escalation/fr.html.erb:9
 #: app/views/mailer/ticket_escalation/it.html.erb:9
-#: app/views/mailer/ticket_escalation/zh-cn.html.erb:9
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:9
@@ -19472,7 +19472,6 @@ msgstr "مشاهده از دید کاربر"
 #: app/views/mailer/ticket_create/zh-cn.html.erb:23
 #: app/views/mailer/ticket_create/zh-tw.html.erb:23
 #: app/views/mailer/ticket_escalation/it.html.erb:17
-#: app/views/mailer/ticket_escalation/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:17

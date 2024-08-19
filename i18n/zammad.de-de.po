@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-16 09:16+0000\n"
+"PO-Revision-Date: 2024-08-19 08:43+0000\n"
 "Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -694,10 +694,8 @@ msgid "(state: %s)"
 msgstr "(Status: %s)"
 
 #: app/frontend/apps/desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue:58
-#, fuzzy
-#| msgid "(state: %s)"
 msgid "(ticket status: %s)"
-msgstr "(Status: %s)"
+msgstr "(ticket status: %s)"
 
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 msgid ""
@@ -3226,17 +3224,16 @@ msgstr "Aufgabenlistenvorlage"
 
 #: app/models/checklist_template/item.rb:32
 msgid "Checklist Template items are limited to 100 items per checklist."
-msgstr ""
+msgstr "Checklistenvorlagen sind auf 100 Elemente pro Checkliste begrenzt."
 
 #: app/controllers/ticket_checklist_controller.rb:17
 msgid "Checklist is already created for this ticket"
 msgstr "Für dieses Ticket wurde bereits eine Aufgabenliste erstellt"
 
 #: app/models/checklist/item.rb:87
-#, fuzzy
-#| msgid "The given checklist item does not belong to the given checklist."
 msgid "Checklist items are limited to 100 items per checklist."
-msgstr "Die angegebene Aufgabe gehört nicht zur angegebenen Liste."
+msgstr ""
+"Die Anzahl der Elemente in einer Checkliste ist auf 100 pro Liste begrenzt."
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:3
@@ -3947,7 +3944,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/signup.coffee:133
 msgid "Could not process your request"
-msgstr ""
+msgstr "Ihre Anfrage konnte nicht verarbeitet werden"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:135
 msgid "Could not remove all two-factor authentication methods for this user."
@@ -7307,16 +7304,12 @@ msgid "Failed Tasks"
 msgstr "Fehlgeschlagene Aufträge"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:162
-#, fuzzy
-#| msgid "Create a new checklist item"
 msgid "Failed to add new checklist item."
-msgstr "Eine neue Aufgabe in der Liste erstellen"
+msgstr "Das Hinzufügen eines neuen Checklisten-Elements ist fehlgeschlagen."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:183
-#, fuzzy
-#| msgid "Create a new checklist item"
 msgid "Failed to delete checklist item."
-msgstr "Eine neue Aufgabe in der Liste erstellen"
+msgstr "Checklisten-Element konnte nicht gelöscht werden."
 
 #: app/controllers/channels_google_controller.rb:96
 #: app/controllers/channels_microsoft365_controller.rb:96
@@ -7329,17 +7322,14 @@ msgid "Failed to roll back the migration of the channel!"
 msgstr "Die Rücknahme der Kanal-Migration ist fehlgeschlagen!"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:169
-#, fuzzy
-#| msgid "Unable to save changes"
 msgid "Failed to save checklist order."
-msgstr "Änderungen können nicht gespeichert werden"
+msgstr "Die Reihenfolge der Checkliste konnte nicht gespeichert werden."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:122
-#, fuzzy
-#| msgid "Failed to set up QR code. Please try again."
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
-"QR-Code konnte nicht eingerichtet werden. Bitte versuchen Sie es erneut."
+"Die Reihenfolge der Checklisten-Elemente konnte nicht gespeichert werden. "
+"Bitte versuchen Sie es erneut."
 
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:52
 msgid "Failed to send email to \"%s\". Please contact an administrator."
@@ -7353,10 +7343,8 @@ msgstr ""
 "QR-Code konnte nicht eingerichtet werden. Bitte versuchen Sie es erneut."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:176
-#, fuzzy
-#| msgid "Create a new checklist item"
 msgid "Failed to update checklist item."
-msgstr "Eine neue Aufgabe in der Liste erstellen"
+msgstr "Aktualisierung des Checklisten-Elements fehlgeschlagen."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageFailedUploadOverlay.vue:23
 msgid "Failed to upload."
@@ -8892,10 +8880,8 @@ msgid "Incomplete Ticket Checklist"
 msgstr "Unvollständige Ticket-Checkliste"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistButton.vue:22
-#, fuzzy
-#| msgid "Incomplete Ticket Checklist"
 msgid "Incomplete checklist items"
-msgstr "Unvollständige Ticket-Checkliste"
+msgstr "Unvollständige Checklisten-Elemente"
 
 #: app/controllers/import_freshdesk_controller.rb:45
 #: app/controllers/import_kayako_controller.rb:35
@@ -8939,7 +8925,6 @@ msgstr "Info: %s"
 #: app/views/mailer/ticket_escalation/de.html.erb:9
 #: app/views/mailer/ticket_escalation/fr.html.erb:9
 #: app/views/mailer/ticket_escalation/it.html.erb:9
-#: app/views/mailer/ticket_escalation/zh-cn.html.erb:9
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:9
@@ -9215,10 +9200,8 @@ msgid "Invalid video URL"
 msgstr "Ungültige Video-URL"
 
 #: app/assets/javascripts/app/controllers/layout_ref.coffee:650
-#, fuzzy
-#| msgid "Invitation sent!"
 msgid "Invitation sent to %s"
-msgstr "Einladung versendet!"
+msgstr "Einladung gesendet an %s"
 
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee:78
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:100
@@ -19287,7 +19270,6 @@ msgstr "Aus Benutzersicht ansehen"
 #: app/views/mailer/ticket_create/zh-cn.html.erb:23
 #: app/views/mailer/ticket_create/zh-tw.html.erb:23
 #: app/views/mailer/ticket_escalation/it.html.erb:17
-#: app/views/mailer/ticket_escalation/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:17
@@ -21376,10 +21358,8 @@ msgid "recovery codes"
 msgstr "Wiederherstellungs-Codes"
 
 #: app/models/checklist/item.rb:81
-#, fuzzy
-#| msgid "The article does not belong to the specified ticket."
 msgid "reference must not be the checklist ticket."
-msgstr "Der Artikel gehört nicht zum angegebenen Ticket."
+msgstr "Referenz darf nicht das Ticket der Checkliste selbst sein."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:103
 msgid "relative"
