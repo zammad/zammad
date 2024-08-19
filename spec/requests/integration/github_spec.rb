@@ -78,7 +78,13 @@ RSpec.describe 'GitHub', required_envs: %w[GITHUB_ENDPOINT GITHUB_APITOKEN], typ
       authenticated_as(agent)
       instance = instance_double(GitHub)
       expect(GitHub).to receive(:new).and_return instance
-      expect(instance).to receive(:issues_by_urls).and_return([issue_data])
+      expect(instance).to receive(:issues_by_urls).and_return(
+        {
+          issues:           [issue_data],
+          url_replacements: []
+        }
+      )
+      expect(instance).to receive(:fix_urls_for_ticket)
 
       post '/api/v1/integration/github', params: params, as: :json
       expect(response).to have_http_status(:ok)

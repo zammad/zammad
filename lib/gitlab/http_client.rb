@@ -52,6 +52,33 @@ class GitLab
       response.data
     end
 
+    def perform_rest_get_request(variables)
+      uri = URI.parse(endpoint)
+      return if uri.blank? || variables.blank?
+
+      response = UserAgent.get(
+        "#{uri.scheme}://#{uri.host}/api/v4/projects/#{ERB::Util.url_encode(variables[:fullpath])}/issues/#{variables[:issue_id]}",
+        {},
+        {
+          headers:      headers,
+          json:         true,
+          open_timeout: 6,
+          read_timeout: 16,
+          log:          {
+            facility: 'GitLab',
+          },
+          verify_ssl:   verify_ssl,
+        },
+      )
+
+      if !response.success?
+        Rails.logger.error response.error
+        return
+      end
+
+      JSON.parse(response.body)
+    end
+
     private
 
     def headers

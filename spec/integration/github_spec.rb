@@ -1,8 +1,11 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+
+require 'integration/git_integration_base_examples'
+
 RSpec.describe GitHub, integration: true, required_envs: %w[GITHUB_ENDPOINT GITHUB_APITOKEN] do
-  let(:instance) { described_class.new(ENV['GITHUB_ENDPOINT'], ENV['GITHUB_APITOKEN']) }
+  let(:invalid_issue_url) { 'https://github.com/organization/repository/issues/42' }
   let(:issue_data) do
     {
       id:         '1575',
@@ -25,7 +28,9 @@ RSpec.describe GitHub, integration: true, required_envs: %w[GITHUB_ENDPOINT GITH
       ],
     }
   end
-  let(:invalid_issue_url) { 'https://github.com/organization/repository/issues/42' }
+  let(:instance) { described_class.new(ENV['GITHUB_ENDPOINT'], ENV['GITHUB_APITOKEN']) }
+
+  it_behaves_like 'Git Integration Base', issue_type: :github
 
   describe '#issues_by_urls' do
     let(:result) { instance.issues_by_urls([ issue_url ]) }
@@ -33,20 +38,28 @@ RSpec.describe GitHub, integration: true, required_envs: %w[GITHUB_ENDPOINT GITH
     context 'when issue exists' do
       let(:issue_url) { ENV['GITHUB_ISSUE_LINK'] }
 
-      it 'returns a result list' do
-        expect(result.size).to eq(1)
+      it 'returns a issues list' do
+        expect(result[:issues].size).to eq(1)
       end
 
-      it 'returns issue data in the result list' do
-        expect(result[0]).to eq(issue_data)
+      it 'returns issue data in the issues list' do
+        expect(result[:issues][0]).to eq(issue_data)
+      end
+
+      it 'returns no url replacements' do
+        expect(result[:url_replacements].size).to eq(0)
       end
     end
 
     context 'when issue does not exists' do
       let(:issue_url) { invalid_issue_url }
 
-      it 'returns no result' do
-        expect(result.size).to eq(0)
+      it 'returns no issues' do
+        expect(result[:issues].size).to eq(0)
+      end
+
+      it 'returns no url replacements' do
+        expect(result[:url_replacements].size).to eq(0)
       end
     end
   end

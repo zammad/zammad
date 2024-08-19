@@ -24,10 +24,13 @@ class Integration::GitHubController < ApplicationController
     config = Setting.get('github_config')
 
     github = ::GitHub.new(config['endpoint'], config['api_token'])
+    data = github.issues_by_urls(params[:links])
+
+    github.fix_urls_for_ticket(params[:ticket_id], data[:url_replacements])
 
     render json: {
       result:   'ok',
-      response: github.issues_by_urls(params[:links]),
+      response: data[:issues],
     }
   rescue => e
     logger.error e
@@ -51,5 +54,4 @@ class Integration::GitHubController < ApplicationController
       result: 'ok',
     }
   end
-
 end

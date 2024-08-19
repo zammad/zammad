@@ -24,10 +24,13 @@ class Integration::GitLabController < ApplicationController
     config = Setting.get('gitlab_config')
 
     gitlab = ::GitLab.new(config['endpoint'], config['api_token'], verify_ssl: config['verify_ssl'])
+    data = gitlab.issues_by_urls(params[:links])
+
+    gitlab.fix_urls_for_ticket(params[:ticket_id], data[:url_replacements])
 
     render json: {
       result:   'ok',
-      response: gitlab.issues_by_urls(params[:links]),
+      response: data[:issues],
     }
   rescue => e
     logger.error e
@@ -51,5 +54,4 @@ class Integration::GitLabController < ApplicationController
       result: 'ok',
     }
   end
-
 end

@@ -12,6 +12,7 @@ class GitLab
         project(fullPath: $fullpath) {
           issue(iid: $issue_id) {
             iid
+            webUrl
             title
             state
             milestone {
@@ -47,9 +48,17 @@ class GitLab
 
     def find_by(url)
       @result = query_by_url(url)
+
+      if @result.blank?
+        new_url = query_new_url_by_rest_api(url)
+        return if new_url.blank?
+
+        @result = query_by_url(new_url)
+      end
+
       return if @result.blank?
 
-      to_h.merge(url: url)
+      to_h
     end
 
     private
@@ -58,6 +67,7 @@ class GitLab
       {
         id:         @result['iid'],
         title:      @result['title'],
+        url:        @result['webUrl'],
         icon_state: STATES_MAPPING.fetch(@result['state'], @result['state']),
         milestone:  milestone,
         assignees:  assignees,
@@ -95,6 +105,16 @@ class GitLab
       )
 
       response.dig('data', 'project', 'issue')
+    end
+
+    def query_new_url_by_rest_api(url)
+      variables = variables(url)
+      return if variables.blank?
+
+      response = client.perform_rest_get_request(variables)
+      return if response.blank?
+
+      response['web_url']
     end
 
     def variables(url)

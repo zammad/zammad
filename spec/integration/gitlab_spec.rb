@@ -1,8 +1,11 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+
+require 'integration/git_integration_base_examples'
+
 RSpec.describe GitLab, integration: true, required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN GITLAB_ISSUE_LINK] do
-  let(:instance) { described_class.new(ENV['GITLAB_ENDPOINT'], ENV['GITLAB_APITOKEN']) }
+  let(:invalid_issue_url) { "https://#{URI.parse(ENV['GITLAB_ISSUE_LINK']).host}/group/project/-/issues/1" }
   let(:issue_data) do
     {
       id:         '1',
@@ -30,7 +33,9 @@ RSpec.describe GitLab, integration: true, required_envs: %w[GITLAB_ENDPOINT GITL
       ],
     }
   end
-  let(:invalid_issue_url) { "https://#{URI.parse(ENV['GITLAB_ISSUE_LINK']).host}/group/project/-/issues/1" }
+  let(:instance) { described_class.new(ENV['GITLAB_ENDPOINT'], ENV['GITLAB_APITOKEN']) }
+
+  it_behaves_like 'Git Integration Base', issue_type: :gitlab
 
   describe '#issues_by_urls' do
     let(:result) { instance.issues_by_urls([ issue_url ]) }
@@ -38,20 +43,28 @@ RSpec.describe GitLab, integration: true, required_envs: %w[GITLAB_ENDPOINT GITL
     context 'when issue exists' do
       let(:issue_url) { ENV['GITLAB_ISSUE_LINK'] }
 
-      it 'returns a result list' do
-        expect(result.size).to eq(1)
+      it 'returns a issues list' do
+        expect(result[:issues].size).to eq(1)
       end
 
-      it 'returns issue data in the result list' do
-        expect(result[0]).to eq(issue_data)
+      it 'returns issue data in the issues list' do
+        expect(result[:issues][0]).to eq(issue_data)
+      end
+
+      it 'returns no url replacements' do
+        expect(result[:url_replacements].size).to eq(0)
       end
     end
 
     context 'when issue does not exists' do
       let(:issue_url) { invalid_issue_url }
 
-      it 'returns no result' do
-        expect(result.size).to eq(0)
+      it 'returns no issues' do
+        expect(result[:issues].size).to eq(0)
+      end
+
+      it 'returns no url replacements' do
+        expect(result[:url_replacements].size).to eq(0)
       end
     end
   end

@@ -7634,7 +7634,7 @@ msgstr ""
 msgid "Invalid GitHub GraphQL API token"
 msgstr ""
 
-#: lib/github/linked_issue.rb:102
+#: lib/github/linked_issue.rb:104
 msgid "Invalid GitHub issue link format"
 msgstr ""
 
@@ -7642,7 +7642,7 @@ msgstr ""
 msgid "Invalid GitLab GraphQL API token"
 msgstr ""
 
-#: lib/gitlab/linked_issue.rb:102
+#: lib/gitlab/linked_issue.rb:122
 msgid "Invalid GitLab issue link format"
 msgstr ""
 

@@ -140,7 +140,7 @@ class App.SidebarGitIssue extends App.Controller
       id:    "#{@providerIdentifier}-#{@taskKey}"
       type:  'POST'
       url:   "#{@apiPath}/integration/#{@providerIdentifier}"
-      data: JSON.stringify(links: params.links)
+      data: JSON.stringify(ticket_id: @ticket?.id, links: params.links)
       success: (data, status, xhr) ->
         if data.response
 
