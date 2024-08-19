@@ -368,8 +368,8 @@ msgid "%s (option)"
 msgstr "%s (옵션)"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:301
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:525
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:229
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:568
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:248
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:364
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:109
@@ -389,6 +389,14 @@ msgstr "%s API Token"
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:179
 msgid "%s Attribute"
 msgstr "%s 속성"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:71
+#, fuzzy
+#| msgid "Checksum"
+msgid "%s Checklist"
+msgstr "체크섬"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:203
 msgid "%s Group"
@@ -704,21 +712,26 @@ msgstr "%s %가 재개되었다"
 msgid "%{model} can have full or granular access to group"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:570
+#: app/models/object_manager/attribute.rb:567
 #, fuzzy
 #| msgid "%s Object(s) are deleted."
 msgid "%{name} already exists"
 msgstr "%s 객체 (들) 삭제됩니다."
 
-#: app/models/object_manager/attribute.rb:559
+#: app/models/object_manager/attribute.rb:556
 msgid "%{name} is a reserved word"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue:51
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 #, fuzzy
 #| msgid "Total: %s"
 msgid "(state: %s)"
+msgstr "총 : %s"
+
+#: app/frontend/apps/desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue:58
+#, fuzzy
+#| msgid "Total: %s"
+msgid "(ticket status: %s)"
 msgstr "총 : %s"
 
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
@@ -952,7 +965,7 @@ msgstr ""
 "테스트 Ticket은 당신이 당신의 Overview \"%s\"%s 리터에서 찾을 수 있습니다, 작"
 "성되었습니다."
 
-#: app/models/ticket.rb:276
+#: app/models/ticket.rb:278
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "A ticket cannot be merged into itself."
@@ -1023,62 +1036,63 @@ msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:18
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTicketItem.vue:38
 #, fuzzy
 #| msgid "Access to %s"
 msgid "Access denied"
 msgstr "%s에 액세스"
 
-#: db/seeds/permissions.rb:297
+#: db/seeds/permissions.rb:303
 msgid "Access the agent chat features."
 msgstr ""
 
-#: db/seeds/permissions.rb:312
+#: db/seeds/permissions.rb:318
 msgid "Access the agent phone features."
 msgstr ""
 
-#: db/seeds/permissions.rb:327
+#: db/seeds/permissions.rb:333
 msgid "Access the knowledge base editor features."
 msgstr ""
 
-#: db/seeds/permissions.rb:333
+#: db/seeds/permissions.rb:339
 msgid "Access the knowledge base reader features."
 msgstr ""
 
-#: db/seeds/permissions.rb:355
+#: db/seeds/permissions.rb:361
 #, fuzzy
 #| msgid "Access to Agent Tickets based on Group Access"
 msgid "Access the tickets as agent based on group access."
 msgstr "그룹 액세스를 기반으로 에이전트 Ticket 액세스"
 
-#: db/seeds/permissions.rb:364
+#: db/seeds/permissions.rb:370
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access tickets as customer."
 msgstr "최근 고객 Ticket"
 
-#: db/seeds/permissions.rb:288
+#: db/seeds/permissions.rb:294
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access to the chat interface."
 msgstr "최근 고객 Ticket"
 
-#: db/seeds/permissions.rb:318
+#: db/seeds/permissions.rb:324
 #, fuzzy
 #| msgid "Delete Knowledge Base"
 msgid "Access to the knowledge base interface."
 msgstr "지식 삭제"
 
-#: db/seeds/permissions.rb:303
+#: db/seeds/permissions.rb:309
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access to the phone interface."
 msgstr "최근 고객 Ticket"
 
-#: db/seeds/permissions.rb:340
+#: db/seeds/permissions.rb:346
 msgid "Access to the report interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:346
+#: db/seeds/permissions.rb:352
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access to the ticket interface."
@@ -1102,11 +1116,11 @@ msgstr "에이전트 한도 초과, 계정 설정을 확인하시기 바랍니�
 msgid "Account"
 msgstr ""
 
-#: app/models/channel/driver/sms/twilio.rb:103
+#: app/models/channel/driver/sms/twilio.rb:104
 msgid "Account SID"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:6
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:6
 msgid "Account Time"
 msgstr "계정 시간"
 
@@ -1120,7 +1134,7 @@ msgstr ""
 msgid "Account not verified"
 msgstr "계정 확인되지"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:37
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:37
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:28
 #: app/assets/javascripts/app/models/ticket.coffee:16
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:2
@@ -1220,6 +1234,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:320
 #: app/assets/javascripts/app/models/chat.coffee:257
+#: app/assets/javascripts/app/models/checklist_template.coffee:9
 #: app/assets/javascripts/app/models/core_workflow.coffee:14
 #: app/assets/javascripts/app/models/email_address.coffee:37
 #: app/assets/javascripts/app/models/group.coffee:16
@@ -1264,7 +1279,7 @@ msgstr "유효한"
 msgid "Activity Stream"
 msgstr "활동 스트림"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:49
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:49
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:50
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:16
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:4
@@ -1292,6 +1307,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:143
 #: app/assets/javascripts/app/views/channel/topics.jst.eco:37
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco:32
+#: app/assets/javascripts/app/views/generic/checklist_item.jst.eco:26
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco:21
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco:20
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco:16
@@ -1312,6 +1328,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:39
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco:15
 #: app/assets/javascripts/app/views/tag/index.jst.eco:25
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:19
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:278
 #: app/frontend/shared/form/i18n/locales.ts:25
 msgid "Add"
@@ -1335,6 +1352,16 @@ msgstr "봇 추가"
 #: app/assets/javascripts/app/views/integration/smime.jst.eco:5
 msgid "Add Certificate"
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:419
+msgid "Add Empty Checklist"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue:42
+#, fuzzy
+#| msgid "Templates"
+msgid "Add From a Template"
+msgstr "템플릿"
 
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco:5
 #, fuzzy
@@ -1423,9 +1450,19 @@ msgstr ""
 msgid "Add condition"
 msgstr "계정 추가"
 
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:5
+msgid "Add empty checklist"
+msgstr ""
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:193
 msgid "Add first level heading"
 msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:11
+#, fuzzy
+#| msgid "Save as template"
+msgid "Add from a template"
+msgstr "템플릿으로 저장"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:186
 #, fuzzy
@@ -1628,7 +1665,7 @@ msgstr ""
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
 
-#: db/seeds/permissions.rb:296
+#: db/seeds/permissions.rb:302
 #, fuzzy
 #| msgid "Agent"
 msgid "Agent chat"
@@ -1642,13 +1679,13 @@ msgstr ""
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "에이전트 한도 초과, 계정 설정을 확인하시기 바랍니다."
 
-#: db/seeds/permissions.rb:311
+#: db/seeds/permissions.rb:317
 #, fuzzy
 #| msgid "Agent"
 msgid "Agent phone"
 msgstr "에이전트"
 
-#: db/seeds/permissions.rb:354
+#: db/seeds/permissions.rb:360
 #, fuzzy
 #| msgid "Open Tickets"
 msgid "Agent tickets"
@@ -1728,16 +1765,36 @@ msgstr "인증"
 msgid "Allow future"
 msgstr "기능 허용"
 
+#: app/models/object_manager/attribute/data_option_validator.rb:65
+msgid "Allow future dates toggle value is required."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:334
 msgid "Allow past"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:71
+msgid "Allow past dates toggle value is required."
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:1967
 msgid "Allow reopening of tickets within a certain time."
 msgstr ""
 
+#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:18
+#, fuzzy
+#| msgid "Allow users to add new tags."
+msgid "Allow users to add new checklists."
+msgstr "사용자가 새 태그를 추가 할 수 있습니다."
+
 #: app/assets/javascripts/app/views/tag/index.jst.eco:16
 msgid "Allow users to add new tags."
+msgstr "사용자가 새 태그를 추가 할 수 있습니다."
+
+#: db/seeds/settings.rb:5766
+#, fuzzy
+#| msgid "Allow users to add new tags."
+msgid "Allow users to create new checklists."
 msgstr "사용자가 새 태그를 추가 할 수 있습니다."
 
 #: db/seeds/settings.rb:4024
@@ -1789,7 +1846,7 @@ msgstr ""
 msgid "An error has occurred"
 msgstr ""
 
-#: app/frontend/shared/server/apollo/handler/BaseHandler.ts:152
+#: app/frontend/shared/server/apollo/handler/BaseHandler.ts:150
 #, fuzzy
 #| msgid "Unable to verify email. Please contact your administrator."
 msgid "An error occured during the operation."
@@ -1932,7 +1989,7 @@ msgstr "앱의 비밀"
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:59
-#: db/seeds/permissions.rb:377
+#: db/seeds/permissions.rb:383
 msgid "Appearance"
 msgstr ""
 
@@ -2104,14 +2161,6 @@ msgstr ""
 msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:51
-msgid "Area for calendar days display"
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:50
-msgid "Area for calendar month display"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:54
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:11
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:16
@@ -2130,7 +2179,7 @@ msgstr ""
 msgid "Article > Text (HTML)"
 msgstr "조"
 
-#: lib/excel_sheet/ticket.rb:72
+#: lib/excel_sheet/ticket.rb:73
 msgid "Article Count"
 msgstr "제 개수"
 
@@ -2152,21 +2201,21 @@ msgstr "제 개수"
 msgid "Article could not be deleted."
 msgstr "%s 객체 (들)이 생성된다."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:118
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:130
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:27
 #, fuzzy
 #| msgid "Block Notifications"
 msgid "Article meta information"
 msgstr "블록 알림"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:39
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:37
 #, fuzzy
 #| msgid "Article"
 msgid "Article permalink"
 msgstr "조"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:77
-#: app/frontend/shared/composables/useArticleSecurity.ts:95
+#: app/frontend/shared/composables/useArticleSecurity.ts:99
 msgid "Article uses different security mechanism."
 msgstr ""
 
@@ -2262,7 +2311,7 @@ msgstr "첨부 파일"
 msgid "Attach files"
 msgstr "첨부 파일"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
 #, fuzzy
 #| msgid "Attachments"
@@ -2274,7 +2323,7 @@ msgstr "첨부파일"
 msgid "Attached Files"
 msgstr "첨부 파일"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:200
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
@@ -2564,7 +2613,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:128
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:175
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:121
-#: db/seeds/permissions.rb:391
+#: db/seeds/permissions.rb:397
 msgid "Avatar"
 msgstr "화신"
 
@@ -2747,6 +2796,12 @@ msgstr "본문"
 #: db/seeds/settings.rb:3203
 msgid "Body - Search for follow-up also in mail body."
 msgstr ""
+
+#: lib/validations/ticket_article_validator/sms_twilio.rb:14
+#, fuzzy
+#| msgid "%s required!"
+msgid "Body text is required"
+msgstr "%S가 필요합니다!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:41
 msgid "Boolean field"
@@ -2996,7 +3051,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:236
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:286
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:195
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:259
@@ -3025,7 +3083,7 @@ msgstr "취소"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:422
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:420
 msgid "Cancel & Go Back"
 msgstr "취소 및 돌아 가기"
 
@@ -3040,12 +3098,6 @@ msgstr "로그 아웃"
 #| msgid "Sign out"
 msgid "Cancel & Sign out"
 msgstr "로그 아웃"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:76
-#, fuzzy
-#| msgid "Cancel Upload"
-msgid "Cancel Update"
-msgstr "업로드 취소"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:20
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:111
@@ -3157,7 +3209,7 @@ msgstr "날짜 바꾸기"
 msgid "Change order"
 msgstr "주문 바꾸기"
 
-#: db/seeds/permissions.rb:409
+#: db/seeds/permissions.rb:415
 #, fuzzy
 #| msgid "Change Your Password"
 msgid "Change personal account password."
@@ -3204,7 +3256,7 @@ msgstr "변경 내용은 데이터베이스 업데이트를 필요로 하였다.
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:95
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
 msgid "Channel"
 msgstr "채널"
@@ -3272,6 +3324,13 @@ msgstr "채널 연결"
 msgid "Check channels."
 msgstr "채널 연결"
 
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:61
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:52
+#, fuzzy
+#| msgid "Checksum"
+msgid "Check item"
+msgstr "체크섬"
+
 #: lib/search_index_backend.rb:410
 msgid "Check the response and payload for detailed information:"
 msgstr ""
@@ -3282,6 +3341,50 @@ msgid ""
 "Check this box if you want to customise how options are sorted. If the box "
 "is not checked, values are sorted in alphabetical order."
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:57
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:40
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:12
+#, fuzzy
+#| msgid "Checksum"
+msgid "Checklist"
+msgstr "체크섬"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:60
+#, fuzzy
+#| msgid "Checksum"
+msgid "Checklist Item"
+msgstr "체크섬"
+
+#: app/assets/javascripts/app/views/generic/checklist_item.jst.eco:10
+msgid "Checklist Item Label"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:29
+#, fuzzy
+#| msgid "Select Template"
+msgid "Checklist Template"
+msgstr "템플릿 선택"
+
+#: app/models/checklist_template/item.rb:32
+msgid "Checklist Template items are limited to 100 items per checklist."
+msgstr ""
+
+#: app/controllers/ticket_checklist_controller.rb:17
+msgid "Checklist is already created for this ticket"
+msgstr ""
+
+#: app/models/checklist/item.rb:87
+msgid "Checklist items are limited to 100 items per checklist."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:3
+#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:3
+#: db/seeds/permissions.rb:287 db/seeds/settings.rb:5763
+#, fuzzy
+#| msgid "Checksum"
+msgid "Checklists"
+msgstr "체크섬"
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee:3
 msgid "Checkmk"
@@ -3422,10 +3525,10 @@ msgid "Clear Search"
 msgstr "검색"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:602
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:651
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:292
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:352
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:311
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:364
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:155
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:159
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:138
@@ -3440,6 +3543,12 @@ msgstr "선택자"
 #| msgid "Caller log"
 msgid "Clear filter"
 msgstr "발신자 로그"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:92
+#, fuzzy
+#| msgid "Selector"
+msgid "Clear the value"
+msgstr "선택자"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:3
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:24
@@ -3501,15 +3610,15 @@ msgstr "닫기"
 msgid "Close & Tag as Spam"
 msgstr "닫기 및 스팸으로 태그"
 
-#: lib/excel_sheet/ticket.rb:61
+#: lib/excel_sheet/ticket.rb:62
 msgid "Close Diff In Min"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:59
+#: lib/excel_sheet/ticket.rb:60
 msgid "Close Escalation At"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:60
+#: lib/excel_sheet/ticket.rb:61
 msgid "Close In Min"
 msgstr ""
 
@@ -3521,7 +3630,7 @@ msgstr ""
 msgid "Close current tab"
 msgstr "현재 탭 닫기"
 
-#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:113
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:115
 #, fuzzy
 #| msgid "Confirm/submit dialog"
 msgid "Close dialog"
@@ -3545,7 +3654,7 @@ msgstr "탭 닫기"
 msgid "Close tab on ticket close"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:53
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:51
 #, fuzzy
 #| msgid "Closed Tickets"
 msgid "Close the time picker"
@@ -3983,7 +4092,7 @@ msgstr "URL 주소"
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "클립 보드에 현재의 개체 번호 (예 : Ticket #)을 복사합니다"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:85
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:83
 #, fuzzy
 #| msgid "Edit Customer"
 msgid "Copy ticket number"
@@ -4031,6 +4140,10 @@ msgid ""
 "Could not load the two-factor authentication configuration for this user."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/signup.coffee:133
+msgid "Could not process your request"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:135
 msgid "Could not remove all two-factor authentication methods for this user."
 msgstr ""
@@ -4056,6 +4169,13 @@ msgstr "인증"
 #| msgid "Authentication"
 msgid "Could not set two-factor authentication method as default"
 msgstr "인증"
+
+#: app/assets/javascripts/app/controllers/widget/link.coffee:69
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:106
+#, fuzzy
+#| msgid "Unable to save changes."
+msgid "Couldn't save changes"
+msgstr "변경을 저장할 수 없음."
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco:5
 msgid "Count"
@@ -4088,7 +4208,7 @@ msgstr "국가"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:434
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:432
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "생성"
@@ -4161,6 +4281,17 @@ msgstr "테스트 Ticket 만들기"
 #: app/controllers/first_steps_controller.rb:86
 msgid "Create a Test Ticket"
 msgstr "테스트 Ticket 만들기"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:204
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "Create a new checklist item"
+msgstr "새로운 고객을 만들기"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:18
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:21
+msgid "Create a new checklist template in the admin interface."
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:17
 msgid "Create a new template in the admin interface."
@@ -4282,8 +4413,8 @@ msgstr "생성"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:18
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:14
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:100
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:104
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:108
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -4314,6 +4445,10 @@ msgid "Created Internal Article"
 msgstr "테스트 Ticket 만들기"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:53
+#: app/assets/javascripts/app/models/checklist.coffee:9
+#: app/assets/javascripts/app/models/checklist_item.coffee:8
+#: app/assets/javascripts/app/models/checklist_template.coffee:10
+#: app/assets/javascripts/app/models/checklist_template_item.coffee:8
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:7
 #: app/assets/javascripts/app/models/organization.coffee:9
 #: app/assets/javascripts/app/models/ticket.coffee:28
@@ -4323,7 +4458,7 @@ msgstr "테스트 Ticket 만들기"
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
 #: app/controllers/time_accountings_controller.rb:122
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:105
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:55
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:62
 #: app/graphql/gql/types/overview_type.rb:80
 msgid "Created at"
 msgstr "에서 만든"
@@ -4474,7 +4609,7 @@ msgstr ""
 msgid "Customer selection based on sender and receiver list"
 msgstr "송신자와 수신자 목록을 기반으로 고객 선택"
 
-#: db/seeds/permissions.rb:363
+#: db/seeds/permissions.rb:369
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Customer tickets"
@@ -4610,38 +4745,38 @@ msgstr "12월"
 msgid "December"
 msgstr "12월"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:68
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:66
 #, fuzzy
 #| msgid "Recent logs"
 msgid "Decrement hours value"
 msgstr "최근 로그"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:70
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:68
 #, fuzzy
 #| msgid "Average: %s minutes"
 msgid "Decrement minutes value"
 msgstr "평균 : %s 분"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:73
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:71
 #, fuzzy
 #| msgid "Average: %s minutes"
 msgid "Decrement seconds value"
 msgstr "평균 : %s 분"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:290
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:293
 msgid "Decryption failed!"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:113
-#: app/frontend/shared/composables/useArticleSecurity.ts:126
+#: app/frontend/shared/composables/useArticleSecurity.ts:130
 #, fuzzy
 #| msgid "Delivery failed"
 msgid "Decryption failed! %s"
 msgstr "배송 실패"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:288
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:291
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:107
-#: app/frontend/shared/composables/useArticleSecurity.ts:120
+#: app/frontend/shared/composables/useArticleSecurity.ts:124
 #, fuzzy
 #| msgid "Connection test successful"
 msgid "Decryption was successful."
@@ -4720,6 +4855,12 @@ msgstr ""
 #: db/seeds/settings.rb:863
 msgid "Default type for a new ticket"
 msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:47
+#, fuzzy
+#| msgid "Default caller id."
+msgid "Default value is required."
+msgstr "기본 발신자 ID입니다."
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:15
 #: db/seeds/settings.rb:2460
@@ -5745,7 +5886,7 @@ msgstr "사용자 삭제"
 msgid "Delete table"
 msgstr "파일 삭제"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:155
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:154
 #, fuzzy
 #| msgid "Getting an Access Token"
 msgid "Delete this access token"
@@ -5848,7 +5989,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/google/list.jst.eco:58
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:59
 #: app/models/channel/driver/sms/message_bird.rb:93
-#: app/models/channel/driver/sms/twilio.rb:106
+#: app/models/channel/driver/sms/twilio.rb:107
 msgid "Destination Group"
 msgstr "대상 그룹"
 
@@ -5891,7 +6032,7 @@ msgstr "결과 없음"
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:37
-#: db/seeds/permissions.rb:422
+#: db/seeds/permissions.rb:428
 msgid "Devices"
 msgstr "장치"
 
@@ -5975,7 +6116,7 @@ msgstr "취소"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:419
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:417
 msgid "Discard Changes"
 msgstr "변경 사항을 취소"
 
@@ -6085,6 +6226,12 @@ msgstr "이 개체를 삭제해야?"
 msgid "Do you want to continue?"
 msgstr "이 개체를 삭제해야?"
 
+#: app/assets/javascripts/app/views/ticket_zoom/checklist_modal.jst.eco:4
+#, fuzzy
+#| msgid "Sure to delete this object?"
+msgid "Do you want to handle them before closing this ticket?"
+msgstr "이 개체를 삭제해야?"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:64
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:46
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:12
@@ -6164,15 +6311,15 @@ msgstr ""
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "다운로드하여 %s 예에서 %s 마이그레이션 플러그인을 설치합니다."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:44
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:42
 msgid "Download original email"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:59
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:57
 msgid "Download raw email"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:316
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:319
 #, fuzzy
 #| msgid "select attachment..."
 msgid "Downloading attachments…"
@@ -6191,7 +6338,7 @@ msgstr ""
 msgid "Drag and drop to reorder ticket overview list items."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:235
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:236
 #, fuzzy
 #| msgid "Drag to reorder"
 msgid "Drag and drop to reorder your tabs."
@@ -6318,6 +6465,19 @@ msgstr "조직 편집"
 msgid "Edit authenticator app"
 msgstr "인증"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:113
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Edit checklist title"
+msgstr "Ticket 업데이트"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:77
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:69
+#, fuzzy
+#| msgid "Category"
+msgid "Edit item"
+msgstr "범주"
+
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:55
 msgid "Edit mask"
 msgstr ""
@@ -6334,6 +6494,12 @@ msgstr "댓글"
 #| msgid "Security"
 msgid "Edit security keys"
 msgstr "보안"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:89
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Edit ticket title"
+msgstr "Ticket 업데이트"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:38
 #, fuzzy
@@ -6425,7 +6591,7 @@ msgstr "마지막 동기화"
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:9
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:132
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
 #: public/assets/form/form.js:32
@@ -6565,6 +6731,12 @@ msgstr "사용"
 
 #: db/seeds/settings.rb:3429
 msgid "Enable Chat"
+msgstr "채팅 사용"
+
+#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:16
+#, fuzzy
+#| msgid "Enable Chat"
+msgid "Enable Checklists"
 msgstr "채팅 사용"
 
 #: app/assets/javascripts/app/views/api.jst.eco:33 db/seeds/settings.rb:3384
@@ -6770,14 +6942,14 @@ msgid ""
 "only effective if the password login is enabled."
 msgstr "웹 인터페이스를 통해 자신의 계정을 생성 할 수 있습니다."
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
 #, fuzzy
 #| msgid "closed"
 msgid "Enclosed"
 msgstr "닫기 완료"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
 #, fuzzy
 #| msgid "close"
@@ -6801,7 +6973,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:62
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:165
-#: app/frontend/shared/composables/useArticleSecurity.ts:159
+#: app/frontend/shared/composables/useArticleSecurity.ts:163
 msgid "Encrypted"
 msgstr ""
 
@@ -6811,7 +6983,7 @@ msgid "Encryption"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:65
-#: app/frontend/shared/composables/useArticleSecurity.ts:159
+#: app/frontend/shared/composables/useArticleSecurity.ts:163
 #, fuzzy
 #| msgid "Encrypt"
 msgid "Encryption error"
@@ -6958,7 +7130,7 @@ msgstr ""
 msgid "Enter the security code generated by the authenticator app:"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:37
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:37
 msgid "Enter the time you want to record"
 msgstr ""
 
@@ -7043,8 +7215,9 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:6
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:165
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:51
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:119
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:124
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:6
+#: app/frontend/apps/desktop/pages/error/views/Error.vue:37
 #: app/frontend/apps/mobile/pages/error/views/Error.vue:39
 msgid "Error"
 msgstr ""
@@ -7086,7 +7259,7 @@ msgid ""
 "</div>\n"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:73
+#: lib/excel_sheet/ticket.rb:74
 msgid "Escalation At"
 msgstr ""
 
@@ -7276,7 +7449,7 @@ msgstr "만료"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:19
 #: app/assets/javascripts/app/views/profile/token_access_create.jst.eco:10
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:15
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:105
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:104
 msgid "Expires"
 msgstr "만료"
 
@@ -7358,6 +7531,18 @@ msgstr "페이스북 제공 글"
 msgid "Failed Tasks"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:162
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "Failed to add new checklist item."
+msgstr "새로운 고객을 만들기"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:183
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "Failed to delete checklist item."
+msgstr "새로운 고객을 만들기"
+
 #: app/controllers/channels_google_controller.rb:96
 #: app/controllers/channels_microsoft365_controller.rb:96
 msgid "Failed to find backup on channel!"
@@ -7366,6 +7551,14 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:223
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:235
 msgid "Failed to roll back the migration of the channel!"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:169
+msgid "Failed to save checklist order."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:122
+msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:52
@@ -7377,6 +7570,12 @@ msgstr "이메일 전송에 실패했습니다 \"%\". 관리자에게 연락해 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:169
 msgid "Failed to set up QR code. Please try again."
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:176
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "Failed to update checklist item."
+msgstr "새로운 고객을 만들기"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageFailedUploadOverlay.vue:23
 msgid "Failed to upload."
@@ -7498,19 +7697,19 @@ msgstr "끝"
 msgid "Finish Setup"
 msgstr "끝"
 
-#: lib/excel_sheet/ticket.rb:62
+#: lib/excel_sheet/ticket.rb:63
 msgid "First Response At"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:65
+#: lib/excel_sheet/ticket.rb:66
 msgid "First Response Diff In Min"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:63
+#: lib/excel_sheet/ticket.rb:64
 msgid "First Response Escalation At"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:64
+#: lib/excel_sheet/ticket.rb:65
 msgid "First Response In Min"
 msgstr ""
 
@@ -7724,7 +7923,7 @@ msgstr "형식으로 | 굵은 |"
 msgid "Format as ||italic||"
 msgstr "|| 이탤릭체로 형식 ||"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:74
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:72
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:92
 msgid "Forward"
 msgstr ""
@@ -7756,7 +7955,7 @@ msgstr "금요일"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:11
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:66
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:73
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:80
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:35
 msgid "From"
@@ -7794,7 +7993,7 @@ msgstr ""
 msgid "Gateway"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:123
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:128
 #: app/assets/javascripts/app/lib/app_post/ajax.coffee:91
 msgid "General communication error, maybe internet is not available!"
 msgstr ""
@@ -8969,6 +9168,16 @@ msgstr ""
 msgid "Including private key."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
+msgid "Incomplete Ticket Checklist"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistButton.vue:22
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "Incomplete checklist items"
+msgstr "새로운 고객을 만들기"
+
 #: app/controllers/import_freshdesk_controller.rb:45
 #: app/controllers/import_kayako_controller.rb:35
 #: app/controllers/import_zendesk_controller.rb:67
@@ -8979,19 +9188,19 @@ msgstr ""
 msgid "Increment (SystemID.Counter)"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:57
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:55
 #, fuzzy
 #| msgid "in hours"
 msgid "Increment hours value"
 msgstr "시간"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:59
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:57
 #, fuzzy
 #| msgid "minutes"
 msgid "Increment minutes value"
 msgstr "의사록"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:62
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:60
 #, fuzzy
 #| msgid "minutes"
 msgid "Increment seconds value"
@@ -9045,6 +9254,10 @@ msgstr ""
 #| msgid "%s Object(s) are created."
 msgid "Inline content could not be generated."
 msgstr "%s 객체 (들)이 생성된다."
+
+#: app/models/object_manager/attribute/data_option_validator.rb:41
+msgid "Input field must be text, password, tel, fax, email or url type."
+msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:320
 msgid "Insert code block"
@@ -9297,6 +9510,12 @@ msgstr ""
 msgid "Invalid video URL"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/layout_ref.coffee:650
+#, fuzzy
+#| msgid "Invitation sent!"
+msgid "Invitation sent to %s"
+msgstr "초대 보냈습니다!"
+
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee:78
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:100
 msgid "Invitation sent!"
@@ -9370,8 +9589,13 @@ msgstr ""
 msgid "It is not possible to delete your current account."
 msgstr "이 개체를 삭제해야?"
 
-#: app/models/ticket.rb:274
+#: app/models/ticket.rb:276
 msgid "It is not possible to merge into an already merged ticket."
+msgstr ""
+
+#: app/assets/javascripts/app/models/checklist.coffee:8
+#: app/assets/javascripts/app/models/checklist_template.coffee:8
+msgid "Items"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:15
@@ -9482,7 +9706,7 @@ msgstr "지식"
 msgid "Knowledge Base Answer"
 msgstr ""
 
-#: db/seeds/permissions.rb:326
+#: db/seeds/permissions.rb:332
 msgid "Knowledge Base Editor"
 msgstr ""
 
@@ -9492,7 +9716,7 @@ msgstr ""
 msgid "Knowledge Base Feed"
 msgstr "지식"
 
-#: db/seeds/permissions.rb:332
+#: db/seeds/permissions.rb:338
 msgid "Knowledge Base Reader"
 msgstr ""
 
@@ -9550,7 +9774,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:13
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:157
-#: db/seeds/permissions.rb:384
+#: db/seeds/permissions.rb:390
 msgid "Language"
 msgstr "언어"
 
@@ -9565,15 +9789,21 @@ msgstr "언어"
 msgid "Last Article"
 msgstr "조"
 
-#: lib/excel_sheet/ticket.rb:70
+#: lib/excel_sheet/ticket.rb:59
+#, fuzzy
+#| msgid "Last used"
+msgid "Last Closed At"
+msgstr "마지막으로 사용"
+
+#: lib/excel_sheet/ticket.rb:71
 msgid "Last Contact Agent At"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:69
+#: lib/excel_sheet/ticket.rb:70
 msgid "Last Contact At"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:71
+#: lib/excel_sheet/ticket.rb:72
 msgid "Last Contact Customer At"
 msgstr ""
 
@@ -9585,7 +9815,7 @@ msgstr ""
 msgid "Last Internal Article"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:110
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:109
 #, fuzzy
 #| msgid "Last used"
 msgid "Last Used"
@@ -9767,7 +9997,7 @@ msgstr "템플릿"
 #: app/assets/javascripts/app/views/widget/user.jst.eco:34
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:46
-#: db/seeds/permissions.rb:436
+#: db/seeds/permissions.rb:442
 msgid "Linked Accounts"
 msgstr "링크 된 계정"
 
@@ -9794,7 +10024,7 @@ msgstr ""
 msgid "Links"
 msgstr "링크"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:217
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:218
 msgid "List of all user taskbar tabs"
 msgstr ""
 
@@ -9849,7 +10079,8 @@ msgstr "로드 중 ..."
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee:151
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:647
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco:3
-#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:34
+#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:40
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:509
 #: app/frontend/shared/form/i18n/locales.ts:58
 #: app/views/init/spinner-loading.html.erb:260
 #, fuzzy
@@ -10004,6 +10235,18 @@ msgstr "관리영역"
 msgid "Manage API of your system."
 msgstr "당신의 %s 시스템의 URL을 입력"
 
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:30
+#, fuzzy
+#| msgid "Select Template"
+msgid "Manage Checklist Template"
+msgstr "템플릿 선택"
+
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:31
+#, fuzzy
+#| msgid "Select Template"
+msgid "Manage Checklist Templates"
+msgstr "템플릿 선택"
+
 #: db/seeds/permissions.rb:168
 msgid "Manage Facebook channel of your system."
 msgstr ""
@@ -10151,65 +10394,65 @@ msgstr ""
 msgid "Manage packages of your system."
 msgstr "당신의 %s 시스템의 URL을 입력"
 
-#: db/seeds/permissions.rb:430
+#: db/seeds/permissions.rb:436
 #, fuzzy
 #| msgid "Personal Access Tokens"
 msgid "Manage personal API tokens."
 msgstr "개인 액세스 토큰"
 
-#: db/seeds/permissions.rb:378
+#: db/seeds/permissions.rb:384
 msgid "Manage personal appearance settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:392
+#: db/seeds/permissions.rb:398
 #, fuzzy
 #| msgid "Manage %s Settings"
 msgid "Manage personal avatar settings."
 msgstr "%s 설정 관리"
 
-#: db/seeds/permissions.rb:464
+#: db/seeds/permissions.rb:470
 msgid "Manage personal calendar."
 msgstr ""
 
-#: db/seeds/permissions.rb:423
+#: db/seeds/permissions.rb:429
 #, fuzzy
 #| msgid "Continue session"
 msgid "Manage personal devices and sessions."
 msgstr "세션을 계속"
 
-#: db/seeds/permissions.rb:385
+#: db/seeds/permissions.rb:391
 #, fuzzy
 #| msgid "Manage %s Settings"
 msgid "Manage personal language settings."
 msgstr "%s 설정 관리"
 
-#: db/seeds/permissions.rb:437
+#: db/seeds/permissions.rb:443
 msgid "Manage personal linked accounts."
 msgstr ""
 
-#: db/seeds/permissions.rb:444
+#: db/seeds/permissions.rb:450
 #, fuzzy
 #| msgid "Manage your notifications settings"
 msgid "Manage personal notifications settings."
 msgstr "알림 설정 관리"
 
-#: db/seeds/permissions.rb:399
+#: db/seeds/permissions.rb:405
 #, fuzzy
 #| msgid "Manage your notifications settings"
 msgid "Manage personal out of office settings."
 msgstr "알림 설정 관리"
 
-#: db/seeds/permissions.rb:454
+#: db/seeds/permissions.rb:460
 msgid "Manage personal overviews."
 msgstr ""
 
-#: db/seeds/permissions.rb:371
+#: db/seeds/permissions.rb:377
 #, fuzzy
 #| msgid "Manage %s Settings"
 msgid "Manage personal settings."
 msgstr "%s 설정 관리"
 
-#: db/seeds/permissions.rb:416
+#: db/seeds/permissions.rb:422
 #, fuzzy
 #| msgid "Authentication"
 msgid "Manage personal two-factor authentication methods."
@@ -10251,6 +10494,12 @@ msgstr "당신의 %s 시스템의 URL을 입력"
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage text modules of your system."
+msgstr "당신의 %s 시스템의 URL을 입력"
+
+#: db/seeds/permissions.rb:288
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket checklists of your system."
 msgstr "당신의 %s 시스템의 URL을 입력"
 
 #: db/seeds/permissions.rb:48
@@ -10421,6 +10670,10 @@ msgstr "알림 취소"
 msgid "Mattermost, RocketChat"
 msgstr ""
 
+#: app/models/object_manager/attribute/data_option_validator.rb:35
+msgid "Max length must be an integer."
+msgstr ""
+
 #: app/assets/javascripts/app/models/chat.coffee:253
 #: app/assets/javascripts/app/views/channel/topics.jst.eco:7
 #, fuzzy
@@ -10444,6 +10697,22 @@ msgstr "최대. 이메일 회신 피사체의 길이."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:387
 msgid "Maximal"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:109
+msgid "Maximal value must be an integer"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:114
+msgid "Maximal value must be higher than -2147483648"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:132
+msgid "Maximal value must be higher than or equal to minimal value"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:119
+msgid "Maximal value must be lower than 2147483648"
 msgstr ""
 
 #: db/seeds/settings.rb:3140
@@ -10674,6 +10943,18 @@ msgstr "최소. 숫자의 크기"
 msgid "Minimal"
 msgstr ""
 
+#: app/models/object_manager/attribute/data_option_validator.rb:87
+msgid "Minimal value must be an integer"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:93
+msgid "Minimal value must be higher than -2147483648"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:98
+msgid "Minimal value must be lower than 2147483648"
+msgstr ""
+
 #: db/seeds/settings.rb:1982
 msgid "Minimum length"
 msgstr "최소 길이"
@@ -10885,6 +11166,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/calendar.coffee:7
 #: app/assets/javascripts/app/models/chat.coffee:251
 #: app/assets/javascripts/app/models/chat_sessions.coffee:7
+#: app/assets/javascripts/app/models/checklist.coffee:7
+#: app/assets/javascripts/app/models/checklist_item.coffee:7
+#: app/assets/javascripts/app/models/checklist_template.coffee:7
+#: app/assets/javascripts/app/models/checklist_template_item.coffee:7
 #: app/assets/javascripts/app/models/core_workflow.coffee:6
 #: app/assets/javascripts/app/models/core_workflow_custom_module.coffee:4
 #: app/assets/javascripts/app/models/group.coffee:7
@@ -10933,7 +11218,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:100
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:31
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:103
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:90
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:142
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:181
 #: db/seeds/object_manager_attributes.rb:1507 public/assets/form/form.js:24
@@ -11063,6 +11348,12 @@ msgstr "새로운 달력"
 msgid "New Category"
 msgstr "범주"
 
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:38
+#, fuzzy
+#| msgid "Templates"
+msgid "New Checklist Template"
+msgstr "템플릿"
+
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:8
 msgid "New Deletion Task"
 msgstr "신규 삭제 작업"
@@ -11084,7 +11375,7 @@ msgid "New Overview"
 msgstr "새로운 Overview"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:132
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:202
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:201
 #, fuzzy
 #| msgid "Your New Personal Access Token"
 msgid "New Personal Access Token"
@@ -11143,7 +11434,7 @@ msgstr "템플릿"
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:68
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:26
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:38
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:15
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:106
 msgid "New Ticket"
@@ -11155,7 +11446,7 @@ msgstr "새로운 Ticket"
 msgid "New Ticket State"
 msgstr "새로운 Ticket"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:29
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:41
 #, fuzzy
 #| msgid "New Ticket"
 msgid "New Ticket: %s"
@@ -11281,13 +11572,13 @@ msgstr "상태"
 msgid "Next in overview"
 msgstr "Overview에서 다음"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:90
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:88
 #, fuzzy
 #| msgid "State"
 msgid "Next month"
 msgstr "상태"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:92
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:90
 #, fuzzy
 #| msgid "State"
 msgid "Next year"
@@ -11323,6 +11614,12 @@ msgstr "없음 %s이 (가) 구성되지."
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:3
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:11
 msgid "No Entries"
+msgstr "해당되는 항목이 없습니다"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_no_items.jst.eco:3
+#, fuzzy
+#| msgid "No Entries"
+msgid "No Entry"
 msgstr "해당되는 항목이 없습니다"
 
 #: lib/external_credential/exchange.rb:12
@@ -11380,6 +11677,24 @@ msgstr "카테고리 없음"
 #| msgid "Notification Sound"
 msgid "No certificate found."
 msgstr "알림 소리"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:432
+#, fuzzy
+#| msgid "You have not created a ticket yet."
+msgid "No checklist added to this ticket yet."
+msgstr "아직 Ticket을 만들지 않았습니다."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:180
+msgid "No checklist items yet"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:14
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:15
+#, fuzzy
+#| msgid "No template created yet."
+msgid "No checklist templates have been created yet."
+msgstr "어떤 템플릿은 아직 생성하지 않습니다."
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:5
 #, fuzzy
@@ -11540,7 +11855,7 @@ msgstr ""
 msgid "No translation for this locale available"
 msgstr ""
 
-#: app/models/ticket.rb:396
+#: app/models/ticket.rb:398
 msgid "No triggers active"
 msgstr ""
 
@@ -11557,6 +11872,12 @@ msgstr ""
 #: app/models/channel/email_parser.rb:108
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
+#, fuzzy
+#| msgid "You have closed a ticket"
+msgid "No, just close the ticket"
+msgstr "당신은 Ticket을 닫았"
 
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
 msgid "No, thanks"
@@ -11585,7 +11906,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:160
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:240
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:114
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:119
+#: app/frontend/shared/errors/useErrorHandler.ts:25
 #: app/frontend/shared/router/error.ts:18
 #: app/helpers/knowledge_base_public_page_title_helper.rb:25
 msgid "Not Found"
@@ -11608,7 +11930,8 @@ msgid "Not assigned"
 msgstr "할당되지 않음"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:158
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:110
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:115
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:25
 #: app/controllers/application_controller/handles_errors.rb:60
 #: app/services/service/ticket/article/create.rb:119
 msgid "Not authorized"
@@ -11631,7 +11954,6 @@ msgid "Not configured"
 msgstr "구성되지 않음"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:18
-#: app/frontend/shared/errors/useErrorHandler.ts:25
 #, fuzzy
 #| msgid "matches"
 msgid "Not found"
@@ -11772,7 +12094,7 @@ msgstr "알림 소리"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:34
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
-#: db/seeds/permissions.rb:443
+#: db/seeds/permissions.rb:449
 msgid "Notifications"
 msgstr "알림"
 
@@ -12037,6 +12359,12 @@ msgstr ""
 msgid "Open in new tab"
 msgstr "탭에서 다음"
 
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:75
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "Open link"
+msgstr "오픈 Ticket"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:410
 msgid "Open macro selection"
 msgstr ""
@@ -12045,37 +12373,37 @@ msgstr ""
 msgid "Open note box"
 msgstr "노트 열기 상자"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:79
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:77
 #, fuzzy
 #| msgid "Open note box"
 msgid "Open the hours overlay"
 msgstr "노트 열기 상자"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:81
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:79
 #, fuzzy
 #| msgid "Open note box"
 msgid "Open the minutes overlay"
 msgstr "노트 열기 상자"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:89
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:87
 #, fuzzy
 #| msgid "Open note box"
 msgid "Open the months overlay"
 msgstr "노트 열기 상자"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:84
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:82
 #, fuzzy
 #| msgid "Open note box"
 msgid "Open the seconds overlay"
 msgstr "노트 열기 상자"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:52
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:50
 #, fuzzy
 #| msgid "Open Tickets"
 msgid "Open the time picker"
 msgstr "오픈 Ticket"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:88
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:86
 #, fuzzy
 #| msgid "Open note box"
 msgid "Open the years overlay"
@@ -12116,6 +12444,23 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/ticket_number_increment.jst.eco:2
 msgid "Options"
 msgstr "옵션"
+
+#: app/models/object_manager/attribute/data_option_validator.rb:59
+#, fuzzy
+#| msgid "%s required!"
+msgid "Options are required."
+msgstr "%S가 필요합니다!"
+
+#: app/models/object_manager/attribute/data_option_validator.rb:53
+#, fuzzy
+#| msgid "Digit required"
+msgid "Options or relation is required."
+msgstr "자리가 필요"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:8
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue:22
+msgid "Or choose a checklist template."
+msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue:76
 #, fuzzy
@@ -12178,7 +12523,7 @@ msgstr "Overviews"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:12
 #: app/controllers/time_accountings_controller.rb:99
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganizationContent.vue:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:10
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
@@ -12259,7 +12604,7 @@ msgstr "조직"
 msgid "Origin By"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:89
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:92
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:39
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:55
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
@@ -12284,7 +12629,7 @@ msgstr "고급 설정"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:126
-#: db/seeds/permissions.rb:398
+#: db/seeds/permissions.rb:404
 msgid "Out of Office"
 msgstr "사무실 중"
 
@@ -12484,7 +12829,7 @@ msgstr "부모의"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:83
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:52
-#: db/seeds/object_manager_attributes.rb:1249 db/seeds/permissions.rb:408
+#: db/seeds/object_manager_attributes.rb:1249 db/seeds/permissions.rb:414
 msgid "Password"
 msgstr "암호"
 
@@ -12641,12 +12986,12 @@ msgstr ""
 #: app/assets/javascripts/app/models/role.coffee:7
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:5
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:17
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:95
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:94
 msgid "Permissions"
 msgstr "권한"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:12
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:213
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:212
 msgid "Personal Access Tokens"
 msgstr "개인 액세스 토큰"
 
@@ -12654,7 +12999,7 @@ msgstr "개인 액세스 토큰"
 msgid "Personal Settings"
 msgstr "개인 설정"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:141
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:140
 #, fuzzy
 #| msgid "Personal Access Tokens"
 msgid "Personal access token has been deleted."
@@ -12667,7 +13012,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/cti.coffee:322
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:12
-#: db/seeds/object_manager_attributes.rb:797 db/seeds/permissions.rb:302
+#: db/seeds/object_manager_attributes.rb:797 db/seeds/permissions.rb:308
 msgid "Phone"
 msgstr "전화"
 
@@ -12695,7 +13040,7 @@ msgid "Phone number is already in use by another WhatsApp account."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:7
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:183
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:182
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
 "응용 프로그램의 이름을 선택하고, 우리는 당신에게 고유 한 토큰을 줄 것이다."
@@ -12729,6 +13074,10 @@ msgstr "사용자 인터페이스 사운드 효과를 재생"
 
 #: app/frontend/shared/form/i18n/locales.ts:117
 msgid "Please accept the %s."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:48
+msgid "Please add at least one item to the checklist."
 msgstr ""
 
 #: app/views/knowledge_base/public/categories/index.html.erb:18
@@ -12815,6 +13164,10 @@ msgid ""
 "versions of Zammad. Use the IDP certificate instead."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/error/views/Error.vue:54
+msgid "Please proceed to login"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:383
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr ""
@@ -12838,6 +13191,10 @@ msgstr "새 암호를 선택합니다."
 msgid ""
 "Please save your recovery codes listed below somewhere safe. You can use "
 "them to sign in if you lose access to another two-factor method:"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:72
+msgid "Please select a checklist template."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts:60
@@ -12999,13 +13356,13 @@ msgstr "너무 이른"
 msgid "Previous in overview"
 msgstr "Overview에 이전"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:91
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:89
 #, fuzzy
 #| msgid "Previous"
 msgid "Previous month"
 msgstr "너무 이른"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:93
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:91
 #, fuzzy
 #| msgid "Previous"
 msgid "Previous year"
@@ -13096,7 +13453,7 @@ msgid "Profile language updated successfully."
 msgstr "테스트 실행 성공했습니다."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
-#: db/seeds/permissions.rb:370
+#: db/seeds/permissions.rb:376
 #, fuzzy
 #| msgid "Proxy Settings"
 msgid "Profile settings"
@@ -13221,7 +13578,7 @@ msgstr ""
 "인증 사용자에 대한 사용자 이름 / 이메일 주소와 비밀번호를 사용하여 REST API "
 "액세스를 활성화합니다."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:68
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:71
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:40
 msgid "Raw"
 msgstr ""
@@ -13408,7 +13765,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:61
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:132
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:177
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:80
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:78
 #: app/frontend/shared/form/i18n/locales.ts:29
 msgid "Remove"
 msgstr "풀다"
@@ -13459,6 +13816,13 @@ msgstr "풀다"
 msgid "Remove authenticator app"
 msgstr "인증"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:378
+#, fuzzy
+#| msgid "Remove"
+msgid "Remove checklist"
+msgstr "풀다"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:284
 #, fuzzy
 #| msgid "Removes the formatting"
@@ -13469,6 +13833,13 @@ msgstr "서식을 제거합니다"
 #, fuzzy
 #| msgid "Remove"
 msgid "Remove image"
+msgstr "풀다"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:85
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:75
+#, fuzzy
+#| msgid "Remove"
+msgid "Remove item"
 msgstr "풀다"
 
 #: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco:5
@@ -13505,6 +13876,11 @@ msgstr "서식을 제거합니다"
 msgid "Removes the shadows for a flat look."
 msgstr "평평한 모양의 그림자를 제거합니다."
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:20
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:371
+msgid "Rename checklist"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee:9
 #, fuzzy
 #| msgid "Personal Access Tokens"
@@ -13526,6 +13902,13 @@ msgstr "재 오픈 율(%)"
 msgid "Reopening time in days"
 msgstr "재 오픈 율(%)"
 
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:14
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:189
+#, fuzzy
+#| msgid "Order"
+msgid "Reorder"
+msgstr "주문"
+
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:26
 msgid "Replacement"
 msgstr "바꿔 놓음"
@@ -13536,7 +13919,7 @@ msgstr "바꿔 놓음"
 msgid "Replacement agent"
 msgstr "바꿔 놓음"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:85
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:83
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:84
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
@@ -14056,11 +14439,13 @@ msgstr "토요일"
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:17
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:14
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:9
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:27
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:38
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:9
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:121
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:217
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:70
@@ -14108,6 +14493,12 @@ msgstr "계속"
 msgid "Save as"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:340
+#, fuzzy
+#| msgid "Discard Changes"
+msgid "Save changes"
+msgstr "변경 사항을 취소"
+
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:217
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:267
 msgid "Save configuration"
@@ -14120,7 +14511,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1084
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1119
 #, fuzzy
 #| msgid "Bulk action executed!"
 msgid "Saving failed."
@@ -14339,7 +14730,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:22
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:175
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:183
@@ -14415,20 +14806,20 @@ msgid "See HTTPLog for details."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:444
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:447
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:115
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:118
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
 msgid "See less"
 msgstr "참조 이하"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:440
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:443
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:116
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:115
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:118
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue:17
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
 msgid "See more"
@@ -14466,6 +14857,7 @@ msgstr "CSV 파일을 선택"
 msgid "Select Shared Draft"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:16
 #: app/assets/javascripts/app/views/widget/template.jst.eco:4
 msgid "Select Template"
 msgstr "템플릿 선택"
@@ -14593,7 +14985,7 @@ msgstr "클라이언트에게 보내기"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:51
 #: app/models/channel/driver/sms/massenversand.rb:45
 #: app/models/channel/driver/sms/message_bird.rb:92
-#: app/models/channel/driver/sms/twilio.rb:105 db/seeds/settings.rb:3090
+#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3090
 #: lib/excel_sheet/ticket.rb:32
 msgid "Sender"
 msgstr "송신기"
@@ -14789,13 +15181,13 @@ msgid ""
 "limits"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:88
 #, fuzzy
 #| msgid "set to internal"
 msgid "Set to external"
 msgstr "내부적으로 설정된"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:93
 #: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts:33
 #, fuzzy
 #| msgid "set to internal"
@@ -15114,7 +15506,7 @@ msgid "Sign email (if not possible, send notification anyway)"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:76
-#: app/frontend/shared/composables/useArticleSecurity.ts:156
+#: app/frontend/shared/composables/useArticleSecurity.ts:160
 #, fuzzy
 #| msgid "Sign out"
 msgid "Sign error"
@@ -15170,14 +15562,14 @@ msgstr "로그인"
 msgid "Signature"
 msgstr "서명"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:279
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:282
 #, fuzzy
 #| msgid "Resend verification email"
 msgid "Signature verification failed!"
 msgstr "확인 이메일을 다시 보내"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:96
-#: app/frontend/shared/composables/useArticleSecurity.ts:110
+#: app/frontend/shared/composables/useArticleSecurity.ts:114
 #, fuzzy
 #| msgid "Resend verification email"
 msgid "Signature verification failed! %s"
@@ -15191,7 +15583,7 @@ msgstr "서명"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:73
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:171
-#: app/frontend/shared/composables/useArticleSecurity.ts:156
+#: app/frontend/shared/composables/useArticleSecurity.ts:160
 msgid "Signed"
 msgstr ""
 
@@ -15281,7 +15673,7 @@ msgstr ""
 msgid "Site"
 msgstr "Site"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:10
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:10
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco:21
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:97
@@ -15388,7 +15780,7 @@ msgstr "출처"
 msgid "Special character required"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:100
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:98
 #: app/frontend/shared/entities/ticket-article/action/plugins/split.ts:12
 #, fuzzy
 #| msgid "split"
@@ -15406,6 +15798,7 @@ msgid "Standard Group/Pool for Tickets."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee:34
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:77
 msgid "Start Editing"
 msgstr ""
 
@@ -15480,7 +15873,7 @@ msgstr "사용자 이름 또는 이메일 주소를 입력"
 msgid "Start typing to search or enter an email address…"
 msgstr "사용자 이름 또는 이메일 주소를 입력"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:69
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:71
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:41
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:409
 #, fuzzy
@@ -15627,7 +16020,7 @@ msgstr "거리"
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:11
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:64
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:40
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:13
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:87
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:171
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:33
@@ -15801,7 +16194,7 @@ msgstr ""
 msgid "Tab has changed, do you really want to close it?"
 msgstr "탭 변경, 당신은 정말 그것을 닫으시겠습니까?"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:231
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:232
 msgid "Tabs"
 msgstr ""
 
@@ -15980,6 +16373,11 @@ msgstr ""
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:47
 msgid "Text or attachment is required"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_item_edit.jst.eco:6
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:145
+msgid "Text or ticket identifier"
 msgstr ""
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:11
@@ -16268,6 +16666,12 @@ msgid ""
 msgstr ""
 "브라우저는 구식이다. 이 웹 소켓을 지원하지 않습니다 - 우리가 채팅에 사용하는 "
 "기술."
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:93
+#, fuzzy
+#| msgid "Geo Calendar Service"
+msgid "The calendar icon"
+msgstr "지오 달력 서비스"
 
 #: app/models/setting/validation/saml/security.rb:16
 #, fuzzy
@@ -16571,6 +16975,10 @@ msgstr "피사체의 형식입니다."
 msgid "The given article is not a media article."
 msgstr "자동차의 상태가 Ticket을 폐쇄 정의합니다."
 
+#: app/graphql/gql/mutations/ticket/checklist/item_delete.rb:13
+msgid "The given checklist item does not belong to the given checklist."
+msgstr ""
+
 #: app/services/service/user/two_factor/set_default_method.rb:18
 #, fuzzy
 #| msgid "Authentication"
@@ -16604,6 +17012,12 @@ msgstr ""
 #| msgid "%s Object(s) are updated."
 msgid "The hostname could not be found."
 msgstr "%s 객체 (들) 업데이트됩니다."
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:102
+#, fuzzy
+#| msgid "Open note box"
+msgid "The hours overlay"
+msgstr "노트 열기 상자"
 
 #: db/seeds/settings.rb:2144
 msgid ""
@@ -16680,6 +17094,24 @@ msgstr "%s 객체 (들) 업데이트됩니다."
 #| msgid "Time Accounting"
 msgid "The login is not possible."
 msgstr "시간 회계"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:104
+#, fuzzy
+#| msgid "Open note box"
+msgid "The minutes overlay"
+msgstr "노트 열기 상자"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:96
+#, fuzzy
+#| msgid "Tickets"
+msgid "The month picker"
+msgstr "Ticket"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:96
+#, fuzzy
+#| msgid "Open note box"
+msgid "The month picker overlay"
+msgstr "노트 열기 상자"
 
 #: app/models/ticket/number.rb:14
 #, fuzzy
@@ -16779,7 +17211,7 @@ msgstr "서명"
 msgid "The password reset request was successful."
 msgstr "테스트 실행 성공했습니다."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:132
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:131
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "The personal access token could not be deleted."
@@ -17100,11 +17532,17 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:299
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:67
-#: app/frontend/shared/composables/useArticleSecurity.ts:85
+#: app/frontend/shared/composables/useArticleSecurity.ts:89
 msgid "The retried security process failed!"
 msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:107
+#, fuzzy
+#| msgid "Open note box"
+msgid "The seconds overlay"
+msgstr "노트 열기 상자"
 
 #: app/frontend/shared/form/i18n/locales.ts:567
 msgid "The selected date is invalid."
@@ -17169,9 +17607,9 @@ msgid ""
 "according to RFC 3156."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:277
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:280
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:90
-#: app/frontend/shared/composables/useArticleSecurity.ts:104
+#: app/frontend/shared/composables/useArticleSecurity.ts:108
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "The signature was successfully verified."
@@ -17239,6 +17677,12 @@ msgstr ""
 #| msgid "%s Object(s) are created."
 msgid "The tickets could not be merged."
 msgstr "%s 객체 (들)이 생성된다."
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:94
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "The time picker"
+msgstr "오픈 Ticket"
 
 #: app/services/service/user/signup.rb:49
 #, fuzzy
@@ -17344,6 +17788,18 @@ msgstr "우리와 의사 소통을하는 방법은 \"Ticket\"이라는 것입니
 #: lib/telegram_helper.rb:35
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:98
+#, fuzzy
+#| msgid "Tickets"
+msgid "The year picker"
+msgstr "Ticket"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:98
+#, fuzzy
+#| msgid "Open note box"
+msgid "The year picker overlay"
+msgstr "노트 열기 상자"
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:76
 #, fuzzy
@@ -17577,7 +18033,7 @@ msgstr ""
 "이 클래스는 초기화의 버튼에 추가됩니다 및 채팅 연결이있어 일단 제거됩니다."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:170
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:222
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:221
 msgid "This device"
 msgstr ""
 
@@ -18187,12 +18643,6 @@ msgstr ""
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:77
-#, fuzzy
-#| msgid "Ticket update"
-msgid "Ticket Update"
-msgstr "Ticket 업데이트"
-
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:105
 #, fuzzy
 #| msgid "Ticket escalation"
@@ -18357,7 +18807,7 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
-#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:32
+#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:26
 msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
 msgstr ""
@@ -18458,7 +18908,7 @@ msgstr "시각"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:105
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:132
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:12
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:12
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:3
 #: db/seeds/permissions.rb:107 db/seeds/settings.rb:3904
 msgid "Time Accounting"
@@ -18584,7 +19034,7 @@ msgstr "양식의 제목"
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:76
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:84
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:85
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:148
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:36
@@ -18695,7 +19145,7 @@ msgstr "Ticket에서 작동합니다."
 msgid "Today"
 msgstr "오늘"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:87
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:85
 msgid "Toggle AM/PM mode"
 msgstr ""
 
@@ -18737,7 +19187,7 @@ msgstr "노트 열기 상자"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
 #: app/models/channel/driver/sms/message_bird.rb:91
-#: app/models/channel/driver/sms/twilio.rb:104
+#: app/models/channel/driver/sms/twilio.rb:105
 msgid "Token"
 msgstr ""
 
@@ -18745,8 +19195,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/api.jst.eco:12
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:52
-#: db/seeds/permissions.rb:429
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:51
+#: db/seeds/permissions.rb:435
 msgid "Token Access"
 msgstr "토큰 액세스"
 
@@ -18772,7 +19222,7 @@ msgstr ""
 msgid "Token is invalid!"
 msgstr ""
 
-#: lib/user_agent.rb:357
+#: lib/user_agent.rb:359
 msgid "Too many redirections for the original URL, halting."
 msgstr ""
 
@@ -19016,7 +19466,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/password.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:57
-#: db/seeds/permissions.rb:415
+#: db/seeds/permissions.rb:421
 #, fuzzy
 #| msgid "Authentication"
 msgid "Two-factor Authentication"
@@ -19140,6 +19590,13 @@ msgstr "할당되지 않은 및 열기"
 msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr "할당되지 않은 이메일 주소는 채널에 할당하거나 삭제할 수 있습니다."
 
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:69
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:60
+#, fuzzy
+#| msgid "Select item"
+msgid "Uncheck item"
+msgstr "물품을 고르시 오"
+
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:12
 msgid "Unit"
 msgstr ""
@@ -19181,9 +19638,9 @@ msgstr "공고"
 msgid "Unsaved Changes"
 msgstr "변경 사항을 취소"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:534
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:238
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:304
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:578
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:257
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:316
 msgid "Unselect Option"
 msgstr ""
 
@@ -19235,15 +19692,15 @@ msgstr "최신 정보"
 msgid "Update Database"
 msgstr "데이터베이스 업데이트"
 
-#: lib/excel_sheet/ticket.rb:68
+#: lib/excel_sheet/ticket.rb:69
 msgid "Update Diff In Min"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:66
+#: lib/excel_sheet/ticket.rb:67
 msgid "Update Escalation At"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:67
+#: lib/excel_sheet/ticket.rb:68
 msgid "Update In Min"
 msgstr ""
 
@@ -19330,6 +19787,10 @@ msgid "Updated At"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:242
+#: app/assets/javascripts/app/models/checklist.coffee:10
+#: app/assets/javascripts/app/models/checklist_item.coffee:9
+#: app/assets/javascripts/app/models/checklist_template.coffee:11
+#: app/assets/javascripts/app/models/checklist_template_item.coffee:9
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:8
 #: app/assets/javascripts/app/models/organization.coffee:11
 #: app/assets/javascripts/app/models/ticket.coffee:30
@@ -19945,7 +20406,7 @@ msgid "Webhook"
 msgstr "Webhook"
 
 #: app/models/channel/driver/sms/message_bird.rb:90
-#: app/models/channel/driver/sms/twilio.rb:102
+#: app/models/channel/driver/sms/twilio.rb:103
 msgid "Webhook Token"
 msgstr ""
 
@@ -20148,6 +20609,28 @@ msgid ""
 msgstr ""
 "체크섬 체크섬 카운터에 추가한다. 형식은 \"%s '에 (예를 들어 %s)처럼 보인다."
 
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:35
+#: app/assets/javascripts/app/models/checklist_template.coffee:23
+#, fuzzy
+#| msgid "With templates you can pre-fill ticket attributes."
+msgid ""
+"With checklist templates it is possible to pre-fill new checklists with "
+"initial items."
+msgstr "템플릿을 사용하면 Ticket의 특성을 미리 채울 수 있습니다."
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:18
+#, fuzzy
+#| msgid "With templates you can pre-fill ticket attributes."
+msgid "With checklist templates you can pre-fill your checklists."
+msgstr "템플릿을 사용하면 Ticket의 특성을 미리 채울 수 있습니다."
+
+#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:8
+msgid ""
+"With checklists you can keep track of the progress of your ticket related "
+"tasks."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee:14
 msgid ""
 "With filters you can e. g. dispatch new tickets into certain groups or set a "
@@ -20241,6 +20724,12 @@ msgstr "예"
 #| msgid "Add attachment option to upload."
 msgid "Yes, add attachments now"
 msgstr "업로드 첨부 파일 옵션을 추가합니다."
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
+#, fuzzy
+#| msgid "Remove"
+msgid "Yes, open the checklist"
+msgstr "풀다"
 
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee:4
 msgid "Yes, start real import."
@@ -20351,7 +20840,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:4
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:181
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:180
 msgid ""
 "You can generate a personal access token for each application you use that "
 "needs access to the Zammad API."
@@ -20469,7 +20958,7 @@ msgid "You have insufficient rights to view this organization."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
-#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:34
+#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:28
 msgid "You have insufficient rights to view this ticket."
 msgstr ""
 
@@ -20502,6 +20991,10 @@ msgstr "아직 Ticket을 만들지 않았습니다."
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:324
 msgid "You have to allow access to your webcam."
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/checklist_modal.jst.eco:2
+msgid "You have unchecked items in the checklist."
 msgstr ""
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco:4
@@ -20914,25 +21407,25 @@ msgstr "Ticket을 할당"
 msgid "at"
 msgstr "...에서"
 
-#: app/models/object_manager/attribute.rb:554
+#: app/models/object_manager/attribute.rb:551
 msgid "at least one letter is required"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
 #, fuzzy
 #| msgid "reached"
 msgid "attached"
 msgstr "도달"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
 #, fuzzy
 #| msgid "Attachments"
 msgid "attachment"
 msgstr "첨부파일"
 
-#: app/models/object_manager/attribute.rb:583
+#: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"
 msgstr ""
 
@@ -20967,11 +21460,11 @@ msgstr "바쁜"
 msgid "camera,image,photo,picture"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:630
+#: app/models/object_manager/attribute.rb:629
 msgid "can only be created on postgresql databases"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:623
+#: app/models/object_manager/attribute.rb:622
 msgid ""
 "can't be altered after creation (you can delete the attribute and create "
 "another with the desired value)"
@@ -20983,7 +21476,7 @@ msgstr ""
 msgid "can't be empty"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:545
+#: app/models/object_manager/attribute.rb:542
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr ""
 
@@ -21143,7 +21636,7 @@ msgstr ""
 msgid "delete"
 msgstr "지우다"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:20
 #, fuzzy
 #| msgid "Delete Customer"
@@ -21254,18 +21747,18 @@ msgstr ""
 msgid "email"
 msgstr "이메일"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:97
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:99
 msgid "email sent to '%s'"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
 #, fuzzy
 #| msgid "closed"
 msgid "enclosed"
 msgstr "닫기 완료"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
 #, fuzzy
 #| msgid "close"
@@ -21343,7 +21836,7 @@ msgstr ""
 msgid "forward"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:136
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:138
 msgid "from"
 msgstr "...에서"
 
@@ -21511,7 +22004,7 @@ msgid "in process"
 msgstr "진행 중"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1425
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1426
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -21589,7 +22082,7 @@ msgstr "아니다"
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:89
 #, fuzzy
 #| msgid "Min. size of number"
 msgid "is not a number"
@@ -21878,7 +22371,7 @@ msgstr "설정하지 (정의 생략)"
 msgid "note"
 msgstr "노트"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:95
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:97
 #, fuzzy
 #| msgid "Notification Sender"
 msgid "notification sent to '%s'"
@@ -21896,7 +22389,7 @@ msgstr "알림"
 msgid "now"
 msgstr "아니"
 
-#: app/models/object_manager/attribute.rb:551
+#: app/models/object_manager/attribute.rb:548
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr ""
 
@@ -21972,7 +22465,7 @@ msgstr ""
 msgid "reached"
 msgstr "도달"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:150
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:13
 #, fuzzy
 #| msgid "Create new Customer"
@@ -21986,6 +22479,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco:21
 msgid "recovery codes"
+msgstr ""
+
+#: app/models/checklist/item.rb:81
+msgid "reference must not be the checklist ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:103
@@ -22069,7 +22566,7 @@ msgstr "선택 첨부 ..."
 msgid "select visible options"
 msgstr "댓글"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:24
 #, fuzzy
 #| msgid "Create new Customer"
@@ -22150,7 +22647,7 @@ msgstr "생략"
 msgid "sms"
 msgstr "SMS"
 
-#: app/models/object_manager/attribute.rb:548
+#: app/models/object_manager/attribute.rb:545
 msgid "spaces are not allowed"
 msgstr ""
 
@@ -22206,7 +22703,7 @@ msgstr "텔레그램 개인 메세지"
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:123
 msgid "this ticket was merged into ticket %s"
 msgstr ""
 
@@ -22215,15 +22712,9 @@ msgstr ""
 msgid "ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:114
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:116
 msgid "ticket %s was merged into this ticket"
 msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:75
-#, fuzzy
-#| msgid "Ticket update"
-msgid "ticket title"
-msgstr "Ticket 업데이트"
 
 #: db/seeds/settings.rb:1131
 msgid "ticket.agent"
@@ -22265,15 +22756,15 @@ msgstr ""
 msgid "translation,locale,localization"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:101
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:103
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:103
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:105
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:105
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:107
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr ""
 
@@ -22426,6 +22917,21 @@ msgstr "... 전체 텍스트 영역의"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ 오늘 대기 시간"
+
+#, fuzzy
+#~| msgid "Select Template"
+#~ msgid "Checklist Templates"
+#~ msgstr "템플릿 선택"
+
+#, fuzzy
+#~| msgid "Cancel Upload"
+#~ msgid "Cancel Update"
+#~ msgstr "업로드 취소"
+
+#, fuzzy
+#~| msgid "Ticket update"
+#~ msgid "Ticket Update"
+#~ msgstr "Ticket 업데이트"
 
 #, fuzzy
 #~| msgid "Ticket update"
@@ -22780,9 +23286,6 @@ msgstr "∅ 오늘 대기 시간"
 #~ msgid "Choose attributes and then save them as a new template."
 #~ msgstr "속성을 선택한 다음 새 템플릿으로 저장할 수 있습니다."
 
-#~ msgid "Save as template"
-#~ msgstr "템플릿으로 저장"
-
 #~ msgid "Save new template"
 #~ msgstr "새 템플릿을 저장합니다"
 
@@ -22893,9 +23396,6 @@ msgstr "∅ 오늘 대기 시간"
 #~ msgid " Order"
 #~ msgstr "주문"
 
-#~ msgid "Order"
-#~ msgstr "주문"
-
 #, fuzzy
 #~| msgid "Reporting"
 #~ msgid "Sorting"
@@ -22960,11 +23460,6 @@ msgstr "∅ 오늘 대기 시간"
 #, fuzzy
 #~| msgid "Unable to save changes."
 #~ msgid "Unable to load changes"
-#~ msgstr "변경을 저장할 수 없음."
-
-#, fuzzy
-#~| msgid "Unable to save changes."
-#~ msgid "Unable to save changes"
 #~ msgstr "변경을 저장할 수 없음."
 
 #~ msgid "TextModule"
@@ -23052,9 +23547,6 @@ msgstr "∅ 오늘 대기 시간"
 
 #~ msgid "Default caller id"
 #~ msgstr "기본 발신자 ID"
-
-#~ msgid "Default caller id."
-#~ msgstr "기본 발신자 ID입니다."
 
 #~ msgid "Login with %s"
 #~ msgstr "%s에 로그인"

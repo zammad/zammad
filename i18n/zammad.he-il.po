@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-13 01:05+0000\n"
+"PO-Revision-Date: 2024-08-10 09:16+0000\n"
 "Last-Translator: YosefAdPro <yosef@adpronet.com>\n"
 "Language-Team: Hebrew (Israel) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/he_IL/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=4; plural=(n == 1) ? 0 : ((n == 2) ? 1 : ((n > 10 && "
 "n % 10 == 0) ? 2 : 3));\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -283,8 +283,8 @@ msgid "%s (option)"
 msgstr "add option"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:301
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:525
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:229
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:568
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:248
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:364
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:109
@@ -303,6 +303,14 @@ msgstr "%s מפתח API"
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:179
 msgid "%s Attribute"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:71
+#, fuzzy
+#| msgid "Checksum"
+msgid "%s Checklist"
+msgstr "checksum"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:203
 msgid "%s Group"
@@ -637,19 +645,24 @@ msgstr "%s% נפתחו מחדש"
 msgid "%{model} can have full or granular access to group"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:570
+#: app/models/object_manager/attribute.rb:567
 msgid "%{name} already exists"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:559
+#: app/models/object_manager/attribute.rb:556
 msgid "%{name} is a reserved word"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue:51
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 #, fuzzy
 #| msgid "Total: %s"
 msgid "(state: %s)"
+msgstr "סהכ: %s"
+
+#: app/frontend/apps/desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue:58
+#, fuzzy
+#| msgid "Total: %s"
+msgid "(ticket status: %s)"
 msgstr "סהכ: %s"
 
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
@@ -873,7 +886,7 @@ msgid ""
 "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr "כרטיס בדיקה נוצר, באפשרותך למצוא אותו בסקירה הכללית שלך \"%s\"%l."
 
-#: app/models/ticket.rb:276
+#: app/models/ticket.rb:278
 #, fuzzy
 #| msgid "%s% have been reopened"
 msgid "A ticket cannot be merged into itself."
@@ -944,62 +957,63 @@ msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:18
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTicketItem.vue:38
 #, fuzzy
 #| msgid "Access to %s"
 msgid "Access denied"
 msgstr "גישה אל %s"
 
-#: db/seeds/permissions.rb:297
+#: db/seeds/permissions.rb:303
 msgid "Access the agent chat features."
 msgstr ""
 
-#: db/seeds/permissions.rb:312
+#: db/seeds/permissions.rb:318
 msgid "Access the agent phone features."
 msgstr ""
 
-#: db/seeds/permissions.rb:327
+#: db/seeds/permissions.rb:333
 msgid "Access the knowledge base editor features."
 msgstr ""
 
-#: db/seeds/permissions.rb:333
+#: db/seeds/permissions.rb:339
 msgid "Access the knowledge base reader features."
 msgstr ""
 
-#: db/seeds/permissions.rb:355
+#: db/seeds/permissions.rb:361
 #, fuzzy
 #| msgid "Access to Agent Tickets based on Group Access"
 msgid "Access the tickets as agent based on group access."
 msgstr "גישה אל כרטיסי הטכנאי מבוססת על הרשאות הקבוצה"
 
-#: db/seeds/permissions.rb:364
+#: db/seeds/permissions.rb:370
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access tickets as customer."
 msgstr "כרטיסי לקוחות אחרונים"
 
-#: db/seeds/permissions.rb:288
+#: db/seeds/permissions.rb:294
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access to the chat interface."
 msgstr "כרטיסי לקוחות אחרונים"
 
-#: db/seeds/permissions.rb:318
+#: db/seeds/permissions.rb:324
 #, fuzzy
 #| msgid "Delete Knowledge Base"
 msgid "Access to the knowledge base interface."
 msgstr "מחיקת בסיס ידע"
 
-#: db/seeds/permissions.rb:303
+#: db/seeds/permissions.rb:309
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access to the phone interface."
 msgstr "כרטיסי לקוחות אחרונים"
 
-#: db/seeds/permissions.rb:340
+#: db/seeds/permissions.rb:346
 msgid "Access to the report interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:346
+#: db/seeds/permissions.rb:352
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access to the ticket interface."
@@ -1023,11 +1037,11 @@ msgstr "חריגה בהגבלת המטפל, נא לבדוק את החשבון ש
 msgid "Account"
 msgstr "חשבון"
 
-#: app/models/channel/driver/sms/twilio.rb:103
+#: app/models/channel/driver/sms/twilio.rb:104
 msgid "Account SID"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:6
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:6
 msgid "Account Time"
 msgstr "זמן החשבון"
 
@@ -1041,7 +1055,7 @@ msgstr "החשבון כבר קיים!"
 msgid "Account not verified"
 msgstr "חשבון לא אומת"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:37
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:37
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:28
 #: app/assets/javascripts/app/models/ticket.coffee:16
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:2
@@ -1141,6 +1155,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:320
 #: app/assets/javascripts/app/models/chat.coffee:257
+#: app/assets/javascripts/app/models/checklist_template.coffee:9
 #: app/assets/javascripts/app/models/core_workflow.coffee:14
 #: app/assets/javascripts/app/models/email_address.coffee:37
 #: app/assets/javascripts/app/models/group.coffee:16
@@ -1185,7 +1200,7 @@ msgstr "פעיל"
 msgid "Activity Stream"
 msgstr "רצף פעילות"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:49
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:49
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:50
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:16
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:4
@@ -1213,6 +1228,7 @@ msgstr "מתאם"
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:143
 #: app/assets/javascripts/app/views/channel/topics.jst.eco:37
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco:32
+#: app/assets/javascripts/app/views/generic/checklist_item.jst.eco:26
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco:21
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco:20
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco:16
@@ -1233,6 +1249,7 @@ msgstr "מתאם"
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:39
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco:15
 #: app/assets/javascripts/app/views/tag/index.jst.eco:25
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:19
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:278
 #: app/frontend/shared/form/i18n/locales.ts:25
 msgid "Add"
@@ -1256,6 +1273,16 @@ msgstr "הוסף Bot"
 #: app/assets/javascripts/app/views/integration/smime.jst.eco:5
 msgid "Add Certificate"
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:419
+msgid "Add Empty Checklist"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue:42
+#, fuzzy
+#| msgid "Templates"
+msgid "Add From a Template"
+msgstr "תבנית"
 
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco:5
 #, fuzzy
@@ -1344,9 +1371,19 @@ msgstr ""
 msgid "Add condition"
 msgstr "add option"
 
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:5
+msgid "Add empty checklist"
+msgstr ""
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:193
 msgid "Add first level heading"
 msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:11
+#, fuzzy
+#| msgid "Save as template"
+msgid "Add from a template"
+msgstr "שמור כתבנית"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:186
 #, fuzzy
@@ -1548,7 +1585,7 @@ msgstr ""
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
 
-#: db/seeds/permissions.rb:296
+#: db/seeds/permissions.rb:302
 #, fuzzy
 #| msgid "Agent"
 msgid "Agent chat"
@@ -1562,13 +1599,13 @@ msgstr ""
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "חריגה בהגבלת המטפל, נא לבדוק את החשבון שלך."
 
-#: db/seeds/permissions.rb:311
+#: db/seeds/permissions.rb:317
 #, fuzzy
 #| msgid "Agent"
 msgid "Agent phone"
 msgstr "טכנאים"
 
-#: db/seeds/permissions.rb:354
+#: db/seeds/permissions.rb:360
 #, fuzzy
 #| msgid "Open Tickets"
 msgid "Agent tickets"
@@ -1647,16 +1684,36 @@ msgstr "אימות"
 msgid "Allow future"
 msgstr "אפשור עתידי"
 
+#: app/models/object_manager/attribute/data_option_validator.rb:65
+msgid "Allow future dates toggle value is required."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:334
 msgid "Allow past"
 msgstr "Allow past"
+
+#: app/models/object_manager/attribute/data_option_validator.rb:71
+msgid "Allow past dates toggle value is required."
+msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:1967
 msgid "Allow reopening of tickets within a certain time."
 msgstr ""
 
+#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:18
+#, fuzzy
+#| msgid "Allow users to add new tags."
+msgid "Allow users to add new checklists."
+msgstr "אפשר למשתמשים להוסיף תגים חדשים."
+
 #: app/assets/javascripts/app/views/tag/index.jst.eco:16
 msgid "Allow users to add new tags."
+msgstr "אפשר למשתמשים להוסיף תגים חדשים."
+
+#: db/seeds/settings.rb:5766
+#, fuzzy
+#| msgid "Allow users to add new tags."
+msgid "Allow users to create new checklists."
 msgstr "אפשר למשתמשים להוסיף תגים חדשים."
 
 #: db/seeds/settings.rb:4024
@@ -1708,7 +1765,7 @@ msgstr ""
 msgid "An error has occurred"
 msgstr ""
 
-#: app/frontend/shared/server/apollo/handler/BaseHandler.ts:152
+#: app/frontend/shared/server/apollo/handler/BaseHandler.ts:150
 #, fuzzy
 #| msgid "Unable to verify email. Please contact your administrator."
 msgid "An error occured during the operation."
@@ -1851,7 +1908,7 @@ msgstr "סיסמת אפליקציה"
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:59
-#: db/seeds/permissions.rb:377
+#: db/seeds/permissions.rb:383
 msgid "Appearance"
 msgstr "מראה"
 
@@ -2023,14 +2080,6 @@ msgstr ""
 msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:51
-msgid "Area for calendar days display"
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:50
-msgid "Area for calendar month display"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:54
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:11
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:16
@@ -2049,7 +2098,7 @@ msgstr ""
 msgid "Article > Text (HTML)"
 msgstr "מאמר"
 
-#: lib/excel_sheet/ticket.rb:72
+#: lib/excel_sheet/ticket.rb:73
 msgid "Article Count"
 msgstr "מספר מאמרים"
 
@@ -2071,21 +2120,21 @@ msgstr "מספר מאמרים"
 msgid "Article could not be deleted."
 msgstr "%s% נפתחו מחדש"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:118
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:130
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:27
 #, fuzzy
 #| msgid "Block Notifications"
 msgid "Article meta information"
 msgstr "חסום התראות"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:39
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:37
 #, fuzzy
 #| msgid "Article"
 msgid "Article permalink"
 msgstr "מאמר"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:77
-#: app/frontend/shared/composables/useArticleSecurity.ts:95
+#: app/frontend/shared/composables/useArticleSecurity.ts:99
 msgid "Article uses different security mechanism."
 msgstr ""
 
@@ -2181,7 +2230,7 @@ msgstr "קבצים מצורפים"
 msgid "Attach files"
 msgstr "קבצים מצורפים"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
 #, fuzzy
 #| msgid "Attachments"
@@ -2193,7 +2242,7 @@ msgstr "צרופות"
 msgid "Attached Files"
 msgstr "קבצים מצורפים"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:200
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
@@ -2481,7 +2530,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:128
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:175
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:121
-#: db/seeds/permissions.rb:391
+#: db/seeds/permissions.rb:397
 msgid "Avatar"
 msgstr "צלמית"
 
@@ -2664,6 +2713,12 @@ msgstr "גוף"
 #: db/seeds/settings.rb:3203
 msgid "Body - Search for follow-up also in mail body."
 msgstr ""
+
+#: lib/validations/ticket_article_validator/sms_twilio.rb:14
+#, fuzzy
+#| msgid "%s is required."
+msgid "Body text is required"
+msgstr "% s נדרש!."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:41
 msgid "Boolean field"
@@ -2905,7 +2960,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:236
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:286
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:195
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:259
@@ -2934,7 +2992,7 @@ msgstr "ביטול"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:422
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:420
 msgid "Cancel & Go Back"
 msgstr "בטל וחזור אחורה"
 
@@ -2949,12 +3007,6 @@ msgstr "יציאה"
 #| msgid "Sign out"
 msgid "Cancel & Sign out"
 msgstr "יציאה"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:76
-#, fuzzy
-#| msgid "Cancel Upload"
-msgid "Cancel Update"
-msgstr "ביטול העלאה"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:20
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:111
@@ -3072,7 +3124,7 @@ msgstr "שנה סדר"
 msgid "Change order"
 msgstr "שנה סדר"
 
-#: db/seeds/permissions.rb:409
+#: db/seeds/permissions.rb:415
 #, fuzzy
 #| msgid "Change your password"
 msgid "Change personal account password."
@@ -3121,7 +3173,7 @@ msgstr "בוצעו שינויים המחייבים עדכון בסיס נתונ�
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:95
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
 msgid "Channel"
 msgstr "ערוץ"
@@ -3189,6 +3241,13 @@ msgstr "חבר ערוצים"
 msgid "Check channels."
 msgstr "חבר ערוצים"
 
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:61
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:52
+#, fuzzy
+#| msgid "Checksum"
+msgid "Check item"
+msgstr "checksum"
+
 #: lib/search_index_backend.rb:410
 msgid "Check the response and payload for detailed information:"
 msgstr ""
@@ -3199,6 +3258,50 @@ msgid ""
 "Check this box if you want to customise how options are sorted. If the box "
 "is not checked, values are sorted in alphabetical order."
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:57
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:40
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:12
+#, fuzzy
+#| msgid "Checksum"
+msgid "Checklist"
+msgstr "checksum"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:60
+#, fuzzy
+#| msgid "Checksum"
+msgid "Checklist Item"
+msgstr "checksum"
+
+#: app/assets/javascripts/app/views/generic/checklist_item.jst.eco:10
+msgid "Checklist Item Label"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:29
+#, fuzzy
+#| msgid "Select Template"
+msgid "Checklist Template"
+msgstr "בחר תבנית"
+
+#: app/models/checklist_template/item.rb:32
+msgid "Checklist Template items are limited to 100 items per checklist."
+msgstr ""
+
+#: app/controllers/ticket_checklist_controller.rb:17
+msgid "Checklist is already created for this ticket"
+msgstr ""
+
+#: app/models/checklist/item.rb:87
+msgid "Checklist items are limited to 100 items per checklist."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:3
+#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:3
+#: db/seeds/permissions.rb:287 db/seeds/settings.rb:5763
+#, fuzzy
+#| msgid "Checksum"
+msgid "Checklists"
+msgstr "checksum"
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee:3
 msgid "Checkmk"
@@ -3339,10 +3442,10 @@ msgid "Clear Search"
 msgstr "חפש"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:602
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:651
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:292
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:352
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:311
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:364
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:155
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:159
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:138
@@ -3357,6 +3460,12 @@ msgstr "בורר"
 #| msgid "Caller log"
 msgid "Clear filter"
 msgstr "יומן רישום מתקשרים"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:92
+#, fuzzy
+#| msgid "Selector"
+msgid "Clear the value"
+msgstr "בורר"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:3
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:24
@@ -3418,15 +3527,15 @@ msgstr "סגור"
 msgid "Close & Tag as Spam"
 msgstr "סגור ותייג כספאם"
 
-#: lib/excel_sheet/ticket.rb:61
+#: lib/excel_sheet/ticket.rb:62
 msgid "Close Diff In Min"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:59
+#: lib/excel_sheet/ticket.rb:60
 msgid "Close Escalation At"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:60
+#: lib/excel_sheet/ticket.rb:61
 msgid "Close In Min"
 msgstr ""
 
@@ -3438,7 +3547,7 @@ msgstr ""
 msgid "Close current tab"
 msgstr "סגור טאב נוכחי"
 
-#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:113
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:115
 #, fuzzy
 #| msgid "Confirm/submit dialog"
 msgid "Close dialog"
@@ -3462,7 +3571,7 @@ msgstr "סגור טאב"
 msgid "Close tab on ticket close"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:53
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:51
 #, fuzzy
 #| msgid "Closed Tickets"
 msgid "Close the time picker"
@@ -3900,7 +4009,7 @@ msgstr "העתק"
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "העתק את מספר האובייקט הנוכחי (למשל, כרטיס #) ללוח"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:85
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:83
 #, fuzzy
 #| msgid "Edit Customer"
 msgid "Copy ticket number"
@@ -3948,6 +4057,10 @@ msgid ""
 "Could not load the two-factor authentication configuration for this user."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/signup.coffee:133
+msgid "Could not process your request"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:135
 msgid "Could not remove all two-factor authentication methods for this user."
 msgstr ""
@@ -3973,6 +4086,13 @@ msgstr "אימות"
 #| msgid "Authentication"
 msgid "Could not set two-factor authentication method as default"
 msgstr "אימות"
+
+#: app/assets/javascripts/app/controllers/widget/link.coffee:69
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:106
+#, fuzzy
+#| msgid "Reset changes"
+msgid "Couldn't save changes"
+msgstr "אפס שינויים"
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco:5
 msgid "Count"
@@ -4005,7 +4125,7 @@ msgstr "מדינה"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:434
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:432
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "יצירה"
@@ -4078,6 +4198,17 @@ msgstr "צור כרטיס ניסיון"
 #: app/controllers/first_steps_controller.rb:86
 msgid "Create a Test Ticket"
 msgstr "צור כרטיס ניסיון"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:204
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "Create a new checklist item"
+msgstr "צור לקוח חדש"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:18
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:21
+msgid "Create a new checklist template in the admin interface."
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:17
 msgid "Create a new template in the admin interface."
@@ -4197,8 +4328,8 @@ msgstr "נוצר:"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:18
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:14
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:100
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:104
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:108
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -4229,6 +4360,10 @@ msgid "Created Internal Article"
 msgstr "צור כרטיס ניסיון"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:53
+#: app/assets/javascripts/app/models/checklist.coffee:9
+#: app/assets/javascripts/app/models/checklist_item.coffee:8
+#: app/assets/javascripts/app/models/checklist_template.coffee:10
+#: app/assets/javascripts/app/models/checklist_template_item.coffee:8
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:7
 #: app/assets/javascripts/app/models/organization.coffee:9
 #: app/assets/javascripts/app/models/ticket.coffee:28
@@ -4238,7 +4373,7 @@ msgstr "צור כרטיס ניסיון"
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
 #: app/controllers/time_accountings_controller.rb:122
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:105
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:55
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:62
 #: app/graphql/gql/types/overview_type.rb:80
 msgid "Created at"
 msgstr "נוצר ב"
@@ -4389,7 +4524,7 @@ msgstr ""
 msgid "Customer selection based on sender and receiver list"
 msgstr "Customer selection based on sender and receiver list"
 
-#: db/seeds/permissions.rb:363
+#: db/seeds/permissions.rb:369
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Customer tickets"
@@ -4521,38 +4656,38 @@ msgstr "דצמ"
 msgid "December"
 msgstr "דצמבר"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:68
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:66
 #, fuzzy
 #| msgid "Recent logs"
 msgid "Decrement hours value"
 msgstr "יומני רישום אחרונים"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:70
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:68
 #, fuzzy
 #| msgid "Average: %s minutes"
 msgid "Decrement minutes value"
 msgstr "ממוצע: %s דקות"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:73
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:71
 #, fuzzy
 #| msgid "Average: %s minutes"
 msgid "Decrement seconds value"
 msgstr "ממוצע: %s דקות"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:290
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:293
 msgid "Decryption failed!"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:113
-#: app/frontend/shared/composables/useArticleSecurity.ts:126
+#: app/frontend/shared/composables/useArticleSecurity.ts:130
 #, fuzzy
 #| msgid "Delivery failed"
 msgid "Decryption failed! %s"
 msgstr "משלוח נכשל"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:288
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:291
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:107
-#: app/frontend/shared/composables/useArticleSecurity.ts:120
+#: app/frontend/shared/composables/useArticleSecurity.ts:124
 #, fuzzy
 #| msgid "Update successful!"
 msgid "Decryption was successful."
@@ -4631,6 +4766,12 @@ msgstr ""
 #: db/seeds/settings.rb:863
 msgid "Default type for a new ticket"
 msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:47
+#, fuzzy
+#| msgid "Default caller id."
+msgid "Default value is required."
+msgstr "מזהה המתקשר המוגדר כברירת מחדל."
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:15
 #: db/seeds/settings.rb:2460
@@ -5648,7 +5789,7 @@ msgstr "מחיקת משתמש"
 msgid "Delete table"
 msgstr "מחק קובץ"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:155
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:154
 #, fuzzy
 #| msgid "Getting an Access Token"
 msgid "Delete this access token"
@@ -5749,7 +5890,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/google/list.jst.eco:58
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:59
 #: app/models/channel/driver/sms/message_bird.rb:93
-#: app/models/channel/driver/sms/twilio.rb:106
+#: app/models/channel/driver/sms/twilio.rb:107
 msgid "Destination Group"
 msgstr "קבוצות יעד"
 
@@ -5792,7 +5933,7 @@ msgstr "%s% נפתחו מחדש"
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:37
-#: db/seeds/permissions.rb:422
+#: db/seeds/permissions.rb:428
 msgid "Devices"
 msgstr "מכשירים"
 
@@ -5876,7 +6017,7 @@ msgstr "בטל"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:419
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:417
 msgid "Discard Changes"
 msgstr "התעלם משינויים"
 
@@ -5982,6 +6123,12 @@ msgstr "בטוח למחוק את האובייקט הזה?"
 msgid "Do you want to continue?"
 msgstr "בטוח למחוק את האובייקט הזה?"
 
+#: app/assets/javascripts/app/views/ticket_zoom/checklist_modal.jst.eco:4
+#, fuzzy
+#| msgid "Sure to delete this object?"
+msgid "Do you want to handle them before closing this ticket?"
+msgstr "בטוח למחוק את האובייקט הזה?"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:64
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:46
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:12
@@ -6060,17 +6207,17 @@ msgstr ""
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "הורד והתקן את הפלאגין %s Migration במקרה של מופע %s."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:44
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:42
 msgid "Download original email"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:59
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:57
 #, fuzzy
 #| msgid "Download"
 msgid "Download raw email"
 msgstr "הורדה"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:316
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:319
 #, fuzzy
 #| msgid "select attachment..."
 msgid "Downloading attachments…"
@@ -6089,7 +6236,7 @@ msgstr ""
 msgid "Drag and drop to reorder ticket overview list items."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:235
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:236
 #, fuzzy
 #| msgid "Drag to reorder"
 msgid "Drag and drop to reorder your tabs."
@@ -6216,6 +6363,19 @@ msgstr "עריכת ארגון"
 msgid "Edit authenticator app"
 msgstr "אימות"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:113
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Edit checklist title"
+msgstr "עדכון כרטיס"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:77
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:69
+#, fuzzy
+#| msgid "Category"
+msgid "Edit item"
+msgstr "קטגוריה"
+
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:55
 msgid "Edit mask"
 msgstr ""
@@ -6232,6 +6392,12 @@ msgstr "השב"
 #| msgid "Security"
 msgid "Edit security keys"
 msgstr "אבטחה"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:89
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Edit ticket title"
+msgstr "עדכון כרטיס"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:38
 #, fuzzy
@@ -6323,7 +6489,7 @@ msgstr "סנכרון אחרון"
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:9
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:132
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
 #: public/assets/form/form.js:32
@@ -6463,6 +6629,12 @@ msgstr "לְאַפשֵׁר"
 
 #: db/seeds/settings.rb:3429
 msgid "Enable Chat"
+msgstr "אפשר צ'אט"
+
+#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:16
+#, fuzzy
+#| msgid "Enable Chat"
+msgid "Enable Checklists"
 msgstr "אפשר צ'אט"
 
 #: app/assets/javascripts/app/views/api.jst.eco:33 db/seeds/settings.rb:3384
@@ -6664,14 +6836,14 @@ msgid ""
 "only effective if the password login is enabled."
 msgstr "מאפשר למשתמשים ליצור לעצמם חשבון בממשק הווב."
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
 #, fuzzy
 #| msgid "closed"
 msgid "Enclosed"
 msgstr "סגור"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
 #, fuzzy
 #| msgid "close"
@@ -6695,7 +6867,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:62
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:165
-#: app/frontend/shared/composables/useArticleSecurity.ts:159
+#: app/frontend/shared/composables/useArticleSecurity.ts:163
 msgid "Encrypted"
 msgstr "מוצפן"
 
@@ -6705,7 +6877,7 @@ msgid "Encryption"
 msgstr "הצפנה"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:65
-#: app/frontend/shared/composables/useArticleSecurity.ts:159
+#: app/frontend/shared/composables/useArticleSecurity.ts:163
 #, fuzzy
 #| msgid "Encrypt"
 msgid "Encryption error"
@@ -6850,7 +7022,7 @@ msgstr "הזן את הקישור שסופק על ידי התוסף בסוף הה
 msgid "Enter the security code generated by the authenticator app:"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:37
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:37
 msgid "Enter the time you want to record"
 msgstr ""
 
@@ -6932,8 +7104,9 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:6
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:165
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:51
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:119
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:124
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:6
+#: app/frontend/apps/desktop/pages/error/views/Error.vue:37
 #: app/frontend/apps/mobile/pages/error/views/Error.vue:39
 msgid "Error"
 msgstr "שגיאה"
@@ -6975,7 +7148,7 @@ msgid ""
 "</div>\n"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:73
+#: lib/excel_sheet/ticket.rb:74
 msgid "Escalation At"
 msgstr ""
 
@@ -7159,7 +7332,7 @@ msgstr "מתפוגג"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:19
 #: app/assets/javascripts/app/views/profile/token_access_create.jst.eco:10
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:15
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:105
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:104
 msgid "Expires"
 msgstr "מתפוגג"
 
@@ -7241,6 +7414,18 @@ msgstr "סיסמת אפליקציה"
 msgid "Failed Tasks"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:162
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "Failed to add new checklist item."
+msgstr "צור לקוח חדש"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:183
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "Failed to delete checklist item."
+msgstr "צור לקוח חדש"
+
 #: app/controllers/channels_google_controller.rb:96
 #: app/controllers/channels_microsoft365_controller.rb:96
 msgid "Failed to find backup on channel!"
@@ -7249,6 +7434,14 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:223
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:235
 msgid "Failed to roll back the migration of the channel!"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:169
+msgid "Failed to save checklist order."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:122
+msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:52
@@ -7260,6 +7453,12 @@ msgstr "לא מצליח לאמת את המייל. נא ליצור קשר עם מ
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:169
 msgid "Failed to set up QR code. Please try again."
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:176
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "Failed to update checklist item."
+msgstr "צור לקוח חדש"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageFailedUploadOverlay.vue:23
 msgid "Failed to upload."
@@ -7381,19 +7580,19 @@ msgstr "סיים העבה אל"
 msgid "Finish Setup"
 msgstr "סיים העבה אל"
 
-#: lib/excel_sheet/ticket.rb:62
+#: lib/excel_sheet/ticket.rb:63
 msgid "First Response At"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:65
+#: lib/excel_sheet/ticket.rb:66
 msgid "First Response Diff In Min"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:63
+#: lib/excel_sheet/ticket.rb:64
 msgid "First Response Escalation At"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:64
+#: lib/excel_sheet/ticket.rb:65
 msgid "First Response In Min"
 msgstr ""
 
@@ -7605,7 +7804,7 @@ msgstr "עצב כ |bold|"
 msgid "Format as ||italic||"
 msgstr "עצב כ ||italic||"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:74
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:72
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:92
 msgid "Forward"
 msgstr ""
@@ -7637,7 +7836,7 @@ msgstr "שישי"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:11
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:66
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:73
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:80
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:35
 msgid "From"
@@ -7675,7 +7874,7 @@ msgstr ""
 msgid "Gateway"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:123
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:128
 #: app/assets/javascripts/app/lib/app_post/ajax.coffee:91
 msgid "General communication error, maybe internet is not available!"
 msgstr ""
@@ -8188,6 +8387,7 @@ msgid ""
 "Hello, the customer service window for this conversation is about to expire, "
 "please reply to keep it open."
 msgstr ""
+"שלום, חלון שירות הלקוחות לשיחה זו עומד לפוג, אנא השב כדי להשאיר אותו פתוח."
 
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelp.vue:18
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelpDialog.vue:20
@@ -8841,6 +9041,16 @@ msgstr ""
 msgid "Including private key."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
+msgid "Incomplete Ticket Checklist"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistButton.vue:22
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "Incomplete checklist items"
+msgstr "צור לקוח חדש"
+
 #: app/controllers/import_freshdesk_controller.rb:45
 #: app/controllers/import_kayako_controller.rb:35
 #: app/controllers/import_zendesk_controller.rb:67
@@ -8851,19 +9061,19 @@ msgstr ""
 msgid "Increment (SystemID.Counter)"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:57
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:55
 #, fuzzy
 #| msgid "in hours"
 msgid "Increment hours value"
 msgstr "בשעות"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:59
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:57
 #, fuzzy
 #| msgid "minutes"
 msgid "Increment minutes value"
 msgstr "דקות"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:62
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:60
 #, fuzzy
 #| msgid "minutes"
 msgid "Increment seconds value"
@@ -8917,6 +9127,10 @@ msgstr ""
 #| msgid "%s% have been reopened"
 msgid "Inline content could not be generated."
 msgstr "%s% נפתחו מחדש"
+
+#: app/models/object_manager/attribute/data_option_validator.rb:41
+msgid "Input field must be text, password, tel, fax, email or url type."
+msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:320
 msgid "Insert code block"
@@ -9167,6 +9381,12 @@ msgstr ""
 msgid "Invalid video URL"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/layout_ref.coffee:650
+#, fuzzy
+#| msgid "Invitation sent!"
+msgid "Invitation sent to %s"
+msgstr "נשלחה הודעה!"
+
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee:78
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:100
 msgid "Invitation sent!"
@@ -9240,8 +9460,13 @@ msgstr ""
 msgid "It is not possible to delete your current account."
 msgstr "בטוח למחוק את האובייקט הזה?"
 
-#: app/models/ticket.rb:274
+#: app/models/ticket.rb:276
 msgid "It is not possible to merge into an already merged ticket."
+msgstr ""
+
+#: app/assets/javascripts/app/models/checklist.coffee:8
+#: app/assets/javascripts/app/models/checklist_template.coffee:8
+msgid "Items"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:15
@@ -9352,7 +9577,7 @@ msgstr "בסיס מידע"
 msgid "Knowledge Base Answer"
 msgstr ""
 
-#: db/seeds/permissions.rb:326
+#: db/seeds/permissions.rb:332
 msgid "Knowledge Base Editor"
 msgstr ""
 
@@ -9362,7 +9587,7 @@ msgstr ""
 msgid "Knowledge Base Feed"
 msgstr "בסיס מידע"
 
-#: db/seeds/permissions.rb:332
+#: db/seeds/permissions.rb:338
 msgid "Knowledge Base Reader"
 msgstr ""
 
@@ -9420,7 +9645,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:13
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:157
-#: db/seeds/permissions.rb:384
+#: db/seeds/permissions.rb:390
 msgid "Language"
 msgstr "שפה"
 
@@ -9435,15 +9660,21 @@ msgstr "שפות"
 msgid "Last Article"
 msgstr "מאמר"
 
-#: lib/excel_sheet/ticket.rb:70
+#: lib/excel_sheet/ticket.rb:59
+#, fuzzy
+#| msgid "Last used"
+msgid "Last Closed At"
+msgstr "נעשה שימוש לאחרונה"
+
+#: lib/excel_sheet/ticket.rb:71
 msgid "Last Contact Agent At"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:69
+#: lib/excel_sheet/ticket.rb:70
 msgid "Last Contact At"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:71
+#: lib/excel_sheet/ticket.rb:72
 msgid "Last Contact Customer At"
 msgstr ""
 
@@ -9455,7 +9686,7 @@ msgstr ""
 msgid "Last Internal Article"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:110
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:109
 #, fuzzy
 #| msgid "Last used"
 msgid "Last Used"
@@ -9633,7 +9864,7 @@ msgstr "תבנית"
 #: app/assets/javascripts/app/views/widget/user.jst.eco:34
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:46
-#: db/seeds/permissions.rb:436
+#: db/seeds/permissions.rb:442
 msgid "Linked Accounts"
 msgstr "חשבונות מקושרים"
 
@@ -9660,7 +9891,7 @@ msgstr ""
 msgid "Links"
 msgstr "קישורים"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:217
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:218
 msgid "List of all user taskbar tabs"
 msgstr ""
 
@@ -9715,7 +9946,8 @@ msgstr "טוען..."
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee:151
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:647
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco:3
-#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:34
+#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:40
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:509
 #: app/frontend/shared/form/i18n/locales.ts:58
 #: app/views/init/spinner-loading.html.erb:260
 #, fuzzy
@@ -9870,6 +10102,18 @@ msgstr "ניהול"
 msgid "Manage API of your system."
 msgstr "הזן את כתובת הURL של מערכת ה %s שלך"
 
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:30
+#, fuzzy
+#| msgid "Select Template"
+msgid "Manage Checklist Template"
+msgstr "בחר תבנית"
+
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:31
+#, fuzzy
+#| msgid "Select Template"
+msgid "Manage Checklist Templates"
+msgstr "בחר תבנית"
+
 #: db/seeds/permissions.rb:168
 msgid "Manage Facebook channel of your system."
 msgstr ""
@@ -10017,65 +10261,65 @@ msgstr ""
 msgid "Manage packages of your system."
 msgstr "הזן את כתובת הURL של מערכת ה %s שלך"
 
-#: db/seeds/permissions.rb:430
+#: db/seeds/permissions.rb:436
 #, fuzzy
 #| msgid "Personal Access Tokens"
 msgid "Manage personal API tokens."
 msgstr "טוקן גישה פרטי"
 
-#: db/seeds/permissions.rb:378
+#: db/seeds/permissions.rb:384
 msgid "Manage personal appearance settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:392
+#: db/seeds/permissions.rb:398
 #, fuzzy
 #| msgid "Manage %s Settings"
 msgid "Manage personal avatar settings."
 msgstr "נהל הגדרות %s"
 
-#: db/seeds/permissions.rb:464
+#: db/seeds/permissions.rb:470
 msgid "Manage personal calendar."
 msgstr ""
 
-#: db/seeds/permissions.rb:423
+#: db/seeds/permissions.rb:429
 #, fuzzy
 #| msgid "Continue session"
 msgid "Manage personal devices and sessions."
 msgstr "המשך מופע"
 
-#: db/seeds/permissions.rb:385
+#: db/seeds/permissions.rb:391
 #, fuzzy
 #| msgid "Manage %s Settings"
 msgid "Manage personal language settings."
 msgstr "נהל הגדרות %s"
 
-#: db/seeds/permissions.rb:437
+#: db/seeds/permissions.rb:443
 msgid "Manage personal linked accounts."
 msgstr ""
 
-#: db/seeds/permissions.rb:444
+#: db/seeds/permissions.rb:450
 #, fuzzy
 #| msgid "Manage your notifications settings"
 msgid "Manage personal notifications settings."
 msgstr "נהל את הגדרות ההתראות שלך"
 
-#: db/seeds/permissions.rb:399
+#: db/seeds/permissions.rb:405
 #, fuzzy
 #| msgid "Manage your notifications settings"
 msgid "Manage personal out of office settings."
 msgstr "נהל את הגדרות ההתראות שלך"
 
-#: db/seeds/permissions.rb:454
+#: db/seeds/permissions.rb:460
 msgid "Manage personal overviews."
 msgstr ""
 
-#: db/seeds/permissions.rb:371
+#: db/seeds/permissions.rb:377
 #, fuzzy
 #| msgid "Manage %s Settings"
 msgid "Manage personal settings."
 msgstr "נהל הגדרות %s"
 
-#: db/seeds/permissions.rb:416
+#: db/seeds/permissions.rb:422
 #, fuzzy
 #| msgid "Authentication"
 msgid "Manage personal two-factor authentication methods."
@@ -10117,6 +10361,12 @@ msgstr "הזן את כתובת הURL של מערכת ה %s שלך"
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage text modules of your system."
+msgstr "הזן את כתובת הURL של מערכת ה %s שלך"
+
+#: db/seeds/permissions.rb:288
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket checklists of your system."
 msgstr "הזן את כתובת הURL של מערכת ה %s שלך"
 
 #: db/seeds/permissions.rb:48
@@ -10285,6 +10535,10 @@ msgstr "נטרל התראות"
 msgid "Mattermost, RocketChat"
 msgstr ""
 
+#: app/models/object_manager/attribute/data_option_validator.rb:35
+msgid "Max length must be an integer."
+msgstr ""
+
 #: app/assets/javascripts/app/models/chat.coffee:253
 #: app/assets/javascripts/app/views/channel/topics.jst.eco:7
 #, fuzzy
@@ -10308,6 +10562,22 @@ msgstr "אורך הנושא מקסימלי בתשובה לדוא\"ל."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:387
 msgid "Maximal"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:109
+msgid "Maximal value must be an integer"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:114
+msgid "Maximal value must be higher than -2147483648"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:132
+msgid "Maximal value must be higher than or equal to minimal value"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:119
+msgid "Maximal value must be lower than 2147483648"
 msgstr ""
 
 #: db/seeds/settings.rb:3140
@@ -10538,6 +10808,18 @@ msgstr "גודל מינימלי של מספר"
 msgid "Minimal"
 msgstr ""
 
+#: app/models/object_manager/attribute/data_option_validator.rb:87
+msgid "Minimal value must be an integer"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:93
+msgid "Minimal value must be higher than -2147483648"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:98
+msgid "Minimal value must be lower than 2147483648"
+msgstr ""
+
 #: db/seeds/settings.rb:1982
 msgid "Minimum length"
 msgstr "אורך מינימלי"
@@ -10747,6 +11029,10 @@ msgstr ""
 #: app/assets/javascripts/app/models/calendar.coffee:7
 #: app/assets/javascripts/app/models/chat.coffee:251
 #: app/assets/javascripts/app/models/chat_sessions.coffee:7
+#: app/assets/javascripts/app/models/checklist.coffee:7
+#: app/assets/javascripts/app/models/checklist_item.coffee:7
+#: app/assets/javascripts/app/models/checklist_template.coffee:7
+#: app/assets/javascripts/app/models/checklist_template_item.coffee:7
 #: app/assets/javascripts/app/models/core_workflow.coffee:6
 #: app/assets/javascripts/app/models/core_workflow_custom_module.coffee:4
 #: app/assets/javascripts/app/models/group.coffee:7
@@ -10795,7 +11081,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:100
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:31
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:103
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:90
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:142
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:181
 #: db/seeds/object_manager_attributes.rb:1507 public/assets/form/form.js:24
@@ -10925,6 +11211,12 @@ msgstr "לוח שנה חדש"
 msgid "New Category"
 msgstr "קטגוריה"
 
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:38
+#, fuzzy
+#| msgid "Templates"
+msgid "New Checklist Template"
+msgstr "תבנית"
+
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:8
 msgid "New Deletion Task"
 msgstr "משימת מחיקה חדשה"
@@ -10946,7 +11238,7 @@ msgid "New Overview"
 msgstr "תצוגה חדשה"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:132
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:202
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:201
 #, fuzzy
 #| msgid "Your New Personal Access Token"
 msgid "New Personal Access Token"
@@ -11005,7 +11297,7 @@ msgstr "תבנית"
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:68
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:26
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:38
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:15
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:106
 msgid "New Ticket"
@@ -11017,7 +11309,7 @@ msgstr "כרטיס חדש"
 msgid "New Ticket State"
 msgstr "כרטיס חדש"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:29
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:41
 #, fuzzy
 #| msgid "New Ticket"
 msgid "New Ticket: %s"
@@ -11143,13 +11435,13 @@ msgstr "מצב"
 msgid "Next in overview"
 msgstr "הבא בתצוגות"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:90
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:88
 #, fuzzy
 #| msgid "State"
 msgid "Next month"
 msgstr "מצב"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:92
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:90
 #, fuzzy
 #| msgid "State"
 msgid "Next year"
@@ -11185,6 +11477,12 @@ msgstr "לא מוגדר %s."
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:3
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:11
 msgid "No Entries"
+msgstr "אין רישום"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_no_items.jst.eco:3
+#, fuzzy
+#| msgid "No Entries"
+msgid "No Entry"
 msgstr "אין רישום"
 
 #: lib/external_credential/exchange.rb:12
@@ -11242,6 +11540,24 @@ msgstr "אין קטגוריות"
 #| msgid "Notification Sound"
 msgid "No certificate found."
 msgstr "צליל התראה"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:432
+#, fuzzy
+#| msgid "You have not created a ticket yet."
+msgid "No checklist added to this ticket yet."
+msgstr "עדיין לא יצרת כרטיס."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:180
+msgid "No checklist items yet"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:14
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:15
+#, fuzzy
+#| msgid "No template created yet."
+msgid "No checklist templates have been created yet."
+msgstr "לא נוצרה תבנית עדיין."
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:5
 #, fuzzy
@@ -11402,7 +11718,7 @@ msgstr ""
 msgid "No translation for this locale available"
 msgstr ""
 
-#: app/models/ticket.rb:396
+#: app/models/ticket.rb:398
 msgid "No triggers active"
 msgstr ""
 
@@ -11419,6 +11735,12 @@ msgstr ""
 #: app/models/channel/email_parser.rb:108
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
+#, fuzzy
+#| msgid "You have closed a ticket"
+msgid "No, just close the ticket"
+msgstr "סגרת כרטיס"
 
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
 msgid "No, thanks"
@@ -11447,7 +11769,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:160
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:240
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:114
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:119
+#: app/frontend/shared/errors/useErrorHandler.ts:25
 #: app/frontend/shared/router/error.ts:18
 #: app/helpers/knowledge_base_public_page_title_helper.rb:25
 msgid "Not Found"
@@ -11470,7 +11793,8 @@ msgid "Not assigned"
 msgstr "לא הוקצה"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:158
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:110
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:115
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:25
 #: app/controllers/application_controller/handles_errors.rb:60
 #: app/services/service/ticket/article/create.rb:119
 msgid "Not authorized"
@@ -11493,7 +11817,6 @@ msgid "Not configured"
 msgstr "לא הוגדר"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:18
-#: app/frontend/shared/errors/useErrorHandler.ts:25
 #, fuzzy
 #| msgid "No results found"
 msgid "Not found"
@@ -11634,7 +11957,7 @@ msgstr "צליל התראה"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:34
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
-#: db/seeds/permissions.rb:443
+#: db/seeds/permissions.rb:449
 msgid "Notifications"
 msgstr "התראות"
 
@@ -11899,6 +12222,12 @@ msgstr ""
 msgid "Open in new tab"
 msgstr "הבא בטאב"
 
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:75
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "Open link"
+msgstr "כרטיסים פתוחים"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:410
 msgid "Open macro selection"
 msgstr ""
@@ -11907,37 +12236,37 @@ msgstr ""
 msgid "Open note box"
 msgstr "פתח תיבת הערה"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:79
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:77
 #, fuzzy
 #| msgid "Open note box"
 msgid "Open the hours overlay"
 msgstr "פתח תיבת הערה"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:81
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:79
 #, fuzzy
 #| msgid "Open note box"
 msgid "Open the minutes overlay"
 msgstr "פתח תיבת הערה"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:89
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:87
 #, fuzzy
 #| msgid "Open note box"
 msgid "Open the months overlay"
 msgstr "פתח תיבת הערה"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:84
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:82
 #, fuzzy
 #| msgid "Open note box"
 msgid "Open the seconds overlay"
 msgstr "פתח תיבת הערה"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:52
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:50
 #, fuzzy
 #| msgid "Open Tickets"
 msgid "Open the time picker"
 msgstr "כרטיסים פתוחים"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:88
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:86
 #, fuzzy
 #| msgid "Open note box"
 msgid "Open the years overlay"
@@ -11978,6 +12307,23 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/ticket_number_increment.jst.eco:2
 msgid "Options"
 msgstr "אפשרויות"
+
+#: app/models/object_manager/attribute/data_option_validator.rb:59
+#, fuzzy
+#| msgid "%s is required."
+msgid "Options are required."
+msgstr "% s נדרש!."
+
+#: app/models/object_manager/attribute/data_option_validator.rb:53
+#, fuzzy
+#| msgid "Digit required"
+msgid "Options or relation is required."
+msgstr "נדרשת ספרה"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:8
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue:22
+msgid "Or choose a checklist template."
+msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue:76
 #, fuzzy
@@ -12040,7 +12386,7 @@ msgstr "תצוגות"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:12
 #: app/controllers/time_accountings_controller.rb:99
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganizationContent.vue:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:10
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
@@ -12119,7 +12465,7 @@ msgstr "ארגון"
 msgid "Origin By"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:89
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:92
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:39
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:55
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
@@ -12144,7 +12490,7 @@ msgstr "הגדרות"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:126
-#: db/seeds/permissions.rb:398
+#: db/seeds/permissions.rb:404
 msgid "Out of Office"
 msgstr "מחוץ למשרד"
 
@@ -12344,7 +12690,7 @@ msgstr "אב"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:83
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:52
-#: db/seeds/object_manager_attributes.rb:1249 db/seeds/permissions.rb:408
+#: db/seeds/object_manager_attributes.rb:1249 db/seeds/permissions.rb:414
 msgid "Password"
 msgstr "סיסמא"
 
@@ -12489,12 +12835,12 @@ msgstr ""
 #: app/assets/javascripts/app/models/role.coffee:7
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:5
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:17
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:95
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:94
 msgid "Permissions"
 msgstr "הרשאות"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:12
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:213
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:212
 msgid "Personal Access Tokens"
 msgstr "טוקן גישה פרטי"
 
@@ -12502,7 +12848,7 @@ msgstr "טוקן גישה פרטי"
 msgid "Personal Settings"
 msgstr "הגדרות אישיות"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:141
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:140
 #, fuzzy
 #| msgid "Personal Access Tokens"
 msgid "Personal access token has been deleted."
@@ -12515,7 +12861,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/cti.coffee:322
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:12
-#: db/seeds/object_manager_attributes.rb:797 db/seeds/permissions.rb:302
+#: db/seeds/object_manager_attributes.rb:797 db/seeds/permissions.rb:308
 msgid "Phone"
 msgstr "טלפון"
 
@@ -12543,7 +12889,7 @@ msgid "Phone number is already in use by another WhatsApp account."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:7
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:183
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:182
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "בחר שם עבור היישום, ואנו נעניק לך אסימון ייחודי."
 
@@ -12577,6 +12923,12 @@ msgstr "השמע אפקטים קוליים של ממשק משתמש"
 #: app/frontend/shared/form/i18n/locales.ts:117
 msgid "Please accept the %s."
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:48
+#, fuzzy
+#| msgid "Please select at least one folder."
+msgid "Please add at least one item to the checklist."
+msgstr "נא לבחור לפחות תיקיה אחת."
 
 #: app/views/knowledge_base/public/categories/index.html.erb:18
 msgid "Please add categories and/or answers"
@@ -12662,6 +13014,10 @@ msgid ""
 "versions of Zammad. Use the IDP certificate instead."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/error/views/Error.vue:54
+msgid "Please proceed to login"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:383
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr ""
@@ -12686,6 +13042,12 @@ msgid ""
 "Please save your recovery codes listed below somewhere safe. You can use "
 "them to sign in if you lose access to another two-factor method:"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:72
+#, fuzzy
+#| msgid "Please select at least one folder."
+msgid "Please select a checklist template."
+msgstr "נא לבחור לפחות תיקיה אחת."
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts:60
 msgid "Please select a ticket to merge into."
@@ -12846,13 +13208,13 @@ msgstr "קודם"
 msgid "Previous in overview"
 msgstr "הקודם בתצוגות"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:91
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:89
 #, fuzzy
 #| msgid "Previous"
 msgid "Previous month"
 msgstr "קודם"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:93
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:91
 #, fuzzy
 #| msgid "Previous"
 msgid "Previous year"
@@ -12941,7 +13303,7 @@ msgid "Profile language updated successfully."
 msgstr "הרצת הניסיון הייתה מוצלחת."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
-#: db/seeds/permissions.rb:370
+#: db/seeds/permissions.rb:376
 #, fuzzy
 #| msgid "Proxy Settings"
 msgid "Profile settings"
@@ -13064,7 +13426,7 @@ msgstr ""
 "אפשר גישה ל- REST API באמצעות שם המשתמש / כתובת הדוא\"ל והסיסמה עבור משתמש "
 "האימות."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:68
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:71
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:40
 msgid "Raw"
 msgstr ""
@@ -13251,7 +13613,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:61
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:132
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:177
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:80
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:78
 #: app/frontend/shared/form/i18n/locales.ts:29
 msgid "Remove"
 msgstr "הסרה"
@@ -13300,6 +13662,13 @@ msgstr "הסרה"
 msgid "Remove authenticator app"
 msgstr "אימות"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:378
+#, fuzzy
+#| msgid "Remove %s"
+msgid "Remove checklist"
+msgstr "הסרה %s"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:284
 #, fuzzy
 #| msgid "Removes the formatting"
@@ -13310,6 +13679,13 @@ msgstr "מסיר את העיצוב"
 #, fuzzy
 #| msgid "Remove"
 msgid "Remove image"
+msgstr "הסרה"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:85
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:75
+#, fuzzy
+#| msgid "Remove"
+msgid "Remove item"
 msgstr "הסרה"
 
 #: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco:5
@@ -13346,6 +13722,11 @@ msgstr "מסיר את העיצוב"
 msgid "Removes the shadows for a flat look."
 msgstr "מסיר את הצללים למראה שטוח."
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:20
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:371
+msgid "Rename checklist"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee:9
 #, fuzzy
 #| msgid "Personal Access Tokens"
@@ -13367,6 +13748,13 @@ msgstr "קצב פתיחה מחדש"
 msgid "Reopening time in days"
 msgstr "קצב פתיחה מחדש"
 
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:14
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:189
+#, fuzzy
+#| msgid "Order"
+msgid "Reorder"
+msgstr "הזמנה"
+
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:26
 msgid "Replacement"
 msgstr "תחליף"
@@ -13377,7 +13765,7 @@ msgstr "תחליף"
 msgid "Replacement agent"
 msgstr "תחליף"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:85
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:83
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:84
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
@@ -13895,11 +14283,13 @@ msgstr "שבת"
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:17
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:14
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:9
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:27
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:38
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:9
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:121
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:217
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:70
@@ -13947,6 +14337,12 @@ msgstr "המשך"
 msgid "Save as"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:340
+#, fuzzy
+#| msgid "Discard Changes"
+msgid "Save changes"
+msgstr "התעלם משינויים"
+
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:217
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:267
 msgid "Save configuration"
@@ -13959,7 +14355,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1084
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1119
 #, fuzzy
 #| msgid "Bulk action executed!"
 msgid "Saving failed."
@@ -14176,7 +14572,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:22
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:175
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:183
@@ -14252,20 +14648,20 @@ msgid "See HTTPLog for details."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:444
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:447
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:115
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:118
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
 msgid "See less"
 msgstr "ראה פחות"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:440
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:443
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:116
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:115
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:118
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue:17
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
 msgid "See more"
@@ -14303,6 +14699,7 @@ msgstr ""
 msgid "Select Shared Draft"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:16
 #: app/assets/javascripts/app/views/widget/template.jst.eco:4
 msgid "Select Template"
 msgstr "בחר תבנית"
@@ -14430,7 +14827,7 @@ msgstr "שלח ללקוחות"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:51
 #: app/models/channel/driver/sms/massenversand.rb:45
 #: app/models/channel/driver/sms/message_bird.rb:92
-#: app/models/channel/driver/sms/twilio.rb:105 db/seeds/settings.rb:3090
+#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3090
 #: lib/excel_sheet/ticket.rb:32
 msgid "Sender"
 msgstr "שׁוֹלֵחַ"
@@ -14626,13 +15023,13 @@ msgid ""
 "limits"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:88
 #, fuzzy
 #| msgid "set to internal"
 msgid "Set to external"
 msgstr "הפוך לפנימי"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:93
 #: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts:33
 #, fuzzy
 #| msgid "set to internal"
@@ -14944,7 +15341,7 @@ msgid "Sign email (if not possible, send notification anyway)"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:76
-#: app/frontend/shared/composables/useArticleSecurity.ts:156
+#: app/frontend/shared/composables/useArticleSecurity.ts:160
 #, fuzzy
 #| msgid "Sign out"
 msgid "Sign error"
@@ -15000,14 +15397,14 @@ msgstr "חתימה"
 msgid "Signature"
 msgstr "חתימה"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:279
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:282
 #, fuzzy
 #| msgid "Resend verification email"
 msgid "Signature verification failed!"
 msgstr "שלח מחדש הודעת אימות למייל"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:96
-#: app/frontend/shared/composables/useArticleSecurity.ts:110
+#: app/frontend/shared/composables/useArticleSecurity.ts:114
 #, fuzzy
 #| msgid "Resend verification email"
 msgid "Signature verification failed! %s"
@@ -15021,7 +15418,7 @@ msgstr "חתימה"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:73
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:171
-#: app/frontend/shared/composables/useArticleSecurity.ts:156
+#: app/frontend/shared/composables/useArticleSecurity.ts:160
 msgid "Signed"
 msgstr ""
 
@@ -15119,7 +15516,7 @@ msgstr ""
 msgid "Site"
 msgstr "אתר"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:10
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:10
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco:21
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:97
@@ -15226,7 +15623,7 @@ msgstr "מקורי"
 msgid "Special character required"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:100
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:98
 #: app/frontend/shared/entities/ticket-article/action/plugins/split.ts:12
 #, fuzzy
 #| msgid "split"
@@ -15244,6 +15641,7 @@ msgid "Standard Group/Pool for Tickets."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee:34
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:77
 msgid "Start Editing"
 msgstr ""
 
@@ -15318,7 +15716,7 @@ msgstr "הקלד את שם המשתמש שלך או את כתובת המייל �
 msgid "Start typing to search or enter an email address…"
 msgstr "הקלד את שם המשתמש שלך או את כתובת המייל שלך"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:69
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:71
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:41
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:409
 #, fuzzy
@@ -15465,7 +15863,7 @@ msgstr "רחוב"
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:11
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:64
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:40
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:13
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:87
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:171
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:33
@@ -15639,7 +16037,7 @@ msgstr ""
 msgid "Tab has changed, do you really want to close it?"
 msgstr "הכרטיסייה השתנתה, האם אתה באמת רוצה לסגור אותה?"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:231
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:232
 msgid "Tabs"
 msgstr ""
 
@@ -15816,6 +16214,11 @@ msgstr ""
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:47
 msgid "Text or attachment is required"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_item_edit.jst.eco:6
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:145
+msgid "Text or ticket identifier"
 msgstr ""
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:11
@@ -16098,6 +16501,12 @@ msgid ""
 "The browser is outdated. It does not support WebSocket - the technology we "
 "use for the chat."
 msgstr "הדפדפן מיושן. הוא אינו תומך ב WebSocket - הטכנולוגיה הדרושה לצ'אט."
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:93
+#, fuzzy
+#| msgid "Geo Calendar Service"
+msgid "The calendar icon"
+msgstr "שרות Geo ליומן"
 
 #: app/models/setting/validation/saml/security.rb:16
 #, fuzzy
@@ -16393,6 +16802,10 @@ msgstr "הפורמט של הנושא."
 msgid "The given article is not a media article."
 msgstr "הגדרת המצב של כרטיסים שנסגרו אוטומטית."
 
+#: app/graphql/gql/mutations/ticket/checklist/item_delete.rb:13
+msgid "The given checklist item does not belong to the given checklist."
+msgstr ""
+
 #: app/services/service/user/two_factor/set_default_method.rb:18
 #, fuzzy
 #| msgid "Authentication"
@@ -16426,6 +16839,12 @@ msgstr ""
 #| msgid "%s% have been reopened"
 msgid "The hostname could not be found."
 msgstr "%s% נפתחו מחדש"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:102
+#, fuzzy
+#| msgid "Open note box"
+msgid "The hours overlay"
+msgstr "פתח תיבת הערה"
 
 #: db/seeds/settings.rb:2144
 msgid ""
@@ -16499,6 +16918,24 @@ msgstr "%s% נפתחו מחדש"
 #| msgid "Time Accounting"
 msgid "The login is not possible."
 msgstr "חשבונאות זמן"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:104
+#, fuzzy
+#| msgid "Open note box"
+msgid "The minutes overlay"
+msgstr "פתח תיבת הערה"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:96
+#, fuzzy
+#| msgid "Tickets"
+msgid "The month picker"
+msgstr "כרטיסים"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:96
+#, fuzzy
+#| msgid "Open note box"
+msgid "The month picker overlay"
+msgstr "פתח תיבת הערה"
 
 #: app/models/ticket/number.rb:14
 #, fuzzy
@@ -16595,7 +17032,7 @@ msgstr "חתימה"
 msgid "The password reset request was successful."
 msgstr "הרצת הניסיון הייתה מוצלחת."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:132
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:131
 #, fuzzy
 #| msgid "%s% have been reopened"
 msgid "The personal access token could not be deleted."
@@ -16916,11 +17353,17 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:299
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:67
-#: app/frontend/shared/composables/useArticleSecurity.ts:85
+#: app/frontend/shared/composables/useArticleSecurity.ts:89
 msgid "The retried security process failed!"
 msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:107
+#, fuzzy
+#| msgid "Open note box"
+msgid "The seconds overlay"
+msgstr "פתח תיבת הערה"
 
 #: app/frontend/shared/form/i18n/locales.ts:567
 msgid "The selected date is invalid."
@@ -16985,9 +17428,9 @@ msgid ""
 "according to RFC 3156."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:277
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:280
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:90
-#: app/frontend/shared/composables/useArticleSecurity.ts:104
+#: app/frontend/shared/composables/useArticleSecurity.ts:108
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "The signature was successfully verified."
@@ -17054,6 +17497,12 @@ msgstr "הטקסט בתחילתו של הנושא בתשובה בדוא\"ל, ל�
 #| msgid "%s% have been reopened"
 msgid "The tickets could not be merged."
 msgstr "%s% נפתחו מחדש"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:94
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "The time picker"
+msgstr "כרטיסים פתוחים"
 
 #: app/services/service/user/signup.rb:49
 #, fuzzy
@@ -17159,6 +17608,18 @@ msgstr "הדרך לתקשר איתנו היא דבר שנקרא \"כרטיס\"."
 #: lib/telegram_helper.rb:35
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:98
+#, fuzzy
+#| msgid "Tickets"
+msgid "The year picker"
+msgstr "כרטיסים"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:98
+#, fuzzy
+#| msgid "Open note box"
+msgid "The year picker overlay"
+msgstr "פתח תיבת הערה"
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:76
 #, fuzzy
@@ -17380,7 +17841,7 @@ msgid ""
 msgstr "class זה מתווסף ללחצן באתחול ומוסר לאחר יצירת חיבור הצ'אט."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:170
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:222
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:221
 msgid "This device"
 msgstr ""
 
@@ -17980,12 +18441,6 @@ msgstr ""
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:77
-#, fuzzy
-#| msgid "Ticket update"
-msgid "Ticket Update"
-msgstr "כרטיס עודכן"
-
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:105
 #, fuzzy
 #| msgid "Ticket escalation"
@@ -18148,7 +18603,7 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
-#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:32
+#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:26
 msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
 msgstr ""
@@ -18249,7 +18704,7 @@ msgstr "זמן"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:105
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:132
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:12
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:12
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:3
 #: db/seeds/permissions.rb:107 db/seeds/settings.rb:3904
 msgid "Time Accounting"
@@ -18375,7 +18830,7 @@ msgstr "כותרת הטופס"
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:76
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:84
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:85
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:148
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:36
@@ -18480,7 +18935,7 @@ msgstr "לטפל בכרטיסים"
 msgid "Today"
 msgstr "היום"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:87
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:85
 msgid "Toggle AM/PM mode"
 msgstr ""
 
@@ -18522,7 +18977,7 @@ msgstr "פתח תיבת הערה"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
 #: app/models/channel/driver/sms/message_bird.rb:91
-#: app/models/channel/driver/sms/twilio.rb:104
+#: app/models/channel/driver/sms/twilio.rb:105
 msgid "Token"
 msgstr ""
 
@@ -18530,8 +18985,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/api.jst.eco:12
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:52
-#: db/seeds/permissions.rb:429
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:51
+#: db/seeds/permissions.rb:435
 msgid "Token Access"
 msgstr "גישת טוקן"
 
@@ -18557,7 +19012,7 @@ msgstr ""
 msgid "Token is invalid!"
 msgstr ""
 
-#: lib/user_agent.rb:357
+#: lib/user_agent.rb:359
 msgid "Too many redirections for the original URL, halting."
 msgstr ""
 
@@ -18801,7 +19256,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/password.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:57
-#: db/seeds/permissions.rb:415
+#: db/seeds/permissions.rb:421
 #, fuzzy
 #| msgid "Authentication"
 msgid "Two-factor Authentication"
@@ -18925,6 +19380,13 @@ msgstr "לא מוקצים ופתוחים"
 msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr "כתובות דוא\"ל שלא הוקצו, נא להקצות אותן לערוץ או למחוק אותן."
 
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:69
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:60
+#, fuzzy
+#| msgid "Select item"
+msgid "Uncheck item"
+msgstr "בחר פריט"
+
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:12
 msgid "Unit"
 msgstr ""
@@ -18966,9 +19428,9 @@ msgstr "התראות"
 msgid "Unsaved Changes"
 msgstr "התעלם משינויים"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:534
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:238
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:304
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:578
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:257
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:316
 msgid "Unselect Option"
 msgstr ""
 
@@ -19020,15 +19482,15 @@ msgstr "עדכון"
 msgid "Update Database"
 msgstr "עדכן בסיס נתונים"
 
-#: lib/excel_sheet/ticket.rb:68
+#: lib/excel_sheet/ticket.rb:69
 msgid "Update Diff In Min"
 msgstr ""
 
-#: lib/excel_sheet/ticket.rb:66
+#: lib/excel_sheet/ticket.rb:67
 msgid "Update Escalation At"
 msgstr "עדכן הסלמה ב"
 
-#: lib/excel_sheet/ticket.rb:67
+#: lib/excel_sheet/ticket.rb:68
 msgid "Update In Min"
 msgstr "עדכון תוך דקות"
 
@@ -19113,6 +19575,10 @@ msgid "Updated At"
 msgstr "עודכן ב"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:242
+#: app/assets/javascripts/app/models/checklist.coffee:10
+#: app/assets/javascripts/app/models/checklist_item.coffee:9
+#: app/assets/javascripts/app/models/checklist_template.coffee:11
+#: app/assets/javascripts/app/models/checklist_template_item.coffee:9
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:8
 #: app/assets/javascripts/app/models/organization.coffee:11
 #: app/assets/javascripts/app/models/ticket.coffee:30
@@ -19730,7 +20196,7 @@ msgid "Webhook"
 msgstr ""
 
 #: app/models/channel/driver/sms/message_bird.rb:90
-#: app/models/channel/driver/sms/twilio.rb:102
+#: app/models/channel/driver/sms/twilio.rb:103
 msgid "Webhook Token"
 msgstr ""
 
@@ -19931,6 +20397,28 @@ msgid ""
 "like \"%s\" (e. g. %s)."
 msgstr "עם Checksum, checksum יצורף למונה. הפורמט נראה כמו \"%s\" (לדוגמה,%s)."
 
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:35
+#: app/assets/javascripts/app/models/checklist_template.coffee:23
+#, fuzzy
+#| msgid "With templates you can pre-fill ticket attributes."
+msgid ""
+"With checklist templates it is possible to pre-fill new checklists with "
+"initial items."
+msgstr "בעזרת תבנית אתה יכול למלא מראש מאפייני כרטיס."
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:18
+#, fuzzy
+#| msgid "With templates you can pre-fill ticket attributes."
+msgid "With checklist templates you can pre-fill your checklists."
+msgstr "בעזרת תבנית אתה יכול למלא מראש מאפייני כרטיס."
+
+#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:8
+msgid ""
+"With checklists you can keep track of the progress of your ticket related "
+"tasks."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee:14
 msgid ""
 "With filters you can e. g. dispatch new tickets into certain groups or set a "
@@ -20024,6 +20512,12 @@ msgstr "כן"
 #| msgid "Add attachment option to upload."
 msgid "Yes, add attachments now"
 msgstr "הוסף אפשרות צרופה להעלאה."
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
+#, fuzzy
+#| msgid "Remove %s"
+msgid "Yes, open the checklist"
+msgstr "הסרה %s"
 
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee:4
 msgid "Yes, start real import."
@@ -20127,7 +20621,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:4
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:181
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:180
 msgid ""
 "You can generate a personal access token for each application you use that "
 "needs access to the Zammad API."
@@ -20226,6 +20720,8 @@ msgid ""
 "You have a 24 hour window to send WhatsApp messages in this conversation. "
 "The customer service window closes %s."
 msgstr ""
+"יש לך חלון של 24 שעות לשלוח הודעות WhatsApp בשיחה זו. חלון שירות הלקוחות "
+"יסגרו ב %s."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorFooter.vue:49
 msgid "You have exceeded the character limit by %s"
@@ -20245,7 +20741,7 @@ msgid "You have insufficient rights to view this organization."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
-#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:34
+#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:28
 msgid "You have insufficient rights to view this ticket."
 msgstr ""
 
@@ -20279,6 +20775,12 @@ msgstr "עדיין לא יצרת כרטיס."
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:324
 msgid "You have to allow access to your webcam."
 msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/checklist_modal.jst.eco:2
+#, fuzzy
+#| msgid "Please select at least one folder."
+msgid "You have unchecked items in the checklist."
+msgstr "נא לבחור לפחות תיקיה אחת."
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco:4
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue:42
@@ -20683,25 +21185,25 @@ msgstr "להקצות כרטיסים"
 msgid "at"
 msgstr "ב"
 
-#: app/models/object_manager/attribute.rb:554
+#: app/models/object_manager/attribute.rb:551
 msgid "at least one letter is required"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
 #, fuzzy
 #| msgid "reached"
 msgid "attached"
 msgstr "הגיע"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
 #, fuzzy
 #| msgid "Attachments"
 msgid "attachment"
 msgstr "צרופות"
 
-#: app/models/object_manager/attribute.rb:583
+#: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"
 msgstr ""
 
@@ -20736,11 +21238,11 @@ msgstr "תפוס"
 msgid "camera,image,photo,picture"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:630
+#: app/models/object_manager/attribute.rb:629
 msgid "can only be created on postgresql databases"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:623
+#: app/models/object_manager/attribute.rb:622
 msgid ""
 "can't be altered after creation (you can delete the attribute and create "
 "another with the desired value)"
@@ -20752,7 +21254,7 @@ msgstr ""
 msgid "can't be empty"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:545
+#: app/models/object_manager/attribute.rb:542
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr ""
 
@@ -20912,7 +21414,7 @@ msgstr "ברירת מחדל"
 msgid "delete"
 msgstr "מחק"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:20
 #, fuzzy
 #| msgid "Delete Customer"
@@ -21023,18 +21525,18 @@ msgstr ""
 msgid "email"
 msgstr "אימייל"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:97
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:99
 msgid "email sent to '%s'"
 msgstr "אימייל נשלח אל '%s'"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
 #, fuzzy
 #| msgid "closed"
 msgid "enclosed"
 msgstr "סגור"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
 #, fuzzy
 #| msgid "close"
@@ -21112,7 +21614,7 @@ msgstr ""
 msgid "forward"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:136
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:138
 msgid "from"
 msgstr "מאת"
 
@@ -21280,7 +21782,7 @@ msgid "in process"
 msgstr "בתהליך"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1425
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1426
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -21358,7 +21860,7 @@ msgstr "הוא לא"
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:89
 #, fuzzy
 #| msgid "Min. size of number"
 msgid "is not a number"
@@ -21645,7 +22147,7 @@ msgstr "לא מוגדר (לא מוגדר)"
 msgid "note"
 msgstr "פתק"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:95
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:97
 #, fuzzy
 #| msgid "Notification Sender"
 msgid "notification sent to '%s'"
@@ -21663,7 +22165,7 @@ msgstr "התראות"
 msgid "now"
 msgstr "לא"
 
-#: app/models/object_manager/attribute.rb:551
+#: app/models/object_manager/attribute.rb:548
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr ""
 
@@ -21739,7 +22241,7 @@ msgstr ""
 msgid "reached"
 msgstr "הגיע"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:150
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:13
 #, fuzzy
 #| msgid "Create new Customer"
@@ -21753,6 +22255,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco:21
 msgid "recovery codes"
+msgstr ""
+
+#: app/models/checklist/item.rb:81
+msgid "reference must not be the checklist ticket."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:103
@@ -21836,7 +22342,7 @@ msgstr "בחר קובץ מצורף ..."
 msgid "select visible options"
 msgstr "השב"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:24
 #, fuzzy
 #| msgid "Create new Customer"
@@ -21917,7 +22423,7 @@ msgstr "דולג"
 msgid "sms"
 msgstr "סמס"
 
-#: app/models/object_manager/attribute.rb:548
+#: app/models/object_manager/attribute.rb:545
 msgid "spaces are not allowed"
 msgstr ""
 
@@ -21973,7 +22479,7 @@ msgstr ""
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:123
 msgid "this ticket was merged into ticket %s"
 msgstr ""
 
@@ -21982,15 +22488,9 @@ msgstr ""
 msgid "ticket"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:114
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:116
 msgid "ticket %s was merged into this ticket"
 msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:75
-#, fuzzy
-#| msgid "Ticket update"
-msgid "ticket title"
-msgstr "עדכון כרטיס"
 
 #: db/seeds/settings.rb:1131
 msgid "ticket.agent"
@@ -22032,15 +22532,15 @@ msgstr ""
 msgid "translation,locale,localization"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:101
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:103
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:103
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:105
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:105
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:107
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr ""
 
@@ -22191,6 +22691,21 @@ msgstr "... של כל איזור הטקסט"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ זמן המתנה היום"
+
+#, fuzzy
+#~| msgid "Select Template"
+#~ msgid "Checklist Templates"
+#~ msgstr "בחר תבנית"
+
+#, fuzzy
+#~| msgid "Cancel Upload"
+#~ msgid "Cancel Update"
+#~ msgstr "ביטול העלאה"
+
+#, fuzzy
+#~| msgid "Ticket update"
+#~ msgid "Ticket Update"
+#~ msgstr "כרטיס עודכן"
 
 #, fuzzy
 #~| msgid "Ticket update"
@@ -22529,9 +23044,6 @@ msgstr "∅ זמן המתנה היום"
 #~ msgid "Choose attributes and then save them as a new template."
 #~ msgstr "בחר מאפיינים ואז שמור אותם כתבנית חדשה."
 
-#~ msgid "Save as template"
-#~ msgstr "שמור כתבנית"
-
 #~ msgid "Save new template"
 #~ msgstr "שמור תבנית חדשה"
 
@@ -22642,9 +23154,6 @@ msgstr "∅ זמן המתנה היום"
 #~ msgid " Order"
 #~ msgstr "הזמנה"
 
-#~ msgid "Order"
-#~ msgstr "הזמנה"
-
 #, fuzzy
 #~| msgid "Reporting"
 #~ msgid "Sorting"
@@ -22703,11 +23212,6 @@ msgstr "∅ זמן המתנה היום"
 #~ msgid "Response Time"
 #~ msgstr "זמן תגוה ראשוני"
 
-#, fuzzy
-#~| msgid "Reset changes"
-#~ msgid "Unable to save changes"
-#~ msgstr "אפס שינויים"
-
 #~ msgid "TextModule"
 #~ msgstr "מודול טקסט"
 
@@ -22764,9 +23268,6 @@ msgstr "∅ זמן המתנה היום"
 
 #~ msgid "Default caller id"
 #~ msgstr "מזהה המתקשר המוגדר כברירת מחדל"
-
-#~ msgid "Default caller id."
-#~ msgstr "מזהה המתקשר המוגדר כברירת מחדל."
 
 #~ msgid "Login with %s"
 #~ msgstr "התחבר באמצעות %s"

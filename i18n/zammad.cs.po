@@ -373,8 +373,8 @@ msgid "%s (option)"
 msgstr "%s (možnost)"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:301
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:525
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:229
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:568
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:248
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:364
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:109
@@ -393,6 +393,14 @@ msgstr "API token %s"
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:179
 msgid "%s Attribute"
 msgstr "Atribut %s"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:71
+#, fuzzy
+#| msgid "Checksum"
+msgid "%s Checklist"
+msgstr "Kontrolní součet"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:203
 msgid "%s Group"
@@ -689,17 +697,22 @@ msgstr "%s% bylo opětovně otevřeno"
 msgid "%{model} can have full or granular access to group"
 msgstr "%{model} může mít plný nebo detailní přístup ke skupině"
 
-#: app/models/object_manager/attribute.rb:570
+#: app/models/object_manager/attribute.rb:567
 msgid "%{name} already exists"
 msgstr "%{name} již existuje"
 
-#: app/models/object_manager/attribute.rb:559
+#: app/models/object_manager/attribute.rb:556
 msgid "%{name} is a reserved word"
 msgstr "%{name} je rezervované slovo"
 
-#: app/frontend/apps/desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue:51
 #: app/frontend/apps/mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:63
 msgid "(state: %s)"
+msgstr "(stav: %s)"
+
+#: app/frontend/apps/desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue:58
+#, fuzzy
+#| msgid "(state: %s)"
+msgid "(ticket status: %s)"
 msgstr "(stav: %s)"
 
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
@@ -943,7 +956,7 @@ msgid ""
 msgstr ""
 "Byl vytvořen testovací ticket, naleznete jej ve svém přehledu \"%s\" %l."
 
-#: app/models/ticket.rb:276
+#: app/models/ticket.rb:278
 msgid "A ticket cannot be merged into itself."
 msgstr "Ticket nemůže být sloučen sám se sebou."
 
@@ -1013,62 +1026,63 @@ msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr "Přijmout Politiku Soukromí dat a Politiku přijatelného užívání"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:18
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTicketItem.vue:38
 #, fuzzy
 #| msgid "Access to %s"
 msgid "Access denied"
 msgstr "Přístup k %s"
 
-#: db/seeds/permissions.rb:297
+#: db/seeds/permissions.rb:303
 msgid "Access the agent chat features."
 msgstr ""
 
-#: db/seeds/permissions.rb:312
+#: db/seeds/permissions.rb:318
 msgid "Access the agent phone features."
 msgstr ""
 
-#: db/seeds/permissions.rb:327
+#: db/seeds/permissions.rb:333
 msgid "Access the knowledge base editor features."
 msgstr ""
 
-#: db/seeds/permissions.rb:333
+#: db/seeds/permissions.rb:339
 msgid "Access the knowledge base reader features."
 msgstr ""
 
-#: db/seeds/permissions.rb:355
+#: db/seeds/permissions.rb:361
 #, fuzzy
 #| msgid "Access to Agent Tickets based on Group Access"
 msgid "Access the tickets as agent based on group access."
 msgstr "Přístup k ticketům řešitelů na základě Skupinového přístupu"
 
-#: db/seeds/permissions.rb:364
+#: db/seeds/permissions.rb:370
 #, fuzzy
 #| msgid "ticket.customer"
 msgid "Access tickets as customer."
 msgstr "ticket.customer"
 
-#: db/seeds/permissions.rb:288
+#: db/seeds/permissions.rb:294
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access to the chat interface."
 msgstr "Nedávné zákaznické tickety"
 
-#: db/seeds/permissions.rb:318
+#: db/seeds/permissions.rb:324
 #, fuzzy
 #| msgid "Inserts knowledge base answer"
 msgid "Access to the knowledge base interface."
 msgstr "Vloží odpověď ze Znalostní báze"
 
-#: db/seeds/permissions.rb:303
+#: db/seeds/permissions.rb:309
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access to the phone interface."
 msgstr "Nedávné zákaznické tickety"
 
-#: db/seeds/permissions.rb:340
+#: db/seeds/permissions.rb:346
 msgid "Access to the report interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:346
+#: db/seeds/permissions.rb:352
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access to the ticket interface."
@@ -1096,11 +1110,11 @@ msgstr ""
 msgid "Account"
 msgstr "Účet"
 
-#: app/models/channel/driver/sms/twilio.rb:103
+#: app/models/channel/driver/sms/twilio.rb:104
 msgid "Account SID"
 msgstr "SID účtu"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:6
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:6
 msgid "Account Time"
 msgstr "Započtená doba"
 
@@ -1114,7 +1128,7 @@ msgstr "Účet již existuje!"
 msgid "Account not verified"
 msgstr "Účet neověřen"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:37
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:37
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:28
 #: app/assets/javascripts/app/models/ticket.coffee:16
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:2
@@ -1212,6 +1226,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:320
 #: app/assets/javascripts/app/models/chat.coffee:257
+#: app/assets/javascripts/app/models/checklist_template.coffee:9
 #: app/assets/javascripts/app/models/core_workflow.coffee:14
 #: app/assets/javascripts/app/models/email_address.coffee:37
 #: app/assets/javascripts/app/models/group.coffee:16
@@ -1254,7 +1269,7 @@ msgstr "Aktivita"
 msgid "Activity Stream"
 msgstr "Tok Aktivit"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:49
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:49
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:50
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:16
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:4
@@ -1278,6 +1293,7 @@ msgstr "Adaptér"
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:143
 #: app/assets/javascripts/app/views/channel/topics.jst.eco:37
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco:32
+#: app/assets/javascripts/app/views/generic/checklist_item.jst.eco:26
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco:21
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco:20
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/row.jst.eco:16
@@ -1298,6 +1314,7 @@ msgstr "Adaptér"
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:39
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco:15
 #: app/assets/javascripts/app/views/tag/index.jst.eco:25
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:19
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:278
 #: app/frontend/shared/form/i18n/locales.ts:25
 msgid "Add"
@@ -1321,6 +1338,16 @@ msgstr "Přidat Bota"
 #: app/assets/javascripts/app/views/integration/smime.jst.eco:5
 msgid "Add Certificate"
 msgstr "Přidat certifikát"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:419
+msgid "Add Empty Checklist"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue:42
+#, fuzzy
+#| msgid "Template"
+msgid "Add From a Template"
+msgstr "Šablona"
 
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco:5
 msgid "Add Key"
@@ -1405,9 +1432,21 @@ msgstr "Přidat odrážkový seznam"
 msgid "Add condition"
 msgstr "Přidat podmínku"
 
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:5
+#, fuzzy
+#| msgid "Add bullet list"
+msgid "Add empty checklist"
+msgstr "Přidat odrážkový seznam"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:193
 msgid "Add first level heading"
 msgstr "Přidat nadpis první úrovně"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:11
+#, fuzzy
+#| msgid "Save as template"
+msgid "Add from a template"
+msgstr "Uložit jako šablonu"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:186
 #, fuzzy
@@ -1648,7 +1687,7 @@ msgstr "Jméno řešitele"
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr "Jméno řešitele + Oddělovač Od + Zobrazovaný název adresy systému"
 
-#: db/seeds/permissions.rb:296
+#: db/seeds/permissions.rb:302
 #, fuzzy
 #| msgid "Agent Name"
 msgid "Agent chat"
@@ -1662,13 +1701,13 @@ msgstr "Časový limit neaktivity řešitele"
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Počet řešitelů překročen, prosím zkontrolujte nastavení svého účtu."
 
-#: db/seeds/permissions.rb:311
+#: db/seeds/permissions.rb:317
 #, fuzzy
 #| msgid "Agent Name"
 msgid "Agent phone"
 msgstr "Jméno řešitele"
 
-#: db/seeds/permissions.rb:354
+#: db/seeds/permissions.rb:360
 #, fuzzy
 #| msgid "Open tickets"
 msgid "Agent tickets"
@@ -1747,17 +1786,39 @@ msgstr ""
 msgid "Allow future"
 msgstr "Povolit budoucí"
 
+#: app/models/object_manager/attribute/data_option_validator.rb:65
+msgid "Allow future dates toggle value is required."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:334
 msgid "Allow past"
 msgstr "Povolit po"
+
+#: app/models/object_manager/attribute/data_option_validator.rb:71
+#, fuzzy
+#| msgid "at least one letter is required"
+msgid "Allow past dates toggle value is required."
+msgstr "je vyžadováno nejméně jedno písmeno"
 
 #: db/seeds/object_manager_attributes.rb:1967
 msgid "Allow reopening of tickets within a certain time."
 msgstr "Povolit znovuotevření ticketů po určitou dobu."
 
+#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:18
+#, fuzzy
+#| msgid "Allow users to add new tags."
+msgid "Allow users to add new checklists."
+msgstr "Dovolit uživatelům přidávat nové štítky."
+
 #: app/assets/javascripts/app/views/tag/index.jst.eco:16
 msgid "Allow users to add new tags."
 msgstr "Dovolit uživatelům přidávat nové štítky."
+
+#: db/seeds/settings.rb:5766
+#, fuzzy
+#| msgid "Allow users to create new tags."
+msgid "Allow users to create new checklists."
+msgstr "Povolit uživatelům vytvářet nové štítky."
 
 #: db/seeds/settings.rb:4024
 msgid "Allow users to create new tags."
@@ -1814,7 +1875,7 @@ msgstr ""
 msgid "An error has occurred"
 msgstr "Nastala chyba"
 
-#: app/frontend/shared/server/apollo/handler/BaseHandler.ts:152
+#: app/frontend/shared/server/apollo/handler/BaseHandler.ts:150
 msgid "An error occured during the operation."
 msgstr "Během operace nastala chyba."
 
@@ -1958,7 +2019,7 @@ msgstr "App Secret"
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:59
-#: db/seeds/permissions.rb:377
+#: db/seeds/permissions.rb:383
 msgid "Appearance"
 msgstr "Vzhled"
 
@@ -2130,14 +2191,6 @@ msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr ""
 "Jste si jisti? Vaše nastavení notifikací bude uvedeno do výchozího nastavení."
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:51
-msgid "Area for calendar days display"
-msgstr ""
-
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:50
-msgid "Area for calendar month display"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:54
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:11
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:16
@@ -2156,7 +2209,7 @@ msgstr "Článek - dialog potvrzení viditelnosti"
 msgid "Article > Text (HTML)"
 msgstr "Typ článku"
 
-#: lib/excel_sheet/ticket.rb:72
+#: lib/excel_sheet/ticket.rb:73
 msgid "Article Count"
 msgstr "Počet Položek"
 
@@ -2172,21 +2225,21 @@ msgstr "Akce článku"
 msgid "Article could not be deleted."
 msgstr "Článek se nepodařilo smazat."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:118
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:130
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:27
 #, fuzzy
 #| msgid "Ticket information"
 msgid "Article meta information"
 msgstr "Informace o ticketu"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:39
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:37
 #, fuzzy
 #| msgid "Article Type"
 msgid "Article permalink"
 msgstr "Typ článku"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:77
-#: app/frontend/shared/composables/useArticleSecurity.ts:95
+#: app/frontend/shared/composables/useArticleSecurity.ts:99
 msgid "Article uses different security mechanism."
 msgstr "Článek používá jiné bezpečnostní mechanismy."
 
@@ -2280,7 +2333,7 @@ msgstr "Přiložit soubory"
 msgid "Attach files"
 msgstr "Přiložit soubory"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
 msgid "Attached"
 msgstr "Přiloženo"
@@ -2290,7 +2343,7 @@ msgstr "Přiloženo"
 msgid "Attached Files"
 msgstr "Přiložené soubory"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:200
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
@@ -2566,7 +2619,7 @@ msgstr "Dostupné typy nového ticketu"
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:128
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:175
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:121
-#: db/seeds/permissions.rb:391
+#: db/seeds/permissions.rb:397
 msgid "Avatar"
 msgstr "Avatar"
 
@@ -2741,6 +2794,12 @@ msgstr "Tělo"
 #: db/seeds/settings.rb:3203
 msgid "Body - Search for follow-up also in mail body."
 msgstr "Tělo - Vyhledávat návaznosti také v těle e-mailu."
+
+#: lib/validations/ticket_article_validator/sms_twilio.rb:14
+#, fuzzy
+#| msgid "A user is required!"
+msgid "Body text is required"
+msgstr "Uživatel je vyžadován!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:41
 msgid "Boolean field"
@@ -2982,7 +3041,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:236
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:286
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:195
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:259
@@ -3011,7 +3073,7 @@ msgstr "Storno"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:422
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:420
 msgid "Cancel & Go Back"
 msgstr "Zrušit a jít zpět"
 
@@ -3024,12 +3086,6 @@ msgstr "Stornovat & Odhlásit se"
 #: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee:3
 msgid "Cancel & Sign out"
 msgstr "Stornovat & Odhlásit se"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:76
-#, fuzzy
-#| msgid "Cancel Upload"
-msgid "Cancel Update"
-msgstr "Zrušit nahrávání"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:20
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:111
@@ -3139,7 +3195,7 @@ msgstr "Změnit datum"
 msgid "Change order"
 msgstr "Změnit řazení"
 
-#: db/seeds/permissions.rb:409
+#: db/seeds/permissions.rb:415
 #, fuzzy
 #| msgid "Change Your Password"
 msgid "Change personal account password."
@@ -3182,7 +3238,7 @@ msgstr "Provedené změny které vyžadují aktualizaci databáze."
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:95
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
 msgid "Channel"
 msgstr "Kanál"
@@ -3242,6 +3298,13 @@ msgstr "Zkontrolovat proud 'kanálu'."
 msgid "Check channels."
 msgstr "Zkontrolujte kanály."
 
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:61
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:52
+#, fuzzy
+#| msgid "Checkmk"
+msgid "Check item"
+msgstr "Checkmk"
+
 #: lib/search_index_backend.rb:410
 msgid "Check the response and payload for detailed information:"
 msgstr "Pro podrobné informace zkontrolujte odpověď a požadavek:"
@@ -3254,6 +3317,54 @@ msgid ""
 msgstr ""
 "Zaškrtněte toto pole, pokud si přejete nastavit řazení možností. Pokud pole "
 "není zaškrtnuto, hodnoty jsou řazeny v abecedním pořadí."
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:57
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:40
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:12
+#, fuzzy
+#| msgid "Checksum"
+msgid "Checklist"
+msgstr "Kontrolní součet"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:60
+#, fuzzy
+#| msgid "Checksum"
+msgid "Checklist Item"
+msgstr "Kontrolní součet"
+
+#: app/assets/javascripts/app/views/generic/checklist_item.jst.eco:10
+msgid "Checklist Item Label"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:29
+#, fuzzy
+#| msgid "Select Template"
+msgid "Checklist Template"
+msgstr "Vybrat šablonu"
+
+#: app/models/checklist_template/item.rb:32
+msgid "Checklist Template items are limited to 100 items per checklist."
+msgstr ""
+
+#: app/controllers/ticket_checklist_controller.rb:17
+#, fuzzy
+#| msgid "ticket %s was merged into this ticket"
+msgid "Checklist is already created for this ticket"
+msgstr "ticket %s byl sloučen do tohoto ticketu"
+
+#: app/models/checklist/item.rb:87
+#, fuzzy
+#| msgid "The article does not belong to the specified ticket."
+msgid "Checklist items are limited to 100 items per checklist."
+msgstr "Článek nepatří uvedenému ticketu."
+
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:3
+#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:3
+#: db/seeds/permissions.rb:287 db/seeds/settings.rb:5763
+#, fuzzy
+#| msgid "Checksum"
+msgid "Checklists"
+msgstr "Kontrolní součet"
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee:3
 msgid "Checkmk"
@@ -3385,10 +3496,10 @@ msgid "Clear Search"
 msgstr "Obnovit hledání"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:602
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:651
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:292
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:352
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:311
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:364
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:155
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:159
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:138
@@ -3401,6 +3512,12 @@ msgstr "Zrušit výběr"
 #| msgid "User filter"
 msgid "Clear filter"
 msgstr "Uživatelský filtr"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:92
+#, fuzzy
+#| msgid "Clear Selection"
+msgid "Clear the value"
+msgstr "Zrušit výběr"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:3
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:24
@@ -3462,15 +3579,15 @@ msgstr "Zavřít"
 msgid "Close & Tag as Spam"
 msgstr "Zavřít a Oštítkovat jako Spam"
 
-#: lib/excel_sheet/ticket.rb:61
+#: lib/excel_sheet/ticket.rb:62
 msgid "Close Diff In Min"
 msgstr "Zavřít rozdíly za minutu"
 
-#: lib/excel_sheet/ticket.rb:59
+#: lib/excel_sheet/ticket.rb:60
 msgid "Close Escalation At"
 msgstr "Zavřít eskalaci v"
 
-#: lib/excel_sheet/ticket.rb:60
+#: lib/excel_sheet/ticket.rb:61
 msgid "Close In Min"
 msgstr "Zavřít za minutu"
 
@@ -3482,7 +3599,7 @@ msgstr "Zavřít konverzace s offline účastníky."
 msgid "Close current tab"
 msgstr "Zavřít aktuální záložku"
 
-#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:113
+#: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:115
 #, fuzzy
 #| msgid "Confirm dialog"
 msgid "Close dialog"
@@ -3506,7 +3623,7 @@ msgstr "Zavřít záložku"
 msgid "Close tab on ticket close"
 msgstr "Zavřít záložku při uzavření ticketu"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:53
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:51
 #, fuzzy
 #| msgid "Closed Tickets"
 msgid "Close the time picker"
@@ -3947,7 +4064,7 @@ msgstr "Kopírovat"
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Kopírovat do schránky aktuální číslo objektu (např.  Ticket#) "
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:85
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:83
 #, fuzzy
 #| msgid "ticket.customer"
 msgid "Copy ticket number"
@@ -4000,6 +4117,10 @@ msgid ""
 "Could not load the two-factor authentication configuration for this user."
 msgstr "Vyžaduje se autentizace"
 
+#: app/assets/javascripts/app/controllers/signup.coffee:133
+msgid "Could not process your request"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:135
 #, fuzzy
 #| msgid ""
@@ -4042,6 +4163,13 @@ msgstr ""
 "Definuje, zda je integrace i-doit (https://www.i-doit.org/) povolena nebo "
 "nikoli."
 
+#: app/assets/javascripts/app/controllers/widget/link.coffee:69
+#: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:106
+#, fuzzy
+#| msgid "Unable to save changes."
+msgid "Couldn't save changes"
+msgstr "Nelze uložit změny."
+
 #: app/assets/javascripts/app/views/tag/table.jst.eco:5
 msgid "Count"
 msgstr "Počet"
@@ -4073,7 +4201,7 @@ msgstr "Země"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:434
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:432
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Vytvořit"
@@ -4166,6 +4294,19 @@ msgstr "Vytvořit ticket"
 #: app/controllers/first_steps_controller.rb:86
 msgid "Create a Test Ticket"
 msgstr "Vytvořit Testovací Ticket"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:204
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "Create a new checklist item"
+msgstr "Vytvořit nového Zákazníka"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:18
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:21
+#, fuzzy
+#| msgid "Create a new template in the admin interface."
+msgid "Create a new checklist template in the admin interface."
+msgstr "Vytvořte novou šablonu v rozhraní pro správu."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:17
 msgid "Create a new template in the admin interface."
@@ -4273,8 +4414,8 @@ msgstr "Vytvořit:"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:18
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:14
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:100
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:104
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:108
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -4299,6 +4440,10 @@ msgid "Created Internal Article"
 msgstr "Vytvořit interní záznam v ticketu"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:53
+#: app/assets/javascripts/app/models/checklist.coffee:9
+#: app/assets/javascripts/app/models/checklist_item.coffee:8
+#: app/assets/javascripts/app/models/checklist_template.coffee:10
+#: app/assets/javascripts/app/models/checklist_template_item.coffee:8
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:7
 #: app/assets/javascripts/app/models/organization.coffee:9
 #: app/assets/javascripts/app/models/ticket.coffee:28
@@ -4308,7 +4453,7 @@ msgstr "Vytvořit interní záznam v ticketu"
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
 #: app/controllers/time_accountings_controller.rb:122
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:105
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:55
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:62
 #: app/graphql/gql/types/overview_type.rb:80
 msgid "Created at"
 msgstr "Vytvořeno v"
@@ -4455,7 +4600,7 @@ msgstr ""
 msgid "Customer selection based on sender and receiver list"
 msgstr "Volba zákazníka na základě seznamu odesílateů a příjemců"
 
-#: db/seeds/permissions.rb:363
+#: db/seeds/permissions.rb:369
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Customer tickets"
@@ -4583,36 +4728,36 @@ msgstr "Pro"
 msgid "December"
 msgstr "Prosinec"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:68
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:66
 #, fuzzy
 #| msgid "Recent Logs"
 msgid "Decrement hours value"
 msgstr "Nedávné záznamy"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:70
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:68
 #, fuzzy
 #| msgid "Average: %s minutes"
 msgid "Decrement minutes value"
 msgstr "Průměr: %s minut"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:73
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:71
 #, fuzzy
 #| msgid "Increment (SystemID.Counter)"
 msgid "Decrement seconds value"
 msgstr "Přírůstek (SystemID.Counter)"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:290
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:293
 msgid "Decryption failed!"
 msgstr "Dešifrování se nezdařilo!"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:113
-#: app/frontend/shared/composables/useArticleSecurity.ts:126
+#: app/frontend/shared/composables/useArticleSecurity.ts:130
 msgid "Decryption failed! %s"
 msgstr "Dekódování selhalo! %s"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:288
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:291
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:107
-#: app/frontend/shared/composables/useArticleSecurity.ts:120
+#: app/frontend/shared/composables/useArticleSecurity.ts:124
 msgid "Decryption was successful."
 msgstr "Dešifrování bylo úspěšné."
 
@@ -4683,6 +4828,12 @@ msgstr "Výchozí rozdíl času (minuty)"
 #: db/seeds/settings.rb:863
 msgid "Default type for a new ticket"
 msgstr "Výchozí typ nového ticketu"
+
+#: app/models/object_manager/attribute/data_option_validator.rb:47
+#, fuzzy
+#| msgid "Default caller id."
+msgid "Default value is required."
+msgstr "Výchozí ID volajícího."
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:15
 #: db/seeds/settings.rb:2460
@@ -5801,7 +5952,7 @@ msgstr "Smazat uživatele"
 msgid "Delete table"
 msgstr "Smazat Soubor"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:155
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:154
 #, fuzzy
 #| msgid "Getting an Access Token"
 msgid "Delete this access token"
@@ -5894,7 +6045,7 @@ msgstr "Plocha"
 #: app/assets/javascripts/app/views/google/list.jst.eco:58
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:59
 #: app/models/channel/driver/sms/message_bird.rb:93
-#: app/models/channel/driver/sms/twilio.rb:106
+#: app/models/channel/driver/sms/twilio.rb:107
 msgid "Destination Group"
 msgstr "Cílová Skupina"
 
@@ -5931,7 +6082,7 @@ msgstr "API token se nepodařilo najít."
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:37
-#: db/seeds/permissions.rb:422
+#: db/seeds/permissions.rb:428
 msgid "Devices"
 msgstr "Zařízení"
 
@@ -6017,7 +6168,7 @@ msgstr "Zrušit"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:419
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:417
 msgid "Discard Changes"
 msgstr "Zahodit změny"
 
@@ -6109,6 +6260,12 @@ msgstr "Opravdu si přejete nastavit viditelnost tohoto článku na \"veřejný\
 msgid "Do you want to continue?"
 msgstr "Opravdu si přejete smazat \"%s\"?"
 
+#: app/assets/javascripts/app/views/ticket_zoom/checklist_modal.jst.eco:4
+#, fuzzy
+#| msgid "Do you really want to delete this object?"
+msgid "Do you want to handle them before closing this ticket?"
+msgstr "Opravdu si přejete smazat tento objekt?"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:64
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:46
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:12
@@ -6188,19 +6345,19 @@ msgstr "Stáhnout %s záznamů"
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Stáhněte a nainstalujte %s Migration Plugin do vaší instance %s."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:44
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:42
 #, fuzzy
 #| msgid "Do not sign email"
 msgid "Download original email"
 msgstr "Nepodepisovat e-mail"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:59
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:57
 #, fuzzy
 #| msgid "Download Private Key"
 msgid "Download raw email"
 msgstr "Stáhnout soukromý klíč"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:316
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:319
 #, fuzzy
 #| msgid "select attachment…"
 msgid "Downloading attachments…"
@@ -6219,7 +6376,7 @@ msgstr "Koncept k dispozici"
 msgid "Drag and drop to reorder ticket overview list items."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:235
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:236
 #, fuzzy
 #| msgid "Drag to reorder"
 msgid "Drag and drop to reorder your tabs."
@@ -6349,6 +6506,19 @@ msgstr "Upravit Organizaci"
 msgid "Edit authenticator app"
 msgstr "Autentizacční aplikace"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:113
+#, fuzzy
+#| msgid "Ticket title"
+msgid "Edit checklist title"
+msgstr "Titulek ticketu"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:77
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:69
+#, fuzzy
+#| msgid "Edit mask"
+msgid "Edit item"
+msgstr "Editační maska"
+
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:55
 msgid "Edit mask"
 msgstr "Editační maska"
@@ -6363,6 +6533,12 @@ msgstr "Upravit odpověď"
 #| msgid "Security"
 msgid "Edit security keys"
 msgstr "Zabezpečení"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:89
+#, fuzzy
+#| msgid "Ticket title"
+msgid "Edit ticket title"
+msgstr "Titulek ticketu"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:38
 msgid "Editing"
@@ -6454,7 +6630,7 @@ msgstr "SSL ověření"
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:9
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:132
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
 #: public/assets/form/form.js:32
@@ -6596,6 +6772,12 @@ msgstr "Aktivovat"
 
 #: db/seeds/settings.rb:3429
 msgid "Enable Chat"
+msgstr "Aktivovat Chat"
+
+#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:16
+#, fuzzy
+#| msgid "Enable Chat"
+msgid "Enable Checklists"
 msgstr "Aktivovat Chat"
 
 #: app/assets/javascripts/app/views/api.jst.eco:33 db/seeds/settings.rb:3384
@@ -6813,12 +6995,12 @@ msgstr ""
 "Povolí uživatelům vytvořit svůj vlastní účet pomocí webového rozhraní. "
 "Nastavení je platné pouze, je-li povoleno přihlášení heslem."
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
 msgid "Enclosed"
 msgstr "Přiloženo"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
 msgid "Enclosure"
 msgstr "Příloha"
@@ -6840,7 +7022,7 @@ msgstr "Šifrovat e-mail (pokud to není možné, přesto zaslat oznámení)"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:62
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:165
-#: app/frontend/shared/composables/useArticleSecurity.ts:159
+#: app/frontend/shared/composables/useArticleSecurity.ts:163
 msgid "Encrypted"
 msgstr "Šifrovaný"
 
@@ -6850,7 +7032,7 @@ msgid "Encryption"
 msgstr "Šifrování"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:65
-#: app/frontend/shared/composables/useArticleSecurity.ts:159
+#: app/frontend/shared/composables/useArticleSecurity.ts:163
 msgid "Encryption error"
 msgstr "Chyba šifrování"
 
@@ -6990,7 +7172,7 @@ msgstr ""
 msgid "Enter the security code generated by the authenticator app:"
 msgstr "Vložte bezpečnostní kód vygenerovaný autentizační aplikací:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:37
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:37
 #, fuzzy
 #| msgid "Please enter the time you want to record."
 msgid "Enter the time you want to record"
@@ -7088,8 +7270,9 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:6
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:165
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:51
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:119
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:124
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:6
+#: app/frontend/apps/desktop/pages/error/views/Error.vue:37
 #: app/frontend/apps/mobile/pages/error/views/Error.vue:39
 msgid "Error"
 msgstr "Chyba"
@@ -7149,7 +7332,7 @@ msgstr ""
 "target=\"zammad_app\">Zobrazit v aplikaci #{config.product_name}</a>\n"
 "</div>\n"
 
-#: lib/excel_sheet/ticket.rb:73
+#: lib/excel_sheet/ticket.rb:74
 msgid "Escalation At"
 msgstr "Eskalace v"
 
@@ -7337,7 +7520,7 @@ msgstr "Eskalace v"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:19
 #: app/assets/javascripts/app/views/profile/token_access_create.jst.eco:10
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:15
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:105
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:104
 msgid "Expires"
 msgstr "Propadává"
 
@@ -7412,6 +7595,18 @@ msgstr "příspěvek facebook feedu"
 msgid "Failed Tasks"
 msgstr "Nezdařené úlohy"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:162
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "Failed to add new checklist item."
+msgstr "Vytvořit nového Zákazníka"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:183
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "Failed to delete checklist item."
+msgstr "Vytvořit nového Zákazníka"
+
 #: app/controllers/channels_google_controller.rb:96
 #: app/controllers/channels_microsoft365_controller.rb:96
 msgid "Failed to find backup on channel!"
@@ -7422,6 +7617,14 @@ msgstr "Nepodařilo se najít zálohu na kanále!"
 msgid "Failed to roll back the migration of the channel!"
 msgstr "Nezdařilo se vrátit zpět migraci kanálu!"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:169
+msgid "Failed to save checklist order."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:122
+msgid "Failed to save the order of the checklist items. Please try again."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:52
 msgid "Failed to send email to \"%s\". Please contact an administrator."
 msgstr ""
@@ -7430,6 +7633,12 @@ msgstr ""
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:169
 msgid "Failed to set up QR code. Please try again."
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:176
+#, fuzzy
+#| msgid "Create new Customer"
+msgid "Failed to update checklist item."
+msgstr "Vytvořit nového Zákazníka"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageFailedUploadOverlay.vue:23
 #, fuzzy
@@ -7551,19 +7760,19 @@ msgstr "Ukončit"
 msgid "Finish Setup"
 msgstr "Ukončit"
 
-#: lib/excel_sheet/ticket.rb:62
+#: lib/excel_sheet/ticket.rb:63
 msgid "First Response At"
 msgstr "Prvotní odpověď v"
 
-#: lib/excel_sheet/ticket.rb:65
+#: lib/excel_sheet/ticket.rb:66
 msgid "First Response Diff In Min"
 msgstr "Rozdíl prvotní odpovědi v min"
 
-#: lib/excel_sheet/ticket.rb:63
+#: lib/excel_sheet/ticket.rb:64
 msgid "First Response Escalation At"
 msgstr "Prvotní eskalace odpovědi v"
 
-#: lib/excel_sheet/ticket.rb:64
+#: lib/excel_sheet/ticket.rb:65
 msgid "First Response In Min"
 msgstr "Prvotní odpověď v min"
 
@@ -7753,7 +7962,7 @@ msgstr "Formátovat jako |tučné|"
 msgid "Format as ||italic||"
 msgstr "Formátovat jako ||kurzívu||"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:74
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:72
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:92
 msgid "Forward"
 msgstr "Přeposlat"
@@ -7785,7 +7994,7 @@ msgstr "Pátek"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:11
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:66
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:73
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:80
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:35
 msgid "From"
@@ -7821,7 +8030,7 @@ msgstr "GID"
 msgid "Gateway"
 msgstr "Brána"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:123
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:128
 #: app/assets/javascripts/app/lib/app_post/ajax.coffee:91
 msgid "General communication error, maybe internet is not available!"
 msgstr "Obecná chyba komunikace, možná není k dispozici internetové připojení!"
@@ -8999,6 +9208,18 @@ msgstr ""
 msgid "Including private key."
 msgstr "Včetně soukromého klíče."
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
+#, fuzzy
+#| msgid "Incomplete credentials"
+msgid "Incomplete Ticket Checklist"
+msgstr "Neúplné pověření"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistButton.vue:22
+#, fuzzy
+#| msgid "Incomplete credentials"
+msgid "Incomplete checklist items"
+msgstr "Neúplné pověření"
+
 #: app/controllers/import_freshdesk_controller.rb:45
 #: app/controllers/import_kayako_controller.rb:35
 #: app/controllers/import_zendesk_controller.rb:67
@@ -9009,19 +9230,19 @@ msgstr "Neúplné pověření"
 msgid "Increment (SystemID.Counter)"
 msgstr "Přírůstek (SystemID.Counter)"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:57
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:55
 #, fuzzy
 #| msgid "in hours"
 msgid "Increment hours value"
 msgstr "v hodinách"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:59
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:57
 #, fuzzy
 #| msgid "Increment (SystemID.Counter)"
 msgid "Increment minutes value"
 msgstr "Přírůstek (SystemID.Counter)"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:62
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:60
 #, fuzzy
 #| msgid "Increment (SystemID.Counter)"
 msgid "Increment seconds value"
@@ -9073,6 +9294,10 @@ msgstr ""
 #: app/models/store.rb:94
 msgid "Inline content could not be generated."
 msgstr "Vnořený obsah se nepodařilo vygenerovat."
+
+#: app/models/object_manager/attribute/data_option_validator.rb:41
+msgid "Input field must be text, password, tel, fax, email or url type."
+msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:320
 msgid "Insert code block"
@@ -9314,6 +9539,12 @@ msgstr "Neplatné hodnoty v kroku %s"
 msgid "Invalid video URL"
 msgstr "Neplatné URL videa"
 
+#: app/assets/javascripts/app/controllers/layout_ref.coffee:650
+#, fuzzy
+#| msgid "Invitation sent!"
+msgid "Invitation sent to %s"
+msgstr "Pozvánka poslána!"
+
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee:78
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:100
 msgid "Invitation sent!"
@@ -9408,9 +9639,14 @@ msgstr "Není možné slučovat již sloučené tickety."
 msgid "It is not possible to delete your current account."
 msgstr "je váš aktuální účet"
 
-#: app/models/ticket.rb:274
+#: app/models/ticket.rb:276
 msgid "It is not possible to merge into an already merged ticket."
 msgstr "Není možné slučovat již sloučené tickety."
+
+#: app/assets/javascripts/app/models/checklist.coffee:8
+#: app/assets/javascripts/app/models/checklist_template.coffee:8
+msgid "Items"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:15
 msgid "Items per page"
@@ -9516,7 +9752,7 @@ msgstr "Znalostní báze"
 msgid "Knowledge Base Answer"
 msgstr "Odpověď ze Znalostní báze"
 
-#: db/seeds/permissions.rb:326
+#: db/seeds/permissions.rb:332
 msgid "Knowledge Base Editor"
 msgstr "Editor Znalostní báze"
 
@@ -9524,7 +9760,7 @@ msgstr "Editor Znalostní báze"
 msgid "Knowledge Base Feed"
 msgstr "Zásoba Znalostní báze"
 
-#: db/seeds/permissions.rb:332
+#: db/seeds/permissions.rb:338
 msgid "Knowledge Base Reader"
 msgstr "Čtenář Znalostní báze"
 
@@ -9580,7 +9816,7 @@ msgstr "Rozložení vstupní stránky"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:13
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:157
-#: db/seeds/permissions.rb:384
+#: db/seeds/permissions.rb:390
 msgid "Language"
 msgstr "Jazyk"
 
@@ -9593,15 +9829,21 @@ msgstr "Jazyky"
 msgid "Last Article"
 msgstr "Poslední odstavec"
 
-#: lib/excel_sheet/ticket.rb:70
+#: lib/excel_sheet/ticket.rb:59
+#, fuzzy
+#| msgid "Closed At"
+msgid "Last Closed At"
+msgstr "Uzavřeno"
+
+#: lib/excel_sheet/ticket.rb:71
 msgid "Last Contact Agent At"
 msgstr "Poslední kontakt řešitele"
 
-#: lib/excel_sheet/ticket.rb:69
+#: lib/excel_sheet/ticket.rb:70
 msgid "Last Contact At"
 msgstr "Poslední kontakt v"
 
-#: lib/excel_sheet/ticket.rb:71
+#: lib/excel_sheet/ticket.rb:72
 msgid "Last Contact Customer At"
 msgstr "Poslední kontakt zákazníka v"
 
@@ -9613,7 +9855,7 @@ msgstr "Poslední externí položka"
 msgid "Last Internal Article"
 msgstr "Poslední interní položka"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:110
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:109
 #, fuzzy
 #| msgid "Last used"
 msgid "Last Used"
@@ -9789,7 +10031,7 @@ msgstr "Propojit šablonu"
 #: app/assets/javascripts/app/views/widget/user.jst.eco:34
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:46
-#: db/seeds/permissions.rb:436
+#: db/seeds/permissions.rb:442
 msgid "Linked Accounts"
 msgstr "Propojené účty"
 
@@ -9816,7 +10058,7 @@ msgstr "Vývojářská stránka LinkedIn"
 msgid "Links"
 msgstr "Propojení"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:217
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:218
 msgid "List of all user taskbar tabs"
 msgstr ""
 
@@ -9865,7 +10107,8 @@ msgstr "Nahrávání se nezdařilo."
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee:151
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:647
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco:3
-#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:34
+#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:40
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:509
 #: app/frontend/shared/form/i18n/locales.ts:58
 #: app/views/init/spinner-loading.html.erb:260
 msgid "Loading…"
@@ -10025,6 +10268,18 @@ msgstr "Spravovat"
 msgid "Manage API of your system."
 msgstr "Zadejte URL vašeho %s systému"
 
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:30
+#, fuzzy
+#| msgid "Select Template"
+msgid "Manage Checklist Template"
+msgstr "Vybrat šablonu"
+
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:31
+#, fuzzy
+#| msgid "Select Template"
+msgid "Manage Checklist Templates"
+msgstr "Vybrat šablonu"
+
 #: db/seeds/permissions.rb:168
 #, fuzzy
 #| msgid "Enter the Subdomain of your %s system"
@@ -10181,67 +10436,67 @@ msgstr ""
 msgid "Manage packages of your system."
 msgstr "Zadejte URL vašeho %s systému"
 
-#: db/seeds/permissions.rb:430
+#: db/seeds/permissions.rb:436
 #, fuzzy
 #| msgid "Personal Access Tokens"
 msgid "Manage personal API tokens."
 msgstr "Osobní Přístupové Tokeny"
 
-#: db/seeds/permissions.rb:378
+#: db/seeds/permissions.rb:384
 msgid "Manage personal appearance settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:392
+#: db/seeds/permissions.rb:398
 #, fuzzy
 #| msgid "Manage %s Settings"
 msgid "Manage personal avatar settings."
 msgstr "Spravovat nastavení pro %s"
 
-#: db/seeds/permissions.rb:464
+#: db/seeds/permissions.rb:470
 msgid "Manage personal calendar."
 msgstr ""
 
-#: db/seeds/permissions.rb:423
+#: db/seeds/permissions.rb:429
 #, fuzzy
 #| msgid "Clean up dead sessions."
 msgid "Manage personal devices and sessions."
 msgstr "Vyčistěte odumřelá sezení."
 
-#: db/seeds/permissions.rb:385
+#: db/seeds/permissions.rb:391
 #, fuzzy
 #| msgid "Manage %s Settings"
 msgid "Manage personal language settings."
 msgstr "Spravovat nastavení pro %s"
 
-#: db/seeds/permissions.rb:437
+#: db/seeds/permissions.rb:443
 msgid "Manage personal linked accounts."
 msgstr ""
 
-#: db/seeds/permissions.rb:444
+#: db/seeds/permissions.rb:450
 #, fuzzy
 #| msgid "Manage your notification settings"
 msgid "Manage personal notifications settings."
 msgstr "Upravte své nastavení oznámení"
 
-#: db/seeds/permissions.rb:399
+#: db/seeds/permissions.rb:405
 #, fuzzy
 #| msgid "Manage your notification settings"
 msgid "Manage personal out of office settings."
 msgstr "Upravte své nastavení oznámení"
 
-#: db/seeds/permissions.rb:454
+#: db/seeds/permissions.rb:460
 #, fuzzy
 #| msgid "Personal overview order was reset."
 msgid "Manage personal overviews."
 msgstr "Osobní řazení přehledu bylo resetováno."
 
-#: db/seeds/permissions.rb:371
+#: db/seeds/permissions.rb:377
 #, fuzzy
 #| msgid "Manage %s Settings"
 msgid "Manage personal settings."
 msgstr "Spravovat nastavení pro %s"
 
-#: db/seeds/permissions.rb:416
+#: db/seeds/permissions.rb:422
 #, fuzzy
 #| msgid "Could not remove two-factor authentication method"
 msgid "Manage personal two-factor authentication methods."
@@ -10285,6 +10540,12 @@ msgstr "Zadejte URL vašeho %s systému"
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage text modules of your system."
+msgstr "Zadejte URL vašeho %s systému"
+
+#: db/seeds/permissions.rb:288
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket checklists of your system."
 msgstr "Zadejte URL vašeho %s systému"
 
 #: db/seeds/permissions.rb:48
@@ -10454,6 +10715,12 @@ msgstr "Mattermost oznámení"
 msgid "Mattermost, RocketChat"
 msgstr "Mattermost, RocketChat"
 
+#: app/models/object_manager/attribute/data_option_validator.rb:35
+#, fuzzy
+#| msgid "must be an integer"
+msgid "Max length must be an integer."
+msgstr "musí být celé číslo"
+
 #: app/assets/javascripts/app/models/chat.coffee:253
 #: app/assets/javascripts/app/views/channel/topics.jst.eco:7
 msgid "Max. clients on waitlist"
@@ -10474,6 +10741,26 @@ msgstr "Max. délka předmětu v e-mailové odpovědi."
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:387
 msgid "Maximal"
 msgstr "Maximální"
+
+#: app/models/object_manager/attribute/data_option_validator.rb:109
+#, fuzzy
+#| msgid "must be an integer"
+msgid "Maximal value must be an integer"
+msgstr "musí být celé číslo"
+
+#: app/models/object_manager/attribute/data_option_validator.rb:114
+msgid "Maximal value must be higher than -2147483648"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:132
+#, fuzzy
+#| msgid "must be greater than or equal to %{count}"
+msgid "Maximal value must be higher than or equal to minimal value"
+msgstr "musí být větší nebo rovno %{count}"
+
+#: app/models/object_manager/attribute/data_option_validator.rb:119
+msgid "Maximal value must be lower than 2147483648"
+msgstr ""
 
 #: db/seeds/settings.rb:3140
 msgid "Maximum Email Size"
@@ -10689,6 +10976,20 @@ msgstr "Min. velikost čísla"
 msgid "Minimal"
 msgstr "Minimální"
 
+#: app/models/object_manager/attribute/data_option_validator.rb:87
+#, fuzzy
+#| msgid "must be an integer"
+msgid "Minimal value must be an integer"
+msgstr "musí být celé číslo"
+
+#: app/models/object_manager/attribute/data_option_validator.rb:93
+msgid "Minimal value must be higher than -2147483648"
+msgstr ""
+
+#: app/models/object_manager/attribute/data_option_validator.rb:98
+msgid "Minimal value must be lower than 2147483648"
+msgstr ""
+
 #: db/seeds/settings.rb:1982
 msgid "Minimum length"
 msgstr "Minimální délka"
@@ -10880,6 +11181,10 @@ msgstr "Integrace Nagiosu"
 #: app/assets/javascripts/app/models/calendar.coffee:7
 #: app/assets/javascripts/app/models/chat.coffee:251
 #: app/assets/javascripts/app/models/chat_sessions.coffee:7
+#: app/assets/javascripts/app/models/checklist.coffee:7
+#: app/assets/javascripts/app/models/checklist_item.coffee:7
+#: app/assets/javascripts/app/models/checklist_template.coffee:7
+#: app/assets/javascripts/app/models/checklist_template_item.coffee:7
 #: app/assets/javascripts/app/models/core_workflow.coffee:6
 #: app/assets/javascripts/app/models/core_workflow_custom_module.coffee:4
 #: app/assets/javascripts/app/models/group.coffee:7
@@ -10928,7 +11233,7 @@ msgstr "Integrace Nagiosu"
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:100
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:31
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:103
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:90
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:142
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:181
 #: db/seeds/object_manager_attributes.rb:1507 public/assets/form/form.js:24
@@ -11059,6 +11364,12 @@ msgstr "Nový Kalendář"
 msgid "New Category"
 msgstr "Kategorie"
 
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:38
+#, fuzzy
+#| msgid "New Template"
+msgid "New Checklist Template"
+msgstr "Nová šablona"
+
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:8
 msgid "New Deletion Task"
 msgstr "Nová úloha smazání"
@@ -11080,7 +11391,7 @@ msgid "New Overview"
 msgstr "Nový Přehled"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:132
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:202
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:201
 #, fuzzy
 #| msgid "Your New Personal Access Token"
 msgid "New Personal Access Token"
@@ -11133,7 +11444,7 @@ msgstr "Nová šablona"
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:68
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:26
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:38
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:15
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:106
 msgid "New Ticket"
@@ -11145,7 +11456,7 @@ msgstr "Nový ticket"
 msgid "New Ticket State"
 msgstr "Nový ticket"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:29
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:41
 #, fuzzy
 #| msgid "New Ticket"
 msgid "New Ticket: %s"
@@ -11294,13 +11605,13 @@ msgstr "Začínáme"
 msgid "Next in overview"
 msgstr "Další v přehledu"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:90
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:88
 #, fuzzy
 #| msgid "in 1 month"
 msgid "Next month"
 msgstr "za 1 měsíc"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:92
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:90
 #, fuzzy
 #| msgid "Get Started"
 msgid "Next year"
@@ -11336,6 +11647,12 @@ msgstr "Chybí konfigurace %s."
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:3
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:11
 msgid "No Entries"
+msgstr "žádnézáznamy"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_no_items.jst.eco:3
+#, fuzzy
+#| msgid "No Entries"
+msgid "No Entry"
 msgstr "žádnézáznamy"
 
 #: lib/external_credential/exchange.rb:12
@@ -11387,6 +11704,24 @@ msgstr "Žádné kategorie"
 #| msgid "Locale not found"
 msgid "No certificate found."
 msgstr "Národní prostředí nenalezeno"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:432
+#, fuzzy
+#| msgid "You have not created a ticket yet."
+msgid "No checklist added to this ticket yet."
+msgstr "Ještě jste nevytvořil ticket."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:180
+msgid "No checklist items yet"
+msgstr ""
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:14
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:15
+#, fuzzy
+#| msgid "No template created yet."
+msgid "No checklist templates have been created yet."
+msgstr "Zatím nebyla vytvořena žádná šablona."
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:5
 msgid "No configuration set."
@@ -11537,7 +11872,7 @@ msgstr "Žádný token!"
 msgid "No translation for this locale available"
 msgstr "Pro toto národní prostředí není k dispozici žádný překlad"
 
-#: app/models/ticket.rb:396
+#: app/models/ticket.rb:398
 msgid "No triggers active"
 msgstr "Žádné aktivní spouštěče"
 
@@ -11556,6 +11891,12 @@ msgstr ""
 #: app/models/channel/email_parser.rb:108
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Žádný x-zammad-session-user-id, žádný nastavený odesílatel!"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
+#, fuzzy
+#| msgid "You can no longer see the ticket."
+msgid "No, just close the ticket"
+msgstr "Již nemůžete zobrazit tento ticket."
 
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
 #, fuzzy
@@ -11586,7 +11927,8 @@ msgstr "Není k dispozici"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:160
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:240
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:114
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:119
+#: app/frontend/shared/errors/useErrorHandler.ts:25
 #: app/frontend/shared/router/error.ts:18
 #: app/helpers/knowledge_base_public_page_title_helper.rb:25
 msgid "Not Found"
@@ -11611,7 +11953,8 @@ msgid "Not assigned"
 msgstr "Nepřiřazené"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:158
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:110
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:115
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:25
 #: app/controllers/application_controller/handles_errors.rb:60
 #: app/services/service/ticket/article/create.rb:119
 msgid "Not authorized"
@@ -11634,7 +11977,6 @@ msgid "Not configured"
 msgstr "Nekonfigurováno"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:18
-#: app/frontend/shared/errors/useErrorHandler.ts:25
 msgid "Not found"
 msgstr "Nenalezeno"
 
@@ -11768,7 +12110,7 @@ msgstr "Zvuk oznámení"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:34
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
-#: db/seeds/permissions.rb:443
+#: db/seeds/permissions.rb:449
 msgid "Notifications"
 msgstr "Oznámení"
 
@@ -12026,6 +12368,12 @@ msgstr ""
 msgid "Open in new tab"
 msgstr "Otevřít v nové záložce"
 
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:75
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "Open link"
+msgstr "Otevřené tickety"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:410
 msgid "Open macro selection"
 msgstr "Otevřít výběr makra"
@@ -12034,37 +12382,37 @@ msgstr "Otevřít výběr makra"
 msgid "Open note box"
 msgstr "Otevřít oblast pro poznámku"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:79
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:77
 #, fuzzy
 #| msgid "Open note box"
 msgid "Open the hours overlay"
 msgstr "Otevřít oblast pro poznámku"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:81
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:79
 #, fuzzy
 #| msgid "Open note box"
 msgid "Open the minutes overlay"
 msgstr "Otevřít oblast pro poznámku"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:89
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:87
 #, fuzzy
 #| msgid "Open note box"
 msgid "Open the months overlay"
 msgstr "Otevřít oblast pro poznámku"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:84
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:82
 #, fuzzy
 #| msgid "Open note box"
 msgid "Open the seconds overlay"
 msgstr "Otevřít oblast pro poznámku"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:52
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:50
 #, fuzzy
 #| msgid "Open tickets"
 msgid "Open the time picker"
 msgstr "Otevřené tickety"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:88
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:86
 #, fuzzy
 #| msgid "Open note box"
 msgid "Open the years overlay"
@@ -12101,6 +12449,23 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/ticket_number_increment.jst.eco:2
 msgid "Options"
 msgstr "Možnosti"
+
+#: app/models/object_manager/attribute/data_option_validator.rb:59
+#, fuzzy
+#| msgid "is required"
+msgid "Options are required."
+msgstr "je povinné"
+
+#: app/models/object_manager/attribute/data_option_validator.rb:53
+#, fuzzy
+#| msgid "This field is required."
+msgid "Options or relation is required."
+msgstr "Toto pole je vyžadováno."
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:8
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue:22
+msgid "Or choose a checklist template."
+msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue:76
 #, fuzzy
@@ -12157,7 +12522,7 @@ msgstr "Více přehledů ticketů"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:12
 #: app/controllers/time_accountings_controller.rb:99
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganizationContent.vue:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:10
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
@@ -12232,7 +12597,7 @@ msgstr "Organizátor"
 msgid "Origin By"
 msgstr "Původně od"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:89
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:92
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:39
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:55
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
@@ -12255,7 +12620,7 @@ msgstr "Ostatní nastavení"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:126
-#: db/seeds/permissions.rb:398
+#: db/seeds/permissions.rb:404
 msgid "Out of Office"
 msgstr "Mimo kancelář"
 
@@ -12456,7 +12821,7 @@ msgstr "Nadřazený"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:83
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:52
-#: db/seeds/object_manager_attributes.rb:1249 db/seeds/permissions.rb:408
+#: db/seeds/object_manager_attributes.rb:1249 db/seeds/permissions.rb:414
 msgid "Password"
 msgstr "Heslo"
 
@@ -12603,12 +12968,12 @@ msgstr "Úroveň práv pro prohlížení ticketů"
 #: app/assets/javascripts/app/models/role.coffee:7
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:5
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:17
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:95
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:94
 msgid "Permissions"
 msgstr "Přístupová práva"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:12
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:213
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:212
 msgid "Personal Access Tokens"
 msgstr "Osobní Přístupové Tokeny"
 
@@ -12616,7 +12981,7 @@ msgstr "Osobní Přístupové Tokeny"
 msgid "Personal Settings"
 msgstr "Osobní nastavení"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:141
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:140
 #, fuzzy
 #| msgid "Personal Access Tokens"
 msgid "Personal access token has been deleted."
@@ -12629,7 +12994,7 @@ msgstr "Osobní řazení přehledu bylo resetováno."
 #: app/assets/javascripts/app/controllers/cti.coffee:322
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:12
-#: db/seeds/object_manager_attributes.rb:797 db/seeds/permissions.rb:302
+#: db/seeds/object_manager_attributes.rb:797 db/seeds/permissions.rb:308
 msgid "Phone"
 msgstr "Telefon"
 
@@ -12657,7 +13022,7 @@ msgid "Phone number is already in use by another WhatsApp account."
 msgstr ""
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:7
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:183
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:182
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "Po zadání jména používané aplikace bude vygenerován unikátní token."
 
@@ -12691,6 +13056,12 @@ msgstr "Přehrát zvuk v uživatelském rozhraní"
 #: app/frontend/shared/form/i18n/locales.ts:117
 msgid "Please accept the %s."
 msgstr "Prosím přijměte %s."
+
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:48
+#, fuzzy
+#| msgid "Please select at least one ticket overview"
+msgid "Please add at least one item to the checklist."
+msgstr "Zvolte prosím alespoň jeden přehled ticketů"
 
 #: app/views/knowledge_base/public/categories/index.html.erb:18
 msgid "Please add categories and/or answers"
@@ -12776,6 +13147,10 @@ msgid ""
 "versions of Zammad. Use the IDP certificate instead."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/error/views/Error.vue:54
+msgid "Please proceed to login"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:383
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
 msgstr "Prosím vyplňte příjemce \"Komu\" nebo \"Kopie\"."
@@ -12800,6 +13175,12 @@ msgid ""
 "Please save your recovery codes listed below somewhere safe. You can use "
 "them to sign in if you lose access to another two-factor method:"
 msgstr ""
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:72
+#, fuzzy
+#| msgid "Please select at least one folder."
+msgid "Please select a checklist template."
+msgstr "Zvolte prosím alespoň jednu složku."
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts:60
 msgid "Please select a ticket to merge into."
@@ -12963,13 +13344,13 @@ msgstr "Předchozí"
 msgid "Previous in overview"
 msgstr "Předchozí v přehledu"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:91
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:89
 #, fuzzy
 #| msgid "Previous"
 msgid "Previous month"
 msgstr "Předchozí"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:93
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:91
 #, fuzzy
 #| msgid "Previous"
 msgid "Previous year"
@@ -13058,7 +13439,7 @@ msgid "Profile language updated successfully."
 msgstr "Tagy ticketu byly úspěšně upraveny."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
-#: db/seeds/permissions.rb:370
+#: db/seeds/permissions.rb:376
 #, fuzzy
 #| msgid "Proxy Settings"
 msgid "Profile settings"
@@ -13175,7 +13556,7 @@ msgstr ""
 "Povolit REST API pro autentizaci uživatele pomocí uživatelského jména/"
 "emailové adresy a hesla."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:68
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:71
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:40
 msgid "Raw"
 msgstr "Surová data"
@@ -13364,7 +13745,7 @@ msgstr "Vzdálený"
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:61
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:132
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:177
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:80
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:78
 #: app/frontend/shared/form/i18n/locales.ts:29
 msgid "Remove"
 msgstr "Odstranit"
@@ -13409,6 +13790,13 @@ msgstr "Odstranit všechny hodnoty"
 msgid "Remove authenticator app"
 msgstr "Autentizacční aplikace"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:378
+#, fuzzy
+#| msgid "Remove %s"
+msgid "Remove checklist"
+msgstr "Odstranit %s"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:284
 msgid "Remove formatting"
 msgstr "Odstranit formátování"
@@ -13417,6 +13805,13 @@ msgstr "Odstranit formátování"
 #, fuzzy
 #| msgid "Remove all"
 msgid "Remove image"
+msgstr "Odstranit vše"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:85
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:75
+#, fuzzy
+#| msgid "Remove all"
+msgid "Remove item"
 msgstr "Odstranit vše"
 
 #: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco:5
@@ -13453,6 +13848,11 @@ msgstr "Odstraní formátování"
 msgid "Removes the shadows for a flat look."
 msgstr "Odstraní stíny textu, čímž se dosáhne ploché zobrazení."
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:20
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:371
+msgid "Rename checklist"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee:9
 msgid "Renew Access Token"
 msgstr "Prodloužit přístupový token"
@@ -13470,6 +13870,13 @@ msgstr "Poměr opětovného otevření"
 msgid "Reopening time in days"
 msgstr "Čas znovuotevření ve dnech"
 
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:14
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:189
+#, fuzzy
+#| msgid "Order"
+msgid "Reorder"
+msgstr "Řazení"
+
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:26
 msgid "Replacement"
 msgstr "Náhrada"
@@ -13480,7 +13887,7 @@ msgstr "Náhrada"
 msgid "Replacement agent"
 msgstr "Náhrada"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:85
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:83
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:84
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
@@ -14069,11 +14476,13 @@ msgstr "Sobota"
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:17
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:14
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:9
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:27
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:38
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:9
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:121
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:217
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:70
@@ -14119,6 +14528,12 @@ msgstr "Uložené podmínky"
 msgid "Save as"
 msgstr "Uložit jako"
 
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:340
+#, fuzzy
+#| msgid "Discard Changes"
+msgid "Save changes"
+msgstr "Zahodit změny"
+
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:217
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:267
 msgid "Save configuration"
@@ -14131,7 +14546,7 @@ msgstr "Uložené podmínky"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1084
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1119
 msgid "Saving failed."
 msgstr "Ukládání se nezdařilo."
 
@@ -14344,7 +14759,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:22
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:175
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:183
@@ -14420,20 +14835,20 @@ msgid "See HTTPLog for details."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:444
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:447
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:115
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:118
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
 msgid "See less"
 msgstr "Zobrazit méně"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:440
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:443
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:116
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:115
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:118
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue:17
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
 msgid "See more"
@@ -14471,6 +14886,7 @@ msgstr "Vyberte CSV soubor"
 msgid "Select Shared Draft"
 msgstr "Vybrat sdílený koncept"
 
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:16
 #: app/assets/javascripts/app/views/widget/template.jst.eco:4
 msgid "Select Template"
 msgstr "Vybrat šablonu"
@@ -14592,7 +15008,7 @@ msgstr "Poslat klientům"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:51
 #: app/models/channel/driver/sms/massenversand.rb:45
 #: app/models/channel/driver/sms/message_bird.rb:92
-#: app/models/channel/driver/sms/twilio.rb:105 db/seeds/settings.rb:3090
+#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3090
 #: lib/excel_sheet/ticket.rb:32
 msgid "Sender"
 msgstr "Odesílatel"
@@ -14777,13 +15193,13 @@ msgstr ""
 "Nastavte časové období v sekundách. Pokud je nastaveno na 0, můžete poznámky "
 "mazat bez časového omezení"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:88
 #, fuzzy
 #| msgid "Set to internal"
 msgid "Set to external"
 msgstr "Nastavit jako interní"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:93
 #: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts:33
 msgid "Set to internal"
 msgstr "Nastavit jako interní"
@@ -15078,7 +15494,7 @@ msgid "Sign email (if not possible, send notification anyway)"
 msgstr "Podepsat e-mail (pokud to není možné, přesto zaslat oznámení)"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:76
-#: app/frontend/shared/composables/useArticleSecurity.ts:156
+#: app/frontend/shared/composables/useArticleSecurity.ts:160
 #, fuzzy
 #| msgid "Sign out"
 msgid "Sign error"
@@ -15130,12 +15546,12 @@ msgstr "Podepsat:"
 msgid "Signature"
 msgstr "Podpis"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:279
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:282
 msgid "Signature verification failed!"
 msgstr "Ověření podpisu se nezdařilo!"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:96
-#: app/frontend/shared/composables/useArticleSecurity.ts:110
+#: app/frontend/shared/composables/useArticleSecurity.ts:114
 msgid "Signature verification failed! %s"
 msgstr "Ověření podpisu selhalo! %s"
 
@@ -15147,7 +15563,7 @@ msgstr "Podpisy"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:73
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:171
-#: app/frontend/shared/composables/useArticleSecurity.ts:156
+#: app/frontend/shared/composables/useArticleSecurity.ts:160
 msgid "Signed"
 msgstr "Podepsáno"
 
@@ -15233,7 +15649,7 @@ msgstr "Sipgate"
 msgid "Site"
 msgstr "Doména (site)"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:10
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:10
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco:21
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:97
@@ -15339,7 +15755,7 @@ msgstr "Zdroje"
 msgid "Special character required"
 msgstr "Je vyžadován speciální znak"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:100
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:98
 #: app/frontend/shared/entities/ticket-article/action/plugins/split.ts:12
 msgid "Split"
 msgstr "Rozdělit"
@@ -15355,6 +15771,7 @@ msgid "Standard Group/Pool for Tickets."
 msgstr "Standardní skupina pro tickety."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee:34
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:77
 msgid "Start Editing"
 msgstr "Začněte upravovat"
 
@@ -15427,7 +15844,7 @@ msgstr "Vyhledejte nebo vložte telefonní číslo…"
 msgid "Start typing to search or enter an email address…"
 msgstr "Hledejte nebo zadejte e-mailovou adresu…"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:69
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:71
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:41
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:409
 msgid "Start typing to search…"
@@ -15568,7 +15985,7 @@ msgstr "Ulice"
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:11
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:64
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:40
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:13
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:87
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:171
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:33
@@ -15742,7 +16159,7 @@ msgstr "Chování záložek po vytvoření ticketu"
 msgid "Tab has changed, do you really want to close it?"
 msgstr "Záložka byla změněna, opravdu ji chcete uzavřít?"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:231
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:232
 msgid "Tabs"
 msgstr ""
 
@@ -15925,6 +16342,13 @@ msgstr "Je požadován text"
 #, fuzzy
 #| msgid "at least one letter is required"
 msgid "Text or attachment is required"
+msgstr "je vyžadováno nejméně jedno písmeno"
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_item_edit.jst.eco:6
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:145
+#, fuzzy
+#| msgid "at least one letter is required"
+msgid "Text or ticket identifier"
 msgstr "je vyžadováno nejméně jedno písmeno"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:11
@@ -16209,6 +16633,12 @@ msgid ""
 msgstr ""
 "Tento prohlížeč je zastaralý. Nepodporuje technologii (WebSocket) kterou "
 "používáme pro službu Chat."
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:93
+#, fuzzy
+#| msgid "Geo Calendar Service"
+msgid "The calendar icon"
+msgstr "Geo Calendar Služba"
 
 #: app/models/setting/validation/saml/security.rb:16
 #, fuzzy
@@ -16526,6 +16956,12 @@ msgstr "Formát předmětu."
 msgid "The given article is not a media article."
 msgstr "Článek nepatří uvedenému ticketu."
 
+#: app/graphql/gql/mutations/ticket/checklist/item_delete.rb:13
+#, fuzzy
+#| msgid "The article does not belong to the specified ticket."
+msgid "The given checklist item does not belong to the given checklist."
+msgstr "Článek nepatří uvedenému ticketu."
+
 #: app/services/service/user/two_factor/set_default_method.rb:18
 #, fuzzy
 #| msgid "The setting 'ticket_number' was not configured."
@@ -16565,6 +17001,12 @@ msgstr "Nastavení 'ticket_number' není nakonfigurováno."
 #: lib/email_helper/probe.rb:282
 msgid "The hostname could not be found."
 msgstr "Název hostitele nebyl nalezen."
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:102
+#, fuzzy
+#| msgid "Open note box"
+msgid "The hours overlay"
+msgstr "Otevřít oblast pro poznámku"
 
 #: db/seeds/settings.rb:2144
 msgid ""
@@ -16640,6 +17082,24 @@ msgstr "Objekt nebyl nalezen."
 #| msgid "Time Accounting"
 msgid "The login is not possible."
 msgstr "Počítání času"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:104
+#, fuzzy
+#| msgid "Open note box"
+msgid "The minutes overlay"
+msgstr "Otevřít oblast pro poznámku"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:96
+#, fuzzy
+#| msgid "Their tickets"
+msgid "The month picker"
+msgstr "Jejich tickety"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:96
+#, fuzzy
+#| msgid "Open note box"
+msgid "The month picker overlay"
+msgstr "Otevřít oblast pro poznámku"
 
 #: app/models/ticket/number.rb:14
 msgid "The new ticket number could not be generated."
@@ -16727,7 +17187,7 @@ msgstr "je neplatné"
 msgid "The password reset request was successful."
 msgstr "Heslo bylo úspěšně změněno!"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:132
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:131
 #, fuzzy
 #| msgid "The report could not be generated"
 msgid "The personal access token could not be deleted."
@@ -17075,11 +17535,17 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr "Opakovaný bezpečnostní proces se nezdařil!"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:299
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:67
-#: app/frontend/shared/composables/useArticleSecurity.ts:85
+#: app/frontend/shared/composables/useArticleSecurity.ts:89
 msgid "The retried security process failed!"
 msgstr "Opakovaný bezpečnostní proces se nezdařil!"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:107
+#, fuzzy
+#| msgid "Open note box"
+msgid "The seconds overlay"
+msgstr "Otevřít oblast pro poznámku"
 
 #: app/frontend/shared/form/i18n/locales.ts:567
 msgid "The selected date is invalid."
@@ -17142,9 +17608,9 @@ msgid ""
 "according to RFC 3156."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:277
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:280
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:90
-#: app/frontend/shared/composables/useArticleSecurity.ts:104
+#: app/frontend/shared/composables/useArticleSecurity.ts:108
 msgid "The signature was successfully verified."
 msgstr "Podpis byl úspěšně ověřen."
 
@@ -17203,6 +17669,12 @@ msgstr "Text na začítku předmětu v emailové odpovědi, např. RE, AW nebo A
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:111
 msgid "The tickets could not be merged."
 msgstr "Tickety se nepodařilo sloučit."
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:94
+#, fuzzy
+#| msgid "Open tickets"
+msgid "The time picker"
+msgstr "Otevřené tickety"
 
 #: app/services/service/user/signup.rb:49
 #, fuzzy
@@ -17327,6 +17799,18 @@ msgstr "Komunikovat s námi můžete prostřednictvím tzv. \"ticketů\"."
 #: lib/telegram_helper.rb:35
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr "Webhook se nezdařilo Telegramem uložit, zdá se, že má neplatnou URL."
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:98
+#, fuzzy
+#| msgid "Their tickets"
+msgid "The year picker"
+msgstr "Jejich tickety"
+
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:98
+#, fuzzy
+#| msgid "Open note box"
+msgid "The year picker overlay"
+msgstr "Otevřít oblast pro poznámku"
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:76
 msgid "Their tickets"
@@ -17547,7 +18031,7 @@ msgstr ""
 "odstraněna, jakmile bude spojení vytvořeno."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:170
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:222
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:221
 msgid "This device"
 msgstr ""
 
@@ -18146,12 +18630,6 @@ msgstr ""
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:77
-#, fuzzy
-#| msgid "Ticket update"
-msgid "Ticket Update"
-msgstr "Aktualizace ticketu"
-
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:105
 msgid "Ticket actions"
 msgstr "Akce ticketu"
@@ -18333,7 +18811,7 @@ msgstr ""
 "</div>\n"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
-#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:32
+#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:26
 msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
 msgstr ""
@@ -18432,7 +18910,7 @@ msgstr "Čas"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:105
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:132
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:12
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:12
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:3
 #: db/seeds/permissions.rb:107 db/seeds/settings.rb:3904
 msgid "Time Accounting"
@@ -18556,7 +19034,7 @@ msgstr "nadpis formuláře"
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:76
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:84
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:85
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:148
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:36
@@ -18668,7 +19146,7 @@ msgstr "Pracovat na ticketech."
 msgid "Today"
 msgstr "Dnes"
 
-#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:87
+#: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:85
 #, fuzzy
 #| msgid "Toggle dark mode"
 msgid "Toggle AM/PM mode"
@@ -18712,7 +19190,7 @@ msgstr "Přepnout tmavý režim"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:44
 #: app/models/channel/driver/sms/message_bird.rb:91
-#: app/models/channel/driver/sms/twilio.rb:104
+#: app/models/channel/driver/sms/twilio.rb:105
 msgid "Token"
 msgstr "Token"
 
@@ -18720,8 +19198,8 @@ msgstr "Token"
 #: app/assets/javascripts/app/views/api.jst.eco:12
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:8
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:52
-#: db/seeds/permissions.rb:429
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:51
+#: db/seeds/permissions.rb:435
 msgid "Token Access"
 msgstr "Přístup přes Token"
 
@@ -18747,7 +19225,7 @@ msgstr "Token pro monitoring."
 msgid "Token is invalid!"
 msgstr "Token je neplatný!"
 
-#: lib/user_agent.rb:357
+#: lib/user_agent.rb:359
 msgid "Too many redirections for the original URL, halting."
 msgstr "Příliš mnoho přesměrování z originální URL, přerušeno."
 
@@ -18985,7 +19463,7 @@ msgstr "Vyžaduje se autentizace"
 #: app/assets/javascripts/app/views/profile/password.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:57
-#: db/seeds/permissions.rb:415
+#: db/seeds/permissions.rb:421
 #, fuzzy
 #| msgid "Authentication"
 msgid "Two-factor Authentication"
@@ -19118,6 +19596,13 @@ msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr ""
 "Nepřiřazené emailové adresy, přiřaďte je k danému kanálu, nebo je smažte."
 
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:69
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:60
+#, fuzzy
+#| msgid "Select item"
+msgid "Uncheck item"
+msgstr "Vybrat položku"
+
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:12
 msgid "Unit"
 msgstr ""
@@ -19155,9 +19640,9 @@ msgstr "Nepřečtená oznámení"
 msgid "Unsaved Changes"
 msgstr "Zahodit změny"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:534
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:238
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:304
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:578
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:257
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:316
 #, fuzzy
 #| msgid "set optional"
 msgid "Unselect Option"
@@ -19213,15 +19698,15 @@ msgstr "Aktualizovat"
 msgid "Update Database"
 msgstr "Aktualizovat databázi"
 
-#: lib/excel_sheet/ticket.rb:68
+#: lib/excel_sheet/ticket.rb:69
 msgid "Update Diff In Min"
 msgstr "Rozdíl aktualizace v min"
 
-#: lib/excel_sheet/ticket.rb:66
+#: lib/excel_sheet/ticket.rb:67
 msgid "Update Escalation At"
 msgstr "Eskalace aktualizace v"
 
-#: lib/excel_sheet/ticket.rb:67
+#: lib/excel_sheet/ticket.rb:68
 msgid "Update In Min"
 msgstr "Aktualizace v min"
 
@@ -19310,6 +19795,10 @@ msgid "Updated At"
 msgstr "Aktualizováno v"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:242
+#: app/assets/javascripts/app/models/checklist.coffee:10
+#: app/assets/javascripts/app/models/checklist_item.coffee:9
+#: app/assets/javascripts/app/models/checklist_template.coffee:11
+#: app/assets/javascripts/app/models/checklist_template_item.coffee:9
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:8
 #: app/assets/javascripts/app/models/organization.coffee:11
 #: app/assets/javascripts/app/models/ticket.coffee:30
@@ -19955,7 +20444,7 @@ msgid "Webhook"
 msgstr "Webhook"
 
 #: app/models/channel/driver/sms/message_bird.rb:90
-#: app/models/channel/driver/sms/twilio.rb:102
+#: app/models/channel/driver/sms/twilio.rb:103
 msgid "Webhook Token"
 msgstr "Token webhooku"
 
@@ -20170,6 +20659,30 @@ msgstr ""
 "Pokud bude aktivována funkce kontrolního součtu, bude jeho hodnota přidána k "
 "počítadlu. Výsledný formát čísla ticketu bude \"%s\" (např. %s)."
 
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:35
+#: app/assets/javascripts/app/models/checklist_template.coffee:23
+#, fuzzy
+#| msgid ""
+#| "With templates it is possible to fill pre-filled tickets quickly and "
+#| "easily."
+msgid ""
+"With checklist templates it is possible to pre-fill new checklists with "
+"initial items."
+msgstr "Se šablonami můžete vyplnit předvyplněné tickety rychle a snadno."
+
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:18
+#, fuzzy
+#| msgid "With templates you can pre-fill ticket attributes."
+msgid "With checklist templates you can pre-fill your checklists."
+msgstr "Se šablonami můžete předvyplnit atributy ticketu."
+
+#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:8
+msgid ""
+"With checklists you can keep track of the progress of your ticket related "
+"tasks."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee:14
 msgid ""
 "With filters you can e. g. dispatch new tickets into certain groups or set a "
@@ -20259,6 +20772,12 @@ msgstr "Ano"
 #| msgid "Add attachment option to upload."
 msgid "Yes, add attachments now"
 msgstr "Přidat možnost nahrávání příloh."
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
+#, fuzzy
+#| msgid "Remove %s"
+msgid "Yes, open the checklist"
+msgstr "Odstranit %s"
 
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee:4
 msgid "Yes, start real import."
@@ -20382,7 +20901,7 @@ msgid ""
 msgstr "Návod pro vyřešení %s můžete najít v naší online dokumentaci %l."
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:4
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:181
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:180
 msgid ""
 "You can generate a personal access token for each application you use that "
 "needs access to the Zammad API."
@@ -20510,7 +21029,7 @@ msgid "You have insufficient rights to view this organization."
 msgstr "Nemáte dostatečná práva pro zobrazení této organizace."
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
-#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:34
+#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:28
 msgid "You have insufficient rights to view this ticket."
 msgstr "Nemáte dostatečná oprávnění pro prohlížení tohoto ticketu."
 
@@ -20544,6 +21063,12 @@ msgstr "Ještě jste nevytvořil ticket."
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:324
 msgid "You have to allow access to your webcam."
 msgstr "Musíte povolit přístup k vaší webkameře."
+
+#: app/assets/javascripts/app/views/ticket_zoom/checklist_modal.jst.eco:2
+#, fuzzy
+#| msgid "Please select at least one ticket overview"
+msgid "You have unchecked items in the checklist."
+msgstr "Zvolte prosím alespoň jeden přehled ticketů"
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco:4
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue:42
@@ -20958,21 +21483,21 @@ msgstr "přiřadit tickety"
 msgid "at"
 msgstr "v"
 
-#: app/models/object_manager/attribute.rb:554
+#: app/models/object_manager/attribute.rb:551
 msgid "at least one letter is required"
 msgstr "je vyžadováno nejméně jedno písmeno"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
 msgid "attached"
 msgstr "přiloženo"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
 msgid "attachment"
 msgstr "příloha"
 
-#: app/models/object_manager/attribute.rb:583
+#: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"
 msgstr "atribut není upravitelný"
 
@@ -21006,11 +21531,11 @@ msgstr "zaneprázdněn"
 msgid "camera,image,photo,picture"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:630
+#: app/models/object_manager/attribute.rb:629
 msgid "can only be created on postgresql databases"
 msgstr ""
 
-#: app/models/object_manager/attribute.rb:623
+#: app/models/object_manager/attribute.rb:622
 msgid ""
 "can't be altered after creation (you can delete the attribute and create "
 "another with the desired value)"
@@ -21024,7 +21549,7 @@ msgstr "nemůže být prázdný"
 msgid "can't be empty"
 msgstr "nemůže být prázdný"
 
-#: app/models/object_manager/attribute.rb:545
+#: app/models/object_manager/attribute.rb:542
 msgid "can't be used because *_id and *_ids are not allowed"
 msgstr "nemůže být použito, protože *_id nebo *_ids nejsou dovoleny"
 
@@ -21182,7 +21707,7 @@ msgstr "výchozí"
 msgid "delete"
 msgstr "smazat"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:20
 #, fuzzy
 #| msgid "Delete Customer"
@@ -21287,16 +21812,16 @@ msgstr "upraveno %s mnou"
 msgid "email"
 msgstr "email"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:97
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:99
 msgid "email sent to '%s'"
 msgstr "e-mail odeslán '%s'"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
 msgid "enclosed"
 msgstr "přiloženo"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
 msgid "enclosure"
 msgstr "příloha"
@@ -21369,7 +21894,7 @@ msgstr "na reakci řešitele"
 msgid "forward"
 msgstr "přeposlat"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:136
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:138
 msgid "from"
 msgstr "od"
 
@@ -21517,7 +22042,7 @@ msgid "in process"
 msgstr "zpracovává se"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1425
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1426
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -21595,7 +22120,7 @@ msgstr "není"
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
 msgstr "není barva. Pouze Hex, RGB nebo HSL barvy jsou podporované."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:89
 msgid "is not a number"
 msgstr "není číslo"
 
@@ -21873,7 +22398,7 @@ msgstr "nenastaveno (nedefinováno)"
 msgid "note"
 msgstr "poznámka"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:95
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:97
 msgid "notification sent to '%s'"
 msgstr "oznámení odesláno uživateli '%s'"
 
@@ -21887,7 +22412,7 @@ msgstr "Oznámení"
 msgid "now"
 msgstr "nyní"
 
-#: app/models/object_manager/attribute.rb:551
+#: app/models/object_manager/attribute.rb:548
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr "povolená jsou pouze malá písmena, čísla a '_'"
 
@@ -21961,7 +22486,7 @@ msgstr ""
 msgid "reached"
 msgstr "dosažen"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:150
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:13
 #, fuzzy
 #| msgid "Create new Customer"
@@ -21976,6 +22501,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco:21
 msgid "recovery codes"
 msgstr ""
+
+#: app/models/checklist/item.rb:81
+#, fuzzy
+#| msgid "The article does not belong to the specified ticket."
+msgid "reference must not be the checklist ticket."
+msgstr "Článek nepatří uvedenému ticketu."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:103
 msgid "relative"
@@ -22051,7 +22582,7 @@ msgstr "zvolte přílohu…"
 msgid "select visible options"
 msgstr "Vybrat vše"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:24
 #, fuzzy
 #| msgid "Create new Customer"
@@ -22132,7 +22663,7 @@ msgstr "přeskočen"
 msgid "sms"
 msgstr "SMS"
 
-#: app/models/object_manager/attribute.rb:548
+#: app/models/object_manager/attribute.rb:545
 msgid "spaces are not allowed"
 msgstr "Mezery nejsou povoleny"
 
@@ -22186,7 +22717,7 @@ msgstr "telegram osobní zpráva"
 msgid "theme,color,style,dark mode,night mode,light mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:121
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:123
 msgid "this ticket was merged into ticket %s"
 msgstr "tento ticket byl sloučen do ticketu %s"
 
@@ -22195,15 +22726,9 @@ msgstr "tento ticket byl sloučen do ticketu %s"
 msgid "ticket"
 msgstr "ticket"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:114
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:116
 msgid "ticket %s was merged into this ticket"
 msgstr "ticket %s byl sloučen do tohoto ticketu"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:75
-#, fuzzy
-#| msgid "Ticket title"
-msgid "ticket title"
-msgstr "Titulek ticketu"
 
 #: db/seeds/settings.rb:1131
 msgid "ticket.agent"
@@ -22245,15 +22770,15 @@ msgstr ""
 msgid "translation,locale,localization"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:101
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:103
 msgid "trigger '%s' was performed because pending reminder was reached"
 msgstr "trigger '%s' spuštěn, protože bylo dosaženo čekající upomínky"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:103
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:105
 msgid "trigger '%s' was performed because ticket was escalated"
 msgstr "trigger '%s' byl spuštěn, protože byl ticket eskalován"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:105
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:107
 msgid "trigger '%s' was performed because ticket will escalate soon"
 msgstr "trigger '%s' byl proveden, protože ticket brzy eskaluje"
 
@@ -22391,6 +22916,21 @@ msgstr "...celé textové oblasti"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "dnešní ∅ čekací doby"
+
+#, fuzzy
+#~| msgid "Select Template"
+#~ msgid "Checklist Templates"
+#~ msgstr "Vybrat šablonu"
+
+#, fuzzy
+#~| msgid "Cancel Upload"
+#~ msgid "Cancel Update"
+#~ msgstr "Zrušit nahrávání"
+
+#, fuzzy
+#~| msgid "Ticket update"
+#~ msgid "Ticket Update"
+#~ msgstr "Aktualizace ticketu"
 
 #, fuzzy
 #~| msgid "Ticket title"
@@ -23027,9 +23567,6 @@ msgstr "dnešní ∅ čekací doby"
 #~ "Vyberte a nastavte atributy a pak zvolte možnost Uložit jako novou "
 #~ "šablonu."
 
-#~ msgid "Save as template"
-#~ msgstr "Uložit jako šablonu"
-
 #~ msgid "Save new template"
 #~ msgstr "Uložit jako novou šablonu"
 
@@ -23120,9 +23657,6 @@ msgstr "dnešní ∅ čekací doby"
 #~ msgid " Order"
 #~ msgstr "Řazení"
 
-#~ msgid "Order"
-#~ msgstr "Řazení"
-
 #, fuzzy
 #~| msgid "Reporting"
 #~ msgid "Sorting"
@@ -23178,11 +23712,6 @@ msgstr "dnešní ∅ čekací doby"
 #, fuzzy
 #~| msgid "Unable to save changes."
 #~ msgid "Unable to load changes"
-#~ msgstr "Nelze uložit změny."
-
-#, fuzzy
-#~| msgid "Unable to save changes."
-#~ msgid "Unable to save changes"
 #~ msgstr "Nelze uložit změny."
 
 #~ msgid "TextModule"
@@ -23260,9 +23789,6 @@ msgstr "dnešní ∅ čekací doby"
 
 #~ msgid "Default caller id"
 #~ msgstr "Výchozí id volajícího"
-
-#~ msgid "Default caller id."
-#~ msgstr "Výchozí ID volajícího."
 
 #~ msgid "Login with %s"
 #~ msgstr "Přihlásit na web %s"
