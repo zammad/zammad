@@ -946,7 +946,7 @@ msgstr "Access to %s"
 msgid "Account"
 msgstr ""
 
-#: app/models/channel/driver/sms/twilio.rb:103
+#: app/models/channel/driver/sms/twilio.rb:104
 msgid "Account SID"
 msgstr ""
 
@@ -2402,6 +2402,12 @@ msgstr "Thân"
 #: db/seeds/settings.rb:3203
 msgid "Body - Search for follow-up also in mail body."
 msgstr ""
+
+#: lib/validations/ticket_article_validator/sms_twilio.rb:14
+#, fuzzy
+#| msgid "%s required!"
+msgid "Body text is required"
+msgstr "%s cần thiết!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:41
 msgid "Boolean field"
@@ -4067,7 +4073,7 @@ msgstr "Tháng 12"
 msgid "December"
 msgstr "Tháng Mười hai"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:290
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:293
 msgid "Decryption failed!"
 msgstr ""
 
@@ -4077,7 +4083,7 @@ msgstr ""
 msgid "Decryption failed! %s"
 msgstr "Bulk action executed!"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:288
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:291
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:100
 #, fuzzy
 #| msgid "Registration successful!"
@@ -5159,7 +5165,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/google/list.jst.eco:58
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:59
 #: app/models/channel/driver/sms/message_bird.rb:93
-#: app/models/channel/driver/sms/twilio.rb:106
+#: app/models/channel/driver/sms/twilio.rb:107
 msgid "Destination Group"
 msgstr ""
 
@@ -5419,7 +5425,7 @@ msgstr ""
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:316
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:319
 #, fuzzy
 #| msgid "select attachment..."
 msgid "Downloading attachments…"
@@ -10484,7 +10490,7 @@ msgstr "Tổ chức"
 msgid "Origin By"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:89
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:92
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
@@ -11302,7 +11308,7 @@ msgid ""
 "disabled. Please contact your administrator."
 msgstr "Không thể xác nhận email. Vui lòng liên hệ quản trị viên..."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:68
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:71
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:51
 msgid "Raw"
 msgstr ""
@@ -12343,14 +12349,14 @@ msgid "See HTTPLog for details."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:444
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:447
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:343
 msgid "See less"
 msgstr "Thu gọn"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:440
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:443
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:116
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
@@ -12488,7 +12494,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:51
 #: app/models/channel/driver/sms/massenversand.rb:44
 #: app/models/channel/driver/sms/message_bird.rb:92
-#: app/models/channel/driver/sms/twilio.rb:105 db/seeds/settings.rb:3090
+#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3090
 #: lib/excel_sheet/ticket.rb:32
 msgid "Sender"
 msgstr "Người gửi"
@@ -12958,7 +12964,7 @@ msgstr "Ký"
 msgid "Signature"
 msgstr "Chữ ký"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:279
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:282
 #, fuzzy
 #| msgid "Resend verification email"
 msgid "Signature verification failed!"
@@ -14666,7 +14672,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:299
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:64
 msgid "The retried security process failed!"
 msgstr ""
@@ -14734,7 +14740,7 @@ msgid ""
 "according to RFC 3156."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:277
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:280
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 msgid "The signature was successfully verified."
 msgstr ""
@@ -16123,7 +16129,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:43
 #: app/models/channel/driver/sms/message_bird.rb:91
-#: app/models/channel/driver/sms/twilio.rb:104
+#: app/models/channel/driver/sms/twilio.rb:105
 msgid "Token"
 msgstr ""
 
@@ -17225,7 +17231,7 @@ msgid "Webhook"
 msgstr "Webhook"
 
 #: app/models/channel/driver/sms/message_bird.rb:90
-#: app/models/channel/driver/sms/twilio.rb:102
+#: app/models/channel/driver/sms/twilio.rb:103
 msgid "Webhook Token"
 msgstr ""
 
@@ -18238,7 +18244,7 @@ msgstr ""
 msgid "delete"
 msgstr "xóa"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:35
 #, fuzzy
 #| msgid "Create new Customer"
@@ -18995,7 +19001,7 @@ msgstr ""
 msgid "reached"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:150
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:31
 #, fuzzy
 #| msgid "Create new Customer"
@@ -19092,7 +19098,7 @@ msgstr "chọn tập tin đính kèm..."
 msgid "select visible options"
 msgstr "trả lời"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:39
 #, fuzzy
 #| msgid "Create new Customer"

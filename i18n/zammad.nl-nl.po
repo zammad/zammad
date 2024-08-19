@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-24 05:23+0000\n"
+"PO-Revision-Date: 2024-08-15 22:16+0000\n"
 "Last-Translator: JPB <JPB@users.noreply.translations.zammad.org>\n"
-"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
-"stable/nl/>\n"
+"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
+"zammad-stable/nl/>\n"
 "Language: nl-nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1019,7 +1019,7 @@ msgstr "Access token"
 msgid "Account"
 msgstr "Account"
 
-#: app/models/channel/driver/sms/twilio.rb:103
+#: app/models/channel/driver/sms/twilio.rb:104
 msgid "Account SID"
 msgstr "Account SID"
 
@@ -2464,6 +2464,10 @@ msgstr "E-mailbericht"
 #: db/seeds/settings.rb:3203
 msgid "Body - Search for follow-up also in mail body."
 msgstr "Body - Zoek voor Follow-up in de e-mail body."
+
+#: lib/validations/ticket_article_validator/sms_twilio.rb:14
+msgid "Body text is required"
+msgstr "Berichttekst is verplicht!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:41
 msgid "Boolean field"
@@ -4089,7 +4093,7 @@ msgstr "dec"
 msgid "December"
 msgstr "december"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:290
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:293
 msgid "Decryption failed!"
 msgstr "Decodering mislukt!"
 
@@ -4097,7 +4101,7 @@ msgstr "Decodering mislukt!"
 msgid "Decryption failed! %s"
 msgstr "Decodering mislukt! %s"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:288
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:291
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:100
 msgid "Decryption was successful."
 msgstr "Decodering gelukt."
@@ -4605,7 +4609,7 @@ msgstr ""
 #: db/seeds/settings.rb:4221
 msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr ""
-"Een postmaster-filter voor filters die beheerd worden via de admin-inteface."
+"Een postmaster-filter voor filters die beheerd worden via de beheeromgeving."
 
 #: db/seeds/settings.rb:4140
 msgid ""
@@ -5310,7 +5314,7 @@ msgstr "Desktop"
 #: app/assets/javascripts/app/views/google/list.jst.eco:58
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:59
 #: app/models/channel/driver/sms/message_bird.rb:93
-#: app/models/channel/driver/sms/twilio.rb:106
+#: app/models/channel/driver/sms/twilio.rb:107
 msgid "Destination Group"
 msgstr "Bestemmingsgroep"
 
@@ -5568,7 +5572,7 @@ msgstr "Download alle items"
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Download en installeer de %s Migration Plugin op de %'s instance."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:316
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:319
 msgid "Downloading attachments…"
 msgstr "Bijlages downloaden…"
 
@@ -6301,7 +6305,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:66
 msgid "Enter your Zendesk API token gained from your admin interface."
 msgstr ""
-"Voer je Zendesk API token in dat je hebt verkregen via de admin-interface."
+"Voer je Zendesk API token in dat je hebt verkregen via de beheeromgeving."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:9
 msgid "Enter your current password, insert a new one and confirm it."
@@ -6321,7 +6325,7 @@ msgid ""
 "Enter your email address and the %s API token gained from your admin "
 "interface."
 msgstr ""
-"Voer je e-mailadres en de % API token verkregen van de admin-interface in."
+"Voer je e-mailadres en de % API token verkregen van de beheeromgeving in."
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:42
 msgid ""
@@ -10608,7 +10612,7 @@ msgstr "Organisator"
 msgid "Origin By"
 msgstr "Oorspronkelijk van"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:89
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:92
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
@@ -11402,7 +11406,7 @@ msgstr ""
 "REST API-toegang met gebruikersnaam/e-mailadres en wachtwoord is momenteel "
 "uitgeschakeld. Neem contact op met de beheerder."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:68
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:71
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:51
 msgid "Raw"
 msgstr "Ruwe data"
@@ -12419,14 +12423,14 @@ msgid "See HTTPLog for details."
 msgstr "Zie HTTPLog voor meer informatie."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:444
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:447
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:343
 msgid "See less"
 msgstr "Toon minder"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:440
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:443
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:116
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
@@ -12565,7 +12569,7 @@ msgstr "Stuur naar klanten"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:51
 #: app/models/channel/driver/sms/massenversand.rb:44
 #: app/models/channel/driver/sms/message_bird.rb:92
-#: app/models/channel/driver/sms/twilio.rb:105 db/seeds/settings.rb:3090
+#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3090
 #: lib/excel_sheet/ticket.rb:32
 msgid "Sender"
 msgstr "Afzender"
@@ -13009,7 +13013,7 @@ msgstr "Ondertekenen:"
 msgid "Signature"
 msgstr "Handtekening"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:279
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:282
 msgid "Signature verification failed!"
 msgstr "Verificatie mislukt!"
 
@@ -14659,7 +14663,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr "Het opnieuw downloaden van de bijlage is mislukt."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:299
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:64
 msgid "The retried security process failed!"
 msgstr "Het herhaalde beveiligingsproces is mislukt!"
@@ -14723,7 +14727,7 @@ msgstr ""
 "Het handtekeninggedeelte van deze PGP e-mail ontbreekt of heeft een verkeerd "
 "inhoudstype volgens RFC 3156."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:277
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:280
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 msgid "The signature was successfully verified."
 msgstr "De signature werd succesvol geverifieerd."
@@ -15294,6 +15298,8 @@ msgid ""
 "This message contains images or other content hosted by an external source. "
 "We blocked it, but you can download the original formatting here."
 msgstr ""
+"Dit bericht bevat afbeeldingen of andere inhoud gehost op een externe bron. "
+"We hebben het geblokkeerd, maar je kunt de originele opmaak downloaden."
 
 #: lib/secure_mailing/smime/incoming.rb:86
 msgid "This message was not signed by its sender."
@@ -16122,13 +16128,13 @@ msgstr "Vandaag"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:359
 msgid "Toggle dark mode"
-msgstr "Schakel donkere modus aan/uit"
+msgstr "Toggle donkere modus"
 
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:43
 #: app/models/channel/driver/sms/message_bird.rb:91
-#: app/models/channel/driver/sms/twilio.rb:104
+#: app/models/channel/driver/sms/twilio.rb:105
 msgid "Token"
 msgstr "Token"
 
@@ -17227,7 +17233,7 @@ msgid "Webhook"
 msgstr "Webhook"
 
 #: app/models/channel/driver/sms/message_bird.rb:90
-#: app/models/channel/driver/sms/twilio.rb:102
+#: app/models/channel/driver/sms/twilio.rb:103
 msgid "Webhook Token"
 msgstr "Webhook Token"
 
@@ -18321,7 +18327,7 @@ msgstr "standaard"
 msgid "delete"
 msgstr "Verwijder"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:35
 msgid "delivered to the customer"
 msgstr "geleverd aan de klant"
@@ -19033,7 +19039,7 @@ msgstr "kwartier"
 msgid "reached"
 msgstr "bereikt"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:150
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:31
 msgid "read by the customer"
 msgstr "gelezen door de klant"
@@ -19117,7 +19123,7 @@ msgstr "selecteer een bijlage…"
 msgid "select visible options"
 msgstr "zichtbare opties selecteren"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:39
 msgid "sent to the customer"
 msgstr "verzonden naar de klant"

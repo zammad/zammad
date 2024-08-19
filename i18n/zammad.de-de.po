@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-11 05:19+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2024-08-12 22:16+0000\n"
+"Last-Translator: Gerrit <github@gmail.arghs.de>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
 "Language: de-de\n"
@@ -1025,7 +1025,7 @@ msgstr "Zugangs-Token"
 msgid "Account"
 msgstr "Konto"
 
-#: app/models/channel/driver/sms/twilio.rb:103
+#: app/models/channel/driver/sms/twilio.rb:104
 msgid "Account SID"
 msgstr "Konto-SID"
 
@@ -2492,6 +2492,10 @@ msgstr "Body"
 #: db/seeds/settings.rb:3203
 msgid "Body - Search for follow-up also in mail body."
 msgstr "Body - Suche nach Nachfragen im Email-Body."
+
+#: lib/validations/ticket_article_validator/sms_twilio.rb:14
+msgid "Body text is required"
+msgstr "Texteingabe erforderlich"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:41
 msgid "Boolean field"
@@ -4126,7 +4130,7 @@ msgstr "Dez"
 msgid "December"
 msgstr "Dezember"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:290
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:293
 msgid "Decryption failed!"
 msgstr "Entschlüsselung fehlgeschlagen!"
 
@@ -4134,7 +4138,7 @@ msgstr "Entschlüsselung fehlgeschlagen!"
 msgid "Decryption failed! %s"
 msgstr "Entschlüsselung fehlgeschlagen! %s"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:288
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:291
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:100
 msgid "Decryption was successful."
 msgstr "Die Entschlüsselung war erfolgreich."
@@ -5368,7 +5372,7 @@ msgstr "Desktop"
 #: app/assets/javascripts/app/views/google/list.jst.eco:58
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:59
 #: app/models/channel/driver/sms/message_bird.rb:93
-#: app/models/channel/driver/sms/twilio.rb:106
+#: app/models/channel/driver/sms/twilio.rb:107
 msgid "Destination Group"
 msgstr "Zielgruppe"
 
@@ -5631,7 +5635,7 @@ msgstr ""
 "Laden Sie das %s Migrations-Plugin herunter und installieren Sie es in Ihrer "
 "%s Instanz."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:316
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:319
 msgid "Downloading attachments…"
 msgstr "Herunterladen von Anhängen…"
 
@@ -10709,7 +10713,7 @@ msgstr "Veranstalter"
 msgid "Origin By"
 msgstr "Ursprünglich von"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:89
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:92
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
@@ -11513,7 +11517,7 @@ msgstr ""
 "REST-API-Zugriff über Benutzername/E-Mail und Passwort ist derzeit "
 "abgeschaltet. Bitte kontaktieren Sie Ihren Administrator."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:68
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:71
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:51
 msgid "Raw"
 msgstr "Rohdaten"
@@ -12539,14 +12543,14 @@ msgid "See HTTPLog for details."
 msgstr "Siehe HTTPLog für Details."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:444
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:447
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:343
 msgid "See less"
 msgstr "Weniger anzeigen"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:440
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:443
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:116
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
@@ -12686,7 +12690,7 @@ msgstr "An Clients senden"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:51
 #: app/models/channel/driver/sms/massenversand.rb:44
 #: app/models/channel/driver/sms/message_bird.rb:92
-#: app/models/channel/driver/sms/twilio.rb:105 db/seeds/settings.rb:3090
+#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3090
 #: lib/excel_sheet/ticket.rb:32
 msgid "Sender"
 msgstr "Sender"
@@ -13132,7 +13136,7 @@ msgstr "Signieren:"
 msgid "Signature"
 msgstr "Signatur"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:279
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:282
 msgid "Signature verification failed!"
 msgstr "Die Signatur-Verifizierung ist fehlgeschlagen!"
 
@@ -14805,7 +14809,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr "Der erneute Versuch, den Anhang herunterzuladen, ist fehlgeschlagen."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:299
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:64
 msgid "The retried security process failed!"
 msgstr "Der erneute Versuch des Sicherheitsprozesses ist fehlgeschlagen!"
@@ -14873,7 +14877,7 @@ msgstr ""
 "Der Signaturteil dieser PGP-E-Mail fehlt oder hat gemäß RFC 3156 einen "
 "ungültigen Inhaltstyp."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:277
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:280
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 msgid "The signature was successfully verified."
 msgstr "Die Signatur wurde erfolgreich verifiziert."
@@ -16297,7 +16301,7 @@ msgstr "Dunklen Modus umschalten"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:43
 #: app/models/channel/driver/sms/message_bird.rb:91
-#: app/models/channel/driver/sms/twilio.rb:104
+#: app/models/channel/driver/sms/twilio.rb:105
 msgid "Token"
 msgstr "Token"
 
@@ -17406,7 +17410,7 @@ msgid "Webhook"
 msgstr "Webhook"
 
 #: app/models/channel/driver/sms/message_bird.rb:90
-#: app/models/channel/driver/sms/twilio.rb:102
+#: app/models/channel/driver/sms/twilio.rb:103
 msgid "Webhook Token"
 msgstr "Webhook-Token"
 
@@ -18507,7 +18511,7 @@ msgstr "Standard"
 msgid "delete"
 msgstr "löschen"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:35
 msgid "delivered to the customer"
 msgstr "dem Kunden zugestellt"
@@ -19220,7 +19224,7 @@ msgstr "Viertelstunde(n)"
 msgid "reached"
 msgstr "erreicht"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:150
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:31
 msgid "read by the customer"
 msgstr "vom Kunden gelesen"
@@ -19303,7 +19307,7 @@ msgstr "Dateien wählen…"
 msgid "select visible options"
 msgstr "sichtbare Optionen auswählen"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:39
 msgid "sent to the customer"
 msgstr "an den Kunden gesendet"

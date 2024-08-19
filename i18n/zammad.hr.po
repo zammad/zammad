@@ -1013,7 +1013,7 @@ msgstr "Pristupni token"
 msgid "Account"
 msgstr "Račun"
 
-#: app/models/channel/driver/sms/twilio.rb:103
+#: app/models/channel/driver/sms/twilio.rb:104
 msgid "Account SID"
 msgstr "SID računa"
 
@@ -2460,6 +2460,12 @@ msgstr "Tijelo"
 #: db/seeds/settings.rb:3203
 msgid "Body - Search for follow-up also in mail body."
 msgstr "Tekst -potraži ponavljanja u tekstu maila."
+
+#: lib/validations/ticket_article_validator/sms_twilio.rb:14
+#, fuzzy
+#| msgid "A user is required!"
+msgid "Body text is required"
+msgstr "Potreban je korisnik!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:41
 msgid "Boolean field"
@@ -4081,7 +4087,7 @@ msgstr "Pro"
 msgid "December"
 msgstr "Prosinac"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:290
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:293
 msgid "Decryption failed!"
 msgstr "Dešifriranje nije uspjelo!"
 
@@ -4089,7 +4095,7 @@ msgstr "Dešifriranje nije uspjelo!"
 msgid "Decryption failed! %s"
 msgstr "Dešifriranje nije uspjelo! %s"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:288
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:291
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:100
 msgid "Decryption was successful."
 msgstr "Dešifriranje je bilo uspješno."
@@ -5285,7 +5291,7 @@ msgstr "Radna površina"
 #: app/assets/javascripts/app/views/google/list.jst.eco:58
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:59
 #: app/models/channel/driver/sms/message_bird.rb:93
-#: app/models/channel/driver/sms/twilio.rb:106
+#: app/models/channel/driver/sms/twilio.rb:107
 msgid "Destination Group"
 msgstr "Odredišna grupa"
 
@@ -5541,7 +5547,7 @@ msgstr "Preuzimanje svih zapisa"
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Preuzmite i instalirajte dodatak za migraciju %s u instanci %s."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:316
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:319
 msgid "Downloading attachments…"
 msgstr "Preuzimanje privitaka…"
 
@@ -10554,7 +10560,7 @@ msgstr "Organizator"
 msgid "Origin By"
 msgstr "Izvorno od"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:89
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:92
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
@@ -11345,7 +11351,7 @@ msgstr ""
 "Pristup REST API-ju pomoću korisničkog imena/adrese e-pošte i lozinke "
 "trenutno je onemogućen. Obratite se administratoru."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:68
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:71
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:51
 msgid "Raw"
 msgstr "Neobrađeni podaci"
@@ -12360,14 +12366,14 @@ msgid "See HTTPLog for details."
 msgstr "Detalje potražite u HTTPLog."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:444
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:447
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:343
 msgid "See less"
 msgstr "Pokaži manje"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:440
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:443
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:116
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
@@ -12504,7 +12510,7 @@ msgstr "Pošalji klijentima"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:51
 #: app/models/channel/driver/sms/massenversand.rb:44
 #: app/models/channel/driver/sms/message_bird.rb:92
-#: app/models/channel/driver/sms/twilio.rb:105 db/seeds/settings.rb:3090
+#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3090
 #: lib/excel_sheet/ticket.rb:32
 msgid "Sender"
 msgstr "Pošiljatelj"
@@ -12945,7 +12951,7 @@ msgstr "Potpis:"
 msgid "Signature"
 msgstr "Potpis"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:279
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:282
 msgid "Signature verification failed!"
 msgstr "Provjera potpisa nije uspjela!"
 
@@ -14580,7 +14586,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr "Ponovljeno preuzimanje privitka nije uspjelo."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:299
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:64
 msgid "The retried security process failed!"
 msgstr "Ponovljeni sigurnosni proces nije uspio!"
@@ -14643,7 +14649,7 @@ msgstr ""
 "Potpisni dio ove PGP e-pošte nedostaje ili ima pogrešnu vrstu sadržaja prema "
 "RFC 3156."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:277
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:280
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 msgid "The signature was successfully verified."
 msgstr "Potpis je uspješno potvrđen."
@@ -16027,7 +16033,7 @@ msgstr "Uključi/isključi tamni način rada"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:43
 #: app/models/channel/driver/sms/message_bird.rb:91
-#: app/models/channel/driver/sms/twilio.rb:104
+#: app/models/channel/driver/sms/twilio.rb:105
 msgid "Token"
 msgstr "Token"
 
@@ -17120,7 +17126,7 @@ msgid "Webhook"
 msgstr "Webhook"
 
 #: app/models/channel/driver/sms/message_bird.rb:90
-#: app/models/channel/driver/sms/twilio.rb:102
+#: app/models/channel/driver/sms/twilio.rb:103
 msgid "Webhook Token"
 msgstr "Webhook token"
 
@@ -18202,7 +18208,7 @@ msgstr "standard"
 msgid "delete"
 msgstr "obriši"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:35
 msgid "delivered to the customer"
 msgstr "dostavljeno klijentu"
@@ -18913,7 +18919,7 @@ msgstr "četvrt sata(i)"
 msgid "reached"
 msgstr "dostignuto"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:150
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:31
 msgid "read by the customer"
 msgstr "pročitano od klijenta"
@@ -18996,7 +19002,7 @@ msgstr "odaberi privitak…"
 msgid "select visible options"
 msgstr "odaberi vidljive opcije"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:39
 msgid "sent to the customer"
 msgstr "poslano klijentu"

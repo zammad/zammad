@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-03 22:16+0000\n"
-"Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
+"PO-Revision-Date: 2024-08-12 22:16+0000\n"
+"Last-Translator: Elodie Massa <elodie@association-enoria.org>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -1031,7 +1031,7 @@ msgstr "Jeton d'accès"
 msgid "Account"
 msgstr "Compte"
 
-#: app/models/channel/driver/sms/twilio.rb:103
+#: app/models/channel/driver/sms/twilio.rb:104
 msgid "Account SID"
 msgstr "SID du compte"
 
@@ -1788,7 +1788,7 @@ msgstr "Informations d'authentification pour Twitter."
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:28
 msgid "App secret"
-msgstr "App secret"
+msgstr "Clé secrète"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:349
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee:3
@@ -2493,6 +2493,10 @@ msgstr "Corps"
 msgid "Body - Search for follow-up also in mail body."
 msgstr "Corps - Rechercher un suivi dans le corps de l'email."
 
+#: lib/validations/ticket_article_validator/sms_twilio.rb:14
+msgid "Body text is required"
+msgstr "Le corps du texte est requis."
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:41
 msgid "Boolean field"
 msgstr "Champ booléen"
@@ -2797,7 +2801,7 @@ msgstr "Impossible de définir les notifications \"en ligne\" comme lues"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:808
 msgid "Cannot upload file"
-msgstr "Impossible d'envoyer le fichier"
+msgstr "Impossible de téléverser le fichier"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee:3
 msgid "Categories"
@@ -3470,7 +3474,7 @@ msgstr "Connecter l'App Twitter"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:136
 msgid "Connect and Continue"
-msgstr "Connecter et poursuivre"
+msgstr "Se connecter et poursuivre"
 
 #: public/assets/chat/views/loader.eco:6
 msgid "Connecting"
@@ -4138,7 +4142,7 @@ msgstr "Déc"
 msgid "December"
 msgstr "Décembre"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:290
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:293
 msgid "Decryption failed!"
 msgstr "Échec du déchiffrement !"
 
@@ -4146,7 +4150,7 @@ msgstr "Échec du déchiffrement !"
 msgid "Decryption failed! %s"
 msgstr "Le déchiffrement a échoué ! %s"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:288
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:291
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:100
 msgid "Decryption was successful."
 msgstr "Déchiffrement réussi."
@@ -5379,7 +5383,7 @@ msgstr "Ordinateur"
 #: app/assets/javascripts/app/views/google/list.jst.eco:58
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:59
 #: app/models/channel/driver/sms/message_bird.rb:93
-#: app/models/channel/driver/sms/twilio.rb:106
+#: app/models/channel/driver/sms/twilio.rb:107
 msgid "Destination Group"
 msgstr "Groupe destinataire"
 
@@ -5639,7 +5643,7 @@ msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr ""
 "Télécharger et installer le plugin de migration %s pour votre instance %s."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:316
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:319
 msgid "Downloading attachments…"
 msgstr "Téléchargement des pièces jointes…"
 
@@ -10720,7 +10724,7 @@ msgstr "Organisateur"
 msgid "Origin By"
 msgstr "Provenant de"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:89
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:92
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
@@ -11523,7 +11527,7 @@ msgstr ""
 "L'accès à l'API REST à l'aide du nom d'utilisateur/adresse email et du mot "
 "de passe est actuellement désactivé. Veuillez contacter votre administrateur."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:68
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:71
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:51
 msgid "Raw"
 msgstr "Brut"
@@ -12548,14 +12552,14 @@ msgid "See HTTPLog for details."
 msgstr "Regardez HTTPLog pour les détails."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:444
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:447
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:343
 msgid "See less"
 msgstr "Voir moins"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:440
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:443
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:116
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
@@ -12693,7 +12697,7 @@ msgstr "Envoyer aux clients"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:51
 #: app/models/channel/driver/sms/massenversand.rb:44
 #: app/models/channel/driver/sms/message_bird.rb:92
-#: app/models/channel/driver/sms/twilio.rb:105 db/seeds/settings.rb:3090
+#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3090
 #: lib/excel_sheet/ticket.rb:32
 msgid "Sender"
 msgstr "Expéditeur"
@@ -13141,7 +13145,7 @@ msgstr "Signer :"
 msgid "Signature"
 msgstr "Signature"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:279
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:282
 msgid "Signature verification failed!"
 msgstr "Vérification de la signature échouée !"
 
@@ -14818,7 +14822,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr "La nouvelle tentative de téléchargement de la pièce jointe a échoué."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:299
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:64
 msgid "The retried security process failed!"
 msgstr "Le processus de sécurité réessayé a échoué !"
@@ -14884,7 +14888,7 @@ msgstr ""
 "La partie signature de cet email PGP est manquante ou présente un type de "
 "contenu incorrect selon la RFC 3156."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:277
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:280
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 msgid "The signature was successfully verified."
 msgstr "La signature a été vérifiée avec succès."
@@ -16303,7 +16307,7 @@ msgstr "Basculer en mode sombre"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:43
 #: app/models/channel/driver/sms/message_bird.rb:91
-#: app/models/channel/driver/sms/twilio.rb:104
+#: app/models/channel/driver/sms/twilio.rb:105
 msgid "Token"
 msgstr "Jeton d'accès"
 
@@ -17409,7 +17413,7 @@ msgid "Webhook"
 msgstr "Webhook"
 
 #: app/models/channel/driver/sms/message_bird.rb:90
-#: app/models/channel/driver/sms/twilio.rb:102
+#: app/models/channel/driver/sms/twilio.rb:103
 msgid "Webhook Token"
 msgstr "Jeton webhook"
 
@@ -18512,7 +18516,7 @@ msgstr "défaut"
 msgid "delete"
 msgstr "effacer"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:35
 msgid "delivered to the customer"
 msgstr "remis au client"
@@ -18649,15 +18653,15 @@ msgstr "exemple de macro"
 
 #: db/seeds/ticket_article_types.rb:15
 msgid "facebook direct-message"
-msgstr "message direct par facebook"
+msgstr "message direct par Facebook"
 
 #: db/seeds/ticket_article_types.rb:11
 msgid "facebook feed comment"
-msgstr "commentaire du flux facebook"
+msgstr "commentaire du flux Facebook"
 
 #: db/seeds/ticket_article_types.rb:10
 msgid "facebook feed post"
-msgstr "flux de post Facebook"
+msgstr "flux de posts Facebook"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:4
@@ -19226,7 +19230,7 @@ msgstr "quart(s) d'heure"
 msgid "reached"
 msgstr "atteint"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:150
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:31
 msgid "read by the customer"
 msgstr "lu par le client"
@@ -19311,7 +19315,7 @@ msgstr "sélectionner une pièce jointe…"
 msgid "select visible options"
 msgstr "sélectionner les options visibles"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:39
 msgid "sent to the customer"
 msgstr "envoyé au client"
@@ -19497,7 +19501,7 @@ msgstr "essayez à nouveau"
 
 #: db/seeds/ticket_article_types.rb:9
 msgid "twitter direct-message"
-msgstr "Message direct par twitter"
+msgstr "Message direct par Twitter"
 
 #: db/seeds/ticket_article_types.rb:8
 msgid "twitter status"
@@ -19537,7 +19541,7 @@ msgstr "message de bienvenue"
 
 #: db/seeds/ticket_article_types.rb:16
 msgid "whatsapp message"
-msgstr "message whatsapp"
+msgstr "message WhatsApp"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:71
 msgid "will be created"

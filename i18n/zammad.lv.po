@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-12 01:05+0000\n"
+"PO-Revision-Date: 2024-07-30 16:00+0000\n"
 "Last-Translator: Katrina Laimina <katrina.laimina@paysera.net>\n"
 "Language-Team: Latvian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/lv/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n % 10 == 0 || n % 100 >= 11 && n % 100 <= "
 "19) ? 0 : ((n % 10 == 1 && n % 100 != 11) ? 1 : 2);\n"
-"X-Generator: Weblate 5.5.5\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -850,7 +850,7 @@ msgstr ""
 msgid "Account"
 msgstr "Konts"
 
-#: app/models/channel/driver/sms/twilio.rb:103
+#: app/models/channel/driver/sms/twilio.rb:104
 msgid "Account SID"
 msgstr ""
 
@@ -1840,7 +1840,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:205
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:314
 msgid "Attachment"
-msgstr ""
+msgstr "Pielikums"
 
 #: db/seeds/settings.rb:3204
 msgid "Attachment - Search for follow-up also in attachments."
@@ -2239,6 +2239,10 @@ msgstr ""
 
 #: db/seeds/settings.rb:3203
 msgid "Body - Search for follow-up also in mail body."
+msgstr ""
+
+#: lib/validations/ticket_article_validator/sms_twilio.rb:14
+msgid "Body text is required"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:41
@@ -3084,10 +3088,8 @@ msgid "Configure Basic Settings"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee:45
-#, fuzzy
-#| msgid "Location"
 msgid "Confirm"
-msgstr "Vieta"
+msgstr "Apstiprināt"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:4
 #, fuzzy
@@ -3717,7 +3719,7 @@ msgstr ""
 #: db/seeds/object_manager_attributes.rb:60 db/seeds/roles.rb:23
 #: db/seeds/ticket_article_senders.rb:4 lib/excel_sheet/ticket.rb:29
 msgid "Customer"
-msgstr "Klienti"
+msgstr "Klients"
 
 #: app/assets/javascripts/app/controllers/chat.coffee:125
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco:4
@@ -3835,7 +3837,7 @@ msgstr "Dec"
 msgid "December"
 msgstr "Decembris"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:290
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:293
 msgid "Decryption failed!"
 msgstr ""
 
@@ -3843,7 +3845,7 @@ msgstr ""
 msgid "Decryption failed! %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:288
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:291
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:100
 msgid "Decryption was successful."
 msgstr ""
@@ -4907,7 +4909,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/google/list.jst.eco:58
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:59
 #: app/models/channel/driver/sms/message_bird.rb:93
-#: app/models/channel/driver/sms/twilio.rb:106
+#: app/models/channel/driver/sms/twilio.rb:107
 msgid "Destination Group"
 msgstr ""
 
@@ -5159,7 +5161,7 @@ msgstr ""
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:316
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:319
 msgid "Downloading attachments…"
 msgstr ""
 
@@ -5685,7 +5687,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco:6
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:6
 msgid "Encryption"
-msgstr ""
+msgstr "Šifrējums"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:165
@@ -6219,7 +6221,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:5
 #: db/seeds/settings.rb:354
 msgid "Filesystem"
-msgstr ""
+msgstr "Failu sistēma"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:16
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:16
@@ -7165,7 +7167,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:8
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco:4
 msgid "ID:"
@@ -9971,7 +9973,7 @@ msgstr "Pārskati"
 #: db/seeds/object_manager_attributes.rb:94 db/seeds/settings.rb:140
 #: lib/excel_sheet/ticket.rb:30
 msgid "Organization"
-msgstr ""
+msgstr "Organizācija"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:382
 msgid "Organization & Department Name"
@@ -10037,7 +10039,7 @@ msgstr ""
 msgid "Origin By"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:89
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:92
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
@@ -10819,7 +10821,7 @@ msgid ""
 "disabled. Please contact your administrator."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:68
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:71
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:51
 msgid "Raw"
 msgstr ""
@@ -11403,7 +11405,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/sla.coffee:3
 msgid "SLAs"
-msgstr ""
+msgstr "SLAs"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:68
@@ -11574,7 +11576,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/job.coffee:3
 #: db/seeds/permissions.rb:96
 msgid "Scheduler"
-msgstr ""
+msgstr "Plānotājs"
 
 #: app/assets/javascripts/app/controllers/job.coffee:17
 msgid "Schedulers"
@@ -11812,14 +11814,14 @@ msgid "See HTTPLog for details."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:444
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:447
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:343
 msgid "See less"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:440
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:443
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:116
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
@@ -11957,7 +11959,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:51
 #: app/models/channel/driver/sms/massenversand.rb:44
 #: app/models/channel/driver/sms/message_bird.rb:92
-#: app/models/channel/driver/sms/twilio.rb:105 db/seeds/settings.rb:3090
+#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3090
 #: lib/excel_sheet/ticket.rb:32
 msgid "Sender"
 msgstr ""
@@ -12393,7 +12395,7 @@ msgstr ""
 msgid "Signature"
 msgstr "Paraksts"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:279
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:282
 msgid "Signature verification failed!"
 msgstr ""
 
@@ -14051,7 +14053,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:299
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:64
 msgid "The retried security process failed!"
 msgstr ""
@@ -14119,7 +14121,7 @@ msgid ""
 "according to RFC 3156."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:277
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:280
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 msgid "The signature was successfully verified."
 msgstr ""
@@ -14834,7 +14836,7 @@ msgstr "Thursday"
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/ticket.ts:6
 #: db/seeds/permissions.rb:208
 msgid "Ticket"
-msgstr "Pieteikumi"
+msgstr "Biļete"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:767
 msgid "Ticket %s created!"
@@ -15468,9 +15470,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:43
 #: app/models/channel/driver/sms/message_bird.rb:91
-#: app/models/channel/driver/sms/twilio.rb:104
+#: app/models/channel/driver/sms/twilio.rb:105
 msgid "Token"
-msgstr ""
+msgstr "Tokens"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:12
@@ -15781,7 +15783,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:8
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:50
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:677
 msgid "URL (AJAX endpoint)"
@@ -15871,7 +15873,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:57
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 msgid "Update"
-msgstr "Atjaunināt"
+msgstr "Atjauninājums"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:38
 msgid "Update Database"
@@ -16532,7 +16534,7 @@ msgid "Webhook"
 msgstr ""
 
 #: app/models/channel/driver/sms/message_bird.rb:90
-#: app/models/channel/driver/sms/twilio.rb:102
+#: app/models/channel/driver/sms/twilio.rb:103
 msgid "Webhook Token"
 msgstr ""
 
@@ -17522,7 +17524,7 @@ msgstr ""
 msgid "delete"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:35
 #, fuzzy
 #| msgid "Customer"
@@ -18257,7 +18259,7 @@ msgstr ""
 msgid "reached"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:150
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:31
 #, fuzzy
 #| msgid "Customer"
@@ -18342,7 +18344,7 @@ msgstr ""
 msgid "select visible options"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:39
 #, fuzzy
 #| msgid "Customer"

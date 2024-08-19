@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-25 05:27+0000\n"
+"PO-Revision-Date: 2024-08-13 20:14+0000\n"
 "Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
@@ -1033,7 +1033,7 @@ msgstr "Токен доступа"
 msgid "Account"
 msgstr "Учётная запись"
 
-#: app/models/channel/driver/sms/twilio.rb:103
+#: app/models/channel/driver/sms/twilio.rb:104
 msgid "Account SID"
 msgstr "Идентификатор безопасности (SID) учётной записи"
 
@@ -2301,7 +2301,7 @@ msgid ""
 "set it to false."
 msgstr ""
 "Автоматически загружать файл chat.css. Если Вы хотите использовать свой "
-"собственный css, просто установите для него значение false."
+"собственный css, просто установите значение false."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:35
 #: app/assets/javascripts/app/models/overview.coffee:8
@@ -2488,6 +2488,10 @@ msgstr "Тело"
 #: db/seeds/settings.rb:3203
 msgid "Body - Search for follow-up also in mail body."
 msgstr "Тело - В дополнение использовать для проверки тело письма."
+
+#: lib/validations/ticket_article_validator/sms_twilio.rb:14
+msgid "Body text is required"
+msgstr "Основной текст обязателен"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:41
 msgid "Boolean field"
@@ -3080,7 +3084,7 @@ msgstr "Введите свой новый пароль"
 
 #: app/assets/javascripts/app/views/password/reset_change.jst.eco:4
 msgid "Choose your new password."
-msgstr "Выберите свой новый пароль."
+msgstr "Введите свой новый пароль."
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco:7
 msgid "Choose your preferred two-factor authentication method to set it up."
@@ -3096,7 +3100,7 @@ msgstr "Город"
 
 #: db/seeds/schedulers.rb:178
 msgid "Clean up 'Cti::Log'."
-msgstr "Очистить Cti::Log."
+msgstr "Очистить 'Cti::Log'."
 
 #: db/seeds/schedulers.rb:187
 msgid "Clean up 'DataPrivacyTask'."
@@ -3104,7 +3108,7 @@ msgstr "Очистить 'DataPrivacyTask'."
 
 #: db/seeds/schedulers.rb:169
 msgid "Clean up 'HttpLog'."
-msgstr "Очистить \"HttpLog\"."
+msgstr "Очистить 'HttpLog'."
 
 #: db/seeds/schedulers.rb:124
 msgid "Clean up ActiveJob locks."
@@ -3223,7 +3227,7 @@ msgstr "Закрыть через несколько минут"
 
 #: db/seeds/schedulers.rb:106
 msgid "Close chat sessions where participants are offline."
-msgstr "Закрыть сеансы чата, когда участники не в сети."
+msgstr "Закрыть сеансы чата, участники которых не в сети."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:168
 msgid "Close current tab"
@@ -3276,7 +3280,7 @@ msgstr "Коммуникация"
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:11
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:42
 msgid "Company Inc."
-msgstr "Компания."
+msgstr "Компания"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts:10
@@ -3457,7 +3461,7 @@ msgstr "Подключить приложение X (бывш. Twitter)"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:136
 msgid "Connect and Continue"
-msgstr "Подключиться и продолжить"
+msgstr "Подключить и продолжить"
 
 #: public/assets/chat/views/loader.eco:6
 msgid "Connecting"
@@ -3497,7 +3501,7 @@ msgstr "Содержание"
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee:42
 msgid "Content could not be loaded."
-msgstr "Содержимое не удалось загрузить."
+msgstr "Не удалось загрузить содержимое."
 
 #: app/models/store.rb:82
 msgid "Content preview could not be generated."
@@ -3505,7 +3509,7 @@ msgstr "Не удалось создать предварительный про
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:110
 msgid "Content was changed since loading"
-msgstr "Содержимое было изменено после загрузки"
+msgstr "Содержимое было изменено с момента загрузки"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee:8
 #: app/assets/javascripts/app/models/public_link.coffee:9
@@ -3549,11 +3553,11 @@ msgstr "Продолжить на мобильном устройстве"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:4
 msgid "Contributing Translations"
-msgstr "Внести свой вклад переводы"
+msgstr "Внести свой вклад в перевод"
 
 #: lib/sessions/event/chat_transfer.rb:30
 msgid "Conversation is transferred into another chat. Please stay tuned."
-msgstr "Разговор переносится в другой чат. Пожалуйста, не переключайтесь."
+msgstr "Разговор переносится в другой чат. Пожалуйста, оставайтесь на связи."
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:77
 msgid "Conversion of retweets into tickets is turned off."
@@ -3574,7 +3578,7 @@ msgstr "Скопировать текущий номер объекта (нап�
 
 #: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco:14
 msgid "Copy to clipboard"
-msgstr "Скопировано в буфер обмена"
+msgstr "Скопировать в буфер обмена"
 
 #: db/seeds/permissions.rb:306
 msgid "Core Workflow"
@@ -4116,7 +4120,7 @@ msgstr "Дек"
 msgid "December"
 msgstr "Декабрь"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:290
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:293
 msgid "Decryption failed!"
 msgstr "Ошибка расшифровки!"
 
@@ -4124,7 +4128,7 @@ msgstr "Ошибка расшифровки!"
 msgid "Decryption failed! %s"
 msgstr "Ошибка расшифровки! %s"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:288
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:291
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:100
 msgid "Decryption was successful."
 msgstr "Расшифровка прошла успешно."
@@ -5356,7 +5360,7 @@ msgstr "Рабочий стол"
 #: app/assets/javascripts/app/views/google/list.jst.eco:58
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:59
 #: app/models/channel/driver/sms/message_bird.rb:93
-#: app/models/channel/driver/sms/twilio.rb:106
+#: app/models/channel/driver/sms/twilio.rb:107
 msgid "Destination Group"
 msgstr "Целевая группа"
 
@@ -5615,7 +5619,7 @@ msgstr "Скачать все записи"
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Скачайте и установите модуль переноса %s на свой экземпляр %s."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:316
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:319
 msgid "Downloading attachments…"
 msgstr "Скачивание вложений…"
 
@@ -10692,7 +10696,7 @@ msgstr "Организатор"
 msgid "Origin By"
 msgstr "По происхождению"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:89
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:92
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
@@ -11490,7 +11494,7 @@ msgstr ""
 "почты и пароля на данный момент отключен. Пожалуйста, свяжитесь с "
 "администратором."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:68
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:71
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:51
 msgid "Raw"
 msgstr "Необработанные данные"
@@ -12513,14 +12517,14 @@ msgid "See HTTPLog for details."
 msgstr "Подробности Вы можете посмотреть в HTTPLog."
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:444
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:447
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:343
 msgid "See less"
 msgstr "Свернуть"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:440
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:443
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:116
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
@@ -12658,7 +12662,7 @@ msgstr "Отправить клиентам "
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:51
 #: app/models/channel/driver/sms/massenversand.rb:44
 #: app/models/channel/driver/sms/message_bird.rb:92
-#: app/models/channel/driver/sms/twilio.rb:105 db/seeds/settings.rb:3090
+#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3090
 #: lib/excel_sheet/ticket.rb:32
 msgid "Sender"
 msgstr "Отправитель"
@@ -13102,7 +13106,7 @@ msgstr "Подписать:"
 msgid "Signature"
 msgstr "Подпись"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:279
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:282
 msgid "Signature verification failed!"
 msgstr "Не удалось проверить подпись!"
 
@@ -14789,7 +14793,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr "Повторная попытка загрузки вложения не удалась."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:299
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:64
 msgid "The retried security process failed!"
 msgstr "Сбой в процессе восстановления системы безопасности!"
@@ -14853,7 +14857,7 @@ msgstr ""
 "Часть подписи этого PGP-письма отсутствует или имеет неправильный тип "
 "содержимого в соответствии с RFC 3156."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:277
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:280
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 msgid "The signature was successfully verified."
 msgstr "Подпись успешно проверена."
@@ -16259,7 +16263,7 @@ msgstr "Переключить на тёмный режим"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:43
 #: app/models/channel/driver/sms/message_bird.rb:91
-#: app/models/channel/driver/sms/twilio.rb:104
+#: app/models/channel/driver/sms/twilio.rb:105
 msgid "Token"
 msgstr "Токен"
 
@@ -17363,7 +17367,7 @@ msgid "Webhook"
 msgstr "Веб-перехватчик (Webhook)"
 
 #: app/models/channel/driver/sms/message_bird.rb:90
-#: app/models/channel/driver/sms/twilio.rb:102
+#: app/models/channel/driver/sms/twilio.rb:103
 msgid "Webhook Token"
 msgstr "Ключ веб-перехватчика (webhook)"
 
@@ -18461,7 +18465,7 @@ msgstr "По умолчанию"
 msgid "delete"
 msgstr "удалить"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:35
 msgid "delivered to the customer"
 msgstr "доставлено клиенту"
@@ -19173,7 +19177,7 @@ msgstr "15 минут"
 msgid "reached"
 msgstr "достигнуто"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:150
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:31
 msgid "read by the customer"
 msgstr "прочитано клиентом"
@@ -19256,7 +19260,7 @@ msgstr "выберите вложение…"
 msgid "select visible options"
 msgstr "выбрать видимые параметры"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:39
 msgid "sent to the customer"
 msgstr "отправить клиенту"

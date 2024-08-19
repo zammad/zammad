@@ -2,17 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-02-16 15:21+0000\n"
-"Last-Translator: ajasimiq <ahmedjaseem@gmail.com>\n"
+"PO-Revision-Date: 2024-08-01 22:16+0000\n"
+"Last-Translator: Ali Sa'ad Eddeen <ali.se@alameensoft.com>\n"
 "Language-Team: Arabic <https://translations.zammad.org/projects/zammad/"
-"zammad-development/ar/>\n"
+"zammad-stable/ar/>\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
 "&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 5.6.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -54,6 +54,11 @@ msgid ""
 "compatible object filesystem. You can switch between the modules even on a "
 "system that is already in production without any loss of data."
 msgstr ""
+"تخزن \"قاعدة البيانات\" جميع المرفقات في قاعدة البيانات (لا يوصى بها لتخزين "
+"كميات كبيرة من البيانات). يقوم \"نظام الملفات\" بتخزين البيانات في نظام "
+"الملفات. يقوم \"التخزين البسيط (S3)\" بتخزين البيانات في نظام ملفات كائن "
+"متوافق مع S3 عن بعد. يمكنك التبديل بين الوحدات حتى على نظام قيد الإنتاج "
+"بالفعل دون أي فقدان للبيانات."
 
 #. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -71,6 +76,17 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: تم الإنشاء بواسطة #{current_user.longname} في "
+"#{ticket.updated_at}_\n"
+"* المجموعة: #{ticket.group.name}\n"
+"* المالك: #{ticket.owner.fullname}\n"
+"* الحالة: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -86,6 +102,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"تذكرة##{ticket.number}>: تم تصعيدها في #{ticket.escalation_at}_\n"
+"التذكرة (#{ticket.title}) من \"#{ticket.customer.longname}\" تم تصعيدها منذ "
+"\"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -102,6 +127,16 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"التذكرة##{ticket.number}>: تم تحديثها في #{ticket.updated_at}_\n"
+"* المجموعة: #{ticket.group.name}\n"
+"* المالك: #{ticket.owner.fullname}\n"
+"* الحالة: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -117,6 +152,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"تذكرة##{ticket.number}>: حان وقت التذكير!_\n"
+"التذكرة تتطلب الانتباه: حان وقت التذكير لـ (#{ticket.title}) مع العميل "
+"\"*#{ticket.customer.longname}*\".\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_update/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -136,6 +180,19 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"تذكرة##{ticket.number}>: تم تحديثها بواسطة #{current_user.longname} في "
+"#{ticket.updated_at}_\n"
+"<% if @objects[:changes].present? %>\n"
+"  <% @objects[:changes].each do |key, value| %>\n"
+"  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
+"  <% end %>\n"
+"<% end %>\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -151,6 +208,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"تذكرة##{ticket.number}>: سيتم تصعيدها في #{ticket.escalation_at}_\n"
+"التذكرة (#{ticket.title}) من \"#{ticket.customer.longname}\" سيتم تصعيدها في "
+"\"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/mailer/user_auth_provider/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -169,6 +235,18 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"#{config.product_name} الحساب مرتبط بتطبيق طرف ثالث\n"
+"\n"
+"<div>مرحباً #{user.firstname},</div>\n"
+"<br>\n"
+"<div>يبدو أنك قمت بربط حسابك <b>مع تطبيق طرف ثالث</b> \"#{t(provider)}\".</"
+"div>\n"
+"<br>\n"
+"<div>إذا لم تكن أنت ، فيرجى إزالة الحساب المرتبط من ملف التعريف الخاص بك "
+"وتغيير كلمة مرور تطبيق الجهة الخارجية. ربما حصل شخص ما على وصول غير مصرح به "
+"إلى حسابك على خدمة الجهة الخارجية.</div>\n"
+"<br>\n"
+"<div>فريق #{config.product_name} </div>\n"
 
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -199,6 +277,29 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"#{config.product_name} دخول من بلد جديد\n"
+"\n"
+"<div>مرحباً #{user.firstname},</div>\n"
+"<br>\n"
+"<div>يبدو أنك استخدمت حسابك مع <b>جهاز معروف ولكن من بلد جديد</b> على "
+"\"#{user_device.created_at}\":</div>\n"
+"<br>\n"
+"<div>\n"
+"جهازك : #{user_device.name}<br>\n"
+"موقعك (نسبي): #{user_device.location}<br>\n"
+"عنوان IP الخاص بك: #{user_device.ip}<br>\n"
+"</div>\n"
+"<br>\n"
+"<div>تمت إضافة البلد إلى قائمة الأجهزة المعروفة الخاصة بك ، والتي يمكنك "
+"عرضها هنا:</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<br>\n"
+"<div>إذا لم تكن أنت، فيرجى إزالة الجهاز وتغيير كلمة مرور حسابك والاتصال "
+"بالمسؤول. ربما حصل شخص ما على وصول غير مصرح به إلى حسابك.</div>\n"
+"<br>\n"
+"<div>فريق #{config.product_name}</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -229,22 +330,41 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"#{config.product_name} تسجيل دخول من جهاز جديد\n"
+"\n"
+"<div>مرحباً #{user.firstname},</div>\n"
+"<br>\n"
+"<div>يبدو أنك قمت بتسجيل الدخول إلى حسابك <b>باستخدام جهاز جديد</b> على "
+"\"#{user_device.created_at}\":</div>\n"
+"<br>\n"
+"<div>\n"
+"جهازك: #{user_device.name}<br>\n"
+"موقعك (نسبي): #{user_device.location}<br>\n"
+"عنوان IP الخاص بك: #{user_device.ip}<br>\n"
+"</div>\n"
+"<br>\n"
+"<div>تمت إضافة جهازك إلى قائمة الأجهزة المعروفة الخاصة بك ، والتي يمكنك "
+"عرضها هنا:</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<br>\n"
+"<div>إذا لم تكن أنت، فيرجى إزالة الجهاز وتغيير كلمة مرور حسابك والاتصال "
+"بالمسؤول. ربما حصل شخص ما على وصول غير مصرح به إلى حسابك.</div>\n"
+"<br>\n"
+"<div>فريق #{config.product_name}</div>\n"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:148
-#, fuzzy
-#| msgid "Confirm"
 msgid "%s (confirm)"
-msgstr "تؤكد"
+msgstr "%s (تأكيد)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:155
 msgid "%s (method)"
-msgstr ""
+msgstr "%s (الطريقة)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:190
-#, fuzzy
-#| msgid "Confirm"
 msgid "%s (option)"
-msgstr "تؤكد"
+msgstr "%s (خيار)"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:254
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:227
@@ -255,29 +375,27 @@ msgstr "تؤكد"
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:313
 #: app/frontend/shared/composables/useSelectOptions.ts:137
 msgid "%s (unknown)"
-msgstr ""
+msgstr "%s (غير معروف)"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:9
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:6
 #, fuzzy
 #| msgid "%s Api Token"
 msgid "%s API Token"
-msgstr "%s Api Token"
+msgstr "%s API Token"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:144
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:179
 msgid "%s Attribute"
-msgstr ""
+msgstr "%s صفة"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:203
 msgid "%s Group"
-msgstr ""
+msgstr "%s مجموعة"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:50
-#, fuzzy
-#| msgid "Import"
 msgid "%s Import Status"
-msgstr "استيراد"
+msgstr "%s حالة الاستيراد"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:61
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:65
@@ -288,7 +406,7 @@ msgstr "ترحيل %s"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:204
 msgid "%s Role"
-msgstr ""
+msgstr "%s الدور"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:5
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:5
@@ -398,7 +516,7 @@ msgstr "أنهى %s التبديل إلى | %s |!"
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:40
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:8
 msgid "%s folders"
-msgstr ""
+msgstr "%s مجلدات"
 
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:39
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:8
@@ -416,7 +534,7 @@ msgstr "قبل %s"
 #: app/assets/javascripts/app/views/google/list.jst.eco:61
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:62
 msgid "%s is inactive, please select an active one."
-msgstr ""
+msgstr "%s غير فعال، يرجى تحديد واحد فعال."
 
 #: app/frontend/shared/form/i18n/locales.ts:531
 #, fuzzy
@@ -965,7 +1083,7 @@ msgstr "الوصول إلى%s"
 msgid "Account"
 msgstr ""
 
-#: app/models/channel/driver/sms/twilio.rb:103
+#: app/models/channel/driver/sms/twilio.rb:104
 msgid "Account SID"
 msgstr ""
 
@@ -2465,6 +2583,12 @@ msgstr "هيكل\\جسم"
 msgid "Body - Search for follow-up also in mail body."
 msgstr ""
 
+#: lib/validations/ticket_article_validator/sms_twilio.rb:14
+#, fuzzy
+#| msgid "%s required!"
+msgid "Body text is required"
+msgstr "مطلوب%s!"
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:41
 msgid "Boolean field"
 msgstr ""
@@ -2814,7 +2938,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:101
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 msgid "Change"
-msgstr "يتغيرون"
+msgstr "تغيير"
 
 #: db/seeds/permissions.rb:324
 msgid "Change %s"
@@ -4193,7 +4317,7 @@ msgstr "ديسمبر"
 msgid "December"
 msgstr "ديسمبر"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:290
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:293
 msgid "Decryption failed!"
 msgstr ""
 
@@ -4203,7 +4327,7 @@ msgstr ""
 msgid "Decryption failed! %s"
 msgstr "فشل التسليم"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:288
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:291
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:100
 #, fuzzy
 #| msgid "Registration successful!"
@@ -5364,7 +5488,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/google/list.jst.eco:58
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:59
 #: app/models/channel/driver/sms/message_bird.rb:93
-#: app/models/channel/driver/sms/twilio.rb:106
+#: app/models/channel/driver/sms/twilio.rb:107
 msgid "Destination Group"
 msgstr "مجموعة الوجهة"
 
@@ -5642,7 +5766,7 @@ msgstr ""
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "قم بتحميل وتثبيت البرنامج الإضافي للترحيل%s على مثيل%s الخاص بك."
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:316
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:319
 #, fuzzy
 #| msgid "select attachment..."
 msgid "Downloading attachments…"
@@ -10997,7 +11121,7 @@ msgstr "منظمة"
 msgid "Origin By"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:89
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:92
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
@@ -11845,7 +11969,7 @@ msgid ""
 "disabled. Please contact your administrator."
 msgstr "تمكين وصول REST API باستخدام اسم المستخدم / البريد الإلكتروني"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:68
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:71
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:51
 msgid "Raw"
 msgstr ""
@@ -12919,14 +13043,14 @@ msgid "See HTTPLog for details."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:71
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:444
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:447
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:343
 msgid "See less"
 msgstr "انظر أقل"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:440
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:443
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:116
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:41
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:21
@@ -13070,7 +13194,7 @@ msgstr "أرسل إلى العملاء"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:51
 #: app/models/channel/driver/sms/massenversand.rb:44
 #: app/models/channel/driver/sms/message_bird.rb:92
-#: app/models/channel/driver/sms/twilio.rb:105 db/seeds/settings.rb:3090
+#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3090
 #: lib/excel_sheet/ticket.rb:32
 msgid "Sender"
 msgstr "مرسل"
@@ -13566,7 +13690,7 @@ msgstr "تسجيل الدخول"
 msgid "Signature"
 msgstr "التوقيع"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:279
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:282
 #, fuzzy
 #| msgid "Resend verification email"
 msgid "Signature verification failed!"
@@ -15337,7 +15461,7 @@ msgstr ""
 msgid "The retried attachment download failed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:299
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:64
 msgid "The retried security process failed!"
 msgstr ""
@@ -15405,7 +15529,7 @@ msgid ""
 "according to RFC 3156."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:277
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:280
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 #, fuzzy
 #| msgid "The test run was successful."
@@ -16889,7 +17013,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48
 #: app/models/channel/driver/sms/massenversand.rb:43
 #: app/models/channel/driver/sms/message_bird.rb:91
-#: app/models/channel/driver/sms/twilio.rb:104
+#: app/models/channel/driver/sms/twilio.rb:105
 msgid "Token"
 msgstr ""
 
@@ -18009,7 +18133,7 @@ msgid "Webhook"
 msgstr "Webhook"
 
 #: app/models/channel/driver/sms/message_bird.rb:90
-#: app/models/channel/driver/sms/twilio.rb:102
+#: app/models/channel/driver/sms/twilio.rb:103
 msgid "Webhook Token"
 msgstr ""
 
@@ -19097,7 +19221,7 @@ msgstr ""
 msgid "delete"
 msgstr "حذف"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:35
 #, fuzzy
 #| msgid "Delete Customer"
@@ -19873,7 +19997,7 @@ msgstr ""
 msgid "reached"
 msgstr "وصلت"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:150
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:31
 #, fuzzy
 #| msgid "Create new Customer"
@@ -19970,7 +20094,7 @@ msgstr "حدد المرفق ..."
 msgid "select visible options"
 msgstr "الرد"
 
-#: app/assets/javascripts/app/controllers/article_view/item.coffee:156
+#: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:39
 #, fuzzy
 #| msgid "Create new Customer"
