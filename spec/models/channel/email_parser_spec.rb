@@ -23,6 +23,22 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
     end
 
+    describe 'when mail does not contain any sender specification' do
+      subject(:instance) { described_class.new }
+
+      let(:raw_mail) { <<~RAW.chomp }
+        To: baz@qux.net
+        Subject: Foo
+
+        Lorem ipsum dolor
+      RAW
+
+      it 'raises error even if exception is false' do
+        expect { described_class.new.parse(raw_mail) }
+          .to raise_error(Exceptions::MissingAttribute, 'Could not parse any sender attribute from the email. Checked fields: From, Reply-To, Return-Path, Sender')
+      end
+    end
+
     # To write new .yml files for emails you can use the following code:
     #
     # File.write('test/data/mail/mailXXX.yml', Channel::EmailParser.new.parse(File.read('test/data/mail/mailXXX.box')).slice(:from, :from_email, :from_display_name, :to, :cc, :subject, :body, :content_type, :'reply-to', :attachments).to_yaml)

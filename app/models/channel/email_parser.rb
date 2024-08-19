@@ -87,11 +87,21 @@ class Channel::EmailParser
 
     headers = message_header_hash(mail)
     body = message_body_hash(mail)
+    sender_attributes = self.class.sender_attributes(headers)
+
+    if sender_attributes.blank?
+      msg = __('Could not parse any sender attribute from the email. Checked fields:')
+      msg += ' '
+      msg += SENDER_FIELDS.map { |f| f.split('-').map(&:capitalize).join('-') }.join(', ')
+
+      raise Exceptions::MissingAttribute.new('email', msg)
+    end
+
     message_attributes = [
       { mail_instance: mail },
       headers,
       body,
-      self.class.sender_attributes(headers),
+      sender_attributes,
       { raw: msg },
     ]
     message_attributes.reduce({}.with_indifferent_access, &:merge)
