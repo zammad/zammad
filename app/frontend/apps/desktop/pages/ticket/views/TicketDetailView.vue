@@ -75,7 +75,7 @@ const { hasSidebar } = useTicketSidebar(sidebarContext)
       <div class="relative flex w-full flex-col">
         <TicketDetailTopBar />
 
-        <ArticleList :aria-busy="isLoadingArticles.value" />
+        <ArticleList :aria-busy="isLoadingArticles" />
       </div>
     </CommonLoader>
 
@@ -84,7 +84,6 @@ const { hasSidebar } = useTicketSidebar(sidebarContext)
         :is-collapsed="isCollapsed"
         :toggle-collapse="toggleCollapse"
         :context="sidebarContext"
-        :cache="['ChecklistContent']"
       />
     </template>
   </LayoutContent>

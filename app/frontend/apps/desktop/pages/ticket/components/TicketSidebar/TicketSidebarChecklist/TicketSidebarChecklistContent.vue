@@ -36,10 +36,6 @@ import { useTicketChecklistItemOrderUpdateMutation } from '#desktop/pages/ticket
 import { useTicketChecklistItemUpsertMutation } from '#desktop/pages/ticket/graphql/mutations/ticketChecklistItemUpsert.api.ts'
 import { useTicketChecklistTitleUpdateMutation } from '#desktop/pages/ticket/graphql/mutations/ticketChecklistTitleUpdate.api.ts'
 
-defineOptions({
-  name: 'ChecklistContent',
-})
-
 defineProps<TicketSidebarContentProps>()
 
 const checklistItemsComponent = ref<InstanceType<typeof ChecklistItemsType>>()
@@ -54,7 +50,10 @@ const onSubscriptionUpdateCallback = (
   const index = findChangedIndex(previousChecklist, newChecklist)
 
   if (index >= 0)
-    nextTick(() => checklistItemsComponent.value?.quitItemEditing(index))
+    nextTick(() => {
+      checklistItemsComponent.value?.quitReordering()
+      checklistItemsComponent.value?.quitItemEditing(index)
+    })
 }
 
 const { checklist, isLoadingChecklist, readOnly } = useTicketChecklist(
@@ -393,7 +392,7 @@ const { isLoadingTemplates, checklistTemplatesMenuItems } =
     :title="__('Checklist')"
     icon="checklist"
   >
-    <CommonLoader :loading="isLoadingChecklist || isLoadingTemplates">
+    <CommonLoader :loading="isLoadingChecklist">
       <div class="flex flex-col gap-3">
         <ChecklistItems
           v-if="checklist"
@@ -426,7 +425,7 @@ const { isLoadingTemplates, checklistTemplatesMenuItems } =
             "
             :templates="checklistTemplatesMenuItems"
           />
-          <ChecklistEmptyTemplates v-else />
+          <ChecklistEmptyTemplates v-else-if="!isLoadingTemplates" />
         </template>
         <CommonLabel v-else>{{
           $t('No checklist added to this ticket yet.')

@@ -26,23 +26,26 @@ export const useTicketChecklist = (
   const readOnly = computed(() => !ticket.value?.policy.update)
 
   const checklistQuery = new QueryHandler(
-    useTicketChecklistQuery(
-      () => ({
-        ticketId: ticketId.value,
-      }),
-      {
-        fetchPolicy: 'cache-and-network',
-      },
-    ),
+    useTicketChecklistQuery(() => ({
+      ticketId: ticketId.value,
+    })),
     {
       errorCallback: (error) => error.type !== GraphQLErrorTypes.RecordNotFound,
     },
   )
 
   const checklistResult = checklistQuery.result()
-  const isLoadingChecklist = checklistQuery.loading()
+  const checklistLoading = checklistQuery.loading()
 
   const checklist = computed(() => checklistResult.value?.ticketChecklist)
+
+  const isLoadingChecklist = computed(() => {
+    // Return already true when an checklist result already exists from the cache, also
+    // when maybe a loading is in progress(because of cache + network).
+    if (checklist.value !== undefined) return false
+
+    return checklistLoading.value
+  })
 
   const incompleteItemCount = computed(
     () => checklistResult.value?.ticketChecklist?.incomplete,
@@ -72,9 +75,19 @@ export const useTicketChecklist = (
           ticketChecklist.items as ChecklistItem[],
         )
 
-      return {
-        ticketChecklist,
+      // When a complete checklist was removed, we need to update the result.
+      if (
+        ticketChecklist === null ||
+        (prev.ticketChecklist === null && ticketChecklist !== null)
+      ) {
+        return {
+          ticketChecklist,
+        }
       }
+
+      // Always return null, because we need not to manipulate the data with this function. It's only for handling the
+      //  edit mode callback.
+      return null as unknown as TicketChecklistQuery
     },
   }))
 

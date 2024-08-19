@@ -43,14 +43,11 @@ export const useArticleDataHandler = (
     options.firstArticlesCount ? toValue(options.firstArticlesCount) : 5,
   )
   const articlesQuery = new QueryHandler(
-    useTicketArticlesQuery(
-      () => ({
-        ticketId: graphqlTicketId.value,
-        pageSize: options.pageSize || 20,
-        firstArticlesCount: firstArticlesCount.value,
-      }),
-      { fetchPolicy: 'cache-and-network' },
-    ),
+    useTicketArticlesQuery(() => ({
+      ticketId: graphqlTicketId.value,
+      pageSize: options.pageSize || 20,
+      firstArticlesCount: firstArticlesCount.value,
+    })),
   )
 
   const articleResult = articlesQuery.result()
@@ -70,7 +67,7 @@ export const useArticleDataHandler = (
     })
   }
 
-  const isLoadingArticles = computed(() => articlesQuery.loading())
+  const isLoadingArticles = articlesQuery.loading()
 
   const adjustPageInfoAfterDeletion = (nextEndCursorEdge?: Maybe<string>) => {
     const newPageInfo: Pick<PageInfo, 'startCursor' | 'endCursor'> = {}

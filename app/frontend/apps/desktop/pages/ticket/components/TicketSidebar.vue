@@ -13,10 +13,6 @@ interface Props {
   context: TicketSidebarContext
   isCollapsed: boolean
   toggleCollapse: () => void
-  /**
-   * List of component names that should be cached by the `KeepAlive` component.
-   * */
-  cache?: string[]
 }
 
 const props = defineProps<Props>()
@@ -44,12 +40,10 @@ const maybeToggleAndSwitchSidebar = (newSidebar: string) => {
       :loading="!activeSidebarPlugin?.contentComponent"
     >
       <div v-show="!isCollapsed" class="flex grow flex-col">
-        <KeepAlive :include="cache || []">
-          <component
-            :is="activeSidebarPlugin?.contentComponent"
-            :context="context"
-          />
-        </KeepAlive>
+        <component
+          :is="activeSidebarPlugin?.contentComponent"
+          :context="context"
+        />
       </div>
     </CommonLoader>
     <div

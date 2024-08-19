@@ -26,7 +26,18 @@ export const createApolloClient = (
       // https://www.apollographql.com/docs/react/data/queries/#setting-a-fetch-policy
       watchQuery: {
         fetchPolicy: 'cache-and-network',
-        nextFetchPolicy: 'cache-and-network',
+        nextFetchPolicy(currentFetchPolicy, { initialFetchPolicy, reason }) {
+          // If the initial fetch policy is cache-first, switch to cache-only to not trigger unwanted network requests.
+          if (
+            initialFetchPolicy === 'cache-first' &&
+            reason !== 'variables-changed'
+          ) {
+            return 'cache-only'
+          }
+
+          // Leave all other fetch policies unchanged.
+          return currentFetchPolicy
+        },
       },
     },
   })

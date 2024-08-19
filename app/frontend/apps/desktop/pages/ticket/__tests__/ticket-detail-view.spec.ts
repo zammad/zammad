@@ -227,6 +227,7 @@ describe('ticket detail view', () => {
 
     mockTicketChecklistQuery({
       ticketChecklist: {
+        id: convertToGraphQLId('Checklist', 1),
         name: 'Checklist title',
         items: [
           { text: 'Item 1', checked: true, ticketAccess: null, ticket: null },
@@ -247,6 +248,7 @@ describe('ticket detail view', () => {
     await getTicketChecklistUpdatesSubscriptionHandler().trigger({
       ticketChecklistUpdates: {
         ticketChecklist: {
+          id: convertToGraphQLId('Checklist', 1),
           name: 'Checklist title',
           items: [
             { text: 'Item 1', checked: true },
@@ -257,10 +259,16 @@ describe('ticket detail view', () => {
       },
     })
 
-    await view.events.click(checklistCheckboxes[0])
-
     expect(
       view.queryByRole('status', { name: 'Incomplete checklist items' }),
     ).not.toBeInTheDocument()
+
+    // Click manually in the frontend again on one of the checklist to show
+    // the incomplete state again(without a subscription = manual cache update).
+    await view.events.click(checklistCheckboxes[1])
+
+    expect(
+      await view.findByRole('status', { name: 'Incomplete checklist items' }),
+    ).toBeInTheDocument()
   })
 })

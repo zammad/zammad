@@ -1,22 +1,18 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, toValue } from 'vue'
+import { computed, type Ref } from 'vue'
 
 import { useTicketQuery } from '#shared/entities/ticket/graphql/queries/ticket.api.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
-import type { MaybeRefOrGetter } from '@vueuse/core'
-
-export const useTicketDataHandler = (ticketId: MaybeRefOrGetter<string>) => {
-  const graphqlTicketId = computed(() => toValue(ticketId))
-
+export const useTicketDataHandler = (ticketId: Ref<string>) => {
   const { createQueryErrorHandler } = useErrorHandler()
 
   const ticketQuery = new QueryHandler(
     useTicketQuery(
       () => ({
-        ticketId: graphqlTicketId.value,
+        ticketId: ticketId.value,
       }),
       { fetchPolicy: 'cache-first' },
     ),

@@ -40,7 +40,11 @@
           </label>
 
         <div class="checklistItemValue <% if !@readOnly: %>js-checklist-item-edit u-clickable<% end %>" <% if !@readOnly: %>data-table-action="edit"<% end %>>
-          <%- App.Utils.linkify(@object.text) || '-' %>
+          <% if @object.text: %>
+            <%- App.Utils.linkify(@object.text) %>
+          <% else if @readonly: %>
+            <%- '—' %>
+          <% end %>
         </div>
       <% end %>
 

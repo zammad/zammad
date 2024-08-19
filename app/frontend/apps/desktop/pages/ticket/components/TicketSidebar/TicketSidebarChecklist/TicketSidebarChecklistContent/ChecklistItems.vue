@@ -56,6 +56,7 @@ dragAndDrop({
   draggable: (el) => {
     // Library bug: The draggable attribute is not set always
     // Workaround to set the attribute manually
+    // https://github.com/formkit/drag-and-drop/issues/96
     el.setAttribute('draggable', isReordering.value.toString())
     return isReordering.value
   },
@@ -93,6 +94,7 @@ defineExpose({
   focusTitle: () => checklistTitleComponent.value?.activateEditing(),
   quitItemEditing: (index: number) =>
     checklistNodes.value?.at(index)?.quitEditing(),
+  quitReordering: resetOrder,
   focusNewItem,
 })
 </script>

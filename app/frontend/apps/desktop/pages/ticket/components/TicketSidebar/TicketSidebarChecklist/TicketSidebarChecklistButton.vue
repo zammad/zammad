@@ -30,7 +30,6 @@ const badge = computed<TicketSidebarButtonBadgeDetails | undefined>(() => {
   }
 })
 
-// TODO: Check if it's correct not to have any condition for showing the sidebar.
 onMounted(() => {
   emit('show')
 })
