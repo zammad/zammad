@@ -1,0 +1,19 @@
+#{config.product_name} login from a new country
+
+<div>Здравейте, #{user.firstname},</div>
+<br>
+<div>Изглежда, че сте използвали акаунта си с <b>познато устройство, но от нова държава</b> on "#{user_device.created_at}":</div>
+<br>
+<div>
+Вашето устройство: #{user_device.name}<br>
+Местоположение (relative): #{user_device.location}<br>
+Вашето IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Държавата е добавена към Вашия списък с познати устройства, които можете да видите тук:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Ако това не сте били Вие, моля, премахнете устройството, променете паролата на акаунта си и се свържете с Вашия администратор. Някой може да е получил неоторизиран достъп до Вашия акаунт.</div>
+<br>
+<div>Поздрави, #{config.product_name} </div>

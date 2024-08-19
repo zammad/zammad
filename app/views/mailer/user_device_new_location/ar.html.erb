@@ -1,0 +1,19 @@
+#{config.product_name} دخول من بلد جديد
+
+<div>مرحباً #{user.firstname},</div>
+<br>
+<div>يبدو أنك استخدمت حسابك مع <b>جهاز معروف ولكن من بلد جديد</b> على "#{user_device.created_at}":</div>
+<br>
+<div>
+جهازك : #{user_device.name}<br>
+موقعك (نسبي): #{user_device.location}<br>
+عنوان IP الخاص بك: #{user_device.ip}<br>
+</div>
+<br>
+<div>تمت إضافة البلد إلى قائمة الأجهزة المعروفة الخاصة بك ، والتي يمكنك عرضها هنا:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>إذا لم تكن أنت، فيرجى إزالة الجهاز وتغيير كلمة مرور حسابك والاتصال بالمسؤول. ربما حصل شخص ما على وصول غير مصرح به إلى حسابك.</div>
+<br>
+<div>فريق #{config.product_name}</div>

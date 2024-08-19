@@ -1,0 +1,11 @@
+Друг билет беше обединен в билет (#{ticket.title})
+
+<div>Здравейте #{recipient.firstname},</div>
+<br>
+<div>
+Друг билет беше обединен в билет (#{ticket.title}) от „<b>#{current_user.longname}</b>“.
+</div>
+<br>
+<div>
+ <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Вижте това в #{config.product_name}</ a>
+</div>

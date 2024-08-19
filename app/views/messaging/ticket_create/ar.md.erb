@@ -1,0 +1,9 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: تم الإنشاء بواسطة #{current_user.longname} في #{ticket.updated_at}_
+* المجموعة: #{ticket.group.name}
+* المالك: #{ticket.owner.fullname}
+* الحالة: #{t(ticket.state.name)}
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>
