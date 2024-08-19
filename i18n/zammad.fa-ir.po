@@ -725,7 +725,8 @@ msgstr ""
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts:72
 msgid ""
 "A newer version of the app is available. Please reload at your earliest."
-msgstr "نسخه جدید از برنامه در دسترس است. لطفا در اسرع وقت دوباره بارگیری کنید."
+msgstr ""
+"نسخه جدید از برنامه در دسترس است. لطفا در اسرع وقت دوباره بارگیری کنید."
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:156
 msgid "A powerful service to get more information about your customers."
@@ -2464,8 +2465,8 @@ msgstr "امکان یافتن کاربر برای توکن وجود ندارد"
 msgid ""
 "Can't update password, your entered passwords do not match. Please try again."
 msgstr ""
-"امکان به‌روزرسانی رمز عبور وجود ندارد، رمز عبور‌های واردشده یکسان نیستند. "
-"لطفا مجددا امتحان کنید."
+"امکان به‌روزرسانی رمز عبور وجود ندارد، رمز عبور‌های واردشده یکسان نیستند. لطفا "
+"مجددا امتحان کنید."
 
 #: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:380
@@ -7316,8 +7317,8 @@ msgid ""
 "How many of your tickets are coming from email, phone, Twitter, or Facebook? "
 "(Shows percentages for both inbound and outbound tickets.)"
 msgstr ""
-"چه تعدادی از تیکت‌های شما از طریق ایمیل، تماس تلفنی یا ... ایجاد شده‌اند؟ ("
-"هم مقادیر ورودی و هم خروجی را نشان می‌دهد.)"
+"چه تعدادی از تیکت‌های شما از طریق ایمیل، تماس تلفنی یا ... ایجاد شده‌اند؟ (هم "
+"مقادیر ورودی و هم خروجی را نشان می‌دهد.)"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_reopen.coffee:9
 msgid ""
@@ -7734,7 +7735,6 @@ msgstr "اطلاعات: %s"
 #: app/views/mailer/ticket_escalation/de.html.erb:9
 #: app/views/mailer/ticket_escalation/fr.html.erb:9
 #: app/views/mailer/ticket_escalation/it.html.erb:9
-#: app/views/mailer/ticket_escalation/zh-cn.html.erb:9
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:9
@@ -12120,8 +12120,8 @@ msgid ""
 "Security keys are hardware or software credentials that can be used as your "
 "two-factor authentication method."
 msgstr ""
-"کلیدهای امنیتی، گواهی‌نامه‌های سخت‌افزاری یا نرم‌افزاری هستند که می‌توان از "
-"آن‌ها به عنوان احراز هویت دوعاملی استفاده کرد."
+"کلیدهای امنیتی، گواهی‌نامه‌های سخت‌افزاری یا نرم‌افزاری هستند که می‌توان از آن‌ها "
+"به عنوان احراز هویت دوعاملی استفاده کرد."
 
 #: lib/external_data_source/errors.rb:28
 msgid "See HTTPLog for details."
@@ -16916,7 +16916,6 @@ msgstr "مشاهده از دید کاربر"
 #: app/views/mailer/ticket_create/zh-cn.html.erb:23
 #: app/views/mailer/ticket_create/zh-tw.html.erb:23
 #: app/views/mailer/ticket_escalation/it.html.erb:17
-#: app/views/mailer/ticket_escalation/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:17

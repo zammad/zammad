@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-13 20:14+0000\n"
+"PO-Revision-Date: 2024-08-19 08:42+0000\n"
 "Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
@@ -8185,7 +8185,6 @@ msgstr "Информация: %s"
 #: app/views/mailer/ticket_escalation/de.html.erb:9
 #: app/views/mailer/ticket_escalation/fr.html.erb:9
 #: app/views/mailer/ticket_escalation/it.html.erb:9
-#: app/views/mailer/ticket_escalation/zh-cn.html.erb:9
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/fr.html.erb:9
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:9
@@ -17267,7 +17266,6 @@ msgstr "Вид от имени пользователя"
 #: app/views/mailer/ticket_create/zh-cn.html.erb:23
 #: app/views/mailer/ticket_create/zh-tw.html.erb:23
 #: app/views/mailer/ticket_escalation/it.html.erb:17
-#: app/views/mailer/ticket_escalation/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation/zh-tw.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-cn.html.erb:17
 #: app/views/mailer/ticket_escalation_warning/zh-tw.html.erb:17
@@ -19005,7 +19003,7 @@ msgid "must be greater than or equal to %{count}"
 msgstr "должен(на/но) быть больше или равен(на/но) %{count}"
 
 msgid "must be in %{count}"
-msgstr "должно входить в %{count}"
+msgstr "должен(на/но) входить в %{count}"
 
 msgid "must be less than %{count}"
 msgstr "должен(на/но) быть меньше %{count}"
@@ -19021,29 +19019,30 @@ msgstr "должен(на/но) быть отличным(ой/ое) от %{coun
 
 #: app/models/knowledge_base.rb:213
 msgid "must begin with a slash (\"/\")"
-msgstr "должны начинаться со слэша (\"/\")"
+msgstr "должен(на/но) начинаться со слэша (\"/\")"
 
 msgid "must exist"
 msgstr "должен(на/но) существовать"
 
 #: app/models/knowledge_base.rb:221
 msgid "must not end with a slash (\"/\")"
-msgstr "не должно заканчиваться слэшем (\"/\")"
+msgstr "не должен(на/но) заканчиваться слэшем (\"/\")"
 
 #: app/models/knowledge_base.rb:217
 msgid "must not include a protocol (e.g., \"http://\" or \"https://\")"
-msgstr "не должен содержать протокол (например, \"http://\" или \"https://\")"
+msgstr ""
+"не должен(на/но) содержать протокол (например, \"http://\" или \"https://\")"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:44
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:60
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:47
 msgid "my own note"
-msgstr "мое собственное примечание"
+msgstr "моё примечание"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorNew.vue:5
 #: db/seeds/ticket_state_types.rb:3 db/seeds/ticket_states.rb:5
 msgid "new"
-msgstr "Новая"
+msgstr "новая"
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:17
 msgid "new & open"
@@ -19098,12 +19097,12 @@ msgstr "не задано"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:540
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:634
 msgid "not set (not defined)"
-msgstr "не установлено (не найдено)"
+msgstr "не задано (не определено)"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/note.coffee:15
 #: db/seeds/ticket_article_types.rb:12
 msgid "note"
-msgstr "заметка"
+msgstr "примечание"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:95
 msgid "notification sent to '%s'"
@@ -19120,7 +19119,7 @@ msgstr "Разрешены только строчные буквы, цифры 
 #: app/frontend/apps/mobile/components/CommonTicketStateList/CommonTicketStateList.vue:43
 #: db/seeds/ticket_state_types.rb:4 db/seeds/ticket_states.rb:11
 msgid "open"
-msgstr "Открыта"
+msgstr "открыта"
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:279
 msgid "optional"
@@ -19141,7 +19140,7 @@ msgstr "или войти используя"
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:18
 msgid "pending"
-msgstr "ожидаемый"
+msgstr "ожидающие"
 
 #: db/seeds/ticket_state_types.rb:6
 msgid "pending action"
@@ -19189,7 +19188,7 @@ msgstr "получено слиянием"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco:21
 msgid "recovery codes"
-msgstr "Коды восстановления"
+msgstr "коды восстановления"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:104
 msgid "relative"
@@ -19215,11 +19214,11 @@ msgstr "удалить вариант"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee:8
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:9
 msgid "reply"
-msgstr "Ответить"
+msgstr "ответить"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:53
 msgid "reply all"
-msgstr "Ответить всем"
+msgstr "ответить всем"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:111
 msgid "required"
@@ -19244,7 +19243,7 @@ msgstr "запустить макрос"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:43
 msgid "select"
-msgstr "Выбрать"
+msgstr "выбрать"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:335
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:464
@@ -19254,7 +19253,7 @@ msgstr "выбрать все параметры"
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:101
 msgid "select attachment…"
-msgstr "выберите вложение…"
+msgstr "выбрать вложение…"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:463
 msgid "select visible options"
