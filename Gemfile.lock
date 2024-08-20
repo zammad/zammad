@@ -193,7 +193,7 @@ GEM
     debug_inspector (1.2.0)
     delayed_job (4.1.12)
       activesupport (>= 3.0, < 8.0)
-    delayed_job_active_record (4.1.9)
+    delayed_job_active_record (4.1.10)
       activerecord (>= 3.0, < 8.0)
       delayed_job (>= 3.0, < 5)
     deprecation_toolkit (2.2.0)
