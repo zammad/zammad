@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-15 22:16+0000\n"
-"Last-Translator: deciouff <decioeduardo@id.uff.br>\n"
+"PO-Revision-Date: 2024-08-20 12:30+0000\n"
+"Last-Translator: \"Decio E. Silva\" <decio@verinatec.com.br>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/pt_BR/>\n"
 "Language: pt-br\n"
@@ -104,8 +104,8 @@ msgid ""
 msgstr ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Escalado em #{ticket.escalation_at}_\n"
-"O ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" foi escalado "
+"Tíquete##{ticket.number}>: Escalado em #{ticket.escalation_at}_\n"
+"O tíquete (#{ticket.title}) de \"#{ticket.customer.longname}\" foi escalado "
 "desde \"#{ticket.escalation_at}\"!\n"
 "\n"
 "<% if @objects[:article] %>\n"
@@ -129,7 +129,7 @@ msgid ""
 msgstr ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Última atualização em #{ticket.updated_at}_\n"
+"Tíquete##{ticket.number}>: Última atualização em #{ticket.updated_at}_\n"
 "* #{t('Group')}: #{ticket.group.name}\n"
 "* #{t('Owner')}: #{ticket.owner.fullname}\n"
 "* #{t('State')}: #{t(ticket.state.name)}\n"
@@ -154,8 +154,8 @@ msgid ""
 msgstr ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Lembrete!_\n"
-"Um ticket precisa de atenção, lembrete criado para (#{ticket.title}) com "
+"Tíquete##{ticket.number}>: Lembrete!_\n"
+"Um tíquete precisa de atenção, lembrete criado para (#{ticket.title}) com "
 "usuário \"*#{ticket.customer.longname}*\".\n"
 "\n"
 "<% if @objects[:article] %>\n"
@@ -182,7 +182,7 @@ msgid ""
 msgstr ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id} |"
-"Ticket##{ticket.number}>: Atualizado por #{current_user.longname} em "
+"Tíquete##{ticket.number}>: Atualizado por #{current_user.longname} em "
 "#{ticket.updated_at}\n"
 "<% if @objects[:changes].present? %>\n"
 "<% @objects[:changes].each do |key, value| %>\n"
@@ -210,8 +210,8 @@ msgid ""
 msgstr ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Vai ser escalado em #{ticket.escalation_at}_\n"
-"O ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" vai ser "
+"Tíquete##{ticket.number}>: Vai ser escalado em #{ticket.escalation_at}_\n"
+"O tíquete (#{ticket.title}) de \"#{ticket.customer.longname}\" vai ser "
 "escalado em \"#{ticket.escalation_at}\"!\n"
 "\n"
 "<% if @objects[:article] %>\n"
@@ -459,7 +459,7 @@ msgstr "%s criou o papel |%s|"
 #: app/assets/javascripts/app/models/ticket.coffee:109
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:24
 msgid "%s created ticket |%s|"
-msgstr "%s criou o ticket |%s|"
+msgstr "%s criou o tíquete |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee:199
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts:24
@@ -560,11 +560,11 @@ msgstr "%s de %s"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco:11
 msgid "%s of my tickets are currently in process."
-msgstr "%s dos meus Chamados estão em progresso."
+msgstr "%s dos meus tíquetes estão em progresso."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:11
 msgid "%s of my tickets escalated"
-msgstr "%s dos meus tickets escaladas"
+msgstr "%s dos meus tíquetes escaladas"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 msgid "%s people"
@@ -600,11 +600,11 @@ msgstr "%s alternou para |%s|!"
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue:54
 #: app/frontend/apps/mobile/components/User/UserItem.vue:30
 msgid "%s tickets"
-msgstr "%s tickets"
+msgstr "%s tíquetes"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:118
 msgid "%s tickets found"
-msgstr "%s chamados encontrados"
+msgstr "%s tíquetes encontrados"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:26
@@ -636,7 +636,7 @@ msgstr "%s atualizou o papel |%s|"
 #: app/assets/javascripts/app/models/ticket.coffee:111
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:26
 msgid "%s updated ticket |%s|"
-msgstr "%s atualizou o ticket |%s|"
+msgstr "%s atualizou o tíquete |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee:201
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts:26
@@ -698,7 +698,7 @@ msgid ""
 "the **Accounted Time** tab."
 msgstr ""
 "**Tipos de Atividade** podem ser usados para agrupar as diferentes entradas "
-"de contabilização de tempo de ticket. Por exemplo, entradas que são "
+"de contabilização de tempo de tíquete. Por exemplo, entradas que são "
 "relevantes para um tipo \"Faturamento\".\n"
 "\n"
 "Quando você habilita o registro do tipo de atividade, os usuários poderão "
@@ -721,7 +721,7 @@ msgstr ""
 "** Privacidade de Dados ** ajuda você a excluir e verificar a remoção de "
 "dados existentes do sistema.\n"
 "\n"
-"Ele pode ser usado para excluir tickets, organizações e usuários. A "
+"Ele pode ser usado para excluir tíquetes, organizações e usuários. A "
 "atribuição do proprietário será desativada caso o usuário excluído seja um "
 "agente.\n"
 "\n"
@@ -752,12 +752,12 @@ msgstr ""
 "sistema irá alertá-lo.\n"
 "\n"
 "Você pode definir metas para três métricas diferentes: **tempo de resposta** "
-"(tempo entre a criação de um ticket e a primeira reação de um agente), "
+"(tempo entre a criação de um tíquete e a primeira reação de um agente), "
 "**tempo de atualização** (tempo entre a solicitação de um cliente e a reação "
 "de um agente), e **tempo de solução** (tempo entre a criação e o fechamento "
-"de um ticket).\n"
+"de um tíquete).\n"
 "\n"
-"Todos os tickets escalados (ou seja, tickets que não atingiram o objetivo "
+"Todos os tíquetes escalados (ou seja, tíquetes que não atingiram o objetivo "
 "definido) são exibidos em uma exibição separada em suas visões gerais. Você "
 "também pode configurar **notificações por e-mail**."
 
@@ -807,7 +807,7 @@ msgstr "1 ano atrás"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:22
 msgid "1. Ticket Create"
-msgstr "1. Criar Ticket"
+msgstr "1. Criar Tíquete"
 
 #: db/seeds/settings.rb:1106
 msgid "2 hours"
@@ -827,7 +827,7 @@ msgstr "2 semanas"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:23
 msgid "2. Ticket Update"
-msgstr "2. Atualizar Ticket"
+msgstr "2. Atualizar Tíquete"
 
 #: db/seeds/ticket_priorities.rb:5
 msgid "3 high"
@@ -839,7 +839,7 @@ msgstr "3 semanas"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:24
 msgid "3. Ticket Reminder Reached"
-msgstr "4. Lembrete de Ticket"
+msgstr "4. Lembrete de Tíquete"
 
 #: db/seeds/settings.rb:1106
 msgid "4 weeks"
@@ -847,11 +847,11 @@ msgstr "4 semanas"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:25
 msgid "4. Ticket Escalation"
-msgstr "4. Escalonamento de Ticket"
+msgstr "4. Escalonamento de Tíquete"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:26
 msgid "5. Ticket Escalation Warning"
-msgstr "5. Aviso de Escalonamento de Ticket"
+msgstr "5. Aviso de Escalonamento de Tíquete"
 
 #: public/assets/chat/chat-no-jquery.coffee:167
 #: public/assets/chat/chat.coffee:165
@@ -870,16 +870,15 @@ msgid ""
 "If you have customers with different business hours, you can create multiple "
 "calendars. Tickets are linked to calendars using **SLAs**."
 msgstr ""
-"Um **calendário** é necessário para calcular os encaminhamentos com base no "
-"horário comercial e enviar notificações de encaminhamento.\n"
+"Um **calendário** é necessário para calcular as escalas com base no horário "
+"comercial e enviar notificações de escalonamento.\n"
 "\n"
-"Defina um calendário **\"padrão\"** válido em todo o sistema. As "
-"notificações de escalação só serão enviadas aos seus agentes durante o "
-"horário comercial definido.\n"
+"Defina um **calendário \"padrão\"** válido para todo o sistema. As "
+"notificações de escalonamento serão enviadas aos seus agentes apenas durante "
+"o horário comercial definido.\n"
 "\n"
-"Se você tiver clientes com horários comerciais diferentes, poderá criar "
-"vários calendários. Os ingressos são vinculados a calendários usando "
-"**SLAs**."
+"Se você tiver clientes com horários comerciais diferentes, pode criar vários "
+"calendários. Os tíquetes são vinculados aos calendários por meio de **SLAs**."
 
 #: db/seeds/settings.rb:3859
 msgid "A list of active import backends that gets scheduled automatically."
@@ -888,7 +887,7 @@ msgstr ""
 
 #: lib/validations/mention_validator.rb:7
 msgid "A mentioned user has no agent access to this ticket"
-msgstr "O usuário mencionado não tem acesso de agente a este ticket"
+msgstr "O usuário mencionado não tem acesso de agente a este tíquete"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:26
 msgid ""
@@ -930,12 +929,12 @@ msgstr ""
 msgid ""
 "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr ""
-"Um Ticket de Teste foi criado, você pode procurar na sua Visão Geral \"%s\" "
+"Um tíquete de teste foi criado, você pode procurar na sua Visão Geral \"%s\" "
 "%l."
 
 #: app/models/ticket.rb:279
 msgid "A ticket cannot be merged into itself."
-msgstr "Um ticket não poder ser agrupado com ele mesmo."
+msgstr "Um tíquete não poder ser agrupado com ele mesmo."
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee
 msgid ""
@@ -1295,7 +1294,7 @@ msgstr "Adicione o texto do contrato antes de enviar."
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:34
 msgid "Add alarm to pending reminder and escalated tickets."
-msgstr "Adicionar alarme em chamados pendentes e escalonados."
+msgstr "Adicionar alarme em tíquetes pendentes e escalonados."
 
 #: app/frontend/shared/form/i18n/locales.ts:72
 msgid "Add all values"
@@ -1378,7 +1377,7 @@ msgstr "Informações adicionais e links"
 
 #: db/seeds/settings.rb:848
 msgid "Additional notes for ticket create types."
-msgstr "Notas adicionais para tipos de criação de chamados."
+msgstr "Notas adicionais para tipos de criação de tíquetes."
 
 #: db/seeds/object_manager_attributes.rb:1208
 msgid "Address"
@@ -1524,7 +1523,7 @@ msgstr "AlarmEe"
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco:8
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:30
 msgid "All Tickets"
-msgstr "todos chamados"
+msgstr "Todos os Tíquetes"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:115
 msgid ""
@@ -1677,7 +1676,7 @@ msgstr "Ocorreu um erro inesperado durante a configuração do sistema."
 
 #: lib/calendar_subscriptions.rb:50
 msgid "An unknown method name was requested."
-msgstr "Um nome de método desconhecido foi solicitado."
+msgstr "Foi solicitado um nome de método desconhecido."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:187
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:147
@@ -3017,7 +3016,7 @@ msgstr "Escolha a data"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco:35
 msgid "Choose if retweets should also be converted to tickets."
-msgstr "Escolha se retweets devem ser convertidos em chamados."
+msgstr "Escolha se retweets devem ser convertidos em tíquetes."
 
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco:10
 msgid ""
@@ -3228,7 +3227,7 @@ msgstr "Fechar aba"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:37
 #: db/seeds/settings.rb:2888
 msgid "Close tab on ticket close"
-msgstr "Fechar aba ao fechar o chamado"
+msgstr "Fechar aba ao fechar o tíquete"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:16
 #: app/models/report.rb:30
@@ -3243,7 +3242,7 @@ msgstr "Fechado em"
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee:120
 #: app/assets/javascripts/app/controllers/widget/user.coffee:80
 msgid "Closed Tickets"
-msgstr "chamados fechados"
+msgstr "Tíquetes Fechados"
 
 #: app/assets/javascripts/app/models/ticket.coffee:25
 #: app/graphql/gql/types/overview_type.rb:78
@@ -3546,7 +3545,7 @@ msgstr "A conversa foi transferida para outro chat. Por favor fique atento."
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:77
 msgid "Conversion of retweets into tickets is turned off."
-msgstr "Conversão de retweets em chamados está desabilitada."
+msgstr "Conversão de retweets em tíquetes está desabilitada."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_base.coffee:123
 msgid "Copied!"
@@ -3996,7 +3995,7 @@ msgid ""
 "Customer tickets of the user will get deleted on execution of the task. No "
 "rollback possible."
 msgstr ""
-"Os chamados do cliente do usuário serão excluídos na execução da tarefa. Não "
+"Os tíquetes do cliente do usuário serão excluídos na execução da tarefa. Não "
 "será possível reverter."
 
 #: app/assets/javascripts/app/models/organization.coffee:7
@@ -4476,7 +4475,7 @@ msgstr "Define se o Slack (http://www.slack.org) está habilitado ou não."
 
 #: db/seeds/settings.rb:2826
 msgid "Defines if a customer can create tickets via the web interface."
-msgstr "Define se o cliente pode criar chamados pela Web."
+msgstr "Define se o cliente pode criar tíquetes pela Web."
 
 #: db/seeds/settings.rb:20
 msgid "Defines if application is in init mode."
@@ -4582,7 +4581,7 @@ msgstr ""
 msgid ""
 "Defines if the ticket conditions editor supports complex logical expressions."
 msgstr ""
-"Define se as condições do editor do chamado suporta expressões lógicas "
+"Define se as condições do editor do tíquete suporta expressões lógicas "
 "complexas."
 
 #: db/seeds/settings.rb:2275
@@ -4931,7 +4930,7 @@ msgstr ""
 "Define o nome de dominio qualificado do sistema. Isso se transforma numa "
 "variável, #{setting.fqdn} que é utiliizada em todos os tipos de mensagens "
 "usadas por esta aplicação, alem de servir para construir links de URL que "
-"apontam diretamente para os chamados existentes neste sistema."
+"apontam diretamente para os tíquetes existentes neste sistema."
 
 #: db/seeds/settings.rb:4524
 msgid "Defines the group of created tickets."
@@ -5033,13 +5032,13 @@ msgid ""
 "follow-ups (useful when communicating between two instances of Zammad)."
 msgstr ""
 "Define o identificador numérico do sistema. Todo chamado contem este ID. "
-"Serve para garantir que apenas chamados gerados pelo seu sistema serão "
+"Serve para garantir que apenas tíquetes gerados pelo seu sistema serão "
 "respondidos corretamente com follow-up (util caso exista comunicação entre "
 "dois sistemas Zammad)."
 
 #: db/seeds/settings.rb:2878
 msgid "Defines the tab behaviour after a ticket action."
-msgstr "Define o comportamento da guia depois de uma ação de Chamado."
+msgstr "Define o comportamento da guia depois de uma ação de tíquete."
 
 #: db/seeds/settings.rb:2673
 msgid "Defines the ticket states used for lookups."
@@ -5937,7 +5936,7 @@ msgstr "Habilitar Códigos de Recuperação"
 
 #: db/seeds/settings.rb:2823
 msgid "Enable Ticket creation"
-msgstr "Habilitar criação de Chamados"
+msgstr "Habilitar criação de Tíquete"
 
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:6
 msgid ""
@@ -10080,7 +10079,7 @@ msgstr ""
 "Nenhum webhook disponível, crie um novo ou ative um existente em \"Gerenciar "
 "> Webhook\""
 
-#: app/models/channel/email_parser.rb:108
+#: app/models/channel/email_parser.rb:109
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Sem x-zammad-session-user-id, sem conjunto de remetentes!"
 

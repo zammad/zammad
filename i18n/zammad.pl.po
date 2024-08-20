@@ -10092,7 +10092,7 @@ msgstr ""
 "Brak dostępnego webhooka, utwórz nowy lub aktywuj istniejący w „Zarządzaj > "
 "Webhook”"
 
-#: app/models/channel/email_parser.rb:108
+#: app/models/channel/email_parser.rb:109
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 "Brak identyfikatora użytkownika x-zammad-session, brak ustawionego nadawcy!"

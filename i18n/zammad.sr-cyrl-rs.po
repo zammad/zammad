@@ -9989,7 +9989,7 @@ msgstr ""
 "Нема доступних повратних позива, молимо додајте нови или активирајте "
 "постојећи у „Управљање > Повратни позив”"
 
-#: app/models/channel/email_parser.rb:108
+#: app/models/channel/email_parser.rb:109
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Без x-zammad-session-user-id, пошиљалац није подешен!"
 

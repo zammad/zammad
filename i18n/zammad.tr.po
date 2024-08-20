@@ -10540,7 +10540,7 @@ msgstr ""
 "Webhook mevcut değil, lütfen \"Yönet > Webhook\" adresinden yeni bir tane "
 "oluşturun veya mevcut olanı etkinleştirin"
 
-#: app/models/channel/email_parser.rb:108
+#: app/models/channel/email_parser.rb:109
 #, fuzzy
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "True"

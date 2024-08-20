@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-19 08:42+0000\n"
+"PO-Revision-Date: 2024-08-20 12:30+0000\n"
 "Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
@@ -10145,7 +10145,7 @@ msgstr ""
 "Веб-перехватчик (webhook) недоступен. Создайте новый или активируйте "
 "существующий в разделе «Управление > Веб-перехватчик (Webhook)»"
 
-#: app/models/channel/email_parser.rb:108
+#: app/models/channel/email_parser.rb:109
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Ни x-zammad-session-user-id, ни отправителя не задано!"
 

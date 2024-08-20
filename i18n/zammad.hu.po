@@ -10185,7 +10185,7 @@ msgstr ""
 "Nincs elérhető webhook, kérjük, hozzon létre egy újat vagy aktiváljon egy "
 "meglévőt a \"Kezelés > Webhook\" menüpontban"
 
-#: app/models/channel/email_parser.rb:108
+#: app/models/channel/email_parser.rb:109
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Nincs x-zammad-session-user-id, nincs beállított feladó!"
 

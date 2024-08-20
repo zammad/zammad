@@ -10014,7 +10014,7 @@ msgstr ""
 "Nema dostupnih webhook-ova, molimo dodajte novi ili aktivirajte postojeći u "
 "„Upravljanje > Webhook”"
 
-#: app/models/channel/email_parser.rb:108
+#: app/models/channel/email_parser.rb:109
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Bez x-zammad-session-user-id, pošiljatelj nije postavljen!"
 

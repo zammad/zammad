@@ -10007,7 +10007,7 @@ msgstr ""
 "Ingen webhook tillgänglig, skapa en ny eller aktivera en befintlig i "
 "\"Hantera > Webhook\""
 
-#: app/models/channel/email_parser.rb:108
+#: app/models/channel/email_parser.rb:109
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Inget x-zammad-session-user-id, ingen avsändare angiven!"
 

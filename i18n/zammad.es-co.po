@@ -10630,7 +10630,7 @@ msgstr ""
 "No hay webhook disponible, cree uno nuevo o active uno existente en "
 "\"Administrar > Webhook\""
 
-#: app/models/channel/email_parser.rb:108
+#: app/models/channel/email_parser.rb:109
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "¡Sin x-zammad-session-user-id, sin remitente establecido!"
 

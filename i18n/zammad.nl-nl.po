@@ -10064,7 +10064,7 @@ msgstr ""
 "Geen webhook beschikbaar, maak een nieuwe aan of activeer een bestaande via "
 "\"Beheer > Webhook\""
 
-#: app/models/channel/email_parser.rb:108
+#: app/models/channel/email_parser.rb:109
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Geen x-zammad-session-user-id, geen afzender ingesteld!"
 

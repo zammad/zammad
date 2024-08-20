@@ -10114,7 +10114,7 @@ msgstr ""
 "Nessun webhook disponibile, per favore creane uno nuovo o attivane uno "
 "esistente andando in \"Gestione > Webhook\""
 
-#: app/models/channel/email_parser.rb:108
+#: app/models/channel/email_parser.rb:109
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 "Intestazione x-zammad-session-user-id mancante, nessun mittente impostato!"

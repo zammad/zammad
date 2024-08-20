@@ -10135,7 +10135,7 @@ msgstr ""
 "Əlçatan webhook yoxdur, lütfən yenisini yaradın və ya mövcud olanı \"Manage "
 "> Webhook\" bölməsində aktivləşdirin."
 
-#: app/models/channel/email_parser.rb:108
+#: app/models/channel/email_parser.rb:109
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 

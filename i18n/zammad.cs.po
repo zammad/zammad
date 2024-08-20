@@ -10310,7 +10310,7 @@ msgstr ""
 "Není k dispozici žádný webhook, prosím vytvořte nový nebo aktivujte "
 "existující v části \"Správa > Webhook\""
 
-#: app/models/channel/email_parser.rb:108
+#: app/models/channel/email_parser.rb:109
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Žádný x-zammad-session-user-id, žádný nastavený odesílatel!"
 
