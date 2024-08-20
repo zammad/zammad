@@ -56,6 +56,40 @@ RSpec.describe FailedEmail, :aggregate_failures, type: :model do
       end
     end
 
+    context 'when it succeeds and an ignore postmaster filter exists' do
+      let!(:failed_email) { create(:failed_email, :invalid) }
+
+      # init postmaster filter
+      before do
+        failed_email.data = "From: ME Bob <me@example.com>\nTo: customer@example.com\nSubject: some subject\n\nSome Text"
+        failed_email.save!
+
+        create(:postmaster_filter,
+               match:   {
+                 'subject' => {
+                   'operator' => 'contains',
+                   'value'    => 'subject',
+                 },
+               },
+               perform: {
+                 'x-zammad-ignore' => { 'value' => 'true' },
+               },)
+      end
+
+      it 'destroys entry' do
+        failed_email.reprocess
+        expect(failed_email).to be_destroyed
+      end
+
+      it 'does not create a ticket' do
+        expect { failed_email.reprocess }.not_to change(Ticket, :count)
+      end
+
+      it 'successfully processed by postmaster filter' do
+        expect(failed_email.reprocess).to eq({})
+      end
+    end
+
     context 'when it fails' do
       before do
         allow_any_instance_of(Channel::EmailParser)
