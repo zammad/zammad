@@ -1,6 +1,6 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Vai ser escalado em #{ticket.escalation_at}_
-O ticket (#{ticket.title}) de "#{ticket.customer.longname}" vai ser escalado em "#{ticket.escalation_at}"!
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Tíquete##{ticket.number}>: Vai ser escalado em #{ticket.escalation_at}_
+O tíquete (#{ticket.title}) de "#{ticket.customer.longname}" vai ser escalado em "#{ticket.escalation_at}"!
 
 <% if @objects[:article] %>
 #{article.body_as_text}
