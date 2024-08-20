@@ -399,7 +399,7 @@ msgstr "%s Öznitelik"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:71
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:70
 #, fuzzy
 #| msgid "Checksum"
 msgid "%s Checklist"
@@ -1341,7 +1341,7 @@ msgstr "Bot Ekle"
 msgid "Add Certificate"
 msgstr "Sertifika Ekle"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:419
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:418
 msgid "Add Empty Checklist"
 msgstr ""
 
@@ -3006,7 +3006,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:195
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:197
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:259
@@ -3260,7 +3260,7 @@ msgstr "'Kanal' akışlarını kontrol edin."
 msgid "Check channels."
 msgstr "Kanalları kontrol edin."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:61
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:65
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:52
 #, fuzzy
 #| msgid "Checkmk"
@@ -3281,7 +3281,7 @@ msgstr ""
 "işaretleyin. Kutu işaretlenmezse, değerler alfabetik sıraya göre sıralanır."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:57
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:40
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:392
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:12
 #, fuzzy
 #| msgid "Checksum"
@@ -4061,6 +4061,10 @@ msgid ""
 msgstr ""
 "Bu kullanıcı için iki faktörlü kimlik doğrulama yapılandırması yüklenemedi."
 
+#: app/models/channel/email_parser.rb:32
+msgid "Could not parse any sender attribute from the email. Checked fields:"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/signup.coffee:133
 msgid "Could not process your request"
 msgstr ""
@@ -4220,7 +4224,7 @@ msgstr "Destek Talebi Oluştur"
 msgid "Create a Test Ticket"
 msgstr "Test Destek Talebi Oluşturun"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:204
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:206
 #, fuzzy
 #| msgid "Create new customer"
 msgid "Create a new checklist item"
@@ -6423,13 +6427,13 @@ msgstr "Edit Organization"
 msgid "Edit authenticator app"
 msgstr "Kimlik Doğrulayıcı Uygulaması"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:113
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:115
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Edit checklist title"
 msgstr "Konu güncellenmesi"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:77
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:81
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:69
 #, fuzzy
 #| msgid "Edit mask"
@@ -7490,13 +7494,13 @@ msgstr "facebook akış gönderisi"
 msgid "Failed Tasks"
 msgstr "True"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:162
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:161
 #, fuzzy
 #| msgid "Create new customer"
 msgid "Failed to add new checklist item."
 msgstr "Yeni müşteri oluştur"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:183
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:182
 #, fuzzy
 #| msgid "Create new customer"
 msgid "Failed to delete checklist item."
@@ -7514,7 +7518,7 @@ msgstr "True"
 msgid "Failed to roll back the migration of the channel!"
 msgstr "True"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:169
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:168
 msgid "Failed to save checklist order."
 msgstr ""
 
@@ -7537,7 +7541,7 @@ msgstr ""
 msgid "Failed to set up QR code. Please try again."
 msgstr "Geçersiz güvenlik kodu! Lütfen yeni bir kodla tekrar deneyin."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:176
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:175
 #, fuzzy
 #| msgid "Create new customer"
 msgid "Failed to update checklist item."
@@ -9500,7 +9504,7 @@ msgstr "True"
 msgid "Invalid GitHub GraphQL API token"
 msgstr "True"
 
-#: lib/github/linked_issue.rb:102
+#: lib/github/linked_issue.rb:104
 msgid "Invalid GitHub issue link format"
 msgstr "Geçersiz GitHub issue bağlantı formatı"
 
@@ -9509,7 +9513,7 @@ msgstr "Geçersiz GitHub issue bağlantı formatı"
 msgid "Invalid GitLab GraphQL API token"
 msgstr "True"
 
-#: lib/gitlab/linked_issue.rb:102
+#: lib/gitlab/linked_issue.rb:122
 msgid "Invalid GitLab issue link format"
 msgstr "Geçersiz GitHub issue bağlantı formatı"
 
@@ -11911,13 +11915,13 @@ msgid "No certificate found."
 msgstr "True"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:432
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:431
 #, fuzzy
 #| msgid "You have not created a ticket yet."
 msgid "No checklist added to this ticket yet."
 msgstr "Herhangi bir arıza bildirimi oluşturulmamıştır."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:180
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:182
 msgid "No checklist items yet"
 msgstr ""
 
@@ -12108,7 +12112,7 @@ msgstr ""
 "Webhook mevcut değil, lütfen \"Yönet > Webhook\" adresinden yeni bir tane "
 "oluşturun veya mevcut olanı etkinleştirin"
 
-#: app/models/channel/email_parser.rb:108
+#: app/models/channel/email_parser.rb:119
 #, fuzzy
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "True"
@@ -14168,7 +14172,7 @@ msgid "Remove authenticator app"
 msgstr "Kimlik Doğrulayıcı Uygulaması"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:25
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:378
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:377
 #, fuzzy
 #| msgid "Remove"
 msgid "Remove checklist"
@@ -14186,7 +14190,7 @@ msgstr "Removes the formatting"
 msgid "Remove image"
 msgstr "Kaldır"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:85
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:89
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:75
 #, fuzzy
 #| msgid "Remove"
@@ -14228,7 +14232,7 @@ msgid "Removes the shadows for a flat look."
 msgstr "Removes the shadows for a flat look."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:20
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:371
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:370
 msgid "Rename checklist"
 msgstr ""
 
@@ -14254,7 +14258,7 @@ msgid "Reopening time in days"
 msgstr "Yeniden açılma oranı"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:14
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:189
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:191
 #, fuzzy
 #| msgid "Order"
 msgid "Reorder"
@@ -14867,7 +14871,7 @@ msgstr "Cumartesi"
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:121
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:217
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:219
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:70
@@ -19494,7 +19498,7 @@ msgid ""
 msgstr "True\n"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
-#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:26
+#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:22
 msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
 msgstr ""
@@ -20296,7 +20300,7 @@ msgstr "Unassigned & Open"
 msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr "Unassigned email addresses, assign them to a channel or delete them."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:69
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:73
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:60
 #, fuzzy
 #| msgid "Select item"
@@ -21787,7 +21791,7 @@ msgid "You have insufficient rights to view this organization."
 msgstr "Bu organizasyonu görüntülemek için yeterli hakkınız yok."
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
-#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:28
+#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:24
 msgid "You have insufficient rights to view this ticket."
 msgstr "Bu bileti görüntülemek için yeterli hakkınız yok."
 

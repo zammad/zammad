@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-16 09:16+0000\n"
+"PO-Revision-Date: 2024-08-20 09:16+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -393,7 +393,7 @@ msgstr "%s атрибут"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:71
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:70
 msgid "%s Checklist"
 msgstr "Списак задатака за %s"
 
@@ -691,10 +691,8 @@ msgid "(state: %s)"
 msgstr "(стање: %s)"
 
 #: app/frontend/apps/desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue:58
-#, fuzzy
-#| msgid "(state: %s)"
 msgid "(ticket status: %s)"
-msgstr "(стање: %s)"
+msgstr "(стање тикета: %s)"
 
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 msgid ""
@@ -1300,7 +1298,7 @@ msgstr "Додај бота"
 msgid "Add Certificate"
 msgstr "Додај сертификат"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:419
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:418
 msgid "Add Empty Checklist"
 msgstr "Додај празан списак"
 
@@ -2896,7 +2894,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:195
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:197
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:259
@@ -3140,7 +3138,7 @@ msgstr "Проверава изворе ’Канала’."
 msgid "Check channels."
 msgstr "Проверава канале."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:61
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:65
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:52
 msgid "Check item"
 msgstr "Означи задатак"
@@ -3159,7 +3157,7 @@ msgstr ""
 "није укључено, вредности ће бити сортиране азбучним редоследом."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:57
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:40
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:392
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:12
 msgid "Checklist"
 msgstr "Списак задатака"
@@ -3178,17 +3176,15 @@ msgstr "Шаблон списка задатака"
 
 #: app/models/checklist_template/item.rb:32
 msgid "Checklist Template items are limited to 100 items per checklist."
-msgstr ""
+msgstr "Шаблони списка су ограничени на 100 задатака по списку."
 
 #: app/controllers/ticket_checklist_controller.rb:17
 msgid "Checklist is already created for this ticket"
 msgstr "Списак задатака већ постоји за овај тикет"
 
 #: app/models/checklist/item.rb:87
-#, fuzzy
-#| msgid "The given checklist item does not belong to the given checklist."
 msgid "Checklist items are limited to 100 items per checklist."
-msgstr "Задатак не припада наведеном списку."
+msgstr "Спискови су ограничени на 100 задатака по списку."
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:3
@@ -3887,9 +3883,13 @@ msgstr ""
 "Није било могуће учитати конфигурацију двофакторске аутентификације "
 "корисника."
 
+#: app/models/channel/email_parser.rb:32
+msgid "Could not parse any sender attribute from the email. Checked fields:"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/signup.coffee:133
 msgid "Could not process your request"
-msgstr ""
+msgstr "Није било могуће обрадити ваш захтев"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:135
 msgid "Could not remove all two-factor authentication methods for this user."
@@ -3919,10 +3919,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/link.coffee:69
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:106
-#, fuzzy
-#| msgid "Save changes"
 msgid "Couldn't save changes"
-msgstr "Сачувај измене"
+msgstr "Није било могуће сачувати измене"
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco:5
 msgid "Count"
@@ -4045,7 +4043,7 @@ msgstr "Отвори тикет"
 msgid "Create a Test Ticket"
 msgstr "Отвори пробни тикет"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:204
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:206
 msgid "Create a new checklist item"
 msgstr "Додај нови задатак"
 
@@ -6141,11 +6139,11 @@ msgstr "Измени организацију"
 msgid "Edit authenticator app"
 msgstr "Уреди апликацију за аутентификацију"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:113
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:115
 msgid "Edit checklist title"
 msgstr "Уреди наслов списка"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:77
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:81
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:69
 msgid "Edit item"
 msgstr "Уреди задатак"
@@ -7163,17 +7161,13 @@ msgstr "Facebook порука тока активности"
 msgid "Failed Tasks"
 msgstr "Неуспели захтеви"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:162
-#, fuzzy
-#| msgid "Create a new checklist item"
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:161
 msgid "Failed to add new checklist item."
-msgstr "Додај нови задатак"
+msgstr "Грешка при додавању новог задатка на списак."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:183
-#, fuzzy
-#| msgid "Create a new checklist item"
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:182
 msgid "Failed to delete checklist item."
-msgstr "Додај нови задатак"
+msgstr "Грешка при брисању задатка са списка."
 
 #: app/controllers/channels_google_controller.rb:96
 #: app/controllers/channels_microsoft365_controller.rb:96
@@ -7185,15 +7179,13 @@ msgstr "Резервна копија на каналу није пронађе�
 msgid "Failed to roll back the migration of the channel!"
 msgstr "Неуспешно поништавање миграције канала!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:169
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:168
 msgid "Failed to save checklist order."
-msgstr ""
+msgstr "Грешка при снимању редоследа списка."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:122
-#, fuzzy
-#| msgid "Failed to set up QR code. Please try again."
 msgid "Failed to save the order of the checklist items. Please try again."
-msgstr "Није било могуће приказати QR код. Молимо покушајте поново."
+msgstr "Грешка при снимању редоследа списка. Молимо покушајте поново."
 
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:52
 msgid "Failed to send email to \"%s\". Please contact an administrator."
@@ -7204,11 +7196,9 @@ msgstr ""
 msgid "Failed to set up QR code. Please try again."
 msgstr "Није било могуће приказати QR код. Молимо покушајте поново."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:176
-#, fuzzy
-#| msgid "Create a new checklist item"
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:175
 msgid "Failed to update checklist item."
-msgstr "Додај нови задатак"
+msgstr "Грешка при снимању задатка."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageFailedUploadOverlay.vue:23
 msgid "Failed to upload."
@@ -8711,8 +8701,6 @@ msgid "Incomplete Ticket Checklist"
 msgstr "Некомплетан списак задатака"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistButton.vue:22
-#, fuzzy
-#| msgid "Incomplete Ticket Checklist"
 msgid "Incomplete checklist items"
 msgstr "Некомплетан списак задатака"
 
@@ -8915,7 +8903,7 @@ msgstr "Неисправни BasicAuth креденцијали"
 msgid "Invalid GitHub GraphQL API token"
 msgstr "Неисправан GitHub GraphQL API кључ"
 
-#: lib/github/linked_issue.rb:102
+#: lib/github/linked_issue.rb:104
 msgid "Invalid GitHub issue link format"
 msgstr "Неисправан формат GitHub извештаја"
 
@@ -8923,7 +8911,7 @@ msgstr "Неисправан формат GitHub извештаја"
 msgid "Invalid GitLab GraphQL API token"
 msgstr "Неисправан GitLab GraphQL API кључ"
 
-#: lib/gitlab/linked_issue.rb:102
+#: lib/gitlab/linked_issue.rb:122
 msgid "Invalid GitLab issue link format"
 msgstr "Неисправан формат GitLab извештаја"
 
@@ -9025,10 +9013,8 @@ msgid "Invalid video URL"
 msgstr "Неисправан видео URL"
 
 #: app/assets/javascripts/app/controllers/layout_ref.coffee:650
-#, fuzzy
-#| msgid "Invitation sent!"
 msgid "Invitation sent to %s"
-msgstr "Послата позивница!"
+msgstr "Послата позивница на %s"
 
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee:78
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:100
@@ -10997,11 +10983,11 @@ msgid "No certificate found."
 msgstr "Није пронађен сертификат."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:432
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:431
 msgid "No checklist added to this ticket yet."
 msgstr "Списак задатака још није додат у овај тикет."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:180
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:182
 msgid "No checklist items yet"
 msgstr "Без задатака за сада"
 
@@ -11163,7 +11149,7 @@ msgstr ""
 "Нема доступних повратних позива, молимо додајте нови или активирајте "
 "постојећи у „Управљање > Повратни позив”"
 
-#: app/models/channel/email_parser.rb:108
+#: app/models/channel/email_parser.rb:119
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Без x-zammad-session-user-id, пошиљалац није подешен!"
 
@@ -12921,7 +12907,7 @@ msgid "Remove authenticator app"
 msgstr "Уклони апликацију за аутентификацију"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:25
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:378
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:377
 msgid "Remove checklist"
 msgstr "Обриши списак"
 
@@ -12933,7 +12919,7 @@ msgstr "Уклони форматирање"
 msgid "Remove image"
 msgstr "Уклони слику"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:85
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:89
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:75
 msgid "Remove item"
 msgstr "Уклони задатак"
@@ -12967,7 +12953,7 @@ msgid "Removes the shadows for a flat look."
 msgstr "Уклања сенке за пљоснатији изглед."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:20
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:371
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:370
 msgid "Rename checklist"
 msgstr "Промени наслов списка"
 
@@ -12989,7 +12975,7 @@ msgid "Reopening time in days"
 msgstr "Време поновног отварања у данима"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:14
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:189
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:191
 msgid "Reorder"
 msgstr "Измени редослед"
 
@@ -13529,7 +13515,7 @@ msgstr "субота"
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:121
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:217
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:219
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:70
@@ -17498,7 +17484,7 @@ msgstr ""
 "</div>\n"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
-#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:26
+#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:22
 msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
 msgstr "Није пронађен тикет под траженим ID. Проверите URL путању на грешке."
@@ -18215,7 +18201,7 @@ msgstr "Недодељени и отворени тикети"
 msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr "Недодељена имејл адреса, доделите је каналу или избришите."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:69
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:73
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:60
 msgid "Uncheck item"
 msgstr "Одзначи задатак"
@@ -19582,7 +19568,7 @@ msgid "You have insufficient rights to view this organization."
 msgstr "Немате дозволу за приступ овој организацији."
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
-#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:28
+#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:24
 msgid "You have insufficient rights to view this ticket."
 msgstr "Немате дозволу за приступ овом тикету."
 
@@ -20990,10 +20976,8 @@ msgid "recovery codes"
 msgstr "шифри за опоравак"
 
 #: app/models/checklist/item.rb:81
-#, fuzzy
-#| msgid "The article does not belong to the specified ticket."
 msgid "reference must not be the checklist ticket."
-msgstr "Чланак не припада наведеном тикету."
+msgstr "Референца не може бити тикет списка."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:103
 msgid "relative"

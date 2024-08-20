@@ -392,7 +392,7 @@ msgstr "%s Kenmerk"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:71
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:70
 msgid "%s Checklist"
 msgstr "%s Checklist"
 
@@ -1313,7 +1313,7 @@ msgstr "Bot toevoegen"
 msgid "Add Certificate"
 msgstr "Voeg certificaat toe"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:419
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:418
 msgid "Add Empty Checklist"
 msgstr "Lege checklist toevoegen"
 
@@ -2915,7 +2915,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:195
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:197
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:259
@@ -3165,7 +3165,7 @@ msgstr "Controleer 'Kanaal'-streams."
 msgid "Check channels."
 msgstr "Controleer kanalen."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:61
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:65
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:52
 msgid "Check item"
 msgstr "Item afvinken"
@@ -3184,7 +3184,7 @@ msgstr ""
 "aangevinkt worden waardes op alfabetische volgorde gesorteerd."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:57
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:40
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:392
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:12
 msgid "Checklist"
 msgstr "Checklist"
@@ -3911,6 +3911,10 @@ msgid ""
 msgstr ""
 "Kan de twee-factor-authenticatieconfiguratie van de gebruiker niet laden."
 
+#: app/models/channel/email_parser.rb:32
+msgid "Could not parse any sender attribute from the email. Checked fields:"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/signup.coffee:133
 msgid "Could not process your request"
 msgstr ""
@@ -4065,7 +4069,7 @@ msgstr "Maak Ticket"
 msgid "Create a Test Ticket"
 msgstr "Creëer een test- ticket"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:204
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:206
 msgid "Create a new checklist item"
 msgstr "Nieuw checklistitem maken"
 
@@ -6195,11 +6199,11 @@ msgstr "Organisatie bewerken"
 msgid "Edit authenticator app"
 msgstr "Verificatie-app bewerken"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:113
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:115
 msgid "Edit checklist title"
 msgstr "Checklisttitel bewerken"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:77
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:81
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:69
 msgid "Edit item"
 msgstr "Item bewerken"
@@ -7227,13 +7231,13 @@ msgstr "Facebook Feed Bericht"
 msgid "Failed Tasks"
 msgstr "Mislukte taken"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:162
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:161
 #, fuzzy
 #| msgid "Create a new checklist item"
 msgid "Failed to add new checklist item."
 msgstr "Nieuw checklistitem maken"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:183
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:182
 #, fuzzy
 #| msgid "Create a new checklist item"
 msgid "Failed to delete checklist item."
@@ -7249,7 +7253,7 @@ msgstr "Kan geen back-up vinden op het kanaal!"
 msgid "Failed to roll back the migration of the channel!"
 msgstr "Kan de migratie van het kanaal niet terugdraaien!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:169
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:168
 #, fuzzy
 #| msgid "Unable to save changes."
 msgid "Failed to save checklist order."
@@ -7270,7 +7274,7 @@ msgstr ""
 msgid "Failed to set up QR code. Please try again."
 msgstr "Het instellen van de QR-code is mislukt. Probeer het opnieuw."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:176
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:175
 #, fuzzy
 #| msgid "Create a new checklist item"
 msgid "Failed to update checklist item."
@@ -8997,7 +9001,7 @@ msgstr "Ongeldige BasicAuth credentials"
 msgid "Invalid GitHub GraphQL API token"
 msgstr "Ongeldig GitHub GraphQL API token"
 
-#: lib/github/linked_issue.rb:102
+#: lib/github/linked_issue.rb:104
 msgid "Invalid GitHub issue link format"
 msgstr "Ongeldig GitHub issue link format"
 
@@ -9005,7 +9009,7 @@ msgstr "Ongeldig GitHub issue link format"
 msgid "Invalid GitLab GraphQL API token"
 msgstr "Ongeldig GitLab GraphQL API token"
 
-#: lib/gitlab/linked_issue.rb:102
+#: lib/gitlab/linked_issue.rb:122
 msgid "Invalid GitLab issue link format"
 msgstr "Ongeldig GitLab issue link format"
 
@@ -11088,11 +11092,11 @@ msgid "No certificate found."
 msgstr "Geen certificaat gevonden."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:432
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:431
 msgid "No checklist added to this ticket yet."
 msgstr "Er is nog geen checklist toegevoegd aan dit ticket."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:180
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:182
 msgid "No checklist items yet"
 msgstr "Geen items op de checklist"
 
@@ -11254,7 +11258,7 @@ msgstr ""
 "Geen webhook beschikbaar, maak een nieuwe aan of activeer een bestaande via "
 "\"Beheer > Webhook\""
 
-#: app/models/channel/email_parser.rb:108
+#: app/models/channel/email_parser.rb:119
 msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Geen x-zammad-session-user-id, geen afzender ingesteld!"
 
@@ -13025,7 +13029,7 @@ msgid "Remove authenticator app"
 msgstr "authenticator-app verwijderen"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:25
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:378
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:377
 msgid "Remove checklist"
 msgstr "Checklist verwijderen"
 
@@ -13037,7 +13041,7 @@ msgstr "Verwijderd de formattering"
 msgid "Remove image"
 msgstr "Afbeelding verwijderen"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:85
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:89
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:75
 msgid "Remove item"
 msgstr "Item verwijderen"
@@ -13071,7 +13075,7 @@ msgid "Removes the shadows for a flat look."
 msgstr "Verwijder alle schaduwen voor een platte uitstraling."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:20
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:371
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:370
 msgid "Rename checklist"
 msgstr "Checklist hernoemen"
 
@@ -13093,7 +13097,7 @@ msgid "Reopening time in days"
 msgstr "Heropeningstijd in dagen"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:14
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:189
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:191
 msgid "Reorder"
 msgstr "Herordenen"
 
@@ -13639,7 +13643,7 @@ msgstr "zaterdag"
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:121
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:217
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:219
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:70
@@ -17646,7 +17650,7 @@ msgstr ""
 "</div>\n"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
-#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:26
+#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:22
 msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
 msgstr ""
@@ -18374,7 +18378,7 @@ msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr ""
 "Niet-toegewezen e-mailadressen, wijs ze toe aan een kanaal of verwijder ze."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:69
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:73
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:60
 msgid "Uncheck item"
 msgstr "Item uitvinken"
@@ -19753,7 +19757,7 @@ msgid "You have insufficient rights to view this organization."
 msgstr "Je hebt niet genoeg rechten om deze organisatie te bekijken."
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
-#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:28
+#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:24
 msgid "You have insufficient rights to view this ticket."
 msgstr "Je hebt niet genoeg rechten om dit ticket te bekijken."
 
