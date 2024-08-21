@@ -1360,7 +1360,6 @@ RSpec.describe Ticket, type: :model do
           'Ticket::Article'         => { 'ticket_id' => 1 },
           'Ticket::TimeAccounting'  => { 'ticket_id' => 1 },
           'Ticket::SharedDraftZoom' => { 'ticket_id' => 0 },
-          'Ticket::Flag'            => { 'ticket_id' => 1 },
           'Checklist'               => { 'ticket_id' => 1 },
           'Checklist::Item'         => { 'ticket_id' => 1 },
         }
@@ -1368,7 +1367,6 @@ RSpec.describe Ticket, type: :model do
         ticket         = create(:ticket)
         article        = create(:ticket_article, ticket: ticket)
         accounting     = create(:ticket_time_accounting, ticket: ticket)
-        flag           = create(:ticket_flag, ticket: ticket)
         checklist      = create(:checklist, ticket: ticket)
         checklist_item = create(:checklist_item, ticket_id: ticket.id)
 
@@ -1380,7 +1378,6 @@ RSpec.describe Ticket, type: :model do
         expect { ticket.reload }.to raise_exception(ActiveRecord::RecordNotFound)
         expect { article.reload }.to raise_exception(ActiveRecord::RecordNotFound)
         expect { accounting.reload }.to raise_exception(ActiveRecord::RecordNotFound)
-        expect { flag.reload }.to raise_exception(ActiveRecord::RecordNotFound)
         expect { checklist.reload }.to raise_exception(ActiveRecord::RecordNotFound)
         # Related checklist_item should not be destroyed
         expect(checklist_item.reload.ticket_id).to be_nil

@@ -135,20 +135,6 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     add_foreign_key :tickets, :users, column: :created_by_id
     add_foreign_key :tickets, :users, column: :updated_by_id
 
-    create_table :ticket_flags do |t|
-      t.references :ticket,                          null: false
-      t.column :key,            :string, limit: 50,  null: false
-      t.column :value,          :string, limit: 50,  null: true
-      t.column :created_by_id,  :integer,            null: false
-      t.timestamps limit: 3, null: false
-    end
-    add_index :ticket_flags, %i[ticket_id created_by_id]
-    add_index :ticket_flags, %i[ticket_id key]
-    add_index :ticket_flags, [:ticket_id]
-    add_index :ticket_flags, [:created_by_id]
-    add_foreign_key :ticket_flags, :tickets, column: :ticket_id
-    add_foreign_key :ticket_flags, :users, column: :created_by_id
-
     create_table :ticket_article_types do |t|
       t.column :name,                 :string, limit: 250, null: false
       t.column :note,                 :string, limit: 250, null: true
@@ -636,7 +622,6 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     drop_table :ticket_articles
     drop_table :ticket_article_types
     drop_table :ticket_article_senders
-    drop_table :ticket_flags
     drop_table :tickets
     drop_table :ticket_priorities
     drop_table :ticket_states

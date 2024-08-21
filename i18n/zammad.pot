@@ -587,7 +587,7 @@ msgstr ""
 msgid "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr ""
 
-#: app/models/ticket.rb:278
+#: app/models/ticket.rb:277
 msgid "A ticket cannot be merged into itself."
 msgstr ""
 
@@ -7796,7 +7796,7 @@ msgstr ""
 msgid "It is not possible to delete your current account."
 msgstr ""
 
-#: app/models/ticket.rb:276
+#: app/models/ticket.rb:275
 msgid "It is not possible to merge into an already merged ticket."
 msgstr ""
 
@@ -9729,7 +9729,7 @@ msgstr ""
 msgid "No translation for this locale available"
 msgstr ""
 
-#: app/models/ticket.rb:398
+#: app/models/ticket.rb:397
 msgid "No triggers active"
 msgstr ""
 

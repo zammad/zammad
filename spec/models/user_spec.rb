@@ -618,7 +618,6 @@ RSpec.describe User, type: :model do
         'Ticket::TimeAccounting'             => { 'created_by_id' => 0 },
         'Ticket::TimeAccounting::Type'       => { 'created_by_id' => 0, 'updated_by_id' => 0 },
         'Ticket::State'                      => { 'created_by_id' => 0, 'updated_by_id' => 0 },
-        'Ticket::Flag'                       => { 'created_by_id' => 0 },
         'PostmasterFilter'                   => { 'created_by_id' => 0, 'updated_by_id' => 0 },
         'PublicLink'                         => { 'created_by_id' => 1, 'updated_by_id' => 0 },
         'User::TwoFactorPreference'          => { 'created_by_id' => 1, 'updated_by_id' => 1, 'user_id' => 1 },
