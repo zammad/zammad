@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-20 12:30+0000\n"
+"PO-Revision-Date: 2024-08-21 05:05+0000\n"
 "Last-Translator: Sjazz <s.jazini@vatanmail.ir>\n"
 "Language-Team: Persian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fa/>\n"
@@ -2089,10 +2089,8 @@ msgstr "بازگشت به نمای‌کلی"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:442
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:195
-#, fuzzy
-#| msgid "Back to my view"
 msgid "Back to previous page"
-msgstr "بازگشت به View من"
+msgstr "بازگشت به صفحه قبلی"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco:7
 msgid "Back to search results"
@@ -2135,10 +2133,8 @@ msgstr "آبجکت‌های پایه"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:736
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:10
-#, fuzzy
-#| msgid "Authentication"
 msgid "Basic Authentication"
-msgstr "احراز هویت"
+msgstr "احراز هویت ساده"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:6
 msgid "Basic Settings"
@@ -2185,10 +2181,8 @@ msgid "Block caller IDs based on sender caller ID."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:42
-#, fuzzy
-#| msgid "Blocked countries"
 msgid "Blocked Content"
-msgstr "کشورهای مسدود شده"
+msgstr "محتواهای مسدود شده"
 
 #: app/assets/javascripts/app/models/chat.coffee:254
 msgid "Blocked IPs (separated by ;)"
@@ -2363,10 +2357,8 @@ msgid "Call Settings"
 msgstr "تنظیمات تماس"
 
 #: app/models/cti/driver/base.rb:152
-#, fuzzy
-#| msgid "Call from %s for %s"
 msgid "Call from %s"
-msgstr "تماس از سوی %s برای %s"
+msgstr "تماس از %s"
 
 #: app/assets/javascripts/app/controllers/cti.coffee:118
 msgid "Call from %s for %s"
@@ -2465,10 +2457,8 @@ msgid "Cancel & Go Back"
 msgstr "صرف‌نظر و بازگشت"
 
 #: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee:3
-#, fuzzy
-#| msgid "Sign out"
 msgid "Cancel & Sign out"
-msgstr "خروج"
+msgstr "لغو و خروج"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:20
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:111
@@ -2498,10 +2488,8 @@ msgid "Cannot process external data source %s. %s"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:68
-#, fuzzy
-#| msgid "Manage your notification settings"
 msgid "Cannot set online notifications as seen"
-msgstr "مدیریت تنظیمات اعلان‌ها"
+msgstr "نمی‌توان اعلان‌های برخط را به عنوان خوانده‌شده تنظیم کرد"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:808
 msgid "Cannot upload file"
@@ -2525,10 +2513,8 @@ msgid "Caution!"
 msgstr "احتیاط!"
 
 #: db/seeds/settings.rb:1938
-#, fuzzy
-#| msgid "Add Certificate"
 msgid "Certificate (PEM)"
-msgstr "افزودن گواهینامه"
+msgstr "گواهینامه (PEM)"
 
 #: app/assets/javascripts/app/views/integration/smime.jst.eco:2
 msgid "Certificates & Private Keys"
@@ -2562,16 +2548,12 @@ msgstr "رمز عبور خود را تغییر دهید"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:118
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:134
-#, fuzzy
-#| msgid "Change Customer"
 msgid "Change customer"
 msgstr "تغییر مشتری"
 
 #: app/frontend/shared/form/i18n/locales.ts:92
-#, fuzzy
-#| msgid "Change order"
 msgid "Change date"
-msgstr "تغییر مرتب سازی"
+msgstr "تغییر تاریخ"
 
 #: app/assets/javascripts/app/views/generic/history.jst.eco:2
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/generic_list.jst.eco:10
@@ -2654,10 +2636,8 @@ msgid "Channel - Web"
 msgstr "کانال - وب"
 
 #: db/seeds/permissions.rb:152
-#, fuzzy
-#| msgid "Channel - Chat"
 msgid "Channel - WhatsApp"
-msgstr "کانال - چت"
+msgstr "کانال - واتس‌اپ"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco:3
 msgid "Channel Distribution"
@@ -2679,10 +2659,8 @@ msgid "Chat ID"
 msgstr "شناسه چت"
 
 #: app/assets/javascripts/app/models/chat_sessions.coffee:21
-#, fuzzy
-#| msgid "Session"
 msgid "Chat Session"
-msgstr "نشست"
+msgstr "نشست گفت‌وگو"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:89
 msgid "Chat Title"
@@ -2747,10 +2725,8 @@ msgid "Child"
 msgstr "فرعی"
 
 #: app/frontend/shared/form/i18n/locales.ts:88
-#, fuzzy
-#| msgid "Close tab"
 msgid "Choose date"
-msgstr "بستن برگه"
+msgstr "انتخاب تاریخ"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco:35
 msgid "Choose if retweets should also be converted to tickets."
@@ -2845,10 +2821,8 @@ msgid "Clean up expired sessions."
 msgstr "پاکسازی نشست‌های منقضی‌شده."
 
 #: db/seeds/schedulers.rb:268
-#, fuzzy
-#| msgid "Clean up closed sessions."
 msgid "Clean up mobile taskbars."
-msgstr "پاکسازی نشست‌های پایان یافته."
+msgstr "پاکسازی نوار کارهای موبایل."
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue:153
 msgid "Clear"
@@ -2856,10 +2830,8 @@ msgstr "پاک کردن"
 
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:117
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue:77
-#, fuzzy
-#| msgid "Search"
 msgid "Clear Search"
-msgstr "جستجو"
+msgstr "پاک کردن جست‌وجو"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:290
@@ -2867,10 +2839,8 @@ msgstr "جستجو"
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:153
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:136
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:218
-#, fuzzy
-#| msgid "Selector"
 msgid "Clear Selection"
-msgstr "انتخاب گر"
+msgstr "پاکسازی انتخاب"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:3
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:24
@@ -3028,10 +2998,8 @@ msgid "Conditions for affected objects"
 msgstr "شرایط آبجکت‌های موردنظر"
 
 #: app/assets/javascripts/app/models/overview.coffee:12
-#, fuzzy
-#| msgid "Conditions for shown Tickets"
 msgid "Conditions for shown tickets"
-msgstr "شرایط تیکتهای نمایش داده‌ شده"
+msgstr "شرایط برای تیک‌تهای نمایش‌داده‌شده"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:130
 msgid "Config"
@@ -3068,39 +3036,29 @@ msgid "Configure App"
 msgstr "تنظیم اپلیکیشن"
 
 #: app/assets/javascripts/app/controllers/getting_started/base.coffee:18
-#, fuzzy
-#| msgid "Basic Settings"
 msgid "Configure Basic Settings"
-msgstr "تنظیمات پایه"
+msgstr "پیکربندی تنظیمات پایه"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee:45
 msgid "Confirm"
 msgstr "تایید"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:4
-#, fuzzy
-#| msgid "Lost Password"
 msgid "Confirm Password"
-msgstr "رمز عبور گمشده"
+msgstr "تایید رمز عبور"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue:37
-#, fuzzy
-#| msgid "Confirm/submit dialog"
 msgid "Confirm dialog"
-msgstr "پنجره تایید/ارسال"
+msgstr "پنجره تایید"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:111
-#, fuzzy
-#| msgid "Configure"
 msgid "Confirm merge"
-msgstr "تنظیم کردن"
+msgstr "تایید ادغام"
 
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:53
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:58
-#, fuzzy
-#| msgid "Lost Password"
 msgid "Confirm password"
-msgstr "رمز عبور گمشده"
+msgstr "تایید رمز عبور"
 
 #. This is the template file app/views/mailer/signup/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -3156,10 +3114,8 @@ msgstr "کانال‌های ارتباطی"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:680
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco:8
-#, fuzzy
-#| msgid "Connect Google App"
 msgid "Connect Exchange App"
-msgstr "اتصال به اپلیکیشن گوگل"
+msgstr "اتصال به برنامه Exchange"
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee:140
 #: app/assets/javascripts/app/views/facebook/index.jst.eco:10
@@ -3182,10 +3138,8 @@ msgid "Connect Twitter App"
 msgstr "اتصال به اپلیکیشن توییتر"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:136
-#, fuzzy
-#| msgid "Saved conditions"
 msgid "Connect and Continue"
-msgstr "شرایط ذخیره شده"
+msgstr "اتصال و ادامه"
 
 #: public/assets/chat/views/loader.eco:6
 msgid "Connecting"
@@ -3978,10 +3932,8 @@ msgid "Define the maximum number of ticket shown in overviews."
 msgstr "مشخص می‌کند که چه تعداد تیکت در نمای‌کلی نمایش داده شود."
 
 #: db/seeds/settings.rb:3527
-#, fuzzy
-#| msgid "Defines the sender of email notifications."
 msgid "Defines Elasticsearch SSL verification."
-msgstr "تعیین فرستنده اعلان‌ از طریق ایمیل."
+msgstr "مشخص کردن بررسی SSL الاستیک سرچ."
 
 #: db/seeds/settings.rb:3518
 msgid "Defines Elasticsearch index name."
@@ -4099,12 +4051,10 @@ msgid "Defines endpoint of Elasticsearch."
 msgstr ""
 
 #: db/seeds/settings.rb:2853
-#, fuzzy
-#| msgid "Defines if a customer can create tickets via the web interface."
 msgid ""
 "Defines groups for which a customer can create tickets via web interface. No "
 "selection means all groups are available."
-msgstr "آیا مشتری اجازه ساخت تیکت از درگاه وب را دارد."
+msgstr ""
 
 #: db/seeds/settings.rb:3093
 msgid ""
@@ -4162,10 +4112,8 @@ msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr ""
 
 #: db/seeds/settings.rb:5511
-#, fuzzy
-#| msgid "Defines if LDAP is enabled or not."
 msgid "Defines if PGP encryption is enabled or not."
-msgstr "آیا LDAP فعال شده یا خیر."
+msgstr "مشخص می‌کند آیا رمزنگاری PGP فعال شده یا خیر."
 
 #: db/seeds/settings.rb:5148
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
@@ -4224,10 +4172,8 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb:5553
-#, fuzzy
-#| msgid "Defines if Exchange is enabled or not."
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
-msgstr "آیا سرویس ایمیل (اکس‌چنج) فعال شده یا خیر."
+msgstr "آیا پیکربندی نام مستعار گیرنده PGP فعال است یا خیر."
 
 #: db/seeds/settings.rb:661
 msgid ""
@@ -4448,10 +4394,8 @@ msgid "Defines the Clearbit config."
 msgstr ""
 
 #: db/seeds/settings.rb:4749
-#, fuzzy
-#| msgid "Defines the Exchange config."
 msgid "Defines the Exchange OAuth config."
-msgstr "تعریف تنظیمات سرویس ایمیل (اکس‌چنج)."
+msgstr "تعریف تنظیمات احراز هویت (OAuth) سرویس ایمیل اکس‌چنج."
 
 #: db/seeds/settings.rb:4736
 msgid "Defines the Exchange config."
@@ -4774,10 +4718,8 @@ msgid "Delete"
 msgstr "حذف"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts:81
-#, fuzzy
-#| msgid "Delete File"
 msgid "Delete Article"
-msgstr "حذف فایل"
+msgstr "حذف مقاله"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:47
 msgid "Delete Avatar?"
@@ -4796,10 +4738,8 @@ msgid "Delete Knowledge Base"
 msgstr "حذف پایگاه دانش"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:9
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Delete Ticket"
-msgstr "ایجاد تیکت تست"
+msgstr "حذف تیکت"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:7
 msgid "Delete User"
@@ -4818,10 +4758,8 @@ msgid "Delete avatar"
 msgstr "حذف آواتار"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:102
-#, fuzzy
-#| msgid "Delete File"
 msgid "Delete immediately"
-msgstr "حذف فایل"
+msgstr "حذف سریع"
 
 #: db/seeds/schedulers.rb:196
 msgid "Delete obsolete classic IMAP backup."
@@ -4944,10 +4882,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:7
 #: db/seeds/settings.rb:2542
-#, fuzzy
-#| msgid "Enable Ticket creation"
 msgid "Detect Duplicate Ticket Creation"
-msgstr "فعالسازی ایجاد تیکت"
+msgstr "تشخیص ایجاد تیکت تکراری"
 
 #: db/seeds/settings.rb:73
 msgid "Developer System"
@@ -5032,10 +4968,8 @@ msgid "Discard Changes"
 msgstr "نادیده گرفتن تغییرات"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:83
-#, fuzzy
-#| msgid "Discard Changes"
 msgid "Discard article"
-msgstr "نادیده گرفتن تغییرات"
+msgstr "نادیده گرفتن مقاله"
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:78
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:61
@@ -5043,8 +4977,6 @@ msgstr "نادیده گرفتن تغییرات"
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:508
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:218
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:48
-#, fuzzy
-#| msgid "Discard Changes"
 msgid "Discard changes"
 msgstr "نادیده گرفتن تغییرات"
 
@@ -5080,10 +5012,8 @@ msgid "Do not sign email"
 msgstr "عدم امضای ایمیل"
 
 #: db/seeds/settings.rb:5748
-#, fuzzy
-#| msgid "You currently don't have any tickets."
 msgid "Do not update any tickets."
-msgstr "شما درحال حاضر هیچ تیکتی ندارید."
+msgstr "هیچ تیکتی را به‌روز نکن."
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco:21
 #, fuzzy
