@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-12 09:16+0000\n"
+"PO-Revision-Date: 2024-08-21 05:05+0000\n"
 "Last-Translator: Elodie Massa <elodie@association-enoria.org>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fr/>\n"
@@ -696,10 +696,8 @@ msgid "(state: %s)"
 msgstr "(état : %s)"
 
 #: app/frontend/apps/desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue:58
-#, fuzzy
-#| msgid "(state: %s)"
 msgid "(ticket status: %s)"
-msgstr "(état : %s)"
+msgstr "(état du ticket  : %s)"
 
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 msgid ""
@@ -1327,7 +1325,7 @@ msgstr "Ajouter un certificat"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:418
 msgid "Add Empty Checklist"
-msgstr ""
+msgstr "Ajouter une liste vide"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue:42
 msgid "Add From a Template"
@@ -1413,20 +1411,16 @@ msgid "Add condition"
 msgstr "Ajouter une condition"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:5
-#, fuzzy
-#| msgid "Add bullet list"
 msgid "Add empty checklist"
-msgstr "Ajouter une liste à puces"
+msgstr "Ajouter une liste à puces vide"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:193
 msgid "Add first level heading"
 msgstr "Ajouter un titre de premier niveau"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:11
-#, fuzzy
-#| msgid "Save as template"
 msgid "Add from a template"
-msgstr "Sauvegarder en tant que modèle"
+msgstr "Ajouter à partir d'un modèle"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:186
 msgid "Add heading"
@@ -3258,10 +3252,8 @@ msgid "Checklist is already created for this ticket"
 msgstr "La liste a déjà été créée pour ce ticket"
 
 #: app/models/checklist/item.rb:87
-#, fuzzy
-#| msgid "The article does not belong to the specified ticket."
 msgid "Checklist items are limited to 100 items per checklist."
-msgstr "Le point de la liste n'appartient plus à la liste."
+msgstr "La valeur limite est de 100 éléments par liste."
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:3
@@ -3976,10 +3968,12 @@ msgstr ""
 #: app/models/channel/email_parser.rb:32
 msgid "Could not parse any sender attribute from the email. Checked fields:"
 msgstr ""
+"Impossible d’analyser l’attribut de l’expéditeur dans le courriel. Champs "
+"cochés :"
 
 #: app/assets/javascripts/app/controllers/signup.coffee:133
 msgid "Could not process your request"
-msgstr ""
+msgstr "Impossible de traiter votre demande"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:135
 msgid "Could not remove all two-factor authentication methods for this user."
@@ -6072,10 +6066,8 @@ msgid "Do you want to continue?"
 msgstr "Voulez-vous continuer ?"
 
 #: app/assets/javascripts/app/views/ticket_zoom/checklist_modal.jst.eco:4
-#, fuzzy
-#| msgid "Do you really want to delete this object?"
 msgid "Do you want to handle them before closing this ticket?"
-msgstr "Voulez-vous vraiment supprimer cet objet ?"
+msgstr "Voulez-vous les traiter avant de fermer ce ticket ?"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:64
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:46
@@ -6298,17 +6290,13 @@ msgid "Edit authenticator app"
 msgstr "Modifier l'application d'authentification"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:115
-#, fuzzy
-#| msgid "Ticket title"
 msgid "Edit checklist title"
-msgstr "Modifier le titre de la liste"
+msgstr "Modifier la liste de contrôle"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:81
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:69
-#, fuzzy
-#| msgid "Edit mask"
 msgid "Edit item"
-msgstr "Modifier le point"
+msgstr "Modifier l'élément"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:55
 msgid "Edit mask"
@@ -7342,16 +7330,12 @@ msgid "Failed Tasks"
 msgstr "Tâches échouées"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:161
-#, fuzzy
-#| msgid "Create a new checklist item"
 msgid "Failed to add new checklist item."
-msgstr "Créer un nouveau point dans la liste"
+msgstr "Impossible d'ajouter un nouvel élément à la liste de contrôle."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:182
-#, fuzzy
-#| msgid "Create a new checklist item"
 msgid "Failed to delete checklist item."
-msgstr "Créer un nouveau point dans la liste"
+msgstr "Impossible d'annuler un élément de la liste de contrôle."
 
 #: app/controllers/channels_google_controller.rb:96
 #: app/controllers/channels_microsoft365_controller.rb:96
@@ -7364,16 +7348,14 @@ msgid "Failed to roll back the migration of the channel!"
 msgstr "L'annulation de la migration du canal a échoué !"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:168
-#, fuzzy
-#| msgid "Unable to save changes."
 msgid "Failed to save checklist order."
-msgstr "Impossible d'enregistrer les modifications."
+msgstr "Échec d'enregistrement de l'ordre de la liste de contrôle."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:122
-#, fuzzy
-#| msgid "Failed to set up QR code. Please try again."
 msgid "Failed to save the order of the checklist items. Please try again."
-msgstr "Échec de la configuration du QR Code. Veuillez réessayer."
+msgstr ""
+"Échec de l'enregistrement de l'ordre des éléments de la liste de contrôle. "
+"Merci de réessayer ultérieurement."
 
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:52
 msgid "Failed to send email to \"%s\". Please contact an administrator."
@@ -7385,10 +7367,8 @@ msgid "Failed to set up QR code. Please try again."
 msgstr "Échec de la configuration du QR Code. Veuillez réessayer."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:175
-#, fuzzy
-#| msgid "Create a new checklist item"
 msgid "Failed to update checklist item."
-msgstr "Créer un nouveau point dans la liste"
+msgstr "Échec de la mise à jour de l'élément de la liste de contrôle."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageFailedUploadOverlay.vue:23
 msgid "Failed to upload."
@@ -8927,13 +8907,11 @@ msgstr "Y compris la clé privée."
 #, fuzzy
 #| msgid "Incomplete credentials"
 msgid "Incomplete Ticket Checklist"
-msgstr "Identifiants incomplets"
+msgstr "Le ticket de la liste de contrôle est incomplet"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistButton.vue:22
-#, fuzzy
-#| msgid "Incomplete credentials"
 msgid "Incomplete checklist items"
-msgstr "Identifiants incomplets"
+msgstr "Les éléments de la liste de contrôle sont incomplets"
 
 #: app/controllers/import_freshdesk_controller.rb:45
 #: app/controllers/import_kayako_controller.rb:35
@@ -9005,6 +8983,8 @@ msgstr "Le contenu en ligne n'a pas pu être généré."
 #: app/models/object_manager/attribute/data_option_validator.rb:41
 msgid "Input field must be text, password, tel, fax, email or url type."
 msgstr ""
+"Le champ de saisie doit être de type texte, mot de passe, n° de téléphone, n°"
+" de fax, adresse e-mail ou url."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:320
 msgid "Insert code block"
@@ -9245,10 +9225,8 @@ msgid "Invalid video URL"
 msgstr "URL de la vidéo invalide"
 
 #: app/assets/javascripts/app/controllers/layout_ref.coffee:650
-#, fuzzy
-#| msgid "Invitation sent!"
 msgid "Invitation sent to %s"
-msgstr "Invitation envoyée !"
+msgstr "Invitation envoyée à %s"
 
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee:78
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:100
@@ -9347,7 +9325,7 @@ msgstr "Il n'est pas possible de fusionner avec un ticket déjà fusionné."
 #: app/assets/javascripts/app/models/checklist.coffee:8
 #: app/assets/javascripts/app/models/checklist_template.coffee:8
 msgid "Items"
-msgstr ""
+msgstr "Éléments"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:15
 msgid "Items per page"
@@ -9956,10 +9934,8 @@ msgid "Manage API of your system."
 msgstr "Gérez l'API de votre système."
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:30
-#, fuzzy
-#| msgid "Manage Checklist Templates"
 msgid "Manage Checklist Template"
-msgstr "Gérer les modèles de liste"
+msgstr "Gérer les modèles de liste de contrôle"
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:31
 msgid "Manage Checklist Templates"
@@ -10333,7 +10309,7 @@ msgstr "La valeur maximale doit être un nombre entier"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:114
 msgid "Maximal value must be higher than -2147483648"
-msgstr ""
+msgstr "La valeur maximale doit être supérieure à -2147483648"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:132
 #, fuzzy
@@ -10343,7 +10319,7 @@ msgstr "La valeur maximale doit être supérieure ou égale à la valeur minimal
 
 #: app/models/object_manager/attribute/data_option_validator.rb:119
 msgid "Maximal value must be lower than 2147483648"
-msgstr ""
+msgstr "La valeur maximale doit être inférieure à 2147483648"
 
 #: db/seeds/settings.rb:3140
 msgid "Maximum Email Size"
@@ -10551,11 +10527,11 @@ msgstr "La valeur minimale doit être un nombre entier"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:93
 msgid "Minimal value must be higher than -2147483648"
-msgstr ""
+msgstr "La valeur minimale doit être supérieure à -2147483648"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:98
 msgid "Minimal value must be lower than 2147483648"
-msgstr ""
+msgstr "La valeur minimale doit être inférieure à 2147483648"
 
 #: db/seeds/settings.rb:1982
 msgid "Minimum length"
@@ -11246,7 +11222,7 @@ msgstr "Aucune liste n'a été ajoutée à ce ticket."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:182
 msgid "No checklist items yet"
-msgstr ""
+msgstr "Aucun élément dans la liste de contrôle"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:15
@@ -11411,10 +11387,8 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "\"x-zammad-session-user-id\" absent, aucun expéditeur défini !"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#, fuzzy
-#| msgid "You can no longer see the ticket."
 msgid "No, just close the ticket"
-msgstr "Vous ne pouvez plus voir le ticket."
+msgstr "Non, uniqement fermer le ticket"
 
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
 msgid "No, thanks"
