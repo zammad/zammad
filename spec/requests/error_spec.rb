@@ -32,7 +32,7 @@ RSpec.describe 'Error handling', type: :request do
     it { expect(response.body).to include('<html') }
     it { expect(response.body).to include("<title>#{title}</title>") }
     it { expect(response.body).to match("<h1[^>]*>#{headline}</h1>") }
-    it { expect(response.body).to include(message) }
+    it { expect(response.body).to include(CGI.escapeHTML(message)) }
   end
 
   context 'URL route does not exist' do
@@ -42,7 +42,7 @@ RSpec.describe 'Error handling', type: :request do
     end
 
     let(:url)         { '/not_existing_url' }
-    let(:message)     { "No route matches [GET] #{url}" }
+    let(:message)     { "This page doesn't exist." }
     let(:http_status) { :not_found }
 
     context 'requesting JSON' do
@@ -57,8 +57,7 @@ RSpec.describe 'Error handling', type: :request do
 
       context 'when request ends with URL' do
 
-        let(:url) { "//////#{message}" }
-        let(:message) { 'this__website__is__closed__visit__our__new__site:_someother.com' }
+        let(:url) { '//////this__website__is__closed__visit__our__new__site:_someother.com' }
 
         include_examples 'HTML response format'
       end
@@ -73,7 +72,7 @@ RSpec.describe 'Error handling', type: :request do
       get '/api/v1/organizations', as: as
     end
 
-    let(:message) { 'Invalid BasicAuth credentials' }
+    let(:message)     { 'Invalid BasicAuth credentials' }
     let(:http_status) { :unauthorized }
 
     context 'requesting JSON' do

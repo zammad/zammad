@@ -12,7 +12,9 @@
   <div class="error-image" style="background-image: url(/assets/error/error-2.svg)"></div>
   <p>Sorry, but the Phoenix is not able to find your resource. Try checking the URL for errors.</p>
 <% else %>
-  <div><%= @exception.message %></div>
+  <% if @exception.message != @message %>
+    <div><%= @exception.message %></div>
+  <% end %>
   <% if @exception.backtrace %>
     <div>Traceback:</div>
     <% @exception.backtrace.each {|row| %>

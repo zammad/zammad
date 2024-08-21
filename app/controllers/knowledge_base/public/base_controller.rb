@@ -113,7 +113,7 @@ class KnowledgeBase::Public::BaseController < ApplicationController
                                e
                              else
                                ActionController::RoutingError
-                                 .new "No route matches #{request.path.inspect}"
+                                 .new "This page doesn't exist." # rubocop:disable Zammad/DetectTranslatableString
                              end
 
     logger.error e

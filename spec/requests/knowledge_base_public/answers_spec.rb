@@ -48,7 +48,7 @@ RSpec.describe 'KnowledgeBase public answers', type: :request do
       # https://github.com/zammad/zammad/issues/3888
       it 'returns route not found error' do
         get help_answer_path(locale_name, category, published_answer)
-        expect(response.body).to include('No route matches')
+        expect(response.body).to include(CGI.escapeHTML("This page doesn't exist."))
       end
     end
   end

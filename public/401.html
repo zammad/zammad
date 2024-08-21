@@ -12,7 +12,9 @@
   <div class="error-image" style="background-image: url(/assets/error/error-1.svg)"></div>
   <p>Sorry, but your authentication failed. Double check your credentials and try again.</p>
 <% else %>
-  <div><%= @exception.message %></div>
+  <% if @exception.message != @message %>
+    <div><%= @exception.message %></div>
+  <% end %>
   <% if @exception.backtrace %>
     <pre><code>
 <% @exception.backtrace.each {|row| %>

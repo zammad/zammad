@@ -12,7 +12,9 @@
   <div class="error-image" style="background-image: url(/assets/error/error-1.svg)"></div>
   <p>Maybe you tried to change something you didn't have access to.</p>
 <% else %>
-  <div><%= @exception.message %></div>
+  <% if @exception.message != @message %>
+    <div><%= @exception.message %></div>
+  <% end %>
   <% if @exception.backtrace %>
     <div>Traceback:</div>
     <% @exception.backtrace.each {|row| %>
