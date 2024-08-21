@@ -126,6 +126,17 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type:
       expect(page).to have_link(Ticket.first.title)
     end
 
+    it 'does reorder item' do
+      click_on 'Reorder'
+      first_item = checklist.items.first
+      last_item = checklist.items.last
+      element = page.find(".checklistShow tr[data-id='#{first_item.id}'] .draggable")
+      element.drag_to(page.find(".checklistShow tr[data-id='#{last_item.id}'] .draggable"))
+      click_on 'Save'
+      wait.until { page.text.index(first_item.text) > page.text.index(last_item.text) }
+      wait.until { checklist.reload.sorted_item_ids.last.to_s == first_item.id.to_s }
+    end
+
     it 'does not abort edit when subscription is updating but including it afterwards' do
       perform_item_action(item.id, 'edit')
       item_text = SecureRandom.uuid

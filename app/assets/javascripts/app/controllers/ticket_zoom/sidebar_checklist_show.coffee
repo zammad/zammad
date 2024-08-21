@@ -30,7 +30,7 @@ class App.SidebarChecklistShow extends App.Controller
     $('body').off('click').on('click', (e) =>
       return if @actionController && @actionController.constructor.name is 'ChecklistReorder'
       return if $(e.target).closest('.js-actions').length > 0
-      return if $(e.target).closest('.checklistShowButtons div.btn').length > 0
+      return if $(e.target).closest('button').length > 0
       return if $(e.target).closest('.checkbox-replacement').length > 0
 
       @actionController?.releaseController()
