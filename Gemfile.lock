@@ -679,7 +679,7 @@ GEM
       tzinfo (>= 1.0.0)
     unicode-display_width (2.5.0)
     uri (0.13.0)
-    vcr (6.3.0)
+    vcr (6.3.1)
       base64
     version_gem (1.1.4)
     viewpoint (1.1.1)
