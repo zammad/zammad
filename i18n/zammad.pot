@@ -1442,7 +1442,7 @@ msgstr ""
 msgid "App secret"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:349
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:409
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee:3
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:3
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
@@ -2864,7 +2864,7 @@ msgstr ""
 msgid "Close chat sessions where participants are offline."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:168
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:218
 msgid "Close current tab"
 msgstr ""
 
@@ -3048,7 +3048,7 @@ msgstr ""
 msgid "Confirm your #{config.product_name} account, #{user.firstname} #{user.lastname}\n\n<div>Hi #{user.firstname},</div>\n<br>\n<div>Confirm your email address to complete your #{config.product_name} account. It's easy, just click the link below.</div>\n<br>\n<div><a href=\"#{url}\">#{url}</a></div>\n<br>\n<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:223
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:278
 msgid "Confirm/submit dialog"
 msgstr ""
 
@@ -3253,7 +3253,7 @@ msgstr ""
 msgid "Copy URL"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:276
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:332
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr ""
 
@@ -3731,7 +3731,7 @@ msgid "Dark Mode"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:5
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:95
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:125
 #: app/assets/javascripts/app/controllers/dashboard.coffee:28
 #: app/assets/javascripts/app/controllers/package.coffee:42
 #: app/frontend/apps/desktop/pages/dashboard/routes.ts:8
@@ -5502,7 +5502,7 @@ msgstr ""
 msgid "Enable time accounting."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:341
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:401
 msgid "Enable/disable inline translations"
 msgstr ""
 
@@ -6338,11 +6338,11 @@ msgstr ""
 msgid "Format"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:487
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:558
 msgid "Format as //strikethrough//"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:469
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:540
 msgid "Format as _underlined_"
 msgstr ""
 
@@ -6350,15 +6350,15 @@ msgstr ""
 msgid "Format as bold"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:536
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:607
 msgid "Format as h1 heading"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:542
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:613
 msgid "Format as h2 heading"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:548
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:619
 msgid "Format as h3 heading"
 msgstr ""
 
@@ -6366,7 +6366,7 @@ msgstr ""
 msgid "Format as italic"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:530
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:601
 msgid "Format as ordered list"
 msgstr ""
 
@@ -6378,15 +6378,15 @@ msgstr ""
 msgid "Format as underlined"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:524
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:595
 msgid "Format as unordered list"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:475
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:546
 msgid "Format as |bold|"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:481
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:552
 msgid "Format as ||italic||"
 msgstr ""
 
@@ -7561,19 +7561,19 @@ msgstr ""
 msgid "Insert the widget code into the source code of every page the chat shall be visible on. It should be placed at the end of the page's source code before the §</body>§ closing tag."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:518
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:589
 msgid "Inserts a horizontal rule"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:451
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:522
 msgid "Inserts a mention for a user"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:445
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:516
 msgid "Inserts knowledge base answer"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:439
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:510
 msgid "Inserts text module"
 msgstr ""
 
@@ -7881,9 +7881,12 @@ msgstr ""
 msgid "Key ID"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:4
-#: app/assets/javascripts/app/controllers/keyboard_shortcuts.coffee:6
+#: app/assets/javascripts/app/controllers/keyboard_shortcuts.coffee:4
 msgid "Keyboard Shortcuts"
+msgstr ""
+
+#: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:4
+msgid "Keyboard Shortcuts Enabled"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts:7
@@ -8203,7 +8206,7 @@ msgstr ""
 msgid "List of installed addons"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:153
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:190
 msgid "List of shortcuts"
 msgstr ""
 
@@ -8312,7 +8315,7 @@ msgstr ""
 msgid "Logo"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:144
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:207
 msgid "Logout"
 msgstr ""
 
@@ -9056,7 +9059,7 @@ msgstr ""
 msgid "Move down"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:262
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:317
 msgid "Move left and right"
 msgstr ""
 
@@ -9064,7 +9067,7 @@ msgstr ""
 msgid "Move up"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:258
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:313
 msgid "Move up and down"
 msgstr ""
 
@@ -9217,7 +9220,7 @@ msgstr ""
 msgid "Name of form submit button"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:429
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:500
 msgid "Navigate through article"
 msgstr ""
 
@@ -9225,7 +9228,7 @@ msgstr ""
 msgid "Navigate to %s"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:86
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:115
 #: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:29
 msgid "Navigation"
 msgstr ""
@@ -9379,7 +9382,7 @@ msgstr ""
 msgid "New Template"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:134
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:168
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:7
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:484
@@ -9930,7 +9933,7 @@ msgid "Notification sound"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:12
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:124
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:157
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:5
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:2
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:1
@@ -10159,11 +10162,11 @@ msgstr ""
 msgid "Open link"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:410
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:478
 msgid "Open macro selection"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:377
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:438
 msgid "Open note box"
 msgstr ""
 
@@ -10428,7 +10431,7 @@ msgstr ""
 msgid "Outbound:"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/browser.coffee:112
+#: app/assets/javascripts/app/lib/app_post/browser.coffee:119
 msgid "Outdated Browser"
 msgstr ""
 
@@ -10448,7 +10451,7 @@ msgid "Overview bulk mask"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:38
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:136
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
@@ -10638,11 +10641,11 @@ msgstr ""
 msgid "Paste Private Key"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:493
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:564
 msgid "Paste from clipboard"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:500
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:571
 msgid "Paste from clipboard (plain text)"
 msgstr ""
 
@@ -11446,11 +11449,11 @@ msgstr ""
 msgid "Remove two-factor authentication"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:554
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:625
 msgid "Removes any hyperlink"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:506
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:577
 msgid "Removes the formatting"
 msgstr ""
 
@@ -11511,7 +11514,7 @@ msgstr ""
 msgid "Reply allowed only for open tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:387
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:453
 msgid "Reply to last article"
 msgstr ""
 
@@ -11994,7 +11997,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1119
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1121
 msgid "Saving failed."
 msgstr ""
 
@@ -12040,7 +12043,7 @@ msgid "Scroll down to see new messages"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:13
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:115
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:147
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:201
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
@@ -12288,7 +12291,7 @@ msgstr ""
 msgid "Select default ticket type"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:266
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:321
 msgid "Select item"
 msgstr ""
 
@@ -12505,7 +12508,7 @@ msgstr ""
 msgid "Set agent limit"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:401
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:468
 msgid "Set article to internal/public"
 msgstr ""
 
@@ -12744,7 +12747,7 @@ msgstr ""
 msgid "Show meta data"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:177
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:229
 msgid "Show next tab"
 msgstr ""
 
@@ -12752,7 +12755,7 @@ msgstr ""
 msgid "Show password login for users on login page. Disabling only takes effect if third-party authentication is enabled."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:200
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:254
 msgid "Show previous tab"
 msgstr ""
 
@@ -13349,6 +13352,14 @@ msgstr ""
 msgid "Support of multilingual Knowledge Base."
 msgstr ""
 
+#: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:16
+msgid "Switch back to old layout"
+msgstr ""
+
+#: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:14
+msgid "Switch to new layout"
+msgstr ""
+
 #: db/seeds/schedulers.rb:142
 msgid "Sync calendars with iCal feeds."
 msgstr ""
@@ -13539,7 +13550,7 @@ msgstr ""
 msgid "Text Modules"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:460
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:531
 msgid "Text editing"
 msgstr ""
 
@@ -15473,7 +15484,7 @@ msgstr ""
 msgid "TicketID"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:368
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:428
 #: app/assets/javascripts/app/controllers/widget/user.coffee:87
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:94
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:98
@@ -15737,7 +15748,7 @@ msgstr ""
 msgid "Toggle Group"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:359
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:419
 msgid "Toggle dark mode"
 msgstr ""
 
@@ -15846,7 +15857,7 @@ msgstr ""
 msgid "Translation Source"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:331
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:390
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
 #: db/seeds/permissions.rb:245
@@ -16224,7 +16235,7 @@ msgstr ""
 msgid "Update Time"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:418
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:488
 msgid "Update as closed"
 msgstr ""
 
@@ -16421,31 +16432,31 @@ msgstr ""
 msgid "Use this switch to start synchronization of your ldap sources."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:90
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:119
 msgid "Used anywhere"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:335
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:394
 msgid "Used anywhere (admin only)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:254
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:309
 msgid "Used in lists (views and results)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:271
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:326
 msgid "Used in object views"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:434
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:505
 msgid "Used when composing a Ticket article"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:464
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:535
 msgid "Used when composing a text"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:372
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:432
 msgid "Used when viewing a Ticket"
 msgstr ""
 
@@ -16528,6 +16539,7 @@ msgstr ""
 msgid "User information could not be retrieved, please check your bind user permissions."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:179
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue:44
 msgid "User menu"
 msgstr ""
@@ -18928,15 +18940,15 @@ msgstr ""
 msgid "|Right| means |Some Subject [Ticket#12345]|"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:324
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:383
 msgid "…add object link URL"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:318
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:376
 msgid "…add object title"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:512
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:583
 msgid "…of whole text area"
 msgstr ""
 

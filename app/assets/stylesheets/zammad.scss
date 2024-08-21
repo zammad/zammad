@@ -11186,6 +11186,17 @@ output {
   }
 }
 
+.zammad-switch-inline-label {
+  @extend .inline-label;
+
+  display: flex;
+  align-items: center;
+
+  .zammad-switch {
+    @include bidi-style(margin-left, 8px, margin-right, 0);
+  }
+}
+
 .controls .zammad-switch {
   margin-top: 10px;
 }
@@ -15048,4 +15059,18 @@ div.accounted-time-value {
 
 #form-checklist-template .form-group {
   margin-bottom: 10px;
+}
+
+#keyboard-shortcut {
+  &-switches {
+    margin-bottom: 20px;
+  }
+
+  &-areas {
+    transition: opacity 0.1s;
+
+    &.is-disabled {
+      opacity: 0.33;
+    }
+  }
 }

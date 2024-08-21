@@ -348,12 +348,14 @@ class App.TicketZoom extends App.Controller
     @articlePager =
       article_id: undefined
 
-    modifier = 'alt+ctrl+left'
-    $(document).on("keydown.ticket_zoom#{@ticket_id}", modifier, (e) =>
+    modifier = 'left'
+    $(document).on("keydown.ticket_zoom#{@ticket_id}", {keys: modifier}, (e) =>
+      return if App.KeyboardShortcutPlugin.isInput()
       @articleNavigate('ascending')
     )
-    modifier = 'alt+ctrl+right'
-    $(document).on("keydown.ticket_zoom#{@ticket_id}", modifier, (e) =>
+    modifier = 'right'
+    $(document).on("keydown.ticket_zoom#{@ticket_id}", {keys: modifier}, (e) =>
+      return if App.KeyboardShortcutPlugin.isInput()
       @articleNavigate('descending')
     )
 

@@ -22,6 +22,18 @@ QUnit.test('App.Browser .hotkeys', assert => {
   stub.restore()
 })
 
+QUnit.test('App.Browser .hotkeysDisplay', assert => {
+  let stub = sinon.stub(App.Browser, 'isMac')
+
+  stub.returns(true)
+  assert.deepEqual(App.Browser.hotkeysDisplay(), ['ctrl', 'option'])
+
+  stub.returns(false)
+  assert.deepEqual(App.Browser.hotkeysDisplay(), ['shift', 'ctrl'])
+
+  stub.restore()
+})
+
 QUnit.test('App.Browser .isMac', assert => {
   let stub = sinon.stub(App.Browser, 'detection')
   stub.returns({

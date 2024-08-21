@@ -1,59 +1,58 @@
-<div class="horizontal">
+<div id="keyboard-shortcut-switches" class="horizontal">
   <div class="flex">
-<% for area in @areas: %>
-  <% if area.location is 'left': %>
-    <h2><%- @T(area.headline) %></h2>
-    <% for item in area.content: %>
-      <% if item.where: %><p><i><%- @T(item.where) %></i></p><% end %>
-      <% for shortcut in item.shortcuts: %>
-        <% if shortcut.hotkeys: %>
-          <kbd><%- @hotkeys.join('</kbd> <kbd>') %></kbd>
-        <% end %>
-        <% if shortcut.keyPrefix: %>
-          <%= shortcut.keyPrefix %>
-        <% end %>
-        <% if _.isArray(shortcut.key): %>
-          <% for key in shortcut.key: %>
-            <kbd><%- key %></kbd>
+    <label class="zammad-switch-inline-label">
+      <%- @T('Keyboard Shortcuts Enabled') %>
+      <div class="zammad-switch zammad-switch--small">
+        <input type="checkbox" id="switch-shortcut-enable" <% if not @isDisabled: %>checked<% end %>>
+        <label for="switch-shortcut-enable"></label>
+      </div>
+    </label>
+  </div>
+  <div class="flex horizontal justify-end">
+    <button class="btn btn--text js-switch-shortcut-layout <% if @isDisabled: %>is-disabled<% end %>">
+      <% if @useOldShortcutLayout: %>
+        <%- @T('Switch to new layout') %>
+      <% else: %>
+        <%- @T('Switch back to old layout') %>
+      <% end %>
+    </button>
+  </div>
+</div>
+<div id="keyboard-shortcut-areas" class="horizontal <% if @isDisabled: %>is-disabled<% end %>">
+<% for location in ['left', 'right']: %>
+  <div class="flex">
+  <% for area in @areas: %>
+    <% if area.location is location: %>
+      <h2><%- @T(area.headline) %></h2>
+      <% for item in area.content: %>
+        <% if item.where: %><p><i><%- @T(item.where) %></i></p><% end %>
+        <% for shortcut in item.shortcuts: %>
+          <% if App.KeyboardShortcutPlugin.getKeyForLayout(shortcut.hotkeys): %>
+            <% for hotkey in @hotkeys: %>
+              <kbd><%= hotkey %></kbd>
+            <% end %>
+          <% else if shortcut.magicKey: %>
+            <kbd><%= @magicKey %></kbd>
           <% end %>
-        <% else: %>
-          <kbd><%- shortcut.key %></kbd>
+          <% if shortcut.shiftKey: %>
+            <kbd>shift</kbd>
+          <% end %>
+          <% if shortcut.keyPrefix: %>
+            <%= shortcut.keyPrefix %>
+          <% end %>
+          <% localKeys = App.KeyboardShortcutPlugin.getKeyForLayout(shortcut.keyDisplay) || App.KeyboardShortcutPlugin.getKeyForLayout(shortcut.key) %>
+          <% if _.isArray(localKeys): %>
+            <% for key in localKeys: %>
+              <kbd><%- key %></kbd>
+            <% end %>
+          <% else: %>
+            <kbd><%- localKeys %></kbd>
+          <% end %>
+          <%- @T(shortcut.description) %><br>
         <% end %>
-        <%- @T(shortcut.description) %><br>
       <% end %>
     <% end %>
   <% end %>
-<% end %>
   </div>
-  <div class="flex">
-<% for area in @areas: %>
-  <% if area.location is 'right': %>
-    <h2><%- @T(area.headline) %></h2>
-    <% for item in area.content: %>
-      <% if item.where: %><p><i><%- @T(item.where) %></i></p><% end %>
-      <% for shortcut in item.shortcuts: %>
-        <% if shortcut.hotkeys: %>
-          <kbd><%- @hotkeys.join('</kbd> <kbd>') %></kbd>
-        <% else if shortcut.magicKey: %>
-          <kbd><%= @magicKey %></kbd>
-        <% end %>
-        <% if shortcut.shiftKey: %>
-          <kbd>shift</kbd>
-        <% end %>
-        <% if shortcut.keyPrefix: %>
-          <%= shortcut.keyPrefix %>
-        <% end %>
-        <% if _.isArray(shortcut.key): %>
-          <% for key in shortcut.key: %>
-            <kbd><%- key %></kbd>
-          <% end %>
-        <% else: %>
-          <kbd><%- shortcut.key %></kbd>
-        <% end %>
-        <%- @T(shortcut.description) %><br>
-      <% end %>
-    <% end %>
-  <% end %>
 <% end %>
-  </div>
 </div>

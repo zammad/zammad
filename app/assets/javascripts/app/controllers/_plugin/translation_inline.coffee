@@ -12,17 +12,12 @@ class TranslationInline extends App.Controller
     return if !@permissionCheck('admin.translation')
 
     # bind on key down
-    # if hotkeys+t is pressed, enable translation_inline and fire ui:rerender
-    browserHotkeys = App.Browser.hotkeys()
+    # if `t` is pressed, enable translation_inline and fire ui:rerender
     $(document).on('keydown.translation', (e) =>
-      hotkeys = false
-      if browserHotkeys is 'ctrl+shift'
-        if !e.altKey && e.ctrlKey && !e.metaKey && e.shiftKey
-          hotkeys = true
-      else
-        if e.altKey && e.ctrlKey && !e.metaKey
-          hotkeys = true
-      if hotkeys && e.keyCode is 84
+      return if App.KeyboardShortcutPlugin.isDisabled()
+      return if App.KeyboardShortcutPlugin.isInput()
+
+      if e.keyCode is 84
         e.preventDefault()
         @toogle()
     )

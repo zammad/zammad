@@ -94,6 +94,13 @@ class App.Browser
     else
       'ctrl+shift'
 
+  @hotkeysDisplay: ->
+    _.map(@hotkeys().split('+').reverse(), (hotkey) => @hotkeyDisplay(hotkey))
+
+  @hotkeyDisplay: (hotkey) ->
+    return 'option' if @isMac() and hotkey is 'alt'
+    hotkey
+
   @isMac: ->
     browser = @detection()
 
