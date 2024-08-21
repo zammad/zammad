@@ -36,7 +36,7 @@ export DATABASE_URL="postgres://${POSTGRESQL_USER}:${ESCAPED_POSTGRESQL_PASS}@${
 
 function check_zammad_ready {
   # Verify that migrations have been ran and seeds executed to process ENV vars like FQDN correctly.
-  until bundle exec rails r 'ActiveRecord::Migration.check_pending! && Locale.any? || raise' &> /dev/null; do
+  until bundle exec rails r 'ActiveRecord::Migration.check_pending!; Locale.any? || raise' &> /dev/null; do
     echo "waiting for init container to finish install or update..."
     sleep 5
   done
