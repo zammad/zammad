@@ -88,7 +88,7 @@ class ExternalCredential::Exchange
     uri    = authorize_tokens_uri(credentials[:client_tenant])
     params = authorize_tokens_params(credentials, authorization_code)
 
-    response = Net::HTTP.post_form(uri, params)
+    response = UserAgent.post(uri.to_s, params)
     if response.code != 200 && response.body.blank?
       Rails.logger.error "Request failed! (code: #{response.code})"
       raise "Request failed! (code: #{response.code})"
@@ -132,7 +132,7 @@ class ExternalCredential::Exchange
     params = refresh_token_params(config)
     uri    = refresh_token_uri(config)
 
-    response = Net::HTTP.post_form(uri, params)
+    response = UserAgent.post(uri.to_s, params)
     if response.code != 200 && response.body.blank?
       HttpLog.create(
         direction:     'out',

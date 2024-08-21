@@ -195,7 +195,7 @@ class ExternalCredential::Google
       path: '/o/oauth2/token',
     )
 
-    response = Net::HTTP.post_form(uri, params)
+    response = UserAgent.post(uri.to_s, params)
     if response.code != 200 && response.body.blank?
       Rails.logger.error "Request failed! (code: #{response.code})"
       raise "Request failed! (code: #{response.code})"
@@ -226,7 +226,7 @@ class ExternalCredential::Google
       path: '/o/oauth2/token',
     )
 
-    response = Net::HTTP.post_form(uri, params)
+    response = UserAgent.post(uri.to_s, params)
     if response.code != 200 && response.body.blank?
       Rails.logger.error "Request failed! (code: #{response.code})"
       raise "Request failed! (code: #{response.code})"
@@ -246,7 +246,7 @@ class ExternalCredential::Google
 
   def self.user_aliases(token)
     uri = URI.parse('https://www.googleapis.com/gmail/v1/users/me/settings/sendAs')
-    http = Net::HTTP.new(uri.host, uri.port)
+    http = UserAgent.get_http(uri, {})
     http.use_ssl = true
     response = http.get(uri.request_uri, { 'Authorization' => "#{token[:token_type]} #{token[:access_token]}" })
     if response.code != 200 && response.body.blank?
