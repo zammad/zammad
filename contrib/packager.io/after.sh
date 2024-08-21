@@ -7,8 +7,5 @@ PATH=$(pwd)/bin:$(pwd)/vendor/bundle/bin:$PATH
 
 set -eux
 
-# delete asset cache
-rm -r tmp/cache
-
-# delete node_modules folder - only required during building
-rm -rf node_modules
+# cleanup
+script/build/cleanup.sh

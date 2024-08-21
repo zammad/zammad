@@ -30,5 +30,8 @@ rm -rf doc/developer_manual
 # Various development files
 rm -rf .dev
 
+# delete asset cache
+rm -rf tmp/cache
+
 # Delete node_modules folder - only required during building
 rm -rf node_modules
