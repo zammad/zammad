@@ -22,8 +22,15 @@ class Authorization::Provider
   def fetch_user
     if Setting.get('auth_third_party_auto_link_at_inital_login')
       user = find_user
-
       return user if user.present?
+    end
+
+    if Setting.get('auth_third_party_no_create_user')
+      account = uid || info['email']
+      message = "User account '#{account}' not found for authentication provider '#{name.capitalize}'."
+      Rails.logger.error { message }
+
+      raise AccountError
     end
 
     User.create_from_hash!(auth_hash)
@@ -33,5 +40,11 @@ class Authorization::Provider
     return if info['email'].nil?
 
     User.find_by(email: info['email'].downcase)
+  end
+
+  class AccountError < StandardError
+    def initialize
+      super(__('The user account does not exist. Please contact your administrator.'))
+    end
   end
 end

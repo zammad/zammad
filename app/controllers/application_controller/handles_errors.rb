@@ -104,7 +104,7 @@ module ApplicationController::HandlesErrors
     elsif e.message == 'Exceptions::NotAuthorized'
       data[:error]       = __('Authorization failed')
       data[:error_human] = data[:error]
-    elsif [ActionController::RoutingError, ActiveRecord::RecordNotFound, Exceptions::UnprocessableEntity, Exceptions::NotAuthorized, Exceptions::Forbidden, Store::Provider::S3::Error].include?(e.class)
+    elsif [ActionController::RoutingError, ActiveRecord::RecordNotFound, Exceptions::UnprocessableEntity, Exceptions::NotAuthorized, Exceptions::Forbidden, Store::Provider::S3::Error, Authorization::Provider::AccountError].include?(e.class)
       data[:error_human] = data[:error]
     end
 

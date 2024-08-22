@@ -1297,6 +1297,32 @@ Setting.create_if_not_exists(
   frontend:    false
 )
 Setting.create_if_not_exists(
+  title:       __('No user creation on logon'),
+  name:        'auth_third_party_no_create_user',
+  area:        'Security::ThirdPartyAuthentication',
+  description: __('Disables user creation on logon with a third-party application.'),
+  options:     {
+    form: [
+      {
+        display: '',
+        null:    true,
+        name:    'auth_third_party_no_create_user',
+        tag:     'boolean',
+        options: {
+          true  => 'yes',
+          false => 'no',
+        },
+      },
+    ],
+  },
+  preferences: {
+    permission: ['admin.security'],
+    prio:       20,
+  },
+  state:       false,
+  frontend:    false
+)
+Setting.create_if_not_exists(
   title:       __('Authentication via %s'),
   name:        'auth_twitter',
   area:        'Security::ThirdPartyAuthentication',

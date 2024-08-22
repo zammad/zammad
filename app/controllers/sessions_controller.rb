@@ -138,6 +138,8 @@ class SessionsController < ApplicationController
 
     # redirect to app
     redirect_to redirect_url
+  rescue Authorization::Provider::AccountError => e
+    forbidden(e)
   end
 
   def failure_omniauth
