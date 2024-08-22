@@ -157,6 +157,7 @@ describe('ticket detail view', () => {
     await mockApplicationConfig({ checklist: true })
 
     const view = await visitView('/tickets/1')
+    await view.events.click(view.getByLabelText('Checklist'))
 
     expect(
       view.getByRole('heading', { name: 'Checklist', level: 2 }),
@@ -207,6 +208,7 @@ describe('ticket detail view', () => {
     })
 
     const view = await visitView('/tickets/1')
+    await view.events.click(view.getByLabelText('Checklist'))
 
     const checklist = view.getByRole('heading', { name: 'Checklist', level: 2 })
     expect(checklist).toBeInTheDocument()

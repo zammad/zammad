@@ -56,7 +56,11 @@ provide(ARTICLES_INFORMATION_KEY, {
 
 const sidebarContext = computed<TicketSidebarContext>(() => ({
   screenType: TicketSidebarScreenType.TicketDetailView,
-  formValues: {},
+  formValues: {
+    // Workaround, to make the sidebars working for now.
+    customer_id: ticket.value?.customer.internalId,
+    organization_id: ticket.value?.organization?.internalId,
+  },
 }))
 
 const { hasSidebar } = useTicketSidebar(sidebarContext)
