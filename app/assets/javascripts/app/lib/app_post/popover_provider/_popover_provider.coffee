@@ -29,6 +29,7 @@ class App.PopoverProvider
     return if !@checkPermissions()
     @clear(@popovers)
     @bind() if !buildParams.doNotBind
+    return if buildParams.isTouchDevice is true
     @popovers = @buildPopovers()
 
   checkPermissions: ->
