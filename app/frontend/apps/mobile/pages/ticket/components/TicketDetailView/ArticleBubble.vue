@@ -7,13 +7,13 @@ import { computed, nextTick, onMounted, ref, watch } from 'vue'
 
 import CommonFilePreview from '#shared/components/CommonFilePreview/CommonFilePreview.vue'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import { useArticleAttachments } from '#shared/composables/useArticleAttachments.ts'
 import { useArticleToggleMore } from '#shared/composables/useArticleToggleMore.ts'
+import { useAttachments } from '#shared/composables/useAttachments.ts'
 import { useHtmlInlineImages } from '#shared/composables/useHtmlInlineImages.ts'
 import { useHtmlLinks } from '#shared/composables/useHtmlLinks.ts'
 import type { ImageViewerFile } from '#shared/composables/useImageViewer.ts'
 import { useImageViewer } from '#shared/composables/useImageViewer.ts'
-import type { TicketArticleAttachment } from '#shared/entities/ticket/types.ts'
+import type { Attachment } from '#shared/entities/attachment/types.ts'
 import type {
   TicketArticleSecurityState,
   TicketArticlesQuery,
@@ -40,7 +40,7 @@ interface Props {
   contentType: string
   ticketInternalId: number
   articleId: string
-  attachments: TicketArticleAttachment[]
+  attachments: Attachment[]
   remoteContentWarning?: string
   mediaError?: boolean | null
 }
@@ -110,9 +110,7 @@ const { shownMore, bubbleElement, hasShowMore, toggleShowMore } =
 
 const articleInternalId = computed(() => getIdFromGraphQLId(props.articleId))
 
-const { attachments: articleAttachments } = useArticleAttachments({
-  ticketInternalId: props.ticketInternalId,
-  articleInternalId: articleInternalId.value,
+const { attachments: articleAttachments } = useAttachments({
   attachments: computed(() => props.attachments),
 })
 
@@ -122,7 +120,7 @@ const { showImage } = useImageViewer(
   computed(() => [...inlineImages.value, ...articleAttachments.value]),
 )
 
-const previewImage = (event: Event, attachment: TicketArticleAttachment) => {
+const previewImage = (event: Event, attachment: Attachment) => {
   stopEvent(event)
   showImage(attachment)
 }

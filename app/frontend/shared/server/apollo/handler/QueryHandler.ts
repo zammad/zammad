@@ -3,7 +3,7 @@
 
 import { getOperationName } from '@apollo/client/utilities'
 import { useApolloClient } from '@vue/apollo-composable'
-import { watch } from 'vue'
+import { watch, nextTick } from 'vue'
 
 import type {
   OperationQueryOptionsReturn,
@@ -264,7 +264,18 @@ export default class QueryHandler<
 
   public onResult(
     callback: (result: ApolloQueryResult<TResult | undefined>) => void,
+    ignoreFirstResult?: boolean,
   ): void {
+    if (ignoreFirstResult) {
+      this.watchOnceOnResult(() => {
+        nextTick(() => {
+          this.operationResult.onResult(callback)
+        })
+      })
+
+      return
+    }
+
     this.operationResult.onResult(callback)
   }
 }

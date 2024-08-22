@@ -19,5 +19,11 @@ FactoryBot.define do
       preferences { { 'Content-Type' => "image/#{File.extname(filename).delete_prefix('.')}" } }
       data        { Rails.root.join('test/data/image/1x1.png').binread }
     end
+
+    trait :ics do
+      filename    { 'basic.ics' }
+      preferences { { 'Content-Type' => 'text/calendar' } }
+      data        { Rails.root.join('spec/fixtures/files/calendar/basic.ics').binread }
+    end
   end
 end

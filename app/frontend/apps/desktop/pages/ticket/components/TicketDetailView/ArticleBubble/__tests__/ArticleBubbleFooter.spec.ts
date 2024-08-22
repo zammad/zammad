@@ -6,6 +6,7 @@ import { renderComponent } from '#tests/support/components/index.ts'
 
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import ArticleBubbleFooter from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue'
 import { TICKET_INFORMATION_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
@@ -46,6 +47,7 @@ describe('ArticleBubbleFooter', () => {
             article: createDummyArticle({
               attachmentsWithoutInline: [
                 {
+                  id: convertToGraphQLId('Store', 123),
                   internalId: 123,
                   name: 'test.txt',
                 },

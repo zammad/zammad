@@ -18,6 +18,7 @@ import { useSessionStore } from '#shared/stores/session.ts'
 
 import { initializeForm, initializeFormFields } from '#mobile/form/index.ts'
 import { initializeGlobalComponentStyles } from '#mobile/initializer/initializeGlobalComponentStyles.ts'
+import initializeGlobalDirectives from '#mobile/initializer/initializeGlobalDirectives.ts'
 import { initializeMobileIcons } from '#mobile/initializer/initializeMobileIcons.ts'
 import { initializeMobileVisuals } from '#mobile/initializer/mobileVisuals.ts'
 import initializeRouter from '#mobile/router/index.ts'
@@ -49,6 +50,7 @@ export default async function mountApp(): Promise<void> {
   initializeGlobalComponentStyles()
   initializeGlobalComponents(app)
   initializeGlobalProperties(app)
+  initializeGlobalDirectives(app)
   initializeMobileVisuals()
   initializeStoreSubscriptions()
 

@@ -470,6 +470,7 @@ describe('remote content removal', () => {
     }
     article.attachmentsWithoutInline = [
       {
+        id: convertToGraphQLId('Store', 1),
         internalId: 1,
         name: 'message',
         preferences: {

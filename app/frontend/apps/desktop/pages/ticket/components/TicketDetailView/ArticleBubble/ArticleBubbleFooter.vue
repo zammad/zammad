@@ -2,18 +2,19 @@
 
 <script setup lang="ts">
 import CommonFilePreview from '#shared/components/CommonFilePreview/CommonFilePreview.vue'
-import { type TicketArticleAttachmentWithUrls } from '#shared/composables/useArticleAttachments.ts'
+import { type AttachmentWithUrls } from '#shared/composables/useAttachments.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
+import type { FilePreview } from '#shared/utils/files.ts'
 
 interface Props {
   article: TicketArticle
-  articleAttachments: TicketArticleAttachmentWithUrls[]
+  articleAttachments: AttachmentWithUrls[]
 }
 
 defineProps<Props>()
 
 defineEmits<{
-  preview: [image: TicketArticleAttachmentWithUrls]
+  preview: [type: FilePreview, image: AttachmentWithUrls]
 }>()
 </script>
 
@@ -39,7 +40,7 @@ defineEmits<{
       :file="attachment"
       :no-preview="!$c.ui_ticket_zoom_attachments_preview"
       no-remove
-      @preview="$emit('preview', attachment)"
+      @preview="($event, type) => $emit('preview', type, attachment)"
     />
   </footer>
 </template>

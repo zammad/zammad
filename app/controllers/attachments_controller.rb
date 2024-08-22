@@ -1,8 +1,6 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class AttachmentsController < ApplicationController
-  include CalendarPreview
-
   prepend_before_action :authorize!, only: %i[show destroy]
   prepend_before_action :authentication_check, except: %i[show destroy]
   prepend_before_action :authentication_check_only, only: %i[show destroy]
@@ -76,8 +74,7 @@ class AttachmentsController < ApplicationController
   private
 
   def render_calendar_preview
-    data = parse_calendar(download_file)
-    render json: data, status: :ok
+    render json: Service::Calendar::IcsFile::Parse.new(current_user:).execute(file: download_file), status: :ok
   rescue => e
     logger.error e
     render json: { error: e.message }, status: :unprocessable_entity

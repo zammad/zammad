@@ -31,14 +31,18 @@ export const imageViewerOptions = ref<ViewerOptions>({
   images: [],
 })
 
-const useImageViewer = (viewFiles: MaybeRef<ImageViewerFile[]>) => {
+export const useImageViewer = (viewFiles: MaybeRef<ImageViewerFile[]>) => {
   const indexMap = new WeakMap<ImageViewerFile, number>()
 
   let images: ImagePreview[] = []
 
   watchEffect(() => {
     images = unref(viewFiles)
-      .filter((file) => canPreviewFile(file.type))
+      .filter((file) => {
+        const canPreview = canPreviewFile(file.type)
+
+        return canPreview && canPreview === 'image'
+      })
       .map((image, index) => {
         // we need to keep track of indexes, because they might
         // be different from original files, if they had non-image uploads
@@ -75,5 +79,3 @@ const useImageViewer = (viewFiles: MaybeRef<ImageViewerFile[]>) => {
     hideImage,
   }
 }
-
-export { useImageViewer }

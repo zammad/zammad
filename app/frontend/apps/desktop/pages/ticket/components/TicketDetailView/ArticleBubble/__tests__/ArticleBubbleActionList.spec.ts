@@ -7,6 +7,7 @@ import { renderComponent } from '#tests/support/components/index.ts'
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import ArticleBubbleActionList from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue'
 import { TICKET_INFORMATION_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
@@ -24,6 +25,7 @@ const renderArticleBubbleActionList = () =>
           articleType: 'email',
           attachmentsWithoutInline: [
             {
+              id: convertToGraphQLId('Store', 123),
               preferences: {
                 'original-format': true,
               },

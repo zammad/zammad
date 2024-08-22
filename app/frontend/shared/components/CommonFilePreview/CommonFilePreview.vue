@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue'
 
+import { useAppName } from '#shared/composables/useAppName.ts'
 import { useSharedVisualConfig } from '#shared/composables/useSharedVisualConfig.ts'
 import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 import type { StoredFile } from '#shared/graphql/types.ts'
@@ -12,6 +13,7 @@ import {
   canDownloadFile,
   canPreviewFile,
   humanizeFileSize,
+  type FilePreview,
 } from '#shared/utils/files.ts'
 import { getIconByContentType } from '#shared/utils/icons.ts'
 
@@ -34,8 +36,10 @@ const props = defineProps<Props>()
 
 const emit = defineEmits<{
   remove: []
-  preview: [$event: Event]
+  preview: [$event: Event, type: FilePreview]
 }>()
+
+const appName = useAppName()
 
 const imageFailed = ref(false)
 
@@ -44,7 +48,12 @@ const canPreview = computed(() => {
 
   if (!previewUrl || imageFailed.value) return false
 
-  return canPreviewFile(file.type)
+  const type = canPreviewFile(file.type)
+
+  // Currently mobile allows only preview of images.
+  if (appName === 'mobile' && type !== 'image') return false
+
+  return type
 })
 
 const canDownload = computed(() => canDownloadFile(props.file.type))
@@ -64,7 +73,9 @@ const ariaLabel = computed(() => {
 })
 
 const onPreviewClick = (event: Event) => {
-  emit('preview', event)
+  if (!canPreview.value) return
+
+  emit('preview', event, canPreview.value)
 }
 
 const { isTouchDevice } = useTouchDevice()
@@ -81,30 +92,33 @@ const classMap = getFilePreviewClasses()
   >
     <button
       v-if="!noPreview && canPreview"
-      class="flex h-9 w-9 items-center justify-center rounded border"
-      :class="classMap.preview"
-      :aria-label="$t('Preview %s', props.file.name)"
+      v-tooltip="$t('Preview %s', props.file.name)"
+      class="flex h-9 w-9 shrink-0 items-center justify-center rounded"
+      :class="[{ border: canPreview !== 'image' }, classMap.preview]"
       @click="onPreviewClick"
       @keydown.delete.prevent="$emit('remove')"
       @keydown.backspace.prevent="$emit('remove')"
     >
-      <img
-        v-if="canPreview"
-        class="max-h-9 rounded object-cover"
-        :src="previewUrl"
-        :alt="$t('Image of %s', file.name)"
-        @error="imageFailed = true"
-      />
+      <template v-if="canPreview">
+        <img
+          v-if="canPreview === 'image'"
+          class="h-9 w-9 rounded border object-cover"
+          :src="previewUrl"
+          :alt="$t('Image of %s', file.name)"
+          @error="imageFailed = true"
+        />
+        <CommonIcon v-else size="base" decorative :name="icon" />
+      </template>
     </button>
 
     <Component
       :is="componentType"
+      v-tooltip="ariaLabel"
       class="flex w-full select-none items-center gap-2 overflow-hidden text-left outline-none"
       :class="{
         'cursor-pointer': componentType !== 'div',
         [classMap.link]: true,
       }"
-      :aria-label="ariaLabel"
       tabindex="0"
       :link="downloadUrl"
       :download="canDownload ? file.name : undefined"
@@ -127,12 +141,12 @@ const classMap = getFilePreviewClasses()
         <CommonIcon v-else size="base" decorative :name="icon" />
       </div>
       <div class="flex flex-1 flex-col overflow-hidden" :class="classMap.base">
-        <span class="truncate">
+        <span class="line-clamp-1">
           {{ file.name }}
         </span>
         <span
           v-if="file.size"
-          class="whitespace-nowrap"
+          class="line-clamp-1"
           :class="[classMap.size, sizeClass]"
         >
           {{ humanizeFileSize(file.size) }}

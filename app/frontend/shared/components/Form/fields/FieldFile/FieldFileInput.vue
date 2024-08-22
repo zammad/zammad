@@ -47,6 +47,7 @@ const uploadFiles = computed<FileUploaded[]>({
 const contentFiles = ref<Record<string, string>>({})
 const loadingFiles = ref<SetOptional<FileUploaded, 'id'>[]>([])
 
+// TODO: We improved now the upload cache endpoint also working for show, so maybe we could use this for preview.
 const uploadFilesWithContent = computed(() => {
   return uploadFiles.value.map((file) => {
     const content = contentFiles.value[file.id]

@@ -182,6 +182,7 @@ export const defaultArticles = (): TicketArticlesQuery =>
               // should not be visible
               {
                 __typename: 'StoredFile',
+                id: convertToGraphQLId('Store', 66),
                 internalId: 66,
                 name: 'not-visible-attachment.png',
                 type: 'image/png',

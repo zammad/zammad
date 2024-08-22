@@ -41,6 +41,7 @@ fragment ticketArticleAttributes on TicketArticle {
   contentType
   references
   attachmentsWithoutInline {
+    id
     internalId
     name
     size

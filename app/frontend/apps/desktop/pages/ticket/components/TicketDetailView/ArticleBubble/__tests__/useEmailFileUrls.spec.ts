@@ -4,6 +4,7 @@ import { ref } from 'vue'
 
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { useEmailFileUrls } from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useEmailFileUrls.ts'
 
@@ -20,6 +21,7 @@ describe('useEmailFileUrls', () => {
         createDummyArticle({
           attachmentsWithoutInline: [
             {
+              id: convertToGraphQLId('Store', 123),
               preferences: {
                 'original-format': true,
               },

@@ -1,0 +1,10 @@
+query ticketAttachments($ticketId: ID!) {
+  ticketAttachments(ticketId: $ticketId) {
+    id
+    internalId
+    name
+    size
+    type
+    preferences
+  }
+}

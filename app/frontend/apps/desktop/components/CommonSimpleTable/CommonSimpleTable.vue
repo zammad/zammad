@@ -103,6 +103,12 @@ const getTooltipText = (item: TableItem, header: TableHeader) => {
               class="inline text-black dark:text-white"
             >
               <template v-if="!item[header.key]">-</template>
+              <template v-else-if="header.type === 'timestamp_absolute'">
+                <CommonDateTime
+                  :date-time="item[header.key] as string"
+                  type="absolute"
+                />
+              </template>
               <template v-else-if="header.type === 'timestamp'">
                 <CommonDateTime :date-time="item[header.key] as string" />
               </template>

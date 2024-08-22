@@ -1,0 +1,11 @@
+query calendarIcsFileEvents($fileId: ID!) {
+  calendarIcsFileEvents(fileId: $fileId) {
+    title
+    location
+    startDate
+    endDate
+    organizer
+    attendees
+    description
+  }
+}

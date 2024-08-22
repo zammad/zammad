@@ -1,10 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { getAttachmentLinks } from '#shared/composables/getAttachmentLinks.ts'
 import type {
   TicketArticle,
   TicketById,
 } from '#shared/entities/ticket/types.ts'
-import { getArticleAttachmentsLinks } from '#shared/entities/ticket-article/composables/getArticleAttachmentsLinks.ts'
 import { useTicketArticleEmailForwardReplyMutation } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleEmailForwardReply.api.ts'
 import type { TicketArticleEmailForwardReplyMutation } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
@@ -75,14 +75,12 @@ export const forwardEmail = async (
     const originalAttachment = article.attachmentsWithoutInline[idx]
     if (!originalAttachment || originalAttachment.name !== file.name)
       return file
-    const { previewUrl, inlineUrl } = getArticleAttachmentsLinks(
+    const { previewUrl, inlineUrl } = getAttachmentLinks(
       {
-        ticketInternalId: ticket.internalId,
-        articleInternalId: article.internalId,
         internalId: originalAttachment.internalId,
         type: file.type,
       },
-      config,
+      config.api_path,
     )
     return {
       ...file,

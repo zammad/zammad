@@ -55,7 +55,7 @@ describe('preview file component', () => {
     expect(previewMock).toHaveBeenCalled()
   })
 
-  it('renders downloadble file', async () => {
+  it('renders downloadable file', async () => {
     const view = renderFilePreview({
       file: {
         name: 'name.word',

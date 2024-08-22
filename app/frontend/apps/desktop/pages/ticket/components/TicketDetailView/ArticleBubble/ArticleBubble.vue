@@ -4,14 +4,14 @@
 import { computed, defineAsyncComponent, ref } from 'vue'
 
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import { useArticleAttachments } from '#shared/composables/useArticleAttachments.ts'
-import {
-  type ImageViewerFile,
-  useImageViewer,
-} from '#shared/composables/useImageViewer.ts'
+import { useAttachments } from '#shared/composables/useAttachments.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
 
+import {
+  useFilePreviewViewer,
+  type ViewerFile,
+} from '#desktop/composables/useFilePreviewViewer.ts'
 import ArticleBubbleActionList from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue'
 import ArticleBubbleBlockedContentWarning from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue'
 import ArticleBubbleBody from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue'
@@ -20,7 +20,6 @@ import ArticleBubbleSecurityStatusBar from '#desktop/pages/ticket/components/Tic
 import ArticleBubbleSecurityWarning from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue'
 import { useBubbleHeader } from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useBubbleHeader.ts'
 import { useBubbleStyleGuide } from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useBubbleStyleGuide.ts'
-import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 const ArticleBubbleHeader = defineAsyncComponent(
   () =>
@@ -34,8 +33,6 @@ interface Props {
 }
 
 const props = defineProps<Props>()
-
-const { ticket } = useTicketInformation()
 
 const { showMetaInformation, toggleHeader } = useBubbleHeader()
 
@@ -73,15 +70,13 @@ const filteredAttachments = computed(() => {
   )
 })
 
-const { attachments: articleAttachments } = useArticleAttachments({
-  ticketInternalId: ticket.value?.internalId as number,
-  articleInternalId: props.article?.internalId,
+const { attachments: articleAttachments } = useAttachments({
   attachments: filteredAttachments,
 })
 
-const inlineImages = ref<ImageViewerFile[]>([])
+const inlineImages = ref<ViewerFile[]>([])
 
-const { showImage } = useImageViewer(
+const { showPreview } = useFilePreviewViewer(
   computed(() => [...inlineImages.value, ...articleAttachments.value]),
 )
 </script>
@@ -168,7 +163,7 @@ const { showImage } = useImageViewer(
         :article="article"
         @click="toggleHeader"
         @keydown.enter="toggleHeader"
-        @preview="showImage"
+        @preview="showPreview('image', $event)"
       />
 
       <ArticleBubbleBlockedContentWarning
@@ -185,7 +180,7 @@ const { showImage } = useImageViewer(
       <ArticleBubbleFooter
         :article="article"
         :article-attachments="articleAttachments"
-        @preview="showImage"
+        @preview="showPreview"
       />
     </div>
 

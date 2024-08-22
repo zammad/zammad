@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-type TableColumnType = 'timestamp'
+type TableColumnType = 'timestamp' | 'timestamp_absolute'
 
 export interface TableHeader<K = string> {
   key: K

@@ -1,36 +1,38 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ConfigList } from '#shared/types/store.ts'
-import { canDownloadFile } from '#shared/utils/files.ts'
+import { canDownloadFile, canPreviewFile } from '#shared/utils/files.ts'
 
 interface Attachment {
   type?: Maybe<string>
   internalId: number
-  articleInternalId: number
-  ticketInternalId: number
 }
 
-export const getArticleAttachmentsLinks = (
-  attachment: Attachment,
-  config: ConfigList,
-) => {
+export const getAttachmentLinks = (attachment: Attachment, apiPath: string) => {
   const buildBaseUrl = () => {
-    const { ticketInternalId, articleInternalId, internalId } = attachment
-    const apiUrl = config.api_path
-    return `${apiUrl}/ticket_attachment/${ticketInternalId}/${articleInternalId}/${internalId}`
+    const { internalId } = attachment
+    return `${apiPath}/attachments/${internalId}`
   }
-  const buildPreviewUrl = (baseUrl: string) => `${baseUrl}?view=preview`
-  const buildInlineUrl = (baseUrl: string) => `${baseUrl}?view=inline`
+  const buildPreviewUrl = (baseUrl: string, type?: string | null) => {
+    if (canPreviewFile(type)) {
+      return `${baseUrl}?preview=1`
+    }
+
+    return ''
+  }
+
+  const buildInlineUrl = (baseUrl: string) => `${baseUrl}?disposition=inline`
+
   const canDownloadAttachment = (attachment: { type?: Maybe<string> }) => {
     return canDownloadFile(attachment.type)
   }
+
   const buildDownloadUrl = (baseUrl: string, canDownload: boolean) => {
     const dispositionParams = canDownload ? '?disposition=attachment' : ''
     return `${baseUrl}${dispositionParams}`
   }
 
   const baseUrl = buildBaseUrl()
-  const previewUrl = buildPreviewUrl(baseUrl)
+  const previewUrl = buildPreviewUrl(baseUrl, attachment.type)
   const canDownload = canDownloadAttachment(attachment)
   const downloadUrl = buildDownloadUrl(baseUrl, canDownload)
   const inlineUrl = buildInlineUrl(baseUrl)

@@ -45,6 +45,7 @@ export const TicketArticleAttributesFragmentDoc = gql`
   contentType
   references
   attachmentsWithoutInline {
+    id
     internalId
     name
     size

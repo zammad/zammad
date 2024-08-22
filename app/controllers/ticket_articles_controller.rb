@@ -3,7 +3,6 @@
 class TicketArticlesController < ApplicationController
   include CreatesTicketArticles
   include ClonesTicketArticleAttachments
-  include CalendarPreview
 
   prepend_before_action -> { authorize! }, only: %i[index import_example import_start]
   prepend_before_action :authentication_check
@@ -282,8 +281,7 @@ class TicketArticlesController < ApplicationController
   private
 
   def render_calendar_preview
-    data = parse_calendar(download_file)
-    render json: data, status: :ok
+    render json: Service::Calendar::IcsFile::Parse.new(current_user:).execute(file: download_file), status: :ok
   rescue => e
     logger.error e
     render json: { error: __('The preview cannot be generated. The format is corrupted or not supported.') }, status: :unprocessable_entity

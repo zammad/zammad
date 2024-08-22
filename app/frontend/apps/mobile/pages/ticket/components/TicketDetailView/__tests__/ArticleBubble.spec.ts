@@ -250,7 +250,7 @@ describe('component for displaying text article', () => {
 
     expect(attachment1).toHaveAttribute(
       'href',
-      '/api/ticket_attachment/6/12/1?disposition=attachment',
+      '/api/attachments/1?disposition=attachment',
     )
     expect(attachment1).toHaveTextContent('Zammad 1.png')
     expect(attachment1).toHaveTextContent('236 KB')
@@ -260,11 +260,11 @@ describe('component for displaying text article', () => {
     })
     expect(
       getByAltText(previewButton, 'Image of Zammad 1.png'),
-    ).toHaveAttribute('src', '/api/ticket_attachment/6/12/1?view=preview')
+    ).toHaveAttribute('src', '/api/attachments/1?preview=1')
 
     expect(attachment2).toHaveAttribute(
       'href',
-      '/api/ticket_attachment/6/12/2?disposition=attachment',
+      '/api/attachments/2?disposition=attachment',
     )
     expect(attachment2).toHaveTextContent('Zammad 2.pdf')
     expect(attachment2).toHaveTextContent('355 Bytes')
@@ -293,7 +293,7 @@ describe('component for displaying text article', () => {
     })
     await view.events.click(attachment)
 
-    expect(view).toHaveImagePreview('/api/ticket_attachment/6/12/1?view=inline')
+    expect(view).toHaveImagePreview('/api/attachments/1?disposition=inline')
   })
 
   it('always shows selected image to preview', async () => {
