@@ -87,9 +87,9 @@ module Channel::Filter::FollowUpCheck
           article_first = ticket.articles.first
           next if !article_first
 
-          # remove leading "..:\s" and "..[\d+]:\s" e. g. "Re: " or "Re[5]: "
+          # remove leading "..:\s", "...:\s", "..[\d+]:\s" and "...[\d+]:\s" e. g. "Re: ", "Re[5]: ", "Fwd: " or "Fwd[5]: "
           subject_to_check = mail[:subject]
-          subject_to_check.gsub!(%r{^(..(\[\d+\])?:\s+)+}, '')
+          subject_to_check.gsub!(%r{^(.{1,3}(\[\d+\])?:\s+)+}, '')
 
           # if subject is different, it's no followup
           next if subject_to_check != article_first.subject

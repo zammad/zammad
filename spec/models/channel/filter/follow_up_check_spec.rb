@@ -44,6 +44,86 @@ RSpec.describe Channel::Filter::FollowUpCheck, type: :channel_filter do
             .to change { mail_hash[:'x-zammad-ticket-id'] }
         end
       end
+
+      context 'when references header contains message id of inital mail but subject is different (reply/answer)' do
+        let(:mail_references) { '<12345@example.com> <abc@example.com>' }
+
+        context 'with english "RE:" prefix' do
+          let(:mail_subject) { 'RE: Question regarding AA' }
+
+          it 'set :x-zammad-ticket-id header' do
+            expect { filter(mail_hash) }
+              .not_to change { mail_hash[:'x-zammad-ticket-id'] }
+          end
+        end
+
+        context 'with english "RE: Fwd[6] RE:" prefix' do
+          let(:mail_subject) { 'RE: Fwd[6]: RE: Question regarding AA' }
+
+          it 'set :x-zammad-ticket-id header' do
+            expect { filter(mail_hash) }
+              .not_to change { mail_hash[:'x-zammad-ticket-id'] }
+          end
+        end
+
+        context 'with german "AW:" prefix' do
+          let(:mail_subject) { 'AW: Question regarding AA' }
+
+          it 'set :x-zammad-ticket-id header' do
+            expect { filter(mail_hash) }
+              .not_to change { mail_hash[:'x-zammad-ticket-id'] }
+          end
+        end
+
+        context 'with german "AW: WG[5]: AW[2]:" prefix' do
+          let(:mail_subject) { 'AW: WG[5]: AW[2]: Question regarding AA' }
+
+          it 'set :x-zammad-ticket-id header' do
+            expect { filter(mail_hash) }
+              .not_to change { mail_hash[:'x-zammad-ticket-id'] }
+          end
+        end
+      end
+
+      context 'when references header contains message id of inital mail and subject different (forward)' do
+        let(:mail_references) { '<12345@example.com> <abc@example.com>' }
+
+        context 'with english "Fwd:" prefix' do
+          let(:mail_subject) { 'Fwd: Question regarding A' }
+
+          it 'set :x-zammad-ticket-id header' do
+            expect { filter(mail_hash) }
+              .to change { mail_hash[:'x-zammad-ticket-id'] }
+          end
+        end
+
+        context 'with english "Fwd: RE: FWD[5]:" prefix' do
+          let(:mail_subject) { 'Fwd: RE: FWD[5]: Question regarding A' }
+
+          it 'set :x-zammad-ticket-id header' do
+            expect { filter(mail_hash) }
+              .to change { mail_hash[:'x-zammad-ticket-id'] }
+          end
+        end
+
+        context 'with german "WG:" prefix' do
+          let(:mail_subject) { 'WG: Question regarding A' }
+
+          it 'set :x-zammad-ticket-id header' do
+            expect { filter(mail_hash) }
+              .to change { mail_hash[:'x-zammad-ticket-id'] }
+          end
+        end
+
+        context 'with german "WG: AW: Wg[5]:" prefix' do
+          let(:mail_subject) { 'WG: AW: Wg[5]: Question regarding A' }
+
+          it 'set :x-zammad-ticket-id header' do
+            expect { filter(mail_hash) }
+              .to change { mail_hash[:'x-zammad-ticket-id'] }
+          end
+        end
+      end
     end
 
     context 'with disabled advanced follow up detection' do
