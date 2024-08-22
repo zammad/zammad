@@ -22,5 +22,6 @@ subscription ticketChecklistUpdates($ticketId: ID!) {
         ticketAccess
       }
     }
+    removedTicketChecklist
   }
 }

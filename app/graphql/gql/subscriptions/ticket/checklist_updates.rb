@@ -8,12 +8,15 @@ module Gql::Subscriptions
     argument :ticket_id, GraphQL::Types::ID, description: 'Ticket identifier'
 
     field :ticket_checklist, Gql::Types::ChecklistType, description: 'Ticket checklist'
+    field :removed_ticket_checklist, Boolean, description: 'Ticket checklist was removed from ticket'
 
     def authorized?(ticket_id:)
       context.current_user.permissions?('ticket.agent') && Gql::ZammadSchema.authorized_object_from_id(ticket_id, type: ::Ticket, user: context.current_user)
     end
 
     def update(ticket_id:)
+      return { removed_ticket_checklist: true } if object.nil?
+
       { ticket_checklist: object }
     end
   end

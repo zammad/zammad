@@ -34,6 +34,7 @@ RSpec.describe Gql::Subscriptions::Ticket::ChecklistUpdates, type: :graphql do
               ticketAccess
             }
           }
+          removedTicketChecklist
         }
       }
     QUERY
@@ -89,7 +90,7 @@ RSpec.describe Gql::Subscriptions::Ticket::ChecklistUpdates, type: :graphql do
 
         result = mock_channel.mock_broadcasted_messages.first[:result]['data']['ticketChecklistUpdates']
 
-        expect(result).to include('ticketChecklist' => nil)
+        expect(result).to include('ticketChecklist' => nil, 'removedTicketChecklist' => true)
       end
 
       it 'triggers after checklist item create' do

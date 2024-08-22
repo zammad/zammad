@@ -90,9 +90,7 @@ const checklistItemsMock: Partial<ChecklistItem>[] = [
   },
 ]
 
-/**
- * partialTicketChecklist - Overrides the default checklist values if set to null, checklist will be empty
- * */
+// Overrides the default checklist values if set to null, checklist will be empty
 const mockChecklistUpdateSubscription = async (
   partialTicketChecklist: Partial<
     TicketChecklistUpdatesSubscription['ticketChecklistUpdates']['ticketChecklist']
@@ -102,6 +100,7 @@ const mockChecklistUpdateSubscription = async (
     await getTicketChecklistUpdatesSubscriptionHandler().trigger({
       ticketChecklistUpdates: {
         ticketChecklist: null,
+        removedTicketChecklist: true,
       },
     })
     return

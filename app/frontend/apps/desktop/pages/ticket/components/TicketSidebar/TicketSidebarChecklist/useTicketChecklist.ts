@@ -60,10 +60,15 @@ export const useTicketChecklist = (
       ticketId: ticketId.value as string,
     },
     updateQuery: (prev, { subscriptionData }) => {
-      if (!subscriptionData.data.ticketChecklistUpdates)
+      if (
+        !subscriptionData.data.ticketChecklistUpdates.ticketChecklist &&
+        !subscriptionData.data.ticketChecklistUpdates.removedTicketChecklist
+      ) {
         return null as unknown as TicketChecklistQuery
+      }
 
-      const { ticketChecklist } = subscriptionData.data.ticketChecklistUpdates
+      const { ticketChecklist, removedTicketChecklist } =
+        subscriptionData.data.ticketChecklistUpdates
 
       if (
         checklist.value?.items?.length &&
@@ -77,7 +82,7 @@ export const useTicketChecklist = (
 
       // When a complete checklist was removed, we need to update the result.
       if (
-        ticketChecklist === null ||
+        removedTicketChecklist ||
         (prev.ticketChecklist === null && ticketChecklist !== null)
       ) {
         return {

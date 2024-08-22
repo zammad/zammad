@@ -30,6 +30,7 @@ export const TicketChecklistUpdatesDocument = gql`
         ticketAccess
       }
     }
+    removedTicketChecklist
   }
 }
     `;
