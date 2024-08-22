@@ -53,8 +53,6 @@ Some Text"
     assert_equal('me+is+customer@example.com', ticket.customer.email)
 
     # check if follow-up based on inital system sender address
-    setting_orig = Setting.get('postmaster_follow_up_search_in')
-    Setting.set('postmaster_follow_up_search_in', [])
 
     # follow-up possible because same subject
     email_raw_string = "From: me+is+customer@example.com
@@ -85,8 +83,6 @@ Some Text"
     assert_not_equal(ticket.id, ticket2.id)
     assert_equal(subject, ticket2.title)
     assert_equal('new', ticket2.state.name)
-
-    Setting.set('postmaster_follow_up_search_in', setting_orig)
 
   end
 

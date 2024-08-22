@@ -628,8 +628,7 @@ RSpec.describe Channel::EmailParser, type: :model do
           end
         end
 
-        context 'when not explicitly configured to search anywhere' do
-          before { Setting.set('postmaster_follow_up_search_in', nil) }
+        context 'when configured to search subject_references' do
 
           context 'when subject contains ticket reference' do
             include_context 'ticket reference in subject'
