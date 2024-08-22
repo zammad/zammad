@@ -47,7 +47,7 @@ class App.KnowledgeBaseDelete extends App.KnowledgeBaseForm
             style:   'block'
             null:    true
             display: __('Permanently Delete Knowledge Base')
-            help:    "Deleting your knowledge base requires an additional verification step. To proceed, enter its name below (\"#{@object().guaranteedTitle()}\"). THIS ACTION CANNOT BE UNDONE."
+            help:    App.i18n.translatePlain('Deleting your knowledge base requires an additional verification step. To proceed, enter its name below ("%s"). THIS ACTION CANNOT BE UNDONE.', @object().guaranteedTitle())
             tag:     'input'
           }
         ]
