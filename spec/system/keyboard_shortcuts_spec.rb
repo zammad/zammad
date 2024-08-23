@@ -229,7 +229,7 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
         visit '/'
       end
 
-      it 'enable translations' do
+      it 'enables translations' do
         within :active_content do
           expect(page).to have_no_selector('.stat-title span.translation')
         end
@@ -241,6 +241,21 @@ RSpec.describe 'Keyboard Shortcuts', type: :system do
           expect(page).to have_css('.stat-title span.translation')
         end
         expect(page).to have_css('#navigation [href="#dashboard"] span.translation')
+      end
+
+      it 'does not enable translations with a modifier (#5312)' do
+        within :active_content do
+          expect(page).to have_no_selector('.stat-title span.translation')
+        end
+        expect(page).to have_no_selector('#navigation [href="#dashboard"] span.translation')
+
+        send_keys([:control, 't'])
+
+        within :active_content do
+          expect(page).to have_no_css('.stat-title span.translation')
+        end
+
+        expect(page).to have_no_css('#navigation [href="#dashboard"] span.translation')
       end
     end
   end
