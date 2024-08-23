@@ -749,17 +749,18 @@ class App.UiElement.ApplicationSelectorExpert extends App.UiElement.ApplicationS
       value.value = element.find('select.js-value').val()
     else if element.find('.js-value .js-objectId')?.val()
       value.value = element.find('.js-value .js-objectId').val()
-    else if element.find('.js-value .js-shadow')?.val()
+    else if element.find('.js-value .js-shadow:not([data-value-type])')?.val()
       value.value = element.find('.js-value .js-shadow').val()
-    else if element.find('[data-value]').length
-      valueField = element.find('[data-value]')
+    else if element.find('[data-value]').length or element.find('[data-value-type]').length
+      valueField = element.find('[data-value],[data-value-type]')
+      dataValue = if valueField.data('value') then valueField.data('value') else valueField.val()
       if valueField.data('valueType') is 'json'
         try
-          value.value = JSON.parse(valueField.data('value'))
+          value.value = JSON.parse(dataValue)
         catch
           App.Log.error 'App.UiElement.ticket_selector', 'Invalid JSON value for a subfield', valueField
       else
-        value.value = valueField.data('value')
+        value.value = dataValue
     else if element.find('.js-value input.form-control')?.val()
       value.value = element.find('.js-value input.form-control').val()
     else if element.find('.js-value .form-control')?.val()

@@ -15,6 +15,7 @@
         name="<%= @attribute.name %>"
         <%= @attribute.autofocus %>
         value="<%= @attribute.valueRaw or @attribute.value %>"
+        data-value-type="<%= @attribute.valueType %>"
         tabindex="-1"
         <% if @attribute.disabled: %> disabled<% end %>
       >
