@@ -4877,7 +4877,7 @@ wait untill text in selector disabppears
     begin
       alert = instance.switch_to.alert
       alert.dismiss
-    rescue e
+    rescue => e
       tries -= 1
       sleep 0.5
       retry if tries.positive?
