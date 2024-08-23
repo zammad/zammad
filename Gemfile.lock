@@ -145,7 +145,7 @@ GEM
       tzinfo
     bootsnap (1.18.4)
       msgpack (~> 1.2)
-    brakeman (6.1.2)
+    brakeman (6.2.1)
       racc
     browser (6.0.0)
     buftok (0.2.0)
