@@ -6,6 +6,7 @@ import type {
   FormFieldValue,
   FormRef,
   FormSchemaField,
+  FormValues,
 } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import type { ChannelEmailInboundMailboxStats } from '#shared/graphql/types.ts'
@@ -72,19 +73,17 @@ export const useEmailInboundForm = () => {
       disabled,
     }
 
-    updateFieldValues({
+    const newValues: FormValues = {
       sslVerify: !disabled,
-    })
+    }
 
     if (newValue === 'off') {
-      emailInboundFormChangeFields.port = {
-        value: 143,
-      }
+      newValues.port = 143
     } else if (newValue === 'ssl') {
-      emailInboundFormChangeFields.port = {
-        value: 993,
-      }
+      newValues.port = 993
     }
+
+    updateFieldValues(newValues)
   })
 
   const emailInboundSchema = [
