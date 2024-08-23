@@ -190,7 +190,6 @@ gem 'aws-sdk-s3', require: false
 # Debugging and profiling
 gem 'byebug'
 gem 'pry-byebug'
-gem 'pry-doc'
 gem 'pry-rails'
 gem 'pry-remote'
 gem 'pry-rescue'
@@ -261,6 +260,9 @@ group :development, :test do
 
   # Keycloak admin tool for setting up SAML auth tests
   gem 'keycloak-admin', git: 'https://github.com/tschaefer/ruby-keycloak-admin/', branch: 'main', require: false
+
+  # Debugging and profiling
+  gem 'pry-doc' # This gem is very large, so don't include it in production.
 end
 
 # To permanently extend Zammad with additional gems, you can specify them in Gemfile.local.
