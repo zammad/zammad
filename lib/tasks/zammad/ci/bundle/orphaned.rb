@@ -104,7 +104,6 @@ module Tasks
             'multi_xml',
             'promise.rb',
             'thread_safe',
-            'unf',
           ].freeze
 
           def self.find_orphaned_gems(age)
