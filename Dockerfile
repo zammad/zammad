@@ -23,10 +23,16 @@ ARG ZAMMAD_USER=zammad
 ENV RAILS_ENV=production
 ENV RAILS_LOG_TO_STDOUT=true
 ENV ZAMMAD_DIR=/opt/zammad
+
 WORKDIR ${ZAMMAD_DIR}
 COPY --from=builder ${ZAMMAD_DIR} .
 COPY --from=builder /usr/local/bundle /usr/local/bundle
 COPY --from=builder ${ZAMMAD_DIR}/contrib/docker/docker-entrypoint.sh /
 RUN contrib/docker/setup.sh runner
+
 USER zammad:zammad
 ENTRYPOINT ["/docker-entrypoint.sh"]
+
+# Set labels to help portainer.io admins to access the shell and rails console.
+LABEL io.portainer.commands.bash-via-entrypoint="/docker-entrypoint.sh /bin/bash"
+LABEL io.portainer.commands.rails-console="/docker-entrypoint.sh bundle exec rails c"
