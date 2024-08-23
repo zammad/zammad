@@ -21,13 +21,14 @@ if [ "$1" = 'builder' ]; then
 
   cd "${ZAMMAD_DIR}"
   bundle config set --local without 'test development mysql'
-  bundle config set --local deployment 'true'
+  # Don't use the 'deployment' switch here as it would require always using 'bundle exec'
+  #   to invoke commands like rails.
+  bundle config set --local frozen 'true'
   bundle install
 
   touch db/schema.rb
   ZAMMAD_SAFE_MODE=1 DATABASE_URL=postgresql://zammad:/zammad bundle exec rake assets:precompile # Don't require Redis.
 
-  rm -r tmp/*
   script/build/cleanup.sh
 fi
 
