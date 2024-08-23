@@ -11,7 +11,7 @@ module Sequencer::Unit::Import::Freshdesk::Requester
       return response if response.is_a?(Net::HTTPOK) || response.is_a?(Net::HTTPNotFound)
 
       handle_error response, iteration
-    rescue e
+    rescue => e
       handle_exception e, iteration
     end
 
