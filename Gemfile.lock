@@ -513,7 +513,7 @@ GEM
     rchardet (1.8.0)
     redis (4.8.1)
     regexp_parser (2.9.0)
-    rexml (3.3.4)
+    rexml (3.3.6)
       strscan
     rotp (6.3.0)
     rspec-core (3.13.0)
