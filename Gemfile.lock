@@ -196,7 +196,7 @@ GEM
     delayed_job_active_record (4.1.10)
       activerecord (>= 3.0, < 8.0)
       delayed_job (>= 3.0, < 5)
-    deprecation_toolkit (2.2.0)
+    deprecation_toolkit (2.2.1)
       activesupport (>= 6.1)
     diff-lcs (1.5.1)
     diffy (3.4.2)
