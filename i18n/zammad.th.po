@@ -444,8 +444,8 @@ msgstr "%s URL"
 msgid "%s ago"
 msgstr "%s มาแล้ว"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:224
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:31
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:222
 msgid "%s attached files"
 msgstr "%s ไฟล์แนบ"
 
@@ -792,8 +792,8 @@ msgstr ""
 "จะแสดงในมุมมองที่แยกต่างหากในภาพรวมของคุณ คุณยังสามารถกำหนดค่า ** การแจ้งเตือนทางอีเมล "
 "**"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:29
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:223
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:221
 msgid "1 attached file"
 msgstr "1 ไฟล์แนบ"
 
@@ -845,7 +845,7 @@ msgstr "1. สร้าง Ticket"
 msgid "2 hours"
 msgstr "2 ชั่วโมง"
 
-#: db/seeds/settings.rb:2022
+#: db/seeds/settings.rb:2048
 msgid "2 lower case and 2 upper case characters"
 msgstr "2 ตัวพิมพ์เล็กและ 2 ตัวพิมพ์ใหญ่"
 
@@ -918,7 +918,7 @@ msgstr ""
 msgid "A color scheme that uses light-colored elements on a dark background."
 msgstr ""
 
-#: db/seeds/settings.rb:3859
+#: db/seeds/settings.rb:3886
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr "รายการแบ็กเอนด์นำเข้าที่ใช้งานอยู่ซึ่งได้รับการกำหนดเวลาโดยอัตโนมัติ"
 
@@ -960,7 +960,7 @@ msgid ""
 "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr "สร้าง ticket ทดสอบแล้ว คุณสามารถดูได้ในภาพรวม \"%s\" %l"
 
-#: app/models/ticket.rb:278
+#: app/models/ticket.rb:277
 msgid "A ticket cannot be merged into itself."
 msgstr "ticket ไม่สามารถรวมเข้ากับตัวเองได้"
 
@@ -997,7 +997,7 @@ msgstr "API"
 msgid "API Key"
 msgstr "API Key"
 
-#: db/seeds/settings.rb:3381
+#: db/seeds/settings.rb:3408
 msgid "API Password Access"
 msgstr "การเข้าถึงรหัสผ่าน API"
 
@@ -1005,7 +1005,7 @@ msgstr "การเข้าถึงรหัสผ่าน API"
 msgid "API Token"
 msgstr "โทเค็น API"
 
-#: db/seeds/settings.rb:3356
+#: db/seeds/settings.rb:3383
 msgid "API Token Access"
 msgstr "เข้าถึงโทเค็น API"
 
@@ -1211,7 +1211,7 @@ msgstr "การดําเนินการ"
 msgid "Actions"
 msgstr "การกระทำ"
 
-#: db/seeds/settings.rb:2717
+#: db/seeds/settings.rb:2743
 msgid "Activate the recursive processing of ticket triggers."
 msgstr "เปิดใช้งานการประมวลผลทริกเกอร์ ticket แบบเรียกซ้ำ"
 
@@ -1501,7 +1501,7 @@ msgstr "เพิ่มคลาสนี้ไปที่ปุ่มบนเ
 msgid "Additional Channels"
 msgstr "ช่องเพิ่มเติม"
 
-#: db/seeds/settings.rb:3190
+#: db/seeds/settings.rb:3216
 msgid "Additional follow-up detection"
 msgstr "การตรวจจับการติดตามเพิ่มเติม"
 
@@ -1670,11 +1670,11 @@ msgstr "เวลา"
 msgid "Agent"
 msgstr "เจ้าหน้าที่"
 
-#: db/seeds/settings.rb:3103
+#: db/seeds/settings.rb:3129
 msgid "Agent Name"
 msgstr "ชื่อเจ้าหน้าที่"
 
-#: db/seeds/settings.rb:3103
+#: db/seeds/settings.rb:3129
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr "ชื่อเจ้าหน้าที่ + FromSeparator + System Address Display Name"
 
@@ -1684,7 +1684,7 @@ msgstr "ชื่อเจ้าหน้าที่ + FromSeparator + System A
 msgid "Agent chat"
 msgstr "ชื่อเจ้าหน้าที่"
 
-#: db/seeds/settings.rb:3456
+#: db/seeds/settings.rb:3483
 msgid "Agent idle timeout"
 msgstr "ระยะหมดเวลาของ เจ้าหน้าที่"
 
@@ -1799,13 +1799,13 @@ msgstr "อนุญาตให้ผู้ใช้เพิ่มแท็ก
 msgid "Allow users to add new tags."
 msgstr "อนุญาตให้ผู้ใช้เพิ่มแท็กใหม่"
 
-#: db/seeds/settings.rb:5766
+#: db/seeds/settings.rb:5793
 #, fuzzy
 #| msgid "Allow users to create new tags."
 msgid "Allow users to create new checklists."
 msgstr "อนุญาตให้ผู้ใช้สร้างแท็กใหม่"
 
-#: db/seeds/settings.rb:4024
+#: db/seeds/settings.rb:4051
 msgid "Allow users to create new tags."
 msgstr "อนุญาตให้ผู้ใช้สร้างแท็กใหม่"
 
@@ -1822,7 +1822,7 @@ msgstr "อนุญาตเว็บไซต์ (คั่นด้วย ;)"
 msgid "Also notify via email"
 msgstr "แจ้งเตือนทางอีเมล์ด้วย"
 
-#: db/seeds/settings.rb:5052
+#: db/seeds/settings.rb:5079
 msgid ""
 "Alternative FQDN for callbacks if you operate Zammad in an internal network."
 msgstr "FQDN ทางเลือกสำหรับการ callbacks หากคุณดำเนินการ Zammad ในเครือข่ายภายใน"
@@ -1956,15 +1956,15 @@ msgstr "แอนติคอน"
 msgid "Any recipient"
 msgstr "ผู้รับ ทั้งหมด"
 
-#: db/seeds/settings.rb:1400
+#: db/seeds/settings.rb:1426
 msgid "App ID"
 msgstr "App ID"
 
-#: db/seeds/settings.rb:1406
+#: db/seeds/settings.rb:1432
 msgid "App Secret"
 msgstr "รหัส แอป"
 
-#: db/seeds/settings.rb:1739
+#: db/seeds/settings.rb:1765
 msgid "App Tenant ID"
 msgstr "ID ผู้เช่าแอป"
 
@@ -1980,11 +1980,11 @@ msgstr "เวอร์ชันแอป"
 msgid "App could not be verified."
 msgstr "ไม่สามารถตรวจสอบแอปได้"
 
-#: db/seeds/settings.rb:1396
+#: db/seeds/settings.rb:1422
 msgid "App credentials for Facebook."
 msgstr "ข้อมูลประจำตัวแอปสำหรับ Facebook"
 
-#: db/seeds/settings.rb:1332
+#: db/seeds/settings.rb:1358
 msgid "App credentials for Twitter."
 msgstr "ข้อมูลรับรองแอพสำหรับ Twitter"
 
@@ -1994,7 +1994,7 @@ msgstr "ข้อมูลรับรองแอพสำหรับ Twitter"
 msgid "App secret"
 msgstr "รหัส แอป"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:349
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:409
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee:3
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:3
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
@@ -2077,7 +2077,7 @@ msgstr "จัดเก็บที่"
 msgid "Are you sure to remove this article?"
 msgstr "คุณแน่ใจหรือไม่ว่าต้องการโหลดซ้ำ? คุณมีการเปลี่ยนแปลงที่ยังไม่ได้บันทึกที่จะสูญหาย"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:152
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:153
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "คุณต้องการลบ \"%s\" หรือไม่?"
 
@@ -2210,7 +2210,7 @@ msgstr "จำนวนบทความ"
 msgid "Article Type"
 msgstr "บทความ"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:284
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:282
 msgid "Article actions"
 msgstr "การกระทําของบทความ"
 
@@ -2218,7 +2218,7 @@ msgstr "การกระทําของบทความ"
 msgid "Article could not be deleted."
 msgstr "ไม่สามารถลบบทความได้"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:130
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:125
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:27
 #, fuzzy
 #| msgid "Ticket notifications"
@@ -2310,17 +2310,17 @@ msgstr "ต้องเลือกวัตถุอย่างน้อยห
 msgid "At least one user needs to have admin permissions."
 msgstr "ผู้ใช้อย่างน้อยหนึ่งรายต้องมีสิทธิ์ของผู้ดูแลระบบ."
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:190
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:191
 msgid "Attach another file"
 msgstr "แนบไฟล์อื่น"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:185
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:186
 #, fuzzy
 #| msgid "Attach files"
 msgid "Attach file"
 msgstr "ไฟล์แนบ"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:188
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:189
 msgid "Attach files"
 msgstr "ไฟล์แนบ"
 
@@ -2342,13 +2342,16 @@ msgstr "ไฟล์แนบ"
 msgid "Attachment"
 msgstr "แฟ้มแนบ"
 
-#: db/seeds/settings.rb:3204
+#: db/seeds/settings.rb:3230
 msgid "Attachment - Search for follow-up also in attachments."
 msgstr "ไฟล์แนบ - ค้นหาการติดตามในไฟล์แนบด้วย."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee:15
 #: app/assets/javascripts/app/views/knowledge_base/_answer_attachments.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:2
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentButton.vue:43
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:32
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/ticket-article-attachment.ts:12
 #: public/assets/form/form.js:50
 msgid "Attachments"
 msgstr "แฟ้มแนบ"
@@ -2397,7 +2400,7 @@ msgstr "แอตทริบิวต์"
 msgid "Attribute '%s' is required in the mapping"
 msgstr "จำเป็นต้องมีแอตทริบิวต์ '%s' ในการแมป"
 
-#: db/seeds/settings.rb:1912
+#: db/seeds/settings.rb:1938
 msgid ""
 "Attribute that uniquely identifies the user. If unset, the name identifier "
 "returned by the IDP is used."
@@ -2409,7 +2412,7 @@ msgid "Attributes"
 msgstr "แอตทริบิวต์"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:32
-#: db/seeds/settings.rb:2568
+#: db/seeds/settings.rb:2594
 #, fuzzy
 #| msgid "Attributes"
 msgid "Attributes to compare"
@@ -2476,7 +2479,7 @@ msgstr "การตรวจสอบสิทธิ์ผ่าน %s"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:5
 #: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts:9
-#: db/seeds/settings.rb:5651
+#: db/seeds/settings.rb:5678
 #, fuzzy
 #| msgid "Authentication"
 msgid "Authenticator App"
@@ -2511,17 +2514,17 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:11
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:7
-#: db/seeds/settings.rb:2414
+#: db/seeds/settings.rb:2440
 msgid "Auto Assignment"
 msgstr "การมอบหมายอัตโนมัติ"
 
-#: db/seeds/settings.rb:2457
+#: db/seeds/settings.rb:2483
 #, fuzzy
 #| msgid "Auto Assignment"
 msgid "Auto Assignment Ignored Users"
 msgstr "การมอบหมายอัตโนมัติ"
 
-#: db/seeds/settings.rb:2440
+#: db/seeds/settings.rb:2466
 #, fuzzy
 #| msgid "Auto Assignment"
 msgid "Auto Assignment Selector"
@@ -2531,7 +2534,7 @@ msgstr "การมอบหมายอัตโนมัติ"
 msgid "Auto Wizard"
 msgstr "ตัวช่วยสร้างอัตโนมัติ"
 
-#: db/seeds/settings.rb:4348
+#: db/seeds/settings.rb:4375
 msgid "Auto close"
 msgstr "ปิดอัตโนมัติ"
 
@@ -2539,7 +2542,7 @@ msgstr "ปิดอัตโนมัติ"
 msgid "Auto create"
 msgstr "สร้างอัตโนมัติ"
 
-#: db/seeds/settings.rb:4374
+#: db/seeds/settings.rb:4401
 msgid "Auto-close state"
 msgstr "สถานะปิดอัตโนมัติ"
 
@@ -2649,7 +2652,7 @@ msgstr "เฉลี่ย: %s นาที"
 msgid "Average: %s%"
 msgstr "เฉลี่ย: %s%"
 
-#: db/seeds/settings.rb:3345
+#: db/seeds/settings.rb:3372
 msgid "BCC address for all outgoing emails"
 msgstr "BCC address สำหรับอีเมลขาออกทั้งหมด"
 
@@ -2735,7 +2738,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:261
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:99
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:97
 msgid "Begin forwarded message"
 msgstr "เริ่มการส่งต่อข้อความ"
 
@@ -2753,7 +2756,7 @@ msgstr "รหัสผ่าน Bind"
 msgid "Bind User"
 msgstr "ผู้ใช้ Bind"
 
-#: db/seeds/settings.rb:3322
+#: db/seeds/settings.rb:3349
 msgid "Block Notifications"
 msgstr "ปิดกั้นการแจ้งเตือน"
 
@@ -2789,7 +2792,7 @@ msgstr "น้ำเงิน"
 msgid "Body"
 msgstr "ตัวเนื้อความ"
 
-#: db/seeds/settings.rb:3203
+#: db/seeds/settings.rb:3229
 msgid "Body - Search for follow-up also in mail body."
 msgstr "เนื้อหา - ค้นหาการติดตามในเนื้อหาอีเมลด้วย."
 
@@ -2847,7 +2850,7 @@ msgstr "เวลาทำการ"
 msgid "But it's only available in these languages:"
 msgstr "แต่ใช้ได้เฉพาะในภาษาเหล่านี้:"
 
-#: db/seeds/settings.rb:3193
+#: db/seeds/settings.rb:3219
 msgid ""
 "By default, the follow-up check is done via the subject of an email. This "
 "setting lets you add more fields for which the follow-up check will be "
@@ -2913,19 +2916,19 @@ msgstr "CTI"
 msgid "CTI (generic)"
 msgstr "CTI (generic)"
 
-#: db/seeds/settings.rb:5111
+#: db/seeds/settings.rb:5138
 msgid "CTI Token"
 msgstr "CTI Token"
 
-#: db/seeds/settings.rb:5098
+#: db/seeds/settings.rb:5125
 msgid "CTI config"
 msgstr "CTI config"
 
-#: db/seeds/settings.rb:5132
+#: db/seeds/settings.rb:5159
 msgid "CTI customer last activity"
 msgstr "CTI customer last activity"
 
-#: db/seeds/settings.rb:5070
+#: db/seeds/settings.rb:5097
 msgid "CTI integration"
 msgstr "CTI integration"
 
@@ -3135,7 +3138,7 @@ msgstr "เค้าโครงหน้าหมวดหมู่"
 msgid "Caution!"
 msgstr "ระมัดระวัง!"
 
-#: db/seeds/settings.rb:1938
+#: db/seeds/settings.rb:1964
 #, fuzzy
 #| msgid "Add Certificate"
 msgid "Certificate (PEM)"
@@ -3354,7 +3357,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:3
-#: db/seeds/permissions.rb:287 db/seeds/settings.rb:5763
+#: db/seeds/permissions.rb:287 db/seeds/settings.rb:5790
 #, fuzzy
 #| msgid "Checksum"
 msgid "Checklists"
@@ -3364,15 +3367,15 @@ msgstr "Checksum"
 msgid "Checkmk"
 msgstr "Checkmk"
 
-#: db/seeds/settings.rb:4495
+#: db/seeds/settings.rb:4522
 msgid "Checkmk integration"
 msgstr "Checkmk integration"
 
-#: db/seeds/settings.rb:4593
+#: db/seeds/settings.rb:4620
 msgid "Checkmk token"
 msgstr "Checkmk token"
 
-#: db/seeds/settings.rb:2335
+#: db/seeds/settings.rb:2361
 msgid "Checksum"
 msgstr "Checksum"
 
@@ -3523,11 +3526,11 @@ msgstr "ล้างการเลือก"
 msgid "Clearbit"
 msgstr "Clearbit"
 
-#: db/seeds/settings.rb:5234
+#: db/seeds/settings.rb:5261
 msgid "Clearbit config"
 msgstr "กำหนดค่า Clearbit"
 
-#: db/seeds/settings.rb:5208
+#: db/seeds/settings.rb:5235
 msgid "Clearbit integration"
 msgstr "Clearbit integration"
 
@@ -3543,13 +3546,13 @@ msgstr "คลิกที่นี่เพื่อตั้งค่าวิ
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:28
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco:21
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco:9
-#: db/seeds/settings.rb:1464
+#: db/seeds/settings.rb:1490
 msgid "Client ID"
 msgstr "รหัสลูกค้า"
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco:17
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco:17
-#: db/seeds/settings.rb:1470
+#: db/seeds/settings.rb:1496
 msgid "Client Secret"
 msgstr "Client ความลับ"
 
@@ -3594,7 +3597,7 @@ msgstr "ปิดในนาที"
 msgid "Close chat sessions where participants are offline."
 msgstr "ปิดเซสชันการแชทที่ผู้เข้าร่วมออฟไลน์"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:168
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:218
 msgid "Close current tab"
 msgstr "ปิดแท็บปัจจุบัน"
 
@@ -3612,13 +3615,13 @@ msgstr "ปิดแท็บ"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:32
-#: db/seeds/settings.rb:2887
+#: db/seeds/settings.rb:2913
 msgid "Close tab"
 msgstr "ปิดแท็บ"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:37
-#: db/seeds/settings.rb:2888
+#: db/seeds/settings.rb:2914
 msgid "Close tab on ticket close"
 msgstr "ปิดแท็บบน ticket ที่ปิดแล้ว"
 
@@ -3683,7 +3686,7 @@ msgstr "Company Inc."
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:11
-#: db/seeds/settings.rb:5643
+#: db/seeds/settings.rb:5670
 msgid "Complete the sign-in with your security key."
 msgstr ""
 
@@ -3811,7 +3814,7 @@ msgid ""
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:223
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:278
 msgid "Confirm/submit dialog"
 msgstr "ยืนยัน/ส่งกล่องโต้ตอบ"
 
@@ -4038,7 +4041,7 @@ msgstr "CTI Token"
 msgid "Copy URL"
 msgstr "คัดลอก"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:276
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:332
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "คัดลอกหมายเลขวัตถุปัจจุบัน (เช่น Ticket#) ไปยังคลิปบอร์ด"
 
@@ -4581,7 +4584,7 @@ msgstr "พูดคุย ผู้ใช้บริการ"
 msgid "Customer and agent ratio (role based user counts)"
 msgstr ""
 
-#: db/seeds/settings.rb:3246
+#: db/seeds/settings.rb:3273
 msgid "Customer selection based on sender and receiver list"
 msgstr "การเลือก ผู้ใช้บริการ ตามรายชื่อผู้ส่งและผู้รับ"
 
@@ -4624,7 +4627,7 @@ msgid "Dark Mode"
 msgstr "โหมดมืด"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:5
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:95
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:125
 #: app/assets/javascripts/app/controllers/dashboard.coffee:28
 #: app/assets/javascripts/app/controllers/package.coffee:42
 #: app/frontend/apps/desktop/pages/dashboard/routes.ts:8
@@ -4670,7 +4673,7 @@ msgstr "วันที่"
 msgid "Date & time field"
 msgstr "ช่องวันที่และเวลา"
 
-#: db/seeds/settings.rb:2314
+#: db/seeds/settings.rb:2340
 msgid "Date (Year.Month.Day.SystemID.Counter)"
 msgstr "วันที่ (Year.Month.Day.SystemID.Counter)"
 
@@ -4771,11 +4774,11 @@ msgstr "พฤติกรรมปกติ"
 msgid "Default Notifications"
 msgstr "ปิดการแจ้งเตือน"
 
-#: db/seeds/settings.rb:3478
+#: db/seeds/settings.rb:3505
 msgid "Default Screen"
 msgstr "หน้าจอเริ่มต้น"
 
-#: db/seeds/settings.rb:2475
+#: db/seeds/settings.rb:2501
 #, fuzzy
 #| msgid "Block Notifications"
 msgid "Default Ticket Agent Notifications"
@@ -4785,7 +4788,7 @@ msgstr "ปิดกั้นการแจ้งเตือน"
 msgid "Default at Signup"
 msgstr "ค่าเริ่มต้นเมื่อสมัคร"
 
-#: db/seeds/settings.rb:4048
+#: db/seeds/settings.rb:4075
 msgid "Default calendar tickets subscriptions"
 msgstr "การสมัคร tickets ปฏิทินเริ่มต้น"
 
@@ -4825,31 +4828,31 @@ msgid "Default value is required."
 msgstr "ต้องการ User!."
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:15
-#: db/seeds/settings.rb:2460
+#: db/seeds/settings.rb:2486
 msgid ""
 "Define an exception of \"automatic assignment\" for certain users (e.g. "
 "executives)."
 msgstr "กำหนดข้อยกเว้นของ \"การมอบหมายอัตโนมัติ\" สำหรับผู้ใช้บางคน (เช่น ผู้บริหาร)"
 
-#: db/seeds/settings.rb:3545
+#: db/seeds/settings.rb:3572
 msgid "Define max. attachment size for Elasticsearch."
 msgstr "กำหนดสูงสุด ขนาดไฟล์แนบสำหรับ Elasticsearch"
 
-#: db/seeds/settings.rb:3554
+#: db/seeds/settings.rb:3581
 msgid "Define max. payload size for Elasticsearch."
 msgstr "กำหนดสูงสุด ขนาดเพย์โหลดสำหรับ Elasticsearch"
 
-#: db/seeds/settings.rb:3572
+#: db/seeds/settings.rb:3599
 #, fuzzy
 #| msgid "Define pipeline name for Elasticsearch."
 msgid "Define model configuration for Elasticsearch."
 msgstr "กำหนดชื่อไปป์ไลน์สำหรับ Elasticsearch"
 
-#: db/seeds/settings.rb:3563
+#: db/seeds/settings.rb:3590
 msgid "Define pipeline name for Elasticsearch."
 msgstr "กำหนดชื่อไปป์ไลน์สำหรับ Elasticsearch"
 
-#: db/seeds/settings.rb:4185
+#: db/seeds/settings.rb:4212
 msgid ""
 "Define postmaster filter to check if follow-ups get created (based on admin "
 "settings)."
@@ -4857,11 +4860,11 @@ msgstr ""
 "กำหนดตัวกรอง postmaster เพื่อตรวจสอบว่ามีการสร้างการติดตามหรือไม่ "
 "(ตามการตั้งค่าของผู้ดูแลระบบ)"
 
-#: db/seeds/settings.rb:4131
+#: db/seeds/settings.rb:4158
 msgid "Define postmaster filter to import archive mailboxes."
 msgstr "กำหนดตัวกรอง postmaster เพื่อนำเข้ากล่องจดหมายเก็บถาวร"
 
-#: db/seeds/settings.rb:4128
+#: db/seeds/settings.rb:4155
 msgid "Define postmaster filter."
 msgstr "กำหนดตัวกรอง Postmaster"
 
@@ -4874,7 +4877,7 @@ msgstr ""
 "กำหนดคิวหรือปลายทางการโทร (สิ่งที่เหมาะกับ PBX ของคุณ) และจับคู่ตัวแทนของคุณกับมัน ด้วยเหตุนี้ "
 "Zammad สามารถสนับสนุนตัวแทนของคุณโดยแสดงเฉพาะรายการการโทรและการแจ้งเตือนที่เกี่ยวข้อง"
 
-#: db/seeds/settings.rb:2478
+#: db/seeds/settings.rb:2504
 #, fuzzy
 #| msgid "Defines the default visibility for new notes."
 msgid "Define the default agent notifications for new users."
@@ -4884,29 +4887,29 @@ msgstr "กำหนดการมองเห็นเริ่มต้นส
 msgid "Define the maximum number of ticket shown in overviews."
 msgstr ""
 
-#: db/seeds/settings.rb:3527
+#: db/seeds/settings.rb:3554
 #, fuzzy
 #| msgid "Defines Elasticsearch index name."
 msgid "Defines Elasticsearch SSL verification."
 msgstr "กำหนดชื่อดัชนี Elasticsearch"
 
-#: db/seeds/settings.rb:3518
+#: db/seeds/settings.rb:3545
 msgid "Defines Elasticsearch index name."
 msgstr "กำหนดชื่อดัชนี Elasticsearch"
 
-#: db/seeds/settings.rb:3785
+#: db/seeds/settings.rb:3812
 msgid "Defines Freshdesk endpoint authentication API key."
 msgstr "กำหนดคีย์ API การพิสูจน์ตัวตนปลายทางของ Freshdesk"
 
-#: db/seeds/settings.rb:3509
+#: db/seeds/settings.rb:3536
 msgid "Defines HTTP basic auth password of Elasticsearch."
 msgstr "Defines HTTP basic auth password of Elasticsearch."
 
-#: db/seeds/settings.rb:3500
+#: db/seeds/settings.rb:3527
 msgid "Defines HTTP basic auth user of Elasticsearch."
 msgstr "Defines HTTP basic auth user of Elasticsearch."
 
-#: db/seeds/settings.rb:3692
+#: db/seeds/settings.rb:3719
 msgid ""
 "Defines HTTP basic authentication password (only if OTRS is protected via "
 "HTTP basic auth)."
@@ -4914,7 +4917,7 @@ msgstr ""
 "Defines HTTP basic authentication password (only if OTRS is protected via "
 "HTTP basic auth)."
 
-#: db/seeds/settings.rb:3673
+#: db/seeds/settings.rb:3700
 msgid ""
 "Defines HTTP basic authentication user (only if OTRS is protected via HTTP "
 "basic auth)."
@@ -4922,68 +4925,68 @@ msgstr ""
 "กำหนดผู้ใช้การรับรองความถูกต้องพื้นฐานของ HTTP (เฉพาะเมื่อ OTRS "
 "ได้รับการป้องกันผ่านการตรวจสอบสิทธิ์พื้นฐานของ HTTP)"
 
-#: db/seeds/settings.rb:3840
+#: db/seeds/settings.rb:3867
 msgid "Defines Kayako endpoint authentication password."
 msgstr "กำหนดรหัสผ่านการพิสูจน์ตัวตนปลายทางของ Kayako"
 
-#: db/seeds/settings.rb:3822
+#: db/seeds/settings.rb:3849
 msgid "Defines Kayako endpoint authentication user."
 msgstr "กำหนดผู้ใช้การพิสูจน์ตัวตนปลายทาง Kayako"
 
-#: db/seeds/settings.rb:3654
+#: db/seeds/settings.rb:3681
 msgid "Defines OTRS endpoint authentication key."
 msgstr "กำหนดคีย์การรับรองความถูกต้องปลายทาง OTRS"
 
-#: db/seeds/settings.rb:3729
+#: db/seeds/settings.rb:3756
 msgid "Defines Zendesk endpoint authentication API key."
 msgstr "กำหนดคีย์ API การพิสูจน์ตัวตนปลายทางของ Zendesk"
 
-#: db/seeds/settings.rb:3748
+#: db/seeds/settings.rb:3775
 msgid "Defines Zendesk endpoint authentication user."
 msgstr "กำหนดผู้ใช้การพิสูจน์ตัวตนปลายทางของ Zendesk"
 
-#: db/seeds/settings.rb:3767
+#: db/seeds/settings.rb:3794
 msgid ""
 "Defines a Freshdesk endpoint to import users, tickets, states, and articles."
 msgstr "กำหนดปลายทาง Freshdesk เพื่อนำเข้าผู้ใช้ ตั๋ว รัฐ และบทความ"
 
-#: db/seeds/settings.rb:3804
+#: db/seeds/settings.rb:3831
 msgid ""
 "Defines a Kayako endpoint to import users, tickets, states, and articles."
 msgstr "กำหนดปลายทางของ Kayako เพื่อนำเข้าผู้ใช้ ตั๋ว รัฐ และบทความ"
 
-#: db/seeds/settings.rb:3711
+#: db/seeds/settings.rb:3738
 msgid ""
 "Defines a Zendesk endpoint to import users, tickets, states, and articles."
 msgstr "กำหนดปลายทางของ Zendesk เพื่อนำเข้าผู้ใช้ ตั๋ว สถานะ และบทความ"
 
-#: db/seeds/settings.rb:5312
+#: db/seeds/settings.rb:5339
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
 msgstr "กำหนดแบ็กเอนด์สถิติแดชบอร์ดที่ได้รับกำหนดเวลาโดยอัตโนมัติ"
 
-#: db/seeds/settings.rb:2985
+#: db/seeds/settings.rb:3011
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per day."
 msgstr "กำหนดขีดจำกัดสำหรับจำนวนตั๋วที่สามารถสร้างผ่านเว็บฟอร์มจากที่อยู่ IP หนึ่งรายการต่อวัน"
 
-#: db/seeds/settings.rb:2964
+#: db/seeds/settings.rb:2990
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per hour."
 msgstr ""
 "กำหนดขีดจำกัดสำหรับจำนวน tickets ที่สามารถสร้างผ่านเว็บฟอร์มจากหนึ่งที่อยู่ IP ต่อชั่วโมง"
 
-#: db/seeds/settings.rb:3006
+#: db/seeds/settings.rb:3032
 msgid ""
 "Defines a limit for how many tickets can be created via web form per day."
 msgstr "กำหนดขีดจำกัดสำหรับจำนวน tickets ที่สามารถสร้างผ่านเว็บฟอร์มต่อวัน"
 
-#: db/seeds/settings.rb:2103
+#: db/seeds/settings.rb:2129
 msgid "Defines after how many failed logins accounts will be deactivated."
 msgstr "กำหนดหลังจากจำนวนบัญชีที่เข้าสู่ระบบล้มเหลวจะถูกปิดการใช้งาน"
 
-#: db/seeds/settings.rb:3636
+#: db/seeds/settings.rb:3663
 msgid ""
 "Defines an OTRS endpoint to import users, tickets, states, and articles."
 msgstr "กำหนดปลายทาง OTRS เพื่อนำเข้าผู้ใช้ ตั๋ว สถานะ และบทความ"
@@ -5002,15 +5005,15 @@ msgid ""
 "arrow."
 msgstr ""
 
-#: db/seeds/settings.rb:3536
+#: db/seeds/settings.rb:3563
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
 msgstr ""
 
-#: db/seeds/settings.rb:3491
+#: db/seeds/settings.rb:3518
 msgid "Defines endpoint of Elasticsearch."
 msgstr "กําหนดจุดสิ้นสุดของ Elasticsearch"
 
-#: db/seeds/settings.rb:2853
+#: db/seeds/settings.rb:2879
 #, fuzzy
 #| msgid "Defines if a customer can create tickets via the web interface."
 msgid ""
@@ -5018,13 +5021,13 @@ msgid ""
 "selection means all groups are available."
 msgstr "กำหนดว่าลูกค้าสามารถสร้าง tickets ผ่านอินเทอร์เฟซเว็บได้หรือไม่"
 
-#: db/seeds/settings.rb:3093
+#: db/seeds/settings.rb:3119
 msgid ""
 "Defines how the From field of emails (sent from answers and email tickets) "
 "should look like."
 msgstr ""
 
-#: db/seeds/settings.rb:2222
+#: db/seeds/settings.rb:2248
 msgid ""
 "Defines how the last customer contact time of tickets should be calculated."
 msgstr ""
@@ -5035,23 +5038,23 @@ msgid ""
 "production, \"websocketPort\" is for CI"
 msgstr ""
 
-#: db/seeds/settings.rb:4498
+#: db/seeds/settings.rb:4525
 msgid "Defines if Checkmk (https://checkmk.com/) is enabled or not."
 msgstr "กําหนดว่าเปิดใช้งาน Checkmk (https://checkmk.com/) หรือไม่"
 
-#: db/seeds/settings.rb:5211
+#: db/seeds/settings.rb:5238
 msgid "Defines if Clearbit (http://www.clearbit.com) is enabled or not."
 msgstr "กําหนดว่าเปิดใช้งาน Clearbit (http://www.clearbit.com) หรือไม่"
 
-#: db/seeds/settings.rb:4762
+#: db/seeds/settings.rb:4789
 msgid "Defines if Exchange is enabled or not."
 msgstr "กําหนดว่าเปิดใช้งาน Exchange หรือไม่"
 
-#: db/seeds/settings.rb:4302
+#: db/seeds/settings.rb:4329
 msgid "Defines if Icinga (http://www.icinga.org) is enabled or not."
 msgstr "กําหนดว่าเปิดใช้งาน Icinga (http://www.icinga.org) หรือไม่"
 
-#: db/seeds/settings.rb:5422
+#: db/seeds/settings.rb:5449
 msgid ""
 "Defines if Knowledge Base navbar button is enabled for users without "
 "Knowledge Base permission."
@@ -5059,41 +5062,41 @@ msgstr ""
 "กำหนดว่าปุ่มแถบนำทางของ ศูนย์การเรียนรู้ "
 "ถูกเปิดใช้งานสำหรับผู้ใช้โดยไม่ได้รับอนุญาตจากศูนย์การเรียนรู้หรือไม่"
 
-#: db/seeds/settings.rb:5407
+#: db/seeds/settings.rb:5434
 msgid "Defines if Knowledge Base navbar button is enabled."
 msgstr "กำหนดว่าปุ่มแถบนำทางของ ศูนย์การเรียนรู้ เปิดใช้งานอยู่หรือไม่"
 
-#: db/seeds/settings.rb:4709
+#: db/seeds/settings.rb:4736
 msgid "Defines if LDAP is enabled or not."
 msgstr "กําหนดว่าเปิดใช้งาน LDAP หรือไม่"
 
-#: db/seeds/settings.rb:4608
+#: db/seeds/settings.rb:4635
 msgid "Defines if Monit (https://mmonit.com/monit/) is enabled or not."
 msgstr "กําหนดว่าเปิดใช้งาน Monit (https://mmonit.com/monit/) หรือไม่"
 
-#: db/seeds/settings.rb:4400
+#: db/seeds/settings.rb:4427
 msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr "กําหนดว่าเปิดใช้งาน Nagios (http://www.nagios.org) หรือไม่"
 
-#: db/seeds/settings.rb:5511
+#: db/seeds/settings.rb:5538
 #, fuzzy
 #| msgid "Defines if LDAP is enabled or not."
 msgid "Defines if PGP encryption is enabled or not."
 msgstr "กําหนดว่าเปิดใช้งาน LDAP หรือไม่"
 
-#: db/seeds/settings.rb:5148
+#: db/seeds/settings.rb:5175
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
 msgstr "กําหนดว่า Placetel (http://www placetel.de) ถูกเปิดใช้งานหรือไม่"
 
-#: db/seeds/settings.rb:5469
+#: db/seeds/settings.rb:5496
 msgid "Defines if S/MIME encryption is enabled or not."
 msgstr ""
 
-#: db/seeds/settings.rb:4949
+#: db/seeds/settings.rb:4976
 msgid "Defines if Slack (http://www.slack.org) is enabled or not."
 msgstr "กำหนดว่า Slack (http://www.slack.org) เปิดใช้งานอยู่หรือไม่"
 
-#: db/seeds/settings.rb:2826
+#: db/seeds/settings.rb:2852
 msgid "Defines if a customer can create tickets via the web interface."
 msgstr "กำหนดว่าลูกค้าสามารถสร้าง tickets ผ่านอินเทอร์เฟซเว็บได้หรือไม่"
 
@@ -5105,17 +5108,17 @@ msgstr "กำหนดว่าแอปพลิเคชันอยู่ใ
 msgid "Defines if application is used as online service."
 msgstr "กำหนดว่าแอปพลิเคชันถูกใช้เป็นบริการออนไลน์หรือไม่"
 
-#: db/seeds/settings.rb:5594
+#: db/seeds/settings.rb:5621
 msgid ""
 "Defines if calendar weeks are shown in the picker of date/datetime fields to "
 "easily select the correct date."
 msgstr ""
 
-#: db/seeds/settings.rb:5073
+#: db/seeds/settings.rb:5100
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr "กำหนดว่าเปิดใช้งานการรวม CTI ทั่วไปหรือไม่"
 
-#: db/seeds/settings.rb:5686
+#: db/seeds/settings.rb:5713
 #, fuzzy
 #| msgid "Click here to set up a two-factor authentication method."
 msgid ""
@@ -5123,21 +5126,21 @@ msgid ""
 "to other two-factor authentication methods."
 msgstr "คลิกที่นี่เพื่อตั้งค่าวิธีการตรวจสอบสิทธิ์สองปัจจัย"
 
-#: db/seeds/settings.rb:4990
+#: db/seeds/settings.rb:5017
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr "กำหนดว่าเปิดใช้งาน sipgate.io (http://www.sipgate.io) หรือไม่"
 
-#: db/seeds/settings.rb:4871
+#: db/seeds/settings.rb:4898
 msgid ""
 "Defines if the GitHub (http://www.github.com) integration is enabled or not."
 msgstr "กำหนดว่าการรวม GitHub (http://www.github.com) เปิดใช้งานหรือไม่"
 
-#: db/seeds/settings.rb:4829
+#: db/seeds/settings.rb:4856
 msgid ""
 "Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
 msgstr "กำหนดว่าการรวม GitLab (http://www.gitlab.com) ถูกเปิดใช้งานหรือไม่"
 
-#: db/seeds/settings.rb:5553
+#: db/seeds/settings.rb:5580
 #, fuzzy
 #| msgid "Defines if generic CTI integration is enabled or not."
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
@@ -5158,7 +5161,7 @@ msgstr ""
 "กำหนดว่าแอปพลิเคชันอยู่ในโหมดนักพัฒนาหรือไม่ "
 "(ผู้ใช้ทุกคนมีรหัสผ่านเดียวกันและการรีเซ็ตรหัสผ่านจะทำงานโดยไม่ต้องส่งอีเมล)"
 
-#: db/seeds/settings.rb:5738
+#: db/seeds/settings.rb:5765
 msgid ""
 "Defines if the change of the primary organization of a user will update the "
 "100 most recent tickets for this user as well."
@@ -5176,30 +5179,30 @@ msgid ""
 "organization widget."
 msgstr "กำหนดว่าอีเมลควรแสดงในผลลัพธ์ของวิดเจ็ตผู้ใช้/องค์กรหรือไม่"
 
-#: db/seeds/settings.rb:4789
+#: db/seeds/settings.rb:4816
 msgid ""
 "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
 "not."
 msgstr "กำหนดว่าการรวม i-doit (https://www.i-doit.org/) ถูกเปิดใช้งานหรือไม่"
 
-#: db/seeds/settings.rb:2249
+#: db/seeds/settings.rb:2275
 msgid ""
 "Defines if the ticket conditions editor supports complex logical expressions."
 msgstr ""
 
-#: db/seeds/settings.rb:2275
+#: db/seeds/settings.rb:2301
 msgid ""
 "Defines if the ticket conditions editor supports regular expression "
 "operators for triggers and ticket auto assignment."
 msgstr ""
 
-#: db/seeds/settings.rb:3988
+#: db/seeds/settings.rb:4015
 #, fuzzy
 #| msgid "Defines the default screen."
 msgid "Defines if the time accounting types are enabled."
 msgstr "กำหนดหน้าจอเริ่มต้น"
 
-#: db/seeds/settings.rb:5654
+#: db/seeds/settings.rb:5681
 #, fuzzy
 #| msgid ""
 #| "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
@@ -5209,7 +5212,7 @@ msgid ""
 "or not."
 msgstr "กำหนดว่าการรวม i-doit (https://www.i-doit.org/) ถูกเปิดใช้งานหรือไม่"
 
-#: db/seeds/settings.rb:5622
+#: db/seeds/settings.rb:5649
 #, fuzzy
 #| msgid ""
 #| "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
@@ -5219,19 +5222,19 @@ msgid ""
 "not."
 msgstr "กำหนดว่าการรวม i-doit (https://www.i-doit.org/) ถูกเปิดใช้งานหรือไม่"
 
-#: db/seeds/settings.rb:2907
+#: db/seeds/settings.rb:2933
 msgid "Defines if tickets can be created via web form."
 msgstr "กำหนดว่าสามารถสร้างตั๋วผ่านแบบฟอร์มบนเว็บได้หรือไม่"
 
-#: db/seeds/settings.rb:4351
+#: db/seeds/settings.rb:4378
 msgid "Defines if tickets should be closed if service is recovered."
 msgstr "กำหนดว่าควรปิดตั๋วหากมีการเรียกคืนบริการ"
 
-#: db/seeds/settings.rb:4221
+#: db/seeds/settings.rb:4248
 msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr "กำหนดตัวกรอง postmaster สำหรับตัวกรองที่จัดการผ่านส่วนต่อประสานผู้ดูแลระบบ"
 
-#: db/seeds/settings.rb:4140
+#: db/seeds/settings.rb:4167
 msgid ""
 "Defines postmaster filter to check if email has been created by Zammad "
 "itself and will set the article sender."
@@ -5239,7 +5242,7 @@ msgstr ""
 "กำหนดตัวกรอง postmaster เพื่อตรวจสอบว่าอีเมลนั้นถูกสร้างขึ้นโดย Zammad เองหรือไม่ "
 "และจะตั้งค่าผู้ส่งบทความ"
 
-#: db/seeds/settings.rb:4149
+#: db/seeds/settings.rb:4176
 msgid ""
 "Defines postmaster filter to check if the email is a self-created "
 "notification email, then ignore it to prevent email loops."
@@ -5247,22 +5250,22 @@ msgstr ""
 "กำหนดตัวกรอง postmaster เพื่อตรวจสอบว่าอีเมลเป็นอีเมลแจ้งเตือนที่สร้างขึ้นเองหรือไม่ "
 "จากนั้นไม่ต้องสนใจเพื่อป้องกันไม่ให้อีเมลวนซ้ำ"
 
-#: db/seeds/settings.rb:4167
+#: db/seeds/settings.rb:4194
 msgid "Defines postmaster filter to handle secure mailing."
 msgstr "กำหนดตัวกรอง postmaster เพื่อจัดการกับการส่งจดหมายที่ปลอดภัย"
 
-#: db/seeds/settings.rb:4275
+#: db/seeds/settings.rb:4302
 msgid ""
 "Defines postmaster filter to identify Jira mails for correct follow-ups."
 msgstr "กำหนดตัวกรอง postmaster เพื่อระบุอีเมล Jira เพื่อการติดตามที่ถูกต้อง"
 
-#: db/seeds/settings.rb:4257
+#: db/seeds/settings.rb:4284
 msgid ""
 "Defines postmaster filter to identify ServiceNow mails for correct follow-"
 "ups."
 msgstr "กำหนดตัวกรอง postmaster เพื่อระบุเมล ServiceNow สำหรับการติดตามที่ถูกต้อง"
 
-#: db/seeds/settings.rb:4086
+#: db/seeds/settings.rb:4113
 msgid ""
 "Defines postmaster filter to identify auto responses to prevent auto replies "
 "from Zammad."
@@ -5270,84 +5273,84 @@ msgstr ""
 "กำหนดตัวกรอง postmaster เพื่อระบุการตอบสนองอัตโนมัติเพื่อป้องกันการตอบกลับอัตโนมัติจาก "
 "Zammad"
 
-#: db/seeds/settings.rb:4104
+#: db/seeds/settings.rb:4131
 msgid ""
 "Defines postmaster filter to identify follow-up ticket for merged tickets."
 msgstr ""
 
-#: db/seeds/settings.rb:4095
+#: db/seeds/settings.rb:4122
 msgid ""
 "Defines postmaster filter to identify follow-ups (based on admin settings)."
 msgstr ""
 
-#: db/seeds/settings.rb:4176
+#: db/seeds/settings.rb:4203
 msgid ""
 "Defines postmaster filter to identify out-of-office emails for follow-up "
 "detection and keeping current ticket state."
 msgstr ""
 
-#: db/seeds/settings.rb:4203
+#: db/seeds/settings.rb:4230
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and disables "
 "sending notification if delivery fails permanently."
 msgstr ""
 
-#: db/seeds/settings.rb:4194
+#: db/seeds/settings.rb:4221
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and handles them "
 "as follow-up of the original tickets"
 msgstr ""
 
-#: db/seeds/settings.rb:4212
+#: db/seeds/settings.rb:4239
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and reopens "
 "tickets if delivery fails permanently."
 msgstr ""
 
-#: db/seeds/settings.rb:4158
+#: db/seeds/settings.rb:4185
 msgid "Defines postmaster filter to identify sender user."
 msgstr "กำหนดตัวกรอง postmaster เพื่อระบุผู้ใช้ผู้ส่ง"
 
-#: db/seeds/settings.rb:4230
+#: db/seeds/settings.rb:4257
 msgid ""
 "Defines postmaster filter to manage Icinga (http://www.icinga.org) emails."
 msgstr "กำหนดตัวกรอง postmaster เพื่อจัดการอีเมล Icinga (http://www.icinga.org)"
 
-#: db/seeds/settings.rb:4248
+#: db/seeds/settings.rb:4275
 msgid ""
 "Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails."
 msgstr "กำหนดตัวกรอง postmaster เพื่อจัดการอีเมล Monit (https://mmonit.com/monit/)"
 
-#: db/seeds/settings.rb:4239
+#: db/seeds/settings.rb:4266
 msgid ""
 "Defines postmaster filter to manage Nagios (http://www.nagios.org) emails."
 msgstr ""
 
-#: db/seeds/settings.rb:4077
+#: db/seeds/settings.rb:4104
 msgid ""
 "Defines postmaster filter to remove X-Zammad headers from untrustworthy "
 "sources."
 msgstr "กำหนดตัวกรอง postmaster เพื่อลบส่วนหัว X-Zammad จากแหล่งที่ไม่น่าไว้วางใจ"
 
-#: db/seeds/settings.rb:4113
+#: db/seeds/settings.rb:4140
 msgid ""
 "Defines postmaster filter to set the owner (based on group follow up "
 "assignment)."
 msgstr ""
 
-#: db/seeds/settings.rb:4122
+#: db/seeds/settings.rb:4149
 msgid ""
 "Defines postmaster filter to set the sender/from of emails based on reply-to "
 "header."
 msgstr "กำหนดตัวกรอง postmaster เพื่อตั้งค่าผู้ส่ง/จากอีเมลตามส่วนหัวตอบกลับ"
 
-#: db/seeds/settings.rb:4293
+#: db/seeds/settings.rb:4320
 msgid ""
 "Defines postmaster filter which sets the articles visibility to internal if "
 "it is a rely to an internal article or the last outgoing email is internal."
 msgstr ""
 
-#: db/seeds/settings.rb:4074
+#: db/seeds/settings.rb:4101
 msgid "Defines postmaster filter."
 msgstr "กำหนดตัวกรอง postmaster"
 
@@ -5355,37 +5358,37 @@ msgstr "กำหนดตัวกรอง postmaster"
 msgid "Defines pretty date format."
 msgstr "กำหนดรูปแบบวันที่ ที่สวยงาม"
 
-#: db/seeds/settings.rb:5301
+#: db/seeds/settings.rb:5328
 msgid "Defines processing timeout for the html sanitizer."
 msgstr ""
 
-#: db/seeds/settings.rb:4910
+#: db/seeds/settings.rb:4937
 msgid "Defines sync transaction backend."
 msgstr ""
 
-#: db/seeds/settings.rb:5289
+#: db/seeds/settings.rb:5316
 msgid "Defines the CSS font information for HTML emails."
 msgstr "กำหนดข้อมูลแบบอักษร CSS สำหรับอีเมล HTML"
 
-#: db/seeds/settings.rb:5101
+#: db/seeds/settings.rb:5128
 msgid "Defines the CTI config."
 msgstr "กำหนดการกำหนดค่า CTI"
 
-#: db/seeds/settings.rb:4596
+#: db/seeds/settings.rb:4623
 msgid "Defines the Checkmk token for allowing updates."
 msgstr "กำหนดโทเค็น Checkmk สำหรับการอนุญาตการอัปเดต"
 
-#: db/seeds/settings.rb:5237
+#: db/seeds/settings.rb:5264
 msgid "Defines the Clearbit config."
 msgstr "กำหนดการกำหนดค่า Clearbit"
 
-#: db/seeds/settings.rb:4749
+#: db/seeds/settings.rb:4776
 #, fuzzy
 #| msgid "Defines the Exchange config."
 msgid "Defines the Exchange OAuth config."
 msgstr "กำหนดการกำหนดค่า Exchange"
 
-#: db/seeds/settings.rb:4736
+#: db/seeds/settings.rb:4763
 msgid "Defines the Exchange config."
 msgstr "กำหนดการกำหนดค่า Exchange"
 
@@ -5393,25 +5396,25 @@ msgstr "กำหนดการกำหนดค่า Exchange"
 msgid "Defines the HTTP protocol of your instance."
 msgstr "กำหนดโปรโตคอล HTTP ของอินสแตนซ์ของคุณ"
 
-#: db/seeds/settings.rb:5539
+#: db/seeds/settings.rb:5566
 #, fuzzy
 #| msgid "Defines the CTI config."
 msgid "Defines the PGP config."
 msgstr "กำหนดการกำหนดค่า CTI"
 
-#: db/seeds/settings.rb:5176
+#: db/seeds/settings.rb:5203
 msgid "Defines the Placetel config."
 msgstr "กำหนดการกำหนดค่า Placetel"
 
-#: db/seeds/settings.rb:5497
+#: db/seeds/settings.rb:5524
 msgid "Defines the S/MIME config."
 msgstr "กำหนดการกำหนดค่า S/MIME"
 
-#: db/seeds/settings.rb:4975
+#: db/seeds/settings.rb:5002
 msgid "Defines the Slack config."
 msgstr "กำหนดการกำหนดค่า Slack"
 
-#: db/seeds/settings.rb:5278
+#: db/seeds/settings.rb:5305
 msgid "Defines the agent limit."
 msgstr "กำหนดขีดจำกัดของตัวแทน"
 
@@ -5439,7 +5442,7 @@ msgstr "กำหนดแบ็กเอนด์สำหรับการค
 msgid "Defines the backend for user and organization image lookups."
 msgstr "กำหนดแบ็กเอนด์สำหรับการค้นหารูปภาพของผู้ใช้และองค์กร"
 
-#: db/seeds/settings.rb:2762
+#: db/seeds/settings.rb:2788
 #, fuzzy
 #| msgid ""
 #| "Defines a limit for how many tickets can be created via web form per day."
@@ -5448,7 +5451,7 @@ msgid ""
 "globally."
 msgstr "กำหนดขีดจำกัดสำหรับจำนวน tickets ที่สามารถสร้างผ่านเว็บฟอร์มต่อวัน"
 
-#: db/seeds/settings.rb:2743
+#: db/seeds/settings.rb:2769
 #, fuzzy
 #| msgid ""
 #| "Defines a limit for how many tickets can be created via web form per day."
@@ -5457,16 +5460,16 @@ msgid ""
 "per ticket."
 msgstr "กำหนดขีดจำกัดสำหรับจำนวน tickets ที่สามารถสร้างผ่านเว็บฟอร์มต่อวัน"
 
-#: db/seeds/settings.rb:3970
+#: db/seeds/settings.rb:3997
 msgid ""
 "Defines the custom unit to be shown next to the time accounting input field."
 msgstr ""
 
-#: db/seeds/settings.rb:4051
+#: db/seeds/settings.rb:4078
 msgid "Defines the default calendar tickets subscription settings."
 msgstr "กำหนดการตั้งค่าการสมัครรับตั๋วปฏิทินเริ่มต้น"
 
-#: db/seeds/settings.rb:3481
+#: db/seeds/settings.rb:3508
 msgid "Defines the default screen."
 msgstr "กำหนดหน้าจอเริ่มต้น"
 
@@ -5478,7 +5481,7 @@ msgstr "กำหนดภาษาของระบบเริ่มต้น
 msgid "Defines the default system timezone."
 msgstr "กำหนดเขตเวลาเริ่มต้นของระบบ"
 
-#: db/seeds/settings.rb:4006
+#: db/seeds/settings.rb:4033
 #, fuzzy
 #| msgid "Defines the default system timezone."
 msgid "Defines the default time accounting type."
@@ -5488,7 +5491,7 @@ msgstr "กำหนดเขตเวลาเริ่มต้นของร
 msgid "Defines the default visibility for new notes."
 msgstr "กำหนดการมองเห็นเริ่มต้นสำหรับบันทึกย่อใหม่"
 
-#: db/seeds/settings.rb:5135
+#: db/seeds/settings.rb:5162
 msgid ""
 "Defines the duration of customer activity (in seconds) on a call until the "
 "user profile dialog is shown."
@@ -5505,19 +5508,19 @@ msgstr ""
 "กำหนดชื่อโดเมนแบบเต็มของระบบ การตั้งค่านี้ใช้เป็นตัวแปร #{setting.fqdn} "
 "ซึ่งพบได้ในการส่งข้อความทุกรูปแบบที่แอปพลิเคชันใช้ เพื่อสร้างลิงก์ไปยังตั๋วภายในระบบของคุณ"
 
-#: db/seeds/settings.rb:4524
+#: db/seeds/settings.rb:4551
 msgid "Defines the group of created tickets."
 msgstr "กำหนดกลุ่มของ tickets ที่สร้างขึ้น"
 
-#: db/seeds/settings.rb:2941
+#: db/seeds/settings.rb:2967
 msgid "Defines the group of tickets created via web form."
 msgstr "กำหนดกลุ่ม tickets ที่สร้างผ่านเว็บฟอร์ม"
 
-#: db/seeds/settings.rb:4816
+#: db/seeds/settings.rb:4843
 msgid "Defines the i-doit config."
 msgstr "กำหนดการกำหนดค่า i-doit"
 
-#: db/seeds/settings.rb:3872
+#: db/seeds/settings.rb:3899
 msgid "Defines the log levels for various logging actions of the Sequencer."
 msgstr "กำหนดระดับบันทึกสำหรับการดำเนินการบันทึกต่างๆ ของ Sequencer"
 
@@ -5525,7 +5528,7 @@ msgstr "กำหนดระดับบันทึกสำหรับกา
 msgid "Defines the logo of the application, shown in the web interface."
 msgstr "กำหนดโลโก้ของแอปพลิเคชันที่แสดงในเว็บอินเตอร์เฟส"
 
-#: db/seeds/settings.rb:3143
+#: db/seeds/settings.rb:3169
 msgid "Defines the maximum accepted email size in MB."
 msgstr "กำหนดขนาดอีเมลสูงสุดที่ยอมรับได้ในหน่วย MB"
 
@@ -5541,7 +5544,7 @@ msgid ""
 "title bar of the web browser."
 msgstr "กำหนดชื่อแอปพลิเคชันที่แสดงในเว็บอินเตอร์เฟส แท็บ และแถบชื่อเรื่องของเว็บเบราว์เซอร์."
 
-#: db/seeds/settings.rb:2656
+#: db/seeds/settings.rb:2682
 #, fuzzy
 #| msgid "Defines the backend for user and organization image lookups."
 msgid "Defines the permission level used for lookups."
@@ -5555,23 +5558,23 @@ msgstr "กำหนดพอร์ตของเซิร์ฟเวอร์
 msgid "Defines the random application secret."
 msgstr "กำหนดความลับของแอปพลิเคชันแบบสุ่ม"
 
-#: db/seeds/settings.rb:4328
+#: db/seeds/settings.rb:4355
 msgid "Defines the sender email address of Icinga emails."
 msgstr "กำหนดที่อยู่อีเมลของผู้ส่งของอีเมล Icinga"
 
-#: db/seeds/settings.rb:4426
+#: db/seeds/settings.rb:4453
 msgid "Defines the sender email address of Nagios emails."
 msgstr "กำหนดที่อยู่อีเมลของผู้ส่งของอีเมล Nagios"
 
-#: db/seeds/settings.rb:4634
+#: db/seeds/settings.rb:4661
 msgid "Defines the sender email address of the service emails."
 msgstr "กำหนดที่อยู่อีเมลผู้ส่งของอีเมลบริการ"
 
-#: db/seeds/settings.rb:3302
+#: db/seeds/settings.rb:3329
 msgid "Defines the sender of email notifications."
 msgstr "กำหนดผู้ส่งการแจ้งเตือนทางอีเมล"
 
-#: db/seeds/settings.rb:3121
+#: db/seeds/settings.rb:3147
 msgid ""
 "Defines the separator between the agent's real name and the given group "
 "email address."
@@ -5583,11 +5586,11 @@ msgid ""
 "permissions the highest timeout value will be used, otherwise the default."
 msgstr ""
 
-#: db/seeds/settings.rb:5039
+#: db/seeds/settings.rb:5066
 msgid "Defines the sipgate.io config."
 msgstr "การกำหนดค่า sipgate.io"
 
-#: db/seeds/settings.rb:4377
+#: db/seeds/settings.rb:4404
 msgid "Defines the state of auto-closed tickets."
 msgstr "กำหนดสถานะของ tickets. ที่ปิดอัตโนมัติ"
 
@@ -5598,57 +5601,57 @@ msgid ""
 "follow-ups (useful when communicating between two instances of Zammad)."
 msgstr ""
 
-#: db/seeds/settings.rb:2878
+#: db/seeds/settings.rb:2904
 msgid "Defines the tab behaviour after a ticket action."
 msgstr "กำหนดลักษณะการทำงานของแท็บหลังการดำเนินการกับ ticket"
 
-#: db/seeds/settings.rb:2673
+#: db/seeds/settings.rb:2699
 #, fuzzy
 #| msgid "Defines the backend for user and organization image lookups."
 msgid "Defines the ticket states used for lookups."
 msgstr "กำหนดแบ็กเอนด์สำหรับการค้นหารูปภาพของผู้ใช้และองค์กร"
 
-#: db/seeds/settings.rb:5434
+#: db/seeds/settings.rb:5461
 msgid "Defines the timeframe during which a self-created note can be deleted."
 msgstr "กำหนดกรอบเวลาระหว่างที่บันทึกย่อที่สร้างขึ้นเองสามารถลบได้"
 
-#: db/seeds/settings.rb:5190
+#: db/seeds/settings.rb:5217
 msgid "Defines the token for Placetel."
 msgstr "กำหนดโทเค็นสำหรับ Placetel."
 
-#: db/seeds/settings.rb:4931
+#: db/seeds/settings.rb:4958
 msgid ""
 "Defines the transaction backend to detect customer signatures in emails."
 msgstr "กำหนดแบ็กเอนด์ของธุรกรรมเพื่อตรวจหาลายเซ็นของลูกค้าในอีเมล."
 
-#: db/seeds/settings.rb:4913
+#: db/seeds/settings.rb:4940
 msgid "Defines the transaction backend to execute triggers."
 msgstr "กำหนดแบ็กเอนด์ของธุรกรรม เพื่อดำเนินการทริกเกอร์"
 
-#: db/seeds/settings.rb:4922
+#: db/seeds/settings.rb:4949
 msgid "Defines the transaction backend to send agent notifications."
 msgstr "กำหนดแบ็กเอนด์ของธุรกรรม เพื่อส่งการแจ้งเตือนของตัวแทน"
 
-#: db/seeds/settings.rb:5259
+#: db/seeds/settings.rb:5286
 msgid ""
 "Defines the transaction backend which detects caller IDs in objects and "
 "stores them for CTI lookups."
 msgstr ""
 "กำหนดแบ็กเอนด์ของธุรกรรมที่ตรวจจับ ID ผู้โทรในออบเจ็กต์และจัดเก็บไว้สำหรับการค้นหา CTI"
 
-#: db/seeds/settings.rb:5268
+#: db/seeds/settings.rb:5295
 #, fuzzy
 #| msgid "Defines the transaction backend to execute triggers."
 msgid "Defines the transaction backend which executes time based triggers."
 msgstr "กำหนดแบ็กเอนด์ของธุรกรรม เพื่อดำเนินการทริกเกอร์"
 
-#: db/seeds/settings.rb:4940
+#: db/seeds/settings.rb:4967
 msgid ""
 "Defines the transaction backend which posts messages to Slack (http://www."
 "slack.com)."
 msgstr "กำหนดแบ็กเอนด์ธุรกรรมที่โพสต์ข้อความไปยัง Slack (http://www.slack.com)"
 
-#: db/seeds/settings.rb:5250
+#: db/seeds/settings.rb:5277
 msgid ""
 "Defines the transaction backend which will enrich customer and organization "
 "information from Clearbit (http://www.clearbit.com)."
@@ -5657,35 +5660,35 @@ msgstr ""
 "clearbit.com)"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:14
-#: db/seeds/settings.rb:3952
+#: db/seeds/settings.rb:3979
 msgid "Defines the unit to be shown next to the time accounting input field."
 msgstr ""
 
-#: db/seeds/settings.rb:2605
+#: db/seeds/settings.rb:2631
 msgid ""
 "Defines the warning message that is shown when a matching ticket is present."
 msgstr ""
 
-#: db/seeds/settings.rb:2588
+#: db/seeds/settings.rb:2614
 msgid ""
 "Defines the warning title that is shown when a matching ticket is present."
 msgstr ""
 
-#: db/seeds/settings.rb:4919
+#: db/seeds/settings.rb:4946
 msgid "Defines transaction backend."
 msgstr "กำหนดแบ็กเอนด์ transaction"
 
-#: db/seeds/settings.rb:2639
+#: db/seeds/settings.rb:2665
 msgid ""
 "Defines whether the matching tickets are shown in case of already existing "
 "tickets."
 msgstr ""
 
-#: db/seeds/settings.rb:2571
+#: db/seeds/settings.rb:2597
 msgid "Defines which ticket attributes are checked before creating a ticket."
 msgstr ""
 
-#: db/seeds/settings.rb:2622
+#: db/seeds/settings.rb:2648
 msgid ""
 "Defines which user roles will receive a warning in case of matching tickets."
 msgstr ""
@@ -5723,7 +5726,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:195
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:162
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:155
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:156
 msgid "Delete"
 msgstr "ลบ"
 
@@ -5873,6 +5876,12 @@ msgstr "ลบองค์กร:"
 msgid "Deleted tickets (%s in total):"
 msgstr "tickets ที่ถูกลบ (รวม %s):"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:50
+msgid ""
+"Deleting your knowledge base requires an additional verification step. To "
+"proceed, enter its name below (\"%s\"). THIS ACTION CANNOT BE UNDONE."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:94
 msgid "Deletion Task"
 msgstr "ลบ Task"
@@ -5951,7 +5960,7 @@ msgid "Destination caller ID or queue"
 msgstr "ID ผู้โทรหรือคิวปลายทาง"
 
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:7
-#: db/seeds/settings.rb:2542
+#: db/seeds/settings.rb:2568
 #, fuzzy
 #| msgid "Enable Ticket creation"
 msgid "Detect Duplicate Ticket Creation"
@@ -6003,7 +6012,7 @@ msgstr "เธอรู้รึเปล่า? คุณสามารถช�
 msgid "Did you plan to include attachments with this message?"
 msgstr ""
 
-#: db/seeds/settings.rb:2048
+#: db/seeds/settings.rb:2074
 msgid "Digit required"
 msgstr "ต้องการตัวเลข"
 
@@ -6045,6 +6054,10 @@ msgstr "ปิดใช้งาน"
 #: app/assets/javascripts/app/models/job.coffee:11
 msgid "Disable Notifications"
 msgstr "ปิดการแจ้งเตือน"
+
+#: db/seeds/settings.rb:1303
+msgid "Disables user creation on logon with a third-party application."
+msgstr ""
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:23
 msgid ""
@@ -6107,7 +6120,7 @@ msgid "Display"
 msgstr "จอแสดงผล"
 
 #: app/assets/javascripts/app/models/email_address.coffee:32
-#: db/seeds/settings.rb:1860
+#: db/seeds/settings.rb:1886
 msgid "Display name"
 msgstr "ชื่อที่แสดง"
 
@@ -6119,7 +6132,7 @@ msgstr "อย่าเข้ารหัสอีเมล"
 msgid "Do not sign email"
 msgstr "อย่าเซ็นอีเมล"
 
-#: db/seeds/settings.rb:5748
+#: db/seeds/settings.rb:5775
 #, fuzzy
 #| msgid "You currently don't have any tickets."
 msgid "Do not update any tickets."
@@ -6202,10 +6215,11 @@ msgstr "เสร็จแล้ว"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee:4
 #: app/assets/javascripts/app/views/system_report.jst.eco:20
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:89
 msgid "Download"
 msgstr "ดาวน์โหลด"
 
-#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:60
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:69
 msgid "Download %s"
 msgstr "ดาวน์โหลด %s"
 
@@ -6289,7 +6303,7 @@ msgstr "ลากเพื่อจัดลำดับใหม่"
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:28
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:44
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:119
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:351
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:352
 msgid "Drop files here"
 msgstr "วางไฟล์ที่นี่"
 
@@ -6450,47 +6464,47 @@ msgstr "แก้ไข tickets"
 msgid "Editor"
 msgstr "แก้ไข"
 
-#: db/seeds/settings.rb:3533
+#: db/seeds/settings.rb:3560
 msgid "Elasticsearch Attachment Extensions"
 msgstr "Elasticsearch Attachment Extensions"
 
-#: db/seeds/settings.rb:3542
+#: db/seeds/settings.rb:3569
 msgid "Elasticsearch Attachment Size"
 msgstr "ขนาดไฟล์แนบ Elasticsearch"
 
-#: db/seeds/settings.rb:3515
+#: db/seeds/settings.rb:3542
 msgid "Elasticsearch Endpoint Index"
 msgstr "Elasticsearch Endpoint Index"
 
-#: db/seeds/settings.rb:3506
+#: db/seeds/settings.rb:3533
 msgid "Elasticsearch Endpoint Password"
 msgstr "รหัสผ่านปลายทาง Elasticsearch"
 
-#: db/seeds/settings.rb:3488
+#: db/seeds/settings.rb:3515
 msgid "Elasticsearch Endpoint URL"
 msgstr "Elasticsearch Endpoint URL"
 
-#: db/seeds/settings.rb:3497
+#: db/seeds/settings.rb:3524
 msgid "Elasticsearch Endpoint User"
 msgstr "ผู้ใช้ปลายทาง Elasticsearch"
 
-#: db/seeds/settings.rb:3569
+#: db/seeds/settings.rb:3596
 #, fuzzy
 #| msgid "SSL verification"
 msgid "Elasticsearch Model Configuration"
 msgstr "SSL verification"
 
-#: db/seeds/settings.rb:3560
+#: db/seeds/settings.rb:3587
 msgid "Elasticsearch Pipeline Name"
 msgstr "Elasticsearch Pipeline Name"
 
-#: db/seeds/settings.rb:3524
+#: db/seeds/settings.rb:3551
 #, fuzzy
 #| msgid "SSL verification"
 msgid "Elasticsearch SSL verification"
 msgstr "SSL verification"
 
-#: db/seeds/settings.rb:3551
+#: db/seeds/settings.rb:3578
 msgid "Elasticsearch Total Payload Size"
 msgstr ""
 
@@ -6660,7 +6674,7 @@ msgstr "ว่าง"
 msgid "Enable"
 msgstr "เปิดใช้"
 
-#: db/seeds/settings.rb:3429
+#: db/seeds/settings.rb:3456
 msgid "Enable Chat"
 msgstr "เปิดใช้งาน แชท"
 
@@ -6670,7 +6684,7 @@ msgstr "เปิดใช้งาน แชท"
 msgid "Enable Checklists"
 msgstr "เปิดใช้งาน แชท"
 
-#: app/assets/javascripts/app/views/api.jst.eco:33 db/seeds/settings.rb:3384
+#: app/assets/javascripts/app/views/api.jst.eco:33 db/seeds/settings.rb:3411
 msgid ""
 "Enable REST API access using the username/email address and password for the "
 "authentication user."
@@ -6685,17 +6699,17 @@ msgstr ""
 "เปิดใช้งาน REST API โดยใช้โทเค็น (ไม่ใช่ชื่อผู้ใช้/ที่อยู่อีเมลและรหัสผ่าน) "
 "ผู้ใช้ทุกคนต้องสร้างโทเค็นเพื่อการเข้าถึงของตนเองในโปรไฟล์ผู้ใช้"
 
-#: db/seeds/settings.rb:3359
+#: db/seeds/settings.rb:3386
 msgid ""
 "Enable REST API using tokens (not username/email address and password). Each "
 "user needs to create its own access tokens in user profile."
 msgstr ""
 
-#: db/seeds/settings.rb:5683
+#: db/seeds/settings.rb:5710
 msgid "Enable Recovery Codes"
 msgstr ""
 
-#: db/seeds/settings.rb:2823
+#: db/seeds/settings.rb:2849
 msgid "Enable Ticket creation"
 msgstr "เปิดใช้งานการสร้าง Ticket"
 
@@ -6705,7 +6719,7 @@ msgid ""
 "types below when adding accounted time."
 msgstr ""
 
-#: db/seeds/settings.rb:2443
+#: db/seeds/settings.rb:2469
 msgid "Enable auto assignment for following matching tickets."
 msgstr "เปิดใช้งานการมอบหมายอัตโนมัติสำหรับ tickets.ที่ตรงกันต่อไปนี้"
 
@@ -6752,19 +6766,19 @@ msgstr ""
 "เปิดหรือปิดโหมดการบำรุงรักษาของ Zammad หากเปิดใช้งาน "
 "ผู้ที่ไม่ใช่ผู้ดูแลระบบทั้งหมดจะออกจากระบบและมีเพียงผู้ดูแลระบบเท่านั้นที่สามารถเริ่มเซสชันใหม่ได้"
 
-#: db/seeds/settings.rb:2417
+#: db/seeds/settings.rb:2443
 msgid "Enable ticket auto assignment."
 msgstr "เปิดใช้งานการกำหนด ticket อัตโนมัติ"
 
-#: db/seeds/settings.rb:3907
+#: db/seeds/settings.rb:3934
 msgid "Enable time accounting."
 msgstr "เปิดใช้งาน บัญชีเวลา"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:341
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:401
 msgid "Enable/disable inline translations"
 msgstr "เปิด/ปิดการแปลแบบอินไลน์"
 
-#: db/seeds/settings.rb:3432
+#: db/seeds/settings.rb:3459
 msgid "Enable/disable online chat."
 msgstr "เปิด/ปิดการแชทออนไลน์"
 
@@ -6777,13 +6791,13 @@ msgid "Enables a sidebar to show an overview of all attachments."
 msgstr "เปิดใช้งานแถบด้านข้างเพื่อแสดงภาพรวมของไฟล์แนบทั้งหมด"
 
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:12
-#: db/seeds/settings.rb:2545
+#: db/seeds/settings.rb:2571
 msgid ""
 "Enables a warning to users during ticket creation if there is an existing "
 "ticket with the same attributes."
 msgstr ""
 
-#: db/seeds/settings.rb:5564
+#: db/seeds/settings.rb:5591
 #, fuzzy
 msgid ""
 "Enables button for user authentication via %s. The button will redirect to /"
@@ -6826,36 +6840,36 @@ msgstr ""
 msgid "Enables user authentication via %s."
 msgstr "เปิดใช้งานการตรวจสอบผู้ใช้ผ่าน %s"
 
-#: db/seeds/settings.rb:1303
+#: db/seeds/settings.rb:1329
 msgid ""
 "Enables user authentication via %s. Register your app first at [%s](%s)."
 msgstr "เปิดใช้งานการตรวจสอบผู้ใช้ผ่าน %s ลงทะเบียนแอปของคุณก่อนได้ที่ [%s](%s)"
 
-#: db/seeds/settings.rb:1588
+#: db/seeds/settings.rb:1614
 msgid "Enables user authentication via GitHub."
 msgstr "เปิดใช้งานการตรวจสอบผู้ใช้ผ่าน GitHub"
 
-#: db/seeds/settings.rb:1652
+#: db/seeds/settings.rb:1678
 msgid "Enables user authentication via GitLab."
 msgstr "เปิดใช้งานการตรวจสอบผู้ใช้ผ่าน GitLab"
 
-#: db/seeds/settings.rb:1460
+#: db/seeds/settings.rb:1486
 msgid "Enables user authentication via Google."
 msgstr "เปิดใช้งานการตรวจสอบผู้ใช้ผ่าน Google"
 
-#: db/seeds/settings.rb:1524
+#: db/seeds/settings.rb:1550
 msgid "Enables user authentication via LinkedIn."
 msgstr "เปิดใช้งานการตรวจสอบผู้ใช้ผ่าน LinkedIn"
 
-#: db/seeds/settings.rb:1723
+#: db/seeds/settings.rb:1749
 msgid "Enables user authentication via Microsoft 365."
 msgstr "เปิดใช้งานการตรวจสอบผู้ใช้ผ่าน Microsoft 365"
 
-#: db/seeds/settings.rb:1856
+#: db/seeds/settings.rb:1882
 msgid "Enables user authentication via SAML."
 msgstr "เปิดใช้งานการตรวจสอบผู้ใช้ผ่าน SAML"
 
-#: db/seeds/settings.rb:1793
+#: db/seeds/settings.rb:1819
 msgid "Enables user authentication via Weibo."
 msgstr "เปิดใช้งานการตรวจสอบผู้ใช้ผ่าน Weibo"
 
@@ -6935,13 +6949,13 @@ msgstr "ปลายทาง"
 msgid "Endpoint Settings"
 msgstr "ตั้งค่ามืออาชีพ"
 
-#: db/seeds/settings.rb:5710
+#: db/seeds/settings.rb:5737
 #, fuzzy
 #| msgid "Authentication"
 msgid "Enforce the setup of the two-factor authentication"
 msgstr "การยึนยันตน"
 
-#: db/seeds/settings.rb:5717
+#: db/seeds/settings.rb:5744
 #, fuzzy
 #| msgid "How to use it"
 msgid "Enforced for user roles"
@@ -7199,6 +7213,28 @@ msgstr ""
 msgid "Escalation at (Update Time)"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:51
+#, fuzzy
+#| msgid "pending"
+msgid "Event Ending"
+msgstr "กำลัง"
+
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:42
+#, fuzzy
+#| msgid "Location"
+msgid "Event Location"
+msgstr "ตำแหน่ง"
+
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:46
+#, fuzzy
+#| msgid "Expert Settings"
+msgid "Event Starting"
+msgstr "ตั้งค่ามืออาชีพ"
+
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:38
+msgid "Event Summary"
+msgstr ""
+
 #: app/assets/javascripts/app/models/knowledge_base.coffee:271
 msgid ""
 "Every category in your knowledge base should be given a unique icon for "
@@ -7272,17 +7308,17 @@ msgstr "ผู้ใช้ที่ได้รับการยกเว้น
 msgid "Exchange"
 msgstr "Exchange"
 
-#: db/seeds/settings.rb:4746
+#: db/seeds/settings.rb:4773
 #, fuzzy
 #| msgid "Exchange"
 msgid "Exchange OAuth"
 msgstr "Exchange"
 
-#: db/seeds/settings.rb:4733
+#: db/seeds/settings.rb:4760
 msgid "Exchange config"
 msgstr "Exchange config"
 
-#: db/seeds/settings.rb:4759
+#: db/seeds/settings.rb:4786
 msgid "Exchange integration"
 msgstr "Exchange integration"
 
@@ -7393,7 +7429,7 @@ msgstr ""
 #: app/controllers/first_steps_controller.rb:31
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:19
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:48
-#: db/seeds/permissions.rb:167 db/seeds/settings.rb:1384
+#: db/seeds/permissions.rb:167 db/seeds/settings.rb:1410
 msgid "Facebook"
 msgstr "เฟสบุ๊ค"
 
@@ -7407,7 +7443,7 @@ msgstr "เฟสบุ๊ค"
 msgid "Facebook Account"
 msgstr "บัญชีเฟสบุ๊ค"
 
-#: db/seeds/settings.rb:1393
+#: db/seeds/settings.rb:1419
 msgid "Facebook App Credentials"
 msgstr "ข้อมูลรับรองแอพ Facebook"
 
@@ -7417,7 +7453,7 @@ msgstr "ข้อมูลรับรองแอพ Facebook"
 msgid "Facebook App Secret"
 msgstr "ข้อมูลรับรองแอพ Facebook"
 
-#: db/seeds/settings.rb:1385
+#: db/seeds/settings.rb:1411
 #, fuzzy
 #| msgid "Developer System"
 msgid "Facebook Developer Site"
@@ -7537,7 +7573,7 @@ msgstr "ข้อเสนอแนะ"
 msgid "Feedback Form"
 msgstr "แบบฟอร์มคำติชม"
 
-#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:123
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:137
 msgid "File '%s' is uploading"
 msgstr ""
 
@@ -7763,11 +7799,11 @@ msgstr "ไม่พบ FormSchema."
 msgid "Format"
 msgstr "รูปแบบ"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:487
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:558
 msgid "Format as //strikethrough//"
 msgstr "จัดรูปแบบเป็น //ขีดทับ//"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:469
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:540
 msgid "Format as _underlined_"
 msgstr "จัดรูปแบบเป็น_underlined_"
 
@@ -7777,15 +7813,15 @@ msgstr "จัดรูปแบบเป็น_underlined_"
 msgid "Format as bold"
 msgstr "จัดรูปแบบเป็น_underlined_"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:536
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:607
 msgid "Format as h1 heading"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:542
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:613
 msgid "Format as h2 heading"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:548
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:619
 msgid "Format as h3 heading"
 msgstr "จัดรูปแบบเป็นหัวเรื่อง h3"
 
@@ -7795,7 +7831,7 @@ msgstr "จัดรูปแบบเป็นหัวเรื่อง h3"
 msgid "Format as italic"
 msgstr "จัดรูปแบบเป็น_underlined_"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:530
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:601
 msgid "Format as ordered list"
 msgstr ""
 
@@ -7811,15 +7847,15 @@ msgstr "จัดรูปแบบเป็น //ขีดทับ//"
 msgid "Format as underlined"
 msgstr "จัดรูปแบบเป็น_underlined_"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:524
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:595
 msgid "Format as unordered list"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:475
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:546
 msgid "Format as |bold|"
 msgstr "รูปแบบเป็น |ตัวหนา|"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:481
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:552
 msgid "Format as ||italic||"
 msgstr "รูปแบบเป็น || ตัวเอียง||"
 
@@ -7966,7 +8002,7 @@ msgstr "บัญชีไม่ได้รับการยืนยัน"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts:11
-#: db/seeds/settings.rb:5675
+#: db/seeds/settings.rb:5702
 msgid "Get the security code from the authenticator app on your device."
 msgstr ""
 
@@ -7982,25 +8018,25 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:81
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:40
-#: db/seeds/settings.rb:1577
+#: db/seeds/settings.rb:1603
 msgid "GitHub"
 msgstr "GitHub"
 
-#: db/seeds/settings.rb:1585
+#: db/seeds/settings.rb:1611
 msgid "GitHub App Credentials"
 msgstr "GitHub App Credentials"
 
-#: db/seeds/settings.rb:1578
+#: db/seeds/settings.rb:1604
 #, fuzzy
 #| msgid "Applications"
 msgid "GitHub OAuth Applications"
 msgstr "โปรแกรม"
 
-#: db/seeds/settings.rb:4895
+#: db/seeds/settings.rb:4922
 msgid "GitHub config"
 msgstr "การกําหนดค่า GitHub"
 
-#: db/seeds/settings.rb:4868
+#: db/seeds/settings.rb:4895
 msgid "GitHub integration"
 msgstr "รวม GitHub"
 
@@ -8011,25 +8047,25 @@ msgstr "คําขอ GitHub ล้มเหลว! โปรดดูไฟ�
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:86
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:47
-#: db/seeds/settings.rb:1641
+#: db/seeds/settings.rb:1667
 msgid "GitLab"
 msgstr ""
 
-#: db/seeds/settings.rb:1649
+#: db/seeds/settings.rb:1675
 msgid "GitLab App Credentials"
 msgstr "ข้อมูลรับรองแอป GitLab"
 
-#: db/seeds/settings.rb:1642
+#: db/seeds/settings.rb:1668
 #, fuzzy
 #| msgid "Applications"
 msgid "GitLab Applications"
 msgstr "โปรแกรม"
 
-#: db/seeds/settings.rb:4853
+#: db/seeds/settings.rb:4880
 msgid "GitLab config"
 msgstr ""
 
-#: db/seeds/settings.rb:4826
+#: db/seeds/settings.rb:4853
 msgid "GitLab integration"
 msgstr "รวม GitLab"
 
@@ -8103,17 +8139,17 @@ msgstr "ข้อความอำลา"
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:96
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:61
-#: db/seeds/permissions.rb:149 db/seeds/settings.rb:1449
+#: db/seeds/permissions.rb:149 db/seeds/settings.rb:1475
 msgid "Google"
 msgstr "กูเกิล"
 
-#: db/seeds/settings.rb:1450
+#: db/seeds/settings.rb:1476
 #, fuzzy
 #| msgid "Client Secret"
 msgid "Google API Console Site"
 msgstr "Client ความลับ"
 
-#: db/seeds/settings.rb:1457
+#: db/seeds/settings.rb:1483
 msgid "Google App Credentials"
 msgstr "ข้อมูลรับรองแอป Google"
 
@@ -8167,7 +8203,7 @@ msgstr "การทักทาย"
 #: app/views/messaging/ticket_create/pt-br.md.erb:3
 #: app/views/messaging/ticket_create/zh-tw.md.erb:3
 #: app/views/messaging/ticket_info/pt-br.md.erb:3
-#: db/seeds/object_manager_attributes.rb:162 db/seeds/settings.rb:2850
+#: db/seeds/object_manager_attributes.rb:162 db/seeds/settings.rb:2876
 #: lib/excel_sheet/ticket.rb:27
 msgid "Group"
 msgstr "กลุ่ม"
@@ -8219,11 +8255,11 @@ msgid "Group permissions"
 msgstr "สิทธิ"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:18
-#: db/seeds/settings.rb:2850
+#: db/seeds/settings.rb:2876
 msgid "Group selection for Ticket creation"
 msgstr "การเลือกกลุ่มสำหรับการสร้าง ticket"
 
-#: db/seeds/settings.rb:2938
+#: db/seeds/settings.rb:2964
 msgid "Group selection for ticket creation"
 msgstr "การเลือกกลุ่มสำหรับการสร้าง ticket"
 
@@ -8258,11 +8294,11 @@ msgstr "กลุ่มคือ …"
 msgid "HMAC SHA1 Signature Token"
 msgstr "HMAC SHA1 Signature Token"
 
-#: db/seeds/settings.rb:5286
+#: db/seeds/settings.rb:5313
 msgid "HTML Email CSS Font"
 msgstr "HTML Email CSS Font"
 
-#: db/seeds/settings.rb:5298
+#: db/seeds/settings.rb:5325
 msgid "HTML Sanitizer Processing Timeout"
 msgstr ""
 
@@ -8493,11 +8529,11 @@ msgstr ""
 msgid "Highlight icon"
 msgstr ""
 
-#: db/seeds/settings.rb:5450
+#: db/seeds/settings.rb:5477
 msgid "Highlights if the note a user is writing is public or private"
 msgstr ""
 
-#: db/seeds/settings.rb:5447
+#: db/seeds/settings.rb:5474
 msgid "Hint for adding an article to an existing ticket."
 msgstr ""
 
@@ -8604,21 +8640,21 @@ msgstr "ID"
 msgid "ID:"
 msgstr "ID:"
 
-#: db/seeds/settings.rb:1867
+#: db/seeds/settings.rb:1893
 msgid "IDP SSO target URL"
 msgstr "IDP SSO target URL"
 
-#: db/seeds/settings.rb:1875
+#: db/seeds/settings.rb:1901
 #, fuzzy
 #| msgid "IDP SSO target URL"
 msgid "IDP Single Logout target URL"
 msgstr "IDP SSO target URL"
 
-#: db/seeds/settings.rb:1883
+#: db/seeds/settings.rb:1909
 msgid "IDP certificate"
 msgstr "IDP certificate"
 
-#: db/seeds/settings.rb:1891
+#: db/seeds/settings.rb:1917
 msgid "IDP certificate fingerprint"
 msgstr "IDP certificate fingerprint"
 
@@ -8630,7 +8666,7 @@ msgstr "IMAP"
 msgid "Icinga"
 msgstr "Icinga"
 
-#: db/seeds/settings.rb:4299
+#: db/seeds/settings.rb:4326
 msgid "Icinga integration"
 msgstr "Icinga integration"
 
@@ -8654,7 +8690,7 @@ msgstr "ไอค่อน URL"
 msgid "Identifier of the chat topic."
 msgstr "ตัวระบุหัวข้อสนทนา"
 
-#: db/seeds/settings.rb:3459
+#: db/seeds/settings.rb:3486
 msgid "Idle timeout in seconds until agent is set offline automatically."
 msgstr "หมดเวลาใช้งานในไม่กี่วินาทีจนกว่าตัวแทนจะถูกตั้งค่าออฟไลน์โดยอัตโนมัติ"
 
@@ -8680,13 +8716,13 @@ msgid ""
 "automatically."
 msgstr ""
 
-#: db/seeds/settings.rb:3249
+#: db/seeds/settings.rb:3276
 msgid ""
 "If the sender is an agent, set the first user in the recipient list as the "
 "customer."
 msgstr ""
 
-#: db/seeds/settings.rb:3325
+#: db/seeds/settings.rb:3352
 msgid "If this regex matches, no notification will be sent by the sender."
 msgstr ""
 
@@ -8759,7 +8795,7 @@ msgstr "หากคุณต้องการใช้ที่อยู่อ
 msgid "Ignore Escalation"
 msgstr "การยกระดับ"
 
-#: db/seeds/settings.rb:3610
+#: db/seeds/settings.rb:3637
 msgid "Ignore Escalation/SLA Information"
 msgstr ""
 
@@ -8767,11 +8803,11 @@ msgstr ""
 msgid "Ignore Message"
 msgstr "ละเว้นข้อความ"
 
-#: db/seeds/settings.rb:3613
+#: db/seeds/settings.rb:3640
 msgid "Ignore escalation/SLA information for import."
 msgstr ""
 
-#: db/seeds/settings.rb:2694
+#: db/seeds/settings.rb:2720
 msgid "Ignore system_id"
 msgstr ""
 
@@ -8791,7 +8827,7 @@ msgstr ""
 msgid "Image file"
 msgstr "Zammad Image Service"
 
-#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:95
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
 msgstr "ของภาพ %s"
 
@@ -8823,51 +8859,51 @@ msgstr "นำเข้า %s"
 msgid "Import API key could not be extracted from URL."
 msgstr ""
 
-#: db/seeds/settings.rb:3782
+#: db/seeds/settings.rb:3809
 msgid "Import API key for requesting the Freshdesk API"
 msgstr ""
 
-#: db/seeds/settings.rb:3726
+#: db/seeds/settings.rb:3753
 msgid "Import API key for requesting the Zendesk API"
 msgstr ""
 
-#: db/seeds/settings.rb:3601
+#: db/seeds/settings.rb:3628
 msgid "Import Backend"
 msgstr "นำเข้าแบ็กเอนด์"
 
-#: db/seeds/settings.rb:3856
+#: db/seeds/settings.rb:3883
 msgid "Import Backends"
 msgstr "นำเข้าแบ็กเอนด์"
 
-#: db/seeds/settings.rb:3633
+#: db/seeds/settings.rb:3660
 msgid "Import Endpoint"
 msgstr ""
 
-#: db/seeds/settings.rb:3651
+#: db/seeds/settings.rb:3678
 msgid "Import Key"
 msgstr "นำเข้ากุญแจ"
 
-#: db/seeds/settings.rb:3579
+#: db/seeds/settings.rb:3606
 msgid "Import Mode"
 msgstr ""
 
-#: db/seeds/settings.rb:3689
+#: db/seeds/settings.rb:3716
 msgid "Import Password for HTTP basic authentication"
 msgstr "นำเข้ารหัสผ่านสำหรับการตรวจสอบสิทธิ์พื้นฐาน HTTP"
 
-#: db/seeds/settings.rb:3837
+#: db/seeds/settings.rb:3864
 msgid "Import Password for requesting the Kayako API"
 msgstr ""
 
-#: db/seeds/settings.rb:3670
+#: db/seeds/settings.rb:3697
 msgid "Import User for HTTP basic authentication"
 msgstr "นำเข้าผู้ใช้สำหรับการตรวจสอบสิทธิ์พื้นฐาน HTTP"
 
-#: db/seeds/settings.rb:3819
+#: db/seeds/settings.rb:3846
 msgid "Import User for requesting the Kayako API"
 msgstr ""
 
-#: db/seeds/settings.rb:3745
+#: db/seeds/settings.rb:3772
 msgid "Import User for requesting the Zendesk API"
 msgstr ""
 
@@ -9058,7 +9094,7 @@ msgstr "ข้อมูลประจำตัวที่ไม่สมบู
 msgid "Incomplete credentials"
 msgstr "ข้อมูลประจำตัวที่ไม่สมบูรณ์"
 
-#: db/seeds/settings.rb:2313
+#: db/seeds/settings.rb:2339
 msgid "Increment (SystemID.Counter)"
 msgstr "การเพิ่มขึ้น (SystemID.Counter)"
 
@@ -9179,19 +9215,19 @@ msgstr ""
 "ใส่รหัสวิดเจ็ตลงในซอร์สโค้ดของทุกหน้าที่แชทจะปรากฏ "
 "ควรวางไว้ที่ส่วนท้ายของซอร์สโค้ดของหน้าก่อนแท็กปิด §</body>§"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:518
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:589
 msgid "Inserts a horizontal rule"
 msgstr "แทรกกฎแนวนอน"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:451
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:522
 msgid "Inserts a mention for a user"
 msgstr "แทรกการกล่าวถึงสำหรับผู้ใช้"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:445
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:516
 msgid "Inserts knowledge base answer"
 msgstr "แทรกคำตอบศูนย์การเรียนรู้"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:439
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:510
 msgid "Inserts text module"
 msgstr "แทรกโมดูลข้อความ"
 
@@ -9468,7 +9504,7 @@ msgstr ""
 msgid "It is not possible to delete your current account."
 msgstr "คุณต้องการลบอวาตาร์ปัจจุบันของคุณหรือไม่?"
 
-#: app/models/ticket.rb:276
+#: app/models/ticket.rb:275
 msgid "It is not possible to merge into an already merged ticket."
 msgstr ""
 
@@ -9554,9 +9590,14 @@ msgstr "Key"
 msgid "Key ID"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:4
-#: app/assets/javascripts/app/controllers/keyboard_shortcuts.coffee:6
+#: app/assets/javascripts/app/controllers/keyboard_shortcuts.coffee:4
 msgid "Keyboard Shortcuts"
+msgstr "ปุ่มลัด"
+
+#: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:4
+#, fuzzy
+#| msgid "Keyboard Shortcuts"
+msgid "Keyboard Shortcuts Enabled"
 msgstr "ปุ่มลัด"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts:7
@@ -9594,15 +9635,15 @@ msgstr "ศูนย์การเรียนรู้ อ่าน"
 msgid "Knowledge Base Reader"
 msgstr "ศูนย์การเรียนรู้ อ่าน"
 
-#: db/seeds/settings.rb:5404
+#: db/seeds/settings.rb:5431
 msgid "Knowledge Base active"
 msgstr "ศูนย์การเรียนรู้ เปิดการทำงาน"
 
-#: db/seeds/settings.rb:5419
+#: db/seeds/settings.rb:5446
 msgid "Knowledge Base active publicly"
 msgstr "ศูนย์การเรียนรู้ เริ่มเผยแพร่"
 
-#: db/seeds/settings.rb:5393
+#: db/seeds/settings.rb:5420
 msgid "Knowledge Base multilingual support"
 msgstr "ศูนย์การเรียนรู้ รองรับหลายภาษา"
 
@@ -9617,7 +9658,7 @@ msgstr "LDAP"
 msgid "LDAP Host"
 msgstr "LDAP Host"
 
-#: db/seeds/settings.rb:4706
+#: db/seeds/settings.rb:4733
 msgid "LDAP integration"
 msgstr "การรวม LDAP"
 
@@ -9791,15 +9832,15 @@ msgstr "จำกัดกลุ่ม"
 msgid "Limit notifications to specific groups"
 msgstr ""
 
-#: db/seeds/settings.rb:2982
+#: db/seeds/settings.rb:3008
 msgid "Limit tickets by IP per day"
 msgstr ""
 
-#: db/seeds/settings.rb:2961
+#: db/seeds/settings.rb:2987
 msgid "Limit tickets by IP per hour"
 msgstr "จำกัด tickets ตาม IP ต่อชั่วโมง"
 
-#: db/seeds/settings.rb:3003
+#: db/seeds/settings.rb:3029
 msgid "Limit tickets per day"
 msgstr ""
 
@@ -9874,15 +9915,15 @@ msgstr "Tickets ที่เชื่อมโยง"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:76
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:33
-#: db/seeds/settings.rb:1513
+#: db/seeds/settings.rb:1539
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: db/seeds/settings.rb:1521
+#: db/seeds/settings.rb:1547
 msgid "LinkedIn App Credentials"
 msgstr ""
 
-#: db/seeds/settings.rb:1514
+#: db/seeds/settings.rb:1540
 #, fuzzy
 #| msgid "Developer System"
 msgid "LinkedIn Developer Site"
@@ -9900,7 +9941,7 @@ msgstr ""
 msgid "List of installed addons"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:153
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:190
 msgid "List of shortcuts"
 msgstr ""
 
@@ -10018,7 +10059,7 @@ msgstr ""
 msgid "Logo"
 msgstr "โลโก้"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:144
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:207
 msgid "Logout"
 msgstr "ออกจากระบบ"
 
@@ -10510,7 +10551,7 @@ msgid "Match none (NOT)"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:38
-#: db/seeds/settings.rb:2670
+#: db/seeds/settings.rb:2696
 msgid "Match tickets in following states"
 msgstr ""
 
@@ -10545,7 +10586,7 @@ msgstr "สูงสุด. แชทพร้อมกัน"
 msgid "Max. length"
 msgstr "สูงสุด. ความยาว"
 
-#: db/seeds/settings.rb:3028
+#: db/seeds/settings.rb:3054
 msgid "Max. length of the subject in an email reply."
 msgstr "สูงสุด. ความยาวของเรื่องในการตอบกลับอีเมล"
 
@@ -10569,17 +10610,17 @@ msgstr ""
 msgid "Maximal value must be lower than 2147483648"
 msgstr ""
 
-#: db/seeds/settings.rb:3140
+#: db/seeds/settings.rb:3166
 msgid "Maximum Email Size"
 msgstr "ขนาดอีเมลสูงสุด"
 
-#: db/seeds/settings.rb:2778
+#: db/seeds/settings.rb:2804
 #, fuzzy
 #| msgid "Recursive Ticket Triggers"
 msgid "Maximum Recursive Ticket Triggers Depth"
 msgstr "ทริกเกอร์ตั๋วแบบเรียกซ้ำ"
 
-#: db/seeds/settings.rb:2100
+#: db/seeds/settings.rb:2126
 msgid "Maximum failed logins"
 msgstr "การเข้าสู่ระบบล้มเหลวสูงสุด"
 
@@ -10589,7 +10630,7 @@ msgstr "การเข้าสู่ระบบล้มเหลวสูง
 msgid "Maximum number of open tabs."
 msgstr "จำนวนทริกเกอร์ที่เรียกซ้ำสูงสุด"
 
-#: db/seeds/settings.rb:2781
+#: db/seeds/settings.rb:2807
 msgid "Maximum number of recursively executed triggers."
 msgstr "จำนวนทริกเกอร์ที่เรียกซ้ำสูงสุด"
 
@@ -10729,7 +10770,7 @@ msgstr "วิธี (AJAX endpoint)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:91
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:54
-#: db/seeds/settings.rb:1712
+#: db/seeds/settings.rb:1738
 msgid "Microsoft"
 msgstr "Microsoft"
 
@@ -10740,11 +10781,11 @@ msgstr "Microsoft"
 msgid "Microsoft 365"
 msgstr "Microsoft 365"
 
-#: db/seeds/settings.rb:1720
+#: db/seeds/settings.rb:1746
 msgid "Microsoft 365 App Credentials"
 msgstr "Weibo App Credentials"
 
-#: db/seeds/settings.rb:1713
+#: db/seeds/settings.rb:1739
 msgid "Microsoft Application Registration Portal"
 msgstr ""
 
@@ -10785,7 +10826,7 @@ msgstr ""
 msgid "Milestone"
 msgstr "เหตุการณ์สำคัญ"
 
-#: db/seeds/settings.rb:2345
+#: db/seeds/settings.rb:2371
 msgid "Min. size of number"
 msgstr "ต่ำสุด. ขนาดของตัวเลข"
 
@@ -10805,7 +10846,7 @@ msgstr ""
 msgid "Minimal value must be lower than 2147483648"
 msgstr ""
 
-#: db/seeds/settings.rb:1982
+#: db/seeds/settings.rb:2008
 msgid "Minimum length"
 msgstr "ความยาวขั้นต่ำ"
 
@@ -10854,7 +10895,7 @@ msgstr "วันจันทร์"
 msgid "Monit"
 msgstr "Monit"
 
-#: db/seeds/settings.rb:4605
+#: db/seeds/settings.rb:4632
 msgid "Monit integration"
 msgstr ""
 
@@ -10864,7 +10905,7 @@ msgstr ""
 msgid "Monitoring"
 msgstr "การตรวจเฝ้าระวัง"
 
-#: db/seeds/settings.rb:3407
+#: db/seeds/settings.rb:3434
 msgid "Monitoring Token"
 msgstr "Monitoring Token"
 
@@ -10908,7 +10949,7 @@ msgstr "ย้ายทั้งหมดจาก \"%s\" เป็น \"%s\":"
 msgid "Move down"
 msgstr "เลื่อนขึ้นและลง"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:262
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:317
 msgid "Move left and right"
 msgstr "เลื่อนไปทางซ้ายและขวา"
 
@@ -10918,7 +10959,7 @@ msgstr "เลื่อนไปทางซ้ายและขวา"
 msgid "Move up"
 msgstr "ย้ายออก"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:258
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:313
 msgid "Move up and down"
 msgstr "เลื่อนขึ้นและลง"
 
@@ -10987,7 +11028,7 @@ msgstr "Tickets ของฉันอยู่ระหว่างดำเน�
 msgid "Nagios"
 msgstr "Nagios"
 
-#: db/seeds/settings.rb:4397
+#: db/seeds/settings.rb:4424
 msgid "Nagios integration"
 msgstr ""
 
@@ -11059,7 +11100,7 @@ msgstr ""
 msgid "Name"
 msgstr "ชื่อ"
 
-#: db/seeds/settings.rb:1899
+#: db/seeds/settings.rb:1925
 msgid "Name Identifier Format"
 msgstr "รูปแบบตัวระบุชื่อ"
 
@@ -11072,7 +11113,7 @@ msgstr ""
 msgid "Name of form submit button"
 msgstr "ชื่อปุ่มส่งแบบฟอร์ม"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:429
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:500
 msgid "Navigate through article"
 msgstr ""
 
@@ -11082,7 +11123,7 @@ msgstr ""
 msgid "Navigate to %s"
 msgstr "ตัวนำทาง"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:86
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:115
 #: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:29
 msgid "Navigation"
 msgstr "ตัวนำทาง"
@@ -11118,7 +11159,7 @@ msgstr "ต้องการ session_id"
 msgid "Need user_id or organization_id as param"
 msgstr "ต้องการ user_id หรือ organization_id เป็น param"
 
-#: db/seeds/settings.rb:2055
+#: db/seeds/settings.rb:2081
 msgid "Needed"
 msgstr "จำเป็น"
 
@@ -11246,7 +11287,7 @@ msgid "New Source"
 msgstr "แหล่งใหม่"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:14
-#: db/seeds/settings.rb:4021
+#: db/seeds/settings.rb:4048
 msgid "New Tags"
 msgstr ""
 
@@ -11256,7 +11297,7 @@ msgstr ""
 msgid "New Template"
 msgstr "แม่แบบ"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:134
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:168
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:7
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:484
@@ -11396,7 +11437,7 @@ msgstr "เริ่ม"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:43
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco:12
-#: db/seeds/settings.rb:2889
+#: db/seeds/settings.rb:2915
 msgid "Next in overview"
 msgstr "ต่อไปในภาพรวม"
 
@@ -11487,6 +11528,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee:4
 msgid "No answers"
 msgstr "ไม่มีคำตอบ"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:50
+#, fuzzy
+#| msgid "%s attached files"
+msgid "No attached files"
+msgstr "%s ไฟล์แนบ"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:325
 msgid "No camera found."
@@ -11653,7 +11700,7 @@ msgstr "ฉบับร่างที่ใช้ร่วมกัน"
 
 #: app/controllers/organizations_controller.rb:160
 #: app/controllers/text_modules_controller.rb:71
-#: app/controllers/ticket_articles_controller.rb:233
+#: app/controllers/ticket_articles_controller.rb:232
 #: app/controllers/tickets_controller.rb:601
 #: app/controllers/users_controller.rb:650
 msgid "No source data submitted!"
@@ -11671,13 +11718,17 @@ msgstr ""
 msgid "No translation for this locale available"
 msgstr "ไม่มีคำแปลสำหรับสถานที่นี้"
 
-#: app/models/ticket.rb:398
+#: app/models/ticket.rb:397
 msgid "No triggers active"
 msgstr "ไม่มีทริกเกอร์ที่ทำงานอยู่"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:8
 msgid "No unread notifications for you. :)"
 msgstr "ไม่มีการแจ้งเตือนที่ยังไม่ได้อ่านสำหรับคุณ :)"
+
+#: db/seeds/settings.rb:1300
+msgid "No user creation on logon"
+msgstr ""
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco:1
 msgid ""
@@ -11704,7 +11755,7 @@ msgstr "ไม่เป็นไรขอบคุณ!"
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
-#: app/graphql/gql/types/ticket_type.rb:98 db/seeds/settings.rb:1931
+#: app/graphql/gql/types/ticket_type.rb:98 db/seeds/settings.rb:1957
 msgid "None"
 msgstr "ไม่มี"
 
@@ -11849,7 +11900,7 @@ msgid "Notification"
 msgstr "การแจ้งเตือน"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:42
-#: db/seeds/settings.rb:3299
+#: db/seeds/settings.rb:3326
 msgid "Notification Sender"
 msgstr "ส่งการแจ้งเตือน"
 
@@ -11902,7 +11953,7 @@ msgid "Notification sound"
 msgstr "เสียงแจ้งเตือน"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:12
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:124
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:157
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:5
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:2
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:1
@@ -12068,13 +12119,13 @@ msgid ""
 "Zammad and complete the translation."
 msgstr ""
 
-#: db/seeds/settings.rb:1934
+#: db/seeds/settings.rb:1960
 #, fuzzy
 #| msgid "Encryption"
 msgid "Only Encrypting"
 msgstr "การเข้ารหัสลับ"
 
-#: db/seeds/settings.rb:1933
+#: db/seeds/settings.rb:1959
 #, fuzzy
 #| msgid "Sign in"
 msgid "Only Signing"
@@ -12133,7 +12184,7 @@ msgstr "อ๊ะ.. ขออภัย คุณมีสิทธิ์ไม�
 msgid "Open"
 msgstr "เปิด %s"
 
-#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:62
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:71
 msgid "Open %s"
 msgstr "เปิด %s"
 
@@ -12163,11 +12214,11 @@ msgstr "เปิด Ticket"
 msgid "Open link"
 msgstr "เปิด Ticket"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:410
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:478
 msgid "Open macro selection"
 msgstr "เปิดการเลือกมาโคร"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:377
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:438
 msgid "Open note box"
 msgstr "เปิดกล่องโน้ต"
 
@@ -12471,7 +12522,7 @@ msgstr "โทรออก"
 msgid "Outbound:"
 msgstr "ขาออก:"
 
-#: app/assets/javascripts/app/lib/app_post/browser.coffee:112
+#: app/assets/javascripts/app/lib/app_post/browser.coffee:119
 msgid "Outdated Browser"
 msgstr "เบราว์เซอร์"
 
@@ -12491,7 +12542,7 @@ msgid "Overview bulk mask"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:38
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:136
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
@@ -12538,17 +12589,17 @@ msgstr ""
 msgid "PGP"
 msgstr ""
 
-#: db/seeds/settings.rb:5550
+#: db/seeds/settings.rb:5577
 msgid "PGP Recipient Alias Configuration"
 msgstr ""
 
-#: db/seeds/settings.rb:5536
+#: db/seeds/settings.rb:5563
 #, fuzzy
 #| msgid "CTI config"
 msgid "PGP config"
 msgstr "CTI config"
 
-#: db/seeds/settings.rb:5508
+#: db/seeds/settings.rb:5535
 #, fuzzy
 #| msgid "LDAP integration"
 msgid "PGP integration"
@@ -12662,19 +12713,19 @@ msgstr "รหัสผ่านสำหรับการเชื่อมต
 msgid "Password for proxy connection."
 msgstr "รหัสผ่านสำหรับการเชื่อมต่อพร็อกซี่"
 
-#: db/seeds/settings.rb:2025
+#: db/seeds/settings.rb:2051
 msgid "Password needs to contain 2 lower case and 2 upper case characters."
 msgstr "รหัสผ่านต้องมีตัวพิมพ์เล็ก 2 ตัวและตัวพิมพ์ใหญ่ 2 ตัว"
 
-#: db/seeds/settings.rb:2051
+#: db/seeds/settings.rb:2077
 msgid "Password needs to contain at least one digit."
 msgstr "รหัสผ่านต้องมีตัวเลขอย่างน้อยหนึ่งหลัก"
 
-#: db/seeds/settings.rb:2077
+#: db/seeds/settings.rb:2103
 msgid "Password needs to contain at least one special character."
 msgstr "รหัสผ่านต้องมีอักขระพิเศษอย่างน้อยหนึ่งตัว."
 
-#: db/seeds/settings.rb:1985
+#: db/seeds/settings.rb:2011
 msgid "Password needs to have at least a minimal number of characters."
 msgstr "รหัสผ่านต้องมีอักขระอย่างน้อยจำนวนน้อยที่สุด."
 
@@ -12699,11 +12750,11 @@ msgstr "วางใบรับรอง"
 msgid "Paste Private Key"
 msgstr "วาง Private Key"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:493
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:564
 msgid "Paste from clipboard"
 msgstr "ว่างจากคลิปบอร์ด"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:500
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:571
 msgid "Paste from clipboard (plain text)"
 msgstr "ว่างจากคลิปบอร์ด (plain text)"
 
@@ -12753,7 +12804,7 @@ msgid "Permanently Delete Knowledge Base"
 msgstr "ลบศูนย์การเรียนรู้อย่างถาวร"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
-#: db/seeds/settings.rb:2653
+#: db/seeds/settings.rb:2679
 msgid "Permission level for looking up tickets"
 msgstr ""
 
@@ -12830,15 +12881,15 @@ msgstr "สีชมพู"
 msgid "Placetel"
 msgstr "Placetel"
 
-#: db/seeds/settings.rb:5187
+#: db/seeds/settings.rb:5214
 msgid "Placetel Token"
 msgstr "Placetel Token"
 
-#: db/seeds/settings.rb:5173
+#: db/seeds/settings.rb:5200
 msgid "Placetel config"
 msgstr ""
 
-#: db/seeds/settings.rb:5145
+#: db/seeds/settings.rb:5172
 msgid "Placetel integration"
 msgstr ""
 
@@ -12931,7 +12982,7 @@ msgstr ""
 msgid "Please install the OTRS migrator plugin and provide a valid URL."
 msgstr ""
 
-#: db/seeds/settings.rb:1896
+#: db/seeds/settings.rb:1922
 msgid ""
 "Please note that this attribute is deprecated within one of the next "
 "versions of Zammad. Use the IDP certificate instead."
@@ -13101,9 +13152,15 @@ msgstr ""
 msgid "Preview"
 msgstr "ดูตัวอย่าง"
 
-#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:86
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:95
 msgid "Preview %s"
 msgstr "ดูตัวอย่าง %s"
+
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:87
+#, fuzzy
+#| msgid "New Calendar"
+msgid "Preview Calendar"
+msgstr "ปฏิทินใหม่"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:131
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:205
@@ -13177,13 +13234,13 @@ msgstr "Prio"
 msgid "Priority"
 msgstr "ความสำคัญ"
 
-#: db/seeds/settings.rb:1945
+#: db/seeds/settings.rb:1971
 #, fuzzy
 #| msgid "Add Private Key"
 msgid "Private key (PEM)"
 msgstr "เพิ่ม Private Key"
 
-#: db/seeds/settings.rb:1952
+#: db/seeds/settings.rb:1978
 #, fuzzy
 #| msgid "Enter Private Key Secret"
 msgid "Private key secret"
@@ -13322,7 +13379,7 @@ msgid ""
 msgstr ""
 "ใส่ข้อความในหน้าเข้าสู่ระบบ. หากต้องการเปลี่ยน ให้คลิกพื้นที่ข้อความด้านล่างแล้วเปลี่ยนในบรรทัด"
 
-#: db/seeds/settings.rb:3582
+#: db/seeds/settings.rb:3609
 msgid "Puts Zammad into import mode (disables some triggers)."
 msgstr "ทำให้ Zammad เข้าสู่โหมดนำเข้า (ปิดใช้งานทริกเกอร์บางตัว)"
 
@@ -13437,7 +13494,7 @@ msgid ""
 "access to other two-factor authentication methods."
 msgstr ""
 
-#: db/seeds/settings.rb:2714
+#: db/seeds/settings.rb:2740
 msgid "Recursive Ticket Triggers"
 msgstr "ทริกเกอร์ตั๋วแบบเรียกซ้ำ"
 
@@ -13447,7 +13504,7 @@ msgstr "ทริกเกอร์ตั๋วแบบเรียกซ้ำ
 msgid "Redis version"
 msgstr "เวอร์ชั่นใหม่"
 
-#: db/seeds/settings.rb:3202
+#: db/seeds/settings.rb:3228
 msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
@@ -13533,7 +13590,7 @@ msgstr "รีโมท"
 msgid "Remove"
 msgstr "ลบ"
 
-#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:152
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:166
 msgid "Remove %s"
 msgstr "ลบ %s"
 
@@ -13621,11 +13678,11 @@ msgstr ""
 msgid "Remove two-factor authentication"
 msgstr "การยึนยันตน"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:554
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:625
 msgid "Removes any hyperlink"
 msgstr "ลบไฮเปอร์ลิงก์ใด ๆ"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:506
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:577
 msgid "Removes the formatting"
 msgstr "ลบการจัดรูปแบบ"
 
@@ -13698,7 +13755,7 @@ msgstr "ตอบกลับ"
 msgid "Reply allowed only for open tickets"
 msgstr "เงื่อนไขการแสดง Tickets"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:387
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:453
 msgid "Reply to last article"
 msgstr ""
 
@@ -13769,7 +13826,7 @@ msgstr ""
 msgid "Requirements"
 msgstr "ความต้องการ"
 
-#: db/seeds/settings.rb:5713
+#: db/seeds/settings.rb:5740
 #, fuzzy
 #| msgid ""
 #| "Requires the set up of the two-factor authentication for certain user "
@@ -14121,7 +14178,7 @@ msgid ""
 "encrypted messages."
 msgstr ""
 
-#: db/seeds/settings.rb:5494
+#: db/seeds/settings.rb:5521
 msgid "S/MIME config"
 msgstr ""
 
@@ -14129,17 +14186,17 @@ msgstr ""
 msgid "S/MIME enables you to send digitally signed and encrypted messages."
 msgstr ""
 
-#: db/seeds/settings.rb:5466
+#: db/seeds/settings.rb:5493
 msgid "S/MIME integration"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:106
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:77
-#: db/seeds/settings.rb:1845
+#: db/seeds/settings.rb:1871
 msgid "SAML"
 msgstr ""
 
-#: db/seeds/settings.rb:1853
+#: db/seeds/settings.rb:1879
 msgid "SAML App Credentials"
 msgstr ""
 
@@ -14230,7 +14287,7 @@ msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:84
-#: db/seeds/settings.rb:5582
+#: db/seeds/settings.rb:5609
 msgid "SSO"
 msgstr "SSO"
 
@@ -14334,7 +14391,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1119
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1121
 msgid "Saving failed."
 msgstr ""
 
@@ -14382,7 +14439,7 @@ msgid "Scroll down to see new messages"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:13
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:115
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:147
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:201
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
@@ -14585,7 +14642,7 @@ msgstr "ระบบความปลอดภัย"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:5
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:10
-#: db/seeds/settings.rb:5619
+#: db/seeds/settings.rb:5646
 #, fuzzy
 #| msgid "Security"
 msgid "Security Keys"
@@ -14626,7 +14683,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:447
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:118
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See less"
 msgstr ""
 
@@ -14638,7 +14695,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:118
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue:17
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See more"
 msgstr "แสดงเพิ่ม"
 
@@ -14675,7 +14732,7 @@ msgstr ""
 msgid "Select default ticket type"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:266
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:321
 msgid "Select item"
 msgstr ""
 
@@ -14772,11 +14829,11 @@ msgid ""
 "hour window is about to expire."
 msgstr ""
 
-#: db/seeds/settings.rb:3272
+#: db/seeds/settings.rb:3299
 msgid "Send postmaster mail if mail too large"
 msgstr "ส่ง postmaster หากอีเมลมีขนาดใหญ่เกินไป"
 
-#: db/seeds/settings.rb:3275
+#: db/seeds/settings.rb:3302
 msgid "Send postmaster reject mail to sender of mail if mail is too large."
 msgstr ""
 
@@ -14788,16 +14845,16 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:51
 #: app/models/channel/driver/sms/massenversand.rb:45
 #: app/models/channel/driver/sms/message_bird.rb:92
-#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3090
+#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3116
 #: lib/excel_sheet/ticket.rb:32
 msgid "Sender"
 msgstr ""
 
-#: db/seeds/settings.rb:3090
+#: db/seeds/settings.rb:3116
 msgid "Sender Format"
 msgstr ""
 
-#: db/seeds/settings.rb:3118
+#: db/seeds/settings.rb:3144
 msgid "Sender Format Separator"
 msgstr ""
 
@@ -14806,7 +14863,7 @@ msgstr ""
 msgid "Sender Type"
 msgstr ""
 
-#: db/seeds/settings.rb:3218
+#: db/seeds/settings.rb:3245
 msgid "Sender based on Reply-To header"
 msgstr ""
 
@@ -14836,7 +14893,7 @@ msgstr ""
 msgid "September"
 msgstr "กันยายน"
 
-#: db/seeds/settings.rb:3869
+#: db/seeds/settings.rb:3896
 msgid "Sequencer log level"
 msgstr ""
 
@@ -14903,11 +14960,11 @@ msgstr "การยึนยันตน"
 msgid "Set a title for your ticket"
 msgstr "สร้าง ticket แรกของคุณ"
 
-#: db/seeds/settings.rb:5275
+#: db/seeds/settings.rb:5302
 msgid "Set agent limit"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:401
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:468
 msgid "Set article to internal/public"
 msgstr "ตั้งบทความเป็นภายใน/สาธารณะ"
 
@@ -14933,7 +14990,7 @@ msgstr "ตรวจสอบอีกครั้ง"
 msgid "Set available ticket types"
 msgstr ""
 
-#: db/seeds/settings.rb:3604
+#: db/seeds/settings.rb:3631
 msgid "Set backend which is being used for import."
 msgstr ""
 
@@ -14966,7 +15023,7 @@ msgstr "ตั้งค่า ID ผู้โทรออก"
 msgid "Set security keys as default"
 msgstr "ตั้งค่าเป็นเริ่มต้น"
 
-#: db/seeds/settings.rb:5437
+#: db/seeds/settings.rb:5464
 msgid ""
 "Set timeframe in seconds. If it's set to 0 you can delete notes without time "
 "limits"
@@ -15024,7 +15081,7 @@ msgstr ""
 msgid "Set up two-factor authentication"
 msgstr "การยึนยันตน"
 
-#: db/seeds/settings.rb:3221
+#: db/seeds/settings.rb:3248
 msgid ""
 "Set/overwrite sender/from of email based on \"Reply-To\" header. Useful to "
 "set correct customer if email is received from a third-party system on "
@@ -15162,7 +15219,7 @@ msgstr "แสดงทั้งหมด…"
 msgid "Show authenticator app secret"
 msgstr "การตรวจสอบสิทธิ์ผ่าน %s"
 
-#: db/seeds/settings.rb:5591
+#: db/seeds/settings.rb:5618
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr ""
 
@@ -15178,7 +15235,7 @@ msgstr "แสดงน้อยลง"
 msgid "Show matching ticket(s) in the warning"
 msgstr ""
 
-#: db/seeds/settings.rb:2636
+#: db/seeds/settings.rb:2662
 msgid "Show matching tickets in the warning"
 msgstr ""
 
@@ -15186,7 +15243,7 @@ msgstr ""
 msgid "Show meta data"
 msgstr "แสดง meta data"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:177
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:229
 msgid "Show next tab"
 msgstr "แสดงแท็บถัดไป"
 
@@ -15196,7 +15253,7 @@ msgid ""
 "third-party authentication is enabled."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:200
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:254
 msgid "Show previous tab"
 msgstr "แสดงแท็บก่อนหน้า"
 
@@ -15216,7 +15273,7 @@ msgid "Show ticket viewers"
 msgstr "ภาพรวม Ticket ทั้งหมด"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:6
-#: db/seeds/settings.rb:3934
+#: db/seeds/settings.rb:3961
 #, fuzzy
 #| msgid "Enable time accounting for following matching tickets."
 msgid "Show time accounting dialog when updating matching tickets."
@@ -15226,7 +15283,7 @@ msgstr "เปิดใช้งาน time accounting สำหรับ ticket
 msgid "Show title in form."
 msgstr "แสดงชื่อเรื่องในแบบฟอร์ม"
 
-#: db/seeds/settings.rb:2619
+#: db/seeds/settings.rb:2645
 #, fuzzy
 #| msgid "How to use it"
 msgid "Show to user roles"
@@ -15347,7 +15404,7 @@ msgstr "ลายเซ็น"
 msgid "Signed"
 msgstr ""
 
-#: db/seeds/settings.rb:1926
+#: db/seeds/settings.rb:1952
 #, fuzzy
 #| msgid "Sign in using"
 msgid "Signing & Encrypting"
@@ -15357,7 +15414,7 @@ msgstr "เข้าสู่ระบบโดยใช้"
 msgid "Signup Screen"
 msgstr "หน้าจอลงทะเบียน"
 
-#: db/seeds/settings.rb:2598
+#: db/seeds/settings.rb:2624
 #, fuzzy
 #| msgid "%s tickets"
 msgid "Similar tickets found"
@@ -15390,13 +15447,13 @@ msgstr "ไม่สามารถส่งอีเมลไปที่ \"%s\
 msgid "Simple Storage Service not reachable."
 msgstr ""
 
-#: db/seeds/settings.rb:1783
+#: db/seeds/settings.rb:1809
 #, fuzzy
 #| msgid "Weibo"
 msgid "Sina Weibo"
 msgstr "Weibo"
 
-#: db/seeds/settings.rb:1783
+#: db/seeds/settings.rb:1809
 msgid "Sina Weibo Open Portal"
 msgstr ""
 
@@ -15433,7 +15490,7 @@ msgstr ""
 msgid "Sipgate"
 msgstr ""
 
-#: db/seeds/settings.rb:1668
+#: db/seeds/settings.rb:1694
 msgid "Site"
 msgstr "ไซต์"
 
@@ -15454,11 +15511,11 @@ msgstr ""
 msgid "Slack Notifications"
 msgstr "ปิดกั้นการแจ้งเตือน"
 
-#: db/seeds/settings.rb:4972
+#: db/seeds/settings.rb:4999
 msgid "Slack config"
 msgstr ""
 
-#: db/seeds/settings.rb:4946
+#: db/seeds/settings.rb:4973
 msgid "Slack integration"
 msgstr ""
 
@@ -15534,7 +15591,7 @@ msgstr "แหล่ง"
 msgid "Sources"
 msgstr "แหล่ง"
 
-#: db/seeds/settings.rb:2074
+#: db/seeds/settings.rb:2100
 msgid "Special character required"
 msgstr ""
 
@@ -15668,7 +15725,7 @@ msgstr "Starting Zammad"
 msgid "State"
 msgstr "สถานะ"
 
-#: db/seeds/settings.rb:5309
+#: db/seeds/settings.rb:5336
 msgid "Stats Backend"
 msgstr ""
 
@@ -15699,7 +15756,7 @@ msgstr "สถานะ:"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:49
-#: db/seeds/settings.rb:2890
+#: db/seeds/settings.rb:2916
 msgid "Stay on tab"
 msgstr "อยู่บนแท็บ"
 
@@ -15745,11 +15802,11 @@ msgstr "สื่อจัดเก็บข้อมูล"
 msgid "Store"
 msgstr "จัดเก็บ"
 
-#: db/seeds/settings.rb:4898
+#: db/seeds/settings.rb:4925
 msgid "Stores the GitHub configuration."
 msgstr ""
 
-#: db/seeds/settings.rb:4856
+#: db/seeds/settings.rb:4883
 msgid "Stores the GitLab configuration."
 msgstr ""
 
@@ -15772,6 +15829,13 @@ msgstr "ถนน"
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:33
 msgid "Subject"
 msgstr "หัวเรื่อง"
+
+#: db/seeds/settings.rb:3231
+msgid ""
+"Subject & References - Additional search for same article subject and same "
+"message ID in references header if no follow-up was recognized using default "
+"settings."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:2
 #: app/assets/javascripts/app/controllers/tag.coffee:103
@@ -15859,9 +15923,17 @@ msgstr "อา."
 msgid "Sunday"
 msgstr "วันอาทิตย์"
 
-#: db/seeds/settings.rb:5396
+#: db/seeds/settings.rb:5423
 msgid "Support of multilingual Knowledge Base."
 msgstr "การสนับสนุน ศูนย์การเรียนรู้หลายภาษา"
+
+#: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:16
+msgid "Switch back to old layout"
+msgstr ""
+
+#: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:14
+msgid "Switch to new layout"
+msgstr ""
 
 #: db/seeds/schedulers.rb:142
 msgid "Sync calendars with iCal feeds."
@@ -15880,7 +15952,7 @@ msgstr ""
 msgid "System"
 msgstr "ระบบ"
 
-#: db/seeds/settings.rb:3102
+#: db/seeds/settings.rb:3128
 msgid "System Address Display Name"
 msgstr "ชื่อที่แสดงที่อยู่ของระบบ"
 
@@ -15932,7 +16004,7 @@ msgstr ""
 msgid "SystemID"
 msgstr ""
 
-#: db/seeds/settings.rb:2875
+#: db/seeds/settings.rb:2901
 msgid "Tab behaviour after ticket action"
 msgstr ""
 
@@ -15966,13 +16038,13 @@ msgstr "รายการนี้อยู่แล้ว!."
 msgid "Tags"
 msgstr "แท็ก"
 
-#: db/seeds/settings.rb:3232
+#: db/seeds/settings.rb:3259
 msgid ""
 "Take Reply-To header as sender/from of email and use the real name of origin "
 "from."
 msgstr "ใช้ส่วนหัว Reply-To เป็นผู้ส่ง/จากอีเมลและใช้ชื่อจริงของแหล่งที่มา"
 
-#: db/seeds/settings.rb:3231
+#: db/seeds/settings.rb:3258
 msgid "Take Reply-To header as sender/from of email."
 msgstr "ใช้ส่วนหัว Reply-To เป็นผู้ส่ง/จากอีเมล"
 
@@ -16082,7 +16154,7 @@ msgstr "ข้อความ"
 msgid "Text Modules"
 msgstr "โมดูลข้อความ"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:460
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:531
 msgid "Text editing"
 msgstr "แก้ไขข้อความ"
 
@@ -16367,7 +16439,7 @@ msgstr "ไม่สามารถลบบทความได้"
 msgid "The article could not be set to public."
 msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 
-#: app/controllers/ticket_articles_controller.rb:153
+#: app/controllers/ticket_articles_controller.rb:152
 msgid "The article does not belong to the specified ticket."
 msgstr ""
 
@@ -16597,7 +16669,7 @@ msgstr ""
 msgid "The device could not be deleted."
 msgstr "ไม่สามารถลบบทความได้"
 
-#: db/seeds/settings.rb:2169
+#: db/seeds/settings.rb:2195
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 
@@ -16663,7 +16735,7 @@ msgstr ""
 msgid "The file could not be uploaded."
 msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 
-#: app/controllers/ticket_articles_controller.rb:167
+#: app/controllers/ticket_articles_controller.rb:166
 msgid "The file does not belong to the specified article."
 msgstr ""
 
@@ -16752,7 +16824,7 @@ msgstr "ไม่พบตําแหน่งที่ตั้ง"
 msgid "The hours overlay"
 msgstr "เปิดกล่องโน้ต"
 
-#: db/seeds/settings.rb:2144
+#: db/seeds/settings.rb:2170
 msgid ""
 "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
 "Ticket#."
@@ -16935,7 +17007,7 @@ msgstr "เปลี่ยนรหัสผ่านสำเร็จ!"
 msgid "The personal access token could not be deleted."
 msgstr "ไม่สามารถสร้างรายงานได้"
 
-#: app/controllers/ticket_articles_controller.rb:274
+#: app/controllers/ticket_articles_controller.rb:272
 msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
@@ -17282,7 +17354,7 @@ msgstr "ไม่มีค่าที่ต้องการ 'group_id'"
 msgid "The required value external_credential could not be found in the cache."
 msgstr ""
 
-#: app/controllers/ticket_articles_controller.rb:264
+#: app/controllers/ticket_articles_controller.rb:263
 #, fuzzy
 #| msgid "The retried security process failed!"
 msgid "The retried attachment download failed."
@@ -17412,12 +17484,12 @@ msgstr "ไม่พบหมายเลข Tickets เป้าหมาย"
 msgid "The test run was successful."
 msgstr "การทดสอบดำเนินการสำเร็จ"
 
-#: db/seeds/settings.rb:3071
+#: db/seeds/settings.rb:3097
 msgid ""
 "The text at the beginning of the subject in an email forward, e. g. FWD."
 msgstr "ข้อความที่จุดเริ่มต้นของหัวเรื่องในการส่งต่ออีเมล, e. g. FWD."
 
-#: db/seeds/settings.rb:3049
+#: db/seeds/settings.rb:3075
 msgid ""
 "The text at the beginning of the subject in an email reply, e.g. RE, AW, or "
 "AS."
@@ -17468,7 +17540,7 @@ msgstr ""
 msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr "กำหนดว่าการรวม i-doit (https://www.i-doit.org/) ถูกเปิดใช้งานหรือไม่"
 
-#: app/controllers/sessions_controller.rb:237
+#: app/controllers/sessions_controller.rb:239
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:34
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
@@ -17493,6 +17565,12 @@ msgid ""
 "logo_resize param."
 msgstr "ไม่สามารถประมวลผลภาพที่อัปโหลด"
 
+#: app/models/authorization/provider.rb:47
+#, fuzzy
+#| msgid "The password could not be set. Please contact your administrator."
+msgid "The user account does not exist. Please contact your administrator."
+msgstr "ไม่สามารถตั้งรหัสผ่านได้ โปรดติดต่อผู้ดูแลระบบของคุณ"
+
 #: app/services/service/auth/send_admin_token.rb:33
 #, fuzzy
 #| msgid "The report could not be generated"
@@ -17504,7 +17582,7 @@ msgstr "ไม่สามารถสร้างรายงานได้"
 msgid "The user's 'preferred_username' could not be extracted from 'id_token'."
 msgstr "ไม่สามารถแยก 'preferred_username' ของผู้ใช้ออกจาก 'id_token'."
 
-#: app/controllers/sessions_controller.rb:233
+#: app/controllers/sessions_controller.rb:235
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:29
 #, fuzzy
 #| msgid "The required parameter 'payload->class_name' is missing."
@@ -18226,11 +18304,11 @@ msgstr ""
 msgid "Ticket (censored):"
 msgstr "ผู้ใช้ (เซ็นเซอร์)"
 
-#: db/seeds/settings.rb:2246
+#: db/seeds/settings.rb:2272
 msgid "Ticket Conditions Expert Mode"
 msgstr ""
 
-#: db/seeds/settings.rb:2272
+#: db/seeds/settings.rb:2298
 msgid "Ticket Conditions Regular Expression Operators"
 msgstr ""
 
@@ -18244,39 +18322,39 @@ msgstr "จำนวน Ticket"
 msgid "Ticket Customer"
 msgstr "ticket.customer"
 
-#: db/seeds/settings.rb:2141
+#: db/seeds/settings.rb:2167
 msgid "Ticket Hook"
 msgstr ""
 
-#: db/seeds/settings.rb:2166
+#: db/seeds/settings.rb:2192
 msgid "Ticket Hook Divider"
 msgstr ""
 
-#: db/seeds/settings.rb:2187
+#: db/seeds/settings.rb:2213
 msgid "Ticket Hook Position"
 msgstr "Ticket ตำแหน่ง Hook"
 
-#: db/seeds/settings.rb:2219
+#: db/seeds/settings.rb:2245
 msgid "Ticket Last Contact Behaviour"
 msgstr "Ticket พฤติกรรมการติดต่อครั้งสุดท้าย"
 
-#: db/seeds/settings.rb:2298
+#: db/seeds/settings.rb:2324
 msgid "Ticket Number Format"
 msgstr "Ticket รูปแบบตัวเลข"
 
-#: db/seeds/settings.rb:2328
+#: db/seeds/settings.rb:2354
 msgid "Ticket Number Increment"
 msgstr "Ticket เพิ่มจำนวน"
 
-#: db/seeds/settings.rb:2385
+#: db/seeds/settings.rb:2411
 msgid "Ticket Number Increment Date"
 msgstr "Ticket วันที่เพิ่มจำนวน"
 
-#: db/seeds/settings.rb:2687
+#: db/seeds/settings.rb:2713
 msgid "Ticket Number ignore system_id"
 msgstr "Ticket หมายเลขละเว้น system_id"
 
-#: db/seeds/settings.rb:5735
+#: db/seeds/settings.rb:5762
 #, fuzzy
 #| msgid "Tickets of Organization"
 msgid "Ticket Organization Reassignment"
@@ -18348,15 +18426,15 @@ msgstr "Ticket อัปเดต"
 msgid "Ticket States"
 msgstr "Ticket อัปเดต"
 
-#: db/seeds/settings.rb:3068
+#: db/seeds/settings.rb:3094
 msgid "Ticket Subject Forward"
 msgstr "ส่งต่อเรื่อง Ticket"
 
-#: db/seeds/settings.rb:3046
+#: db/seeds/settings.rb:3072
 msgid "Ticket Subject Reply"
 msgstr "Ticket หัวเรื่อง ตอบ"
 
-#: db/seeds/settings.rb:3025
+#: db/seeds/settings.rb:3051
 msgid "Ticket Subject Size"
 msgstr "Ticket ขนาดเรื่อง"
 
@@ -18364,11 +18442,11 @@ msgstr "Ticket ขนาดเรื่อง"
 msgid "Ticket Subscriptions"
 msgstr "Ticket สมัครรับข้อมูล"
 
-#: db/seeds/settings.rb:2759
+#: db/seeds/settings.rb:2785
 msgid "Ticket Trigger Loop Protection Articles Total"
 msgstr ""
 
-#: db/seeds/settings.rb:2740
+#: db/seeds/settings.rb:2766
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr ""
 
@@ -18564,7 +18642,7 @@ msgstr "Ticket#"
 msgid "TicketID"
 msgstr "TicketID"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:368
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:428
 #: app/assets/javascripts/app/controllers/widget/user.coffee:87
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:94
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:98
@@ -18597,7 +18675,7 @@ msgstr ""
 msgid "Tickets assigned to me: %s of %s"
 msgstr "Tickets ที่มอบหมายให้ฉัน: %s จาก %s"
 
-#: app/controllers/ticket_articles_controller.rb:226
+#: app/controllers/ticket_articles_controller.rb:225
 #: app/controllers/tickets_controller.rb:594
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
@@ -18614,7 +18692,7 @@ msgstr ""
 msgid "Tickets with \"%s\""
 msgstr ""
 
-#: db/seeds/settings.rb:2615
+#: db/seeds/settings.rb:2641
 msgid "Tickets with the same attributes were found."
 msgstr ""
 
@@ -18633,33 +18711,33 @@ msgstr "เวลา"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:132
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:12
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:3
-#: db/seeds/permissions.rb:107 db/seeds/settings.rb:3904
+#: db/seeds/permissions.rb:107 db/seeds/settings.rb:3931
 msgid "Time Accounting"
 msgstr ""
 
-#: db/seeds/settings.rb:3967
+#: db/seeds/settings.rb:3994
 #, fuzzy
 #| msgid "Time Accounting Selector"
 msgid "Time Accounting Custom Unit"
 msgstr "ตัวเลือกการบัญชีเวลา"
 
-#: db/seeds/settings.rb:4003
+#: db/seeds/settings.rb:4030
 #, fuzzy
 #| msgid "Time Accounting Selector"
 msgid "Time Accounting Default Type"
 msgstr "ตัวเลือกการบัญชีเวลา"
 
-#: db/seeds/settings.rb:3931
+#: db/seeds/settings.rb:3958
 msgid "Time Accounting Selector"
 msgstr "ตัวเลือกการบัญชีเวลา"
 
-#: db/seeds/settings.rb:3985
+#: db/seeds/settings.rb:4012
 #, fuzzy
 #| msgid "Time Accounting Selector"
 msgid "Time Accounting Types"
 msgstr "ตัวเลือกการบัญชีเวลา"
 
-#: db/seeds/settings.rb:3949
+#: db/seeds/settings.rb:3976
 #, fuzzy
 #| msgid "Time Accounting Selector"
 msgid "Time Accounting Unit"
@@ -18765,7 +18843,7 @@ msgstr "ชื่อของแบบฟอร์ม"
 msgid "To"
 msgstr "ถึง"
 
-#: db/seeds/settings.rb:3348
+#: db/seeds/settings.rb:3375
 msgid ""
 "To archive all outgoing emails from Zammad to external, you can store a BCC "
 "email address here."
@@ -18860,7 +18938,7 @@ msgstr ""
 msgid "Toggle Group"
 msgstr "หลัก"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:359
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:419
 msgid "Toggle dark mode"
 msgstr ""
 
@@ -18911,15 +18989,15 @@ msgstr "Token Access"
 msgid "Token authorization failed."
 msgstr "การยืนยันสิทธิ์ล้มเหลว"
 
-#: db/seeds/settings.rb:5114
+#: db/seeds/settings.rb:5141
 msgid "Token for CTI."
 msgstr "Token for CTI."
 
-#: db/seeds/settings.rb:5018
+#: db/seeds/settings.rb:5045
 msgid "Token for Sipgate."
 msgstr "Token for Sipgate."
 
-#: db/seeds/settings.rb:3410
+#: db/seeds/settings.rb:3437
 msgid "Token for monitoring."
 msgstr "Token for monitoring."
 
@@ -18989,7 +19067,7 @@ msgstr "การแปล"
 msgid "Translation Source"
 msgstr "การแปล"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:331
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:390
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
 #: db/seeds/permissions.rb:245
@@ -19068,7 +19146,7 @@ msgstr "เปลี่ยนแชทเป็น ticket"
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:14
 #: app/assets/javascripts/app/views/object_manager/attribute/autocompletion_ajax_external_data_source.jst.eco:3
 #: app/frontend/apps/desktop/form/composables/useSSLVerificationWarningHandler.ts:24
-#: db/seeds/settings.rb:1923
+#: db/seeds/settings.rb:1949
 msgid ""
 "Turning off SSL verification is a security risk and should be used only "
 "temporary. Use this option at your own risk!"
@@ -19117,7 +19195,7 @@ msgstr "Twitter Secret"
 msgid "Twitter Account"
 msgstr "บัญชีทวิตเตอร์"
 
-#: db/seeds/settings.rb:1329
+#: db/seeds/settings.rb:1355
 msgid "Twitter App Credentials"
 msgstr "Twitter App Credentials"
 
@@ -19137,7 +19215,7 @@ msgstr "Twitter Secret"
 msgid "Twitter Dev environment label"
 msgstr ""
 
-#: db/seeds/settings.rb:1322
+#: db/seeds/settings.rb:1348
 #, fuzzy
 #| msgid "Developer System"
 msgid "Twitter Developer Site"
@@ -19149,11 +19227,11 @@ msgstr "ผู้พัฒนาระบบ"
 msgid "Twitter Direct Message"
 msgstr "ทวิตเตอร์ข้อความโดยตรง"
 
-#: db/seeds/settings.rb:1336
+#: db/seeds/settings.rb:1362
 msgid "Twitter Key"
 msgstr "Twitter Key"
 
-#: db/seeds/settings.rb:1342
+#: db/seeds/settings.rb:1368
 msgid "Twitter Secret"
 msgstr "Twitter Secret"
 
@@ -19271,7 +19349,7 @@ msgstr "ชนิด:"
 msgid "UID"
 msgstr "UID"
 
-#: db/seeds/settings.rb:1907
+#: db/seeds/settings.rb:1933
 #, fuzzy
 #| msgid "%s Attribute"
 msgid "UID Attribute Name"
@@ -19430,7 +19508,7 @@ msgstr "ยืนยัน แบบร่างที่ใช้ร่วม�
 msgid "Update Time"
 msgstr "อัพเดทเวลา"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:418
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:488
 msgid "Update as closed"
 msgstr "ปิดอัพเดท"
 
@@ -19461,7 +19539,7 @@ msgstr ""
 msgid "Update successful."
 msgstr "อัปเดตสำเร็จแล้ว"
 
-#: db/seeds/settings.rb:5747
+#: db/seeds/settings.rb:5774
 #, fuzzy
 #| msgid "The file could not be uploaded."
 msgid "Update the most recent tickets."
@@ -19660,13 +19738,13 @@ msgstr "ใช้ฟิลด์หัวเรื่องสำหรับอ
 msgid "Use the camera to take a photo for the avatar."
 msgstr ""
 
-#: db/seeds/settings.rb:2233
+#: db/seeds/settings.rb:2259
 msgid ""
 "Use the start time of the last customer thread (which may consist of "
 "multiple articles)."
 msgstr "ใช้เวลาเริ่มต้นของเธรดลูกค้าล่าสุด (ซึ่งอาจประกอบด้วยหลายบทความ)."
 
-#: db/seeds/settings.rb:2232
+#: db/seeds/settings.rb:2258
 msgid "Use the time of the very last customer article."
 msgstr "ใช้เวลาของบทความลูกค้าล่าสุด."
 
@@ -19674,31 +19752,31 @@ msgstr "ใช้เวลาของบทความลูกค้าล่
 msgid "Use this switch to start synchronization of your ldap sources."
 msgstr "ใช้สวิตช์นี้เพื่อเริ่มการซิงโครไนซ์แหล่งที่มา ldap ของคุณ."
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:90
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:119
 msgid "Used anywhere"
 msgstr "ใช้ได้ทุกที่"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:335
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:394
 msgid "Used anywhere (admin only)"
 msgstr "ใช้ได้ทุกที่ (ผู้ดูแลระบบเท่านั้น)"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:254
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:309
 msgid "Used in lists (views and results)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:271
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:326
 msgid "Used in object views"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:434
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:505
 msgid "Used when composing a Ticket article"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:464
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:535
 msgid "Used when composing a text"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:372
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:432
 msgid "Used when viewing a Ticket"
 msgstr ""
 
@@ -19791,6 +19869,7 @@ msgid ""
 "permissions."
 msgstr "ไม่สามารถเรียกข้อมูลผู้ใช้ได้ โปรดตรวจสอบการอนุญาตการผูกผู้ใช้ของคุณ"
 
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:179
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue:44
 #, fuzzy
 #| msgid "Username"
@@ -20066,14 +20145,14 @@ msgid "Warning"
 msgstr "คำเตือน"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:34
-#: db/seeds/settings.rb:2602
+#: db/seeds/settings.rb:2628
 #, fuzzy
 #| msgid "Add image"
 msgid "Warning message"
 msgstr "เพิ่มรูป"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:33
-#: db/seeds/settings.rb:2585
+#: db/seeds/settings.rb:2611
 #, fuzzy
 #| msgid "Warning"
 msgid "Warning title"
@@ -20181,11 +20260,11 @@ msgstr "สัปดาห์"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:101
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:68
-#: db/seeds/settings.rb:1782
+#: db/seeds/settings.rb:1808
 msgid "Weibo"
 msgstr "Weibo"
 
-#: db/seeds/settings.rb:1790
+#: db/seeds/settings.rb:1816
 msgid "Weibo App Credentials"
 msgstr "Weibo App Credentials"
 
@@ -20887,7 +20966,7 @@ msgstr "ไม่สามารถอัปโหลดไฟล์ได้"
 #: app/assets/javascripts/app/views/google/app_config.jst.eco:23
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco:31
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco:47
-#: db/seeds/settings.rb:1348
+#: db/seeds/settings.rb:1374
 msgid "Your callback URL"
 msgstr "callback URL ของคุณ"
 
@@ -21612,11 +21691,11 @@ msgstr ""
 msgid "i-doit"
 msgstr ""
 
-#: db/seeds/settings.rb:4813
+#: db/seeds/settings.rb:4840
 msgid "i-doit config"
 msgstr "i-doit config"
 
-#: db/seeds/settings.rb:4786
+#: db/seeds/settings.rb:4813
 msgid "i-doit integration"
 msgstr "i-doit integration"
 
@@ -21846,7 +21925,7 @@ msgstr "เปลี่ยนไปเป็น"
 msgid "just now"
 msgstr "ขณะนี้"
 
-#: db/seeds/settings.rb:2203
+#: db/seeds/settings.rb:2229
 msgid "left"
 msgstr "ซ้าย"
 
@@ -22033,7 +22112,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:96
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:27
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco:7
-#: db/seeds/settings.rb:2205
+#: db/seeds/settings.rb:2231
 msgid "none"
 msgstr "ไม่มี"
 
@@ -22203,7 +22282,7 @@ msgstr "ตอบกลับ"
 msgid "required"
 msgstr "%s จำเป็น"
 
-#: db/seeds/settings.rb:2204
+#: db/seeds/settings.rb:2230
 msgid "right"
 msgstr "ขวา"
 
@@ -22298,19 +22377,19 @@ msgstr "แสดงเพิ่ม"
 msgid "shown"
 msgstr "แสดง"
 
-#: db/seeds/settings.rb:5015
+#: db/seeds/settings.rb:5042
 msgid "sipgate.io Token"
 msgstr "sipgate.io Token"
 
-#: db/seeds/settings.rb:5049
+#: db/seeds/settings.rb:5076
 msgid "sipgate.io alternative FQDN"
 msgstr "sipgate.io alternative FQDN"
 
-#: db/seeds/settings.rb:5036
+#: db/seeds/settings.rb:5063
 msgid "sipgate.io config"
 msgstr "sipgate.io config"
 
-#: db/seeds/settings.rb:4987
+#: db/seeds/settings.rb:5014
 msgid "sipgate.io integration"
 msgstr "sipgate.io integration"
 
@@ -22568,15 +22647,15 @@ msgstr ""
 msgid "|Right| means |Some Subject [Ticket#12345]|"
 msgstr "|Right| means |Some Subject [Ticket#12345]|"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:324
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:383
 msgid "…add object link URL"
 msgstr "‎... เพิ่ม URL ของลิงก์ออบเจ็กต์‎"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:318
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:376
 msgid "…add object title"
 msgstr "‎... เพิ่มชื่อวัตถุ‎"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:512
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:583
 msgid "…of whole text area"
 msgstr "‎... ของพื้นที่ข้อความทั้งหมด‎"
 

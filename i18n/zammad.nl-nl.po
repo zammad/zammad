@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-15 09:16+0000\n"
+"PO-Revision-Date: 2024-08-26 05:31+0000\n"
 "Last-Translator: JPB <JPB@users.noreply.translations.zammad.org>\n"
-"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
-"development/nl/>\n"
+"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
+"zammad-development/nl/>\n"
 "Language: nl-nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -425,8 +425,8 @@ msgstr "%s URL"
 msgid "%s ago"
 msgstr "%s geleden"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:224
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:31
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:222
 msgid "%s attached files"
 msgstr "%s bijlagen"
 
@@ -692,10 +692,8 @@ msgid "(state: %s)"
 msgstr "(status: %s)"
 
 #: app/frontend/apps/desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue:58
-#, fuzzy
-#| msgid "(state: %s)"
 msgid "(ticket status: %s)"
-msgstr "(status: %s)"
+msgstr "(ticketstatus: %s)"
 
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 msgid ""
@@ -771,8 +769,8 @@ msgstr ""
 "gemist) worden in een aparte weergave binnen je overzichten weergegeven. Je "
 "kunt ook **e-mailmeldingen** configureren."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:29
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:223
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:221
 msgid "1 attached file"
 msgstr "1 bijlage"
 
@@ -824,7 +822,7 @@ msgstr "1. Ticket Aanmaken"
 msgid "2 hours"
 msgstr "2 uur"
 
-#: db/seeds/settings.rb:2022
+#: db/seeds/settings.rb:2048
 msgid "2 lower case and 2 upper case characters"
 msgstr "2 kleine en 2 grote letters"
 
@@ -904,7 +902,7 @@ msgstr ""
 "Een kleurenschema dat gebruikmaakt van lichte elementen op een donkere "
 "achtergrond."
 
-#: db/seeds/settings.rb:3859
+#: db/seeds/settings.rb:3886
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr "Een lijst van active imports die automatisch gepland worden."
 
@@ -952,7 +950,7 @@ msgid ""
 msgstr ""
 "Er is een test-ticket aangemaakt, je vindt het in jouw overzicht \"%s\" %l\"."
 
-#: app/models/ticket.rb:278
+#: app/models/ticket.rb:277
 msgid "A ticket cannot be merged into itself."
 msgstr "Een ticket kan niet met zichzelf worden samengevoegd."
 
@@ -994,7 +992,7 @@ msgstr "API"
 msgid "API Key"
 msgstr "API Key"
 
-#: db/seeds/settings.rb:3381
+#: db/seeds/settings.rb:3408
 msgid "API Password Access"
 msgstr "API Password Access"
 
@@ -1002,7 +1000,7 @@ msgstr "API Password Access"
 msgid "API Token"
 msgstr "API Token"
 
-#: db/seeds/settings.rb:3356
+#: db/seeds/settings.rb:3383
 msgid "API Token Access"
 msgstr "API Token Access"
 
@@ -1048,7 +1046,7 @@ msgstr "Toegang tot de Kennisbank."
 
 #: db/seeds/permissions.rb:361
 msgid "Access the tickets as agent based on group access."
-msgstr "Toegang tot Behandelaar tickets gebaseerd op groepstoegang."
+msgstr "Toegang tot tickets als Behandelaar gebaseerd op groepstoegang."
 
 #: db/seeds/permissions.rb:370
 msgid "Access tickets as customer."
@@ -1060,7 +1058,7 @@ msgstr "Toegang tot de chat interface."
 
 #: db/seeds/permissions.rb:324
 msgid "Access to the knowledge base interface."
-msgstr "Toegang tot de interface van de kennisbank."
+msgstr "Toegang tot de kennisbank interface."
 
 #: db/seeds/permissions.rb:309
 msgid "Access to the phone interface."
@@ -1094,7 +1092,7 @@ msgstr "Account SID"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:6
 msgid "Account Time"
-msgstr "Tijd van gebruiker"
+msgstr "Tijd registreren"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:582
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:198
@@ -1163,7 +1161,7 @@ msgstr "Actie"
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
 msgid "Action execution"
-msgstr "Uitvoering van acties"
+msgstr "Actie-uitvoering"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts:12
 msgid "Action menu button for authenticator app"
@@ -1182,7 +1180,7 @@ msgstr "Actiemenu knop voor beveiligingssleutels"
 msgid "Actions"
 msgstr "Acties"
 
-#: db/seeds/settings.rb:2717
+#: db/seeds/settings.rb:2743
 msgid "Activate the recursive processing of ticket triggers."
 msgstr "Activeer de recursieve verwerking van tickettriggers."
 
@@ -1195,7 +1193,7 @@ msgid ""
 "Activates lost password feature for users. This setting is only effective if "
 "the password login is enabled."
 msgstr ""
-"'Wachtwoord vergeten' functionaliteit inschakelen. Dit werkt enkel indien "
+"'Wachtwoord vergeten\" functionaliteit inschakelen. Dit werkt enkel indien "
 "het aanmelden met wachtwoord actief is."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:320
@@ -1311,7 +1309,7 @@ msgstr "Bot toevoegen"
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:88
 #: app/assets/javascripts/app/views/integration/smime.jst.eco:5
 msgid "Add Certificate"
-msgstr "Voeg certificaat toe"
+msgstr "Certificaat toevoegen"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:418
 msgid "Add Empty Checklist"
@@ -1340,7 +1338,7 @@ msgstr "Public of Private Key toevoegen"
 
 #: app/assets/javascripts/app/views/ssl_certificates.jst.eco:5
 msgid "Add SSL Certificate"
-msgstr "Voeg SSL-Certificaat toe"
+msgstr "SSL-Certificaat toevoegen"
 
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco:19
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:14
@@ -1373,7 +1371,7 @@ msgstr "Voeg een bericht toe"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:123
 msgid "Add agreement text before submit."
-msgstr "Voeg de tekst van de overeenkomst toe voor het versturen."
+msgstr "Voeg de overeenkomsttekst toe voor het versturen."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:316
 msgid "Add alarm to pending reminder and escalated tickets"
@@ -1464,7 +1462,7 @@ msgstr ""
 msgid "Additional Channels"
 msgstr "Extra kanalen"
 
-#: db/seeds/settings.rb:3190
+#: db/seeds/settings.rb:3216
 msgid "Additional follow-up detection"
 msgstr "Additionele opvolgingsdetectie"
 
@@ -1606,11 +1604,11 @@ msgstr "Leeftijd"
 msgid "Agent"
 msgstr "Behandelaar"
 
-#: db/seeds/settings.rb:3103
+#: db/seeds/settings.rb:3129
 msgid "Agent Name"
 msgstr "Naam behandelaar"
 
-#: db/seeds/settings.rb:3103
+#: db/seeds/settings.rb:3129
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr "Naam behandelaar + VanScheiding + Systeemadres naamweergave"
 
@@ -1618,7 +1616,7 @@ msgstr "Naam behandelaar + VanScheiding + Systeemadres naamweergave"
 msgid "Agent chat"
 msgstr "Chat met behandelaar"
 
-#: db/seeds/settings.rb:3456
+#: db/seeds/settings.rb:3483
 msgid "Agent idle timeout"
 msgstr "Behandelaar idle time-out"
 
@@ -1738,11 +1736,11 @@ msgstr "Gebruikers toestaan om nieuwe checklists toe te voegen."
 msgid "Allow users to add new tags."
 msgstr "Sta gebruikers toe nieuwe tags toe te voegen."
 
-#: db/seeds/settings.rb:5766
+#: db/seeds/settings.rb:5793
 msgid "Allow users to create new checklists."
 msgstr "Gebruikers toestaan om nieuwe checklists te maken."
 
-#: db/seeds/settings.rb:4024
+#: db/seeds/settings.rb:4051
 msgid "Allow users to create new tags."
 msgstr "Laat gebruikers nieuwe tags aanmaken."
 
@@ -1759,7 +1757,7 @@ msgstr "Toegestane website (gescheiden door ;)"
 msgid "Also notify via email"
 msgstr "Verstuur ook via e -mail"
 
-#: db/seeds/settings.rb:5052
+#: db/seeds/settings.rb:5079
 msgid ""
 "Alternative FQDN for callbacks if you operate Zammad in an internal network."
 msgstr ""
@@ -1891,15 +1889,15 @@ msgstr "Anticon"
 msgid "Any recipient"
 msgstr "Elke ontvanger"
 
-#: db/seeds/settings.rb:1400
+#: db/seeds/settings.rb:1426
 msgid "App ID"
 msgstr "App ID"
 
-#: db/seeds/settings.rb:1406
+#: db/seeds/settings.rb:1432
 msgid "App Secret"
 msgstr "App Secret"
 
-#: db/seeds/settings.rb:1739
+#: db/seeds/settings.rb:1765
 msgid "App Tenant ID"
 msgstr "App Tenant ID"
 
@@ -1915,11 +1913,11 @@ msgstr "App Versie"
 msgid "App could not be verified."
 msgstr "Account is niet geverifieerd."
 
-#: db/seeds/settings.rb:1396
+#: db/seeds/settings.rb:1422
 msgid "App credentials for Facebook."
 msgstr "App inloggegevens voor Facebook."
 
-#: db/seeds/settings.rb:1332
+#: db/seeds/settings.rb:1358
 msgid "App credentials for Twitter."
 msgstr "App inloggegevens voor Twitter."
 
@@ -1927,7 +1925,7 @@ msgstr "App inloggegevens voor Twitter."
 msgid "App secret"
 msgstr "App secret"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:349
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:409
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee:3
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:3
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
@@ -2002,7 +2000,7 @@ msgstr "Gearchiveerd op"
 msgid "Are you sure to remove this article?"
 msgstr "Weet je zeker dat je deze notitie wilt verwijderen?"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:152
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:153
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Wil je echt \"%s\" verwijderen?"
 
@@ -2123,7 +2121,7 @@ msgstr "Aantal notities"
 msgid "Article Type"
 msgstr "Notitie Type"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:284
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:282
 msgid "Article actions"
 msgstr "Notitie acties"
 
@@ -2131,7 +2129,7 @@ msgstr "Notitie acties"
 msgid "Article could not be deleted."
 msgstr "Notitie kon niet verwijderd worden."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:130
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:125
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:27
 msgid "Article meta information"
 msgstr "Notitie meta-informatie"
@@ -2217,15 +2215,15 @@ msgstr "Minimaal één object moet geselecteerd worden."
 msgid "At least one user needs to have admin permissions."
 msgstr "Minimaal één gebruiker moet administrator rechten hebben."
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:190
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:191
 msgid "Attach another file"
 msgstr "Extra bijlage toevoegen"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:185
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:186
 msgid "Attach file"
 msgstr "Bijlage toevoegen"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:188
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:189
 msgid "Attach files"
 msgstr "Bijlage toevoegen"
 
@@ -2247,13 +2245,16 @@ msgstr "Bijlagen"
 msgid "Attachment"
 msgstr "Bijlage"
 
-#: db/seeds/settings.rb:3204
+#: db/seeds/settings.rb:3230
 msgid "Attachment - Search for follow-up also in attachments."
 msgstr "Bijlage - Voor Follow-up ook in bijlages zoeken."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee:15
 #: app/assets/javascripts/app/views/knowledge_base/_answer_attachments.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:2
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentButton.vue:43
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:32
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/ticket-article-attachment.ts:12
 #: public/assets/form/form.js:50
 msgid "Attachments"
 msgstr "Bijlagen"
@@ -2304,7 +2305,7 @@ msgstr "Kenmerk"
 msgid "Attribute '%s' is required in the mapping"
 msgstr "Attribuut '%s' is nodig in de mapping"
 
-#: db/seeds/settings.rb:1912
+#: db/seeds/settings.rb:1938
 msgid ""
 "Attribute that uniquely identifies the user. If unset, the name identifier "
 "returned by the IDP is used."
@@ -2318,7 +2319,7 @@ msgid "Attributes"
 msgstr "Attributen"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:32
-#: db/seeds/settings.rb:2568
+#: db/seeds/settings.rb:2594
 msgid "Attributes to compare"
 msgstr "Attributen om te vergelijken"
 
@@ -2375,7 +2376,7 @@ msgstr "Authenticatie via %s"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:5
 #: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts:9
-#: db/seeds/settings.rb:5651
+#: db/seeds/settings.rb:5678
 msgid "Authenticator App"
 msgstr "Authenticator App"
 
@@ -2404,15 +2405,15 @@ msgstr "Authy"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:11
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:7
-#: db/seeds/settings.rb:2414
+#: db/seeds/settings.rb:2440
 msgid "Auto Assignment"
 msgstr "Automatische toewijzing"
 
-#: db/seeds/settings.rb:2457
+#: db/seeds/settings.rb:2483
 msgid "Auto Assignment Ignored Users"
 msgstr "Automatische toewijzing van gebruikersuitzonderingen"
 
-#: db/seeds/settings.rb:2440
+#: db/seeds/settings.rb:2466
 msgid "Auto Assignment Selector"
 msgstr "Automatische toewijzingskiezer"
 
@@ -2420,7 +2421,7 @@ msgstr "Automatische toewijzingskiezer"
 msgid "Auto Wizard"
 msgstr "Auto-Assistent"
 
-#: db/seeds/settings.rb:4348
+#: db/seeds/settings.rb:4375
 msgid "Auto close"
 msgstr "Automatisch sluiten"
 
@@ -2428,7 +2429,7 @@ msgstr "Automatisch sluiten"
 msgid "Auto create"
 msgstr "Automatisch aanmaken"
 
-#: db/seeds/settings.rb:4374
+#: db/seeds/settings.rb:4401
 msgid "Auto-close state"
 msgstr "Automatisch sluiten status"
 
@@ -2532,7 +2533,7 @@ msgstr "Gemiddeld: %s minuten"
 msgid "Average: %s%"
 msgstr "Gemiddeld: %s%"
 
-#: db/seeds/settings.rb:3345
+#: db/seeds/settings.rb:3372
 msgid "BCC address for all outgoing emails"
 msgstr "BCC adres voor alle uitgaande e-mails"
 
@@ -2619,7 +2620,7 @@ msgstr ""
 "verloopt en Zammad daarna goed werkt:"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:261
-#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:99
+#: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:97
 msgid "Begin forwarded message"
 msgstr "Start doorgestuurd bericht"
 
@@ -2637,7 +2638,7 @@ msgstr "LDAP Gebruikerswachtwoord"
 msgid "Bind User"
 msgstr "LDAP Gebruiker"
 
-#: db/seeds/settings.rb:3322
+#: db/seeds/settings.rb:3349
 msgid "Block Notifications"
 msgstr "Blokkeer notificaties"
 
@@ -2671,13 +2672,13 @@ msgstr "Blauw"
 msgid "Body"
 msgstr "E-mailbericht"
 
-#: db/seeds/settings.rb:3203
+#: db/seeds/settings.rb:3229
 msgid "Body - Search for follow-up also in mail body."
 msgstr "Body - Zoek voor Follow-up in de e-mail body."
 
 #: lib/validations/ticket_article_validator/sms_twilio.rb:14
 msgid "Body text is required"
-msgstr "Berichttekst is verplicht!"
+msgstr "Berichttekst is verplicht"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:41
 msgid "Boolean field"
@@ -2727,7 +2728,7 @@ msgstr "Openingstijden"
 msgid "But it's only available in these languages:"
 msgstr "Maar het is alleen in de volgende talen beschikbaar:"
 
-#: db/seeds/settings.rb:3193
+#: db/seeds/settings.rb:3219
 msgid ""
 "By default, the follow-up check is done via the subject of an email. This "
 "setting lets you add more fields for which the follow-up check will be "
@@ -2798,19 +2799,19 @@ msgstr "CTI"
 msgid "CTI (generic)"
 msgstr "CTI (generiek)"
 
-#: db/seeds/settings.rb:5111
+#: db/seeds/settings.rb:5138
 msgid "CTI Token"
 msgstr "CTI Token"
 
-#: db/seeds/settings.rb:5098
+#: db/seeds/settings.rb:5125
 msgid "CTI config"
 msgstr "CTI config"
 
-#: db/seeds/settings.rb:5132
+#: db/seeds/settings.rb:5159
 msgid "CTI customer last activity"
 msgstr "CTI klant laatste activiteit"
 
-#: db/seeds/settings.rb:5070
+#: db/seeds/settings.rb:5097
 msgid "CTI integration"
 msgstr "CTI integratie"
 
@@ -3018,7 +3019,7 @@ msgstr "Categorie pagina layout"
 msgid "Caution!"
 msgstr "Let op!"
 
-#: db/seeds/settings.rb:1938
+#: db/seeds/settings.rb:1964
 msgid "Certificate (PEM)"
 msgstr "Certificaat (PEM)"
 
@@ -3204,20 +3205,19 @@ msgstr "Checklist-sjabloon"
 #: app/models/checklist_template/item.rb:32
 msgid "Checklist Template items are limited to 100 items per checklist."
 msgstr ""
+"Items in een checklist-sjabloon zijn beperkt tot 100 items per checklist."
 
 #: app/controllers/ticket_checklist_controller.rb:17
 msgid "Checklist is already created for this ticket"
 msgstr "Checklist is al aangemaakt voor dit ticket"
 
 #: app/models/checklist/item.rb:87
-#, fuzzy
-#| msgid "The given checklist item does not belong to the given checklist."
 msgid "Checklist items are limited to 100 items per checklist."
-msgstr "Het checklist item hoort niet bij de controlelijst."
+msgstr "Items op de checklist zijn beperkt tot 100 items per checklist."
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:3
-#: db/seeds/permissions.rb:287 db/seeds/settings.rb:5763
+#: db/seeds/permissions.rb:287 db/seeds/settings.rb:5790
 msgid "Checklists"
 msgstr "Checklists"
 
@@ -3225,15 +3225,15 @@ msgstr "Checklists"
 msgid "Checkmk"
 msgstr "Checkmk"
 
-#: db/seeds/settings.rb:4495
+#: db/seeds/settings.rb:4522
 msgid "Checkmk integration"
 msgstr "Checkmk integratie"
 
-#: db/seeds/settings.rb:4593
+#: db/seeds/settings.rb:4620
 msgid "Checkmk token"
 msgstr "Checkmk token"
 
-#: db/seeds/settings.rb:2335
+#: db/seeds/settings.rb:2361
 msgid "Checksum"
 msgstr "Checksum"
 
@@ -3379,11 +3379,11 @@ msgstr "De waarde wissen"
 msgid "Clearbit"
 msgstr "Clearbit"
 
-#: db/seeds/settings.rb:5234
+#: db/seeds/settings.rb:5261
 msgid "Clearbit config"
 msgstr "Clearbit config"
 
-#: db/seeds/settings.rb:5208
+#: db/seeds/settings.rb:5235
 msgid "Clearbit integration"
 msgstr "Clearbit integratie"
 
@@ -3399,13 +3399,13 @@ msgstr "Klik hier om een twee-factor-authenticatiemethode in te stellen."
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:28
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco:21
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco:9
-#: db/seeds/settings.rb:1464
+#: db/seeds/settings.rb:1490
 msgid "Client ID"
 msgstr "Client ID"
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco:17
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco:17
-#: db/seeds/settings.rb:1470
+#: db/seeds/settings.rb:1496
 msgid "Client Secret"
 msgstr "Client Secret"
 
@@ -3450,7 +3450,7 @@ msgstr "Gesloten in minuten"
 msgid "Close chat sessions where participants are offline."
 msgstr "Sluit chatsessies waar deelnemers offline zijn."
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:168
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:218
 msgid "Close current tab"
 msgstr "Huidige tab sluiten"
 
@@ -3464,13 +3464,13 @@ msgstr "Zijpaneel sluiten"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:32
-#: db/seeds/settings.rb:2887
+#: db/seeds/settings.rb:2913
 msgid "Close tab"
 msgstr "Tab sluiten"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:37
-#: db/seeds/settings.rb:2888
+#: db/seeds/settings.rb:2914
 msgid "Close tab on ticket close"
 msgstr "Sluit tab bij afhandelen ticket"
 
@@ -3529,7 +3529,7 @@ msgstr "Bedrijfsnaam B.V."
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:11
-#: db/seeds/settings.rb:5643
+#: db/seeds/settings.rb:5670
 msgid "Complete the sign-in with your security key."
 msgstr "Voltooi de aanmelding met je beveiligingssleutel."
 
@@ -3656,7 +3656,7 @@ msgstr ""
 "<br>\n"
 "<div>Het #{config.product_name}-team</div>\n"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:223
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:278
 msgid "Confirm/submit dialog"
 msgstr "Dialoog bevestigen/verzenden"
 
@@ -3861,7 +3861,7 @@ msgstr "Kopieer token"
 msgid "Copy URL"
 msgstr "URL kopiëren"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:276
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:332
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Huidig objectnummer kopiëren (bijv. Ticket#) naar klembord"
 
@@ -3914,10 +3914,12 @@ msgstr ""
 #: app/models/channel/email_parser.rb:32
 msgid "Could not parse any sender attribute from the email. Checked fields:"
 msgstr ""
+"Kon geen kenmerk van de afzender uit de e-mail verwerken. Gecontroleerde "
+"velden:"
 
 #: app/assets/javascripts/app/controllers/signup.coffee:133
 msgid "Could not process your request"
-msgstr ""
+msgstr "Kon het verzoek niet verwerken"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:135
 msgid "Could not remove all two-factor authentication methods for this user."
@@ -4363,7 +4365,7 @@ msgid "Customer and agent ratio (role based user counts)"
 msgstr ""
 "Klant- en behandelaarratio (telling van gebruikers op basis van rollen)"
 
-#: db/seeds/settings.rb:3246
+#: db/seeds/settings.rb:3273
 msgid "Customer selection based on sender and receiver list"
 msgstr "Klant-selectie op basis van zender- en ontvangerslijst"
 
@@ -4408,7 +4410,7 @@ msgid "Dark Mode"
 msgstr "Donkere Modus"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:5
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:95
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:125
 #: app/assets/javascripts/app/controllers/dashboard.coffee:28
 #: app/assets/javascripts/app/controllers/package.coffee:42
 #: app/frontend/apps/desktop/pages/dashboard/routes.ts:8
@@ -4454,7 +4456,7 @@ msgstr "Datum"
 msgid "Date & time field"
 msgstr "Datum en tijd veld"
 
-#: db/seeds/settings.rb:2314
+#: db/seeds/settings.rb:2340
 msgid "Date (Year.Month.Day.SystemID.Counter)"
 msgstr "Datum (Year.Month.Day.SystemID.Counter)"
 
@@ -4543,11 +4545,11 @@ msgstr "Standaard gedrag"
 msgid "Default Notifications"
 msgstr "Standaard Notificaties"
 
-#: db/seeds/settings.rb:3478
+#: db/seeds/settings.rb:3505
 msgid "Default Screen"
 msgstr "Standaard scherm"
 
-#: db/seeds/settings.rb:2475
+#: db/seeds/settings.rb:2501
 msgid "Default Ticket Agent Notifications"
 msgstr "Standaard Ticket Behandelaar Notificaties"
 
@@ -4555,7 +4557,7 @@ msgstr "Standaard Ticket Behandelaar Notificaties"
 msgid "Default at Signup"
 msgstr "Standaard bij aanmelding"
 
-#: db/seeds/settings.rb:4048
+#: db/seeds/settings.rb:4075
 msgid "Default calendar tickets subscriptions"
 msgstr "Standaard agendaticket abonnementen"
 
@@ -4591,7 +4593,7 @@ msgid "Default value is required."
 msgstr "Standaardwaarde is vereist."
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:15
-#: db/seeds/settings.rb:2460
+#: db/seeds/settings.rb:2486
 msgid ""
 "Define an exception of \"automatic assignment\" for certain users (e.g. "
 "executives)."
@@ -4599,23 +4601,23 @@ msgstr ""
 "Definieer een uitzondering voor \"automatische toewijzing\" voor bepaalde "
 "gebruikers (bijvoorbeeld leidinggevenden)."
 
-#: db/seeds/settings.rb:3545
+#: db/seeds/settings.rb:3572
 msgid "Define max. attachment size for Elasticsearch."
 msgstr "Definieer max. bijlagegrootte voor Elasticsearch."
 
-#: db/seeds/settings.rb:3554
+#: db/seeds/settings.rb:3581
 msgid "Define max. payload size for Elasticsearch."
 msgstr "Definieer max. payloadgrootte voor Elasticsearch."
 
-#: db/seeds/settings.rb:3572
+#: db/seeds/settings.rb:3599
 msgid "Define model configuration for Elasticsearch."
 msgstr "Definieer de modelconfiguratie voor Elasticsearch."
 
-#: db/seeds/settings.rb:3563
+#: db/seeds/settings.rb:3590
 msgid "Define pipeline name for Elasticsearch."
 msgstr "Definieer de pipeline naam voor Elasticsearch."
 
-#: db/seeds/settings.rb:4185
+#: db/seeds/settings.rb:4212
 msgid ""
 "Define postmaster filter to check if follow-ups get created (based on admin "
 "settings)."
@@ -4623,11 +4625,11 @@ msgstr ""
 "Een postmasterfilter om te controleren of er follow-ups worden gemaakt (op "
 "basis van beheerdersinstellingen)."
 
-#: db/seeds/settings.rb:4131
+#: db/seeds/settings.rb:4158
 msgid "Define postmaster filter to import archive mailboxes."
 msgstr "Een postmasterfilter om archiefmailboxen te importeren."
 
-#: db/seeds/settings.rb:4128
+#: db/seeds/settings.rb:4155
 msgid "Define postmaster filter."
 msgstr "Postmasterfilter-instellingen."
 
@@ -4641,7 +4643,7 @@ msgstr ""
 "behandelaren eraan toe. Hierdoor kan Zammad de behandelaren ondersteunen "
 "door hen alleen relevante oproepinvoer en -meldingen te tonen."
 
-#: db/seeds/settings.rb:2478
+#: db/seeds/settings.rb:2504
 msgid "Define the default agent notifications for new users."
 msgstr ""
 "Definieer de standaard behandelaar-notificaties voor nieuwe gebruikers."
@@ -4650,27 +4652,27 @@ msgstr ""
 msgid "Define the maximum number of ticket shown in overviews."
 msgstr "Definieer het maximum aantal getoonde tickets in overzichten."
 
-#: db/seeds/settings.rb:3527
+#: db/seeds/settings.rb:3554
 msgid "Defines Elasticsearch SSL verification."
 msgstr "Definieert Elasticsearch SSL-verificatie."
 
-#: db/seeds/settings.rb:3518
+#: db/seeds/settings.rb:3545
 msgid "Defines Elasticsearch index name."
 msgstr "Definieert Elasticsearch-indexnaam."
 
-#: db/seeds/settings.rb:3785
+#: db/seeds/settings.rb:3812
 msgid "Defines Freshdesk endpoint authentication API key."
 msgstr "Definieert Freshdesk endpoint authentication API key."
 
-#: db/seeds/settings.rb:3509
+#: db/seeds/settings.rb:3536
 msgid "Defines HTTP basic auth password of Elasticsearch."
 msgstr "Het HTTP basic auth wachtwoord van Elasticsearch."
 
-#: db/seeds/settings.rb:3500
+#: db/seeds/settings.rb:3527
 msgid "Defines HTTP basic auth user of Elasticsearch."
 msgstr "De HTTP basic auth gebruikernaam van Elasticsearch."
 
-#: db/seeds/settings.rb:3692
+#: db/seeds/settings.rb:3719
 msgid ""
 "Defines HTTP basic authentication password (only if OTRS is protected via "
 "HTTP basic auth)."
@@ -4678,7 +4680,7 @@ msgstr ""
 "Het HTTP basic authentication wachtwoord (alleen als OTRS is beveiligd met "
 "HTTP basic auth)."
 
-#: db/seeds/settings.rb:3673
+#: db/seeds/settings.rb:3700
 msgid ""
 "Defines HTTP basic authentication user (only if OTRS is protected via HTTP "
 "basic auth)."
@@ -4686,54 +4688,54 @@ msgstr ""
 "De HTTP basic authentication gebruiker (alleen als OTRS is beveiligd met "
 "HTTP basic auth)."
 
-#: db/seeds/settings.rb:3840
+#: db/seeds/settings.rb:3867
 msgid "Defines Kayako endpoint authentication password."
 msgstr "Het Kayako endpoint authentication wachtwoord."
 
-#: db/seeds/settings.rb:3822
+#: db/seeds/settings.rb:3849
 msgid "Defines Kayako endpoint authentication user."
 msgstr "Definieert de Kayako endpoint authentication gebruiker."
 
-#: db/seeds/settings.rb:3654
+#: db/seeds/settings.rb:3681
 msgid "Defines OTRS endpoint authentication key."
 msgstr "De OTRS endpoint authentication key."
 
-#: db/seeds/settings.rb:3729
+#: db/seeds/settings.rb:3756
 msgid "Defines Zendesk endpoint authentication API key."
 msgstr "Definieert Zendesk endpoint authentication API key."
 
-#: db/seeds/settings.rb:3748
+#: db/seeds/settings.rb:3775
 msgid "Defines Zendesk endpoint authentication user."
 msgstr "De Zendesk endpoint authentication gebruikersnaam."
 
-#: db/seeds/settings.rb:3767
+#: db/seeds/settings.rb:3794
 msgid ""
 "Defines a Freshdesk endpoint to import users, tickets, states, and articles."
 msgstr ""
 "Het Freshdesk endpoint om gebruikers, tickets, statussen en notities te "
 "importeren."
 
-#: db/seeds/settings.rb:3804
+#: db/seeds/settings.rb:3831
 msgid ""
 "Defines a Kayako endpoint to import users, tickets, states, and articles."
 msgstr ""
 "Het Kayako endpoint om gebruikers, tickets, statussen en notities te "
 "importeren."
 
-#: db/seeds/settings.rb:3711
+#: db/seeds/settings.rb:3738
 msgid ""
 "Defines a Zendesk endpoint to import users, tickets, states, and articles."
 msgstr ""
 "Het Zendesk endpoint om gebruikers, tickets, statussen en notities te "
 "importeren."
 
-#: db/seeds/settings.rb:5312
+#: db/seeds/settings.rb:5339
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
 msgstr ""
 "Configuratie voor een dashboard statistiek backend, die automatisch "
 "uitgevoerd wordt."
 
-#: db/seeds/settings.rb:2985
+#: db/seeds/settings.rb:3011
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per day."
@@ -4741,7 +4743,7 @@ msgstr ""
 "Limiteer het aantal tickets die via een webformulier per dag per IP-adres "
 "gemaakt mogen worden."
 
-#: db/seeds/settings.rb:2964
+#: db/seeds/settings.rb:2990
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per hour."
@@ -4749,19 +4751,19 @@ msgstr ""
 "Limiteer het aantal tickets die via een webformulier per uur per IP-adres "
 "gemaakt mogen worden."
 
-#: db/seeds/settings.rb:3006
+#: db/seeds/settings.rb:3032
 msgid ""
 "Defines a limit for how many tickets can be created via web form per day."
 msgstr ""
 "Limiteer het aantal tickets die via een webformulier per dag gemaakt mogen "
 "worden."
 
-#: db/seeds/settings.rb:2103
+#: db/seeds/settings.rb:2129
 msgid "Defines after how many failed logins accounts will be deactivated."
 msgstr ""
 "Maximaal aantal verkeerde inlogpogingen voordat account gedectiveerd wordt."
 
-#: db/seeds/settings.rb:3636
+#: db/seeds/settings.rb:3663
 msgid ""
 "Defines an OTRS endpoint to import users, tickets, states, and articles."
 msgstr ""
@@ -4789,16 +4791,16 @@ msgstr ""
 "worden, terwijl een lage prioriteit met een neerwaartse pijl wordt "
 "aangegeven."
 
-#: db/seeds/settings.rb:3536
+#: db/seeds/settings.rb:3563
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
 msgstr ""
 "Stel in welke bijlage bestandsextenties door ElasticSearch worden genegeerd."
 
-#: db/seeds/settings.rb:3491
+#: db/seeds/settings.rb:3518
 msgid "Defines endpoint of Elasticsearch."
 msgstr "Stel het Elasticsearch endpoint in."
 
-#: db/seeds/settings.rb:2853
+#: db/seeds/settings.rb:2879
 msgid ""
 "Defines groups for which a customer can create tickets via web interface. No "
 "selection means all groups are available."
@@ -4806,7 +4808,7 @@ msgstr ""
 "Definieert groepen waarvoor een klant via de webinterface tickets kan "
 "aanmaken. Geen selectie betekent dat alle groepen beschikbaar zijn."
 
-#: db/seeds/settings.rb:3093
+#: db/seeds/settings.rb:3119
 msgid ""
 "Defines how the From field of emails (sent from answers and email tickets) "
 "should look like."
@@ -4814,7 +4816,7 @@ msgstr ""
 "Bepaalt hoe het Van-veld van e-mails (verzonden uit antwoorden en e-"
 "mailtickets) eruit moet zien."
 
-#: db/seeds/settings.rb:2222
+#: db/seeds/settings.rb:2248
 msgid ""
 "Defines how the last customer contact time of tickets should be calculated."
 msgstr "Hoe moet de laatste klantcontacttijd van tickets moet worden berekend."
@@ -4827,23 +4829,23 @@ msgstr ""
 "Hoe moet de websocket-server bereikt worden. \"websocket\" is standaard bij "
 "productie, \"websocketPort\" is voor CI"
 
-#: db/seeds/settings.rb:4498
+#: db/seeds/settings.rb:4525
 msgid "Defines if Checkmk (https://checkmk.com/) is enabled or not."
 msgstr "Zet Checkmk-integratie (https://checkmk.com/) aan of uit."
 
-#: db/seeds/settings.rb:5211
+#: db/seeds/settings.rb:5238
 msgid "Defines if Clearbit (http://www.clearbit.com) is enabled or not."
 msgstr "Zet Clearbit-integratie (http://www.clearbit.com) aan of uit."
 
-#: db/seeds/settings.rb:4762
+#: db/seeds/settings.rb:4789
 msgid "Defines if Exchange is enabled or not."
 msgstr "Zet Exchange-integratie aan of uit."
 
-#: db/seeds/settings.rb:4302
+#: db/seeds/settings.rb:4329
 msgid "Defines if Icinga (http://www.icinga.org) is enabled or not."
 msgstr "Zet Icinga-integratie (http://www.icinga.org) aan of uit."
 
-#: db/seeds/settings.rb:5422
+#: db/seeds/settings.rb:5449
 msgid ""
 "Defines if Knowledge Base navbar button is enabled for users without "
 "Knowledge Base permission."
@@ -4851,40 +4853,40 @@ msgstr ""
 "Is de Kennisbank-navigatieknop wel of niet ingeschakeld voor gebruikers "
 "zonder Kennisbank-machtigingen."
 
-#: db/seeds/settings.rb:5407
+#: db/seeds/settings.rb:5434
 msgid "Defines if Knowledge Base navbar button is enabled."
 msgstr "Bepaald of de Kennisbank-navigatiebalk is ingeschakeld."
 
-#: db/seeds/settings.rb:4709
+#: db/seeds/settings.rb:4736
 msgid "Defines if LDAP is enabled or not."
 msgstr "Zet LDAP-integratie aan of uit."
 
-#: db/seeds/settings.rb:4608
+#: db/seeds/settings.rb:4635
 msgid "Defines if Monit (https://mmonit.com/monit/) is enabled or not."
 msgstr ""
 "Zet Monit-integratie (https://mmonit.com/monit/) integratie aan of uit."
 
-#: db/seeds/settings.rb:4400
+#: db/seeds/settings.rb:4427
 msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
 msgstr "Zet Nagios-integratie (http://www.nagios.org) aan of uit."
 
-#: db/seeds/settings.rb:5511
+#: db/seeds/settings.rb:5538
 msgid "Defines if PGP encryption is enabled or not."
 msgstr "Zet PGP encryptie aan of uit."
 
-#: db/seeds/settings.rb:5148
+#: db/seeds/settings.rb:5175
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
 msgstr "Zet Placetel (http://www.placetel.de) integratie aan of uit."
 
-#: db/seeds/settings.rb:5469
+#: db/seeds/settings.rb:5496
 msgid "Defines if S/MIME encryption is enabled or not."
 msgstr "Zet S/MIME encryption aan of uit."
 
-#: db/seeds/settings.rb:4949
+#: db/seeds/settings.rb:4976
 msgid "Defines if Slack (http://www.slack.org) is enabled or not."
 msgstr "Zet Slack-integratie (http://www.slack.org) aan of uit."
 
-#: db/seeds/settings.rb:2826
+#: db/seeds/settings.rb:2852
 msgid "Defines if a customer can create tickets via the web interface."
 msgstr "Bepaalt of een klant via de webinterface tickets kan aanmaken."
 
@@ -4896,7 +4898,7 @@ msgstr "Stel in of de applicatie in 'init'-mode staat."
 msgid "Defines if application is used as online service."
 msgstr "Stel in of de applicatie als online service wordt gebruikt."
 
-#: db/seeds/settings.rb:5594
+#: db/seeds/settings.rb:5621
 msgid ""
 "Defines if calendar weeks are shown in the picker of date/datetime fields to "
 "easily select the correct date."
@@ -4904,11 +4906,11 @@ msgstr ""
 "Bepaald of kalenderweken worden weergegeven in de kiezer van datum-tijd-"
 "velden om eenvoudig de juiste datum te selecteren."
 
-#: db/seeds/settings.rb:5073
+#: db/seeds/settings.rb:5100
 msgid "Defines if generic CTI integration is enabled or not."
 msgstr "Zet de generieke CTI-integratie aan of uit."
 
-#: db/seeds/settings.rb:5686
+#: db/seeds/settings.rb:5713
 msgid ""
 "Defines if recovery codes can be used by users in the event they lose access "
 "to other two-factor authentication methods."
@@ -4917,21 +4919,21 @@ msgstr ""
 "tot hun account in het geval de gebruiker de toegang tot andere twee-factor-"
 "authenticatiemethoden verliest."
 
-#: db/seeds/settings.rb:4990
+#: db/seeds/settings.rb:5017
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
 msgstr "Zet desipgate.io-integratie (http://www.sipgate.io) aan of uit."
 
-#: db/seeds/settings.rb:4871
+#: db/seeds/settings.rb:4898
 msgid ""
 "Defines if the GitHub (http://www.github.com) integration is enabled or not."
 msgstr "Zet de GitHub-integratie (http://www.github.com) aan of uit."
 
-#: db/seeds/settings.rb:4829
+#: db/seeds/settings.rb:4856
 msgid ""
 "Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
 msgstr "Zet de GitLab-integratie (http://www.gitlab.com) aan of uit."
 
-#: db/seeds/settings.rb:5553
+#: db/seeds/settings.rb:5580
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
 msgstr "Zet de PGP ontvanger aliasconfiguratie aan of uit."
 
@@ -4951,7 +4953,7 @@ msgstr ""
 "Zet de applicatie in ontwikkelaarsmodus (alle gebruikers hebben hetzelfde "
 "wachtwoord, en wachtwoord resets versturen geen e-mail)."
 
-#: db/seeds/settings.rb:5738
+#: db/seeds/settings.rb:5765
 msgid ""
 "Defines if the change of the primary organization of a user will update the "
 "100 most recent tickets for this user as well."
@@ -4975,20 +4977,20 @@ msgstr ""
 "Stel in of het e-mailadres moet worden getoond in de het zoekresultaat van "
 "de gebruikers/organisatie widget."
 
-#: db/seeds/settings.rb:4789
+#: db/seeds/settings.rb:4816
 msgid ""
 "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
 "not."
 msgstr "Zet de i-doit-integratie (https://www.i-doit.org) aan of uit."
 
-#: db/seeds/settings.rb:2249
+#: db/seeds/settings.rb:2275
 msgid ""
 "Defines if the ticket conditions editor supports complex logical expressions."
 msgstr ""
 "Bepaald of de editor voor ticketvoorwaarden complexe logische uitdrukkingen "
 "ondersteunt."
 
-#: db/seeds/settings.rb:2275
+#: db/seeds/settings.rb:2301
 msgid ""
 "Defines if the ticket conditions editor supports regular expression "
 "operators for triggers and ticket auto assignment."
@@ -4997,18 +4999,18 @@ msgstr ""
 "reguliere expressies ondersteunt, ten behoeve van triggers en automatische "
 "toewijzing."
 
-#: db/seeds/settings.rb:3988
+#: db/seeds/settings.rb:4015
 msgid "Defines if the time accounting types are enabled."
 msgstr "Bepaalt of de tijdsverantwoording types ingeschakeld zijn."
 
-#: db/seeds/settings.rb:5654
+#: db/seeds/settings.rb:5681
 msgid ""
 "Defines if the two-factor authentication method authenticator app is enabled "
 "or not."
 msgstr ""
 "Zet de verificatie-app voor authenticatie met twee factoren aan of uit."
 
-#: db/seeds/settings.rb:5622
+#: db/seeds/settings.rb:5649
 msgid ""
 "Defines if the two-factor authentication method security keys is enabled or "
 "not."
@@ -5016,21 +5018,21 @@ msgstr ""
 "Stel in of de twee-factor-authenticatiemethode beveiligingssleutels zijn "
 "ingeschakeld of niet."
 
-#: db/seeds/settings.rb:2907
+#: db/seeds/settings.rb:2933
 msgid "Defines if tickets can be created via web form."
 msgstr "Stel in of tickets gemaakt mogen worden via een webformulier."
 
-#: db/seeds/settings.rb:4351
+#: db/seeds/settings.rb:4378
 msgid "Defines if tickets should be closed if service is recovered."
 msgstr ""
 "Geeft aan of tickets moeten worden gesloten nadat de service is hersteld."
 
-#: db/seeds/settings.rb:4221
+#: db/seeds/settings.rb:4248
 msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr ""
 "Een postmaster-filter voor filters die beheerd worden via de beheeromgeving."
 
-#: db/seeds/settings.rb:4140
+#: db/seeds/settings.rb:4167
 msgid ""
 "Defines postmaster filter to check if email has been created by Zammad "
 "itself and will set the article sender."
@@ -5038,7 +5040,7 @@ msgstr ""
 "Een postmaster-filter om te controleren of een e-mail is aangemaakt via "
 "Zammad zelf zodat de afzender gekoppeld kan worden."
 
-#: db/seeds/settings.rb:4149
+#: db/seeds/settings.rb:4176
 msgid ""
 "Defines postmaster filter to check if the email is a self-created "
 "notification email, then ignore it to prevent email loops."
@@ -5046,17 +5048,17 @@ msgstr ""
 "Een postmaster-filter om te controleren of het om een zelfgemaakte "
 "notificatie-e-mail gaat, deze worden genegeerd om e-mail loops te voorkomen."
 
-#: db/seeds/settings.rb:4167
+#: db/seeds/settings.rb:4194
 msgid "Defines postmaster filter to handle secure mailing."
 msgstr "Een postmaster-filter voor veilig e-mailen."
 
-#: db/seeds/settings.rb:4275
+#: db/seeds/settings.rb:4302
 msgid ""
 "Defines postmaster filter to identify Jira mails for correct follow-ups."
 msgstr ""
 "Een postmaster-filter om Jira e-mails te herkennen voor correct follow-ups."
 
-#: db/seeds/settings.rb:4257
+#: db/seeds/settings.rb:4284
 msgid ""
 "Defines postmaster filter to identify ServiceNow mails for correct follow-"
 "ups."
@@ -5064,7 +5066,7 @@ msgstr ""
 "Een postmaster-filter om ServiceNow e-mails te herkennen voor correcte "
 "Follow-ups."
 
-#: db/seeds/settings.rb:4086
+#: db/seeds/settings.rb:4113
 msgid ""
 "Defines postmaster filter to identify auto responses to prevent auto replies "
 "from Zammad."
@@ -5072,19 +5074,19 @@ msgstr ""
 "Een postmaster-filter om afwezigheidsassistenten te herkennen zodat deze e-"
 "mails niet in Zammad worden gezet."
 
-#: db/seeds/settings.rb:4104
+#: db/seeds/settings.rb:4131
 msgid ""
 "Defines postmaster filter to identify follow-up ticket for merged tickets."
 msgstr "Een postmaster-filter om samengevoegde tickets te vinden."
 
-#: db/seeds/settings.rb:4095
+#: db/seeds/settings.rb:4122
 msgid ""
 "Defines postmaster filter to identify follow-ups (based on admin settings)."
 msgstr ""
 "Een postmaster-filter om Follow-ups te vinden (gebaseerd op admin-"
 "instellingen)."
 
-#: db/seeds/settings.rb:4176
+#: db/seeds/settings.rb:4203
 msgid ""
 "Defines postmaster filter to identify out-of-office emails for follow-up "
 "detection and keeping current ticket state."
@@ -5092,7 +5094,7 @@ msgstr ""
 "Een postmaster-filter om afwezigheidsassistent e-mails te herkennen voor "
 "Follow-up detectie en het behouden van de huidige ticket status."
 
-#: db/seeds/settings.rb:4203
+#: db/seeds/settings.rb:4230
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and disables "
 "sending notification if delivery fails permanently."
@@ -5100,7 +5102,7 @@ msgstr ""
 "Een postmaster-filter om bounces the herkennen; en het uitschakelen van e-"
 "mailnotificiaties als afleveren permanent mislukt."
 
-#: db/seeds/settings.rb:4194
+#: db/seeds/settings.rb:4221
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and handles them "
 "as follow-up of the original tickets"
@@ -5108,7 +5110,7 @@ msgstr ""
 "Een postmaster-filter om bounces te herkennen; en te behandelen als Follow-"
 "up van de originele tickets"
 
-#: db/seeds/settings.rb:4212
+#: db/seeds/settings.rb:4239
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and reopens "
 "tickets if delivery fails permanently."
@@ -5116,31 +5118,31 @@ msgstr ""
 "Een postmaster-filter om bounces te herkennen; en tickets te heropenen als "
 "aflevering permanent mislukt."
 
-#: db/seeds/settings.rb:4158
+#: db/seeds/settings.rb:4185
 msgid "Defines postmaster filter to identify sender user."
 msgstr "Een postmaster-filter om de afzender te identificieren."
 
-#: db/seeds/settings.rb:4230
+#: db/seeds/settings.rb:4257
 msgid ""
 "Defines postmaster filter to manage Icinga (http://www.icinga.org) emails."
 msgstr ""
 "Een postmaster-filter om Icinga (http://www.icinga.org) e-mails te "
 "behandelen."
 
-#: db/seeds/settings.rb:4248
+#: db/seeds/settings.rb:4275
 msgid ""
 "Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails."
 msgstr ""
 "Een postmaster-filter om Monit (https://mmonit.com/monit/) e-mails te "
 "behandelen."
 
-#: db/seeds/settings.rb:4239
+#: db/seeds/settings.rb:4266
 msgid ""
 "Defines postmaster filter to manage Nagios (http://www.nagios.org) emails."
 msgstr ""
 "Een postmaster-filter om Nagios (http://www.nagios.org e-mails te behandelen."
 
-#: db/seeds/settings.rb:4077
+#: db/seeds/settings.rb:4104
 msgid ""
 "Defines postmaster filter to remove X-Zammad headers from untrustworthy "
 "sources."
@@ -5148,7 +5150,7 @@ msgstr ""
 "Een postmaster-filter om X-Zammad headers te verwijderen van onbetrouwbare "
 "bronnen."
 
-#: db/seeds/settings.rb:4113
+#: db/seeds/settings.rb:4140
 msgid ""
 "Defines postmaster filter to set the owner (based on group follow up "
 "assignment)."
@@ -5156,7 +5158,7 @@ msgstr ""
 "Een postmaster-filter om de behandelaar in te stellen (gebaseerd op follow-"
 "up groep toewijzing)."
 
-#: db/seeds/settings.rb:4122
+#: db/seeds/settings.rb:4149
 msgid ""
 "Defines postmaster filter to set the sender/from of emails based on reply-to "
 "header."
@@ -5164,7 +5166,7 @@ msgstr ""
 "Een postmaster-filter om afzender van een e-mail in te stellen gebaseerd op "
 "de reply-to header."
 
-#: db/seeds/settings.rb:4293
+#: db/seeds/settings.rb:4320
 msgid ""
 "Defines postmaster filter which sets the articles visibility to internal if "
 "it is a rely to an internal article or the last outgoing email is internal."
@@ -5173,7 +5175,7 @@ msgstr ""
 "als het een antwoord is op een interne notitie, of de als de laatst "
 "verzonden e-mail intern is."
 
-#: db/seeds/settings.rb:4074
+#: db/seeds/settings.rb:4101
 msgid "Defines postmaster filter."
 msgstr "Een postmaster-filter instellen."
 
@@ -5181,35 +5183,35 @@ msgstr "Een postmaster-filter instellen."
 msgid "Defines pretty date format."
 msgstr "Bepaald een leesbaar datumformaat."
 
-#: db/seeds/settings.rb:5301
+#: db/seeds/settings.rb:5328
 msgid "Defines processing timeout for the html sanitizer."
 msgstr "Stel de verwerkingstijd voor de html-opschoner in."
 
-#: db/seeds/settings.rb:4910
+#: db/seeds/settings.rb:4937
 msgid "Defines sync transaction backend."
 msgstr "Stel sync-transaction-backend in."
 
-#: db/seeds/settings.rb:5289
+#: db/seeds/settings.rb:5316
 msgid "Defines the CSS font information for HTML emails."
 msgstr "Stel de CSS font informatie in voor HTML e-mails."
 
-#: db/seeds/settings.rb:5101
+#: db/seeds/settings.rb:5128
 msgid "Defines the CTI config."
 msgstr "De CTI-configuratie."
 
-#: db/seeds/settings.rb:4596
+#: db/seeds/settings.rb:4623
 msgid "Defines the Checkmk token for allowing updates."
 msgstr "Het Checkmk token om updates toe te staan."
 
-#: db/seeds/settings.rb:5237
+#: db/seeds/settings.rb:5264
 msgid "Defines the Clearbit config."
 msgstr "De clearbit-configuratie."
 
-#: db/seeds/settings.rb:4749
+#: db/seeds/settings.rb:4776
 msgid "Defines the Exchange OAuth config."
 msgstr "De Exchange OAuth configuratie."
 
-#: db/seeds/settings.rb:4736
+#: db/seeds/settings.rb:4763
 msgid "Defines the Exchange config."
 msgstr "De exchange-configuratie."
 
@@ -5217,23 +5219,23 @@ msgstr "De exchange-configuratie."
 msgid "Defines the HTTP protocol of your instance."
 msgstr "Bepaald het http-protocol van de instantie."
 
-#: db/seeds/settings.rb:5539
+#: db/seeds/settings.rb:5566
 msgid "Defines the PGP config."
 msgstr "Definieert de PGP config."
 
-#: db/seeds/settings.rb:5176
+#: db/seeds/settings.rb:5203
 msgid "Defines the Placetel config."
 msgstr "De Placetel-configuratie."
 
-#: db/seeds/settings.rb:5497
+#: db/seeds/settings.rb:5524
 msgid "Defines the S/MIME config."
 msgstr "De S/MIME-configuratie."
 
-#: db/seeds/settings.rb:4975
+#: db/seeds/settings.rb:5002
 msgid "Defines the Slack config."
 msgstr "De Slack-configuratie."
 
-#: db/seeds/settings.rb:5278
+#: db/seeds/settings.rb:5305
 msgid "Defines the agent limit."
 msgstr "Bepaald het aantal behandelaren."
 
@@ -5265,7 +5267,7 @@ msgstr ""
 msgid "Defines the backend for user and organization image lookups."
 msgstr "Bepaald de backend voor gebruikers en organisatie image lookups."
 
-#: db/seeds/settings.rb:2762
+#: db/seeds/settings.rb:2788
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "globally."
@@ -5273,7 +5275,7 @@ msgstr ""
 "Definieert de configuratie van het aantal artikelen dat globaal in een "
 "minuutbereik kan worden aangemaakt."
 
-#: db/seeds/settings.rb:2743
+#: db/seeds/settings.rb:2769
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "per ticket."
@@ -5281,18 +5283,18 @@ msgstr ""
 "Definieert de configuratie van het aantal artikelen dat per ticket in een "
 "minuut aangemaakt kunnen worden."
 
-#: db/seeds/settings.rb:3970
+#: db/seeds/settings.rb:3997
 msgid ""
 "Defines the custom unit to be shown next to the time accounting input field."
 msgstr ""
 "Definieert de aangepaste waarde die moet worden weergegeven naast het "
 "invoerveld voor de tijdregistratie."
 
-#: db/seeds/settings.rb:4051
+#: db/seeds/settings.rb:4078
 msgid "Defines the default calendar tickets subscription settings."
 msgstr "Bepaald de standaard abonnementsinstellingen voor agendatickets."
 
-#: db/seeds/settings.rb:3481
+#: db/seeds/settings.rb:3508
 msgid "Defines the default screen."
 msgstr "Bepaald de standaard schermconfiguratie."
 
@@ -5304,7 +5306,7 @@ msgstr "Bepaalt de standaard systeemtaal."
 msgid "Defines the default system timezone."
 msgstr "Bepaalt de standaard tijdzone voor het systeem."
 
-#: db/seeds/settings.rb:4006
+#: db/seeds/settings.rb:4033
 msgid "Defines the default time accounting type."
 msgstr "Definieert het standaard type tijdaccount."
 
@@ -5312,7 +5314,7 @@ msgstr "Definieert het standaard type tijdaccount."
 msgid "Defines the default visibility for new notes."
 msgstr "Standaard zichtbaarheid voor nieuwe notities."
 
-#: db/seeds/settings.rb:5135
+#: db/seeds/settings.rb:5162
 msgid ""
 "Defines the duration of customer activity (in seconds) on a call until the "
 "user profile dialog is shown."
@@ -5331,19 +5333,19 @@ msgstr ""
 "wordt in alle vormen van berichtenverkeer die door de applicatie worden "
 "gebruikt, om links te bouwen naar de tickets binnen het systeem."
 
-#: db/seeds/settings.rb:4524
+#: db/seeds/settings.rb:4551
 msgid "Defines the group of created tickets."
 msgstr "Bepaald de groep aangemaakte tickets."
 
-#: db/seeds/settings.rb:2941
+#: db/seeds/settings.rb:2967
 msgid "Defines the group of tickets created via web form."
 msgstr "Bepaald de groep tickets aangemaakt via een web formulier."
 
-#: db/seeds/settings.rb:4816
+#: db/seeds/settings.rb:4843
 msgid "Defines the i-doit config."
 msgstr "De i-doit-configuratie."
 
-#: db/seeds/settings.rb:3872
+#: db/seeds/settings.rb:3899
 msgid "Defines the log levels for various logging actions of the Sequencer."
 msgstr ""
 "Configureer de log levels voor diverse logging acties van de Sequencer."
@@ -5353,7 +5355,7 @@ msgid "Defines the logo of the application, shown in the web interface."
 msgstr ""
 "Legt het logo van de applicatie vast, zoals weergegeven in de webinterface."
 
-#: db/seeds/settings.rb:3143
+#: db/seeds/settings.rb:3169
 msgid "Defines the maximum accepted email size in MB."
 msgstr "Stel de maximaal geaccepteerde e-mailgrootte (MB) in."
 
@@ -5373,7 +5375,7 @@ msgstr ""
 "Stel de naam van de toepassing in, zoals weergegeven in de webinterface, "
 "tabbladen en titelbalk van de webbrowser."
 
-#: db/seeds/settings.rb:2656
+#: db/seeds/settings.rb:2682
 msgid "Defines the permission level used for lookups."
 msgstr ""
 "Hiermee definieer je het machtigingsniveau dat wordt gebruikt voor "
@@ -5387,23 +5389,23 @@ msgstr "Stel de websocket server poort in."
 msgid "Defines the random application secret."
 msgstr "Stel de random application secret in."
 
-#: db/seeds/settings.rb:4328
+#: db/seeds/settings.rb:4355
 msgid "Defines the sender email address of Icinga emails."
 msgstr "Stel het afzenderadres van Icinga e-mails in."
 
-#: db/seeds/settings.rb:4426
+#: db/seeds/settings.rb:4453
 msgid "Defines the sender email address of Nagios emails."
 msgstr "Stel het afzenderadres van Nagios e-mails in."
 
-#: db/seeds/settings.rb:4634
+#: db/seeds/settings.rb:4661
 msgid "Defines the sender email address of the service emails."
 msgstr "Stel het e-mailadres van de afzender van de servicemails in."
 
-#: db/seeds/settings.rb:3302
+#: db/seeds/settings.rb:3329
 msgid "Defines the sender of email notifications."
 msgstr "Bepaald de afzender van e-mailberichten."
 
-#: db/seeds/settings.rb:3121
+#: db/seeds/settings.rb:3147
 msgid ""
 "Defines the separator between the agent's real name and the given group "
 "email address."
@@ -5420,11 +5422,11 @@ msgstr ""
 "toegewezen permissies wordt de hoogste time-out waarde gebruikt, anders de "
 "standaardwaarde."
 
-#: db/seeds/settings.rb:5039
+#: db/seeds/settings.rb:5066
 msgid "Defines the sipgate.io config."
 msgstr "De sipgate.io-configuratie."
 
-#: db/seeds/settings.rb:4377
+#: db/seeds/settings.rb:4404
 msgid "Defines the state of auto-closed tickets."
 msgstr "Bepaalt de status van automatisch gesloten tickets."
 
@@ -5438,42 +5440,42 @@ msgstr ""
 "zorgt ervoor dat alleen tickets die bij het systeem horen worden verwerkt "
 "als follow-up (dit is nuttig bij communicatie tussen twee Zammad instanties)."
 
-#: db/seeds/settings.rb:2878
+#: db/seeds/settings.rb:2904
 msgid "Defines the tab behaviour after a ticket action."
 msgstr "Stel het standaardgedrag in van de tab na een ticketactie."
 
-#: db/seeds/settings.rb:2673
+#: db/seeds/settings.rb:2699
 msgid "Defines the ticket states used for lookups."
 msgstr ""
 "Hiermee definieer je de ticketstatussen die worden gebruikt voor "
 "zoekopdrachten."
 
-#: db/seeds/settings.rb:5434
+#: db/seeds/settings.rb:5461
 msgid "Defines the timeframe during which a self-created note can be deleted."
 msgstr ""
 "Stel het tijdsbestek in waar binnen een zelfgemaakte notitie verwijderd kan "
 "worden ."
 
-#: db/seeds/settings.rb:5190
+#: db/seeds/settings.rb:5217
 msgid "Defines the token for Placetel."
 msgstr "Stel het token in voor Placetel."
 
-#: db/seeds/settings.rb:4931
+#: db/seeds/settings.rb:4958
 msgid ""
 "Defines the transaction backend to detect customer signatures in emails."
 msgstr ""
 "Stel de transactie-backend in om ondertekeningen in e-mails te detecteren."
 
-#: db/seeds/settings.rb:4913
+#: db/seeds/settings.rb:4940
 msgid "Defines the transaction backend to execute triggers."
 msgstr "Stel de transactie-backend in om triggers uit te voeren."
 
-#: db/seeds/settings.rb:4922
+#: db/seeds/settings.rb:4949
 msgid "Defines the transaction backend to send agent notifications."
 msgstr ""
 "Bepaalt de transactie-backend om behandelaar-notificaties te verzenden."
 
-#: db/seeds/settings.rb:5259
+#: db/seeds/settings.rb:5286
 msgid ""
 "Defines the transaction backend which detects caller IDs in objects and "
 "stores them for CTI lookups."
@@ -5481,12 +5483,12 @@ msgstr ""
 "Bepaalt de transactie-backend die Caller ID's in objecten detecteert en "
 "opslaat voor CTI-lookups."
 
-#: db/seeds/settings.rb:5268
+#: db/seeds/settings.rb:5295
 msgid "Defines the transaction backend which executes time based triggers."
 msgstr ""
 "Definieert de transactie-backend die op tijd gebaseerde triggers uitvoert."
 
-#: db/seeds/settings.rb:4940
+#: db/seeds/settings.rb:4967
 msgid ""
 "Defines the transaction backend which posts messages to Slack (http://www."
 "slack.com)."
@@ -5494,7 +5496,7 @@ msgstr ""
 "Stel de transaction-backend in om berichten op Slack (http://www.slack.com) "
 "te plaatsen."
 
-#: db/seeds/settings.rb:5250
+#: db/seeds/settings.rb:5277
 msgid ""
 "Defines the transaction backend which will enrich customer and organization "
 "information from Clearbit (http://www.clearbit.com)."
@@ -5503,31 +5505,31 @@ msgstr ""
 "(http://www.clearbit.com) op te halen."
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:14
-#: db/seeds/settings.rb:3952
+#: db/seeds/settings.rb:3979
 msgid "Defines the unit to be shown next to the time accounting input field."
 msgstr ""
 "Definieert de weer te geven tijdseenheid bij het invoerveld voor "
 "tijdsverantwoording."
 
-#: db/seeds/settings.rb:2605
+#: db/seeds/settings.rb:2631
 msgid ""
 "Defines the warning message that is shown when a matching ticket is present."
 msgstr ""
 "Hiermee definieer je het waarschuwingsbericht dat wordt weergegeven wanneer "
 "een overeenkomend ticket aanwezig is."
 
-#: db/seeds/settings.rb:2588
+#: db/seeds/settings.rb:2614
 msgid ""
 "Defines the warning title that is shown when a matching ticket is present."
 msgstr ""
 "Hiermee definieer je de waarschuwingstitel die wordt weergegeven wanneer een "
 "overeenkomend ticket aanwezig is."
 
-#: db/seeds/settings.rb:4919
+#: db/seeds/settings.rb:4946
 msgid "Defines transaction backend."
 msgstr "Stel de transaction-backend in."
 
-#: db/seeds/settings.rb:2639
+#: db/seeds/settings.rb:2665
 msgid ""
 "Defines whether the matching tickets are shown in case of already existing "
 "tickets."
@@ -5535,13 +5537,13 @@ msgstr ""
 "Hiermee bepaal je of de overeenkomende tickets worden weergegeven in het "
 "geval van reeds bestaande tickets."
 
-#: db/seeds/settings.rb:2571
+#: db/seeds/settings.rb:2597
 msgid "Defines which ticket attributes are checked before creating a ticket."
 msgstr ""
 "Hiermee definieer je welke ticketkenmerken worden gecontroleerd voordat een "
 "ticket wordt gemaakt."
 
-#: db/seeds/settings.rb:2622
+#: db/seeds/settings.rb:2648
 msgid ""
 "Defines which user roles will receive a warning in case of matching tickets."
 msgstr ""
@@ -5581,7 +5583,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:195
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:162
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:155
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:156
 msgid "Delete"
 msgstr "Verwijderen"
 
@@ -5709,6 +5711,15 @@ msgstr "Organisatie verwijderen:"
 msgid "Deleted tickets (%s in total):"
 msgstr "Verwijderde tickets (%s in totaal):"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:50
+msgid ""
+"Deleting your knowledge base requires an additional verification step. To "
+"proceed, enter its name below (\"%s\"). THIS ACTION CANNOT BE UNDONE."
+msgstr ""
+"Het verwijderen van de Kennisbank vereist een extra verificatiestap. Voer de "
+"naam hieronder in (\"%s\") om verder te gaan. DEZE ACTIE KAN NIET ONGEDAAN "
+"WORDEN GEMAAKT."
+
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:94
 msgid "Deletion Task"
 msgstr "Verwijdertaak"
@@ -5785,7 +5796,7 @@ msgid "Destination caller ID or queue"
 msgstr "Bestemming Caller ID of wachtrij"
 
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:7
-#: db/seeds/settings.rb:2542
+#: db/seeds/settings.rb:2568
 msgid "Detect Duplicate Ticket Creation"
 msgstr "Dubbele ticketcreatie detecteren"
 
@@ -5836,7 +5847,7 @@ msgstr "Wist je dat je kan helpen %s te vertalen op:"
 msgid "Did you plan to include attachments with this message?"
 msgstr "Was je van plan bijlagen toe te voegen aan dit bericht?"
 
-#: db/seeds/settings.rb:2048
+#: db/seeds/settings.rb:2074
 msgid "Digit required"
 msgstr "Getal verplicht"
 
@@ -5876,6 +5887,12 @@ msgstr "Uitschakelen"
 #: app/assets/javascripts/app/models/job.coffee:11
 msgid "Disable Notifications"
 msgstr "Meldingen uitschakelen"
+
+#: db/seeds/settings.rb:1303
+msgid "Disables user creation on logon with a third-party application."
+msgstr ""
+"Schakelt het aanmaken van gebruikers uit bij het aanmelden met een "
+"applicatie van derden."
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:23
 msgid ""
@@ -5933,7 +5950,7 @@ msgid "Display"
 msgstr "Weergave"
 
 #: app/assets/javascripts/app/models/email_address.coffee:32
-#: db/seeds/settings.rb:1860
+#: db/seeds/settings.rb:1886
 msgid "Display name"
 msgstr "Weergave naam"
 
@@ -5945,7 +5962,7 @@ msgstr "E-mail niet versleutelen"
 msgid "Do not sign email"
 msgstr "E-mail niet ondertekenen"
 
-#: db/seeds/settings.rb:5748
+#: db/seeds/settings.rb:5775
 msgid "Do not update any tickets."
 msgstr "Tickets niet updaten."
 
@@ -6022,10 +6039,11 @@ msgstr "Klaar"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee:4
 #: app/assets/javascripts/app/views/system_report.jst.eco:20
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:89
 msgid "Download"
 msgstr "Download"
 
-#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:60
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:69
 msgid "Download %s"
 msgstr "Download %s"
 
@@ -6097,7 +6115,7 @@ msgstr "Sleep om te herbestellen"
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:28
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:44
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:119
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:351
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:352
 msgid "Drop files here"
 msgstr "Sleep bestanden hierheen"
 
@@ -6237,43 +6255,43 @@ msgstr "In bewerking op Desktop"
 msgid "Editor"
 msgstr "Editor"
 
-#: db/seeds/settings.rb:3533
+#: db/seeds/settings.rb:3560
 msgid "Elasticsearch Attachment Extensions"
 msgstr "Elasticsearch Bijlage Extensies"
 
-#: db/seeds/settings.rb:3542
+#: db/seeds/settings.rb:3569
 msgid "Elasticsearch Attachment Size"
 msgstr "Elasticsearch Bijlage grootte"
 
-#: db/seeds/settings.rb:3515
+#: db/seeds/settings.rb:3542
 msgid "Elasticsearch Endpoint Index"
 msgstr "Elasticsearch Endpoint Index"
 
-#: db/seeds/settings.rb:3506
+#: db/seeds/settings.rb:3533
 msgid "Elasticsearch Endpoint Password"
 msgstr "Elasticsearch Endpoint Password"
 
-#: db/seeds/settings.rb:3488
+#: db/seeds/settings.rb:3515
 msgid "Elasticsearch Endpoint URL"
 msgstr "Elasticsearch Endpoint URL"
 
-#: db/seeds/settings.rb:3497
+#: db/seeds/settings.rb:3524
 msgid "Elasticsearch Endpoint User"
 msgstr "Elasticsearch Endpoint User"
 
-#: db/seeds/settings.rb:3569
+#: db/seeds/settings.rb:3596
 msgid "Elasticsearch Model Configuration"
 msgstr "Elasticsearch modelconfiguratie"
 
-#: db/seeds/settings.rb:3560
+#: db/seeds/settings.rb:3587
 msgid "Elasticsearch Pipeline Name"
 msgstr "Elasticsearch Pipeline Name"
 
-#: db/seeds/settings.rb:3524
+#: db/seeds/settings.rb:3551
 msgid "Elasticsearch SSL verification"
 msgstr "Elasticsearch SSL-verificatie"
 
-#: db/seeds/settings.rb:3551
+#: db/seeds/settings.rb:3578
 msgid "Elasticsearch Total Payload Size"
 msgstr "Elasticsearch Total Payload Size"
 
@@ -6441,7 +6459,7 @@ msgstr "Leeg"
 msgid "Enable"
 msgstr "Inschakelen"
 
-#: db/seeds/settings.rb:3429
+#: db/seeds/settings.rb:3456
 msgid "Enable Chat"
 msgstr "Chat inschakelen"
 
@@ -6449,7 +6467,7 @@ msgstr "Chat inschakelen"
 msgid "Enable Checklists"
 msgstr "Checklists inschakelen"
 
-#: app/assets/javascripts/app/views/api.jst.eco:33 db/seeds/settings.rb:3384
+#: app/assets/javascripts/app/views/api.jst.eco:33 db/seeds/settings.rb:3411
 msgid ""
 "Enable REST API access using the username/email address and password for the "
 "authentication user."
@@ -6466,7 +6484,7 @@ msgstr ""
 "en wachtwoord). Alle gebruikers moeten in hun gebruikersprofiel eigen Tokens "
 "aanmaken."
 
-#: db/seeds/settings.rb:3359
+#: db/seeds/settings.rb:3386
 msgid ""
 "Enable REST API using tokens (not username/email address and password). Each "
 "user needs to create its own access tokens in user profile."
@@ -6475,11 +6493,11 @@ msgstr ""
 "wachtwoord). Iedere gebruiker moet een eigen Access Token in hun "
 "gebruikersprofiel opnemen."
 
-#: db/seeds/settings.rb:5683
+#: db/seeds/settings.rb:5710
 msgid "Enable Recovery Codes"
 msgstr "Herstelcodes inschakelen"
 
-#: db/seeds/settings.rb:2823
+#: db/seeds/settings.rb:2849
 msgid "Enable Ticket creation"
 msgstr "Activeer aanmaken van tickets"
 
@@ -6491,7 +6509,7 @@ msgstr ""
 "Activiteitenselectie inschakelen. Zo kunnen behandelaren een van de "
 "onderstaande types selecteren bij het toevoegen van geregistreerde tijd."
 
-#: db/seeds/settings.rb:2443
+#: db/seeds/settings.rb:2469
 msgid "Enable auto assignment for following matching tickets."
 msgstr "Schakel auto-toewijzen in voor de volgende matchende tickets."
 
@@ -6544,19 +6562,19 @@ msgstr ""
 "ingeschakeld is worden alle niet-administrators uitgelogd en alleen "
 "administrators kunnen een nieuwe sessie starten."
 
-#: db/seeds/settings.rb:2417
+#: db/seeds/settings.rb:2443
 msgid "Enable ticket auto assignment."
 msgstr "Auto-ticket-toewijzing inschakelen."
 
-#: db/seeds/settings.rb:3907
+#: db/seeds/settings.rb:3934
 msgid "Enable time accounting."
 msgstr "Tijdregistratie inschakelen."
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:341
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:401
 msgid "Enable/disable inline translations"
 msgstr "Vertalingen inline inschakelen/uitschakelen"
 
-#: db/seeds/settings.rb:3432
+#: db/seeds/settings.rb:3459
 msgid "Enable/disable online chat."
 msgstr "Online chat inschakelen/uitschakelen."
 
@@ -6569,7 +6587,7 @@ msgid "Enables a sidebar to show an overview of all attachments."
 msgstr "Zet een sidebar aan om een overzicht van alle bijlagen te tonen."
 
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:12
-#: db/seeds/settings.rb:2545
+#: db/seeds/settings.rb:2571
 msgid ""
 "Enables a warning to users during ticket creation if there is an existing "
 "ticket with the same attributes."
@@ -6577,7 +6595,7 @@ msgstr ""
 "Hiermee schakel je een waarschuwing in voor gebruikers tijdens het maken van "
 "tickets als er een bestaand ticket is met dezelfde kenmerken."
 
-#: db/seeds/settings.rb:5564
+#: db/seeds/settings.rb:5591
 msgid ""
 "Enables button for user authentication via %s. The button will redirect to /"
 "auth/sso on user interaction."
@@ -6622,38 +6640,38 @@ msgstr ""
 msgid "Enables user authentication via %s."
 msgstr "Activeert gebruikersauthenticatie via %s."
 
-#: db/seeds/settings.rb:1303
+#: db/seeds/settings.rb:1329
 msgid ""
 "Enables user authentication via %s. Register your app first at [%s](%s)."
 msgstr ""
 "Maakt gebruikersauthenticatie via %s mogelijk. Registreer de app eerst bij "
 "[%s](%s)."
 
-#: db/seeds/settings.rb:1588
+#: db/seeds/settings.rb:1614
 msgid "Enables user authentication via GitHub."
 msgstr "Authenticatie via Github inschakelen."
 
-#: db/seeds/settings.rb:1652
+#: db/seeds/settings.rb:1678
 msgid "Enables user authentication via GitLab."
 msgstr "Activeert gebruikersauthenticatie via GitLab."
 
-#: db/seeds/settings.rb:1460
+#: db/seeds/settings.rb:1486
 msgid "Enables user authentication via Google."
 msgstr "Authenticatie via Google inschakelen."
 
-#: db/seeds/settings.rb:1524
+#: db/seeds/settings.rb:1550
 msgid "Enables user authentication via LinkedIn."
 msgstr "Authenticatie via LinkedIn inschakelen."
 
-#: db/seeds/settings.rb:1723
+#: db/seeds/settings.rb:1749
 msgid "Enables user authentication via Microsoft 365."
 msgstr "Activeert gebruikersauthenticatie via Microsoft 365."
 
-#: db/seeds/settings.rb:1856
+#: db/seeds/settings.rb:1882
 msgid "Enables user authentication via SAML."
 msgstr "Activeert gebruikersauthenticatie via SAML."
 
-#: db/seeds/settings.rb:1793
+#: db/seeds/settings.rb:1819
 msgid "Enables user authentication via Weibo."
 msgstr "Activeert gebruikersauthenticatie via Weibo."
 
@@ -6731,11 +6749,11 @@ msgstr "Eindpunt"
 msgid "Endpoint Settings"
 msgstr "Endpoint insellingen"
 
-#: db/seeds/settings.rb:5710
+#: db/seeds/settings.rb:5737
 msgid "Enforce the setup of the two-factor authentication"
 msgstr "Twee-factor authenticatie afdwingen"
 
-#: db/seeds/settings.rb:5717
+#: db/seeds/settings.rb:5744
 msgid "Enforced for user roles"
 msgstr "Verplicht voor gebruikersrollen"
 
@@ -7012,6 +7030,22 @@ msgstr "Escalatie op (Eerste reactie)"
 msgid "Escalation at (Update Time)"
 msgstr "Escalatie op (Update-tijd)"
 
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:51
+msgid "Event Ending"
+msgstr "Evenement einde"
+
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:42
+msgid "Event Location"
+msgstr "Evenementlokatie"
+
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:46
+msgid "Event Starting"
+msgstr "Evenement start"
+
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:38
+msgid "Event Summary"
+msgstr "Evenement Samenvatting"
+
 #: app/assets/javascripts/app/models/knowledge_base.coffee:271
 msgid ""
 "Every category in your knowledge base should be given a unique icon for "
@@ -7086,15 +7120,15 @@ msgstr "Uitgezonderde gebruikers"
 msgid "Exchange"
 msgstr "Exchange"
 
-#: db/seeds/settings.rb:4746
+#: db/seeds/settings.rb:4773
 msgid "Exchange OAuth"
 msgstr "Exchange OAuth"
 
-#: db/seeds/settings.rb:4733
+#: db/seeds/settings.rb:4760
 msgid "Exchange config"
 msgstr "Exchange configuratie"
 
-#: db/seeds/settings.rb:4759
+#: db/seeds/settings.rb:4786
 msgid "Exchange integration"
 msgstr "Exchange integratie"
 
@@ -7191,7 +7225,7 @@ msgstr "Extraheer zammad-bijlage-informatie uit arrays"
 #: app/controllers/first_steps_controller.rb:31
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:19
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:48
-#: db/seeds/permissions.rb:167 db/seeds/settings.rb:1384
+#: db/seeds/permissions.rb:167 db/seeds/settings.rb:1410
 msgid "Facebook"
 msgstr "Facebook"
 
@@ -7203,7 +7237,7 @@ msgstr "Facebook APP ID"
 msgid "Facebook Account"
 msgstr "Facebook Account"
 
-#: db/seeds/settings.rb:1393
+#: db/seeds/settings.rb:1419
 msgid "Facebook App Credentials"
 msgstr "Facebook App Credentials"
 
@@ -7211,7 +7245,7 @@ msgstr "Facebook App Credentials"
 msgid "Facebook App Secret"
 msgstr "Facebook App Secret"
 
-#: db/seeds/settings.rb:1385
+#: db/seeds/settings.rb:1411
 msgid "Facebook Developer Site"
 msgstr "Facebook Developer Site"
 
@@ -7232,16 +7266,12 @@ msgid "Failed Tasks"
 msgstr "Mislukte taken"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:161
-#, fuzzy
-#| msgid "Create a new checklist item"
 msgid "Failed to add new checklist item."
-msgstr "Nieuw checklistitem maken"
+msgstr "Het is niet gelukt om een nieuw checklistitem toe te voegen."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:182
-#, fuzzy
-#| msgid "Create a new checklist item"
 msgid "Failed to delete checklist item."
-msgstr "Nieuw checklistitem maken"
+msgstr "Het is niet gelukt om het checklistitem te verwijderen."
 
 #: app/controllers/channels_google_controller.rb:96
 #: app/controllers/channels_microsoft365_controller.rb:96
@@ -7254,16 +7284,14 @@ msgid "Failed to roll back the migration of the channel!"
 msgstr "Kan de migratie van het kanaal niet terugdraaien!"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:168
-#, fuzzy
-#| msgid "Unable to save changes."
 msgid "Failed to save checklist order."
-msgstr "Niet mogelijk de instellingen op te slaan."
+msgstr "De volgorde van de items op de checklist is niet opgeslagen."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:122
-#, fuzzy
-#| msgid "Failed to set up QR code. Please try again."
 msgid "Failed to save the order of the checklist items. Please try again."
-msgstr "Het instellen van de QR-code is mislukt. Probeer het opnieuw."
+msgstr ""
+"De volgorde van de items op de checklist is niet opgeslagen. Probeer het "
+"opnieuw."
 
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:52
 msgid "Failed to send email to \"%s\". Please contact an administrator."
@@ -7275,10 +7303,8 @@ msgid "Failed to set up QR code. Please try again."
 msgstr "Het instellen van de QR-code is mislukt. Probeer het opnieuw."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:175
-#, fuzzy
-#| msgid "Create a new checklist item"
 msgid "Failed to update checklist item."
-msgstr "Nieuw checklistitem maken"
+msgstr "Het is niet gelukt om het item in de checklist bij te werken."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageFailedUploadOverlay.vue:23
 msgid "Failed to upload."
@@ -7324,7 +7350,7 @@ msgstr "Feedback"
 msgid "Feedback Form"
 msgstr "Feedback formulier"
 
-#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:123
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:137
 msgid "File '%s' is uploading"
 msgstr "Bestand '%s' wordt geüpload"
 
@@ -7540,11 +7566,11 @@ msgstr "FormSchema kon niet worden gevonden."
 msgid "Format"
 msgstr "Formaat"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:487
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:558
 msgid "Format as //strikethrough//"
 msgstr "Opmaken als //doorgestreept//"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:469
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:540
 msgid "Format as _underlined_"
 msgstr "Opmaken als _onderstreept_"
 
@@ -7552,15 +7578,15 @@ msgstr "Opmaken als _onderstreept_"
 msgid "Format as bold"
 msgstr "Opmaken als vetgedrukt"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:536
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:607
 msgid "Format as h1 heading"
 msgstr "Opmaken als h1-rubriek"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:542
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:613
 msgid "Format as h2 heading"
 msgstr "Opmaken als h2-rubriek"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:548
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:619
 msgid "Format as h3 heading"
 msgstr "Opmaken als h3-rubriek"
 
@@ -7568,7 +7594,7 @@ msgstr "Opmaken als h3-rubriek"
 msgid "Format as italic"
 msgstr "Opmaken als cursief"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:530
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:601
 msgid "Format as ordered list"
 msgstr "Opmaken als geordende lijst"
 
@@ -7580,15 +7606,15 @@ msgstr "Opmaken als doorgestreept"
 msgid "Format as underlined"
 msgstr "Opmaken als onderstreept"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:524
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:595
 msgid "Format as unordered list"
 msgstr "Opmaken als ongeordende lijst"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:475
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:546
 msgid "Format as |bold|"
 msgstr "Opmaken als |vetgedrukt|"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:481
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:552
 msgid "Format as ||italic||"
 msgstr "Opmaken als ||cursief||"
 
@@ -7725,7 +7751,7 @@ msgstr "Ontvang een notificatie"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/authenticator-app.ts:11
-#: db/seeds/settings.rb:5675
+#: db/seeds/settings.rb:5702
 msgid "Get the security code from the authenticator app on your device."
 msgstr "Haal de beveiligingscode op via de authenticator-app op je apparaat."
 
@@ -7741,23 +7767,23 @@ msgstr "Sleutel informatie ophalen uit de browser…"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:81
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:40
-#: db/seeds/settings.rb:1577
+#: db/seeds/settings.rb:1603
 msgid "GitHub"
 msgstr "GitHub"
 
-#: db/seeds/settings.rb:1585
+#: db/seeds/settings.rb:1611
 msgid "GitHub App Credentials"
 msgstr "GitHub App Credentials"
 
-#: db/seeds/settings.rb:1578
+#: db/seeds/settings.rb:1604
 msgid "GitHub OAuth Applications"
 msgstr "GitHub OAuth Applications"
 
-#: db/seeds/settings.rb:4895
+#: db/seeds/settings.rb:4922
 msgid "GitHub config"
 msgstr "GitHub configuratie"
 
-#: db/seeds/settings.rb:4868
+#: db/seeds/settings.rb:4895
 msgid "GitHub integration"
 msgstr "GitHub integratie"
 
@@ -7768,23 +7794,23 @@ msgstr "GitHub-request is mislukt! Bekijk het logbestand voor details"
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:86
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:47
-#: db/seeds/settings.rb:1641
+#: db/seeds/settings.rb:1667
 msgid "GitLab"
 msgstr "GitLab"
 
-#: db/seeds/settings.rb:1649
+#: db/seeds/settings.rb:1675
 msgid "GitLab App Credentials"
 msgstr "GitLab App Credentials"
 
-#: db/seeds/settings.rb:1642
+#: db/seeds/settings.rb:1668
 msgid "GitLab Applications"
 msgstr "GitLab Applications"
 
-#: db/seeds/settings.rb:4853
+#: db/seeds/settings.rb:4880
 msgid "GitLab config"
 msgstr "GitLab configuratie"
 
-#: db/seeds/settings.rb:4826
+#: db/seeds/settings.rb:4853
 msgid "GitLab integration"
 msgstr "GitLab integratie"
 
@@ -7852,15 +7878,15 @@ msgstr "Vaarwel bericht"
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:96
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:61
-#: db/seeds/permissions.rb:149 db/seeds/settings.rb:1449
+#: db/seeds/permissions.rb:149 db/seeds/settings.rb:1475
 msgid "Google"
 msgstr "Google"
 
-#: db/seeds/settings.rb:1450
+#: db/seeds/settings.rb:1476
 msgid "Google API Console Site"
 msgstr "Google API Console Site"
 
-#: db/seeds/settings.rb:1457
+#: db/seeds/settings.rb:1483
 msgid "Google App Credentials"
 msgstr "Google App Inloggegevens"
 
@@ -7908,7 +7934,7 @@ msgstr "Begroeting"
 #: app/views/messaging/ticket_create/pt-br.md.erb:3
 #: app/views/messaging/ticket_create/zh-tw.md.erb:3
 #: app/views/messaging/ticket_info/pt-br.md.erb:3
-#: db/seeds/object_manager_attributes.rb:162 db/seeds/settings.rb:2850
+#: db/seeds/object_manager_attributes.rb:162 db/seeds/settings.rb:2876
 #: lib/excel_sheet/ticket.rb:27
 msgid "Group"
 msgstr "Groep"
@@ -7960,11 +7986,11 @@ msgid "Group permissions"
 msgstr "Groepspermissies"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:18
-#: db/seeds/settings.rb:2850
+#: db/seeds/settings.rb:2876
 msgid "Group selection for Ticket creation"
 msgstr "Geselecteerde groep voor toewijzing ticket"
 
-#: db/seeds/settings.rb:2938
+#: db/seeds/settings.rb:2964
 msgid "Group selection for ticket creation"
 msgstr "Groepsselectie voor het maken van tickets"
 
@@ -7999,11 +8025,11 @@ msgstr "Groepen zijn …"
 msgid "HMAC SHA1 Signature Token"
 msgstr "HMAC SHA1 Signature Token"
 
-#: db/seeds/settings.rb:5286
+#: db/seeds/settings.rb:5313
 msgid "HTML Email CSS Font"
 msgstr "HTML E-mail CSS Font"
 
-#: db/seeds/settings.rb:5298
+#: db/seeds/settings.rb:5325
 msgid "HTML Sanitizer Processing Timeout"
 msgstr "Verwerkingstime-out voor HTML Sanitizer"
 
@@ -8237,12 +8263,12 @@ msgstr "Highlight kleur"
 msgid "Highlight icon"
 msgstr "Highlight pictogram"
 
-#: db/seeds/settings.rb:5450
+#: db/seeds/settings.rb:5477
 msgid "Highlights if the note a user is writing is public or private"
 msgstr ""
 "Markeert of de notitie die een gebruiker schrijft openbaar of intern is"
 
-#: db/seeds/settings.rb:5447
+#: db/seeds/settings.rb:5474
 msgid "Hint for adding an article to an existing ticket."
 msgstr "Tip voor het toevoegen van een notitie aan een bestaand ticket."
 
@@ -8357,19 +8383,19 @@ msgstr "ID"
 msgid "ID:"
 msgstr "ID:"
 
-#: db/seeds/settings.rb:1867
+#: db/seeds/settings.rb:1893
 msgid "IDP SSO target URL"
 msgstr "IDP SSO target URL"
 
-#: db/seeds/settings.rb:1875
+#: db/seeds/settings.rb:1901
 msgid "IDP Single Logout target URL"
 msgstr "IDP Single Logout target URL"
 
-#: db/seeds/settings.rb:1883
+#: db/seeds/settings.rb:1909
 msgid "IDP certificate"
 msgstr "IDP certificaat"
 
-#: db/seeds/settings.rb:1891
+#: db/seeds/settings.rb:1917
 msgid "IDP certificate fingerprint"
 msgstr "IDP certificaat fingerprint"
 
@@ -8381,7 +8407,7 @@ msgstr "IMAP"
 msgid "Icinga"
 msgstr "Icinga"
 
-#: db/seeds/settings.rb:4299
+#: db/seeds/settings.rb:4326
 msgid "Icinga integration"
 msgstr "Icinga integratie"
 
@@ -8405,7 +8431,7 @@ msgstr "Icon URL"
 msgid "Identifier of the chat topic."
 msgstr "Identificatie van het chatonderwerp."
 
-#: db/seeds/settings.rb:3459
+#: db/seeds/settings.rb:3486
 msgid "Idle timeout in seconds until agent is set offline automatically."
 msgstr ""
 "Time-out voor inactiviteit in seconden totdat de behandelaar automatisch "
@@ -8440,7 +8466,7 @@ msgstr ""
 "Als de host en service zijn hersteld, kan het ticket automatisch gesloten "
 "worden."
 
-#: db/seeds/settings.rb:3249
+#: db/seeds/settings.rb:3276
 msgid ""
 "If the sender is an agent, set the first user in the recipient list as the "
 "customer."
@@ -8448,7 +8474,7 @@ msgstr ""
 "Als de afzender een behandelaar is, stel de eerste gebruiker in op de "
 "ontvangerslijst als klant."
 
-#: db/seeds/settings.rb:3325
+#: db/seeds/settings.rb:3352
 msgid "If this regex matches, no notification will be sent by the sender."
 msgstr "Als deze regex overeenkomt, zal de afzender geen melding sturen."
 
@@ -8526,7 +8552,7 @@ msgstr ""
 msgid "Ignore Escalation"
 msgstr "Escalatie negeren"
 
-#: db/seeds/settings.rb:3610
+#: db/seeds/settings.rb:3637
 msgid "Ignore Escalation/SLA Information"
 msgstr "Negeer escalatie/SLA-informatie"
 
@@ -8534,11 +8560,11 @@ msgstr "Negeer escalatie/SLA-informatie"
 msgid "Ignore Message"
 msgstr "Negeer bericht"
 
-#: db/seeds/settings.rb:3613
+#: db/seeds/settings.rb:3640
 msgid "Ignore escalation/SLA information for import."
 msgstr "Negeer escalatie-/SLA-informatie voor importeren."
 
-#: db/seeds/settings.rb:2694
+#: db/seeds/settings.rb:2720
 msgid "Ignore system_id"
 msgstr "Negeer system_id"
 
@@ -8556,7 +8582,7 @@ msgstr "Beelddienst"
 msgid "Image file"
 msgstr "Afbeeldingsbestand"
 
-#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:95
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
 msgstr "Afbeelding van %s"
 
@@ -8586,51 +8612,51 @@ msgstr "Importeer %s"
 msgid "Import API key could not be extracted from URL."
 msgstr "De import-API-sleutel kan niet worden geëxtraheerd uit de URL."
 
-#: db/seeds/settings.rb:3782
+#: db/seeds/settings.rb:3809
 msgid "Import API key for requesting the Freshdesk API"
 msgstr "Importeer API-sleutel voor het bevragen van de Freshdesk API"
 
-#: db/seeds/settings.rb:3726
+#: db/seeds/settings.rb:3753
 msgid "Import API key for requesting the Zendesk API"
 msgstr "API-sleutel importeren voor het bevragen van de Zendesk API"
 
-#: db/seeds/settings.rb:3601
+#: db/seeds/settings.rb:3628
 msgid "Import Backend"
 msgstr "Backend importeren"
 
-#: db/seeds/settings.rb:3856
+#: db/seeds/settings.rb:3883
 msgid "Import Backends"
 msgstr "Backends importeren"
 
-#: db/seeds/settings.rb:3633
+#: db/seeds/settings.rb:3660
 msgid "Import Endpoint"
 msgstr "Invoer eindpunt"
 
-#: db/seeds/settings.rb:3651
+#: db/seeds/settings.rb:3678
 msgid "Import Key"
 msgstr "Importsleutel"
 
-#: db/seeds/settings.rb:3579
+#: db/seeds/settings.rb:3606
 msgid "Import Mode"
 msgstr "Invoermodus"
 
-#: db/seeds/settings.rb:3689
+#: db/seeds/settings.rb:3716
 msgid "Import Password for HTTP basic authentication"
 msgstr "Import wachtwoord voor HTTP basic authentication"
 
-#: db/seeds/settings.rb:3837
+#: db/seeds/settings.rb:3864
 msgid "Import Password for requesting the Kayako API"
 msgstr "Importeer-wachtwoord voor bevragen van de Kayako API"
 
-#: db/seeds/settings.rb:3670
+#: db/seeds/settings.rb:3697
 msgid "Import User for HTTP basic authentication"
 msgstr "Importeer-gebruiker voor HTTP basic authentication"
 
-#: db/seeds/settings.rb:3819
+#: db/seeds/settings.rb:3846
 msgid "Import User for requesting the Kayako API"
 msgstr "Importeer-gebruiker voor bevragen van de Kayako API"
 
-#: db/seeds/settings.rb:3745
+#: db/seeds/settings.rb:3772
 msgid "Import User for requesting the Zendesk API"
 msgstr "Importeer-gebruiker voor bevragen van de Zendesk API"
 
@@ -8796,10 +8822,8 @@ msgid "Incomplete Ticket Checklist"
 msgstr "Onvolledige Ticket Checklist"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistButton.vue:22
-#, fuzzy
-#| msgid "Incomplete Ticket Checklist"
 msgid "Incomplete checklist items"
-msgstr "Onvolledige Ticket Checklist"
+msgstr "Onvoltooide checklistitems"
 
 #: app/controllers/import_freshdesk_controller.rb:45
 #: app/controllers/import_kayako_controller.rb:35
@@ -8807,7 +8831,7 @@ msgstr "Onvolledige Ticket Checklist"
 msgid "Incomplete credentials"
 msgstr "Onvolledige credentials"
 
-#: db/seeds/settings.rb:2313
+#: db/seeds/settings.rb:2339
 msgid "Increment (SystemID.Counter)"
 msgstr "Ticketnummer verhogen (SystemID.Counter)"
 
@@ -8920,19 +8944,19 @@ msgstr ""
 "zichtbaar moet zijn. Deze moet aan het einde van de broncode van de pagina "
 "geplaatst worden voordat de §</body>§ slottag geplaatst wordt."
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:518
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:589
 msgid "Inserts a horizontal rule"
 msgstr "Een horizontale regel invoegen"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:451
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:522
 msgid "Inserts a mention for a user"
 msgstr "Mention toevoegen voor een gebruiker"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:445
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:516
 msgid "Inserts knowledge base answer"
 msgstr "Voegt kennisbankantwoord in"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:439
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:510
 msgid "Inserts text module"
 msgstr "Tekstmodule invoegen"
 
@@ -9113,10 +9137,8 @@ msgid "Invalid video URL"
 msgstr "Ongeldige video-URL"
 
 #: app/assets/javascripts/app/controllers/layout_ref.coffee:650
-#, fuzzy
-#| msgid "Invitation sent!"
 msgid "Invitation sent to %s"
-msgstr "Uitnodiging verzonden!"
+msgstr "Uitnodiging verzonden naar %s"
 
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee:78
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:100
@@ -9208,7 +9230,7 @@ msgstr "Het is niet mogelijk om de systeemgebruiker te verwijderen."
 msgid "It is not possible to delete your current account."
 msgstr "Het is niet mogelijk om je huidige account te verwijderen."
 
-#: app/models/ticket.rb:276
+#: app/models/ticket.rb:275
 msgid "It is not possible to merge into an already merged ticket."
 msgstr ""
 "Het is niet mogelijk om samen te voegen met een reeds samengevoegd ticket."
@@ -9297,10 +9319,13 @@ msgstr "Sleutel"
 msgid "Key ID"
 msgstr "Key ID"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:4
-#: app/assets/javascripts/app/controllers/keyboard_shortcuts.coffee:6
+#: app/assets/javascripts/app/controllers/keyboard_shortcuts.coffee:4
 msgid "Keyboard Shortcuts"
 msgstr "Sneltoetsen"
+
+#: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:4
+msgid "Keyboard Shortcuts Enabled"
+msgstr "Toetsenbordsnelkoppelingen ingeschakeld"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts:7
 msgid "Keyboard shortcuts"
@@ -9333,15 +9358,15 @@ msgstr "Kennisbankfeed"
 msgid "Knowledge Base Reader"
 msgstr "Kennisbank reader"
 
-#: db/seeds/settings.rb:5404
+#: db/seeds/settings.rb:5431
 msgid "Knowledge Base active"
 msgstr "Kennisbank actief"
 
-#: db/seeds/settings.rb:5419
+#: db/seeds/settings.rb:5446
 msgid "Knowledge Base active publicly"
 msgstr "Kennisbank openbaar actief"
 
-#: db/seeds/settings.rb:5393
+#: db/seeds/settings.rb:5420
 msgid "Knowledge Base multilingual support"
 msgstr "Kennisbank meertalige ondersteuning"
 
@@ -9356,7 +9381,7 @@ msgstr "LDAP"
 msgid "LDAP Host"
 msgstr "LDAP Host"
 
-#: db/seeds/settings.rb:4706
+#: db/seeds/settings.rb:4733
 msgid "LDAP integration"
 msgstr "LDAP integratie"
 
@@ -9397,10 +9422,8 @@ msgid "Last Article"
 msgstr "Laatste Notitie"
 
 #: lib/excel_sheet/ticket.rb:59
-#, fuzzy
-#| msgid "Closed At"
 msgid "Last Closed At"
-msgstr "Gesloten op"
+msgstr "Laatst gesloten op"
 
 #: lib/excel_sheet/ticket.rb:71
 msgid "Last Contact Agent At"
@@ -9520,15 +9543,15 @@ msgstr "Groepen beperken"
 msgid "Limit notifications to specific groups"
 msgstr "Meldingen beperken tot specifieke groepen"
 
-#: db/seeds/settings.rb:2982
+#: db/seeds/settings.rb:3008
 msgid "Limit tickets by IP per day"
 msgstr "Beperk tickets per IP per dag"
 
-#: db/seeds/settings.rb:2961
+#: db/seeds/settings.rb:2987
 msgid "Limit tickets by IP per hour"
 msgstr "Beperk tickets per IP per uur"
 
-#: db/seeds/settings.rb:3003
+#: db/seeds/settings.rb:3029
 msgid "Limit tickets per day"
 msgstr "Beperk tickets per dag"
 
@@ -9599,15 +9622,15 @@ msgstr "Gekoppelde tickets"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:76
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:33
-#: db/seeds/settings.rb:1513
+#: db/seeds/settings.rb:1539
 msgid "LinkedIn"
 msgstr "LinkedIn"
 
-#: db/seeds/settings.rb:1521
+#: db/seeds/settings.rb:1547
 msgid "LinkedIn App Credentials"
 msgstr "LinkedIn inloggegevens"
 
-#: db/seeds/settings.rb:1514
+#: db/seeds/settings.rb:1540
 msgid "LinkedIn Developer Site"
 msgstr "LinkedIn Developer Site"
 
@@ -9623,7 +9646,7 @@ msgstr "Lijst van alle tabs op de taakbalk van gebruikers"
 msgid "List of installed addons"
 msgstr "Lijst met geïnstalleerde addons"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:153
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:190
 msgid "List of shortcuts"
 msgstr "Lijst van snelkoppelingen"
 
@@ -9741,7 +9764,7 @@ msgstr ""
 msgid "Logo"
 msgstr "Logo"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:144
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:207
 msgid "Logout"
 msgstr "Uitloggen"
 
@@ -10143,7 +10166,7 @@ msgid "Match none (NOT)"
 msgstr "Match niet (NOT)"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:38
-#: db/seeds/settings.rb:2670
+#: db/seeds/settings.rb:2696
 msgid "Match tickets in following states"
 msgstr "Match tickets met de volgende statussen"
 
@@ -10176,7 +10199,7 @@ msgstr "Maximaal aantal huidige chats"
 msgid "Max. length"
 msgstr "Maximale lengte"
 
-#: db/seeds/settings.rb:3028
+#: db/seeds/settings.rb:3054
 msgid "Max. length of the subject in an email reply."
 msgstr "Max. lengte van het onderwerp in een e-mail antwoord."
 
@@ -10200,15 +10223,15 @@ msgstr "Maximale waarde moet hoger zijn dan of gelijk aan minimale waarde"
 msgid "Maximal value must be lower than 2147483648"
 msgstr "Maximale waarde moet lager zijn dan 2147483648"
 
-#: db/seeds/settings.rb:3140
+#: db/seeds/settings.rb:3166
 msgid "Maximum Email Size"
 msgstr "Maximale emailgrootte"
 
-#: db/seeds/settings.rb:2778
+#: db/seeds/settings.rb:2804
 msgid "Maximum Recursive Ticket Triggers Depth"
 msgstr "Maximale diepte recursieve triggers voor tickets"
 
-#: db/seeds/settings.rb:2100
+#: db/seeds/settings.rb:2126
 msgid "Maximum failed logins"
 msgstr "Maximale onjuiste inlogpogingen"
 
@@ -10216,7 +10239,7 @@ msgstr "Maximale onjuiste inlogpogingen"
 msgid "Maximum number of open tabs."
 msgstr "Maximaal aantal geopende tabbladen."
 
-#: db/seeds/settings.rb:2781
+#: db/seeds/settings.rb:2807
 msgid "Maximum number of recursively executed triggers."
 msgstr "Maximum aantal recursief uitgevoerde triggers."
 
@@ -10338,7 +10361,7 @@ msgstr "Methode (AJAX endpoint)"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:91
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:54
-#: db/seeds/settings.rb:1712
+#: db/seeds/settings.rb:1738
 msgid "Microsoft"
 msgstr "Microsoft"
 
@@ -10349,11 +10372,11 @@ msgstr "Microsoft"
 msgid "Microsoft 365"
 msgstr "Microsoft 365"
 
-#: db/seeds/settings.rb:1720
+#: db/seeds/settings.rb:1746
 msgid "Microsoft 365 App Credentials"
 msgstr "Microsoft 365 App Credentials"
 
-#: db/seeds/settings.rb:1713
+#: db/seeds/settings.rb:1739
 msgid "Microsoft Application Registration Portal"
 msgstr "Microsoft Application Registration Portal"
 
@@ -10390,7 +10413,7 @@ msgstr "Migrator kan OTRS-uitvoer niet lezen!"
 msgid "Milestone"
 msgstr "Mijlpaal"
 
-#: db/seeds/settings.rb:2345
+#: db/seeds/settings.rb:2371
 msgid "Min. size of number"
 msgstr "Min. aantalgrootte"
 
@@ -10410,7 +10433,7 @@ msgstr "Minimale waarde moet hoger zijn dan -2147483648"
 msgid "Minimal value must be lower than 2147483648"
 msgstr "De minimale waarde moet lager zijn dan 2147483648"
 
-#: db/seeds/settings.rb:1982
+#: db/seeds/settings.rb:2008
 msgid "Minimum length"
 msgstr "Minimale lengte"
 
@@ -10459,7 +10482,7 @@ msgstr "maandag"
 msgid "Monit"
 msgstr "Monit"
 
-#: db/seeds/settings.rb:4605
+#: db/seeds/settings.rb:4632
 msgid "Monit integration"
 msgstr "Monit integratie"
 
@@ -10469,7 +10492,7 @@ msgstr "Monit integratie"
 msgid "Monitoring"
 msgstr "Monitoring"
 
-#: db/seeds/settings.rb:3407
+#: db/seeds/settings.rb:3434
 msgid "Monitoring Token"
 msgstr "Monitoring Token"
 
@@ -10511,7 +10534,7 @@ msgstr "Verplaats alles van \"%s\" naar \"%s\":"
 msgid "Move down"
 msgstr "Verplaats omlaag"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:262
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:317
 msgid "Move left and right"
 msgstr "Verplaats links en rechts"
 
@@ -10519,7 +10542,7 @@ msgstr "Verplaats links en rechts"
 msgid "Move up"
 msgstr "Verplaatst omhoog"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:258
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:313
 msgid "Move up and down"
 msgstr "Verplaats omhoog en omlaag"
 
@@ -10586,7 +10609,7 @@ msgstr "Mijn tickets in behandeling"
 msgid "Nagios"
 msgstr "Nagios"
 
-#: db/seeds/settings.rb:4397
+#: db/seeds/settings.rb:4424
 msgid "Nagios integration"
 msgstr "Nagios integratie"
 
@@ -10658,7 +10681,7 @@ msgstr "Nagios integratie"
 msgid "Name"
 msgstr "Naam"
 
-#: db/seeds/settings.rb:1899
+#: db/seeds/settings.rb:1925
 msgid "Name Identifier Format"
 msgstr "Name Identifier Format"
 
@@ -10671,7 +10694,7 @@ msgstr "Naam voor deze beveiligingssleutel"
 msgid "Name of form submit button"
 msgstr "Naam van formulier verzend knop"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:429
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:500
 msgid "Navigate through article"
 msgstr "Door notities navigeren"
 
@@ -10679,7 +10702,7 @@ msgstr "Door notities navigeren"
 msgid "Navigate to %s"
 msgstr "Navigeer naar %s"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:86
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:115
 #: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:29
 msgid "Navigation"
 msgstr "Navigatie"
@@ -10713,7 +10736,7 @@ msgstr "Session_id nodig."
 msgid "Need user_id or organization_id as param"
 msgstr "User_id of Organization_id nodig als parameter"
 
-#: db/seeds/settings.rb:2055
+#: db/seeds/settings.rb:2081
 msgid "Needed"
 msgstr "Nodig"
 
@@ -10829,7 +10852,7 @@ msgid "New Source"
 msgstr "Nieuwe bron"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:14
-#: db/seeds/settings.rb:4021
+#: db/seeds/settings.rb:4048
 msgid "New Tags"
 msgstr "Nieuwe Tags"
 
@@ -10837,7 +10860,7 @@ msgstr "Nieuwe Tags"
 msgid "New Template"
 msgstr "Nieuw sjabloon"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:134
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:168
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:7
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:484
@@ -10993,7 +11016,7 @@ msgstr "Volgende Status"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:43
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco:12
-#: db/seeds/settings.rb:2889
+#: db/seeds/settings.rb:2915
 msgid "Next in overview"
 msgstr "Volgende in overzicht"
 
@@ -11078,6 +11101,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee:4
 msgid "No answers"
 msgstr "Geen antwoorden"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:50
+msgid "No attached files"
+msgstr "Geen bijlagen"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:325
 msgid "No camera found."
@@ -11224,7 +11251,7 @@ msgstr "Nog geen gedeelde concepten"
 
 #: app/controllers/organizations_controller.rb:160
 #: app/controllers/text_modules_controller.rb:71
-#: app/controllers/ticket_articles_controller.rb:233
+#: app/controllers/ticket_articles_controller.rb:232
 #: app/controllers/tickets_controller.rb:601
 #: app/controllers/users_controller.rb:650
 msgid "No source data submitted!"
@@ -11242,13 +11269,17 @@ msgstr "Geen token!"
 msgid "No translation for this locale available"
 msgstr "Geen vertaling voor dit land beschikbaar"
 
-#: app/models/ticket.rb:398
+#: app/models/ticket.rb:397
 msgid "No triggers active"
 msgstr "Geen triggers actief"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:8
 msgid "No unread notifications for you. :)"
 msgstr "Je hebt geen ongelezen notificaties. :)"
+
+#: db/seeds/settings.rb:1300
+msgid "No user creation on logon"
+msgstr "Geen gebruiker aanmaken bij inloggen"
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco:1
 msgid ""
@@ -11264,7 +11295,7 @@ msgstr "Geen x-zammad-session-user-id, geen afzender ingesteld!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
 msgid "No, just close the ticket"
-msgstr "Nee, sluit het ticket."
+msgstr "Nee, sluit het ticket"
 
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
 msgid "No, thanks"
@@ -11273,7 +11304,7 @@ msgstr "Nee, bedankt"
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
-#: app/graphql/gql/types/ticket_type.rb:98 db/seeds/settings.rb:1931
+#: app/graphql/gql/types/ticket_type.rb:98 db/seeds/settings.rb:1957
 msgid "None"
 msgstr "Geen"
 
@@ -11420,7 +11451,7 @@ msgid "Notification"
 msgstr "Melding"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:42
-#: db/seeds/settings.rb:3299
+#: db/seeds/settings.rb:3326
 msgid "Notification Sender"
 msgstr "Notificatie"
 
@@ -11458,7 +11489,7 @@ msgid "Notification sound"
 msgstr "Notificatiesgeluid"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:12
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:124
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:157
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:5
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:2
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:1
@@ -11624,11 +11655,11 @@ msgstr ""
 "Slechts %s% van deze taal is al vertaald. Help alstublieft om Zammad te "
 "verbeteren en voltooi de vertaling."
 
-#: db/seeds/settings.rb:1934
+#: db/seeds/settings.rb:1960
 msgid "Only Encrypting"
 msgstr "Alleen Encryptie"
 
-#: db/seeds/settings.rb:1933
+#: db/seeds/settings.rb:1959
 msgid "Only Signing"
 msgstr "Alleen ondertekenen"
 
@@ -11685,7 +11716,7 @@ msgstr "Oeps… Sorry, Je hebt niet genoeg rechten om dit te openen: %s."
 msgid "Open"
 msgstr "Open"
 
-#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:62
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:71
 msgid "Open %s"
 msgstr "Open %s"
 
@@ -11711,11 +11742,11 @@ msgstr "Open in nieuwe tab"
 msgid "Open link"
 msgstr "Open link"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:410
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:478
 msgid "Open macro selection"
 msgstr "Macroselectie openen"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:377
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:438
 msgid "Open note box"
 msgstr "Open notitie box"
 
@@ -11986,7 +12017,7 @@ msgstr "Uitgaand gesprek: %s"
 msgid "Outbound:"
 msgstr "Uitgaand:"
 
-#: app/assets/javascripts/app/lib/app_post/browser.coffee:112
+#: app/assets/javascripts/app/lib/app_post/browser.coffee:119
 msgid "Outdated Browser"
 msgstr "Verouderde browser"
 
@@ -12006,7 +12037,7 @@ msgid "Overview bulk mask"
 msgstr "Overzicht bulk mask"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:38
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:105
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:136
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
@@ -12053,15 +12084,15 @@ msgstr ""
 msgid "PGP"
 msgstr "PGP"
 
-#: db/seeds/settings.rb:5550
+#: db/seeds/settings.rb:5577
 msgid "PGP Recipient Alias Configuration"
 msgstr "PGP Recipient Alias Configuratie"
 
-#: db/seeds/settings.rb:5536
+#: db/seeds/settings.rb:5563
 msgid "PGP config"
 msgstr "PGP configuratie"
 
-#: db/seeds/settings.rb:5508
+#: db/seeds/settings.rb:5535
 msgid "PGP integration"
 msgstr "PGP integratie"
 
@@ -12163,19 +12194,19 @@ msgstr "Wachtwoord voor proxy verbinding"
 msgid "Password for proxy connection."
 msgstr "Wachtwoord voor proxy verbinding."
 
-#: db/seeds/settings.rb:2025
+#: db/seeds/settings.rb:2051
 msgid "Password needs to contain 2 lower case and 2 upper case characters."
 msgstr "Wachtwoord moet 2 kleine letters en 2 hoofdletters bevatten."
 
-#: db/seeds/settings.rb:2051
+#: db/seeds/settings.rb:2077
 msgid "Password needs to contain at least one digit."
 msgstr "Wachtwoord moet uit minimaal 1 cijfer bestaan."
 
-#: db/seeds/settings.rb:2077
+#: db/seeds/settings.rb:2103
 msgid "Password needs to contain at least one special character."
 msgstr "Wachtwoord moet ten minste één speciaal teken bevatten."
 
-#: db/seeds/settings.rb:1985
+#: db/seeds/settings.rb:2011
 msgid "Password needs to have at least a minimal number of characters."
 msgstr "Wachtwoord moet een minimum aantal tekens bevatten."
 
@@ -12200,11 +12231,11 @@ msgstr "Plak Certificaat"
 msgid "Paste Private Key"
 msgstr "Plak Private Key"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:493
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:564
 msgid "Paste from clipboard"
 msgstr "Plak van klembord"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:500
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:571
 msgid "Paste from clipboard (plain text)"
 msgstr "Plakken vanaf klembord (platte tekst)"
 
@@ -12248,7 +12279,7 @@ msgid "Permanently Delete Knowledge Base"
 msgstr "Kennisbank permanent verwijderen"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
-#: db/seeds/settings.rb:2653
+#: db/seeds/settings.rb:2679
 msgid "Permission level for looking up tickets"
 msgstr "Machtigingsniveau voor het opzoeken van tickets"
 
@@ -12321,15 +12352,15 @@ msgstr "Roze"
 msgid "Placetel"
 msgstr "Placetel"
 
-#: db/seeds/settings.rb:5187
+#: db/seeds/settings.rb:5214
 msgid "Placetel Token"
 msgstr "Placetel Token"
 
-#: db/seeds/settings.rb:5173
+#: db/seeds/settings.rb:5200
 msgid "Placetel config"
 msgstr "Placetel configuratie"
 
-#: db/seeds/settings.rb:5145
+#: db/seeds/settings.rb:5172
 msgid "Placetel integration"
 msgstr "Placetel integratie"
 
@@ -12422,7 +12453,7 @@ msgstr "Voeg a.u.b. een correcte URL toe."
 msgid "Please install the OTRS migrator plugin and provide a valid URL."
 msgstr "Installeer de OTRS migrator plugin en geef een geldige URL op."
 
-#: db/seeds/settings.rb:1896
+#: db/seeds/settings.rb:1922
 msgid ""
 "Please note that this attribute is deprecated within one of the next "
 "versions of Zammad. Use the IDP certificate instead."
@@ -12595,9 +12626,13 @@ msgstr ""
 msgid "Preview"
 msgstr "Voorbeeld"
 
-#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:86
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:95
 msgid "Preview %s"
 msgstr "Voorbeeld %s"
+
+#: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:87
+msgid "Preview Calendar"
+msgstr "Preview Kalender"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:131
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:205
@@ -12661,11 +12696,11 @@ msgstr "Prio"
 msgid "Priority"
 msgstr "Prioriteit"
 
-#: db/seeds/settings.rb:1945
+#: db/seeds/settings.rb:1971
 msgid "Private key (PEM)"
 msgstr "Private key (PEM)"
 
-#: db/seeds/settings.rb:1952
+#: db/seeds/settings.rb:1978
 msgid "Private key secret"
 msgstr "Private key secret"
 
@@ -12797,7 +12832,7 @@ msgstr ""
 "Plaats een bericht op de login pagina. Om het aan te passen, klik op het "
 "tekstvak hieronder en verander het in het voorbeeld."
 
-#: db/seeds/settings.rb:3582
+#: db/seeds/settings.rb:3609
 msgid "Puts Zammad into import mode (disables some triggers)."
 msgstr "Zet Zammad in de importmodus (schakelt sommige triggers uit)."
 
@@ -12905,7 +12940,7 @@ msgstr ""
 "Herstelcodes kunnen worden gebruikt om toegang te krijgen tot je account in "
 "het geval je de toegang tot andere tweefactorauthenticatiemethoden verliest."
 
-#: db/seeds/settings.rb:2714
+#: db/seeds/settings.rb:2740
 msgid "Recursive Ticket Triggers"
 msgstr "Recursieve tickettriggers"
 
@@ -12913,7 +12948,7 @@ msgstr "Recursieve tickettriggers"
 msgid "Redis version"
 msgstr "Redis-versie"
 
-#: db/seeds/settings.rb:3202
+#: db/seeds/settings.rb:3228
 msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
 msgstr ""
@@ -12996,7 +13031,7 @@ msgstr "Remote"
 msgid "Remove"
 msgstr "Verwijderen"
 
-#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:152
+#: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:166
 msgid "Remove %s"
 msgstr "Verwijder %s"
 
@@ -13062,11 +13097,11 @@ msgstr "Verwijder geselecteerde waardes"
 msgid "Remove two-factor authentication"
 msgstr "Verwijder twee-factor-authenticatie"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:554
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:625
 msgid "Removes any hyperlink"
 msgstr "Verwijdert elke hyperlink"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:506
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:577
 msgid "Removes the formatting"
 msgstr "Verwijderd de indeling"
 
@@ -13127,7 +13162,7 @@ msgstr "Allen beantwoorden"
 msgid "Reply allowed only for open tickets"
 msgstr "Antwoord alleen toegestaan voor open tickets"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:387
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:453
 msgid "Reply to last article"
 msgstr "Reageer op de laatste notitie"
 
@@ -13196,7 +13231,7 @@ msgstr "Vereiste parameter 'profiel' ontbreekt."
 msgid "Requirements"
 msgstr "Verplichtingen"
 
-#: db/seeds/settings.rb:5713
+#: db/seeds/settings.rb:5740
 msgid ""
 "Requires the setup of the two-factor authentication for certain user roles."
 msgstr ""
@@ -13495,7 +13530,7 @@ msgstr ""
 "aanvaarde methode (of beter gezegd, een protocol) voor het verzenden van "
 "digitaal ondertekende en versleutelde berichten."
 
-#: db/seeds/settings.rb:5494
+#: db/seeds/settings.rb:5521
 msgid "S/MIME config"
 msgstr "S/MIME configuratie"
 
@@ -13504,17 +13539,17 @@ msgid "S/MIME enables you to send digitally signed and encrypted messages."
 msgstr ""
 "Met S/MIME kun je digitaal ondertekende en versleutelde berichten verzenden."
 
-#: db/seeds/settings.rb:5466
+#: db/seeds/settings.rb:5493
 msgid "S/MIME integration"
 msgstr "S/MIME integratie"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:106
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:77
-#: db/seeds/settings.rb:1845
+#: db/seeds/settings.rb:1871
 msgid "SAML"
 msgstr "SAML"
 
-#: db/seeds/settings.rb:1853
+#: db/seeds/settings.rb:1879
 msgid "SAML App Credentials"
 msgstr "SAML App Credentials"
 
@@ -13603,7 +13638,7 @@ msgstr "SSL/STARTTLS"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:111
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:84
-#: db/seeds/settings.rb:5582
+#: db/seeds/settings.rb:5609
 msgid "SSO"
 msgstr "SSO"
 
@@ -13697,7 +13732,7 @@ msgstr "Opgeslagen voorwaarden"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1119
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1121
 msgid "Saving failed."
 msgstr "Opslaan mislukt."
 
@@ -13743,7 +13778,7 @@ msgid "Scroll down to see new messages"
 msgstr "Scroll naar beneden om nieuwe tickets te bekijken"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:13
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:115
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:147
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:201
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
@@ -13933,7 +13968,7 @@ msgstr "Veiligheidssleutel"
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:4
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/security_keys.coffee:5
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:10
-#: db/seeds/settings.rb:5619
+#: db/seeds/settings.rb:5646
 msgid "Security Keys"
 msgstr "Veiligheidssleutels"
 
@@ -13968,7 +14003,7 @@ msgstr "Zie HTTPLog voor meer informatie."
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:447
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:118
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See less"
 msgstr "Toon minder"
 
@@ -13980,7 +14015,7 @@ msgstr "Toon minder"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:118
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue:17
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:275
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
 msgid "See more"
 msgstr "Bekijk meer"
 
@@ -14021,7 +14056,7 @@ msgstr "Kies sjabloon"
 msgid "Select default ticket type"
 msgstr "Selecteer standaard tickettype"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:266
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:321
 msgid "Select item"
 msgstr "Selecteer item"
 
@@ -14113,11 +14148,11 @@ msgstr ""
 "Stuur automatische herinneringen naar klanten met het verzoek om te reageren "
 "als het 24-uursvenster bijna is verstreken."
 
-#: db/seeds/settings.rb:3272
+#: db/seeds/settings.rb:3299
 msgid "Send postmaster mail if mail too large"
 msgstr "Stuur postmaster e-mail als de e-mailbestandsgrootte te groot is"
 
-#: db/seeds/settings.rb:3275
+#: db/seeds/settings.rb:3302
 msgid "Send postmaster reject mail to sender of mail if mail is too large."
 msgstr ""
 "Stuur postmaster afwijzings-e-mail naar afzender van e-mail als de e-mail te "
@@ -14131,16 +14166,16 @@ msgstr "Stuur naar klanten"
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:51
 #: app/models/channel/driver/sms/massenversand.rb:45
 #: app/models/channel/driver/sms/message_bird.rb:92
-#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3090
+#: app/models/channel/driver/sms/twilio.rb:106 db/seeds/settings.rb:3116
 #: lib/excel_sheet/ticket.rb:32
 msgid "Sender"
 msgstr "Afzender"
 
-#: db/seeds/settings.rb:3090
+#: db/seeds/settings.rb:3116
 msgid "Sender Format"
 msgstr "Verstuurder format"
 
-#: db/seeds/settings.rb:3118
+#: db/seeds/settings.rb:3144
 msgid "Sender Format Separator"
 msgstr "Verzender format verdeler"
 
@@ -14149,7 +14184,7 @@ msgstr "Verzender format verdeler"
 msgid "Sender Type"
 msgstr "Afzender type"
 
-#: db/seeds/settings.rb:3218
+#: db/seeds/settings.rb:3245
 msgid "Sender based on Reply-To header"
 msgstr "Afzender gebaseerd op Reply-To header"
 
@@ -14179,7 +14214,7 @@ msgstr "Scheid meerdere waarden door ;"
 msgid "September"
 msgstr "september"
 
-#: db/seeds/settings.rb:3869
+#: db/seeds/settings.rb:3896
 msgid "Sequencer log level"
 msgstr "Sequencer log level"
 
@@ -14240,11 +14275,11 @@ msgstr "Twee-Factor Authenticatie instellen: %s"
 msgid "Set a title for your ticket"
 msgstr "Stel een titel in voor je ticket"
 
-#: db/seeds/settings.rb:5275
+#: db/seeds/settings.rb:5302
 msgid "Set agent limit"
 msgstr "Behandelaarslimiet instellen"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:401
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:468
 msgid "Set article to internal/public"
 msgstr "Zet notitie op intern/openbaar"
 
@@ -14266,7 +14301,7 @@ msgstr "Authenticatie-app instellen als standaard"
 msgid "Set available ticket types"
 msgstr "Beschikbare tickettypes instellen"
 
-#: db/seeds/settings.rb:3604
+#: db/seeds/settings.rb:3631
 msgid "Set backend which is being used for import."
 msgstr "Stel de backend in die wordt gebruikt voor import."
 
@@ -14297,7 +14332,7 @@ msgstr "Stel uitgaand Caller ID in"
 msgid "Set security keys as default"
 msgstr "Beveiligingssleutels als standaard instellen"
 
-#: db/seeds/settings.rb:5437
+#: db/seeds/settings.rb:5464
 msgid ""
 "Set timeframe in seconds. If it's set to 0 you can delete notes without time "
 "limits"
@@ -14345,7 +14380,7 @@ msgstr "Stel de communicatiekanalen in die je met uw Zammad wilt gebruiken."
 msgid "Set up two-factor authentication"
 msgstr "Stel twee-factor-authenticatie in"
 
-#: db/seeds/settings.rb:3221
+#: db/seeds/settings.rb:3248
 msgid ""
 "Set/overwrite sender/from of email based on \"Reply-To\" header. Useful to "
 "set correct customer if email is received from a third-party system on "
@@ -14478,7 +14513,7 @@ msgstr "Toon alles…"
 msgid "Show authenticator app secret"
 msgstr "Toon authenticator-app-geheim"
 
-#: db/seeds/settings.rb:5591
+#: db/seeds/settings.rb:5618
 msgid "Show calendar weeks in the picker of date/datetime fields"
 msgstr "Toon kalenderweken in de kiezer van datum/tijd-velden"
 
@@ -14494,7 +14529,7 @@ msgstr "Minder tonen"
 msgid "Show matching ticket(s) in the warning"
 msgstr "Toon overeenkomende ticket(s) in de waarschuwing"
 
-#: db/seeds/settings.rb:2636
+#: db/seeds/settings.rb:2662
 msgid "Show matching tickets in the warning"
 msgstr "Toon overeenkomende tickets in de waarschuwing"
 
@@ -14502,7 +14537,7 @@ msgstr "Toon overeenkomende tickets in de waarschuwing"
 msgid "Show meta data"
 msgstr "Toon metadata"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:177
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:229
 msgid "Show next tab"
 msgstr "Toon volgende tab"
 
@@ -14514,7 +14549,7 @@ msgstr ""
 "Toon wachtwoord login voor gebruikers op de login pagina. Inactief zetten "
 "werkt enkel als thir-party authenticatie is ingeschakeld."
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:200
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:254
 msgid "Show previous tab"
 msgstr "Toon vorige tab"
 
@@ -14532,7 +14567,7 @@ msgid "Show ticket viewers"
 msgstr "Toon raadplegers ticket"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:6
-#: db/seeds/settings.rb:3934
+#: db/seeds/settings.rb:3961
 msgid "Show time accounting dialog when updating matching tickets."
 msgstr ""
 "Toon het dialoogvenster voor tijdregistratie bij het bijwerken van "
@@ -14542,7 +14577,7 @@ msgstr ""
 msgid "Show title in form."
 msgstr "Geef titel weer in formulier."
 
-#: db/seeds/settings.rb:2619
+#: db/seeds/settings.rb:2645
 msgid "Show to user roles"
 msgstr "Weergeven aan gebruikersrollen"
 
@@ -14658,7 +14693,7 @@ msgstr "Handtekeningen"
 msgid "Signed"
 msgstr "Ondertekend"
 
-#: db/seeds/settings.rb:1926
+#: db/seeds/settings.rb:1952
 msgid "Signing & Encrypting"
 msgstr "Signing & Encrypting"
 
@@ -14666,7 +14701,7 @@ msgstr "Signing & Encrypting"
 msgid "Signup Screen"
 msgstr "Inschrijvingsscherm"
 
-#: db/seeds/settings.rb:2598
+#: db/seeds/settings.rb:2624
 msgid "Similar tickets found"
 msgstr "Vergelijkbare tickets gevonden"
 
@@ -14696,11 +14731,11 @@ msgstr ""
 msgid "Simple Storage Service not reachable."
 msgstr "Simple Storage Service niet bereikbaar."
 
-#: db/seeds/settings.rb:1783
+#: db/seeds/settings.rb:1809
 msgid "Sina Weibo"
 msgstr "Sina Weibo"
 
-#: db/seeds/settings.rb:1783
+#: db/seeds/settings.rb:1809
 msgid "Sina Weibo Open Portal"
 msgstr "Sina Weibo Open Portal"
 
@@ -14730,7 +14765,7 @@ msgstr "Enkelvoudig genest selectieveld"
 msgid "Sipgate"
 msgstr "Sipgate"
 
-#: db/seeds/settings.rb:1668
+#: db/seeds/settings.rb:1694
 msgid "Site"
 msgstr "Site"
 
@@ -14749,11 +14784,11 @@ msgstr "Slack"
 msgid "Slack Notifications"
 msgstr "Slack Notificaties"
 
-#: db/seeds/settings.rb:4972
+#: db/seeds/settings.rb:4999
 msgid "Slack config"
 msgstr "Slack configuratie"
 
-#: db/seeds/settings.rb:4946
+#: db/seeds/settings.rb:4973
 msgid "Slack integration"
 msgstr "Slack integratie"
 
@@ -14832,7 +14867,7 @@ msgstr "Bron"
 msgid "Sources"
 msgstr "Bronnen"
 
-#: db/seeds/settings.rb:2074
+#: db/seeds/settings.rb:2100
 msgid "Special character required"
 msgstr "Speciaal teken vereist"
 
@@ -14948,7 +14983,7 @@ msgstr "Import starten…"
 msgid "State"
 msgstr "Status"
 
-#: db/seeds/settings.rb:5309
+#: db/seeds/settings.rb:5336
 msgid "Stats Backend"
 msgstr "Statistieken backend"
 
@@ -14977,7 +15012,7 @@ msgstr "Status:"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:49
-#: db/seeds/settings.rb:2890
+#: db/seeds/settings.rb:2916
 msgid "Stay on tab"
 msgstr "Blijf op de tab"
 
@@ -15019,11 +15054,11 @@ msgstr "Opslagmethode"
 msgid "Store"
 msgstr "Winkel"
 
-#: db/seeds/settings.rb:4898
+#: db/seeds/settings.rb:4925
 msgid "Stores the GitHub configuration."
 msgstr "Slaat de GitHub-configuratie op."
 
-#: db/seeds/settings.rb:4856
+#: db/seeds/settings.rb:4883
 msgid "Stores the GitLab configuration."
 msgstr "Slaat de GitLab-configuratie op."
 
@@ -15046,6 +15081,16 @@ msgstr "Straat"
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:33
 msgid "Subject"
 msgstr "Onderwerp"
+
+#: db/seeds/settings.rb:3231
+msgid ""
+"Subject & References - Additional search for same article subject and same "
+"message ID in references header if no follow-up was recognized using default "
+"settings."
+msgstr ""
+"Onderwerp & referenties - Extra zoeken naar hetzelfde onderwerp van het "
+"notitie en hetzelfde ID van het bericht in de header van referenties als er "
+"geen opvolging werd herkend met standaardinstellingen."
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:2
 #: app/assets/javascripts/app/controllers/tag.coffee:103
@@ -15127,9 +15172,17 @@ msgstr "zo"
 msgid "Sunday"
 msgstr "zondag"
 
-#: db/seeds/settings.rb:5396
+#: db/seeds/settings.rb:5423
 msgid "Support of multilingual Knowledge Base."
 msgstr "Ondersteuning van meertalige Kennisbank."
+
+#: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:16
+msgid "Switch back to old layout"
+msgstr "Terugschakelen naar oude lay-out"
+
+#: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:14
+msgid "Switch to new layout"
+msgstr "Overschakelen naar nieuwe lay-out"
 
 #: db/seeds/schedulers.rb:142
 msgid "Sync calendars with iCal feeds."
@@ -15148,7 +15201,7 @@ msgstr "Sync met computer"
 msgid "System"
 msgstr "Systeem"
 
-#: db/seeds/settings.rb:3102
+#: db/seeds/settings.rb:3128
 msgid "System Address Display Name"
 msgstr "Weergavenaam systeemadres"
 
@@ -15199,7 +15252,7 @@ msgstr ""
 msgid "SystemID"
 msgstr "SystemID"
 
-#: db/seeds/settings.rb:2875
+#: db/seeds/settings.rb:2901
 msgid "Tab behaviour after ticket action"
 msgstr "Functie van Tab-toets na aanpassen ticket"
 
@@ -15231,7 +15284,7 @@ msgstr "Tag \"%s\" bestaat al."
 msgid "Tags"
 msgstr "Tags"
 
-#: db/seeds/settings.rb:3232
+#: db/seeds/settings.rb:3259
 msgid ""
 "Take Reply-To header as sender/from of email and use the real name of origin "
 "from."
@@ -15239,7 +15292,7 @@ msgstr ""
 "Neem antwoord-aan header als afzender van e-mail en gebruik de echte naam "
 "van de verzender."
 
-#: db/seeds/settings.rb:3231
+#: db/seeds/settings.rb:3258
 msgid "Take Reply-To header as sender/from of email."
 msgstr "Neem antwoord-aan header als afzender van de e-mail."
 
@@ -15353,7 +15406,7 @@ msgstr "Tekst"
 msgid "Text Modules"
 msgstr "Tekst-modules"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:460
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:531
 msgid "Text editing"
 msgstr "Tekstbewerking"
 
@@ -15596,7 +15649,7 @@ msgstr "De notitie kon niet worden aangepast naar intern."
 msgid "The article could not be set to public."
 msgstr "De notitie kon niet worden aangepast naar openbaar."
 
-#: app/controllers/ticket_articles_controller.rb:153
+#: app/controllers/ticket_articles_controller.rb:152
 msgid "The article does not belong to the specified ticket."
 msgstr "De notitie behoort niet tot het opgegeven ticket."
 
@@ -15816,7 +15869,7 @@ msgstr "De standaard lettergrootte is 12px."
 msgid "The device could not be deleted."
 msgstr "Het apparaat kon niet worden verwijderd."
 
-#: db/seeds/settings.rb:2169
+#: db/seeds/settings.rb:2195
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
 "Het koppelteken tussen de Ticket-hook en Ticket-nummer. Bijvoorbeeld ':'."
@@ -15879,7 +15932,7 @@ msgstr "Het bestand kon niet uit de bot worden opgehaald."
 msgid "The file could not be uploaded."
 msgstr "Het bestand kon niet worden geupload."
 
-#: app/controllers/ticket_articles_controller.rb:167
+#: app/controllers/ticket_articles_controller.rb:166
 msgid "The file does not belong to the specified article."
 msgstr "Het bestand behoort niet tot de opgegeven notitie."
 
@@ -15957,7 +16010,7 @@ msgstr "De hostnaam kan niet worden gevonden."
 msgid "The hours overlay"
 msgstr "De uren overlay"
 
-#: db/seeds/settings.rb:2144
+#: db/seeds/settings.rb:2170
 msgid ""
 "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
 "Ticket#."
@@ -16119,7 +16172,7 @@ msgstr "Het wachtwoord is gereset."
 msgid "The personal access token could not be deleted."
 msgstr "Het persoonlijke toegangstoken kon niet worden verwijderd."
 
-#: app/controllers/ticket_articles_controller.rb:274
+#: app/controllers/ticket_articles_controller.rb:272
 msgid ""
 "The preview cannot be generated. The format is corrupted or not supported."
 msgstr ""
@@ -16430,7 +16483,7 @@ msgid "The required value external_credential could not be found in the cache."
 msgstr ""
 "De vereiste waarde external_credential kan niet worden gevonden in de cache."
 
-#: app/controllers/ticket_articles_controller.rb:264
+#: app/controllers/ticket_articles_controller.rb:263
 msgid "The retried attachment download failed."
 msgstr "Het opnieuw downloaden van de bijlage is mislukt."
 
@@ -16560,12 +16613,12 @@ msgstr "Het doel ticket kan niet worden gevonden."
 msgid "The test run was successful."
 msgstr "De test was succesvol."
 
-#: db/seeds/settings.rb:3071
+#: db/seeds/settings.rb:3097
 msgid ""
 "The text at the beginning of the subject in an email forward, e. g. FWD."
 msgstr "Begin tekst voor doorgestuurde mail, bijvoorbeeld FW."
 
-#: db/seeds/settings.rb:3049
+#: db/seeds/settings.rb:3075
 msgid ""
 "The text at the beginning of the subject in an email reply, e.g. RE, AW, or "
 "AS."
@@ -16608,7 +16661,7 @@ msgid "The two-factor authentication method \"%s\" was removed for this user."
 msgstr ""
 "De twee-factor-authenticatiemethode %s van deze gebruiker is verwijderd."
 
-#: app/controllers/sessions_controller.rb:237
+#: app/controllers/sessions_controller.rb:239
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:34
 #: app/services/service/user/two_factor/initiate_method_configuration.rb:6
 #: app/services/service/user/two_factor/verify_method_configuration.rb:15
@@ -16631,6 +16684,10 @@ msgstr ""
 "De geüploade afbeelding kon niet worden verwerkt. data:image nodig in logo "
 "of logo_resize param."
 
+#: app/models/authorization/provider.rb:47
+msgid "The user account does not exist. Please contact your administrator."
+msgstr "Het gebruikersaccount bestaat niet. Neem contact op met de beheerder."
+
 #: app/services/service/auth/send_admin_token.rb:33
 msgid "The user token could not be generated."
 msgstr "Het token voor de gebruiker kon niet worden gegenereerd."
@@ -16642,7 +16699,7 @@ msgstr ""
 "De 'preferred_username' van de gebruiker kan niet worden geëxtraheerd uit "
 "'id_token'."
 
-#: app/controllers/sessions_controller.rb:233
+#: app/controllers/sessions_controller.rb:235
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:29
 msgid "The username or password is incorrect."
 msgstr "De gebruikersnaam of het wachtwoord is niet correct."
@@ -17348,11 +17405,11 @@ msgstr ""
 msgid "Ticket (censored):"
 msgstr "Ticket (gecensureerd):"
 
-#: db/seeds/settings.rb:2246
+#: db/seeds/settings.rb:2272
 msgid "Ticket Conditions Expert Mode"
 msgstr "Ticketvoorwaarden Expert-modus"
 
-#: db/seeds/settings.rb:2272
+#: db/seeds/settings.rb:2298
 msgid "Ticket Conditions Regular Expression Operators"
 msgstr "Ticket voorwaarden Reguliere expressie operatoren"
 
@@ -17364,39 +17421,39 @@ msgstr "Ticket-aantal"
 msgid "Ticket Customer"
 msgstr "Ticket Klant"
 
-#: db/seeds/settings.rb:2141
+#: db/seeds/settings.rb:2167
 msgid "Ticket Hook"
 msgstr "Ticket Haak"
 
-#: db/seeds/settings.rb:2166
+#: db/seeds/settings.rb:2192
 msgid "Ticket Hook Divider"
 msgstr "Ticket-hook koppelteken"
 
-#: db/seeds/settings.rb:2187
+#: db/seeds/settings.rb:2213
 msgid "Ticket Hook Position"
 msgstr "Ticket Haak Positie"
 
-#: db/seeds/settings.rb:2219
+#: db/seeds/settings.rb:2245
 msgid "Ticket Last Contact Behaviour"
 msgstr "Ticket Laatst Contact gedrag"
 
-#: db/seeds/settings.rb:2298
+#: db/seeds/settings.rb:2324
 msgid "Ticket Number Format"
 msgstr "Ticketnummer formaat"
 
-#: db/seeds/settings.rb:2328
+#: db/seeds/settings.rb:2354
 msgid "Ticket Number Increment"
 msgstr "Ticket Nummer Ophogen"
 
-#: db/seeds/settings.rb:2385
+#: db/seeds/settings.rb:2411
 msgid "Ticket Number Increment Date"
 msgstr "Ticketnummer via datum"
 
-#: db/seeds/settings.rb:2687
+#: db/seeds/settings.rb:2713
 msgid "Ticket Number ignore system_id"
 msgstr "Ticketnummer negeert system_id"
 
-#: db/seeds/settings.rb:5735
+#: db/seeds/settings.rb:5762
 msgid "Ticket Organization Reassignment"
 msgstr "Ticket Organisatie opnieuw toewijzen"
 
@@ -17448,15 +17505,15 @@ msgstr "Ticketstatus"
 msgid "Ticket States"
 msgstr "Ticketstatussen"
 
-#: db/seeds/settings.rb:3068
+#: db/seeds/settings.rb:3094
 msgid "Ticket Subject Forward"
 msgstr "Ticket Onderwerp Doorsturen"
 
-#: db/seeds/settings.rb:3046
+#: db/seeds/settings.rb:3072
 msgid "Ticket Subject Reply"
 msgstr "Ticket onderwerp antwoord"
 
-#: db/seeds/settings.rb:3025
+#: db/seeds/settings.rb:3051
 msgid "Ticket Subject Size"
 msgstr "Ticket onderwerp grote"
 
@@ -17464,11 +17521,11 @@ msgstr "Ticket onderwerp grote"
 msgid "Ticket Subscriptions"
 msgstr "Ticket Abonnementen"
 
-#: db/seeds/settings.rb:2759
+#: db/seeds/settings.rb:2785
 msgid "Ticket Trigger Loop Protection Articles Total"
 msgstr "Ticket Trigger Loop Bescherming Artikelen Totaal"
 
-#: db/seeds/settings.rb:2740
+#: db/seeds/settings.rb:2766
 msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr "Ticket Trigger Loop Bescherming Artikelen per Ticket"
 
@@ -17682,7 +17739,7 @@ msgstr "Ticket #"
 msgid "TicketID"
 msgstr "TicketID"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:368
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:428
 #: app/assets/javascripts/app/controllers/widget/user.coffee:87
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:94
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:98
@@ -17717,7 +17774,7 @@ msgstr "Tickets zijn gerangschikt volgens \"%s\" kolom (%s)."
 msgid "Tickets assigned to me: %s of %s"
 msgstr "Tickets aan mij toegewezen: %s van de %s"
 
-#: app/controllers/ticket_articles_controller.rb:226
+#: app/controllers/ticket_articles_controller.rb:225
 #: app/controllers/tickets_controller.rb:594
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
@@ -17736,7 +17793,7 @@ msgstr "Tickets van gebruiker"
 msgid "Tickets with \"%s\""
 msgstr "Tickets met \"%s\""
 
-#: db/seeds/settings.rb:2615
+#: db/seeds/settings.rb:2641
 msgid "Tickets with the same attributes were found."
 msgstr "Er werden tickets met dezelfde attributen gevonden."
 
@@ -17755,27 +17812,27 @@ msgstr "Tijd"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:132
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:12
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:3
-#: db/seeds/permissions.rb:107 db/seeds/settings.rb:3904
+#: db/seeds/permissions.rb:107 db/seeds/settings.rb:3931
 msgid "Time Accounting"
 msgstr "Tijdsregistratie"
 
-#: db/seeds/settings.rb:3967
+#: db/seeds/settings.rb:3994
 msgid "Time Accounting Custom Unit"
 msgstr "Tijdregistratie Aangepaste Eenheid"
 
-#: db/seeds/settings.rb:4003
+#: db/seeds/settings.rb:4030
 msgid "Time Accounting Default Type"
 msgstr "Tijdregistratie Standaard Type"
 
-#: db/seeds/settings.rb:3931
+#: db/seeds/settings.rb:3958
 msgid "Time Accounting Selector"
 msgstr "Tijdsregistratie keuzes"
 
-#: db/seeds/settings.rb:3985
+#: db/seeds/settings.rb:4012
 msgid "Time Accounting Types"
 msgstr "Tijdregistratietypes"
 
-#: db/seeds/settings.rb:3949
+#: db/seeds/settings.rb:3976
 msgid "Time Accounting Unit"
 msgstr "Tijdregistratie Unit"
 
@@ -17873,7 +17930,7 @@ msgstr "Titel van het formulier"
 msgid "To"
 msgstr "Aan"
 
-#: db/seeds/settings.rb:3348
+#: db/seeds/settings.rb:3375
 msgid ""
 "To archive all outgoing emails from Zammad to external, you can store a BCC "
 "email address here."
@@ -17987,7 +18044,7 @@ msgstr "Toggle tussen AM- en PM-modus"
 msgid "Toggle Group"
 msgstr "Toggle Groep"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:359
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:419
 msgid "Toggle dark mode"
 msgstr "Toggle donkere modus"
 
@@ -18028,15 +18085,15 @@ msgstr "Toegangstoken"
 msgid "Token authorization failed."
 msgstr "Token authenticatie mislukt."
 
-#: db/seeds/settings.rb:5114
+#: db/seeds/settings.rb:5141
 msgid "Token for CTI."
 msgstr "Token voor CTI."
 
-#: db/seeds/settings.rb:5018
+#: db/seeds/settings.rb:5045
 msgid "Token for Sipgate."
 msgstr "Token voor Sipgate."
 
-#: db/seeds/settings.rb:3410
+#: db/seeds/settings.rb:3437
 msgid "Token for monitoring."
 msgstr "Token voor monitoring."
 
@@ -18096,7 +18153,7 @@ msgstr "Vertaling"
 msgid "Translation Source"
 msgstr "Vertalingsbron"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:331
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:390
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
 #: db/seeds/permissions.rb:245
@@ -18177,7 +18234,7 @@ msgstr "Verander chat in ticket"
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:14
 #: app/assets/javascripts/app/views/object_manager/attribute/autocompletion_ajax_external_data_source.jst.eco:3
 #: app/frontend/apps/desktop/form/composables/useSSLVerificationWarningHandler.ts:24
-#: db/seeds/settings.rb:1923
+#: db/seeds/settings.rb:1949
 msgid ""
 "Turning off SSL verification is a security risk and should be used only "
 "temporary. Use this option at your own risk!"
@@ -18225,7 +18282,7 @@ msgstr "Twitter Access Token Secret"
 msgid "Twitter Account"
 msgstr "Twitter Account"
 
-#: db/seeds/settings.rb:1329
+#: db/seeds/settings.rb:1355
 msgid "Twitter App Credentials"
 msgstr "Twitter App inloggegevens"
 
@@ -18241,7 +18298,7 @@ msgstr "Twitter Consumer Secret"
 msgid "Twitter Dev environment label"
 msgstr "Twitter Dev environment label"
 
-#: db/seeds/settings.rb:1322
+#: db/seeds/settings.rb:1348
 msgid "Twitter Developer Site"
 msgstr "Twitter Developer Site"
 
@@ -18249,11 +18306,11 @@ msgstr "Twitter Developer Site"
 msgid "Twitter Direct Message"
 msgstr "Twitter Direct Mericht"
 
-#: db/seeds/settings.rb:1336
+#: db/seeds/settings.rb:1362
 msgid "Twitter Key"
 msgstr "Twitter sleutel"
 
-#: db/seeds/settings.rb:1342
+#: db/seeds/settings.rb:1368
 msgid "Twitter Secret"
 msgstr "Twitter Secret"
 
@@ -18347,7 +18404,7 @@ msgstr "Type:"
 msgid "UID"
 msgstr "UID"
 
-#: db/seeds/settings.rb:1907
+#: db/seeds/settings.rb:1933
 msgid "UID Attribute Name"
 msgstr "UID-Attribuutnaam"
 
@@ -18497,7 +18554,7 @@ msgstr "Gedeeld concept bijwerken"
 msgid "Update Time"
 msgstr "Vervolg tijd"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:418
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:488
 msgid "Update as closed"
 msgstr "Update als gesloten"
 
@@ -18530,7 +18587,7 @@ msgstr ""
 msgid "Update successful."
 msgstr "Update succesvol."
 
-#: db/seeds/settings.rb:5747
+#: db/seeds/settings.rb:5774
 msgid "Update the most recent tickets."
 msgstr "Update de meest recente tickets."
 
@@ -18757,7 +18814,7 @@ msgstr ""
 msgid "Use the camera to take a photo for the avatar."
 msgstr "Gebruik de camera om een foto te maken voor de avatar."
 
-#: db/seeds/settings.rb:2233
+#: db/seeds/settings.rb:2259
 msgid ""
 "Use the start time of the last customer thread (which may consist of "
 "multiple articles)."
@@ -18765,7 +18822,7 @@ msgstr ""
 "Gebruik de starttijd van de laatste klant-thread (die uit meerdere notities "
 "kan bestaan)."
 
-#: db/seeds/settings.rb:2232
+#: db/seeds/settings.rb:2258
 msgid "Use the time of the very last customer article."
 msgstr "Gebruik de tijd van de laatste klantnotitie."
 
@@ -18774,31 +18831,31 @@ msgid "Use this switch to start synchronization of your ldap sources."
 msgstr ""
 "Gebruik deze schakelaar om de synchronisatie van je LDAP bronnen te starten."
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:90
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:119
 msgid "Used anywhere"
 msgstr "Overal gebruiken"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:335
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:394
 msgid "Used anywhere (admin only)"
 msgstr "Wordt overal gebruikt (alleen beheerders)"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:254
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:309
 msgid "Used in lists (views and results)"
 msgstr "Gebruikt in lijsten (weergaven en resultaten)"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:271
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:326
 msgid "Used in object views"
 msgstr "Gebruikt in objectweergaven"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:434
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:505
 msgid "Used when composing a Ticket article"
 msgstr "Wordt gebruikt bij het opstellen van een Ticket Notitie"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:464
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:535
 msgid "Used when composing a text"
 msgstr "Wordt gebruikt tijdens het schrijven van een tekst"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:372
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:432
 msgid "Used when viewing a Ticket"
 msgstr "Wordt gebruikt tijdens het bekijken van een Ticket"
 
@@ -18885,6 +18942,7 @@ msgstr ""
 "Gebruikersinformatie kan niet worden opgehaald, controleer de "
 "gebruikersrechten."
 
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:179
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue:44
 msgid "User menu"
 msgstr "Gebruikersmenu"
@@ -19148,12 +19206,12 @@ msgid "Warning"
 msgstr "Waarschuwing"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:34
-#: db/seeds/settings.rb:2602
+#: db/seeds/settings.rb:2628
 msgid "Warning message"
 msgstr "Waarschuwingsbericht"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:33
-#: db/seeds/settings.rb:2585
+#: db/seeds/settings.rb:2611
 msgid "Warning title"
 msgstr "Waarschuwingstitel"
 
@@ -19257,11 +19315,11 @@ msgstr "Week/Weken"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:101
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:68
-#: db/seeds/settings.rb:1782
+#: db/seeds/settings.rb:1808
 msgid "Weibo"
 msgstr "Weibo"
 
-#: db/seeds/settings.rb:1790
+#: db/seeds/settings.rb:1816
 msgid "Weibo App Credentials"
 msgstr "Weibo App Credentials"
 
@@ -19953,7 +20011,7 @@ msgstr "Je avatar is geüpload."
 #: app/assets/javascripts/app/views/google/app_config.jst.eco:23
 #: app/assets/javascripts/app/views/microsoft365/app_config.jst.eco:31
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco:47
-#: db/seeds/settings.rb:1348
+#: db/seeds/settings.rb:1374
 msgid "Your callback URL"
 msgstr "De retour URL"
 
@@ -20658,11 +20716,11 @@ msgstr ""
 msgid "i-doit"
 msgstr "i-doit"
 
-#: db/seeds/settings.rb:4813
+#: db/seeds/settings.rb:4840
 msgid "i-doit config"
 msgstr "i-doit configuratie"
 
-#: db/seeds/settings.rb:4786
+#: db/seeds/settings.rb:4813
 msgid "i-doit integration"
 msgstr "i-doit integratie"
 
@@ -20870,7 +20928,7 @@ msgstr "net veranderd in"
 msgid "just now"
 msgstr "zojuist"
 
-#: db/seeds/settings.rb:2203
+#: db/seeds/settings.rb:2229
 msgid "left"
 msgstr "links"
 
@@ -21046,7 +21104,7 @@ msgstr "geen eenheid"
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:96
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:27
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco:7
-#: db/seeds/settings.rb:2205
+#: db/seeds/settings.rb:2231
 msgid "none"
 msgstr "geen"
 
@@ -21169,10 +21227,8 @@ msgid "recovery codes"
 msgstr "herstelcodes"
 
 #: app/models/checklist/item.rb:81
-#, fuzzy
-#| msgid "The article does not belong to the specified ticket."
 msgid "reference must not be the checklist ticket."
-msgstr "De notitie behoort niet tot het opgegeven ticket."
+msgstr "referentie mag niet het checklist ticket zijn."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:103
 msgid "relative"
@@ -21209,7 +21265,7 @@ msgstr "allen beantwoorden"
 msgid "required"
 msgstr "vereist"
 
-#: db/seeds/settings.rb:2204
+#: db/seeds/settings.rb:2230
 msgid "right"
 msgstr "rechts"
 
@@ -21296,19 +21352,19 @@ msgstr "toon meer"
 msgid "shown"
 msgstr "getoond"
 
-#: db/seeds/settings.rb:5015
+#: db/seeds/settings.rb:5042
 msgid "sipgate.io Token"
 msgstr "sipgate.io Token"
 
-#: db/seeds/settings.rb:5049
+#: db/seeds/settings.rb:5076
 msgid "sipgate.io alternative FQDN"
 msgstr "sipgate.io alternatieve FQDN"
 
-#: db/seeds/settings.rb:5036
+#: db/seeds/settings.rb:5063
 msgid "sipgate.io config"
 msgstr "sipgate.io configuratie"
 
-#: db/seeds/settings.rb:4987
+#: db/seeds/settings.rb:5014
 msgid "sipgate.io integration"
 msgstr "sipgate.io integratie"
 
@@ -21558,15 +21614,15 @@ msgstr ""
 msgid "|Right| means |Some Subject [Ticket#12345]|"
 msgstr "|Rechts| betekent |Onderwerp [Ticket#12345]|"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:324
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:383
 msgid "…add object link URL"
 msgstr "…object link url toevoegen"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:318
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:376
 msgid "…add object title"
 msgstr "…object link titel toevoegen"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:512
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:583
 msgid "…of whole text area"
 msgstr "…van geheel tekstvak"
 
