@@ -10,7 +10,7 @@ class MysqlStrategy
 
   def self.db_checksum
     @@db_checksum ||= begin # rubocop:disable Style/ClassVars
-      files = Dir[ Rails.root.join('db/**/*') ].reject { |f| File.directory?(f) }
+      files = Rails.root.glob('db/**/*').reject { |f| File.directory?(f) }
       content = files.map { |f| File.read(f) }.join
       Digest::MD5.hexdigest(content).to_s
     end

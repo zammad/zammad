@@ -9,7 +9,7 @@ def env_trusted_proxies
     eval(ENV['RAILS_TRUSTED_PROXIES']) # rubocop:disable Security/Eval
   else
     # The regular way: variable contains a list if IP addresses/masks: "127.0.0.1,::1"
-    ENV['RAILS_TRUSTED_PROXIES'].split(',').select(&:present?)
+    ENV['RAILS_TRUSTED_PROXIES'].split(',').compact_blank
   end
 end
 

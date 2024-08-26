@@ -1770,7 +1770,7 @@ RSpec.describe Ticket, type: :model do
     subject!(:ticket) { create(:ticket) }
 
     context 'when payload is ok' do
-      let(:current_payload_size) { 3.megabyte }
+      let(:current_payload_size) { 3.megabytes }
 
       it 'return false' do
         expect(ticket.send(:search_index_attribute_lookup_oversized?, current_payload_size)).to be false
@@ -1778,7 +1778,7 @@ RSpec.describe Ticket, type: :model do
     end
 
     context 'when payload is bigger' do
-      let(:current_payload_size) { 350.megabyte }
+      let(:current_payload_size) { 350.megabytes }
 
       it 'return true' do
         expect(ticket.send(:search_index_attribute_lookup_oversized?, current_payload_size)).to be true
@@ -1796,7 +1796,7 @@ RSpec.describe Ticket, type: :model do
     end
 
     context 'when total payload is ok' do
-      let(:current_payload_size) { 200.megabyte }
+      let(:current_payload_size) { 200.megabytes }
 
       it 'return false' do
         expect(ticket.send(:search_index_attribute_lookup_file_oversized?, store, current_payload_size)).to be false
@@ -1804,7 +1804,7 @@ RSpec.describe Ticket, type: :model do
     end
 
     context 'when total payload is oversized' do
-      let(:current_payload_size) { 299.megabyte }
+      let(:current_payload_size) { 299.megabytes }
 
       it 'return true' do
         expect(ticket.send(:search_index_attribute_lookup_file_oversized?, store, current_payload_size)).to be true

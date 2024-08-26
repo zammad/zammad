@@ -95,7 +95,7 @@ module Channel::Filter::Database # rubocop:disable Metrics/ModuleLength
 
     mail_header_key         = key.downcase.to_sym
     mail[mail_header_key] ||= []
-    tags                    = meta['value'].split(',').map(&:strip).select(&:present?)
+    tags                    = meta['value'].split(',').map(&:strip).compact_blank
 
     case meta['operator']
     when 'add'

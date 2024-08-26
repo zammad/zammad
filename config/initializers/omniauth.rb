@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-Dir[ Rails.root.join('lib/omniauth/*') ].each do |file|
+Rails.root.glob('lib/omniauth/*').each do |file|
   if File.file?(file)
     require file
   end

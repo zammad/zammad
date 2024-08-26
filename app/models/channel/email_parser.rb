@@ -624,7 +624,7 @@ returns
       h.replace(imported_fields.slice(*RECIPIENT_FIELDS)
                                .transform_values { |v| v.match?(EMAIL_REGEX) ? v : '' })
 
-      h['x-any-recipient'] = h.values.select(&:present?).join(', ')
+      h['x-any-recipient'] = h.values.compact_blank.join(', ')
       h['message_id']      = imported_fields['message-id']
       h['subject']         = imported_fields['subject']
       h['date']            = begin
