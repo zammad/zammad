@@ -166,7 +166,7 @@
     "tippy.js": "^6.3.7",
     "tiptap-text-direction": "^0.3.1",
     "ts-essentials": "^10.0.2",
-    "tslib": "^2.6.3",
+    "tslib": "^2.7.0",
     "ua-parser-js": "^1.0.38",
     "uuid": "^10.0.0",
     "vite-bundle-visualizer": "^1.2.1",
