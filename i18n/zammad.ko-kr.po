@@ -5335,6 +5335,12 @@ msgstr "삭제된 소속"
 msgid "Deleted tickets (%s in total):"
 msgstr "삭제된 티켓(전체 중 %s)"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:50
+msgid ""
+"Deleting your knowledge base requires an additional verification step. To "
+"proceed, enter its name below (\"%s\"). THIS ACTION CANNOT BE UNDONE."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:94
 msgid "Deletion Task"
 msgstr "작업 삭제"

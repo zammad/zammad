@@ -5034,6 +5034,12 @@ msgstr "Sunting Organisasi"
 msgid "Deleted tickets (%s in total):"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:50
+msgid ""
+"Deleting your knowledge base requires an additional verification step. To "
+"proceed, enter its name below (\"%s\"). THIS ACTION CANNOT BE UNDONE."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:94
 msgid "Deletion Task"
 msgstr ""

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-13 20:14+0000\n"
+"PO-Revision-Date: 2024-08-23 22:16+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/sv/>\n"
@@ -5227,6 +5227,14 @@ msgstr "Borttagen organisation:"
 msgid "Deleted tickets (%s in total):"
 msgstr "Borttagna ärenden (totalt %s):"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:50
+msgid ""
+"Deleting your knowledge base requires an additional verification step. To "
+"proceed, enter its name below (\"%s\"). THIS ACTION CANNOT BE UNDONE."
+msgstr ""
+"För att radera Kunskapsbanken krävs ytterligare ett verifieringssteg. För "
+"att fortsätta, ange namnet nedan (\"%s\"). DENNA ÅTGÄRD KAN INTE ÅNGRAS."
+
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:94
 msgid "Deletion Task"
 msgstr "Borttagningsuppgift"
@@ -8098,7 +8106,7 @@ msgid ""
 "the §</body>§ closing tag."
 msgstr ""
 "Sätt in widgetkoden i källkoden på varje sida där chatten ska vara synlig. "
-"Den ska placeras i slutet av sidans källkod före stänings-taggen §</body>§."
+"Den ska placeras i slutet av sidans källkod före stängnings-taggen §</body>§."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:518
 msgid "Inserts a horizontal rule"
@@ -9490,7 +9498,7 @@ msgstr "Namn Identifieringsformat"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:126
 msgid "Name for this security key"
-msgstr "Namn på säkerhetsnyckel"
+msgstr "Namn på denna säkerhetsnyckel"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:39
 msgid "Name of form submit button"
@@ -9561,7 +9569,7 @@ msgstr "Nytt"
 
 #: app/assets/javascripts/app/controllers/api.coffee:190
 msgid "New Access Token is"
-msgstr "Nytt åtkomsttoken är"
+msgstr "Ny åtkomsttoken är"
 
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:54
 msgid "New Activity Type"
@@ -9581,7 +9589,7 @@ msgstr "Ny kalender"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:8
 msgid "New Deletion Task"
-msgstr "Ny borttagning"
+msgstr "Ny Raderingsuppgift"
 
 #: app/assets/javascripts/app/controllers/group.coffee:25
 msgid "New Group"
@@ -9589,15 +9597,15 @@ msgstr "Ny grupp"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:22
 msgid "New Macro"
-msgstr "Nytt makro"
+msgstr "Nytt Makro"
 
 #: app/assets/javascripts/app/controllers/organization.coffee:28
 msgid "New Organization"
-msgstr "Ny organisation"
+msgstr "Ny Organisation"
 
 #: app/assets/javascripts/app/controllers/overview.coffee:24
 msgid "New Overview"
-msgstr "Ny översikt"
+msgstr "Ny Översikt"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee:19
 msgid "New Priority"
@@ -9605,15 +9613,15 @@ msgstr "Ny prioritet"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee:22
 msgid "New Profile"
-msgstr "Ny profil"
+msgstr "Ny Profil"
 
 #: app/assets/javascripts/app/controllers/public_link.coffee:18
 msgid "New Public Link"
-msgstr "Ny publik länk"
+msgstr "Ny Publik länk"
 
 #: app/assets/javascripts/app/controllers/role.coffee:28
 msgid "New Role"
-msgstr "Ny roll"
+msgstr "Ny Roll"
 
 #: app/assets/javascripts/app/views/sla/index.jst.eco:10
 msgid "New SLA"
@@ -9625,16 +9633,16 @@ msgstr "Ny Schemaläggare"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:27
 msgid "New Source"
-msgstr "Ny källa"
+msgstr "Ny Källa"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:14
 #: db/seeds/settings.rb:4021
 msgid "New Tags"
-msgstr "Ny tagg"
+msgstr "Ny Tagg"
 
 #: app/assets/javascripts/app/controllers/template.coffee:22
 msgid "New Template"
-msgstr "Ny mall"
+msgstr "Ny Mall"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:134
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:65
@@ -9645,7 +9653,7 @@ msgstr "Ny mall"
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
 msgid "New Ticket"
-msgstr "Nytt ärende"
+msgstr "Nytt Ärende"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:21
 msgid "New Ticket State"
@@ -9653,7 +9661,7 @@ msgstr "Ny ärendestatus"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco:11
 msgid "New Translation"
-msgstr "Ny översättning"
+msgstr "Ny Översättning"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:25
 msgid "New Trigger"
@@ -9663,7 +9671,7 @@ msgstr "Ny Trigger"
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:89
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:54
 msgid "New User"
-msgstr "Ny användare"
+msgstr "Ny Användare"
 
 #: db/seeds/settings.rb:1054
 msgid "New User Accounts"
@@ -9671,15 +9679,15 @@ msgstr "Tillåt nya användarkonton"
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:115
 msgid "New Version"
-msgstr "Ny version"
+msgstr "Ny Version"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee:28
 msgid "New Webhook"
-msgstr "Ny webhook"
+msgstr "Ny Webhook"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:24
 msgid "New Workflow"
-msgstr "Nytt arbetsflöde"
+msgstr "Nytt Arbetsflöde"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:66
 msgid "New organizations are shared."
@@ -9732,8 +9740,8 @@ msgstr ""
 "\n"
 "<div>Hej #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>Ärende (#{ticket.title}) har skapats av \"<b>#{current_user.longname}</"
-"b>\".</div>\n"
+"<div>Ärende (#{ticket.title}) har skapats av \"<b>#{current_user."
+"longname}</b>\".</div>\n"
 "<br>\n"
 "<div>\n"
 "Grupp: #{ticket.group.name}<br>\n"
@@ -9811,19 +9819,19 @@ msgstr "Ingen %s är konfigurerad."
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:3
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:11
 msgid "No Entries"
-msgstr "INGET ATT VISA"
+msgstr "Inget att visa"
 
 #: lib/external_credential/exchange.rb:12
 msgid "No Exchange app configured!"
-msgstr "Ingen Exchange app konfigurerad!"
+msgstr "Exchange app är inte konfigurerad!"
 
 #: lib/external_credential/facebook.rb:12
 msgid "No Facebook app configured!"
-msgstr "Ingen Facebook-app är konfigurerad!"
+msgstr "Facebook-app är inte konfigurerad!"
 
 #: lib/external_credential/microsoft365.rb:12
 msgid "No Microsoft 365 app configured!"
-msgstr "Ingen Microsoft 365-app är konfigurerad!"
+msgstr "Microsoft 365-app är inte konfigurerad!"
 
 #: db/seeds/settings.rb:553
 msgid "No Proxy"
@@ -9834,7 +9842,7 @@ msgstr "Ingen Proxy"
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:44
 msgid "No SSL"
-msgstr "Ingen SSL"
+msgstr "Inget SSL"
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee:37
 msgid "No Thanks!"
@@ -9865,7 +9873,7 @@ msgstr "Inget certifikat hittat."
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:5
 msgid "No configuration set."
-msgstr "Ingen konfiguration tillgänglig."
+msgstr "Konfiguration är inte gjord."
 
 #: app/views/knowledge_base/public/categories/index.html.erb:16
 #: app/views/knowledge_base/public/tags/show.html.erb:15
@@ -9906,7 +9914,7 @@ msgstr "Inga filformat tillåtna."
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:647
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:802
 msgid "No filter was configured."
-msgstr "Inget filter är konfigurerat."
+msgstr "Filter är inte konfigurerat."
 
 #: app/controllers/integration/exchange_controller.rb:45
 msgid "No folders were found for the given user credentials."
@@ -9930,7 +9938,7 @@ msgstr "Inga tidigare sökningar"
 
 #: app/models/setting/validation/saml/security.rb:34
 msgid "No private key found."
-msgstr "Ingen privat nyckel hittad."
+msgstr "Privat nyckel hittades inte."
 
 #: db/seeds/settings.rb:556
 msgid "No proxy for the following hosts."
@@ -9942,8 +9950,7 @@ msgstr "Inga uppgifter har hittats!"
 
 #: lib/whatsapp/webhook/message/status.rb:15
 msgid "No related article found to process the status message on."
-msgstr ""
-"Ingen relaterad artikel hittades för att bearbeta statusmeddelandet på."
+msgstr "Ingen relaterad artikel hittades för att bearbeta statusmeddelandet på."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:363
@@ -9969,7 +9976,7 @@ msgstr "Ingen session tillgänglig."
 
 #: lib/stats.rb:21
 msgid "No settings with area 'Dashboard::Stats' defined"
-msgstr "Inga inställningar för området 'Dashboard::Stats' definierade"
+msgstr "Inställningar för området 'Dashboard::Stats' är inte definierade"
 
 #: app/controllers/organizations_controller.rb:166
 #: app/controllers/text_modules_controller.rb:71
@@ -9977,7 +9984,7 @@ msgstr "Inga inställningar för området 'Dashboard::Stats' definierade"
 #: app/controllers/tickets_controller.rb:607
 #: app/controllers/users_controller.rb:680
 msgid "No source data submitted!"
-msgstr "Ingen källdata har skickats!"
+msgstr "Källdata har inte skickats!"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:14
 msgid "No template created yet."
@@ -9989,7 +9996,7 @@ msgstr "Token saknas!"
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
 msgid "No translation for this locale available"
-msgstr "Ingen översättning finns för detta språk"
+msgstr "Översättning för detta språk är inte tillgängligt"
 
 #: app/models/ticket.rb:399
 msgid "No triggers active"
@@ -9997,14 +10004,14 @@ msgstr "Inga triggers aktiva"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:8
 msgid "No unread notifications for you. :)"
-msgstr "Inga nya notifieringar :)"
+msgstr "Inga olästa notifieringar :)"
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco:1
 msgid ""
 "No webhook available, please create a new one or activate an existing one at "
 "\"Manage > Webhook\""
 msgstr ""
-"Ingen webhook tillgänglig, skapa en ny eller aktivera en befintlig i "
+"Webhook är inte tillgänglig, skapa en ny eller aktivera en befintlig i "
 "\"Hantera > Webhook\""
 
 #: app/models/channel/email_parser.rb:109
@@ -10125,7 +10132,7 @@ msgstr "Notering:"
 #: app/assets/javascripts/app/models/signature.coffee:26
 #: db/seeds/object_manager_attributes.rb:1342
 msgid "Notes are visible to agents only, never to customers."
-msgstr "Anteckningar är bara synliga för handläggare, aldrig för kunder."
+msgstr "Anteckningar är bara synliga för agenter, aldrig för kunder."
 
 #: app/assets/javascripts/app/views/generic/column_select.jst.eco:20
 msgid "Nothing selected"
@@ -10181,7 +10188,7 @@ msgstr "nov"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue:90
 msgid "November"
-msgstr "November"
+msgstr "november"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:10
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:20
@@ -10204,7 +10211,7 @@ msgstr "OAuth-URL:er är:"
 
 #: app/controllers/application_controller/authenticates.rb:104
 msgid "OAuth2 token is expired!"
-msgstr "OAuth2-token har gått ut!"
+msgstr "OAuth2 Token har löpt ut!"
 
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue:18
 msgid "OK"
@@ -10265,7 +10272,7 @@ msgstr "okt"
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue:89
 msgid "October"
-msgstr "Oktober"
+msgstr "oktober"
 
 #: public/assets/chat/chat.coffee:206
 msgid "Offline"
@@ -10278,7 +10285,7 @@ msgstr "Ok"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:413
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts:32
 msgid "On %s, %s wrote:"
-msgstr "%s skrev %s:"
+msgstr "Den %s skrev %s:"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:9
 msgid "On-screen Translation"
@@ -10303,7 +10310,7 @@ msgstr "Onlineformulär"
 
 #: db/seeds/settings.rb:83
 msgid "Online Service"
-msgstr "Online tjänster"
+msgstr "Onlinetjänster"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:18
 msgid "Only %s attachment allowed"
@@ -12831,7 +12838,7 @@ msgstr "Visa föregående flik"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:42
 msgid "Show the chat when ready."
-msgstr "Visa chatten när den är klar."
+msgstr "Visa chatten när den är tillgänglig."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue:104
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue:87
@@ -19298,7 +19305,7 @@ msgstr "... lägg till objekttitel"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:512
 msgid "…of whole text area"
-msgstr "... av hela textfältet"
+msgstr "...av hela textfältet"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-12 22:16+0000\n"
+"PO-Revision-Date: 2024-08-23 22:16+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/sr_Cyrl/>\n"
@@ -5209,6 +5209,14 @@ msgstr "Обрисана организација:"
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:38
 msgid "Deleted tickets (%s in total):"
 msgstr "Обрисани тикети (укупно %s):"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:50
+msgid ""
+"Deleting your knowledge base requires an additional verification step. To "
+"proceed, enter its name below (\"%s\"). THIS ACTION CANNOT BE UNDONE."
+msgstr ""
+"Брисање ваше базе знања захтева додатни корак потврде. Да бисте наставили, "
+"унесите њено име испод („%s”). ОВА РАДЊА ЈЕ НЕПОВРАТНА."
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:94
 msgid "Deletion Task"

@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-15 22:16+0000\n"
+"PO-Revision-Date: 2024-08-26 05:31+0000\n"
 "Last-Translator: JPB <JPB@users.noreply.translations.zammad.org>\n"
-"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
-"stable/nl/>\n"
+"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
+"zammad-stable/nl/>\n"
 "Language: nl-nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1025,7 +1025,7 @@ msgstr "Account SID"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:6
 msgid "Account Time"
-msgstr "Tijd van gebruiker"
+msgstr "Tijd registreren"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:582
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:198
@@ -1094,7 +1094,7 @@ msgstr "Actie"
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
 msgid "Action execution"
-msgstr "Uitvoering van acties"
+msgstr "Actie-uitvoering"
 
 #: app/assets/javascripts/app/models/macro.coffee:7
 #: app/assets/javascripts/app/models/template.coffee:7
@@ -1117,7 +1117,7 @@ msgid ""
 "Activates lost password feature for users. This setting is only effective if "
 "the password login is enabled."
 msgstr ""
-"'Wachtwoord vergeten' functionaliteit inschakelen. Dit werkt enkel indien "
+"'Wachtwoord vergeten\" functionaliteit inschakelen. Dit werkt enkel indien "
 "het aanmelden met wachtwoord actief is."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:320
@@ -1228,7 +1228,7 @@ msgstr "Bot toevoegen"
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:88
 #: app/assets/javascripts/app/views/integration/smime.jst.eco:5
 msgid "Add Certificate"
-msgstr "Voeg certificaat toe"
+msgstr "Certificaat toevoegen"
 
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco:5
 msgid "Add Key"
@@ -1249,7 +1249,7 @@ msgstr "Public of Private Key toevoegen"
 
 #: app/assets/javascripts/app/views/ssl_certificates.jst.eco:5
 msgid "Add SSL Certificate"
-msgstr "Voeg SSL-Certificaat toe"
+msgstr "SSL-Certificaat toevoegen"
 
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco:19
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:14
@@ -1282,7 +1282,7 @@ msgstr "Voeg een bericht toe"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:123
 msgid "Add agreement text before submit."
-msgstr "Voeg de tekst van de overeenkomst toe voor het versturen."
+msgstr "Voeg de overeenkomsttekst toe voor het versturen."
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:34
 msgid "Add alarm to pending reminder and escalated tickets."
@@ -2467,7 +2467,7 @@ msgstr "Body - Zoek voor Follow-up in de e-mail body."
 
 #: lib/validations/ticket_article_validator/sms_twilio.rb:14
 msgid "Body text is required"
-msgstr "Berichttekst is verplicht!"
+msgstr "Berichttekst is verplicht"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:41
 msgid "Boolean field"
@@ -5256,6 +5256,15 @@ msgstr "Organisatie verwijderen:"
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:38
 msgid "Deleted tickets (%s in total):"
 msgstr "Verwijderde tickets (%s in totaal):"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:50
+msgid ""
+"Deleting your knowledge base requires an additional verification step. To "
+"proceed, enter its name below (\"%s\"). THIS ACTION CANNOT BE UNDONE."
+msgstr ""
+"Het verwijderen van de Kennisbank vereist een extra verificatiestap. Voer de "
+"naam hieronder in (\"%s\") om verder te gaan. DEZE ACTIE KAN NIET ONGEDAAN "
+"WORDEN GEMAAKT."
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:94
 msgid "Deletion Task"

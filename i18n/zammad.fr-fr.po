@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-20 12:30+0000\n"
-"Last-Translator: Solenne Lefevre <solenne.lefevre@data-bene.io>\n"
+"PO-Revision-Date: 2024-08-22 22:16+0000\n"
+"Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -580,7 +580,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:65
 msgid "%s required!"
-msgstr "%s obligatoire !"
+msgstr "%s requis !"
 
 #: app/assets/javascripts/app/models/user.coffee:203
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts:28
@@ -2139,7 +2139,7 @@ msgstr "Attribut"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:618
 msgid "Attribute '%s' is required in the mapping"
-msgstr "L'attribut '%s' est nécessaire pour la liaison"
+msgstr "L'attribut '%s' est requis pour la liaison"
 
 #: db/seeds/settings.rb:1912
 msgid ""
@@ -2495,7 +2495,7 @@ msgstr "Corps - Rechercher un suivi dans le corps de l'email."
 
 #: lib/validations/ticket_article_validator/sms_twilio.rb:14
 msgid "Body text is required"
-msgstr "Le corps du texte est requis."
+msgstr "Le corps du texte est requis"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:41
 msgid "Boolean field"
@@ -4849,7 +4849,7 @@ msgstr "Définit la configuration CTI."
 
 #: db/seeds/settings.rb:4596
 msgid "Defines the Checkmk token for allowing updates."
-msgstr "Définit le jeton Checkmk pour autoriser les mises à jour."
+msgstr "Définit le jeton Checkmk pour permettre les mises à jour."
 
 #: db/seeds/settings.rb:5237
 msgid "Defines the Clearbit config."
@@ -5323,6 +5323,12 @@ msgstr "Organisation supprimée :"
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:38
 msgid "Deleted tickets (%s in total):"
 msgstr "Tickets supprimés (%s au total) :"
+
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:50
+msgid ""
+"Deleting your knowledge base requires an additional verification step. To "
+"proceed, enter its name below (\"%s\"). THIS ACTION CANNOT BE UNDONE."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:94
 msgid "Deletion Task"
@@ -7657,9 +7663,8 @@ msgid "High priority"
 msgstr "Priorité élevée"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
-#, fuzzy
 msgid "Highlight color"
-msgstr "Couleur d'affichage"
+msgstr "Couleur de mise en avant"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:8
 msgid "Highlight icon"
@@ -8539,7 +8544,7 @@ msgstr "Il n'est pas possible de fusionner avec un ticket déjà fusionné."
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:15
 msgid "Items per page"
-msgstr "Eléments par page"
+msgstr "Éléments par page"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 #: app/assets/javascripts/app/controllers/report.coffee:204
@@ -11831,11 +11836,11 @@ msgstr "Demander le droit"
 
 #: app/controllers/reports_controller.rb:57
 msgid "Required parameter 'downloadBackendSelected' is missing."
-msgstr "La paramètre obligatoire 'downloadBackendSelected' est manquant."
+msgstr "La paramètre requis 'downloadBackendSelected' est manquant."
 
 #: app/controllers/reports_controller.rb:117
 msgid "Required parameter 'profile' is missing."
-msgstr "Le paramètre obligatoire 'profile' est manquant."
+msgstr "Le paramètre requis 'profile' est manquant."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:177
 #: app/assets/javascripts/app/views/channel/form.jst.eco:147
@@ -14619,7 +14624,8 @@ msgstr "La limite de requêtes pour cette opération a été dépassée."
 #: lib/validations/verify_perform_rules_validator.rb:62
 msgid "The required '%{attribute}' value for %{key}, %{inner} is missing!"
 msgstr ""
-"La valeur du champ '%{attribute}' pour %{key}, %{inner} est manquante !"
+"La valeur du champ '%{attribute}' requis pour %{key}, %{inner} est "
+"manquante !"
 
 #: app/controllers/channels_twitter_controller.rb:38
 msgid "The required 'ExternalCredential' 'twitter' could not be found."
@@ -14632,27 +14638,27 @@ msgstr "La phrase secrète PGP requise est manquante."
 #: app/controllers/users_controller.rb:779
 #: app/services/service/user/add_first_admin.rb:12
 msgid "The required attribute 'email' is missing."
-msgstr "L'attribut obligatoire 'email' est manquant."
+msgstr "L'attribut requis 'email' est manquant."
 
 #: app/services/service/system/set_system_information.rb:42
 msgid "The required attribute 'organization' is missing."
-msgstr "L'attribut obligatoire 'organization' est manquant."
+msgstr "L'attribut requis 'organization' est manquant."
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb:35
 msgid "The required event field 'execution' is missing."
-msgstr "Le champ d'événement obligatoire 'execution' est manquant."
+msgstr "Le champ d'événement requis 'execution' est manquant."
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb:62
 msgid "The required event field 'execution' is unknown or missing."
-msgstr "Le champ d'événement obligatoire 'execution' est inconnu ou manquant."
+msgstr "Le champ d'événement requis 'execution' est inconnu ou manquant."
 
 #: lib/idoit.rb:22
 msgid "The required field 'api_token' is missing from the config."
-msgstr "Le champ obligatoire 'api_token' est manquant dans la configuration."
+msgstr "Le champ requis 'api_token' est manquant dans la configuration."
 
 #: lib/idoit.rb:23
 msgid "The required field 'endpoint' is missing from the config."
-msgstr "Le champ obligatoire 'endpoint' est manquant dans la configuration."
+msgstr "Le champ requis 'endpoint' est manquant dans la configuration."
 
 #: app/models/postmaster_filter.rb:33
 msgid "The required match value is missing."
@@ -14660,163 +14666,163 @@ msgstr "La valeur de correspondance requise est manquante."
 
 #: app/controllers/user/two_factors_controller.rb:32
 msgid "The required parameter \"method\" is missing."
-msgstr "Le paramètre obligatoire 'method' est manquant."
+msgstr "Le paramètre requis 'method' est manquant."
 
 #: app/controllers/user/two_factors_controller.rb:33
 msgid "The required parameter \"payload\" is missing."
-msgstr "Le paramètre obligatoire \"payload\" est manquant."
+msgstr "Le paramètre requis \"payload\" est manquant."
 
 #: lib/whatsapp/client.rb:12
 msgid "The required parameter 'access_token' is missing."
-msgstr "Le paramètre obligatoire 'access_token' est manquant."
+msgstr "Le paramètre requis 'access_token' est manquant."
 
 #: lib/external_credential/facebook.rb:23
 msgid "The required parameter 'application_id' is missing."
-msgstr "Le paramètre obligatoire 'application_id' est manquant."
+msgstr "Le paramètre requis 'application_id' est manquant."
 
 #: lib/external_credential/facebook.rb:24
 msgid "The required parameter 'application_secret' is missing."
-msgstr "Le paramètre obligatoire 'application_secret' est manquant."
+msgstr "Le paramètre requis 'application_secret' est manquant."
 
 #: app/controllers/channels_sms_controller.rb:89
 msgid "The required parameter 'area' is missing."
-msgstr "Le paramètre obligatoire 'area' est manquant."
+msgstr "Le paramètre requis 'area' est manquant."
 
 #: lib/whatsapp/account/phone_numbers.rb:16
 msgid "The required parameter 'business_id' is missing."
-msgstr "Le paramètre obligatoire 'business_id' est manquant."
+msgstr "Le paramètre requis 'business_id' est manquant."
 
 #: lib/external_credential/exchange.rb:27 lib/external_credential/google.rb:23
 #: lib/external_credential/microsoft365.rb:27
 msgid "The required parameter 'client_id' is missing."
-msgstr "Le paramètre obligatoire 'client_id' est manquant."
+msgstr "Le paramètre requis 'client_id' est manquant."
 
 #: lib/external_credential/exchange.rb:28 lib/external_credential/google.rb:24
 #: lib/external_credential/microsoft365.rb:28
 msgid "The required parameter 'client_secret' is missing."
-msgstr "Le paramètre obligatoire 'client_secret' est manquant."
+msgstr "Le paramètre requis 'client_secret' est manquant."
 
 #: lib/external_credential/exchange.rb:43 lib/external_credential/google.rb:36
 #: lib/external_credential/microsoft365.rb:43
 msgid "The required parameter 'code' is missing."
-msgstr "Le paramètre obligatoire 'code' est manquant."
+msgstr "Le paramètre requis 'code' est manquant."
 
 #: lib/external_credential/twitter.rb:22
 msgid "The required parameter 'consumer_key' is missing."
-msgstr "Le paramètre obligatoire 'consumer_key' est manquant."
+msgstr "Le paramètre requis 'consumer_key' est manquant."
 
 #: lib/external_credential/twitter.rb:23
 msgid "The required parameter 'consumer_secret' is missing."
-msgstr "Le paramètre obligatoire 'consumer_secret' est manquant."
+msgstr "Le paramètre requis 'consumer_secret' est manquant."
 
 #: app/controllers/channels_twitter_controller.rb:56
 msgid ""
 "The required parameter 'crc_token' is missing from the Twitter verify "
 "payload!"
 msgstr ""
-"Le paramètre obligatoire 'crc_token' est absent de la charge utile (payload) "
-"de vérification de Twitter !"
+"Le paramètre requis 'crc_token' est absent de la charge utile (payload) de "
+"vérification de Twitter !"
 
 #: app/controllers/channels_twitter_controller.rb:21
 msgid "The required parameter 'for_user_id' is missing."
-msgstr "Le paramètre obligatoire 'for_user_id' est manquant."
+msgstr "Le paramètre requis 'for_user_id' est manquant."
 
 #: lib/telegram_helper.rb:56
 msgid "The required parameter 'group_id' is invalid."
-msgstr "Le paramètre obligatoire 'group_id' est invalide."
+msgstr "Le paramètre requis 'group_id' est invalide."
 
 #: lib/telegram_helper.rb:51
 msgid "The required parameter 'group_id' is missing."
-msgstr "Le paramètre obligatoire 'group_id' est manquant."
+msgstr "Le paramètre requis 'group_id' est manquant."
 
 #: app/controllers/users_controller.rb:622
 msgid "The required parameter 'id' is missing."
-msgstr "Le paramètre obligatoire 'id' est manquant."
+msgstr "Le paramètre requis 'id' est manquant."
 
 #: lib/search_index_backend.rb:600
 msgid "The required parameter 'key' is missing."
-msgstr "Le paramètre obligatoire 'key' est manquant."
+msgstr "Le paramètre requis 'key' est manquant."
 
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee:75
 msgid "The required parameter 'link_type' is missing."
-msgstr "Le paramètre obligatoire 'link_type' est manquant."
+msgstr "Le paramètre requis 'link_type' est manquant."
 
 #: app/models/text_module.rb:28
 msgid "The required parameter 'locale' is missing."
-msgstr "Le paramètre obligatoire 'locale' est manquant."
+msgstr "Le paramètre requis 'locale' est manquant."
 
 #: app/controllers/user_access_token_controller.rb:41
 msgid "The required parameter 'name' is missing."
-msgstr "Le paramètre obligatoire 'name' est manquant."
+msgstr "Le paramètre requis 'name' est manquant."
 
 #: lib/external_credential/twitter.rb:134
 msgid "The required parameter 'oauth_token' is missing."
-msgstr "Le paramètre obligatoire 'oauth_token' est manquant."
+msgstr "Le paramètre requis 'oauth_token' est manquant."
 
 #: lib/external_credential/twitter.rb:135
 msgid "The required parameter 'oauth_token_secret' is missing."
-msgstr "Le paramètre obligatoire 'oauth_token_secret' est manquant."
+msgstr "Le paramètre requis 'oauth_token_secret' est manquant."
 
 #: app/controllers/channels_sms_controller.rb:45
 msgid "The required parameter 'options.adapter' is missing."
-msgstr "Le paramètre obligatoire 'options.adapter' est manquant."
+msgstr "Le paramètre requis 'options.adapter' est manquant."
 
 #: app/controllers/channels_sms_controller.rb:93
 msgid "The required parameter 'params' is missing."
-msgstr "Le paramètre obligatoire 'params' est manquant."
+msgstr "Le paramètre requis 'params' est manquant."
 
 #: app/controllers/users_controller.rb:505
 msgid "The required parameter 'password' is missing."
-msgstr "Le paramètre obligatoire 'password' est manquant."
+msgstr "Le paramètre requis 'password' est manquant."
 
 #: app/models/core_workflow/result.rb:15
 msgid "The required parameter 'payload->class_name' is missing."
-msgstr "Le paramètre obligatoire 'payload->class_name' est manquant."
+msgstr "Le paramètre requis 'payload->class_name' est manquant."
 
 #: app/models/core_workflow/result.rb:16
 msgid "The required parameter 'payload->screen' is missing."
-msgstr "Le paramètre obligatoire 'payload->screen' est manquant."
+msgstr "Le paramètre requis 'payload->screen' est manquant."
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:104
 msgid "The required parameter 'permission' is missing."
-msgstr "Le paramètre obligatoire 'permission' est manquant."
+msgstr "Le paramètre requis 'permission' est manquant."
 
 #: lib/external_credential/twitter.rb:53
 msgid "The required parameter 'request_token' is missing."
-msgstr "Le paramètre obligatoire 'request_token' est manquant."
+msgstr "Le paramètre requis 'request_token' est manquant."
 
 #: app/controllers/users_controller.rb:772
 msgid "The required parameter 'signup' is missing."
-msgstr "Le paramètre obligatoire 'signup' est manquant."
+msgstr "Le paramètre requis 'signup' est manquant."
 
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee:72
 msgid "The required parameter 'ticket_number' is missing."
-msgstr "Le paramètre obligatoire 'ticket_number' est manquant."
+msgstr "Le paramètre requis 'ticket_number' est manquant."
 
 #: app/models/concerns/perform_changes/action/attribute_updates.rb:74
 msgid "The required parameter 'user_id' is missing."
-msgstr "Le paramètre obligatoire 'user_id' est manquant."
+msgstr "Le paramètre requis 'user_id' est manquant."
 
 #: lib/search_index_backend.rb:601
 msgid "The required parameter 'value' is missing."
-msgstr "Le paramètre obligatoire 'value' est manquant."
+msgstr "Le paramètre requis 'value' est manquant."
 
 #: app/controllers/channels_twitter_controller.rb:55
 msgid ""
 "The required value 'external_credential[:consumer_secret]' could not be "
 "found in the cache."
 msgstr ""
-"La valeur obligatoire 'external_credential[:consumer_secret]' n'a pas été "
-"trouvée dans le cache."
+"La valeur requis 'external_credential[:consumer_secret]' n'a pas été trouvée "
+"dans le cache."
 
 #: app/policies/ticket_policy.rb:35
 msgid "The required value 'group_id' is missing."
-msgstr "La valeur obligatoire 'group_id' est manquante."
+msgstr "La valeur requis 'group_id' est manquante."
 
 #: app/controllers/channels_twitter_controller.rb:54
 msgid "The required value external_credential could not be found in the cache."
 msgstr ""
-"La valeur obligatoire external_credential n'a pas été trouvée dans le cache."
+"La valeur requis external_credential n'a pas été trouvée dans le cache."
 
 #: app/controllers/ticket_articles_controller.rb:264
 msgid "The retried attachment download failed."
@@ -15309,7 +15315,7 @@ msgstr "Ce champ ne commence pas par \"%s\"."
 
 #: app/frontend/shared/form/i18n/locales.ts:507
 msgid "This field is required."
-msgstr "Ce champ est obligatoire."
+msgstr "Ce champ est requis."
 
 #: app/frontend/shared/form/i18n/locales.ts:328
 msgid "This field isn't a valid date, please use the format \"%s\"."
@@ -19277,7 +19283,7 @@ msgstr "répondre à tous"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:111
 msgid "required"
-msgstr "obligatoire"
+msgstr "requis(e)"
 
 #: db/seeds/settings.rb:2204
 msgid "right"

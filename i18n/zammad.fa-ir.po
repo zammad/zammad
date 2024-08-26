@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-21 05:05+0000\n"
+"PO-Revision-Date: 2024-08-26 05:31+0000\n"
 "Last-Translator: Sjazz <s.jazini@vatanmail.ir>\n"
 "Language-Team: Persian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fa/>\n"
@@ -268,7 +268,7 @@ msgstr "گروه %s"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:50
 msgid "%s Import Status"
-msgstr "%s وضعیت درون‌ریزی"
+msgstr "%s وضعیت درونبرد"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:61
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:65
@@ -2704,7 +2704,6 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee:3
-#, fuzzy
 msgid "Checkmk"
 msgstr "Checkmk"
 
@@ -3254,10 +3253,8 @@ msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "کپی شماره آبجکت کنونی (مثلا شماره تیکت) داخل کلیپ‌بورد"
 
 #: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco:14
-#, fuzzy
-#| msgid "Copy to clipboard: Ctrl+C, Enter"
 msgid "Copy to clipboard"
-msgstr "کپی به کلیپ برد : CTRL+C , Enter"
+msgstr "رونوشت به کلیپ برد"
 
 #: db/seeds/permissions.rb:306
 msgid "Core Workflow"
@@ -3339,10 +3336,8 @@ msgstr "ساخت یوزر ادمین"
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:65
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue:23
-#, fuzzy
-#| msgid "Administrator Account"
 msgid "Create Administrator Account"
-msgstr "حساب کاربری ادمین"
+msgstr "ایجاد حساب کاربری مدیر"
 
 #: lib/excel_sheet/ticket.rb:31
 msgid "Create Channel"
@@ -3387,10 +3382,8 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:65
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:578
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Create Ticket"
-msgstr "ایجاد تیکت تست"
+msgstr "ایجاد تیکت"
 
 #: app/controllers/first_steps_controller.rb:86
 msgid "Create a Test Ticket"
@@ -3409,10 +3402,8 @@ msgid "Create a translation"
 msgstr "ایجاد یک ترجمه"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue:83
-#, fuzzy
-#| msgid "Create my account"
 msgid "Create account"
-msgstr "حساب من را ایجاد کن"
+msgstr "ایجاد حساب کاربری"
 
 #: db/seeds/permissions.rb:473
 msgid "Create and set up %s"
@@ -3428,8 +3419,6 @@ msgid "Create new Customer"
 msgstr "ایجاد مشتری جدید"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:78
-#, fuzzy
-#| msgid "Create new Customer"
 msgid "Create new customer"
 msgstr "ایجاد مشتری جدید"
 
@@ -3442,22 +3431,16 @@ msgid "Create new records"
 msgstr "ایجاد رکوردهای جدید"
 
 #: app/frontend/apps/mobile/components/CommonTicketCreateLink/CommonTicketCreateLink.vue:14
-#, fuzzy
-#| msgid "Create new object"
 msgid "Create new ticket"
-msgstr "ایجاد آبجکت جدید"
+msgstr "ایجاد تیکت جدید"
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationTicketsCount.ts:17
-#, fuzzy
-#| msgid "Tickets of Organization"
 msgid "Create new ticket for this organization"
-msgstr "تیکت‌های سازمان"
+msgstr "ایجاد تیکت جدید برای این سازمان"
 
 #: app/frontend/apps/mobile/entities/user/composables/useUserTicketsCount.ts:16
-#, fuzzy
-#| msgid "Tickets of Organization"
 msgid "Create new ticket for this user"
-msgstr "تیکت‌های سازمان"
+msgstr "ایجاد تیکت جدید برای این کاربر"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:65
 msgid "Create organizations automatically if record has one."
@@ -3469,16 +3452,12 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:153
-#, fuzzy
-#| msgid "Created At"
 msgid "Create tag"
-msgstr "زمان ایجاد"
+msgstr "ایجاد برچسب"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:631
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Create ticket"
-msgstr "ایجاد تیکت تست"
+msgstr "ایجاد تیکت"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:14
 msgid "Create your first ticket"
@@ -3515,10 +3494,8 @@ msgid "Created"
 msgstr "ایجاد شده"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
-#, fuzzy
-#| msgid "Created At"
 msgid "Created Article"
-msgstr "زمان ایجاد"
+msgstr "ایجاد مقاله"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:18
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:16
@@ -3527,16 +3504,12 @@ msgid "Created At"
 msgstr "زمان ایجاد"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
-#, fuzzy
-#| msgid "Create new object"
 msgid "Created External Article"
-msgstr "ایجاد آبجکت جدید"
+msgstr "مقاله خارجی ایجاد شده"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
-#, fuzzy
-#| msgid "Create new object"
 msgid "Created Internal Article"
-msgstr "ایجاد آبجکت جدید"
+msgstr "مقاله داخلی ایجاد شده"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:53
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:7
@@ -3579,10 +3552,8 @@ msgid "Creating new tickets via web is disabled."
 msgstr "ایجاد تیکت‌های جدید از طریق وب غیرفعال شده است."
 
 #: app/models/report.rb:85
-#, fuzzy
-#| msgid "Create Channels"
 msgid "Creation Channels"
-msgstr "کانال ایجاد تیکت"
+msgstr "ایجاد کانال‌ها"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:53
 msgid "Creation mask"
@@ -3631,21 +3602,17 @@ msgid "Custom"
 msgstr "سفارشی"
 
 #: app/assets/javascripts/app/models/webhook.coffee:12
-#, fuzzy
-#| msgid "Example Payload"
 msgid "Custom Payload"
-msgstr "نمونه کد برنامه"
+msgstr "داده‌ی سفارشی"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:80
-#, fuzzy
-#| msgid "Translations"
 msgid "Custom Translation"
-msgstr "ترجمه ها"
+msgstr "ترجمه سفارشی"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:127
 #: app/assets/javascripts/app/models/knowledge_base.coffee:290
 msgid "Custom URL"
-msgstr "لینک سفارشی"
+msgstr "پیوند سفارشی"
 
 #: lib/knowledge_base/server_snippet.rb:10
 msgid "Custom address is not set"
@@ -3825,20 +3792,16 @@ msgid "Default Behavior"
 msgstr "رفتار پیش‌فرض"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:3
-#, fuzzy
-#| msgid "Disable Notifications"
 msgid "Default Notifications"
-msgstr "غیر فعال‌سازی اطلاع رسانی ها"
+msgstr "اعلان‌های پیش فرض"
 
 #: db/seeds/settings.rb:3478
 msgid "Default Screen"
 msgstr "پنجره پیش‌فرض"
 
 #: db/seeds/settings.rb:2475
-#, fuzzy
-#| msgid "Block Notifications"
 msgid "Default Ticket Agent Notifications"
-msgstr "متوقف کردن اطلاع رسانی ها"
+msgstr "پیش‌فرضِ اعلان‌های تیکت کارشناس"
 
 #: app/assets/javascripts/app/models/role.coffee:9
 msgid "Default at Signup"
@@ -3860,10 +3823,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:26
 #: app/assets/javascripts/app/models/ticket_state.coffee:28
-#, fuzzy
-#| msgid "Default type for a new ticket"
 msgid "Default for new tickets"
-msgstr "نوع پیش‌فرض برای تیکت جدید"
+msgstr "پیش‌فرض برای تیکت‌های جدید"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:357
 msgid "Default time diff (hours)"
@@ -3922,10 +3883,8 @@ msgid ""
 msgstr ""
 
 #: db/seeds/settings.rb:2478
-#, fuzzy
-#| msgid "Defines the default visibility for new notes."
 msgid "Define the default agent notifications for new users."
-msgstr "تعیین قابلیت مشاهده پیش‌فرض برای یادداشت جدید."
+msgstr "تعیین اعلان‌های پیش‌فرض کارشناس برای کاربران جدید."
 
 #: db/seeds/settings.rb:1004
 msgid "Define the maximum number of ticket shown in overviews."
@@ -4406,10 +4365,8 @@ msgid "Defines the HTTP protocol of your instance."
 msgstr ""
 
 #: db/seeds/settings.rb:5539
-#, fuzzy
-#| msgid "Defines the LDAP config."
 msgid "Defines the PGP config."
-msgstr "تعریف تنظیمات LDAP."
+msgstr "تعریف پیکربندی PGP."
 
 #: db/seeds/settings.rb:5176
 msgid "Defines the Placetel config."
@@ -4483,10 +4440,8 @@ msgid "Defines the default system timezone."
 msgstr "تعیین منظقه زمانی پیش‌فرض سیستم."
 
 #: db/seeds/settings.rb:4006
-#, fuzzy
-#| msgid "Defines the default system timezone."
 msgid "Defines the default time accounting type."
-msgstr "تعیین منظقه زمانی پیش‌فرض سیستم."
+msgstr "تعیین پیش‌فرضِ نوع زمان حساب کاربری"
 
 #: db/seeds/settings.rb:633
 msgid "Defines the default visibility for new notes."
@@ -4809,6 +4764,12 @@ msgstr "سازمان‌های حذف شده:"
 msgid "Deleted tickets (%s in total):"
 msgstr "تیکت‌های حذف‌شده (در مجموع %s عدد):"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:50
+msgid ""
+"Deleting your knowledge base requires an additional verification step. To "
+"proceed, enter its name below (\"%s\"). THIS ACTION CANNOT BE UNDONE."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:94
 msgid "Deletion Task"
 msgstr "ماموریت حذف"
@@ -5016,10 +4977,8 @@ msgid "Do not update any tickets."
 msgstr "هیچ تیکتی را به‌روز نکن."
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco:21
-#, fuzzy
-#| msgid "No proxy for the following hosts."
 msgid "Do not use the proxy for the following hosts."
-msgstr "برای هاست های زیر از پروکسی استفاده نشود."
+msgstr "برای هاست‌های زیر از پروکسی استفاده نشود."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:24
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee:115
@@ -5036,10 +4995,8 @@ msgid "Do you really want to delete this object?"
 msgstr "آیا واقعا مایل به حذف این آبجکت هستید؟"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue:152
-#, fuzzy
-#| msgid "Do you really want to delete this draft?"
 msgid "Do you really want to delete your current avatar?"
-msgstr "آیا واقعا مایل به حذف این پیش‌نویس هستید؟"
+msgstr "آیا واقعا مایل به حذف تصویر نمایه خود هستید؟"
 
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee:3
 msgid "Do you really want to set the visibility of this article to \"public\"?"
@@ -5058,10 +5015,8 @@ msgstr "دامنه"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:122
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:14
-#, fuzzy
-#| msgid "Domain"
 msgid "Domain Alias"
-msgstr "دامنه"
+msgstr "نام مستعار دامنه"
 
 #: db/seeds/object_manager_attributes.rb:1593
 msgid "Domain based assignment"
@@ -5088,10 +5043,8 @@ msgid "Download"
 msgstr "دانلود"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:66
-#, fuzzy
-#| msgid "Download"
 msgid "Download %s"
-msgstr "دانلود"
+msgstr "بارگیری %s"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:5
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:27
@@ -5113,16 +5066,12 @@ msgid "Download Private Key"
 msgstr "دانلود کلید خصوصی"
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:68
-#, fuzzy
-#| msgid "Download Private Key"
 msgid "Download Public Key"
-msgstr "دانلود کلید خصوصی"
+msgstr "بارگیری کلید عمومی"
 
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:16
-#, fuzzy
-#| msgid "Download %s record(s)"
 msgid "Download all records"
-msgstr "دانلود %s عدد رکورد"
+msgstr "بارگیری همه مدارک"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:8
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:103
@@ -5130,10 +5079,8 @@ msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:319
-#, fuzzy
-#| msgid "select attachment…"
 msgid "Downloading attachments…"
-msgstr "انتخاب فایل ضمیمه…"
+msgstr "بارگیری ضمیمه‌ها…"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:101
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:9
@@ -5155,10 +5102,8 @@ msgid "Drop files here"
 msgstr "فایلها را اینجا رها کنید"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue:104
-#, fuzzy
-#| msgid "Drop files here"
 msgid "Drop image file here"
-msgstr "فایلها را اینجا رها کنید"
+msgstr "پرونده تصویر را اینجا رها کنید"
 
 #: app/assets/javascripts/app/controllers/login.coffee:26
 msgid "Due to inactivity, you have been automatically logged out."
@@ -5172,10 +5117,8 @@ msgstr ""
 "بعلت عدم فعالیت٬ شما بصورت خودکار ظرف مدت ۳۰ ثانیه از سیستم خارج خواهید شد."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:13
-#, fuzzy
-#| msgid "Application"
 msgid "Duplicate Detection"
-msgstr "اپلیکیشن"
+msgstr "شناسایی تکراری"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:34
 msgid "Duration"
@@ -5237,20 +5180,16 @@ msgstr "ویرایش ماسک"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:34
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:88
-#, fuzzy
-#| msgid "reply"
 msgid "Edit reply"
-msgstr "پاسخ"
+msgstr "ویرایش پاسخ"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:37
 msgid "Editing"
 msgstr "در حال ویرایش"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:37
-#, fuzzy
-#| msgid "assign tickets"
 msgid "Editing on Desktop"
-msgstr "تخصیص تیکت ها"
+msgstr "ویرایش در حالت میزکار"
 
 #: db/seeds/settings.rb:3533
 msgid "Elasticsearch Attachment Extensions"
@@ -5364,10 +5303,8 @@ msgid "Email Address"
 msgstr "آدرس ایمیل"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannels.vue:37
-#, fuzzy
-#| msgid "Channel"
 msgid "Email Channel"
-msgstr "کانال"
+msgstr "کانال رایانامه"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:83
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:67
@@ -5395,10 +5332,8 @@ msgstr "ایمیل خروجی"
 
 #: app/frontend/apps/desktop/pages/authentication/routes.ts:119
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:114
-#, fuzzy
-#| msgid "Email Notification"
 msgid "Email Verification"
-msgstr "اعلان از طریق ایمیل"
+msgstr "تایید رایانامه"
 
 #: app/models/user.rb:725
 msgid "Email address '%{email}' is already used for another user."
@@ -5410,10 +5345,8 @@ msgid "Email could not be verified. Please contact your administrator."
 msgstr "امکان راستی‌آزمایی ایمیل وجود ندارد. لطفا با ادمین سیستم تماس بگیرید."
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:88
-#, fuzzy
-#| msgid "Expert"
 msgid "Email import mode"
-msgstr "پیشرفته"
+msgstr "حالت درونبرد رایانامه"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:811
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:383
@@ -5670,10 +5603,8 @@ msgstr "رمزنگاری"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:65
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:165
-#, fuzzy
-#| msgid "Encryption"
 msgid "Encryption error"
-msgstr "رمزگذاری"
+msgstr "خطای رمزنگاری"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:95
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:193
@@ -5700,16 +5631,12 @@ msgid "Endpoint Settings"
 msgstr "تنظیمات دستگاه کاربر"
 
 #: db/seeds/settings.rb:5710
-#, fuzzy
-#| msgid "Authentication"
 msgid "Enforce the setup of the two-factor authentication"
-msgstr "احراز هویت"
+msgstr "الزام تنظیم کردن احراز هویت دوعاملی"
 
 #: db/seeds/settings.rb:5717
-#, fuzzy
-#| msgid "How to use it"
 msgid "Enforced for user roles"
-msgstr "چطور از سیستم استفاده کنیم"
+msgstr "الزام‌شده برای نقش‌های کاربر"
 
 #: db/seeds.rb:37
 msgid "English (United States)"
@@ -5981,8 +5908,6 @@ msgid "Examples:"
 msgstr "مثال‌ها:"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee:39
-#, fuzzy
-#| msgid "Exception users"
 msgid "Excepted users"
 msgstr "کاربران استثناء"
 
@@ -5993,10 +5918,8 @@ msgid "Exchange"
 msgstr "سیستم ایمیل (اکس‌چنج)"
 
 #: db/seeds/settings.rb:4746
-#, fuzzy
-#| msgid "Exchange"
 msgid "Exchange OAuth"
-msgstr "سیستم ایمیل (اکس‌چنج)"
+msgstr "احراز هویت اکس‌چنج"
 
 #: db/seeds/settings.rb:4733
 msgid "Exchange config"
@@ -6016,10 +5939,8 @@ msgid "Execute changes on objects"
 msgstr "اعمال این تغییرات برروی آبجکت"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:119
-#, fuzzy
-#| msgid "Not configured"
 msgid "Execute configured macros"
-msgstr "پیکربندی نشده"
+msgstr "اجرای ماکروهای پیکربندی‌شده"
 
 #: db/seeds/schedulers.rb:205
 msgid "Execute import jobs."
@@ -6035,22 +5956,16 @@ msgid "Execution Time"
 msgstr "زمان اجرا"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:283
-#, fuzzy
-#| msgid "Waiting Customers"
 msgid "Existing members"
-msgstr "مشتریان درحال انتظار"
+msgstr "اعضای موجود"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:255
-#, fuzzy
-#| msgid "New Ticket"
 msgid "Existing tickets"
-msgstr "تیکت‌ جدید"
+msgstr "تیکت‌‌های موجود"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:260
-#, fuzzy
-#| msgid "%s tickets found"
 msgid "Existing tickets (open)"
-msgstr "%s تیکت پیدا شد"
+msgstr "تیکت‌های موجود (باز)"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:217
 msgid "Expert"
@@ -6061,10 +5976,8 @@ msgid "Expert Settings"
 msgstr "تنظیمات پیشرفته"
 
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco:6
-#, fuzzy
-#| msgid "Expert"
 msgid "Expert mode"
-msgstr "پیشرفته"
+msgstr "حالت پیشرفته"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:18
 msgid "Experts"
@@ -6078,20 +5991,16 @@ msgid "Expires"
 msgstr "ابطال"
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:18
-#, fuzzy
-#| msgid "Expires"
 msgid "Expires at"
-msgstr "ابطال"
+msgstr "منقضی می‌شود در"
 
 #: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
 msgstr "جستوجوی پیشرفته"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:73
-#, fuzzy
-#| msgid "internal"
 msgid "External data source field"
-msgstr "داخلی"
+msgstr ""
 
 #: lib/search_index_backend.rb:677
 msgid "Extract zammad-attachment information from arrays"
@@ -6109,10 +6018,8 @@ msgid "Facebook"
 msgstr "فیسبوک"
 
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco:9
-#, fuzzy
-#| msgid "Facebook"
 msgid "Facebook APP ID"
-msgstr "فیسبوک"
+msgstr "شناسه فیسبوک"
 
 #: app/assets/javascripts/app/controllers/_channel/facebook.coffee:190
 msgid "Facebook Account"
@@ -6123,16 +6030,12 @@ msgid "Facebook App Credentials"
 msgstr ""
 
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco:17
-#, fuzzy
-#| msgid "App Secret"
 msgid "Facebook App Secret"
-msgstr "رمز اپلیکیشن"
+msgstr "رمز فیسبوک"
 
 #: db/seeds/settings.rb:1385
-#, fuzzy
-#| msgid "App Secret"
 msgid "Facebook Developer Site"
-msgstr "رمز اپلیکیشن"
+msgstr "سایت برنامه‌نویس فیسبوک"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:24
 msgid "Failed Tasks"
@@ -6227,16 +6130,12 @@ msgid "Filter"
 msgstr "فیلتر"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:109
-#, fuzzy
-#| msgid "assign tickets"
 msgid "Find a ticket"
-msgstr "تخصیص تیکت ها"
+msgstr "یافتن تیکت"
 
 #: app/assets/javascripts/app/views/translation/form.jst.eco:5
-#, fuzzy
-#| msgid "Inline translation"
 msgid "Find translation suggestion"
-msgstr "ترجمه درخط"
+msgstr "یافتن پیشنهاد ترجمه"
 
 #: app/assets/javascripts/app/views/search/index.jst.eco:6
 msgid "Find what you're looking for, e.g. \"search phrase\""
@@ -6256,10 +6155,8 @@ msgid "Finish"
 msgstr "پایان"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:118
-#, fuzzy
-#| msgid "Finish"
 msgid "Finish Setup"
-msgstr "پایان"
+msgstr "پایان نصب"
 
 #: lib/excel_sheet/ticket.rb:62
 msgid "First Response At"
@@ -6400,10 +6297,8 @@ msgid "Form"
 msgstr "فرم"
 
 #: app/graphql/gql/queries/form_updater.rb:30
-#, fuzzy
-#| msgid "The object could not be updated."
 msgid "FormSchema could not be found."
-msgstr "آبجکت قابل بروزرسانی نبود."
+msgstr ""
 
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:10
 msgid "Format"
@@ -6418,10 +6313,8 @@ msgid "Format as _underlined_"
 msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:82
-#, fuzzy
-#| msgid "Format"
 msgid "Format as bold"
-msgstr "قالب"
+msgstr "قالب بندی به‌صورت توپر"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:536
 msgid "Format as h1 heading"
@@ -6550,10 +6443,8 @@ msgstr "ایجاد توکن"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:237
 #: app/assets/javascripts/app/views/profile/password.jst.eco:113
-#, fuzzy
-#| msgid "Delete records"
 msgid "Generate recovery codes"
-msgstr "حذف رکوردها"
+msgstr "تولید کدهای بازیابی"
 
 #: db/seeds/schedulers.rb:151
 msgid "Generate user-based stats."
@@ -6581,10 +6472,8 @@ msgid "Get Started"
 msgstr "شروع به کار"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:213
-#, fuzzy
-#| msgid "Account not verified"
 msgid "Get notified"
-msgstr "حساب کاربری تایید نشد"
+msgstr "مطلع شوید"
 
 #: app/assets/javascripts/app/lib/app_post/two_factor_methods/authenticator_app.coffee:6
 #: app/frontend/shared/entities/two-factor/plugins/authenticator_app.ts:10
@@ -6612,10 +6501,8 @@ msgid "GitHub App Credentials"
 msgstr "احراز هویت اپلیکیشن گیت‌هاب"
 
 #: db/seeds/settings.rb:1578
-#, fuzzy
-#| msgid "Applications"
 msgid "GitHub OAuth Applications"
-msgstr "اپلیکیشن‌ها"
+msgstr "برنامه‌های احراز هویت گیت هاب"
 
 #: db/seeds/settings.rb:4895
 msgid "GitHub config"
@@ -6641,10 +6528,8 @@ msgid "GitLab App Credentials"
 msgstr ""
 
 #: db/seeds/settings.rb:1642
-#, fuzzy
-#| msgid "Applications"
 msgid "GitLab Applications"
-msgstr "اپلیکیشن‌ها"
+msgstr "برنامه‌های گیت‌لب"
 
 #: db/seeds/settings.rb:4853
 msgid "GitLab config"
@@ -6663,10 +6548,8 @@ msgid "Given object does not support selector"
 msgstr ""
 
 #: app/models/setting/validation/time_zone.rb:10
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "Given time zone is not valid."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "منطقه زمانی ارائه شده نامعتبر است."
 
 #: app/assets/javascripts/app/views/google/index.jst.eco:3
 #: app/assets/javascripts/app/views/google/list.jst.eco:3
@@ -6704,16 +6587,12 @@ msgid "Go home"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:258
-#, fuzzy
-#| msgid "Login"
 msgid "Go to Login"
-msgstr "نام کاربری"
+msgstr "رفتن به صفحه ورود"
 
 #: lib/secure_mailing/pgp/incoming.rb:55
-#, fuzzy
-#| msgid "Signature"
 msgid "Good signature"
-msgstr "امضاء"
+msgstr "امضا خوب"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:26
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:23
@@ -6728,32 +6607,24 @@ msgid "Google"
 msgstr "گوگل"
 
 #: db/seeds/settings.rb:1450
-#, fuzzy
-#| msgid "Client Secret"
 msgid "Google API Console Site"
-msgstr "رمز مشتری"
+msgstr "سایت کنسول API گوگل"
 
 #: db/seeds/settings.rb:1457
 msgid "Google App Credentials"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:8
-#, fuzzy
-#| msgid "Authentication"
 msgid "Google Authenticator"
-msgstr "احراز هویت"
+msgstr "تایید هویت کننده گوگل"
 
 #: app/assets/javascripts/app/views/google/app_config.jst.eco:9
-#, fuzzy
-#| msgid "Client ID"
 msgid "Google Client ID"
-msgstr "شناسه مشتری"
+msgstr "شناسه کاربری گوگل"
 
 #: app/assets/javascripts/app/views/google/app_config.jst.eco:17
-#, fuzzy
-#| msgid "Client Secret"
 msgid "Google Client Secret"
-msgstr "رمز مشتری"
+msgstr "رمز کاربری گوگل"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:16
 msgid "Green"
@@ -6832,10 +6703,8 @@ msgstr "هنگام تعریف کانال٬ گروه موردنیاز است!"
 #: app/assets/javascripts/app/models/role.coffee:8
 #: app/assets/javascripts/app/models/user.coffee:13
 #: db/seeds/object_manager_attributes.rb:1425
-#, fuzzy
-#| msgid "Permissions"
 msgid "Group permissions"
-msgstr "دسترسی‌ها"
+msgstr "دسترسی‌های گروه"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:18
 #: db/seeds/settings.rb:2850
@@ -6848,17 +6717,13 @@ msgstr "گروه‌های در دسترس برای تیکت‌های ساخته 
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:60
 #: app/assets/javascripts/app/models/overview.coffee:43
-#, fuzzy
-#| msgid "Group by"
 msgid "Grouping by"
 msgstr "گروه‌بندی با"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:70
 #: app/assets/javascripts/app/models/overview.coffee:58
-#, fuzzy
-#| msgid "Change order"
 msgid "Grouping order"
-msgstr "تغییر مرتب سازی"
+msgstr "ترتیب گروه‌بندی"
 
 #: app/assets/javascripts/app/controllers/group.coffee:3
 #: app/assets/javascripts/app/models/macro.coffee:15
@@ -6890,40 +6755,28 @@ msgid "HTML Sanitizer Processing Timeout"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:736
-#, fuzzy
-#| msgid "Authentication"
 msgid "HTTP Authentication"
-msgstr "احراز هویت"
+msgstr "احراز هویت HTTP"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:770
-#, fuzzy
-#| msgid "Authentication"
 msgid "HTTP Authentication token"
-msgstr "احراز هویت"
+msgstr "توکن احراز هویت HTTP"
 
 #: app/assets/javascripts/app/models/webhook.coffee:11
-#, fuzzy
-#| msgid "Authentication"
 msgid "HTTP Basic Authentication Password"
-msgstr "احراز هویت"
+msgstr "کلمه عبور احراز هویت ساده HTTP"
 
 #: app/assets/javascripts/app/models/webhook.coffee:10
-#, fuzzy
-#| msgid "Authentication"
 msgid "HTTP Basic Authentication Username"
-msgstr "احراز هویت"
+msgstr "نام کاربری احراز هویت ساده HTTP"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:759
-#, fuzzy
-#| msgid "Authentication"
 msgid "HTTP Basic Authentication password"
-msgstr "احراز هویت"
+msgstr "کلمه عبور احراز هویت ساده HTTP"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:748
-#, fuzzy
-#| msgid "Authentication"
 msgid "HTTP Basic Authentication username"
-msgstr "احراز هویت"
+msgstr "نام کاربری احراز هویت ساده HTTP"
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee:45
 msgid "HTTP Log"
@@ -6943,10 +6796,8 @@ msgstr "انجام شده"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdownItem.vue:128
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:336
-#, fuzzy
-#| msgid "%s subdomain"
 msgid "Has submenu"
-msgstr "%s زیردامنه"
+msgstr "زیر منو دارد"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:48
 msgid "Has ticket open in tabs, but is not actively looking at the ticket."
@@ -7034,19 +6885,14 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:14
-#, fuzzy
-#| msgid ""
-#| "Here you can search for tickets, customers and organizations. Use the "
-#| "wildcard §*§ to find everything. E. g. §smi*§ or §rosent*l§. You also can "
-#| "use ||double quotes|| for searching phrases §\"some phrase\"§."
 msgid ""
 "Here you can search for tickets, customers, and organizations. Use the "
 "asterisk §*§ to find anything, e.g. §smi*§ or §rosent*l§. You also can use ||"
 "quotation marks|| for searching phrases: §\"some phrase\"§."
 msgstr ""
-"اینجا میتوانید تیکتها را جستجو کنید, در مشتریان و سازمانها از §*§ برای پیدا "
-"کردن هرچیزی استفاده کنید. مثال. §کوثر*§ or §مهران*l§. میتوانید از ||double "
-"quotes|| برای جستجوی برخی عبارتها §\"عبارت مد نظر\"§."
+"اینجا میتوانید تیکت‌ها، مشتریان و سازمان‌ها را جستجو کنید. از ستاره §*§ برای "
+"پیدا کردن هر چیزی استفاده کنید. برای مثال: §*سلیمی§ یا §سامانه*مشکل§. از ||\""
+"|| برای جستجوی عبارت‌ها §\"عبارت مد نظر\"§ استفاده کنید."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:23
 msgid ""
@@ -7089,16 +6935,12 @@ msgid "Hi! Which one of our products?"
 msgstr "سلام! کدامیک از محصولات ما؟"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:24
-#, fuzzy
-#| msgid "Reauthenticate"
 msgid "Hide authenticator app secret"
-msgstr "احراز هویت مجدد"
+msgstr "مخفی کردن رمز برنامه احراز هویت"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
-#, fuzzy
-#| msgid "Priority"
 msgid "High priority"
-msgstr "اولویت"
+msgstr "اولویت بالا"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
 msgid "Highlight color"
@@ -7371,7 +7213,7 @@ msgstr "صرف‌نظر از پیام"
 
 #: db/seeds/settings.rb:3613
 msgid "Ignore escalation/SLA information for import."
-msgstr "نادیده گرفتن بالاسپاری/ اطلاعات SLA برای درون‌ریزی."
+msgstr "نادیده گرفتن بالاسپاری/ اطلاعات SLA برای درونبرد."
 
 #: db/seeds/settings.rb:2694
 msgid "Ignore system_id"
@@ -7388,22 +7230,16 @@ msgstr "سرویس تصاویر"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:61
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:35
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:9
-#, fuzzy
-#| msgid "Image Service"
 msgid "Image file"
-msgstr "سرویس تصاویر"
+msgstr "پرونده تصویر"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:108
-#, fuzzy
-#| msgid "Image"
 msgid "Image of %s"
-msgstr "تصویر"
+msgstr "تصویر %s"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue:115
-#, fuzzy
-#| msgid "Image Service"
 msgid "Image preview"
-msgstr "سرویس تصاویر"
+msgstr "پیش‌نمایش تصویر"
 
 #: app/assets/javascripts/app/controllers/import.coffee:4
 #: app/assets/javascripts/app/controllers/import_freshdesk.coffee:25
@@ -7417,11 +7253,11 @@ msgstr "سرویس تصاویر"
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee:6
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:190
 msgid "Import"
-msgstr "ورود اطلاعات"
+msgstr "درونبُرد"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:88
 msgid "Import %s"
-msgstr "ورود %s"
+msgstr "درونبرد %s"
 
 #: app/controllers/import_otrs_controller.rb:59
 msgid "Import API key could not be extracted from URL."
@@ -7449,11 +7285,11 @@ msgstr ""
 
 #: db/seeds/settings.rb:3651
 msgid "Import Key"
-msgstr "وارد کردن کلید"
+msgstr "درونبرد کلید"
 
 #: db/seeds/settings.rb:3579
 msgid "Import Mode"
-msgstr "حالت ورود"
+msgstr "حالت درونبرد"
 
 #: db/seeds/settings.rb:3689
 msgid "Import Password for HTTP basic authentication"
@@ -7476,10 +7312,8 @@ msgid "Import User for requesting the Zendesk API"
 msgstr ""
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:65
-#, fuzzy
-#| msgid "Import %s"
 msgid "Import as archive"
-msgstr "ورود %s"
+msgstr "درونبرد به صورت بایگانی"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:122
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:98
@@ -7491,10 +7325,8 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:77
-#, fuzzy
-#| msgid "Import %s"
 msgid "Import as regular"
-msgstr "ورود %s"
+msgstr "درونبرد به صورت عادی"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:123
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:99
@@ -7505,27 +7337,21 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:215
-#, fuzzy
-#| msgid "Password changed successfully!"
 msgid "Import finished successfully!"
-msgstr "رمزعبور با موفقیت تغییر کرد!"
+msgstr "درونبرد با موفقیت پایان یافت!"
 
 #: app/assets/javascripts/app/views/import/index.jst.eco:5
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSelection.vue:16
 msgid "Import from"
-msgstr "وارد کردن از"
+msgstr "درونبرد از"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:25
-#, fuzzy
-#| msgid "Import from"
 msgid "Import from %s"
-msgstr "وارد کردن از"
+msgstr "درونبرد از %s"
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:206
-#, fuzzy
-#| msgid "Import from"
 msgid "Import from Source"
-msgstr "وارد کردن از"
+msgstr "درونبرد از منبع"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:8
 msgid "Important"
@@ -7533,7 +7359,7 @@ msgstr "مهم"
 
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee:13
 msgid "Imported"
-msgstr "وارد شده"
+msgstr "درونبرد شده"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:683
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:282
@@ -7586,10 +7412,8 @@ msgid "Include attachments of the article?"
 msgstr "ضمائم یادداشت هم شامل شوند؟"
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:97
-#, fuzzy
-#| msgid "Overviews"
 msgid "Included ticket overviews"
-msgstr "مرورکلی"
+msgstr "نمای‌کلی‌های تیکت لحاظ شده"
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:26
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:22
@@ -7641,16 +7465,12 @@ msgid "Inline content could not be generated."
 msgstr "امکان ایجاد محتوا وجود نداشت."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:223
-#, fuzzy
-#| msgid "Inserts knowledge base answer"
 msgid "Insert text from Knowledge Base article"
-msgstr "افزودن پاسخ از پایگاه دانش"
+msgstr "افزودن متن از مقاله پایگاه دانش"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:230
-#, fuzzy
-#| msgid "Inserts text module"
 msgid "Insert text from text module"
-msgstr "افزودن ماژول‌ متن"
+msgstr "افزودن متن از ماژول‌ متن"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:138
 msgid ""
@@ -7676,10 +7496,8 @@ msgid "Inserts text module"
 msgstr "افزودن ماژول‌ متن"
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:170
-#, fuzzy
-#| msgid "Installed"
 msgid "Install App"
-msgstr "نصب شده"
+msgstr "نصب برنامه"
 
 #: app/assets/javascripts/app/views/package.jst.eco:32
 msgid "Install Package"
@@ -7690,10 +7508,8 @@ msgid "Installed"
 msgstr "نصب شده"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:45
-#, fuzzy
-#| msgid "Integer"
 msgid "Integer field"
-msgstr "عدد صحیح"
+msgstr "جانوشت عدد صحیح"
 
 #: app/assets/javascripts/app/controllers/integrations.coffee:3
 #: db/seeds/permissions.rb:236
@@ -7711,10 +7527,8 @@ msgid "Internal"
 msgstr "داخلی"
 
 #: app/frontend/shared/errors/useErrorHandler.ts:32
-#, fuzzy
-#| msgid "Internal"
 msgid "Internal Error"
-msgstr "داخلی"
+msgstr "خطای داخلی"
 
 #: app/assets/javascripts/app/views/knowledge_base/feed_dialog.jst.eco:2
 msgid "Internal Knowledge Base feed:"
@@ -7785,10 +7599,8 @@ msgid "Invalid link structure (Object)"
 msgstr ""
 
 #: app/models/concerns/checks_condition_validation.rb:12
-#, fuzzy
-#| msgid "Selected conditions"
 msgid "Invalid object selector conditions"
-msgstr "انتخاب شرط"
+msgstr "شرایط انتخابگر مورد نامعتبر است"
 
 #: lib/password_policy/min_length.rb:11
 msgid "Invalid password, it must be at least %s characters long!"
@@ -7910,10 +7722,8 @@ msgid "Ionicons"
 msgstr "Ionicons"
 
 #: lib/validations/data_privacy_task_validator.rb:50
-#, fuzzy
-#| msgid "At least one user needs to have admin permissions."
 msgid "It is not possible to delete the last account with admin permissions."
-msgstr "حداقل یک کاربر بایستی دسترسی ادمین داشته باشد."
+msgstr "امکان حذف آخرین حساب کاربری با دسترسی مدیر وجود ندارد."
 
 #: lib/validations/data_privacy_task_validator.rb:38
 msgid "It is not possible to delete the system user."
@@ -8035,10 +7845,8 @@ msgid "Knowledge Base Editor"
 msgstr "ویرایشگر پایگاه دانش"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee:6
-#, fuzzy
-#| msgid "Knowledge Base"
 msgid "Knowledge Base Feed"
-msgstr "پایگاه دانش"
+msgstr "خوراک پایگاه دانش"
 
 #: db/seeds/permissions.rb:495
 msgid "Knowledge Base Reader"
@@ -8102,10 +7910,8 @@ msgid "Languages"
 msgstr "زبان‌ها"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
-#, fuzzy
-#| msgid "Article"
 msgid "Last Article"
-msgstr "یادداشت"
+msgstr "آخرین مقاله"
 
 #: lib/excel_sheet/ticket.rb:70
 msgid "Last Contact Agent At"
@@ -8124,26 +7930,20 @@ msgid "Last External Article"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
-#, fuzzy
-#| msgid "Last Contact At"
 msgid "Last Internal Article"
-msgstr "آخرین تماس در"
+msgstr "آخرین مقاله داخلی"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:123
 msgid "Last change %s %s by %s"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:11
-#, fuzzy
-#| msgid "has changed"
 msgid "Last changed"
-msgstr "تغییر کرده است"
+msgstr "آخرین تغییر"
 
 #: app/assets/javascripts/app/models/ticket.coffee:26
-#, fuzzy
-#| msgid "Closing time"
 msgid "Last closing time"
-msgstr "زمان بستن"
+msgstr "آخرین زمان بستن"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:230
 #: app/assets/javascripts/app/models/ticket.coffee:21
@@ -8164,10 +7964,8 @@ msgid "Last contact (customer)"
 msgstr "آخرین تماس (مشتری)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:222
-#, fuzzy
-#| msgid "Last run"
 msgid "Last login"
-msgstr "آخرین اجرا"
+msgstr "آخرین ورود"
 
 #: app/assets/javascripts/app/models/user.coffee:10
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:23
@@ -8180,10 +7978,8 @@ msgid "Last run"
 msgstr "آخرین اجرا"
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:270
-#, fuzzy
-#| msgid "Last sync"
 msgid "Last searches"
-msgstr "آخرین همسان‌سازی"
+msgstr "آخرین جست‌وجوها"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:2
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:2
@@ -8273,8 +8069,6 @@ msgid "Link issue"
 msgstr "لینک کردن مشکل"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:267
-#, fuzzy
-#| msgid "Link Template"
 msgid "Link template"
 msgstr "لینک کردن قالب"
 
@@ -8317,17 +8111,13 @@ msgid "Load"
 msgstr "بار"
 
 #: app/frontend/shared/form/i18n/locales.ts:60
-#, fuzzy
-#| msgid "show more"
 msgid "Load more"
-msgstr "نمایش موارد بیشتر"
+msgstr "بارگیری موارد بیشتر"
 
 #: app/frontend/apps/mobile/components/CommonLoader/CommonLoader.vue:38
 #: app/frontend/apps/mobile/components/CommonRefetch/CommonRefetch.vue:42
-#, fuzzy
-#| msgid "contains one not"
 msgid "Loading content"
-msgstr "شامل یکی نباشد"
+msgstr "بارگیری محتوا"
 
 #: app/views/init/spinner-loading.html.erb:260
 msgid "Loading failed, please try again later."
@@ -8363,10 +8153,8 @@ msgid "Locale"
 msgstr "زبان محلی"
 
 #: app/graphql/gql/mutations/account/locale.rb:13
-#, fuzzy
-#| msgid "The object could not be updated."
 msgid "Locale could not be found."
-msgstr "آبجکت قابل بروزرسانی نبود."
+msgstr "محل یافت نمی‌شود."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:257
 msgid "Locale not found"
@@ -8399,10 +8187,8 @@ msgid "Login"
 msgstr "نام کاربری"
 
 #: app/assets/javascripts/app/models/public_link.coffee:9
-#, fuzzy
-#| msgid "Screen"
 msgid "Login Screen"
-msgstr "صفحه نمایش"
+msgstr "صفحه ورود"
 
 #: lib/auth/error/authentication_failed.rb:4
 msgid ""
@@ -8436,10 +8222,8 @@ msgid "Lost network connection!"
 msgstr "ارتباط با شبکه قطع شد!"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
-#, fuzzy
-#| msgid "Priority"
 msgid "Low priority"
-msgstr "اولویت"
+msgstr "اولویت پایین"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:3
 msgid "Macro"
@@ -8501,10 +8285,8 @@ msgstr "مدیریت تگ‌ها"
 
 #: app/assets/javascripts/app/controllers/user.coffee:162
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
-#, fuzzy
-#| msgid "Authentication"
 msgid "Manage Two-Factor Authentication"
-msgstr "احراز هویت"
+msgstr "مدیریت احراز هویت دوعاملی"
 
 #: app/assets/javascripts/app/views/api.jst.eco:48
 msgid ""
@@ -8582,20 +8364,16 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:38
 #: db/seeds/settings.rb:2670
-#, fuzzy
-#| msgid "Match all of the following"
 msgid "Match tickets in following states"
-msgstr "تطابق با تمام موارد زیر"
+msgstr "تطابق تیکت‌ها با وضعیت‌های زیر"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee:13
 msgid "Material"
 msgstr "متریال"
 
 #: app/models/webhook/pre_defined/mattermost.rb:5
-#, fuzzy
-#| msgid "Disable Notifications"
 msgid "Mattermost Notifications"
-msgstr "غیر فعال‌سازی اطلاع رسانی ها"
+msgstr "اعلان‌های مترموست"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:87
 msgid "Mattermost, RocketChat"
@@ -8611,10 +8389,8 @@ msgid "Max. concurrent chats"
 msgstr "حداکثر چت‌های همزمان"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:257
-#, fuzzy
-#| msgid "Minimum length"
 msgid "Max. length"
-msgstr "Mindestlänge"
+msgstr "حداکثر طول"
 
 #: db/seeds/settings.rb:3028
 msgid "Max. length of the subject in an email reply."
@@ -8660,20 +8436,16 @@ msgid "Me"
 msgstr "من"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue:80
-#, fuzzy
-#| msgid "Download %s record(s)"
 msgid "Media Download Error"
-msgstr "دانلود %s عدد رکورد"
+msgstr "خطای بارگیری رسانه"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue:50
 msgid "Media download failed. Please try again later."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue:43
-#, fuzzy
-#| msgid "Decryption was successful."
 msgid "Media download was successful."
-msgstr "رمزگشایی موفقیت‌آمیز بود."
+msgstr "بارگیری رسانه موفق بود."
 
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco:20
 #: app/assets/javascripts/app/views/popover/organization.jst.eco:6
@@ -8683,10 +8455,8 @@ msgid "Members"
 msgstr "اعضا"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:216
-#, fuzzy
-#| msgid "current user"
 msgid "Mention user"
-msgstr "کاربر فعلی"
+msgstr "اشاره به کاربر"
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:48
 msgid "Mentions"
@@ -8702,10 +8472,8 @@ msgid "Merge"
 msgstr "ادغام"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:48
-#, fuzzy
-#| msgid "Merge to Ticket#"
 msgid "Merge tickets"
-msgstr "ادغام با تیکت شماره"
+msgstr "ادغام تیکت‌ها"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco:2
 msgid "Merge to Ticket#"
@@ -8723,10 +8491,8 @@ msgstr "پیام"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:46
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:132
-#, fuzzy
-#| msgid "Messages"
 msgid "Message Status"
-msgstr "پیام‌ها"
+msgstr "وضعیت پیام"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:47
 msgid "Message after sending form"
@@ -8742,28 +8508,20 @@ msgid "Messages"
 msgstr "پیام‌ها"
 
 #: app/models/webhook/pre_defined/mattermost.rb:38
-#, fuzzy
-#| msgid "Create Channels"
 msgid "Messaging Channel"
-msgstr "کانال ایجاد تیکت"
+msgstr "کانال پیام‌رسانی"
 
 #: app/models/webhook/pre_defined/mattermost.rb:45
-#, fuzzy
-#| msgid "Icon URL"
 msgid "Messaging Icon URL"
-msgstr "لینک آیکن"
+msgstr "پیوند تصویرک پیام‌رسانی"
 
 #: app/models/webhook/pre_defined/mattermost.rb:31
-#, fuzzy
-#| msgid "Username"
 msgid "Messaging Username"
-msgstr "نام کاربری"
+msgstr "نام کاربری پیام‌رسانی"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:95
-#, fuzzy
-#| msgid "Show Search Details"
 msgid "Meta Data"
-msgstr "نمایش جزئیات جستجو"
+msgstr "ابر داده"
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:11
 msgid "Method"
@@ -8786,26 +8544,20 @@ msgid "Microsoft 365"
 msgstr "مایکروسافت ۳۶۵"
 
 #: db/seeds/settings.rb:1720
-#, fuzzy
-#| msgid "Twitter App Credentials"
 msgid "Microsoft 365 App Credentials"
-msgstr "Twitter App Credentials"
+msgstr "گواهی‌های برنامه مایکروسافت 365"
 
 #: db/seeds/settings.rb:1713
 msgid "Microsoft Application Registration Portal"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:15
-#, fuzzy
-#| msgid "Authentication"
 msgid "Microsoft Authenticator"
-msgstr "احراز هویت"
+msgstr "تایید اعتبار کننده مایکروسافت"
 
 #: app/models/webhook/pre_defined/microsoft_teams.rb:5
-#, fuzzy
-#| msgid "Disable Notifications"
 msgid "Microsoft Teams Notifications"
-msgstr "غیر فعال‌سازی اطلاع رسانی ها"
+msgstr "اعلان‌های مایکروسافت تیمز"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:56
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:60
@@ -8926,10 +8678,8 @@ msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:125
-#, fuzzy
-#| msgid "Overviews"
 msgid "More ticket overviews"
-msgstr "مرورکلی"
+msgstr "نمای‌کلی‌های تیکت بیشتر"
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:14
 msgid "Most recent activity"
@@ -8940,20 +8690,16 @@ msgid "Move all from \"%s\" to \"%s\":"
 msgstr "انتقال همه از «%s» به «%s»:"
 
 #: app/frontend/shared/form/i18n/locales.ts:52
-#, fuzzy
-#| msgid "Move up and down"
 msgid "Move down"
-msgstr "حرکت به بالا و پائین"
+msgstr "حرکت به پایین"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:262
 msgid "Move left and right"
 msgstr "حرکت به چپ و راست"
 
 #: app/frontend/shared/form/i18n/locales.ts:48
-#, fuzzy
-#| msgid "Move up and down"
 msgid "Move up"
-msgstr "حرکت به بالا و پائین"
+msgstr "حرکت به بالا"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:258
 msgid "Move up and down"
@@ -8968,10 +8714,8 @@ msgid "Moved out"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:61
-#, fuzzy
-#| msgid "Delivery failed"
 msgid "Multiple selection field"
-msgstr "تحویل ناموفق بود"
+msgstr "جانوشت چند انتخابی"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:69
 msgid "Multiple tree selection field"
@@ -9158,10 +8902,8 @@ msgid "New Access Token is"
 msgstr "توکن دسترسی جدید عبارتست از"
 
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:54
-#, fuzzy
-#| msgid "Active"
 msgid "New Activity Type"
-msgstr "فعال"
+msgstr "نوع فعالیت جدید"
 
 #: app/assets/javascripts/app/views/api.jst.eco:52
 msgid "New Application"
@@ -9196,20 +8938,16 @@ msgid "New Overview"
 msgstr "مرورکلی جدید"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee:19
-#, fuzzy
-#| msgid "Priority"
 msgid "New Priority"
-msgstr "اولویت"
+msgstr "اولویت جدید"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee:22
 msgid "New Profile"
 msgstr "پروفایل جدید"
 
 #: app/assets/javascripts/app/controllers/public_link.coffee:18
-#, fuzzy
-#| msgid "Public Menu"
 msgid "New Public Link"
-msgstr "منوی عمومی"
+msgstr "پیوند عمومی جدید"
 
 #: app/assets/javascripts/app/controllers/role.coffee:28
 msgid "New Role"
@@ -9224,10 +8962,8 @@ msgid "New Scheduler"
 msgstr "تقویم جدید"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:27
-#, fuzzy
-#| msgid "Source"
 msgid "New Source"
-msgstr "منبع"
+msgstr "منبع جدید"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:14
 #: db/seeds/settings.rb:4021
@@ -9235,10 +8971,8 @@ msgid "New Tags"
 msgstr "تگ‌های جدید"
 
 #: app/assets/javascripts/app/controllers/template.coffee:22
-#, fuzzy
-#| msgid "Templates"
 msgid "New Template"
-msgstr "قالب‌ها"
+msgstr "قالب جدید"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:134
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:65
@@ -9252,16 +8986,12 @@ msgid "New Ticket"
 msgstr "تیکت‌ جدید"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:21
-#, fuzzy
-#| msgid "New Ticket"
 msgid "New Ticket State"
-msgstr "تیکت‌ جدید"
+msgstr "ایجاد وضعیت تیکت‌"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco:11
-#, fuzzy
-#| msgid "Translations"
 msgid "New Translation"
-msgstr "ترجمه ها"
+msgstr "ترجمه جدید"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:25
 msgid "New Trigger"
@@ -9354,10 +9084,8 @@ msgid "Next"
 msgstr "بعدی"
 
 #: app/assets/javascripts/app/models/ticket_state.coffee:8
-#, fuzzy
-#| msgid "Get Started"
 msgid "Next State"
-msgstr "شروع به کار"
+msgstr "وضعیت بعدی"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:43
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco:12
@@ -9398,10 +9126,8 @@ msgid "No Entries"
 msgstr "داده ای جهت نمایش وجود ندارد"
 
 #: lib/external_credential/exchange.rb:12
-#, fuzzy
-#| msgid "No Facebook app configured!"
 msgid "No Exchange app configured!"
-msgstr "اپلیکیشن فیسبوک پیکربندی نشده!"
+msgstr "برنامه اکس‌چنج پیکربندی نشده!"
 
 #: lib/external_credential/facebook.rb:12
 msgid "No Facebook app configured!"
@@ -9461,10 +9187,8 @@ msgid "No double colons (::) allowed, reserved delimiter"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:21
-#, fuzzy
-#| msgid "draft"
 msgid "No drafts"
-msgstr "پیش‌نویس"
+msgstr "بدون هیچ پیش‌نویسی"
 
 #: app/controllers/users_controller.rb:357
 msgid "No email!"
@@ -9474,20 +9198,16 @@ msgstr "بدون ایمیل!"
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:114
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:263
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:147
-#, fuzzy
-#| msgid "No Entries"
 msgid "No entries"
-msgstr "داده ای جهت نمایش وجود ندارد"
+msgstr "بدون هیچ داده‌ای"
 
 #: app/controllers/integration/exchange_controller.rb:58
 msgid "No entries were found in the selected folder(s)."
 msgstr "در پوشه(ها)ی انتخاب شده فایلی وجود ندارد."
 
 #: app/frontend/shared/form/i18n/locales.ts:44
-#, fuzzy
-#| msgid "No filter."
 msgid "No file chosen."
-msgstr "Keine Filter."
+msgstr "هیچ پرونده‌ای انتخاب نشده."
 
 #: app/frontend/shared/form/i18n/locales.ts:452
 msgid "No file formats allowed."
@@ -9504,17 +9224,15 @@ msgstr ""
 
 #: app/services/service/system/import/check_status.rb:44
 msgid "No import in progress."
-msgstr "هیچ درون‌ریزی در جریان نیست."
+msgstr "هیچ درونبردی در جریان نیست."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:192
 msgid "No linked issues"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_macro.jst.eco:4
-#, fuzzy
-#| msgid "No session available."
 msgid "No macros available."
-msgstr "هیچ نشستی وجود ندارد."
+msgstr "هیچ ماکرویی وجود ندارد."
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:290
 #, fuzzy
@@ -11033,8 +10751,8 @@ msgid ""
 "Records that exist in the import data (but not in Zammad) will always be "
 "created."
 msgstr ""
-"رکوردهایی که در فایل ورودی وجود دارد (اما در سیستم موجود نیست) ایجاد خواهند "
-"شد."
+"اسنادی که در اطلاعات درونبرد وجود دارد (اما در سامانه موجود نیست) همیشه "
+"ایجاد خواهند شد."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/recovery_codes.coffee:2
 #: app/frontend/apps/desktop/pages/authentication/components/LoginRecoveryCode.vue:32
@@ -12905,7 +12623,7 @@ msgstr "شروع به کار سامانه ارتباط با مشتریان…"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:210
 msgid "Starting import…"
-msgstr "شروع به درون ریزی…"
+msgstr "شروع به درونبرد…"
 
 #: app/assets/javascripts/app/models/chat_sessions.coffee:8
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:7
@@ -13891,11 +13609,11 @@ msgstr "تصویر با تغییر اندازه معتبر نیست."
 #: app/assets/javascripts/app/controllers/widget/import.coffee:64
 #: app/assets/javascripts/app/controllers/widget/import_try_result.coffee:62
 msgid "The import failed."
-msgstr "ورود اطلاعات ناموفق بود."
+msgstr "درونبرد ناموفق بود."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco:14
 msgid "The import was successful."
-msgstr "ورود اطلاعات موفقیت‌آمیز بود."
+msgstr "درونبرد موفقیت‌آمیز بود."
 
 #: app/assets/javascripts/app/views/package.jst.eco:7
 msgid ""
@@ -16285,7 +16003,7 @@ msgstr "بروزرسانی رکوردهای موجود"
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:15
 msgid ""
 "Update existing records with the attributes specified in the import data."
-msgstr "بروزرسانی رکوردهای موجود با اطلاعات فایل ورودی."
+msgstr "به‌روزرسانی اسناد موجود با اطلاعات درونبرد."
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:81
 #: app/assets/javascripts/app/controllers/_profile/language.coffee:58
@@ -16747,7 +16465,7 @@ msgstr "بررسی و ذخیره تنظیمات شما…"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:45
 msgid "Verifying and saving your import configuration…"
-msgstr "بررسی و ذخیره تنظیمات درون ریزی شده…"
+msgstr "بررسی و ذخیره تنظیمات درونبرد شده شما…"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/security_keys.jst.eco:24
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts:12

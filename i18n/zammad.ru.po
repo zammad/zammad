@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-20 12:30+0000\n"
+"PO-Revision-Date: 2024-08-22 22:16+0000\n"
 "Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
@@ -5303,6 +5303,12 @@ msgstr "Удаленная организация:"
 msgid "Deleted tickets (%s in total):"
 msgstr "Удаленные заявки (%s всего):"
 
+#: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:50
+msgid ""
+"Deleting your knowledge base requires an additional verification step. To "
+"proceed, enter its name below (\"%s\"). THIS ACTION CANNOT BE UNDONE."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:94
 msgid "Deletion Task"
 msgstr "Задача на удаление"
@@ -5489,7 +5495,7 @@ msgstr "Отмените Ваши несохраненные изменения"
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:25
 msgid "Discard your unsaved changes."
-msgstr "Отменить Ваши несохраненные изменения"
+msgstr "Отменить Ваши несохраненные изменения."
 
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:7
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:7
