@@ -60,8 +60,8 @@ importers:
         specifier: ^7.2.100
         version: 7.2.100
       '@sinonjs/fake-timers':
-        specifier: ^11.2.2
-        version: 11.2.2
+        specifier: ^11.3.1
+        version: 11.3.1
       '@tiptap/core':
         specifier: ^2.6.6
         version: 2.6.6(@tiptap/pm@2.6.6)
@@ -1837,11 +1837,11 @@ packages:
   '@sinclair/typebox@0.27.8':
     resolution: {integrity: sha512-+Fj43pSMwJs4KRrH/938Uf+uAELIgVBmQzg/q1YG10djyfA3TnrU8N8XzqCh/okZdszqBQTZf96idMfE5lnwTA==}
 
-  '@sinonjs/commons@3.0.0':
-    resolution: {integrity: sha512-jXBtWAF4vmdNmZgD5FoKsVLv3rPgDnLgPbU84LIJ3otV44vJlDRokVng5v8NFJdCf/da9legHcKaRuZs4L7faA==}
+  '@sinonjs/commons@3.0.1':
+    resolution: {integrity: sha512-K3mCHKQ9sVh8o1C9cxkwxaOmXoAMlDxC1mYyHrjqOWEcBjYr76t96zL2zlj5dUGZ3HSw240X1qgH3Mjf1yJWpQ==}
 
-  '@sinonjs/fake-timers@11.2.2':
-    resolution: {integrity: sha512-G2piCSxQ7oWOxwGSAyFHfPIsyeJGXYtc6mFbnFA+kRXkiEnTl8c/8jul2S329iFBnDI9HGoeWWAZvuvOkZccgw==}
+  '@sinonjs/fake-timers@11.3.1':
+    resolution: {integrity: sha512-EVJO7nW5M/F5Tur0Rf2z/QoMo+1Ia963RiMtapiQrEWvY0iBUvADo8Beegwjpnle5BHkyHuoxSTW3jF43H1XRA==}
 
   '@surma/rollup-plugin-off-main-thread@2.2.3':
     resolution: {integrity: sha512-lR8q/9W7hZpMWweNiAKU7NQerBnzQQLvi8qnTDU/fxItPhtZVMbPV3lbCwjhIlNBe9Bbr5V+KHshvWmVSG9cxQ==}
@@ -8153,13 +8153,13 @@ snapshots:
 
   '@sinclair/typebox@0.27.8': {}
 
-  '@sinonjs/commons@3.0.0':
+  '@sinonjs/commons@3.0.1':
     dependencies:
       type-detect: 4.0.8
 
-  '@sinonjs/fake-timers@11.2.2':
+  '@sinonjs/fake-timers@11.3.1':
     dependencies:
-      '@sinonjs/commons': 3.0.0
+      '@sinonjs/commons': 3.0.1
 
   '@surma/rollup-plugin-off-main-thread@2.2.3':
     dependencies:
