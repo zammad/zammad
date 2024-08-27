@@ -1,7 +1,7 @@
 {
   "extends": [
     "stylelint-config-standard",
-    "stylelint-config-standard-scss",
+    "stylelint-config-recommended-scss",
     "stylelint-config-recommended-vue",
     "stylelint-prettier/recommended"
   ],
@@ -26,6 +26,8 @@
     "selector-no-vendor-prefix": null,
     "selector-pseudo-element-no-unknown": null,
     "scss/at-extend-no-missing-placeholder": null,
+    "scss/at-import-partial-extension": null,
+    "scss/load-no-partial-leading-underscore": true,
     "scss/at-rule-no-unknown": null,
     "scss/dollar-variable-pattern": null,
     "scss/double-slash-comment-whitespace-inside": null,

@@ -1,5 +1,7 @@
-@import './transitions.css';
+@import url('./transitions.css');
+
 @config './tailwind.desktop.js';
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
