@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, provide } from 'vue'
+import { provideLocal } from '@vueuse/shared'
+import { computed, ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -10,7 +11,7 @@ import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import ArticleBubbleActionList from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue'
-import { TICKET_INFORMATION_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
+import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 const renderArticleBubbleActionList = () =>
   renderComponent(
@@ -37,9 +38,10 @@ const renderArticleBubbleActionList = () =>
 
         const ticket = createDummyTicket()
 
-        provide(TICKET_INFORMATION_KEY, {
+        provideLocal(TICKET_KEY, {
           ticket: computed(() => ticket),
           ticketId: computed(() => ticket.id),
+          ticketInternalId: ref(ticket.internalId),
         })
 
         return { position, article }

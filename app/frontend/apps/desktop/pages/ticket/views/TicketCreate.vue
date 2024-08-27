@@ -36,10 +36,13 @@ import ApplyTemplate from '../components/ApplyTemplate.vue'
 import TicketDuplicateDetectionAlert from '../components/TicketDuplicateDetectionAlert.vue'
 import TicketSidebar from '../components/TicketSidebar.vue'
 import {
+  useProvideTicketSidebar,
+  useTicketSidebar,
+} from '../composables/useTicketSidebar.ts'
+import {
   TicketSidebarScreenType,
   type TicketSidebarContext,
-} from '../components/types.ts'
-import { useTicketSidebar } from '../composables/useTicketSidebar.ts'
+} from '../types/sidebar.ts'
 
 interface Props {
   tabId?: string
@@ -285,7 +288,8 @@ const sidebarContext = computed<TicketSidebarContext>(() => ({
   formValues: values.value,
 }))
 
-const { hasSidebar } = useTicketSidebar(sidebarContext)
+useProvideTicketSidebar(sidebarContext)
+const { hasSidebar } = useTicketSidebar()
 
 const tabContext = computed<TaskbarTabContext>((currentContext) => {
   if (!isInitialSettled.value) return {}

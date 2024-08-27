@@ -1,16 +1,22 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import TicketSidebarOrganizationButton from '../TicketSidebarOrganizationButton.vue'
-import TicketSidebarOrganizationContent from '../TicketSidebarOrganizationContent.vue'
+import {
+  TicketSidebarScreenType,
+  type TicketSidebarContext,
+} from '#desktop/pages/ticket/types/sidebar.ts'
+
+import TicketSidebarOrganization from '../TicketSidebarOrganization/TicketSidebarOrganization.vue'
 
 import type { TicketSidebarPlugin } from './types.ts'
-import type { TicketSidebarContext } from '../../types.ts'
 
 export default <TicketSidebarPlugin>{
   title: __('Organization'),
-  buttonComponent: TicketSidebarOrganizationButton,
-  contentComponent: TicketSidebarOrganizationContent,
+  component: TicketSidebarOrganization,
   permissions: ['ticket.agent'],
+  screens: [
+    TicketSidebarScreenType.TicketDetailView,
+    TicketSidebarScreenType.TicketCreate,
+  ],
   icon: 'buildings',
   order: 2000,
   available: (context: TicketSidebarContext) => {

@@ -5,6 +5,7 @@ import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
 import type { TicketArticle } from '#shared/entities/ticket/types'
 
 import { useEmailFileUrls } from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useEmailFileUrls.ts'
+import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 interface Props {
   article: TicketArticle
@@ -12,7 +13,12 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const { originalFormattingUrl } = useEmailFileUrls(props.article)
+const { ticketInternalId } = useTicketInformation()
+
+const { originalFormattingUrl } = useEmailFileUrls(
+  props.article,
+  ticketInternalId,
+)
 </script>
 
 <template>

@@ -4,22 +4,24 @@
 import { computed, watch } from 'vue'
 
 import { useArticleContext } from '#desktop/pages/ticket/composables/useArticleContext.ts'
-
 import {
-  type TicketSidebarButtonProps,
-  type TicketSidebarButtonEmits,
-  type TicketSidebarButtonBadgeDetails,
+  type TicketSidebarProps,
+  type TicketSidebarEmits,
   TicketSidebarButtonBadgeType,
-} from '../../types.ts'
-import TicketSidebarButton from '../TicketSidebarButton.vue'
+  type TicketSidebarButtonBadgeDetails,
+} from '#desktop/pages/ticket/types/sidebar.ts'
 
+import TicketSidebarWrapper from '../TicketSidebarWrapper.vue'
+
+import TicketSidebarAttachmentContent from './TicketSidebarAttachmentContent.vue'
 import { useTicketAttachments } from './useTicketAttachments.ts'
 
-defineProps<TicketSidebarButtonProps>()
+defineProps<TicketSidebarProps>()
 
-const emit = defineEmits<TicketSidebarButtonEmits>()
+const emit = defineEmits<TicketSidebarEmits>()
 
-const { ticketAttachments, ticketAttachmentsQuery } = useTicketAttachments()
+const { ticketAttachments, ticketAttachmentsQuery, loading } =
+  useTicketAttachments()
 
 const { context: contextArticle } = useArticleContext()
 
@@ -51,12 +53,18 @@ const badge = computed<TicketSidebarButtonBadgeDetails | undefined>(() => {
 </script>
 
 <template>
-  <TicketSidebarButton
+  <TicketSidebarWrapper
     :key="sidebar"
-    :name="sidebar"
-    :label="sidebarPlugin.title"
-    :icon="sidebarPlugin.icon"
+    :sidebar="sidebar"
+    :sidebar-plugin="sidebarPlugin"
     :selected="selected"
     :badge="badge"
-  />
+  >
+    <TicketSidebarAttachmentContent
+      :context="context"
+      :sidebar-plugin="sidebarPlugin"
+      :ticket-attachments="ticketAttachments"
+      :loading="loading"
+    />
+  </TicketSidebarWrapper>
 </template>

@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import userEvent from '@testing-library/user-event'
+import { provideLocal } from '@vueuse/shared'
 import { beforeEach, describe, expect } from 'vitest'
 import { computed, provide, ref } from 'vue'
 
@@ -10,7 +11,7 @@ import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { MAIN_LAYOUT_KEY } from '#desktop/components/layout/composables/useMainLayoutContainer.ts'
 import { testOptionsTopBar } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/__tests__/support/testOptions.ts'
 import TicketDetailTopBar from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue'
-import { TICKET_INFORMATION_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
+import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 const renderTopBar = (options = testOptionsTopBar) => {
   return renderComponent(
@@ -26,9 +27,10 @@ const renderTopBar = (options = testOptionsTopBar) => {
           computed(() => parentContainer.value),
         )
 
-        provide(TICKET_INFORMATION_KEY, {
+        provideLocal(TICKET_KEY, {
           ticket: computed(() => options),
           ticketId: computed(() => options.id),
+          ticketInternalId: ref(options.internalId),
         })
         return {}
       },

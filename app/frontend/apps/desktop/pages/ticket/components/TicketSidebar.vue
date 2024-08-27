@@ -1,13 +1,9 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { toRef } from 'vue'
-
-import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
-
 import { useTicketSidebar } from '../composables/useTicketSidebar.ts'
 
-import type { TicketSidebarContext } from './types.ts'
+import type { TicketSidebarContext } from '../types/sidebar.ts'
 
 interface Props {
   context: TicketSidebarContext
@@ -19,13 +15,12 @@ const props = defineProps<Props>()
 
 const {
   activeSidebar,
-  activeSidebarPlugin,
   availableSidebarPlugins,
   shownSidebars,
   showSidebar,
   hideSidebar,
   switchSidebar,
-} = useTicketSidebar(toRef(props, 'context'))
+} = useTicketSidebar()
 
 const maybeToggleAndSwitchSidebar = (newSidebar: string) => {
   if (props.isCollapsed) props.toggleCollapse()
@@ -35,23 +30,13 @@ const maybeToggleAndSwitchSidebar = (newSidebar: string) => {
 
 <template>
   <div class="flex h-full justify-end">
-    <CommonLoader
-      class="mx-auto self-center"
-      :loading="!activeSidebarPlugin?.contentComponent"
-    >
-      <div v-show="!isCollapsed" class="flex grow flex-col">
-        <component
-          :is="activeSidebarPlugin?.contentComponent"
-          :context="context"
-        />
-      </div>
-    </CommonLoader>
+    <div v-show="!isCollapsed" id="ticketSidebar" class="flex grow flex-col" />
     <div
       class="flex w-12 flex-col items-center gap-2.5 border-neutral-100 px-2.5 py-3 transition-[border] dark:border-gray-900"
       :class="{ 'border-s': !isCollapsed }"
     >
       <component
-        :is="sidebarPlugin.buttonComponent"
+        :is="sidebarPlugin.component"
         v-for="(sidebarPlugin, sidebar) of availableSidebarPlugins"
         v-show="shownSidebars[sidebar]"
         :key="sidebar"

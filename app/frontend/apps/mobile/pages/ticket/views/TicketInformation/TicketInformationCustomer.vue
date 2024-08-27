@@ -34,20 +34,15 @@ const errorCallback = createQueryErrorHandler({
   forbidden: __('You have insufficient rights to view this user.'),
 })
 
+const customerInternalId = computed(() => ticket.value?.customer.internalId)
+
 const {
   user,
   loading,
   objectAttributes,
   secondaryOrganizations,
-  loadUser,
   loadAllSecondaryOrganizations,
-} = useUserDetail(undefined, errorCallback)
-
-watchEffect(() => {
-  if (ticket.value) {
-    loadUser(ticket.value.customer.internalId)
-  }
-})
+} = useUserDetail(customerInternalId, errorCallback)
 
 watchEffect(() => {
   updateRefetchingStatus(loading.value && user.value != null)

@@ -8,7 +8,7 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import {
   TicketSidebarButtonBadgeType,
   type TicketSidebarButtonBadgeDetails,
-} from '../types.ts'
+} from '../../types/sidebar.ts'
 
 interface Props {
   name: string

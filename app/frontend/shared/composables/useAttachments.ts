@@ -1,13 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, type ComputedRef } from 'vue'
+import { computed, type ComputedRef, type Ref } from 'vue'
 
 import { getAttachmentLinks } from '#shared/composables/getAttachmentLinks.ts'
 import type { Attachment } from '#shared/entities/attachment/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 interface AttachmentsOptions {
-  attachments: ComputedRef<Attachment[]>
+  attachments: ComputedRef<Attachment[]> | Ref<Attachment[]>
 }
 
 export interface AttachmentWithUrls extends Attachment {

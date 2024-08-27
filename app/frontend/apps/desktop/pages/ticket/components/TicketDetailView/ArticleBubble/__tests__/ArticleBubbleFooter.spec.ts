@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, provide } from 'vue'
+import { provideLocal } from '@vueuse/shared'
+import { computed, ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -9,7 +10,7 @@ import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/moc
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import ArticleBubbleFooter from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue'
-import { TICKET_INFORMATION_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
+import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 describe('ArticleBubbleFooter', () => {
   it('does not display for articles without attachments', () => {
@@ -18,9 +19,10 @@ describe('ArticleBubbleFooter', () => {
       router: true,
       setup: () => {
         const ticket = createDummyTicket()
-        provide(TICKET_INFORMATION_KEY, {
+        provideLocal(TICKET_KEY, {
           ticket: computed(() => ticket),
           ticketId: computed(() => ticket.id),
+          ticketInternalId: ref(ticket.internalId),
         })
         return {
           article: createDummyArticle(),
@@ -39,9 +41,10 @@ describe('ArticleBubbleFooter', () => {
         components: { ArticleBubbleFooter },
         setup: () => {
           const ticket = createDummyTicket()
-          provide(TICKET_INFORMATION_KEY, {
+          provideLocal(TICKET_KEY, {
             ticket: computed(() => ticket),
             ticketId: computed(() => ticket.id),
+            ticketInternalId: ref(ticket.internalId),
           })
           return {
             article: createDummyArticle({

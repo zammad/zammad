@@ -7,7 +7,7 @@ import { waitForTicketSharedDraftStartDeleteMutationCalls } from '#shared/entiti
 import { mockTicketSharedDraftStartSingleQuery } from '#shared/entities/ticket-shared-draft-start/graphql/queries/ticketSharedDraftStartSingle.mocks.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
-import TicketSidebarSharedDraftFlyout from '../TicketSidebar/TicketSidebarSharedDraftFlyout.vue'
+import TicketSidebarSharedDraftFlyout from '../TicketSidebarSharedDraftFlyout.vue'
 
 vi.hoisted(() => {
   vi.setSystemTime(new Date('2024-07-03T13:48:09Z'))

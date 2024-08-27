@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { watchOnce } from '@vueuse/shared'
-import { computed, nextTick, ref, type Ref } from 'vue'
+import { computed, ref, type Ref } from 'vue'
 
 import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
 import type {
@@ -12,8 +11,9 @@ import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type { GraphQLHandlerError } from '#shared/types/error.ts'
+import { normalizeEdges } from '#shared/utils/helpers.ts'
 
-import { useOrganizationLazyQuery } from '../graphql/queries/organization.api.ts'
+import { useOrganizationQuery } from '../graphql/queries/organization.api.ts'
 import { OrganizationUpdatesDocument } from '../graphql/subscriptions/organizationUpdates.api.ts'
 
 import type { WatchQueryFetchPolicy } from '@apollo/client/core'
@@ -24,13 +24,14 @@ export const useOrganizationDetail = (
   fetchPolicy?: WatchQueryFetchPolicy,
 ) => {
   const organizationId = computed(() => {
-    if (!internalId.value) return ''
+    if (!internalId.value) return
+
     return convertToGraphQLId('Organization', internalId.value)
   })
   const fetchMembersCount = ref<Maybe<number>>(3)
 
   const organizationQuery = new QueryHandler(
-    useOrganizationLazyQuery(
+    useOrganizationQuery(
       () => ({
         organizationInternalId: internalId.value,
         membersCount: 3,
@@ -45,26 +46,16 @@ export const useOrganizationDetail = (
     },
   )
 
-  watchOnce(
-    internalId,
-    () => {
-      organizationQuery.load()
-
-      nextTick(() => {
-        organizationQuery.subscribeToMore<
-          OrganizationUpdatesSubscriptionVariables,
-          OrganizationUpdatesSubscription
-        >(() => ({
-          document: OrganizationUpdatesDocument,
-          variables: {
-            organizationId: organizationId.value,
-            membersCount: fetchMembersCount.value,
-          },
-        }))
-      })
+  organizationQuery.subscribeToMore<
+    OrganizationUpdatesSubscriptionVariables,
+    OrganizationUpdatesSubscription
+  >(() => ({
+    document: OrganizationUpdatesDocument,
+    variables: {
+      organizationId: organizationId.value!,
+      membersCount: fetchMembersCount.value,
     },
-    { immediate: true },
-  )
+  }))
 
   const organizationResult = organizationQuery.result()
   const loading = organizationQuery.loading()
@@ -91,11 +82,16 @@ export const useOrganizationDetail = (
     EnumObjectManagerObjects.Organization,
   )
 
+  const organizationMembers = computed(
+    () => normalizeEdges(organization.value?.allMembers) || [],
+  )
+
   return {
     loading,
     organizationQuery,
     organization,
     objectAttributes,
+    organizationMembers,
     loadAllMembers,
   }
 }

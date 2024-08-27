@@ -2,24 +2,21 @@
 
 import { useApplicationStore } from '#shared/stores/application.ts'
 
-import { TicketSidebarScreenType } from '../../types.ts'
-import TicketSidebarChecklistButton from '../TicketSidebarChecklist/TicketSidebarChecklistButton.vue'
-import TicketSidebarChecklistContent from '../TicketSidebarChecklist/TicketSidebarChecklistContent.vue'
+import { TicketSidebarScreenType } from '../../../types/sidebar.ts'
+import TicketSidebarChecklist from '../TicketSidebarChecklist/TicketSidebarChecklist.vue'
 
 import type { TicketSidebarPlugin } from './types.ts'
 
 export default <TicketSidebarPlugin>{
   title: __('Checklist'),
-  buttonComponent: TicketSidebarChecklistButton,
-  contentComponent: TicketSidebarChecklistContent,
+  component: TicketSidebarChecklist,
   permissions: ['ticket.agent'],
+  screens: [TicketSidebarScreenType.TicketDetailView],
   icon: 'checklist',
   order: 5000,
-  available: (context) => {
+  available: () => {
     const { config } = useApplicationStore()
-    return (
-      context.screenType === TicketSidebarScreenType.TicketDetailView &&
-      config.checklist
-    )
+
+    return Boolean(config.checklist)
   },
 }

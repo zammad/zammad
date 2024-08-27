@@ -1,18 +1,59 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { type ComputedRef, inject, type InjectionKey } from 'vue'
+import { injectLocal, provideLocal } from '@vueuse/shared'
+import { computed } from 'vue'
 
+import { useTicketQuery } from '#shared/entities/ticket/graphql/queries/ticket.api.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
+import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
-interface TicketInformation {
-  ticket: ComputedRef<TicketById | undefined>
-  ticketId: ComputedRef<string>
+import type { TicketInformation } from '#desktop/entities/ticket/types.ts'
+
+import type { Ref, InjectionKey } from 'vue'
+
+export const TICKET_KEY = Symbol('ticket') as InjectionKey<TicketInformation>
+
+export const useProvideTicketInformation = (
+  internalId: Ref<number | string>,
+) => {
+  const ticketId = computed(() =>
+    convertToGraphQLId('Ticket', internalId.value),
+  )
+
+  // TODO: stay witht his for now, but need to be re-implemented for the tab situation.
+  const { createQueryErrorHandler } = useErrorHandler()
+
+  const ticketQuery = new QueryHandler(
+    // Currently we need no subscribeToMore here, because the tab registration holds the ticket subscription.
+    useTicketQuery(
+      () => ({
+        ticketId: ticketId.value,
+      }),
+      { fetchPolicy: 'cache-first' },
+    ),
+    {
+      errorCallback: createQueryErrorHandler({
+        notFound: __(
+          'Ticket with specified ID was not found. Try checking the URL for errors.',
+        ),
+        forbidden: __('You have insufficient rights to view this ticket.'),
+      }),
+    },
+  )
+
+  const result = ticketQuery.result()
+
+  const ticket = computed(() => result.value?.ticket as TicketById)
+
+  provideLocal(TICKET_KEY, {
+    ticket,
+    ticketId,
+    ticketInternalId: internalId as Ref<number>,
+  })
 }
 
-export const TICKET_INFORMATION_KEY = Symbol(
-  'ticket-information',
-) as InjectionKey<TicketInformation>
-
 export const useTicketInformation = () => {
-  return inject(TICKET_INFORMATION_KEY) as TicketInformation
+  return injectLocal(TICKET_KEY) as TicketInformation
 }

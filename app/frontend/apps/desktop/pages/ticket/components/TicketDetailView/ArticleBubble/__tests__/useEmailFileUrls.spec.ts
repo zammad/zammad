@@ -3,16 +3,9 @@
 import { ref } from 'vue'
 
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
-import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { useEmailFileUrls } from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useEmailFileUrls.ts'
-
-vi.mock('#desktop/pages/ticket/composables/useTicketInformation.ts', () => ({
-  useTicketInformation: () => ({
-    ticket: ref(createDummyTicket()),
-  }),
-}))
 
 describe('useEmailFileUrls', () => {
   it('should return originalFormattingUrl and rawMessageUrl', () => {
@@ -31,10 +24,11 @@ describe('useEmailFileUrls', () => {
           ],
         }),
       ),
+      ref(222),
     )
 
     expect(originalFormattingUrl.value).toBe(
-      '/ticket_attachment/1/1/123?disposition=attachment',
+      '/ticket_attachment/222/1/123?disposition=attachment',
     )
     expect(rawMessageUrl.value).toBe('/api/v1/ticket_article_plain/1')
   })

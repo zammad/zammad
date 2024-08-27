@@ -10,16 +10,18 @@ import {
   type GraphQLHandlerError,
 } from '#shared/types/error.ts'
 
-import TicketSidebarButton from './TicketSidebarButton.vue'
+import {
+  type TicketSidebarProps,
+  type TicketSidebarEmits,
+} from '#desktop/pages/ticket/types/sidebar.ts'
 
-import type {
-  TicketSidebarButtonProps,
-  TicketSidebarButtonEmits,
-} from '../types.ts'
+import TicketSidebarWrapper from '../TicketSidebarWrapper.vue'
 
-const props = defineProps<TicketSidebarButtonProps>()
+import TicketSidebarSharedDraftStartContent from './TicketSidebarSharedDraftStartContent.vue'
 
-const emit = defineEmits<TicketSidebarButtonEmits>()
+const props = defineProps<TicketSidebarProps>()
+
+const emit = defineEmits<TicketSidebarEmits>()
 
 const groupId = computed(() =>
   convertToGraphQLId('Group', Number(props.context.formValues.group_id)),
@@ -38,10 +40,8 @@ const errorCallback = (error: GraphQLHandlerError) => {
   return true
 }
 
-const { sharedDraftStartListQuery } = useTicketSharedDraftStart(
-  groupId,
-  errorCallback,
-)
+const { sharedDraftStartListQuery, sharedDraftStartList } =
+  useTicketSharedDraftStart(groupId, errorCallback)
 
 sharedDraftStartListQuery.onResult(({ data }) => {
   if (!data?.ticketSharedDraftStartList) return
@@ -51,11 +51,17 @@ sharedDraftStartListQuery.onResult(({ data }) => {
 </script>
 
 <template>
-  <TicketSidebarButton
+  <TicketSidebarWrapper
     :key="sidebar"
-    :name="sidebar"
-    :label="sidebarPlugin.title"
-    :icon="sidebarPlugin.icon"
+    :sidebar="sidebar"
+    :sidebar-plugin="sidebarPlugin"
     :selected="selected"
-  />
+  >
+    <TicketSidebarSharedDraftStartContent
+      v-if="sharedDraftStartList"
+      :context="context"
+      :sidebar-plugin="sidebarPlugin"
+      :shared-draft-start-list="sharedDraftStartList"
+    />
+  </TicketSidebarWrapper>
 </template>

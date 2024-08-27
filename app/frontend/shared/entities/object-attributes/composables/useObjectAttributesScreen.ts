@@ -20,6 +20,8 @@ export const useObjectAttributesScreen = (
     screens: ComputedRef<Record<string, string[]>>,
     attributesLookup: ComputedRef<Map<string, ObjectManagerFrontendAttribute>>,
   ) => {
+    if (!screens.value[screen]) return []
+
     return screens.value[screen].reduce(
       (screenAttributes: ObjectManagerFrontendAttribute[], attributeName) => {
         screenAttributes.push(

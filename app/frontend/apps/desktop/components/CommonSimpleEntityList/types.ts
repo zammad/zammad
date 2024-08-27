@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import type { ObjectLike } from '#shared/types/utils.ts'
+
 import type { Component } from 'vue'
 
 export enum EntityType {
@@ -7,8 +9,8 @@ export enum EntityType {
   Organization = 'Organization',
 }
 
-export interface Entity<T> {
-  array: (unknown | T)[]
+export interface Entity<T = ObjectLike> {
+  array: T[]
   totalCount: number
 }
 

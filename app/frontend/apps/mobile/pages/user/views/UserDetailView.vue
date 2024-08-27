@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, toRef } from 'vue'
 
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
@@ -40,11 +40,8 @@ const {
   loading,
   objectAttributes,
   secondaryOrganizations,
-  loadUser,
   loadAllSecondaryOrganizations,
-} = useUserDetail(undefined, errorCallback)
-
-loadUser(props.internalId)
+} = useUserDetail(toRef(props, 'internalId'), errorCallback)
 
 useOnlineNotificationSeen(user)
 

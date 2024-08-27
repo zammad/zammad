@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, type ComputedRef, provide } from 'vue'
+import { provideLocal } from '@vueuse/shared'
+import { computed, ref, type ComputedRef, provide } from 'vue'
 
 import { getQueryHandler } from '#tests/graphql/builders/__tests__/utils.ts'
 
@@ -13,7 +14,7 @@ import type {
 } from '#shared/graphql/types.ts'
 
 import { ARTICLES_INFORMATION_KEY } from '#desktop/pages/ticket/composables/useArticleContext.ts'
-import { TICKET_INFORMATION_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
+import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 export const mockDetailViewSetup = (data?: {
   ticket?: Parameters<typeof createDummyTicket>[0]
@@ -23,7 +24,8 @@ export const mockDetailViewSetup = (data?: {
 
   const dummyTicket = createDummyTicket(data?.ticket)
 
-  provide(TICKET_INFORMATION_KEY, {
+  provideLocal(TICKET_KEY, {
+    ticketInternalId: ref(dummyTicket.internalId),
     ticketId: computed(() => dummyTicket.id),
     ticket: computed(() => dummyTicket),
   })

@@ -11,15 +11,15 @@ import { TicketSharedDraftStartListDocument } from '#shared/entities/ticket-shar
 import { TicketSharedDraftStartUpdateByGroupDocument } from '#shared/entities/ticket-shared-draft-start/graphql/subscriptions/ticketSharedDraftStartUpdateByGroup.api.ts'
 import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
-import sharedDraftStartSidebarPlugin from '../TicketSidebar/plugins/shared-draft-start.ts'
-import TicketSidebarSharedDraftStartButton from '../TicketSidebar/TicketSidebarSharedDraftStartButton.vue'
-import { TicketSidebarScreenType } from '../types.ts'
+import { TicketSidebarScreenType } from '../../../../types/sidebar.ts'
+import sharedDraftStartSidebarPlugin from '../../plugins/shared-draft-start.ts'
+import TicketSidebarSharedDraftStart from '../TicketSidebarSharedDraftStart.vue'
 
 // NB: We have to run this test example inside its own test, since it does not play nicely with automocker.
 //   The issue stems from the fact that automocker does not support triggering hard errors in queries.
 //   Therefore, we manually register the subscription and fail the query with a protocol error,
 //   in order to cover the expected behavior.
-describe('TicketSidebarSharedDraftStartButton.vue', () => {
+describe('TicketSidebarSharedDraftStart.vue', () => {
   it('hides sidebar when shared draft feature is inactive', async () => {
     mockGraphQLSubscription(TicketSharedDraftStartUpdateByGroupDocument)
 
@@ -32,7 +32,7 @@ describe('TicketSidebarSharedDraftStartButton.vue', () => {
       },
     ])
 
-    const wrapper = renderComponent(TicketSidebarSharedDraftStartButton, {
+    const wrapper = renderComponent(TicketSidebarSharedDraftStart, {
       props: {
         sidebar: 'shared-draft-start',
         sidebarPlugin: sharedDraftStartSidebarPlugin,
@@ -42,6 +42,11 @@ describe('TicketSidebarSharedDraftStartButton.vue', () => {
           formValues: {
             group_id: 1,
           },
+        },
+      },
+      global: {
+        stubs: {
+          teleport: true,
         },
       },
     })

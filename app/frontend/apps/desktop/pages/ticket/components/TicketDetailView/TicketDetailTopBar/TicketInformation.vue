@@ -20,11 +20,9 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const ticket = computed(() => props.ticket)
-
 const isUpdatingTitle = ref(false)
 
-const { updateTitle } = useTicketEditTitle(ticket)
+const { updateTitle } = useTicketEditTitle(computed(() => props.ticket))
 </script>
 
 <template>
@@ -39,7 +37,7 @@ const { updateTitle } = useTicketEditTitle(ticket)
         :entity="ticket?.customer"
       />
       <CommonOrganizationAvatar
-        v-if="ticket?.customer.organization"
+        v-if="ticket?.customer?.organization"
         class="ltr:-translate-x- -z-10 ltr:-translate-x-1.5 rtl:translate-x-1.5"
         :size="hideDetails ? 'medium' : 'normal'"
         :entity="ticket?.customer.organization"
@@ -59,7 +57,7 @@ const { updateTitle } = useTicketEditTitle(ticket)
             class="flex items-center gap-1"
             :class="{
               'after:inline-block after:h-[.12rem] after:w-[.12rem] after:shrink-0 after:rounded-full after:bg-current':
-                ticket.customer.organization,
+                ticket?.customer?.organization,
             }"
           >
             {{ ticket?.customer.fullname }}

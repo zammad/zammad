@@ -21,7 +21,7 @@ export const edgesToArray = <T>(
 export const normalizeEdges = <T>(
   object?: Maybe<{ edges?: { node: T }[]; totalCount?: number }>,
 ): { array: T[]; totalCount: number } => {
-  const array = edgesToArray(object)
+  const array = edgesToArray<T>(object)
   return {
     array,
     totalCount: object?.totalCount ?? array.length,

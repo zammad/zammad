@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
 import {
   type ExtendedRenderResult,
@@ -8,6 +8,7 @@ import {
 } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
+import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import {
@@ -19,8 +20,6 @@ import {
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import '#tests/graphql/builders/mocks.ts'
 
-import ChecklistContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue'
-import { TicketSidebarScreenType } from '#desktop/pages/ticket/components/types.ts'
 import { waitForTicketChecklistAddMutationCalls } from '#desktop/pages/ticket/graphql/mutations/ticketChecklistAdd.mocks.ts'
 import { waitForTicketChecklistDeleteMutationCalls } from '#desktop/pages/ticket/graphql/mutations/ticketChecklistDelete.mocks.ts'
 import { waitForTicketChecklistItemDeleteMutationCalls } from '#desktop/pages/ticket/graphql/mutations/ticketChecklistItemDelete.mocks.ts'
@@ -33,11 +32,16 @@ import { mockChecklistTemplatesQuery } from '#desktop/pages/ticket/graphql/queri
 import { mockTicketChecklistQuery } from '#desktop/pages/ticket/graphql/queries/ticketChecklist.mocks.ts'
 import { getChecklistTemplateUpdatesSubscriptionHandler } from '#desktop/pages/ticket/graphql/subscriptions/checklistTemplateUpdates.mocks.ts'
 import { getTicketChecklistUpdatesSubscriptionHandler } from '#desktop/pages/ticket/graphql/subscriptions/ticketChecklistUpdates.mocks.ts'
+import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
+
+import checklistSidebarPlugin from '../../plugins/checklist.ts'
+import TicketSidebarChecklist from '../TicketSidebarChecklist.vue'
 
 const ticket = { value: createDummyTicket() }
 
 vi.mock('#desktop/pages/ticket/composables/useTicketInformation.ts', () => ({
   useTicketInformation: () => ({
+    ticketInternalId: ref(ticket.value.internalId),
     ticketId: computed(() => ticket.value.id),
     ticket: computed(() => ticket.value),
   }),
@@ -128,6 +132,7 @@ const mockChecklistUpdateSubscription = async (
   await getTicketChecklistUpdatesSubscriptionHandler().trigger({
     ticketChecklistUpdates: {
       ticketChecklist,
+      removedTicketChecklist: false,
     },
   })
 }
@@ -212,9 +217,12 @@ const verifyTextUpdate = async (
   ).toBeInTheDocument()
 }
 
-const renderChecklist = () =>
-  renderComponent(ChecklistContent, {
+const renderChecklist = async () => {
+  const result = renderComponent(TicketSidebarChecklist, {
     props: {
+      sidebar: 'checklist',
+      sidebarPlugin: checklistSidebarPlugin,
+      selected: true,
       context: {
         screenType: TicketSidebarScreenType.TicketDetailView,
         formValues: {},
@@ -227,7 +235,22 @@ const renderChecklist = () =>
     dialog: true,
   })
 
-describe('TicketSidebarChecklistContent', () => {
+  await waitForNextTick()
+
+  return result
+}
+
+describe('TicketSidebarChecklist', () => {
+  beforeAll(() => {
+    const app = document.createElement('div')
+    app.id = 'ticketSidebar'
+    document.body.appendChild(app)
+  })
+
+  afterAll(() => {
+    document.body.innerHTML = ''
+  })
+
   beforeEach(() => {
     ticket.value = createDummyTicket()
 
@@ -246,7 +269,7 @@ describe('TicketSidebarChecklistContent', () => {
       },
     })
 
-    const wrapper = renderChecklist()
+    const wrapper = await renderChecklist()
 
     expect(
       await wrapper.findByText('No checklist added to this ticket yet.'),
@@ -289,20 +312,10 @@ describe('TicketSidebarChecklistContent', () => {
       },
     })
 
-    const wrapper = renderChecklist()
+    const wrapper = await renderChecklist()
 
     expect(await wrapper.findByText('Access denied')).toBeInTheDocument()
     expect(wrapper.getByIconName('x-lg')).toBeInTheDocument()
-  })
-
-  it('has checklist related information', () => {
-    const wrapper = renderChecklist()
-
-    expect(
-      wrapper.getByRole('heading', { name: 'Checklist', level: 2 }),
-    ).toBeInTheDocument()
-
-    expect(wrapper.getByIconName('checklist')).toBeInTheDocument()
   })
 
   it('creates a empty checklist with a couple of items', async () => {
@@ -310,7 +323,11 @@ describe('TicketSidebarChecklistContent', () => {
       ticketChecklist: null,
     })
 
-    const wrapper = renderChecklist()
+    const wrapper = await renderChecklist()
+
+    expect(
+      wrapper.getByRole('heading', { name: 'Checklist', level: 2 }),
+    ).toBeInTheDocument()
 
     expect(
       await wrapper.findByRole('button', { name: 'Add Empty Checklist' }),
@@ -334,7 +351,7 @@ describe('TicketSidebarChecklistContent', () => {
         items: [],
       },
     })
-    const wrapper = renderChecklist()
+    const wrapper = await renderChecklist()
 
     expect(
       await wrapper.findByText('No checklist items yet'),
@@ -344,17 +361,17 @@ describe('TicketSidebarChecklistContent', () => {
   describe('actions', () => {
     beforeEach(() => {
       mockPermissions(['ticket.agent'])
+    })
 
+    it('update checklist title', async () => {
       mockTicketChecklistQuery({
         ticketChecklist: {
           name: 'Checklist title',
           items: checklistItemsMock,
         },
       })
-    })
 
-    it('update checklist title', async () => {
-      const wrapper = renderChecklist()
+      const wrapper = await renderChecklist()
 
       expect(
         await wrapper.findByRole('heading', {
@@ -390,7 +407,7 @@ describe('TicketSidebarChecklistContent', () => {
       })
 
       expect(
-        wrapper.getByRole('heading', {
+        await wrapper.findByRole('heading', {
           level: 3,
           name: 'Checklist title update',
         }),
@@ -405,7 +422,7 @@ describe('TicketSidebarChecklistContent', () => {
           items: checklistItemsMock,
         },
       })
-      const wrapper = renderChecklist()
+      const wrapper = await renderChecklist()
 
       expect(
         await wrapper.findByRole('heading', {
@@ -429,7 +446,7 @@ describe('TicketSidebarChecklistContent', () => {
           items: checklistItemsMock,
         },
       })
-      const wrapper = renderChecklist()
+      const wrapper = await renderChecklist()
 
       expect(
         await wrapper.findByRole('heading', {
@@ -455,7 +472,14 @@ describe('TicketSidebarChecklistContent', () => {
     })
 
     it('removes entire checklist', async () => {
-      const wrapper = renderChecklist()
+      mockTicketChecklistQuery({
+        ticketChecklist: {
+          id: convertToGraphQLId('Checklist', 1),
+          name: 'Checklist title',
+          items: checklistItemsMock,
+        },
+      })
+      const wrapper = await renderChecklist()
 
       expect(
         await wrapper.findByRole('heading', {
@@ -488,7 +512,7 @@ describe('TicketSidebarChecklistContent', () => {
         },
       })
 
-      const wrapper = renderChecklist()
+      const wrapper = await renderChecklist()
 
       expect(
         await wrapper.findByRole('heading', {
@@ -526,7 +550,7 @@ describe('TicketSidebarChecklistContent', () => {
         },
       })
 
-      const wrapper = renderChecklist()
+      const wrapper = await renderChecklist()
 
       expect(
         await wrapper.findByRole('heading', {
@@ -562,7 +586,7 @@ describe('TicketSidebarChecklistContent', () => {
           items: checklistItemsMock,
         },
       })
-      const wrapper = renderChecklist()
+      const wrapper = await renderChecklist()
 
       expect(
         await wrapper.findByRole('heading', {
@@ -587,9 +611,10 @@ describe('TicketSidebarChecklistContent', () => {
       mockTicketChecklistQuery({
         ticketChecklist: null,
       })
+
       mockChecklistTemplatesQuery({ checklistTemplates: templateMocks })
 
-      const wrapper = renderChecklist()
+      const wrapper = await renderChecklist()
 
       expect(
         await wrapper.findByText('Or choose a checklist template.'),
@@ -623,11 +648,12 @@ describe('TicketSidebarChecklistContent', () => {
       mockTicketChecklistQuery({
         ticketChecklist: null,
       })
+
       mockChecklistTemplatesQuery({
         checklistTemplates: [],
       })
 
-      const wrapper = renderChecklist()
+      const wrapper = await renderChecklist()
 
       expect(
         await wrapper.findByRole('link', {
@@ -650,9 +676,10 @@ describe('TicketSidebarChecklistContent', () => {
       mockTicketChecklistQuery({
         ticketChecklist: null,
       })
+
       mockChecklistTemplatesQuery({ checklistTemplates: templateMocks })
 
-      const wrapper = renderChecklist()
+      const wrapper = await renderChecklist()
 
       expect(
         await wrapper.findByRole('button', { name: 'Add From a Template' }),

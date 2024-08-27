@@ -9,25 +9,24 @@ import {
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
 import type { FormFieldValue } from '#shared/components/Form/types.ts'
-import { useTicketSharedDraftStart } from '#shared/entities/ticket-shared-draft-start/composables/useTicketSharedDraftStart.ts'
 import { useTicketSharedDraftStartCreateMutation } from '#shared/entities/ticket-shared-draft-start/graphql/mutations/ticketSharedDraftStartCreate.api.ts'
 import { useTicketSharedDraftStartUpdateMutation } from '#shared/entities/ticket-shared-draft-start/graphql/mutations/ticketSharedDraftStartUpdate.api.ts'
+import type { TicketSharedDraftStartListQuery } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
-import {
-  GraphQLErrorTypes,
-  type GraphQLHandlerError,
-} from '#shared/types/error.ts'
 import { domFrom } from '#shared/utils/dom.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
+import type { TicketSidebarContentProps } from '#desktop/pages/ticket/types/sidebar.ts'
 
-import TicketSidebarContent from './TicketSidebarContent.vue'
+import TicketSidebarContent from '../TicketSidebarContent.vue'
 
-import type { TicketSidebarContentProps } from '../types.ts'
+interface Props extends TicketSidebarContentProps {
+  sharedDraftStartList: TicketSharedDraftStartListQuery['ticketSharedDraftStartList']
+}
 
-const props = defineProps<TicketSidebarContentProps>()
+const props = defineProps<Props>()
 
 const groupId = computed(() =>
   convertToGraphQLId('Group', Number(props.context.formValues.group_id)),
@@ -38,17 +37,6 @@ const currentSharedDraftId = computed(() =>
     'Ticket::SharedDraftStart',
     Number(props.context.formValues.shared_draft_id),
   ),
-)
-
-// Silence query error notification in the frontend in case of unknown errors.
-//   The query may raise a non-specific error if the group has inactive shared drafts.
-//   FIXME: Check if it's possible to silence the console error too.
-const errorCallback = (error: GraphQLHandlerError) =>
-  error.type !== GraphQLErrorTypes.UnknownError
-
-const { sharedDraftStartList } = useTicketSharedDraftStart(
-  groupId,
-  errorCallback,
 )
 
 const sharedDraftTitle = ref('')
@@ -172,7 +160,7 @@ const openFlyout = (sharedDraftStartId: string) => {
 </script>
 
 <template>
-  <TicketSidebarContent :title="__('Shared Drafts')" icon="file-text">
+  <TicketSidebarContent :title="sidebarPlugin.title" :icon="sidebarPlugin.icon">
     <FormKit
       id="sharedDraftTitle"
       v-model="sharedDraftTitle"

@@ -1,26 +1,27 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
 
 import CommonFilePreview from '#shared/components/CommonFilePreview/CommonFilePreview.vue'
 import { useAttachments } from '#shared/composables/useAttachments.ts'
+import type { Attachment } from '#shared/entities/attachment/types.ts'
 
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import { useFilePreviewViewer } from '#desktop/composables/useFilePreviewViewer.ts'
+import type { TicketSidebarContentProps } from '#desktop/pages/ticket/types/sidebar.ts'
 
 import TicketSidebarContent from '../TicketSidebarContent.vue'
 
-import { useTicketAttachments } from './useTicketAttachments.ts'
+interface Props extends TicketSidebarContentProps {
+  ticketAttachments: Attachment[]
+  loading: boolean
+}
 
-import type { TicketSidebarContentProps } from '../../types.ts'
-
-defineProps<TicketSidebarContentProps>()
-
-const { loading, ticketAttachments } = useTicketAttachments('cache-first')
+const props = defineProps<Props>()
 
 const { attachments: attachmentsWithUrls } = useAttachments({
-  attachments: ticketAttachments,
+  attachments: toRef(props, 'ticketAttachments'),
 })
 
 const { showPreview } = useFilePreviewViewer(

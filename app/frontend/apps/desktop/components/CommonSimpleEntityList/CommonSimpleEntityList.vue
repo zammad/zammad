@@ -3,6 +3,8 @@
 <script setup lang="ts" generic="T">
 import { computed } from 'vue'
 
+import type { ObjectLike } from '#shared/types/utils.ts'
+
 import CommonShowMoreButton from '#desktop/components/CommonShowMoreButton/CommonShowMoreButton.vue'
 import entityModules from '#desktop/components/CommonSimpleEntityList/plugins/index.ts'
 import {
@@ -11,11 +13,7 @@ import {
 } from '#desktop/components/CommonSimpleEntityList/types.ts'
 
 interface Props {
-  /**
-   * Populate entity through `normalizesEdges` function
-   * @type {T[]} -> ReturnType of `normalizesEdges` function
-   * */
-  entity: Entity<T>
+  entity: Entity<ObjectLike>
   type: EntityType
   label?: string
 }
@@ -31,7 +29,7 @@ const entitySetup = computed(() => {
   return {
     component,
     context,
-    data: props.entity.array,
+    array: props.entity.array,
   }
 })
 </script>
@@ -45,23 +43,15 @@ const entitySetup = computed(() => {
       {{ label }}
     </CommonLabel>
 
-    <TransitionGroup
-      v-if="entity.array?.length"
-      tag="ul"
-      name="fade"
-      class="flex flex-col gap-1.5"
-    >
-      <li
-        v-for="(entityValue, index) in entitySetup.data"
-        :key="`entity-${index}`"
-      >
+    <ul v-if="entity.array?.length" class="flex flex-col gap-1.5">
+      <li v-for="item in entitySetup.array" :key="`entity-${item.id}`">
         <component
           :is="entitySetup.component"
-          :entity="entityValue"
+          :entity="item"
           :context="entitySetup.context"
         />
       </li>
-    </TransitionGroup>
+    </ul>
 
     <CommonLabel v-if="!entity.array?.length" class="block"
       >{{ entitySetup.context.emptyMessage }}

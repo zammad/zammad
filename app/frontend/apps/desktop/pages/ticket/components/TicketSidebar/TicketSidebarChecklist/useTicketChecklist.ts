@@ -3,35 +3,25 @@
 import { computed } from 'vue'
 
 import type {
-  ChecklistItem,
   TicketChecklistQuery,
   TicketChecklistUpdatesSubscription,
   TicketChecklistUpdatesSubscriptionVariables,
 } from '#shared/graphql/types.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
-import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import { useTicketChecklistQuery } from '#desktop/pages/ticket/graphql/queries/ticketChecklist.api.ts'
 import { TicketChecklistUpdatesDocument } from '#desktop/pages/ticket/graphql/subscriptions/ticketChecklistUpdates.api.ts'
 
-export const useTicketChecklist = (
-  subscriptionUpdateCallback?: (
-    previousChecklist: ChecklistItem[],
-    newChecklist: ChecklistItem[],
-  ) => void,
-) => {
-  const { ticketId, ticket } = useTicketInformation()
+export const useTicketChecklist = () => {
+  const { ticket, ticketId } = useTicketInformation()
 
-  const readOnly = computed(() => !ticket.value?.policy.update)
+  const readonly = computed(() => !ticket?.value?.policy.update)
 
   const checklistQuery = new QueryHandler(
     useTicketChecklistQuery(() => ({
       ticketId: ticketId.value,
     })),
-    {
-      errorCallback: (error) => error.type !== GraphQLErrorTypes.RecordNotFound,
-    },
   )
 
   const checklistResult = checklistQuery.result()
@@ -40,6 +30,9 @@ export const useTicketChecklist = (
   const checklist = computed(() => checklistResult.value?.ticketChecklist)
 
   const isLoadingChecklist = computed(() => {
+    // Return true when the ticket is not loaded yet, because some output is related to the ticket data (e.g. readonly).
+    if (!ticket.value) return true
+
     // Return already true when an checklist result already exists from the cache, also
     // when maybe a loading is in progress(because of cache + network).
     if (checklist.value !== undefined) return false
@@ -57,7 +50,7 @@ export const useTicketChecklist = (
   >(() => ({
     document: TicketChecklistUpdatesDocument,
     variables: {
-      ticketId: ticketId.value as string,
+      ticketId: ticketId.value,
     },
     updateQuery: (prev, { subscriptionData }) => {
       if (
@@ -70,16 +63,6 @@ export const useTicketChecklist = (
       const { ticketChecklist, removedTicketChecklist } =
         subscriptionData.data.ticketChecklistUpdates
 
-      if (
-        checklist.value?.items?.length &&
-        ticketChecklist?.items?.length &&
-        subscriptionUpdateCallback
-      )
-        subscriptionUpdateCallback(
-          checklistResult.value?.ticketChecklist?.items as ChecklistItem[],
-          ticketChecklist.items as ChecklistItem[],
-        )
-
       // When a complete checklist was removed, we need to update the result.
       if (
         removedTicketChecklist ||
@@ -90,8 +73,7 @@ export const useTicketChecklist = (
         }
       }
 
-      // Always return null, because we need not to manipulate the data with this function. It's only for handling the
-      //  edit mode callback.
+      // Always return null when we need not to change anything related to the data.
       return null as unknown as TicketChecklistQuery
     },
   }))
@@ -99,7 +81,7 @@ export const useTicketChecklist = (
   return {
     checklist,
     incompleteItemCount,
-    readOnly,
+    readonly,
     isLoadingChecklist,
   }
 }

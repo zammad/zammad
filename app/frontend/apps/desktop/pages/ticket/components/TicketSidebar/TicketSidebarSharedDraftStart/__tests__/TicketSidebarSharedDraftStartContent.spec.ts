@@ -8,13 +8,12 @@ import { waitForNextTick } from '#tests/support/utils.ts'
 import { pushComponent } from '#shared/components/DynamicInitializer/manage.ts'
 import { waitForTicketSharedDraftStartCreateMutationCalls } from '#shared/entities/ticket-shared-draft-start/graphql/mutations/ticketSharedDraftStartCreate.mocks.ts'
 import { waitForTicketSharedDraftStartUpdateMutationCalls } from '#shared/entities/ticket-shared-draft-start/graphql/mutations/ticketSharedDraftStartUpdate.mocks.ts'
-import { mockTicketSharedDraftStartListQuery } from '#shared/entities/ticket-shared-draft-start/graphql/queries/ticketSharedDraftStartList.mocks.ts'
+import type { TicketSharedDraftStartListQuery } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
-import sharedDraftStartSidebarPlugin from '../TicketSidebar/plugins/shared-draft-start.ts'
-import TicketSidebarSharedDraftStartButton from '../TicketSidebar/TicketSidebarSharedDraftStartButton.vue'
-import TicketSidebarSharedDraftStartContent from '../TicketSidebar/TicketSidebarSharedDraftStartContent.vue'
-import { TicketSidebarScreenType } from '../types.ts'
+import { TicketSidebarScreenType } from '../../../../types/sidebar.ts'
+import sharedDraftStartSidebarPlugin from '../../plugins/shared-draft-start.ts'
+import TicketSidebarSharedDraftStartContent from '../TicketSidebarSharedDraftStartContent.vue'
 
 vi.hoisted(() => {
   vi.setSystemTime(new Date('2024-07-03T13:48:09Z'))
@@ -27,31 +26,8 @@ vi.mock('#shared/components/DynamicInitializer/manage.ts', () => {
   }
 })
 
-const renderTicketSidebarSharedDraftStartButton = async (
-  context: {
-    formValues: Record<string, unknown>
-  },
-  options: any = {},
-) => {
-  const result = renderComponent(TicketSidebarSharedDraftStartButton, {
-    props: {
-      sidebar: 'shared-draft-start',
-      sidebarPlugin: sharedDraftStartSidebarPlugin,
-      selected: true,
-      context: {
-        screenType: TicketSidebarScreenType.TicketCreate,
-        ...context,
-      },
-    },
-    ...options,
-  })
-
-  if (context.formValues.group_id) await waitForNextTick()
-
-  return result
-}
-
 const renderTicketSidebarSharedDraftStartContent = async (
+  sharedDraftStartList: TicketSharedDraftStartListQuery['ticketSharedDraftStartList'],
   context: {
     formValues: Record<string, unknown>
     form?: Record<string, unknown>
@@ -60,6 +36,8 @@ const renderTicketSidebarSharedDraftStartContent = async (
 ) => {
   const result = renderComponent(TicketSidebarSharedDraftStartContent, {
     props: {
+      sidebarPlugin: sharedDraftStartSidebarPlugin,
+      sharedDraftStartList,
       context: {
         screenType: TicketSidebarScreenType.TicketCreate,
         ...context,
@@ -75,35 +53,9 @@ const renderTicketSidebarSharedDraftStartContent = async (
   return result
 }
 
-describe('TicketSidebarSharedDraftStartButton.vue', () => {
-  it('shows sidebar when group ID is present', async () => {
-    const wrapper = await renderTicketSidebarSharedDraftStartButton({
-      formValues: {
-        group_id: 1,
-      },
-    })
-
-    expect(wrapper.emitted('show')).toHaveLength(1)
-  })
-
-  it('does not show sidebar when group ID is absent', async () => {
-    const wrapper = await renderTicketSidebarSharedDraftStartButton({
-      formValues: {
-        group_id: null,
-      },
-    })
-
-    expect(wrapper.emitted('show')).toBeUndefined()
-  })
-})
-
 describe('TicketSidebarSharedDraftStartContent.vue', () => {
   it('renders empty shared draft list', async () => {
-    mockTicketSharedDraftStartListQuery({
-      ticketSharedDraftStartList: [],
-    })
-
-    const wrapper = await renderTicketSidebarSharedDraftStartContent({
+    const wrapper = await renderTicketSidebarSharedDraftStartContent([], {
       formValues: {
         group_id: 2,
       },
@@ -120,13 +72,18 @@ describe('TicketSidebarSharedDraftStartContent.vue', () => {
   })
 
   it('renders non-empty shared draft list', async () => {
-    mockTicketSharedDraftStartListQuery({
-      ticketSharedDraftStartList: [
+    const wrapper = await renderTicketSidebarSharedDraftStartContent(
+      [
         {
           id: convertToGraphQLId('Ticket::SharedDraftStart', 1),
           name: 'Test shared draft 1',
           updatedAt: '2024-07-03T13:48:09Z',
           updatedBy: {
+            __typename: 'User',
+            id: convertToGraphQLId('User', 2),
+            internalId: 2,
+            firstname: 'Erika',
+            lastname: 'Mustermann',
             fullname: 'Erika Mustermann',
           },
         },
@@ -135,6 +92,11 @@ describe('TicketSidebarSharedDraftStartContent.vue', () => {
           name: 'Test shared draft 2',
           updatedAt: '2024-07-03T13:30:00Z',
           updatedBy: {
+            __typename: 'User',
+            id: convertToGraphQLId('User', 3),
+            internalId: 3,
+            firstname: 'Max',
+            lastname: 'Mustermann',
             fullname: 'Max Mustermann',
           },
         },
@@ -144,13 +106,12 @@ describe('TicketSidebarSharedDraftStartContent.vue', () => {
           updatedAt: '2024-07-02T12:00:00Z',
         },
       ],
-    })
-
-    const wrapper = await renderTicketSidebarSharedDraftStartContent({
-      formValues: {
-        group_id: 2,
+      {
+        formValues: {
+          group_id: 2,
+        },
       },
-    })
+    )
 
     expect(
       wrapper.getByRole('link', { name: 'Test shared draft 1' }),
@@ -174,27 +135,31 @@ describe('TicketSidebarSharedDraftStartContent.vue', () => {
   })
 
   it('supports previewing shared draft', async () => {
-    mockTicketSharedDraftStartListQuery({
-      ticketSharedDraftStartList: [
+    const wrapper = await renderTicketSidebarSharedDraftStartContent(
+      [
         {
           id: convertToGraphQLId('Ticket::SharedDraftStart', 1),
           name: 'Test shared draft 1',
           updatedAt: '2024-07-03T13:48:09Z',
           updatedBy: {
+            __typename: 'User',
+            id: convertToGraphQLId('User', 2),
+            internalId: 2,
+            firstname: 'Erika',
+            lastname: 'Mustermann',
             fullname: 'Erika Mustermann',
           },
         },
       ],
-    })
-
-    const wrapper = await renderTicketSidebarSharedDraftStartContent({
-      formValues: {
-        group_id: 2,
+      {
+        formValues: {
+          group_id: 2,
+        },
+        form: {
+          formId: 'test-form',
+        },
       },
-      form: {
-        formId: 'test-form',
-      },
-    })
+    )
 
     await wrapper.events.click(
       wrapper.getByRole('link', { name: 'Test shared draft 1' }),
@@ -214,11 +179,7 @@ describe('TicketSidebarSharedDraftStartContent.vue', () => {
   })
 
   it('supports creating new shared draft', async () => {
-    mockTicketSharedDraftStartListQuery({
-      ticketSharedDraftStartList: [],
-    })
-
-    const wrapper = await renderTicketSidebarSharedDraftStartContent({
+    const wrapper = await renderTicketSidebarSharedDraftStartContent([], {
       formValues: {
         group_id: 2,
         title: 'Test Title',
@@ -260,32 +221,36 @@ describe('TicketSidebarSharedDraftStartContent.vue', () => {
   })
 
   it('supports updating existing shared draft', async () => {
-    mockTicketSharedDraftStartListQuery({
-      ticketSharedDraftStartList: [
+    const wrapper = await renderTicketSidebarSharedDraftStartContent(
+      [
         {
           id: convertToGraphQLId('Ticket::SharedDraftStart', 1),
           name: 'Test shared draft 1',
           updatedAt: '2024-07-03T13:48:09Z',
           updatedBy: {
+            __typename: 'User',
+            id: convertToGraphQLId('User', 2),
+            internalId: 2,
+            firstname: 'Erika',
+            lastname: 'Mustermann',
             fullname: 'Erika Mustermann',
           },
         },
       ],
-    })
-
-    const wrapper = await renderTicketSidebarSharedDraftStartContent({
-      formValues: {
-        group_id: 2,
-        shared_draft_id: 1,
-        title: 'Test Title',
-        articleSenderType: 'email-out',
-        cc: ['foo@example.org', 'bar@example.org'],
-        tags: ['tag 1', 'tag 2', 'tag 3'],
+      {
+        formValues: {
+          group_id: 2,
+          shared_draft_id: 1,
+          title: 'Test Title',
+          articleSenderType: 'email-out',
+          cc: ['foo@example.org', 'bar@example.org'],
+          tags: ['tag 1', 'tag 2', 'tag 3'],
+        },
+        form: {
+          formId: 'test-form',
+        },
       },
-      form: {
-        formId: 'test-form',
-      },
-    })
+    )
 
     await wrapper.events.click(
       wrapper.getByRole('button', { name: 'Update Shared Draft' }),

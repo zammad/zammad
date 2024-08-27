@@ -2,24 +2,22 @@
 
 import { useApplicationStore } from '#shared/stores/application.ts'
 
-import { TicketSidebarScreenType } from '../../types.ts'
-import TicketSidebarAttachmentButton from '../TicketSidebarAttachment/TicketSidebarAttachmentButton.vue'
-import TicketSidebarAttachmentContent from '../TicketSidebarAttachment/TicketSidebarAttachmentContent.vue'
+import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
+
+import TicketSidebarAttachment from '../TicketSidebarAttachment/TicketSidebarAttachment.vue'
 
 import type { TicketSidebarPlugin } from './types.ts'
 
 export default <TicketSidebarPlugin>{
   title: __('Attachments'),
-  buttonComponent: TicketSidebarAttachmentButton,
-  contentComponent: TicketSidebarAttachmentContent,
+  component: TicketSidebarAttachment,
   permissions: ['ticket.agent', 'ticket.customer'],
+  screens: [TicketSidebarScreenType.TicketDetailView],
   icon: 'paperclip',
   order: 6000,
-  available: (context) => {
+  available: () => {
     const { config } = useApplicationStore()
-    return (
-      context.screenType === TicketSidebarScreenType.TicketDetailView &&
-      config.ui_ticket_zoom_sidebar_article_attachments
-    )
+
+    return config.ui_ticket_zoom_sidebar_article_attachments
   },
 }

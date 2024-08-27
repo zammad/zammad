@@ -90,9 +90,9 @@ const { hasChannelAlert, channelAlert } = useTicketChannel(ticket)
         />
       </template>
     </CommonBreadcrumb>
-
+    <!-- TODO: we should have some computed for this policy thing or maybe we have already something? -->
     <HighlightMenu
-      v-if="ticket?.policy.update"
+      v-if="ticket?.policy?.update"
       class="justify-self-end"
       :style="{ gridTemplate: 'actions' }"
     />

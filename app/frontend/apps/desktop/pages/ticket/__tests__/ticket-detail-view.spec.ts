@@ -240,6 +240,7 @@ describe('ticket detail view', () => {
     })
 
     const view = await visitView('/tickets/1')
+    await view.events.click(view.getByLabelText('Checklist'))
 
     expect(
       view.getByRole('status', { name: 'Incomplete checklist items' }),

@@ -1,22 +1,17 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  TicketSidebarScreenType,
-  type TicketSidebarContext,
-} from '../../types.ts'
-import TicketSidebarSharedDraftStartButton from '../TicketSidebarSharedDraftStartButton.vue'
-import TicketSidebarSharedDraftStartContent from '../TicketSidebarSharedDraftStartContent.vue'
+import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
+
+import TicketSidebarSharedDraftStart from '../TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStart.vue'
 
 import type { TicketSidebarPlugin } from './types.ts'
 
 export default <TicketSidebarPlugin>{
   title: __('Shared Drafts'),
-  buttonComponent: TicketSidebarSharedDraftStartButton,
-  contentComponent: TicketSidebarSharedDraftStartContent,
+  component: TicketSidebarSharedDraftStart,
   permissions: ['ticket.agent'],
+  screens: [TicketSidebarScreenType.TicketCreate],
   icon: 'file-text',
   order: 3000,
-  available: (context: TicketSidebarContext) =>
-    context.screenType === TicketSidebarScreenType.TicketCreate &&
-    !!context.formValues.group_id,
+  available: (context) => !!context.formValues.group_id,
 }

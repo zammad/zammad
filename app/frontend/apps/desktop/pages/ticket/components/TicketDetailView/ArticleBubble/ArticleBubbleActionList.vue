@@ -20,7 +20,7 @@ const props = defineProps<{
 }>()
 
 const { canUpdateTicket } = useTicketArticleReply()
-const { ticket } = useTicketInformation()
+const { ticket, ticketInternalId } = useTicketInformation()
 
 const { isTouchDevice } = useTouchDevice()
 
@@ -42,12 +42,18 @@ const popoverActions: MenuItem[] = [
     label: __('Download original email'),
     onClick(arg) {
       const { article } = arg as { article: TicketArticle }
-      const { originalFormattingUrl } = useEmailFileUrls(article)
+      const { originalFormattingUrl } = useEmailFileUrls(
+        article,
+        ticketInternalId,
+      )
       openExternalLink(originalFormattingUrl.value as string)
     },
     show: (arg) => {
       const { article } = arg as { article: TicketArticle }
-      const { originalFormattingUrl } = useEmailFileUrls(article)
+      const { originalFormattingUrl } = useEmailFileUrls(
+        article,
+        ticketInternalId,
+      )
       return !!(article.type?.name === 'email' && originalFormattingUrl.value)
     },
     icon: 'download',
@@ -57,12 +63,12 @@ const popoverActions: MenuItem[] = [
     label: __('Download raw email'),
     onClick(arg) {
       const { article } = arg as { article: TicketArticle }
-      const { rawMessageUrl } = useEmailFileUrls(article)
+      const { rawMessageUrl } = useEmailFileUrls(article, ticketInternalId)
       openExternalLink(rawMessageUrl.value)
     },
     show: (arg) => {
       const { article } = arg as { article: TicketArticle }
-      const { rawMessageUrl } = useEmailFileUrls(article)
+      const { rawMessageUrl } = useEmailFileUrls(article, ticketInternalId)
       return !!(article.type?.name === 'email' && rawMessageUrl.value)
     },
     icon: 'download',

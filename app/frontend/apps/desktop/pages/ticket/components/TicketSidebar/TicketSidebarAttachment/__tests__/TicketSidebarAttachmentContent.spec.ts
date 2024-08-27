@@ -7,9 +7,9 @@ import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 
-import { TicketSidebarScreenType } from '#desktop/pages/ticket/components/types.ts'
-import { mockTicketAttachmentsQuery } from '#desktop/pages/ticket/graphql/queries/ticketAttachments.mocks.ts'
+import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
 
+import ticketArticlAttachmentsSidebarPlugin from '../../plugins/ticket-article-attachment.ts'
 import TicketSidebarAttachmentContent from '../TicketSidebarAttachmentContent.vue'
 
 const ticket = { value: createDummyTicket() }
@@ -24,27 +24,7 @@ vi.mock('#desktop/pages/ticket/composables/useTicketInformation.ts', () => ({
 const renderAttachmentContent = () =>
   renderComponent(TicketSidebarAttachmentContent, {
     props: {
-      context: {
-        screenType: TicketSidebarScreenType.TicketDetailView,
-        formValues: {},
-        toggleCollapse: () => {},
-        isCollapsed: false,
-      },
-    },
-    router: true,
-    form: true,
-    dialog: true,
-  })
-
-describe('TicketSidebarAttachmentContent', () => {
-  beforeEach(() => {
-    mockApplicationConfig({
-      ui_ticket_zoom_sidebar_article_attachments: true,
-    })
-  })
-
-  it('renders attachments', async () => {
-    mockTicketAttachmentsQuery({
+      sidebarPlugin: ticketArticlAttachmentsSidebarPlugin,
       ticketAttachments: [
         {
           __typename: 'StoredFile',
@@ -80,8 +60,27 @@ describe('TicketSidebarAttachmentContent', () => {
           },
         },
       ],
-    })
+      loading: false,
+      context: {
+        screenType: TicketSidebarScreenType.TicketDetailView,
+        formValues: {},
+        toggleCollapse: () => {},
+        isCollapsed: false,
+      },
+    },
+    router: true,
+    form: true,
+    dialog: true,
+  })
 
+describe('TicketSidebarAttachmentContent', () => {
+  beforeEach(() => {
+    mockApplicationConfig({
+      ui_ticket_zoom_sidebar_article_attachments: true,
+    })
+  })
+
+  it('renders attachments', async () => {
     const wrapper = renderAttachmentContent()
 
     expect(await wrapper.findByText('image010.jpg')).toBeInTheDocument()
