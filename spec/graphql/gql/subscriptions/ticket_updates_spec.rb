@@ -75,7 +75,7 @@ RSpec.describe Gql::Subscriptions::TicketUpdates, type: :graphql do
       context 'when the group is changed and permission is lost' do
         it 'does stop receiving ticket updates' do
           ticket.update!(group: create(:group))
-          expect(mock_channel.mock_broadcasted_messages.first[:result]['errors'].first['message']).to eq('not allowed to show? this Ticket')
+          expect(mock_channel.mock_broadcasted_messages.first[:result]['errors'].first['message']).to eq('not allowed to TicketPolicy#show? this Ticket')
         end
       end
 

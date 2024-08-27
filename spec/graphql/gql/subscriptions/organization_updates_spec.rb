@@ -49,7 +49,7 @@ RSpec.describe Gql::Subscriptions::OrganizationUpdates, type: :graphql do
               'data'   => nil,
               'errors' => include(
                 include(
-                  'message' => 'not allowed to show? this Organization',
+                  'message' => 'not allowed to OrganizationPolicy#show? this Organization',
                 ),
               ),
             }

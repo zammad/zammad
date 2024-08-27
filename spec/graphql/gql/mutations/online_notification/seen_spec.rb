@@ -57,7 +57,7 @@ RSpec.describe Gql::Mutations::OnlineNotification::Seen, :aggregate_failures, ty
 
         it 'results in an error' do
           expect(gql.result.error_type).to eq Exceptions::Forbidden
-          expect(gql.result.error_message).to eq "not allowed to show? this #{object.class.name}"
+          expect(gql.result.error_message).to match %r{not allowed to .*Policy#show\? this #{object.class.name}}
         end
       end
     end

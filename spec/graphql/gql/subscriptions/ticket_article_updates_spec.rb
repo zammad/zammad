@@ -160,7 +160,7 @@ RSpec.describe Gql::Subscriptions::TicketArticleUpdates, type: :graphql do
       end
 
       it 'does stop receiving ticket updates' do
-        expect(mock_channel.mock_broadcasted_messages.first[:result]['errors'].first['message']).to eq('not allowed to show? this Ticket')
+        expect(mock_channel.mock_broadcasted_messages.first[:result]['errors'].first['message']).to eq('not allowed to TicketPolicy#show? this Ticket')
       end
     end
 
