@@ -49,7 +49,7 @@ module.exports = {
         }
 
         // Ignore strings used for comparison
-        const tokenBefore = context.getTokenBefore(node)
+        const tokenBefore = context.sourceCode.getTokenBefore(node)
         if (
           tokenBefore &&
           tokenBefore.type === 'Punctuator' &&

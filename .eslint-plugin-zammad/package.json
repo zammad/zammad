@@ -10,7 +10,7 @@
   "author": "Martin Gruner",
   "main": "lib/index.js",
   "scripts": {
-    "lint": "eslint .",
+    "lint": "eslint --max-warnings 0 .",
     "test": "mocha tests --recursive"
   },
   "dependencies": {

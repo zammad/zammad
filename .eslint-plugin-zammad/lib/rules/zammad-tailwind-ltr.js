@@ -89,7 +89,7 @@ module.exports = {
 
   create(context) {
     const visitor =
-      context.parserServices?.defineTemplateBodyVisitor ||
+      context.sourceCode.parserServices?.defineTemplateBodyVisitor ||
       ((obj1, obj2) => ({ ...obj1, ...obj2 }))
 
     const processLiteral = (node, quotes = "'") => {

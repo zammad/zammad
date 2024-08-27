@@ -12,7 +12,7 @@
 /**
  * @type {import('eslint').Rule.RuleModule}
  */
-const kebabCaseRegex = /^[a-z]+(-[a-z]+)*$/
+const kebabCaseRegex = /^[a-z-]+$/
 
 module.exports = {
   meta: {
