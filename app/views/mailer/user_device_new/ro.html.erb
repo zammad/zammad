@@ -1,0 +1,19 @@
+Conectare la #{config.product_name} de pe un dispozitiv nou
+
+<div>Bună, #{user.firstname},</div>
+<br>
+<div>Se pare că te-ai autentificat în contul tău <b>de pe un dispozitiv nou</b> pe data de "#{user_device.created_at}":</div>
+<br>
+<div>
+Dispozitivul tău: #{user_device.name}<br>
+Locația ta (aproximativă): #{user_device.location}<br>
+Adresa ta IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Dispozitivul tău a fost adăugat în lista ta de dispozitive cunoscute, pe care o poți vizualiza aici:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Dacă nu ai fost tu, te rugăm să elimini dispozitivul, să îți schimbi parola contului și să contactezi administratorul. Cineva ar putea avea acces neautorizat la contul tău.</div>
+<br>
+<div>Echipa #{config.product_name}</div>
