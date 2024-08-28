@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-26 05:31+0000\n"
+"PO-Revision-Date: 2024-08-28 04:29+0000\n"
 "Last-Translator: JPB <JPB@users.noreply.translations.zammad.org>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
 "zammad-development/nl/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.7\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -392,7 +392,7 @@ msgstr "%s Kenmerk"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:70
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:55
 msgid "%s Checklist"
 msgstr "%s Checklist"
 
@@ -1311,7 +1311,7 @@ msgstr "Bot toevoegen"
 msgid "Add Certificate"
 msgstr "Certificaat toevoegen"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:418
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:403
 msgid "Add Empty Checklist"
 msgstr "Lege checklist toevoegen"
 
@@ -1455,7 +1455,7 @@ msgstr "Derde niveau koptekst toevoegen"
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:85
 msgid "Add this class to a button on your page that should open the chat."
 msgstr ""
-"Deze html-class toevoegen aan een knop op jouw pagina die de chat zou moeten "
+"Voeg deze html-class toe aan een knop op jouw pagina die de chat zou moeten "
 "openen."
 
 #: app/controllers/first_steps_controller.rb:109
@@ -1468,15 +1468,15 @@ msgstr "Additionele opvolgingsdetectie"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:211
 msgid "Additional information"
-msgstr "Extra informatie"
+msgstr "Aanvullende informatie"
 
 #: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:59
 msgid "Additional information and links"
-msgstr "Extra informatie en links toevoegen"
+msgstr "Aanvullende informatie en links"
 
 #: db/seeds/settings.rb:848
 msgid "Additional notes for ticket create types."
-msgstr "Stel aanvullende notities in voor het maken van tickets."
+msgstr "Aanvullende notities voor ticket creatie types."
 
 #: db/seeds/object_manager_attributes.rb:1208
 msgid "Address"
@@ -1489,7 +1489,7 @@ msgstr "Adres van de proxy voor http en https bronnen."
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
-msgstr "Beheer"
+msgstr "Beheerder"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:448
 msgid "Admin Consent"
@@ -1606,11 +1606,11 @@ msgstr "Behandelaar"
 
 #: db/seeds/settings.rb:3129
 msgid "Agent Name"
-msgstr "Naam behandelaar"
+msgstr "Naam Behandelaar"
 
 #: db/seeds/settings.rb:3129
 msgid "Agent Name + FromSeparator + System Address Display Name"
-msgstr "Naam behandelaar + VanScheiding + Systeemadres naamweergave"
+msgstr "Naam Behandelaar + VanScheiding + Systeemadres naamweergave"
 
 #: db/seeds/permissions.rb:302
 msgid "Agent chat"
@@ -1622,7 +1622,7 @@ msgstr "Behandelaar idle time-out"
 
 #: app/models/role.rb:153 app/models/user.rb:696
 msgid "Agent limit exceeded, please check your account settings."
-msgstr "Maximum behandelaren overschreden, controleer je accountinstellingen."
+msgstr "Maximum Behandelaren overschreden, controleer je accountinstellingen."
 
 #: db/seeds/permissions.rb:317
 msgid "Agent phone"
@@ -1750,12 +1750,12 @@ msgstr "Laat meerdere gebruikers één e-mailadres gebruiken."
 
 #: app/assets/javascripts/app/models/chat.coffee:255
 msgid "Allow websites (separated by ;)"
-msgstr "Toegestane website (gescheiden door ;)"
+msgstr "Toegestane websites (gescheiden door ;)"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco:9
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:64
 msgid "Also notify via email"
-msgstr "Verstuur ook via e -mail"
+msgstr "Verstuur ook via e-mail"
 
 #: db/seeds/settings.rb:5079
 msgid ""
@@ -1795,7 +1795,7 @@ msgstr "Er is een fout opgetreden"
 
 #: app/frontend/shared/server/apollo/handler/BaseHandler.ts:150
 msgid "An error occured during the operation."
-msgstr "Er is een fout opgetreden."
+msgstr "Er is een fout opgetreden tijdens de bewerking."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:997
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:5
@@ -1855,13 +1855,13 @@ msgstr ""
 "<div>Hallo #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"Een ander ticket is samengevoegd tot ticket (#{ticket.title}) door "
-"\"<b>#{current_user.longname}</b>\".\n"
+"Een ander ticket is samengevoegd tot ticket (#{ticket.title}) door \""
+"<b>#{current_user.longname}</b>\".\n"
 "</div>\n"
 "<br>\n"
 "<div>\n"
-"   <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}\" target=\"zammad_app\">Bekijk dit in #{config.product_name}</a>\n"
+"   <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\""
+" target=\"zammad_app\">Bekijk dit in #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/models/ticket.coffee:121
@@ -1887,7 +1887,7 @@ msgstr "Anticon"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:22
 msgid "Any recipient"
-msgstr "Elke ontvanger"
+msgstr "Iedere ontvanger"
 
 #: db/seeds/settings.rb:1426
 msgid "App ID"
@@ -1911,7 +1911,7 @@ msgstr "App Versie"
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee:193
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:721
 msgid "App could not be verified."
-msgstr "Account is niet geverifieerd."
+msgstr "App is niet geverifieerd."
 
 #: db/seeds/settings.rb:1422
 msgid "App credentials for Facebook."
@@ -1949,18 +1949,18 @@ msgid "Applications"
 msgstr "Applicaties"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:107
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:107
 msgid "Apply"
 msgstr "Toepassen"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:107
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:107
 msgid "Apply Draft"
-msgstr "Concept accepteren"
+msgstr "Concept toepassen"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:2
 msgid "Apply Shared Draft"
-msgstr "Gedeeld concept accepteren"
+msgstr "Gedeeld concept toepassen"
 
 #: app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue:81
 msgid "Apply Template"
@@ -2184,7 +2184,7 @@ msgstr "Time-out toewijzing"
 #: app/assets/javascripts/app/models/_application_model.coffee:164
 #: app/assets/javascripts/app/models/group.coffee:8
 msgid "Assignment timeout"
-msgstr "Toewijzings time-out"
+msgstr "Time-out toewijzing"
 
 #: app/assets/javascripts/app/models/group.coffee:8
 #: db/seeds/object_manager_attributes.rb:1895
@@ -2192,8 +2192,8 @@ msgid ""
 "Assignment timeout in minutes if assigned agent is not working on it. Ticket "
 "will be shown as unassigend."
 msgstr ""
-"Toewijzing time-out in minuten toewijzen als toegewezen behandelaar er niet "
-"aan werkt. Ticket wordt getoond als niet toegewezen."
+"Toewijzing time-out in minuten wanneer toegewezen behandelaar er niet aan "
+"werkt. Ticket wordt getoond als niet toegewezen."
 
 #: app/models/user.rb:599
 msgid ""
@@ -2205,7 +2205,7 @@ msgstr ""
 
 #: app/models/postmaster_filter.rb:29
 msgid "At least one match rule is required, but none was provided."
-msgstr "Minimaal één regel is verplicht, maar er is er geen één aangeboden."
+msgstr "Minimaal één regel is verplicht, maar er is er geen aangeboden."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:155
 msgid "At least one object must be selected."
@@ -2238,7 +2238,7 @@ msgid "Attached Files"
 msgstr "Bijlagen"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:200
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:203
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
@@ -2252,8 +2252,8 @@ msgstr "Bijlage - Voor Follow-up ook in bijlages zoeken."
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee:15
 #: app/assets/javascripts/app/views/knowledge_base/_answer_attachments.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:2
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentButton.vue:43
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:32
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachment.vue:45
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:33
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/ticket-article-attachment.ts:12
 #: public/assets/form/form.js:50
 msgid "Attachments"
@@ -2288,7 +2288,8 @@ msgstr ""
 msgid ""
 "Attention: These will also be your login and password after the import is "
 "completed."
-msgstr "Belangrijk! Dit is je login en wachtwoord nadat de import compleet is."
+msgstr ""
+"Belangrijk! Dit is ook je login en wachtwoord nadat de import compleet is."
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:39
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:36
@@ -2390,7 +2391,7 @@ msgid "Authenticator app secret"
 msgstr "Authenticator app geheim"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:152
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:152
 msgid "Author"
 msgstr "Auteur"
 
@@ -2769,7 +2770,7 @@ msgstr "CA"
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:165
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:168
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:86
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:160
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
@@ -2944,8 +2945,8 @@ msgstr "Annuleren"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:119
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:420
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:188
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:424
 msgid "Cancel & Go Back"
 msgstr "Annuleer & ga terug"
 
@@ -3185,8 +3186,7 @@ msgstr ""
 "aangevinkt worden waardes op alfabetische volgorde gesorteerd."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:57
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:392
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:12
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
 msgid "Checklist"
 msgstr "Checklist"
 
@@ -3354,7 +3354,7 @@ msgstr "Ruim mobiele taakbalken op."
 msgid "Clear Search"
 msgstr "Wis zoeken"
 
-#: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
+#: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:56
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:651
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:311
@@ -3981,7 +3981,7 @@ msgstr "Land"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:432
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:436
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Aanmaken"
@@ -4007,7 +4007,7 @@ msgstr "Maak Kennisbank"
 msgid "Create Macros"
 msgstr "Maak macro"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:185
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:173
 msgid "Create Shared Draft"
 msgstr "Gedeeld concept maken"
 
@@ -4085,7 +4085,7 @@ msgid "Create a new template in the admin interface."
 msgstr "Maak een nieuw sjabloon aan in de beheerdersinterface."
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:180
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:168
 msgid "Create a shared draft"
 msgstr "Een gedeeld concept maken"
 
@@ -4182,7 +4182,7 @@ msgstr "Maak:"
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:14
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:108
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:106
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -4346,8 +4346,7 @@ msgstr "Aangepast adres niet ingesteld"
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:9
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:11
 #: app/controllers/time_accountings_controller.rb:95
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:47
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/customer.ts:10
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/customer.ts:13
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts:6
 #: app/graphql/gql/types/overview_type.rb:61
 #: db/seeds/object_manager_attributes.rb:60 db/seeds/roles.rb:23
@@ -5581,7 +5580,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:83
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:38
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:195
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:195
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:162
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:156
 msgid "Delete"
@@ -5910,7 +5909,7 @@ msgstr "Annuleren"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:417
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:421
 msgid "Discard Changes"
 msgstr "Wijzigingen annuleren"
 
@@ -6083,7 +6082,7 @@ msgstr "Download en installeer de %s Migration Plugin op de %'s instance."
 msgid "Download original email"
 msgstr "Download originele e-mail"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:57
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
 msgid "Download raw email"
 msgstr "Download raw e-mail"
 
@@ -6183,7 +6182,7 @@ msgstr "Paasvakantie"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:157
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:76
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:53
-#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:56
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:53
 msgid "Edit"
 msgstr "Wijzig"
 
@@ -6197,8 +6196,8 @@ msgstr "Categorie bewerken"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:16
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:34
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:39
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:90
 msgid "Edit Customer"
 msgstr "Klant bewerken"
 
@@ -6208,7 +6207,7 @@ msgstr "Kennisbank bewerken"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee:21
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee:11
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganizationContent.vue:39
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:36
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:80
 msgid "Edit Organization"
 msgstr "Organisatie bewerken"
@@ -6239,7 +6238,7 @@ msgstr "Antwoord aanpassen"
 msgid "Edit security keys"
 msgstr "Beveiligingssleutels bewerken"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:89
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:87
 msgid "Edit ticket title"
 msgstr "Tickettitel bewerken"
 
@@ -7265,11 +7264,11 @@ msgstr "Facebook Feed Bericht"
 msgid "Failed Tasks"
 msgstr "Mislukte taken"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:161
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:146
 msgid "Failed to add new checklist item."
 msgstr "Het is niet gelukt om een nieuw checklistitem toe te voegen."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:182
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:167
 msgid "Failed to delete checklist item."
 msgstr "Het is niet gelukt om het checklistitem te verwijderen."
 
@@ -7283,7 +7282,7 @@ msgstr "Kan geen back-up vinden op het kanaal!"
 msgid "Failed to roll back the migration of the channel!"
 msgstr "Kan de migratie van het kanaal niet terugdraaien!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:168
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:153
 msgid "Failed to save checklist order."
 msgstr "De volgorde van de items op de checklist is niet opgeslagen."
 
@@ -7302,7 +7301,7 @@ msgstr ""
 msgid "Failed to set up QR code. Please try again."
 msgstr "Het instellen van de QR-code is mislukt. Probeer het opnieuw."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:175
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:160
 msgid "Failed to update checklist item."
 msgstr "Het is niet gelukt om het item in de checklist bij te werken."
 
@@ -7618,7 +7617,7 @@ msgstr "Opmaken als |vetgedrukt|"
 msgid "Format as ||italic||"
 msgstr "Opmaken als ||cursief||"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:72
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:78
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:92
 msgid "Forward"
 msgstr "Doorsturen"
@@ -8821,7 +8820,7 @@ msgstr "Inclusief private key."
 msgid "Incomplete Ticket Checklist"
 msgstr "Onvolledige Ticket Checklist"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistButton.vue:22
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklist.vue:26
 msgid "Incomplete checklist items"
 msgstr "Onvoltooide checklistitems"
 
@@ -9454,7 +9453,7 @@ msgid "Last change %s %s by %s"
 msgstr "Laatste wijziging %s %s door %s"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:11
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:166
 msgid "Last changed"
 msgstr "Laatst gewijzigd"
 
@@ -10272,7 +10271,7 @@ msgstr "Het downloaden van media is gelukt."
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco:20
 #: app/assets/javascripts/app/views/popover/organization.jst.eco:6
 #: app/assets/javascripts/app/views/widget/organization.jst.eco:29
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganizationContent.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:75
 #: app/frontend/apps/mobile/components/Organization/OrganizationMembersList.vue:29
 msgid "Members"
 msgstr "Leden"
@@ -10675,8 +10674,8 @@ msgstr "Nagios integratie"
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:31
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:103
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:142
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:181
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:142
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:169
 #: db/seeds/object_manager_attributes.rb:1507 public/assets/form/form.js:24
 msgid "Name"
 msgstr "Naam"
@@ -10870,7 +10869,7 @@ msgstr "Nieuw sjabloon"
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:38
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:15
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:106
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:109
 msgid "New Ticket"
 msgstr "Nieuw ticket"
 
@@ -11102,7 +11101,7 @@ msgstr ""
 msgid "No answers"
 msgstr "Geen antwoorden"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:50
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:51
 msgid "No attached files"
 msgstr "Geen bijlagen"
 
@@ -11119,7 +11118,7 @@ msgid "No certificate found."
 msgstr "Geen certificaat gevonden."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:431
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:416
 msgid "No checklist added to this ticket yet."
 msgstr "Er is nog geen checklist toegevoegd aan dit ticket."
 
@@ -11173,7 +11172,7 @@ msgid "No file formats allowed."
 msgstr "Geen bestandsformaten toegestaan."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:647
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:802
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:803
 msgid "No filter was configured."
 msgstr "Er is geen filter ingesteld."
 
@@ -11245,7 +11244,7 @@ msgstr "Geen sessie beschikbaar."
 msgid "No settings with area 'Dashboard::Stats' defined"
 msgstr "Geen instellingen met 'Dashboard::Stats' gedefinieerd"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:236
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:224
 msgid "No shared drafts yet"
 msgstr "Nog geen gedeelde concepten"
 
@@ -11779,7 +11778,7 @@ msgid "Open ticket indicator"
 msgstr "Ticket-indicator openen"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:38
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerButton.vue:48
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomer.vue:56
 msgid "Open tickets"
 msgstr "Open tickets"
 
@@ -11869,8 +11868,7 @@ msgstr "Volgorde van overzichten van tickets"
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco:9
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:12
 #: app/controllers/time_accountings_controller.rb:99
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganizationContent.vue:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:10
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:13
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
@@ -11903,7 +11901,7 @@ msgstr "Bedrijfsondersteuning"
 msgid "Organization could not be updated."
 msgstr "Organisatie kon niet worden bijgewerkt."
 
-#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:81
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:78
 msgid "Organization tickets"
 msgstr "Tickets organisatie"
 
@@ -11944,7 +11942,7 @@ msgid "Origin By"
 msgstr "Oorspronkelijk van"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:92
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:39
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:45
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:55
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
@@ -12047,7 +12045,7 @@ msgstr "Overzicht bulk mask"
 msgid "Overviews"
 msgstr "Overzichten"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:108
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:108
 msgid "Overwrite Content"
 msgstr "Inhoud overschrijven"
 
@@ -12634,8 +12632,8 @@ msgstr "Voorbeeld %s"
 msgid "Preview Calendar"
 msgstr "Preview Kalender"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:131
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:205
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:131
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:193
 msgid "Preview Shared Draft"
 msgstr "Preview van gedeeld ontwerp"
 
@@ -13026,7 +13024,7 @@ msgstr "Remote"
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:61
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:132
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:177
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:78
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:84
 #: app/frontend/shared/form/i18n/locales.ts:29
 msgid "Remove"
 msgstr "Verwijderen"
@@ -13064,7 +13062,7 @@ msgid "Remove authenticator app"
 msgstr "authenticator-app verwijderen"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:25
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:377
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:362
 msgid "Remove checklist"
 msgstr "Checklist verwijderen"
 
@@ -13110,7 +13108,7 @@ msgid "Removes the shadows for a flat look."
 msgstr "Verwijder alle schaduwen voor een platte uitstraling."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:20
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:370
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:355
 msgid "Rename checklist"
 msgstr "Checklist hernoemen"
 
@@ -13144,7 +13142,7 @@ msgstr "Vervanger"
 msgid "Replacement agent"
 msgstr "Vervangend behandelaar"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:89
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:84
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
@@ -13910,9 +13908,9 @@ msgstr "Zoekresultaat value key \"%s\" is niet gevonden."
 msgid "Search…"
 msgstr "Zoeken…"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:78
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:103
-#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:136
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:82
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:98
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
 #: db/seeds/object_manager_attributes.rb:962
 msgid "Secondary organizations"
 msgstr "Secundaire organisaties"
@@ -13935,7 +13933,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:22
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:175
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:178
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:183
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
@@ -14340,11 +14338,11 @@ msgstr ""
 "Stel het tijdsbestek in seconden in. Als het is ingesteld op 0, kun je "
 "notities zonder tijdslimiet verwijderen"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:88
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:94
 msgid "Set to external"
 msgstr "Maak extern"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:99
 #: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts:33
 msgid "Set to internal"
 msgstr "Maak intern"
@@ -14426,8 +14424,7 @@ msgstr "Gedeeld"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee:12
 #: app/assets/javascripts/app/models/group.coffee:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:175
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/shared-draft-start.ts:13
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/shared-draft-start.ts:10
 #: db/seeds/object_manager_attributes.rb:2093
 msgid "Shared Drafts"
 msgstr "Gedeelde Concepten"
@@ -14437,15 +14434,15 @@ msgstr "Gedeelde Concepten"
 msgid "Shared draft cannot be selected for this ticket."
 msgstr "Gedeeld concept kan niet worden geselecteerd voor dit ticket."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:131
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:119
 msgid "Shared draft has been created successfully."
 msgstr "Het gedeelde concept is succesvol aangemaakt."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:93
 msgid "Shared draft has been deleted."
 msgstr "Gedeeld concept is verwijderd."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:156
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:144
 msgid "Shared draft has been updated successfully."
 msgstr "Het gedeelde concept is bijgewerkt."
 
@@ -14871,7 +14868,7 @@ msgstr "Bronnen"
 msgid "Special character required"
 msgstr "Speciaal teken vereist"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:98
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:104
 #: app/frontend/shared/entities/ticket-article/action/plugins/split.ts:12
 msgid "Split"
 msgstr "Splitsen"
@@ -15397,7 +15394,7 @@ msgstr "Testen"
 #: app/assets/javascripts/app/models/signature.coffee:8
 #: app/assets/javascripts/app/models/ticket_article.coffee:11
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:20
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:178
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:178
 #: db/seeds/object_manager_attributes.rb:536
 msgid "Text"
 msgstr "Tekst"
@@ -16751,7 +16748,7 @@ msgstr "De jaarkiezer"
 msgid "The year picker overlay"
 msgstr "De overlay van de jaarplanner"
 
-#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:76
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:73
 msgid "Their tickets"
 msgstr "Hun tickets"
 
@@ -16796,7 +16793,7 @@ msgid "There is an existing draft. Do you want to overwrite it?"
 msgstr "Er is een bestaand concept. Wil je het overschrijven?"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:57
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:105
 msgid "There is existing content. Do you want to overwrite it?"
 msgstr "Er is bestaande inhoud. Wil je deze overschrijven?"
 
@@ -17183,7 +17180,7 @@ msgstr ""
 "Dit bericht bevat afbeeldingen of andere inhoud gehost op een externe bron. "
 "Deze inhoud is geblokkeerd, maar je kunt de originele opmaak hier downloaden."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:28
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:34
 msgid ""
 "This message contains images or other content hosted by an external source. "
 "It was blocked, but you can download the original formatting."
@@ -17706,6 +17703,7 @@ msgstr ""
 "id}\" target=\"zammad_app\">Bekijk dit in #{config.product_name}</a>\n"
 "</div>\n"
 
+#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:39
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
 #: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:22
 msgid ""
@@ -17752,7 +17750,7 @@ msgstr "TicketID"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:89
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:93
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts:9
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:51
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue:173
@@ -18543,7 +18541,7 @@ msgstr "Update escalatie op"
 msgid "Update In Min"
 msgstr "Update in Min"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:223
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:211
 msgid "Update Shared Draft"
 msgstr "Gedeeld concept bijwerken"
 
@@ -19814,6 +19812,7 @@ msgstr "Jij hebt onvoldoende rechten om deze tab te openen."
 msgid "You have insufficient rights to view this organization."
 msgstr "Je hebt niet genoeg rechten om deze organisatie te bekijken."
 
+#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:41
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
 #: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:24
 msgid "You have insufficient rights to view this ticket."
@@ -20338,7 +20337,7 @@ msgstr "sluiten"
 msgid "closed"
 msgstr "gesloten"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:109
 msgid "closed tickets"
 msgstr "gesloten tickets"
 
@@ -21149,7 +21148,7 @@ msgstr "alleen kleine letters, cijfers en '_' zijn toegestaan"
 msgid "open"
 msgstr "open"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:98
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:102
 msgid "open tickets"
 msgstr "open tickets"
 

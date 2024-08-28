@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-27 05:48+0000\n"
+"PO-Revision-Date: 2024-08-28 04:29+0000\n"
 "Last-Translator: Bogdan Lungu <bogdy_lungu_alex@yahoo.co.uk>\n"
 "Language-Team: Romanian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ro/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.7\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -104,8 +104,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "#{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Escaladat la #{ticket.escalation_at}_{ticket."
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Escaladat la #{ticket.escalation_at}_{ticket."
 "escalation_at}_.\n"
 "Tichetul (#{ticket.title}) de la „#{ticket.customer.longname}” a fost "
 "escaladat la „#{ticket.escalation_at}”!\n"
@@ -296,8 +296,8 @@ msgstr ""
 "<div>Țara a fost adăugată la lista ta de dispozitive cunoscute, pe care o "
 "poți vizualiza aici:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
-">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Dacă nu ai fost tu, te rugăm să elimini dispozitivul, să îți schimbi "
 "parola contului și să contactezi administratorul. Cineva ar putea avea acces "
@@ -350,8 +350,8 @@ msgstr ""
 "<div>Dispozitivul tău a fost adăugat în lista ta de dispozitive cunoscute, "
 "pe care o poți vizualiza aici:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
-">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
+"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Dacă nu ai fost tu, te rugăm să elimini dispozitivul, să îți schimbi "
 "parola contului și să contactezi administratorul. Cineva ar putea avea acces "
@@ -395,7 +395,7 @@ msgstr "Atribut %s"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:70
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:55
 msgid "%s Checklist"
 msgstr ""
 
@@ -769,11 +769,11 @@ msgstr ""
 "termen de opt ore. Dacă ești în pericol de a nu atinge acest obiectiv, "
 "Zammad te va alerta.\n"
 "\n"
-"Poți defini obiective pentru trei metrici diferite: **timp de răspuns** ("
-"timpul dintre crearea unui tichet și prima reacție a unui agent), **timp de "
+"Poți defini obiective pentru trei metrici diferite: **timp de răspuns** "
+"(timpul dintre crearea unui tichet și prima reacție a unui agent), **timp de "
 "actualizare** (timpul dintre solicitarea unui client și reacția unui agent) "
-"și **timp de soluționare** (timpul dintre crearea și închiderea unui tichet)."
-"\n"
+"și **timp de soluționare** (timpul dintre crearea și închiderea unui "
+"tichet).\n"
 "\n"
 "Orice tichete escaladate (adică tichete care au depășit obiectivul definit) "
 "sunt afișate într-o vizualizare separată în vizualizările tale. Poți, de "
@@ -1345,7 +1345,7 @@ msgstr "Adaugă bot"
 msgid "Add Certificate"
 msgstr "Adaugă certificat"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:418
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:403
 msgid "Add Empty Checklist"
 msgstr ""
 
@@ -1983,12 +1983,12 @@ msgid "Applications"
 msgstr "Aplicații"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:107
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:107
 msgid "Apply"
 msgstr "Aplică"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:107
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:107
 msgid "Apply Draft"
 msgstr "Aplică ciorna"
 
@@ -2282,7 +2282,7 @@ msgid "Attached Files"
 msgstr "Fișiere atașate"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:200
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:203
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
@@ -2296,8 +2296,8 @@ msgstr "Atașament - Caută continuări (follow-up) și în atașamente."
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee:15
 #: app/assets/javascripts/app/views/knowledge_base/_answer_attachments.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:2
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentButton.vue:43
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:32
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachment.vue:45
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:33
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/ticket-article-attachment.ts:12
 #: public/assets/form/form.js:50
 msgid "Attachments"
@@ -2440,7 +2440,7 @@ msgid "Authenticator app secret"
 msgstr "Secret aplicație Google Authenticator"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:152
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:152
 msgid "Author"
 msgstr "Autor"
 
@@ -2732,8 +2732,8 @@ msgstr "Conținut"
 #: db/seeds/settings.rb:3229
 msgid "Body - Search for follow-up also in mail body."
 msgstr ""
-"Conținut e-mailului - Caută continuări (follow-up) și în conținutul "
-"e-mailului."
+"Conținut e-mailului - Caută continuări (follow-up) și în conținutul e-"
+"mailului."
 
 #: lib/validations/ticket_article_validator/sms_twilio.rb:14
 #, fuzzy
@@ -2832,7 +2832,7 @@ msgstr "CA"
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:165
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:168
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:86
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:160
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
@@ -3009,8 +3009,8 @@ msgstr "Anulează"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:119
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:420
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:188
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:424
 msgid "Cancel & Go Back"
 msgstr "Anulează și întoarce-te"
 
@@ -3262,8 +3262,7 @@ msgstr ""
 "ordine alfabetică."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:57
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:392
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:12
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
 msgid "Checklist"
 msgstr ""
 
@@ -3438,7 +3437,7 @@ msgstr "Curăță taskbar-urile mobile."
 msgid "Clear Search"
 msgstr "Șterge căutarea"
 
-#: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
+#: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:56
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:651
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:311
@@ -4097,7 +4096,7 @@ msgstr "Țară"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:432
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:436
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Creează"
@@ -4123,7 +4122,7 @@ msgstr "Creează bază de cunoștințe"
 msgid "Create Macros"
 msgstr "Creează macro-uri"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:185
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:173
 #, fuzzy
 #| msgid "Created at"
 msgid "Create Shared Draft"
@@ -4204,7 +4203,7 @@ msgid "Create a new template in the admin interface."
 msgstr "Creează un șablon nou în interfața de administrare."
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:180
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:168
 msgid "Create a shared draft"
 msgstr "Creează o ciornă partajată"
 
@@ -4302,7 +4301,7 @@ msgstr "Create:"
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:14
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:108
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:106
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -4416,36 +4415,36 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue:224
 msgid "Currently no overview is assigned to your roles."
-msgstr ""
+msgstr "În prezent, niciun rezumat nu este atribuit rolurilor tale."
 
 #: app/assets/javascripts/app/controllers/ticket_overview/navbar.coffee:90
 msgid ""
 "Currently no overview is assigned to your roles. Please contact your "
 "administrator."
 msgstr ""
+"În prezent, niciun rezumat nu este atribuit rolurilor tale. Te rugăm să "
+"contactezi administratorul."
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:28
 msgid "Custom"
-msgstr ""
+msgstr "Personalizat"
 
 #: app/assets/javascripts/app/models/webhook.coffee:12
 msgid "Custom Payload"
-msgstr ""
+msgstr "Încărcare personalizată (Custom Payload)"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:80
-#, fuzzy
-#| msgid "Translations"
 msgid "Custom Translation"
-msgstr "Traduceri"
+msgstr "Traducere personalizată"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:127
 #: app/assets/javascripts/app/models/knowledge_base.coffee:290
 msgid "Custom URL"
-msgstr ""
+msgstr "URL Personalizat"
 
 #: lib/knowledge_base/server_snippet.rb:10
 msgid "Custom address is not set"
-msgstr ""
+msgstr "Adresa personalizată nu este setată"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:505
@@ -4464,8 +4463,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:9
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:11
 #: app/controllers/time_accountings_controller.rb:95
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:47
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/customer.ts:10
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/customer.ts:13
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts:6
 #: app/graphql/gql/types/overview_type.rb:61
 #: db/seeds/object_manager_attributes.rb:60 db/seeds/roles.rb:23
@@ -4484,9 +4482,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:3273
 msgid "Customer selection based on sender and receiver list"
-msgstr ""
-"Selectarea clientului bazată pe baza lista expeditorilor și celor care "
-"primesc"
+msgstr "Selecția clientului pe baza listei de expeditori și destinatari"
 
 #: db/seeds/permissions.rb:369
 #, fuzzy
@@ -4499,13 +4495,14 @@ msgid ""
 "Customer tickets of the user will get deleted on execution of the task. No "
 "rollback possible."
 msgstr ""
+"Tichetele clienților utilizatorului vor fi șterse la executarea sarcinii. Nu "
+"se poate reveni."
 
 #: app/assets/javascripts/app/models/organization.coffee:7
 #: db/seeds/object_manager_attributes.rb:1552
-#, fuzzy
-#| msgid "Customers in the organization can view each other items."
 msgid "Customers in the organization can view each other's items."
-msgstr "Clienții din aceeași organizație pot vedea tichetele între ei."
+msgstr ""
+"Clienții din organizație pot vizualiza articolele din aceeași organizație."
 
 #: app/assets/javascripts/app/models/job.coffee:12
 #: app/assets/javascripts/app/models/trigger.coffee:11
@@ -4513,15 +4510,17 @@ msgid ""
 "Customize the default locale and timezone during replacement of template "
 "variables."
 msgstr ""
+"Personalizează locația și fusul orar implicit în timpul înlocuirii "
+"variabilelor din șablon."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee:26
 msgid "Cut"
-msgstr ""
+msgstr "Tăiere"
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:19
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:38
 msgid "Dark"
-msgstr "Întunecată"
+msgstr "Întunecat"
 
 #: app/assets/javascripts/app/controllers/dark_mode.coffee:33
 #: app/frontend/apps/desktop/components/ThemeSwitch/ThemeSwitch.vue:93
@@ -4534,36 +4533,36 @@ msgstr "Mod întunecat"
 #: app/assets/javascripts/app/controllers/package.coffee:42
 #: app/frontend/apps/desktop/pages/dashboard/routes.ts:8
 msgid "Dashboard"
-msgstr "Dashboard"
+msgstr "Tablou de bord"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:3
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:3
 #: db/seeds/permissions.rb:251
 msgid "Data Privacy"
-msgstr ""
+msgstr "Confidențialitatea datelor"
 
 #: lib/validations/data_privacy_task_validator.rb:23
 msgid "Data privacy task allows to delete a user or a ticket only."
 msgstr ""
+"Sarcina de confidențialitate a datelor permite ștergerea doar a unui "
+"utilizator sau a unui tichet."
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:96
 msgid "DataPrivacyTask"
-msgstr ""
+msgstr "Sarcina de confidențialitate a datelor"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:97
 msgid "DataPrivacyTasks"
-msgstr ""
+msgstr "Sarcini de confidențialitate a datelor"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:7
 #: db/seeds/settings.rb:353
 msgid "Database"
-msgstr ""
+msgstr "Bază de date"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:15
-#, fuzzy
-#| msgid "Database Update required"
 msgid "Database Update Required"
-msgstr "Actualizarea bazei de date necesară"
+msgstr "Este necesară actualizarea bazei de date"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:129
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:5
@@ -4572,20 +4571,16 @@ msgid "Date"
 msgstr "Dată"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:53
-#, fuzzy
-#| msgid "Date & Time"
 msgid "Date & time field"
-msgstr "Dată și oră"
+msgstr "Câmpul dată și oră"
 
 #: db/seeds/settings.rb:2340
 msgid "Date (Year.Month.Day.SystemID.Counter)"
-msgstr ""
+msgstr "Data (Year.Month.Day.SystemID.Counter)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:49
-#, fuzzy
-#| msgid "Date & Time"
 msgid "Date field"
-msgstr "Dată și oră"
+msgstr "Câmpul dată"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:49
 #, fuzzy
@@ -4640,22 +4635,18 @@ msgstr "Media este: %s minute"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:293
 msgid "Decryption failed!"
-msgstr ""
+msgstr "Decriptarea a eșuat!"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:113
 #: app/frontend/shared/composables/useArticleSecurity.ts:130
-#, fuzzy
-#| msgid "Delivery failed"
 msgid "Decryption failed! %s"
-msgstr "Trimitere eșuată"
+msgstr "Decriptarea a eșuat! %s"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:291
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:107
 #: app/frontend/shared/composables/useArticleSecurity.ts:124
-#, fuzzy
-#| msgid "Update successful!"
 msgid "Decryption was successful."
-msgstr "S-a actualizat cu succes!"
+msgstr "Decriptare reușită!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:239
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:32
@@ -4669,28 +4660,24 @@ msgstr "S-a actualizat cu succes!"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:215
 #: db/seeds/settings.rb:863
 msgid "Default"
-msgstr "Mod implicit"
+msgstr "Implicit"
 
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco:9
 #: app/assets/javascripts/app/views/integration/smime.jst.eco:10
 msgid "Default Behavior"
-msgstr ""
+msgstr "Comportament implicit"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:3
-#, fuzzy
-#| msgid "Disable Notifications"
 msgid "Default Notifications"
-msgstr "Oprește notificările"
+msgstr "Notificări implicite"
 
 #: db/seeds/settings.rb:3505
 msgid "Default Screen"
-msgstr ""
+msgstr "Ecran implicit"
 
 #: db/seeds/settings.rb:2501
-#, fuzzy
-#| msgid "Block Notifications"
 msgid "Default Ticket Agent Notifications"
-msgstr "Blochează notificările"
+msgstr "Notificări implicite de tichete pentru agenți"
 
 #: app/assets/javascripts/app/models/role.coffee:9
 msgid "Default at Signup"
@@ -4698,38 +4685,34 @@ msgstr "Implicit la înscriere"
 
 #: db/seeds/settings.rb:4075
 msgid "Default calendar tickets subscriptions"
-msgstr ""
+msgstr "Abonamente la tichete pe baza calendarului implicit"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:92
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:110
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:95
-#, fuzzy
-#| msgid "Default caller id for outbound calls."
 msgid "Default caller ID for outbound calls."
-msgstr "Caller ID-ul implicit pentru apelurile date"
+msgstr "ID apelant implicit pentru apelurile externe."
 
 #: app/assets/javascripts/app/models/ticket_state.coffee:35
 msgid "Default for follow-ups"
-msgstr ""
+msgstr "Implicit pentru continuări (followup-uri)"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:26
 #: app/assets/javascripts/app/models/ticket_state.coffee:28
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Default for new tickets"
-msgstr "Creează un tichet de test"
+msgstr "Implicit pentru tichetele noi"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:357
 msgid "Default time diff (hours)"
-msgstr ""
+msgstr "Diferența implicită de timp (ore)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:343
 msgid "Default time diff (minutes)"
-msgstr ""
+msgstr "Diferența implicită de timp (minute)"
 
 #: db/seeds/settings.rb:863
 msgid "Default type for a new ticket"
-msgstr ""
+msgstr "Tip implicit pentru un tichet nou"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:47
 #, fuzzy
@@ -4743,38 +4726,42 @@ msgid ""
 "Define an exception of \"automatic assignment\" for certain users (e.g. "
 "executives)."
 msgstr ""
-"Definiți o excepție de \"atribuire automată\" pentru anumiți utilizatori (de "
-"exemplu, directori)."
+"Definește o excepție de „atribuire automată” pentru anumiți utilizatori (de "
+"exemplu, executivi)."
 
 #: db/seeds/settings.rb:3572
 msgid "Define max. attachment size for Elasticsearch."
-msgstr ""
+msgstr "Definește dimensiunea maximă a atașamentelor pentru Elasticsearch."
 
 #: db/seeds/settings.rb:3581
 msgid "Define max. payload size for Elasticsearch."
 msgstr ""
+"Definește dimensiunea maximă a încărcărilor(payload) pentru Elasticsearch."
 
 #: db/seeds/settings.rb:3599
 msgid "Define model configuration for Elasticsearch."
-msgstr ""
+msgstr "Definește configurația modelului pentru Elasticsearch."
 
 #: db/seeds/settings.rb:3590
 msgid "Define pipeline name for Elasticsearch."
-msgstr ""
+msgstr "Definește numele pipeline-ului pentru Elasticsearch."
 
 #: db/seeds/settings.rb:4212
 msgid ""
 "Define postmaster filter to check if follow-ups get created (based on admin "
 "settings)."
 msgstr ""
+"Definește filtrul postmaster pentru a verifica dacă urmărirea este creată "
+"(în funcție de setările de administrare)."
 
 #: db/seeds/settings.rb:4158
 msgid "Define postmaster filter to import archive mailboxes."
 msgstr ""
+"Definește filtrul postmaster pentru a importa căsuțele de e-mail arhivate."
 
 #: db/seeds/settings.rb:4155
 msgid "Define postmaster filter."
-msgstr ""
+msgstr "Definește filtrul postmaster."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:102
 msgid ""
@@ -4782,120 +4769,137 @@ msgid ""
 "agents to it. By this, Zammad can support your agents by showing them only "
 "relevant call entries and notifications."
 msgstr ""
+"Definește cozi sau destinații de apeluri (în funcție de PBX-ul tău) și "
+"asociază-ți agenții cu acestea. Astfel, Zammad poate sprijini agenții tăi "
+"arătându-le doar înregistrările și notificările de apeluri relevante."
 
 #: db/seeds/settings.rb:2504
-#, fuzzy
-#| msgid "Default visibility for new note."
 msgid "Define the default agent notifications for new users."
-msgstr "Vizibilitatea implicită a notelor noi."
+msgstr "Definește notificările implicite de agenți pentru utilizatorii noi."
 
 #: db/seeds/settings.rb:1004
 msgid "Define the maximum number of ticket shown in overviews."
-msgstr ""
+msgstr "Definește numărul maxim de tichete afișate în rezumate."
 
 #: db/seeds/settings.rb:3554
-#, fuzzy
-#| msgid "Defines the sender of email notifications."
 msgid "Defines Elasticsearch SSL verification."
-msgstr "Definește cu ce email se trimit notificările de email"
+msgstr "Definește verificarea SSL pentru Elasticsearch."
 
 #: db/seeds/settings.rb:3545
 msgid "Defines Elasticsearch index name."
-msgstr ""
+msgstr "Definește numele indexului pentru Elasticsearch."
 
 #: db/seeds/settings.rb:3812
-#, fuzzy
 msgid "Defines Freshdesk endpoint authentication API key."
-msgstr "Definește cu ce email se trimit notificările de email"
+msgstr "Definește cheia API pentru autentificarea endpoint-ului Freshdesk."
 
 #: db/seeds/settings.rb:3536
 msgid "Defines HTTP basic auth password of Elasticsearch."
-msgstr ""
+msgstr "Definește parola de autentificare de bază HTTP pentru Elasticsearch."
 
 #: db/seeds/settings.rb:3527
 msgid "Defines HTTP basic auth user of Elasticsearch."
 msgstr ""
+"Definește utilizatorul de autentificare de bază HTTP pentru Elasticsearch."
 
 #: db/seeds/settings.rb:3719
 msgid ""
 "Defines HTTP basic authentication password (only if OTRS is protected via "
 "HTTP basic auth)."
 msgstr ""
+"Definește parola de autentificare de bază HTTP (doar dacă OTRS este protejat "
+"prin autentificare de bază HTTP)."
 
 #: db/seeds/settings.rb:3700
 msgid ""
 "Defines HTTP basic authentication user (only if OTRS is protected via HTTP "
 "basic auth)."
 msgstr ""
+"Definește utilizatorul de autentificare de bază HTTP (doar dacă OTRS este "
+"protejat prin autentificare de bază HTTP)."
 
 #: db/seeds/settings.rb:3867
 msgid "Defines Kayako endpoint authentication password."
-msgstr ""
+msgstr "Definește parola de autentificare pentru endpoint-ul Kayako."
 
 #: db/seeds/settings.rb:3849
-#, fuzzy
 msgid "Defines Kayako endpoint authentication user."
-msgstr "Definește cu ce email se trimit notificările de email"
+msgstr "Definește utilizatorul de autentificare pentru endpoint-ul Kayako."
 
 #: db/seeds/settings.rb:3681
 msgid "Defines OTRS endpoint authentication key."
-msgstr ""
+msgstr "Definește cheia de autentificare pentru endpoint-ul OTRS."
 
 #: db/seeds/settings.rb:3756
-#, fuzzy
 msgid "Defines Zendesk endpoint authentication API key."
-msgstr "Definește cu ce email se trimit notificările de email"
+msgstr "Definește cheia de autentificare pentru endpoint-ul Zendesk."
 
 #: db/seeds/settings.rb:3775
 msgid "Defines Zendesk endpoint authentication user."
-msgstr ""
+msgstr "Definește utilizatorul de autentificare pentru endpoint-ul Zendesk."
 
 #: db/seeds/settings.rb:3794
 msgid ""
 "Defines a Freshdesk endpoint to import users, tickets, states, and articles."
 msgstr ""
+"Definește un endpoint Freshdesk pentru importul utilizatorilor, tichetelor, "
+"stărilor și articolelor."
 
 #: db/seeds/settings.rb:3831
 msgid ""
 "Defines a Kayako endpoint to import users, tickets, states, and articles."
 msgstr ""
+"Definește un endpoint Kayako pentru importul utilizatorilor, tichetelor, "
+"stărilor și articolelor."
 
 #: db/seeds/settings.rb:3738
 msgid ""
 "Defines a Zendesk endpoint to import users, tickets, states, and articles."
 msgstr ""
+"Definește un endpoint Zendesk pentru importul utilizatorilor, tichetelor, "
+"stărilor și articolelor."
 
 #: db/seeds/settings.rb:5339
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
 msgstr ""
+"Definește un backend pentru statisticile de tabloului de bord care este "
+"programat automat."
 
 #: db/seeds/settings.rb:3011
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per day."
 msgstr ""
+"Definește o limită pentru numărul de tichete care pot fi create prin "
+"formular web de la o adresă IP pe zi."
 
 #: db/seeds/settings.rb:2990
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per hour."
 msgstr ""
+"Definește o limită pentru numărul de tichete care pot fi create prin "
+"formular web de la o adresă IP pe oră."
 
 #: db/seeds/settings.rb:3032
 msgid ""
 "Defines a limit for how many tickets can be created via web form per day."
 msgstr ""
+"Definește o limită pentru numărul de tichete care pot fi create prin "
+"formular web pe zi."
 
 #: db/seeds/settings.rb:2129
-#, fuzzy
-#| msgid "Number of failed logins after account will be deactivated."
 msgid "Defines after how many failed logins accounts will be deactivated."
-msgstr "Numărul de logări greșite după care un cont va fi dezactivat"
+msgstr ""
+"Definește după câte încercări de autentificare eșuate, conturile vor fi "
+"dezactivate."
 
 #: db/seeds/settings.rb:3663
 msgid ""
 "Defines an OTRS endpoint to import users, tickets, states, and articles."
 msgstr ""
+"Definește un endpoint OTRS pentru importul utilizatorilor, tichetelor, "
+"stărilor și articolelor."
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
 msgid ""
@@ -4903,6 +4907,9 @@ msgid ""
 "priority will be rendered in an indian red, while low priority in a baby "
 "blue color."
 msgstr ""
+"Definește o culoare opțională de evidențiere pentru această prioritate în "
+"tabelele de tichete. Prioritatea mare va fi afișată într-un roșu indian, în "
+"timp ce prioritatea mică va fi afișată într-o nuanță de albastru deschis."
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:8
 msgid ""
@@ -4910,103 +4917,108 @@ msgid ""
 "be rendered with an exclamation point, while low priority with a downwards "
 "arrow."
 msgstr ""
+"Definește un iconiță opțională pentru această prioritate în tabelele de "
+"tichete. Prioritatea importantă va fi afișată cu un semn de exclamare, în "
+"timp ce prioritatea mică va fi afișată cu o săgeată în jos."
 
 #: db/seeds/settings.rb:3563
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
 msgstr ""
+"Definește extensiile de atașamente care vor fi ignorate de Elasticsearch."
 
 #: db/seeds/settings.rb:3518
 msgid "Defines endpoint of Elasticsearch."
-msgstr ""
+msgstr "Definește endpoint-ul Elasticsearch."
 
 #: db/seeds/settings.rb:2879
-#, fuzzy
-#| msgid ""
-#| "Defines groups for which a customer can create tickets via web interface. "
-#| "\"-\" means all groups are available."
 msgid ""
 "Defines groups for which a customer can create tickets via web interface. No "
 "selection means all groups are available."
 msgstr ""
-"Definește grupurile pentru care un client poate crea tichete prin interfața "
-"web. \"-\" înseamnă că pentru toate grupurile."
+"Definește grupurile pentru care un client poate crea tichete prin "
+"intermediul interfeței web. Nicio selecție înseamnă că toate grupurile sunt "
+"disponibile."
 
 #: db/seeds/settings.rb:3119
 msgid ""
 "Defines how the From field of emails (sent from answers and email tickets) "
 "should look like."
 msgstr ""
-"Definește cum va arăta câmpul From în email-uri ( în cazul răspunsurilor și "
-"tichetelor din email)"
+"Definește cum ar trebui să arate câmpul \"De la\" al e-mailurilor (trimise "
+"din răspunsuri și tichete prin e-mail)."
 
 #: db/seeds/settings.rb:2248
-#, fuzzy
-#| msgid "Defines if a customer can create tickets via the web interface."
 msgid ""
 "Defines how the last customer contact time of tickets should be calculated."
-msgstr "Definește dacă un client poate crea tichete prin interfața web."
+msgstr ""
+"Definește cum ar trebui să fie calculat timpul ultimei contactări a "
+"clientului pentru tichete."
 
 #: db/seeds/settings.rb:289
 msgid ""
 "Defines how to reach websocket server. \"websocket\" is default on "
 "production, \"websocketPort\" is for CI"
 msgstr ""
+"Definește cum să accesezi serverul WebSocket. „websocket” este implicit în "
+"producție, iar „websocketPort” este pentru CI"
 
 #: db/seeds/settings.rb:4525
 msgid "Defines if Checkmk (https://checkmk.com/) is enabled or not."
-msgstr ""
+msgstr "Definește dacă Checkmk (https://checkmk.com/) este activat sau nu."
 
 #: db/seeds/settings.rb:5238
 msgid "Defines if Clearbit (http://www.clearbit.com) is enabled or not."
-msgstr ""
+msgstr "Definește dacă Clearbit (http://www.clearbit.com) este activat sau nu."
 
 #: db/seeds/settings.rb:4789
 msgid "Defines if Exchange is enabled or not."
-msgstr ""
+msgstr "Definește dacă Exchange este activat sau nu."
 
 #: db/seeds/settings.rb:4329
 msgid "Defines if Icinga (http://www.icinga.org) is enabled or not."
-msgstr ""
+msgstr "Definește dacă Icinga (http://www.icinga.org) este activat sau nu."
 
 #: db/seeds/settings.rb:5449
 msgid ""
 "Defines if Knowledge Base navbar button is enabled for users without "
 "Knowledge Base permission."
 msgstr ""
+"Definește dacă butonul din bara de navigare pentru baza de cunoștințe este "
+"activat pentru utilizatori fără permisiuni de acces la baza de cunoștințe."
 
 #: db/seeds/settings.rb:5434
 msgid "Defines if Knowledge Base navbar button is enabled."
 msgstr ""
+"Definește dacă butonul din bara de navigare pentru baza de cunoștințe este "
+"activat."
 
 #: db/seeds/settings.rb:4736
 msgid "Defines if LDAP is enabled or not."
-msgstr ""
+msgstr "Definește dacă LDAP este activat sau nu."
 
 #: db/seeds/settings.rb:4635
 msgid "Defines if Monit (https://mmonit.com/monit/) is enabled or not."
-msgstr ""
+msgstr "Definește dacă Monit (https://mmonit.com/monit/) este activat sau nu."
 
 #: db/seeds/settings.rb:4427
 msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
-msgstr ""
+msgstr "Definește dacă Nagios (http://www.nagios.org) este activat sau nu."
 
 #: db/seeds/settings.rb:5538
-#, fuzzy
-#| msgid "Authentication"
 msgid "Defines if PGP encryption is enabled or not."
-msgstr "Autentificare"
+msgstr "Definește dacă criptarea PGP este activă sau nu."
 
 #: db/seeds/settings.rb:5175
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
-msgstr ""
+msgstr "Definește dacă Placetel (http://www.placetel.de) este activat sau nu."
 
 #: db/seeds/settings.rb:5496
 msgid "Defines if S/MIME encryption is enabled or not."
-msgstr ""
+msgstr "Definește dacă criptarea S/MIME este activă sau nu."
 
 #: db/seeds/settings.rb:4976
 msgid "Defines if Slack (http://www.slack.org) is enabled or not."
-msgstr ""
+msgstr "Definește dacă Slack (http://www.slack.org) este activat sau nu."
 
 #: db/seeds/settings.rb:2852
 msgid "Defines if a customer can create tickets via the web interface."
@@ -5014,159 +5026,200 @@ msgstr "Definește dacă un client poate crea tichete prin interfața web."
 
 #: db/seeds/settings.rb:20
 msgid "Defines if application is in init mode."
-msgstr ""
+msgstr "Definește dacă aplicația este în modul de inițializare."
 
 #: db/seeds/settings.rb:86
 msgid "Defines if application is used as online service."
-msgstr ""
+msgstr "Definește dacă aplicația este folosită ca un serviciu on-line."
 
 #: db/seeds/settings.rb:5621
 msgid ""
 "Defines if calendar weeks are shown in the picker of date/datetime fields to "
 "easily select the correct date."
 msgstr ""
+"Definește dacă săptămânile calendaristice sunt afișate în selectorul de "
+"câmpuri de dată/date și ora pentru a selecta ușor data corectă."
 
 #: db/seeds/settings.rb:5100
 msgid "Defines if generic CTI integration is enabled or not."
-msgstr ""
+msgstr "Definește dacă integrarea generică CTI este activată sau nu."
 
 #: db/seeds/settings.rb:5713
 msgid ""
 "Defines if recovery codes can be used by users in the event they lose access "
 "to other two-factor authentication methods."
 msgstr ""
+"Definește dacă codurile de recuperare pot fi utilizate de utilizatori în "
+"cazul în care pierd accesul la alte metode de autentificare în doi pași."
 
 #: db/seeds/settings.rb:5017
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
-msgstr ""
+msgstr "Definește dacă sipgate.io (http://www.sipgate.io) este activat sau nu."
 
 #: db/seeds/settings.rb:4898
 msgid ""
 "Defines if the GitHub (http://www.github.com) integration is enabled or not."
 msgstr ""
+"Definește dacă integrarea GitHub (http://www.github.com) este activată sau "
+"nu."
 
 #: db/seeds/settings.rb:4856
 msgid ""
 "Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
 msgstr ""
+"Definește dacă integrarea GitLab (http://www.gitlab.com) este activată sau "
+"nu."
 
 #: db/seeds/settings.rb:5580
-#, fuzzy
-#| msgid "Authentication"
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
-msgstr "Autentificare"
+msgstr ""
+"Definește dacă configurația aliasului destinatarului PGP este activată sau "
+"nu."
 
 #: db/seeds/settings.rb:661
 msgid ""
 "Defines if the agent has to accept a confirmation dialog when changing the "
 "article visibility to \"public\"."
 msgstr ""
+"Definește dacă agentul trebuie să accepte un dialog de confirmare atunci "
+"când schimbă vizibilitatea articolului la „public”."
 
 #: db/seeds/settings.rb:76
 msgid ""
 "Defines if the application is in developer mode (all users have the same "
 "password and password reset will work without email delivery)."
 msgstr ""
+"Definește dacă aplicația este în modul dezvoltator (toți utilizatorii au "
+"aceeași parolă și resetarea parolei va funcționa fără livrarea de e-mailuri)."
 
 #: db/seeds/settings.rb:5765
 msgid ""
 "Defines if the change of the primary organization of a user will update the "
 "100 most recent tickets for this user as well."
 msgstr ""
+"Definește dacă schimbarea organizației principale a unui utilizator va "
+"actualiza și cele mai recente 100 de tichete ale acestui utilizator."
 
 #: db/seeds/settings.rb:580
 msgid ""
 "Defines if the core workflow communication should run over ajax instead of "
 "websockets."
 msgstr ""
+"Definește dacă comunicarea fluxului de lucru de bază ar trebui să se "
+"desfășoare prin AJAX în loc de WebSockets."
 
 #: db/seeds/settings.rb:606
 msgid ""
 "Defines if the email should be displayed in the result of the user/"
 "organization widget."
 msgstr ""
+"Definește dacă e-mailul ar trebui să fie afișat în rezultatul widget-ului "
+"utilizator/organizație."
 
 #: db/seeds/settings.rb:4816
 msgid ""
 "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
 "not."
 msgstr ""
+"Definește dacă integrarea i-doit (https://www.i-doit.org/) este activată sau "
+"nu."
 
 #: db/seeds/settings.rb:2275
 msgid ""
 "Defines if the ticket conditions editor supports complex logical expressions."
 msgstr ""
+"Definește dacă editorul de condiții pentru tichete suportă expresii logice "
+"complexe."
 
 #: db/seeds/settings.rb:2301
 msgid ""
 "Defines if the ticket conditions editor supports regular expression "
 "operators for triggers and ticket auto assignment."
 msgstr ""
+"Definește dacă editorul de condiții pentru tichete suportă operatori de "
+"expresii regulate pentru declanșatoare (triggere) și atribuirea automată a "
+"tichetelor."
 
 #: db/seeds/settings.rb:4015
-#, fuzzy
-#| msgid "Authentication"
 msgid "Defines if the time accounting types are enabled."
-msgstr "Autentificare"
+msgstr ""
+"Definește dacă tipurile de contabilizare a timpului sunt active sau nu."
 
 #: db/seeds/settings.rb:5681
 msgid ""
 "Defines if the two-factor authentication method authenticator app is enabled "
 "or not."
 msgstr ""
+"Definește dacă metoda de autentificare în doi factori folosind aplicația "
+"Google Authenticator este activă sau nu."
 
 #: db/seeds/settings.rb:5649
-#, fuzzy
-#| msgid "Authentication"
 msgid ""
 "Defines if the two-factor authentication method security keys is enabled or "
 "not."
-msgstr "Autentificare"
+msgstr ""
+"Definește dacă metoda de autentificare în doi factori folosind chei de "
+"securitate este activă sau nu."
 
 #: db/seeds/settings.rb:2933
 msgid "Defines if tickets can be created via web form."
-msgstr ""
+msgstr "Definește dacă tichetele pot fi create folosind formularul web."
 
 #: db/seeds/settings.rb:4378
 msgid "Defines if tickets should be closed if service is recovered."
-msgstr "Definește dacă tichetele ar trebui închise dacă serviciul își revine."
+msgstr ""
+"Definește dacă tichetele ar trebui închise dacă serviciul este restabilit."
 
 #: db/seeds/settings.rb:4248
 msgid "Defines postmaster filter for filters managed via admin interface."
 msgstr ""
+"Definește filtrul postmaster pentru filtrele gestionate prin intermediul "
+"interfeței de administrare."
 
 #: db/seeds/settings.rb:4167
 msgid ""
 "Defines postmaster filter to check if email has been created by Zammad "
 "itself and will set the article sender."
 msgstr ""
+"Definește filtrul postmaster pentru a verifica dacă e-mailul a fost creat de "
+"Zammad și va seta expeditorul articolului."
 
 #: db/seeds/settings.rb:4176
 msgid ""
 "Defines postmaster filter to check if the email is a self-created "
 "notification email, then ignore it to prevent email loops."
 msgstr ""
+"Definește filtrul postmaster pentru a verifica dacă e-mailul este un e-mail "
+"de notificare creat de sine, apoi îl ignoră pentru a preveni buclele de e-"
+"mail."
 
 #: db/seeds/settings.rb:4194
 msgid "Defines postmaster filter to handle secure mailing."
 msgstr ""
+"Definește filtrul postmaster pentru a gestiona corespondența securizată."
 
 #: db/seeds/settings.rb:4302
 msgid ""
 "Defines postmaster filter to identify Jira mails for correct follow-ups."
 msgstr ""
+"Definește filtrul postmaster pentru a identifica e-mailurile Jira pentru "
+"urmăriri corecte."
 
 #: db/seeds/settings.rb:4284
 msgid ""
 "Defines postmaster filter to identify ServiceNow mails for correct follow-"
 "ups."
 msgstr ""
+"Definește filtrul postmaster pentru a identifica e-mailurile ServiceNow "
+"pentru urmăriri corecte."
 
 #: db/seeds/settings.rb:4113
 msgid ""
 "Defines postmaster filter to identify auto responses to prevent auto replies "
 "from Zammad."
 msgstr ""
+"Definește filtrul postmaster pentru a identifica răspunsurile automate, "
+"pentru a preveni răspunsurile automate din partea Zammad."
 
 #: db/seeds/settings.rb:4131
 msgid ""
@@ -5183,159 +5236,171 @@ msgid ""
 "Defines postmaster filter to identify out-of-office emails for follow-up "
 "detection and keeping current ticket state."
 msgstr ""
+"Definește filtrul postmaster pentru a identifica e-mailurile de „în afara "
+"biroului” pentru detectarea continuărilor (follow-up) și menținerea stării "
+"curente a tichetului."
 
 #: db/seeds/settings.rb:4230
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and disables "
 "sending notification if delivery fails permanently."
 msgstr ""
+"Definește filtrul postmaster pentru a identifica bouncer-urile postmaster și "
+"dezactivează trimiterea notificărilor dacă livrarea eșuează permanent."
 
 #: db/seeds/settings.rb:4221
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and handles them "
 "as follow-up of the original tickets"
 msgstr ""
+"Definește filtrul postmaster pentru a identifica bouncer-urile postmaster și "
+"a le trata ca continuări (follow-up) ale tichetelor originale"
 
 #: db/seeds/settings.rb:4239
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and reopens "
 "tickets if delivery fails permanently."
 msgstr ""
+"Definește filtrul postmaster pentru a identifica bouncer-urile postmaster și "
+"a reîntoarce tichetele dacă livrarea eșuează permanent."
 
 #: db/seeds/settings.rb:4185
 msgid "Defines postmaster filter to identify sender user."
-msgstr ""
+msgstr "Definește filtrul postmaster pentru a identifica expeditorul."
 
 #: db/seeds/settings.rb:4257
 msgid ""
 "Defines postmaster filter to manage Icinga (http://www.icinga.org) emails."
 msgstr ""
+"Definește filtrul postmaster pentru a gestiona emailurile Icinga (http://www."
+"icinga.org)."
 
 #: db/seeds/settings.rb:4275
 msgid ""
 "Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails."
 msgstr ""
+"Definește filtrul postmaster pentru a gestiona emailurile Monit "
+"(https://mmonit.com/monit/)."
 
 #: db/seeds/settings.rb:4266
 msgid ""
 "Defines postmaster filter to manage Nagios (http://www.nagios.org) emails."
 msgstr ""
+"Definește filtrul postmaster pentru a gestiona emailurile Nagios (http://www."
+"nagios.org)."
 
 #: db/seeds/settings.rb:4104
 msgid ""
 "Defines postmaster filter to remove X-Zammad headers from untrustworthy "
 "sources."
 msgstr ""
+"Definește filtrul postmaster pentru a elimina anteturile X-Zammad din surse "
+"nesigure."
 
 #: db/seeds/settings.rb:4140
 msgid ""
 "Defines postmaster filter to set the owner (based on group follow up "
 "assignment)."
 msgstr ""
+"Definește filtrul postmaster pentru a seta proprietarul (pe baza atribuirii "
+"de urmărire a grupului)."
 
 #: db/seeds/settings.rb:4149
 msgid ""
 "Defines postmaster filter to set the sender/from of emails based on reply-to "
 "header."
 msgstr ""
+"Definește filtrul postmaster pentru a seta expeditorul/„de la” al e-"
+"mailurilor pe baza antetului „reply-to”."
 
 #: db/seeds/settings.rb:4320
 msgid ""
 "Defines postmaster filter which sets the articles visibility to internal if "
 "it is a rely to an internal article or the last outgoing email is internal."
 msgstr ""
+"Definește filtrul postmaster care setează vizibilitatea articolelor la "
+"intern dacă este un răspuns la un articol intern sau dacă ultimul e-mail "
+"trimis este intern."
 
 #: db/seeds/settings.rb:4101
 msgid "Defines postmaster filter."
-msgstr ""
+msgstr "Definește filtrul postmaster."
 
 #: db/seeds/settings.rb:207
 msgid "Defines pretty date format."
-msgstr "Definește formatul datei"
+msgstr "Definește formatul de afișare ușor lizibilă a datei."
 
 #: db/seeds/settings.rb:5328
 msgid "Defines processing timeout for the html sanitizer."
-msgstr ""
+msgstr "Definește timpul de expirare al procesării pentru sanitizatorul HTML."
 
 #: db/seeds/settings.rb:4937
 msgid "Defines sync transaction backend."
-msgstr ""
+msgstr "Definește backend-ul pentru sincronizarea tranzacțiilor."
 
 #: db/seeds/settings.rb:5316
 msgid "Defines the CSS font information for HTML emails."
-msgstr ""
+msgstr "Definește informațiile despre fonturile CSS pentru e-mailurile HTML."
 
 #: db/seeds/settings.rb:5128
 msgid "Defines the CTI config."
-msgstr ""
+msgstr "Definește configurarea CTI."
 
 #: db/seeds/settings.rb:4623
 msgid "Defines the Checkmk token for allowing updates."
-msgstr ""
+msgstr "Definește token Checkmk pentru a permite actualizările."
 
 #: db/seeds/settings.rb:5264
 msgid "Defines the Clearbit config."
-msgstr ""
+msgstr "Definește configurarea Clearbit."
 
 #: db/seeds/settings.rb:4776
-#, fuzzy
-#| msgid "Defines pretty date format."
 msgid "Defines the Exchange OAuth config."
-msgstr "Definește formatul datei"
+msgstr "Definește configurarea OAuth pentru Exchange."
 
 #: db/seeds/settings.rb:4763
 msgid "Defines the Exchange config."
-msgstr ""
+msgstr "Definește configurarea Exchange."
 
 #: db/seeds/settings.rb:316
-#, fuzzy
-#| msgid "Define the http protocol of your instance."
 msgid "Defines the HTTP protocol of your instance."
-msgstr "Definește protocolul http pentru instanța ta."
+msgstr "Definește protocolul HTTP pentru instanța ta."
 
 #: db/seeds/settings.rb:5566
-#, fuzzy
-#| msgid "Defines pretty date format."
 msgid "Defines the PGP config."
-msgstr "Definește formatul datei"
+msgstr "Definește configurarea PGP."
 
 #: db/seeds/settings.rb:5203
 msgid "Defines the Placetel config."
-msgstr ""
+msgstr "Definește configurarea Placetel."
 
 #: db/seeds/settings.rb:5524
 msgid "Defines the S/MIME config."
-msgstr ""
+msgstr "Definește configurarea S/MIME."
 
 #: db/seeds/settings.rb:5002
 msgid "Defines the Slack config."
-msgstr ""
+msgstr "Definește configurarea Slack."
 
 #: db/seeds/settings.rb:5305
-#, fuzzy
-#| msgid "Defines pretty date format."
 msgid "Defines the agent limit."
-msgstr "Definește formatul datei"
+msgstr "Definește numărul limită de agenți."
 
 #: db/seeds/settings.rb:402
-#, fuzzy
-#| msgid ""
-#| "Defines the backend for geo IP lookups. Shows also location of an IP "
-#| "address if an IP address is shown."
 msgid ""
 "Defines the backend for geo IP lookups. Also shows location of an IP address "
 "if it is traceable."
 msgstr ""
-"Definește backend-ul pentru căutările privind localizare geografică a "
-"adreselor IP. Arată inclusiv locația adresei IP"
+"Definește backend-ul pentru căutările geo IP. De asemenea, afișează locația "
+"unei adrese IP dacă aceasta poate fi determinată."
 
 #: db/seeds/settings.rb:456
 msgid ""
 "Defines the backend for geo calendar lookups. Used for initial calendar "
 "succession."
 msgstr ""
-"Definește backend-ul pentru căutările de calendar geografic. Este utilizat "
-"pentru succesiunea calendaristică inițială"
+"Definește backend-ul pentru căutările calendar geografic. Utilizat pentru "
+"succesiunea inițială a calendarului."
 
 #: db/seeds/settings.rb:429
 msgid ""
@@ -5356,53 +5421,56 @@ msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "globally."
 msgstr ""
+"Definește configurația privind numărul de articole care pot fi create într-"
+"un interval de minute la nivel global."
 
 #: db/seeds/settings.rb:2769
 msgid ""
 "Defines the configuration how many articles can be created in a minute range "
 "per ticket."
 msgstr ""
+"Definește configurația privind numărul de articole care pot fi create într-"
+"un interval de minute per tichet."
 
 #: db/seeds/settings.rb:3997
 msgid ""
 "Defines the custom unit to be shown next to the time accounting input field."
 msgstr ""
+"Definește unitatea personalizată care va fi afișată lângă câmpul de "
+"introducere a timpului contabilizat."
 
 #: db/seeds/settings.rb:4078
 msgid "Defines the default calendar tickets subscription settings."
 msgstr ""
+"Definește setările implicite de calendar pentru abonamentele la tichete."
 
 #: db/seeds/settings.rb:3508
 msgid "Defines the default screen."
-msgstr ""
+msgstr "Definește ecranul implicit."
 
 #: db/seeds/settings.rb:166
 msgid "Defines the default system language."
 msgstr "Definește limba implicită a sistemului."
 
 #: db/seeds/settings.rb:186
-#, fuzzy
-#| msgid "Defines the state of auto closed tickets."
 msgid "Defines the default system timezone."
-msgstr "Definește statusul tichetelor închise automat."
+msgstr "Definește fusul orar implicit al sistemului."
 
 #: db/seeds/settings.rb:4033
-#, fuzzy
-#| msgid "Defines the state of auto closed tickets."
 msgid "Defines the default time accounting type."
-msgstr "Definește statusul tichetelor închise automat."
+msgstr "Definește tipul implicit de contabilizare a timpului."
 
 #: db/seeds/settings.rb:633
-#, fuzzy
-#| msgid "Default visibility for new note."
 msgid "Defines the default visibility for new notes."
-msgstr "Vizibilitatea implicită a notelor noi."
+msgstr "Definește vizibilitatea implicită pentru notițele noi."
 
 #: db/seeds/settings.rb:5162
 msgid ""
 "Defines the duration of customer activity (in seconds) on a call until the "
 "user profile dialog is shown."
 msgstr ""
+"Definește durata activității clientului (în secunde) într-un apel până când "
+"este afișat dialogul profilului utilizatorului."
 
 #: db/seeds/settings.rb:266
 msgid ""
@@ -5410,48 +5478,47 @@ msgid ""
 "as a variable, #{setting.fqdn} which is found in all forms of messaging used "
 "by the application, to build links to the tickets within your system."
 msgstr ""
-"Definește numele de domeniu complet al sistemului. Această setare este "
-"utilizată ca variabilă, # {setting.fqdn}  care se regăsește în toate "
-"formularele de mesaje folosite de aplicație, pentru a construii link-uri "
-"către tichete în interiorul sistemului tău."
+"Definește numele complet de domeniu al sistemului. Această setare este "
+"utilizată ca variabilă, #{setting.fqdn}, care se găsește în toate formele de "
+"mesagerie utilizate de aplicație, pentru a construi linkuri către tichetele "
+"din sistemul tău."
 
 #: db/seeds/settings.rb:4551
 msgid "Defines the group of created tickets."
 msgstr "Definește grupul tichetelor create."
 
 #: db/seeds/settings.rb:2967
-#, fuzzy
-#| msgid "Defines the group of created tickets."
 msgid "Defines the group of tickets created via web form."
-msgstr "Definește grupul tichetelor create."
+msgstr "Definește grupul tichetelor create folosind formularul web."
 
 #: db/seeds/settings.rb:4843
 msgid "Defines the i-doit config."
-msgstr ""
+msgstr "Definește configurarea i-doit."
 
 #: db/seeds/settings.rb:3899
 msgid "Defines the log levels for various logging actions of the Sequencer."
 msgstr ""
+"Definește nivelurile de jurnalizare pentru diverse acțiuni de jurnalizare "
+"ale Sequencer-ului."
 
 #: db/seeds/settings.rb:120
 msgid "Defines the logo of the application, shown in the web interface."
-msgstr "Definește logo-ul aplicației, afișat în interfaza web."
+msgstr "Definește logo-ul aplicației, afișat în interfața web."
 
 #: db/seeds/settings.rb:3169
 msgid "Defines the maximum accepted email size in MB."
-msgstr ""
+msgstr "Definește dimensiunea maximă acceptată a e-mailului în MB."
 
 #: db/seeds/settings.rb:1017
 msgid ""
 "Defines the maximum number of allowed open tabs before auto cleanup removes "
 "surplus tabs when creating new tabs."
 msgstr ""
+"Definește numărul maxim de tab-uri deschise permise înainte ca curățarea "
+"automată să elimine tab-urile suplimentare atunci când se creează tab-uri "
+"noi."
 
 #: db/seeds/settings.rb:96
-#, fuzzy
-#| msgid ""
-#| "Defines the name of the application, shown in the web interface, tabs and "
-#| "title bar of the web browser."
 msgid ""
 "Defines the name of the application, shown in the web interface, tabs, and "
 "title bar of the web browser."
@@ -5460,37 +5527,33 @@ msgstr ""
 "a browserului web."
 
 #: db/seeds/settings.rb:2682
-#, fuzzy
-#| msgid "Defines the backend for user and organization image lookups."
 msgid "Defines the permission level used for lookups."
-msgstr ""
-"Definește backend-ul pentru căutările de imagini ale utilizatorilor și "
-"organizațiilor."
+msgstr "Definește nivelul de permisiune utilizat pentru căutări."
 
 #: db/seeds/settings.rb:297
 msgid "Defines the port of the websocket server."
-msgstr ""
+msgstr "Definește port-ul serverului websocket."
 
 #: db/seeds/settings.rb:7
 msgid "Defines the random application secret."
-msgstr ""
+msgstr "Definește un secret aleator al aplicației."
 
 #: db/seeds/settings.rb:4355
 msgid "Defines the sender email address of Icinga emails."
-msgstr ""
+msgstr "Definește adresa de email a expeditorului pentru emailurile Icinga."
 
 #: db/seeds/settings.rb:4453
 msgid "Defines the sender email address of Nagios emails."
-msgstr ""
+msgstr "Definește adresa de email a expeditorului pentru emailurile Nagios."
 
 #: db/seeds/settings.rb:4661
 msgid "Defines the sender email address of the service emails."
 msgstr ""
-"Definește adresa de e-mail a expeditorului pentru e-mailurile serviciilor."
+"Definește adresa de e-mail a expeditorului pentru e-mailurile de serviciu."
 
 #: db/seeds/settings.rb:3329
 msgid "Defines the sender of email notifications."
-msgstr "Definește cu ce email se trimit notificările de email"
+msgstr "Definește adresa de e-mail a expeditorului pentru notificări."
 
 #: db/seeds/settings.rb:3147
 msgid ""
@@ -5505,14 +5568,15 @@ msgid ""
 "Defines the session timeout for inactivity of users. Based on the assigned "
 "permissions the highest timeout value will be used, otherwise the default."
 msgstr ""
+"Definește timpul de expirare al sesiunii pentru inactivitatea "
+"utilizatorilor. În funcție de permisiunile atribuite, va fi utilizată "
+"valoarea maximă a expirării; altfel, se va folosi valoarea implicită."
 
 #: db/seeds/settings.rb:5066
 msgid "Defines the sipgate.io config."
-msgstr ""
+msgstr "Definește configurarea sipgate.io."
 
 #: db/seeds/settings.rb:4404
-#, fuzzy
-#| msgid "Defines the state of auto closed tickets."
 msgid "Defines the state of auto-closed tickets."
 msgstr "Definește statusul tichetelor închise automat."
 
@@ -5522,100 +5586,120 @@ msgid ""
 "ensures that only tickets which belong to your system will be processed as "
 "follow-ups (useful when communicating between two instances of Zammad)."
 msgstr ""
-"Definește identificatorul sistemului. Fiecare număr de tichet conține un ID. "
-"Acest lucru asigură că doar tichetele care aparțin sistemului dvs. vor fi "
-"prelucrate (este util când comunicați între două instanțe Zammad)."
+"Definește identificatorul sistemului. Fiecare număr de tichet conține acest "
+"ID. Acest lucru asigură că doar tichetele care aparțin sistemului dvs. vor "
+"fi prelucrate (este util când comunicați între două instanțe Zammad)."
 
 #: db/seeds/settings.rb:2904
 msgid "Defines the tab behaviour after a ticket action."
-msgstr ""
+msgstr "Definește comportamentul tab-ului după o acțiune asupra unui tichet."
 
 #: db/seeds/settings.rb:2699
-#, fuzzy
-#| msgid "Defines the backend for user and organization image lookups."
 msgid "Defines the ticket states used for lookups."
-msgstr ""
-"Definește backend-ul pentru căutările de imagini ale utilizatorilor și "
-"organizațiilor."
+msgstr "Definește stările tichetelor utilizate pentru interogări."
 
 #: db/seeds/settings.rb:5461
 msgid "Defines the timeframe during which a self-created note can be deleted."
 msgstr ""
+"Definește intervalul de timp în care o notiță creată de sine poate fi "
+"ștearsă."
 
 #: db/seeds/settings.rb:5217
-#, fuzzy
-#| msgid "Defines pretty date format."
 msgid "Defines the token for Placetel."
-msgstr "Definește formatul datei"
+msgstr "Definește tokenul pentru Placetel."
 
 #: db/seeds/settings.rb:4958
 msgid ""
 "Defines the transaction backend to detect customer signatures in emails."
 msgstr ""
+"Definește backend-ul de tranzacție pentru a detecta semnăturile clienților "
+"în e-mailuri."
 
 #: db/seeds/settings.rb:4940
 msgid "Defines the transaction backend to execute triggers."
 msgstr ""
+"Definește backend-ul de tranzacție pentru a executa declanșatoarele (trigger-"
+"ele)."
 
 #: db/seeds/settings.rb:4949
 msgid "Defines the transaction backend to send agent notifications."
-msgstr ""
+msgstr "Definește backend-ul de tranzacție pentru trimite notificări agenților."
 
 #: db/seeds/settings.rb:5286
 msgid ""
 "Defines the transaction backend which detects caller IDs in objects and "
 "stores them for CTI lookups."
 msgstr ""
+"Definește backend-ul de tranzacție care detectează ID-urile apelanților în "
+"obiecte și le stochează pentru căutările CTI."
 
 #: db/seeds/settings.rb:5295
 msgid "Defines the transaction backend which executes time based triggers."
 msgstr ""
+"Definește backend-ul de tranzacție pentru a executa declanșatoarele (trigger-"
+"ele) bazate pe timp."
 
 #: db/seeds/settings.rb:4967
 msgid ""
 "Defines the transaction backend which posts messages to Slack (http://www."
 "slack.com)."
 msgstr ""
+"Definește backend-ul de tranzacție care postează mesaje în Slack (http://www."
+"slack.com)."
 
 #: db/seeds/settings.rb:5277
 msgid ""
 "Defines the transaction backend which will enrich customer and organization "
 "information from Clearbit (http://www.clearbit.com)."
 msgstr ""
+"Definește backend-ul de tranzacție care va îmbogăți informațiile despre "
+"clienți și organizații folosind Clearbit (http://www.clearbit.com)."
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:14
 #: db/seeds/settings.rb:3979
 msgid "Defines the unit to be shown next to the time accounting input field."
 msgstr ""
+"Definește unitatea de măsură care va fi afișată lângă câmpul de introducere "
+"a contabilizării timpului."
 
 #: db/seeds/settings.rb:2631
 msgid ""
 "Defines the warning message that is shown when a matching ticket is present."
 msgstr ""
+"Definește mesajul de avertizare care este afișat atunci când există un "
+"tichet corespunzător."
 
 #: db/seeds/settings.rb:2614
 msgid ""
 "Defines the warning title that is shown when a matching ticket is present."
 msgstr ""
+"Definește titlul avertizării care este afișată atunci când există un tichet "
+"corespunzător."
 
 #: db/seeds/settings.rb:4946
 msgid "Defines transaction backend."
-msgstr ""
+msgstr "Definește backend-ul de tranzacție."
 
 #: db/seeds/settings.rb:2665
 msgid ""
 "Defines whether the matching tickets are shown in case of already existing "
 "tickets."
 msgstr ""
+"Definește dacă tichetele corespunzătoare sunt afișate în cazul existenței "
+"deja a unor tichete."
 
 #: db/seeds/settings.rb:2597
 msgid "Defines which ticket attributes are checked before creating a ticket."
 msgstr ""
+"Definește care atribute ale tichetului sunt verificate înainte de a crea un "
+"tichet."
 
 #: db/seeds/settings.rb:2648
 msgid ""
 "Defines which user roles will receive a warning in case of matching tickets."
 msgstr ""
+"Definește care roluri de utilizator vor primi un avertisment în cazul "
+"tichetele corespunzătoare."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:674
@@ -5648,21 +5732,19 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:83
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:38
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:195
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:195
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:162
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:156
 msgid "Delete"
 msgstr "Șterge"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts:84
-#, fuzzy
-#| msgid "Delete File"
 msgid "Delete Article"
-msgstr "Șterge fișierul"
+msgstr "Șterge articolul"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:47
 msgid "Delete Avatar?"
-msgstr ""
+msgstr "Șterg avatarul?"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:33
 msgid "Delete Customer"
@@ -5670,11 +5752,11 @@ msgstr "Șterge client"
 
 #: app/assets/javascripts/app/views/generic/attachment_item.jst.eco:5
 msgid "Delete File"
-msgstr "Șterge fișierul"
+msgstr "Șterge fișier"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:40
 msgid "Delete Knowledge Base"
-msgstr ""
+msgstr "Șterge baza de cunoștiințe"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:29
 #, fuzzy
@@ -5683,10 +5765,8 @@ msgid "Delete Object"
 msgstr "Creează un tichet de test"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:9
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Delete Ticket"
-msgstr "Creează un tichet de test"
+msgstr "Șterge tichetul"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:7
 msgid "Delete User"
@@ -5694,17 +5774,15 @@ msgstr "Șterge utilizator"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 msgid "Delete all child categories and answers, then try again."
-msgstr ""
+msgstr "Șterge toate categoriile și răspunsurile copil, apoi încearcă din nou."
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:19
 msgid "Delete all existing records first."
 msgstr "Ștergeți mai întâi toate înregistrările existente."
 
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:162
-#, fuzzy
-#| msgid "Delete User"
 msgid "Delete avatar"
-msgstr "Șterge utilizator"
+msgstr "Șterge avatar"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:150
 #, fuzzy
@@ -5719,38 +5797,36 @@ msgid "Delete existing data of your system."
 msgstr "Ștergeți mai întâi toate înregistrările existente."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:102
-#, fuzzy
-#| msgid "Delete File"
 msgid "Delete immediately"
-msgstr "Șterge fișierul"
+msgstr "Șterge imediat"
 
 #: db/seeds/schedulers.rb:196
 msgid "Delete obsolete classic IMAP backup."
-msgstr ""
+msgstr "Șterge backup-ul clasic IMAP învechit."
 
 #: db/seeds/schedulers.rb:79
 msgid "Delete old 'RecentView' entries."
-msgstr ""
+msgstr "Șterge înregistrările vechi pentru 'RecentView'."
 
 #: db/seeds/schedulers.rb:70
 msgid "Delete old activity stream entries."
-msgstr ""
+msgstr "Șterge înregistrările vechi pentru jurnalul de activitate."
 
 #: db/seeds/schedulers.rb:88
 msgid "Delete old online notification entries."
-msgstr ""
+msgstr "Șterge înregistrările vechi pentru notificări online."
 
 #: db/seeds/schedulers.rb:160
 msgid "Delete old stats store entries."
-msgstr ""
+msgstr "Șterge înregistrările vechi pentru stocarea de statistici."
 
 #: db/seeds/schedulers.rb:97
 msgid "Delete old token entries."
-msgstr ""
+msgstr "Șterge înregistrările vechi pentru token-uri."
 
 #: db/seeds/schedulers.rb:224
 msgid "Delete old upload cache entries."
-msgstr ""
+msgstr "Șterge înregistrările vechi pentru cache-ul fișierelor încărcate."
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:186
 msgid "Delete organization?"
@@ -5791,42 +5867,37 @@ msgid "Delete this device"
 msgstr "Șterge utilizator"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:29
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete:"
-msgstr "Șterge"
+msgstr "Șterge:"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:20
-#, fuzzy
-#| msgid "Delete organization?"
 msgid "Deleted Organization:"
-msgstr "Ștergi organizația?"
+msgstr "Organizație ștearsă:"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:38
 msgid "Deleted tickets (%s in total):"
-msgstr ""
+msgstr "Tichete șterse (%s în total):"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:50
 msgid ""
 "Deleting your knowledge base requires an additional verification step. To "
 "proceed, enter its name below (\"%s\"). THIS ACTION CANNOT BE UNDONE."
 msgstr ""
+"Ștergerea bazei tale de cunoștințe necesită un pas suplimentar de "
+"verificare. Pentru a continua, introdu numele acesteia mai jos (\"%s\"). "
+"ACEASTĂ ACȚIUNE NU POATE FI ANULATĂ."
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:94
 msgid "Deletion Task"
-msgstr ""
+msgstr "Sarcină de ștergere"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:70
-#, fuzzy
-#| msgid "Delivery failed"
 msgid "Deletion failed."
-msgstr "Trimitere eșuată"
+msgstr "Ștergere eșuată."
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view_delivery_failed.jst.eco:4
-#, fuzzy
-#| msgid "Delivery failed"
 msgid "Delivery failed:"
-msgstr "Trimitere eșuată"
+msgstr "Trimitere eșuată:"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/DeliveryMessage.vue:13
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleDeliveryMessage.vue:33
@@ -5860,7 +5931,7 @@ msgstr "Descriere"
 
 #: app/assets/javascripts/app/models/public_link.coffee:8
 msgid "Description (shown as title tag for screen readers)"
-msgstr ""
+msgstr "Descriere (afișată ca etichetă de titlu pentru cititoarele de ecran)"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:17
 #: app/assets/javascripts/app/views/channel/form.jst.eco:25
@@ -5870,7 +5941,7 @@ msgstr "Designer"
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:25
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:43
 msgid "Desktop"
-msgstr ""
+msgstr "Desktop"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:262
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:339
@@ -5886,29 +5957,25 @@ msgstr "Grupul destinatar"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:58
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:74
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:61
-#, fuzzy
-#| msgid "Destination caller id"
 msgid "Destination caller ID"
-msgstr "Caller-ID destinație"
+msgstr "ID-ul apelantului destinatar"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:108
-#, fuzzy
-#| msgid "Destination caller id"
 msgid "Destination caller ID or queue"
-msgstr "Caller-ID destinație"
+msgstr "ID-ul apelantului destinatar sau coadă de așteptare"
 
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:7
 #: db/seeds/settings.rb:2568
 msgid "Detect Duplicate Ticket Creation"
-msgstr ""
+msgstr "Detectează duplicarea creării tichetelor"
 
 #: db/seeds/settings.rb:73
 msgid "Developer System"
-msgstr ""
+msgstr "Sistem dezvoltator"
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:127
 msgid "Device"
-msgstr ""
+msgstr "Dispozitiv"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:89
 #, fuzzy
@@ -5926,7 +5993,7 @@ msgstr "Dispozitive"
 
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue:185
 msgid "Dialog window with selections"
-msgstr ""
+msgstr "Fereastră dialog cu selecții"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:313
 msgid ""
@@ -5934,6 +6001,9 @@ msgid ""
 "community on our public platform %l? It sports a very convenient user "
 "interface based on Weblate, give it a try!"
 msgstr ""
+"Știai că traducerile sistemului pot fi contribute și împărtășite cu "
+"comunitatea pe platforma noastră publică %l? Aceasta are o interfață foarte "
+"convenabilă bazată pe Weblate, încearc-o!"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:36
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:165
@@ -5942,7 +6012,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco:12
 msgid "Did you know? You can help translating %s at:"
-msgstr ""
+msgstr "Știai? Poți ajuta la traducerea %s la:"
 
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
 msgid "Did you plan to include attachments with this message?"
@@ -5950,19 +6020,19 @@ msgstr ""
 
 #: db/seeds/settings.rb:2074
 msgid "Digit required"
-msgstr ""
+msgstr "Este necesară introducerea unei cifre"
 
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:61
 msgid "Direct Messages"
-msgstr "Mesaje Directe"
+msgstr "Mesaje directe"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco:30
 msgid "Direct Messages Group"
-msgstr ""
+msgstr "Grup mesaje directe"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:43
 msgid "Direct URL"
-msgstr "Direct URL"
+msgstr "URL direct"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:333
 #, fuzzy
@@ -6000,6 +6070,8 @@ msgid ""
 "Disabling the notifications from all groups will turn off the limit. "
 "Instead, to disable the notifications use the settings above."
 msgstr ""
+"Dezactivarea notificărilor din toate grupurile va dezactiva limita. În "
+"schimb, pentru a dezactiva notificările, folosește setările de mai sus."
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:279
 msgid "Discard"
@@ -6008,7 +6080,7 @@ msgstr "Renunță"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:417
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:421
 msgid "Discard Changes"
 msgstr "Renunță la modificări"
 
@@ -6019,10 +6091,8 @@ msgid "Discard Snapshot"
 msgstr "Renunță la modificări"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:88
-#, fuzzy
-#| msgid "Discard Changes"
 msgid "Discard article"
-msgstr "Renunță la modificări"
+msgstr "Renunță la articol"
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:81
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:66
@@ -6030,22 +6100,18 @@ msgstr "Renunță la modificări"
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:419
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:225
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:53
-#, fuzzy
-#| msgid "Discard Changes"
 msgid "Discard changes"
 msgstr "Renunță la modificări"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:162
-#, fuzzy
-#| msgid "Discard your unsaved changes."
 msgid "Discard your unsaved changes"
 msgstr "Renunță la modificările nesalvate"
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:25
 msgid "Discard your unsaved changes."
-msgstr "Renunță la modificările nesalvate"
+msgstr "Renunță la modificările nesalvate."
 
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:7
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:7
@@ -6053,7 +6119,7 @@ msgstr "Renunță la modificările nesalvate"
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:8
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:55
 msgid "Display"
-msgstr "Afișează"
+msgstr "Afișare"
 
 #: app/assets/javascripts/app/models/email_address.coffee:32
 #: db/seeds/settings.rb:1886
@@ -6062,55 +6128,42 @@ msgstr "Numele afișat"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:662
 msgid "Do not encrypt email"
-msgstr ""
+msgstr "Nu cripta email-ul"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:648
 msgid "Do not sign email"
-msgstr ""
+msgstr "Nu semna email-ul"
 
 #: db/seeds/settings.rb:5775
-#, fuzzy
-#| msgid "You have not created a ticket yet."
 msgid "Do not update any tickets."
-msgstr "Încă nu ați creat un tichet"
+msgstr "Nu actualiza nici un tichet."
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco:21
-#, fuzzy
-#| msgid "No proxy for the following hosts."
 msgid "Do not use the proxy for the following hosts."
-msgstr "Nu folosi proxy pentru următoarele host-uri."
+msgstr "Nu folosi proxy-ul pentru următoarele host-uri."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:24
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee:115
-#, fuzzy
-#| msgid "Sure to delete this object?"
 msgid "Do you really want to delete \"%s\"?"
-msgstr "Ești sigur că vrei să ștergi acest obiect?"
+msgstr "Ești sigur că vrei să ștergi \"%s\"?"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:127
-#, fuzzy
-#| msgid "Sure to delete this object?"
 msgid "Do you really want to delete this draft?"
-msgstr "Ești sigur că vrei să ștergi acest obiect?"
+msgstr "Ești sigur că vrei să ștergi această ciornă?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:10
 #: app/assets/javascripts/app/controllers/tag.coffee:139
-#, fuzzy
-#| msgid "Sure to delete this object?"
 msgid "Do you really want to delete this object?"
 msgstr "Ești sigur că vrei să ștergi acest obiect?"
 
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:160
-#, fuzzy
-#| msgid "Sure to delete this object?"
 msgid "Do you really want to delete your current avatar?"
-msgstr "Ești sigur că vrei să ștergi acest obiect?"
+msgstr "Ești sigur că vrei să îți ștergi avatarul curent?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee:3
-#, fuzzy
-#| msgid "Sure to delete this object?"
 msgid "Do you really want to set the visibility of this article to \"public\"?"
-msgstr "Ești sigur că vrei să ștergi acest obiect?"
+msgstr ""
+"Ești sigur că vrei să setezi vizibilitatea acestui articol la \"public\"?"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:56
 #, fuzzy
@@ -6128,7 +6181,7 @@ msgstr "Ești sigur că vrei să ștergi acest obiect?"
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:46
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:12
 msgid "Document file"
-msgstr ""
+msgstr "Fișier de tip document"
 
 #: db/seeds/object_manager_attributes.rb:1593
 msgid "Domain"
@@ -6136,14 +6189,12 @@ msgstr "Domeniu"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:122
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:14
-#, fuzzy
-#| msgid "Domain"
 msgid "Domain Alias"
-msgstr "Domeniu"
+msgstr "Alias domeniu"
 
 #: db/seeds/object_manager_attributes.rb:1593
 msgid "Domain based assignment"
-msgstr "Atribuire pe bază de nume de domeniu."
+msgstr "Atribuire pe bază de nume de domeniu"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:102
 msgid ""
@@ -6154,79 +6205,77 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:592
 msgid "Don't synchronize"
-msgstr ""
+msgstr "Nu sincroniza"
 
 #: app/frontend/apps/mobile/components/CommonDialog/CommonDialog.vue:146
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:284
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:177
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:132
 msgid "Done"
-msgstr "Gata"
+msgstr "Finalizat"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee:4
 #: app/assets/javascripts/app/views/system_report.jst.eco:20
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:89
 msgid "Download"
-msgstr ""
+msgstr "Descarcă"
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:69
 msgid "Download %s"
-msgstr ""
+msgstr "Descarcă %s"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:5
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:28
 msgid "Download %s Migration Plugin"
-msgstr "Descărcați pluginul de migrare %s"
+msgstr "Descarcă plugin-ul de migrare pentru %s"
 
 #: app/assets/javascripts/app/views/report/download_button.jst.eco:1
 msgid "Download %s record(s)"
-msgstr ""
+msgstr "Descarcă %s înregistrări"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:48
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:37
 msgid "Download Certificate"
-msgstr ""
+msgstr "Descarcă certificat"
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:59
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:39
 msgid "Download Private Key"
-msgstr ""
+msgstr "Descarcă cheie privată"
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:68
 msgid "Download Public Key"
-msgstr ""
+msgstr "Descarcă cheie publică"
 
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:16
 msgid "Download all records"
-msgstr ""
+msgstr "Descarcă toate înregistrările"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:8
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:104
 msgid "Download and install the %s Migration Plugin on your %s instance."
-msgstr "Descărcați și instalați pluginul de migrare %s pe instanța %s."
+msgstr "Descărcă și instalează plugin-ul de migrare pentru %s pe instanța %s."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:42
 msgid "Download original email"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:57
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
 msgid "Download raw email"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:319
-#, fuzzy
-#| msgid "select attachment…"
 msgid "Downloading attachments…"
-msgstr "selectează atașament…"
+msgstr "Descarc atașamentele…"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:101
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:9
 msgid "Draft"
-msgstr ""
+msgstr "Ciornă"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:9
 msgid "Draft available"
-msgstr ""
+msgstr "Ciornă disponibilă"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:51
 msgid "Drag and drop to reorder ticket overview list items."
@@ -6238,38 +6287,38 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:2
 msgid "Drag to reorder"
-msgstr ""
+msgstr "Trage pentru a rearanja"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:28
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:44
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:119
 #: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:352
 msgid "Drop files here"
-msgstr "Adaugă fișierele aici"
+msgstr "Trageți fișierele aici"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue:106
-#, fuzzy
-#| msgid "Drop files here"
 msgid "Drop image file here"
-msgstr "Adaugă fișierele aici"
+msgstr "Trageți fișierul de tip imagine aici"
 
 #: app/assets/javascripts/app/controllers/login.coffee:26
 msgid "Due to inactivity, you have been automatically logged out."
-msgstr ""
+msgstr "Din cauza inactivității, ai fost deconectat automat."
 
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee:99
 msgid ""
 "Due to inactivity, you will be automatically logged out within the next 30 "
 "seconds."
 msgstr ""
+"Din cauza inactivității, vei fi deconectat automat în următoarele 30 de "
+"secunde."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:13
 msgid "Duplicate Detection"
-msgstr ""
+msgstr "Detectare duplicate"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:34
 msgid "Duration"
-msgstr "Durata"
+msgstr "Durată"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts:25
 #, fuzzy
@@ -6295,7 +6344,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee:334
 msgid "Easter holiday"
-msgstr "Vacanta de Pasti"
+msgstr "Sărbătoarea Paștelui"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:59
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee:36
@@ -6319,7 +6368,7 @@ msgstr "Vacanta de Pasti"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:157
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:76
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:53
-#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:56
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:53
 msgid "Edit"
 msgstr "Editează"
 
@@ -6335,8 +6384,8 @@ msgstr "Categorie"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:16
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:34
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:39
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:90
 msgid "Edit Customer"
 msgstr "Editează clientul"
 
@@ -6348,7 +6397,7 @@ msgstr "%s Obiecte sunt create."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee:21
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee:11
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganizationContent.vue:39
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:36
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:80
 msgid "Edit Organization"
 msgstr "Editează organizația"
@@ -6374,14 +6423,12 @@ msgstr "Categorie"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:55
 msgid "Edit mask"
-msgstr ""
+msgstr "Editează masca"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:37
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:88
-#, fuzzy
-#| msgid "reply"
 msgid "Edit reply"
-msgstr "răspuns"
+msgstr "Editează răspuns"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts:22
 #, fuzzy
@@ -6389,23 +6436,19 @@ msgstr "răspuns"
 msgid "Edit security keys"
 msgstr "Securitate"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:89
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:87
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Edit ticket title"
 msgstr "Actualizare tichet"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:38
-#, fuzzy
-#| msgid "Edit"
 msgid "Editing"
-msgstr "Editează"
+msgstr "Editare"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:38
-#, fuzzy
-#| msgid "assign tickets"
 msgid "Editing on Desktop"
-msgstr "atribuie tichete"
+msgstr "Editare pe Desktop"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #, fuzzy
@@ -6415,55 +6458,55 @@ msgstr "Editează"
 
 #: db/seeds/settings.rb:3560
 msgid "Elasticsearch Attachment Extensions"
-msgstr ""
+msgstr "Extensii pentru atașamente Elasticsearch"
 
 #: db/seeds/settings.rb:3569
 msgid "Elasticsearch Attachment Size"
-msgstr ""
+msgstr "Mărime atașamente Elasticsearch"
 
 #: db/seeds/settings.rb:3542
 msgid "Elasticsearch Endpoint Index"
-msgstr ""
+msgstr "Index Endpoint Elasticsearch"
 
 #: db/seeds/settings.rb:3533
 msgid "Elasticsearch Endpoint Password"
-msgstr ""
+msgstr "Parolă Endpoint Elasticsearch"
 
 #: db/seeds/settings.rb:3515
 msgid "Elasticsearch Endpoint URL"
-msgstr ""
+msgstr "URL Endpoint Elasticsearch"
 
 #: db/seeds/settings.rb:3524
 msgid "Elasticsearch Endpoint User"
-msgstr ""
+msgstr "Utilizator Endpoint Elasticsearch"
 
 #: db/seeds/settings.rb:3596
-#, fuzzy
-#| msgid "Your Email Configuration"
 msgid "Elasticsearch Model Configuration"
-msgstr "Configurația ta de email"
+msgstr "Configurație model Elasticsearch"
 
 #: db/seeds/settings.rb:3587
 msgid "Elasticsearch Pipeline Name"
-msgstr ""
+msgstr "Numele pipeline-ului Elasticsearch"
 
 #: db/seeds/settings.rb:3551
 msgid "Elasticsearch SSL verification"
-msgstr ""
+msgstr "Verificare SSL Elasticsearch"
 
 #: db/seeds/settings.rb:3578
 msgid "Elasticsearch Total Payload Size"
-msgstr ""
+msgstr "Dimensiunea totală a payload-ului Elasticsearch"
 
 #: lib/search_index_backend.rb:406
 msgid ""
 "Elasticsearch is not reachable. It's possible that it's not running. Please "
 "check whether it is installed."
 msgstr ""
+"Elasticsearch nu este accesibil. Este posibil să nu fie în execuție. Te "
+"rugăm să verifici dacă este instalat."
 
 #: app/controllers/reports_controller.rb:9
 msgid "Elasticsearch needs to be configured!"
-msgstr ""
+msgstr "Elasticsearch trebuie să fie configurat!"
 
 #: app/models/system_report/plugin/search_index.rb:4
 #, fuzzy
@@ -6490,27 +6533,27 @@ msgstr "Ultima sincronizare"
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
 #: public/assets/form/form.js:32
 msgid "Email"
-msgstr "Adresă de email"
+msgstr "E-mail"
 
 #: app/models/report.rb:131
 msgid "Email (in)"
-msgstr ""
+msgstr "E-mail (primite)"
 
 #: app/models/report.rb:151
 msgid "Email (out)"
-msgstr ""
+msgstr "E-mail (trimise)"
 
 #: db/seeds/settings.rb:712
 msgid "Email - full quote"
-msgstr "Email  citarea completă"
+msgstr "E-mail - citare completă"
 
 #: db/seeds/settings.rb:739
 msgid "Email - quote header"
-msgstr ""
+msgstr "E-mail - antet citat"
 
 #: db/seeds/settings.rb:685
 msgid "Email - subject field"
-msgstr "Email câmpul subiectului"
+msgstr "E-mail - câmp subiect"
 
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:22
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:8
@@ -6518,11 +6561,11 @@ msgstr "Email câmpul subiectului"
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:72
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:129
 msgid "Email Account"
-msgstr "Cont de email"
+msgstr "Cont de e-mail"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:17
 msgid "Email Accounts"
-msgstr "Conturi email"
+msgstr "Conturi e-mail"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:201
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:241
@@ -6532,19 +6575,17 @@ msgstr "Conturi email"
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:82
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:33
 msgid "Email Address"
-msgstr "Adresă email"
+msgstr "Adresa de e-mail"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannels.vue:37
-#, fuzzy
-#| msgid "Channel"
 msgid "Email Channel"
-msgstr "Canal de discuție"
+msgstr "Canal de discuție pentru e-mailuri"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:83
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:67
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:68
 msgid "Email Inbound"
-msgstr "Email primit"
+msgstr "E-mail primit"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:162
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:8
@@ -6552,42 +6593,37 @@ msgstr "Email primit"
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:103
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:30
 msgid "Email Notification"
-msgstr "Notificare email"
+msgstr "Notificare e-mail"
 
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:17
 msgid "Email Notifications"
-msgstr ""
+msgstr "Notificări e-mail"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:148
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:117
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:70
 msgid "Email Outbound"
-msgstr "Email trimis"
+msgstr "E-mail trimis"
 
 #: app/frontend/apps/desktop/pages/authentication/routes.ts:113
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:116
-#, fuzzy
-#| msgid "Email Notification"
 msgid "Email Verification"
-msgstr "Notificare email"
+msgstr "Verificare e-mail"
 
 #: app/models/user.rb:609
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
+"Adresa de e-mail '%{email}' este deja folosită pentru un alt utilizator."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee:53
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:50
-#, fuzzy
-#| msgid "Unable to verify email. Please contact your administrator."
 msgid "Email could not be verified. Please contact your administrator."
 msgstr ""
-"Nu putem verifica adresa de email. Te rugăm contactează administratorul tău."
+"E-mailul nu a putut fi verificat. Te rugăm să contactezi administratorul tău."
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:88
-#, fuzzy
-#| msgid "Expert"
 msgid "Email import mode"
-msgstr "Expert"
+msgstr "Mod import e-mail"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:811
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:383
@@ -6596,21 +6632,25 @@ msgid ""
 "Email sending and receiving could not be verified. Please check your "
 "settings."
 msgstr ""
+"Trimiterea și primirea e-mailurilor nu au putut fi verificate. Te rugăm să "
+"verifici setările tale."
 
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:47
 msgid "Email sent to \"%s\". Please let the user verify their email account."
 msgstr ""
+"E-mail trimis la \"%s\". Te rugăm să ceri utilizatorului să-și verifice "
+"contul de e-mail."
 
 #: app/assets/javascripts/app/controllers/signup.coffee:118
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:91
 msgid "Email sent to \"%s\". Please verify your email account."
-msgstr ""
+msgstr "E-mail trimis la \"%s\". Te rugăm să îți verifici contul de e-mail."
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco:21
 #: app/assets/javascripts/app/views/knowledge_base/search_field_panel.jst.eco:5
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco:17
 msgid "Empty"
-msgstr "Gol"
+msgstr "Nici un rezultat"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:151
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:72
@@ -6626,7 +6666,7 @@ msgstr "Activează"
 
 #: db/seeds/settings.rb:3456
 msgid "Enable Chat"
-msgstr "Activează chat"
+msgstr "Activează chatul"
 
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:16
 #, fuzzy
@@ -7460,13 +7500,13 @@ msgstr "App Secret"
 msgid "Failed Tasks"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:161
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:146
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "Failed to add new checklist item."
 msgstr "Creează client nou"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:182
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:167
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "Failed to delete checklist item."
@@ -7482,7 +7522,7 @@ msgstr ""
 msgid "Failed to roll back the migration of the channel!"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:168
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:153
 msgid "Failed to save checklist order."
 msgstr ""
 
@@ -7501,7 +7541,7 @@ msgstr ""
 msgid "Failed to set up QR code. Please try again."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:175
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:160
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "Failed to update checklist item."
@@ -7854,7 +7894,7 @@ msgstr "Formatează ca |bold|"
 msgid "Format as ||italic||"
 msgstr "Formatează ca ||italic||"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:72
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:78
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:92
 msgid "Forward"
 msgstr ""
@@ -9116,7 +9156,7 @@ msgstr ""
 msgid "Incomplete Ticket Checklist"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistButton.vue:22
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklist.vue:26
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "Incomplete checklist items"
@@ -9764,7 +9804,7 @@ msgid "Last change %s %s by %s"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:11
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:166
 #, fuzzy
 #| msgid "has changed"
 msgid "Last changed"
@@ -10704,7 +10744,7 @@ msgstr "S-a actualizat cu succes!"
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco:20
 #: app/assets/javascripts/app/views/popover/organization.jst.eco:6
 #: app/assets/javascripts/app/views/widget/organization.jst.eco:29
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganizationContent.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:75
 #: app/frontend/apps/mobile/components/Organization/OrganizationMembersList.vue:29
 msgid "Members"
 msgstr "Membrii"
@@ -11155,8 +11195,8 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:31
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:103
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:142
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:181
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:142
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:169
 #: db/seeds/object_manager_attributes.rb:1507 public/assets/form/form.js:24
 msgid "Name"
 msgstr "Nume"
@@ -11372,7 +11412,7 @@ msgstr "Templates"
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:38
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:15
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:106
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:109
 msgid "New Ticket"
 msgstr "Tichet nou"
 
@@ -11600,7 +11640,7 @@ msgstr ""
 msgid "No answers"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:50
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:51
 #, fuzzy
 #| msgid "Attached Files"
 msgid "No attached files"
@@ -11621,7 +11661,7 @@ msgid "No certificate found."
 msgstr "Sunet de notificare"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:431
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:416
 #, fuzzy
 #| msgid "You have not created a ticket yet."
 msgid "No checklist added to this ticket yet."
@@ -11685,7 +11725,7 @@ msgid "No file formats allowed."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:647
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:802
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:803
 #, fuzzy
 #| msgid "Not configured"
 msgid "No filter was configured."
@@ -11769,7 +11809,7 @@ msgstr ""
 msgid "No settings with area 'Dashboard::Stats' defined"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:236
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:224
 #, fuzzy
 #| msgid "Shared"
 msgid "No shared drafts yet"
@@ -12358,7 +12398,7 @@ msgid "Open ticket indicator"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:38
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerButton.vue:48
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomer.vue:56
 #, fuzzy
 #| msgid "Open Tickets"
 msgid "Open tickets"
@@ -12464,8 +12504,7 @@ msgstr "Overviews"
 #: app/assets/javascripts/app/views/time_accounting/by_organization.jst.eco:9
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:12
 #: app/controllers/time_accountings_controller.rb:99
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganizationContent.vue:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:10
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/organization.ts:13
 #: app/frontend/apps/mobile/pages/organization/routes.ts:8
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/organization.ts:6
@@ -12502,7 +12541,7 @@ msgstr "Suportul organizației"
 msgid "Organization could not be updated."
 msgstr "%s Obiecte sunt actualizate."
 
-#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:81
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:78
 #, fuzzy
 #| msgid "My Organization Tickets"
 msgid "Organization tickets"
@@ -12547,7 +12586,7 @@ msgid "Origin By"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:92
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:39
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:45
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:55
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
@@ -12661,7 +12700,7 @@ msgstr ""
 msgid "Overviews"
 msgstr "Prezentare generală"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:108
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:108
 msgid "Overwrite Content"
 msgstr ""
 
@@ -13282,8 +13321,8 @@ msgstr "Previzualizează"
 msgid "Preview Calendar"
 msgstr "Calendar nou"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:131
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:205
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:131
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:193
 #, fuzzy
 #| msgid "Shared"
 msgid "Preview Shared Draft"
@@ -13719,7 +13758,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:61
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:132
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:177
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:78
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:84
 #: app/frontend/shared/form/i18n/locales.ts:29
 msgid "Remove"
 msgstr "Șterge"
@@ -13771,7 +13810,7 @@ msgid "Remove authenticator app"
 msgstr "Autentificare"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:25
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:377
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:362
 #, fuzzy
 #| msgid "Remove"
 msgid "Remove checklist"
@@ -13831,7 +13870,7 @@ msgid "Removes the shadows for a flat look."
 msgstr "Îndepărtează umbrele pentru un aspect plat."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:20
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:370
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:355
 msgid "Rename checklist"
 msgstr ""
 
@@ -13873,7 +13912,7 @@ msgstr "înlocuire"
 msgid "Replacement agent"
 msgstr "înlocuire"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:89
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:84
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
@@ -14658,9 +14697,9 @@ msgstr "Sunet de notificare"
 msgid "Search…"
 msgstr "Caută"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:78
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:103
-#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:136
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:82
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:98
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
 #: db/seeds/object_manager_attributes.rb:962
 #, fuzzy
 #| msgid "specific organization"
@@ -14683,7 +14722,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:22
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:175
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:178
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:183
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
@@ -15133,13 +15172,13 @@ msgid ""
 "limits"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:88
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:94
 #, fuzzy
 #| msgid "set to internal"
 msgid "Set to external"
 msgstr "setează pentru intern"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:99
 #: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts:33
 #, fuzzy
 #| msgid "set to internal"
@@ -15242,8 +15281,7 @@ msgstr "Distribuit"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee:12
 #: app/assets/javascripts/app/models/group.coffee:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:175
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/shared-draft-start.ts:13
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/shared-draft-start.ts:10
 #: db/seeds/object_manager_attributes.rb:2093
 #, fuzzy
 #| msgid "Shared"
@@ -15255,19 +15293,19 @@ msgstr "Distribuit"
 msgid "Shared draft cannot be selected for this ticket."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:131
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:119
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Shared draft has been created successfully."
 msgstr "Testul a avut succes."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:93
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "Shared draft has been deleted."
 msgstr "%s Obiecte sunt actualizate."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:156
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:144
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Shared draft has been updated successfully."
@@ -15734,7 +15772,7 @@ msgstr "Sursă"
 msgid "Special character required"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:98
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:104
 #: app/frontend/shared/entities/ticket-article/action/plugins/split.ts:12
 #, fuzzy
 #| msgid "split"
@@ -16294,7 +16332,7 @@ msgstr "Testez"
 #: app/assets/javascripts/app/models/signature.coffee:8
 #: app/assets/javascripts/app/models/ticket_article.coffee:11
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:20
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:178
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:178
 #: db/seeds/object_manager_attributes.rb:536
 msgid "Text"
 msgstr "Text"
@@ -17789,7 +17827,7 @@ msgstr "Tichete"
 msgid "The year picker overlay"
 msgstr "Deschideți nota"
 
-#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:76
+#: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:73
 #, fuzzy
 #| msgid "Tickets"
 msgid "Their tickets"
@@ -17847,7 +17885,7 @@ msgid "There is an existing draft. Do you want to overwrite it?"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:57
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftFlyout.vue:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:105
 msgid "There is existing content. Do you want to overwrite it?"
 msgstr ""
 
@@ -18276,7 +18314,7 @@ msgid ""
 "It was blocked, but you can download the original formatting here."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:28
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:34
 msgid ""
 "This message contains images or other content hosted by an external source. "
 "It was blocked, but you can download the original formatting."
@@ -18799,6 +18837,7 @@ msgid ""
 "</div>\n"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:39
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
 #: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:22
 msgid ""
@@ -18845,7 +18884,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:89
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:93
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts:9
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:51
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue:173
@@ -19702,7 +19741,7 @@ msgstr ""
 msgid "Update In Min"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStartContent.vue:223
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:211
 #, fuzzy
 #| msgid "Shared"
 msgid "Update Shared Draft"
@@ -20960,6 +20999,7 @@ msgstr ""
 msgid "You have insufficient rights to view this organization."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:41
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
 #: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:24
 msgid "You have insufficient rights to view this ticket."
@@ -21513,7 +21553,7 @@ msgstr "Închide"
 msgid "closed"
 msgstr "Închis"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:109
 #, fuzzy
 #| msgid "Closed Tickets"
 msgid "closed tickets"
@@ -22398,7 +22438,7 @@ msgstr ""
 msgid "open"
 msgstr "deschis"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomerContent.vue:98
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:102
 #, fuzzy
 #| msgid "Open Tickets"
 msgid "open tickets"
