@@ -3138,7 +3138,7 @@ msgstr "Temizle"
 msgid "Clear Search"
 msgstr "Aramayı Temizle"
 
-#: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
+#: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:56
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:290
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:348
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:153
@@ -10430,7 +10430,7 @@ msgid "No file formats allowed."
 msgstr "True"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:647
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:802
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:803
 #, fuzzy
 #| msgid "Not configured"
 msgid "No filter was configured."

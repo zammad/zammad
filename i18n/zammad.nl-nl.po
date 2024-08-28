@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-26 05:31+0000\n"
+"PO-Revision-Date: 2024-08-28 04:28+0000\n"
 "Last-Translator: JPB <JPB@users.noreply.translations.zammad.org>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/nl/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.7\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1350,7 +1350,7 @@ msgstr "Derde niveau koptekst toevoegen"
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:85
 msgid "Add this class to a button on your page that should open the chat."
 msgstr ""
-"Deze html-class toevoegen aan een knop op jouw pagina die de chat zou moeten "
+"Voeg deze html-class toe aan een knop op jouw pagina die de chat zou moeten "
 "openen."
 
 #: app/controllers/first_steps_controller.rb:109
@@ -1363,15 +1363,15 @@ msgstr "Additionele opvolgingsdetectie"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:209
 msgid "Additional information"
-msgstr "Extra informatie"
+msgstr "Aanvullende informatie"
 
 #: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:56
 msgid "Additional information and links"
-msgstr "Extra informatie en links toevoegen"
+msgstr "Aanvullende informatie en links"
 
 #: db/seeds/settings.rb:848
 msgid "Additional notes for ticket create types."
-msgstr "Stel aanvullende notities in voor het maken van tickets."
+msgstr "Aanvullende notities voor ticket creatie types."
 
 #: db/seeds/object_manager_attributes.rb:1208
 msgid "Address"
@@ -1384,7 +1384,7 @@ msgstr "Adres van de proxy voor http en https bronnen."
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
 msgid "Admin"
-msgstr "Beheer"
+msgstr "Beheerder"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:448
 msgid "Admin Consent"
@@ -1392,7 +1392,7 @@ msgstr "Beheerder Toestemming"
 
 #: db/seeds/permissions.rb:5
 msgid "Admin Interface"
-msgstr "Interface Beheer"
+msgstr "Beheerinterface"
 
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee:23
 #: app/frontend/apps/desktop/pages/authentication/routes.ts:26
@@ -1492,11 +1492,11 @@ msgstr "Behandelaar"
 
 #: db/seeds/settings.rb:3103
 msgid "Agent Name"
-msgstr "Naam behandelaar"
+msgstr "Naam Behandelaar"
 
 #: db/seeds/settings.rb:3103
 msgid "Agent Name + FromSeparator + System Address Display Name"
-msgstr "Naam behandelaar + VanScheiding + Systeemadres naamweergave"
+msgstr "Naam Behandelaar + VanScheiding + Systeemadres naamweergave"
 
 #: db/seeds/settings.rb:3456
 msgid "Agent idle timeout"
@@ -1504,7 +1504,7 @@ msgstr "Behandelaar idle time-out"
 
 #: app/models/role.rb:153 app/models/user.rb:837
 msgid "Agent limit exceeded, please check your account settings."
-msgstr "Maximum behandelaren overschreden, controleer je accountinstellingen."
+msgstr "Maximum Behandelaren overschreden, controleer je accountinstellingen."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:109
 msgid "Agents"
@@ -1600,11 +1600,11 @@ msgstr "Laat meerdere gebruikers één e-mailadres gebruiken."
 
 #: app/assets/javascripts/app/models/chat.coffee:255
 msgid "Allow websites (separated by ;)"
-msgstr "Toegestane website (gescheiden door ;)"
+msgstr "Toegestane websites (gescheiden door ;)"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco:9
 msgid "Also notify via email"
-msgstr "Verstuur ook via e -mail"
+msgstr "Verstuur ook via e-mail"
 
 #: db/seeds/settings.rb:5052
 msgid ""
@@ -1644,7 +1644,7 @@ msgstr "Er is een fout opgetreden"
 
 #: app/frontend/shared/server/apollo/handler/BaseHandler.ts:145
 msgid "An error occured during the operation."
-msgstr "Er is een fout opgetreden."
+msgstr "Er is een fout opgetreden tijdens de bewerking."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:997
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:5
@@ -1704,13 +1704,13 @@ msgstr ""
 "<div>Hallo #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"Een ander ticket is samengevoegd tot ticket (#{ticket.title}) door "
-"\"<b>#{current_user.longname}</b>\".\n"
+"Een ander ticket is samengevoegd tot ticket (#{ticket.title}) door \""
+"<b>#{current_user.longname}</b>\".\n"
 "</div>\n"
 "<br>\n"
 "<div>\n"
-"   <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}\" target=\"zammad_app\">Bekijk dit in #{config.product_name}</a>\n"
+"   <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\""
+" target=\"zammad_app\">Bekijk dit in #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/models/ticket.coffee:121
@@ -1736,7 +1736,7 @@ msgstr "Anticon"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:22
 msgid "Any recipient"
-msgstr "Elke ontvanger"
+msgstr "Iedere ontvanger"
 
 #: db/seeds/settings.rb:1400
 msgid "App ID"
@@ -1760,7 +1760,7 @@ msgstr "App Versie"
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee:193
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:721
 msgid "App could not be verified."
-msgstr "Account is niet geverifieerd."
+msgstr "App is niet geverifieerd."
 
 #: db/seeds/settings.rb:1396
 msgid "App credentials for Facebook."
@@ -1799,11 +1799,11 @@ msgstr "Toepassen"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:56
 msgid "Apply Draft"
-msgstr "Concept accepteren"
+msgstr "Concept toepassen"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:2
 msgid "Apply Shared Draft"
-msgstr "Gedeeld concept accepteren"
+msgstr "Gedeeld concept toepassen"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:10
 msgid "Apply current defaults to all agents"
@@ -2005,7 +2005,7 @@ msgstr "Time-out toewijzing"
 #: app/assets/javascripts/app/models/_application_model.coffee:164
 #: app/assets/javascripts/app/models/group.coffee:8
 msgid "Assignment timeout"
-msgstr "Toewijzings time-out"
+msgstr "Time-out toewijzing"
 
 #: app/assets/javascripts/app/models/group.coffee:8
 #: db/seeds/object_manager_attributes.rb:1895
@@ -2013,8 +2013,8 @@ msgid ""
 "Assignment timeout in minutes if assigned agent is not working on it. Ticket "
 "will be shown as unassigend."
 msgstr ""
-"Toewijzing time-out in minuten toewijzen als toegewezen behandelaar er niet "
-"aan werkt. Ticket wordt getoond als niet toegewezen."
+"Toewijzing time-out in minuten wanneer toegewezen behandelaar er niet aan "
+"werkt. Ticket wordt getoond als niet toegewezen."
 
 #: app/models/user.rb:715
 msgid ""
@@ -2026,7 +2026,7 @@ msgstr ""
 
 #: app/models/postmaster_filter.rb:29
 msgid "At least one match rule is required, but none was provided."
-msgstr "Minimaal één regel is verplicht, maar er is er geen één aangeboden."
+msgstr "Minimaal één regel is verplicht, maar er is er geen aangeboden."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:155
 msgid "At least one object must be selected."
@@ -2103,7 +2103,8 @@ msgstr ""
 msgid ""
 "Attention: These will also be your login and password after the import is "
 "completed."
-msgstr "Belangrijk! Dit is je login en wachtwoord nadat de import compleet is."
+msgstr ""
+"Belangrijk! Dit is ook je login en wachtwoord nadat de import compleet is."
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:39
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:36
@@ -3119,7 +3120,7 @@ msgstr "Wissen"
 msgid "Clear Search"
 msgstr "Wis zoeken"
 
-#: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
+#: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:56
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:290
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:348
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:153
@@ -9971,7 +9972,7 @@ msgid "No file formats allowed."
 msgstr "Geen bestandsformaten toegestaan."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:647
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:802
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:803
 msgid "No filter was configured."
 msgstr "Er is geen filter ingesteld."
 

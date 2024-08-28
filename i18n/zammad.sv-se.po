@@ -3099,7 +3099,7 @@ msgstr "Rensa"
 msgid "Clear Search"
 msgstr "Rensa sökningar"
 
-#: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
+#: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:56
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:290
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:348
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:153
@@ -9740,8 +9740,8 @@ msgstr ""
 "\n"
 "<div>Hej #{recipient.firstname},</div>\n"
 "<br>\n"
-"<div>Ärende (#{ticket.title}) har skapats av \"<b>#{current_user."
-"longname}</b>\".</div>\n"
+"<div>Ärende (#{ticket.title}) har skapats av \"<b>#{current_user.longname}</"
+"b>\".</div>\n"
 "<br>\n"
 "<div>\n"
 "Grupp: #{ticket.group.name}<br>\n"
@@ -9912,7 +9912,7 @@ msgid "No file formats allowed."
 msgstr "Inga filformat tillåtna."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:647
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:802
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:803
 msgid "No filter was configured."
 msgstr "Filter är inte konfigurerat."
 
@@ -9950,7 +9950,8 @@ msgstr "Inga uppgifter har hittats!"
 
 #: lib/whatsapp/webhook/message/status.rb:15
 msgid "No related article found to process the status message on."
-msgstr "Ingen relaterad artikel hittades för att bearbeta statusmeddelandet på."
+msgstr ""
+"Ingen relaterad artikel hittades för att bearbeta statusmeddelandet på."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:363

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-27 05:49+0000\n"
+"PO-Revision-Date: 2024-08-27 10:53+0000\n"
 "Last-Translator: Sajjad Jazini <s.jazini@vatanmail.ir>\n"
 "Language-Team: Persian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fa/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.7\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -2832,7 +2832,7 @@ msgstr "پاک کردن"
 msgid "Clear Search"
 msgstr "پاک کردن جست‌وجو"
 
-#: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:55
+#: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:56
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:290
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:348
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:153
@@ -9214,7 +9214,7 @@ msgid "No file formats allowed."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:647
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:802
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:803
 msgid "No filter was configured."
 msgstr "هیچ صافی‌ای تنظیم نشده است."
 
@@ -17290,13 +17290,11 @@ msgstr "شامل یکی نباشد"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:8
 msgid "created"
-msgstr "ایجاد شده"
+msgstr "ایجاد شد"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue:72
-#, fuzzy
-#| msgid "created"
 msgid "created %s"
-msgstr "ایجاد شده"
+msgstr "%s ایجاد شد"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:375
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:537
@@ -18428,7 +18426,7 @@ msgstr "دست نخورده"
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:4
 msgid "updated"
-msgstr "بروز شده"
+msgstr "به‌روز شد"
 
 #: db/seeds/ticket_article_types.rb:13
 msgid "web"
