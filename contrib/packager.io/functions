@@ -131,8 +131,10 @@ function create_database_password () {
 function create_postgresql_db () {
   if [ -n "$(which postgresql-setup 2> /dev/null)" ]; then
     echo "# Preparing postgresql server"
-    postgresql-setup initdb
+    postgresql-setup --initdb
   fi
+
+  ${INIT_CMD} daemon-reload
 
   echo "# Creating postgresql bootstart"
   ${INIT_CMD} enable postgresql.service
