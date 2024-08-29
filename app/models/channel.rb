@@ -281,7 +281,7 @@ send via account
       logger.error error
 
       self.status_out = 'error'
-      self.last_log_out = error
+      self.last_log_out = error.inspect
     end
 
     save!
