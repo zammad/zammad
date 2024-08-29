@@ -132,6 +132,12 @@ function create_postgresql_db () {
   if [ -n "$(which postgresql-setup 2> /dev/null)" ]; then
     echo "# Preparing postgresql server"
     postgresql-setup --initdb
+
+    # Mimik pgsql-Installation.
+    # Upcoming start of postgresql server would fail without it ...
+    mkdir -p /var/run/postgresql/
+    chown postgres:postgres /var/run/postgresql/
+    chmod -R 755 /var/run/postgresql/
   fi
 
   ${INIT_CMD} daemon-reload
