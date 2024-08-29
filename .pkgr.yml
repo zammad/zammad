@@ -108,6 +108,10 @@ targets:
       - libImlib2-1
       - imlib2
       - shared-mime-info
+      # We need the fuser binary from the psmisc package to detect the running redis systemd service.
+      # Because on SUSE systems, this service is arbitrarily named (e.g.) redis@foobar.service
+      # So we cannot hardcode the service name as we do for other supported distros.
+      - psmisc
     build_dependencies:
       # Add packages required for build that are not in the official SLES repo.
       # Direct URLs must be used since we cannot add repos on packager.io

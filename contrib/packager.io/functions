@@ -229,9 +229,29 @@ function create_webserver_config () {
 }
 
 function enforce_redis () {
+  REDIS_URL=$(zammad config:get REDIS_URL)
   if [ -n "${REDIS_URL}" ]; then
-    echo "# Redis URL ${REDIS_URL} found."
-    return 0
+    echo "# REDIS_URL variable set to ${REDIS_URL}."
+    if ! echo ${REDIS_URL} | grep -E 'redis://([a-zA-Z0-9.-]+|[0-9]{1,3}(\.[0-9]{1,3}){3}):[0-9]+/?' > /dev/null; then
+	    echo "ERROR - Malformed REDIS_URL."
+	    echo -e "REDIS_URL must follow one of these formats:\nredis://<fqdn>:<port_number>\nredis://<ip_address>:<port_number>"
+	    exit 1
+    else
+      echo "# Performing connection check."
+      REDIS_URL_HOST=$(echo ${REDIS_URL} | cut -d'/' -f3 | cut -d':' -f1)
+      REDIS_URL_PORT=$(echo ${REDIS_URL} | cut -d'/' -f3 | cut -d':' -f2)
+      if echo 2> /dev/null > /dev/tcp/$REDIS_URL_HOST/$REDIS_URL_PORT; then
+        echo "# Connection check successful."
+        return 0
+      else
+        echo "# Connection check unsuccessful."
+        echo "ERROR - No redis server found at ${REDIS_URL}."
+        echo "Please install Redis following the instructions at https://redis.io/docs/getting-started/ or set the REDIS_URL environment variable with the following command."
+        echo -e "zammad config:set REDIS_URL=redis://your.redis.server:6379\n"
+        echo "Please fix these issues, then run the package installation again."
+        exit 1
+      fi
+    fi
   fi
 
   echo "# Enforcing Redis..."
@@ -239,6 +259,20 @@ function enforce_redis () {
   local REDIS_SERVICE_NAME=""
   if [ "${OS}" == "DEBIAN" ]; then
       REDIS_SERVICE_NAME="redis-server"
+  elif [ "${OS}" == "SUSE" ]; then
+      REDIS_PID=$(fuser 6379/tcp 2> /dev/null)
+      if [ -z "${REDIS_PID}" ]; then
+        echo -e "ERROR - SUSE Linux detected but no running redis-instance listening on port 6379 or REDIS_URL set.\n"
+        echo "SUSE Linux uses a systemd template for its redis package."
+        echo "If redis was installed via zypper, please make sure an instance of its template-service is running (e.g. redis@zammad.service) and it is listening on port 6379."
+        echo "Alternatively, you can set the REDIS_URL environment variable with the following command."
+        echo -e "zammad config:set REDIS_URL=redis://your.redis.server:6379\n"
+        echo "Please fix these issues, then run the package installation again."
+        exit 1
+      else
+        REDIS_SERVICE_NAME=$(ps -p $REDIS_PID -o unit=)
+        echo "# Redis service ${REDIS_SERVICE_NAME} detected."
+      fi
   else
       REDIS_SERVICE_NAME="redis"
   fi
@@ -248,20 +282,15 @@ function enforce_redis () {
     ${INIT_CMD} enable ${REDIS_SERVICE_NAME}
 
     echo "# Starting Redis server"
-    ${INIT_CMD} restart ${REDIS_SERVICE_NAME}
-    if [ $? -eq 0 ]; then
+    if ${INIT_CMD} restart ${REDIS_SERVICE_NAME}; then
       echo "# Redis server is running."
       return 0
+    else
+      echo -e "\nSomething went wrong. Please check any error output above and fix the issues."
+      echo "Then run the package installation again."
+      exit 1
     fi
   fi
-
-  echo "It seems no redis server runs locally."
-  echo "Please install Redis following the instructions at https://redis.io/docs/getting-started/ or set the REDIS_URL environment variable."
-  echo "e.g. export REDIS_URL=redis://your.redis.server:6379"
-  echo
-  echo "Please try again the Zammad package installation."
-
-  return 1
 }
 
 function setup_elasticsearch () {
