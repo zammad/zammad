@@ -170,12 +170,6 @@ function create_mysql_db () {
 }
 
 function update_database_yml () {
-  if [ "${OS}" == "REDHAT" ] || [ "${OS}" == "SUSE" ]; then
-    if [ "${ADAPTER}" == "postgresql" ]; then
-      DB_PASS=""
-    fi
-  fi
-
   echo "# Updating database.yml"
   sed -e "s/.*adapter:.*/  adapter: ${ADAPTER}/" \
     -e "s/.*username:.*/  username: ${DB_USER}/" \
