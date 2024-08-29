@@ -15,7 +15,7 @@ module Channel::Filter::BounceDeliveryPermanentFailed
       next if attachment[:preferences]['Mime-Type'] != 'message/rfc822'
       next if !attachment[:data]
 
-      result = Channel::EmailParser.new.parse(attachment[:data])
+      result = Channel::EmailParser.new.parse(attachment[:data], allow_missing_attribute_exceptions: false)
       next if !result[:message_id]
 
       message_id_md5 = Digest::MD5.hexdigest(result[:message_id])

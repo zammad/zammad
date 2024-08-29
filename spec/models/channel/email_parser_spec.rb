@@ -39,6 +39,22 @@ RSpec.describe Channel::EmailParser, type: :model do
       end
     end
 
+    describe 'when mail does not contain any sender specification with disabled missing attribute exceptions' do
+      subject(:instance) { described_class.new }
+
+      let(:raw_mail) { <<~RAW.chomp }
+        To: baz@qux.net
+        Subject: Foo
+
+        Lorem ipsum dolor
+      RAW
+
+      it 'prevents raising an error' do
+        expect { described_class.new.parse(raw_mail, allow_missing_attribute_exceptions: false) }
+          .not_to raise_error
+      end
+    end
+
     # To write new .yml files for emails you can use the following code:
     #
     # File.write('test/data/mail/mailXXX.yml', Channel::EmailParser.new.parse(File.read('test/data/mail/mailXXX.box')).slice(:from, :from_email, :from_display_name, :to, :cc, :subject, :body, :content_type, :'reply-to', :attachments).to_yaml)

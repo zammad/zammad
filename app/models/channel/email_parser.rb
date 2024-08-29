@@ -15,7 +15,7 @@ class Channel::EmailParser
 =begin
 
   parser = Channel::EmailParser.new
-  mail = parser.parse(msg_as_string)
+  mail = parser.parse(msg_as_string, allow_missing_attribute_exceptions: true | false)
 
   mail = {
     from:              'Some Name <some@example.com>',
@@ -74,7 +74,7 @@ class Channel::EmailParser
 
 =end
 
-  def parse(msg)
+  def parse(msg, allow_missing_attribute_exceptions: true)
     msg = msg.force_encoding('binary')
     # mail 2.6 and earlier accepted non-conforming mails that lacked the correct CRLF seperators,
     # mail 2.7 and above require CRLF so we force it on using binary_unsafe_to_crlf
@@ -89,7 +89,7 @@ class Channel::EmailParser
     body = message_body_hash(mail)
     sender_attributes = self.class.sender_attributes(headers)
 
-    if sender_attributes.blank?
+    if allow_missing_attribute_exceptions && sender_attributes.blank?
       msg = __('Could not parse any sender attribute from the email. Checked fields:')
       msg += ' '
       msg += SENDER_FIELDS.map { |f| f.split('-').map(&:capitalize).join('-') }.join(', ')
