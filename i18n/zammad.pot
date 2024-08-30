@@ -2639,7 +2639,7 @@ msgstr ""
 msgid "Checklist is already created for this ticket"
 msgstr ""
 
-#: app/models/checklist/item.rb:87
+#: app/models/checklist/item.rb:97
 msgid "Checklist items are limited to 100 items per checklist."
 msgstr ""
 
@@ -17708,6 +17708,10 @@ msgstr ""
 msgid "chat"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
+msgid "checked Checklist Item '%s'"
+msgstr ""
+
 #: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco:24
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:24
 msgid "children"
@@ -18028,7 +18032,7 @@ msgstr ""
 msgid "forward"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:138
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:143
 msgid "from"
 msgstr ""
 
@@ -18610,7 +18614,7 @@ msgstr ""
 msgid "recovery codes"
 msgstr ""
 
-#: app/models/checklist/item.rb:81
+#: app/models/checklist/item.rb:91
 msgid "reference must not be the checklist ticket."
 msgstr ""
 
@@ -18895,6 +18899,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:423
 msgid "unassign user"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
+msgid "unchecked Checklist Item '%s'"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168

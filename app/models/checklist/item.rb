@@ -20,9 +20,12 @@ class Checklist::Item < ApplicationModel
 
   after_create :update_checklist
   after_update :update_checklist
+  after_update :history_update_checked, if: -> { saved_change_to_checked? }
   after_destroy :update_checklist
 
   validates :text, presence: { allow_blank: true }
+
+  history_attributes_ignored :checked
 
   def history_log_attributes
     {
@@ -33,6 +36,13 @@ class Checklist::Item < ApplicationModel
 
   def history_create
     history_log('created', created_by_id, { value_to: text })
+  end
+
+  def history_update_checked
+    history_log('checklist_item_checked', updated_by_id, {
+                  value_from: text,
+                  value_to:   checked.to_s,
+                })
   end
 
   def history_destroy
