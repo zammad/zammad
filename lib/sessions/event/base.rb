@@ -121,7 +121,18 @@ class Sessions::Event::Base
   end
 
   def remote_ip
-    @headers&.fetch('X-Forwarded-For', nil).presence
+    # Basic implementation of the algorithm recommended by
+    #   https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/X-Forwarded-For#selecting_an_ip_address
+    #   because we cannot use Rails' request.remote_ip here (as it runs from websocket server without rack).
+    raw_header = @headers&.dig('X-Forwarded-For').presence
+
+    return if !raw_header
+
+    raw_header
+      .split(',')
+      .map(&:strip)
+      .difference(Rails.application.config.action_dispatch.trusted_proxies)
+      .last
   end
 
   def origin
