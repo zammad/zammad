@@ -58,7 +58,8 @@ RSpec.describe Ticket::Article::AddsMetadataGeneral do
       let(:customer) { create(:customer) }
 
       it '#from is set correctly to customer full name and email' do
-        expect(article.from).to eq("#{customer.fullname} <#{customer.email}>")
+        # Names with Umlauts trigger quoting of the name, accept both variants.
+        expect(article.from).to eq("#{customer.fullname} <#{customer.email}>").or(eq("\"#{customer.fullname}\" <#{customer.email}>"))
       end
     end
 
