@@ -13797,7 +13797,7 @@ msgstr ""
 msgid "The admin password auth email could not be sent."
 msgstr ""
 
-#: app/frontend/apps/desktop/stores/theme.ts:39
+#: app/frontend/apps/desktop/stores/theme.ts:42
 msgid "The appearance could not be updated."
 msgstr ""
 

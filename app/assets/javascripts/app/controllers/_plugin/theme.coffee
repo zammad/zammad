@@ -51,6 +51,7 @@ class App.Theme extends App.Controller
       App.Event.trigger('ui:theme:saved', data)
 
     document.documentElement.dataset.theme = @currentTheme(data.theme)
+    document.documentElement.style.colorScheme = @currentTheme(data.theme)
     App.Event.trigger('ui:theme:changed', data)
 
 App.Config.set('theme', App.Theme, 'Plugins')

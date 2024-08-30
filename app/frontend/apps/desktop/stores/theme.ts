@@ -25,7 +25,10 @@ const sanitizeTheme = (theme: string): AppThemeName => {
 }
 
 const saveDOMTheme = (theme: AppThemeName) => {
-  getRoot().dataset.theme = theme
+  const root = getRoot()
+
+  root.dataset.theme = theme
+  root.style.colorScheme = theme
 }
 
 export const useThemeStore = defineStore('theme', () => {
