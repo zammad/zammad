@@ -46,14 +46,14 @@ const colorCode = computed(() => {
     internal
   >
     <CommonTicketStateIndicatorIcon
-      class="shrink-0"
+      class="ms-0.5 mt-1 shrink-0"
       :class="classes?.indicator || ''"
       :color-code="colorCode"
       :label="currentState"
       :aria-labelledby="ticketId"
       icon-size="tiny"
     />
-    <CommonLabel :id="ticketId" class="self-center text-blue-800">
+    <CommonLabel :id="ticketId" class="mt-0.5 text-blue-800">
       {{ ticket?.title }}
     </CommonLabel>
   </CommonLink>

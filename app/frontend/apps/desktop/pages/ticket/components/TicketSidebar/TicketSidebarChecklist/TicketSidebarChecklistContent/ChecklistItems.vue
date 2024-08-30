@@ -134,7 +134,7 @@ defineExpose({
           >
             <CommonIcon
               tabindex="0"
-              class="mt-1 text-gray-100 outline-none focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-neutral-400"
+              class="me-0.5 ms-1 mt-1 text-gray-100 outline-none focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-neutral-400"
               size="xs"
               role="checkbox"
               aria-readonly="true"
@@ -155,9 +155,6 @@ defineExpose({
           <!-- No CommonLabel to preserve the link detection -->
           <ChecklistTicketItem
             v-else
-            :classes="{
-              indicator: 'my-1.5',
-            }"
             :unauthorized="!verifyAccess(item)"
             :ticket="item.ticket"
           />

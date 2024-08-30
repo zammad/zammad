@@ -99,6 +99,7 @@ defineExpose({
         size="xs"
       />
       <CommonIcon
+        v-if="!isTicketItem"
         tabindex="0"
         class="mt-1.5 shrink-0 text-gray-100 outline-none focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-neutral-400"
         size="xs"
@@ -116,7 +117,7 @@ defineExpose({
         type="checkbox"
         :classes="{
           outer: 'flex items-center shrink-0 self-start mt-0.5',
-          inner: 'rtl:ml-0 ltr:mr-0',
+          inner: 'rtl:!ml-0 ltr:!mr-0',
         }"
         :model-value="item.checked"
         :name="`checkbox-checklist-item-${getIdFromGraphQLId(item.id)}`"
@@ -128,7 +129,7 @@ defineExpose({
     <ChecklistTicketItem
       v-if="isTicketItem || noAccessToLinkedTicket"
       :classes="{
-        indicator: 'mt-1',
+        indicator: isReordering ? '-ms-0.5' : '',
       }"
       :unauthorized="noAccessToLinkedTicket"
       :ticket="item.ticket"
