@@ -60,8 +60,8 @@ importers:
         specifier: ^7.2.100
         version: 7.2.100
       '@sinonjs/fake-timers':
-        specifier: ^11.3.1
-        version: 11.3.1
+        specifier: ^13.0.1
+        version: 13.0.1
       '@tiptap/core':
         specifier: ^2.6.6
         version: 2.6.6(@tiptap/pm@2.6.6)
@@ -1844,8 +1844,8 @@ packages:
   '@sinonjs/commons@3.0.1':
     resolution: {integrity: sha512-K3mCHKQ9sVh8o1C9cxkwxaOmXoAMlDxC1mYyHrjqOWEcBjYr76t96zL2zlj5dUGZ3HSw240X1qgH3Mjf1yJWpQ==}
 
-  '@sinonjs/fake-timers@11.3.1':
-    resolution: {integrity: sha512-EVJO7nW5M/F5Tur0Rf2z/QoMo+1Ia963RiMtapiQrEWvY0iBUvADo8Beegwjpnle5BHkyHuoxSTW3jF43H1XRA==}
+  '@sinonjs/fake-timers@13.0.1':
+    resolution: {integrity: sha512-ZEbLYOvZQHccQJzbg2E5r+/Mdjb6BMdjToL4r8WwUw0VTjTnyY3gCnwLeiovcXI3/Uo25exmqmiwsjL/eE/rSg==}
 
   '@surma/rollup-plugin-off-main-thread@2.2.3':
     resolution: {integrity: sha512-lR8q/9W7hZpMWweNiAKU7NQerBnzQQLvi8qnTDU/fxItPhtZVMbPV3lbCwjhIlNBe9Bbr5V+KHshvWmVSG9cxQ==}
@@ -8208,7 +8208,7 @@ snapshots:
     dependencies:
       type-detect: 4.0.8
 
-  '@sinonjs/fake-timers@11.3.1':
+  '@sinonjs/fake-timers@13.0.1':
     dependencies:
       '@sinonjs/commons': 3.0.1
 
@@ -12345,7 +12345,7 @@ snapshots:
   stylelint-config-standard-scss@13.1.0(postcss@8.4.43)(stylelint@16.9.0(typescript@5.5.4)):
     dependencies:
       stylelint: 16.9.0(typescript@5.5.4)
-      stylelint-config-recommended-scss: 14.0.0(postcss@8.4.43)(stylelint@16.8.2(typescript@5.5.4))
+      stylelint-config-recommended-scss: 14.0.0(postcss@8.4.43)(stylelint@16.9.0(typescript@5.5.4))
       stylelint-config-standard: 36.0.1(stylelint@16.9.0(typescript@5.5.4))
     optionalDependencies:
       postcss: 8.4.43
