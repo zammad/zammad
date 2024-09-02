@@ -3229,7 +3229,7 @@ msgstr "Le voci del Template Checklist sono limitate a 100 voci per checklist."
 msgid "Checklist is already created for this ticket"
 msgstr "La Checklist è già stata creata per questo ticket"
 
-#: app/models/checklist/item.rb:87
+#: app/models/checklist/item.rb:97
 msgid "Checklist items are limited to 100 items per checklist."
 msgstr "Le voci della checklist sono limitate a 100 voci per checklist."
 
@@ -7558,7 +7558,7 @@ msgstr "Design piatto"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:291
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:86
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:59
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:177
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:176
 msgid "Folder"
 msgstr "Cartella"
 
@@ -8389,7 +8389,7 @@ msgstr "Home"
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:69
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:73
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:29
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:112
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:111
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:67
 msgid "Host"
 msgstr "Host"
@@ -9394,7 +9394,7 @@ msgstr "Kayako"
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:280
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:292
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:87
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:187
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:186
 msgid "Keep messages on server"
 msgstr "Tieni messaggi sul server"
 
@@ -11197,7 +11197,7 @@ msgstr "Nessun proxy"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:415
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:203
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:44
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:45
 msgid "No SSL"
 msgstr "SSL disabilitato"
 
@@ -12279,7 +12279,7 @@ msgstr "Gruppo padre"
 #: app/assets/javascripts/app/views/login.jst.eco:35
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:43
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:41
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:132
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:131
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:87
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:104
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:51
@@ -12678,7 +12678,7 @@ msgstr "Attendere prego…"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:417
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:85
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:72
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:164
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:163
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:97
 msgid "Port"
 msgstr "Porta"
@@ -13748,7 +13748,7 @@ msgstr "SMTP - configura il tuo server SMTP"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:415
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:207
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:48
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:49
 msgid "SSL"
 msgstr "SSL"
 
@@ -13767,7 +13767,7 @@ msgstr "Certificati SSL"
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco:24
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:31
 #: app/assets/javascripts/app/views/integration/ldap_ssl_verify_row.jst.eco:2
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:150
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:149
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:108
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:63
 msgid "SSL verification"
@@ -13777,7 +13777,7 @@ msgstr "Verifica SSL"
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:27
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:33
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:142
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:141
 msgid "SSL/STARTTLS"
 msgstr "SSL/STARTTLS"
 
@@ -13790,7 +13790,7 @@ msgstr "SSO"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:415
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:205
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:55
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:56
 msgid "STARTTLS"
 msgstr "STARTTLS"
 
@@ -18636,7 +18636,7 @@ msgstr "Ticket creato con successo."
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:11
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:11
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:57
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:105
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:104
 #: db/seeds/object_manager_attributes.rb:124
 msgid "Type"
 msgstr "Tipo"
@@ -19138,7 +19138,7 @@ msgstr "Utilizzato durante la visualizzazione di un Ticket"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:128
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:111
 #: app/assets/javascripts/app/views/session.jst.eco:8
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:122
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:121
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:77
 #: app/frontend/apps/mobile/pages/user/routes.ts:7
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:32
@@ -20612,6 +20612,12 @@ msgstr "non può essere una sottocategoria della categoria padre"
 msgid "chat"
 msgstr "chat"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
+#, fuzzy
+#| msgid "Checklist Item"
+msgid "checked Checklist Item '%s'"
+msgstr "Elemento Checklist"
+
 #: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco:24
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:24
 msgid "children"
@@ -20937,7 +20943,7 @@ msgstr "per la risposta di un agente"
 msgid "forward"
 msgstr "inoltra"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:138
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:143
 msgid "from"
 msgstr "da"
 
@@ -21531,7 +21537,7 @@ msgstr "unione ricevuta"
 msgid "recovery codes"
 msgstr "codici di recupero"
 
-#: app/models/checklist/item.rb:81
+#: app/models/checklist/item.rb:91
 #, fuzzy
 #| msgid "The article does not belong to the specified ticket."
 msgid "reference must not be the checklist ticket."
@@ -21822,6 +21828,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:423
 msgid "unassign user"
 msgstr "Utente non assegnato"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
+#, fuzzy
+#| msgid "Incomplete credentials"
+msgid "unchecked Checklist Item '%s'"
+msgstr "Credenziali incomplete"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "unset readonly"
