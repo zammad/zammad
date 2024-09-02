@@ -28,7 +28,7 @@ module Tasks
           puts "Installing #{filename} (without package migrations)..."
           ::Package.install(file: filename)
           puts 'done.'
-          puts "Please run package migrations now via 'zammad:package:migrate'."
+          puts "Please run package migrations now via 'zammad:package:post_install'."
         end
 
       end
