@@ -49,7 +49,7 @@ export const useEmailOutboundForm = () => {
           children: [
             {
               name: 'adapter',
-              label: __('Send Mails via'),
+              label: __('Send mails via'),
               type: 'select',
               outerClass: 'col-span-2',
               required: true,

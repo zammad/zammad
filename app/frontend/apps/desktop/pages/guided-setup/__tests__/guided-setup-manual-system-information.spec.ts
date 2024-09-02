@@ -56,9 +56,9 @@ describe('guided setup system information', () => {
         view.queryByRole('button', { name: 'Go Back' }),
       ).not.toBeInTheDocument()
 
-      const organizationField = view.getByLabelText('Organization Name')
+      const organizationField = view.getByLabelText('Organization name')
       const urlField = view.getByLabelText('System URL')
-      const logoField = view.getByLabelText('Organization Logo')
+      const logoField = view.getByLabelText('Organization logo')
 
       expect(organizationField).toBeInTheDocument()
       expect(urlField).toBeInTheDocument()

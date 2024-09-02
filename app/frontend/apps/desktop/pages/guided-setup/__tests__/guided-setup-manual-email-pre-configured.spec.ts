@@ -46,7 +46,7 @@ describe('guided setup manual email notification', () => {
       })
 
       expect(view.getByText('Email Account')).toBeInTheDocument()
-      expect(view.getByText('Email Address')).toBeInTheDocument()
+      expect(view.getByText('Email address')).toBeInTheDocument()
     })
   })
 

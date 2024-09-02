@@ -21,7 +21,7 @@ export const useEmailAccountForm = () => {
       children: [
         {
           name: 'realname',
-          label: __('Full Name'),
+          label: __('Full name'),
           type: 'text',
           props: {
             placeholder: __('Organization Support'),
@@ -30,7 +30,7 @@ export const useEmailAccountForm = () => {
         },
         {
           name: 'email',
-          label: __('Email Address'),
+          label: __('Email address'),
           type: 'email',
           props: {},
           validation: 'email',

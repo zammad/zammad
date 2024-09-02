@@ -146,12 +146,12 @@ describe('guided setup manual channel email', () => {
       const accountForm = view.getByTestId('channel-email-account')
 
       await view.events.type(
-        getByLabelText(accountForm, 'Full Name'),
+        getByLabelText(accountForm, 'Full name'),
         'Zammad Helpdesk',
       )
 
       await view.events.type(
-        getByLabelText(accountForm, 'Email Address'),
+        getByLabelText(accountForm, 'Email address'),
         'zammad@mail.test.dc.zammad.com',
       )
 
@@ -197,12 +197,12 @@ describe('guided setup manual channel email', () => {
       const accountForm = view.getByTestId('channel-email-account')
 
       await view.events.type(
-        getByLabelText(accountForm, 'Full Name'),
+        getByLabelText(accountForm, 'Full name'),
         'Zammad Helpdesk',
       )
 
       await view.events.type(
-        getByLabelText(accountForm, 'Email Address'),
+        getByLabelText(accountForm, 'Email address'),
         'zammad@mail.test.dc.zammad.com',
       )
 
@@ -242,12 +242,12 @@ describe('guided setup manual channel email', () => {
       const accountForm = view.getByTestId('channel-email-account')
 
       await view.events.type(
-        getByLabelText(accountForm, 'Full Name'),
+        getByLabelText(accountForm, 'Full name'),
         'Zammad Helpdesk',
       )
 
       await view.events.type(
-        getByLabelText(accountForm, 'Email Address'),
+        getByLabelText(accountForm, 'Email address'),
         'zammad@mail.test.dc.zammad.com',
       )
 
@@ -299,12 +299,12 @@ describe('guided setup manual channel email', () => {
       const accountForm = view.getByTestId('channel-email-account')
 
       await view.events.type(
-        getByLabelText(accountForm, 'Full Name'),
+        getByLabelText(accountForm, 'Full name'),
         'Zammad Helpdesk',
       )
 
       await view.events.type(
-        getByLabelText(accountForm, 'Email Address'),
+        getByLabelText(accountForm, 'Email address'),
         'zammad@mail.test.dc.zammad.com',
       )
 
@@ -360,12 +360,12 @@ describe('guided setup manual channel email', () => {
       const accountForm = view.getByTestId('channel-email-account')
 
       await view.events.type(
-        getByLabelText(accountForm, 'Full Name'),
+        getByLabelText(accountForm, 'Full name'),
         'Zammad Helpdesk',
       )
 
       await view.events.type(
-        getByLabelText(accountForm, 'Email Address'),
+        getByLabelText(accountForm, 'Email address'),
         'zammad@mail.test.dc.zammad.com',
       )
 
@@ -441,12 +441,12 @@ describe('guided setup manual channel email', () => {
       const accountForm = view.getByTestId('channel-email-account')
 
       await view.events.type(
-        getByLabelText(accountForm, 'Full Name'),
+        getByLabelText(accountForm, 'Full name'),
         'Zammad Helpdesk',
       )
 
       await view.events.type(
-        getByLabelText(accountForm, 'Email Address'),
+        getByLabelText(accountForm, 'Email address'),
         'zammad@mail.test.dc.zammad.com',
       )
 
@@ -509,12 +509,12 @@ describe('guided setup manual channel email', () => {
       const accountForm = view.getByTestId('channel-email-account')
 
       await view.events.type(
-        getByLabelText(accountForm, 'Full Name'),
+        getByLabelText(accountForm, 'Full name'),
         'Zammad Helpdesk',
       )
 
       await view.events.type(
-        getByLabelText(accountForm, 'Email Address'),
+        getByLabelText(accountForm, 'Email address'),
         'zammad@mail.test.dc.zammad.com',
       )
 
@@ -569,12 +569,12 @@ describe('guided setup manual channel email', () => {
       const accountForm = view.getByTestId('channel-email-account')
 
       await view.events.type(
-        getByLabelText(accountForm, 'Full Name'),
+        getByLabelText(accountForm, 'Full name'),
         'Zammad Helpdesk',
       )
 
       await view.events.type(
-        getByLabelText(accountForm, 'Email Address'),
+        getByLabelText(accountForm, 'Email address'),
         'zammad@mail.test.dc.zammad.com',
       )
 
@@ -693,12 +693,12 @@ describe('guided setup manual channel email', () => {
       const accountForm = view.getByTestId('channel-email-account')
 
       await view.events.type(
-        getByLabelText(accountForm, 'Full Name'),
+        getByLabelText(accountForm, 'Full name'),
         'Zammad Helpdesk',
       )
 
       await view.events.type(
-        getByLabelText(accountForm, 'Email Address'),
+        getByLabelText(accountForm, 'Email address'),
         'zammad@mail.test.dc.zammad.com',
       )
 
@@ -767,12 +767,12 @@ describe('guided setup manual channel email', () => {
       const accountForm = view.getByTestId('channel-email-account')
 
       await view.events.type(
-        getByLabelText(accountForm, 'Full Name'),
+        getByLabelText(accountForm, 'Full name'),
         'Zammad Helpdesk',
       )
 
       await view.events.type(
-        getByLabelText(accountForm, 'Email Address'),
+        getByLabelText(accountForm, 'Email address'),
         'zammad@mail.test.dc.zammad.com',
       )
 

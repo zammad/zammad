@@ -5360,7 +5360,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:126
 #: app/assets/javascripts/app/views/google/list.jst.eco:81
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:82
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:33
 msgid "Email Address"
 msgstr ""
 
@@ -5395,6 +5394,10 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/routes.ts:113
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:116
 msgid "Email Verification"
+msgstr ""
+
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:33
+msgid "Email address"
 msgstr ""
 
 #: app/models/user.rb:609
@@ -6464,8 +6467,11 @@ msgid "Full"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:11
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:24
 msgid "Full Name"
+msgstr ""
+
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:24
+msgid "Full name"
 msgstr ""
 
 #: db/seeds/settings.rb:263
@@ -10338,12 +10344,7 @@ msgstr ""
 msgid "Organization & Department Name"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:47
-msgid "Organization Logo"
-msgstr ""
-
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:9
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:40
 msgid "Organization Name"
 msgstr ""
 
@@ -10355,6 +10356,14 @@ msgstr ""
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationEdit.ts:85
 msgid "Organization could not be updated."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:47
+msgid "Organization logo"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:40
+msgid "Organization name"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:78
@@ -12403,12 +12412,15 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:397
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:65
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:50
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:52
 msgid "Send Mails via"
 msgstr ""
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco:33
 msgid "Send a message to all logged in users."
+msgstr ""
+
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:52
+msgid "Send mails via"
 msgstr ""
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:40

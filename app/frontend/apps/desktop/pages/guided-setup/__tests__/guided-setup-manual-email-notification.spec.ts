@@ -99,7 +99,7 @@ describe('guided setup manual email notification', () => {
       await getNode('email-notification-setup')?.settled
 
       expect(view.getByText('Email Notification')).toBeInTheDocument()
-      expect(view.getByLabelText('Send Mails via')).toBeInTheDocument()
+      expect(view.getByLabelText('Send mails via')).toBeInTheDocument()
 
       const continueButton = view.getByRole('button', {
         name: 'Save and Continue',
@@ -125,7 +125,7 @@ describe('guided setup manual email notification', () => {
 
       expect(queryByRole(form, 'alert')).not.toBeInTheDocument()
 
-      const adapterField = view.getByLabelText('Send Mails via')
+      const adapterField = view.getByLabelText('Send mails via')
 
       await view.events.click(adapterField)
       await view.events.click(view.getAllByRole('option')[0])
@@ -162,7 +162,7 @@ describe('guided setup manual email notification', () => {
       await flushPromises()
       await getNode('email-notification-setup')?.settled
 
-      const adapterField = view.getByLabelText('Send Mails via')
+      const adapterField = view.getByLabelText('Send mails via')
 
       await view.events.click(adapterField)
       await view.events.click(view.getAllByRole('option')[0])
@@ -213,7 +213,7 @@ describe('guided setup manual email notification', () => {
       await flushPromises()
       await getNode('email-notification-setup')?.settled
 
-      const adapterField = view.getByLabelText('Send Mails via')
+      const adapterField = view.getByLabelText('Send mails via')
 
       await view.events.click(adapterField)
       await view.events.click(view.getAllByRole('option')[0])

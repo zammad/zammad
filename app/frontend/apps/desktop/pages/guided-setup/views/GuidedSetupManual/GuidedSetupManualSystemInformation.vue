@@ -37,14 +37,14 @@ const systemInformationSchema = [
     children: [
       {
         name: 'organization',
-        label: __('Organization Name'),
+        label: __('Organization name'),
         type: 'text',
         required: true,
         placeholder: __('Company Inc.'),
       },
       {
         name: 'logo',
-        label: __('Organization Logo'),
+        label: __('Organization logo'),
         type: 'imageUpload',
         props: {
           placeholderImagePath: logoUrl,
