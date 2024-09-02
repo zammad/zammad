@@ -2,6 +2,7 @@
 
 import { type ObjectDirective } from 'vue'
 
+import { useAppName } from '#shared/composables/useAppName.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
 interface Modifiers {
@@ -266,7 +267,9 @@ export default {
       if (!message) return
 
       element.setAttribute('aria-label', message)
-      // :TODO be careful to not override existing aria-label
+
+      // Mobile does not have tooltips, hence we don't apply the rest of the logic
+      if (useAppName() === 'mobile') return
 
       element.setAttribute('data-tooltip', 'true')
 

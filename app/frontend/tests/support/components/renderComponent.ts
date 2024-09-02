@@ -29,6 +29,7 @@ import { initializeTwoFactorPlugins } from '#shared/entities/two-factor/composab
 import { buildFormKitPluginConfig } from '#shared/form/index.ts'
 import { i18n } from '#shared/i18n.ts'
 import applicationConfigPlugin from '#shared/plugins/applicationConfigPlugin.ts'
+import tooltip from '#shared/plugins/directives/tooltip/index.ts'
 import { initializeWalker } from '#shared/router/walker.ts'
 import type { AppName } from '#shared/types/app.ts'
 import type { FormFieldTypeImportModules } from '#shared/types/form.ts'
@@ -36,7 +37,6 @@ import type { ImportGlobEagerOutput } from '#shared/types/utils.ts'
 
 import { twoFactorConfigurationPluginLookup } from '#desktop/entities/two-factor-configuration/plugins/index.ts'
 import desktopIconsAliases from '#desktop/initializer/desktopIconsAliasesMap.ts'
-import { directives } from '#desktop/initializer/initializeGlobalDirectives.ts'
 import mobileIconsAliases from '#mobile/initializer/mobileIconsAliasesMap.ts'
 
 import { setTestState, waitForNextTick } from '../utils.ts'
@@ -156,8 +156,8 @@ const defaultWrapperOptions: ExtendedMountingOptions<unknown> = {
       CommonLabel,
       CommonBadge,
     },
-    directives,
     stubs: {},
+    directives: { [tooltip.name]: tooltip.directive },
     plugins,
   },
 }

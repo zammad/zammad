@@ -138,10 +138,6 @@ describe('TooltipDirective', () => {
       await wrapper.events.hover(
         wrapper.getByText('This is a very long text that will be truncated'),
       )
-
-      // await waitFor(() => {
-      //   expect(wrapper.queryByText('Foo Test world')).toBeInTheDocument()
-      // })
     })
   })
 })
