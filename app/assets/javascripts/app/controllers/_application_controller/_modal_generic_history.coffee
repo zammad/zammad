@@ -123,9 +123,9 @@ class App.GenericHistory extends App.ControllerModal
         content = App.i18n.translatePlain( 'this ticket was merged into ticket %s', ticket_link)
       else if item.type is 'checklist_item_checked'
         content = if item.value_to is 'true'
-          App.i18n.translatePlain("checked Checklist Item '%s'",  item.value_from)
+          App.i18n.translatePlain("checked checklist item '%s'",  item.value_from)
         else
-          App.i18n.translatePlain("unchecked Checklist Item '%s'", item.value_from)
+          App.i18n.translatePlain("unchecked checklist item '%s'", item.value_from)
       else
         content = "#{ @T( item.type ) } #{ @T(item.object) } "
         if item.attribute

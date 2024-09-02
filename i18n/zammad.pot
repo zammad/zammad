@@ -17709,7 +17709,7 @@ msgid "chat"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
-msgid "checked Checklist Item '%s'"
+msgid "checked checklist item '%s'"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco:24
@@ -18902,7 +18902,7 @@ msgid "unassign user"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
-msgid "unchecked Checklist Item '%s'"
+msgid "unchecked checklist item '%s'"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
