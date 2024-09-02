@@ -1,0 +1,24 @@
+Tichet nou (#{ticket.title})
+
+<div>Bună #{recipient.firstname},</div>
+<br>
+<div>Tichetul nou (#{ticket.title}) a fost creat de "<b>#{current_user.longname}</b>".</div>
+<br>
+<div>
+Grup: #{ticket.group.name}<br>
+Proprietar: #{ticket.owner.fullname}<br>
+Stare: #{t(ticket.state.name)}<br>
+</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  Informații:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Vezi asta în #{config.product_name}</a>
+</div>
