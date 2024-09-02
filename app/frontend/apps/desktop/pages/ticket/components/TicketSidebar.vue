@@ -32,7 +32,7 @@ const maybeToggleAndSwitchSidebar = (newSidebar: string) => {
   <div class="flex h-full justify-end">
     <div v-show="!isCollapsed" id="ticketSidebar" class="flex grow flex-col" />
     <div
-      class="flex w-12 flex-col items-center gap-2.5 border-neutral-100 px-2.5 py-3 transition-[border] dark:border-gray-900"
+      class="flex max-w-12 flex-col items-center gap-2.5 border-neutral-100 px-2.5 py-3 transition-[border] dark:border-gray-900"
       :class="{ 'border-s': !isCollapsed }"
     >
       <component
