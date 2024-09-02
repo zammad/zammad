@@ -51,7 +51,7 @@ RSpec.describe Gql::Queries::Ticket::Checklist, type: :graphql do
       'name'       => checklist.name,
       'completed'  => false,
       'incomplete' => 5,
-      'items'      => checklist.items.map do |item|
+      'items'      => checklist.items.sort_by(&:id).map do |item|
         {
           'id'           => gql.id(item),
           'text'         => item.text,
