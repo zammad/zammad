@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-27 10:53+0000\n"
+"PO-Revision-Date: 2024-09-02 04:54+0000\n"
 "Last-Translator: Sajjad Jazini <s.jazini@vatanmail.ir>\n"
 "Language-Team: Persian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fa/>\n"
@@ -303,7 +303,7 @@ msgstr "%s یک مأموریت برای حذف کاربر با شناسه |%s| �
 #: app/assets/javascripts/app/models/ticket_article.coffee:49
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:24
 msgid "%s created article for |%s|"
-msgstr "%s یادداشتی برای |%s| ایجاد کرد"
+msgstr "%s یک بند برای |%s| ایجاد کرد"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:28
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:26
@@ -474,7 +474,7 @@ msgstr "%s تیکت پیدا شد"
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:26
 msgid "%s updated article for |%s|"
-msgstr "%s یادداشت |%s| را به‌روز کرد"
+msgstr "%s بند |%s| را به‌روز کرد"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:30
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:32
@@ -911,7 +911,7 @@ msgstr "فعالیت"
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
 msgid "Action execution"
-msgstr "انجام کار"
+msgstr "اجرا عمل"
 
 #: app/assets/javascripts/app/models/macro.coffee:7
 #: app/assets/javascripts/app/models/template.coffee:7
@@ -1598,7 +1598,7 @@ msgstr "آرشیو شده در"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts:12
 msgid "Are you sure to remove this article?"
-msgstr "آیا میخواهید این مقاله را حذف کنید؟"
+msgstr "آیا میخواهید این بند را حذف کنید؟"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/FieldFileInput.vue:119
 msgid "Are you sure you want to delete \"%s\"?"
@@ -1659,7 +1659,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:81
 msgid "Are you sure? The prepared article will be removed."
-msgstr "آیا مطمئن هستید؟ مقاله آماده شده حذف خواهد شد."
+msgstr "آیا مطمئن هستید؟ بند آماده شده حذف خواهد شد."
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:113
 msgid ""
@@ -1689,31 +1689,31 @@ msgstr "آیا مطمئن هستید؟ تنظیمات اعلان‌های شما
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:10
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:10
 msgid "Article"
-msgstr "مقاله"
+msgstr "بند"
 
 #: db/seeds/settings.rb:658
 msgid "Article - visibility confirmation dialog"
-msgstr "یادداشت - پنجره تایید قابلیت مشاهده"
+msgstr "بند - پنجره تایید قابلیت مشاهده"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
 msgid "Article > Text (HTML)"
-msgstr "مقاله › متن (HTML)"
+msgstr "بند › متن (HTML)"
 
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
-msgstr "تعداد یادداشت"
+msgstr "تعداد بند"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:114
 msgid "Article Type"
-msgstr "نوع مقاله"
+msgstr "نوع بند"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:352
 msgid "Article actions"
-msgstr "فعالیت‌های مقاله"
+msgstr "فعالیت‌های بند"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee:61
 msgid "Article could not be deleted."
-msgstr "امکان حذف یادداشت وجود ندارد."
+msgstr "امکان حذف بند وجود ندارد."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:73
 msgid "Article uses different security mechanism."
@@ -1722,7 +1722,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket.coffee:15
 #: app/graphql/gql/types/overview_type.rb:68
 msgid "Article#"
-msgstr "شماره یادداشت"
+msgstr "# بند"
 
 #: db/seeds/object_manager_attributes.rb:1989
 msgid "Assign Follow-Ups"
@@ -3495,7 +3495,7 @@ msgstr "ایجاد شده"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "Created Article"
-msgstr "ایجاد مقاله"
+msgstr "بند ایجاد شده"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:18
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:16
@@ -3505,11 +3505,11 @@ msgstr "زمان ایجاد"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
 msgid "Created External Article"
-msgstr "مقاله خارجی ایجاد شده"
+msgstr "بند خارجی ایجاد شده"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
 msgid "Created Internal Article"
-msgstr "مقاله داخلی ایجاد شده"
+msgstr "بند داخلی ایجاد شده"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:53
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:7
@@ -4674,7 +4674,7 @@ msgstr "حذف"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts:81
 msgid "Delete Article"
-msgstr "حذف مقاله"
+msgstr "حذف بند"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:47
 msgid "Delete Avatar?"
@@ -4930,7 +4930,7 @@ msgstr "نادیده گرفتن تغییرات"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:83
 msgid "Discard article"
-msgstr "نادیده گرفتن مقاله"
+msgstr "نادیده گرفتن بند"
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:78
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:61
@@ -5000,8 +5000,7 @@ msgstr "آیا واقعا مایل به حذف تصویر نمایه خود هس
 
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee:3
 msgid "Do you really want to set the visibility of this article to \"public\"?"
-msgstr ""
-"آیا واقعا میخواهید قابلیت مشاهده این یادداشت را به حالت عمومی تغییر دهید؟"
+msgstr "آیا میخواهید قابلیت مشاهده این بند را به عمومی تغییر دهید؟"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:64
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:45
@@ -5800,7 +5799,7 @@ msgstr "خطا"
 
 #: app/services/service/system/run_auto_wizard.rb:18
 msgid "Error during execution of auto wizard."
-msgstr "خطا هنگام اجرای ویزارد خودکار."
+msgstr "خطا هنگام اجرای جادوگر خودکار."
 
 #: db/seeds/overviews.rb:160
 msgid "Escalated Tickets"
@@ -7409,7 +7408,7 @@ msgstr "رویداد"
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:24
 msgid "Include attachments of the article?"
-msgstr "ضمائم یادداشت هم شامل شوند؟"
+msgstr "ضمائم بند هم شامل شوند؟"
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:97
 msgid "Included ticket overviews"
@@ -7466,7 +7465,7 @@ msgstr "امکان ایجاد محتوا وجود نداشت."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:223
 msgid "Insert text from Knowledge Base article"
-msgstr "افزودن متن از مقاله پایگاه دانش"
+msgstr "افزودن متن از بند پایگاه دانش"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:230
 msgid "Insert text from text module"
@@ -7911,7 +7910,7 @@ msgstr "زبان‌ها"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
 msgid "Last Article"
-msgstr "آخرین مقاله"
+msgstr "آخرین بند"
 
 #: lib/excel_sheet/ticket.rb:70
 msgid "Last Contact Agent At"
@@ -7931,7 +7930,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
-msgstr "آخرین مقاله داخلی"
+msgstr "آخرین بند داخلی"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:123
 msgid "Last change %s %s by %s"
@@ -8163,7 +8162,7 @@ msgstr "محل یافت نشد"
 #: app/assets/javascripts/app/models/job.coffee:12
 #: app/assets/javascripts/app/models/trigger.coffee:11
 msgid "Localization of execution changes"
-msgstr "بومی سازی تغییرات اقدام"
+msgstr "بومی سازی تغییرات اجرا"
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:6
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:13
@@ -10571,7 +10570,7 @@ msgstr "انتشار"
 
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee:2
 msgid "Publish Article"
-msgstr "انتشار یادداشت"
+msgstr "انتشار بند"
 
 #: app/views/knowledge_base/public/answers/show.html.erb:41
 msgid "Published %s"
@@ -10855,7 +10854,7 @@ msgstr "پاسخ دادن فقط برای تیکت‌های باز مجاز اس
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:387
 msgid "Reply to last article"
-msgstr "پاسخ به آخرین یادداشت"
+msgstr "پاسخ به آخرین بند"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:22
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:100
@@ -11734,7 +11733,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:459
 msgid "Sender of last article"
-msgstr "فرستنده آخرین یادداشت"
+msgstr "فرستنده آخرین بند"
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:35
 msgid "Sending…"
@@ -11817,7 +11816,7 @@ msgstr "تنظیم محدوده کارشناس"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:401
 msgid "Set article to internal/public"
-msgstr "تنظیم یادداشت به حالت داخلی/عمومی"
+msgstr "تنظیم بند به داخلی/عمومی"
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:81
 msgid "Set as Default"
@@ -12873,16 +12872,12 @@ msgid "The PGP email recipient is invalid."
 msgstr "دریافت‌کننده ایمیل PGP نامعتبر است."
 
 #: lib/secure_mailing/pgp/tool/error.rb:115
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The PGP email signer is invalid."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "تایید کننده ایمیل PGP معتبر نیست."
 
 #: lib/secure_mailing/pgp/security_options.rb:41
-#, fuzzy
-#| msgid "Certificate for verification could not be found."
 msgid "The PGP key for %s was found, but has expired."
-msgstr "گواهینامه برای راستی‌آزمایی یافت نشد."
+msgstr "کلید PGP برای %s یافت شد، ولی منقضی شده است."
 
 #: lib/secure_mailing/pgp/security_options.rb:43
 msgid "The PGP key for %s was found."
@@ -12893,22 +12888,16 @@ msgid "The PGP key for %s was not found."
 msgstr "نتایج جست‌وجو در PGP «%s» یافت نشد."
 
 #: lib/secure_mailing/pgp/tool/error.rb:61
-#, fuzzy
-#| msgid "No results were found."
 msgid "The PGP key has been revoked."
-msgstr "نتایجی یافت نشد."
+msgstr "کلید PGP باطل شد."
 
 #: lib/secure_mailing/pgp/tool/error.rb:52
-#, fuzzy
-#| msgid "No results were found."
 msgid "The PGP key has expired."
-msgstr "نتایجی یافت نشد."
+msgstr "کلید PGP منقضی شد."
 
 #: lib/secure_mailing/pgp/security_options.rb:78
-#, fuzzy
-#| msgid "No results were found."
 msgid "The PGP keys for %s were found."
-msgstr "نتایجی یافت نشد."
+msgstr "کلیدهای PGP برای %s یافت شد."
 
 #: lib/secure_mailing/pgp/security_options.rb:82
 msgid "The PGP keys for %s were not found."
@@ -12923,10 +12912,8 @@ msgid "The PGP signature has expired."
 msgstr "امضا PGP منقضی شده است."
 
 #: lib/secure_mailing/pgp/tool/error.rb:79
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The PGP signature is invalid."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "امضا PGP نامعتبر است."
 
 #: lib/secure_mailing/pgp/tool/error.rb:97
 msgid "The PGP signature key has been revoked."
@@ -12951,10 +12938,8 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:59
-#, fuzzy
-#| msgid "The URL to this installation of Zammad."
 msgid "The URL of this installation of Zammad."
-msgstr "لینک این سیستم پشتیبانی."
+msgstr "پیوند این سامانه."
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:25
 msgid "The URL to this installation of Zammad."
@@ -12965,47 +12950,33 @@ msgid "The WhatsApp channel webhook configuration could not be verified."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:156
-#, fuzzy
-#| msgid "The changes could not be saved."
 msgid "The WhatsApp connection could not be saved."
-msgstr "تغییرات قابل ذخیره نیست."
+msgstr "ارتباط واتس‌اپ نمی‌تواند ذخیره شود."
 
 #: lib/whatsapp/webhook/concerns/has_channel.rb:19
-#, fuzzy
-#| msgid "The object could not be updated."
 msgid "The WhatsApp webhook channel could not be found."
-msgstr "آبجکت قابل بروزرسانی نبود."
+msgstr "کانال وب‌هوک واتس‌اپ یافت نمی‌شود."
 
 #: lib/whatsapp/webhook/payload.rb:110
-#, fuzzy
-#| msgid "The uploaded image could not be processed."
 msgid "The WhatsApp webhook payload could not be processed."
-msgstr "تصویر بارگذاری شده قابل پردازش نیست."
+msgstr "داده وب‌هوک واتس‌اپ قابل پردازش نیست."
 
 #: lib/whatsapp/webhook/payload.rb:101
-#, fuzzy
-#| msgid "The object could not be created."
 msgid "The WhatsApp webhook payload could not be validated."
-msgstr "آبجکت قابل ایجاد نبود."
+msgstr "داده وب‌هوک واتس‌اپ نمی‌تواند معتبر شود."
 
 #: app/controllers/reports_controller.rb:130
-#, fuzzy
-#| msgid "Certificate for verification could not be found."
 msgid "The active reporting profile could not be found."
-msgstr "گواهینامه برای راستی‌آزمایی یافت نشد."
+msgstr "نمایه گزارش گیری فعال یافت نشد."
 
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco:2
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco:2
-#, fuzzy
-#| msgid "The password could not be set. Please contact your administrator."
 msgid "The admin consent request was sent to your administrator."
-msgstr "امکان تنظیم رمز عبور وجود ندارد. لطفا با ادمین سیستم تماس بگیرید."
+msgstr "درخواست تایید مدیر به مدیر شما ارسال شد."
 
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:80
-#, fuzzy
-#| msgid "Verification email could not be sent."
 msgid "The admin password auth email could not be sent."
-msgstr "ایمیل راستی‌آزمایی قابل ارسال نبود."
+msgstr "ایمیل تایید رمز مدیر ارسال نشد."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:206
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee:24
@@ -13014,48 +12985,36 @@ msgid "The application is not running in a secure context."
 msgstr ""
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts:21
-#, fuzzy
-#| msgid "Article could not be deleted."
 msgid "The article could not be deleted."
-msgstr "امکان حذف یادداشت وجود ندارد."
+msgstr "بند نمی‌تواند حذف شود."
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts:12
-#, fuzzy
-#| msgid "Article could not be deleted."
 msgid "The article could not be set to internal."
-msgstr "امکان حذف یادداشت وجود ندارد."
+msgstr "این بند نمی‌تواند به عنوان داخلی تنظیم شود."
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts:13
-#, fuzzy
-#| msgid "The issue could not be saved."
 msgid "The article could not be set to public."
-msgstr "مشکل قابل ذخیره نبود."
+msgstr "این بند نمی‌تواند به عمومی تنظیم شود."
 
 #: app/controllers/ticket_articles_controller.rb:153
 msgid "The article does not belong to the specified ticket."
-msgstr "این یادداشت به تیکت مشخص شده تعلق ندارد."
+msgstr "این بند به تیکت مشخص شده تعلق ندارد."
 
 #: app/assets/javascripts/app/views/getting_started/auto_wizard_enabled.jst.eco:6
 msgid "The auto wizard is enabled. Please use the provided auto wizard url."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue:130
-#, fuzzy
-#| msgid "The entry could not be created."
 msgid "The avatar could not be deleted."
-msgstr "امکان ایجاداین ورودی وجود ندارد."
+msgstr "تصویر نمایه حذف نمی‌شود."
 
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue:42
-#, fuzzy
-#| msgid "The entry could not be created."
 msgid "The avatar could not be fetched."
-msgstr "امکان ایجاداین ورودی وجود ندارد."
+msgstr "تصویر نمایه دریافت نمی‌شود."
 
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue:84
-#, fuzzy
-#| msgid "The issue could not be saved."
 msgid "The avatar could not be uploaded."
-msgstr "مشکل قابل ذخیره نبود."
+msgstr "تصویر نمایه بارگزاری نمی‌شود."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:212
 msgid ""
@@ -13064,23 +13023,17 @@ msgid ""
 msgstr ""
 
 #: app/models/setting/validation/saml/security.rb:16
-#, fuzzy
-#| msgid "The issue could not be saved."
 msgid "The certificate could not be parsed."
-msgstr "مشکل قابل ذخیره نبود."
+msgstr "گواهینامه قابل تحلیل نبود."
 
 #: app/models/setting/validation/saml/security.rb:75
-#, fuzzy
-#| msgid "The article does not belong to the specified ticket."
 msgid "The certificate does not match the given private key."
-msgstr "این یادداشت به تیکت مشخص شده تعلق ندارد."
+msgstr "گواهینامه با کلید خصوصی ارائه شده همخوانی ندارد."
 
 #: lib/secure_mailing/smime/security_options.rb:39
-#, fuzzy
-#| msgid "Certificate for verification could not be found."
 msgid ""
 "The certificate for %s was found, but it is not valid yet or has expired."
-msgstr "گواهینامه برای راستی‌آزمایی یافت نشد."
+msgstr "گواهینامه برای %s یافت شد، ولی یا هنوز معتبر نیست یا منقضی شده است."
 
 #: lib/secure_mailing/smime/security_options.rb:37
 msgid "The certificate for %s was found."
@@ -13095,8 +13048,6 @@ msgid "The certificate for this private key could not be found."
 msgstr ""
 
 #: lib/secure_mailing/smime/incoming.rb:69
-#, fuzzy
-#| msgid "Certificate for verification could not be found."
 msgid "The certificate for verification could not be found."
 msgstr "گواهینامه برای راستی‌آزمایی یافت نشد."
 
@@ -13180,11 +13131,9 @@ msgstr ""
 "تنظیمات سامانه تغییر نموده است لطفا مرورگر خود را مجددا بارگذاری نمایید."
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts:100
-#, fuzzy
-#| msgid "A new version of Zammad is available, please reload your browser."
 msgid ""
 "The configuration of Zammad has changed. Please reload at your earliest."
-msgstr "نسخه جدید از سیستم در دسترس می باشد."
+msgstr "پیکربندی سامانه تغییر کرده است. لطفا صفحه را دوباره بارگزاری نمایید."
 
 #: app/frontend/shared/server/connection.ts:83
 msgid "The connection to the server was lost."
@@ -13203,10 +13152,8 @@ msgstr "ارتباط مردود شد."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:45
 #: app/controllers/users_controller.rb:474
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The current password you provided is incorrect."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "رمز وارد شده اشتباه است."
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:6
 msgid ""
@@ -13234,10 +13181,8 @@ msgstr ""
 #: app/services/service/auth/send_admin_token.rb:39
 #: app/services/service/user/password_reset/send.rb:37
 #: app/services/service/user/password_reset/update.rb:42
-#, fuzzy
-#| msgid "Article could not be deleted."
 msgid "The email could not be sent to the user."
-msgstr "امکان حذف یادداشت وجود ندارد."
+msgstr "ایمیل به کاربر ارسال نشد."
 
 #: lib/secure_mailing/pgp/incoming.rb:118
 msgid ""
@@ -13276,14 +13221,12 @@ msgid "The file could not be retrieved from the bot."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/html5_upload.coffee:90
-#, fuzzy
-#| msgid "The issue could not be saved."
 msgid "The file could not be uploaded."
-msgstr "مشکل قابل ذخیره نبود."
+msgstr "پرونده بارگزاری نشد."
 
 #: app/controllers/ticket_articles_controller.rb:167
 msgid "The file does not belong to the specified article."
-msgstr "این فایل به یادداشت مشخص شده تعلق ندارد."
+msgstr "این پرونده به بند مشخص شده تعلق ندارد."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:863
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/filesTypeError.ts:22
@@ -13315,10 +13258,8 @@ msgid "The format of the subject."
 msgstr "قالب موضوع."
 
 #: lib/whatsapp/retry/media.rb:65
-#, fuzzy
-#| msgid "The article does not belong to the specified ticket."
 msgid "The given article is not a media article."
-msgstr "این یادداشت به تیکت مشخص شده تعلق ندارد."
+msgstr "بند ارائه شده یک بند رسانه‌ای نیست."
 
 #: app/controllers/import_freshdesk_controller.rb:131
 #: app/controllers/import_kayako_controller.rb:108
@@ -13329,10 +13270,8 @@ msgstr "این یادداشت به تیکت مشخص شده تعلق ندارد.
 #: app/services/service/system/import/apply_otrs_configuration.rb:85
 #: app/services/service/system/import/apply_zendesk_configuration.rb:24
 #: lib/email_helper/probe.rb:282
-#, fuzzy
-#| msgid "The object could not be updated."
 msgid "The hostname could not be found."
-msgstr "آبجکت قابل بروزرسانی نبود."
+msgstr "نام هاست یافت نشد."
 
 #: db/seeds/settings.rb:2144
 msgid ""
@@ -13341,10 +13280,8 @@ msgid ""
 msgstr ""
 
 #: app/services/service/avatar/image_validate.rb:10
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The image is invalid."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "تصویر معتبر نیست."
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:39
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:111
@@ -13375,10 +13312,8 @@ msgid "The issue could not be saved."
 msgstr "مشکل قابل ذخیره نبود."
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:57
-#, fuzzy
-#| msgid "The object could not be updated."
 msgid "The language could not be updated."
-msgstr "آبجکت قابل بروزرسانی نبود."
+msgstr "زبان قابل به‌روزرسانی نبود."
 
 #: app/models/setting/validation/saml/security.rb:44
 msgid "The length of the private key is too short."
@@ -13399,16 +13334,12 @@ msgid "The login is not possible."
 msgstr "ورود امکان پذیر نیست."
 
 #: app/models/ticket/number.rb:14
-#, fuzzy
-#| msgid "The tickets could not be merged."
 msgid "The new ticket number could not be generated."
-msgstr "تیکت‌ها قابل ادغام نیستند."
+msgstr "شماره جدید تیکت قابل تولید نیست."
 
 #: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:48
-#, fuzzy
-#| msgid "The entry could not be created."
 msgid "The notifcation could not be deleted."
-msgstr "امکان ایجاداین ورودی وجود ندارد."
+msgstr "اعلان قابل حذف نیست."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:64
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
@@ -13421,10 +13352,8 @@ msgid "The object could not be created."
 msgstr "آبجکت قابل ایجاد نبود."
 
 #: app/controllers/links_controller.rb:32
-#, fuzzy
-#| msgid "The object could not be updated."
 msgid "The object could not be found."
-msgstr "آبجکت قابل بروزرسانی نبود."
+msgstr "موضوع یافت نشد."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_edit.coffee:64
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:265
@@ -13437,10 +13366,8 @@ msgid "The object could not be updated."
 msgstr "آبجکت قابل بروزرسانی نبود."
 
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:44
-#, fuzzy
-#| msgid "The entry could not be created."
 msgid "The online notification could not be marked as seen."
-msgstr "امکان ایجاداین ورودی وجود ندارد."
+msgstr "اعلان برخط قابل علامت زدن به عنوان خوانده شده نیست."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:248
 msgid "The page is not available anymore"
@@ -13473,16 +13400,12 @@ msgid ""
 msgstr ""
 
 #: lib/secure_mailing/pgp/incoming.rb:305
-#, fuzzy
-#| msgid "The object could not be updated."
 msgid "The private PGP key could not be found."
-msgstr "آبجکت قابل بروزرسانی نبود."
+msgstr "کلید PGP خصوصی یافت نشد."
 
 #: lib/secure_mailing/smime/incoming.rb:36
-#, fuzzy
-#| msgid "Certificate for verification could not be found."
 msgid "The private key for decryption could not be found."
-msgstr "گواهینامه برای راستی‌آزمایی یافت نشد."
+msgstr "کلید خصوصی برای رمزگشایی یافت نشد."
 
 #: lib/secure_mailing/smime/private_key.rb:31
 msgid ""
@@ -13497,16 +13420,12 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:87
-#, fuzzy
-#| msgid "The entry could not be created."
 msgid "The product version could not be fetched."
-msgstr "امکان ایجاداین ورودی وجود ندارد."
+msgstr "نسخه محصول قابل دریافت نبود."
 
 #: lib/external_credential/twitter.rb:54
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The provided 'oauth_token' is invalid."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "'oauth_token' ارائه شده معتبر نیست."
 
 #: app/controllers/import_freshdesk_controller.rb:11
 #: app/controllers/import_kayako_controller.rb:12
@@ -13542,10 +13461,8 @@ msgid "The provided endpoint is invalid."
 msgstr ""
 
 #: app/models/postmaster_filter.rb:32
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The provided match operator is missing or invalid."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "عملگر تطابق ارائه شده، یا وجود ندارد یا نامعتبر است."
 
 #: app/models/webhook.rb:45
 msgid "The provided payload is invalid. Please check your syntax."
@@ -13561,10 +13478,8 @@ msgid "The provided token is invalid."
 msgstr ""
 
 #: lib/secure_mailing/pgp/incoming.rb:305
-#, fuzzy
-#| msgid "The object could not be updated."
 msgid "The public PGP key could not be found."
-msgstr "آبجکت قابل بروزرسانی نبود."
+msgstr "کلید عمومی PGP یافت نشد."
 
 #: app/assets/javascripts/app/controllers/report.coffee:178
 msgid "The report could not be generated"
@@ -13587,35 +13502,25 @@ msgid "The required 'ExternalCredential' 'twitter' could not be found."
 msgstr ""
 
 #: lib/secure_mailing/pgp/tool/error.rb:151
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required PGP passphrase is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "عبارت عبور مورد نیاز PGP وارد نشده است."
 
 #: app/controllers/users_controller.rb:779
 #: app/services/service/user/add_first_admin.rb:12
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required attribute 'email' is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مقدار الزامی «ایمیل» وارد نشده است."
 
 #: app/services/service/system/set_system_information.rb:42
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required attribute 'organization' is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مقدار الزامی «سازمان» وارد نشده است."
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb:35
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required event field 'execution' is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مقدار الزامی رویداد «اجرا» وارد نشده است."
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb:62
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required event field 'execution' is unknown or missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr ""
 
 #: lib/idoit.rb:22
 msgid "The required field 'api_token' is missing from the config."
@@ -13626,28 +13531,20 @@ msgid "The required field 'endpoint' is missing from the config."
 msgstr ""
 
 #: app/models/postmaster_filter.rb:33
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required match value is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مقدار الزامی تطابق وارد نشده است."
 
 #: app/controllers/user/two_factors_controller.rb:32
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required parameter \"method\" is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مولفه الزامی «روش» وارد نشده است."
 
 #: app/controllers/user/two_factors_controller.rb:33
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required parameter \"payload\" is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مولفه الزامی «داده» وارد نشده است."
 
 #: lib/whatsapp/client.rb:12
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required parameter 'access_token' is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مولفه الزامی «access_token» وارد نشده است."
 
 #: lib/external_credential/facebook.rb:23
 msgid "The required parameter 'application_id' is missing."
@@ -13662,10 +13559,8 @@ msgid "The required parameter 'area' is missing."
 msgstr ""
 
 #: lib/whatsapp/account/phone_numbers.rb:16
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required parameter 'business_id' is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مولفه الزامی «business_id» وارد نشده است."
 
 #: lib/external_credential/exchange.rb:27 lib/external_credential/google.rb:23
 #: lib/external_credential/microsoft365.rb:27
@@ -13679,10 +13574,8 @@ msgstr ""
 
 #: lib/external_credential/exchange.rb:43 lib/external_credential/google.rb:36
 #: lib/external_credential/microsoft365.rb:43
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required parameter 'code' is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مولفه الزامی «کد» وارد نشده است."
 
 #: lib/external_credential/twitter.rb:22
 msgid "The required parameter 'consumer_key' is missing."
@@ -13699,10 +13592,8 @@ msgid ""
 msgstr ""
 
 #: app/controllers/channels_twitter_controller.rb:21
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required parameter 'for_user_id' is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مولفه الزامی «for_user_id» وارد نشده است."
 
 #: lib/telegram_helper.rb:56
 msgid "The required parameter 'group_id' is invalid."
@@ -13717,26 +13608,20 @@ msgid "The required parameter 'id' is missing."
 msgstr ""
 
 #: lib/search_index_backend.rb:600
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required parameter 'key' is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مولفه الزامی «کلید» وارد نشده است."
 
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee:75
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required parameter 'link_type' is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مولفه الزامی «link_type» وارد نشده است."
 
 #: app/models/text_module.rb:28
 msgid "The required parameter 'locale' is missing."
 msgstr ""
 
 #: app/controllers/user_access_token_controller.rb:41
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required parameter 'name' is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مولفه الزامی «نام» وارد نشده است."
 
 #: lib/external_credential/twitter.rb:134
 msgid "The required parameter 'oauth_token' is missing."
@@ -13755,10 +13640,8 @@ msgid "The required parameter 'params' is missing."
 msgstr ""
 
 #: app/controllers/users_controller.rb:505
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required parameter 'password' is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مولفه الزامی «رمز» وارد نشده است."
 
 #: app/models/core_workflow/result.rb:15
 msgid "The required parameter 'payload->class_name' is missing."
@@ -13769,38 +13652,28 @@ msgid "The required parameter 'payload->screen' is missing."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:104
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required parameter 'permission' is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مولفه الزامی «دسترسی» وارد نشده است."
 
 #: lib/external_credential/twitter.rb:53
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required parameter 'request_token' is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مولفه الزامی «توکن درخواست» وارد نشده است."
 
 #: app/controllers/users_controller.rb:772
 msgid "The required parameter 'signup' is missing."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee:72
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required parameter 'ticket_number' is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مولفه الزامی «ticket_number» وارد نشده است."
 
 #: app/models/concerns/perform_changes/action/attribute_updates.rb:74
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required parameter 'user_id' is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مولفه الزامی «user_id» وارد نشده است."
 
 #: lib/search_index_backend.rb:601
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required parameter 'value' is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مولفه الزامی «مقدار» وارد نشده است."
 
 #: app/controllers/channels_twitter_controller.rb:55
 msgid ""
@@ -13809,10 +13682,8 @@ msgid ""
 msgstr ""
 
 #: app/policies/ticket_policy.rb:35
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The required value 'group_id' is missing."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "مولفه الزامی «شناسه گروه» وارد نشده است."
 
 #: app/controllers/channels_twitter_controller.rb:54
 msgid "The required value external_credential could not be found in the cache."
@@ -13828,16 +13699,12 @@ msgid "The retried security process failed!"
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts:565
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The selected date is invalid."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "تاریخ انتخاب‌شده معتبر نیست."
 
 #: app/services/service/system/import/apply_configuration_base.rb:38
-#, fuzzy
-#| msgid "The issue could not be saved."
 msgid "The server presented a certificate that could not be verified."
-msgstr "مشکل قابل ذخیره نبود."
+msgstr "سرور گواهینامه‌ای ارائه کرده که قابل تایید نیست."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:585
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:201
@@ -13861,16 +13728,12 @@ msgid "The setting 'ticket_number' was not configured."
 msgstr ""
 
 #: app/assets/javascripts/app/models/setting.coffee:68
-#, fuzzy
-#| msgid "The entry could not be created."
 msgid "The setting could not be reset."
-msgstr "امکان ایجاداین ورودی وجود ندارد."
+msgstr "تنظیم قابل بازتنظیم نیست."
 
 #: app/assets/javascripts/app/models/setting.coffee:31
-#, fuzzy
-#| msgid "The object could not be updated."
 msgid "The setting could not be updated."
-msgstr "آبجکت قابل بروزرسانی نبود."
+msgstr "تنظیم قابل به‌روزرسانی نیست."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue:47
 msgid "The setup has already been started. Please wait until it is finished."
@@ -13881,10 +13744,8 @@ msgid "The sign-in failed. Please contact the Support team."
 msgstr ""
 
 #: lib/secure_mailing/pgp/tool/error.rb:88
-#, fuzzy
-#| msgid "No results were found."
 msgid "The signature PGP key has expired."
-msgstr "نتایجی یافت نشد."
+msgstr "امضا کلید PGP منقضی شده."
 
 #: lib/secure_mailing/pgp/incoming.rb:93
 msgid ""
@@ -13898,10 +13759,8 @@ msgid "The signature was successfully verified."
 msgstr ""
 
 #: app/controllers/tickets_controller.rb:387
-#, fuzzy
-#| msgid "The tickets could not be merged."
 msgid "The source ticket could not be found."
-msgstr "تیکت‌ها قابل ادغام نیستند."
+msgstr "تیکت منبع یافت نشد."
 
 #: app/services/service/system/check_setup.rb:18
 msgid ""
@@ -13920,10 +13779,8 @@ msgid "The system was configured successfully. You are being redirected."
 msgstr ""
 
 #: app/controllers/tickets_controller.rb:378
-#, fuzzy
-#| msgid "The tickets could not be merged."
 msgid "The target ticket number could not be found."
-msgstr "تیکت‌ها قابل ادغام نیستند."
+msgstr "شماره تیکت مقصد یافت نشد."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco:6
 msgid "The test run was successful."
@@ -13949,17 +13806,13 @@ msgid "The token could not be generated."
 msgstr "امکان ایجاد توکن وجود ندارد."
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:83
-#, fuzzy
-#| msgid "Email could not be verified. Please contact your administrator."
 msgid "The token could not be verified. Please contact your administrator."
-msgstr "امکان راستی‌آزمایی ایمیل وجود ندارد. لطفا با ادمین سیستم تماس بگیرید."
+msgstr "امکان راستی‌آزمایی توکن وجود ندارد. لطفا با مدیر سامانه تماس بگیرید."
 
 #: app/assets/javascripts/app/views/login.jst.eco:61
 #: app/frontend/apps/desktop/pages/authentication/composables/useAdminPasswordAuthVerify.ts:62
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The token for the admin password login is invalid."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "توکن برای ورود رمز مدیر معتبر نیست."
 
 #: app/frontend/apps/desktop/pages/authentication/composables/useAdminPasswordAuthVerify.ts:54
 msgid "The token is valid. You are now able to login via password once."
@@ -13981,18 +13834,16 @@ msgid "The two-factor authentication method is not enabled."
 msgstr ""
 
 #: app/models/setting/validation/saml/security.rb:43
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The type of the private key is wrong."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "نوع کلید خصوصی اشتباه است."
 
 #: app/controllers/settings_controller.rb:49
-#, fuzzy
-#| msgid "The uploaded image could not be processed."
 msgid ""
 "The uploaded image could not be processed. Need data:image in logo or "
 "logo_resize param."
-msgstr "تصویر بارگذاری شده قابل پردازش نیست."
+msgstr ""
+"تصویر بارگزاری شده قابل پردازش نیست. نیازمند مولفه data:image یا logo_resize "
+"در لوگو است."
 
 #: app/services/service/auth/send_admin_token.rb:33
 msgid "The user token could not be generated."
@@ -14005,16 +13856,12 @@ msgstr ""
 
 #: app/controllers/sessions_controller.rb:233
 #: app/graphql/gql/mutations/two_factor_method_initiate_authentication.rb:29
-#, fuzzy
-#| msgid "The resized image is invalid."
 msgid "The username or password is incorrect."
-msgstr "تصویر با تغییر اندازه معتبر نیست."
+msgstr "نام کاربری یا رمز اشتباه است."
 
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:97
-#, fuzzy
-#| msgid "Verification email could not be sent."
 msgid "The verification email could not be resent."
-msgstr "ایمیل راستی‌آزمایی قابل ارسال نبود."
+msgstr "ایمیل راستی‌آزمایی قابل ارسال دوباره نبود."
 
 #: app/models/setting/validation/saml/tls.rb:37
 msgid ""
@@ -14039,10 +13886,8 @@ msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:64
-#, fuzzy
-#| msgid "Tickets"
 msgid "Their tickets"
-msgstr "تیکت‌ها"
+msgstr "تیکت‌های آن‌ها"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:63
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:11
@@ -14083,10 +13928,8 @@ msgid "There is existing content. Do you want to overwrite it?"
 msgstr "یک محتوا وجود دارد. آیا تمایل دارید آن را بازنویسی کنید؟"
 
 #: lib/external_credential/google.rb:12
-#, fuzzy
-#| msgid "There is no agent online."
 msgid "There is no Google app configured."
-msgstr "هیچ کارشناسی آنلاین نیست."
+msgstr "هیچ برنامه گوگل پیکربندی نشده است."
 
 #: lib/external_credential/twitter.rb:11
 msgid "There is no Twitter app configured."
@@ -14109,17 +13952,13 @@ msgstr ""
 "کلمه \"%s\" را وارد نمایید."
 
 #: app/assets/javascripts/app/controllers/package.coffee:52
-#, fuzzy
-#| msgid ""
-#| "There is no rollback of this deletion possible. If you are sure that you "
-#| "wish to proceed, please type \"%s\" into the input."
 msgid ""
 "There is no rollback of this deletion. If you are sure that you wish to "
 "proceed, please type \"%s\" into the input. All related data to this package "
 "will be lost."
 msgstr ""
-"پس از این حذف٬ امکان بازگشت وجود ندارد. اگر از ادامه کار اطمینان دارید لطفا "
-"کلمه \"%s\" را وارد نمایید."
+"پس از این حذف امکان بازگشت وجود ندارد. اگر از ادامه کار اطمینان دارید لطفا "
+"کلمه «%s» را وارد نمایید. تمام اطلاعات مربوط به این بسته از دست خواهد رفت."
 
 #: app/controllers/import_freshdesk_controller.rb:133
 #: app/controllers/import_otrs_controller.rb:19
@@ -14129,10 +13968,8 @@ msgstr ""
 #: app/services/service/system/import/apply_otrs_configuration.rb:88
 #: app/services/service/system/import/apply_zendesk_configuration.rb:50
 #: lib/email_helper/probe.rb:284
-#, fuzzy
-#| msgid "There is no agent online."
 msgid "There is no route to this host."
-msgstr "هیچ کارشناسی آنلاین نیست."
+msgstr "هیچ مسیری به این میزبان نیست."
 
 #: app/controllers/user/two_factors_controller.rb:115
 msgid ""
@@ -14144,10 +13981,8 @@ msgid "There is no valid PGP email recipient."
 msgstr "دریافت‌کننده ایمیل PGP معتبر وجود ندارد."
 
 #: lib/secure_mailing/pgp/tool/error.rb:133
-#, fuzzy
-#| msgid "There is no agent online."
 msgid "There is no valid PGP email signer."
-msgstr "هیچ کارشناسی آنلاین نیست."
+msgstr "هیچ امضا کننده معتبری برای ایمیل PGP نیست."
 
 #: lib/secure_mailing/pgp/tool/error.rb:160
 msgid "There was an unknown PGP error."
@@ -14186,12 +14021,12 @@ msgid "There were PGP keys found for %s, but at least one of them has expired."
 msgstr ""
 
 #: lib/secure_mailing/smime/security_options.rb:66
-#, fuzzy
-#| msgid "Certificate for verification could not be found."
 msgid ""
 "There were certificates found for %s, but at least one of them is not valid "
 "yet or has expired."
-msgstr "گواهینامه برای راستی‌آزمایی یافت نشد."
+msgstr ""
+"گواهینامه‌هایی برای %s یافت شد، ولی حداقل یکی از آن‌ها یا هنوز معتبر نشده یا "
+"منقضی شده."
 
 #: app/frontend/shared/form/i18n/locales.ts:97
 msgid "There were errors in your form."
@@ -14217,10 +14052,8 @@ msgid ""
 msgstr ""
 
 #: app/models/ticket/time_accounting.rb:44
-#, fuzzy
-#| msgid "The article does not belong to the specified ticket."
 msgid "This article is not part of the ticket."
-msgstr "این یادداشت به تیکت مشخص شده تعلق ندارد."
+msgstr "این بند قسمتی از این تیکت نیست."
 
 #: lib/telegram_helper.rb:47
 msgid "This bot already exists."
@@ -14249,16 +14082,12 @@ msgid "This feature is not enabled."
 msgstr "این ویژگی فعال نشده است."
 
 #: config/initializers/activemodel_error.rb:31
-#, fuzzy
-#| msgid "Text editing"
 msgid "This field %s"
-msgstr "ویرایش متن"
+msgstr "این جانوشت %s"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldFile/features/multipleFilesError.ts:18
-#, fuzzy
-#| msgid "Invalid password, it must be at least %s characters long!"
 msgid "This field allows only one file."
-msgstr "رمز عبور نامعتبر. حداقل بایستی دارای %s کاراکتر باشد."
+msgstr "این جانوشت فقط یک پرونده را اجازه می‌دهد."
 
 #: app/frontend/shared/form/i18n/locales.ts:153
 msgid "This field can only contain alphabetical characters."
@@ -14273,16 +14102,12 @@ msgid "This field can only contain letters and spaces."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts:263
-#, fuzzy
-#| msgid "Invalid password, it must be at least %s characters long!"
 msgid "This field can only contain lowercase letters."
-msgstr "رمز عبور نامعتبر. حداقل بایستی دارای %s کاراکتر باشد."
+msgstr "این جانوشت فقط شامل حروف کوچک می‌شود."
 
 #: app/frontend/shared/form/i18n/locales.ts:253
-#, fuzzy
-#| msgid "Invalid password, it must be at least %s characters long!"
 msgid "This field can only contain uppercase letters."
-msgstr "رمز عبور نامعتبر. حداقل بایستی دارای %s کاراکتر باشد."
+msgstr "این جانوشت فقط شامل حروف بزرگ می‌شود."
 
 #: app/frontend/shared/form/i18n/locales.ts:485
 msgid "This field can't contain the value \"%s\"."
@@ -15966,7 +15791,7 @@ msgstr "قابل استفاده در نمایش آبجکت"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:434
 msgid "Used when composing a Ticket article"
-msgstr "استفاده شده هنگام ایجاد مطلب برای یک تیکت"
+msgstr "استفاده شده هنگام ایجاد بند برای یک تیکت"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:464
 msgid "Used when composing a text"

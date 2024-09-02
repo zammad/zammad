@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-18 11:00+0000\n"
+"PO-Revision-Date: 2024-08-30 22:16+0000\n"
 "Last-Translator: Mantas Masalskis <mantas@idev.lt>\n"
 "Language-Team: Lithuanian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/lt/>\n"
@@ -13,7 +13,7 @@ msgstr ""
 "Plural-Forms: nplurals=3; plural=(n % 10 == 1 && (n % 100 < 11 || n % 100 > "
 "19)) ? 0 : ((n % 10 >= 2 && n % 10 <= 9 && (n % 100 < 11 || n % 100 > 19)) ? "
 "1 : 2);\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.7\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -641,7 +641,7 @@ msgstr "%s atnaujino naudotoją |%s|"
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:34
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:2
 msgid "%s user to %s user"
-msgstr ""
+msgstr "%s naudotojas į %s naudotoją"
 
 #: lib/whatsapp/webhook/message.rb:53
 #, fuzzy
@@ -671,15 +671,15 @@ msgstr "%s% vėl atidaryti"
 
 #: app/models/concerns/has_group_relation_definition.rb:51
 msgid "%{model} can have full or granular access to group"
-msgstr ""
+msgstr "%{model} gali turėti pilną arba dalinę prieigą prie grupės"
 
 #: app/models/object_manager/attribute.rb:572
 msgid "%{name} already exists"
-msgstr ""
+msgstr "%{name} jau egzistuoja"
 
 #: app/models/object_manager/attribute.rb:561
 msgid "%{name} is a reserved word"
-msgstr ""
+msgstr "%{name} yra rezervuotas žodis"
 
 #: app/frontend/shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:62
 #, fuzzy
@@ -5880,7 +5880,7 @@ msgstr "Įjungti laiko apskaitą."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:341
 msgid "Enable/disable inline translations"
-msgstr "Įjungti/išjungti tiesioginį vertimą"
+msgstr "Įjungti/išjungti greitąjį vertimą"
 
 #: db/seeds/settings.rb:3432
 msgid "Enable/disable online chat."
@@ -13672,11 +13672,11 @@ msgstr "Reikia teksto arba prisegtuko"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:11
 msgid "Text with disabled inline translations looks like"
-msgstr ""
+msgstr "Tekstas su išjungtu greituoju vertimu atrodo kaip"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:12
 msgid "Text with enabled inline translations looks like"
-msgstr ""
+msgstr "Tekstas su įjungtu greituoju vertimu atrodo kaip"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:37
 #, fuzzy
@@ -15994,18 +15994,23 @@ msgstr ""
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:41
 msgid "To find out more about the 24-hour customer service window see %l."
 msgstr ""
+"Daugiau informacijos apie 24 valandų klientų aptarnavimo langą rasite %l."
 
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:116
 msgid ""
 "To install %s as an app, press the %s \"Share\" button and then the %s \"Add "
 "to Home Screen\" button."
 msgstr ""
+"Jei norite įdiegti %s kaip programėlę, paspauskite mygtuką %s „Bendrinti“, "
+"tada mygtuką %s „Įtraukti į pagrindinį ekraną“."
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:10
 msgid ""
 "To make translations easier you can enable and disable the inline "
 "translation feature by pressing \"%s\" at any time."
 msgstr ""
+"Kad būtų patogiau versti, galite įjungti ir išjungti greitojo vertimo "
+"funkciją bet kuriuo metu paspausdami „%s“."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco:3
 msgid ""
