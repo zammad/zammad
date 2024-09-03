@@ -382,6 +382,7 @@ const submitCreateTicket = async (event: FormSubmitData<TicketFormData>) => {
   >
     <div class="w-full max-w-screen-2xl px-28 pt-3.5">
       <Form
+        id="ticket-create"
         ref="form"
         :key="tabId"
         :form-id="activeTaskbarTabFormId"

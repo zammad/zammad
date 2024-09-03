@@ -15,6 +15,7 @@ FactoryBot.define do
       customer { association :customer }
       group { Group.first }
       owner { association :agent }
+      tags { [] }
     end
 
     trait :dummy_data do
@@ -26,6 +27,7 @@ FactoryBot.define do
           'ticket.customer_id'    => { value: customer.id, value_completion: "#{customer.firstname} #{customer.lastname} <#{customer.email}>" },
           'ticket.group_id'       => { value: group.id },
           'ticket.owner_id'       => { value: owner.id },
+          'ticket.tags'           => { value: tags.join(',') }
         }
       end
     end
