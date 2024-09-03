@@ -1,0 +1,13 @@
+Pakvietimas į #{config.product_name} #{config.fqdn}
+
+<div>Sveiki #{user.firstname},</div>
+<br>
+<div>Aš (#{current_user.firstname} #{current_user.lastname}) kviečiu jus į #{config.product_name} - mūsų klientų pagalbos platformą.</div>
+<br>
+<div>Paspauskite <a href="#{config.http_type}://#{config.fqdn}/#password_reset_verify/#{token.token}">čia</a> ir pasirinkite savo slaptažodį.</div>
+<br>
+<div>Sėkmės,</div>
+<br>
+<div>#{current_user.firstname} #{current_user.lastname}</div>
+<br>
+<div>Jūsų #{config.product_name} komanda</div>
