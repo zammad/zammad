@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-30 22:16+0000\n"
+"PO-Revision-Date: 2024-09-03 05:37+0000\n"
 "Last-Translator: Mantas Masalskis <mantas@idev.lt>\n"
 "Language-Team: Lithuanian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/lt/>\n"
@@ -2436,10 +2436,8 @@ msgid "Body - Search for follow-up also in mail body."
 msgstr "Turinys - Ieškoti laiškų sekos ir laiško turinyje."
 
 #: lib/validations/ticket_article_validator/sms_twilio.rb:14
-#, fuzzy
-#| msgid "A user is required!"
 msgid "Body text is required"
-msgstr "Pasirinkite naudotoją!"
+msgstr "Tekstas yra privalomas"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:41
 msgid "Boolean field"
@@ -3920,7 +3918,7 @@ msgstr "Dabartinis slaptažodis"
 
 #: app/controllers/application_controller/has_user.rb:42
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
-msgstr ""
+msgstr "Dabartinis naudotojas neturi leidimų naudoti From/X-On-Behalf-Of!"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue:227
 msgid "Currently no overview is assigned to your roles."
@@ -4411,6 +4409,8 @@ msgid ""
 "Defines if Knowledge Base navbar button is enabled for users without "
 "Knowledge Base permission."
 msgstr ""
+"Nurodo ar Žinių bazės navigacijos mygtukas yra įjungtas naudotojams be Žinių "
+"bazės leidimų."
 
 #: db/seeds/settings.rb:5407
 msgid "Defines if Knowledge Base navbar button is enabled."
@@ -4598,90 +4598,113 @@ msgstr ""
 #: db/seeds/settings.rb:4275
 msgid ""
 "Defines postmaster filter to identify Jira mails for correct follow-ups."
-msgstr ""
+msgstr "Nurodo postmaster filtrą, identifikuojantį Jira laiškų seką."
 
 #: db/seeds/settings.rb:4257
 msgid ""
 "Defines postmaster filter to identify ServiceNow mails for correct follow-"
 "ups."
-msgstr ""
+msgstr "Nurodo postmaster filtrą, identifikuojantį ServiceNow laiškų seką."
 
 #: db/seeds/settings.rb:4086
 msgid ""
 "Defines postmaster filter to identify auto responses to prevent auto replies "
 "from Zammad."
 msgstr ""
+"Nurodo postmaster filtrą, identifikuojantį automatinius atsakymus. Tai "
+"leidžia išvengianti Zammad automatinių atsakymų."
 
 #: db/seeds/settings.rb:4104
 msgid ""
 "Defines postmaster filter to identify follow-up ticket for merged tickets."
 msgstr ""
+"Nurodo postmaster filtrą, identifikuojantį sekančią triktį jei triktis "
+"prijungta."
 
 #: db/seeds/settings.rb:4095
 msgid ""
 "Defines postmaster filter to identify follow-ups (based on admin settings)."
 msgstr ""
+"Nurodo postmaster filtrą, identifikuojantį sekas (pagal administratoriaus "
+"nustatymus)."
 
 #: db/seeds/settings.rb:4176
 msgid ""
 "Defines postmaster filter to identify out-of-office emails for follow-up "
 "detection and keeping current ticket state."
 msgstr ""
+"Nurodo postmaster filtrą, identifikuojantį pavadavimo laiškus sekų radimui "
+"ir išsaugant teisingą trikčių būklę."
 
 #: db/seeds/settings.rb:4203
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and disables "
 "sending notification if delivery fails permanently."
 msgstr ""
+"Nurodo postmaster filtrą, identifikuojantį postmaster grąžinimus. Išjungia "
+"pranešimus jei pristatymas visiškai neįmanomas."
 
 #: db/seeds/settings.rb:4194
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and handles them "
 "as follow-up of the original tickets"
 msgstr ""
+"Nurodo postmaster filtrą, identifikuojantį postmaster grąžinimus. Juos "
+"apdoroja kaip atsakymą į atitinkamas triktis"
 
 #: db/seeds/settings.rb:4212
 msgid ""
 "Defines postmaster filter to identify postmaster bounces; and reopens "
 "tickets if delivery fails permanently."
 msgstr ""
+"Nurodo postmaster filtrą, identifikuojantį postmaster grąžinimus. Vėl "
+"atidaro triktis jei pristatymas visiškai neįmanomas."
 
 #: db/seeds/settings.rb:4158
 msgid "Defines postmaster filter to identify sender user."
-msgstr ""
+msgstr "Nurodo postmaster filtrą, identifikuojantį siunčiantįjį naudotoją."
 
 #: db/seeds/settings.rb:4230
 msgid ""
 "Defines postmaster filter to manage Icinga (http://www.icinga.org) emails."
 msgstr ""
+"Nurodo postmaster filtrą Icinga (http://www.icinga.org) laiškų tvarkymui."
 
 #: db/seeds/settings.rb:4248
 msgid ""
 "Defines postmaster filter to manage Monit (https://mmonit.com/monit/) emails."
 msgstr ""
+"Nurodo postmaster filtrą Monit (https://mmonit.com/monit/) laiškų tvarkymui."
 
 #: db/seeds/settings.rb:4239
 msgid ""
 "Defines postmaster filter to manage Nagios (http://www.nagios.org) emails."
 msgstr ""
+"Nurodo postmaster filtrą Nagios (http://www.nagios.org) laiškų tvarkymui."
 
 #: db/seeds/settings.rb:4077
 msgid ""
 "Defines postmaster filter to remove X-Zammad headers from untrustworthy "
 "sources."
 msgstr ""
+"Nurodo postmaster filtrą ištrinantį X-Zammad antraštes iš nepatikimų "
+"siuntėjų."
 
 #: db/seeds/settings.rb:4113
 msgid ""
 "Defines postmaster filter to set the owner (based on group follow up "
 "assignment)."
 msgstr ""
+"Nurodo postmaster filtrą priskiriantį trikties savininką (pagal grupės "
+"sekančių laiškų priskyrimą)."
 
 #: db/seeds/settings.rb:4122
 msgid ""
 "Defines postmaster filter to set the sender/from of emails based on reply-to "
 "header."
 msgstr ""
+"Nurodo postmaster filtrą priskiriantį laiškų siuntėją (Nuo) pagal reply-to "
+"antraštę."
 
 #: db/seeds/settings.rb:4293
 msgid ""
@@ -4693,27 +4716,27 @@ msgstr ""
 
 #: db/seeds/settings.rb:4074
 msgid "Defines postmaster filter."
-msgstr ""
+msgstr "Nurodo postmaster filtrą."
 
 #: db/seeds/settings.rb:207
 msgid "Defines pretty date format."
-msgstr ""
+msgstr "Nurodo gražų datos formatą."
 
 #: db/seeds/settings.rb:5301
 msgid "Defines processing timeout for the html sanitizer."
-msgstr ""
+msgstr "Nurodo ilgiausią leistiną HTML valymo trukmę."
 
 #: db/seeds/settings.rb:4910
 msgid "Defines sync transaction backend."
-msgstr ""
+msgstr "Nurodo sinchroninių transakcijos darbų valdiklį."
 
 #: db/seeds/settings.rb:5289
 msgid "Defines the CSS font information for HTML emails."
-msgstr ""
+msgstr "Nurodo CSS šriftą HTML laiškams."
 
 #: db/seeds/settings.rb:5101
 msgid "Defines the CTI config."
-msgstr ""
+msgstr "Nurodo CTI konfigūraciją."
 
 #: db/seeds/settings.rb:4596
 msgid "Defines the Checkmk token for allowing updates."
@@ -4721,57 +4744,61 @@ msgstr "Nurodo Checkmk žetoną leidžiantį atnaujinimus."
 
 #: db/seeds/settings.rb:5237
 msgid "Defines the Clearbit config."
-msgstr ""
+msgstr "Nurodo Clearbit konfigūraciją."
 
 #: db/seeds/settings.rb:4749
 msgid "Defines the Exchange OAuth config."
-msgstr ""
+msgstr "Nurodo Exchange OAuth konfigūraciją."
 
 #: db/seeds/settings.rb:4736
 msgid "Defines the Exchange config."
-msgstr ""
+msgstr "Nurodo Exchange konfigūraciją."
 
 #: db/seeds/settings.rb:316
 msgid "Defines the HTTP protocol of your instance."
-msgstr ""
+msgstr "Nurodo jūsų sistemos HTTP protokolą."
 
 #: db/seeds/settings.rb:5539
 msgid "Defines the PGP config."
-msgstr ""
+msgstr "Nurodo PGP konfigūraciją."
 
 #: db/seeds/settings.rb:5176
 msgid "Defines the Placetel config."
-msgstr ""
+msgstr "Nurodo Placetel konfigūraciją."
 
 #: db/seeds/settings.rb:5497
 msgid "Defines the S/MIME config."
-msgstr ""
+msgstr "Nurodo S/MIME konfigūraciją."
 
 #: db/seeds/settings.rb:4975
 msgid "Defines the Slack config."
-msgstr ""
+msgstr "Nurodo Slack konfigūraciją."
 
 #: db/seeds/settings.rb:5278
 msgid "Defines the agent limit."
-msgstr ""
+msgstr "Nurodo agentų limitą."
 
 #: db/seeds/settings.rb:402
 msgid ""
 "Defines the backend for geo IP lookups. Also shows location of an IP address "
 "if it is traceable."
 msgstr ""
+"Nurodo IP adreso geolokacijos valdiklį. Jei pavyksta nustatyti, taip pat "
+"rodo IP adreso vietą."
 
 #: db/seeds/settings.rb:456
 msgid ""
 "Defines the backend for geo calendar lookups. Used for initial calendar "
 "succession."
 msgstr ""
+"Nurodo geografinės kalendorių paieškos valdiklį. Naudojama sukuriant pirminį "
+"kalendorių."
 
 #: db/seeds/settings.rb:429
 msgid ""
 "Defines the backend for geo location lookups to store geo locations for "
 "addresses."
-msgstr ""
+msgstr "Nurodo geolokacijos valdiklį adresų talpinimui."
 
 #: db/seeds/settings.rb:375
 msgid "Defines the backend for user and organization image lookups."
@@ -4870,7 +4897,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:2656
 msgid "Defines the permission level used for lookups."
-msgstr ""
+msgstr "Nurodo leidimų lygį naudojamą paieškoje."
 
 #: db/seeds/settings.rb:297
 msgid "Defines the port of the websocket server."
@@ -4878,15 +4905,15 @@ msgstr ""
 
 #: db/seeds/settings.rb:7
 msgid "Defines the random application secret."
-msgstr ""
+msgstr "Nurodo atsitiktinį aplikacijos slaptuką."
 
 #: db/seeds/settings.rb:4328
 msgid "Defines the sender email address of Icinga emails."
-msgstr ""
+msgstr "Nurodo Icinga laiškų siuntėjo adresą."
 
 #: db/seeds/settings.rb:4426
 msgid "Defines the sender email address of Nagios emails."
-msgstr ""
+msgstr "Nurodo Nagios laiškų siuntėjo adresą."
 
 #: db/seeds/settings.rb:4634
 msgid "Defines the sender email address of the service emails."
@@ -4907,6 +4934,8 @@ msgid ""
 "Defines the session timeout for inactivity of users. Based on the assigned "
 "permissions the highest timeout value will be used, otherwise the default."
 msgstr ""
+"Nurodo sesijos laiko limitą neaktyviems naudotojams. Bus naudojamas "
+"ilgiausias laiko limitas pagal priskirtus leidimus arba numatytasis."
 
 #: db/seeds/settings.rb:5039
 msgid "Defines the sipgate.io config."
@@ -7165,11 +7194,11 @@ msgstr ""
 msgid ""
 "Group information could not be retrieved, please check your bind user "
 "permissions."
-msgstr ""
+msgstr "Nepavyko gauti grupės informacijos. Patikrinkite naudotojo leidimus."
 
 #: app/models/channel/driver/sms/base.rb:39
 msgid "Group is invalid!"
-msgstr ""
+msgstr "Netinkama grupė!"
 
 #: app/models/channel/driver/sms/base.rb:36
 msgid "Group needed in channel definition!"
@@ -7178,10 +7207,8 @@ msgstr ""
 #: app/assets/javascripts/app/models/role.coffee:8
 #: app/assets/javascripts/app/models/user.coffee:13
 #: db/seeds/object_manager_attributes.rb:1425
-#, fuzzy
-#| msgid "Permissions"
 msgid "Group permissions"
-msgstr "Leidimai"
+msgstr "Grupės leidimai"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:18
 #: db/seeds/settings.rb:2850
@@ -8069,7 +8096,7 @@ msgstr ""
 #: app/controllers/integration/placetel_controller.rb:28
 #: app/controllers/integration/sipgate_controller.rb:28
 msgid "Invalid 'direction'!"
-msgstr ""
+msgstr "Netinkama „direction“!"
 
 #: app/controllers/application_controller/authenticates.rb:56
 msgid "Invalid BasicAuth credentials"
@@ -8109,15 +8136,15 @@ msgstr ""
 
 #: app/controllers/tickets_controller.rb:191
 msgid "Invalid link structure"
-msgstr ""
+msgstr "Netinkama nuorodos struktūra"
 
 #: app/controllers/tickets_controller.rb:197
 msgid "Invalid link structure (Object → LinkType)"
-msgstr ""
+msgstr "Netinkama nuorodos struktūra (Objektas → Nuorodos tipas)"
 
 #: app/controllers/tickets_controller.rb:194
 msgid "Invalid link structure (Object)"
-msgstr ""
+msgstr "Netinkama nuorodos struktūra (Objektas)"
 
 #: app/models/concerns/checks_condition_validation.rb:12
 msgid "Invalid object selector conditions"
@@ -8125,29 +8152,30 @@ msgstr "Netinkamos objekto parinkimo sąlygos"
 
 #: lib/password_policy/min_length.rb:11
 msgid "Invalid password, it must be at least %s characters long!"
-msgstr ""
+msgstr "Netinkamas slaptažodis. Turi būti bent %s simbolių!"
 
 #: lib/password_policy/max_length.rb:24
 msgid "Invalid password, it must be shorter than %s characters!"
-msgstr ""
+msgstr "Netinkamas slaptažodis. Turi būti daugiausia %s simbolių!"
 
 #: lib/password_policy/digit.rb:13
 msgid "Invalid password, it must contain at least 1 digit!"
-msgstr ""
+msgstr "Netinkamas slaptažodis. Turi būti bent 1 skaitmuo!"
 
 #: lib/password_policy/special_character.rb:13
 msgid "Invalid password, it must contain at least 1 special character!"
-msgstr ""
+msgstr "Netinkamas slaptažodis. Turi būti bent 1 specialusis simbolis!"
 
 #: lib/password_policy/upper_and_lower_case_characters.rb:13
 msgid ""
 "Invalid password, it must contain at least 2 lowercase and 2 uppercase "
 "characters!"
 msgstr ""
+"Netinkamas slaptažodis. Turi būti bent 2 mažosios ir 2 didžiosios raidės!"
 
 #: lib/knowledge_base/permissions_update.rb:86
 msgid "Invalid permissions, do not lock yourself out."
-msgstr ""
+msgstr "Netinkami leidimai, neužsiblokuokite savęs."
 
 #: lib/knowledge_base/permissions_update.rb:113
 msgid "Invalid permissions."
@@ -8158,16 +8186,20 @@ msgid ""
 "Invalid permissions. This role does not have access to this category because "
 "parent category is not visible for it."
 msgstr ""
+"Netinkami leidimai. Ši rolė neturi prieigos prie šitos kategorijos, nes "
+"neturi prieigos prie tėvinės kategorijos."
 
 #: lib/knowledge_base/permissions_update.rb:113
 msgid ""
 "Invalid permissions. This role has editor access to parent category. "
 "Limiting access is not effective."
 msgstr ""
+"Netinkami leidimai. Ši rolė turi redaktoriaus prieigą prie tėvinės "
+"kategorijos. Prieigos ribojimas būtų neveiksmingas."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:93
 msgid "Invalid security code! Please try again with a new code."
-msgstr ""
+msgstr "Netinkamas saugos kodas! Bandėkite su nauju kodu."
 
 #: app/controllers/integration/cti_controller.rb:41
 #: app/controllers/integration/placetel_controller.rb:40
@@ -8177,11 +8209,11 @@ msgstr "Netinkamas žetonas, susisiekite su administratoriumi!"
 
 #: app/frontend/apps/mobile/components/CommonStepper/CommonStepperStep.vue:33
 msgid "Invalid values in step %s"
-msgstr ""
+msgstr "Netinkamos vertės žingsnyje %s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_video.coffee:39
 msgid "Invalid video URL"
-msgstr ""
+msgstr "Netinkamas video adresas"
 
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee:78
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:97
@@ -8209,6 +8241,22 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"Pakvietimas į #{config.product_name} #{config.fqdn}\n"
+"\n"
+"<div>Sveiki #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Aš (#{current_user.firstname} #{current_user.lastname}) kviečiu jus į "
+"#{config.product_name} - mūsų klientų pagalbos platformą.</div>\n"
+"<br>\n"
+"<div>Paspauskite <a href=\"#{config.http_type}://#{config.fqdn}/#"
+"password_reset_verify/#{token.token}\">čia</a> ir pasirinkite savo "
+"slaptažodį.</div>\n"
+"<br>\n"
+"<div>Sėkmės,</div>\n"
+"<br>\n"
+"<div>#{current_user.firstname} #{current_user.lastname}</div>\n"
+"<br>\n"
+"<div>Jūsų #{config.product_name} komanda</div>\n"
 
 #: app/assets/javascripts/app/views/getting_started/agent.jst.eco:5
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:20
@@ -8228,15 +8276,15 @@ msgstr "Kolegų kvietimas"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps.coffee:49
 msgid "Invite Customer"
-msgstr "Klientų kvietimas"
+msgstr "Pakvieskite klientus"
 
 #: app/controllers/first_steps_controller.rb:64
 msgid "Invite agents/colleagues to help working on tickets"
-msgstr ""
+msgstr "Pakvieskite agentus/kolegas kartu dirbti su triktimis"
 
 #: app/controllers/first_steps_controller.rb:70
 msgid "Invite customers to create issues in Zammad"
-msgstr ""
+msgstr "Pakvieskite klientus kurti triktis Zammad"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee:17
 msgid "Ionicons"
@@ -8244,7 +8292,7 @@ msgstr ""
 
 #: lib/validations/data_privacy_task_validator.rb:50
 msgid "It is not possible to delete the last account with admin permissions."
-msgstr ""
+msgstr "Negalima ištrinti paskutinės paskyros su administratoriaus leidimais."
 
 #: lib/validations/data_privacy_task_validator.rb:38
 msgid "It is not possible to delete the system user."
@@ -10776,7 +10824,7 @@ msgstr "Visiškai ištrinti žinių bazę"
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: db/seeds/settings.rb:2653
 msgid "Permission level for looking up tickets"
-msgstr ""
+msgstr "Leidimų lygis trikčių paieškai"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:168
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:96
@@ -14367,7 +14415,7 @@ msgstr "Pateiktas „oauth_token“ yra netinkamas."
 #: app/controllers/import_otrs_controller.rb:11
 #: app/controllers/import_zendesk_controller.rb:11
 msgid "The provided URL is invalid."
-msgstr ""
+msgstr "Pateiktas adresas yra netinkamas."
 
 #: app/controllers/import_freshdesk_controller.rb:60
 #: app/controllers/import_kayako_controller.rb:129
@@ -14376,7 +14424,7 @@ msgstr ""
 #: app/services/service/system/import/apply_kayako_configuration.rb:30
 #: app/services/service/system/import/apply_zendesk_configuration.rb:30
 msgid "The provided credentials are invalid."
-msgstr ""
+msgstr "Pateikti prisijungimai yra netinkami."
 
 #: lib/validations/channel_email_account_uniqueness_validator.rb:16
 msgid "The provided email account is already in use."
@@ -14385,23 +14433,26 @@ msgstr ""
 #: app/models/webhook.rb:34
 msgid "The provided endpoint is invalid, no hostname was specified."
 msgstr ""
+"Pateiktas prieigos taškas yra netinkamas. Nenurodytas serverio pavadinimas."
 
 #: app/models/webhook.rb:33
 msgid ""
 "The provided endpoint is invalid, no http or https protocol was specified."
 msgstr ""
+"Pateiktas prieigos taškas yra netinkamas. Nenurodytas nei http, nei https "
+"protokolas."
 
 #: app/models/webhook.rb:36
 msgid "The provided endpoint is invalid."
-msgstr ""
+msgstr "Pateiktas prieigos taškas netinkamas."
 
 #: app/models/postmaster_filter.rb:32
 msgid "The provided match operator is missing or invalid."
-msgstr ""
+msgstr "Pateiktas patikros operatorius netinkamas."
 
 #: app/models/webhook.rb:45
 msgid "The provided payload is invalid. Please check your syntax."
-msgstr ""
+msgstr "Pateikti duomenys yra netinkami. Patikrinkite sintaksę."
 
 #: app/controllers/application_controller/authenticates.rb:101
 #: app/controllers/integration/check_mk_controller.rb:139
@@ -14442,7 +14493,7 @@ msgstr ""
 
 #: lib/secure_mailing/pgp/tool/error.rb:151
 msgid "The required PGP passphrase is missing."
-msgstr ""
+msgstr "PGP slapta frazė privaloma."
 
 #: app/controllers/users_controller.rb:779
 #: app/services/service/user/add_first_admin.rb:12
@@ -14455,11 +14506,11 @@ msgstr "Būtinas „organization“ atributas."
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb:35
 msgid "The required event field 'execution' is missing."
-msgstr ""
+msgstr "Būtinas įvykio atributas „execution“."
 
 #: app/jobs/trigger_webhook_job/custom_payload/track/notification.rb:62
 msgid "The required event field 'execution' is unknown or missing."
-msgstr ""
+msgstr "ūtinas įvykio atributas „execution“ neatpažintas."
 
 #: lib/idoit.rb:22
 msgid "The required field 'api_token' is missing from the config."
@@ -14640,7 +14691,7 @@ msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts:565
 msgid "The selected date is invalid."
-msgstr ""
+msgstr "Pasirinkta data yra netinkama."
 
 #: app/services/service/system/import/apply_configuration_base.rb:38
 #, fuzzy
@@ -14837,6 +14888,7 @@ msgstr "Bendraukite su mumis naudodami „triktis“."
 #: lib/telegram_helper.rb:35
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
 msgstr ""
+"Telegram negalėjo išsaugoti webhook. Panašu, kad adresas yra netinkamas."
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:64
 #, fuzzy
@@ -15312,7 +15364,7 @@ msgstr ""
 msgid ""
 "This permission level is not available based on the current roles "
 "permissions."
-msgstr ""
+msgstr "Šis leidimų lygis negalimas dėl nepakankamų rolės leidimų."
 
 #: app/services/service/execute_locked_block.rb:46
 msgid ""
@@ -16835,7 +16887,7 @@ msgstr ""
 msgid ""
 "User information could not be retrieved, please check your bind user "
 "permissions."
-msgstr ""
+msgstr "Nepavyko gauti naudotojo informacijos. Patikrinkite naudotojo leidimus."
 
 #: app/assets/javascripts/app/controllers/user.coffee:201
 msgid "User successfully unlocked!"
@@ -17591,11 +17643,11 @@ msgstr ""
 #: app/controllers/import_freshdesk_controller.rb:73
 #: app/services/service/system/import/apply_freshdesk_configuration.rb:32
 msgid "You do not have administrator permission."
-msgstr ""
+msgstr "Neturite administratoriaus prieigos."
 
 #: app/frontend/shared/router/guards/before/permission.ts:37
 msgid "You don't have the necessary permissions to access this page."
-msgstr ""
+msgstr "Neturite prieigos prie šio puslapio."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/channel.coffee:29
 #: app/frontend/shared/entities/ticket/channel/plugins/whatsapp.ts:40
@@ -17610,7 +17662,7 @@ msgstr ""
 
 #: app/policies/ticket_policy.rb:65
 msgid "You have insufficient permissions to mention other users."
-msgstr ""
+msgstr "Neturite leidimų paminėti kitus naudotojus."
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts:35
 msgid "You have insufficient rights to view this organization."
@@ -17629,6 +17681,7 @@ msgid ""
 "You have no change permission or you are a customer for some of the selected "
 "tickets."
 msgstr ""
+"Neturite keitimo leidimų arba esate klientas vienoje iš pasirinktų trikčių."
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:15
 msgid "You have no configured %s right now."
@@ -18538,7 +18591,7 @@ msgid "is in working time"
 msgstr ""
 
 msgid "is invalid"
-msgstr ""
+msgstr "yra netinkama"
 
 #: lib/validations/object_manager/attribute_validator/min_max.rb:30
 msgid "is larger than the allowed maximum value of %{max_value}"
