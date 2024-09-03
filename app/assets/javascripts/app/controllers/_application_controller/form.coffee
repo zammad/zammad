@@ -479,10 +479,12 @@ class App.ControllerForm extends App.Controller
 
       if !@constructor.fieldIsReadonly(field_by_name)
         field_by_name.closest('.form-group').find('input, select, textarea, .form-control').attr('readonly', true)
+        field_by_name.closest('.form-group').find('input, select, textarea, .form-control').attr('tabindex', '-1')
         field_by_name.closest('.form-group').find('input[type=file]').attr('disabled', true)
         field_by_name.closest('.form-group').addClass('is-readonly')
       if !@constructor.fieldIsReadonly(field_by_data)
         field_by_data.closest('.form-group').find('input, select, textarea, .form-control').attr('readonly', true)
+        field_by_data.closest('.form-group').find('input, select, textarea, .form-control').attr('tabindex', '-1')
         field_by_data.closest('.form-group').find('input[type=file]').attr('disabled', true)
         field_by_data.closest('.form-group').addClass('is-readonly')
 
@@ -495,10 +497,12 @@ class App.ControllerForm extends App.Controller
 
       if @constructor.fieldIsReadonly(field_by_name)
         field_by_name.closest('.form-group').find('input, select, textarea, .form-control').attr('readonly', false)
+        field_by_name.closest('.form-group').find('input, select, textarea, .form-control').removeAttr('tabindex')
         field_by_name.closest('.form-group').find('input[type=file]').attr('disabled', false)
         field_by_name.closest('.form-group').removeClass('is-readonly')
       if @constructor.fieldIsReadonly(field_by_data)
         field_by_data.closest('.form-group').find('input, select, textarea, .form-control').attr('readonly', false)
+        field_by_data.closest('.form-group').find('input, select, textarea, .form-control').removeAttr('tabindex')
         field_by_data.closest('.form-group').find('input[type=file]').attr('disabled', false)
         field_by_data.closest('.form-group').removeClass('is-readonly')
 
