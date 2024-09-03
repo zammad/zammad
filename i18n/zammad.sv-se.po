@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-31 09:16+0000\n"
+"PO-Revision-Date: 2024-09-03 05:37+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
@@ -2897,7 +2897,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:197
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:194
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:259
@@ -4046,7 +4046,7 @@ msgstr "Skapa Ärende"
 msgid "Create a Test Ticket"
 msgstr "Skapa ett testärende"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:206
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:203
 msgid "Create a new checklist item"
 msgstr "Skapa en ny post i checklistan"
 
@@ -6326,7 +6326,6 @@ msgstr "E-postkonton"
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:126
 #: app/assets/javascripts/app/views/google/list.jst.eco:81
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:82
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:33
 msgid "Email Address"
 msgstr "E-postadress"
 
@@ -6362,6 +6361,12 @@ msgstr "Utgående e-post"
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:116
 msgid "Email Verification"
 msgstr "E-postverifiering"
+
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:33
+#, fuzzy
+#| msgid "Email Address"
+msgid "Email address"
+msgstr "E-postadress"
 
 #: app/models/user.rb:609
 msgid "Email address '%{email}' is already used for another user."
@@ -7614,8 +7619,13 @@ msgid "Full"
 msgstr "Fullständigt"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:11
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:24
 msgid "Full Name"
+msgstr "Fullständigt namn"
+
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:24
+#, fuzzy
+#| msgid "Full Name"
+msgid "Full name"
 msgstr "Fullständigt namn"
 
 #: db/seeds/settings.rb:263
@@ -11054,7 +11064,7 @@ msgstr "Inget certifikat hittat."
 msgid "No checklist added to this ticket yet."
 msgstr "Ingen checklista har ännu lagts till i detta ärende."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:182
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:179
 msgid "No checklist items yet"
 msgstr "Ännu inga checklistposter"
 
@@ -11815,12 +11825,7 @@ msgstr "Organisation"
 msgid "Organization & Department Name"
 msgstr "Organisation- och avdelningsnamn"
 
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:47
-msgid "Organization Logo"
-msgstr "Organisation Logga"
-
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:9
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:40
 msgid "Organization Name"
 msgstr "Organisationsnamn"
 
@@ -11833,6 +11838,18 @@ msgstr "Organisationsupport"
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationEdit.ts:85
 msgid "Organization could not be updated."
 msgstr "Organisationen kunde inte uppdateras."
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:47
+#, fuzzy
+#| msgid "Organization Logo"
+msgid "Organization logo"
+msgstr "Organisation Logga"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:40
+#, fuzzy
+#| msgid "Organization Name"
+msgid "Organization name"
+msgstr "Organisationsnamn"
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:78
 msgid "Organization tickets"
@@ -13057,7 +13074,7 @@ msgid "Reopening time in days"
 msgstr "Återöppningstid i dagar"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:14
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:191
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:188
 msgid "Reorder"
 msgstr "Ändra ordning"
 
@@ -13598,7 +13615,7 @@ msgstr "Lördag"
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:121
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:219
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:216
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:70
@@ -14050,13 +14067,18 @@ msgstr "Skicka inbjudan"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:397
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:65
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:50
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:52
 msgid "Send Mails via"
 msgstr "Skicka e-post via"
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco:33
 msgid "Send a message to all logged in users."
 msgstr "Skicka meddelande till alla inloggade användare."
+
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:52
+#, fuzzy
+#| msgid "Send Mails via"
+msgid "Send mails via"
+msgstr "Skicka e-post via"
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:40
 msgid ""
@@ -15351,7 +15373,7 @@ msgid "Text or attachment is required"
 msgstr "Text eller bifogad fil krävs"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_item_edit.jst.eco:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:145
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:146
 msgid "Text or ticket identifier"
 msgstr "Identifierare för text eller ärende"
 
@@ -15530,7 +15552,7 @@ msgstr "Begäran om administratörsmedgivande skickades till din administratör.
 msgid "The admin password auth email could not be sent."
 msgstr "Admin lösenord autentiseringsmail kunde inte skickas."
 
-#: app/frontend/apps/desktop/stores/theme.ts:39
+#: app/frontend/apps/desktop/stores/theme.ts:42
 msgid "The appearance could not be updated."
 msgstr "Utseendet kunde inte uppdateras."
 
@@ -20187,8 +20209,8 @@ msgid "chat"
 msgstr "chatta"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
-msgid "checked Checklist Item '%s'"
-msgstr "markerad Checklistpost '%s'"
+msgid "checked checklist item '%s'"
+msgstr "markerad checklistpost '%s'"
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco:24
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:24
@@ -21386,8 +21408,8 @@ msgid "unassign user"
 msgstr "plocka bort användare från ärendet"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
-msgid "unchecked Checklist Item '%s'"
-msgstr "avmarkerad Checklistpost '%s'"
+msgid "unchecked checklist item '%s'"
+msgstr "avmarkerad checklistpost '%s'"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "unset readonly"

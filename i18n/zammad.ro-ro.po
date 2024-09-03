@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-02 04:54+0000\n"
+"PO-Revision-Date: 2024-09-03 05:37+0000\n"
 "Last-Translator: Bogdan Lungu <bogdy_lungu_alex@yahoo.co.uk>\n"
 "Language-Team: Romanian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ro/>\n"
@@ -2979,7 +2979,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:197
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:194
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:259
@@ -4185,7 +4185,7 @@ msgstr "Creează tichet"
 msgid "Create a Test Ticket"
 msgstr "Creează un tichet de test"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:206
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:203
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "Create a new checklist item"
@@ -6572,7 +6572,6 @@ msgstr "Conturi e-mail"
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:126
 #: app/assets/javascripts/app/views/google/list.jst.eco:81
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:82
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:33
 msgid "Email Address"
 msgstr "Adresa de e-mail"
 
@@ -6608,6 +6607,12 @@ msgstr "E-mail trimis"
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:116
 msgid "Email Verification"
 msgstr "Verificare e-mail"
+
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:33
+#, fuzzy
+#| msgid "Email Address"
+msgid "Email address"
+msgstr "Adresa de e-mail"
 
 #: app/models/user.rb:609
 msgid "Email address '%{email}' is already used for another user."
@@ -7895,8 +7900,13 @@ msgid "Full"
 msgstr "Toate"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:11
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:24
 msgid "Full Name"
+msgstr "Nume complet"
+
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:24
+#, fuzzy
+#| msgid "Full Name"
+msgid "Full name"
 msgstr "Nume complet"
 
 #: db/seeds/settings.rb:263
@@ -8704,7 +8714,8 @@ msgstr ""
 msgid ""
 "If the host and service have recovered, the ticket can be closed "
 "automatically."
-msgstr "Dacă host-ul și serviciul și-au revenit, tichetul va fi închis automat."
+msgstr ""
+"Dacă host-ul și serviciul și-au revenit, tichetul va fi închis automat."
 
 #: db/seeds/settings.rb:3276
 msgid ""
@@ -9370,7 +9381,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:93
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:107
 msgid "Invalid security code! Please try again with a new code."
-msgstr "Cod de securitate invalid! Vă rugăm să încercați din nou cu un cod nou."
+msgstr ""
+"Cod de securitate invalid! Vă rugăm să încercați din nou cu un cod nou."
 
 #: app/controllers/integration/cti_controller.rb:41
 #: app/controllers/integration/placetel_controller.rb:40
@@ -9425,8 +9437,9 @@ msgstr ""
 "<div>Eu (#{current_user.firstname} #{current_user.lastname}) te invit la "
 "#{config.product_name} - platforma noastră de suport clienți.</div>\n"
 "<br>\n"
-"<div>Apasă <a href=\"#{config.http_type}://#{config.fqdn}/#"
-"password_reset_verify/#{token.token}\">aici</a> și setează-ți parola.</div>\n"
+"<div>Apasă <a href=\"#{config.http_type}://#{config.fqdn}/"
+"#password_reset_verify/#{token.token}\">aici</a> și setează-ți parola.</"
+"div>\n"
 "<br>\n"
 "<div>Distracție plăcută,</div>\n"
 "<br>\n"
@@ -11434,46 +11447,42 @@ msgid "No Entry"
 msgstr "Nicio intrare"
 
 #: lib/external_credential/exchange.rb:12
-#, fuzzy
-#| msgid "No %s configured."
 msgid "No Exchange app configured!"
-msgstr "Nu a fost configura %s."
+msgstr "Nu este configurată nici o aplicație Exchange!"
 
 #: lib/external_credential/facebook.rb:12
-#, fuzzy
-#| msgid "No %s configured."
 msgid "No Facebook app configured!"
-msgstr "Nu a fost configura %s."
+msgstr "Nu este configurată nici o aplicație Facebook!"
 
 #: lib/external_credential/microsoft365.rb:12
-#, fuzzy
-#| msgid "No %s configured."
 msgid "No Microsoft 365 app configured!"
-msgstr "Nu a fost configura %s."
+msgstr "Nu este configurată nici o aplicație Microsoft 365!"
 
 #: db/seeds/settings.rb:553
 msgid "No Proxy"
-msgstr ""
+msgstr "Fără proxy"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:415
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:203
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:45
 msgid "No SSL"
-msgstr ""
+msgstr "Fără SSL"
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee:37
 msgid "No Thanks!"
-msgstr ""
+msgstr "Nu, mulțumesc!"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:122
 msgid ""
 "No additional text can be sent with this media type. Please remove the text."
 msgstr ""
+"Nu pot fi trimise texte suplimentare cu acest tip de media. Vă rugăm să "
+"eliminați textul."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee:4
 msgid "No answers"
-msgstr ""
+msgstr "Nici un răspuns"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:51
 #, fuzzy
@@ -11483,17 +11492,15 @@ msgstr "Fișiere atașate"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:325
 msgid "No camera found."
-msgstr ""
+msgstr "Nu a fost găsită nici o cameră web."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee:4
 msgid "No categories"
-msgstr ""
+msgstr "Fără categorii"
 
 #: app/models/setting/validation/saml/security.rb:33
-#, fuzzy
-#| msgid "Notification Sound"
 msgid "No certificate found."
-msgstr "Sunet de notificare"
+msgstr "Nu a fost găsit nici un certificat."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:416
@@ -11502,7 +11509,7 @@ msgstr "Sunet de notificare"
 msgid "No checklist added to this ticket yet."
 msgstr "Încă nu ați creat un tichet"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:182
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:179
 msgid "No checklist items yet"
 msgstr ""
 
@@ -11514,75 +11521,65 @@ msgid "No checklist templates have been created yet."
 msgstr "Niciun template creat"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:5
-#, fuzzy
-#| msgid "Save configuration"
 msgid "No configuration set."
-msgstr "Salvează configurația"
+msgstr "Nu a fost setată nici o configurație."
 
 #: app/views/knowledge_base/public/categories/index.html.erb:16
 #: app/views/knowledge_base/public/tags/show.html.erb:15
 msgid "No content to show"
-msgstr ""
+msgstr "Nici un conținut de afișat"
 
 #: app/models/group.rb:34
 msgid "No double colons (::) allowed, reserved delimiter"
-msgstr ""
+msgstr "Nu sunt permise două puncte (::), delimitator rezervat"
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:21
 msgid "No drafts"
-msgstr ""
+msgstr "Fără ciorne"
 
 #: app/controllers/users_controller.rb:347
 msgid "No email!"
-msgstr ""
+msgstr "Nici un e-mail!"
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:131
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:117
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:267
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:150
-#, fuzzy
-#| msgid "No Entries"
 msgid "No entries"
-msgstr "Nicio intrare"
+msgstr "Fără înregistrări"
 
 #: app/controllers/integration/exchange_controller.rb:58
 msgid "No entries were found in the selected folder(s)."
-msgstr ""
+msgstr "Nu au fost găsite înregistrări în folder(ele) selectate."
 
 #: app/frontend/shared/form/i18n/locales.ts:46
-#, fuzzy
-#| msgid "No filter."
 msgid "No file chosen."
-msgstr "Niciun filtru"
+msgstr "Nici un fișier selectat."
 
 #: app/frontend/shared/form/i18n/locales.ts:454
 msgid "No file formats allowed."
-msgstr ""
+msgstr "Nu este permis nici un format de fișier."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:647
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:803
-#, fuzzy
-#| msgid "Not configured"
 msgid "No filter was configured."
-msgstr "Neconfigurat"
+msgstr "Nici filtru configurat."
 
 #: app/controllers/integration/exchange_controller.rb:45
 msgid "No folders were found for the given user credentials."
-msgstr ""
+msgstr "Nu au fost găsite foldere pentru datele de conectare furnizate."
 
 #: app/services/service/system/import/check_status.rb:44
-#, fuzzy
-#| msgid "Your tickets in process"
 msgid "No import in progress."
-msgstr "Tichetele tale în procesare"
+msgstr "Nici un import în desfășurare."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:192
 msgid "No linked issues"
-msgstr ""
+msgstr "Fără probleme asociate"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_macro.jst.eco:4
 msgid "No macros available."
-msgstr ""
+msgstr "Nici un macro disponibil."
 
 #: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/user.ts:9
 #, fuzzy
@@ -11597,16 +11594,12 @@ msgid "No organizations found"
 msgstr "Organizații"
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:297
-#, fuzzy
-#| msgid "Previous tab"
 msgid "No previous searches"
-msgstr "Tab anterior"
+msgstr "Nici o căutare anterioară"
 
 #: app/models/setting/validation/saml/security.rb:34
-#, fuzzy
-#| msgid "No results found"
 msgid "No private key found."
-msgstr "Nu au fost găsite rezultate"
+msgstr "Nu a fost găsită nici o cheie privată."
 
 #: db/seeds/settings.rb:556
 msgid "No proxy for the following hosts."
@@ -11614,7 +11607,7 @@ msgstr "Nu folosi proxy pentru următoarele host-uri."
 
 #: lib/whatsapp/webhook/message/status.rb:15
 msgid "No related article found to process the status message on."
-msgstr ""
+msgstr "Niciun articol corelat găsit pentru a procesa mesajul de status."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:336
@@ -11633,16 +11626,16 @@ msgstr "Nu au fost găsite rezultate."
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue:30
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:204
 msgid "No security information available."
-msgstr ""
+msgstr "Nici o informație de securitate disponibilă."
 
 #: lib/sessions/event/chat_session_start.rb:23
 #: lib/sessions/event/chat_transfer.rb:15
 msgid "No session available."
-msgstr ""
+msgstr "Nici o sesiune disponibilă."
 
 #: lib/stats.rb:21
 msgid "No settings with area 'Dashboard::Stats' defined"
-msgstr ""
+msgstr "Nici o setare definită cu zona 'Dashboard::Stats'"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:224
 #, fuzzy
@@ -11656,27 +11649,27 @@ msgstr "Distribuit"
 #: app/controllers/tickets_controller.rb:601
 #: app/controllers/users_controller.rb:650
 msgid "No source data submitted!"
-msgstr ""
+msgstr "Nici o dată sursă trimisă!"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:14
 msgid "No template created yet."
-msgstr "Niciun template creat"
+msgstr "Încă nu a fost creată nici o schiță."
 
 #: app/controllers/users_controller.rb:326
 msgid "No token!"
-msgstr ""
+msgstr "Fără token!"
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
 msgid "No translation for this locale available"
-msgstr ""
+msgstr "Nu este disponibilă nici o traducere pentru această localizare"
 
 #: app/models/ticket.rb:397
 msgid "No triggers active"
-msgstr ""
+msgstr "Nici un declanșator(trigger) activ"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:8
 msgid "No unread notifications for you. :)"
-msgstr "Nu sunt notificări necitite pentru tine. :)"
+msgstr "Nu ai notificări necitite. :)"
 
 #: db/seeds/settings.rb:1300
 msgid "No user creation on logon"
@@ -11687,10 +11680,12 @@ msgid ""
 "No webhook available, please create a new one or activate an existing one at "
 "\"Manage > Webhook\""
 msgstr ""
+"Niciun webhook disponibil, vă rugăm să creați unul nou sau să activați unul "
+"existent la \"Administrare > Webhook\""
 
 #: app/models/channel/email_parser.rb:119
 msgid "No x-zammad-session-user-id, no sender set!"
-msgstr ""
+msgstr "Niciun x-zammad-session-user-id și niciun expeditor setat!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
 #, fuzzy
@@ -11707,7 +11702,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
 #: app/graphql/gql/types/ticket_type.rb:98 db/seeds/settings.rb:1957
 msgid "None"
-msgstr ""
+msgstr "Niciunul"
 
 #: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:66
 msgid "Normal"
@@ -11721,7 +11716,7 @@ msgstr "Neatribuit"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:247
 msgid "Not Available"
-msgstr ""
+msgstr "Indisponibil"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:160
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:240
@@ -11730,16 +11725,18 @@ msgstr ""
 #: app/frontend/shared/router/error.ts:18
 #: app/helpers/knowledge_base_public_page_title_helper.rb:25
 msgid "Not Found"
-msgstr ""
+msgstr "Negăsit"
 
 #: app/policies/controllers/taskbar_controller_policy.rb:31
 msgid "Not allowed to access this task."
-msgstr ""
+msgstr "Accesul la această sarcină nu este permis."
 
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:29
 msgid ""
 "Not applicable to: merging, emails, form, Facebook, Telegram, Twitter, SMS"
 msgstr ""
+"Nu este aplicabil pentru: fuzionare, e-mailuri, formulare, Facebook, "
+"Telegram, Twitter, SMS"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:42
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:79
@@ -11754,29 +11751,27 @@ msgstr "Neatribuit"
 #: app/controllers/application_controller/handles_errors.rb:60
 #: app/services/service/ticket/article/create.rb:119
 msgid "Not authorized"
-msgstr ""
+msgstr "Neautorizat"
 
 #: app/controllers/settings_controller.rb:21
 msgid "Not authorized (feature not possible)"
-msgstr ""
+msgstr "Neautorizat (caracteristica nu este posibilă)"
 
 #: app/controllers/application_controller/authenticates.rb:83
 msgid "Not authorized (token expired)!"
-msgstr ""
+msgstr "Neautorizat (token expirat)!"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_controller.coffee:203
 msgid "Not available in selected language"
-msgstr ""
+msgstr "Indisponibil în limba selectată"
 
 #: app/assets/javascripts/app/views/cti/not_configured.jst.eco:3
 msgid "Not configured"
 msgstr "Neconfigurat"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:18
-#, fuzzy
-#| msgid "No results found"
 msgid "Not found"
-msgstr "Nu au fost găsite rezultate"
+msgstr "Negăsit"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:51
@@ -11802,17 +11797,15 @@ msgstr "Nu au fost găsite rezultate"
 #: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:12
 #: db/seeds/object_manager_attributes.rb:1335
 msgid "Note"
-msgstr "Notă"
+msgstr "Notiță"
 
 #: db/seeds/settings.rb:630
 msgid "Note - default visibility"
-msgstr "Nota  vizibilitatea implicită"
+msgstr "Notiță - vizibilitatea implicită"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:28
-#, fuzzy
-#| msgid "Note"
 msgid "Note:"
-msgstr "Notă"
+msgstr "Notiță:"
 
 #: app/assets/javascripts/app/views/system_report.jst.eco:9
 msgid ""
@@ -11829,23 +11822,21 @@ msgstr ""
 #: app/assets/javascripts/app/models/signature.coffee:26
 #: db/seeds/object_manager_attributes.rb:1342
 msgid "Notes are visible to agents only, never to customers."
-msgstr "Notele sunt vizibile doar agenților, niciodată clienților"
+msgstr "Notițele sunt vizibile doar agenților, niciodată clienților."
 
 #: app/assets/javascripts/app/views/generic/column_select.jst.eco:20
 msgid "Nothing selected"
-msgstr "Nimic Selectat"
+msgstr "Nimic selectat"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:94
 msgid "Notice"
-msgstr "Avertisment"
+msgstr "Observație"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:23
 #: app/assets/javascripts/app/views/google/list.jst.eco:16
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:17
-#, fuzzy
-#| msgid "Notice"
 msgid "Notice:"
-msgstr "Avertisment"
+msgstr "Observație:"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:59
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:24
@@ -11856,11 +11847,11 @@ msgstr "Notificare"
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:42
 #: db/seeds/settings.rb:3326
 msgid "Notification Sender"
-msgstr ""
+msgstr "Expeditor notificare"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:52
 msgid "Notification Sound"
-msgstr "Sunet de notificare"
+msgstr "Sunet notificare"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:55
 #, fuzzy
@@ -11869,10 +11860,8 @@ msgid "Notification matrix"
 msgstr "Notificare"
 
 #: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:77
-#, fuzzy
-#| msgid "Notification"
 msgid "Notification read"
-msgstr "Notificare"
+msgstr "Notificare citită"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:170
 #, fuzzy
@@ -11935,27 +11924,25 @@ msgstr "Număr"
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:11
 msgid "OAuth"
-msgstr ""
+msgstr "OAuth"
 
 #: app/assets/javascripts/app/views/exchange/oauth_intro.jst.eco:2
 #: app/assets/javascripts/app/views/exchange/token_information.jst.eco:2
-#, fuzzy
-#| msgid "Configuration"
 msgid "OAuth Configuration"
-msgstr "Configurație"
+msgstr "Configurație OAuth"
 
 #: app/assets/javascripts/app/views/api.jst.eco:59
 msgid "OAuth URLs are:"
-msgstr ""
+msgstr "URL-urile OAuth sunt:"
 
 #: app/controllers/application_controller/authenticates.rb:104
 msgid "OAuth2 token is expired!"
-msgstr ""
+msgstr "Tokenul OAuth2 este expirat!"
 
 #: app/frontend/apps/desktop/components/CommonDialog/CommonDialogActionFooter.vue:18
 #: app/frontend/apps/mobile/components/CommonConfirmation/CommonConfirmation.vue:25
 msgid "OK"
-msgstr ""
+msgstr "OK"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:112
 #, fuzzy
@@ -11965,19 +11952,17 @@ msgstr "Ok, am copiat token-ul"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:145
 msgid "OK, I've copied my token"
-msgstr "Ok, am copiat token-ul"
+msgstr "Ok, mi-am copiat token-ul"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee:2
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue:63
-#, fuzzy
-#| msgid "OK, I've copied my token"
 msgid "OK, I've saved my recovery codes"
-msgstr "Ok, am copiat token-ul"
+msgstr "Ok, mi-am salvat codurile de recuperare"
 
 #: app/assets/javascripts/app/controllers/import_otrs.coffee:175
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts:11
 msgid "OTRS"
-msgstr ""
+msgstr "OTRS"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts:22
 #, fuzzy
@@ -11992,27 +11977,23 @@ msgstr ""
 "în prezent nu acceptăm aceste tipuri de fluxuri de date"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:96
-#, fuzzy
-#| msgid ""
-#| "We detected OTRS BPM processes which can't get imported into Zammad, "
-#| "since we currently don't support these kind of workflows."
 msgid ""
 "OTRS BPM processes were found. They cannot be imported into Zammad as these "
 "kind of workflows are currently not supported."
 msgstr ""
-"Am detectat procese OTRS BOPM care nu pot fi importate în Zammad, deoarece "
-"în prezent nu acceptăm aceste tipuri de fluxuri de date"
+"Au fost găsite procese BPM OTRS. Acestea nu pot fi importate în Zammad "
+"deoarece acest tip de fluxuri de lucru nu este suportat în prezent."
 
 #: app/assets/javascripts/app/models/core_workflow.coffee:7
 #: app/assets/javascripts/app/models/job.coffee:8
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:2
 msgid "Object"
-msgstr ""
+msgstr "Obiect"
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:114
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:3
 msgid "Object Manager"
-msgstr "Manager de obiecte"
+msgstr "Gestionare obiecte"
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:330
 #: db/seeds/permissions.rb:221
@@ -12030,33 +12011,31 @@ msgid "October"
 msgstr "Octombrie"
 
 #: public/assets/chat/chat.coffee:206
-#, fuzzy
-#| msgid "Online"
 msgid "Offline"
-msgstr "Online"
+msgstr "Offline"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:40
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:413
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts:32
 msgid "On %s, %s wrote:"
-msgstr "La %s, %s a scris:"
+msgstr "Pe data de %s, %s a scris:"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:9
-#, fuzzy
-#| msgid "Translations"
 msgid "On-screen Translation"
-msgstr "Traduceri"
+msgstr "Traducere pe ecran"
 
 #: app/assets/javascripts/app/models/macro.coffee:8
 msgid "Once completed…"
-msgstr ""
+msgstr "Odată finalizate…"
 
 #: app/models/application_model/can_creates_and_updates.rb:21
 msgid "One of the required parameters must be provided, but none was found."
 msgstr ""
+"Trebuie să fie furnizat unul dintre parametrii necesari, dar niciunul nu a "
+"fost găsit."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
 #: public/assets/chat/chat.coffee:207
@@ -12069,57 +12048,51 @@ msgstr "Formulare online"
 
 #: db/seeds/settings.rb:83
 msgid "Online Service"
-msgstr ""
+msgstr "Serviciu online"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:18
-#, fuzzy
-#| msgid "Attached Files"
 msgid "Only %s attachment allowed"
-msgstr "Fișiere atașate"
+msgstr "Sunt permise doar atașamente %s"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:834
 msgid "Only %s attachment allowed."
-msgstr ""
+msgstr "Sunt permise doar atașamente %s."
 
 #: app/assets/javascripts/app/views/translation/support.jst.eco:3
 msgid ""
 "Only %s% of this language is already translated. Please help to improve "
 "Zammad and complete the translation."
 msgstr ""
+"Doar %s% din această limbă este deja tradusă. Vă rugăm să ajutați la "
+"îmbunătățirea Zammad și să finalizați traducerea."
 
 #: db/seeds/settings.rb:1960
-#, fuzzy
-#| msgid "Encrypt"
 msgid "Only Encrypting"
-msgstr "Criptează "
+msgstr "Doar criptare"
 
 #: db/seeds/settings.rb:1959
-#, fuzzy
-#| msgid "Sign in"
 msgid "Only Signing"
-msgstr "Loghează-te"
+msgstr "Doar semnare"
 
 #: app/assets/javascripts/app/models/overview.coffee:11
-#, fuzzy
-#| msgid "Only available for Users which are replacements for other users."
 msgid ""
 "Only available for users which are absence replacements for other users."
-msgstr "Disponibil doar pentru Utilizatorii care înlocuiesc alți utilizatori."
+msgstr "Disponibil doar pentru utilizatorii care înlocuiesc alți utilizatori."
 
 #: app/assets/javascripts/app/models/overview.coffee:10
-#, fuzzy
-#| msgid "Only available for Users with shared Organization"
 msgid "Only available for users with shared organizations"
-msgstr "Este disponibil doar pentru Utilizatorii cu Organizație partajată"
+msgstr "Disponibil doar pentru utilizatorii cu organizații partajate"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:30
 msgid "Only for these groups."
-msgstr "Numai pentru aceste grupuri."
+msgstr "Doar pentru aceste grupuri."
 
 #: app/assets/javascripts/app/views/package.jst.eco:9
 msgid ""
 "Only packages from known, trusted, and verified sources should be installed."
 msgstr ""
+"Doar pachetele din surse cunoscute, de încredere și verificate ar trebui "
+"instalate."
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:37
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:23
@@ -12129,54 +12102,52 @@ msgid ""
 "Only the 20 most recent records are displayed. Download to view the full "
 "list."
 msgstr ""
+"Sunt afișate doar cele mai recente 20 de înregistrări. Descărcați pentru a "
+"vizualiza lista completă."
 
 #: db/seeds/settings.rb:30
 msgid "Only used internally to propagate current web app version to clients."
 msgstr ""
+"Utilizat doar intern pentru a propaga versiunea curentă a aplicației web "
+"către clienți."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:102
 msgid "Only visible to editors"
-msgstr ""
+msgstr "Vizibil doar pentru editori"
 
 #: app/assets/javascripts/app/views/generic/error/not_found.jst.eco:3
 msgid "Oops.. I'm sorry, but I can't find this %s."
-msgstr ""
+msgstr "Oops.. Îmi pare rău, dar nu pot găsi %s."
 
 #: app/assets/javascripts/app/views/generic/error/unauthorized.jst.eco:3
 msgid "Oops.. I'm sorry, but you have insufficient rights to open this %s."
-msgstr ""
+msgstr "Oops.. Îmi pare rău, dar drepturi suficiente pentru a deschide %s."
 
 #: app/frontend/shared/form/i18n/locales.ts:107
-#, fuzzy
-#| msgid "Open"
 msgid "Open"
-msgstr "Deschide"
+msgstr "Deschis"
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:71
-#, fuzzy
-#| msgid "Open"
 msgid "Open %s"
-msgstr "Deschide"
+msgstr "Deschide %s"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:3
 msgid "Open Ticket# %s"
-msgstr "Deschide-ți Tichet# %s"
+msgstr "Deschide tichetul# %s"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee:112
 #: app/assets/javascripts/app/controllers/widget/user.coffee:70
 #: db/seeds/overviews.rb:109
 msgid "Open Tickets"
-msgstr "Tichete Deschise"
+msgstr "Tichete deschise"
 
 #: app/models/system_report/plugin/entities/ticket.rb:4
 msgid "Open and closed tickets ratio (ticket counts based on state)"
 msgstr ""
 
 #: app/assets/javascripts/app/models/public_link.coffee:10
-#, fuzzy
-#| msgid "Next in tab"
 msgid "Open in new tab"
-msgstr "Tab următor"
+msgstr "Deschide în tab nou"
 
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:75
 #, fuzzy
@@ -12186,11 +12157,11 @@ msgstr "Tichete Deschise"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:478
 msgid "Open macro selection"
-msgstr ""
+msgstr "Deschide selectarea marco-ului"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:438
 msgid "Open note box"
-msgstr "Deschideți nota"
+msgstr "Deschide căsuța de notițe"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:77
 #, fuzzy
@@ -12230,25 +12201,21 @@ msgstr "Deschideți nota"
 
 #: db/seeds/settings.rb:919
 msgid "Open ticket indicator"
-msgstr ""
+msgstr "Indicator tichet deschis"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:38
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomer.vue:56
-#, fuzzy
-#| msgid "Open Tickets"
 msgid "Open tickets"
-msgstr "Tichete Deschise"
+msgstr "Tichete deschise"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:21
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:218
 msgid "Open your authenticator app and scan the QR code below:"
-msgstr ""
+msgstr "Deschide aplicația ta Authenticator și scanează codul QR de mai jos:"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:48
-#, fuzzy
-#| msgid "Next in tab"
 msgid "Opened in tabs"
-msgstr "Tab următor"
+msgstr "Deschis în tab-uri"
 
 #: app/models/system_report/plugin/os.rb:6
 msgid "Operating system"
@@ -12262,7 +12229,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/ticket_number_date.jst.eco:2
 #: app/assets/javascripts/app/views/settings/ticket_number_increment.jst.eco:2
 msgid "Options"
-msgstr "Citite"
+msgstr "Opțiuni"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:59
 #, fuzzy
@@ -12280,38 +12247,30 @@ msgid "Or choose a checklist template."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue:76
-#, fuzzy
-#| msgid "migrate from another system"
 msgid "Or migrate from another system"
-msgstr "migrează de la alt sistem"
+msgstr "Sau migrează din alt sistem"
 
 #: app/assets/javascripts/app/views/getting_started/intro.jst.eco:9
-#, fuzzy
-#| msgid "migrate from another system"
 msgid "Or migrate from another system."
-msgstr "migrează de la alt sistem"
+msgstr "Sau migrează din alt sistem."
 
 #: app/frontend/apps/desktop/pages/authentication/components/LoginThirdParty.vue:24
 #: app/frontend/apps/mobile/pages/authentication/components/LoginThirdParty.vue:24
-#, fuzzy
-#| msgid "or sign in using"
 msgid "Or sign in using"
-msgstr "sau conectați-vă utilizând "
+msgstr "Sau conectați-vă utilizând"
 
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactorMethods.vue:51
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactorMethods.vue:36
 msgid "Or use one of your recovery codes."
-msgstr ""
+msgstr "Sau folosește unul dintre codurile tale de recuperare."
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco:19
 msgid "Or, use one of your"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:3
-#, fuzzy
-#| msgid "Overviews"
 msgid "Order of Overviews"
-msgstr "Overviews"
+msgstr "Ordinea prezentărilor generale"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:135
 #, fuzzy
@@ -12353,34 +12312,35 @@ msgstr "Organizație"
 msgid "Organization & Department Name"
 msgstr "Organizația & Numele departamentului"
 
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:47
-#, fuzzy
-#| msgid "Organization"
-msgid "Organization Logo"
-msgstr "Organizație"
-
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:9
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:40
 msgid "Organization Name"
-msgstr "Numele Organizației"
+msgstr "Numele organizației"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:382
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:12
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:27
 msgid "Organization Support"
-msgstr "Suportul organizației"
+msgstr "Suport organizație"
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationEdit.ts:85
-#, fuzzy
-#| msgid "%s Object(s) are updated."
 msgid "Organization could not be updated."
-msgstr "%s Obiecte sunt actualizate."
+msgstr "Organizația nu a putut fi actualizată."
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:47
+#, fuzzy
+#| msgid "Organization Logo"
+msgid "Organization logo"
+msgstr "Sigla organizației"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:40
+#, fuzzy
+#| msgid "Organization Name"
+msgid "Organization name"
+msgstr "Numele organizației"
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:78
-#, fuzzy
-#| msgid "My Organization Tickets"
 msgid "Organization tickets"
-msgstr "Tichetele organizației mele"
+msgstr "Tichetele organizației"
 
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:30
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:26
@@ -12388,6 +12348,8 @@ msgid ""
 "Organization with specified ID was not found. Try checking the URL for "
 "errors."
 msgstr ""
+"Organizația cu ID-ul specificat nu a fost găsită. Încercați să verificați "
+"URL-ul pentru erori."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee:40
 #: app/assets/javascripts/app/controllers/organization.coffee:3
@@ -12405,41 +12367,33 @@ msgid "Organizations"
 msgstr "Organizații"
 
 #: app/frontend/apps/mobile/pages/search/plugins/organization.ts:10
-#, fuzzy
-#| msgid "My Organization Tickets"
 msgid "Organizations with \"%s\""
-msgstr "Tichetele organizației mele"
+msgstr "Organizații cu \"%s\""
 
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:22
-#, fuzzy
-#| msgid "Organization"
 msgid "Organizer"
-msgstr "Organizație"
+msgstr "Organizator"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:19
 msgid "Origin By"
-msgstr ""
+msgstr "Origine de"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:92
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:45
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:55
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
-msgstr "Aspect inițială "
+msgstr "Formatare inițială"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:79
-#, fuzzy
-#| msgid "Original Formatting"
 msgid "Original Translation"
-msgstr "Aspect inițială "
+msgstr "Traducere inițială"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:80
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:97
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:83
-#, fuzzy
-#| msgid "Settings"
 msgid "Other Settings"
-msgstr "Setări"
+msgstr "Alte setări"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:3
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:2
@@ -12447,7 +12401,7 @@ msgstr "Setări"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:126
 #: db/seeds/permissions.rb:404
 msgid "Out of Office"
-msgstr "În afara serviciului"
+msgstr "În afara biroului"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:157
 #, fuzzy
@@ -12468,11 +12422,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee:11
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
 msgstr ""
+"Din toate tichetele deschise (la nivel de companie), câte sunt atribuite ție?"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:163
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:190
 msgid "Out of office replacement"
-msgstr "Înlocuire în cazul în care nu sunt disponibil"
+msgstr "Înlocuitor pentru \"În afara biroului\""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:99
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:24
@@ -12482,14 +12437,14 @@ msgstr "Înlocuire în cazul în care nu sunt disponibil"
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:19
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:71
 msgid "Outbound"
-msgstr "Ieșire"
+msgstr "Trimise"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:132
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:141
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:22
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:21
 msgid "Outbound Call"
-msgstr "Apel telefonic dat"
+msgstr "Apel inițiat"
 
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:22
 #, fuzzy
@@ -12498,16 +12453,12 @@ msgid "Outbound Call: %s"
 msgstr "Apel telefonic dat"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco:16
-#, fuzzy
-#| msgid "Outbound"
 msgid "Outbound:"
-msgstr "Ieșire"
+msgstr "Trimise:"
 
 #: app/assets/javascripts/app/lib/app_post/browser.coffee:119
-#, fuzzy
-#| msgid "Browser"
 msgid "Outdated Browser"
-msgstr "Browser"
+msgstr "Browser învechit"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:247
 msgid "Outdent text"
@@ -12522,7 +12473,7 @@ msgstr "Prezentare generală"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:56
 msgid "Overview bulk mask"
-msgstr ""
+msgstr "Mască pentru vizualizarea în masă"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:38
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:136
@@ -12533,7 +12484,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:34
 #: db/seeds/permissions.rb:35
 msgid "Overviews"
-msgstr "Prezentare generală"
+msgstr "Prezentări generale"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:108
 msgid "Overwrite Content"
@@ -12541,7 +12492,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee:5
 msgid "Overwrite Draft"
-msgstr ""
+msgstr "Suprascrie ciorna"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:504
 #: app/assets/javascripts/app/models/ticket.coffee:11
@@ -12555,40 +12506,38 @@ msgstr ""
 #: app/views/messaging/ticket_info/pt-br.md.erb:4
 #: db/seeds/object_manager_attributes.rb:207 lib/excel_sheet/ticket.rb:28
 msgid "Owner"
-msgstr "Owner"
+msgstr "Proprietar"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:11
 msgid ""
 "Owner tickets of the user will not get deleted. The owner will be mapped to "
 "the system user (ID 1)."
 msgstr ""
+"Tichetele deținute de utilizatorul proprietar nu vor fi șterse. Proprietarul "
+"va fi mapat la utilizatorul sistemului (ID 1)."
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:3
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:37
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:73
 #: app/frontend/shared/entities/ticket-article/composables/translateArticleSecurity.ts:8
 msgid "PGP"
-msgstr ""
+msgstr "PGP"
 
 #: db/seeds/settings.rb:5577
 msgid "PGP Recipient Alias Configuration"
-msgstr ""
+msgstr "Configurație alias destinatar PGP"
 
 #: db/seeds/settings.rb:5563
-#, fuzzy
-#| msgid "Config"
 msgid "PGP config"
-msgstr "Configurare"
+msgstr "Configurare PGP"
 
 #: db/seeds/settings.rb:5535
-#, fuzzy
-#| msgid "Integrations"
 msgid "PGP integration"
-msgstr "Integrările"
+msgstr "Integrare PGP"
 
 #: lib/email_helper.rb:12
 msgid "POP3"
-msgstr ""
+msgstr "POP3"
 
 #: app/assets/javascripts/app/views/package.jst.eco:2
 msgid "Package"
@@ -12601,27 +12550,25 @@ msgstr "Pachete"
 
 #: app/views/knowledge_base/public/not_found.html.erb:4
 msgid "Page not found"
-msgstr ""
+msgstr "Pagina nu a fost găsită"
 
 #: app/assets/javascripts/app/views/facebook/account_edit.jst.eco:4
 #: app/assets/javascripts/app/views/facebook/list.jst.eco:20
 msgid "Pages"
-msgstr ""
+msgstr "Pagini"
 
 #: app/controllers/integration/smime_controller.rb:77
 msgid "Parameter 'data' or 'file' required."
-msgstr ""
+msgstr "Este necesar parametrul 'data' sau 'file'."
 
 #: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:66
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee:87
 msgid "Parent"
-msgstr "Părinte/original"
+msgstr "Părinte"
 
 #: db/seeds/object_manager_attributes.rb:1857
-#, fuzzy
-#| msgid "Parent"
 msgid "Parent group"
-msgstr "Părinte/original"
+msgstr "Grup părinte"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:384
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:10
@@ -12651,24 +12598,20 @@ msgstr "Parolă"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:3
 #: app/assets/javascripts/app/views/profile/password.jst.eco:3
-#, fuzzy
-#| msgid "Authentication"
 msgid "Password & Authentication"
-msgstr "Autentificare"
+msgstr "Parolă & Autentificare"
 
 #: app/assets/javascripts/app/views/api.jst.eco:30
 msgid "Password Access"
 msgstr "Acces cu parolă"
 
 #: db/seeds/settings.rb:1027
-#, fuzzy
-#| msgid "Password"
 msgid "Password Login"
-msgstr "Parola"
+msgstr "Autentificare parolă"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:125
 msgid "Password changed successfully!"
-msgstr ""
+msgstr "Parolă modificată cu succes!"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:105
 #, fuzzy
@@ -12689,76 +12632,68 @@ msgid "Password could not be checked"
 msgstr "%s Obiecte sunt create."
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco:15
-#, fuzzy
-#| msgid "Password for proxy connection."
 msgid "Password for proxy connection"
-msgstr "Parola pentru conexiunea cu proxy"
+msgstr "Parola pentru conexiunea proxy"
 
 #: db/seeds/settings.rb:532
 msgid "Password for proxy connection."
-msgstr "Parola pentru conexiunea cu proxy"
+msgstr "Parola pentru conexiunea proxy."
 
 #: db/seeds/settings.rb:2051
-#, fuzzy
-#| msgid "Password needs to contain 2 lower and 2 upper characters."
 msgid "Password needs to contain 2 lower case and 2 upper case characters."
-msgstr "Parola este necesar să conțină 2 caractere mici și 2 caractere mari"
+msgstr "Este necesar ca parola să conțină 2 litere mici și 2 litere mari."
 
 #: db/seeds/settings.rb:2077
 msgid "Password needs to contain at least one digit."
-msgstr "Parola este necesar să conțină minim un număr!"
+msgstr "Este necesar ca parola să conțină cel puțin o cifră."
 
 #: db/seeds/settings.rb:2103
 msgid "Password needs to contain at least one special character."
-msgstr ""
+msgstr "Este necesar ca parola să conțină cel un caracter special."
 
 #: db/seeds/settings.rb:2011
 msgid "Password needs to have at least a minimal number of characters."
-msgstr "Parola este necesar să conțină minim un număr minim de caractere."
+msgstr "Este necesar ca parola să aibă cel puțin numărul minim de caractere."
 
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco:4
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:102
-#, fuzzy
-#| msgid "We've sent password reset instructions to your email address."
 msgid "Password reset instructions were sent to your email address."
 msgstr ""
-"Am trimis instrucțiunile de setare a parolei noi în adresa dvs. de email"
+"Am trimis instrucțiunile de resetare a parolei pe adresa dvs. de e-mail."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee:34
 msgid "Paste"
-msgstr ""
+msgstr "Lipire"
 
 #: app/assets/javascripts/app/views/integration/smime_certificate_add.jst.eco:19
 #: app/assets/javascripts/app/views/ssl_certificate_binary_or_text.jst.eco:16
 #: app/assets/javascripts/app/views/ssl_certificates_create.jst.eco:19
 msgid "Paste Certificate"
-msgstr ""
+msgstr "Lipește certificatul"
 
 #: app/assets/javascripts/app/views/integration/smime_private_key_add.jst.eco:20
 msgid "Paste Private Key"
-msgstr ""
+msgstr "Lipește cheia privată"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:564
 msgid "Paste from clipboard"
-msgstr ""
+msgstr "Lipire din clipboard"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:571
 msgid "Paste from clipboard (plain text)"
-msgstr ""
+msgstr "Lipire din clipboard (text simplu)"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:25
 msgid "Paste in CSV data"
-msgstr "Inserați datele CSV"
+msgstr "Lipire în date CSV"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:106
 msgid "Paste key"
-msgstr ""
+msgstr "Lipește cheia"
 
 #: db/seeds/overviews.rb:132
-#, fuzzy
-#| msgid "My pending reached Tickets"
 msgid "Pending Reached Tickets"
-msgstr "Tichetele mele cu perioada de așteptare la final"
+msgstr "Tichete cu perioada de așteptare atinsă"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:288
 #, fuzzy
@@ -12768,35 +12703,31 @@ msgstr "Tichetele mele cu perioada de așteptare la final"
 
 #: app/assets/javascripts/app/models/ticket.coffee:113
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:29
-#, fuzzy
-#| msgid "Pending reminder reached for Ticket |%s|"
 msgid "Pending reminder reached for ticket |%s|"
-msgstr "Timpul de amânare al tichetului  |%s|  a fost ajuns"
+msgstr "Timpul de amânare al tichetului |%s| a fost atins"
 
 #: app/assets/javascripts/app/models/ticket.coffee:13
 #: app/graphql/gql/types/overview_type.rb:66
 #: db/seeds/object_manager_attributes.rb:307
 msgid "Pending till"
-msgstr "în așteptare până la"
+msgstr "În așteptare până la"
 
 #: db/seeds/roles.rb:24
 msgid "People who create Tickets ask for help."
-msgstr "Persoanele care creează tichete solicită ajutorul nostru"
+msgstr "Persoanele care creează tichete solicită ajutor."
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:10
-#, fuzzy
-#| msgid "Ticket Subscriptions"
 msgid "Perform actions"
-msgstr "Urmăritori tichete"
+msgstr "Efectuează acțiuni"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:49
 msgid "Permanently Delete Knowledge Base"
-msgstr ""
+msgstr "Șterge permanent baza de cunoștințe"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: db/seeds/settings.rb:2679
 msgid "Permission level for looking up tickets"
-msgstr ""
+msgstr "Nivel permisiune pentru identificarea tichetelor"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:323
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:96
@@ -12810,7 +12741,7 @@ msgstr "Permisiuni"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:12
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:212
 msgid "Personal Access Tokens"
-msgstr "Token-uri pentru acces personal"
+msgstr "Token-uri de acces personal"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:28
 msgid "Personal Settings"
@@ -12824,7 +12755,7 @@ msgstr "Token-uri pentru acces personal"
 
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:76
 msgid "Personal overview order was reset."
-msgstr ""
+msgstr "Ordinea personală pentru privirea generală a fost resetată."
 
 #: app/assets/javascripts/app/controllers/cti.coffee:322
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
@@ -12835,26 +12766,24 @@ msgstr "Telefon"
 
 #: app/models/report.rb:91
 msgid "Phone (in)"
-msgstr ""
+msgstr "Telefon (intrare)"
 
 #: app/models/report.rb:111
 msgid "Phone (out)"
-msgstr ""
+msgstr "Telefon (ieșire)"
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:119
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:103
 msgid "Phone Extension to Agent Mapping"
-msgstr ""
+msgstr "Mapare agent la extensie telefon"
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:14
-#, fuzzy
-#| msgid "November"
 msgid "Phone number"
-msgstr "Noiembrie"
+msgstr "Nr. de telefon"
 
 #: app/models/channel/area/whatsapp.rb:18
 msgid "Phone number is already in use by another WhatsApp account."
-msgstr ""
+msgstr "Numărul de telefon este deja folosit de un alt cont WhatsApp."
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:7
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:182
@@ -12869,19 +12798,19 @@ msgstr "Roz"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:5
 #: app/controllers/cti_controller.rb:20
 msgid "Placetel"
-msgstr ""
+msgstr "Placetel"
 
 #: db/seeds/settings.rb:5214
 msgid "Placetel Token"
-msgstr ""
+msgstr "Token Placetel"
 
 #: db/seeds/settings.rb:5200
 msgid "Placetel config"
-msgstr ""
+msgstr "Configurare Placetel"
 
 #: db/seeds/settings.rb:5172
 msgid "Placetel integration"
-msgstr ""
+msgstr "Integrare Placetel"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:70
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:80
@@ -12890,7 +12819,7 @@ msgstr "Redați efectele sonore ale interfeței utilizatorului"
 
 #: app/frontend/shared/form/i18n/locales.ts:117
 msgid "Please accept the %s."
-msgstr ""
+msgstr "Vă rugăm sa acceptați %s."
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:48
 msgid "Please add at least one item to the checklist."
@@ -12898,23 +12827,15 @@ msgstr ""
 
 #: app/views/knowledge_base/public/categories/index.html.erb:18
 msgid "Please add categories and/or answers"
-msgstr ""
+msgstr "Vă rugăm să adăugați categorii și/sau răspunsuri"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:12
-#, fuzzy
-#| msgid "Please click the button below to create your first one."
 msgid "Please click on the button below to create your first one."
-msgstr "Te rog apasă buton de mai jos pentru a crea primul tichet."
+msgstr "Te rugăm să apeși pe butonul de mai jos pentru a crea primul tichet."
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco:6
-#, fuzzy
-#| msgid ""
-#| "Your account has not been verified. Please click the link in the "
-#| "verification email."
 msgid "Please click on the link in the verification email."
-msgstr ""
-"Contul dvs. Nu a fost verificat. Vă rugam să dați clic pe link-ul din e-"
-"mailul trimis pentru verificare."
+msgstr "Vă rugam să dați clic pe link-ul din e-mailul de verificare."
 
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:127
 msgid ""
@@ -12922,67 +12843,76 @@ msgid ""
 "email, check other places it might be, like your junk, spam, social, or "
 "other folders."
 msgstr ""
+"Vă rugam să dați clic pe link-ul din e-mailul de verificare. Dacă nu vedeți "
+"e-mailul, verificați și alte locuri în care ar putea fi, cum ar fi folderele "
+"de junk, spam, social sau alte foldere."
 
 #: app/services/service/system/import/run.rb:32
 msgid "Please configure import source before running."
-msgstr ""
+msgstr "Vă rugăm să configurați sursa importului înaintea rulării."
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:146
 msgid "Please contact your administrator."
-msgstr ""
+msgstr "Vă rugăm să vă contactați administratorul."
 
 #: lib/selector/sql.rb:181
 msgid ""
 "Please enable execution_time feature to use it (currently only allowed for "
 "triggers and schedulers)"
 msgstr ""
+"Vă rugăm să activați funcția execution_time pentru a o utiliza (în prezent, "
+"este permisă doar pentru declanșatoare(triggere) și "
+"programatoare(schedulers))"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:342
 msgid "Please enter a text."
-msgstr ""
+msgstr "Vă rugăm să introduceți un text."
 
 #: app/assets/javascripts/app/controllers/webhook.coffee:93
 msgid "Please enter a valid JSON string."
-msgstr ""
+msgstr "Vă rugăm să introduceți un șir JSON valid."
 
 #: app/frontend/shared/form/i18n/locales.ts:360
 msgid "Please enter a valid email address."
-msgstr ""
+msgstr "Vă rugăm să introduceți o adresă de e-mail validă."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:14
 msgid "Please enter the endpoint for accessing Exchange Web Services."
 msgstr ""
+"Vă rugăm să introduceți endpoint-ul pentru accesarea serviciilor web "
+"Exchange."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:29
 msgid "Please enter your Exchange credentials."
-msgstr ""
+msgstr "Vă rugăm să introduceți datele de autentificare pentru Exchange."
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:19
-#, fuzzy
-#| msgid "Please execute database changes only in a maintenance time-slot."
 msgid "Please execute database changes only in a maintenance window."
 msgstr ""
-"Vă rugăm să realizați modificările la baza de date în intervalul de timp al "
-"mentenanței."
+"Vă rugăm să efectuați modificările bazei de date doar în timpul în care "
+"platforma se află în mentenanță."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form_item.coffee:100
 msgid "Please fill in all fields"
-msgstr ""
+msgstr "Vă rugăm să completați toate câmpurile"
 
 #: app/frontend/shared/form/i18n/locales.ts:560
 #: app/services/service/system/set_system_information.rb:38
 msgid "Please include a valid url."
-msgstr ""
+msgstr "Vă rugăm să includeți un URL valid."
 
 #: app/services/service/system/import/apply_otrs_configuration.rb:82
 msgid "Please install the OTRS migrator plugin and provide a valid URL."
 msgstr ""
+"Vă rugăm să instalați plugin-ul de migrare OTRS și să furnizați un URL valid."
 
 #: db/seeds/settings.rb:1922
 msgid ""
 "Please note that this attribute is deprecated within one of the next "
 "versions of Zammad. Use the IDP certificate instead."
 msgstr ""
+"Vă rugăm să rețineți că acest atribut este depreciat în una dintre "
+"versiunile viitoare ale Zammad. Utilizați certificatul IDP în schimb."
 
 #: app/frontend/apps/desktop/pages/error/views/Error.vue:54
 msgid "Please proceed to login"
@@ -12990,21 +12920,17 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:383
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
-msgstr ""
+msgstr "Vă rugăm să furnizați un destinatar în „Către” sau „CC”."
 
 #: app/controllers/users_controller.rb:458
-#, fuzzy
-#| msgid "Choose your new password."
 msgid "Please provide your current password."
-msgstr "Alege o parola nouă"
+msgstr "Vă rugăm să introduceți parola dvs. actuală."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:105
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:87
 #: app/controllers/users_controller.rb:463
-#, fuzzy
-#| msgid "Choose your new password."
 msgid "Please provide your new password."
-msgstr "Alege o parola nouă"
+msgstr "Vă rugăm să introduceți parola dvs. nouă."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/recovery_codes.jst.eco:2
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue:88
@@ -13012,6 +12938,9 @@ msgid ""
 "Please save your recovery codes listed below somewhere safe. You can use "
 "them to sign in if you lose access to another two-factor method:"
 msgstr ""
+"Vă rugăm să salvați undeva în siguranță codurile de recuperare enumerate mai "
+"jos. Le puteți folosi pentru a vă autentifica dacă pierdeți accesul la o "
+"altă metodă de autentificare în doi factori:"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:72
 msgid "Please select a checklist template."
@@ -13019,45 +12948,49 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts:60
 msgid "Please select a ticket to merge into."
-msgstr ""
+msgstr "Vă rugăm să selectați un tichet cu care să fuzionați."
 
 #: app/controllers/integration/exchange_controller.rb:52
 msgid "Please select at least one folder."
-msgstr ""
+msgstr "Vă rugăm să selectați cel puțin un folder."
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:75
 msgid "Please select at least one ticket overview"
-msgstr ""
+msgstr "Vă rugăm să selectați cel puțin o privire generală a unui tichet"
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:5
 msgid ""
 "Please select the authentication method that should be used to establish the "
 "connection to your Exchange server."
 msgstr ""
+"Vă rugăm să selectați metoda de autentificare care ar trebui utilizată "
+"pentru a stabili conexiunea cu serverul dvs. Exchange."
 
 #: app/assets/javascripts/app/views/microsoft365/user_mismatch.jst.eco:4
 msgid ""
 "Please start the reauthentication again and enter the correct credentials."
 msgstr ""
+"Vă rugăm să începeți din nou reautentificarea și să introduceți datele de "
+"autentificare corecte."
 
 #: app/controllers/knowledge_base/manage_controller.rb:20
 msgid "Please submit custom address before generating the snippet"
 msgstr ""
+"Vă rugăm să trimiteți adresa personalizată înainte de a genera fragmentul"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue:13
 msgid "Please use the provided URL."
-msgstr ""
+msgstr "Vă rugăm să folosiți URL-ul furnizat."
 
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco:3
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco:3
 msgid "Please wait until you received the notification email of the approval."
 msgstr ""
+"Vă rugăm să așteptați până când primiți e-mailul de notificare al aprobării."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:594
-#, fuzzy
-#| msgid "Please wait..."
 msgid "Please wait…"
-msgstr "Te rog așteaptă..."
+msgstr "Vă rugăm să așteptați…"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:417
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:85
@@ -13070,7 +13003,7 @@ msgstr "Port"
 #: app/assets/javascripts/app/models/object_manager_attribute.coffee:12
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:58
 msgid "Position"
-msgstr ""
+msgstr "Poziție"
 
 #: app/models/system_report/plugin/postgre_sql.rb:4
 msgid "PostgresSQL server version"
@@ -13079,7 +13012,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:40
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee:31
 msgid "Postmaster Filter"
-msgstr ""
+msgstr "Filtru Postmaster"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request.jst.eco:16
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:14
@@ -13093,16 +13026,16 @@ msgstr ""
 #: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:68
 #: app/frontend/apps/mobile/pages/authentication/components/LoginFooter.vue:26
 msgid "Powered by"
-msgstr "Powered by"
+msgstr "Cu sprijinul"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee:32
 #: app/assets/javascripts/app/views/pre_defined_webhook.jst.eco:5
 msgid "Pre-defined Webhook"
-msgstr ""
+msgstr "Webhook predefinit"
 
 #: app/assets/javascripts/app/controllers/webhook.coffee:242
 msgid "Pre-defined webhook for %s."
-msgstr ""
+msgstr "Webhook predefinit pentru %s."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:54
 msgid "Prefer color scheme as indicated by the operating system."
@@ -13110,20 +13043,20 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:34
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:285
-#, fuzzy
-#| msgid "Please click the button below to create your first one."
 msgid "Press the button below to finish the setup."
-msgstr "Te rog apasă buton de mai jos pentru a crea primul tichet."
+msgstr "Apasă butonul de mai jos pentru a finaliza instalarea."
 
 #: db/seeds/settings.rb:204
 msgid "Pretty Date"
-msgstr "Pretty Date"
+msgstr "Dată ușor lizibilă"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:292
 msgid ""
 "Pretty Good Privacy (PGP) enables you to send digitally signed and encrypted "
 "messages."
 msgstr ""
+"Pretty Good Privacy (PGP) vă permite să trimiteți mesaje semnate digital și "
+"criptate."
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:6
 msgid ""
@@ -13131,6 +13064,9 @@ msgid ""
 "signing, encrypting and decrypting messages and to increase the security of "
 "email communication."
 msgstr ""
+"Pretty Good Privacy (PGP) este un program de criptare care poate fi folosit "
+"pentru semnarea, criptarea și decriptarea mesajelor și pentru a spori "
+"securitatea comunicării prin e-mail."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:852
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:20
@@ -13731,7 +13667,7 @@ msgid "Reopening time in days"
 msgstr "Rată de redeschidere"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:14
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:191
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:188
 #, fuzzy
 #| msgid "Order"
 msgid "Reorder"
@@ -14273,7 +14209,7 @@ msgstr "Sâmbătă"
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:121
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:219
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:216
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:70
@@ -14781,13 +14717,18 @@ msgstr "Invitație trimisă"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:397
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:65
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:50
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:52
 msgid "Send Mails via"
 msgstr "Trimite email prin"
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco:33
 msgid "Send a message to all logged in users."
 msgstr "Trimite un mesaj tuturor utilizatorilor logați."
+
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:52
+#, fuzzy
+#| msgid "Send Mails via"
+msgid "Send mails via"
+msgstr "Trimite email prin"
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:40
 msgid ""
@@ -16218,7 +16159,7 @@ msgid "Text or attachment is required"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_item_edit.jst.eco:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:145
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:146
 msgid "Text or ticket identifier"
 msgstr ""
 
@@ -16439,7 +16380,7 @@ msgstr ""
 msgid "The admin password auth email could not be sent."
 msgstr "Când se trimite notificarea."
 
-#: app/frontend/apps/desktop/stores/theme.ts:39
+#: app/frontend/apps/desktop/stores/theme.ts:42
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The appearance could not be updated."
@@ -21371,7 +21312,7 @@ msgstr "chat"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
 #, fuzzy
 #| msgid "Select Template"
-msgid "checked Checklist Item '%s'"
+msgid "checked checklist item '%s'"
 msgstr "Alege template"
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco:24
@@ -22669,7 +22610,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 #, fuzzy
 #| msgid "Create new Customer"
-msgid "unchecked Checklist Item '%s'"
+msgid "unchecked checklist item '%s'"
 msgstr "Creează client nou"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168

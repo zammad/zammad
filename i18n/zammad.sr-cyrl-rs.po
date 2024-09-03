@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-31 09:16+0000\n"
+"PO-Revision-Date: 2024-09-02 09:16+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -2897,7 +2897,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:197
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:194
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:259
@@ -4047,7 +4047,7 @@ msgstr "Отвори тикет"
 msgid "Create a Test Ticket"
 msgstr "Отвори пробни тикет"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:206
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:203
 msgid "Create a new checklist item"
 msgstr "Додај нови задатак"
 
@@ -6308,7 +6308,6 @@ msgstr "Имејл налози"
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:126
 #: app/assets/javascripts/app/views/google/list.jst.eco:81
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:82
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:33
 msgid "Email Address"
 msgstr "Имејл адреса"
 
@@ -6344,6 +6343,12 @@ msgstr "Одлазни имејл"
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:116
 msgid "Email Verification"
 msgstr "Провера имејл адресе"
+
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:33
+#, fuzzy
+#| msgid "Email Address"
+msgid "Email address"
+msgstr "Имејл адреса"
 
 #: app/models/user.rb:609
 msgid "Email address '%{email}' is already used for another user."
@@ -7592,8 +7597,13 @@ msgid "Full"
 msgstr "Све"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:11
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:24
 msgid "Full Name"
+msgstr "Пуно име"
+
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:24
+#, fuzzy
+#| msgid "Full Name"
+msgid "Full name"
 msgstr "Пуно име"
 
 #: db/seeds/settings.rb:263
@@ -11026,7 +11036,7 @@ msgstr "Није пронађен сертификат."
 msgid "No checklist added to this ticket yet."
 msgstr "Списак задатака још није додат у овај тикет."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:182
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:179
 msgid "No checklist items yet"
 msgstr "Без задатака за сада"
 
@@ -11782,12 +11792,7 @@ msgstr "Организација"
 msgid "Organization & Department Name"
 msgstr "Назив организације и одељења"
 
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:47
-msgid "Organization Logo"
-msgstr "Лого организације"
-
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:9
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:40
 msgid "Organization Name"
 msgstr "Назив организације"
 
@@ -11800,6 +11805,18 @@ msgstr "Подршка организације"
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationEdit.ts:85
 msgid "Organization could not be updated."
 msgstr "Није било могуће освежити организацију."
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:47
+#, fuzzy
+#| msgid "Organization Logo"
+msgid "Organization logo"
+msgstr "Лого организације"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:40
+#, fuzzy
+#| msgid "Organization Name"
+msgid "Organization name"
+msgstr "Назив организације"
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:78
 msgid "Organization tickets"
@@ -13021,7 +13038,7 @@ msgid "Reopening time in days"
 msgstr "Време поновног отварања у данима"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:14
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:191
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:188
 msgid "Reorder"
 msgstr "Измени редослед"
 
@@ -13561,7 +13578,7 @@ msgstr "субота"
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:121
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:219
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:216
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:70
@@ -14015,13 +14032,18 @@ msgstr "Пошаљи позивницу"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:397
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:65
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:50
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:52
 msgid "Send Mails via"
 msgstr "Шаљи имејл поруке путем"
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco:33
 msgid "Send a message to all logged in users."
 msgstr "Пошаљи поруку свим пријављеним корисницима."
+
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:52
+#, fuzzy
+#| msgid "Send Mails via"
+msgid "Send mails via"
+msgstr "Шаљи имејл поруке путем"
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:40
 msgid ""
@@ -15320,7 +15342,7 @@ msgid "Text or attachment is required"
 msgstr "Неопходни су текст или прилог"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_item_edit.jst.eco:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:145
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:146
 msgid "Text or ticket identifier"
 msgstr "Текст или идентификатор тикета"
 
@@ -15503,7 +15525,7 @@ msgid "The admin password auth email could not be sent."
 msgstr ""
 "Није било могуће послати имејл поруку са привременом лозинком администратора."
 
-#: app/frontend/apps/desktop/stores/theme.ts:39
+#: app/frontend/apps/desktop/stores/theme.ts:42
 msgid "The appearance could not be updated."
 msgstr "Није било могуће освежити изглед."
 
@@ -20140,7 +20162,7 @@ msgid "chat"
 msgstr "ћаскање"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
-msgid "checked Checklist Item '%s'"
+msgid "checked checklist item '%s'"
 msgstr "oзначен задатак ’%s’"
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco:24
@@ -21337,7 +21359,7 @@ msgid "unassign user"
 msgstr "скини доделу корисника"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
-msgid "unchecked Checklist Item '%s'"
+msgid "unchecked checklist item '%s'"
 msgstr "одзначен задатак ’%s’"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168

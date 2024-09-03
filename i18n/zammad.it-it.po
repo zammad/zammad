@@ -2934,7 +2934,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:197
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:194
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:259
@@ -4098,7 +4098,7 @@ msgstr "Crea un ticket"
 msgid "Create a Test Ticket"
 msgstr "Crea un ticket di test"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:206
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:203
 msgid "Create a new checklist item"
 msgstr "Creare una nuova voce della checklist"
 
@@ -6431,7 +6431,6 @@ msgstr "Account Email"
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:126
 #: app/assets/javascripts/app/views/google/list.jst.eco:81
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:82
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:33
 msgid "Email Address"
 msgstr "Indirizzo Email"
 
@@ -6467,6 +6466,12 @@ msgstr "Email in uscita"
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:116
 msgid "Email Verification"
 msgstr "Verifica dell'email"
+
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:33
+#, fuzzy
+#| msgid "Email Address"
+msgid "Email address"
+msgstr "Indirizzo Email"
 
 #: app/models/user.rb:609
 msgid "Email address '%{email}' is already used for another user."
@@ -7753,8 +7758,13 @@ msgid "Full"
 msgstr "Completo"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:11
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:24
 msgid "Full Name"
+msgstr "Nome Completo"
+
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:24
+#, fuzzy
+#| msgid "Full Name"
+msgid "Full name"
 msgstr "Nome Completo"
 
 #: db/seeds/settings.rb:263
@@ -11241,7 +11251,7 @@ msgstr "Nessun certificato trovato."
 msgid "No checklist added to this ticket yet."
 msgstr "Non hai ancora creato un ticket."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:182
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:179
 msgid "No checklist items yet"
 msgstr ""
 
@@ -12017,12 +12027,7 @@ msgstr "Organizzazione"
 msgid "Organization & Department Name"
 msgstr "Organizzazione e nome reparto"
 
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:47
-msgid "Organization Logo"
-msgstr "Logo dell'organizzazione"
-
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:9
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:40
 msgid "Organization Name"
 msgstr "Nome Organizzazione"
 
@@ -12035,6 +12040,18 @@ msgstr "Supporto dell'organizzazione"
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationEdit.ts:85
 msgid "Organization could not be updated."
 msgstr "Impossibile modificare l'organizzazione."
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:47
+#, fuzzy
+#| msgid "Organization Logo"
+msgid "Organization logo"
+msgstr "Logo dell'organizzazione"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:40
+#, fuzzy
+#| msgid "Organization Name"
+msgid "Organization name"
+msgstr "Nome Organizzazione"
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:78
 msgid "Organization tickets"
@@ -13275,7 +13292,7 @@ msgid "Reopening time in days"
 msgstr "Tempo di riapertura in giorni"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:14
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:191
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:188
 #, fuzzy
 #| msgid "Order"
 msgid "Reorder"
@@ -13823,7 +13840,7 @@ msgstr "Sabato"
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:121
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:219
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:216
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:70
@@ -14281,13 +14298,18 @@ msgstr "Manda invito"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:397
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:65
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:50
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:52
 msgid "Send Mails via"
 msgstr "Spedisci Mails via"
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco:33
 msgid "Send a message to all logged in users."
 msgstr "Invia un messaggio a tutti gli utenti connessi."
+
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:52
+#, fuzzy
+#| msgid "Send Mails via"
+msgid "Send mails via"
+msgstr "Spedisci Mails via"
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:40
 msgid ""
@@ -15592,7 +15614,7 @@ msgid "Text or attachment is required"
 msgstr "È richiesto un testo o un allegato"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_item_edit.jst.eco:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:145
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:146
 #, fuzzy
 #| msgid "Text or attachment is required"
 msgid "Text or ticket identifier"
@@ -15779,7 +15801,7 @@ msgstr ""
 "Non è stato possibile inviare l'email di autenticazione della password "
 "dell'amministratore."
 
-#: app/frontend/apps/desktop/stores/theme.ts:39
+#: app/frontend/apps/desktop/stores/theme.ts:42
 msgid "The appearance could not be updated."
 msgstr "Non è stato possibile aggiornare l'aspetto."
 
@@ -20615,7 +20637,7 @@ msgstr "chat"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
 #, fuzzy
 #| msgid "Checklist Item"
-msgid "checked Checklist Item '%s'"
+msgid "checked checklist item '%s'"
 msgstr "Elemento Checklist"
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco:24
@@ -21832,7 +21854,7 @@ msgstr "Utente non assegnato"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 #, fuzzy
 #| msgid "Incomplete credentials"
-msgid "unchecked Checklist Item '%s'"
+msgid "unchecked checklist item '%s'"
 msgstr "Credenziali incomplete"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168

@@ -3057,7 +3057,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:197
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:194
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:259
@@ -4288,7 +4288,7 @@ msgstr "테스트 Ticket 만들기"
 msgid "Create a Test Ticket"
 msgstr "테스트 Ticket 만들기"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:206
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:203
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "Create a new checklist item"
@@ -6652,7 +6652,6 @@ msgstr "전자 메일 계정"
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:126
 #: app/assets/javascripts/app/views/google/list.jst.eco:81
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:82
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:33
 msgid "Email Address"
 msgstr "이메일 주소"
 
@@ -6692,6 +6691,12 @@ msgstr "이메일 아웃 바운드"
 #| msgid "Email Notification"
 msgid "Email Verification"
 msgstr "이메일 알림"
+
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:33
+#, fuzzy
+#| msgid "Email Address"
+msgid "Email address"
+msgstr "이메일 주소"
 
 #: app/models/user.rb:609
 msgid "Email address '%{email}' is already used for another user."
@@ -8011,8 +8016,13 @@ msgid "Full"
 msgstr "전체 이름"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:11
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:24
 msgid "Full Name"
+msgstr "전체 이름"
+
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:24
+#, fuzzy
+#| msgid "Full Name"
+msgid "Full name"
 msgstr "전체 이름"
 
 #: db/seeds/settings.rb:263
@@ -11733,7 +11743,7 @@ msgstr "알림 소리"
 msgid "No checklist added to this ticket yet."
 msgstr "아직 Ticket을 만들지 않았습니다."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:182
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:179
 msgid "No checklist items yet"
 msgstr ""
 
@@ -12588,14 +12598,7 @@ msgstr "조직"
 msgid "Organization & Department Name"
 msgstr "조직 및 부서명"
 
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:47
-#, fuzzy
-#| msgid "Organization"
-msgid "Organization Logo"
-msgstr "조직"
-
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:9
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:40
 msgid "Organization Name"
 msgstr "조직 이름"
 
@@ -12610,6 +12613,18 @@ msgstr "조직 지원"
 #| msgid "%s Object(s) are updated."
 msgid "Organization could not be updated."
 msgstr "%s 객체 (들) 업데이트됩니다."
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:47
+#, fuzzy
+#| msgid "Organization"
+msgid "Organization logo"
+msgstr "조직"
+
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:40
+#, fuzzy
+#| msgid "Organization Name"
+msgid "Organization name"
+msgstr "조직 이름"
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:78
 #, fuzzy
@@ -13960,7 +13975,7 @@ msgid "Reopening time in days"
 msgstr "재 오픈 율(%)"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:14
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:191
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:188
 #, fuzzy
 #| msgid "Order"
 msgid "Reorder"
@@ -14502,7 +14517,7 @@ msgstr "토요일"
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:121
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:219
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:216
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:70
@@ -15012,13 +15027,18 @@ msgstr "공유 조직"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:397
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:65
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:50
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:52
 msgid "Send Mails via"
 msgstr "를 통해 메일을 보내기"
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco:33
 msgid "Send a message to all logged in users."
 msgstr "로그인 한 사용자 모두에게 메시지를 보냅니다."
+
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:52
+#, fuzzy
+#| msgid "Send Mails via"
+msgid "Send mails via"
+msgstr "를 통해 메일을 보내기"
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:40
 msgid ""
@@ -16447,7 +16467,7 @@ msgid "Text or attachment is required"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_item_edit.jst.eco:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:145
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:146
 msgid "Text or ticket identifier"
 msgstr ""
 
@@ -16665,7 +16685,7 @@ msgstr "이메일을 확인할 수 없습니다. 관리자에게 문의하시기
 msgid "The admin password auth email could not be sent."
 msgstr "알림이 전송 될 때."
 
-#: app/frontend/apps/desktop/stores/theme.ts:39
+#: app/frontend/apps/desktop/stores/theme.ts:42
 #, fuzzy
 #| msgid "%s Object(s) are updated."
 msgid "The appearance could not be updated."
@@ -21570,7 +21590,7 @@ msgstr "채팅"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
 #, fuzzy
 #| msgid "Checksum"
-msgid "checked Checklist Item '%s'"
+msgid "checked checklist item '%s'"
 msgstr "체크섬"
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco:24
@@ -22876,7 +22896,7 @@ msgstr "등록되지 않은 사용자"
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 #, fuzzy
 #| msgid "Create new Customer"
-msgid "unchecked Checklist Item '%s'"
+msgid "unchecked checklist item '%s'"
 msgstr "새로운 고객을 만들기"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
