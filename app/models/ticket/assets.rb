@@ -31,10 +31,10 @@ returns
     return data if data[ app_model_ticket ][ id ]
 
     data[app_model_ticket][id] = attributes_with_association_ids
-    data[app_model_ticket][id]['checklist_incomplete_items'] = checklist&.incomplete
 
     group.assets(data)
     organization&.assets(data)
+    checklist&.assets(data)
     assets_user(data)
 
     data

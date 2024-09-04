@@ -3,12 +3,13 @@
 require 'rails_helper'
 
 RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type: :system do
+  let(:action_user) { create(:agent, groups: Group.all) }
   let(:other_agent) { create(:agent, groups: Group.all) }
   let(:ticket)      { create(:ticket, group: Group.first) }
 
   def authenticate
     Setting.set('checklist', true)
-    true
+    action_user
   end
 
   def perform_item_action(id, action)
@@ -347,6 +348,21 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type:
         wait.until { ticket.reload.state.name == 'closed' }
         expect(page).to have_no_text('You have unchecked items in the checklist')
       end
+    end
+  end
+
+  describe 'Checklist badge counter does not update when linked tickets change state. #5319' do
+    let(:ticket) do
+      ticket = create(:ticket, group: Group.first)
+      checklist = create(:checklist, ticket: ticket)
+      checklist.items.last.update(text: "Ticket##{ticket_link.number}")
+      ticket
+    end
+    let(:ticket_link) { create(:ticket, group: Group.first) }
+
+    it 'does update for badge when sidebar is not opened and same user updates related tickets' do
+      ticket_link.update!(state: Ticket::State.find_by(name: 'closed'), updated_by: action_user)
+      expect(page).to have_css(".tabsSidebar-tab[data-tab='checklist'] .js-tabCounter", text: ticket.checklist.incomplete)
     end
   end
 end

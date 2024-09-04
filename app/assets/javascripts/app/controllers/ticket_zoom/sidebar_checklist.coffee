@@ -3,12 +3,9 @@ class SidebarChecklist extends App.Controller
     super
 
     @changeable = @ticket.userGroupAccess('change')
-    @counter = @ticket.checklist_incomplete_items
 
   release: =>
     super
-    if @badgeSubscribeId
-      @ticket.unsubscribe(@badgeSubscribeId)
     @unsubscribe()
     @clearWidget()
 
@@ -64,8 +61,23 @@ class SidebarChecklist extends App.Controller
 
     @unsubscribe()
 
-    # catch latest state
-    checklist = App.Checklist.find(@checklist.id)
+    # ticket subscriptions
+    sid = App.Ticket.subscribeItem(
+      @ticket.id,
+      =>
+        @badgeRenderLocal()
+        return if @widget?.actionController
+        @shown()
+    )
+    @subscriptions.push(
+      object: 'Ticket',
+      id: @ticket.id,
+      sid: sid,
+    )
+
+    # checklist subscriptions
+    checklist = App.Checklist.findByAttribute('ticket_id', @ticket.id)
+    return if !checklist
 
     sid = App.Checklist.subscribeItem(
       checklist.id,
@@ -125,7 +137,6 @@ class SidebarChecklist extends App.Controller
           App.Collection.loadAssets(data.assets)
 
           @checklist = App.Checklist.find(data.id)
-          @counter = @ticket.checklist_incomplete_items
 
           @widget = new App.SidebarChecklistShow(el: @elSidebar, parentVC: @, checklist: @checklist, readOnly: !@changeable, enterEditMode: enterEditMode)
 
@@ -137,21 +148,11 @@ class SidebarChecklist extends App.Controller
         @badgeRenderLocal()
     )
 
-    return if @subcribed
-    @subcribed = true
-
-    @controllerBind('Checklist:create Checklist:destroy', (data) =>
-      return if @ticket_id && @ticket_id isnt data.ticket_id
-      return if @widget?.actionController
-      @shown()
-    )
-
   clearWidget: =>
     @widget?.el.empty()
     @widget?.releaseController()
 
     @checklist = undefined
-    @counter = 0
     @renderActions()
 
   metaBadge: =>
@@ -159,7 +160,7 @@ class SidebarChecklist extends App.Controller
       name: 'checklist'
       icon: 'checklist'
       counterPossible: true
-      counter: @counter
+      counter: App.Checklist.findByAttribute('ticket_id', @ticket.id)?.open_items().length
     }
 
   badgeRender: (el) =>
@@ -170,20 +171,9 @@ class SidebarChecklist extends App.Controller
     return if !@badgeEl
     @badgeEl.html(App.view('generic/sidebar_tabs_item')(@metaBadge()))
 
-    return if @badgeSubscribe
-    @badgeSubscribe   = true
-    @badgeSubscribeId = @ticket.subscribe((ticket) =>
-      @counter = ticket.checklist_incomplete_items
-      @badgeRenderLocal()
-    )
-
-  increaseCounter: =>
-    @counter++
-    @badgeRenderLocal()
-
-  decreaseCounter: =>
-    @counter--
-    @badgeRenderLocal()
+    return if @badgeRenderLocalInit
+    @badgeRenderLocalInit = true
+    @subscribe()
 
 class ChecklistRemoveModal extends App.ControllerGenericDestroyConfirm
   onSubmit: =>

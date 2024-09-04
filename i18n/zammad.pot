@@ -2614,7 +2614,7 @@ msgstr ""
 msgid "Check this box if you want to customise how options are sorted. If the box is not checked, values are sorted in alphabetical order."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:57
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:54
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
 msgid "Checklist"
 msgstr ""
@@ -6095,7 +6095,7 @@ msgstr ""
 msgid "Failed to save checklist order."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:122
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:117
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 
@@ -11461,7 +11461,7 @@ msgstr ""
 msgid "Remove authenticator app"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:25
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:362
 msgid "Remove checklist"
 msgstr ""
@@ -11507,7 +11507,7 @@ msgstr ""
 msgid "Removes the shadows for a flat look."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:20
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:355
 msgid "Rename checklist"
 msgstr ""

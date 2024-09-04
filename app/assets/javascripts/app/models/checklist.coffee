@@ -13,6 +13,21 @@ class App.Checklist extends App.Model
   sorted_items: =>
     App.ChecklistItem.findAll(@sorted_item_ids)
 
+  open_items: =>
+    @sorted_items().filter (item) ->
+      if item.ticket_id
+        ticket = App.Ticket.find(item.ticket_id)
+        if ticket
+          if ticket.userGroupAccess('read')
+            ticketState    = App.TicketState.fullLocal(ticket.state_id)
+            ticketState.state_type.name isnt 'closed' && ticketState.state_type.name isnt 'merged'
+          else
+            false # no access
+        else
+          false # no access
+      else
+        !item.checked
+
   @completedForTicketId: (ticket_id, callback) =>
     App.Ajax.request(
       id: 'checklist_completed'
@@ -21,4 +36,3 @@ class App.Checklist extends App.Model
       success: (data, status, xhr) ->
         callback(data)
     )
-

@@ -59,8 +59,6 @@ class App.SidebarChecklistShow extends App.Controller
     item.checklist_id = @checklist.id
     item.text = ''
 
-    @parentVC.increaseCounter()
-
     item.save(
       done: ->
         App.ChecklistItem.full(@id, callbackDone, force: true)
@@ -94,9 +92,6 @@ class App.SidebarChecklistShow extends App.Controller
   updateChecklistItem: (id, upcomingState, checkboxElem) =>
     item = App.ChecklistItem.find(id)
     item.checked = upcomingState
-
-    @parentVC.increaseCounter() if upcomingState is false
-    @parentVC.decreaseCounter() if upcomingState is true
 
     item.save(
       done: =>
@@ -208,8 +203,6 @@ class App.SidebarChecklistShow extends App.Controller
     item = App.ChecklistItem.find(id)
 
     deleteCallback = =>
-      @parentVC.decreaseCounter() if not item.checked
-
       item.destroy(
         done: =>
           @renderTable()
