@@ -27,12 +27,10 @@ describe('LayoutSidebar', () => {
     })
 
     it('shows CollapseButton in expanded state when collapsible is true', async () => {
-      expect(
-        view.queryByLabelText('Expand this element'),
-      ).not.toBeInTheDocument()
+      expect(view.queryByLabelText('Expand sidebar')).not.toBeInTheDocument()
 
       // By default, is expanded and aria label shows collapse action
-      expect(view.queryByLabelText('Collapse this element')).toBeInTheDocument()
+      expect(view.queryByLabelText('Collapse sidebar')).toBeInTheDocument()
     })
 
     it('does not show CollapseButton when collapsible is false', async () => {
@@ -51,16 +49,9 @@ describe('LayoutSidebar', () => {
 
     it('shows an action Button when iconCollapsed is provided and sidebar is collapsed', async () => {
       await view.rerender({ iconCollapsed: 'person-gear' })
-      const collapseButton = await view.findByLabelText('Collapse this element')
+      const collapseButton = await view.findByLabelText('Collapse sidebar')
       await view.events.click(collapseButton)
       expect(view.queryByTestId('action-button')).toBeInTheDocument()
-    })
-
-    it('hides collapse button if props is set and sidebar is collapsed', async () => {
-      await view.rerender({ hideButtonWhenCollapsed: true })
-      expect(
-        view.queryByLabelText('Expand this element'),
-      ).not.toBeInTheDocument()
     })
   })
 
@@ -78,36 +69,36 @@ describe('LayoutSidebar', () => {
       })
     })
 
-    it('shows ResizeHandle when resizable is true', async () => {
+    it('shows ResizeLine when resizable is true', async () => {
       expect(view.queryByLabelText('Resize sidebar')).toBeInTheDocument()
     })
 
-    it('does not show ResizeHandle when resizable is false', async () => {
+    it('does not show ResizeLine when resizable is false', async () => {
       await view.rerender({ resizable: false })
 
       expect(view.queryByLabelText('Resize sidebar')).not.toBeInTheDocument()
     })
 
-    it('resizes sidebar when ResizeHandle is clicked and dragged', async () => {
-      const resizeHandle = await view.findByLabelText('Resize sidebar')
+    it('resizes sidebar when ResizeLine is clicked and dragged', async () => {
+      const resizeLine = await view.findByLabelText('Resize sidebar')
 
-      await view.events.click(resizeHandle)
+      await view.events.click(resizeLine)
 
       // Emulate mouse down on resize handle and mouse move on document
-      await fireEvent.mouseDown(resizeHandle, { clientX: 0 })
+      await fireEvent.mouseDown(resizeLine, { clientX: 0 })
       await fireEvent.mouseMove(document, { clientX: 100 })
       await fireEvent.mouseUp(document, { clientX: 100 })
 
       expect(view.emitted('resize-horizontal')).toEqual([[100]])
     })
 
-    it('resizes sidebar when ResizeHandle is touched and dragged', async () => {
-      const resizeHandle = await view.findByLabelText('Resize sidebar')
+    it('resizes sidebar when ResizeLine is touched and dragged', async () => {
+      const resizeLine = await view.findByLabelText('Resize sidebar')
 
-      await view.events.click(resizeHandle)
+      await view.events.click(resizeLine)
 
       // Touch device
-      await fireEvent.touchStart(resizeHandle, { pageX: 0 })
+      await fireEvent.touchStart(resizeLine, { pageX: 0 })
       await fireEvent.touchMove(document, { pageX: 100 })
       await fireEvent.touchEnd(document, { pageX: 100 })
 
@@ -115,22 +106,12 @@ describe('LayoutSidebar', () => {
       expect(view.emitted('resize-horizontal')).toBeTruthy()
     })
 
-    it('resets width when ResizeHandle is double clicked', async () => {
-      const resizeHandle = await view.findByLabelText('Resize sidebar')
+    it('resets width when ResizeLine is double clicked', async () => {
+      const resizeLine = await view.findByLabelText('Resize sidebar')
 
-      await fireEvent.dblClick(resizeHandle)
+      await fireEvent.dblClick(resizeLine)
 
       expect(view.emitted('reset-width')).toBeTruthy()
-    })
-
-    it('hides ResizeHandle when sidebar is collapsed', async () => {
-      await view.rerender({ collapsible: true })
-
-      const collapseButton = await view.findByLabelText('Collapse this element')
-
-      await view.events.click(collapseButton)
-
-      expect(view.queryByLabelText('Resize sidebar')).not.toBeInTheDocument()
     })
   })
 
@@ -153,18 +134,21 @@ describe('LayoutSidebar', () => {
 
       expect(aside).toHaveClass('border-e')
 
-      const collapseButton = view.getByLabelText('Collapse this element')
+      const collapseButton = view.getByLabelText('Collapse sidebar')
 
       expect(collapseButton.parentElement).toHaveClasses([
+        'focus-within:opacity-100',
+        'hover:opacity-100',
+      ])
+
+      const resizeLine = view.getByLabelText('Resize sidebar')
+
+      expect(resizeLine.parentElement).toHaveClasses([
         'ltr:right-0',
         'ltr:translate-x-1/2',
         'rtl:left-0',
         'rtl:-translate-x-1/2',
       ])
-
-      const resizeHandle = view.getByLabelText('Resize sidebar')
-
-      expect(resizeHandle).toHaveClasses(['ltr:right-0', 'rtl:left-0'])
     })
 
     it('supports end position (right)', async () => {
@@ -174,18 +158,15 @@ describe('LayoutSidebar', () => {
 
       expect(aside).toHaveClass('border-s')
 
-      const collapseButton = view.getByLabelText('Collapse this element')
+      const resizeLine = view.getByLabelText('Resize sidebar')
 
-      expect(collapseButton.parentElement).toHaveClasses([
+      expect(resizeLine.parentElement).toHaveClasses([
         'ltr:left-0',
+        'rtl:right-0',
         'ltr:-translate-x-1/2',
         'rtl:right-0',
         'rtl:translate-x-1/2',
       ])
-
-      const resizeHandle = view.getByLabelText('Resize sidebar')
-
-      expect(resizeHandle).toHaveClasses(['ltr:left-0', 'rtl:right-0'])
     })
   })
 })

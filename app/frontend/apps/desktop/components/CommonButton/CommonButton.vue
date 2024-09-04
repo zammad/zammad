@@ -71,6 +71,8 @@ const variantClasses = computed(() => {
         'text-gray-100',
         'dark:text-neutral-400',
       ]
+    case 'none':
+      return []
     case 'secondary':
     default:
       return ['-:bg-transparent', '-:hover:bg-transparent', 'text-blue-800']

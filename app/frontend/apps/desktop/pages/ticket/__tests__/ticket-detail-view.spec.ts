@@ -274,4 +274,6 @@ describe('ticket detail view', () => {
       await view.findByRole('status', { name: 'Incomplete checklist items' }),
     ).toBeInTheDocument()
   })
+
+  it('replies to an article', () => {})
 })

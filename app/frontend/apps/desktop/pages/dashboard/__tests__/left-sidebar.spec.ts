@@ -56,7 +56,7 @@ describe('Left sidebar', () => {
 
       const aside = view.getByRole('complementary')
       const collapseButton = getByRole(aside, 'button', {
-        name: 'Collapse this element',
+        name: 'Collapse sidebar',
       })
 
       await view.events.click(collapseButton)
@@ -66,7 +66,7 @@ describe('Left sidebar', () => {
       })
 
       const expandButton = getByRole(aside, 'button', {
-        name: 'Expand this element',
+        name: 'Expand sidebar',
       })
 
       await view.events.click(expandButton)

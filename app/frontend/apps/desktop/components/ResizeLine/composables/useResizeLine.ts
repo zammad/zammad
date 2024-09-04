@@ -12,9 +12,9 @@ import { ref, onUnmounted, type Ref } from 'vue'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
-export const useResizeWidthHandle = (
+export const useResizeLine = (
   resizeCallback: (positionX: number) => void,
-  handleRef: MaybeComputedElementRef<MaybeElement>,
+  resizeLineElementRef: MaybeComputedElementRef<MaybeElement>,
   keyStrokeCallback: (e: KeyboardEvent, adjustment: number) => void,
   options?: {
     calculateFromRight?: boolean
@@ -24,7 +24,7 @@ export const useResizeWidthHandle = (
 
   const locale = useLocaleStore()
   const { width } = useElementBounding(
-    handleRef as MaybeComputedElementRef<MaybeElement>,
+    resizeLineElementRef as MaybeComputedElementRef<MaybeElement>,
   )
   const { width: screenWidth } = useWindowSize()
 
@@ -74,7 +74,7 @@ export const useResizeWidthHandle = (
     document.addEventListener('mousemove', resize)
   }
 
-  const startResizing = (e: MouseEvent) => {
+  const startResizing = (e: MouseEvent | TouchEvent) => {
     // Do not react on double click event.
     if (e.detail > 1) return
 
@@ -98,7 +98,7 @@ export const useResizeWidthHandle = (
         keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? 5 : -5)
       }
     },
-    { target: handleRef as Ref<EventTarget> },
+    { target: resizeLineElementRef as Ref<EventTarget> },
   )
 
   onKeyStroke(
@@ -110,7 +110,7 @@ export const useResizeWidthHandle = (
         keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? -5 : 5)
       }
     },
-    { target: handleRef as Ref<EventTarget> },
+    { target: resizeLineElementRef as Ref<EventTarget> },
   )
 
   return {

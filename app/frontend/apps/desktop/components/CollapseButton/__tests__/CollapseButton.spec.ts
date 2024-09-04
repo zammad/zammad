@@ -10,60 +10,60 @@ import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vu
 describe('CollapseButton', () => {
   it.each([
     {
-      isCollapsed: true,
+      collapsed: true,
       orientation: 'horizontal',
       inverse: false,
       icon: 'arrow-bar-right',
     },
     {
-      isCollapsed: false,
+      collapsed: false,
       orientation: 'horizontal',
       inverse: false,
       icon: 'arrow-bar-left',
     },
     {
-      isCollapsed: true,
+      collapsed: true,
       orientation: 'vertical',
       inverse: false,
       icon: 'arrows-expand',
     },
     {
-      isCollapsed: false,
+      collapsed: false,
       orientation: 'vertical',
       inverse: false,
       icon: 'arrows-collapse',
     },
     {
-      isCollapsed: true,
+      collapsed: true,
       orientation: 'horizontal',
       inverse: true,
       icon: 'arrow-bar-left',
     },
     {
-      isCollapsed: false,
+      collapsed: false,
       orientation: 'horizontal',
       inverse: true,
       icon: 'arrow-bar-right',
     },
     {
-      isCollapsed: true,
+      collapsed: true,
       orientation: 'vertical',
       inverse: true,
       icon: 'arrows-expand',
     },
     {
-      isCollapsed: false,
+      collapsed: false,
       orientation: 'vertical',
       inverse: true,
       icon: 'arrows-collapse',
     },
   ])(
-    'displays correct LTR icon (isCollapsed: $isCollapsed, orientation: $orientation, inverse: $inverse)',
-    async ({ isCollapsed, orientation, inverse, icon }) => {
+    'displays correct LTR icon (collapsed: $collapsed, orientation: $orientation, inverse: $inverse)',
+    async ({ collapsed, orientation, inverse, icon }) => {
       const wrapper = renderComponent(CollapseButton, {
         props: {
           ownerId: 'test',
-          isCollapsed,
+          collapsed,
           inverse,
           orientation,
         },
@@ -75,56 +75,56 @@ describe('CollapseButton', () => {
 
   it.each([
     {
-      isCollapsed: true,
+      collapsed: true,
       orientation: 'horizontal',
       inverse: false,
       icon: 'arrow-bar-left',
     },
     {
-      isCollapsed: false,
+      collapsed: false,
       orientation: 'horizontal',
       inverse: false,
       icon: 'arrow-bar-right',
     },
     {
-      isCollapsed: true,
+      collapsed: true,
       orientation: 'vertical',
       inverse: false,
       icon: 'arrows-expand',
     },
     {
-      isCollapsed: false,
+      collapsed: false,
       orientation: 'vertical',
       inverse: false,
       icon: 'arrows-collapse',
     },
     {
-      isCollapsed: true,
+      collapsed: true,
       orientation: 'horizontal',
       inverse: true,
       icon: 'arrow-bar-right',
     },
     {
-      isCollapsed: false,
+      collapsed: false,
       orientation: 'horizontal',
       inverse: true,
       icon: 'arrow-bar-left',
     },
     {
-      isCollapsed: true,
+      collapsed: true,
       orientation: 'vertical',
       inverse: true,
       icon: 'arrows-expand',
     },
     {
-      isCollapsed: false,
+      collapsed: false,
       orientation: 'vertical',
       inverse: true,
       icon: 'arrows-collapse',
     },
   ])(
-    'displays correct RTL icon (isCollapsed: $isCollapsed, orientation: $orientation, inverse: $inverse)',
-    async ({ isCollapsed, orientation, inverse, icon }) => {
+    'displays correct RTL icon (collapsed: $collapsed, orientation: $orientation, inverse: $inverse)',
+    async ({ collapsed, orientation, inverse, icon }) => {
       const locale = useLocaleStore()
 
       locale.localeData = {
@@ -134,7 +134,7 @@ describe('CollapseButton', () => {
       const wrapper = renderComponent(CollapseButton, {
         props: {
           ownerId: 'test',
-          isCollapsed,
+          collapsed,
           inverse,
           orientation,
         },
@@ -148,7 +148,7 @@ describe('CollapseButton', () => {
     const wrapper = renderComponent(CollapseButton, {
       props: {
         ownerId: 'test',
-        isCollapsed: true,
+        collapsed: true,
       },
     })
 
@@ -171,14 +171,39 @@ describe('CollapseButton', () => {
     const wrapper = renderComponent(CollapseButton, {
       props: {
         ownerId: 'test',
-        group: 'sidebar',
       },
     })
-    expect(wrapper.getByRole('button')).toHaveClasses([
-      'transition-opacity',
+    expect(wrapper.getByRole('button').parentElement).toHaveClasses([
       'opacity-0',
     ])
   })
+
+  it.each(['tertiary-gray', 'none'])(
+    'renders variant %s correctly',
+    (variant) => {
+      const wrapper = renderComponent(CollapseButton, {
+        props: {
+          variant,
+          ownerId: 'test',
+        },
+      })
+      if (variant === 'tertiary-gray') {
+        expect(wrapper.getByRole('button')).toHaveClasses([
+          'focus-visible:bg-blue-800',
+          'active:dark:bg-blue-800',
+          'focus:dark:bg-blue-800',
+          'active:bg-blue-800',
+          'focus:bg-blue-800',
+          'hover:bg-blue-600',
+          'hover:dark:bg-blue-900',
+          'text-black',
+          'dark:bg-gray-200',
+          'dark:text-white',
+        ])
+      }
+      expect(wrapper.getByRole('button')).toHaveClasses([])
+    },
+  )
 
   it('shows always for touch devices', () => {
     // Impersonate a touch device by mocking the corresponding media query.
@@ -193,7 +218,6 @@ describe('CollapseButton', () => {
     const wrapper = renderComponent(CollapseButton, {
       props: {
         ownerId: 'test',
-        group: 'test',
       },
     })
 
@@ -202,5 +226,24 @@ describe('CollapseButton', () => {
       'opacity-0',
       'group-hover/test:opacity-100',
     ])
+  })
+
+  it('supports custom labels for expand and collapse', async () => {
+    const wrapper = renderComponent(CollapseButton, {
+      props: {
+        ownerId: 'test',
+        collapsed: true,
+        expandLabel: 'expand foo',
+        collapseLabel: 'collapse foo',
+      },
+    })
+
+    expect(wrapper.getByLabelText('expand foo')).toBeInTheDocument()
+
+    await wrapper.rerender({
+      collapsed: false,
+    })
+
+    expect(wrapper.getByLabelText('collapse foo')).toBeInTheDocument()
   })
 })

@@ -22,30 +22,27 @@ withDefaults(defineProps<Props>(), {
 <template>
   <!--  eslint-disable vuejs-accessibility/no-static-element-interactions-->
   <header
-    class="group/heading flex cursor-default justify-between px-0 text-base font-normal leading-snug text-stone-200 active:text-stone-200 dark:text-neutral-500 dark:active:text-neutral-500"
+    class="group flex cursor-default justify-between rounded-md px-2 py-2.5 text-base font-normal leading-snug text-stone-200 focus-within:text-black focus-within:outline focus-within:outline-1 focus-within:-outline-offset-1 focus-within:outline-blue-800 hover:bg-blue-600 hover:text-black dark:text-neutral-500 dark:focus-within:text-white dark:hover:bg-blue-900 hover:dark:text-white"
     :class="{ 'cursor-pointer': collapsible }"
     @click="collapsible && $emit('toggle-collapsed', title)"
     @keydown.enter="collapsible && $emit('toggle-collapsed', title)"
   >
     <slot name="title">
-      <h4 class="grow text-base ltr:mr-auto rtl:ml-auto">
+      <h4
+        class="grow select-none text-base text-current ltr:mr-auto rtl:ml-auto"
+      >
         {{ $t(title) }}
       </h4>
     </slot>
+
     <CollapseButton
       v-if="collapsible"
-      :is-collapsed="collapsed"
+      :collapsed="collapsed"
       :owner-id="id"
-      group="heading"
-      class="mt-0.5 rtl:order-1"
+      no-padded
+      class="opacity-0 focus-visible:bg-transparent focus-visible:text-black group-hover:text-black group-hover:opacity-100 rtl:order-1 dark:focus-visible:text-white dark:group-hover:text-white"
       orientation="vertical"
       @keydown.enter="collapsible && $emit('toggle-collapsed', title)"
     />
   </header>
 </template>
-
-<style scoped>
-header:hover :deep(.collapse-button) {
-  @apply outline outline-1 outline-offset-1 outline-blue-600 dark:outline-blue-900;
-}
-</style>

@@ -9,3 +9,4 @@ export type ButtonVariant =
   | 'remove'
   | 'subtle'
   | 'neutral'
+  | 'none'

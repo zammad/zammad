@@ -104,13 +104,13 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
     <li
       v-for="category in categories"
       :key="category.label"
-      class="bg-neutral-00 relative z-0 mb-4"
+      class="bg-neutral-00 relative z-0 mb-1"
       :class="{ 'overflow-clip': collapsedCategories.has(category.label) }"
     >
       <template v-if="permittedEntries[category.label].length > 0">
         <NavigationMenuHeader
           :id="category.id"
-          class="mb-1 px-2"
+          class="mb-1"
           :collapsed="collapsedCategories.has(category.label)"
           :title="category.label"
           :icon="category.icon"

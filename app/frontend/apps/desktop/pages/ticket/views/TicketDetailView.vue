@@ -73,7 +73,6 @@ const { hasSidebar } = useTicketSidebar()
     no-padding
     background-variant="primary"
     :show-sidebar="hasSidebar"
-    hide-button-when-collapsed
     content-alignment="center"
   >
     <CommonLoader class="mt-8" :loading="!ticket">

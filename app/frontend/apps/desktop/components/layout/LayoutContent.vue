@@ -28,7 +28,6 @@ export interface Props {
   width?: ContentWidth
   backgroundVariant?: BackgroundVariant
   contentAlignment?: ContentAlignment
-  hideButtonWhenCollapsed?: boolean
   helpText?: string[] | string
   /**
    * Hides `default slot` content and shows help text if provided
@@ -44,7 +43,6 @@ const props = withDefaults(defineProps<Props>(), {
   width: 'full',
   showInlineHelp: false,
   contentAlignment: 'start',
-  hideButtonWhenCollapsed: false,
 })
 
 const maxWidth = computed(() =>
@@ -62,6 +60,9 @@ const { userId } = useSessionStore()
 const storageKeyId = `${userId}-${props.name}`
 
 const {
+  currentSidebarWidth,
+  maxSidebarWidth,
+  minSidebarWidth,
   gridColumns,
   collapseSidebar,
   expandSidebar,
@@ -127,10 +128,12 @@ const { durations } = useTransitionConfig()
         #default="{ isCollapsed, toggleCollapse }"
         :name="storageKeyId"
         :position="SidebarPosition.End"
-        :hide-button-when-collapsed="hideButtonWhenCollapsed"
         :aria-label="$t('Content sidebar')"
         collapsible
         resizable
+        :current-width="currentSidebarWidth"
+        :max-width="maxSidebarWidth"
+        :min-width="minSidebarWidth"
         no-padding
         no-scroll
         class="bg-neutral-50 dark:bg-gray-500"

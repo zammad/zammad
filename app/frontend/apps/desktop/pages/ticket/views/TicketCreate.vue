@@ -377,7 +377,6 @@ const submitCreateTicket = async (event: FormSubmitData<TicketFormData>) => {
     name="ticket-create"
     background-variant="primary"
     content-alignment="center"
-    hide-button-when-collapsed
     :show-sidebar="hasSidebar"
   >
     <div class="w-full max-w-screen-2xl px-28 pt-3.5">

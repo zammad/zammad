@@ -23,8 +23,8 @@ import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonOverlayContainer from '#desktop/components/CommonOverlayContainer/CommonOverlayContainer.vue'
-import { useResizeWidthHandle } from '#desktop/components/ResizeHandle/composables/useResizeWidthHandle.ts'
-import ResizeHandle from '#desktop/components/ResizeHandle/ResizeHandle.vue'
+import { useResizeLine } from '#desktop/components/ResizeLine/composables/useResizeLine.ts'
+import ResizeLine from '#desktop/components/ResizeLine/ResizeLine.vue'
 
 import CommonFlyoutActionFooter from './CommonFlyoutActionFooter.vue'
 import { closeFlyout } from './useFlyout.ts'
@@ -127,7 +127,7 @@ if (props.persistResizeWidth) {
   flyoutContainerWidth = ref(flyoutSize[props.size || 'medium'])
 }
 
-const resizeHandleComponent = ref<InstanceType<typeof ResizeHandle>>()
+const resizeHandleComponent = ref<InstanceType<typeof ResizeLine>>()
 
 const resizeCallback = (valueX: number) => {
   if (valueX >= flyoutMaxWidth.value) return
@@ -140,7 +140,7 @@ const activeElement = useActiveElement()
 const handleKeyStroke = (e: KeyboardEvent, adjustment: number) => {
   if (
     !flyoutContainerWidth.value ||
-    activeElement.value !== resizeHandleComponent.value?.$el
+    activeElement.value !== resizeHandleComponent.value?.resizeLine
   )
     return
 
@@ -153,9 +153,9 @@ const handleKeyStroke = (e: KeyboardEvent, adjustment: number) => {
   resizeCallback(newWidth)
 }
 
-const { startResizing, isResizingHorizontal } = useResizeWidthHandle(
+const { startResizing, isResizingHorizontal } = useResizeLine(
   resizeCallback,
-  resizeHandleComponent,
+  resizeHandleComponent.value?.resizeLine,
   handleKeyStroke,
   {
     calculateFromRight: true,
@@ -302,19 +302,20 @@ onMounted(() => {
       </slot>
     </footer>
 
-    <ResizeHandle
+    <ResizeLine
       v-if="resizable"
       ref="resizeHandleComponent"
-      class="absolute top-1/2 -translate-y-1/2 ltr:left-0 rtl:right-0"
-      :aria-label="$t('Resize side panel')"
-      role="separator"
-      tabindex="0"
-      aria-orientation="horizontal"
-      :aria-valuenow="flyoutContainerWidth"
-      :aria-valuemax="flyoutMaxWidth"
-      @mousedown="startResizing"
-      @touchstart="startResizing"
-      @dblclick="resetWidth()"
+      :label="$t('Resize side panel')"
+      class="absolute top-[7px] h-[calc(100%-14px)] overflow-clip ltr:left-0 ltr:-translate-x-1/2 rtl:right-0 rtl:translate-x-1/2"
+      button-class="ltr:rounded-tl-sm rtl:rounded-tr-sm ltr:rounded-bl-sm rtl:rounded-br-sm"
+      orientation="vertical"
+      :values="{
+        current: flyoutContainerWidth,
+        max: flyoutMaxWidth,
+      }"
+      @mousedown-event="startResizing"
+      @touchstart-event="startResizing"
+      @dblclick-event="resetWidth()"
     />
   </CommonOverlayContainer>
 </template>
