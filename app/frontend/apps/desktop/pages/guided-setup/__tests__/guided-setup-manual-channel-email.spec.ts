@@ -97,19 +97,22 @@ describe('guided setup manual channel email', () => {
           case EnumFormUpdaterId.FormUpdaterUpdaterGuidedSetupEmailOutbound:
             return {
               formUpdater: {
-                adapter: {
-                  initialValue: 'smtp',
-                  options: [
-                    {
-                      value: 'smtp',
-                      label: 'SMTP - configure your own outgoing SMTP settings',
-                    },
-                    {
-                      value: 'sendmail',
-                      label:
-                        'Local MTA (Sendmail/Postfix/Exim/â\u0080¦) - use server setup',
-                    },
-                  ],
+                fields: {
+                  adapter: {
+                    initialValue: 'smtp',
+                    options: [
+                      {
+                        value: 'smtp',
+                        label:
+                          'SMTP - configure your own outgoing SMTP settings',
+                      },
+                      {
+                        value: 'sendmail',
+                        label:
+                          'Local MTA (Sendmail/Postfix/Exim/â\u0080¦) - use server setup',
+                      },
+                    ],
+                  },
                 },
               },
             }
@@ -118,18 +121,20 @@ describe('guided setup manual channel email', () => {
           default:
             return {
               formUpdater: {
-                adapter: {
-                  initialValue: 'imap',
-                  options: [
-                    {
-                      value: 'imap',
-                      label: 'IMAP',
-                    },
-                    {
-                      value: 'pop3',
-                      label: 'POP3',
-                    },
-                  ],
+                fields: {
+                  adapter: {
+                    initialValue: 'imap',
+                    options: [
+                      {
+                        value: 'imap',
+                        label: 'IMAP',
+                      },
+                      {
+                        value: 'pop3',
+                        label: 'POP3',
+                      },
+                    ],
+                  },
                 },
               },
             }

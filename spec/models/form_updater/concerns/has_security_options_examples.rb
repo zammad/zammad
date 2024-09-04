@@ -25,7 +25,7 @@ RSpec.shared_examples 'FormUpdater::HasSecurityOptions' do |type:|
 
     shared_examples 'resolving security field' do |expected_result:|
       it 'resolves security field' do
-        result = resolved_result.resolve
+        result = resolved_result.resolve[:fields]
 
         expect(result['security']).to include(expected_result)
       end
@@ -33,7 +33,7 @@ RSpec.shared_examples 'FormUpdater::HasSecurityOptions' do |type:|
 
     shared_examples 'not resolving security field' do
       it 'does not resolve security field' do
-        result = resolved_result.resolve
+        result = resolved_result.resolve[:fields]
 
         expect(result['security']).to be_nil
       end

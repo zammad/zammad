@@ -14,13 +14,13 @@ RSpec.shared_examples 'FormUpdater::AppliesTicketTemplate' do
 
     shared_examples 'skips the field' do
       it 'skips the field' do
-        expect(resolved_result.resolve[field_name]).not_to have_key(:value)
+        expect(resolved_result.resolve[:fields][field_name]).not_to have_key(:value)
       end
     end
 
     shared_examples 'sets the template value for the field' do
       it 'sets the template value for the field' do
-        expect(resolved_result.resolve[field_name]).to include(field_result)
+        expect(resolved_result.resolve[:fields][field_name]).to include(field_result)
       end
     end
 
@@ -221,8 +221,8 @@ RSpec.shared_examples 'FormUpdater::AppliesTicketTemplate' do
         let(:template) { create(:template, options: { 'ticket.group_id' => { 'value' => group.id.to_s }, 'ticket.owner_id' => { 'value' => user.id.to_s } }) }
 
         it 'sets the template value for both fields', :aggregate_failures do
-          expect(resolved_result.resolve['group_id']).to include(value: group.id)
-          expect(resolved_result.resolve['owner_id']).to include(value: user.id)
+          expect(resolved_result.resolve[:fields]['group_id']).to include(value: group.id)
+          expect(resolved_result.resolve[:fields]['owner_id']).to include(value: user.id)
         end
       end
     end

@@ -34,7 +34,7 @@ RSpec.shared_examples 'FormUpdater::ChecksCoreWorkflow' do |object_name:|
     it 'checks that mapping was correct' do
       result = resolved_result.resolve
 
-      expect(result[field_name]).to include(expected_result)
+      expect(result[:fields][field_name]).to include(expected_result)
     end
   end
 

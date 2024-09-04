@@ -82,19 +82,21 @@ describe('personal notifications settings', () => {
 
     mockFormUpdaterQuery({
       formUpdater: {
-        EnumFormUpdaterId:
-          EnumFormUpdaterId.FormUpdaterUpdaterUserNotifications,
-        group_ids: {
-          options: [
-            {
-              label: 'Testers Group',
-              value: 1,
-            },
-            {
-              label: 'Developers Group',
-              value: 2,
-            },
-          ],
+        fields: {
+          EnumFormUpdaterId:
+            EnumFormUpdaterId.FormUpdaterUpdaterUserNotifications,
+          group_ids: {
+            options: [
+              {
+                label: 'Testers Group',
+                value: 1,
+              },
+              {
+                label: 'Developers Group',
+                value: 2,
+              },
+            ],
+          },
         },
       },
     })

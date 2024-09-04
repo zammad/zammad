@@ -1946,11 +1946,11 @@ msgstr ""
 msgid "Automatically loads the chat.css file. If you want to use your own css, just set it to false."
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1214
+#: app/frontend/shared/components/Form/Form.vue:1226
 msgid "Autosave in progress…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1223
+#: app/frontend/shared/components/Form/Form.vue:1235
 msgid "Autosaving is taking longer than expected…"
 msgstr ""
 

@@ -13,7 +13,10 @@ export const FormUpdaterDocument = gql`
     data: $data
     relationFields: $relationFields
     id: $id
-  )
+  ) {
+    fields
+    flags
+  }
 }
     `;
 export function useFormUpdaterQuery(variables: Types.FormUpdaterQueryVariables | VueCompositionApi.Ref<Types.FormUpdaterQueryVariables> | ReactiveFunction<Types.FormUpdaterQueryVariables>, options: VueApolloComposable.UseQueryOptions<Types.FormUpdaterQuery, Types.FormUpdaterQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.FormUpdaterQuery, Types.FormUpdaterQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.FormUpdaterQuery, Types.FormUpdaterQueryVariables>> = {}) {

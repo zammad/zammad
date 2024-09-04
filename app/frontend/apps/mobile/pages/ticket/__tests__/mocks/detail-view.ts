@@ -361,8 +361,10 @@ export const mockTicketDetailViewGql = (options: MockOptions = {}) => {
     )
     mockGraphQLApi(FormUpdaterDocument).willResolve({
       formUpdater: {
-        pending_time: {
-          show: false,
+        fields: {
+          pending_time: {
+            show: false,
+          },
         },
       },
     })

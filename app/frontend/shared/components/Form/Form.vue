@@ -91,7 +91,7 @@ import type { Component, Ref } from 'vue'
 export interface Props {
   id?: string
   schema?: FormSchemaNode[]
-  schemaData?: Except<ReactiveFormSchemData, 'fields'>
+  schemaData?: Except<ReactiveFormSchemData, 'fields' | 'flags'>
   schemaComponentLibrary?: Record<string, Component>
   handlers?: FormHandler[]
   changeFields?: Record<string, Partial<FormSchemaField>>
@@ -132,6 +132,7 @@ export interface Props {
   // When you return "false" inside the submit function the handling will be stopped.
   onSubmit?: (
     values: FormSubmitData,
+    flags?: Record<string, boolean>,
   ) => Promise<void | (() => void) | false> | void | (() => void) | false
 }
 
@@ -322,7 +323,7 @@ const onSubmit = (values: FormSubmitData) => {
 
   formNode.value?.clearErrors()
 
-  const submitResult = props.onSubmit(flatValues)
+  const submitResult = props.onSubmit(flatValues, schemaData.flags)
 
   if (submitResult !== undefined && submitResult === false) return
 
@@ -334,6 +335,8 @@ const onSubmit = (values: FormSubmitData) => {
 
         // it's possible to destroy Form before this is called and the reset should not run when errors exists.
         if (!formNode.value || formNode.value.context?.state.errors) return
+
+        schemaData.flags = {}
 
         // TODO: maybe should do some similar thing like in the formReset function for the form updater
         if (props.clearValuesAfterSubmit) {
@@ -359,6 +362,7 @@ const onSubmit = (values: FormSubmitData) => {
       })
   }
 
+  schemaData.flags = {}
   formNode.value?.reset(!props.clearValuesAfterSubmit ? values : undefined)
 
   submitResult?.()
@@ -417,6 +421,7 @@ const fixedAndSkippedFields: string[] = []
 
 const schemaData = reactive<ReactiveFormSchemData>({
   fields: {},
+  flags: {},
   values,
   // Helper function to translate directly with the formkit syntax.
   // Wrapper is neded, because of unexpected side effects.
@@ -575,12 +580,19 @@ const getResetFormValues = (
 const resetForm = (
   values: FormValues = {},
   object: EntityObject | undefined = undefined,
-  { resetDirty = true }: { resetDirty?: boolean } = {},
+  {
+    resetDirty = true,
+    resetFlags = true,
+  }: { resetDirty?: boolean; resetFlags?: boolean } = {},
   groupNode: FormKitNode | undefined = undefined,
 ) => {
   if (!formNode.value) return
 
   formResetRunning.value = true
+
+  if (resetFlags) {
+    schemaData.flags = {}
+  }
 
   const rootNode = formNode.value
 
@@ -1265,10 +1277,12 @@ const initializeFormSchema = () => {
       }
 
       if (queryResult?.data?.formUpdater) {
+        Object.assign(schemaData.flags, queryResult.data.formUpdater.flags)
+
         updateChangedFields(
           changeFields.value
-            ? merge(queryResult.data.formUpdater, changeFields.value)
-            : queryResult.data.formUpdater,
+            ? merge(queryResult.data.formUpdater.fields, changeFields.value)
+            : queryResult.data.formUpdater.fields,
         )
       }
 

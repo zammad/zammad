@@ -22,7 +22,7 @@ RSpec.describe FormUpdater::Updater::User::Notifications do
 
   describe '#resolve' do
     it 'return user groups' do
-      expect(form_updater.resolve).to include(
+      expect(form_updater.resolve[:fields]).to include(
         'group_ids' => include(
           options: contain_exactly(
             include(

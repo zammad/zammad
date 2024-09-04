@@ -34,28 +34,30 @@ describe('PersonalSettingNewAccessTokenFlyout - create new access token', () => 
   beforeEach(() => {
     mockFormUpdaterQuery({
       formUpdater: {
-        permissions: {
-          options: [
-            {
-              value: 'report',
-              label: 'Report (%s)',
-              description: 'To access the report interface.',
-            },
-            {
-              value: 'ticket',
-              label: 'Ticket (%s)',
-              description: 'To access the ticket interface.',
-              disabled: true,
-              children: [
-                {
-                  value: 'ticket.agent',
-                  label: 'Agent Tickets (%s)',
-                  description:
-                    'To access the agent tickets based on group access.',
-                },
-              ],
-            },
-          ],
+        fields: {
+          permissions: {
+            options: [
+              {
+                value: 'report',
+                label: 'Report (%s)',
+                description: 'To access the report interface.',
+              },
+              {
+                value: 'ticket',
+                label: 'Ticket (%s)',
+                description: 'To access the ticket interface.',
+                disabled: true,
+                children: [
+                  {
+                    value: 'ticket.agent',
+                    label: 'Agent Tickets (%s)',
+                    description:
+                      'To access the agent tickets based on group access.',
+                  },
+                ],
+              },
+            ],
+          },
         },
       },
     })

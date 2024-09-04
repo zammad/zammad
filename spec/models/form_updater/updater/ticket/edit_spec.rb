@@ -56,7 +56,7 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
 
   context 'when resolving' do
     it 'returns all resolved relation fields with correct value + label' do
-      expect(resolved_result.resolve).to include(
+      expect(resolved_result.resolve[:fields]).to include(
         'group_id'    => include(expected_result['group_id']),
         'state_id'    => include(expected_result['state_id']),
         'priority_id' => include(expected_result['priority_id']),
@@ -75,7 +75,7 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
       end
 
       it 'body (and also attachments) should be disabled' do
-        expect(resolved_result.resolve).to include(
+        expect(resolved_result.resolve[:fields]).to include(
           'body'        => include({
                                      disabled: true,
                                    }),
@@ -130,7 +130,7 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
         it 'checks that "rejectNonExistentValues" is false' do
           # Trigger first object authorization check.
           resolved_result.authorized?
-          result = resolved_result.resolve
+          result = resolved_result.resolve[:fields]
           expect(result[field_name]).to include(expected_result)
         end
       end
@@ -233,6 +233,24 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
         end
 
         include_examples 'resolve fields'
+      end
+    end
+
+    context 'when time accounting should be triggered' do
+      let(:id) do
+        Gql::ZammadSchema.id_from_object(create(:ticket, group: group))
+      end
+
+      before do
+        Setting.set('time_accounting', true)
+      end
+
+      it 'checks that time_accounting flag is present' do
+        # Trigger first object authorization check.
+        resolved_result.authorized?
+
+        flags = resolved_result.resolve[:flags]
+        expect(flags[:time_accounting]).to be_truthy
       end
     end
   end

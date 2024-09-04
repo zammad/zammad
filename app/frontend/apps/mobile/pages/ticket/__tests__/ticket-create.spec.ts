@@ -48,49 +48,51 @@ const visitTicketCreate = async (path = '/tickets/create') => {
 
   const mockFormUpdater = mockGraphQLApi(FormUpdaterDocument).willResolve({
     formUpdater: {
-      ticket_duplicate_detection: {
-        show: true,
-        hidden: false,
-        value: { count: 0, items: [] },
-      },
-      group_id: {
-        show: true,
-        options: [
-          {
-            label: 'Users',
-            value: 1,
-          },
-        ],
-        clearable: true,
-      },
-      owner_id: {
-        show: true,
-        options: [{ value: 100, label: 'Max Mustermann' }],
-      },
-      priority_id: {
-        show: true,
-        options: [
-          { value: 1, label: '1 low' },
-          { value: 2, label: '2 normal' },
-          { value: 3, label: '3 high' },
-        ],
-        clearable: true,
-      },
-      pending_time: {
-        show: false,
-        required: false,
-        hidden: false,
-        disabled: false,
-      },
-      state_id: {
-        show: true,
-        options: [
-          { value: 4, label: 'closed' },
-          { value: 2, label: 'open' },
-          { value: 7, label: 'pending close' },
-          { value: 3, label: 'pending reminder' },
-        ],
-        clearable: true,
+      fields: {
+        ticket_duplicate_detection: {
+          show: true,
+          hidden: false,
+          value: { count: 0, items: [] },
+        },
+        group_id: {
+          show: true,
+          options: [
+            {
+              label: 'Users',
+              value: 1,
+            },
+          ],
+          clearable: true,
+        },
+        owner_id: {
+          show: true,
+          options: [{ value: 100, label: 'Max Mustermann' }],
+        },
+        priority_id: {
+          show: true,
+          options: [
+            { value: 1, label: '1 low' },
+            { value: 2, label: '2 normal' },
+            { value: 3, label: '3 high' },
+          ],
+          clearable: true,
+        },
+        pending_time: {
+          show: false,
+          required: false,
+          hidden: false,
+          disabled: false,
+        },
+        state_id: {
+          show: true,
+          options: [
+            { value: 4, label: 'closed' },
+            { value: 2, label: 'open' },
+            { value: 7, label: 'pending close' },
+            { value: 3, label: 'pending reminder' },
+          ],
+          clearable: true,
+        },
       },
     },
   })

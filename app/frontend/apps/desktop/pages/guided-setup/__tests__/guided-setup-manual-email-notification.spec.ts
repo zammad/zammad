@@ -58,22 +58,24 @@ describe('guided setup manual email notification', () => {
 
       mockFormUpdaterQuery({
         formUpdater: {
-          adapter: {
-            initialValue: 'sendmail',
-            options: [
-              {
-                value: 'smtp',
-                label: 'SMTP - configure your own outgoing SMTP settings',
-              },
-              {
-                value: 'sendmail',
-                label:
-                  'Local MTA (Sendmail/Postfix/Exim/â\u0080¦) - use server setup',
-              },
-            ],
-          },
-          notification_sender: {
-            initialValue: 'Zammad Helpdesk <noreply@zammad.example.com>',
+          fields: {
+            adapter: {
+              initialValue: 'sendmail',
+              options: [
+                {
+                  value: 'smtp',
+                  label: 'SMTP - configure your own outgoing SMTP settings',
+                },
+                {
+                  value: 'sendmail',
+                  label:
+                    'Local MTA (Sendmail/Postfix/Exim/â\u0080¦) - use server setup',
+                },
+              ],
+            },
+            notification_sender: {
+              initialValue: 'Zammad Helpdesk <noreply@zammad.example.com>',
+            },
           },
         },
       })

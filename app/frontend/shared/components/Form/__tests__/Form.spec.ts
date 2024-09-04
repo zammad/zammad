@@ -1061,7 +1061,10 @@ describe('Form.vue - Reset', () => {
         return {
           data: {
             formUpdater: {
-              example,
+              fields: {
+                example,
+              },
+              flags: {},
             },
           },
         }
@@ -1168,7 +1171,10 @@ describe('Form.vue - Autosave notification', () => {
 
       return {
         data: {
-          formUpdater: {},
+          formUpdater: {
+            fields: {},
+            flags: {},
+          },
         },
       }
     })

@@ -211,28 +211,30 @@ describe('personal settings for token access', () => {
   it('create new personal access token', async () => {
     mockFormUpdaterQuery({
       formUpdater: {
-        permissions: {
-          options: [
-            {
-              value: 'report',
-              label: 'Report (%s)',
-              description: 'To access the report interface.',
-            },
-            {
-              value: 'ticket',
-              label: 'Ticket (%s)',
-              description: 'To access the ticket interface.',
-              disabled: true,
-              children: [
-                {
-                  value: 'ticket.agent',
-                  label: 'Agent Tickets (%s)',
-                  description:
-                    'To access the agent tickets based on group access.',
-                },
-              ],
-            },
-          ],
+        fields: {
+          permissions: {
+            options: [
+              {
+                value: 'report',
+                label: 'Report (%s)',
+                description: 'To access the report interface.',
+              },
+              {
+                value: 'ticket',
+                label: 'Ticket (%s)',
+                description: 'To access the ticket interface.',
+                disabled: true,
+                children: [
+                  {
+                    value: 'ticket.agent',
+                    label: 'Agent Tickets (%s)',
+                    description:
+                      'To access the agent tickets based on group access.',
+                  },
+                ],
+              },
+            ],
+          },
         },
       },
     })

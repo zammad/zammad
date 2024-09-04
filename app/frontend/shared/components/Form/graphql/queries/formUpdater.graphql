@@ -11,5 +11,8 @@ query formUpdater(
     data: $data
     relationFields: $relationFields
     id: $id
-  )
+  ) {
+    fields
+    flags
+  }
 }

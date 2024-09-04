@@ -23,7 +23,7 @@ RSpec.describe FormUpdater::Updater::User::Current::NewAccessToken do
 
   describe '#resolve' do
     it 'returns permissions list for current user' do
-      expect(form_updater.resolve).to include(
+      expect(form_updater.resolve[:fields]).to include(
         'permissions' => include(
           options: contain_exactly(
             include(
@@ -48,7 +48,7 @@ RSpec.describe FormUpdater::Updater::User::Current::NewAccessToken do
     it 'uses permission name as fallback if label is not present' do
       permission_admin.update_columns(label: nil)
 
-      expect(form_updater.resolve).to include(
+      expect(form_updater.resolve[:fields]).to include(
         'permissions' => include(
           options: contain_exactly(
             include(

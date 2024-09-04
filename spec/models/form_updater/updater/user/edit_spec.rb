@@ -33,7 +33,7 @@ RSpec.describe(FormUpdater::Updater::User::Edit) do
       # Triggers the object initialization from the id.
       resolved_result.authorized?
 
-      expect(resolved_result.resolve).to include(
+      expect(resolved_result.resolve[:fields]).to include(
         'organization_ids' => include({
                                         initialValue: secondary_organizations.map(&:id),
                                         options:      secondary_organizations.each_with_object([]) do |organization, options|

@@ -21,7 +21,7 @@ RSpec.describe FormUpdater::Updater::User::Invite do
 
   describe '#resolve' do
     it 'includes roles and preselects Agent role' do
-      expect(form_updater.resolve).to include(
+      expect(form_updater.resolve[:fields]).to include(
         'role_ids' => include(
           options: eq(
             Role.reorder(:id).map do |elem|
@@ -40,7 +40,7 @@ RSpec.describe FormUpdater::Updater::User::Invite do
       parent_group   = Group.first
       children_group = create(:group, parent: parent_group)
 
-      expect(form_updater.resolve).to include(
+      expect(form_updater.resolve[:fields]).to include(
         'group_ids' => include(
           options: include(
             include(

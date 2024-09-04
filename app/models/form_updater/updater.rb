@@ -6,7 +6,7 @@ class FormUpdater::Updater
   # Context from GraphQL or possibly other environments.
   # It must respond to :current_user and :current_user? for session information (see Gql::Context::CurrentUserAware).
   # It may respond to :schema with an object providing :id_for_object to perform ID mappings like in Gql::ZammadSchema.
-  attr_reader :context, :current_user, :relation_fields, :meta, :data, :id, :object, :result
+  attr_reader :context, :current_user, :relation_fields, :meta, :data, :id, :object, :result, :flags
 
   def initialize(context:, relation_fields:, meta:, data:, id: nil)
     @context         = context
@@ -16,6 +16,7 @@ class FormUpdater::Updater
     @current_user    = context[:current_user]
 
     @result = {}
+    @flags  = {}
 
     # Build lookup for relation fields for better usage.
     @relation_fields = relation_fields.each_with_object({}) do |relation_field, lookup|
@@ -49,7 +50,10 @@ class FormUpdater::Updater
 
     resolve_relation_fields if relation_fields.present?
 
-    result
+    {
+      fields: result,
+      flags:  flags
+    }
   end
 
   private

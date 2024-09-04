@@ -97,7 +97,7 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
 
   context 'when resolving' do
     it 'returns all resolved relation fields with correct value + label' do
-      expect(resolved_result.resolve).to include(
+      expect(resolved_result.resolve[:fields]).to include(
         'group_id'    => include(expected_result['group_id']),
         'state_id'    => include(expected_result['state_id']),
         'priority_id' => include(expected_result['priority_id']),
@@ -108,7 +108,7 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
       let(:user) { create(:agent, groups: [level2_group]) }
 
       it 'returns group_id as integer' do
-        expect(resolved_result.resolve).to include(
+        expect(resolved_result.resolve[:fields]).to include(
           'group_id' => include(value: level2_group.id)
         )
       end
@@ -146,7 +146,7 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
       end
 
       it 'returns current group options' do
-        expect(resolved_result.resolve).to include(
+        expect(resolved_result.resolve[:fields]).to include(
           'group_id'    => include(expected_result['group_id']),
         )
       end
@@ -156,7 +156,7 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
       let(:data) { { 'group_id' => group.id } }
 
       it 'returns no new value for group' do
-        expect(resolved_result.resolve).to not_include(
+        expect(resolved_result.resolve[:fields]).to not_include(
           'group_id' => include(value: group.id)
         )
       end
@@ -168,7 +168,7 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
       end
 
       it 'returns initial value for priority_id' do
-        expect(resolved_result.resolve).to include(
+        expect(resolved_result.resolve[:fields]).to include(
           'priority_id' => include(initialValue: 1)
         )
       end
@@ -179,7 +179,7 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
       let(:customer) { create(:customer, organization: create(:organization)) }
 
       it 'returns initial value for customer_id' do
-        expect(resolved_result.resolve).to include(
+        expect(resolved_result.resolve[:fields]).to include(
           'customer_id' => include(
             initialValue: customer.id,
             options:      [{

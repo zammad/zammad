@@ -12,7 +12,7 @@ module Gql::Queries
     argument :data, GraphQL::Types::JSON, description: 'Current form data from'
     argument :id, GraphQL::Types::ID, required: false, description: 'Optional ID for related entity (e.g. for update forms)'
 
-    type GraphQL::Types::JSON, null: false
+    type Gql::Types::FormUpdaterResultType, null: false
 
     def initialize(...)
       super

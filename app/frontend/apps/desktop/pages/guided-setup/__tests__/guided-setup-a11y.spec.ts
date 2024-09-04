@@ -165,22 +165,24 @@ describe('testing admin password request a11y', () => {
 
     mockFormUpdaterQuery({
       formUpdater: {
-        adapter: {
-          initialValue: 'sendmail',
-          options: [
-            {
-              value: 'smtp',
-              label: 'SMTP - configure your own outgoing SMTP settings',
-            },
-            {
-              value: 'sendmail',
-              label:
-                'Local MTA (Sendmail/Postfix/Exim/â\u0080¦) - use server setup',
-            },
-          ],
-        },
-        notification_sender: {
-          initialValue: 'Zammad Helpdesk <noreply@zammad.example.com>',
+        fields: {
+          adapter: {
+            initialValue: 'sendmail',
+            options: [
+              {
+                value: 'smtp',
+                label: 'SMTP - configure your own outgoing SMTP settings',
+              },
+              {
+                value: 'sendmail',
+                label:
+                  'Local MTA (Sendmail/Postfix/Exim/â\u0080¦) - use server setup',
+              },
+            ],
+          },
+          notification_sender: {
+            initialValue: 'Zammad Helpdesk <noreply@zammad.example.com>',
+          },
         },
       },
     })
@@ -229,19 +231,21 @@ describe('testing admin password request a11y', () => {
         case EnumFormUpdaterId.FormUpdaterUpdaterGuidedSetupEmailOutbound:
           return {
             formUpdater: {
-              adapter: {
-                initialValue: 'smtp',
-                options: [
-                  {
-                    value: 'smtp',
-                    label: 'SMTP - configure your own outgoing SMTP settings',
-                  },
-                  {
-                    value: 'sendmail',
-                    label:
-                      'Local MTA (Sendmail/Postfix/Exim/â\u0080¦) - use server setup',
-                  },
-                ],
+              fields: {
+                adapter: {
+                  initialValue: 'smtp',
+                  options: [
+                    {
+                      value: 'smtp',
+                      label: 'SMTP - configure your own outgoing SMTP settings',
+                    },
+                    {
+                      value: 'sendmail',
+                      label:
+                        'Local MTA (Sendmail/Postfix/Exim/â\u0080¦) - use server setup',
+                    },
+                  ],
+                },
               },
             },
           }
@@ -250,18 +254,20 @@ describe('testing admin password request a11y', () => {
         default:
           return {
             formUpdater: {
-              adapter: {
-                initialValue: 'imap',
-                options: [
-                  {
-                    value: 'imap',
-                    label: 'IMAP',
-                  },
-                  {
-                    value: 'pop3',
-                    label: 'POP3',
-                  },
-                ],
+              fields: {
+                adapter: {
+                  initialValue: 'imap',
+                  options: [
+                    {
+                      value: 'imap',
+                      label: 'IMAP',
+                    },
+                    {
+                      value: 'pop3',
+                      label: 'POP3',
+                    },
+                  ],
+                },
               },
             },
           }
@@ -316,37 +322,39 @@ describe('testing admin password request a11y', () => {
 
     mockFormUpdaterQuery({
       formUpdater: {
-        role_ids: {
-          initialValue: [2],
-          options: [
-            {
-              value: 1,
-              label: 'Admin',
-              description: 'To configure your system.',
-            },
-            {
-              value: 2,
-              label: 'Agent',
-              description: 'To work on Tickets.',
-            },
-            {
-              value: 3,
-              label: 'Customer',
-              description: 'People who create Tickets ask for help.',
-            },
-          ],
-        },
-        group_ids: {
-          options: [
-            {
-              value: 1,
-              label: 'Users',
-            },
-            {
-              value: 2,
-              label: 'some group1',
-            },
-          ],
+        fields: {
+          role_ids: {
+            initialValue: [2],
+            options: [
+              {
+                value: 1,
+                label: 'Admin',
+                description: 'To configure your system.',
+              },
+              {
+                value: 2,
+                label: 'Agent',
+                description: 'To work on Tickets.',
+              },
+              {
+                value: 3,
+                label: 'Customer',
+                description: 'People who create Tickets ask for help.',
+              },
+            ],
+          },
+          group_ids: {
+            options: [
+              {
+                value: 1,
+                label: 'Users',
+              },
+              {
+                value: 2,
+                label: 'some group1',
+              },
+            ],
+          },
         },
       },
     })

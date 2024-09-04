@@ -55,37 +55,39 @@ describe('guided setup manual invite', () => {
 
       mockFormUpdaterQuery({
         formUpdater: {
-          role_ids: {
-            initialValue: [2],
-            options: [
-              {
-                value: 1,
-                label: 'Admin',
-                description: 'To configure your system.',
-              },
-              {
-                value: 2,
-                label: 'Agent',
-                description: 'To work on Tickets.',
-              },
-              {
-                value: 3,
-                label: 'Customer',
-                description: 'People who create Tickets ask for help.',
-              },
-            ],
-          },
-          group_ids: {
-            options: [
-              {
-                value: 1,
-                label: 'Users',
-              },
-              {
-                value: 2,
-                label: 'some group1',
-              },
-            ],
+          fields: {
+            role_ids: {
+              initialValue: [2],
+              options: [
+                {
+                  value: 1,
+                  label: 'Admin',
+                  description: 'To configure your system.',
+                },
+                {
+                  value: 2,
+                  label: 'Agent',
+                  description: 'To work on Tickets.',
+                },
+                {
+                  value: 3,
+                  label: 'Customer',
+                  description: 'People who create Tickets ask for help.',
+                },
+              ],
+            },
+            group_ids: {
+              options: [
+                {
+                  value: 1,
+                  label: 'Users',
+                },
+                {
+                  value: 2,
+                  label: 'some group1',
+                },
+              ],
+            },
           },
         },
       })

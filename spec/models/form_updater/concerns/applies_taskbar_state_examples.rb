@@ -12,13 +12,13 @@ RSpec.shared_examples 'FormUpdater::AppliesTaskbarState' do |taskbar_key:, taskb
 
     shared_examples 'skips the field' do
       it 'skips the field' do
-        expect(resolved_result.resolve[field_name]).not_to have_key(:value)
+        expect(resolved_result.resolve[:fields][field_name]).not_to have_key(:value)
       end
     end
 
     shared_examples 'applies the form value of the field' do
       it 'applies the form value of the field' do
-        expect(resolved_result.resolve[field_name]).to include(field_result)
+        expect(resolved_result.resolve[:fields][field_name]).to include(field_result)
       end
     end
 

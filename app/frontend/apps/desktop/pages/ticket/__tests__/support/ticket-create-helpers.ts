@@ -16,35 +16,37 @@ import { testOptions } from '#desktop/components/Form/fields/FieldCustomer/__tes
 export const handleMockFormUpdaterQuery = (additionalProperties = {}) =>
   mockFormUpdaterQuery({
     formUpdater: {
-      group_id: {
-        options: [
-          {
-            value: 1,
-            label: 'Users',
-          },
-          {
-            value: 2,
-            label: 'some group1',
-          },
-        ],
+      fields: {
+        group_id: {
+          options: [
+            {
+              value: 1,
+              label: 'Users',
+            },
+            {
+              value: 2,
+              label: 'some group1',
+            },
+          ],
+        },
+        priority_id: {
+          options: [
+            { value: 1, label: '1 low' },
+            { value: 2, label: '2 normal' },
+            { value: 3, label: '3 high' },
+          ],
+        },
+        state_id: {
+          options: [
+            { value: 4, label: 'closed' },
+            { value: 1, label: 'new' },
+            { value: 2, label: 'open' },
+            { value: 6, label: 'pending close' },
+            { value: 3, label: 'pending reminder' },
+          ],
+        },
+        ...additionalProperties,
       },
-      priority_id: {
-        options: [
-          { value: 1, label: '1 low' },
-          { value: 2, label: '2 normal' },
-          { value: 3, label: '3 high' },
-        ],
-      },
-      state_id: {
-        options: [
-          { value: 4, label: 'closed' },
-          { value: 1, label: 'new' },
-          { value: 2, label: 'open' },
-          { value: 6, label: 'pending close' },
-          { value: 3, label: 'pending reminder' },
-        ],
-      },
-      ...additionalProperties,
     },
   })
 

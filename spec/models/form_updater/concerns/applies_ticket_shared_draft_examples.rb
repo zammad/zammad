@@ -14,13 +14,13 @@ RSpec.shared_examples 'FormUpdater::AppliesTicketSharedDraft' do
 
     shared_examples 'skips the field' do
       it 'skips the field' do
-        expect(resolved_result.resolve[field_name]).not_to have_key(:value)
+        expect(resolved_result.resolve[:fields][field_name]).not_to have_key(:value)
       end
     end
 
     shared_examples 'sets the draft value for the field' do
       it 'sets the draft value for the field' do
-        expect(resolved_result.resolve[field_name]).to include(field_result)
+        expect(resolved_result.resolve[:fields][field_name]).to include(field_result)
       end
     end
 
@@ -204,8 +204,8 @@ RSpec.shared_examples 'FormUpdater::AppliesTicketSharedDraft' do
         let(:draft)    { create(:ticket_shared_draft_start, group: user.groups.first, content: { 'group_id' => group.id.to_s, 'owner_id' => user.id.to_s }) }
 
         it 'sets the draft value for both fields', :aggregate_failures do
-          expect(resolved_result.resolve['group_id']).to include(value: group.id)
-          expect(resolved_result.resolve['owner_id']).to include(value: user.id)
+          expect(resolved_result.resolve[:fields]['group_id']).to include(value: group.id)
+          expect(resolved_result.resolve[:fields]['owner_id']).to include(value: user.id)
         end
       end
     end

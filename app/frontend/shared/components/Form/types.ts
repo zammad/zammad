@@ -192,6 +192,7 @@ export interface ReactiveFormSchemData {
       >
     }
   >
+  flags: Record<string, boolean>
 
   [index: string]: unknown
 }
