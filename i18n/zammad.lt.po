@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-03 05:37+0000\n"
+"PO-Revision-Date: 2024-09-04 05:12+0000\n"
 "Last-Translator: Mantas Masalskis <mantas@idev.lt>\n"
 "Language-Team: Lithuanian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/lt/>\n"
@@ -644,22 +644,16 @@ msgid "%s user to %s user"
 msgstr "%s naudotojas į %s naudotoją"
 
 #: lib/whatsapp/webhook/message.rb:53
-#, fuzzy
-#| msgid "Channel"
 msgid "%s via WhatsApp"
-msgstr "Kanalas"
+msgstr "%s per WhatsApp"
 
 #: app/frontend/shared/i18n/dates.ts:90
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s weeks ago"
-msgstr "prieš %s"
+msgstr "prieš %s savaičių"
 
 #: app/frontend/shared/i18n/dates.ts:76
-#, fuzzy
-#| msgid "%s ago"
 msgid "%s years ago"
-msgstr "prieš %s"
+msgstr "prieš %s metų"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco:11
 msgid "%s% are currently in process"
@@ -682,10 +676,8 @@ msgid "%{name} is a reserved word"
 msgstr "%{name} yra rezervuotas žodis"
 
 #: app/frontend/shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:62
-#, fuzzy
-#| msgid "Total: %s"
 msgid "(state: %s)"
-msgstr "Iš viso: %s"
+msgstr "(būsena: %s)"
 
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 msgid ""
@@ -698,6 +690,12 @@ msgid ""
 "activity type will be rendered for an entry in the **Activity** table under "
 "the **Accounted Time** tab."
 msgstr ""
+"**Veiksmų tipai** gali būti naudojami skirtingų bilietų laiko apskaitos "
+"įrašų grupavimui. Pavyzdžiui, įrašai, kurie yra susiję su „Sąskaitų“ tipu.\n"
+"\n"
+"Įjungus veiksmų tipo registravimą, naudotojai galės pasirinkti tipą iš šio "
+"sąrašo. Be to, skiltis su susijusiu veiklos tipu bus atvaizduojama įrašo "
+"**Veiksmų** lentelėje skirtuke **Apskaitytas laikas**."
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
 msgid ""
@@ -737,12 +735,23 @@ msgid ""
 "displayed in a separate view in your overviews. You can also configure "
 "**email notifications**."
 msgstr ""
+"**Aptarnavimo lygio sutartys** (**SLA**), padeda laikytis konkretaus kliento "
+"užklausų atsakymo laiko. Taip galite nustatyti tikslus, pavyzdžiui, į "
+"kiekvieną užklausą atsakyti per aštuonias valandas. Jei kyla pavojus, kad "
+"šio tikslo nepasieksite, Zammad jus apie tai įspės.\n"
+"\n"
+"Galite nustatyti trijų skirtingų rodiklių tikslus: **pirmo atsakymo laiką** ("
+"laikas nuo trikties sukūrimo iki pirmosios agento reakcijos), **atsakinėjimo "
+"laiką** (laikas nuo kiekvienos kliento užklausos iki agento reakcijos) ir **"
+"sprendimo laiką** (laikas nuo bilieto sukūrimo iki jo uždarymo).\n"
+"\n"
+"Visos eskaluotos triktys (t. y. triktys, kurios nepasiekė nustatyto tikslo) "
+"rodomos atskirame sąraše jūsų apžvalgose. Taip pat galite susikonfigūruoti **"
+"pranešimus el. paštu**."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:291
-#, fuzzy
-#| msgid "Attached Files"
 msgid "1 attached file"
-msgstr "Prikabinti priedai"
+msgstr "1 prisegtukas"
 
 #: db/seeds/settings.rb:1106
 msgid "1 day"
@@ -765,10 +774,8 @@ msgid "1 low"
 msgstr "1 žemas"
 
 #: app/frontend/shared/i18n/dates.ts:110
-#, fuzzy
-#| msgid "minute"
 msgid "1 minute ago"
-msgstr "minutė"
+msgstr "prieš minutę"
 
 #: app/frontend/shared/i18n/dates.ts:82
 msgid "1 month ago"
@@ -787,18 +794,14 @@ msgid "1 year ago"
 msgstr "prieš metus"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:22
-#, fuzzy
-#| msgid "Ticket update"
 msgid "1. Ticket Create"
-msgstr "Bilieto atnaujinimas"
+msgstr "1. Triktis sukurta"
 
 #: db/seeds/settings.rb:1106
 msgid "2 hours"
 msgstr "2 valandos"
 
 #: db/seeds/settings.rb:2022
-#, fuzzy
-#| msgid "2 lower and 2 upper characters"
 msgid "2 lower case and 2 upper case characters"
 msgstr "2 mažosios ir 2 didžiosios raidės"
 
@@ -823,10 +826,8 @@ msgid "3 weeks"
 msgstr "3 savaitės"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:24
-#, fuzzy
-#| msgid "Ticket reminder reached"
 msgid "3. Ticket Reminder Reached"
-msgstr "Pasiektas Bilieto priminimas"
+msgstr "3. Atėjo trikties priminimo laikas"
 
 #: db/seeds/settings.rb:1106
 msgid "4 weeks"
@@ -857,33 +858,45 @@ msgid ""
 "If you have customers with different business hours, you can create multiple "
 "calendars. Tickets are linked to calendars using **SLAs**."
 msgstr ""
+"**Kalendorius** reikalingas eskalacijos apskaičiavimui pagal darbo valandas "
+"ir pranešimų išsiuntimui.\n"
+"\n"
+"Nurodykite **\"standartinį \"** kalendorių, kuris bus naudojamas kaip "
+"numatytasis visoje sistemoje. Eskalavimo pranešimai jūsų agentams bus "
+"siunčiami tik nurodytomis darbo valandomis.\n"
+"\n"
+"Jei turite klientų, kurių darbo valandos skiriasi, galite sukurti kelis "
+"kalendorius. Triktys su kalendoriais susiejamos naudojant **SLA**."
 
 #: db/seeds/settings.rb:3859
 msgid "A list of active import backends that gets scheduled automatically."
 msgstr ""
+"Aktyvių importavimo valdiklių, kurie bus automatiškai paleidžiami, sąrašas."
 
 #: lib/validations/mention_validator.rb:7
 msgid "A mentioned user has no agent access to this ticket"
-msgstr ""
+msgstr "Paminėtasis naudotojas neturi agento prieigos prie šios trikties"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:26
 msgid ""
 "A new session was created with your account. This session will be stopped to "
 "prevent a conflict."
 msgstr ""
+"Su jūsų paskyra sukurta nauja sesija. Ši sesija bus sustabdyta, kad būtų "
+"išvengta konflikto."
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:116
 msgid "A new version of Zammad is available, please reload your browser."
-msgstr ""
+msgstr "Yra nauja Zammad versija. Perkraukite naršyklę."
 
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts:72
 msgid ""
 "A newer version of the app is available. Please reload at your earliest."
-msgstr ""
+msgstr "Yra naujesnė programėlės versija. Kai galėsite, perkraukite naršyklę."
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:156
 msgid "A powerful service to get more information about your customers."
-msgstr ""
+msgstr "Paslauga, leidžianti gauti daugiau informacijos apie jūsų klientus."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee:208
 msgid "A queue is required!"
@@ -894,11 +907,13 @@ msgid ""
 "A team communication tool for the 21st century. Compatible with tools like "
 "%s."
 msgstr ""
+"Komandos bendravimo įrankis XXI amžiui. Suderinamas su tokiais įrankiais "
+"kaip %s."
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:1
 msgid ""
 "A test ticket has been created, you can find it in your overview \"%s\" %l."
-msgstr ""
+msgstr "Sukurta bandomoji triktis. J1 galite rasto „%s“ apžvalgoje %l."
 
 #: app/models/ticket.rb:279
 msgid "A ticket cannot be merged into itself."
@@ -909,12 +924,14 @@ msgid ""
 "A ticket's priority is simply a ranking of how urgent or important it is. "
 "Different priorities allow you to see the importance of your tickets better."
 msgstr ""
+"Trikties prioritetas yra įvertinimas kiek ji skubi ar svarbi. Skirtingi "
+"prioritetai leidžia greičiau pastebėti trikties svarbumą."
 
 #: app/assets/javascripts/app/models/ticket_state.coffee
 msgid ""
 "A ticket's state is used to categorize and manage the lifecycle of a ticket "
 "or customer inquiry."
-msgstr ""
+msgstr "Trikties būsena naudojama trikties ciklo valdymui ir kategorizavimui."
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee:215
 msgid "A user is required!"
@@ -925,6 +942,8 @@ msgid ""
 "A webhook can be fired by triggers and schedulers, don't forget to define "
 "them!"
 msgstr ""
+"Webhook gali būti naudojamas Paleistukuose ir Planiniuose darbuose. "
+"Nepamirškite pridėti vieno iš jų!"
 
 #: app/assets/javascripts/app/controllers/api.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:2 db/seeds/permissions.rb:243
@@ -990,11 +1009,11 @@ msgstr "Paskyra"
 
 #: app/models/channel/driver/sms/twilio.rb:104
 msgid "Account SID"
-msgstr ""
+msgstr "Paskyros SID"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:6
 msgid "Account Time"
-msgstr ""
+msgstr "Laiko apskaita"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:582
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:198
@@ -1013,7 +1032,7 @@ msgstr "Paskyra nepatvirtinta"
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:2
 #: app/graphql/gql/types/overview_type.rb:69
 msgid "Accounted Time"
-msgstr "Apskaičiuotas laikas"
+msgstr "Apskaitytas laikas"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:11
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:11
@@ -1063,7 +1082,7 @@ msgstr "Veiksmas"
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
 msgid "Action execution"
-msgstr ""
+msgstr "Veiksmų vykdymas"
 
 #: app/assets/javascripts/app/models/macro.coffee:7
 #: app/assets/javascripts/app/models/template.coffee:7
@@ -1075,19 +1094,19 @@ msgstr "Veiksmai"
 
 #: db/seeds/settings.rb:2717
 msgid "Activate the recursive processing of ticket triggers."
-msgstr ""
+msgstr "Įjungti rekursyvų trikčių apdorojimą Paleistukuose."
 
 #: app/assets/javascripts/app/models/trigger.coffee:7
-#, fuzzy
-#| msgid "Active"
 msgid "Activated by"
-msgstr "Aktyvus"
+msgstr "Aktyvuojama"
 
 #: db/seeds/settings.rb:1083
 msgid ""
 "Activates lost password feature for users. This setting is only effective if "
 "the password login is enabled."
 msgstr ""
+"Įjungti slaptažodžio atstatymo funkciją. Šis nustatymas galioja tik kai "
+"įjungtas prisijungimas su slaptažodžiu."
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:320
 #: app/assets/javascripts/app/models/chat.coffee:257
@@ -1124,10 +1143,8 @@ msgid "Active Agents"
 msgstr "Aktyvūs agentai"
 
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:16
-#, fuzzy
-#| msgid "Active"
 msgid "Activity"
-msgstr "Aktyvus"
+msgstr "Veiksmai"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco:10
 msgid "Activity Stream"
@@ -1138,17 +1155,13 @@ msgstr "Veiksmų srautas"
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:16
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:4
 #: app/controllers/time_accountings_controller.rb:119
-#, fuzzy
-#| msgid "Active"
 msgid "Activity Type"
-msgstr "Aktyvus"
+msgstr "Veiksmo tipas"
 
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:23
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:51
-#, fuzzy
-#| msgid "Active"
 msgid "Activity Types"
-msgstr "Aktyvus"
+msgstr "Veiksmo tipai"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:39
 msgid "Adapter"
@@ -1206,10 +1219,8 @@ msgid "Add Certificate"
 msgstr "Pridėti sertifikatą"
 
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco:5
-#, fuzzy
-#| msgid "reply"
 msgid "Add Key"
-msgstr "atsakyti"
+msgstr "Pridėti raktą"
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:9
 msgid "Add Link"
@@ -1259,7 +1270,7 @@ msgstr "Pridėti žinutę"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:123
 msgid "Add agreement text before submit."
-msgstr ""
+msgstr "Pridėti sutikimo tekstą."
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:34
 msgid "Add alarm to pending reminder and escalated tickets."
@@ -1267,15 +1278,15 @@ msgstr "Pridėti įspėjimą eskaluotoms ir laukiančioms priminimo triktims."
 
 #: app/frontend/shared/form/i18n/locales.ts:72
 msgid "Add all values"
-msgstr ""
+msgstr "Pridėti visas parinktis"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:112
 msgid "Add attachment option to upload."
-msgstr ""
+msgstr "Leisti pridėti prisegtuką."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:197
 msgid "Add bullet list"
-msgstr ""
+msgstr "Pridėti sąrašą"
 
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco:32
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco:18
@@ -1284,53 +1295,51 @@ msgstr "Pridėti sąlygą"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:155
 msgid "Add first level heading"
-msgstr ""
+msgstr "Pridėti pirmojo lygio antraštę"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:103
 msgid "Add image"
 msgstr "Pridėti paveiksliuką"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:123
-#, fuzzy
-#| msgid "Add Link"
 msgid "Add link"
-msgstr "Susieti"
+msgstr "Pridėti nuorodą"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
 msgid "Add ordered list"
-msgstr ""
+msgstr "Pridėti rikiuojamą sąrašą"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:34
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:88
-#, fuzzy
-#| msgid "reply"
 msgid "Add reply"
-msgstr "atsakyti"
+msgstr "Atsakyti"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:165
 msgid "Add second level heading"
-msgstr ""
+msgstr "Pridėti antrojo lygio antraštę"
 
 #: app/frontend/shared/form/i18n/locales.ts:76
 msgid "Add selected values"
-msgstr ""
+msgstr "Pridėti pasirinktas parinktis"
 
 #: db/seeds/settings.rb:769
 msgid "Add sender initials to end of a tweet."
-msgstr ""
+msgstr "Pridėti siuntėjo inicialus prie tweeto."
 
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco:35
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco:21
 msgid "Add subclause"
-msgstr ""
+msgstr "Pridėtį subsąlygą"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:175
 msgid "Add third level heading"
-msgstr ""
+msgstr "Pridėti trečio lygio antraštę"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:85
 msgid "Add this class to a button on your page that should open the chat."
 msgstr ""
+"Pridėkite šią klasę prie mygtuko savo puslapyje, kuris turėtų atverti "
+"pokalbių langelį."
 
 #: app/controllers/first_steps_controller.rb:109
 msgid "Additional Channels"
@@ -1338,23 +1347,19 @@ msgstr "Papildomi kanalai"
 
 #: db/seeds/settings.rb:3190
 msgid "Additional follow-up detection"
-msgstr ""
+msgstr "Papildomas atsakymų aptikimas"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:209
-#, fuzzy
-#| msgid "Notifications"
 msgid "Additional information"
-msgstr "Pranešimai"
+msgstr "Papildoma informacija"
 
 #: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:56
-#, fuzzy
-#| msgid "Notifications"
 msgid "Additional information and links"
-msgstr "Pranešimai"
+msgstr "Papildoma informacija ir nuorodos"
 
 #: db/seeds/settings.rb:848
 msgid "Additional notes for ticket create types."
-msgstr ""
+msgstr "Papildomos pastabos dėl trikči kūrimo pagal tipus."
 
 #: db/seeds/object_manager_attributes.rb:1208
 msgid "Address"
@@ -1362,7 +1367,7 @@ msgstr "Adresas"
 
 #: db/seeds/settings.rb:483
 msgid "Address of the proxy server for http and https resources."
-msgstr ""
+msgstr "Proxy serverio adresas HTTP ir HTTPS užklausoms."
 
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee:13
 #: db/seeds/roles.rb:5
@@ -1371,7 +1376,7 @@ msgstr "Administratorius"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:448
 msgid "Admin Consent"
-msgstr ""
+msgstr "Administratoriaus sutikimas"
 
 #: db/seeds/permissions.rb:5
 msgid "Admin Interface"
@@ -1380,12 +1385,14 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee:23
 #: app/frontend/apps/desktop/pages/authentication/routes.ts:26
 msgid "Admin Password Login"
-msgstr ""
+msgstr "Administratoriaus prisijungimas su slaptažodžiu"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:4
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:56
 msgid "Admin password login instructions were sent to your email address."
 msgstr ""
+"Administratoriaus prisijungimo su slaptažodžiu instrukcijos buvo išsiųstos "
+"jūsų el. pašto adresu."
 
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -1409,6 +1416,23 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"Administratoriaus prisijungimas prie #{config.product_name}\n"
+"\n"
+"<div>Sveiki #{user.firstname},</div>\n"
+"<br>\n"
+"<div>Gavome užklausą del administratoriaus prisijungimo prie #{config."
+"product_name} paskyros <b>#{user.login}</b>.</div>\n"
+"<br>\n"
+"<div>Paspauskite arba nusikopijuokite į naršyklę nuorodą esančią "
+"žemiau:</div>\n"
+"<br>\n"
+"<div><a href=\"#{url}\">#{url}</a></div>\n"
+"<br>\n"
+"<div>Ši nuoroda atidarys puslapį, kuriame galėsite prisijungti.</div>\n"
+"<br>\n"
+"<div>Jei nenorite prisijungti, ignoruokite šį laišką</div>\n"
+"<br>\n"
+"<div>Jūsų #{config.product_name} komanda</div>\n"
 
 #: app/assets/javascripts/app/views/getting_started/admin.jst.eco:5
 msgid "Administrator Account"
@@ -1416,21 +1440,23 @@ msgstr "Administratoriaus paskyra"
 
 #: app/assets/javascripts/app/models/macro.coffee:10
 msgid "Advance to next ticket from overview"
-msgstr ""
+msgstr "Pereiti į sekančią triktį apžvalgoje"
 
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco:4
 msgid "After approval, please re-connect your Exchange account."
-msgstr ""
+msgstr "Po patvirtinimo, vėl prijunkite savo Exchange paskyrą."
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco:4
 msgid "After approval, please re-connect your Microsoft365 mailbox."
-msgstr ""
+msgstr "Po patvirtinimo, vėl prijunkite savo Microsoft365 pašto dėžutę."
 
 #: app/assets/javascripts/app/views/package.jst.eco:12
 msgid ""
 "After installing, updating, or uninstalling packages the following commands "
 "need to be executed on the server:"
 msgstr ""
+"Įdiegus, atnaujinus arba pašalinus paketus, serveryje reikia paleisti šias "
+"komandas:"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceFreshdesk.vue:94
 msgid ""
@@ -1454,19 +1480,19 @@ msgstr "Agentas"
 
 #: db/seeds/settings.rb:3103
 msgid "Agent Name"
-msgstr ""
+msgstr "Agento vardas"
 
 #: db/seeds/settings.rb:3103
 msgid "Agent Name + FromSeparator + System Address Display Name"
-msgstr ""
+msgstr "Agento vardas + Nuo skirtukas + Sistemos adreso pavadinimas"
 
 #: db/seeds/settings.rb:3456
 msgid "Agent idle timeout"
-msgstr ""
+msgstr "Agento laikas be veiksmų"
 
 #: app/models/role.rb:153 app/models/user.rb:837
 msgid "Agent limit exceeded, please check your account settings."
-msgstr ""
+msgstr "Išnaudotas agentų limitas. Patikrinkite savo paskyros nustatymus."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:109
 msgid "Agents"
@@ -1474,7 +1500,7 @@ msgstr "Agentai"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:27
 msgid "Alarm"
-msgstr ""
+msgstr "Įspėjimas"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco:8
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:30
@@ -1486,6 +1512,8 @@ msgid ""
 "All affected tickets will be deleted immediately when this job is run, "
 "without a history entry. There is no rollback of this deletion possible."
 msgstr ""
+"Visos paveiktos triktys bus ištrintos iš karto kai bus paleistas šis darbas. "
+"Be jokių istorijos įrašų. Šio ištrynimo atšaukti neįmanoma."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:116
 msgid ""
@@ -1510,8 +1538,6 @@ msgstr ""
 "atstatyti."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:462
-#, fuzzy
-#| msgid "All Agents"
 msgid "All agents"
 msgstr "Visi agentai"
 
@@ -1526,10 +1552,8 @@ msgstr ""
 "Zammad paskyros."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:38
-#, fuzzy
-#| msgid "All Tickets"
 msgid "All tickets"
-msgstr "Visi Bilietai"
+msgstr "Visos triktys"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:128
 msgid "All two-factor authentication methods were removed for this user."
@@ -1538,15 +1562,15 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:325
 msgid "Allow future"
-msgstr ""
+msgstr "Leisti ateityje"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:334
 msgid "Allow past"
-msgstr ""
+msgstr "Leisti praeityje"
 
 #: db/seeds/object_manager_attributes.rb:1967
 msgid "Allow reopening of tickets within a certain time."
-msgstr ""
+msgstr "Leisti per tam tikrą laiką iš naujo atidaryti triktis."
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:16
 msgid "Allow users to add new tags."
@@ -1558,11 +1582,11 @@ msgstr "Leisti naudotojams pridėti naujas žymas."
 
 #: db/seeds/settings.rb:1163
 msgid "Allow using one email address for multiple users."
-msgstr ""
+msgstr "Leisti naudoti tą patį el. pašto adresą keliems naudotojams."
 
 #: app/assets/javascripts/app/models/chat.coffee:255
 msgid "Allow websites (separated by ;)"
-msgstr ""
+msgstr "Leidžiami puslapiai (atskirti ;)"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco:9
 msgid "Also notify via email"
@@ -1572,11 +1596,12 @@ msgstr "Taip pat pranešti el.paštu"
 msgid ""
 "Alternative FQDN for callbacks if you operate Zammad in an internal network."
 msgstr ""
+"Alternatyvus FQDN atgaliniams ryšiui, jei Zammad veikia vidiniame tinkle."
 
 #: app/helpers/knowledge_base_breadcrumb_helper.rb:20
 #: app/helpers/knowledge_base_public_page_title_helper.rb:27
 msgid "Alternative Translations"
-msgstr ""
+msgstr "Alternatyvūs vertimai"
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco:16
 msgid "Alternative name"
@@ -1584,21 +1609,23 @@ msgstr "Alternatyvus pavadinimas"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:9
 msgid "Alternatively, you can use the Zammad API to import data."
-msgstr ""
+msgstr "Arba galite naudoti Zammad API duomenų importavimui."
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
 msgid "Always"
-msgstr ""
+msgstr "Visada"
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee:46
 msgid ""
 "An email was sent to _%s_. Click the link in the email to verify your "
 "account."
 msgstr ""
+"Laiškas buvo išsiustas _%s_. Paspauskite gautą nuorodą, kad patvirtintumėte "
+"savo paskyrą."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee:50
 msgid "An error has occurred"
-msgstr ""
+msgstr "Įvyko klaida"
 
 #: app/frontend/shared/server/apollo/handler/BaseHandler.ts:145
 msgid "An error occured during the operation."
@@ -1627,7 +1654,7 @@ msgstr "Sistemos sąrankos metu įvyko netikėta klaida."
 
 #: lib/calendar_subscriptions.rb:50
 msgid "An unknown method name was requested."
-msgstr ""
+msgstr "Neatpažintas užklausos metodo pavadinimas."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:187
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:147
@@ -1665,27 +1692,23 @@ msgstr "Kita triktis buvo prijungta prie trikties „%s“"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/link_answer_button.coffee:11
 msgid "Answer"
-msgstr ""
+msgstr "Atsakymas"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/answers.coffee:3
 msgid "Answers"
 msgstr "Atsakymai"
 
 #: app/assets/javascripts/app/views/knowledge_base/_reader_list_item.jst.eco:6
-#, fuzzy
-#| msgid "Answers"
 msgid "Answers: %s"
-msgstr "Atsakymai"
+msgstr "Atsakymai: %s"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee:9
 msgid "Anticon"
-msgstr ""
+msgstr "Anticon"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:22
-#, fuzzy
-#| msgid "Recipient"
 msgid "Any recipient"
-msgstr "Gavėjas"
+msgstr "Bet kuris gavėjas"
 
 #: db/seeds/settings.rb:1400
 msgid "App ID"
@@ -1834,6 +1857,8 @@ msgid ""
 "Are you sure? Default notifications settings will be applied to all active "
 "agents. This operation may take some time."
 msgstr ""
+"Ar tikrai? Numatytieji pranešimų nustatymai bus pritaikyti visiems aktyviems "
+"agentams. Ši operacija gali šiek tiek užtrukti."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee:34
 msgid ""
@@ -1852,10 +1877,12 @@ msgid ""
 "Are you sure? The user will have to to reconfigure all two-factor "
 "authentication methods."
 msgstr ""
+"Ar tikrai? Naudotojas turės iš naujo susikonfigūruoti visus dviejų veiksnių "
+"autentifikavimosi metodus."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:59
 msgid "Are you sure? You have changes that will get lost."
-msgstr ""
+msgstr "Ar tikrai? Turite pakeitimų, kurie bus prarasti."
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:76
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:42
@@ -1863,7 +1890,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:216
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:46
 msgid "Are you sure? You have unsaved changes that will get lost."
-msgstr ""
+msgstr "Ar tikrai? Turite neišsaugotų pakeitimų, kurie bus prarasti."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:150
 msgid "Are you sure? Your notifications settings will be reset to default."
@@ -2728,7 +2755,8 @@ msgstr ""
 
 #: app/models/sla.rb:44
 msgid "Cannot have both response time and update time."
-msgstr "Negalima vienu metu naudoti tiek sprendimo laiką, tiek atsakymo laiką."
+msgstr ""
+"Negalima vienu metu naudoti tiek pirmo atsakymo, tiek atsakinėjimo laiko."
 
 #: lib/external_data_source/errors.rb:14
 msgid "Cannot process external data source %s. %s"
@@ -2801,10 +2829,8 @@ msgstr "Pasikeisti savo slaptažodį"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:118
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:134
-#, fuzzy
-#| msgid "Change Customer"
 msgid "Change customer"
-msgstr "Pakeisti Klientą"
+msgstr "Pakeisti klientą"
 
 #: app/frontend/shared/form/i18n/locales.ts:92
 #, fuzzy
@@ -2945,7 +2971,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/chat.coffee:297
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco:29
 msgid "Chatting Customers"
-msgstr ""
+msgstr "Pokalbiai su klientais"
 
 #: db/seeds/schedulers.rb:34
 msgid "Check 'Channel' streams."
@@ -3744,10 +3770,8 @@ msgid "Create new Customer"
 msgstr "Sukurti naują klientą"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldCustomer/FieldCustomerWrapper.vue:78
-#, fuzzy
-#| msgid "Create new Customer"
 msgid "Create new customer"
-msgstr "Sukurti naują abonentą"
+msgstr "Sukurti naują klientą"
 
 #: app/assets/javascripts/app/lib/app_post/_object_organization_autocompletion.coffee:34
 msgid "Create new object"
@@ -3929,29 +3953,29 @@ msgid ""
 "Currently no overview is assigned to your roles. Please contact your "
 "administrator."
 msgstr ""
+"Šiuo metu nėra apžvalgų priskirtų jūsų rolėms. Susisiekite su savo "
+"administratoriumi."
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:28
 msgid "Custom"
-msgstr ""
+msgstr "Individualus"
 
 #: app/assets/javascripts/app/models/webhook.coffee:12
 msgid "Custom Payload"
 msgstr "Parinkti siunčiamieji duomenys"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:80
-#, fuzzy
-#| msgid "Translations"
 msgid "Custom Translation"
-msgstr "Vertimai"
+msgstr "Individualus vertimas"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:127
 #: app/assets/javascripts/app/models/knowledge_base.coffee:290
 msgid "Custom URL"
-msgstr ""
+msgstr "Individualus adresas"
 
 #: lib/knowledge_base/server_snippet.rb:10
 msgid "Custom address is not set"
-msgstr ""
+msgstr "Individualus adresas nėra nurodytas"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:208
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:461
@@ -3980,17 +4004,19 @@ msgstr "Klientas"
 #: app/assets/javascripts/app/controllers/chat.coffee:125
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco:4
 msgid "Customer Chat"
-msgstr ""
+msgstr "Kliento pokalbiai"
 
 #: db/seeds/settings.rb:3246
 msgid "Customer selection based on sender and receiver list"
-msgstr ""
+msgstr "Kliento parinkimas pagal siuntėjų ir gavėjų sąrašą"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:7
 msgid ""
 "Customer tickets of the user will get deleted on execution of the task. No "
 "rollback possible."
 msgstr ""
+"Naudotojo kliento triktys bus ištrintos vykdant šią užduotį. Jų atstatyti "
+"bus neįmanoma."
 
 #: app/assets/javascripts/app/models/organization.coffee:7
 #: db/seeds/object_manager_attributes.rb:1552
@@ -4008,7 +4034,7 @@ msgstr "Parinkite kalbą ar laiko juostą šablono kintamiesiems."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee:26
 msgid "Cut"
-msgstr ""
+msgstr "Iškirpti"
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:19
 msgid "Dark"
@@ -4059,20 +4085,16 @@ msgid "Date"
 msgstr "Data"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:53
-#, fuzzy
-#| msgid "Date & Time"
 msgid "Date & time field"
-msgstr "Data ir Laikas"
+msgstr "Datos ir laiko laukelis"
 
 #: db/seeds/settings.rb:2314
 msgid "Date (Year.Month.Day.SystemID.Counter)"
-msgstr ""
+msgstr "Data (Metai.Mėnesis.Diena.SystemosId.Skaitliukas)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:49
-#, fuzzy
-#| msgid "Date & Time"
 msgid "Date field"
-msgstr "Data ir Laikas"
+msgstr "Datos laukelis"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco:7
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:5
@@ -4101,18 +4123,16 @@ msgstr "Gruodis"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:293
 msgid "Decryption failed!"
-msgstr ""
+msgstr "Nepavyko iššifruoti!"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:105
-#, fuzzy
-#| msgid "Resend verification email"
 msgid "Decryption failed! %s"
-msgstr "Persiųsti patvirtinimo laišką"
+msgstr "Nepavyko iššifruoti! %s"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:291
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:100
 msgid "Decryption was successful."
-msgstr ""
+msgstr "Iššifravimas sėkmingas."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:239
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:32
@@ -4130,23 +4150,19 @@ msgstr "Numatytasis"
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco:9
 #: app/assets/javascripts/app/views/integration/smime.jst.eco:10
 msgid "Default Behavior"
-msgstr ""
+msgstr "Numatytoji elgsena"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:3
-#, fuzzy
-#| msgid "Email Notification"
 msgid "Default Notifications"
-msgstr "El. pašto pranešimas"
+msgstr "Numatytieji pranešimai"
 
 #: db/seeds/settings.rb:3478
 msgid "Default Screen"
-msgstr ""
+msgstr "Numatytasis ekranas"
 
 #: db/seeds/settings.rb:2475
-#, fuzzy
-#| msgid "Notification"
 msgid "Default Ticket Agent Notifications"
-msgstr "Pranešimas"
+msgstr "Numatytieji trikčių agento pranešimai"
 
 #: app/assets/javascripts/app/models/role.coffee:9
 msgid "Default at Signup"
@@ -4154,7 +4170,7 @@ msgstr "Numatytoji registruojantis"
 
 #: db/seeds/settings.rb:4048
 msgid "Default calendar tickets subscriptions"
-msgstr ""
+msgstr "Numatytosios kalendoriaus trikčių prenumeratos"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:92
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:110
@@ -4164,14 +4180,12 @@ msgstr "Numatytasis skambintojo ID išeinantiems skambučiams."
 
 #: app/assets/javascripts/app/models/ticket_state.coffee:35
 msgid "Default for follow-ups"
-msgstr ""
+msgstr "Numatytoji reikšmė trikčių tęsiniams"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:26
 #: app/assets/javascripts/app/models/ticket_state.coffee:28
-#, fuzzy
-#| msgid "Create new Customer"
 msgid "Default for new tickets"
-msgstr "Sukurti naują abonentą"
+msgstr "Numatytoji reikšmė naujoms triktims"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:357
 msgid "Default time diff (hours)"
@@ -4183,7 +4197,7 @@ msgstr "Numatytasis laiko skirtumas (minutės)"
 
 #: db/seeds/settings.rb:863
 msgid "Default type for a new ticket"
-msgstr ""
+msgstr "Numatytasis tipas naujoms triktims"
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:15
 #: db/seeds/settings.rb:2460
@@ -4191,10 +4205,12 @@ msgid ""
 "Define an exception of \"automatic assignment\" for certain users (e.g. "
 "executives)."
 msgstr ""
+"Nurodo „automatinio priskyrimo“ išimtį nurodytiems naudotojams (pvz. "
+"valdybai)."
 
 #: db/seeds/settings.rb:3545
 msgid "Define max. attachment size for Elasticsearch."
-msgstr ""
+msgstr "Nurodo maksimalų prisegtukų dydį Elasticsearch indeksavimui."
 
 #: db/seeds/settings.rb:3554
 msgid "Define max. payload size for Elasticsearch."
@@ -4202,25 +4218,27 @@ msgstr "Nurodo maksimalų Elasticsearch pateikiamų duomenų dydį."
 
 #: db/seeds/settings.rb:3572
 msgid "Define model configuration for Elasticsearch."
-msgstr ""
+msgstr "Nurodo modelių konfigūraciją Elasticsearch indeksavimui."
 
 #: db/seeds/settings.rb:3563
 msgid "Define pipeline name for Elasticsearch."
-msgstr ""
+msgstr "Nurodo Elasticsearch pipeline pavadinimą."
 
 #: db/seeds/settings.rb:4185
 msgid ""
 "Define postmaster filter to check if follow-ups get created (based on admin "
 "settings)."
 msgstr ""
+"Nurodo postmaster filtrą, tikrinantį ar papildomi įrašai yra sukuriami ("
+"pagal administratoriaus nustatymus)."
 
 #: db/seeds/settings.rb:4131
 msgid "Define postmaster filter to import archive mailboxes."
-msgstr ""
+msgstr "Nurodo postmaster filtrą archyvų importavimui."
 
 #: db/seeds/settings.rb:4128
 msgid "Define postmaster filter."
-msgstr ""
+msgstr "Nurodo postmaster filtrą."
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:102
 msgid ""
@@ -4228,14 +4246,17 @@ msgid ""
 "agents to it. By this, Zammad can support your agents by showing them only "
 "relevant call entries and notifications."
 msgstr ""
+"Nurodo eiles arba skambučių paskirties vietas (priklausomai nuo jūsų PBX) ir "
+"priskiria atitinkamus agentus. Pagal tai Zammad gali rodyti agentams tik su "
+"jais susijusius skambučius ir pranešimus."
 
 #: db/seeds/settings.rb:2478
 msgid "Define the default agent notifications for new users."
-msgstr ""
+msgstr "Nurodo numatytuosius agento pranešimus naujiems naudotojams."
 
 #: db/seeds/settings.rb:1004
 msgid "Define the maximum number of ticket shown in overviews."
-msgstr ""
+msgstr "Nurodo didžiausią trikčių skaičių rodomą apžvalgoje."
 
 #: db/seeds/settings.rb:3527
 msgid "Defines Elasticsearch SSL verification."
@@ -4247,47 +4268,51 @@ msgstr "Nurodo Elasticsearch indekso pavadinimą."
 
 #: db/seeds/settings.rb:3785
 msgid "Defines Freshdesk endpoint authentication API key."
-msgstr ""
+msgstr "Nurodo Freshdesk prieigos taško autentifikacijos API raktą."
 
 #: db/seeds/settings.rb:3509
 msgid "Defines HTTP basic auth password of Elasticsearch."
-msgstr ""
+msgstr "Nurodo HTTP basic auth Elasticsearch slaptažodį."
 
 #: db/seeds/settings.rb:3500
 msgid "Defines HTTP basic auth user of Elasticsearch."
-msgstr ""
+msgstr "Nurodo HTTP basic auth Elasticsearch naudotoją."
 
 #: db/seeds/settings.rb:3692
 msgid ""
 "Defines HTTP basic authentication password (only if OTRS is protected via "
 "HTTP basic auth)."
 msgstr ""
+"Nurodo HTTP basic auth slaptažodį (tik jeigu OTRS yra apsaugotas HTTP basic "
+"auth)."
 
 #: db/seeds/settings.rb:3673
 msgid ""
 "Defines HTTP basic authentication user (only if OTRS is protected via HTTP "
 "basic auth)."
 msgstr ""
+"Nurodo HTTP basic auth naudotoją (tik jeigu OTRS yra apsaugotas HTTP basic "
+"auth)."
 
 #: db/seeds/settings.rb:3840
 msgid "Defines Kayako endpoint authentication password."
-msgstr ""
+msgstr "Nurodo Kayako prieigos taško autentifikacijos slaptažodį."
 
 #: db/seeds/settings.rb:3822
 msgid "Defines Kayako endpoint authentication user."
-msgstr ""
+msgstr "Nurodo Kayako prieigos taško autentifikacijos naudotoją."
 
 #: db/seeds/settings.rb:3654
 msgid "Defines OTRS endpoint authentication key."
-msgstr ""
+msgstr "Nurodo OTRS prieigos taško autentifikacijos raktą."
 
 #: db/seeds/settings.rb:3729
 msgid "Defines Zendesk endpoint authentication API key."
-msgstr ""
+msgstr "Nurodo Zendesk prieigos taško autentifikacijos API raktą."
 
 #: db/seeds/settings.rb:3748
 msgid "Defines Zendesk endpoint authentication user."
-msgstr ""
+msgstr "Nurodo Zendesk prieigos taško autentifikacijos naudotoją."
 
 #: db/seeds/settings.rb:3767
 msgid ""
@@ -4312,28 +4337,32 @@ msgstr ""
 
 #: db/seeds/settings.rb:5312
 msgid "Defines a dashboard stats backend that gets scheduled automatically."
-msgstr ""
+msgstr "Nurodo skydelio statistikos valdiklį kuris paleidžiamas automatiškai."
 
 #: db/seeds/settings.rb:2985
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per day."
 msgstr ""
+"Nurodo kiek trikčių gali būti sukurta naudojantis web forma iš vieno IP "
+"adreso per dieną."
 
 #: db/seeds/settings.rb:2964
 msgid ""
 "Defines a limit for how many tickets can be created via web form from one IP "
 "address per hour."
 msgstr ""
+"Nurodo kiek trikčių gali būti sukurta naudojantis web forma iš vieno IP "
+"adreso per valandą."
 
 #: db/seeds/settings.rb:3006
 msgid ""
 "Defines a limit for how many tickets can be created via web form per day."
-msgstr ""
+msgstr "Nurodo kiek trikčių gali būti sukurta naudojantis web forma per dieną."
 
 #: db/seeds/settings.rb:2103
 msgid "Defines after how many failed logins accounts will be deactivated."
-msgstr ""
+msgstr "Nurodo po kelių nesėkmingų bandymų prisijungti paskyra bus deaktyvuota."
 
 #: db/seeds/settings.rb:3636
 msgid ""
@@ -4356,10 +4385,12 @@ msgid ""
 "be rendered with an exclamation point, while low priority with a downwards "
 "arrow."
 msgstr ""
+"Nurodo papildomą prioriteto ikonėlę trikčių sąrašuose. Svarbios triktys bus "
+"rodomi su šauktuku, o žemo prioriteto - su rodykle nukreipta žemyn."
 
 #: db/seeds/settings.rb:3536
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
-msgstr ""
+msgstr "Nurodo prisegtukų plėtinius, kurie bus ignoruojami Elasticsearch."
 
 #: db/seeds/settings.rb:3491
 msgid "Defines endpoint of Elasticsearch."
@@ -4370,39 +4401,45 @@ msgid ""
 "Defines groups for which a customer can create tickets via web interface. No "
 "selection means all groups are available."
 msgstr ""
+"Nurodo grupes, kuriose klientas gali sukurti triktis per web sąsają. Jei "
+"nenurodyta nei viena grupė, klientui prieinamos visos grupės."
 
 #: db/seeds/settings.rb:3093
 msgid ""
 "Defines how the From field of emails (sent from answers and email tickets) "
 "should look like."
 msgstr ""
+"Nurodo kaip turėtų atrodyti „Nuo“ laiškų (siunčiant atsakymus ir kuriant "
+"išeinančių laiškų triktis) laukelis."
 
 #: db/seeds/settings.rb:2222
 msgid ""
 "Defines how the last customer contact time of tickets should be calculated."
-msgstr ""
+msgstr "Nurodo kaip apskaičiuojamas paskutinis kliento kontakto laikas."
 
 #: db/seeds/settings.rb:289
 msgid ""
 "Defines how to reach websocket server. \"websocket\" is default on "
 "production, \"websocketPort\" is for CI"
 msgstr ""
+"Nurodo kaip susisiekti su websocket serveriu. „Websocket“ yra numatytasis "
+"būdas pagrindinėje aplinkoje, „websocketPort“ skirta CI"
 
 #: db/seeds/settings.rb:4498
 msgid "Defines if Checkmk (https://checkmk.com/) is enabled or not."
-msgstr ""
+msgstr "Nurodo ar Checkmk (https://checkmk.com/) įjungtas."
 
 #: db/seeds/settings.rb:5211
 msgid "Defines if Clearbit (http://www.clearbit.com) is enabled or not."
-msgstr ""
+msgstr "Nurodo ar Clearbit (http://www.clearbit.com) įjungtas."
 
 #: db/seeds/settings.rb:4762
 msgid "Defines if Exchange is enabled or not."
-msgstr ""
+msgstr "Nurodo ar Exchange yra įjungtas."
 
 #: db/seeds/settings.rb:4302
 msgid "Defines if Icinga (http://www.icinga.org) is enabled or not."
-msgstr ""
+msgstr "Nurodo ar Icinga (http://www.icinga.org) įjungta."
 
 #: db/seeds/settings.rb:5422
 msgid ""
@@ -4414,19 +4451,19 @@ msgstr ""
 
 #: db/seeds/settings.rb:5407
 msgid "Defines if Knowledge Base navbar button is enabled."
-msgstr ""
+msgstr "Nurodo ar rodomas Žinių bazės navigacijos mygtukas."
 
 #: db/seeds/settings.rb:4709
 msgid "Defines if LDAP is enabled or not."
-msgstr ""
+msgstr "Nurodo ar LDAP yra įjungtas."
 
 #: db/seeds/settings.rb:4608
 msgid "Defines if Monit (https://mmonit.com/monit/) is enabled or not."
-msgstr ""
+msgstr "Nurodo ar Monit (https://mmonit.com/monit/) įjungtas."
 
 #: db/seeds/settings.rb:4400
 msgid "Defines if Nagios (http://www.nagios.org) is enabled or not."
-msgstr ""
+msgstr "Nurodo ar Nagios (http://www.nagios.org) yra įjungtas."
 
 #: db/seeds/settings.rb:5511
 msgid "Defines if PGP encryption is enabled or not."
@@ -4434,19 +4471,19 @@ msgstr "Nurodo ar PGP šifravimas įjungtas."
 
 #: db/seeds/settings.rb:5148
 msgid "Defines if Placetel (http://www.placetel.de) is enabled or not."
-msgstr ""
+msgstr "Nurodo ar Placetel (http://www.placetel.de) įjungtas."
 
 #: db/seeds/settings.rb:5469
 msgid "Defines if S/MIME encryption is enabled or not."
-msgstr ""
+msgstr "Nurodo ar S/MIME šifravimas įjungtas."
 
 #: db/seeds/settings.rb:4949
 msgid "Defines if Slack (http://www.slack.org) is enabled or not."
-msgstr ""
+msgstr "Nurodo ar Slack (http://www.slack.org) įjungtas."
 
 #: db/seeds/settings.rb:2826
 msgid "Defines if a customer can create tickets via the web interface."
-msgstr ""
+msgstr "Nurodo ar klientas gali kurti triktis web sąsajoje."
 
 #: db/seeds/settings.rb:20
 msgid "Defines if application is in init mode."
@@ -4460,11 +4497,11 @@ msgstr "Nurodo ar aplikacija yra naudojama kaip online paslauga."
 msgid ""
 "Defines if calendar weeks are shown in the picker of date/datetime fields to "
 "easily select the correct date."
-msgstr ""
+msgstr "Nurodo ar kalendoriaus savaitės yra rodomos datos įvestyse."
 
 #: db/seeds/settings.rb:5073
 msgid "Defines if generic CTI integration is enabled or not."
-msgstr ""
+msgstr "Nurodo ar įjungta bendrinė CTI integracija."
 
 #: db/seeds/settings.rb:5686
 msgid ""
@@ -4476,17 +4513,17 @@ msgstr ""
 
 #: db/seeds/settings.rb:4990
 msgid "Defines if sipgate.io (http://www.sipgate.io) is enabled or not."
-msgstr ""
+msgstr "Nurodo ar sipgate.io (http://www.sipgate.io) įjungtas."
 
 #: db/seeds/settings.rb:4871
 msgid ""
 "Defines if the GitHub (http://www.github.com) integration is enabled or not."
-msgstr ""
+msgstr "Nurodo ar GitHub (http://www.github.com) integracija įjungta."
 
 #: db/seeds/settings.rb:4829
 msgid ""
 "Defines if the GitLab (http://www.gitlab.com) integration is enabled or not."
-msgstr ""
+msgstr "Nurodo ar GitLab (http://www.gitlab.com) integracija įjungta."
 
 #: db/seeds/settings.rb:5553
 msgid "Defines if the PGP recipient alias configuration is enabled or not."
@@ -4505,6 +4542,8 @@ msgid ""
 "Defines if the application is in developer mode (all users have the same "
 "password and password reset will work without email delivery)."
 msgstr ""
+"Nurodo ar aplikacija yra kūrėjo režimu (visi naudotojai turi tokį patį "
+"slaptažodį ir slaptažodžio atstatymas nesiunčia laiškų)."
 
 #: db/seeds/settings.rb:5738
 msgid ""
@@ -4518,7 +4557,7 @@ msgstr ""
 msgid ""
 "Defines if the core workflow communication should run over ajax instead of "
 "websockets."
-msgstr ""
+msgstr "Nurodo ar CoreWorkflow veikia per ajax, ar websocket."
 
 #: db/seeds/settings.rb:606
 msgid ""
@@ -4532,7 +4571,7 @@ msgstr ""
 msgid ""
 "Defines if the i-doit (https://www.i-doit.org/) integration is enabled or "
 "not."
-msgstr ""
+msgstr "Nurodo ar i-doit (https://www.i-doit.org/) integracija įjungta."
 
 #: db/seeds/settings.rb:2249
 msgid ""
@@ -4557,7 +4596,7 @@ msgstr "Nurodo ar laiko apskaitos tipai įjungti."
 msgid ""
 "Defines if the two-factor authentication method authenticator app is enabled "
 "or not."
-msgstr ""
+msgstr "Nurodo ar dviejų veiksnių autentifikacija su programėle įjungta."
 
 #: db/seeds/settings.rb:5622
 msgid ""
@@ -4567,15 +4606,15 @@ msgstr "Nurodo ar dviejų veiksnių autentifikacija su saugumo raktais įjungta.
 
 #: db/seeds/settings.rb:2907
 msgid "Defines if tickets can be created via web form."
-msgstr ""
+msgstr "Nurodo ar triktys gali būti sukurtos per web formą."
 
 #: db/seeds/settings.rb:4351
 msgid "Defines if tickets should be closed if service is recovered."
-msgstr ""
+msgstr "Nurodo ar triktys turėtų būti uždarytos jei paslauga atstatyta."
 
 #: db/seeds/settings.rb:4221
 msgid "Defines postmaster filter for filters managed via admin interface."
-msgstr ""
+msgstr "Nurodo posmaster filtrą filtrų valdymui per administratoriaus sąsają."
 
 #: db/seeds/settings.rb:4140
 msgid ""
@@ -4590,10 +4629,12 @@ msgid ""
 "Defines postmaster filter to check if the email is a self-created "
 "notification email, then ignore it to prevent email loops."
 msgstr ""
+"Nurodo posmaster filtrą tikrinantį ar laiškas yra pačio Zammad pranešimas, "
+"ir tada jį ignoruoja vengiant el. laiškų begalinio ciklo."
 
 #: db/seeds/settings.rb:4167
 msgid "Defines postmaster filter to handle secure mailing."
-msgstr ""
+msgstr "Nurodo postmaster filtrą tvarkyti saugiam siuntimui."
 
 #: db/seeds/settings.rb:4275
 msgid ""
@@ -4821,36 +4862,39 @@ msgstr "Nurodo kiek įrašų galima sukurti vienoje triktyje per vieną minutę.
 msgid ""
 "Defines the custom unit to be shown next to the time accounting input field."
 msgstr ""
+"Nurodo individualų vienetą, kuris būtų rodomas prie laiko apskaitos laukelio."
 
 #: db/seeds/settings.rb:4051
 msgid "Defines the default calendar tickets subscription settings."
-msgstr ""
+msgstr "Nurodo numatytuosius trikčių kalendoriaus prenumeratos nustatymus."
 
 #: db/seeds/settings.rb:3481
 msgid "Defines the default screen."
-msgstr ""
+msgstr "Nurodo numatytąjį ekraną."
 
 #: db/seeds/settings.rb:166
 msgid "Defines the default system language."
-msgstr ""
+msgstr "Nurodo numatytąją sistemos kalbą."
 
 #: db/seeds/settings.rb:186
 msgid "Defines the default system timezone."
-msgstr ""
+msgstr "Nurodo numatytąją sistemos laiko juostą."
 
 #: db/seeds/settings.rb:4006
 msgid "Defines the default time accounting type."
-msgstr ""
+msgstr "Nurodo numatytąjį laiko apskaitos tipą."
 
 #: db/seeds/settings.rb:633
 msgid "Defines the default visibility for new notes."
-msgstr ""
+msgstr "Nurodo numatytąjį matomumą naujos pastaboms."
 
 #: db/seeds/settings.rb:5135
 msgid ""
 "Defines the duration of customer activity (in seconds) on a call until the "
 "user profile dialog is shown."
 msgstr ""
+"Nurodo kliento aktyvumo trukmę sekundėmis, kol bus parodytas naudotojo "
+"profilio dialogas."
 
 #: db/seeds/settings.rb:266
 msgid ""
@@ -4858,42 +4902,49 @@ msgid ""
 "as a variable, #{setting.fqdn} which is found in all forms of messaging used "
 "by the application, to build links to the tickets within your system."
 msgstr ""
+"Nurodo pilną sistemos domeno vardą (FQDN). Šis nustatymas naudojamas kaip "
+"kintamasis #{setting.fqdn}, kuris randamas visuose pranešimuose generuojant "
+"nuorodas į triktis jūsų sistemoje."
 
 #: db/seeds/settings.rb:4524
 msgid "Defines the group of created tickets."
-msgstr ""
+msgstr "Nurodo kuriamų trikčių grupę."
 
 #: db/seeds/settings.rb:2941
 msgid "Defines the group of tickets created via web form."
-msgstr ""
+msgstr "Nurodo per web formą sukurtų trikčių grupę."
 
 #: db/seeds/settings.rb:4816
 msgid "Defines the i-doit config."
-msgstr ""
+msgstr "Nurodo i-doit konfigūraciją."
 
 #: db/seeds/settings.rb:3872
 msgid "Defines the log levels for various logging actions of the Sequencer."
-msgstr ""
+msgstr "Nurodo Sequencer veiksmų registravimo žurnaluose lygį."
 
 #: db/seeds/settings.rb:120
 msgid "Defines the logo of the application, shown in the web interface."
-msgstr ""
+msgstr "Nurodo logotipą, rodomą aplikacijoje."
 
 #: db/seeds/settings.rb:3143
 msgid "Defines the maximum accepted email size in MB."
-msgstr ""
+msgstr "Nurodo didžiausią priimamą el. laiško dydį MB."
 
 #: db/seeds/settings.rb:1017
 msgid ""
 "Defines the maximum number of allowed open tabs before auto cleanup removes "
 "surplus tabs when creating new tabs."
 msgstr ""
+"Nurodo didžiausią leistiną atidarytų skirtukų skaičių. Jį pasiekus ir "
+"atidarant naujus skirtukus, automatiškai uždaromi seni skirtukai."
 
 #: db/seeds/settings.rb:96
 msgid ""
 "Defines the name of the application, shown in the web interface, tabs, and "
 "title bar of the web browser."
 msgstr ""
+"Nurodo aplikacijos pavadinimą, rodomą naudotojo sąsajoje ir naršyklės "
+"pavadinimo juostoje."
 
 #: db/seeds/settings.rb:2656
 msgid "Defines the permission level used for lookups."
@@ -4901,7 +4952,7 @@ msgstr "Nurodo leidimų lygį naudojamą paieškoje."
 
 #: db/seeds/settings.rb:297
 msgid "Defines the port of the websocket server."
-msgstr ""
+msgstr "Nurodo websocket serverio prievadą."
 
 #: db/seeds/settings.rb:7
 msgid "Defines the random application secret."
@@ -4917,17 +4968,17 @@ msgstr "Nurodo Nagios laiškų siuntėjo adresą."
 
 #: db/seeds/settings.rb:4634
 msgid "Defines the sender email address of the service emails."
-msgstr ""
+msgstr "Nurodo tarnybinių laiškų siuntėjo el. pašto adresą."
 
 #: db/seeds/settings.rb:3302
 msgid "Defines the sender of email notifications."
-msgstr ""
+msgstr "Nurodo el. pašto pranešimų siuntėją."
 
 #: db/seeds/settings.rb:3121
 msgid ""
 "Defines the separator between the agent's real name and the given group "
 "email address."
-msgstr ""
+msgstr "Nurodo skirtuką tarp agento vardo ir nurodytos grupės el. pašto adreso."
 
 #: db/seeds/settings.rb:1111
 msgid ""
@@ -4939,11 +4990,11 @@ msgstr ""
 
 #: db/seeds/settings.rb:5039
 msgid "Defines the sipgate.io config."
-msgstr ""
+msgstr "Nurodo sipgate.io konfigūraciją."
 
 #: db/seeds/settings.rb:4377
 msgid "Defines the state of auto-closed tickets."
-msgstr ""
+msgstr "Nurodo automatiškai uždaromų trikčių būklę."
 
 #: db/seeds/settings.rb:241
 msgid ""
@@ -4951,18 +5002,22 @@ msgid ""
 "ensures that only tickets which belong to your system will be processed as "
 "follow-ups (useful when communicating between two instances of Zammad)."
 msgstr ""
+"Nurodo sistemos identifiaktorių. Kiekvienos trikties numeris turi šį "
+"identifikatorių. Tai užtikrina, kad tik triktys, kurios priklauso jūsų "
+"sistemai bus apdorojamos kaip papildomi įrašai (naudinga kai vyksta "
+"komunikacija tarp dviejų Zammad sistemų)."
 
 #: db/seeds/settings.rb:2878
 msgid "Defines the tab behaviour after a ticket action."
-msgstr ""
+msgstr "Nurodo skirtuko elgseną po trikties veiksmo."
 
 #: db/seeds/settings.rb:2673
 msgid "Defines the ticket states used for lookups."
-msgstr ""
+msgstr "Nurodo trikčių būsenas naudojamas paieškose."
 
 #: db/seeds/settings.rb:5434
 msgid "Defines the timeframe during which a self-created note can be deleted."
-msgstr ""
+msgstr "Nurodo per kiek laiko savęs pačio sukurta pastaba gali būti ištrinta."
 
 #: db/seeds/settings.rb:5190
 msgid "Defines the token for Placetel."
@@ -4971,38 +5026,44 @@ msgstr "Nurodo Placetel žetoną."
 #: db/seeds/settings.rb:4931
 msgid ""
 "Defines the transaction backend to detect customer signatures in emails."
-msgstr ""
+msgstr "Nurodo transakcijos valdiklį, kuris laiškuose ieško klientų parašų."
 
 #: db/seeds/settings.rb:4913
 msgid "Defines the transaction backend to execute triggers."
-msgstr ""
+msgstr "Nurodo transakcijos valdiklį, kuris vykdo Paleistukus."
 
 #: db/seeds/settings.rb:4922
 msgid "Defines the transaction backend to send agent notifications."
-msgstr ""
+msgstr "Nurodo transakcijos valdiklį, kuris siunčia pranešimus agentams."
 
 #: db/seeds/settings.rb:5259
 msgid ""
 "Defines the transaction backend which detects caller IDs in objects and "
 "stores them for CTI lookups."
 msgstr ""
+"Nurodo transakcijos valdiklį kuris randa skambintojo ID objektuose ir "
+"talpina juos CTI paieškai.."
 
 #: db/seeds/settings.rb:5268
 msgid "Defines the transaction backend which executes time based triggers."
 msgstr ""
+"Nurodo transakcijos valdiklį, kuris vykdo Paleistukus paleidžiamus pagal "
+"laiką."
 
 #: db/seeds/settings.rb:4940
 msgid ""
 "Defines the transaction backend which posts messages to Slack (http://www."
 "slack.com)."
 msgstr ""
+"Nurodo transakcijos valdiklį, kuris siunčia žinutęs į Slack (http://www.slack"
+".com)."
 
 #: db/seeds/settings.rb:5250
 msgid ""
 "Defines the transaction backend which will enrich customer and organization "
 "information from Clearbit (http://www.clearbit.com)."
 msgstr ""
-"Nurodo transakcijos servisą, kuris praturtins klientų ir organizacijų "
+"Nurodo transakcijos valdiklį, kuris praturtins klientų ir organizacijų "
 "informaciją Clearbit (http://www.clearbit.com) duomenimis."
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:14
@@ -5022,7 +5083,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:4919
 msgid "Defines transaction backend."
-msgstr ""
+msgstr "Nurodo transakcijos valdiklį."
 
 #: db/seeds/settings.rb:2639
 msgid ""
@@ -5858,6 +5919,8 @@ msgid ""
 "Enable activity type selection. This would allow agents to select one of the "
 "types below when adding accounted time."
 msgstr ""
+"Įjungia veiksmų tipo pasirinkimą. Tai leidžia agentams pasirinkti vieną iš "
+"šių tipų vedant laiko apskaitą."
 
 #: db/seeds/settings.rb:2443
 msgid "Enable auto assignment for following matching tickets."
@@ -6316,7 +6379,7 @@ msgstr "Eskaluota (Pirmo atsakymo laikas)"
 #: app/assets/javascripts/app/models/ticket.coffee:19
 #: app/graphql/gql/types/overview_type.rb:72
 msgid "Escalation at (Update Time)"
-msgstr "Eskaluota (dėl atsakymo laiko)"
+msgstr "Eskaluota (dėl atsakinėjimo laiko)"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:271
 msgid ""
@@ -6666,7 +6729,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/sla/index.jst.eco:37
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:181
 msgid "First Response Time"
-msgstr ""
+msgstr "Pirmo atsakymo laikas"
 
 #: app/models/report.rb:45
 msgid "First Solution"
@@ -9009,7 +9072,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:2778
 msgid "Maximum Recursive Ticket Triggers Depth"
-msgstr ""
+msgstr "Didžiausias leistinas rekursyvių Paleistukų gylis"
 
 #: db/seeds/settings.rb:2100
 msgid "Maximum failed logins"
@@ -9022,6 +9085,8 @@ msgstr ""
 #: db/seeds/settings.rb:2781
 msgid "Maximum number of recursively executed triggers."
 msgstr ""
+"Didžiausias kiekis kiek kartų paleistukas gali būti paleistas rekursyviai "
+"per tą patį kartą."
 
 #: db/seeds/settings.rb:1001
 msgid "Maximum number of ticket shown in overviews"
@@ -9926,7 +9991,7 @@ msgstr ""
 
 #: lib/stats.rb:21
 msgid "No settings with area 'Dashboard::Stats' defined"
-msgstr ""
+msgstr "Nustatymų „Dashboard::Stats“ srityje nėra"
 
 #: app/controllers/organizations_controller.rb:166
 #: app/controllers/text_modules_controller.rb:71
@@ -11420,7 +11485,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:2714
 msgid "Recursive Ticket Triggers"
-msgstr ""
+msgstr "Rekursyvūs trikčių Paleistukai"
 
 #: db/seeds/settings.rb:3202
 msgid ""
@@ -11621,17 +11686,17 @@ msgstr "Raportų sąsaja"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee:3
 msgid "Report Profile"
-msgstr "Raportų profilis"
+msgstr "Ataskaitų profilis"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee:15
 #: db/seeds/permissions.rb:103
 msgid "Report Profiles"
-msgstr "Raportų profiliai"
+msgstr "Ataskaitų profiliai"
 
 #: app/assets/javascripts/app/controllers/report.coffee:6
 #: app/assets/javascripts/app/views/report/main.jst.eco:5
 msgid "Reporting"
-msgstr ""
+msgstr "Ataskaitos"
 
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:18
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:17
@@ -13127,7 +13192,7 @@ msgstr "SMS"
 #: app/assets/javascripts/app/views/sla/index.jst.eco:49
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:189
 msgid "Solution Time"
-msgstr "Išsprendimo laikas"
+msgstr "Sprendimo laikas"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:11
 msgid "Some Text"
@@ -13886,10 +13951,8 @@ msgid "The WhatsApp webhook payload could not be validated."
 msgstr "Nepavyko patikrinti Whatsapp webhook pateikiamų duomenų."
 
 #: app/controllers/reports_controller.rb:130
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The active reporting profile could not be found."
-msgstr "%s% iš naujo atidarytas"
+msgstr "Nepavyko rasti aktyvaus ataskaitų profilio."
 
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco:2
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco:2
@@ -14470,10 +14533,8 @@ msgid "The public PGP key could not be found."
 msgstr "%s% iš naujo atidarytas"
 
 #: app/assets/javascripts/app/controllers/report.coffee:178
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The report could not be generated"
-msgstr "%s% iš naujo atidarytas"
+msgstr "Nepavyko sugeneruoti ataskaitos"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:31
 msgid "The request could not be processed."
@@ -15969,7 +16030,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:18
 msgid "Timeframe for the first response."
-msgstr ""
+msgstr "Laikas pirmam atsakymui."
 
 #: app/assets/javascripts/app/models/job.coffee:14
 #: app/assets/javascripts/app/models/trigger.coffee:13 db/seeds/settings.rb:183
@@ -16159,10 +16220,8 @@ msgid "Total"
 msgstr "Viso"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:65
-#, fuzzy
-#| msgid "Accounted Time"
 msgid "Total Accounted Time"
-msgstr "Apskaičiuotas laikas"
+msgstr "Visas apskaitytas laikas"
 
 #: db/seeds/settings.rb:949
 msgid "Total display of the number of objects in a grouping."
