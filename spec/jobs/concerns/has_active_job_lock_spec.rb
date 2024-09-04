@@ -16,7 +16,7 @@ RSpec.describe HasActiveJobLock, type: :job do
 
       cattr_accessor :perform_counter, default: 0
 
-      def perform
+      def perform(...)
         self.class.perform_counter += 1
       end
     end
