@@ -14885,7 +14885,8 @@ div.accounted-time-value {
     padding-right: 4px;
     padding-top: 10px;
     padding-bottom: 5px; // make sure the value is aligned vertically with the checkbox and the dropdown menu
-    word-break: break-all;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
 
     &.edit-widget-active {
       padding-top: 5px;
