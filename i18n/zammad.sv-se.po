@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-03 05:37+0000\n"
+"PO-Revision-Date: 2024-09-04 05:12+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
@@ -2926,7 +2926,7 @@ msgstr "Avbryt"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:424
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:425
 msgid "Cancel & Go Back"
 msgstr "Avbryt & Gå tillbaka"
 
@@ -3956,7 +3956,7 @@ msgstr "Land"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:436
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:437
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Skapa"
@@ -5869,7 +5869,7 @@ msgstr "Avbryt"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:421
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:422
 msgid "Discard Changes"
 msgstr "Avbryt ändringar"
 
@@ -6363,8 +6363,6 @@ msgid "Email Verification"
 msgstr "E-postverifiering"
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:33
-#, fuzzy
-#| msgid "Email Address"
 msgid "Email address"
 msgstr "E-postadress"
 
@@ -7623,8 +7621,6 @@ msgid "Full Name"
 msgstr "Fullständigt namn"
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:24
-#, fuzzy
-#| msgid "Full Name"
 msgid "Full name"
 msgstr "Fullständigt namn"
 
@@ -11840,14 +11836,10 @@ msgid "Organization could not be updated."
 msgstr "Organisationen kunde inte uppdateras."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:47
-#, fuzzy
-#| msgid "Organization Logo"
 msgid "Organization logo"
-msgstr "Organisation Logga"
+msgstr "Organisation logga"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:40
-#, fuzzy
-#| msgid "Organization Name"
 msgid "Organization name"
 msgstr "Organisationsnamn"
 
@@ -14075,8 +14067,6 @@ msgid "Send a message to all logged in users."
 msgstr "Skicka meddelande till alla inloggade användare."
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:52
-#, fuzzy
-#| msgid "Send Mails via"
 msgid "Send mails via"
 msgstr "Skicka e-post via"
 

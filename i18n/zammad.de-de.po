@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-29 05:28+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2024-09-03 09:16+0000\n"
+"Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -2971,7 +2971,7 @@ msgstr "Abbrechen"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:424
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:425
 msgid "Cancel & Go Back"
 msgstr "Abbrechen & Zurück"
 
@@ -4019,7 +4019,7 @@ msgstr "Land"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:436
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:437
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Erstellen"
@@ -5968,7 +5968,7 @@ msgstr "Verwerfen"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:421
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:422
 msgid "Discard Changes"
 msgstr "Änderungen verwerfen"
 
@@ -6471,8 +6471,6 @@ msgid "Email Verification"
 msgstr "E-Mail-Prüfung"
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:33
-#, fuzzy
-#| msgid "Email Address"
 msgid "Email address"
 msgstr "E-Mail-Adresse"
 
@@ -7756,10 +7754,8 @@ msgid "Full Name"
 msgstr "Voller Name"
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:24
-#, fuzzy
-#| msgid "Full Name"
 msgid "Full name"
-msgstr "Voller Name"
+msgstr "Vollständiger Name"
 
 #: db/seeds/settings.rb:263
 msgid "Fully Qualified Domain Name"
@@ -12019,14 +12015,10 @@ msgid "Organization could not be updated."
 msgstr "Organisation konnte nicht aktualisiert werden."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:47
-#, fuzzy
-#| msgid "Organization Logo"
 msgid "Organization logo"
 msgstr "Logo der Organisation"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:40
-#, fuzzy
-#| msgid "Organization Name"
 msgid "Organization name"
 msgstr "Name der Organisation"
 
@@ -14285,8 +14277,6 @@ msgid "Send a message to all logged in users."
 msgstr "Eine Nachricht an alle angemeldeten Benutzer senden."
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:52
-#, fuzzy
-#| msgid "Send Mails via"
 msgid "Send mails via"
 msgstr "Verschickt E-Mails über"
 
@@ -20551,10 +20541,8 @@ msgid "chat"
 msgstr "Chat"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
-#, fuzzy
-#| msgid "Checklist Item"
 msgid "checked checklist item '%s'"
-msgstr "Checklisten-Element"
+msgstr "erledigte Checklisten-Element '%s'"
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco:24
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:24
@@ -21755,10 +21743,8 @@ msgid "unassign user"
 msgstr "Benutzerzuweisung entfernen"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
-#, fuzzy
-#| msgid "Incomplete checklist items"
 msgid "unchecked checklist item '%s'"
-msgstr "Unvollständige Checklisten-Elemente"
+msgstr "öffnete Checklisten-Element '%s'"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "unset readonly"
