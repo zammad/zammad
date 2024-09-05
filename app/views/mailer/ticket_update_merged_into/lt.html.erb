@@ -1,0 +1,11 @@
+Triktis (#{ticket.title}) buvo prijungta prie kitos trikties
+
+<div>Sveiki #{recipient.firstname},</div>
+<br>
+<div>
+<b>#{current_user.longname}</b> prijungė šią triktį (#{ticket.title}) prie kitos trikties.
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Peržiūrėti #{config.product_name}</a>
+</div>

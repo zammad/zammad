@@ -1,0 +1,18 @@
+Triktis eskaluota (#{ticket.title})
+
+<div>Sveiki #{recipient.firstname},</div>
+<br>
+<div>Triktis (#{ticket.title}) nuo "<b>#{ticket.customer.longname}</b>" buvo eskaluota nuo "#{ticket.escalation_at}"!</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  Informacija:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Peržiūrėti #{config.product_name}</a>
+</div>

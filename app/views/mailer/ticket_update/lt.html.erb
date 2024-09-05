@@ -1,0 +1,29 @@
+Triktis atnaujinta (#{ticket.title})
+
+<div>Sveiki #{recipient.firstname},</div>
+<br>
+<div>
+<b>#{current_user.longname}</b> atnaujino triktį (#{ticket.title}).
+</div>
+<br>
+<% if @objects[:changes].present? %>
+  <div>
+  Pakeitimai:<br>
+  <% @objects[:changes].each do |key, value| %>
+    <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>
+  <% end %>
+  </div>
+<% end %>
+<br>
+<% if @objects[:article] %>
+  <div>
+  Informacija:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% if @objects[:article] %>/#{article.id}<% end %>" target="zammad_app">Peržiūrėti #{config.product_name}</a>
+</div>
