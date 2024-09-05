@@ -20,11 +20,23 @@ class AddSettingOptionForPostmasterFollowUpSearchIn < ActiveRecord::Migration[7.
     setting.save!
 
     # update setting
+    update_setting
+  end
+
+  def update_setting
+
+    # verify if setting value need to be updated
     current = Setting.get('postmaster_follow_up_search_in')
     return if !current || current.include?('subject_references')
 
-    current ||= []
+    # prepare current setting value
+    if current.instance_of?(String)
+      current = [current]
+    end
+
+    # store new setting value
     current.push('subject_references')
     Setting.set('postmaster_follow_up_search_in', current)
   end
+
 end
