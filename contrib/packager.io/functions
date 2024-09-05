@@ -232,25 +232,19 @@ function enforce_redis () {
   REDIS_URL=$(zammad config:get REDIS_URL)
   if [ -n "${REDIS_URL}" ]; then
     echo "# REDIS_URL variable set to ${REDIS_URL}."
-    if ! echo ${REDIS_URL} | grep -E 'redis://([a-zA-Z0-9.-]+|[0-9]{1,3}(\.[0-9]{1,3}){3}):[0-9]+/?' > /dev/null; then
-	    echo "ERROR - Malformed REDIS_URL."
-	    echo -e "REDIS_URL must follow one of these formats:\nredis://<fqdn>:<port_number>\nredis://<ip_address>:<port_number>"
-	    exit 1
+    echo "# Performing connection check."
+    if zammad run ruby -r redis -e 'Redis.new(driver: :hiredis, url: ENV["REDIS_URL"]).ping'; then
+      echo "# Connection check successful."
+      return 0
     else
-      echo "# Performing connection check."
-      REDIS_URL_HOST=$(echo ${REDIS_URL} | cut -d'/' -f3 | cut -d':' -f1)
-      REDIS_URL_PORT=$(echo ${REDIS_URL} | cut -d'/' -f3 | cut -d':' -f2)
-      if echo 2> /dev/null > /dev/tcp/$REDIS_URL_HOST/$REDIS_URL_PORT; then
-        echo "# Connection check successful."
-        return 0
-      else
-        echo "# Connection check unsuccessful."
-        echo "ERROR - No redis server found at ${REDIS_URL}."
-        echo "Please install Redis following the instructions at https://redis.io/docs/getting-started/ or set the REDIS_URL environment variable with the following command."
-        echo -e "zammad config:set REDIS_URL=redis://your.redis.server:6379\n"
-        echo "Please fix these issues, then run the package installation again."
-        exit 1
-      fi
+      echo "# Connection check unsuccessful."
+      echo "ERROR - No redis server found at ${REDIS_URL}."
+      echo "Please install Redis following the instructions at https://redis.io/docs/getting-started/ or set the REDIS_URL environment variable with the following command."
+      echo "zammad config:set REDIS_URL=redis://your.redis.server:6379\n"
+      echo "Acceptable formats for REDIS_URL are:"
+      echo "redis[s]://[[username]:password@]host[:port][/db-number]"
+      echo "Please fix these issues, then run the package installation again."
+      exit 1
     fi
   fi
 
