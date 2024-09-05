@@ -170,6 +170,7 @@ export type FormSchemaNodeWithChildren = (
         | string
       )[]
     | string
+    | FormKitSchemaCondition
 }
 
 export type FormSchemaNode =

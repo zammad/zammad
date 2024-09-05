@@ -19,7 +19,7 @@ module Gql::Mutations
           inbound_configuration:  map_config_to_type(internal_result.dig(:setting, :inbound)),
           outbound_configuration: map_config_to_type(internal_result.dig(:setting, :outbound)),
         }.tap do |result|
-          result[:mailbox_stats] = internal_result.slice(:content_messages, :archive_possible, :archive_week_range) if internal_result[:content_messages]
+          result[:mailbox_stats] = internal_result.slice(:content_messages, :archive_possible, :archive_possible_is_fallback, :archive_week_range) if internal_result[:content_messages]
         end
       }
     end

@@ -2915,6 +2915,20 @@
               "deprecationReason": null
             },
             {
+              "name": "archivePossibleIsFallback",
+              "description": "Whether the archive import suggestion is based on a fallback logic due to a missing DATE sort option on the mail server.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "archiveWeekRange",
               "description": "There were emails found older than the specified amount of weeks, therefore an archive import should be suggested.",
               "args": [

@@ -680,7 +680,11 @@ class ChannelEmailAccountWizard extends App.ControllerWizardModal
       return
 
     @$('.js-archiveMessage').removeClass('hide')
-    message = App.i18n.translateContent('In addition, emails were found in your mailbox that are older than %s weeks. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.', data.archive_week_range)
+
+    if data.archive_possible_is_fallback is true
+      message = App.i18n.translateContent('Since the mail server does not support sorting messages by date, it was not possible to detect if there is any mail older than %s weeks in the connected mailbox. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.', data.archive_week_range)
+    else
+      message = App.i18n.translateContent('In addition, emails were found in your mailbox that are older than %s weeks. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.', data.archive_week_range)
     @$('.js-inbound-acknowledge .js-archiveMessageCount').html(message)
 
     configureAttributesAcknowledge = [

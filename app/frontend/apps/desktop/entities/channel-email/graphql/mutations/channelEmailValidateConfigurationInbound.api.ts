@@ -15,6 +15,7 @@ export const ChannelEmailValidateConfigurationInboundDocument = gql`
     mailboxStats {
       contentMessages
       archivePossible
+      archivePossibleIsFallback
       archiveWeekRange
     }
     errors {

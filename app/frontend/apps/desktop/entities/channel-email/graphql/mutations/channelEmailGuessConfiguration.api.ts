@@ -31,6 +31,7 @@ export const ChannelEmailGuessConfigurationDocument = gql`
       mailboxStats {
         contentMessages
         archivePossible
+        archivePossibleIsFallback
         archiveWeekRange
       }
     }

@@ -20,7 +20,7 @@ module Gql::Mutations
     def map_probe_result(probe_result, field_prefix:)
       if probe_result[:result] == 'ok'
         return { success: true }.tap do |result|
-          result[:mailbox_stats] = probe_result.slice(:content_messages, :archive_possible, :archive_week_range) if probe_result[:content_messages]
+          result[:mailbox_stats] = probe_result.slice(:content_messages, :archive_possible, :archive_possible_is_fallback, :archive_week_range) if probe_result[:content_messages]
         end
       end
 

@@ -33,6 +33,7 @@ export const useEmailInboundForm = () => {
     metaInformationInbound.value = {
       contentMessages: data.contentMessages || 0,
       archivePossible: data.archivePossible || false,
+      archivePossibleIsFallback: data.archivePossibleIsFallback || false,
       archiveWeekRange: data.archiveWeekRange || 0,
       nextAction,
     }

@@ -137,13 +137,15 @@ example
       @imap.select(folder)
     end
 
-    message_ids = timeout(6.minutes) do
+    message_ids_result = timeout(6.minutes) do
       if keep_on_server && check_type != 'check' && check_type != 'verify'
         fetch_unread_message_ids
       else
         fetch_all_message_ids
       end
     end
+
+    message_ids = message_ids_result[:result]
 
     # check mode only
     if check_type == 'check'
@@ -171,12 +173,42 @@ example
         content_messages = message_ids.count
       end
 
-      archive_possible   = false
+      archive_possible = false || message_ids_result[:is_fallback]
+      archive_possible_is_fallback = false || message_ids_result[:is_fallback]
       archive_check      = 0
       archive_max_check  = 500
       archive_days_range = 14
       archive_week_range = archive_days_range / 7
-      message_ids.reverse_each do |message_id|
+
+      # use .each only if ordered response is ascending (from older to newer)
+      message_ids_iterator = message_ids.each
+
+      # since the correct loop order could improve performance, we should check even for less than 500 available messages
+      # starting with 5 messages, since we need 2 additional fetch requests to find the used order and it would not make sense with less messages
+      if !message_ids_result[:is_fallback] && content_messages > 4
+        message_0_meta = nil
+        message_1_meta = nil
+        timeout(1.minute) do
+          message_0_meta = @imap.fetch(message_ids[0], ['RFC822.HEADER'])[0]
+          message_1_meta = @imap.fetch(message_ids[1], ['RFC822.HEADER'])[0]
+        end
+        headers0 = self.class.extract_rfc822_headers(message_0_meta)
+        headers1 = self.class.extract_rfc822_headers(message_1_meta)
+
+        if headers0['Date'].present? && headers1['Date'].present?
+          begin
+            date0 = Time.zone.parse(headers0['Date'])
+            date1 = Time.zone.parse(headers1['Date'])
+
+            # change iterator to .reverse_each if order of the 2 probe messages is descending (from newer to older)
+            message_ids_iterator = message_ids.reverse_each if date0 > date1
+          rescue => e # rubocop:disable Metrics/BlockNesting
+            # no easy order decision possible due to a date parsing issue, continue with default iterator
+          end
+        end
+      end
+
+      message_ids_iterator.each do |message_id|
         message_meta = nil
         timeout(1.minute) do
           message_meta = @imap.fetch(message_id, ['RFC822.HEADER'])[0]
@@ -200,15 +232,19 @@ example
 
         archive_possible = true
 
+        # even if it was fallback before, we just found a real old mail, so it's not fallback anymore
+        archive_possible_is_fallback = false
+
         break
       end
 
       disconnect
       return {
-        result:             'ok',
-        content_messages:   content_messages,
-        archive_possible:   archive_possible,
-        archive_week_range: archive_week_range,
+        result:                       'ok',
+        content_messages:             content_messages,
+        archive_possible:             archive_possible,
+        archive_possible_is_fallback: archive_possible_is_fallback,
+        archive_week_range:           archive_week_range,
       }
     end
 
@@ -375,9 +411,15 @@ example
   end
 
   def fetch_message_ids(filter)
-    @imap.sort(['DATE'], filter, 'US-ASCII')
+    {
+      result:      @imap.sort(['DATE'], filter, 'US-ASCII'),
+      is_fallback: false
+    }
   rescue
-    @imap.search(filter)
+    {
+      result:      @imap.search(filter),
+      is_fallback: true # indicates that we can not use a result ordered by date
+    }
   end
 
   def fetch_message_body_key(options)

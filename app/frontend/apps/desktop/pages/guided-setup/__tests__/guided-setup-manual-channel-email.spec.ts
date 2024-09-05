@@ -406,6 +406,7 @@ describe('guided setup manual channel email', () => {
           mailboxStats: {
             contentMessages: 3,
             archivePossible: true,
+            archivePossibleIsFallback: false,
             archiveWeekRange: 2,
           },
         },
@@ -431,6 +432,88 @@ describe('guided setup manual channel email', () => {
 
       expect(inboundMessagesForm).toHaveTextContent(
         'In addition, emails were found in your mailbox that are older than 2 weeks. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.',
+      )
+
+      expect(
+        getByLabelText(inboundMessagesForm, 'Email import mode'),
+      ).toBeInTheDocument()
+
+      expect(view.getByRole('button', { name: 'Continue' })).toBeInTheDocument()
+    })
+
+    it('can show inbound messages form when some messages are detected but imap sort failed', async () => {
+      const view = await visitView('/guided-setup/manual/channels/email')
+
+      const accountForm = view.getByTestId('channel-email-account')
+
+      await view.events.type(
+        getByLabelText(accountForm, 'Full name'),
+        'Zammad Helpdesk',
+      )
+
+      await view.events.type(
+        getByLabelText(accountForm, 'Email address'),
+        'zammad@mail.test.dc.zammad.com',
+      )
+
+      await view.events.type(getByLabelText(accountForm, 'Password'), 'zammad')
+
+      mockChannelEmailGuessConfigurationMutation({
+        channelEmailGuessConfiguration: {
+          result: {
+            inboundConfiguration: null,
+            outboundConfiguration: null,
+          },
+        },
+      })
+
+      await view.events.click(
+        view.getByRole('button', {
+          name: 'Connect and Continue',
+        }),
+      )
+
+      const inboundForm = view.getByTestId('channel-email-inbound')
+
+      await view.events.type(
+        getByLabelText(inboundForm, 'Host'),
+        'mail.test.dc.zammad.com',
+      )
+
+      await getNode('channel-email-inbound')?.settled
+
+      mockChannelEmailValidateConfigurationInboundMutation({
+        channelEmailValidateConfigurationInbound: {
+          success: true,
+          mailboxStats: {
+            contentMessages: 3,
+            archivePossible: true,
+            archivePossibleIsFallback: true,
+            archiveWeekRange: 2,
+          },
+        },
+      })
+
+      await view.events.click(
+        view.getByRole('button', {
+          name: 'Continue',
+        }),
+      )
+
+      expect(inboundForm).not.toBeVisible()
+
+      const inboundMessagesForm = view.getByTestId(
+        'channel-email-inbound-messages',
+      )
+
+      expect(inboundMessagesForm).toBeVisible()
+
+      expect(inboundMessagesForm).toHaveTextContent(
+        '3 email(s) were found in your mailbox. They will all be moved from your mailbox into Zammad.',
+      )
+
+      expect(inboundMessagesForm).toHaveTextContent(
+        'Since the mail server does not support sorting messages by date, it was not possible to detect if there is any mail older than 2 weeks in the connected mailbox. You can import such emails as an "archive", which means that no notifications are sent and the tickets have the status "closed". However, you can find them in Zammad anytime using the search function.',
       )
 
       expect(

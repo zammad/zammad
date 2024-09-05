@@ -45,10 +45,12 @@ fetch one account
 
 =end
 
-  def fetch(force = false)
+  def fetch(force = false, driver_call_result = {})
+    args            = options[:args]
     adapter         = options[:adapter]
     adapter_options = options
     if options[:inbound] && options[:inbound][:adapter]
+      args            = options[:inbound][:args]
       adapter         = options[:inbound][:adapter]
       adapter_options = options[:inbound][:options]
     end
@@ -59,9 +61,10 @@ fetch one account
     driver_instance = driver_class.new
     return if !force && !driver_instance.fetchable?(self)
 
-    result = driver_instance.fetch(adapter_options, self)
+    result = driver_instance.fetch(adapter_options, self, *args)
     self.status_in   = result[:result]
     self.last_log_in = result[:notice]
+    driver_call_result.replace result
     preferences[:last_fetch] = Time.zone.now
     save!
     true

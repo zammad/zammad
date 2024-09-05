@@ -52,6 +52,7 @@ export type EmailInboundMetaInformationNextAction = 'roundtrip' | 'outbound'
 export interface EmailInboundMetaInformation {
   contentMessages: number
   archivePossible?: boolean
+  archivePossibleIsFallback?: boolean
   archiveWeekRange?: number
   nextAction: EmailInboundMetaInformationNextAction
   archive?: boolean

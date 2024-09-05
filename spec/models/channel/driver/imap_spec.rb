@@ -67,6 +67,12 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
     end
   end
 
+  def expect_imap_fetch_check_results(result_params_to_compare = {})
+    driver_call_result = {}
+    expect { channel.fetch(true, driver_call_result) }.not_to change(Ticket::Article, :count)
+    expect(driver_call_result).to include(result_params_to_compare)
+  end
+
   describe '.fetch', :aggregate_failures do
     let(:folder) { "imap_spec-#{SecureRandom.uuid}" }
 
@@ -128,6 +134,94 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
 
     after do
       imap.delete(folder)
+    end
+
+    context 'when checking for imap status' do
+      let(:inbound_options) do
+        {
+          adapter: 'imap',
+          options: {
+            host:           ENV['MAIL_SERVER'],
+            user:           ENV['MAIL_ADDRESS'],
+            password:       server_password,
+            ssl:            true,
+            ssl_verify:     false,
+            folder:         folder,
+            keep_on_server: false,
+          },
+          args:    ['check']
+        }
+      end
+      let(:email_without_date) do
+        <<~EMAIL.gsub(%r{\n}, "\r\n")
+          Subject: hello1
+          From: shugo@example.com
+          To: shugo@example.com
+          Message-ID: <some1@example_without_date>
+
+          hello world
+        EMAIL
+      end
+      let(:email_now_date) do
+        <<~EMAIL.gsub(%r{\n}, "\r\n")
+          Subject: hello1
+          Date: #{Time.current.rfc2822}
+          From: shugo@example.com
+          To: shugo@example.com
+          Message-ID: <some1@example_now_date>
+
+          hello world
+        EMAIL
+      end
+      let(:email_old_date) do
+        <<~EMAIL.gsub(%r{\n}, "\r\n")
+          Subject: hello1
+          Date: Mon, 01 Jan 2000 03:00:00 +0000
+          From: shugo@example.com
+          To: shugo@example.com
+          Message-ID: <some1@example_old_date>
+
+          hello world
+        EMAIL
+      end
+
+      context 'with support for imap sort by date' do
+        it 'with dateless mail' do
+          imap.append(folder, email_without_date, [], Time.zone.now)
+          expect_imap_fetch_check_results({ archive_possible: false, archive_possible_is_fallback: false })
+        end
+
+        it 'with now dated mail' do
+          imap.append(folder, email_now_date, [], Time.zone.now)
+          expect_imap_fetch_check_results({ archive_possible: false, archive_possible_is_fallback: false })
+        end
+
+        it 'with old dated mail' do
+          imap.append(folder, email_old_date, [], Time.zone.now)
+          expect_imap_fetch_check_results({ archive_possible: true, archive_possible_is_fallback: false })
+        end
+      end
+
+      context 'without support for imap sort by date' do
+        before do
+          allow_any_instance_of(Net::IMAP).to receive(:sort).and_raise('this mail server does not support sorting by date')
+        end
+
+        it 'with dateless mail' do
+          imap.append(folder, email_without_date, [], Time.zone.now)
+          expect_imap_fetch_check_results({ archive_possible: true, archive_possible_is_fallback: true })
+        end
+
+        it 'with now dated mail' do
+          imap.append(folder, email_now_date, [], Time.zone.now)
+          expect_imap_fetch_check_results({ archive_possible: true, archive_possible_is_fallback: true })
+        end
+
+        it 'with old dated mail' do
+          imap.append(folder, email_old_date, [], Time.zone.now)
+          expect_imap_fetch_check_results({ archive_possible: true, archive_possible_is_fallback: false })
+        end
+      end
     end
 
     context 'when fetching regular emails' do
