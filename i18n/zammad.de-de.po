@@ -2498,11 +2498,11 @@ msgstr ""
 "Lädt automatisch die Datei chat.css. Wenn Sie Ihre eigene CSS-Datei "
 "verwenden möchten, setzen Sie dies einfach auf false."
 
-#: app/frontend/shared/components/Form/Form.vue:1214
+#: app/frontend/shared/components/Form/Form.vue:1226
 msgid "Autosave in progress…"
 msgstr "Automatisches Speichern läuft…"
 
-#: app/frontend/shared/components/Form/Form.vue:1223
+#: app/frontend/shared/components/Form/Form.vue:1235
 msgid "Autosaving is taking longer than expected…"
 msgstr "Das automatische Speichern dauert länger als erwartet…"
 
@@ -2971,7 +2971,7 @@ msgstr "Abbrechen"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:425
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:424
 msgid "Cancel & Go Back"
 msgstr "Abbrechen & Zurück"
 
@@ -3207,7 +3207,7 @@ msgstr ""
 "möchten. Wenn das Kästchen deaktiviert ist, werden die Werte in "
 "alphabetischer Reihenfolge sortiert."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:57
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:54
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
 msgid "Checklist"
 msgstr "Checkliste"
@@ -3532,7 +3532,13 @@ msgstr "Geschlossene Tickets"
 msgid "Closing time"
 msgstr "Schließzeit"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:66
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:160
+#, fuzzy
+#| msgid "Content sidebar"
+msgid "Collapse sidebar"
+msgstr "Inhalts-Seitenleiste"
+
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:61
 msgid "Collapse this element"
 msgstr "Dieses Element zuklappen"
 
@@ -4019,7 +4025,7 @@ msgstr "Land"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:437
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:436
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Erstellen"
@@ -5968,7 +5974,7 @@ msgstr "Verwerfen"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:422
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:421
 msgid "Discard Changes"
 msgstr "Änderungen verwerfen"
 
@@ -7250,7 +7256,13 @@ msgstr "Vorhandene Tickets"
 msgid "Existing tickets (open)"
 msgstr "Vorhandene Tickets (offen)"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:65
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:161
+#, fuzzy
+#| msgid "Main sidebar"
+msgid "Expand sidebar"
+msgstr "Haupt-Seitenleiste"
+
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:60
 msgid "Expand this element"
 msgstr "Dieses Element aufklappen"
 
@@ -7367,7 +7379,7 @@ msgstr "Die Rücknahme der Kanal-Migration ist fehlgeschlagen!"
 msgid "Failed to save checklist order."
 msgstr "Die Reihenfolge der Checkliste konnte nicht gespeichert werden."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:122
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:117
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 "Die Reihenfolge der Checklisten-Elemente konnte nicht gespeichert werden. "
@@ -13191,7 +13203,7 @@ msgstr "Alle Werte entfernen"
 msgid "Remove authenticator app"
 msgstr "Authentifizierungs-App entfernen"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:25
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:362
 msgid "Remove checklist"
 msgstr "Checkliste entfernen"
@@ -13237,7 +13249,7 @@ msgstr "Formatierung entfernen"
 msgid "Removes the shadows for a flat look."
 msgstr "Entfernt die Schatten für ein flaches Design."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:20
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:355
 msgid "Rename checklist"
 msgstr "Checkliste umbenennen"
@@ -13512,11 +13524,11 @@ msgstr ""
 msgid "Resize frame"
 msgstr "Rahmengröße ändern"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:309
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:308
 msgid "Resize side panel"
 msgstr "Größe des Seitenpanels ändern"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:135
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:133
 msgid "Resize sidebar"
 msgstr "Größe der Seitenleiste ändern"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-28 04:29+0000\n"
+"PO-Revision-Date: 2024-09-05 05:56+0000\n"
 "Last-Translator: JPB <JPB@users.noreply.translations.zammad.org>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
 "development/nl/>\n"
@@ -2472,11 +2472,11 @@ msgstr ""
 "Het chat.css-bestand wordt automatisch geladen. Als je eigen CSS wilt "
 "gebruiken, zet deze waarde op false."
 
-#: app/frontend/shared/components/Form/Form.vue:1214
+#: app/frontend/shared/components/Form/Form.vue:1226
 msgid "Autosave in progress…"
 msgstr "Autosave bezig…"
 
-#: app/frontend/shared/components/Form/Form.vue:1223
+#: app/frontend/shared/components/Form/Form.vue:1235
 msgid "Autosaving is taking longer than expected…"
 msgstr "Het automatisch opslaan duurt langer dan verwacht…"
 
@@ -2946,7 +2946,7 @@ msgstr "Annuleren"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:425
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:424
 msgid "Cancel & Go Back"
 msgstr "Annuleer & ga terug"
 
@@ -3185,7 +3185,7 @@ msgstr ""
 "Vink aan als je de sorteer opties wilt aanpassen. Als dit vak niet in "
 "aangevinkt worden waardes op alfabetische volgorde gesorteerd."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:57
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:54
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
 msgid "Checklist"
 msgstr "Checklist"
@@ -3502,7 +3502,13 @@ msgstr "Gesloten tickets"
 msgid "Closing time"
 msgstr "Afhandeltijd"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:66
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:160
+#, fuzzy
+#| msgid "Content sidebar"
+msgid "Collapse sidebar"
+msgstr "Inhoud zijbalk"
+
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:61
 msgid "Collapse this element"
 msgstr "Element inklappen"
 
@@ -3981,7 +3987,7 @@ msgstr "Land"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:437
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:436
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Aanmaken"
@@ -5909,7 +5915,7 @@ msgstr "Annuleren"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:422
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:421
 msgid "Discard Changes"
 msgstr "Wijzigingen annuleren"
 
@@ -6406,8 +6412,6 @@ msgid "Email Verification"
 msgstr "E-mail verificatie"
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:33
-#, fuzzy
-#| msgid "Email Address"
 msgid "Email address"
 msgstr "Email adres"
 
@@ -7174,7 +7178,13 @@ msgstr "Bestaande tickets"
 msgid "Existing tickets (open)"
 msgstr "Bestaande tickets (open)"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:65
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:161
+#, fuzzy
+#| msgid "Main sidebar"
+msgid "Expand sidebar"
+msgstr "Hoofdzijbalk"
+
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:60
 msgid "Expand this element"
 msgstr "Dit element uitbreiden"
 
@@ -7291,7 +7301,7 @@ msgstr "Kan de migratie van het kanaal niet terugdraaien!"
 msgid "Failed to save checklist order."
 msgstr "De volgorde van de items op de checklist is niet opgeslagen."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:122
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:117
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 "De volgorde van de items op de checklist is niet opgeslagen. Probeer het "
@@ -7674,8 +7684,6 @@ msgid "Full Name"
 msgstr "Volledige naam"
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:24
-#, fuzzy
-#| msgid "Full Name"
 msgid "Full name"
 msgstr "Volledige naam"
 
@@ -11907,16 +11915,12 @@ msgid "Organization could not be updated."
 msgstr "Organisatie kon niet worden bijgewerkt."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:47
-#, fuzzy
-#| msgid "Organization Logo"
 msgid "Organization logo"
-msgstr "Organisatie Logo"
+msgstr "Organisatielogo"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:40
-#, fuzzy
-#| msgid "Organization Name"
 msgid "Organization name"
-msgstr "Bedrijfsnaam"
+msgstr "Organisatienaam"
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:78
 msgid "Organization tickets"
@@ -13078,7 +13082,7 @@ msgstr "Verwijder alle waardes"
 msgid "Remove authenticator app"
 msgstr "authenticator-app verwijderen"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:25
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:362
 msgid "Remove checklist"
 msgstr "Checklist verwijderen"
@@ -13124,7 +13128,7 @@ msgstr "Verwijderd de indeling"
 msgid "Removes the shadows for a flat look."
 msgstr "Verwijder alle schaduwen voor een platte uitstraling."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:20
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:355
 msgid "Rename checklist"
 msgstr "Checklist hernoemen"
@@ -13398,11 +13402,11 @@ msgstr "Het resetten van de volgorde van de ticketoverzichten is mislukt."
 msgid "Resize frame"
 msgstr "Formaat van frame wijzigen"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:309
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:308
 msgid "Resize side panel"
 msgstr "Formaat zijpaneel wijzigen"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:135
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:133
 msgid "Resize sidebar"
 msgstr "Grootte zijbalk aanpassen"
 
@@ -14155,8 +14159,6 @@ msgid "Send a message to all logged in users."
 msgstr "Verzend een boodschap naar alle ingelogde gebruikers."
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:52
-#, fuzzy
-#| msgid "Send Mails via"
 msgid "Send mails via"
 msgstr "Verstuur mails via"
 
@@ -20341,10 +20343,8 @@ msgid "chat"
 msgstr "chat"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
-#, fuzzy
-#| msgid "Checklist Item"
 msgid "checked checklist item '%s'"
-msgstr "Checklistitem"
+msgstr "Checklist item '%s' afgevinkt"
 
 #: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco:24
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:24
@@ -21545,10 +21545,8 @@ msgid "unassign user"
 msgstr "Niet toegewezen gebruiker"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
-#, fuzzy
-#| msgid "Incomplete checklist items"
 msgid "unchecked checklist item '%s'"
-msgstr "Onvoltooide checklistitems"
+msgstr "Open checklistitem '%s'"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "unset readonly"

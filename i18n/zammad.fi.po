@@ -2435,11 +2435,11 @@ msgid ""
 "set it to false."
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1214
+#: app/frontend/shared/components/Form/Form.vue:1226
 msgid "Autosave in progress…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1223
+#: app/frontend/shared/components/Form/Form.vue:1235
 msgid "Autosaving is taking longer than expected…"
 msgstr ""
 
@@ -2913,7 +2913,7 @@ msgstr "Peruuta"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:425
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:424
 msgid "Cancel & Go Back"
 msgstr "Peruuta ja palaa takaisin"
 
@@ -3176,7 +3176,7 @@ msgid ""
 "is not checked, values are sorted in alphabetical order."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:57
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:54
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
 #, fuzzy
 #| msgid "Checksum"
@@ -3521,7 +3521,13 @@ msgstr "Suljetut tiketit"
 msgid "Closing time"
 msgstr "Sulkemisaika"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:66
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:160
+#, fuzzy
+#| msgid "Content"
+msgid "Collapse sidebar"
+msgstr "Sisältö"
+
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:61
 msgid "Collapse this element"
 msgstr ""
 
@@ -4035,7 +4041,7 @@ msgstr "Maa"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:437
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:436
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Luo"
@@ -5878,7 +5884,7 @@ msgstr "Hylkää"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:422
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:421
 msgid "Discard Changes"
 msgstr "Hylkää muutokset"
 
@@ -7135,7 +7141,13 @@ msgstr "Uusi tiketti"
 msgid "Existing tickets (open)"
 msgstr "%s tiketit"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:65
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:161
+#, fuzzy
+#| msgid "Content"
+msgid "Expand sidebar"
+msgstr "Sisältö"
+
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:60
 msgid "Expand this element"
 msgstr ""
 
@@ -7276,7 +7288,7 @@ msgstr ""
 msgid "Failed to save checklist order."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:122
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:117
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 
@@ -13336,7 +13348,7 @@ msgstr "Poista kaikki"
 msgid "Remove authenticator app"
 msgstr "Tunnistaudu"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:25
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:362
 #, fuzzy
 #| msgid "Remove"
@@ -13394,7 +13406,7 @@ msgstr "Poistaa muotoilut"
 msgid "Removes the shadows for a flat look."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:20
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:355
 msgid "Rename checklist"
 msgstr ""
@@ -13658,11 +13670,11 @@ msgstr ""
 msgid "Resize frame"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:309
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:308
 msgid "Resize side panel"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:135
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:133
 msgid "Resize sidebar"
 msgstr ""
 

@@ -2397,11 +2397,11 @@ msgid ""
 "set it to false."
 msgstr "自动加载chat.css文件。如果要使用自己的CSS，请将其设置为false。"
 
-#: app/frontend/shared/components/Form/Form.vue:1214
+#: app/frontend/shared/components/Form/Form.vue:1226
 msgid "Autosave in progress…"
 msgstr "自动保存正在进行中…"
 
-#: app/frontend/shared/components/Form/Form.vue:1223
+#: app/frontend/shared/components/Form/Form.vue:1235
 msgid "Autosaving is taking longer than expected…"
 msgstr "自动保存花费的时间比预期要长…"
 
@@ -2859,7 +2859,7 @@ msgstr "取消"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:425
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:424
 msgid "Cancel & Go Back"
 msgstr "取消并返回"
 
@@ -3094,7 +3094,7 @@ msgstr ""
 "如果您想自定义选项的排序方式，请选中此框。如果未选中该框，否则值将按字母顺序"
 "排序。"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:57
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:54
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
 #, fuzzy
 #| msgid "Checksum"
@@ -3421,7 +3421,13 @@ msgstr "关闭的工单"
 msgid "Closing time"
 msgstr "关闭时间"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:66
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:160
+#, fuzzy
+#| msgid "Content sidebar"
+msgid "Collapse sidebar"
+msgstr "内容侧边栏"
+
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:61
 msgid "Collapse this element"
 msgstr "崩溃这个元素"
 
@@ -3895,7 +3901,7 @@ msgstr "国家"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:437
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:436
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "创建"
@@ -5676,7 +5682,7 @@ msgstr "放弃"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:422
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:421
 msgid "Discard Changes"
 msgstr "放弃更改"
 
@@ -6894,7 +6900,13 @@ msgstr "现有工单"
 msgid "Existing tickets (open)"
 msgstr "现有工单（开放）"
 
-#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:65
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:161
+#, fuzzy
+#| msgid "Main sidebar"
+msgid "Expand sidebar"
+msgstr "主侧栏"
+
+#: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:60
 msgid "Expand this element"
 msgstr "扩展此元素"
 
@@ -7015,7 +7027,7 @@ msgstr "未能退缩频道的迁移！"
 msgid "Failed to save checklist order."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:122
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:117
 #, fuzzy
 #| msgid "Failed to set up QR code. Please try again."
 msgid "Failed to save the order of the checklist items. Please try again."
@@ -13023,7 +13035,7 @@ msgstr "删除所有值"
 msgid "Remove authenticator app"
 msgstr "验证"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:25
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:362
 #, fuzzy
 #| msgid "Remove %s"
@@ -13075,7 +13087,7 @@ msgstr "刪除格式"
 msgid "Removes the shadows for a flat look."
 msgstr "去除陰影以獲得平坦外觀"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:20
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:355
 msgid "Rename checklist"
 msgstr ""
@@ -13352,11 +13364,11 @@ msgstr "重置机票概述的顺序失败。"
 msgid "Resize frame"
 msgstr "调整框架"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:309
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:308
 msgid "Resize side panel"
 msgstr "调整侧面面板大小"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:135
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:133
 msgid "Resize sidebar"
 msgstr "调整侧边栏大小"
 
