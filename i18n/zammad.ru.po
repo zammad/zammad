@@ -2366,19 +2366,19 @@ msgstr "Аутентификация"
 msgid "Authentication Token"
 msgstr "Токен аутентификации"
 
-#: lib/email_helper/probe.rb:280
+#: lib/email_helper/probe.rb:282
 msgid "Authentication failed due to incorrect credentials."
 msgstr "Ошибка аутентификации из-за неверных учётных данных."
 
-#: lib/email_helper/probe.rb:278
+#: lib/email_helper/probe.rb:280
 msgid "Authentication failed due to incorrect username."
 msgstr "Ошибка аутентификации из-за неверного имени пользователя."
 
-#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:276
+#: app/controllers/import_otrs_controller.rb:17 lib/email_helper/probe.rb:278
 msgid "Authentication failed."
 msgstr "Ошибка аутентификации."
 
-#: lib/email_helper/probe.rb:281
+#: lib/email_helper/probe.rb:283
 msgid "Authentication not possible (not offered by the service)"
 msgstr "Аутентификация невозможна (не предлагается службой)"
 
@@ -6477,12 +6477,12 @@ msgstr ""
 "Электронная почта не может быть проверена. Пожалуйста, свяжитесь с Вашим "
 "администратором."
 
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:88
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:91
 msgid "Email import mode"
 msgstr "Режим импорта электронной почты"
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:811
-#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:383
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:815
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:387
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:167
 msgid ""
 "Email sending and receiving could not be verified. Please check your "
@@ -7550,7 +7550,7 @@ msgstr "Плоский Дизайн"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:291
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:86
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:59
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:176
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:177
 msgid "Folder"
 msgstr "Папка"
 
@@ -8394,7 +8394,7 @@ msgstr "Главная"
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:69
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:73
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:29
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:111
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:112
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:67
 msgid "Host"
 msgstr "Хост"
@@ -8764,13 +8764,13 @@ msgstr "Пользователь для импорта через запросы
 msgid "Import User for requesting the Zendesk API"
 msgstr "Пользователь для импорта через запросы к API Zendesk"
 
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:65
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:68
 msgid "Import as archive"
 msgstr "Импорт в архив"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:122
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:98
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:65
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:68
 msgid ""
 "Import as archive: |No notifications are sent|, the |tickets are closed|, "
 "and original timestamps are used. You can still find them in Zammad using "
@@ -8780,13 +8780,13 @@ msgstr ""
 "используются исходные временные метки. Вы все еще можете найти их в Zammad с "
 "помощью поиска."
 
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:77
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:80
 msgid "Import as regular"
 msgstr "Обычный импорт"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:123
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:99
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:77
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:80
 msgid ""
 "Import as regular: |Notifications are sent| and the |tickets are open| - you "
 "can find the tickets in the overview of open tickets."
@@ -8819,8 +8819,8 @@ msgstr "Важно"
 msgid "Imported"
 msgstr "Импортировано"
 
-#: app/assets/javascripts/app/controllers/_channel/email.coffee:683
-#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:282
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:687
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:286
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:117
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:93
 msgid ""
@@ -9401,7 +9401,7 @@ msgstr "Kayako"
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:280
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:292
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:87
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:186
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:187
 msgid "Keep messages on server"
 msgstr "Хранить сообщения на сервере"
 
@@ -11191,7 +11191,7 @@ msgstr "Без прокси"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:415
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:203
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:45
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:46
 msgid "No SSL"
 msgstr "Без уровня защищённых сокетов (SSL))"
 
@@ -12264,7 +12264,7 @@ msgstr "Родительская группа"
 #: app/assets/javascripts/app/views/login.jst.eco:35
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:43
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:41
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:131
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:132
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:87
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:104
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:51
@@ -12664,7 +12664,7 @@ msgstr "Пожалуйста подождите…"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:417
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:85
 #: app/assets/javascripts/app/controllers/getting_started/email_notification.coffee:72
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:163
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:164
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:97
 msgid "Port"
 msgstr "Порт"
@@ -13730,7 +13730,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:415
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:207
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:49
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:50
 msgid "SSL"
 msgstr "SSL"
 
@@ -13749,7 +13749,7 @@ msgstr "SSL-сертификаты"
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco:24
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:31
 #: app/assets/javascripts/app/views/integration/ldap_ssl_verify_row.jst.eco:2
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:149
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:150
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:108
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:63
 msgid "SSL verification"
@@ -13759,7 +13759,7 @@ msgstr "Проверка уровеню защищённых сокетов (SSL
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:27
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:33
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:141
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:142
 msgid "SSL/STARTTLS"
 msgstr "SSL/STARTTLS"
 
@@ -13772,7 +13772,7 @@ msgstr "ТЕВ (SSO)"
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:415
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:205
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:83
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:56
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:57
 msgid "STARTTLS"
 msgstr "STARTTLS"
 
@@ -14601,7 +14601,7 @@ msgstr "Сделать снимок"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:119
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:95
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:49
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:52
 msgid ""
 "Should the emails from this mailbox be imported as an archive or as regular "
 "emails?"
@@ -14873,6 +14873,27 @@ msgstr "Sina Weibo"
 #: db/seeds/settings.rb:1809
 msgid "Sina Weibo Open Portal"
 msgstr "Открытый портал Sina Weibo"
+
+#: app/assets/javascripts/app/controllers/_channel/email.coffee:685
+#: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:284
+#, fuzzy
+#| msgid ""
+#| "In addition, emails were found in your mailbox that are older than %s "
+#| "weeks. You can import such emails as an \"archive\", which means that no "
+#| "notifications are sent and the tickets have the status \"closed\". "
+#| "However, you can find them in Zammad anytime using the search function."
+msgid ""
+"Since the mail server does not support sorting messages by date, it was not "
+"possible to detect if there is any mail older than %s weeks in the connected "
+"mailbox. You can import such emails as an \"archive\", which means that no "
+"notifications are sent and the tickets have the status \"closed\". However, "
+"you can find them in Zammad anytime using the search function."
+msgstr ""
+"Кроме того, мы нашли в Вашем почтовом ящике электронные письма старше %s "
+"недель. Вы можете импортировать такие письма в виде «архива», что означает, "
+"что уведомления по ним не будут отправлены, а заявки получат статус "
+"«закрыта». Однако Вы можете найти их в Zammad в любое время, используя "
+"функцию поиска."
 
 #: public/assets/chat/views/customer_timeout.eco:5
 msgid ""
@@ -15965,7 +15986,7 @@ msgstr "Соединение с сервером было потеряно."
 #: app/services/service/system/import/apply_kayako_configuration.rb:51
 #: app/services/service/system/import/apply_otrs_configuration.rb:89
 #: app/services/service/system/import/apply_zendesk_configuration.rb:51
-#: lib/email_helper/probe.rb:286
+#: lib/email_helper/probe.rb:288
 msgid "The connection was refused."
 msgstr "В подключении было отказано."
 
@@ -16138,7 +16159,7 @@ msgstr "Указанный метод двухфакторной аутенти�
 #: app/services/service/system/import/apply_kayako_configuration.rb:24
 #: app/services/service/system/import/apply_otrs_configuration.rb:85
 #: app/services/service/system/import/apply_zendesk_configuration.rb:24
-#: lib/email_helper/probe.rb:282
+#: lib/email_helper/probe.rb:284
 msgid "The hostname could not be found."
 msgstr "Не удалось найти имя хоста."
 
@@ -17009,7 +17030,7 @@ msgstr ""
 #: app/services/service/system/import/apply_kayako_configuration.rb:50
 #: app/services/service/system/import/apply_otrs_configuration.rb:88
 #: app/services/service/system/import/apply_zendesk_configuration.rb:50
-#: lib/email_helper/probe.rb:284
+#: lib/email_helper/probe.rb:286
 msgid "There is no route to this host."
 msgstr "Маршрут к этому хосту отсутствует."
 
@@ -17293,7 +17314,7 @@ msgid "This group or its children exceed the allowed nesting depth."
 msgstr ""
 "Эта группа или ее дочерние элементы превышают допустимую глубину вложенности."
 
-#: lib/email_helper/probe.rb:285
+#: lib/email_helper/probe.rb:287
 msgid "This host cannot be reached."
 msgstr "С этим узлом невозможно связаться."
 
@@ -18561,7 +18582,7 @@ msgstr "Двухфакторный метод был успешно настро
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:11
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:11
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:57
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:104
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:105
 #: db/seeds/object_manager_attributes.rb:124
 msgid "Type"
 msgstr "Тип"
@@ -19056,7 +19077,7 @@ msgstr "Используется при просмотре заявки"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:128
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:111
 #: app/assets/javascripts/app/views/session.jst.eco:8
-#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:121
+#: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:122
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:77
 #: app/frontend/apps/mobile/pages/user/routes.ts:7
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:32
