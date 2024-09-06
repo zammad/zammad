@@ -226,8 +226,6 @@ const checkSubmitEditTicket = () => {
         .querySelector('#ticketArticleReplyForm')
         ?.scrollIntoView({ behavior: 'smooth' })
     }
-
-    return
   }
 
   formSubmit()
