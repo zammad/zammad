@@ -563,18 +563,25 @@ result
 
 =end
 
-  def get_references(ignore = [])
+  # limited by 32kb (https://github.com/zammad/zammad/issues/5334)
+  # https://learn.microsoft.com/en-us/office365/servicedescriptions/exchange-online-service-description/exchange-online-limits
+  def get_references(ignore = [], max_length: 30_000)
     references = []
-    Ticket::Article.select('in_reply_to, message_id').where(ticket_id: id).each do |article|
-      if article.in_reply_to.present?
-        references.push article.in_reply_to
+    counter    = 0
+    Ticket::Article.select('in_reply_to, message_id').where(ticket_id: id).reverse_each do |article|
+      new_references = []
+      if article.message_id.present?
+        new_references.push article.message_id
       end
-      next if article.message_id.blank?
+      if article.in_reply_to.present?
+        new_references.push article.in_reply_to
+      end
+      new_references -= ignore
 
-      references.push article.message_id
-    end
-    ignore.each do |item|
-      references.delete(item)
+      counter += new_references.join.length
+      break if counter > max_length
+
+      references.unshift(*new_references)
     end
     references
   end
