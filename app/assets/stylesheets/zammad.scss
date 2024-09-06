@@ -2073,7 +2073,7 @@ fieldset > .form-group {
     pointer-events: none;
     cursor: not-allowed !important;
 
-    input:read-only.form-control:not(.js-input) {
+    input:read-only.form-control:not(.js-input, .js-objectSelect) {
       pointer-events: auto;
       cursor: auto;
     }
