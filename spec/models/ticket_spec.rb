@@ -1973,4 +1973,31 @@ RSpec.describe Ticket, type: :model do
       end
     end
   end
+
+  describe '#get_references' do
+    let!(:ticket) { create(:ticket) }
+    let!(:articles) { create_list(:ticket_article, 10, ticket: ticket, reply_to: nil) }
+
+    before do
+      articles.each do |article|
+        article.update(message_id: SecureRandom.uuid)
+      end
+    end
+
+    it 'does return references' do
+      expect(ticket.get_references.count).to eq(10)
+    end
+
+    it 'does return references by limit' do
+      expect(ticket.get_references([], max_length: articles.last.message_id.length * 3).count).to eq(3)
+    end
+
+    it 'does return last 3 references by limit' do
+      expect(ticket.get_references([], max_length: articles.last.message_id.length * 3)).to eq(articles.map(&:message_id)[-3..])
+    end
+
+    it 'does ignore references' do
+      expect(ticket.get_references([articles.last.message_id])).not_to include(articles.last.message_id)
+    end
+  end
 end
