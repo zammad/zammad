@@ -145,16 +145,16 @@ QUnit.test('i18n', assert => {
   timestamp = App.i18n.translateTimestamp(undefined, offset);
   assert.equal(timestamp, undefined, 'de-de - timestamp translated correctly')
 
-  var date = App.i18n.translateDate('2012-11-06', 0)
+  var date = App.i18n.translateDate('2012-11-06', false)
   assert.equal(date, '06.11.2012', 'de-de - date translated correctly')
 
-  date = App.i18n.translateDate('', 0)
+  date = App.i18n.translateDate('', false)
   assert.equal(date, '', 'de-de - date translated correctly')
 
-  date = App.i18n.translateDate(null, 0)
+  date = App.i18n.translateDate(null, false)
   assert.equal(date, null, 'de-de - date translated correctly')
 
-  date = App.i18n.translateDate(undefined, 0)
+  date = App.i18n.translateDate(undefined, false)
   assert.equal(date, undefined, 'de-de - date translated correctly')
 
   date = App.i18n.timeFormat()
@@ -232,16 +232,16 @@ QUnit.test('i18n', assert => {
   timestamp = App.i18n.translateTimestamp(undefined, offset);
   assert.equal(timestamp, undefined, 'en - timestamp translated correctly')
 
-  date = App.i18n.translateDate('2012-11-06', 0)
+  date = App.i18n.translateDate('2012-11-06', false)
   assert.equal(date, '11/06/2012', 'en - date translated correctly')
 
-  date = App.i18n.translateDate('', 0)
+  date = App.i18n.translateDate('', false)
   assert.equal(date, '', 'en - date translated correctly')
 
-  date = App.i18n.translateDate(null, 0)
+  date = App.i18n.translateDate(null, false)
   assert.equal(date, null, 'en - date translated correctly')
 
-  date = App.i18n.translateDate(undefined, 0)
+  date = App.i18n.translateDate(undefined, false)
   assert.equal(date, undefined, 'en - date translated correctly')
 
   date = App.i18n.timeFormat()
