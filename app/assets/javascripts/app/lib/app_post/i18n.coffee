@@ -35,7 +35,10 @@ class App.i18n
       _instance ?= new _i18nSingleton()
     _instance.timestamp(args, offset)
 
-  @translateDate: (args, offset = 0) ->
+  # Since zammad usually stores the date as simple string (like 1994-08-18) without time zone, we need to enable epoch shifting (second translateDate argument),
+  # to act like having a completely time zone independent date.
+  # Otherwise `new Date("1994-08-18")` would parse it like `new Date("1994-08-18 00:00:00 UTC")` and transforms/outputs it using the local time zone.
+  @translateDate: (args, offset = true) ->
     if _instance == undefined
       _instance ?= new _i18nSingleton()
     _instance.date(args, offset)
