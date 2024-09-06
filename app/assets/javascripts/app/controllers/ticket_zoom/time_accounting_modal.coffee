@@ -73,12 +73,16 @@ class App.TicketZoomTimeAccountingModal extends App.ControllerModal
     return if !@cancelCallback
     @cancelCallback()
 
-  onSubmit: =>
+  onSubmit: (e) =>
+    e.preventDefault()
+    @formDisable(e)
+
     params = @formParams()
 
     errors = @form.validate(params)
 
     if !_.isEmpty(errors)
+      @formEnable(e)
       @formValidate(form: @form.el, errors: errors)
       return false
 
@@ -87,6 +91,7 @@ class App.TicketZoomTimeAccountingModal extends App.ControllerModal
     if isNaN(parseFloat(params.time_unit)) or /[A-z]|\s/.test(params.time_unit)
       errors =
         time_unit: __('is not a number')
+      @formEnable(e)
       @formValidate(form: @form.el, errors: errors)
       return false
 
