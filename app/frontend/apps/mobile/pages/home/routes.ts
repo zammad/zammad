@@ -27,7 +27,7 @@ const route: RouteRecordRaw[] = [
     },
   },
   {
-    path: '/favorite/ticker-overviews/edit',
+    path: '/favorite/ticket-overviews/edit',
     props: true,
     name: 'TicketOverviews',
     component: () => import('./views/FavoriteTicketOverviewsEdit.vue'),

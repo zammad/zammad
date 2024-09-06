@@ -32,7 +32,7 @@ describe('playing with overviews', () => {
     const { saveOverviews, LOCAL_STORAGE_NAME } = getTicketOverviewStorage()
     saveOverviews(['1', '2'])
 
-    const view = await visitView('/favorite/ticker-overviews/edit')
+    const view = await visitView('/favorite/ticket-overviews/edit')
 
     const includedOverviewsUtils = within(
       await view.findByTestId('includedOverviews'),
@@ -70,7 +70,7 @@ describe('playing with overviews', () => {
   it('removing/adding overviews', async () => {
     const { LOCAL_STORAGE_NAME } = getTicketOverviewStorage()
 
-    const view = await visitView('/favorite/ticker-overviews/edit')
+    const view = await visitView('/favorite/ticket-overviews/edit')
 
     const buttonsRemove = await view.findAllByIconName('minus')
 
@@ -123,7 +123,7 @@ describe('playing with overviews', () => {
   it('gives error, when trying to save no overviews', async () => {
     const { saveOverviews } = getTicketOverviewStorage()
     saveOverviews(['1'])
-    const view = await visitView('/favorite/ticker-overviews/edit')
+    const view = await visitView('/favorite/ticket-overviews/edit')
 
     const buttonRemove = await view.findByIconName('minus')
 

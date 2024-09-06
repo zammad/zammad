@@ -13,6 +13,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   action: []
+  'action-active': [boolean]
 }>()
 
 const icon = computed(() => {
@@ -32,7 +33,7 @@ const icon = computed(() => {
 
 <template>
   <div
-    class="flex min-h-[54px] items-center border-b border-gray-300 last:border-0"
+    class="flex min-h-[54px] cursor-move items-center border-b border-gray-300 last:border-0"
     data-test-id="overviewItem"
     :draggable="draggable ? 'true' : undefined"
   >
@@ -43,6 +44,14 @@ const icon = computed(() => {
       tabindex="0"
       @keydown.enter="emit('action')"
       @click="emit('action')"
+      @mousedown="emit('action-active', true)"
+      @mouseup="emit('action-active', false)"
+      @mouseout="emit('action-active', false)"
+      @focusout="emit('action-active', false)"
+      @blur="emit('action-active', false)"
+      @touchstart="emit('action-active', true)"
+      @touchend="emit('action-active', false)"
+      @touchcancel="emit('action-active', false)"
     >
       <CommonIcon :name="icon.name" size="base" />
     </div>
@@ -53,7 +62,7 @@ const icon = computed(() => {
       v-if="draggable"
       name="change-order"
       size="small"
-      class="handler text-gray shrink-0 cursor-move ltr:mr-4 rtl:ml-4"
+      class="text-gray shrink-0 ltr:mr-4 rtl:ml-4"
     />
   </div>
 </template>

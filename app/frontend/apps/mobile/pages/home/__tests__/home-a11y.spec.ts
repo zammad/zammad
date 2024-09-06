@@ -19,7 +19,7 @@ describe('testing home a11y', () => {
   })
 
   it('favorite ticket overviews screen has no accessibility violations', async () => {
-    const view = await visitView('/favorite/ticker-overviews/edit')
+    const view = await visitView('/favorite/ticket-overviews/edit')
     const results = await axe(view.html())
     expect(results).toHaveNoViolations()
   })

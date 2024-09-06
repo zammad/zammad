@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { animations } from '@formkit/drag-and-drop'
+import { animations, updateConfig } from '@formkit/drag-and-drop'
 import { dragAndDrop } from '@formkit/drag-and-drop/vue'
 import { storeToRefs } from 'pinia'
 import { computed, ref, watch } from 'vue'
@@ -56,7 +56,6 @@ dragAndDrop({
   plugins: [animations()],
   dropZoneClass: 'opacity-0',
   touchDropZoneClass: 'opacity-0',
-  dragHandle: '.handler',
 })
 
 const { notify } = useNotifications()
@@ -101,6 +100,10 @@ const removeFromFavorites = (id: string) => {
 const addToFavorites = (id: string) => {
   includedIds.value.add(id)
 }
+
+const updateDndDisabledConfig = (disabled: boolean) => {
+  updateConfig(dndParentRef.value, { disabled })
+}
 </script>
 
 <template>
@@ -122,6 +125,7 @@ const addToFavorites = (id: string) => {
           :overview="overview"
           draggable
           @action="removeFromFavorites(overview.id)"
+          @action-active="updateDndDisabledConfig"
         />
       </div>
       <div

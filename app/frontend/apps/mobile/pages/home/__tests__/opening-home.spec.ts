@@ -24,7 +24,7 @@ describe('home page', () => {
 
     expect(view.getByRole('link', { name: /Edit/ })).toHaveAttribute(
       'href',
-      '/mobile/favorite/ticker-overviews/edit',
+      '/mobile/favorite/ticket-overviews/edit',
     )
 
     const overviews = await view.findAllByText(/^Overview/)

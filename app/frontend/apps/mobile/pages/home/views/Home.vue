@@ -74,7 +74,7 @@ const ticketOverview = computed<MenuItem[]>(() => {
       :items="ticketOverview"
       :header-label="__('Ticket Overview')"
       :action-label="__('Edit')"
-      action-link="/favorite/ticker-overviews/edit"
+      action-link="/favorite/ticket-overviews/edit"
     >
       <template v-if="overviews.loading" #before-items>
         <div class="flex w-full justify-center">
