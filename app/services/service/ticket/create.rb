@@ -11,6 +11,7 @@ class Service::Ticket::Create < Service::BaseWithCurrentUser
 
       article_data = ticket_data.delete(:article)
       tag_data     = ticket_data.delete(:tags)
+      link_data    = ticket_data.delete(:links)
 
       find_or_create_customer(ticket_data)
       preprocess_ticket_data! ticket_data
@@ -21,6 +22,7 @@ class Service::Ticket::Create < Service::BaseWithCurrentUser
 
         create_article(ticket, article_data)
         assign_tags(ticket, tag_data)
+        add_links(ticket, link_data)
       end
     end
   end
@@ -44,6 +46,20 @@ class Service::Ticket::Create < Service::BaseWithCurrentUser
       next if !::Tag.tag_allowed?(name: tag.strip, user_id: current_user.id)
 
       ticket.tag_add(tag.strip)
+    end
+  end
+
+  def add_links(ticket, link_data)
+    return if link_data.blank?
+
+    link_data.each do |link|
+      Link.add(
+        link_type:                link[:link_type],
+        link_object_target:       link[:link_object].class.name,
+        link_object_target_value: link[:link_object].id,
+        link_object_source:       'Ticket',
+        link_object_source_value: ticket.id,
+      )
     end
   end
 

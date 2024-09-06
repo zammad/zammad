@@ -171,6 +171,7 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
                 lastContact: taskbarTab.lastContact,
                 order: taskbarTab.prio,
                 formId: taskbarTab.formId,
+                formNewArticlePresent: taskbarTab.formNewArticlePresent,
                 changed: taskbarTab.changed,
                 dirty: taskbarTab.dirty,
                 notify: taskbarTab.notify,

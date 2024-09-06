@@ -41,6 +41,7 @@ export interface TicketSidebarProps extends TicketSidebarContentProps {
 export interface TicketSidebarWrapperProps
   extends Omit<TicketSidebarProps, 'context'> {
   badge?: TicketSidebarButtonBadgeDetails
+  updateIndicator?: boolean
 }
 
 export type TicketSidebarEmits = {

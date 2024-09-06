@@ -90,7 +90,7 @@ Checks if file is used inline
 
   def has_rich_text_cleanup_unused_attachments # rubocop:disable Naming/PredicateName
     active_cids = has_rich_text_attributes.each_with_object([]) do |elem, memo|
-      memo.concat self.class.has_rich_text_inline_cids(self, send(elem))
+      memo.concat HasRichText.extract_inline_cids(send(elem))
     end
 
     attachments
@@ -105,14 +105,14 @@ Checks if file is used inline
 
       attrs.each do |attr|
         define_method :"#{attr}_with_urls" do
-          self.class.has_rich_text_insert_urls(self, send(attr))
+          HasRichText.insert_urls(send(attr), attachments)
         end
       end
     end
+  end
 
-    def has_rich_text_insert_urls(object, raw) # rubocop:disable Naming/PredicateName
-      attachments = object.attachments
-
+  class << self
+    def insert_urls(raw, attachments)
       scrubber = Loofah::Scrubber.new do |node|
         next if node.name != 'img'
         next if !node['src']&.start_with?('cid:')
@@ -131,10 +131,9 @@ Checks if file is used inline
       end
 
       Loofah.scrub_fragment(raw, scrubber).to_s
-
     end
 
-    def has_rich_text_inline_cids(_object, raw) # rubocop:disable Naming/PredicateName
+    def extract_inline_cids(raw)
       inline_cids = []
 
       scrubber = Loofah::Scrubber.new do |node|

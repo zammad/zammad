@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { within } from '@testing-library/vue'
+import { getNode } from '@formkit/core'
+import { waitFor, within } from '@testing-library/vue'
 
 import createArticle from '#tests/graphql/factories/TicketArticle.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
@@ -8,13 +9,19 @@ import { visitView } from '#tests/support/components/visitView.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
+import { waitForTicketUpdateMutationCalls } from '#shared/entities/ticket/graphql/mutations/update.mocks.ts'
 import { mockTicketArticlesQuery } from '#shared/entities/ticket/graphql/queries/ticket/articles.mocks.ts'
 import { mockTicketQuery } from '#shared/entities/ticket/graphql/queries/ticket.mocks.ts'
+import { getTicketUpdatesSubscriptionHandler } from '#shared/entities/ticket/graphql/subscriptions/ticketUpdates.mocks.ts'
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
-import type { TicketArticleEdge } from '#shared/graphql/types.ts'
+import {
+  EnumTicketArticleSenderName,
+  type TicketArticleEdge,
+} from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
+import { setupMocks } from '#desktop/pages/ticket/__tests__/support/ticket-edit-helpers.ts'
 import { mockTicketChecklistQuery } from '#desktop/pages/ticket/graphql/queries/ticketChecklist.mocks.ts'
 import { getTicketChecklistUpdatesSubscriptionHandler } from '#desktop/pages/ticket/graphql/subscriptions/ticketChecklistUpdates.mocks.ts'
 
@@ -275,5 +282,265 @@ describe('ticket detail view', () => {
     ).toBeInTheDocument()
   })
 
-  it('replies to an article', () => {})
+  describe('Ticket article actions', () => {
+    describe.todo('email', () => {
+      it.todo('replies to an article', async () => {
+        mockPermissions(['ticket.agent'])
+
+        await mockApplicationConfig({
+          ui_ticket_zoom_article_note_new_internal: true,
+        })
+
+        mockTicketQuery({
+          ticket: createDummyTicket({
+            state: {
+              id: convertToGraphQLId('Ticket::State', 1),
+              name: 'open',
+              stateType: {
+                id: convertToGraphQLId('TicketStateType', 1),
+                name: 'open',
+              },
+            },
+            articleType: 'email',
+            defaultPolicy: {
+              update: true,
+              agentReadAccess: true,
+            },
+          }),
+        })
+
+        const testArticle = createDummyArticle({
+          articleType: 'email',
+          internal: false,
+          senderName: EnumTicketArticleSenderName.Customer,
+        })
+
+        mockTicketArticlesQuery({
+          articles: {
+            totalCount: 1,
+            edges: [{ node: testArticle }],
+          },
+        })
+
+        const view = await visitView('/tickets/1')
+
+        await view.events.click(view.getByRole('button', { name: 'Add reply' }))
+      })
+
+      describe('dropdown actions', () => {
+        it.todo('forwards an article', async () => {})
+        it.todo('downloads raw email', async () => {})
+      })
+    })
+
+    describe('dropdown shared actions', () => {
+      it.todo('splits an article', async () => {})
+      it.todo('copies article permalink', async () => {})
+      it.todo('sets article to internal or public', async () => {})
+    })
+
+    describe('sidebar', () => {
+      it.todo('updates ticket information to be closed', async () => {
+        // :TODO test works in isolation but not if the whole test suite is running
+
+        const ticket = createDummyTicket({
+          state: {
+            id: convertToGraphQLId('Ticket::State', 1),
+            name: 'open',
+            stateType: {
+              id: convertToGraphQLId('TicketStateType', 1),
+              name: 'open',
+            },
+          },
+          articleType: 'email',
+          defaultPolicy: {
+            update: true,
+            agentReadAccess: true,
+          },
+        })
+
+        await setupMocks({ ticket })
+
+        const view = await visitView('/tickets/1')
+
+        expect(
+          view.findByRole('heading', {
+            level: 2,
+            name: 'Ticket',
+          }),
+        )
+
+        const statusBadges = view.getAllByTestId('common-badge')
+
+        const hasOpenTicketStatus = statusBadges.some((badge) =>
+          within(badge).getByText('open'),
+        )
+
+        expect(hasOpenTicketStatus).toBe(true)
+
+        const ticketMetaSidebar = within(view.getByLabelText('Content sidebar'))
+
+        await view.events.click(ticketMetaSidebar.getByLabelText('State'))
+
+        expect(
+          await view.findByRole('listbox', { name: 'Select…' }),
+        ).toBeInTheDocument()
+
+        expect(await view.findByRole('option', { name: 'closed' }))
+
+        await view.events.click(view.getByRole('option', { name: 'closed' }))
+
+        await view.events.click(view.getByRole('button', { name: 'Update' }))
+
+        const calls = await waitForTicketUpdateMutationCalls()
+
+        expect(calls?.at(-1)?.variables).toEqual({
+          input: {
+            article: null,
+            groupId: convertToGraphQLId('Group', 2),
+            objectAttributeValues: [],
+            ownerId: convertToGraphQLId('User', 1),
+            priorityId: convertToGraphQLId('Ticket::Priority', 3),
+            stateId: convertToGraphQLId('Ticket::State', 2), // Updates from open to closed 1 -> 2
+          },
+          ticketId: convertToGraphQLId('Ticket', 1),
+        })
+
+        await getTicketUpdatesSubscriptionHandler().trigger({
+          ticketUpdates: {
+            ticket: {
+              ...ticket,
+              state: {
+                ...ticket.state,
+                id: convertToGraphQLId('Ticket::State', 2),
+                name: 'closed',
+              },
+            },
+          },
+        })
+
+        const hasClosedTicketStatus = statusBadges.some((badge) =>
+          within(badge).getByText('closed'),
+        )
+        expect(hasClosedTicketStatus).toBe(true)
+      })
+    })
+
+    it.todo('adds a phone call article', async () => {})
+
+    it.todo('adds an internal note', async () => {
+      mockPermissions(['ticket.agent'])
+
+      await mockApplicationConfig({
+        ui_ticket_zoom_article_note_new_internal: true,
+      })
+
+      mockTicketQuery({
+        ticket: createDummyTicket({
+          ticketId: '1',
+          articleType: 'phone',
+          defaultPolicy: {
+            update: true,
+            agentReadAccess: true,
+          },
+        }),
+      })
+
+      mockTicketArticlesQuery({
+        articles: {
+          totalCount: 1,
+          edges: [
+            {
+              node: createDummyArticle({
+                articleType: 'phone',
+                internal: false,
+              }),
+            },
+          ],
+        },
+      })
+
+      const view = await visitView('/tickets/1')
+
+      await view.events.click(
+        view.getByRole('button', { name: 'Add internal note' }),
+      )
+
+      expect(
+        await view.findByRole('heading', { level: 2, name: 'Reply' }),
+      ).toBeInTheDocument()
+
+      await getNode('form-ticket-edit')?.settled
+
+      await view.events.type(
+        view.getByRole('textbox', { name: 'Text' }),
+        'Foo note',
+      )
+
+      await waitFor(() =>
+        expect(view.getByRole('button', { name: 'Update' })).not.toBeDisabled(),
+      )
+
+      // Seems value gets set in the formkit tree
+      // Textarea does not receive the value
+      // Error state is not shown
+      // const node = getNode('form-ticket-edit').at('article.body').context
+
+      await view.events.click(view.getByRole('button', { name: 'Update' }))
+
+      const calls = await waitForTicketUpdateMutationCalls()
+
+      // :TODO continue here
+      expect(calls?.at(-1)?.variables).toEqual({})
+    })
+
+    it.todo('discards unsaved changes', async () => {
+      mockPermissions(['ticket.agent'])
+
+      await mockApplicationConfig({
+        ui_ticket_zoom_article_note_new_internal: true,
+      })
+
+      mockTicketQuery({
+        ticket: createDummyTicket({
+          articleType: 'phone',
+          defaultPolicy: {
+            update: true,
+            agentReadAccess: true,
+          },
+        }),
+      })
+
+      const view = await visitView('/tickets/1')
+
+      await view.events.click(
+        view.getByRole('button', { name: 'Add phone call' }),
+      )
+
+      expect(
+        await view.findByRole('heading', { level: 2, name: 'Reply' }),
+      ).toBeInTheDocument()
+
+      await view.events.type(
+        view.getByRole('textbox', { name: 'Text' }),
+        'Foo note',
+      )
+
+      await view.events.click(
+        view.getByRole('button', { name: 'Discard your unsaved changes' }),
+      )
+
+      const confirmDialog = await view.findByRole('dialog')
+
+      expect(confirmDialog).toBeInTheDocument()
+
+      await view.events.click(
+        within(confirmDialog).getByRole('button', { name: 'Discard Changes' }),
+      )
+
+      expect(
+        view.queryByRole('textbox', { name: 'Text' }),
+      ).not.toBeInTheDocument()
+    })
+  })
 })

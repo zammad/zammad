@@ -1,17 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, nextTick, ref, shallowRef } from 'vue'
+import { computed, ref, shallowRef } from 'vue'
 
-import type {
-  EditorContentType,
-  FieldEditorContext,
-} from '#shared/components/Form/fields/FieldEditor/types.ts'
+import { useTicketArticleReplyAction } from '#shared/entities/ticket/composables/useTicketArticleReplyAction.ts'
 import type {
   TicketArticle,
   TicketById,
 } from '#shared/entities/ticket/types.ts'
 import { createArticleActions } from '#shared/entities/ticket-article/action/plugins/index.ts'
-import type { TicketArticlePerformOptions } from '#shared/entities/ticket-article/action/plugins/types.ts'
 import { getArticleSelection } from '#shared/entities/ticket-article/composables/getArticleSelection.ts'
 import log from '#shared/utils/log.ts'
 import type { SelectionData } from '#shared/utils/selection.ts'
@@ -20,8 +16,6 @@ import type { PopupItemDescriptor } from '#mobile/components/CommonSectionPopup/
 import { useDialog } from '#mobile/composables/useDialog.ts'
 
 import { useTicketInformation } from './useTicketInformation.ts'
-
-import type { FormKitNode } from '@formkit/core'
 
 export const useTicketArticleContext = () => {
   const articleForContext = shallowRef<TicketArticle>()
@@ -35,6 +29,11 @@ export const useTicketArticleContext = () => {
 
   const { showArticleReplyDialog, form } = useTicketInformation()
 
+  const { openReplyForm, getNewArticleBody } = useTicketArticleReplyAction(
+    form,
+    showArticleReplyDialog,
+  )
+
   const triggerId = ref(0)
 
   const recalculate = () => {
@@ -44,57 +43,6 @@ export const useTicketArticleContext = () => {
   const disposeCallbacks: (() => unknown)[] = []
   const onDispose = (callback: () => unknown) => {
     disposeCallbacks.push(callback)
-  }
-
-  const openReplyDialog: TicketArticlePerformOptions['openReplyDialog'] =
-    async (values = {}) => {
-      const formNode = form.value?.formNode as FormKitNode
-
-      await showArticleReplyDialog()
-
-      const { articleType, ...otherOptions } = values
-
-      const typeNode = formNode.find('articleType', 'name')
-      if (formNode.context) {
-        Object.assign(formNode.context, { _open: true })
-      }
-
-      typeNode?.input(articleType, false)
-      // trigger new fields that depend on the articleType
-      await nextTick()
-
-      for (const [key, value] of Object.entries(otherOptions)) {
-        const node = formNode.find(key, 'name')
-        node?.input(value, false)
-        // TODO: make handling more generic(?)
-        if (node && (key === 'to' || key === 'cc')) {
-          const options = Array.isArray(value)
-            ? value.map((v) => ({ value: v, label: v }))
-            : [{ value, label: value }]
-          node.emit('prop:options', options)
-        }
-      }
-
-      formNode.emit('article-reply-open', articleType)
-
-      const context = formNode.find('body', 'name')?.context as
-        | FieldEditorContext
-        | undefined
-
-      context?.focus()
-
-      nextTick(() => {
-        if (formNode.context) {
-          Object.assign(formNode.context, { _open: false })
-        }
-      })
-    }
-
-  const getNewArticleBody = (type: EditorContentType): string => {
-    const bodyElement = form.value?.getNodeByName('body')
-    if (!bodyElement) return ''
-    const getEditorValue = bodyElement.context?.getEditorValue
-    return typeof getEditorValue === 'function' ? getEditorValue(type) : ''
   }
 
   const contextOptions = computed<PopupItemDescriptor[]>(() => {
@@ -122,7 +70,7 @@ export const useTicketArticleContext = () => {
           perform(ticket, article, {
             formId: form.value?.formId || '',
             selection: selectionData.value,
-            openReplyDialog,
+            openReplyForm,
             getNewArticleBody,
           }),
       }

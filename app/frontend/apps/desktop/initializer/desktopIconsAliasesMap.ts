@@ -83,6 +83,10 @@ export default {
   'phone-in': 'telephone-inbound',
   'phone-out': 'telephone-outbound',
   'mail-out': 'envelope',
+  mail: 'envelope',
+  note: 'pencil-square',
+  phone: 'telephone',
+  message: 'sms',
 
   // these aliases are used in shared context, but they refer to the same name
   search: 'search',
@@ -100,4 +104,10 @@ export default {
   'signing-fail': 'patch-x',
   'encryption-success': 'lock',
   'encryption-fail': 'unlock',
+
+  // Article actions
+  'lock-open': 'unlock',
+  trash: 'trash3',
+  'reply-alt': 'reply-all',
+  web: 'globe',
 }

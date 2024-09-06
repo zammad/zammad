@@ -9,7 +9,7 @@ module Gql::Types::User
     field :user_id, ID, null: false
     field :last_contact, GraphQL::Types::ISO8601DateTime, null: false
     field :key, String, null: false
-    field :callback, Gql::Types::Enum::TaskbarEntityType, null: false # TODO: rename to something understable like type? maybe with "proprty: :callback"
+    field :callback, Gql::Types::Enum::TaskbarEntityType, null: false # TODO: rename to something understable like type? maybe with "property: :callback"
     field :state, GraphQL::Types::JSON
     field :preferences, GraphQL::Types::JSON
     field :params, GraphQL::Types::JSON
@@ -19,6 +19,7 @@ module Gql::Types::User
     field :app, Gql::Types::Enum::TaskbarAppType, null: false
 
     field :form_id, String
+    field :form_new_article_present, Boolean, null: false
     field :entity, Gql::Types::User::TaskbarItemEntityType
     field :entity_access, Gql::Types::Enum::TaskbarEntityAccessType
     field :changed, Boolean, null: false
@@ -48,6 +49,10 @@ module Gql::Types::User
 
     def form_id
       @object.state&.dig('article', 'form_id') || @object.state&.dig('form_id')
+    end
+
+    def form_new_article_present
+      false # || @object.state&.dig('article', 'type').present?
     end
 
     def changed

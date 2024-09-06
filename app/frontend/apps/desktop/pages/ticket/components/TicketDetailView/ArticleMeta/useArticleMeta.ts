@@ -92,6 +92,17 @@ export const useArticleMeta = (
         order: 300,
       },
       {
+        label: __('CC'),
+        name: 'cc',
+        component: ArticleMetaFieldAddress,
+        props: {
+          type: 'cc',
+        },
+        show: () =>
+          !!(article.value.cc?.parsed?.[0]?.name || article.value.cc?.raw),
+        order: 350,
+      },
+      {
         label: __('Channel'),
         name: 'channel',
         value: plugin?.name,

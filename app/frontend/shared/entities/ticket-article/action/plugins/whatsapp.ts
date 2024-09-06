@@ -81,19 +81,19 @@ const actionPlugin: TicketArticleActionPlugin = {
     if (!canUseWhatsapp(ticket)) return []
 
     const action: TicketArticleAction = {
-      apps: ['mobile'],
+      apps: ['mobile', 'desktop'],
       label: __('Reply'),
       name: 'whatsapp message',
       icon: 'reply',
       view: {
         agent: ['change'],
       },
-      perform(ticket, article, { openReplyDialog }) {
+      perform(ticket, article, { openReplyForm }) {
         const articleData = {
           articleType: type,
           inReplyTo: article.messageId,
         }
-        openReplyDialog(articleData)
+        openReplyForm(articleData)
       },
     }
 
@@ -195,9 +195,10 @@ const actionPlugin: TicketArticleActionPlugin = {
     }
 
     const type: TicketArticleType = {
-      apps: ['mobile'],
+      apps: ['mobile', 'desktop'],
       value: 'whatsapp message',
       label: __('WhatsApp'),
+      buttonLabel: __('Add message'),
       icon: 'whatsapp',
       view: {
         agent: ['change'],

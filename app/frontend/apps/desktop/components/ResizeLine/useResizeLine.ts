@@ -7,7 +7,7 @@ import {
   useElementBounding,
   useWindowSize,
 } from '@vueuse/core'
-import { ref, onUnmounted, type Ref } from 'vue'
+import { ref, type Ref, onBeforeUnmount } from 'vue'
 
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
@@ -18,17 +18,24 @@ export const useResizeLine = (
   keyStrokeCallback: (e: KeyboardEvent, adjustment: number) => void,
   options?: {
     calculateFromRight?: boolean
+    /**
+     * @default 'horizontal'
+     * */
+    orientation: 'horizontal' | 'vertical'
+    offsetThreshold?: number
   },
 ) => {
-  const isResizingHorizontal = ref(false)
+  const isResizing = ref(false)
 
   const locale = useLocaleStore()
-  const { width } = useElementBounding(
+  const { height: screenHeight } = useWindowSize()
+
+  const { width, height } = useElementBounding(
     resizeLineElementRef as MaybeComputedElementRef<MaybeElement>,
   )
   const { width: screenWidth } = useWindowSize()
 
-  const resize = (event: MouseEvent | TouchEvent) => {
+  const handleVerticalResize = (event: MouseEvent | TouchEvent) => {
     // Position the cursor as close to the handle center as possible.
     let positionX = Math.round(width.value / 2)
 
@@ -55,10 +62,31 @@ export const useResizeLine = (
     resizeCallback(positionX)
   }
 
+  const handleHorizontalResize = (event: MouseEvent | TouchEvent) => {
+    // Position the cursor as close to the handle center as possible.
+    let positionY = Math.round(height.value / 2)
+
+    if (event instanceof MouseEvent) {
+      positionY += event.pageY
+    } else if (event.targetTouches[0]) {
+      positionY += event.targetTouches[0].pageY
+    }
+
+    positionY = screenHeight.value - positionY - (options?.offsetThreshold ?? 0)
+
+    resizeCallback(positionY)
+  }
+
+  const resize = (event: MouseEvent | TouchEvent) => {
+    if (options?.orientation === 'vertical') return handleVerticalResize(event)
+
+    handleHorizontalResize(event)
+  }
+
   const endResizing = () => {
     // eslint-disable-next-line no-use-before-define
     removeListeners()
-    isResizingHorizontal.value = false
+    isResizing.value = false
   }
 
   const removeListeners = () => {
@@ -80,41 +108,60 @@ export const useResizeLine = (
 
     e.preventDefault()
 
-    isResizingHorizontal.value = true
+    isResizing.value = true
+
     addEventListeners()
   }
 
-  onUnmounted(() => {
+  onBeforeUnmount(() => {
     removeListeners()
   })
 
   // a11y keyboard navigation horizontal resize
-  onKeyStroke(
-    'ArrowLeft',
-    (e: KeyboardEvent) => {
-      if (options?.calculateFromRight) {
-        keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? -5 : 5)
-      } else {
-        keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? 5 : -5)
-      }
-    },
-    { target: resizeLineElementRef as Ref<EventTarget> },
-  )
+  if (options?.orientation === 'vertical') {
+    onKeyStroke(
+      'ArrowLeft',
+      (e: KeyboardEvent) => {
+        if (options?.calculateFromRight) {
+          keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? -5 : 5)
+        } else {
+          keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? 5 : -5)
+        }
+      },
+      { target: resizeLineElementRef as Ref<EventTarget> },
+    )
 
-  onKeyStroke(
-    'ArrowRight',
-    (e: KeyboardEvent) => {
-      if (options?.calculateFromRight) {
-        keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? 5 : -5)
-      } else {
-        keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? -5 : 5)
-      }
-    },
-    { target: resizeLineElementRef as Ref<EventTarget> },
-  )
+    onKeyStroke(
+      'ArrowRight',
+      (e: KeyboardEvent) => {
+        if (options?.calculateFromRight) {
+          keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? 5 : -5)
+        } else {
+          keyStrokeCallback(e, locale.localeData?.dir === 'rtl' ? -5 : 5)
+        }
+      },
+      { target: resizeLineElementRef as Ref<EventTarget> },
+    )
+  } else {
+    onKeyStroke(
+      'ArrowUp',
+      (e: KeyboardEvent) => {
+        keyStrokeCallback(e, 5)
+      },
+      { target: resizeLineElementRef as Ref<EventTarget> },
+    )
+
+    onKeyStroke(
+      'ArrowDown',
+      (e: KeyboardEvent) => {
+        keyStrokeCallback(e, -5)
+      },
+      { target: resizeLineElementRef as Ref<EventTarget> },
+    )
+  }
 
   return {
-    isResizingHorizontal,
+    isResizing,
     startResizing,
   }
 }

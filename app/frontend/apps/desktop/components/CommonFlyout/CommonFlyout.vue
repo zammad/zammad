@@ -23,8 +23,8 @@ import { getFirstFocusableElement } from '#shared/utils/getFocusableElements.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonOverlayContainer from '#desktop/components/CommonOverlayContainer/CommonOverlayContainer.vue'
-import { useResizeLine } from '#desktop/components/ResizeLine/composables/useResizeLine.ts'
 import ResizeLine from '#desktop/components/ResizeLine/ResizeLine.vue'
+import { useResizeLine } from '#desktop/components/ResizeLine/useResizeLine.ts'
 
 import CommonFlyoutActionFooter from './CommonFlyoutActionFooter.vue'
 import { closeFlyout } from './useFlyout.ts'
@@ -153,12 +153,13 @@ const handleKeyStroke = (e: KeyboardEvent, adjustment: number) => {
   resizeCallback(newWidth)
 }
 
-const { startResizing, isResizingHorizontal } = useResizeLine(
+const { startResizing, isResizing } = useResizeLine(
   resizeCallback,
   resizeHandleComponent.value?.resizeLine,
   handleKeyStroke,
   {
     calculateFromRight: true,
+    orientation: 'vertical',
   },
 )
 
@@ -239,7 +240,7 @@ onMounted(() => {
     :no-close-on-backdrop-click="noCloseOnBackdropClick"
     :show-backdrop="showBackdrop"
     :style="{ width: `${flyoutContainerWidth}px` }"
-    :class="{ 'transition-all': !isResizingHorizontal }"
+    :class="{ 'transition-all': !isResizing }"
     :aria-label="$t('Side panel')"
     :aria-labelledby="`${flyoutId}-title`"
     @click-background="close()"
@@ -306,8 +307,7 @@ onMounted(() => {
       v-if="resizable"
       ref="resizeHandleComponent"
       :label="$t('Resize side panel')"
-      class="absolute top-[7px] h-[calc(100%-14px)] overflow-clip ltr:left-0 ltr:-translate-x-1/2 rtl:right-0 rtl:translate-x-1/2"
-      button-class="ltr:rounded-tl-sm rtl:rounded-tr-sm ltr:rounded-bl-sm rtl:rounded-br-sm"
+      class="absolute top-2 h-[calc(100%-16px)] overflow-clip ltr:left-px ltr:-translate-x-1/2 rtl:right-px rtl:translate-x-1/2"
       orientation="vertical"
       :values="{
         current: flyoutContainerWidth,

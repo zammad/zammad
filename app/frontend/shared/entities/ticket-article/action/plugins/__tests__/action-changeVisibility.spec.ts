@@ -17,7 +17,12 @@ describe('changeVisibility action', () => {
     ticket.policy.update = true
     const article = createTicketArticle()
     const actions = createTestArticleActions(ticket, article)
-    expect(actions.find((a) => a.name === 'changeVisibility')).toBeDefined()
+
+    expect(actions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ name: 'changeVisibility' }),
+      ]),
+    )
   })
 
   const views: TicketView[] = ['agent', 'customer']
@@ -29,7 +34,12 @@ describe('changeVisibility action', () => {
       ticket.policy.update = false
       const article = createTicketArticle()
       const actions = createTestArticleActions(ticket, article)
-      expect(actions.find((a) => a.name === 'changeVisibility')).toBeUndefined()
+
+      expect(actions).toEqual(
+        expect.not.arrayContaining([
+          expect.objectContaining({ name: 'changeVisibility' }),
+        ]),
+      )
     },
   )
 
@@ -38,6 +48,10 @@ describe('changeVisibility action', () => {
     const ticket = createTicket()
     const article = createTicketArticle()
     const actions = createTestArticleActions(ticket, article)
-    expect(actions.find((a) => a.name === 'changeVisibility')).toBeUndefined()
+    expect(actions).toEqual(
+      expect.not.arrayContaining([
+        expect.objectContaining({ name: 'changeVisibility' }),
+      ]),
+    )
   })
 })

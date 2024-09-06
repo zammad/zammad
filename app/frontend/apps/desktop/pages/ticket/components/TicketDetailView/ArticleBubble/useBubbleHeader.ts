@@ -17,8 +17,22 @@ export const useBubbleHeader = () => {
 
     return interactiveElements.has(target.tagName) || hasInteractiveElements
   }
+
+  const hasSelectionRange = (target: HTMLElement) => {
+    if (!target) return false
+
+    const selection = window.getSelection()
+    if (!selection || selection.type !== 'Range') return false
+
+    return true
+  }
+
   const toggleHeader = (event: MouseEvent) => {
-    if (isInteractiveTarget(event.target as HTMLElement)) return
+    if (
+      isInteractiveTarget(event.target as HTMLElement) ||
+      hasSelectionRange(event.target as HTMLElement)
+    )
+      return
 
     showMetaInformation.value = !showMetaInformation.value
   }

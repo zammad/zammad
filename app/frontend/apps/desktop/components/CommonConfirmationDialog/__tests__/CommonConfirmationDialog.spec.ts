@@ -33,6 +33,7 @@ describe('dialog confirm behaviour', () => {
       text: 'Test heading',
       confirmCallback: confirmCallbackSpy,
       cancelCallback: vi.fn(),
+      closeCallback: vi.fn(),
     }
 
     await waitForNextTick()
@@ -53,6 +54,7 @@ describe('dialog confirm behaviour', () => {
       confirmationVariant: 'delete',
       confirmCallback: confirmCallbackSpy,
       cancelCallback: vi.fn(),
+      closeCallback: vi.fn(),
     }
 
     await waitForNextTick()
@@ -81,6 +83,7 @@ describe('dialog confirm behaviour', () => {
       buttonVariant: 'danger',
       confirmCallback: confirmCallbackSpy,
       cancelCallback: vi.fn(),
+      closeCallback: vi.fn(),
     }
 
     await waitForNextTick()
@@ -103,6 +106,7 @@ describe('dialog confirm behaviour', () => {
       text: 'Test heading',
       confirmCallback: confirmCallbackSpy,
       cancelCallback: cancelCallbackSpy,
+      closeCallback: vi.fn(),
     }
 
     await waitForNextTick()

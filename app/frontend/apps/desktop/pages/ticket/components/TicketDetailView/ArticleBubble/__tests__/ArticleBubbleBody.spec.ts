@@ -1,15 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { provideLocal } from '@vueuse/shared'
-import { computed, ref } from 'vue'
-
 import { renderComponent } from '#tests/support/components/index.ts'
 
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 
+import { provideTicketInformationMocks } from '#desktop/entities/ticket/__tests__/mocks/provideTicketInformationMocks.ts'
 import ArticleBubbleBody from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue'
-import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 const renderBody = (
   article: ReturnType<typeof createDummyArticle>,
@@ -22,11 +19,8 @@ const renderBody = (
       setup: () => {
         const dummyTicket = createDummyTicket()
 
-        provideLocal(TICKET_KEY, {
-          ticketId: computed(() => dummyTicket.id),
-          ticket: computed(() => dummyTicket),
-          ticketInternalId: ref(dummyTicket.internalId),
-        })
+        provideTicketInformationMocks(dummyTicket)
+
         return {
           article,
           showMetaInformation,

@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { createTestingPinia } from '@pinia/testing'
-import { describe, expect, vi } from 'vitest'
 
 import { useHtmlLinks } from '../useHtmlLinks.ts'
 

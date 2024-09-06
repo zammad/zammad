@@ -8,6 +8,7 @@ export const TicketTaskbarTabAttributesFragmentDoc = gql`
   number
   title
   state {
+    id
     name
   }
   stateColorCode

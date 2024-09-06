@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { injectLocal, provideLocal } from '@vueuse/shared'
-import { computed } from 'vue'
+import { computed, inject, provide } from 'vue'
 
 import { useTicketQuery } from '#shared/entities/ticket/graphql/queries/ticket.api.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
@@ -15,7 +14,7 @@ import type { Ref, InjectionKey } from 'vue'
 
 export const TICKET_KEY = Symbol('ticket') as InjectionKey<TicketInformation>
 
-export const useProvideTicketInformation = (
+export const initializeTicketInformation = (
   internalId: Ref<number | string>,
 ) => {
   const ticketId = computed(() =>
@@ -47,13 +46,20 @@ export const useProvideTicketInformation = (
 
   const ticket = computed(() => result.value?.ticket as TicketById)
 
-  provideLocal(TICKET_KEY, {
+  const canUpdateTicket = computed(() => !!ticket.value?.policy.update)
+
+  return {
     ticket,
     ticketId,
     ticketInternalId: internalId as Ref<number>,
-  })
+    canUpdateTicket,
+  }
+}
+
+export const provideTicketInformation = (data: TicketInformation) => {
+  provide(TICKET_KEY, data)
 }
 
 export const useTicketInformation = () => {
-  return injectLocal(TICKET_KEY) as TicketInformation
+  return inject(TICKET_KEY) as TicketInformation
 }

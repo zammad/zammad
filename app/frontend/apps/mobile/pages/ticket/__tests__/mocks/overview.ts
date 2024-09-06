@@ -7,6 +7,7 @@ import {
   EnumTicketStateColorCode,
   type TicketsByOverviewQuery,
 } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
 
 import { TicketsByOverviewDocument } from '../../graphql/queries/ticketsByOverview.api.ts'
@@ -38,6 +39,7 @@ export const ticketDefault = () =>
       name: 'open',
       stateType: {
         __typename: 'TicketStateType',
+        id: convertToGraphQLId('TicketStateType', '2'),
         name: 'open',
       },
     },

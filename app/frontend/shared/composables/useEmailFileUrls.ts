@@ -3,7 +3,7 @@
 import { find } from 'lodash-es'
 import { computed, type Ref, type MaybeRef, toValue } from 'vue'
 
-import type { TicketArticle } from '#shared/entities/ticket/types'
+import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 
 // TODO MaybeRef needed? Check...
 export const useEmailFileUrls = (
@@ -13,6 +13,8 @@ export const useEmailFileUrls = (
   const article = computed(() => toValue(ticketArticle))
 
   const originalFormattingUrl = computed(() => {
+    if (article.value.type?.name !== 'email') return
+
     const originalFormattingFile = find(
       article.value.attachmentsWithoutInline,
       (file) => {
@@ -22,12 +24,14 @@ export const useEmailFileUrls = (
 
     if (!originalFormattingFile) return
 
-    return `/ticket_attachment/${ticketInternalId.value}/${article.value.internalId}/${originalFormattingFile.internalId}?disposition=attachment`
+    return `/api/v1/ticket_attachment/${ticketInternalId.value}/${article.value.internalId}/${originalFormattingFile.internalId}?disposition=attachment`
   })
 
-  const rawMessageUrl = computed(
-    () => `/api/v1/ticket_article_plain/${article.value.internalId}`,
-  )
+  const rawMessageUrl = computed(() => {
+    if (article.value.type?.name !== 'email') return
+
+    return `/api/v1/ticket_article_plain/${article.value.internalId}`
+  })
 
   return { originalFormattingUrl, rawMessageUrl }
 }

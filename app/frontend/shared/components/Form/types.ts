@@ -19,7 +19,7 @@ import type {
   FormKitValidationRules,
 } from '@formkit/validation'
 import type { Except, Primitive, SetOptional, SetRequired } from 'type-fest'
-import type { Ref } from 'vue'
+import type { Ref, ShallowRef } from 'vue'
 
 export interface FormFieldAdditionalProps {
   belongsToObjectField?: string
@@ -257,6 +257,7 @@ export interface FormRef {
   formId: string
   formNode: FormKitNode
   values: FormValues
+  flags: Record<string, boolean>
   updateSchemaDataField: UpdateSchemaDataFieldFunction
   updateChangedFields: (
     changedFields: Record<string, Partial<FormSchemaField>>,
@@ -276,6 +277,8 @@ export interface FormRef {
   triggerFormUpdater(options?: FormUpdaterOptions): void
 }
 
+export type FormRefParameter = ShallowRef<FormRef | undefined>
+
 export interface FormStep {
   label: string
   order: number
@@ -288,7 +291,7 @@ export interface FormStep {
 export type FormClass = 'loading'
 export type FormClassMap = Record<FormClass, string>
 
-export type FormGroupClass = 'container' | 'help' | 'dirtyMark'
+export type FormGroupClass = 'container' | 'help' | 'dirtyMark' | 'bottomMargin'
 export type FormGroupClassMap = Record<FormGroupClass, string>
 
 export type FieldLinkClass = 'container' | 'base' | 'link'

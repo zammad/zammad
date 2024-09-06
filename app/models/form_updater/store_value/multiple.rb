@@ -14,6 +14,7 @@ class FormUpdater::StoreValue::Multiple < FormUpdater::StoreValue::Base
 
   def multiple_fields
     %w[
+      to
       cc
       tags
     ]

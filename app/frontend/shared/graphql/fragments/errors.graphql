@@ -1,4 +1,5 @@
 fragment errors on UserError {
   message
   field
+  exception
 }

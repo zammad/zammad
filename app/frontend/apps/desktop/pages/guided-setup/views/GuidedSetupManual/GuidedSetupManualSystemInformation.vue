@@ -9,6 +9,7 @@ import type {
   FormSubmitData,
   FormValues,
 } from '#shared/components/Form/types.ts'
+import { useBaseUrl } from '#shared/composables/useBaseUrl.ts'
 import { useLogoUrl } from '#shared/composables/useLogoUrl.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
@@ -63,19 +64,11 @@ const systemInformationSchema = [
   },
 ]
 
-const getInitialInstanceUrl = () => {
-  const { fqdn } = application.config
-
-  if (!fqdn || fqdn === 'zammad.example.com') {
-    return window.location.origin
-  }
-
-  return `${application.config.http_type}://${fqdn}`
-}
+const { baseUrl } = useBaseUrl()
 
 const initialValues: FormValues = {
   organization: application.config.organization,
-  url: getInitialInstanceUrl(),
+  url: baseUrl.value,
 }
 
 const form = shallowRef()

@@ -73,9 +73,22 @@
     @apply inline-block font-extrabold text-yellow-600 content-['•'] ltr:ml-1 rtl:mr-1;
   }
 
-  /* Compatibility layer for object attributes and form columns. */
+  /*
+    Responsive multi-column mode for form groups:
+    - compatibility layer for object attributes and form columns via legacy `.formGroup--halfSize` class
+    - container query via optional TW `@container/form-group` class
+  */
   .form-group .formkit-outer {
-    @apply col-span-2;
+    /* stylelint-disable-next-line scss/operator-no-unspaced */
+    @apply @lg/form-group:col-span-1 col-span-2;
+
+    /* Optional full-width style for specific fields. */
+    &[data-type='editor'],
+    &[data-type='file'],
+    &:last-of-type:nth-of-type(odd) {
+      /* stylelint-disable-next-line scss/operator-no-unspaced */
+      @apply @lg/form-group:col-span-2;
+    }
 
     &.form-group-single-column {
       @apply col-span-1;
@@ -83,10 +96,46 @@
   }
 
   /*
-    TODO: Dirty mark styling within the field.
-
-    .form-group.form-group-mark-dirty .formkit-outer[data-dirty]::before {}
+    Use specific selector for dirty flag styling due to nested FormKit fields.
   */
+  .form-group.form-group-mark-dirty
+    > .formkit-outer[data-dirty]
+    > .formkit-block
+    > .formkit-wrapper
+    > .formkit-inner {
+    @apply relative;
+
+    &::before {
+      @apply absolute bottom-0 top-0 w-2 rounded-es-lg rounded-ss-lg content-[''] ltr:left-0 rtl:right-0;
+
+      background: repeating-linear-gradient(
+          45deg,
+          theme(colors.white),
+          theme(colors.white) 5px,
+          transparent 5px,
+          transparent 10px
+        )
+        repeat center;
+      mask-image: linear-gradient(
+        90deg,
+        theme(colors.black),
+        theme(colors.black) 0.4rem,
+        transparent 0.4rem,
+        transparent
+      );
+
+      [data-theme='dark'] & {
+        background: repeating-linear-gradient(
+            45deg,
+            theme(colors.gray.200),
+            theme(colors.gray.200) 5px,
+            transparent 5px,
+            transparent 10px
+          )
+          repeat center;
+      }
+    }
+  }
 
   .tooltip {
     @apply fixed z-50 w-fit -translate-y-2 select-none text-wrap rounded-md border border-neutral-100 bg-blue-200 px-2 py-1 text-xs leading-snug text-gray-100 opacity-0 transition-all dark:border-gray-900 dark:bg-gray-700 dark:text-neutral-400;

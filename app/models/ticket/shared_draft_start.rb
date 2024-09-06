@@ -77,7 +77,7 @@ class Ticket::SharedDraftStart < ApplicationModel
     cache = UploadCache.new(form_id)
 
     output = content.deep_dup
-    output[:body] = self.class.has_rich_text_insert_urls(cache, output[:body])
+    output[:body] = HasRichText.insert_urls(output[:body], cache.attachments)
 
     output
   end

@@ -4,6 +4,7 @@
 const path = require('path')
 
 const formKitTailwind = require('@formkit/themes/tailwindcss')
+const containerQueriesTailwind = require('@tailwindcss/container-queries')
 const unimportantTailwind = require('tailwindcss-unimportant')
 
 const zammadTailwind = require('../../../build/zammadTailwindPlugin.js')
@@ -19,7 +20,12 @@ module.exports = {
     `${desktopDir}/**/*.{js,jsx,ts,tsx,vue,css}`,
     `${sharedDir}/**/*.{js,jsx,ts,tsx,vue,css}`,
   ],
-  plugins: [formKitTailwind, zammadTailwind, unimportantTailwind],
+  plugins: [
+    containerQueriesTailwind,
+    formKitTailwind,
+    unimportantTailwind,
+    zammadTailwind,
+  ],
   theme: {
     colors: {
       alpha: {

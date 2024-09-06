@@ -26,7 +26,7 @@ RSpec.shared_examples 'mobile app: reply article' do |type_label, note, internal
   end
 
   def assert_fields(type_label, internal)
-    expect(find_select('Article Type', visible: :all)).to have_selected_option(type_label)
+    expect(find_select('Channel', visible: :all)).to have_selected_option(type_label)
     expect(find_select('Visibility', visible: :all)).to have_selected_option(internal ? 'Internal' : 'Public')
 
     expect(find_autocomplete('To')).to have_selected_options(to) if to.present?

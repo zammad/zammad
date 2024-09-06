@@ -80,7 +80,7 @@ const actionPlugin: TicketArticleActionPlugin = {
     }
 
     const action: TicketArticleAction = {
-      apps: ['mobile'],
+      apps: ['mobile', 'desktop'],
       label: __('Delete Article'),
       name: 'articleDelete',
       icon: 'trash',

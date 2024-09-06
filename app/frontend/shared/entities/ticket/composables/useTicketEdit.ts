@@ -56,6 +56,7 @@ export const useTicketEdit = (
     // show Zammad user as empty
     initialTicketValue.owner_id = ownerInternalId === 1 ? null : ownerInternalId
 
+    // TODO: check why article type was changed back to initial?!
     form.value?.resetForm(initialTicketValue, newTicket, {
       // don't reset to new values, if user changes something
       // if ticket is different, it's probably navigation to another ticket,
@@ -101,7 +102,10 @@ export const useTicketEdit = (
     }
   }
 
-  const editTicket = async (formData: FormSubmitData) => {
+  const editTicket = async (
+    formData: FormSubmitData,
+    skipValidator?: string,
+  ) => {
     if (!ticket.value || !form.value) return undefined
 
     if (!formData.owner_id) {
@@ -123,6 +127,7 @@ export const useTicketEdit = (
         objectAttributeValues: additionalObjectAttributeValues,
         article,
       } as TicketUpdateInput,
+      skipValidator,
     })
   }
 

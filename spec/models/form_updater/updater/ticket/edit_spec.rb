@@ -4,6 +4,8 @@ require 'rails_helper'
 
 require 'models/form_updater/concerns/checks_core_workflow_examples'
 require 'models/form_updater/concerns/has_security_options_examples'
+require 'models/form_updater/concerns/stores_taskbar_state_examples'
+require 'models/form_updater/concerns/applies_taskbar_state_examples'
 
 RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
   subject(:resolved_result) do
@@ -253,8 +255,73 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
         expect(flags[:time_accounting]).to be_truthy
       end
     end
+
+    context 'when new article was applied' do
+      let(:taskbar_key)     { 'TicketZoom-1234' }
+      let(:taskbar)         { create(:taskbar, key: taskbar_key, callback: 'Ticket', user_id: user.id, state: taskbar_state) }
+      let(:taskbar_state)   { { 'title' => 'test', 'article' => { 'articleType' => 'email' } } }
+      let(:field_name)      { 'title' }
+      let(:field_result)    { { value: 'test' } }
+      let(:additional_data) { { 'taskbarId' => Gql::ZammadSchema.id_from_object(taskbar), 'applyTaskbarState' => true } }
+      let(:meta)            { { additional_data: } }
+
+      before do
+        skip 'TODO: This is a known issue and should be fixed in the future.'
+      end
+
+      it 'checks that newArticlePresent flag is present' do
+        # Trigger first object authorization check.
+        resolved_result.authorized?
+
+        flags = resolved_result.resolve[:flags]
+        expect(flags[:newArticlePresent]).to be_truthy
+      end
+    end
+
+    context 'when new article is saved' do
+      let(:data)            { { 'title' => 'test', 'article' => { 'articleType' => 'email' } } }
+      let(:result)          { { 'ticket' => include({ 'title' => 'test' }), 'article' => { 'type' => 'email' } } }
+      let(:taskbar_key)     { 'TicketZoom-1234' }
+      let(:taskbar)         { create(:taskbar, key: taskbar_key, callback: 'Ticket', user_id: user.id) }
+      let(:additional_data) { { 'taskbarId' => Gql::ZammadSchema.id_from_object(taskbar) } }
+      let(:meta)            { { additional_data: } }
+
+      before do
+        skip 'TODO: This is a known issue and should be fixed in the future.'
+      end
+
+      it 'checks that data was stored correctly' do
+        # Trigger first object authorization check.
+        resolved_result.authorized?
+
+        resolved_result.resolve
+        state = taskbar.reload.state
+
+        expect(state).to include(result)
+      end
+    end
+
   end
 
   include_examples 'FormUpdater::ChecksCoreWorkflow', object_name: 'Ticket'
   include_examples 'FormUpdater::HasSecurityOptions', type: 'edit'
+
+  context 'when data should be stored and applied' do
+    let(:id) do
+      Gql::ZammadSchema.id_from_object(create(:ticket, group: group))
+    end
+
+    before do
+      skip 'TODO: This is a known issue and should be fixed in the future.'
+
+      # Trigger creation of the ticket and handover the id.
+      id
+
+      # Trigger first object authorization check.
+      resolved_result.authorized?
+    end
+
+    include_examples 'FormUpdater::StoresTaskbarState', taskbar_key: 'TicketZoom-1234', taskbar_callback: 'Ticket', store_state_group_key: 'ticket', store_state_group_skip_keys: ['article'] # gitleaks:allow
+    include_examples 'FormUpdater::AppliesTaskbarState', taskbar_key: 'TicketZoom-1234', taskbar_callback: 'Ticket', apply_state_group_keys: %w[ticket article] # gitleaks:allow
+  end
 end

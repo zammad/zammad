@@ -3,6 +3,12 @@
 module FormUpdater::Concerns::AppliesTaskbarState
   extend ActiveSupport::Concern
 
+  class_methods do
+    def apply_state_group_keys(group_keys)
+      @apply_state_group_keys ||= group_keys
+    end
+  end
+
   def resolve
     if current_taskbar.present? && should_apply?
       apply_taskbar_state
@@ -16,8 +22,16 @@ module FormUpdater::Concerns::AppliesTaskbarState
   def apply_taskbar_state
     apply_value = FormUpdater::ApplyValue.new(context:, data:, meta:, result:)
 
+    apply_state_group_keys = self.class.instance_variable_get(:@apply_state_group_keys)
+
     current_taskbar.state.each_pair do |field, value|
-      apply_value.perform(field: field, config: { 'value' => value }, include_blank: true)
+      if apply_state_group_keys.present? && apply_state_group_keys.include?(field) && value.is_a?(Hash)
+        value.each_pair do |sub_field, sub_value|
+          apply_value.perform(field: sub_field, config: { 'value' => sub_value }, include_blank: true, parent_field: field)
+        end
+      else
+        apply_value.perform(field: field, config: { 'value' => value }, include_blank: true)
+      end
     end
   end
 

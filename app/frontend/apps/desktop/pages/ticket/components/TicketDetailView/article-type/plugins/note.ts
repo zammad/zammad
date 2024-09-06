@@ -5,5 +5,5 @@ import type { ChannelModule } from '#desktop/pages/ticket/components/TicketDetai
 export default <ChannelModule>{
   name: 'note',
   label: __('Note'),
-  icon: 'pencil-square',
+  icon: 'note',
 }

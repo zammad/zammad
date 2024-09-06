@@ -3,12 +3,12 @@
 <script setup lang="ts">
 import { computed, type ComputedRef, ref } from 'vue'
 
+import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
 import { useTicketChannel } from '#shared/entities/ticket/composables/useTicketChannel.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 
 import CommonBreadcrumb from '#desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue'
 import { useMainLayoutContainer } from '#desktop/components/layout/composables/useMainLayoutContainer.ts'
-import { useCopyToClipboard } from '#desktop/composables/useCopyToClipboard.ts'
 import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
 import HighlightMenu from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/HighlightMenu.vue'
 import TicketInformation from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue'
@@ -83,7 +83,7 @@ const { hasChannelAlert, channelAlert } = useTicketChannel(ticket)
           v-tooltip="$t('Copy ticket number')"
           :aria-label="$t('Copy ticket number')"
           role="button"
-          name="clipboard2"
+          name="files"
           size="xs"
           class="cursor-pointer text-blue-800 ltr:ml-2 rtl:mr-2"
           @click="copyToClipboard(ticketNumberWithTicketHook)"

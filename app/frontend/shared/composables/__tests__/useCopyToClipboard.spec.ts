@@ -4,7 +4,7 @@ import { ref } from 'vue'
 
 import { waitForNextTick } from '#tests/support/utils.ts'
 
-import { useCopyToClipboard } from '../useCopyToClipboard.ts'
+import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
 
 const clipboardCopyMock = vi.fn()
 const clipboardCopiedMock = ref(false)

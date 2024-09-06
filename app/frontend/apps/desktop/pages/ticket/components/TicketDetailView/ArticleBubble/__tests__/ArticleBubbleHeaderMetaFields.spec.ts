@@ -9,6 +9,7 @@ import {
 
 import { type createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 
+import iconAliasMapRaw from '#desktop/initializer/desktopIconsAliasesMap.ts'
 import { mockDetailViewSetup } from '#desktop/pages/ticket/components/TicketDetailView/__tests__/support/article-detail-view-mocks.ts'
 import { modules as articleTypeModules } from '#desktop/pages/ticket/components/TicketDetailView/article-type/index.ts'
 import type { ArticleTypeName } from '#desktop/pages/ticket/components/TicketDetailView/article-type/types.ts'
@@ -57,6 +58,8 @@ const renderWrapper = (
   )
 }
 
+const iconAliasMap: Record<string, string> = iconAliasMapRaw
+
 describe('ArticleBubbleMetaFields', () => {
   it.each(articleTypeModules)(
     'displays meta field for channel $name',
@@ -74,7 +77,9 @@ describe('ArticleBubbleMetaFields', () => {
 
       expect(wrapper.getByText('Channel')).toBeInTheDocument()
       expect(wrapper.getByText(name)).toBeInTheDocument()
-      expect(wrapper.getByIconName(icon)).toBeInTheDocument()
+      expect(
+        wrapper.getByIconName(iconAliasMap[icon] || icon),
+      ).toBeInTheDocument()
 
       hasAdditionalFields(wrapper, name as ArticleTypeName)
     },

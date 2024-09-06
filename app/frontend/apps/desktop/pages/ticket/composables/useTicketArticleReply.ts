@@ -1,13 +1,47 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed } from 'vue'
+import { computed, ref } from 'vue'
 
-import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
+import type { FormRef } from '#shared/components/Form/types.ts'
 
-export const useTicketArticleReply = () => {
-  const { ticket } = useTicketInformation()
+import type { Ref, ShallowRef } from 'vue'
 
-  const canUpdateTicket = computed(() => !!ticket.value?.policy.update)
+export const useTicketArticleReply = (
+  form: ShallowRef<FormRef | undefined>,
+  initialNewTicketArticlePresent: Ref<boolean | undefined>,
+) => {
+  const localNewTicketArticlePresent = ref<boolean>()
+  // TODO: swichting tabs when you added a new article is shortly showing the buttons (because taskbar tab don't has the information yet?)
+  const newTicketArticlePresent = computed({
+    get: () => {
+      if (localNewTicketArticlePresent.value !== undefined)
+        return localNewTicketArticlePresent.value
 
-  return { canUpdateTicket }
+      return initialNewTicketArticlePresent.value
+    },
+    set: (value) => {
+      localNewTicketArticlePresent.value = value
+    },
+  })
+
+  const articleFormGroupNode = computed(() => {
+    if (!newTicketArticlePresent.value) return undefined
+
+    return form.value?.getNodeByName('article')
+  })
+
+  const isArticleFormGroupValid = computed(() => {
+    return !!articleFormGroupNode.value?.context?.state.valid
+  })
+
+  const showTicketArticleReplyForm = () => {
+    newTicketArticlePresent.value = true
+  }
+
+  return {
+    newTicketArticlePresent,
+    articleFormGroupNode,
+    isArticleFormGroupValid,
+    showTicketArticleReplyForm,
+  }
 }

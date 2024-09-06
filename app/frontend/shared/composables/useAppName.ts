@@ -1,8 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-let appName: string
+import type { AppName } from '#shared/types/app.ts'
 
-export const initializeAppName = (name: string) => {
+let appName: AppName
+
+export const initializeAppName = (name: AppName) => {
   appName = name
 }
 

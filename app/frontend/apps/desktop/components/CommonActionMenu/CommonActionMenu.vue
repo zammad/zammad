@@ -43,6 +43,7 @@ const props = withDefaults(defineProps<Props>(), {
   placement: 'arrowStart',
   orientation: 'autoVertical',
   defaultButtonVariant: 'neutral',
+  defaultIcon: 'three-dots-vertical',
   noPaddedDefaultButton: true,
 })
 
@@ -139,7 +140,7 @@ const variantClasses = computed(() => {
         ]"
         :variant="defaultButtonVariant as ButtonVariant"
         :size="buttonSize"
-        :icon="defaultIcon || 'three-dots-vertical'"
+        :icon="defaultIcon"
         @click="toggle"
       />
 

@@ -51,6 +51,7 @@ const getFormContext = (): FormRef => {
     formId: 'test-form',
     formNode: getNode('test-form') as FormKitNode,
     values: getNode('test-form')?.value as FormValues,
+    flags: {},
     updateChangedFields: vi.fn(),
     updateSchemaDataField: vi.fn(),
     getNodeByName: vi.fn(),

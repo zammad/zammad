@@ -1,7 +1,5 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import userEvent from '@testing-library/user-event'
-import { provideLocal } from '@vueuse/shared'
 import { beforeEach, describe, expect } from 'vitest'
 import { computed, provide, ref } from 'vue'
 
@@ -9,9 +7,15 @@ import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
 import { MAIN_LAYOUT_KEY } from '#desktop/components/layout/composables/useMainLayoutContainer.ts'
+import { provideTicketInformationMocks } from '#desktop/entities/ticket/__tests__/mocks/provideTicketInformationMocks.ts'
 import { testOptionsTopBar } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/__tests__/support/testOptions.ts'
 import TicketDetailTopBar from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue'
-import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
+
+const copyToClipboardMock = vi.fn()
+
+vi.mock('#shared/composables/useCopyToClipboard.ts', async () => ({
+  useCopyToClipboard: () => ({ copyToClipboard: copyToClipboardMock }),
+}))
 
 const renderTopBar = (options = testOptionsTopBar) => {
   return renderComponent(
@@ -27,11 +31,8 @@ const renderTopBar = (options = testOptionsTopBar) => {
           computed(() => parentContainer.value),
         )
 
-        provideLocal(TICKET_KEY, {
-          ticket: computed(() => options),
-          ticketId: computed(() => options.id),
-          ticketInternalId: ref(options.internalId),
-        })
+        provideTicketInformationMocks(options)
+
         return {}
       },
     },
@@ -41,14 +42,14 @@ const renderTopBar = (options = testOptionsTopBar) => {
 describe('TicketDetailTopBar', () => {
   beforeEach(() => {
     mockApplicationConfig({
-      ticket_hook: 'ticket#test',
+      ticket_hook: 'Ticket#',
     })
   })
 
   it('shows breadcrumb with copyable ticket number', () => {
     const wrapper = renderTopBar()
 
-    expect(wrapper.getByText('ticket#test89001')).toBeInTheDocument()
+    expect(wrapper.getByText('Ticket#89001')).toBeInTheDocument()
   })
 
   it.todo('hides details on scroll', () => {
@@ -67,23 +68,11 @@ describe('TicketDetailTopBar', () => {
 
   describe('features', () => {
     it('copies ticket number', async () => {
-      const copyLegacy = vi.fn()
-
-      // vueUse executes here the `legacyCopy` function instead of window.navigator.clipboard.writeText
-      // It does not exist on the global object, so we need to define it
-      Object.defineProperty(document, 'execCommand', {
-        value: () => copyLegacy('89001'),
-        writable: true,
-        configurable: true,
-      })
-
-      userEvent.setup({ writeToClipboard: true })
-
       const wrapper = renderTopBar()
 
-      await wrapper.events.click(wrapper.getByIconName('clipboard2'))
+      await wrapper.events.click(wrapper.getByIconName('files'))
 
-      expect(copyLegacy).toHaveBeenCalledWith('89001')
+      expect(copyToClipboardMock).toHaveBeenCalledWith('Ticket#89001')
     })
 
     it('shows highlight menu', () => {

@@ -21,6 +21,7 @@ export interface ConfirmationOptions {
   confirmationVariant?: ConfirmationVariant
   confirmCallback: () => void
   cancelCallback: () => void
+  closeCallback: () => void
 }
 
 const confirmationOptions = ref<ConfirmationOptions>()
@@ -31,10 +32,10 @@ export const useConfirmation = () => {
     text: string,
     options: Except<
       ConfirmationOptions,
-      'text' | 'confirmCallback' | 'cancelCallback'
+      'text' | 'confirmCallback' | 'cancelCallback' | 'closeCallback'
     > = {},
   ) => {
-    return new Promise<boolean>((resolve) => {
+    return new Promise<boolean | undefined>((resolve) => {
       confirmationOptions.value = {
         ...options,
         text,
@@ -44,6 +45,9 @@ export const useConfirmation = () => {
         cancelCallback() {
           resolve(false)
         },
+        closeCallback() {
+          resolve(undefined)
+        },
       }
     })
   }
@@ -52,7 +56,7 @@ export const useConfirmation = () => {
     variant: ConfirmationVariant = 'confirm',
     options: Except<
       ConfirmationOptions,
-      'text' | 'confirmCallback' | 'cancelCallback'
+      'text' | 'confirmCallback' | 'cancelCallback' | 'closeCallback'
     > = {},
   ) => {
     return waitForConfirmation('', {

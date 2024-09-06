@@ -5,6 +5,7 @@ import { nullableMock } from '#tests/support/utils.ts'
 
 import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.api.ts'
 import type { ObjectManagerFrontendAttributesPayload } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 export const ticketObjectAttributes = () => ({
   attributes: [
@@ -445,6 +446,7 @@ export const ticketPayload = (id = 1) =>
       name: 'open',
       stateType: {
         name: 'open',
+        id: convertToGraphQLId('TicketStateType', '2'),
         __typename: 'TicketStateType',
       },
       __typename: 'TicketState',

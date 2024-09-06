@@ -37,14 +37,16 @@ export const useBubbleStyleGuide = (
   // We need this class otherwise on a transition the edges of children are shown
   const articleWrapperBorderClass = computed(() =>
     position.value === 'right'
-      ? 'ltr:rounded-br-none rtl:rounded-br-none'
-      : 'ltr:rounded-bl-none rtl:rounded-bl-none',
+      ? 'ltr:rounded-br-none rtl:rounded-bl-none'
+      : 'ltr:rounded-bl-none rtl:rounded-br-none',
   )
 
   const internalNoteClass = computed(() => {
     if (!isArticleTypeNote.value) return ''
 
-    return 'bg-stripes before:rounded-2xl relative z-0 rounded-xl outline outline-1 outline-blue-700 ltr:rounded-bl-none rtl:rounded-br-none ltr:before:rounded-bl-none rtl:before:rounded-br-none'
+    return position.value === 'right'
+      ? 'bg-stripes before:rounded-2xl relative z-0 rounded-xl outline outline-1 outline-blue-700 ltr:rounded-br-none rtl:rounded-bl-none ltr:before:rounded-br-none rtl:before:rounded-bl-none'
+      : 'bg-stripes before:rounded-2xl relative z-0 rounded-xl outline outline-1 outline-blue-700 ltr:rounded-bl-none rtl:rounded-br-none ltr:before:rounded-bl-none rtl:before:rounded-br-none'
   })
 
   return {

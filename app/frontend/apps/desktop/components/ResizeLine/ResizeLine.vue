@@ -99,10 +99,7 @@ defineExpose({
       :disabled="disabled"
       tabindex="0"
       class="line"
-      :class="[
-        { '!bg-blue-800': resizing, 'cursor-col-resize': !disabled },
-        buttonClass,
-      ]"
+      :class="[{ '!bg-blue-800': resizing }, buttonClass]"
       @mousedown="handleMousedown"
       @blur="resizing = false"
       @touchstart="handleTouchstart"
@@ -142,7 +139,7 @@ defineExpose({
     @apply -:w-full h-[12px];
 
     .line {
-      @apply h-1 w-full;
+      @apply h-1 w-full enabled:cursor-row-resize;
     }
   }
 
@@ -150,7 +147,7 @@ defineExpose({
     @apply -:h-full w-[12px];
 
     .line {
-      @apply h-full w-1;
+      @apply h-full w-1 enabled:cursor-col-resize;
     }
   }
 }

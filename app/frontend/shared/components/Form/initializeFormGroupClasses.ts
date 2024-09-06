@@ -7,6 +7,7 @@ let formGroupClasses: FormGroupClassMap = {
   container: 'form-group',
   help: 'form-group-help',
   dirtyMark: 'form-group-mark-dirty',
+  bottomMargin: 'form-group-bottom-margin',
 }
 
 export const initializeFormGroupClasses = (classes: FormGroupClassMap) => {

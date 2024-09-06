@@ -24,7 +24,8 @@ module FormUpdater::Concerns::ChecksCoreWorkflow
   private
 
   def perform_payload
-    params = data
+    # Copy data to avoid changing the original data inside core workflow.
+    params = data.dup
 
     # Add object id information for the perform worklow for already existing objects.
     if object

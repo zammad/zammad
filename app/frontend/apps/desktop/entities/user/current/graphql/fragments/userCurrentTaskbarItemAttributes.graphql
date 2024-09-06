@@ -3,6 +3,7 @@ fragment userCurrentTaskbarItemAttributes on UserTaskbarItem {
   key
   callback
   formId
+  formNewArticlePresent
   entity {
     ... on Ticket {
       ...ticketTaskbarTabAttributes

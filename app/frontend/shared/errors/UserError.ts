@@ -32,6 +32,10 @@ export default class UserError extends Error {
     return this.errors[0].message
   }
 
+  public getFirstErrorException(): string | undefined | null {
+    return this.errors[0].exception
+  }
+
   public getFieldErrorList(): Record<string, string> {
     return this.fieldErrors.reduce(
       (fieldErrorList: Record<string, string>, fieldError) => {

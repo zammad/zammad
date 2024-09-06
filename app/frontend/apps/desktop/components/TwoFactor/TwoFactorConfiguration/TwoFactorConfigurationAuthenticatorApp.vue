@@ -11,6 +11,7 @@ import {
 import Form from '#shared/components/Form/Form.vue'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
+import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
 import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
 import { useUserCurrentTwoFactorVerifyMethodConfigurationMutation } from '#shared/entities/user/current/graphql/mutations/two-factor/userCurrentTwoFactorVerifyMethodConfiguration.api.ts'
 import { useUserCurrentTwoFactorInitiateMethodConfigurationQuery } from '#shared/entities/user/current/graphql/queries/two-factor/userCurrentTwoFactorInitiateMethodConfiguration.api.ts'
@@ -20,7 +21,6 @@ import QueryHandler from '#shared/server/apollo/handler/QueryHandler.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
-import { useCopyToClipboard } from '#desktop/composables/useCopyToClipboard.ts'
 
 import type { TwoFactorConfigurationComponentProps } from '../types.ts'
 

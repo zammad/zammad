@@ -2,9 +2,9 @@
 
 <script setup lang="ts">
 import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
+import { useEmailFileUrls } from '#shared/composables/useEmailFileUrls.ts'
 import type { TicketArticle } from '#shared/entities/ticket/types'
 
-import { useEmailFileUrls } from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useEmailFileUrls.ts'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 interface Props {
@@ -38,7 +38,6 @@ const { originalFormattingUrl } = useEmailFileUrls(
       <CommonLink
         v-if="originalFormattingUrl"
         :link="originalFormattingUrl"
-        :rest-api="true"
         size="medium"
         target="_blank"
       >

@@ -7,9 +7,10 @@ const actionPlugin: TicketArticleActionPlugin = {
 
   addTypes() {
     const type: TicketArticleType = {
-      apps: ['mobile'],
+      apps: ['mobile', 'desktop'],
       value: 'web',
       label: __('Web'),
+      buttonLabel: __('Add Reply'),
       icon: 'web',
       view: {
         customer: ['change'],

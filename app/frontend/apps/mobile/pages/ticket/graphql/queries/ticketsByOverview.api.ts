@@ -42,6 +42,7 @@ export const TicketsByOverviewDocument = gql`
           id
           name
           stateType {
+            id
             name
           }
         }

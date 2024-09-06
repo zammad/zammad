@@ -35,7 +35,14 @@ export const useElementScroll = (
   )
 
   const reachedBottom = computed(
-    () => y.value === scrollNode.value.clientHeight,
+    () =>
+      // NB: Check if this is the most optimal calculation.
+      //   In Webkit based browsers it sometimes results in -0.5 right on the bottom edge,
+      //   hence the need for the lower bound.
+      y.value -
+        (scrollNode.value?.scrollHeight ?? 0) +
+        (scrollNode.value?.offsetHeight ?? 0) >
+      -1,
   )
 
   const isScrollable = computed(

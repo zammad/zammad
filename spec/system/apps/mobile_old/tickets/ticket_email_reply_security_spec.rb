@@ -22,7 +22,7 @@ RSpec.describe 'Mobile > Ticket > Email reply with security options', app: :mobi
     find_button('Reply').click
 
     within_form(form_updater_gql_number: 1) do
-      find_select('Article Type', visible: :all).select_option('Phone')
+      find_select('Channel', visible: :all).select_option('Phone')
     end
   end
 

@@ -3,11 +3,13 @@
 class Service::Ticket::Update < Service::BaseWithCurrentUser
   include Service::Concerns::HandlesCoreWorkflow
 
-  def execute(ticket:, ticket_data:)
+  def execute(ticket:, ticket_data:, skip_validator: nil)
     Pundit.authorize current_user, ticket, :update?
     set_core_workflow_information(ticket_data, ::Ticket, 'edit')
 
     article_data = ticket_data.delete(:article)
+
+    validate!(current_user, ticket, ticket_data, article_data, skip_validator)
 
     ticket.with_lock do
       ticket.update!(ticket_data)
@@ -33,5 +35,9 @@ class Service::Ticket::Update < Service::BaseWithCurrentUser
   # Mobile UI leaves this processing for GraphQL
   def preprocess_article_data!(article_input)
     article_input[:from] = current_user.fullname
+  end
+
+  def validate!(user, ticket, ticket_data, article_data, skip_validator)
+    Service::Ticket::Update::Validator.new(user:, ticket:, ticket_data:, article_data:, skip_validator:).validate!
   end
 end

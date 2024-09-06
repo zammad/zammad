@@ -68,7 +68,11 @@ export const testOptionsTopBar: TicketById = nullableMock({
     __typename: 'TicketState',
     id: convertToGraphQLId('Ticket', 1),
     name: 'new',
-    stateType: { __typename: 'TicketStateType', name: 'new' },
+    stateType: {
+      __typename: 'TicketStateType',
+      id: convertToGraphQLId('TicketStateType', 1),
+      name: 'new',
+    },
   },
   group: {
     __typename: 'Group',

@@ -20,8 +20,7 @@ module Taskbar::List
           taskbar = Taskbar.find(relation[:id])
           next if taskbar.user_id != user.id
 
-          taskbar.skip_trigger = true
-          taskbar.update!(prio: relation[:prio])
+          taskbar.update!(prio: relation[:prio], skip_trigger: true)
         end
         trigger_list_update(user, 'desktop')
       end

@@ -49,6 +49,10 @@ export const useTaskbarTab = (
     () => activeTaskbarTab.value?.formId || undefined,
   )
 
+  const activeTaskbarTabNewArticlePresent = computed(
+    () => !!activeTaskbarTab.value?.formNewArticlePresent,
+  )
+
   const activeTaskbarTabDelete = () => {
     if (!activeTaskbarTab.value?.taskbarTabId) return
 
@@ -57,6 +61,7 @@ export const useTaskbarTab = (
 
   return {
     activeTaskbarTabFormId,
+    activeTaskbarTabNewArticlePresent,
     activeTaskbarTab,
     activeTaskbarTabDelete,
   }

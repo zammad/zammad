@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graphql do
   let(:query) do
     <<~QUERY
-      mutation ticketUpdate($ticketId: ID!, $input: TicketUpdateInput!) {
-        ticketUpdate(ticketId: $ticketId, input: $input) {
+      mutation ticketUpdate($ticketId: ID!, $input: TicketUpdateInput!, $skipValidator: String) {
+        ticketUpdate(ticketId: $ticketId, input: $input, skipValidator: $skipValidator) {
           ticket {
             id
             title
@@ -28,11 +28,11 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
               }
               value
             }
-
           }
           errors {
             message
             field
+            exception
           }
         }
       }
@@ -120,6 +120,8 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
 
         context 'with time unit' do
           let(:time_accounting_enabled) { true }
+          let(:variables)               { { ticketId: gql.id(ticket), input: input_payload, skipValidator: 'Service::Ticket::Update::Validator::TimeAccounting::ConditionMatchesError' } }
+
           let(:article_payload) do
             {
               body:     'dummy',
@@ -218,6 +220,47 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
           gql.execute(query, variables: variables)
           expect(gql.result.error_type).to eq(Exceptions::Forbidden)
           expect(gql.result.error_message).to eq('Access forbidden by Gql::Types::GroupType')
+        end
+      end
+
+      context 'when ticket has a checklist and is being closed' do
+        let(:checklist) { create(:checklist, ticket: ticket) }
+
+        let(:input_base_payload) do
+          {
+            title:      'Ticket Create Mutation Test',
+            groupId:    gql.id(group),
+            priorityId: gql.id(priority),
+            customer:   { id: gql.id(customer) },
+            ownerId:    gql.id(agent),
+            article:    article_payload,
+            stateId:    gql.id(Ticket::State.find_by(name: 'closed')),
+          }
+        end
+
+        before do
+          checklist
+
+          gql.execute(query, variables: variables)
+        end
+
+        it 'returns a user error' do
+          expect(gql.result.data).to eq({
+                                          'ticket' => nil,
+                                          'errors' => [
+                                            'message'   => 'The ticket checklist is incomplete.',
+                                            'field'     => nil,
+                                            'exception' => 'Service::Ticket::Update::Validator::ChecklistCompleted::IncompleteChecklistError',
+                                          ],
+                                        })
+        end
+
+        context 'when validator is being skipped' do
+          let(:variables) { { ticketId: gql.id(ticket), input: input_payload, skipValidator: 'Service::Ticket::Update::Validator::ChecklistCompleted::IncompleteChecklistError' } }
+
+          it 'updates the ticket' do
+            expect(gql.result.data['ticket']).to eq(expected_response)
+          end
         end
       end
     end

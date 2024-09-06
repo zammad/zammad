@@ -42,6 +42,7 @@ query ticketsByOverview(
           id
           name
           stateType {
+            id
             name
           }
         }

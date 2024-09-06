@@ -23,6 +23,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemUpsert, type: :graphql do
               number
               title
               state {
+                id
                 name
               }
               stateColorCode

@@ -55,10 +55,10 @@ export const createEligibleTicketArticleReplyData = (
 export const createTestArticleActions = (
   ticket: TicketById,
   article: TicketArticle,
-  options = defaultOptions,
+  app: AppName = 'mobile',
 ) => {
   initializeStore()
-  return createArticleActions(ticket, article, 'mobile', options)
+  return createArticleActions(ticket, article, app, defaultOptions)
 }
 
 export const createTestArticleTypes = (

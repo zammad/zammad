@@ -1,6 +1,9 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { FormRef, FormValues } from '#shared/components/Form/types.ts'
+import type {
+  FormRefParameter,
+  FormValues,
+} from '#shared/components/Form/types.ts'
 import type {
   TicketById,
   TicketLiveAppUser,
@@ -11,7 +14,7 @@ import type {
 } from '#shared/graphql/types.ts'
 import type { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
-import type { ComputedRef, Ref, ShallowRef } from 'vue'
+import type { ComputedRef, Ref } from 'vue'
 
 export interface TicketInformation {
   ticketQuery: QueryHandler<
@@ -22,7 +25,7 @@ export interface TicketInformation {
   ticket: ComputedRef<TicketById | undefined>
   newTicketArticleRequested: Ref<boolean>
   newTicketArticlePresent: Ref<boolean>
-  form: ShallowRef<FormRef | undefined>
+  form: FormRefParameter
   updateFormLocation: (newLocation: string) => void
   canUpdateTicket: ComputedRef<boolean>
   showArticleReplyDialog: () => Promise<void>

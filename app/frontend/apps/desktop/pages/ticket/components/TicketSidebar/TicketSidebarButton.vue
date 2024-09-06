@@ -4,6 +4,7 @@
 import { computed } from 'vue'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import CommonUpdateIndicator from '#desktop/components/CommonUpdateIndicator/CommonUpdateIndicator.vue'
 
 import {
   TicketSidebarButtonBadgeType,
@@ -16,6 +17,7 @@ interface Props {
   icon: string
   selected?: boolean
   badge?: TicketSidebarButtonBadgeDetails
+  updateIndicator?: boolean
 }
 
 const props = defineProps<Props>()
@@ -63,6 +65,7 @@ const badgeColor = computed(() => {
       :aria-label="$t(label)"
       @click="$emit('click', name)"
     />
+    <CommonUpdateIndicator v-if="!selected && updateIndicator" />
     <CommonLabel
       v-if="badge"
       size="xs"

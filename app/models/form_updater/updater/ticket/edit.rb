@@ -1,10 +1,16 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class FormUpdater::Updater::Ticket::Edit < FormUpdater::Updater
+  # include FormUpdater::Concerns::AppliesTaskbarState
   include FormUpdater::Concerns::ChecksCoreWorkflow
   include FormUpdater::Concerns::HasSecurityOptions
+  # include FormUpdater::Concerns::StoresTaskbarState
 
   core_workflow_screen 'edit'
+
+  # apply_state_group_keys %w[ticket article]
+  # store_state_group_key 'ticket'
+  # store_state_group_skip_keys ['article']
 
   def resolve
     set_default_follow_up_state if !meta[:initial]
@@ -14,6 +20,17 @@ class FormUpdater::Updater::Ticket::Edit < FormUpdater::Updater
 
   def object_type
     ::Ticket
+  end
+
+  def handle_updater_flags
+    flags[:newArticlePresent] = result['articleType'].present?
+  end
+
+  def after_store_taskbar_preperation(state)
+    return if data.dig('article', 'articleType').nil?
+
+    # TODO: change to "type", but for now we need to keep it as "articleType" for compatibility reasons without apply_value mapping.
+    state['article']['type'] = state['article'].delete('articleType')
   end
 
   private

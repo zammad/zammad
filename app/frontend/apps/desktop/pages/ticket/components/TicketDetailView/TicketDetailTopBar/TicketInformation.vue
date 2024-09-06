@@ -46,7 +46,7 @@ const { updateTitle } = useTicketEditTitle(computed(() => props.ticket))
 
     <div class="grow basis-full">
       <div
-        class="flex flex-col justify-center duration-300"
+        class="flex flex-col justify-center"
         :class="{
           'mb-3.5': !hideDetails,
         }"
@@ -77,7 +77,9 @@ const { updateTitle } = useTicketEditTitle(computed(() => props.ticket))
           :value="ticket.title"
           :parent="$refs.parentContainer as HTMLElement"
           :classes="{
-            label: 'dark:text-white font-medium line-clamp-4',
+            label: hideDetails
+              ? 'dark:text-white font-medium line-clamp-1'
+              : 'dark:text-white font-medium line-clamp-4',
             input: 'dark:text-white font-medium',
           }"
           :label-attrs="{

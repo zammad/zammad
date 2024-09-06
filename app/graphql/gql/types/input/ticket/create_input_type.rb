@@ -21,5 +21,12 @@ module Gql::Types::Input::Ticket
              description: 'The shared draft used to create this ticket.',
              loads:       Gql::Types::Ticket::SharedDraftStartType,
              prepare:     only_for_ticket_agents
+
+    argument :links,
+             [Gql::Types::Input::Ticket::LinkInputType],
+             required:    false,
+             description: 'Links to create for the newly created ticket',
+             prepare:     only_for_ticket_agents
+
   end
 end

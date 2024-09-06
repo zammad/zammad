@@ -1148,6 +1148,7 @@ describe('with ticket on a whatsapp channel', () => {
       {
         name: 'closed',
         stateType: {
+          id: convertToGraphQLId('TicketStateType', 5),
           name: TicketState.Closed,
         },
       },

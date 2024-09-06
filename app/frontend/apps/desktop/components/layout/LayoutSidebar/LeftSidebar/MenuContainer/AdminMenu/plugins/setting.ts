@@ -9,5 +9,5 @@ export default {
   permission: ['admin.*'],
   variant: 'neutral',
   icon: 'gear',
-  link: `${window.origin}/#manage`, // This is a transition solution, the actual link will be different
+  link: '/#manage', // This is a transition solution, the actual link will be different
 } as AdminMenuItem

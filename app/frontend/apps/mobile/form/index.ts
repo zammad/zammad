@@ -50,6 +50,7 @@ export const initializeFormFields = () => {
     container: 'form-group overflow-hidden rounded-xl bg-gray-500',
     help: 'text-xs text-gray-100 ltr:pl-3 rtl:pr-3',
     dirtyMark: 'form-group-mark-dirty',
+    bottomMargin: 'mb-4',
   })
 
   initializeFieldLinkClasses({

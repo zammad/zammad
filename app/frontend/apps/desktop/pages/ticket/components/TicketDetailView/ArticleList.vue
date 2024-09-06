@@ -61,7 +61,7 @@ const getArticleElement = async (key: string): Promise<Element | null> => {
 
   if (!row) return Promise.resolve(null)
 
-  return waitForElement(`#article-list-row-${row.key}`)
+  return waitForElement(`#article-${row.key}`)
 }
 
 const hasMoreButton = computed(() => {
@@ -90,7 +90,7 @@ const initialScroll = async () => {
   if (!targetElement) {
     const targetRow = rows.value[rows.value.length - 1]
 
-    targetElement = await waitForElement(`#article-list-row-${targetRow?.key}`)
+    targetElement = await waitForElement(`#article-${targetRow?.key}`)
   }
 
   if (!targetElement) return false
@@ -124,11 +124,11 @@ watch(
   <section
     v-if="context.articles.value?.articles.edges && rows"
     role="feed"
-    class="mx-auto w-full max-w-6xl scroll-mt-[12rem] space-y-10 px-12 py-4"
+    class="mx-auto w-full max-w-6xl space-y-10 px-12 py-4"
   >
     <article
       v-for="(row, rowIndex) in rows"
-      :id="`article-list-row-${row.key}`"
+      :id="`article-${row.key}`"
       :key="row.key"
       :aria-setsize="totalCount"
       :aria-posinset="rowIndex + 1"

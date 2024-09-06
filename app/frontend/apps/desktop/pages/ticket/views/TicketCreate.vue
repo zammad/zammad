@@ -215,6 +215,10 @@ const formSchema = defineFormSchema([
             },
           },
           {
+            name: 'link_ticket_id',
+            type: 'hidden',
+          },
+          {
             name: 'shared_draft_id',
             type: 'hidden',
           },

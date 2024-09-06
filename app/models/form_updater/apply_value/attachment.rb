@@ -7,7 +7,7 @@ class FormUpdater::ApplyValue::Attachment < FormUpdater::ApplyValue::Base
   end
 
   def map_value(field:, config:)
-    return if config['value'].nil?
+    return if config['value'].nil? || !config['value'].is_a?(Array)
 
     result['attachments'][:value] = Array(config['value']).map do |elem|
       resolve_attachment(elem)

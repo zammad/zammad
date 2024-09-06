@@ -138,6 +138,25 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
         end
       end
 
+      context 'with links' do
+        let!(:other_ticket) { create(:ticket, group: agent.groups.first) }
+        let(:links) do
+          [
+            { linkObjectId: gql.id(other_ticket), linkType: 'child' },
+            { linkObjectId: gql.id(other_ticket), linkType: 'normal' },
+          ]
+        end
+        let(:input_payload) { input_base_payload.merge(links:) }
+
+        it 'creates the ticket and adds links' do
+          it_creates_ticket
+          expect(Link.list(link_object: 'Ticket', link_object_value: Ticket.last.id)).to contain_exactly(
+            { 'link_object' => 'Ticket', 'link_object_value' => other_ticket.id, 'link_type' => 'parent' },
+            { 'link_object' => 'Ticket', 'link_object_value' => other_ticket.id, 'link_type' => 'normal' },
+          )
+        end
+      end
+
       context 'when customer is provided as an email address' do
         let(:email_address) { Faker::Internet.email }
         let(:input_payload) { input_base_payload.merge(customer: { email: email_address }) }
@@ -538,6 +557,22 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
           it_fails_to_create_ticket
           expect(gql.result.error_type).to eq(Exceptions::Forbidden)
           expect(gql.result.error_message).to eq('Access forbidden by Gql::Types::UserType')
+        end
+      end
+
+      context 'with links' do
+        let!(:other_ticket) { create(:ticket, customer: customer) }
+        let(:links) do
+          [
+            { linkObjectId: gql.id(other_ticket), linkType: 'child' },
+            { linkObjectId: gql.id(other_ticket), linkType: 'normal' },
+          ]
+        end
+        let(:input_payload) { input_base_payload.merge(links:) }
+
+        it 'creates the ticket without links' do
+          it_creates_ticket
+          expect(Link.list(link_object: 'Ticket', link_object_value: Ticket.last.id)).to eq([])
         end
       end
 

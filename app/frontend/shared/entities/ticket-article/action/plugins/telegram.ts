@@ -22,20 +22,20 @@ const actionPlugin: TicketArticleActionPlugin = {
       return []
 
     const action: TicketArticleAction = {
-      apps: ['mobile'],
+      apps: ['mobile', 'desktop'],
       label: __('Reply'),
       name: 'telegram personal-message',
       icon: 'reply',
       view: {
         agent: ['change'],
       },
-      perform(ticket, article, { openReplyDialog }) {
+      perform(ticket, article, { openReplyForm }) {
         const articleData = {
           articleType: type,
           inReplyTo: article.messageId,
         }
 
-        openReplyDialog(articleData)
+        openReplyForm(articleData)
       },
     }
     return [action]
@@ -47,9 +47,10 @@ const actionPlugin: TicketArticleActionPlugin = {
     if (descriptionType !== 'telegram personal-message') return []
 
     const type: TicketArticleType = {
-      apps: ['mobile'],
+      apps: ['mobile', 'desktop'],
       value: 'telegram personal-message',
       label: __('Telegram'),
+      buttonLabel: __('Add message'),
       icon: 'telegram',
       view: {
         agent: ['change'],

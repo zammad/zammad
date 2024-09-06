@@ -19,7 +19,7 @@ import type {
 const replyToTwitterComment = ((
   ticket,
   article,
-  { openReplyDialog, getNewArticleBody },
+  { openReplyForm, getNewArticleBody },
 ) => {
   const articleData: FormValues = {
     articleType: 'twitter status',
@@ -45,10 +45,10 @@ const replyToTwitterComment = ((
   if (body) articleData.body = `${recipientsString} ${body} `
   else articleData.body = `${recipientsString} `
 
-  openReplyDialog(articleData)
+  openReplyForm(articleData)
 }) satisfies TicketArticleAction['perform']
 
-const replyToTwitterDm = ((ticket, article, { openReplyDialog }) => {
+const replyToTwitterDm = ((ticket, article, { openReplyForm }) => {
   const sender = article.sender?.name
 
   let to: string | undefined | null
@@ -69,7 +69,7 @@ const replyToTwitterDm = ((ticket, article, { openReplyDialog }) => {
     inReplyTo: article.messageId,
   }
 
-  openReplyDialog(articleData)
+  openReplyForm(articleData)
 }) satisfies TicketArticleAction['perform']
 
 const getTwitterInitials = (config: ConfigList) => {
@@ -93,7 +93,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       return []
 
     const action: TicketArticleAction = {
-      apps: ['mobile'],
+      apps: ['mobile', 'desktop'],
       label: __('Reply'),
       name: type,
       icon: 'reply',
@@ -119,9 +119,10 @@ const actionPlugin: TicketArticleActionPlugin = {
       return []
 
     const type: TicketArticleType = {
-      apps: ['mobile'],
+      apps: ['mobile', 'desktop'],
       value: descriptionType,
       label: __('Twitter'),
+      buttonLabel: __('Add message'),
       icon: 'twitter',
       view: {
         agent: ['change'],

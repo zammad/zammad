@@ -42,14 +42,14 @@ defineOptions({
 })
 
 const emit = defineEmits<{
-  close: [cancel: boolean]
+  close: [cancel?: boolean]
 }>()
 
 const dialogElement = ref<HTMLElement>()
 const footerElement = ref<HTMLElement>()
 const contentElement = ref<HTMLElement>()
 
-const close = async (cancel = true) => {
+const close = async (cancel?: boolean) => {
   emit('close', cancel)
   await closeDialog(props.name)
 }
@@ -127,7 +127,7 @@ onMounted(() => {
         <slot name="footer">
           <CommonDialogActionFooter
             v-bind="footerActionOptions"
-            @cancel="close()"
+            @cancel="close(true)"
             @action="close(false)"
           />
         </slot>

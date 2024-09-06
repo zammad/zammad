@@ -13,7 +13,7 @@ defineProps<Props>()
 <template>
   <div class="flex items-center gap-3 px-5 text-center">
     <div class="line-more grow"></div>
-    <CommonButton class="shrink-0" :disabled>
+    <CommonButton class="shrink-0" :disabled="disabled">
       {{ $t('See more') }}
     </CommonButton>
     <div class="line-more grow"></div>

@@ -28,6 +28,7 @@ describe('popup confirm behaviour', () => {
       text: 'Test heading',
       confirmCallback: confirmCallbackSpy,
       cancelCallback: vi.fn(),
+      closeCallback: vi.fn(),
     }
 
     await waitForNextTick()
@@ -48,6 +49,7 @@ describe('popup confirm behaviour', () => {
       buttonVariant: 'danger',
       confirmCallback: confirmCallbackSpy,
       cancelCallback: vi.fn(),
+      closeCallback: vi.fn(),
     }
 
     await waitForNextTick()
@@ -66,6 +68,7 @@ describe('popup confirm behaviour', () => {
       text: 'Test heading',
       confirmCallback: confirmCallbackSpy,
       cancelCallback: cancelCallbackSpy,
+      closeCallback: vi.fn(),
     }
 
     await waitForNextTick()

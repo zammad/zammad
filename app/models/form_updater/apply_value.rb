@@ -14,13 +14,16 @@ class FormUpdater::ApplyValue
 
   FIELD_RENAMING_MAP = {
     'formSenderType' => 'articleSenderType',
+    'article.type'   => 'articleType'
   }.freeze
 
-  def perform(field:, config:, include_blank: false)
+  def perform(field:, config:, include_blank: false, parent_field: nil)
     # Skip fields without a configured value
     return if config['value'].blank? && !include_blank
 
-    field = FIELD_RENAMING_MAP[field] || field
+    full_field_path = parent_field ? "#{parent_field}.#{field}" : field
+
+    field = FIELD_RENAMING_MAP[full_field_path] || field
     result[field] ||= {}
 
     # Cache the field attribute

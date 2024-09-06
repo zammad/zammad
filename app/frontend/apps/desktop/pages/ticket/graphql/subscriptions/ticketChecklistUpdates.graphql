@@ -15,6 +15,7 @@ subscription ticketChecklistUpdates($ticketId: ID!) {
           number
           title
           state {
+            id
             name
           }
           stateColorCode

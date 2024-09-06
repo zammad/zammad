@@ -20,7 +20,7 @@ defineProps<Props>()
   <div class="flex w-full gap-2 p-3">
     <CommonLabel
       tag="h2"
-      class="min-h-7 grow"
+      class="min-h-7 grow gap-1.5"
       size="large"
       :prefix-icon="icon"
       icon-color="text-stone-200 dark:text-neutral-500"
@@ -38,7 +38,7 @@ defineProps<Props>()
     />
   </div>
 
-  <div class="flex flex-col gap-3 overflow-y-auto p-3">
+  <div class="flex h-full flex-col gap-3 overflow-y-auto p-3">
     <slot />
   </div>
 </template>

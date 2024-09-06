@@ -97,7 +97,7 @@ export const forwardEmail = async (
     'Begin forwarded message',
   )}:---</p><p></p><blockquote type="cite">${quotedHeader}${body}</blockquote>`
 
-  return options.openReplyDialog({
+  return options.openReplyForm({
     articleType: 'email',
     subject: config.ui_ticket_zoom_article_email_subject
       ? article.subject || ticket.title

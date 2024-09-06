@@ -209,7 +209,7 @@ export const replyToEmail = (
     (currentBody && selection ? `<p></p>${currentBody}` : currentBody)
 
   // signature is handled in article type "onSelected" hook
-  options.openReplyDialog({
+  options.openReplyForm({
     ...newArticle,
     subtype: 'reply',
     body,

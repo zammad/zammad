@@ -7,9 +7,10 @@ const actionPlugin: TicketArticleActionPlugin = {
 
   addTypes() {
     const type: TicketArticleType = {
-      apps: ['mobile'],
+      apps: ['mobile', 'desktop'],
       value: 'phone',
       label: __('Phone'),
+      buttonLabel: __('Add phone call'),
       icon: 'phone',
       fields: {
         attachments: {},

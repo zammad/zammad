@@ -1,6 +1,6 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-RSpec.shared_examples 'FormUpdater::AppliesTaskbarState' do |taskbar_key:, taskbar_callback:|
+RSpec.shared_examples 'FormUpdater::AppliesTaskbarState' do |taskbar_key:, taskbar_callback:, apply_state_group_keys:|
   context 'when applying taskbar state' do
 
     let(:taskbar)         { create(:taskbar, key: taskbar_key, callback: taskbar_callback, user_id: user.id, state: taskbar_state) }
@@ -62,6 +62,22 @@ RSpec.shared_examples 'FormUpdater::AppliesTaskbarState' do |taskbar_key:, taskb
         let(:taskbar_state) { { 'title' => '' } }
         let(:field_name)    { 'title' }
         let(:field_result)  { { value: '' } }
+
+        include_examples 'applies the form value of the field'
+      end
+
+      context 'with group which should be flatten' do
+        let(:taskbar_state) do
+          flat_state = { 'priority_id' => 1 }
+
+          if apply_state_group_keys.present?
+            return { apply_state_group_keys.first => flat_state }
+          end
+
+          flat_state
+        end
+        let(:field_name)    { 'priority_id' }
+        let(:field_result)  { { value: 1 } }
 
         include_examples 'applies the form value of the field'
       end

@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useCopyToClipboard } from '#desktop/composables/useCopyToClipboard.ts'
+import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
 
 import CommonButton from '../CommonButton/CommonButton.vue'
 
@@ -30,7 +30,7 @@ const { copyToClipboard } = useCopyToClipboard()
     readonly
   >
     <template #link="context">
-      <div class="mb-2 ms-2 flex h-full items-center">
+      <div class="mb-0.5 ms-2 flex h-full items-center">
         <CommonButton
           prefix-icon="files"
           size="medium"

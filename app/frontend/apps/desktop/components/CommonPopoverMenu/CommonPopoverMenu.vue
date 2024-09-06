@@ -35,6 +35,7 @@ const showHeaderLabel = computed(() => {
 
 const onClickItem = (event: MouseEvent, item: MenuItem) => {
   if (item.onClick) {
+    event.preventDefault()
     item.onClick(props.entity)
   }
 

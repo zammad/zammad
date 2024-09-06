@@ -23,6 +23,7 @@ export const TicketChecklistUpdatesDocument = gql`
           number
           title
           state {
+            id
             name
           }
           stateColorCode

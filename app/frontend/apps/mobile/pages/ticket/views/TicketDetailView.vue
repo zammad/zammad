@@ -20,8 +20,11 @@ import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotificationSeen.ts'
+import { useTicketEdit } from '#shared/entities/ticket/composables/useTicketEdit.ts'
+import { useTicketEditForm } from '#shared/entities/ticket/composables/useTicketEditForm.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import { TicketUpdatesDocument } from '#shared/entities/ticket/graphql/subscriptions/ticketUpdates.api.ts'
+import type { TicketFormData } from '#shared/entities/ticket/types.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
 import UserError from '#shared/errors/UserError.ts'
 import type {
@@ -31,7 +34,6 @@ import type {
 import { EnumFormUpdaterId } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
 
 import CommonLoader from '#mobile/components/CommonLoader/CommonLoader.vue'
 import { useCommonSelect } from '#mobile/components/CommonSelect/useCommonSelect.ts'
@@ -41,8 +43,6 @@ import type { TicketInformation } from '#mobile/entities/ticket/types.ts'
 
 import TicketDetailViewActions from '../components/TicketDetailView/TicketDetailViewActions.vue'
 import { useTicketArticleReply } from '../composable/useTicketArticleReply.ts'
-import { useTicketEdit } from '../composable/useTicketEdit.ts'
-import { useTicketEditForm } from '../composable/useTicketEditForm.ts'
 import { TICKET_INFORMATION_SYMBOL } from '../composable/useTicketInformation.ts'
 import { useTicketLiveUser } from '../composable/useTicketLiveUser.ts'
 
@@ -111,16 +111,44 @@ const {
 
 const {
   currentArticleType,
-  ticketEditSchema,
+  ticketSchema,
+  articleSchema,
+  securityIntegration,
   articleTypeHandler,
   articleTypeSelectHandler,
 } = useTicketEditForm(ticket, form)
+
+const ticketEditSchema = [
+  {
+    isLayout: true,
+    component: 'FormGroup',
+    props: {
+      style: {
+        if: '$formLocation !== "[data-ticket-edit-form]"',
+        then: 'display: none;',
+      },
+      showDirtyMark: true,
+    },
+    children: [ticketSchema],
+  },
+  {
+    isLayout: true,
+    component: 'FormGroup',
+    props: {
+      style: {
+        if: '$formLocation !== "[data-ticket-article-reply-form]"',
+        then: 'display: none;',
+      },
+    },
+    children: [articleSchema],
+  },
+]
 
 const { isTicketAgent } = useTicketView(ticket)
 
 const { notify } = useNotifications()
 
-const saveTicketForm = async (formData: FormSubmitData) => {
+const saveTicketForm = async (formData: FormSubmitData<TicketFormData>) => {
   const updateFormData = currentArticleType.value?.updateForm
   if (updateFormData) {
     formData = updateFormData(formData)
@@ -250,15 +278,6 @@ const submitForm = () => {
   formSubmit()
 }
 
-const application = useApplicationStore()
-
-const securityIntegration = computed<boolean>(
-  () =>
-    (application.config.smime_integration ||
-      application.config.pgp_integration) ??
-    false,
-)
-
 const ticketEditSchemaData = reactive({
   formLocation,
   securityIntegration,
@@ -326,7 +345,7 @@ const showBottomBanner = computed(() => {
         use-object-attributes
         :aria-hidden="!formVisible"
         :class="formVisible ? 'visible' : 'hidden'"
-        @submit="saveTicketForm($event as FormSubmitData)"
+        @submit="saveTicketForm($event as FormSubmitData<TicketFormData>)"
       />
     </CommonLoader>
   </Teleport>

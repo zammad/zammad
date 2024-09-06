@@ -68,6 +68,7 @@ export const initializeFormFields = () => {
     container: 'form-group grid grid-cols-2 gap-y-2.5 gap-x-3',
     help: 'text-xs',
     dirtyMark: 'form-group-mark-dirty',
+    bottomMargin: 'mb-4 last:mb-0',
   })
 
   initializeToggleClasses({

@@ -96,6 +96,7 @@ RSpec.describe Gql::RecordLoader, :aggregate_failures, authenticated_as: :agent,
                 state {
                   name
                   stateType {
+                    id
                     name
                   }
                 }

@@ -7,7 +7,7 @@ import ArticleMetaSecurity from '#desktop/pages/ticket/components/TicketDetailVi
 
 export default <ChannelModule>{
   name: 'email',
-  icon: 'envelope',
+  icon: 'mail',
   label: __('Email'),
   additionalFields: [
     { name: 'subject', order: 350, label: __('Subject') },

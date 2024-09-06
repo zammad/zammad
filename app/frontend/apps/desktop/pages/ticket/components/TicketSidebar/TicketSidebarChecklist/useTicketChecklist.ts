@@ -14,9 +14,7 @@ import { useTicketChecklistQuery } from '#desktop/pages/ticket/graphql/queries/t
 import { TicketChecklistUpdatesDocument } from '#desktop/pages/ticket/graphql/subscriptions/ticketChecklistUpdates.api.ts'
 
 export const useTicketChecklist = () => {
-  const { ticket, ticketId } = useTicketInformation()
-
-  const readonly = computed(() => !ticket?.value?.policy.update)
+  const { ticket, ticketId, canUpdateTicket } = useTicketInformation()
 
   const checklistQuery = new QueryHandler(
     useTicketChecklistQuery(() => ({
@@ -81,7 +79,7 @@ export const useTicketChecklist = () => {
   return {
     checklist,
     incompleteItemCount,
-    readonly,
+    canUpdateTicket,
     isLoadingChecklist,
   }
 }

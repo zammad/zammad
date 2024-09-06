@@ -44,6 +44,7 @@ vi.mock('#desktop/pages/ticket/composables/useTicketInformation.ts', () => ({
     ticketInternalId: ref(ticket.value.internalId),
     ticketId: computed(() => ticket.value.id),
     ticket: computed(() => ticket.value),
+    canUpdateTicket: computed(() => !!ticket.value?.policy.update),
   }),
 }))
 

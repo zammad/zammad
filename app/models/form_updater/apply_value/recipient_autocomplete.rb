@@ -3,7 +3,7 @@
 class FormUpdater::ApplyValue::RecipientAutocomplete < FormUpdater::ApplyValue::Base
 
   def can_handle_field?(field:, field_attribute:)
-    field == 'cc'
+    %w[to cc].include?(field)
   end
 
   def map_value(field:, config:)

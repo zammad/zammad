@@ -83,7 +83,7 @@ const { showPreview } = useFilePreviewViewer(
 
 <template>
   <div
-    class="backface-hidden relative rounded-t-xl"
+    class="group/article backface-hidden relative rounded-t-xl"
     :data-test-id="`article-bubble-container-${article.internalId}`"
     :class="[
       {

@@ -1,4 +1,8 @@
-query ticketChecklist($ticketId: ID, $ticketInternalId: Int, $ticketNumber: String) {
+query ticketChecklist(
+  $ticketId: ID
+  $ticketInternalId: Int
+  $ticketNumber: String
+) {
   ticketChecklist(
     ticket: {
       ticketId: $ticketId
@@ -20,6 +24,7 @@ query ticketChecklist($ticketId: ID, $ticketInternalId: Int, $ticketNumber: Stri
         number
         title
         state {
+          id
           name
         }
         stateColorCode

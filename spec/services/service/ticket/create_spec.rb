@@ -76,6 +76,25 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
         .to eq sample_tags
     end
 
+    context 'when adding links' do
+      let!(:other_ticket) { create(:ticket, customer: customer) }
+      let(:links) do
+        [
+          { link_object: other_ticket, link_type: 'child' },
+          { link_object: other_ticket, link_type: 'normal' },
+        ]
+      end
+
+      it 'adds links correctly' do
+        ticket_data[:links] = links
+        ticket = service.execute(ticket_data:)
+        expect(Link.list(link_object: 'Ticket', link_object_value: ticket.id)).to contain_exactly(
+          { 'link_object' => 'Ticket', 'link_object_value' => other_ticket.id, 'link_type' => 'parent' },
+          { 'link_object' => 'Ticket', 'link_object_value' => other_ticket.id, 'link_type' => 'normal' },
+        )
+      end
+    end
+
     context 'when tag creation is disabled' do
       before do
         Setting.set('tag_new', false)

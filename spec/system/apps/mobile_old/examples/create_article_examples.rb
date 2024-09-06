@@ -39,7 +39,7 @@ RSpec.shared_examples 'mobile app: create article' do |type_label, internal: fal
     it 'cannot create article' do
       open_article_dialog
 
-      expect(find_select('Article Type', visible: :all).open.dialog_element).to have_no_text(type_label)
+      expect(find_select('Channel', visible: :all).open.dialog_element).to have_no_text(type_label)
     end
   end
 
@@ -52,7 +52,7 @@ RSpec.shared_examples 'mobile app: create article' do |type_label, internal: fal
     it "can create article #{type_label}" do
       open_article_dialog
 
-      find_select('Article Type', visible: :all).select_option(type_label)
+      find_select('Channel', visible: :all).select_option(type_label)
 
       if internal
         expect(find_select('Visibility', visible: :all)).to have_selected_option('Internal')

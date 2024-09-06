@@ -30,7 +30,7 @@ const { showPreview } = useFilePreviewViewer(
 </script>
 
 <template>
-  <TicketSidebarContent :title="__('Attachments')" icon="paperclip">
+  <TicketSidebarContent :title="sidebarPlugin.title" :icon="sidebarPlugin.icon">
     <CommonLoader :loading="loading">
       <div
         v-if="ticketAttachments && ticketAttachments.length > 0"

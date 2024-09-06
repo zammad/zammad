@@ -1,14 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { provideLocal } from '@vueuse/shared'
-import { computed, ref } from 'vue'
-
 import { renderComponent } from '#tests/support/components/index.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 
+import { provideTicketInformationMocks } from '#desktop/entities/ticket/__tests__/mocks/provideTicketInformationMocks.ts'
 import ArticleBubbleBlockedContentWarning from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue'
-import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 describe('ArticleBubbleBlockedContentWarning', () => {
   it('does not show if there is no blocked content', () => {
@@ -19,11 +16,7 @@ describe('ArticleBubbleBlockedContentWarning', () => {
       },
       setup: () => {
         const ticket = createDummyTicket()
-        provideLocal(TICKET_KEY, {
-          ticket: computed(() => ticket),
-          ticketId: computed(() => ticket.id),
-          ticketInternalId: ref(ticket.internalId),
-        })
+        provideTicketInformationMocks(ticket)
       },
     })
     expect(
@@ -45,11 +38,8 @@ describe('ArticleBubbleBlockedContentWarning', () => {
       },
       setup: () => {
         const ticket = createDummyTicket()
-        provideLocal(TICKET_KEY, {
-          ticket: computed(() => ticket),
-          ticketId: computed(() => ticket.id),
-          ticketInternalId: ref(ticket.internalId),
-        })
+
+        provideTicketInformationMocks(ticket)
       },
     })
     console.log(wrapper.html())

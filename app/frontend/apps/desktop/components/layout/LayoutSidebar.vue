@@ -7,8 +7,8 @@ import { computed, ref, watch } from 'vue'
 import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vue'
 import { useCollapseHandler } from '#desktop/components/CollapseButton/composables/useCollapseHandler.ts'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import { useResizeLine } from '#desktop/components/ResizeLine/composables/useResizeLine.ts'
 import ResizeLine from '#desktop/components/ResizeLine/ResizeLine.vue'
+import { useResizeLine } from '#desktop/components/ResizeLine/useResizeLine.ts'
 
 import { SidebarPosition } from './types.ts'
 
@@ -69,16 +69,17 @@ const handleKeyStroke = (e: KeyboardEvent, adjustment: number) => {
   emit('resize-horizontal', newWidth)
 }
 
-const { startResizing, isResizingHorizontal } = useResizeLine(
+const { startResizing, isResizing } = useResizeLine(
   (positionX) => emit('resize-horizontal', positionX),
   resizeLineComponent.value?.resizeLine,
   handleKeyStroke,
   {
     calculateFromRight: props.position === SidebarPosition.End,
+    orientation: 'vertical',
   },
 )
 
-watch(isResizingHorizontal, (isResizing) => {
+watch(isResizing, (isResizing) => {
   if (isResizing) {
     emit('resize-horizontal-start')
   } else {

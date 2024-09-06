@@ -14,6 +14,7 @@ export const SearchDocument = gql`
       title
       number
       state {
+        id
         name
       }
       priority {

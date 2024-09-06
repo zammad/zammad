@@ -1,5 +1,13 @@
-mutation ticketChecklistItemUpsert($checklistId: ID!, $checklistItemId: ID, $input: TicketChecklistItemInput!) {
-  ticketChecklistItemUpsert(checklistId: $checklistId, checklistItemId: $checklistItemId, input: $input) {
+mutation ticketChecklistItemUpsert(
+  $checklistId: ID!
+  $checklistItemId: ID
+  $input: TicketChecklistItemInput!
+) {
+  ticketChecklistItemUpsert(
+    checklistId: $checklistId
+    checklistItemId: $checklistItemId
+    input: $input
+  ) {
     checklistItem {
       id
       text
@@ -10,6 +18,7 @@ mutation ticketChecklistItemUpsert($checklistId: ID!, $checklistItemId: ID, $inp
         number
         title
         state {
+          id
           name
         }
         stateColorCode

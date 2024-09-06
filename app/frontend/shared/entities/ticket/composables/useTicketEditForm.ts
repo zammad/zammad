@@ -10,6 +10,7 @@ import type {
   FormHandlerFunction,
   FormRef,
 } from '#shared/components/Form/types.ts'
+import { useAppName } from '#shared/composables/useAppName.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { createArticleTypes } from '#shared/entities/ticket-article/action/plugins/index.ts'
@@ -18,6 +19,7 @@ import type {
   TicketArticleTypeFields,
 } from '#shared/entities/ticket-article/action/plugins/types.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 
 import type { FormKitNode } from '@formkit/core'
 import type { Ref } from 'vue'
@@ -26,8 +28,10 @@ export const useTicketEditForm = (
   ticket: Ref<TicketById | undefined>,
   form: Ref<FormRef | undefined>,
 ) => {
+  const appName = useAppName()
+
   const ticketArticleTypes = computed(() => {
-    return ticket.value ? createArticleTypes(ticket.value, 'mobile') : []
+    return ticket.value ? createArticleTypes(ticket.value, appName) : []
   })
 
   const currentArticleType = shallowRef<AppSpecificTicketArticleType>()
@@ -73,17 +77,23 @@ export const useTicketEditForm = (
 
   const { isTicketCustomer } = useTicketView(ticket)
 
+  const isMobileApp = appName === 'mobile'
+
   const ticketSchema = {
     type: 'group',
     name: 'ticket', // will be flattened in the form submit result
     isGroupOrList: true,
     children: [
-      {
-        name: 'title',
-        type: 'text',
-        label: __('Ticket title'),
-        required: true,
-      },
+      ...(isMobileApp
+        ? [
+            {
+              name: 'title',
+              type: 'text',
+              label: __('Ticket title'),
+              required: true,
+            },
+          ]
+        : []),
       {
         type: 'hidden',
         name: 'isDefaultFollowUpStateSet',
@@ -96,7 +106,10 @@ export const useTicketEditForm = (
   }
 
   const articleSchema = {
-    if: '$newTicketArticleRequested || $newTicketArticlePresent',
+    // Desktop is handling the condition on top for the teleport.
+    if: isMobileApp
+      ? '$newTicketArticleRequested || $newTicketArticlePresent'
+      : undefined,
     type: 'group',
     name: 'article',
     isGroupOrList: true,
@@ -112,8 +125,8 @@ export const useTicketEditForm = (
       },
       {
         name: 'articleType',
-        label: __('Article Type'),
-        labelSrOnly: true,
+        label: __('Channel'),
+        labelSrOnly: isMobileApp,
         type: 'select',
         hidden: computed(() => ticketArticleTypes.value.length === 1),
         props: {
@@ -123,7 +136,7 @@ export const useTicketEditForm = (
       {
         name: 'internal',
         label: __('Visibility'),
-        labelSrOnly: true,
+        labelSrOnly: isMobileApp,
         hidden: isTicketCustomer,
         type: 'select',
         props: {
@@ -143,7 +156,7 @@ export const useTicketEditForm = (
         triggerFormUpdater: false,
       },
       {
-        if: '$currentArticleType.fields.to)',
+        if: '$currentArticleType.fields.to',
         name: 'to',
         label: __('To'),
         type: 'recipient',
@@ -200,7 +213,7 @@ export const useTicketEditForm = (
         triggerFormUpdater: true,
       },
       {
-        if: '$currentArticleType.fields.attachments)',
+        if: '$currentArticleType.fields.attachments',
         type: 'file',
         name: 'attachments',
         label: __('Attachment'),
@@ -228,32 +241,6 @@ export const useTicketEditForm = (
       },
     ],
   }
-
-  const ticketEditSchema = [
-    {
-      isLayout: true,
-      component: 'FormGroup',
-      props: {
-        style: {
-          if: '$formLocation !== "[data-ticket-edit-form]"',
-          then: 'display: none;',
-        },
-        showDirtyMark: true,
-      },
-      children: [ticketSchema],
-    },
-    {
-      isLayout: true,
-      component: 'FormGroup',
-      props: {
-        style: {
-          if: '$formLocation !== "[data-ticket-article-reply-form]"',
-          then: 'display: none;',
-        },
-      },
-      children: [articleSchema],
-    },
-  ]
 
   const articleTypeChangeHandler = () => {
     const executeHandler = (
@@ -330,9 +317,22 @@ export const useTicketEditForm = (
     })
   }
 
+  const application = useApplicationStore()
+
+  const securityIntegration = computed<boolean>(
+    () =>
+      (application.config.smime_integration ||
+        application.config.pgp_integration) ??
+      false,
+  )
+
   return {
-    ticketEditSchema,
+    ticketSchema,
+    articleSchema,
     currentArticleType,
+    ticketArticleTypes,
+    securityIntegration,
+    isTicketCustomer,
     articleTypeHandler: articleTypeChangeHandler,
     articleTypeSelectHandler,
   }

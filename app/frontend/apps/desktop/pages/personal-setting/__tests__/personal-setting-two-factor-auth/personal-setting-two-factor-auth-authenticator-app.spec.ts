@@ -11,7 +11,7 @@ import { visitViewAndMockPasswordConfirmation } from '#desktop/pages/personal-se
 
 const copyToClipboardMock = vi.fn()
 
-vi.mock('#desktop/composables/useCopyToClipboard.ts', async () => ({
+vi.mock('#shared/composables/useCopyToClipboard.ts', async () => ({
   useCopyToClipboard: () => ({ copyToClipboard: copyToClipboardMock }),
 }))
 

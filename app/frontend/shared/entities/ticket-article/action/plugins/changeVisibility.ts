@@ -36,7 +36,7 @@ const actionPlugin: TicketArticleActionPlugin = {
     const iconName = targetInternalState ? 'lock' : 'lock-open'
 
     const action: TicketArticleAction = {
-      apps: ['mobile'],
+      apps: ['mobile', 'desktop'],
       label,
       name: 'changeVisibility',
       icon: iconName,

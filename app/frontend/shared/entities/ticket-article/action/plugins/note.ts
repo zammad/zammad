@@ -6,10 +6,13 @@ const actionPlugin: TicketArticleActionPlugin = {
   order: 100,
 
   addTypes(ticket, { config }) {
+    const isInternal = !!config.ui_ticket_zoom_article_note_new_internal
+
     const type: TicketArticleType = {
-      apps: ['mobile'],
+      apps: ['mobile', 'desktop'],
       value: 'note',
       label: __('Note'),
+      buttonLabel: isInternal ? __('Add internal note') : __('Add note'),
       icon: 'note',
       fields: {
         attachments: {},
@@ -20,7 +23,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       view: {
         agent: ['change'],
       },
-      internal: !!config.ui_ticket_zoom_article_note_new_internal,
+      internal: isInternal,
     }
     return [type]
   },

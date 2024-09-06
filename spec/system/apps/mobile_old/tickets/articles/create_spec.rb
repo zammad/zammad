@@ -48,7 +48,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
     it 'creates an internal note (default)' do
       open_article_dialog
 
-      expect(find_select('Article Type', visible: :all)).to have_selected_option('Note')
+      expect(find_select('Channel', visible: :all)).to have_selected_option('Note')
       expect(find_select('Visibility', visible: :all)).to have_selected_option('Internal')
 
       text = find_editor('Text')
@@ -74,7 +74,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
       find_input('Ticket title').type('foobar')
       click_on('Add reply')
 
-      expect(find_select('Article Type', visible: :all)).to have_selected_option('Note')
+      expect(find_select('Channel', visible: :all)).to have_selected_option('Note')
       expect(find_select('Visibility', visible: :all)).to have_selected_option('Internal')
 
       text = find_editor('Text')
@@ -113,7 +113,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
         visit "/tickets/#{ticket.id}"
         find_button('Add reply').click
 
-        find_select('Article Type', visible: :all).select_option('Email')
+        find_select('Channel', visible: :all).select_option('Email')
 
         wait_for_test_flag('editor.signatureAdd')
 
@@ -140,7 +140,7 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
         visit "/tickets/#{ticket.id}"
         find_button('Add reply').click
 
-        find_select('Article Type', visible: :all).select_option('Email')
+        find_select('Channel', visible: :all).select_option('Email')
 
         wait_for_test_flag('editor.signatureAdd')
 
@@ -388,12 +388,12 @@ RSpec.describe 'Mobile > Ticket > Article > Create', app: :mobile, authenticated
   context 'when creating secured article', authenticated_as: :authenticate do
     def prepare_phone_article
       open_article_dialog
-      find_select('Article Type', visible: :all).select_option('Phone')
+      find_select('Channel', visible: :all).select_option('Phone')
     end
 
     def prepare_email_article(with_body: false)
       open_article_dialog
-      find_select('Article Type', visible: :all).select_option('Email')
+      find_select('Channel', visible: :all).select_option('Email')
       find_autocomplete('To').search_for_option(customer.email, label: customer.fullname)
 
       find_editor('Text').type(Faker::Hacker.say_something_smart) if with_body

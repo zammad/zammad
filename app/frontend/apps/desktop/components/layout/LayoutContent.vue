@@ -90,7 +90,7 @@ const { durations } = useTransitionConfig()
       >
         <div
           data-test-id="layout-wrapper"
-          class="flex grow flex-col gap-3"
+          class="flex h-full grow flex-col gap-3"
           :class="contentAlignmentClass"
           :style="{ maxWidth }"
         >

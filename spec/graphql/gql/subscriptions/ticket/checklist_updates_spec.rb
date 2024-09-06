@@ -27,6 +27,7 @@ RSpec.describe Gql::Subscriptions::Ticket::ChecklistUpdates, type: :graphql do
                 number
                 title
                 state {
+                  id
                   name
                 }
                 stateColorCode

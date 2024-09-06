@@ -3,12 +3,13 @@
 import { useEventListener } from '@vueuse/core'
 import { useRouter } from 'vue-router'
 
-import { useApplicationStore } from '#shared/stores/application.ts'
 import { isStandalone } from '#shared/utils/pwa.ts'
 
+import { useBaseUrl } from './useBaseUrl.ts'
+
 const useHtmlLinks = (urlPrefix: '/desktop' | '/mobile') => {
+  const { baseUrl } = useBaseUrl()
   const router = useRouter()
-  const application = useApplicationStore()
 
   const getRedirectRoute = (url: URL): string | undefined => {
     if (url.pathname.startsWith(urlPrefix)) {
@@ -30,13 +31,13 @@ const useHtmlLinks = (urlPrefix: '/desktop' | '/mobile') => {
   }
 
   const handleLinkClick = (link: HTMLAnchorElement, event: Event) => {
-    const fqdnOrigin = `${window.location.protocol}//${application.config.fqdn}${
-      window.location.port ? `:${window.location.port}` : ''
-    }`
     try {
       const url = new URL(link.href)
 
-      if (url.origin === window.location.origin || url.origin === fqdnOrigin) {
+      if (
+        url.origin === window.location.origin ||
+        url.origin === baseUrl.value
+      ) {
         const redirectRoute = getRedirectRoute(url)
         if (redirectRoute) {
           event.preventDefault()
@@ -62,7 +63,7 @@ const useHtmlLinks = (urlPrefix: '/desktop' | '/mobile') => {
 
     if (!userId) return
 
-    link.href = `${window.location.origin}${urlPrefix}/users/${userId}`
+    link.href = `${baseUrl.value}${urlPrefix}/users/${userId}`
   }
 
   const setupLinksHandlers = (element: HTMLDivElement) => {

@@ -136,6 +136,8 @@ export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
     return (form.value?.values || {}) as T
   })
 
+  const flags = computed(() => form.value?.flags || {})
+
   const formSetErrors = (errors: MutationSendError) => {
     if (!node.value) return
 
@@ -152,6 +154,7 @@ export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
     context,
     nodeValues,
     values,
+    flags,
     state,
     isValid,
     isDirty,

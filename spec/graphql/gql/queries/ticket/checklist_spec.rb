@@ -32,6 +32,7 @@ RSpec.describe Gql::Queries::Ticket::Checklist, type: :graphql do
               number
               title
               state {
+                id
                 name
               }
               stateColorCode
@@ -151,6 +152,7 @@ RSpec.describe Gql::Queries::Ticket::Checklist, type: :graphql do
                   'number'         => another_ticket.number,
                   'title'          => another_ticket.title,
                   'state'          => {
+                    'id'   => gql.id(another_ticket.state),
                     'name' => another_ticket.state.name,
                   },
                   'stateColorCode' => 'open',
@@ -184,6 +186,7 @@ RSpec.describe Gql::Queries::Ticket::Checklist, type: :graphql do
                   'number'         => another_ticket.number,
                   'title'          => another_ticket.title,
                   'state'          => {
+                    'id'   => gql.id(another_ticket.state),
                     'name' => another_ticket.state.name,
                   },
                   'stateColorCode' => 'closed',

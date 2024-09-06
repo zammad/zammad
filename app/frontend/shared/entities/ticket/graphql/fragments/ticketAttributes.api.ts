@@ -61,6 +61,7 @@ export const TicketAttributesFragmentDoc = gql`
     id
     name
     stateType {
+      id
       name
     }
   }

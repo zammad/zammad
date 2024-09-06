@@ -1,8 +1,7 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-RSpec.shared_examples 'FormUpdater::StoresTaskbarState' do |taskbar_key:, taskbar_callback:|
+RSpec.shared_examples 'FormUpdater::StoresTaskbarState' do |taskbar_key:, taskbar_callback:, store_state_group_key:, store_state_group_skip_keys:|
   context 'when storing taskbar state' do
-
     let(:data)            { { 'title' => 'test' } }
     let(:field_name)      { 'title' }
     let(:field_result)    { 'test' }
@@ -12,13 +11,44 @@ RSpec.shared_examples 'FormUpdater::StoresTaskbarState' do |taskbar_key:, taskba
 
     shared_examples 'omits the field' do
       it 'omits the field' do
-        expect { resolved_result.resolve }.to not_change { taskbar.reload.state[field_name] }
+        expect { resolved_result.resolve }.to not_change {
+                                                state = taskbar.reload.state
+
+                                                field_value = state[field_name]
+                                                if (!store_state_group_skip_keys || store_state_group_skip_keys.exclude?(field_name)) && store_state_group_key.present?
+                                                  field_value = state.dig(store_state_group_key, field_name)
+                                                end
+
+                                                field_value
+                                              }
       end
     end
 
     shared_examples 'stores the form value of the field' do
       it 'stores the form value of the field' do
-        expect { resolved_result.resolve }.to change { taskbar.reload.state[field_name] }.to(field_result)
+        expect { resolved_result.resolve }.to change {
+                                                state = taskbar.reload.state
+
+                                                field_value = state[field_name]
+                                                if (!store_state_group_skip_keys || store_state_group_skip_keys.exclude?(field_name)) && store_state_group_key.present?
+                                                  field_value = state.dig(store_state_group_key, field_name)
+                                                end
+
+                                                field_value
+                                              }.to(field_result)
+      end
+    end
+
+    shared_examples 'stores all form values of the fields' do
+      it 'stores the form values of the fields' do
+        resolved_result.resolve
+
+        current_check_state = taskbar.reload.state
+        if (!store_state_group_skip_keys || store_state_group_skip_keys.exclude?(field_name)) && store_state_group_key.present?
+          current_check_state = current_check_state[store_state_group_key]
+        end
+
+        expect(current_check_state).to include(field_result)
       end
     end
 
@@ -48,6 +78,18 @@ RSpec.shared_examples 'FormUpdater::StoresTaskbarState' do |taskbar_key:, taskba
         let(:field_result) { 'recipient1@example.org, recipient2@example.org' }
 
         include_examples 'stores the form value of the field'
+
+        context 'with cc field inside articles' do
+          before do
+            skip 'TODO: This is a known issue and should be fixed in the future.'
+          end
+
+          let(:data)         { { 'article' => { 'cc' => %w[recipient1@example.org recipient2@example.org] } } }
+          let(:field_name)   { 'article' }
+          let(:field_result) { { 'cc' => 'recipient1@example.org, recipient2@example.org' } }
+
+          include_examples 'stores the form value of the field'
+        end
       end
 
       context 'with tags field' do
@@ -76,6 +118,25 @@ RSpec.shared_examples 'FormUpdater::StoresTaskbarState' do |taskbar_key:, taskba
         let(:data)         { { 'title' => '' } }
         let(:field_name)   { 'title' }
         let(:field_result) { '' }
+
+        include_examples 'stores the form value of the field'
+      end
+
+      context 'with multiple fields' do
+        let(:data)         { { 'state_id' => 1, 'priority_id' => 3 } }
+        let(:field_result) { { 'state_id' => 1, 'priority_id' => 3 } }
+
+        include_examples 'stores all form values of the fields'
+      end
+
+      context 'with used skip_group_keys' do
+        let(:data)         { { 'article' => { 'body' => 'Example Text', 'articleSenderType' => 'phone-in' } } }
+        let(:field_name)   { 'article' }
+        let(:field_result) { { 'body' => 'Example Text', 'formSenderType' => 'phone-in' } }
+
+        before do
+          skip 'TODO: This is a known issue and should be fixed in the future.'
+        end
 
         include_examples 'stores the form value of the field'
       end

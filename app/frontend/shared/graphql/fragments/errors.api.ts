@@ -5,5 +5,6 @@ export const ErrorsFragmentDoc = gql`
     fragment errors on UserError {
   message
   field
+  exception
 }
     `;

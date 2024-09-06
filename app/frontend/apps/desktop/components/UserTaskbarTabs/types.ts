@@ -22,6 +22,7 @@ export interface UserTaskbarTab<T = Maybe<ObjectWithId | ObjectWithUid>> {
   updatedAt?: Scalars['ISO8601DateTime']['output']
   order: number
   formId?: Maybe<Scalars['FormId']['input']>
+  formNewArticlePresent?: boolean
   changed?: boolean
   dirty?: boolean
   notify?: boolean

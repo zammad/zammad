@@ -144,6 +144,20 @@ export const useTicketCreate = (
       )
     }
 
+    if (formData.link_ticket_id) {
+      const linkObjectId = convertToGraphQLId(
+        'Ticket',
+        formData.link_ticket_id as string | number,
+      )
+
+      input.links = [
+        {
+          linkObjectId,
+          linkType: 'child',
+        },
+      ]
+    }
+
     return ticketCreateMutation
       .send({ input })
       .then((result) => {

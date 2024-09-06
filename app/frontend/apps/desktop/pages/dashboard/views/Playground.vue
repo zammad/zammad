@@ -21,6 +21,7 @@ import type {
   FormValues,
 } from '#shared/components/Form/types.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
@@ -46,7 +47,6 @@ import { useTabManager } from '#desktop/components/CommonTabManager/useTabManage
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import ThemeSwitch from '#desktop/components/ThemeSwitch/ThemeSwitch.vue'
 import type { ThemeSwitchInstance } from '#desktop/components/ThemeSwitch/types.ts'
-import { useCopyToClipboard } from '#desktop/composables/useCopyToClipboard.ts'
 
 const alphabetOptions = computed(() =>
   [...Array(26).keys()].map((i) => ({
@@ -1223,7 +1223,7 @@ const inlineEditValue = ref('Edit me inline')
         <CommonBreadcrumb class="grow" :items="breadcrumbItems">
           <template #trailing>
             <CommonIcon
-              name="clipboard2"
+              name="files"
               size="xs"
               class="text-blue-800"
               @click="copyToClipboard('123456')"

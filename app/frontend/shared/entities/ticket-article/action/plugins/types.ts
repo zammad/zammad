@@ -11,6 +11,7 @@ import type { FormRef, FormSubmitData } from '#shared/components/Form/types.ts'
 import type {
   TicketArticle,
   TicketById,
+  TicketFormData,
 } from '#shared/entities/ticket/types.ts'
 import type { getTicketView } from '#shared/entities/ticket/utils/getTicketView.ts'
 import type { AppName } from '#shared/types/app.ts'
@@ -43,7 +44,7 @@ export interface TicketArticlePerformOptions {
   selection?: SelectionData
   formId: string
 
-  openReplyDialog(values?: MaybeRecord<TicketArticleFormValues>): Promise<void>
+  openReplyForm(values?: MaybeRecord<TicketArticleFormValues>): Promise<void>
 
   getNewArticleBody(type: EditorContentType): string
 }
@@ -73,7 +74,8 @@ export interface TicketArticleAction {
   name: string // "type" in desktop view, but clashes with ArticleType
   icon: string
   view: TicketViewPolicyMap
-  link?: string // do we need it(?)
+  link?: string
+  alwaysVisible?: boolean
 
   perform?(
     ticket: TicketById,
@@ -121,6 +123,7 @@ export interface AppSpecificTicketArticleType {
   value: string
   icon: string
   label: string
+  buttonLabel: string
   internal: boolean
   view: TicketViewPolicyMap
   fields: Partial<Record<keyof TicketArticleTypeFields, TicketArticleTypeProps>>
@@ -148,8 +151,11 @@ export interface AppSpecificTicketArticleType {
     options: TicketArticleSelectionOptions,
   ): void
 
-  // TODO use actual type instead of FormValues
-  updateForm?(formValues: FormSubmitData): FormSubmitData
+  updateForm?(
+    formValues: FormSubmitData<TicketFormData>,
+  ): FormSubmitData<TicketFormData>
+
+  performReply?(ticket: TicketById): MaybeRecord<TicketArticleFormValues>
 }
 
 export interface TicketArticleType

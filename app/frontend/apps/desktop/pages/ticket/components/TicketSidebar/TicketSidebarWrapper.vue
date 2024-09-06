@@ -21,6 +21,7 @@ defineEmits<{
       :icon="sidebarPlugin.icon"
       :badge="badge"
       :selected="selected"
+      :update-indicator="updateIndicator"
       @click="$emit('click', $event)"
     />
     <Teleport v-if="selected" to="#ticketSidebar">

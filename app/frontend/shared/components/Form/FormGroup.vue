@@ -20,14 +20,18 @@ const classMap = getFormGroupClasses()
     :class="[
       classMap.container,
       {
-        'mb-4': !hasHelp,
+        [classMap.bottomMargin]: !hasHelp,
         [classMap.dirtyMark]: showDirtyMark,
       },
     ]"
   >
     <slot />
   </div>
-  <div v-if="hasHelp" class="mb-4 pt-1" :class="classMap.help">
+  <div
+    v-if="hasHelp"
+    class="pt-1"
+    :class="[classMap.bottomMargin, classMap.help]"
+  >
     <slot name="help">
       {{ help }}
     </slot>

@@ -9,7 +9,7 @@ interface Props {
   context: {
     article: TicketArticle
   }
-  type?: 'from' | 'to'
+  type?: 'from' | 'to' | 'cc'
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -18,6 +18,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 const getEmailAddress = (article: TicketArticle) => {
   if (props.type === 'from') return article.from?.parsed?.at(0)?.emailAddress
+  if (props.type === 'cc') return article.cc?.parsed?.at(0)?.emailAddress
 
   return article.to?.parsed?.at(0)?.emailAddress
 }
@@ -25,6 +26,9 @@ const getEmailAddress = (article: TicketArticle) => {
 const getName = (article: TicketArticle) => {
   if (props.type === 'from')
     return article.from?.parsed?.at(0)?.name || article.from?.raw
+
+  if (props.type === 'cc')
+    return article.cc?.parsed?.at(0)?.name || article.cc?.raw
 
   return article.to?.parsed?.at(0)?.name || article.to?.raw
 }
@@ -39,6 +43,8 @@ const email = computed(() => getEmailAddress(props.context.article))
     <CommonLabel v-if="name" class="text-black dark:text-white">{{
       $t(name)
     }}</CommonLabel>
-    <CommonLabel v-if="email && email !== '-'">{{ `<${email}>` }}</CommonLabel>
+    <CommonLabel v-if="email && email !== '-' && email !== name">{{
+      `<${email}>`
+    }}</CommonLabel>
   </div>
 </template>

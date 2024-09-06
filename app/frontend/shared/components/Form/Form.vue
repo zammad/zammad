@@ -938,6 +938,7 @@ const handlesFormUpdater = (
     meta.reset = true
   } else if (changedField) {
     meta.changedField = changedField
+    // TODO: we need to reflect the group, when it's not flatten...
     data[changedField.name] = changedField.newValue
   }
 
@@ -1263,6 +1264,10 @@ const initializeFormSchema = () => {
       useFormUpdaterQuery(
         formUpdaterVariables as Ref<FormUpdaterQueryVariables>,
         {
+          // TODO: we can try it like that to improve a little bit the loading situation, but could
+          // lead to an flickering when something changes from server perspective...
+          // fetchPolicy: 'cache-and-network',
+          // nextFetchPolicy: 'no-cache',
           fetchPolicy: 'no-cache',
         },
       ),
@@ -1369,6 +1374,7 @@ defineExpose({
   formNode,
   formId,
   values,
+  flags: schemaData.flags,
   updateChangedFields,
   updateSchemaDataField,
   getNodeByName,

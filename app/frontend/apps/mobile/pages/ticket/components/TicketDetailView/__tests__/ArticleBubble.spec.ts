@@ -383,18 +383,15 @@ describe('links handling', () => {
   })
 
   it('handles self mobile links with fqdn', async () => {
-    mockApplicationConfig({ fqdn: 'example.com' })
-    await clickLink(`http://example.com:3000${mobile.pathname}`)
+    mockApplicationConfig({ http_type: 'https', fqdn: 'example.com' })
+    await clickLink(`https://example.com${mobile.pathname}`)
     const router = getTestRouter()
     expect(open).not.toHaveBeenCalled()
     expect(router.push).toHaveBeenCalledWith(mobile.link)
   })
   it('handles target=_blank mobile links with fqdn', async () => {
-    mockApplicationConfig({ fqdn: 'example.com' })
-    await clickLink(
-      `http://example.com:3000${mobile.pathname}`,
-      'target="_blank"',
-    )
+    mockApplicationConfig({ http_type: 'https', fqdn: 'example.com' })
+    await clickLink(`https://example.com${mobile.pathname}`, 'target="_blank"')
     const router = getTestRouter()
     expect(open).toHaveBeenCalledWith(mobile.pathname, '_blank')
     expect(router.push).not.toHaveBeenCalledWith()
@@ -423,16 +420,16 @@ describe('links handling', () => {
   })
 
   it('handles self desktop links with fqdn', async () => {
-    mockApplicationConfig({ fqdn: 'example.com' })
-    await clickLink(`http://example.com:3000/#${desktop.link.slice(1)}`)
+    mockApplicationConfig({ http_type: 'https', fqdn: 'example.com' })
+    await clickLink(`https://example.com/#${desktop.link.slice(1)}`)
     const router = getTestRouter()
     expect(open).not.toHaveBeenCalled()
     expect(router.push).toHaveBeenCalledWith(desktop.link)
   })
   it('handles target=_blank desktop links with fqdn', async () => {
-    mockApplicationConfig({ fqdn: 'example.com' })
+    mockApplicationConfig({ http_type: 'https', fqdn: 'example.com' })
     await clickLink(
-      `http://example.com:3000/#${desktop.link.slice(1)}`,
+      `https://example.com/#${desktop.link.slice(1)}`,
       'target="_blank"',
     )
     const router = getTestRouter()
@@ -456,7 +453,7 @@ describe('links handling', () => {
   })
 
   it('fixes invalid user mention links', () => {
-    mockApplicationConfig({ fqdn: 'example.com' })
+    mockApplicationConfig({ http_type: 'https', fqdn: 'example.com' })
     const userId = '1'
     const userLink = `http://example.com:3000/#user/profile/${userId}`
     const view = renderArticleBubble({
@@ -464,7 +461,7 @@ describe('links handling', () => {
     })
     expect(view.getByRole('link')).toHaveAttribute(
       'href',
-      `http://localhost:3000/mobile/users/${userId}`,
+      `https://example.com/mobile/users/${userId}`,
     )
   })
 })

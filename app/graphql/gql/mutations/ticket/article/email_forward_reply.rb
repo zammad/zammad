@@ -43,6 +43,8 @@ module Gql::Mutations
         result = send(func, article)
         return result if result.present?
       end
+
+      nil
     end
 
     def to_email_web(article)

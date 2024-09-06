@@ -4,6 +4,7 @@ class FormUpdater::Updater::Ticket::Create < FormUpdater::Updater
   include FormUpdater::Concerns::AppliesTaskbarState
   include FormUpdater::Concerns::AppliesTicketTemplate
   include FormUpdater::Concerns::AppliesTicketSharedDraft
+  include FormUpdater::Concerns::AppliesSplitTicketArticle
   include FormUpdater::Concerns::ChecksCoreWorkflow
   include FormUpdater::Concerns::HasSecurityOptions
   include FormUpdater::Concerns::ProvidesInitialValues

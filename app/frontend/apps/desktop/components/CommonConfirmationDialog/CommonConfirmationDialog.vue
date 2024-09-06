@@ -12,11 +12,13 @@ import type { ConfirmationVariantOptions } from './types.ts'
 
 const { confirmationOptions } = useConfirmation()
 
-const handleConfirmation = (isCancel: boolean) => {
+const handleConfirmation = (isCancel?: boolean) => {
   if (isCancel) {
     confirmationOptions.value?.cancelCallback()
-  } else {
+  } else if (isCancel === false) {
     confirmationOptions.value?.confirmCallback()
+  } else {
+    confirmationOptions.value?.closeCallback()
   }
 
   confirmationOptions.value = undefined
