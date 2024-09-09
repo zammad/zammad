@@ -24,17 +24,26 @@ class App.ControllerTabs extends App.Controller
         localeController.hide()
 
   render: ->
+    displayTabs = []
+
+    # Filter out tabs which use custom controllers that the current user has no permission to access (#5328).
+    _.each(@tabs, (tab) =>
+      displayTabs.push(tab) if not tab.controller
+      return if tab.controller.requiredPermission and !@permissionCheck(tab.controller.requiredPermission)
+      displayTabs.push(tab)
+    )
+
     @html App.view('generic/tabs')(
       header: @header
       subHeader: @subHeader
-      tabs: @tabs
+      tabs: displayTabs
       addTab: @addTab
       headerSwitchName: @headerSwitchName
       headerSwitchChecked: @headerSwitchChecked
     )
 
     # insert content
-    for tab in @tabs
+    for tab in displayTabs
       @$('.tab-content').append("<div class=\"tab-pane\" id=\"#{tab.target}\"></div>")
       if tab.controller
         params = tab.params || {}
@@ -45,7 +54,7 @@ class App.ControllerTabs extends App.Controller
         @controllerList.push new tab.controller(_.extend({}, @originParams, params))
 
     # check if tabs need to be show / cant' use .tab(), because tabs are note shown (only one tab exists)
-    if @tabs.length <= 1
+    if displayTabs.length <= 1
       @$('.tab-pane').addClass('active')
       return
 

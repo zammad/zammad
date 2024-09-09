@@ -609,7 +609,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee:3
 #: app/assets/javascripts/app/views/api.jst.eco:2
-#: db/seeds/permissions.rb:215
+#: db/seeds/permissions.rb:227
 msgid "API"
 msgstr ""
 
@@ -653,47 +653,47 @@ msgstr ""
 msgid "Access denied"
 msgstr ""
 
-#: db/seeds/permissions.rb:303
+#: db/seeds/permissions.rb:315
 msgid "Access the agent chat features."
 msgstr ""
 
-#: db/seeds/permissions.rb:318
+#: db/seeds/permissions.rb:330
 msgid "Access the agent phone features."
 msgstr ""
 
-#: db/seeds/permissions.rb:333
+#: db/seeds/permissions.rb:345
 msgid "Access the knowledge base editor features."
 msgstr ""
 
-#: db/seeds/permissions.rb:339
+#: db/seeds/permissions.rb:351
 msgid "Access the knowledge base reader features."
 msgstr ""
 
-#: db/seeds/permissions.rb:361
+#: db/seeds/permissions.rb:373
 msgid "Access the tickets as agent based on group access."
 msgstr ""
 
-#: db/seeds/permissions.rb:370
+#: db/seeds/permissions.rb:382
 msgid "Access tickets as customer."
 msgstr ""
 
-#: db/seeds/permissions.rb:294
+#: db/seeds/permissions.rb:306
 msgid "Access to the chat interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:324
+#: db/seeds/permissions.rb:336
 msgid "Access to the knowledge base interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:309
+#: db/seeds/permissions.rb:321
 msgid "Access to the phone interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:346
+#: db/seeds/permissions.rb:358
 msgid "Access to the report interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:352
+#: db/seeds/permissions.rb:364
 msgid "Access to the ticket interface."
 msgstr ""
 
@@ -1222,7 +1222,7 @@ msgstr ""
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
 
-#: db/seeds/permissions.rb:302
+#: db/seeds/permissions.rb:314
 msgid "Agent chat"
 msgstr ""
 
@@ -1235,11 +1235,11 @@ msgstr ""
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:317
+#: db/seeds/permissions.rb:329
 msgid "Agent phone"
 msgstr ""
 
-#: db/seeds/permissions.rb:360
+#: db/seeds/permissions.rb:372
 msgid "Agent tickets"
 msgstr ""
 
@@ -1483,7 +1483,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:59
-#: db/seeds/permissions.rb:383
+#: db/seeds/permissions.rb:395
 msgid "Appearance"
 msgstr ""
 
@@ -2004,7 +2004,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:128
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:175
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:121
-#: db/seeds/permissions.rb:397
+#: db/seeds/permissions.rb:409
 msgid "Avatar"
 msgstr ""
 
@@ -2528,7 +2528,7 @@ msgstr ""
 msgid "Change order"
 msgstr ""
 
-#: db/seeds/permissions.rb:415
+#: db/seeds/permissions.rb:427
 msgid "Change personal account password."
 msgstr ""
 
@@ -2673,7 +2673,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:3
-#: db/seeds/permissions.rb:287
+#: db/seeds/permissions.rb:299
 #: db/seeds/settings.rb:5790
 msgid "Checklists"
 msgstr ""
@@ -3308,7 +3308,7 @@ msgid "Core Workflow Ajax Mode"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:3
-#: db/seeds/permissions.rb:239
+#: db/seeds/permissions.rb:251
 msgid "Core Workflows"
 msgstr ""
 
@@ -3735,7 +3735,7 @@ msgstr ""
 msgid "Customer selection based on sender and receiver list"
 msgstr ""
 
-#: db/seeds/permissions.rb:369
+#: db/seeds/permissions.rb:381
 msgid "Customer tickets"
 msgstr ""
 
@@ -3777,7 +3777,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:3
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:3
-#: db/seeds/permissions.rb:251
+#: db/seeds/permissions.rb:263
 msgid "Data Privacy"
 msgstr ""
 
@@ -4699,7 +4699,7 @@ msgstr ""
 msgid "Delete column"
 msgstr ""
 
-#: db/seeds/permissions.rb:252
+#: db/seeds/permissions.rb:264
 msgid "Delete existing data of your system."
 msgstr ""
 
@@ -4875,7 +4875,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:37
-#: db/seeds/permissions.rb:428
+#: db/seeds/permissions.rb:440
 msgid "Devices"
 msgstr ""
 
@@ -7667,7 +7667,7 @@ msgid "Integer field"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/integrations.coffee:3
-#: db/seeds/permissions.rb:209
+#: db/seeds/permissions.rb:221
 msgid "Integrations"
 msgstr ""
 
@@ -7982,7 +7982,7 @@ msgstr ""
 msgid "Knowledge Base Answer"
 msgstr ""
 
-#: db/seeds/permissions.rb:332
+#: db/seeds/permissions.rb:344
 msgid "Knowledge Base Editor"
 msgstr ""
 
@@ -7990,7 +7990,7 @@ msgstr ""
 msgid "Knowledge Base Feed"
 msgstr ""
 
-#: db/seeds/permissions.rb:338
+#: db/seeds/permissions.rb:350
 msgid "Knowledge Base Reader"
 msgstr ""
 
@@ -8044,7 +8044,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:13
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:157
-#: db/seeds/permissions.rb:390
+#: db/seeds/permissions.rb:402
 msgid "Language"
 msgstr ""
 
@@ -8244,7 +8244,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/user.jst.eco:34
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:46
-#: db/seeds/permissions.rb:442
+#: db/seeds/permissions.rb:454
 msgid "Linked Accounts"
 msgstr ""
 
@@ -8432,7 +8432,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee:3
 #: app/assets/javascripts/app/views/maintenance.jst.eco:3
-#: db/seeds/permissions.rb:257
+#: db/seeds/permissions.rb:269
 msgid "Maintenance"
 msgstr ""
 
@@ -8453,7 +8453,7 @@ msgstr ""
 msgid "Manage"
 msgstr ""
 
-#: db/seeds/permissions.rb:216
+#: db/seeds/permissions.rb:228
 msgid "Manage API of your system."
 msgstr ""
 
@@ -8506,7 +8506,7 @@ msgstr ""
 msgid "Manage WhatsApp channel of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:276
+#: db/seeds/permissions.rb:288
 msgid "Manage active user sessions of your system."
 msgstr ""
 
@@ -8538,7 +8538,7 @@ msgstr ""
 msgid "Manage core system settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:240
+#: db/seeds/permissions.rb:252
 msgid "Manage core workflows of your system."
 msgstr ""
 
@@ -8554,71 +8554,71 @@ msgstr ""
 msgid "Manage groups of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:210
+#: db/seeds/permissions.rb:222
 msgid "Manage integrations of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:258
+#: db/seeds/permissions.rb:270
 msgid "Manage maintenance mode of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:264
+#: db/seeds/permissions.rb:276
 msgid "Manage monitoring of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:222
+#: db/seeds/permissions.rb:234
 msgid "Manage object attributes of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:270
+#: db/seeds/permissions.rb:282
 msgid "Manage packages of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:436
+#: db/seeds/permissions.rb:448
 msgid "Manage personal API tokens."
 msgstr ""
 
-#: db/seeds/permissions.rb:384
+#: db/seeds/permissions.rb:396
 msgid "Manage personal appearance settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:398
+#: db/seeds/permissions.rb:410
 msgid "Manage personal avatar settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:470
+#: db/seeds/permissions.rb:482
 msgid "Manage personal calendar."
 msgstr ""
 
-#: db/seeds/permissions.rb:429
+#: db/seeds/permissions.rb:441
 msgid "Manage personal devices and sessions."
 msgstr ""
 
-#: db/seeds/permissions.rb:391
+#: db/seeds/permissions.rb:403
 msgid "Manage personal language settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:443
+#: db/seeds/permissions.rb:455
 msgid "Manage personal linked accounts."
 msgstr ""
 
-#: db/seeds/permissions.rb:450
+#: db/seeds/permissions.rb:462
 msgid "Manage personal notifications settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:405
+#: db/seeds/permissions.rb:417
 msgid "Manage personal out of office settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:460
+#: db/seeds/permissions.rb:472
 msgid "Manage personal overviews."
 msgstr ""
 
-#: db/seeds/permissions.rb:377
+#: db/seeds/permissions.rb:389
 msgid "Manage personal settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:422
+#: db/seeds/permissions.rb:434
 msgid "Manage personal two-factor authentication methods."
 msgstr ""
 
@@ -8642,7 +8642,7 @@ msgstr ""
 msgid "Manage security settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:282
+#: db/seeds/permissions.rb:294
 msgid "Manage system report of your system."
 msgstr ""
 
@@ -8650,8 +8650,16 @@ msgstr ""
 msgid "Manage text modules of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:288
+#: db/seeds/permissions.rb:210
+msgid "Manage ticket auto assignment settings of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb:300
 msgid "Manage ticket checklists of your system."
+msgstr ""
+
+#: db/seeds/permissions.rb:216
+msgid "Manage ticket duplicate detection settings of your system."
 msgstr ""
 
 #: db/seeds/permissions.rb:48
@@ -8662,7 +8670,7 @@ msgstr ""
 msgid "Manage ticket overviews of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:234
+#: db/seeds/permissions.rb:246
 msgid "Manage ticket priorities of your system."
 msgstr ""
 
@@ -8670,7 +8678,7 @@ msgstr ""
 msgid "Manage ticket settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:228
+#: db/seeds/permissions.rb:240
 msgid "Manage ticket states of your system."
 msgstr ""
 
@@ -8686,7 +8694,7 @@ msgstr ""
 msgid "Manage time accounting settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:246
+#: db/seeds/permissions.rb:258
 msgid "Manage translations of your system."
 msgstr ""
 
@@ -9086,7 +9094,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/monitoring.coffee:3
 #: app/assets/javascripts/app/views/monitoring.jst.eco:3
-#: db/seeds/permissions.rb:263
+#: db/seeds/permissions.rb:275
 msgid "Monitoring"
 msgstr ""
 
@@ -10023,7 +10031,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:34
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
-#: db/seeds/permissions.rb:449
+#: db/seeds/permissions.rb:461
 msgid "Notifications"
 msgstr ""
 
@@ -10103,7 +10111,7 @@ msgid "Object Manager"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:330
-#: db/seeds/permissions.rb:221
+#: db/seeds/permissions.rb:233
 msgid "Objects"
 msgstr ""
 
@@ -10465,7 +10473,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:126
-#: db/seeds/permissions.rb:404
+#: db/seeds/permissions.rb:416
 msgid "Out of Office"
 msgstr ""
 
@@ -10600,7 +10608,7 @@ msgid "Package"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/package.coffee:3
-#: db/seeds/permissions.rb:269
+#: db/seeds/permissions.rb:281
 msgid "Packages"
 msgstr ""
 
@@ -10649,7 +10657,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:83
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:52
 #: db/seeds/object_manager_attributes.rb:1249
-#: db/seeds/permissions.rb:414
+#: db/seeds/permissions.rb:426
 msgid "Password"
 msgstr ""
 
@@ -10807,7 +10815,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:12
 #: db/seeds/object_manager_attributes.rb:797
-#: db/seeds/permissions.rb:308
+#: db/seeds/permissions.rb:320
 msgid "Phone"
 msgstr ""
 
@@ -11205,7 +11213,7 @@ msgid "Profile language updated successfully."
 msgstr ""
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
-#: db/seeds/permissions.rb:376
+#: db/seeds/permissions.rb:388
 msgid "Profile settings"
 msgstr ""
 
@@ -12577,7 +12585,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/session.coffee:3
 #: app/assets/javascripts/app/views/session.jst.eco:2
-#: db/seeds/permissions.rb:275
+#: db/seeds/permissions.rb:287
 msgid "Sessions"
 msgstr ""
 
@@ -13493,7 +13501,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/system_report.coffee:3
 #: app/assets/javascripts/app/views/system_report.jst.eco:2
-#: db/seeds/permissions.rb:281
+#: db/seeds/permissions.rb:293
 msgid "System Report"
 msgstr ""
 
@@ -15350,6 +15358,10 @@ msgstr ""
 msgid "Ticket (censored):"
 msgstr ""
 
+#: db/seeds/permissions.rb:209
+msgid "Ticket Auto Assignment"
+msgstr ""
+
 #: db/seeds/settings.rb:2272
 msgid "Ticket Conditions Expert Mode"
 msgstr ""
@@ -15364,6 +15376,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:22
 msgid "Ticket Customer"
+msgstr ""
+
+#: db/seeds/permissions.rb:215
+msgid "Ticket Duplicate Detection"
 msgstr ""
 
 #: db/seeds/settings.rb:2167
@@ -15421,7 +15437,7 @@ msgid "Ticket Owner"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee:16
-#: db/seeds/permissions.rb:233
+#: db/seeds/permissions.rb:245
 msgid "Ticket Priorities"
 msgstr ""
 
@@ -15446,7 +15462,7 @@ msgid "Ticket State"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:3
-#: db/seeds/permissions.rb:227
+#: db/seeds/permissions.rb:239
 msgid "Ticket States"
 msgstr ""
 
@@ -15900,7 +15916,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:51
-#: db/seeds/permissions.rb:435
+#: db/seeds/permissions.rb:447
 msgid "Token Access"
 msgstr ""
 
@@ -15979,7 +15995,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:390
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
-#: db/seeds/permissions.rb:245
+#: db/seeds/permissions.rb:257
 msgid "Translations"
 msgstr ""
 
@@ -16138,7 +16154,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/password.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:57
-#: db/seeds/permissions.rb:421
+#: db/seeds/permissions.rb:433
 msgid "Two-factor Authentication"
 msgstr ""
 

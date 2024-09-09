@@ -1,5 +1,5 @@
 class App.SettingTicketDuplicateDetection extends App.ControllerSubContent
-  requiredPermission: 'admin.ticket_duplicate_detection'
+  @requiredPermission: 'admin.ticket_duplicate_detection'
   events:
     'change .js-ticketDuplicateDetection input': 'setTicketDuplicateDetection'
     'click .js-ticketDuplicateDetectionFilter': 'setFilter'

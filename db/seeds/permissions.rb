@@ -205,6 +205,18 @@ Permission.create_if_not_exists(
   preferences: { prio: 1330 }
 )
 Permission.create_if_not_exists(
+  name:        'admin.ticket_auto_assignment',
+  label:       __('Ticket Auto Assignment'),
+  description: __('Manage ticket auto assignment settings of your system.'),
+  preferences: { prio: 1331 }
+)
+Permission.create_if_not_exists(
+  name:        'admin.ticket_duplicate_detection',
+  label:       __('Ticket Duplicate Detection'),
+  description: __('Manage ticket duplicate detection settings of your system.'),
+  preferences: { prio: 1332 }
+)
+Permission.create_if_not_exists(
   name:        'admin.integration',
   label:       __('Integrations'),
   description: __('Manage integrations of your system.'),
