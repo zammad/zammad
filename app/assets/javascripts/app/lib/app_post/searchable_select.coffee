@@ -4,6 +4,7 @@ class App.SearchableSelect extends Spine.Controller
     'input .js-input':                                'onInput'
     'blur .js-input':                                 'onBlur'
     'focus .js-input':                                'onFocus'
+    'click .js-input':                                'onClick'
     'focus .js-shadow':                               'onShadowFocus'
     'change .js-shadow':                              'onShadowChange'
     'click .js-option':                               'selectItem'
@@ -573,11 +574,13 @@ class App.SearchableSelect extends Spine.Controller
     @input.off 'keydown.searchable_select'
 
   onFocus: ->
+    @initialValue = @input.val()
     @input.on 'keydown.searchable_select', @navigate
 
+  onClick: ->
     # Clear the input value so the user can start searching immediately (#4830).
-    @input.val('')
-      .removeAttr('title')
+    # Regression which provoked (#5335)
+    @resetSearch()
 
   # propergate focus to our visible input
   onShadowFocus: ->
