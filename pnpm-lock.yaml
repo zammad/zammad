@@ -256,8 +256,8 @@ importers:
         version: 7.1.0
     devDependencies:
       '@faker-js/faker':
-        specifier: ^8.4.1
-        version: 8.4.1
+        specifier: ^9.0.0
+        version: 9.0.0
       '@graphql-codegen/cli':
         specifier: ^5.0.2
         version: 5.0.2(@babel/core@7.24.5)(@types/node@18.11.4)(graphql@16.9.0)
@@ -1275,9 +1275,9 @@ packages:
     resolution: {integrity: sha512-Ys+3g2TaW7gADOJzPt83SJtCDhMjndcDMFVQ/Tj9iA1BfJzFKD9mAUXT3OenpuPHbI6P/myECxRJrofUsDx/5g==}
     engines: {node: ^12.22.0 || ^14.17.0 || >=16.0.0}
 
-  '@faker-js/faker@8.4.1':
-    resolution: {integrity: sha512-XQ3cU+Q8Uqmrbf2e0cIC/QN43sTBSC8KF12u29Mb47tWrt2hAgBXSgpZMj4Ao8Uk0iJcU99QsOCaIL8934obCg==}
-    engines: {node: ^14.17.0 || ^16.13.0 || >=18.0.0, npm: '>=6.14.13'}
+  '@faker-js/faker@9.0.0':
+    resolution: {integrity: sha512-dTDHJSmz6c1OJ6HO7jiUiIb4sB20Dlkb3pxYsKm0qTXm2Bmj97rlXIhlvaFsW2rvCi+OLlwKLVSS6ZxFUVZvjQ==}
+    engines: {node: '>=18.0.0', npm: '>=9.0.0'}
 
   '@formkit/core@1.6.5':
     resolution: {integrity: sha512-LLq8+vLd9ddPYA0NkyvnKycN4ESU8Wqcl9TrllPyU/axduJunSIJMZz4LHzlwK8G26b0pQNegXF/hXaj4wbmng==}
@@ -7358,7 +7358,7 @@ snapshots:
 
   '@eslint/js@8.57.0': {}
 
-  '@faker-js/faker@8.4.1': {}
+  '@faker-js/faker@9.0.0': {}
 
   '@formkit/core@1.6.5':
     dependencies:
