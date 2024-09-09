@@ -18597,7 +18597,7 @@ msgstr "nije"
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
 msgstr "nije boja. Podržane su samo Hex, RGB i HSL boje."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:93
 msgid "is not a number"
 msgstr "nije broj"
 

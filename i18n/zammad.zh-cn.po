@@ -18632,7 +18632,7 @@ msgstr "非"
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
 msgstr "不是一种颜色。仅支持 Hex、RGB 和 HSL 颜色。"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:93
 #, fuzzy
 #| msgid "Min. size of number"
 msgid "is not a number"

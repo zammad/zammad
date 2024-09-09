@@ -18908,7 +18908,7 @@ msgid "is not a color. Only Hex, RGB and HSL colors are supported."
 msgstr ""
 "n'est pas une couleur. Seules les couleurs Hex, RGB et HSL sont compatibles."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:93
 msgid "is not a number"
 msgstr "n'est pas un nombre"
 

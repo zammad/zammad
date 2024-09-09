@@ -18950,7 +18950,7 @@ msgstr "≠"
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
 msgstr "nem egy szín. Csak a Hex, RGB és HSL színek támogatottak."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:93
 msgid "is not a number"
 msgstr "nem egy szám"
 

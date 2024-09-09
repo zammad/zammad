@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-07-23 11:00+0000\n"
-"Last-Translator: Daniel Macías <danielmaciasm@gmail.com>\n"
+"PO-Revision-Date: 2024-09-09 22:16+0000\n"
+"Last-Translator: Benjamin Scharf <bs@zammad.com>\n"
 "Language-Team: Spanish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/es/>\n"
 "Language: es-es\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.7\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -2481,10 +2481,8 @@ msgid "Body - Search for follow-up also in mail body."
 msgstr "Cuerpo - Buscar un seguimiento también en el cuerpo del correo."
 
 #: lib/validations/ticket_article_validator/sms_twilio.rb:14
-#, fuzzy
-#| msgid "A user is required!"
 msgid "Body text is required"
-msgstr "Se requiere un usuario!"
+msgstr "El cuerpo del texto es obligatorio"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:41
 msgid "Boolean field"
@@ -4018,7 +4016,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/organization.coffee:7
 #: db/seeds/object_manager_attributes.rb:1552
 msgid "Customers in the organization can view each other's items."
-msgstr "Los clientes de la organización pueden ver los elementos de otros."
+msgstr "Los clientes de la organización pueden ver los ítems de los demás."
 
 #: app/assets/javascripts/app/models/job.coffee:12
 #: app/assets/javascripts/app/models/trigger.coffee:11
@@ -5315,6 +5313,9 @@ msgid ""
 "Deleting your knowledge base requires an additional verification step. To "
 "proceed, enter its name below (\"%s\"). THIS ACTION CANNOT BE UNDONE."
 msgstr ""
+"La eliminación de su base de conocimientos requiere un paso de verificación "
+"adicional. Para proceder, introduzca su nombre a continuación (%s). ESTA "
+"ACCIÓN NO PUEDE DESHACERSE."
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:94
 msgid "Deletion Task"
@@ -7607,8 +7608,8 @@ msgid ""
 "Here you can sign out, change the frontend language, and see your last "
 "viewed items."
 msgstr ""
-"Aquí puede cerrar sesión, cambiar el idioma de la interfaz y ver sus últimos "
-"artículos vistos."
+"Aquí puedes cerrar sesión, cambiar el idioma del frontend y ver tus últimos "
+"ítems vistos."
 
 #: app/assets/javascripts/app/views/object_manager/attribute.jst.eco:4
 msgid "Here you define which authorization has access to the attribute."
@@ -8525,7 +8526,7 @@ msgstr "No es posible fusionar con un ticket que ya ha sido fusionado."
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:15
 msgid "Items per page"
-msgstr "Objetos por página"
+msgstr "Ítems por página"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 #: app/assets/javascripts/app/controllers/report.coffee:204
@@ -11412,7 +11413,7 @@ msgstr "Protocolo"
 #: app/controllers/knowledge_base/categories_controller.rb:23
 #: lib/knowledge_base/menu_item_update_action.rb:90
 msgid "Provide position of all items in scope"
-msgstr "Indique la posición de todos los elementos en el ámbito"
+msgstr "Indique la posición de todos los ítems en el ámbito"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:167
 msgid "Provider"
@@ -18857,7 +18858,7 @@ msgstr "no es"
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
 msgstr "no es un color. Sólo los colores Hex, RGB y HSL son soportados."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:93
 msgid "is not a number"
 msgstr "no es un número"
 
