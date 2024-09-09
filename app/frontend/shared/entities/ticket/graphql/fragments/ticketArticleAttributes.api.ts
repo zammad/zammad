@@ -43,7 +43,6 @@ export const TicketArticleAttributesFragmentDoc = gql`
   messageIdMd5
   inReplyTo
   contentType
-  references
   attachmentsWithoutInline {
     id
     internalId

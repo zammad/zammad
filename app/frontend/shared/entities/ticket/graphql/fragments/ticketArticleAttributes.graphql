@@ -39,7 +39,6 @@ fragment ticketArticleAttributes on TicketArticle {
   messageIdMd5
   inReplyTo
   contentType
-  references
   attachmentsWithoutInline {
     id
     internalId

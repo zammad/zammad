@@ -17,7 +17,7 @@ module Import
         InReplyTo:   :in_reply_to,
         MessageID:   :message_id,
         # ReplyTo:    :reply_to,
-        References:  :references,
+        # References:  :references,
         ContentType: :content_type,
         ChangeTime:  :updated_at,
         CreateTime:  :created_at,

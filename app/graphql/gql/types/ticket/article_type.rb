@@ -24,7 +24,6 @@ module Gql::Types::Ticket
     field :message_id_md5, String
     field :in_reply_to, String
     field :content_type, String, null: false
-    field :references, String
     field :body, String, null: false, description: 'Raw body as saved in the database.'
     field :body_with_urls, String, null: false, description: 'Body with cid: URLs replaced for inline images in HTML articles.'
     field :internal, Boolean, null: false

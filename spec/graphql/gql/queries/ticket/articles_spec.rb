@@ -62,7 +62,6 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
                 messageIdMd5
                 inReplyTo
                 contentType
-                references
                 attachments {
                   name
                 }
@@ -177,7 +176,6 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
               'parsed' => nil,
               'raw'    => to,
             },
-            'references'               => article1.references,
             'type'                     => {
               'name' => article1.type.name,
             },
