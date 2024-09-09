@@ -568,7 +568,7 @@ result
   def get_references(ignore = [], max_length: 30_000)
     references = []
     counter    = 0
-    Ticket::Article.select('in_reply_to, message_id').where(ticket_id: id).reverse_each do |article|
+    Ticket::Article.select('in_reply_to, message_id').where(ticket_id: id).reorder(id: :desc).each do |article|
       new_references = []
       if article.message_id.present?
         new_references.push article.message_id
