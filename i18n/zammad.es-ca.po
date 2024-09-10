@@ -905,7 +905,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee:3
-#: app/assets/javascripts/app/views/api.jst.eco:2 db/seeds/permissions.rb:215
+#: app/assets/javascripts/app/views/api.jst.eco:2 db/seeds/permissions.rb:227
 msgid "API"
 msgstr "API"
 
@@ -953,57 +953,57 @@ msgstr ""
 msgid "Access denied"
 msgstr "Accés a %s"
 
-#: db/seeds/permissions.rb:303
+#: db/seeds/permissions.rb:315
 msgid "Access the agent chat features."
 msgstr ""
 
-#: db/seeds/permissions.rb:318
+#: db/seeds/permissions.rb:330
 msgid "Access the agent phone features."
 msgstr ""
 
-#: db/seeds/permissions.rb:333
+#: db/seeds/permissions.rb:345
 msgid "Access the knowledge base editor features."
 msgstr ""
 
-#: db/seeds/permissions.rb:339
+#: db/seeds/permissions.rb:351
 msgid "Access the knowledge base reader features."
 msgstr ""
 
-#: db/seeds/permissions.rb:361
+#: db/seeds/permissions.rb:373
 #, fuzzy
 #| msgid "Access to Agent Tickets based on Group Access"
 msgid "Access the tickets as agent based on group access."
 msgstr "Accedeix als tiquets dels agents basats en accés al grup"
 
-#: db/seeds/permissions.rb:370
+#: db/seeds/permissions.rb:382
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access tickets as customer."
 msgstr "Tiquets de clients recents"
 
-#: db/seeds/permissions.rb:294
+#: db/seeds/permissions.rb:306
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access to the chat interface."
 msgstr "Tiquets de clients recents"
 
-#: db/seeds/permissions.rb:324
+#: db/seeds/permissions.rb:336
 #, fuzzy
 #| msgid "Delete Knowledge Base"
 msgid "Access to the knowledge base interface."
 msgstr "Elimina la Base de coneixement"
 
-#: db/seeds/permissions.rb:309
+#: db/seeds/permissions.rb:321
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access to the phone interface."
 msgstr "Tiquets de clients recents"
 
-#: db/seeds/permissions.rb:346
+#: db/seeds/permissions.rb:358
 msgid "Access to the report interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:352
+#: db/seeds/permissions.rb:364
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access to the ticket interface."
@@ -1295,6 +1295,12 @@ msgstr ""
 msgid "Add Public or Private Key"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/web.ts:13
+#, fuzzy
+#| msgid "reply"
+msgid "Add Reply"
+msgstr "respondre"
+
 #: app/assets/javascripts/app/views/ssl_certificates.jst.eco:5
 msgid "Add SSL Certificate"
 msgstr ""
@@ -1356,12 +1362,24 @@ msgstr "Afegeix l'opció d'adjuntar fitxers"
 msgid "Add bullet list"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:49
+#, fuzzy
+#| msgid "Action"
+msgid "Add comment"
+msgstr "Acció"
+
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco:32
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco:18
 #, fuzzy
 #| msgid "Action"
 msgid "Add condition"
 msgstr "Acció"
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:168
+#, fuzzy
+#| msgid "Add Tag"
+msgid "Add email"
+msgstr "Afegeix etiqueta"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:5
 msgid "Add empty checklist"
@@ -1389,11 +1407,31 @@ msgstr "Afegeix etiqueta"
 msgid "Add image"
 msgstr "Afegeix etiqueta"
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:15
+#, fuzzy
+#| msgid "Add a Note"
+msgid "Add internal note"
+msgstr "Afegeix una nota"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:153
 #, fuzzy
 #| msgid "Add Link"
 msgid "Add link"
 msgstr "Afegeix enllaç"
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:53
+#: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts:125
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:201
+#, fuzzy
+#| msgid "Add Tag"
+msgid "Add message"
+msgstr "Afegeix etiqueta"
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:15
+#, fuzzy
+#| msgid "Add Bot"
+msgid "Add note"
+msgstr "Afegeix un Bot"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:258
 #, fuzzy
@@ -1401,6 +1439,11 @@ msgstr "Afegeix enllaç"
 msgid "Add ordered list"
 msgstr "Aplica format de llista ordenada"
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:13
+msgid "Add phone call"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:59
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:37
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:88
 #, fuzzy
@@ -1419,6 +1462,12 @@ msgstr ""
 #: db/seeds/settings.rb:769
 msgid "Add sender initials to end of a tweet."
 msgstr "Afegeix les inicials del remitent al final del tuit."
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:49
+#, fuzzy
+#| msgid "Add Tag"
+msgid "Add sms"
+msgstr "Afegeix etiqueta"
 
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco:35
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco:21
@@ -1581,7 +1630,7 @@ msgstr ""
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
 
-#: db/seeds/permissions.rb:302
+#: db/seeds/permissions.rb:314
 #, fuzzy
 #| msgid "Agent"
 msgid "Agent chat"
@@ -1597,13 +1646,13 @@ msgstr ""
 "Límit de l'agent excedit, si us plau, comprova les configuracions del teu "
 "compte."
 
-#: db/seeds/permissions.rb:317
+#: db/seeds/permissions.rb:329
 #, fuzzy
 #| msgid "Agent"
 msgid "Agent phone"
 msgstr "Agent"
 
-#: db/seeds/permissions.rb:360
+#: db/seeds/permissions.rb:372
 #, fuzzy
 #| msgid "Open Tickets"
 msgid "Agent tickets"
@@ -1913,7 +1962,7 @@ msgstr "Secret de l'aplicació"
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:59
-#: db/seeds/permissions.rb:383
+#: db/seeds/permissions.rb:395
 msgid "Appearance"
 msgstr ""
 
@@ -1996,7 +2045,7 @@ msgstr "Estàs segur d'eliminar aquest objecte?"
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Estàs segur d'eliminar aquest objecte?"
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:31
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:33
 #, fuzzy
 #| msgid "Sure to delete this object?"
 msgid "Are you sure you want to delete this object?"
@@ -2071,11 +2120,11 @@ msgstr ""
 msgid "Are you sure? You have changes that will get lost."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:44
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:46
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:45
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:417
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:223
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:251
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:51
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr ""
@@ -2107,12 +2156,6 @@ msgstr "Article"
 msgid "Article Count"
 msgstr "Quantitat d'articles"
 
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:115
-#, fuzzy
-#| msgid "Article"
-msgid "Article Type"
-msgstr "Article"
-
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:282
 #, fuzzy
 #| msgid "Article Count"
@@ -2131,12 +2174,6 @@ msgstr "Objecte %s han sigut creats."
 #| msgid "Block Notifications"
 msgid "Article meta information"
 msgstr "Bloqueja les notificacions"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:37
-#, fuzzy
-#| msgid "Article"
-msgid "Article permalink"
-msgstr "Article"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:77
 #: app/frontend/shared/composables/useArticleSecurity.ts:99
@@ -2249,9 +2286,9 @@ msgstr "Adjunta fitxers"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:203
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:219
 #, fuzzy
 #| msgid "Attachments"
 msgid "Attachment"
@@ -2265,7 +2302,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/_answer_attachments.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:2
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachment.vue:45
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:33
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/ticket-article-attachment.ts:12
 #: public/assets/form/form.js:50
 msgid "Attachments"
@@ -2511,11 +2547,11 @@ msgstr ""
 "Automàticament carrega el fitxer chat.css. Si vols utilitzar el teu propi "
 "css, solament has de posar-ho en false"
 
-#: app/frontend/shared/components/Form/Form.vue:1226
+#: app/frontend/shared/components/Form/Form.vue:1227
 msgid "Autosave in progress…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1235
+#: app/frontend/shared/components/Form/Form.vue:1236
 msgid "Autosaving is taking longer than expected…"
 msgstr ""
 
@@ -2545,7 +2581,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:128
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:175
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:121
-#: db/seeds/permissions.rb:397
+#: db/seeds/permissions.rb:409
 msgid "Avatar"
 msgstr "Avatar"
 
@@ -2827,11 +2863,12 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:95
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:168
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:86
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:160
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:37
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:173
 #: db/seeds/object_manager_attributes.rb:508
 msgid "CC"
 msgstr ""
@@ -3021,7 +3058,7 @@ msgstr "Cancel·lar"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:424
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:428
 msgid "Cancel & Go Back"
 msgstr "Cancel·la i torna enrere"
 
@@ -3155,7 +3192,7 @@ msgstr "Canvia l'ordre"
 msgid "Change order"
 msgstr "Canvia l'ordre"
 
-#: db/seeds/permissions.rb:415
+#: db/seeds/permissions.rb:427
 #, fuzzy
 #| msgid "Change your password"
 msgid "Change personal account password."
@@ -3204,8 +3241,9 @@ msgstr "S'han efectuat canvis que requereixen actualitzar la base de dades"
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:106
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:128
 msgid "Channel"
 msgstr "Canal"
 
@@ -3327,7 +3365,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:3
-#: db/seeds/permissions.rb:287 db/seeds/settings.rb:5790
+#: db/seeds/permissions.rb:299 db/seeds/settings.rb:5790
 #, fuzzy
 #| msgid "Checksum"
 msgid "Checklists"
@@ -3591,7 +3629,7 @@ msgstr "Tanca pestanya actual"
 msgid "Close dialog"
 msgstr "Confirma/Enviar diàleg"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:272
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:273
 #, fuzzy
 #| msgid "Close tab"
 msgid "Close side panel"
@@ -3641,7 +3679,7 @@ msgstr "Tiquets tancats"
 msgid "Closing time"
 msgstr "Temps de tancament"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:160
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:161
 #, fuzzy
 #| msgid "Content"
 msgid "Collapse sidebar"
@@ -3670,7 +3708,7 @@ msgid "Communication"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:11
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:43
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:44
 msgid "Company Inc."
 msgstr "Empresa S.L."
 
@@ -3825,7 +3863,7 @@ msgstr "Confirma/Enviar diàleg"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:130
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:112
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco:4
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:55
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:57
 #, fuzzy
 #| msgid "Configuration"
 msgid "Confirmation"
@@ -4010,7 +4048,7 @@ msgstr ""
 msgid "Copied!"
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/useCopyToClipboard.ts:21
+#: app/frontend/shared/composables/useCopyToClipboard.ts:21
 msgid "Copied."
 msgstr ""
 
@@ -4049,6 +4087,12 @@ msgstr "Seguretat"
 msgid "Copy URL"
 msgstr "URL personalitzada"
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/articlePermalink.ts:14
+#, fuzzy
+#| msgid "Article"
+msgid "Copy article permalink"
+msgstr "Article"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:332
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr ""
@@ -4071,7 +4115,7 @@ msgid "Core Workflow Ajax Mode"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:3
-#: db/seeds/permissions.rb:239
+#: db/seeds/permissions.rb:251
 msgid "Core Workflows"
 msgstr ""
 
@@ -4174,7 +4218,7 @@ msgstr "País"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:436
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:440
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Crear"
@@ -4380,7 +4424,7 @@ msgstr "Crear"
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:14
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:106
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:108
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -4574,7 +4618,7 @@ msgstr ""
 msgid "Customer selection based on sender and receiver list"
 msgstr "Selecció del client basada en la llista d'emisors i receptors."
 
-#: db/seeds/permissions.rb:369
+#: db/seeds/permissions.rb:381
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Customer tickets"
@@ -4626,7 +4670,7 @@ msgstr "Panell principal"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:3
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:3
-#: db/seeds/permissions.rb:251
+#: db/seeds/permissions.rb:263
 msgid "Data Privacy"
 msgstr "Privacitat de les dades"
 
@@ -5762,7 +5806,7 @@ msgstr "Elimina fitxer"
 msgid "Delete Knowledge Base"
 msgstr "Elimina la Base de coneixement"
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:29
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:31
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Delete Object"
@@ -5798,7 +5842,7 @@ msgstr "Eliminar"
 msgid "Delete column"
 msgstr "Elimina fitxer"
 
-#: db/seeds/permissions.rb:252
+#: db/seeds/permissions.rb:264
 #, fuzzy
 #| msgid "Delete all existing records first."
 msgid "Delete existing data of your system."
@@ -6008,7 +6052,7 @@ msgstr "No s'han trobat resultats."
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:37
-#: db/seeds/permissions.rb:428
+#: db/seeds/permissions.rb:440
 msgid "Devices"
 msgstr "Dispositius"
 
@@ -6095,8 +6139,8 @@ msgstr "Descartar"
 
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:421
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:49
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:425
 msgid "Discard Changes"
 msgstr "Descarta els canvis"
 
@@ -6116,13 +6160,14 @@ msgstr "Descarta els canvis"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:47
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:419
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:225
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:253
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:53
 #, fuzzy
 #| msgid "Discard Changes"
 msgid "Discard changes"
 msgstr "Descarta els canvis"
 
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:415
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:162
 #, fuzzy
@@ -6200,7 +6245,7 @@ msgstr "Estàs segur d'eliminar aquest objecte?"
 msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr "Estàs segur d'eliminar aquest objecte?"
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:56
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:58
 #, fuzzy
 #| msgid "Sure to delete this object?"
 msgid "Do you want to continue?"
@@ -6293,11 +6338,11 @@ msgstr ""
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Descarrega i instala el Plugin de migració %s a la teva instancia %s"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:42
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:123
 msgid "Download original email"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:137
 msgid "Download raw email"
 msgstr ""
 
@@ -6478,7 +6523,7 @@ msgstr "respondre"
 msgid "Edit security keys"
 msgstr "Seguretat"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:89
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Edit ticket title"
@@ -6575,7 +6620,7 @@ msgstr "Última sincronització"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:132
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:167
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
 #: public/assets/form/form.js:32
 msgid "Email"
@@ -7446,7 +7491,7 @@ msgstr "Nou tiquet"
 msgid "Existing tickets (open)"
 msgstr "asigna tiquets"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:161
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:162
 #, fuzzy
 #| msgid "Content"
 msgid "Expand sidebar"
@@ -7961,8 +8006,7 @@ msgstr "Aplica format de |negreta|"
 msgid "Format as ||italic||"
 msgstr "Aplica format de ||cursiva||"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:78
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:92
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:96
 msgid "Forward"
 msgstr ""
 
@@ -9229,7 +9273,7 @@ msgstr ""
 msgid "Include your own tickets in subscription for pending tickets."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:114
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:117
 #, fuzzy
 #| msgid "Overviews"
 msgid "Included ticket overviews"
@@ -9245,6 +9289,7 @@ msgid "Including private key."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:242
 msgid "Incomplete Ticket Checklist"
 msgstr ""
 
@@ -9429,7 +9474,7 @@ msgid "Integer field"
 msgstr "Enter"
 
 #: app/assets/javascripts/app/controllers/integrations.coffee:3
-#: db/seeds/permissions.rb:209
+#: db/seeds/permissions.rb:221
 msgid "Integrations"
 msgstr "Integracions"
 
@@ -9439,7 +9484,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:133
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:133
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:146
 msgid "Internal"
 msgstr "Intern"
 
@@ -9796,7 +9841,7 @@ msgstr "Base de coneixement"
 msgid "Knowledge Base Answer"
 msgstr ""
 
-#: db/seeds/permissions.rb:332
+#: db/seeds/permissions.rb:344
 msgid "Knowledge Base Editor"
 msgstr ""
 
@@ -9806,7 +9851,7 @@ msgstr ""
 msgid "Knowledge Base Feed"
 msgstr "Base de coneixement"
 
-#: db/seeds/permissions.rb:338
+#: db/seeds/permissions.rb:350
 msgid "Knowledge Base Reader"
 msgstr ""
 
@@ -9864,7 +9909,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:13
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:157
-#: db/seeds/permissions.rb:390
+#: db/seeds/permissions.rb:402
 msgid "Language"
 msgstr "Idioma"
 
@@ -10087,7 +10132,7 @@ msgstr "Plantilles"
 #: app/assets/javascripts/app/views/widget/user.jst.eco:34
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:46
-#: db/seeds/permissions.rb:442
+#: db/seeds/permissions.rb:454
 msgid "Linked Accounts"
 msgstr "Comptes vinculats"
 
@@ -10298,7 +10343,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee:3
 #: app/assets/javascripts/app/views/maintenance.jst.eco:3
-#: db/seeds/permissions.rb:257
+#: db/seeds/permissions.rb:269
 msgid "Maintenance"
 msgstr "Manteniment"
 
@@ -10319,7 +10364,7 @@ msgstr ""
 msgid "Manage"
 msgstr "Gestiona"
 
-#: db/seeds/permissions.rb:216
+#: db/seeds/permissions.rb:228
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage API of your system."
@@ -10388,7 +10433,7 @@ msgstr "Autenticació"
 msgid "Manage WhatsApp channel of your system."
 msgstr "Introdueix l'URL del teu sistema %s"
 
-#: db/seeds/permissions.rb:276
+#: db/seeds/permissions.rb:288
 msgid "Manage active user sessions of your system."
 msgstr ""
 
@@ -10432,7 +10477,7 @@ msgstr "Introdueix l'URL del teu sistema %s"
 msgid "Manage core system settings."
 msgstr "Gestiona paràmetres de %s"
 
-#: db/seeds/permissions.rb:240
+#: db/seeds/permissions.rb:252
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage core workflows of your system."
@@ -10456,93 +10501,93 @@ msgstr "Introdueix l'URL del teu sistema %s"
 msgid "Manage groups of your system."
 msgstr "Per configurar el teu sistema."
 
-#: db/seeds/permissions.rb:210
+#: db/seeds/permissions.rb:222
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage integrations of your system."
 msgstr "Introdueix l'URL del teu sistema %s"
 
-#: db/seeds/permissions.rb:258
+#: db/seeds/permissions.rb:270
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage maintenance mode of your system."
 msgstr "Introdueix l'URL del teu sistema %s"
 
-#: db/seeds/permissions.rb:264
+#: db/seeds/permissions.rb:276
 #, fuzzy
 #| msgid "To configure your system."
 msgid "Manage monitoring of your system."
 msgstr "Per configurar el teu sistema."
 
-#: db/seeds/permissions.rb:222
+#: db/seeds/permissions.rb:234
 msgid "Manage object attributes of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:270
+#: db/seeds/permissions.rb:282
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage packages of your system."
 msgstr "Introdueix l'URL del teu sistema %s"
 
-#: db/seeds/permissions.rb:436
+#: db/seeds/permissions.rb:448
 #, fuzzy
 #| msgid "Personal Access Tokens"
 msgid "Manage personal API tokens."
 msgstr "Tokens d'accés personal"
 
-#: db/seeds/permissions.rb:384
+#: db/seeds/permissions.rb:396
 msgid "Manage personal appearance settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:398
+#: db/seeds/permissions.rb:410
 #, fuzzy
 #| msgid "Manage %s Settings"
 msgid "Manage personal avatar settings."
 msgstr "Gestiona paràmetres de %s"
 
-#: db/seeds/permissions.rb:470
+#: db/seeds/permissions.rb:482
 msgid "Manage personal calendar."
 msgstr ""
 
-#: db/seeds/permissions.rb:429
+#: db/seeds/permissions.rb:441
 #, fuzzy
 #| msgid "Continue session"
 msgid "Manage personal devices and sessions."
 msgstr "Continua la sessió"
 
-#: db/seeds/permissions.rb:391
+#: db/seeds/permissions.rb:403
 #, fuzzy
 #| msgid "Manage %s Settings"
 msgid "Manage personal language settings."
 msgstr "Gestiona paràmetres de %s"
 
-#: db/seeds/permissions.rb:443
+#: db/seeds/permissions.rb:455
 msgid "Manage personal linked accounts."
 msgstr ""
 
-#: db/seeds/permissions.rb:450
+#: db/seeds/permissions.rb:462
 #, fuzzy
 #| msgid "Manage your notifications settings"
 msgid "Manage personal notifications settings."
 msgstr "Gestiona la configuració de les notificacions"
 
-#: db/seeds/permissions.rb:405
+#: db/seeds/permissions.rb:417
 #, fuzzy
 #| msgid "Manage your notifications settings"
 msgid "Manage personal out of office settings."
 msgstr "Gestiona la configuració de les notificacions"
 
-#: db/seeds/permissions.rb:460
+#: db/seeds/permissions.rb:472
 msgid "Manage personal overviews."
 msgstr ""
 
-#: db/seeds/permissions.rb:377
+#: db/seeds/permissions.rb:389
 #, fuzzy
 #| msgid "Manage %s Settings"
 msgid "Manage personal settings."
 msgstr "Gestiona paràmetres de %s"
 
-#: db/seeds/permissions.rb:422
+#: db/seeds/permissions.rb:434
 #, fuzzy
 #| msgid "Authentication"
 msgid "Manage personal two-factor authentication methods."
@@ -10574,7 +10619,7 @@ msgstr "Introdueix l'URL del teu sistema %s"
 msgid "Manage security settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:282
+#: db/seeds/permissions.rb:294
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage system report of your system."
@@ -10586,10 +10631,22 @@ msgstr "Introdueix l'URL del teu sistema %s"
 msgid "Manage text modules of your system."
 msgstr "Introdueix l'URL del teu sistema %s"
 
-#: db/seeds/permissions.rb:288
+#: db/seeds/permissions.rb:210
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket auto assignment settings of your system."
+msgstr "Introdueix l'URL del teu sistema %s"
+
+#: db/seeds/permissions.rb:300
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage ticket checklists of your system."
+msgstr "Introdueix l'URL del teu sistema %s"
+
+#: db/seeds/permissions.rb:216
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket duplicate detection settings of your system."
 msgstr "Introdueix l'URL del teu sistema %s"
 
 #: db/seeds/permissions.rb:48
@@ -10604,7 +10661,7 @@ msgstr "Introdueix l'URL del teu sistema %s"
 msgid "Manage ticket overviews of your system."
 msgstr "Resums"
 
-#: db/seeds/permissions.rb:234
+#: db/seeds/permissions.rb:246
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage ticket priorities of your system."
@@ -10616,7 +10673,7 @@ msgstr "Introdueix l'URL del teu sistema %s"
 msgid "Manage ticket settings of your system."
 msgstr "Introdueix l'URL del teu sistema %s"
 
-#: db/seeds/permissions.rb:228
+#: db/seeds/permissions.rb:240
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage ticket states of your system."
@@ -10638,7 +10695,7 @@ msgstr "Introdueix l'URL del teu sistema %s"
 msgid "Manage time accounting settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:246
+#: db/seeds/permissions.rb:258
 msgid "Manage translations of your system."
 msgstr ""
 
@@ -11101,7 +11158,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/monitoring.coffee:3
 #: app/assets/javascripts/app/views/monitoring.jst.eco:3
-#: db/seeds/permissions.rb:263
+#: db/seeds/permissions.rb:275
 msgid "Monitoring"
 msgstr "Monitoratge"
 
@@ -11130,7 +11187,7 @@ msgstr ""
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:137
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:141
 #, fuzzy
 #| msgid "Overviews"
 msgid "More ticket overviews"
@@ -11818,7 +11875,7 @@ msgstr "esborrany"
 msgid "No email!"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:131
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:135
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:117
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:267
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:150
@@ -11979,6 +12036,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:245
 #, fuzzy
 #| msgid "You have closed a ticket"
 msgid "No, just close the ticket"
@@ -12085,7 +12143,7 @@ msgstr "trobats"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:48
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:35
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/note.ts:7
-#: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:12
+#: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:14
 #: db/seeds/object_manager_attributes.rb:1335
 msgid "Note"
 msgstr "Nota"
@@ -12199,7 +12257,7 @@ msgstr "So de notificació"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:34
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
-#: db/seeds/permissions.rb:449
+#: db/seeds/permissions.rb:461
 msgid "Notifications"
 msgstr "Notificacions"
 
@@ -12301,7 +12359,7 @@ msgid "Object Manager"
 msgstr "Gestor d'objectes"
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:330
-#: db/seeds/permissions.rb:221
+#: db/seeds/permissions.rb:233
 msgid "Objects"
 msgstr "Objectes"
 
@@ -12659,13 +12717,13 @@ msgstr "Suport d'organització"
 msgid "Organization could not be updated."
 msgstr "Objecte(s) %s s'han actualitzat."
 
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:47
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:48
 #, fuzzy
 #| msgid "Organization"
 msgid "Organization logo"
 msgstr "Organització"
 
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:40
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:41
 #, fuzzy
 #| msgid "Organization Name"
 msgid "Organization name"
@@ -12716,7 +12774,7 @@ msgid "Origin By"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:92
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:45
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:44
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:55
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
@@ -12740,7 +12798,7 @@ msgstr "Ajustos"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:126
-#: db/seeds/permissions.rb:404
+#: db/seeds/permissions.rb:416
 msgid "Out of Office"
 msgstr "Fora de l'oficina"
 
@@ -12892,7 +12950,7 @@ msgid "Package"
 msgstr "Paquet"
 
 #: app/assets/javascripts/app/controllers/package.coffee:3
-#: db/seeds/permissions.rb:269
+#: db/seeds/permissions.rb:281
 msgid "Packages"
 msgstr "Paquets"
 
@@ -12942,7 +13000,7 @@ msgstr "Pare"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:83
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:52
-#: db/seeds/object_manager_attributes.rb:1249 db/seeds/permissions.rb:414
+#: db/seeds/object_manager_attributes.rb:1249 db/seeds/permissions.rb:426
 msgid "Password"
 msgstr "Contrasenya"
 
@@ -13127,7 +13185,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/cti.coffee:322
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:12
-#: db/seeds/object_manager_attributes.rb:797 db/seeds/permissions.rb:308
+#: db/seeds/object_manager_attributes.rb:797 db/seeds/permissions.rb:320
 msgid "Phone"
 msgstr "Telèfon"
 
@@ -13158,6 +13216,10 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:182
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "Escull un nom per a l'aplicació, i et donarem un toket únic."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:224
+msgid "Pin this panel"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:24
 msgid "Pink"
@@ -13328,7 +13390,7 @@ msgstr ""
 msgid "Please select at least one folder."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:75
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:74
 msgid "Please select at least one ticket overview"
 msgstr ""
 
@@ -13581,7 +13643,7 @@ msgid "Profile language updated successfully."
 msgstr "El test s'ha executat correctament."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
-#: db/seeds/permissions.rb:376
+#: db/seeds/permissions.rb:388
 #, fuzzy
 #| msgid "Proxy Settings"
 msgid "Profile settings"
@@ -13623,7 +13685,7 @@ msgid "Proxy address"
 msgstr "Adreça del proxy"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:138
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:151
 msgid "Public"
 msgstr "Públic"
 
@@ -13895,7 +13957,6 @@ msgstr ""
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:61
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:132
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:177
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:84
 #: app/frontend/shared/form/i18n/locales.ts:29
 msgid "Remove"
 msgstr "Eliminar"
@@ -14049,8 +14110,8 @@ msgstr "Substitut"
 msgid "Replacement agent"
 msgstr "Substitut"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:89
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:84
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:221
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:26
@@ -14061,7 +14122,7 @@ msgstr "Substitut"
 msgid "Reply"
 msgstr "respondre"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:104
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:108
 #, fuzzy
 #| msgid "reply"
 msgid "Reply All"
@@ -14268,15 +14329,21 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:188
+#, fuzzy
+#| msgid "Close tab"
+msgid "Resize article panel"
+msgstr "Tanca la pestanya"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageHandler.vue:169
 msgid "Resize frame"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:308
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:309
 msgid "Resize side panel"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:133
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:134
 msgid "Resize sidebar"
 msgstr ""
 
@@ -14578,7 +14645,7 @@ msgstr "Dissabte"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:216
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:70
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:69
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:138
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:100
 msgid "Save"
@@ -14613,7 +14680,7 @@ msgstr "Fora de l'oficina"
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:53
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:146
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:115
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:138
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:131
 #, fuzzy
 #| msgid "Continue"
 msgid "Save and Continue"
@@ -14863,8 +14930,8 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:22
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:178
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:183
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:196
 #: db/seeds/permissions.rb:197
 msgid "Security"
 msgstr "Seguretat"
@@ -15212,7 +15279,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/session.coffee:3
 #: app/assets/javascripts/app/views/session.jst.eco:2
-#: db/seeds/permissions.rb:275
+#: db/seeds/permissions.rb:287
 msgid "Sessions"
 msgstr "Sessions"
 
@@ -15318,13 +15385,6 @@ msgid ""
 "limits"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:94
-#, fuzzy
-#| msgid "set to internal"
-msgid "Set to external"
-msgstr "Establir com intern"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:99
 #: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts:33
 #, fuzzy
 #| msgid "set to internal"
@@ -15433,7 +15493,7 @@ msgid "Shared Drafts"
 msgstr "Compartit"
 
 #: app/controllers/tickets_controller.rb:90
-#: app/services/service/ticket/create.rb:139
+#: app/services/service/ticket/create.rb:155
 msgid "Shared draft cannot be selected for this ticket."
 msgstr ""
 
@@ -15545,7 +15605,7 @@ msgstr ""
 msgid "Show matching tickets in the warning"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts:135
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts:83
 #, fuzzy
 #| msgid "Show Search Details"
 msgid "Show meta data"
@@ -15611,13 +15671,13 @@ msgstr ""
 msgid "Shown when the chat is closed."
 msgstr "Mostra quan el xat està tancat."
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:243
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:244
 #, fuzzy
 #| msgid "Close tab"
 msgid "Side panel"
 msgstr "Tanca la pestanya"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:289
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:290
 msgid "Side panel footer"
 msgstr ""
 
@@ -15928,8 +15988,7 @@ msgstr "Font"
 msgid "Special character required"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:104
-#: app/frontend/shared/entities/ticket-article/action/plugins/split.ts:12
+#: app/frontend/shared/entities/ticket-article/action/plugins/split.ts:11
 #, fuzzy
 #| msgid "split"
 msgid "Split"
@@ -16170,8 +16229,8 @@ msgstr "Carrer"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:40
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:13
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:87
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:171
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:33
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:184
 msgid "Subject"
 msgstr "Assumpte"
 
@@ -16302,7 +16361,7 @@ msgid "System Address Display Name"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:89
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:28
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:29
 #, fuzzy
 #| msgid "Block Notifications"
 msgid "System Information"
@@ -16314,14 +16373,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/system_report.coffee:3
 #: app/assets/javascripts/app/views/system_report.jst.eco:2
-#: db/seeds/permissions.rb:281
+#: db/seeds/permissions.rb:293
 #, fuzzy
 #| msgid "System URL"
 msgid "System Report"
 msgstr "URL del sistema"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:22
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:56
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:57
 msgid "System URL"
 msgstr "URL del sistema"
 
@@ -16690,7 +16749,7 @@ msgid ""
 "protocol."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:60
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:61
 #, fuzzy
 #| msgid "The URL to this installation of Zammad."
 msgid "The URL of this installation of Zammad."
@@ -17856,6 +17915,16 @@ msgstr ""
 "El text al començament de l'assumpte en una respota de correu electrònic,  e."
 "g. RE, AW, or AS."
 
+#: app/services/service/ticket/update/validator/checklist_completed.rb:16
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "The ticket checklist is incomplete."
+msgstr "Introdueix l'URL del teu sistema %s"
+
+#: app/services/service/ticket/update/validator/time_accounting.rb:16
+msgid "The ticket time accounting condition is met."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:111
 #, fuzzy
 #| msgid "%s Object(s) are created."
@@ -18654,6 +18723,7 @@ msgstr "Dijous"
 #: app/assets/javascripts/app/models/signature.coffee:15
 #: app/assets/javascripts/app/models/text_module.coffee:15
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:19
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/information.ts:10
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:10
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:10
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/ticket.ts:6
@@ -18696,6 +18766,12 @@ msgstr ""
 msgid "Ticket (censored):"
 msgstr "Fusionat el tiquet %s"
 
+#: db/seeds/permissions.rb:209
+#, fuzzy
+#| msgid "Auto Assignment"
+msgid "Ticket Auto Assignment"
+msgstr "Auto assignació"
+
 #: db/seeds/settings.rb:2272
 msgid "Ticket Conditions Expert Mode"
 msgstr ""
@@ -18713,6 +18789,12 @@ msgstr ""
 #| msgid "Edit Customer"
 msgid "Ticket Customer"
 msgstr "Edita client"
+
+#: db/seeds/permissions.rb:215
+#, fuzzy
+#| msgid "Enable Ticket creation"
+msgid "Ticket Duplicate Detection"
+msgstr "Permet la creació de tiquet"
 
 #: db/seeds/settings.rb:2167
 msgid "Ticket Hook"
@@ -18753,14 +18835,14 @@ msgid "Ticket Organization Reassignment"
 msgstr "Tiquets de l'organització"
 
 #: app/frontend/apps/mobile/pages/home/routes.ts:35
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:67
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:66
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:22
 #, fuzzy
 #| msgid "New Overview"
 msgid "Ticket Overview"
 msgstr "Nova descripció"
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:84
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:83
 #, fuzzy
 #| msgid "Overviews"
 msgid "Ticket Overview settings are saved."
@@ -18779,7 +18861,7 @@ msgid "Ticket Owner"
 msgstr "Nova descripció"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee:16
-#: db/seeds/permissions.rb:233
+#: db/seeds/permissions.rb:245
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket Priorities"
@@ -18814,7 +18896,7 @@ msgid "Ticket State"
 msgstr "Tiquet actualitzat"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:3
-#: db/seeds/permissions.rb:227
+#: db/seeds/permissions.rb:239
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket States"
@@ -18955,7 +19037,7 @@ msgstr "Objecte %s han sigut creats."
 msgid "Ticket tags updated successfully."
 msgstr "El test s'ha executat correctament."
 
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:84
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:92
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket title"
@@ -18968,8 +19050,15 @@ msgstr "Tiquet actualitzat"
 msgid "Ticket update"
 msgstr "Tiquet actualitzat"
 
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:306
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Ticket update failed."
+msgstr "Tiquet actualitzat"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:135
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:283
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:163
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Ticket updated successfully."
@@ -19007,7 +19096,7 @@ msgid ""
 "</div>\n"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:39
+#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:38
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
 #: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:22
 msgid ""
@@ -19239,8 +19328,8 @@ msgstr "Títol del formulari"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:84
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:85
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:148
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:36
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:161
 #: db/seeds/object_manager_attributes.rb:482
 msgid "To"
 msgstr "A"
@@ -19401,7 +19490,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:51
-#: db/seeds/permissions.rb:435
+#: db/seeds/permissions.rb:447
 msgid "Token Access"
 msgstr "Accés al token"
 
@@ -19492,7 +19581,7 @@ msgstr "Traduccions"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:390
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
-#: db/seeds/permissions.rb:245
+#: db/seeds/permissions.rb:257
 msgid "Translations"
 msgstr "Traduccions"
 
@@ -19671,7 +19760,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/password.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:57
-#: db/seeds/permissions.rb:421
+#: db/seeds/permissions.rb:433
 #, fuzzy
 #| msgid "Authentication"
 msgid "Two-factor Authentication"
@@ -19825,6 +19914,10 @@ msgstr ""
 msgid "Unlock"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:224
+msgid "Unpin this panel"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:77
 #, fuzzy
 #| msgid "Notification"
@@ -19837,7 +19930,7 @@ msgstr "Notificació"
 msgid "Unread notifications"
 msgstr "Notificació"
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:42
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:44
 #, fuzzy
 #| msgid "Discard Changes"
 msgid "Unsaved Changes"
@@ -19890,6 +19983,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:57
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:13
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:424
 msgid "Update"
 msgstr "Actualitzar"
 
@@ -20531,7 +20625,7 @@ msgstr "Nou tiquet"
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:125
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:138
 #: db/seeds/object_manager_attributes.rb:449
 msgid "Visibility"
 msgstr "Visibilitat"
@@ -20930,7 +21024,7 @@ msgstr "Groc"
 #: app/assets/javascripts/app/controllers/tag.coffee:133
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:121
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:23
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:58
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:60
 msgid "Yes"
 msgstr "Sí"
 
@@ -20941,6 +21035,7 @@ msgid "Yes, add attachments now"
 msgstr "Afegeix l'opció d'adjuntar fitxers"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:244
 #, fuzzy
 #| msgid "Remove"
 msgid "Yes, open the checklist"
@@ -21187,7 +21282,7 @@ msgstr ""
 msgid "You have insufficient rights to view this organization."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:41
+#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:40
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
 #: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:24
 msgid "You have insufficient rights to view this ticket."
@@ -21227,6 +21322,14 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/checklist_modal.jst.eco:2
 msgid "You have unchecked items in the checklist."
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:239
+#, fuzzy
+#| msgid "Sure to delete this object?"
+msgid ""
+"You have unchecked items in the checklist. Do you want to handle them before "
+"closing this ticket?"
+msgstr "Estàs segur d'eliminar aquest objecte?"
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco:4
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue:42
@@ -22319,7 +22422,7 @@ msgstr "no és"
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:93
 #, fuzzy
 #| msgid "Min. size of number"
 msgid "is not a number"
@@ -23164,6 +23267,16 @@ msgstr "...de tota la zona de text"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ temps d'espera avui"
+
+#, fuzzy
+#~| msgid "Article"
+#~ msgid "Article Type"
+#~ msgstr "Article"
+
+#, fuzzy
+#~| msgid "set to internal"
+#~ msgid "Set to external"
+#~ msgstr "Establir com intern"
 
 #, fuzzy
 #~| msgid "Select Template"

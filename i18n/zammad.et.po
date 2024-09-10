@@ -817,7 +817,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee:3
-#: app/assets/javascripts/app/views/api.jst.eco:2 db/seeds/permissions.rb:215
+#: app/assets/javascripts/app/views/api.jst.eco:2 db/seeds/permissions.rb:227
 msgid "API"
 msgstr "API"
 
@@ -863,53 +863,53 @@ msgstr ""
 msgid "Access denied"
 msgstr ""
 
-#: db/seeds/permissions.rb:303
+#: db/seeds/permissions.rb:315
 msgid "Access the agent chat features."
 msgstr ""
 
-#: db/seeds/permissions.rb:318
+#: db/seeds/permissions.rb:330
 msgid "Access the agent phone features."
 msgstr ""
 
-#: db/seeds/permissions.rb:333
+#: db/seeds/permissions.rb:345
 msgid "Access the knowledge base editor features."
 msgstr ""
 
-#: db/seeds/permissions.rb:339
+#: db/seeds/permissions.rb:351
 msgid "Access the knowledge base reader features."
 msgstr ""
 
-#: db/seeds/permissions.rb:361
+#: db/seeds/permissions.rb:373
 msgid "Access the tickets as agent based on group access."
 msgstr ""
 
-#: db/seeds/permissions.rb:370
+#: db/seeds/permissions.rb:382
 #, fuzzy
 #| msgid "ticket.customer"
 msgid "Access tickets as customer."
 msgstr "ticket.customer"
 
-#: db/seeds/permissions.rb:294
+#: db/seeds/permissions.rb:306
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access to the chat interface."
 msgstr "Viimased Kliendi Piletid"
 
-#: db/seeds/permissions.rb:324
+#: db/seeds/permissions.rb:336
 msgid "Access to the knowledge base interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:309
+#: db/seeds/permissions.rb:321
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access to the phone interface."
 msgstr "Viimased Kliendi Piletid"
 
-#: db/seeds/permissions.rb:346
+#: db/seeds/permissions.rb:358
 msgid "Access to the report interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:352
+#: db/seeds/permissions.rb:364
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access to the ticket interface."
@@ -1189,6 +1189,12 @@ msgstr "Lisa Privaatvõti"
 msgid "Add Public or Private Key"
 msgstr "Lisa Privaatvõti"
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/web.ts:13
+#, fuzzy
+#| msgid "Add reply"
+msgid "Add Reply"
+msgstr "Lisa vastus"
+
 #: app/assets/javascripts/app/views/ssl_certificates.jst.eco:5
 #, fuzzy
 #| msgid "Add Certificate"
@@ -1248,10 +1254,22 @@ msgstr ""
 msgid "Add bullet list"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:49
+#, fuzzy
+#| msgid "Add Account"
+msgid "Add comment"
+msgstr "Lisa Konto"
+
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco:32
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco:18
 msgid "Add condition"
 msgstr "Lisa tingimus"
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:168
+#, fuzzy
+#| msgid "email"
+msgid "Add email"
+msgstr "e-post"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:5
 msgid "Add empty checklist"
@@ -1275,14 +1293,39 @@ msgstr "Lisa Välje"
 msgid "Add image"
 msgstr "Lisa pilt"
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:15
+#, fuzzy
+#| msgid "Add a Note"
+msgid "Add internal note"
+msgstr "Lisa Märkus"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:153
 msgid "Add link"
 msgstr "Lisa link"
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:53
+#: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts:125
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:201
+#, fuzzy
+#| msgid "Add a message"
+msgid "Add message"
+msgstr "Lisa sõnum"
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:15
+#, fuzzy
+#| msgid "Add Bot"
+msgid "Add note"
+msgstr "Lisa Bot"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:258
 msgid "Add ordered list"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:13
+msgid "Add phone call"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:59
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:37
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:88
 msgid "Add reply"
@@ -1299,6 +1342,12 @@ msgstr ""
 #: db/seeds/settings.rb:769
 msgid "Add sender initials to end of a tweet."
 msgstr ""
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:49
+#, fuzzy
+#| msgid "Add image"
+msgid "Add sms"
+msgstr "Lisa pilt"
 
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco:35
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco:21
@@ -1453,7 +1502,7 @@ msgstr "Töötaja Nimi"
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
 
-#: db/seeds/permissions.rb:302
+#: db/seeds/permissions.rb:314
 #, fuzzy
 #| msgid "Agent Name"
 msgid "Agent chat"
@@ -1467,13 +1516,13 @@ msgstr ""
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:317
+#: db/seeds/permissions.rb:329
 #, fuzzy
 #| msgid "Agent Name"
 msgid "Agent phone"
 msgstr "Töötaja Nimi"
 
-#: db/seeds/permissions.rb:360
+#: db/seeds/permissions.rb:372
 #, fuzzy
 #| msgid "Open tickets"
 msgid "Agent tickets"
@@ -1753,7 +1802,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:59
-#: db/seeds/permissions.rb:383
+#: db/seeds/permissions.rb:395
 msgid "Appearance"
 msgstr ""
 
@@ -1830,7 +1879,7 @@ msgstr "Oled sa kindel, et soovid eemaldada selle artikli?"
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Oled sa kindel, et soovid kustutada \"%s\"?"
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:31
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:33
 #, fuzzy
 #| msgid "Are you sure you want to delete \"%s\"?"
 msgid "Are you sure you want to delete this object?"
@@ -1906,11 +1955,11 @@ msgstr ""
 msgid "Are you sure? You have changes that will get lost."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:44
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:46
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:45
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:417
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:223
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:251
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:51
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr ""
@@ -1942,10 +1991,6 @@ msgstr "Artikli Tüüp"
 msgid "Article Count"
 msgstr "Artiklite Arv"
 
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:115
-msgid "Article Type"
-msgstr "Artikli Tüüp"
-
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:282
 msgid "Article actions"
 msgstr "Artikli tegevused"
@@ -1960,12 +2005,6 @@ msgstr "Artiklit ei saa kustutada."
 #| msgid "Notifications"
 msgid "Article meta information"
 msgstr "Teavitused"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:37
-#, fuzzy
-#| msgid "Article Type"
-msgid "Article permalink"
-msgstr "Artikli Tüüp"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:77
 #: app/frontend/shared/composables/useArticleSecurity.ts:99
@@ -2066,9 +2105,9 @@ msgstr "Lisatud Failid"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:203
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:219
 msgid "Attachment"
 msgstr "Manus"
 
@@ -2080,7 +2119,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/_answer_attachments.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:2
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachment.vue:45
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:33
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/ticket-article-attachment.ts:12
 #: public/assets/form/form.js:50
 msgid "Attachments"
@@ -2300,11 +2338,11 @@ msgid ""
 "set it to false."
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1226
+#: app/frontend/shared/components/Form/Form.vue:1227
 msgid "Autosave in progress…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1235
+#: app/frontend/shared/components/Form/Form.vue:1236
 msgid "Autosaving is taking longer than expected…"
 msgstr ""
 
@@ -2334,7 +2372,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:128
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:175
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:121
-#: db/seeds/permissions.rb:397
+#: db/seeds/permissions.rb:409
 msgid "Avatar"
 msgstr ""
 
@@ -2592,11 +2630,12 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:95
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:168
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:86
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:160
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:37
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:173
 #: db/seeds/object_manager_attributes.rb:508
 msgid "CC"
 msgstr "CC"
@@ -2766,7 +2805,7 @@ msgstr "Katkesta"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:424
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:428
 msgid "Cancel & Go Back"
 msgstr "Katkesta ja Mine Tagasi"
 
@@ -2892,7 +2931,7 @@ msgstr "Muuda järjestust"
 msgid "Change order"
 msgstr "Muuda järjestust"
 
-#: db/seeds/permissions.rb:415
+#: db/seeds/permissions.rb:427
 #, fuzzy
 #| msgid "Change Your Password"
 msgid "Change personal account password."
@@ -2935,8 +2974,9 @@ msgstr ""
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:106
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:128
 msgid "Channel"
 msgstr "Kanal"
 
@@ -3052,7 +3092,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:3
-#: db/seeds/permissions.rb:287 db/seeds/settings.rb:5790
+#: db/seeds/permissions.rb:299 db/seeds/settings.rb:5790
 #, fuzzy
 #| msgid "Checksum"
 msgid "Checklists"
@@ -3297,7 +3337,7 @@ msgstr ""
 msgid "Close dialog"
 msgstr "Kinnitus dialoog"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:272
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:273
 #, fuzzy
 #| msgid "Close tab"
 msgid "Close side panel"
@@ -3347,7 +3387,7 @@ msgstr "Suletud Piletid"
 msgid "Closing time"
 msgstr "Sulgemise aeg"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:160
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:161
 #, fuzzy
 #| msgid "Content"
 msgid "Collapse sidebar"
@@ -3374,7 +3414,7 @@ msgid "Communication"
 msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:11
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:43
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:44
 msgid "Company Inc."
 msgstr ""
 
@@ -3513,7 +3553,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:130
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:112
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco:4
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:55
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:57
 msgid "Confirmation"
 msgstr "Kinnitus"
 
@@ -3688,7 +3728,7 @@ msgstr ""
 msgid "Copied!"
 msgstr ""
 
-#: app/frontend/apps/desktop/composables/useCopyToClipboard.ts:21
+#: app/frontend/shared/composables/useCopyToClipboard.ts:21
 msgid "Copied."
 msgstr ""
 
@@ -3723,6 +3763,12 @@ msgstr "Turvalisus"
 msgid "Copy URL"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/articlePermalink.ts:14
+#, fuzzy
+#| msgid "Article Type"
+msgid "Copy article permalink"
+msgstr "Artikli Tüüp"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:332
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr ""
@@ -3742,7 +3788,7 @@ msgid "Core Workflow Ajax Mode"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:3
-#: db/seeds/permissions.rb:239
+#: db/seeds/permissions.rb:251
 msgid "Core Workflows"
 msgstr ""
 
@@ -3843,7 +3889,7 @@ msgstr "Riik"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:436
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:440
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Loo"
@@ -4033,7 +4079,7 @@ msgstr "Loo:"
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:14
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:106
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:108
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -4217,7 +4263,7 @@ msgstr ""
 msgid "Customer selection based on sender and receiver list"
 msgstr ""
 
-#: db/seeds/permissions.rb:369
+#: db/seeds/permissions.rb:381
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Customer tickets"
@@ -4265,7 +4311,7 @@ msgstr "Töölaud"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:3
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:3
-#: db/seeds/permissions.rb:251
+#: db/seeds/permissions.rb:263
 msgid "Data Privacy"
 msgstr ""
 
@@ -5314,7 +5360,7 @@ msgstr "Kustuta Fail"
 msgid "Delete Knowledge Base"
 msgstr "Kustuta Teadmusbaas"
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:29
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:31
 #, fuzzy
 #| msgid "Create Ticket"
 msgid "Delete Object"
@@ -5348,7 +5394,7 @@ msgstr "Kustuta avatar"
 msgid "Delete column"
 msgstr "Kustuta Artikkel"
 
-#: db/seeds/permissions.rb:252
+#: db/seeds/permissions.rb:264
 msgid "Delete existing data of your system."
 msgstr ""
 
@@ -5546,7 +5592,7 @@ msgstr "%s% on taasavatud"
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:37
-#: db/seeds/permissions.rb:428
+#: db/seeds/permissions.rb:440
 msgid "Devices"
 msgstr "Seadmed"
 
@@ -5633,8 +5679,8 @@ msgstr "Loobu"
 
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:421
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:49
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:425
 msgid "Discard Changes"
 msgstr "Loobu Muudatustest"
 
@@ -5652,11 +5698,12 @@ msgstr "Loobu artiklist"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:47
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:419
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:225
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:253
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:53
 msgid "Discard changes"
 msgstr "Loobu muudatustest"
 
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:415
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:162
 msgid "Discard your unsaved changes"
@@ -5720,7 +5767,7 @@ msgstr ""
 msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:56
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:58
 msgid "Do you want to continue?"
 msgstr ""
 
@@ -5809,13 +5856,13 @@ msgstr "Lae alla %s kirje(t)"
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:42
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:123
 #, fuzzy
 #| msgid "Download Certificate"
 msgid "Download original email"
 msgstr "Lae alla Sertifikaat"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:137
 #, fuzzy
 #| msgid "Download Private Key"
 msgid "Download raw email"
@@ -5982,7 +6029,7 @@ msgstr "Muuda vastust"
 msgid "Edit security keys"
 msgstr "Turvalisus"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:89
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Edit ticket title"
@@ -6075,7 +6122,7 @@ msgstr "Perekonnanimi"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:132
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:167
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
 #: public/assets/form/form.js:32
 msgid "Email"
@@ -6857,7 +6904,7 @@ msgstr "Uus Pilet"
 msgid "Existing tickets (open)"
 msgstr "%s piletid leitud"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:161
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:162
 #, fuzzy
 #| msgid "Content"
 msgid "Expand sidebar"
@@ -7331,8 +7378,7 @@ msgstr ""
 msgid "Format as ||italic||"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:78
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:92
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:96
 msgid "Forward"
 msgstr ""
 
@@ -8495,7 +8541,7 @@ msgstr ""
 msgid "Include your own tickets in subscription for pending tickets."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:114
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:117
 #, fuzzy
 #| msgid "Overviews"
 msgid "Included ticket overviews"
@@ -8511,6 +8557,7 @@ msgid "Including private key."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:242
 msgid "Incomplete Ticket Checklist"
 msgstr ""
 
@@ -8682,7 +8729,7 @@ msgid "Integer field"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/integrations.coffee:3
-#: db/seeds/permissions.rb:209
+#: db/seeds/permissions.rb:221
 msgid "Integrations"
 msgstr "Integratsioonid"
 
@@ -8692,7 +8739,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:133
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:133
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:146
 msgid "Internal"
 msgstr "Sisemine"
 
@@ -9031,7 +9078,7 @@ msgstr "Teadmusbaas"
 msgid "Knowledge Base Answer"
 msgstr "Teadmusbaasi Vastus"
 
-#: db/seeds/permissions.rb:332
+#: db/seeds/permissions.rb:344
 msgid "Knowledge Base Editor"
 msgstr "Teadmusbaasi Toimetaja"
 
@@ -9039,7 +9086,7 @@ msgstr "Teadmusbaasi Toimetaja"
 msgid "Knowledge Base Feed"
 msgstr "Teadmusbaasi Feed"
 
-#: db/seeds/permissions.rb:338
+#: db/seeds/permissions.rb:350
 msgid "Knowledge Base Reader"
 msgstr "Teadmusbaasi Lugeja"
 
@@ -9093,7 +9140,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:13
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:157
-#: db/seeds/permissions.rb:390
+#: db/seeds/permissions.rb:402
 msgid "Language"
 msgstr "Keel"
 
@@ -9312,7 +9359,7 @@ msgstr "Mallid"
 #: app/assets/javascripts/app/views/widget/user.jst.eco:34
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:46
-#: db/seeds/permissions.rb:442
+#: db/seeds/permissions.rb:454
 msgid "Linked Accounts"
 msgstr ""
 
@@ -9515,7 +9562,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee:3
 #: app/assets/javascripts/app/views/maintenance.jst.eco:3
-#: db/seeds/permissions.rb:257
+#: db/seeds/permissions.rb:269
 msgid "Maintenance"
 msgstr "Haldamine"
 
@@ -9536,7 +9583,7 @@ msgstr ""
 msgid "Manage"
 msgstr "Halda"
 
-#: db/seeds/permissions.rb:216
+#: db/seeds/permissions.rb:228
 msgid "Manage API of your system."
 msgstr ""
 
@@ -9595,7 +9642,7 @@ msgstr "Liht Autentimine"
 msgid "Manage WhatsApp channel of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:276
+#: db/seeds/permissions.rb:288
 msgid "Manage active user sessions of your system."
 msgstr ""
 
@@ -9629,7 +9676,7 @@ msgstr ""
 msgid "Manage core system settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:240
+#: db/seeds/permissions.rb:252
 msgid "Manage core workflows of your system."
 msgstr ""
 
@@ -9645,77 +9692,77 @@ msgstr ""
 msgid "Manage groups of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:210
+#: db/seeds/permissions.rb:222
 msgid "Manage integrations of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:258
+#: db/seeds/permissions.rb:270
 msgid "Manage maintenance mode of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:264
+#: db/seeds/permissions.rb:276
 msgid "Manage monitoring of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:222
+#: db/seeds/permissions.rb:234
 msgid "Manage object attributes of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:270
+#: db/seeds/permissions.rb:282
 msgid "Manage packages of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:436
+#: db/seeds/permissions.rb:448
 msgid "Manage personal API tokens."
 msgstr ""
 
-#: db/seeds/permissions.rb:384
+#: db/seeds/permissions.rb:396
 msgid "Manage personal appearance settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:398
+#: db/seeds/permissions.rb:410
 #, fuzzy
 #| msgid "Personal Settings"
 msgid "Manage personal avatar settings."
 msgstr "Isiklikud Seaded"
 
-#: db/seeds/permissions.rb:470
+#: db/seeds/permissions.rb:482
 msgid "Manage personal calendar."
 msgstr ""
 
-#: db/seeds/permissions.rb:429
+#: db/seeds/permissions.rb:441
 #, fuzzy
 #| msgid "Clean up dead sessions."
 msgid "Manage personal devices and sessions."
 msgstr "Kustuta surnud sessioonid."
 
-#: db/seeds/permissions.rb:391
+#: db/seeds/permissions.rb:403
 msgid "Manage personal language settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:443
+#: db/seeds/permissions.rb:455
 msgid "Manage personal linked accounts."
 msgstr ""
 
-#: db/seeds/permissions.rb:450
+#: db/seeds/permissions.rb:462
 msgid "Manage personal notifications settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:405
+#: db/seeds/permissions.rb:417
 msgid "Manage personal out of office settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:460
+#: db/seeds/permissions.rb:472
 msgid "Manage personal overviews."
 msgstr ""
 
-#: db/seeds/permissions.rb:377
+#: db/seeds/permissions.rb:389
 #, fuzzy
 #| msgid "Personal Settings"
 msgid "Manage personal settings."
 msgstr "Isiklikud Seaded"
 
-#: db/seeds/permissions.rb:422
+#: db/seeds/permissions.rb:434
 #, fuzzy
 #| msgid "Basic Authentication"
 msgid "Manage personal two-factor authentication methods."
@@ -9741,7 +9788,7 @@ msgstr ""
 msgid "Manage security settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:282
+#: db/seeds/permissions.rb:294
 msgid "Manage system report of your system."
 msgstr ""
 
@@ -9749,10 +9796,22 @@ msgstr ""
 msgid "Manage text modules of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:288
+#: db/seeds/permissions.rb:210
+#, fuzzy
+#| msgid "Overviews"
+msgid "Manage ticket auto assignment settings of your system."
+msgstr "Ülevaated"
+
+#: db/seeds/permissions.rb:300
 #, fuzzy
 #| msgid "Overviews"
 msgid "Manage ticket checklists of your system."
+msgstr "Ülevaated"
+
+#: db/seeds/permissions.rb:216
+#, fuzzy
+#| msgid "Overviews"
+msgid "Manage ticket duplicate detection settings of your system."
 msgstr "Ülevaated"
 
 #: db/seeds/permissions.rb:48
@@ -9765,7 +9824,7 @@ msgstr ""
 msgid "Manage ticket overviews of your system."
 msgstr "Ülevaated"
 
-#: db/seeds/permissions.rb:234
+#: db/seeds/permissions.rb:246
 msgid "Manage ticket priorities of your system."
 msgstr ""
 
@@ -9773,7 +9832,7 @@ msgstr ""
 msgid "Manage ticket settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:228
+#: db/seeds/permissions.rb:240
 msgid "Manage ticket states of your system."
 msgstr ""
 
@@ -9789,7 +9848,7 @@ msgstr ""
 msgid "Manage time accounting settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:246
+#: db/seeds/permissions.rb:258
 msgid "Manage translations of your system."
 msgstr ""
 
@@ -10218,7 +10277,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/monitoring.coffee:3
 #: app/assets/javascripts/app/views/monitoring.jst.eco:3
-#: db/seeds/permissions.rb:263
+#: db/seeds/permissions.rb:275
 msgid "Monitoring"
 msgstr "Jälgimine"
 
@@ -10247,7 +10306,7 @@ msgstr ""
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:137
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:141
 #, fuzzy
 #| msgid "Overviews"
 msgid "More ticket overviews"
@@ -10905,7 +10964,7 @@ msgstr "mustand"
 msgid "No email!"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:131
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:135
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:117
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:267
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:150
@@ -11054,6 +11113,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:245
 #, fuzzy
 #| msgid "You can no longer see the ticket."
 msgid "No, just close the ticket"
@@ -11158,7 +11218,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:48
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:35
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/note.ts:7
-#: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:12
+#: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:14
 #: db/seeds/object_manager_attributes.rb:1335
 msgid "Note"
 msgstr "Märkus"
@@ -11266,7 +11326,7 @@ msgstr "Teavitused"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:34
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
-#: db/seeds/permissions.rb:449
+#: db/seeds/permissions.rb:461
 msgid "Notifications"
 msgstr "Teavitused"
 
@@ -11354,7 +11414,7 @@ msgid "Object Manager"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:330
-#: db/seeds/permissions.rb:221
+#: db/seeds/permissions.rb:233
 msgid "Objects"
 msgstr "Objektid"
 
@@ -11688,13 +11748,13 @@ msgstr ""
 msgid "Organization could not be updated."
 msgstr "Organisatsiooni ei ole võimalik uuendada."
 
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:47
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:48
 #, fuzzy
 #| msgid "Organization"
 msgid "Organization logo"
 msgstr "Organisatsioon"
 
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:40
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:41
 #, fuzzy
 #| msgid "Organization Name"
 msgid "Organization name"
@@ -11739,7 +11799,7 @@ msgid "Origin By"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:92
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:45
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:44
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:55
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
@@ -11761,7 +11821,7 @@ msgstr "Teised Seaded"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:126
-#: db/seeds/permissions.rb:404
+#: db/seeds/permissions.rb:416
 msgid "Out of Office"
 msgstr ""
 
@@ -11905,7 +11965,7 @@ msgid "Package"
 msgstr "Pakett"
 
 #: app/assets/javascripts/app/controllers/package.coffee:3
-#: db/seeds/permissions.rb:269
+#: db/seeds/permissions.rb:281
 msgid "Packages"
 msgstr "Paketid"
 
@@ -11955,7 +12015,7 @@ msgstr "Ülem"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:83
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:52
-#: db/seeds/object_manager_attributes.rb:1249 db/seeds/permissions.rb:414
+#: db/seeds/object_manager_attributes.rb:1249 db/seeds/permissions.rb:426
 msgid "Password"
 msgstr "Parool"
 
@@ -12128,7 +12188,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/cti.coffee:322
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:12
-#: db/seeds/object_manager_attributes.rb:797 db/seeds/permissions.rb:308
+#: db/seeds/object_manager_attributes.rb:797 db/seeds/permissions.rb:320
 msgid "Phone"
 msgstr "Telefon"
 
@@ -12158,6 +12218,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:7
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:182
 msgid "Pick a name for the application, and we'll give you a unique token."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:224
+msgid "Pin this panel"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:24
@@ -12316,7 +12380,7 @@ msgstr "Palun vali vähemalt üks kaust."
 msgid "Please select at least one folder."
 msgstr "Palun vali vähemalt üks kaust."
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:75
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:74
 msgid "Please select at least one ticket overview"
 msgstr "Palun vali vähemalt üks piletite ülevaade"
 
@@ -12568,7 +12632,7 @@ msgid "Profile language updated successfully."
 msgstr "Pileti sildi uuendamine oli edukas."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
-#: db/seeds/permissions.rb:376
+#: db/seeds/permissions.rb:388
 #, fuzzy
 #| msgid "Personal Settings"
 msgid "Profile settings"
@@ -12610,7 +12674,7 @@ msgid "Proxy address"
 msgstr "Aadress"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:138
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:151
 msgid "Public"
 msgstr "Avalik"
 
@@ -12864,7 +12928,6 @@ msgstr ""
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:61
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:132
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:177
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:84
 #: app/frontend/shared/form/i18n/locales.ts:29
 msgid "Remove"
 msgstr "Eemalda"
@@ -13016,8 +13079,8 @@ msgstr ""
 msgid "Replacement agent"
 msgstr "Minu Asendus Piletid"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:89
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:84
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:221
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:26
@@ -13028,7 +13091,7 @@ msgstr "Minu Asendus Piletid"
 msgid "Reply"
 msgstr "vasta"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:104
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:108
 #, fuzzy
 #| msgid "reply"
 msgid "Reply All"
@@ -13231,15 +13294,21 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:188
+#, fuzzy
+#| msgid "Close tab"
+msgid "Resize article panel"
+msgstr "Sulge sakk"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageHandler.vue:169
 msgid "Resize frame"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:308
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:309
 msgid "Resize side panel"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:133
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:134
 msgid "Resize sidebar"
 msgstr ""
 
@@ -13533,7 +13602,7 @@ msgstr "Laupäev"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:216
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:70
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:69
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:138
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:100
 msgid "Save"
@@ -13566,7 +13635,7 @@ msgstr "Loo Test Pilet"
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:53
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:146
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:115
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:138
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:131
 #, fuzzy
 #| msgid "Continue"
 msgid "Save and Continue"
@@ -13806,8 +13875,8 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:22
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:178
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:183
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:196
 #: db/seeds/permissions.rb:197
 msgid "Security"
 msgstr "Turvalisus"
@@ -14137,7 +14206,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/session.coffee:3
 #: app/assets/javascripts/app/views/session.jst.eco:2
-#: db/seeds/permissions.rb:275
+#: db/seeds/permissions.rb:287
 msgid "Sessions"
 msgstr "Sessioonid"
 
@@ -14239,13 +14308,6 @@ msgid ""
 "limits"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:94
-#, fuzzy
-#| msgid "Internal"
-msgid "Set to external"
-msgstr "Sisemine"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:99
 #: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts:33
 #, fuzzy
 #| msgid "Internal"
@@ -14346,7 +14408,7 @@ msgid "Shared Drafts"
 msgstr "Jagatud"
 
 #: app/controllers/tickets_controller.rb:90
-#: app/services/service/ticket/create.rb:139
+#: app/services/service/ticket/create.rb:155
 msgid "Shared draft cannot be selected for this ticket."
 msgstr ""
 
@@ -14452,7 +14514,7 @@ msgstr ""
 msgid "Show matching tickets in the warning"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts:135
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts:83
 #, fuzzy
 #| msgid "Show Search Details"
 msgid "Show meta data"
@@ -14516,13 +14578,13 @@ msgstr ""
 msgid "Shown when the chat is closed."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:243
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:244
 #, fuzzy
 #| msgid "Close tab"
 msgid "Side panel"
 msgstr "Sulge sakk"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:289
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:290
 msgid "Side panel footer"
 msgstr ""
 
@@ -14820,8 +14882,7 @@ msgstr "Allikas"
 msgid "Special character required"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:104
-#: app/frontend/shared/entities/ticket-article/action/plugins/split.ts:12
+#: app/frontend/shared/entities/ticket-article/action/plugins/split.ts:11
 msgid "Split"
 msgstr ""
 
@@ -15044,8 +15105,8 @@ msgstr "Tänav"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:40
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:13
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:87
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:171
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:33
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:184
 msgid "Subject"
 msgstr "Teema"
 
@@ -15176,7 +15237,7 @@ msgid "System Address Display Name"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:89
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:28
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:29
 #, fuzzy
 #| msgid "Notifications"
 msgid "System Information"
@@ -15188,14 +15249,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/system_report.coffee:3
 #: app/assets/javascripts/app/views/system_report.jst.eco:2
-#: db/seeds/permissions.rb:281
+#: db/seeds/permissions.rb:293
 #, fuzzy
 #| msgid "Notifications"
 msgid "System Report"
 msgstr "Teavitused"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:22
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:56
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:57
 msgid "System URL"
 msgstr ""
 
@@ -15550,7 +15611,7 @@ msgid ""
 "protocol."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:60
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:61
 msgid "The URL of this installation of Zammad."
 msgstr ""
 
@@ -16640,6 +16701,16 @@ msgid ""
 "AS."
 msgstr ""
 
+#: app/services/service/ticket/update/validator/checklist_completed.rb:16
+#, fuzzy
+#| msgid "Overviews"
+msgid "The ticket checklist is incomplete."
+msgstr "Ülevaated"
+
+#: app/services/service/ticket/update/validator/time_accounting.rb:16
+msgid "The ticket time accounting condition is met."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:111
 msgid "The tickets could not be merged."
 msgstr "Pileteid ei ole võimalik liita."
@@ -17343,6 +17414,7 @@ msgstr "Neljapäev"
 #: app/assets/javascripts/app/models/signature.coffee:15
 #: app/assets/javascripts/app/models/text_module.coffee:15
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:19
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/information.ts:10
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:10
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:10
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/ticket.ts:6
@@ -17383,6 +17455,12 @@ msgstr ""
 msgid "Ticket (censored):"
 msgstr "Piletit %s liidetud."
 
+#: db/seeds/permissions.rb:209
+#, fuzzy
+#| msgid "Tickets of Organization"
+msgid "Ticket Auto Assignment"
+msgstr "Organisatsiooni Piletid"
+
 #: db/seeds/settings.rb:2272
 msgid "Ticket Conditions Expert Mode"
 msgstr ""
@@ -17400,6 +17478,12 @@ msgstr "Piletite Arv"
 #| msgid "ticket.customer"
 msgid "Ticket Customer"
 msgstr "ticket.customer"
+
+#: db/seeds/permissions.rb:215
+#, fuzzy
+#| msgid "Ticket escalation"
+msgid "Ticket Duplicate Detection"
+msgstr "Pileti eskalatsioon"
 
 #: db/seeds/settings.rb:2167
 msgid "Ticket Hook"
@@ -17440,14 +17524,14 @@ msgid "Ticket Organization Reassignment"
 msgstr "Organisatsiooni Piletid"
 
 #: app/frontend/apps/mobile/pages/home/routes.ts:35
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:67
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:66
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:22
 #, fuzzy
 #| msgid "New Overview"
 msgid "Ticket Overview"
 msgstr "Uus Ülevaade"
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:84
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:83
 msgid "Ticket Overview settings are saved."
 msgstr "Pileti Ülevaadete seadistused salvestatud."
 
@@ -17464,7 +17548,7 @@ msgid "Ticket Owner"
 msgstr "Uus Ülevaade"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee:16
-#: db/seeds/permissions.rb:233
+#: db/seeds/permissions.rb:245
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket Priorities"
@@ -17499,7 +17583,7 @@ msgid "Ticket State"
 msgstr "Pileti uuendamine"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:3
-#: db/seeds/permissions.rb:227
+#: db/seeds/permissions.rb:239
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket States"
@@ -17632,7 +17716,7 @@ msgstr "Kasutajat ei ole võimalik luua."
 msgid "Ticket tags updated successfully."
 msgstr "Pileti sildi uuendamine oli edukas."
 
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:84
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:92
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket title"
@@ -17645,8 +17729,15 @@ msgstr "Pileti uuendamine"
 msgid "Ticket update"
 msgstr "Pileti uuendamine"
 
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:306
+#, fuzzy
+#| msgid "Ticket update"
+msgid "Ticket update failed."
+msgstr "Pileti uuendamine"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:135
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:283
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:163
 msgid "Ticket updated successfully."
 msgstr "Pileti uuendamine oli edukas."
 
@@ -17682,7 +17773,7 @@ msgid ""
 "</div>\n"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:39
+#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:38
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
 #: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:22
 msgid ""
@@ -17904,8 +17995,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:84
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:85
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:148
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:36
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:161
 #: db/seeds/object_manager_attributes.rb:482
 msgid "To"
 msgstr "Kellele"
@@ -18046,7 +18137,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:51
-#: db/seeds/permissions.rb:435
+#: db/seeds/permissions.rb:447
 msgid "Token Access"
 msgstr ""
 
@@ -18137,7 +18228,7 @@ msgstr "Tõlked"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:390
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
-#: db/seeds/permissions.rb:245
+#: db/seeds/permissions.rb:257
 msgid "Translations"
 msgstr "Tõlked"
 
@@ -18304,7 +18395,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/password.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:57
-#: db/seeds/permissions.rb:421
+#: db/seeds/permissions.rb:433
 #, fuzzy
 #| msgid "Basic Authentication"
 msgid "Two-factor Authentication"
@@ -18452,6 +18543,10 @@ msgstr ""
 msgid "Unlock"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:224
+msgid "Unpin this panel"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:77
 #, fuzzy
 #| msgid "Notification"
@@ -18464,7 +18559,7 @@ msgstr "Teavitus"
 msgid "Unread notifications"
 msgstr "Teavitus"
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:42
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:44
 #, fuzzy
 #| msgid "Discard Changes"
 msgid "Unsaved Changes"
@@ -18519,6 +18614,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:57
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:13
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:424
 msgid "Update"
 msgstr "Uuenda"
 
@@ -19142,7 +19238,7 @@ msgstr "Uus Pilet"
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:125
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:138
 #: db/seeds/object_manager_attributes.rb:449
 msgid "Visibility"
 msgstr ""
@@ -19509,7 +19605,7 @@ msgstr "Kollane"
 #: app/assets/javascripts/app/controllers/tag.coffee:133
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:121
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:23
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:58
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:60
 msgid "Yes"
 msgstr "Jah"
 
@@ -19520,6 +19616,7 @@ msgid "Yes, add attachments now"
 msgstr "%s lisatud failid"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:244
 #, fuzzy
 #| msgid "Remove"
 msgid "Yes, open the checklist"
@@ -19731,7 +19828,7 @@ msgstr ""
 msgid "You have insufficient rights to view this organization."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:41
+#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:40
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
 #: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:24
 msgid "You have insufficient rights to view this ticket."
@@ -19772,6 +19869,14 @@ msgstr ""
 #, fuzzy
 #| msgid "Please select at least one ticket overview"
 msgid "You have unchecked items in the checklist."
+msgstr "Palun vali vähemalt üks piletite ülevaade"
+
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:239
+#, fuzzy
+#| msgid "Please select at least one ticket overview"
+msgid ""
+"You have unchecked items in the checklist. Do you want to handle them before "
+"closing this ticket?"
 msgstr "Palun vali vähemalt üks piletite ülevaade"
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco:4
@@ -20794,7 +20899,7 @@ msgstr ""
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:93
 msgid "is not a number"
 msgstr ""
 
@@ -21599,6 +21704,14 @@ msgstr ""
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Tänane ooteaeg"
+
+#~ msgid "Article Type"
+#~ msgstr "Artikli Tüüp"
+
+#, fuzzy
+#~| msgid "Internal"
+#~ msgid "Set to external"
+#~ msgstr "Sisemine"
 
 #, fuzzy
 #~| msgid "Select Template"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-02 04:54+0000\n"
+"PO-Revision-Date: 2024-09-10 04:02+0000\n"
 "Last-Translator: Sajjad Jazini <s.jazini@vatanmail.ir>\n"
 "Language-Team: Persian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fa/>\n"
@@ -378,7 +378,7 @@ msgstr "%s پوشه"
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:39
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:8
 msgid "%s groups to %s roles assignments"
-msgstr "%s گروه برای %s نقش وظائف"
+msgstr "واگذاری %s گروه به %s نقش"
 
 #: app/frontend/shared/i18n/dates.ts:104
 msgid "%s hours ago"
@@ -801,7 +801,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/api.coffee:3
-#: app/assets/javascripts/app/views/api.jst.eco:2 db/seeds/permissions.rb:215
+#: app/assets/javascripts/app/views/api.jst.eco:2 db/seeds/permissions.rb:227
 msgid "API"
 msgstr "API"
 
@@ -847,57 +847,57 @@ msgstr ""
 msgid "Access denied"
 msgstr "Access to %s"
 
-#: db/seeds/permissions.rb:303
+#: db/seeds/permissions.rb:315
 msgid "Access the agent chat features."
 msgstr ""
 
-#: db/seeds/permissions.rb:318
+#: db/seeds/permissions.rb:330
 msgid "Access the agent phone features."
 msgstr ""
 
-#: db/seeds/permissions.rb:333
+#: db/seeds/permissions.rb:345
 msgid "Access the knowledge base editor features."
 msgstr ""
 
-#: db/seeds/permissions.rb:339
+#: db/seeds/permissions.rb:351
 msgid "Access the knowledge base reader features."
 msgstr ""
 
-#: db/seeds/permissions.rb:361
+#: db/seeds/permissions.rb:373
 #, fuzzy
 #| msgid "Access to Agent Tickets based on Group Access"
 msgid "Access the tickets as agent based on group access."
 msgstr "Access to Agent Tickets based on Group Access"
 
-#: db/seeds/permissions.rb:370
+#: db/seeds/permissions.rb:382
 #, fuzzy
 #| msgid "ticket.customer"
 msgid "Access tickets as customer."
 msgstr "مشتری ایجاد‌کننده تیکت"
 
-#: db/seeds/permissions.rb:294
+#: db/seeds/permissions.rb:306
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access to the chat interface."
 msgstr "تیکت‌های اخیر مشتری"
 
-#: db/seeds/permissions.rb:324
+#: db/seeds/permissions.rb:336
 #, fuzzy
 #| msgid "Inserts knowledge base answer"
 msgid "Access to the knowledge base interface."
 msgstr "افزودن پاسخ از پایگاه دانش"
 
-#: db/seeds/permissions.rb:309
+#: db/seeds/permissions.rb:321
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access to the phone interface."
 msgstr "تیکت‌های اخیر مشتری"
 
-#: db/seeds/permissions.rb:346
+#: db/seeds/permissions.rb:358
 msgid "Access to the report interface."
 msgstr ""
 
-#: db/seeds/permissions.rb:352
+#: db/seeds/permissions.rb:364
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Access to the ticket interface."
@@ -1173,6 +1173,12 @@ msgstr "افزودن کلید خصوصی"
 msgid "Add Public or Private Key"
 msgstr "افزودن کلید عمومی یا خصوصی"
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/web.ts:13
+#, fuzzy
+#| msgid "Add reply"
+msgid "Add Reply"
+msgstr "افزودن پاسخ"
+
 #: app/assets/javascripts/app/views/ssl_certificates.jst.eco:5
 msgid "Add SSL Certificate"
 msgstr "افزودن گواهینامه SSL"
@@ -1232,10 +1238,22 @@ msgstr "ضمیمه دلخواه را برای آپلود اضافه کنید."
 msgid "Add bullet list"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:49
+#, fuzzy
+#| msgid "Add Account"
+msgid "Add comment"
+msgstr "افزودن حساب کاربری"
+
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco:32
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco:18
 msgid "Add condition"
 msgstr "افزودن شرط"
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:168
+#, fuzzy
+#| msgid "email"
+msgid "Add email"
+msgstr "ایمیل"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:5
 msgid "Add empty checklist"
@@ -1261,14 +1279,39 @@ msgstr "افزودن تگ"
 msgid "Add image"
 msgstr "افزودن تصویر"
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:15
+#, fuzzy
+#| msgid "Add a Note"
+msgid "Add internal note"
+msgstr "افزودن یک متن"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:153
 msgid "Add link"
 msgstr "افزودن پیوند"
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:53
+#: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts:125
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:201
+#, fuzzy
+#| msgid "Add a message"
+msgid "Add message"
+msgstr "افزودن یک پیام"
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:15
+#, fuzzy
+#| msgid "Add Bot"
+msgid "Add note"
+msgstr "افزودن بات"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:258
 msgid "Add ordered list"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:13
+msgid "Add phone call"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:59
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:37
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:88
 msgid "Add reply"
@@ -1285,6 +1328,12 @@ msgstr ""
 #: db/seeds/settings.rb:769
 msgid "Add sender initials to end of a tweet."
 msgstr "اضافه کردن پاراف فرستنده در پایان توییت."
+
+#: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:49
+#, fuzzy
+#| msgid "Add image"
+msgid "Add sms"
+msgstr "افزودن تصویر"
 
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco:35
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco:21
@@ -1439,7 +1488,7 @@ msgstr "نام کارشناس"
 msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr ""
 
-#: db/seeds/permissions.rb:302
+#: db/seeds/permissions.rb:314
 #, fuzzy
 #| msgid "Agent Name"
 msgid "Agent chat"
@@ -1453,13 +1502,13 @@ msgstr "وقت آزاد کارشناس"
 msgid "Agent limit exceeded, please check your account settings."
 msgstr "Agent limit exceeded, please check your account settings."
 
-#: db/seeds/permissions.rb:317
+#: db/seeds/permissions.rb:329
 #, fuzzy
 #| msgid "Agent Name"
 msgid "Agent phone"
 msgstr "نام کارشناس"
 
-#: db/seeds/permissions.rb:360
+#: db/seeds/permissions.rb:372
 #, fuzzy
 #| msgid "Open Tickets"
 msgid "Agent tickets"
@@ -1678,6 +1727,19 @@ msgid ""
 "target=\"zammad_app\">View this in #{config.product_name}</a>\n"
 "</div>\n"
 msgstr ""
+"یک تیکت دیگر با تیکت (#{ticket.title}) ادغام شد\n"
+"\n"
+"<div>سلام #{recipient.firstname}،</div>\n"
+"<br>\n"
+"<div>\n"
+"یک تیکت دیگر با تیکت (#{ticket.title}) توسط \"<b>#{current_user.longname}</"
+"b>\" ادغام شد.\n"
+"</div>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">مشاهده این در #{config.product_name}</a>\n"
+"</div>\n"
 
 #: app/assets/javascripts/app/models/ticket.coffee:121
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:37
@@ -1746,7 +1808,7 @@ msgstr "رمز برنامه"
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/appearance.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:59
-#: db/seeds/permissions.rb:383
+#: db/seeds/permissions.rb:395
 msgid "Appearance"
 msgstr "ظاهر"
 
@@ -1823,7 +1885,7 @@ msgstr "آیا میخواهید این بند را حذف کنید؟"
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "آیا مایل به حذف «%s» هستید؟"
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:31
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:33
 #, fuzzy
 #| msgid "Do you really want to delete this object?"
 msgid "Are you sure you want to delete this object?"
@@ -1896,11 +1958,11 @@ msgstr ""
 msgid "Are you sure? You have changes that will get lost."
 msgstr "آیا مطمئن هستید؟ تغییرات ذخیره نشده‌ای دارید که از دست خواهد رفت."
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:44
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:46
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:45
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:417
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:223
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:251
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:51
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "آیا مطمئن هستید؟ تغییرات ذخیره نشده‌ای دارید که از دست خواهد رفت."
@@ -1930,10 +1992,6 @@ msgstr "بند › متن (HTML)"
 msgid "Article Count"
 msgstr "تعداد بند"
 
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:115
-msgid "Article Type"
-msgstr "نوع بند"
-
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:282
 msgid "Article actions"
 msgstr "فعالیت‌های بند"
@@ -1948,12 +2006,6 @@ msgstr "امکان حذف بند وجود ندارد."
 #| msgid "Block Notifications"
 msgid "Article meta information"
 msgstr "متوقف کردن اطلاع رسانی ها"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:37
-#, fuzzy
-#| msgid "Article"
-msgid "Article permalink"
-msgstr "یادداشت"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:77
 #: app/frontend/shared/composables/useArticleSecurity.ts:99
@@ -2059,9 +2111,9 @@ msgstr "فایل‌های ضمیمه"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:203
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:206
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:219
 msgid "Attachment"
 msgstr "ضمیمه"
 
@@ -2073,7 +2125,6 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/_answer_attachments.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:2
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachment.vue:45
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:33
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/ticket-article-attachment.ts:12
 #: public/assets/form/form.js:50
 msgid "Attachments"
@@ -2285,11 +2336,11 @@ msgid ""
 "set it to false."
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1226
+#: app/frontend/shared/components/Form/Form.vue:1227
 msgid "Autosave in progress…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1235
+#: app/frontend/shared/components/Form/Form.vue:1236
 msgid "Autosaving is taking longer than expected…"
 msgstr ""
 
@@ -2319,7 +2370,7 @@ msgstr "انواع موجود برای تیکت جدید"
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:128
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:175
 #: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:121
-#: db/seeds/permissions.rb:397
+#: db/seeds/permissions.rb:409
 msgid "Avatar"
 msgstr "آواتار"
 
@@ -2573,11 +2624,12 @@ msgstr "CA"
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:95
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:168
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:86
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:160
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:37
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:173
 #: db/seeds/object_manager_attributes.rb:508
 msgid "CC"
 msgstr "CC"
@@ -2747,7 +2799,7 @@ msgstr "لغو"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:424
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:428
 msgid "Cancel & Go Back"
 msgstr "صرف‌نظر و بازگشت"
 
@@ -2867,7 +2919,7 @@ msgstr "تغییر تاریخ"
 msgid "Change order"
 msgstr "تغییر مرتب سازی"
 
-#: db/seeds/permissions.rb:415
+#: db/seeds/permissions.rb:427
 #, fuzzy
 #| msgid "Change Your Password"
 msgid "Change personal account password."
@@ -2910,8 +2962,9 @@ msgstr "تغییرات انجام شده نیازمند به‌روزرسانی 
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:106
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:128
 msgid "Channel"
 msgstr "کانال"
 
@@ -3029,7 +3082,7 @@ msgstr "این یادداشت به تیکت مشخص شده تعلق ندارد.
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:3
-#: db/seeds/permissions.rb:287 db/seeds/settings.rb:5790
+#: db/seeds/permissions.rb:299 db/seeds/settings.rb:5790
 #, fuzzy
 #| msgid "Checksum"
 msgid "Checklists"
@@ -3271,7 +3324,7 @@ msgstr "بستن برگه کنونی"
 msgid "Close dialog"
 msgstr "پنجره تایید/ارسال"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:272
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:273
 #, fuzzy
 #| msgid "Close tab"
 msgid "Close side panel"
@@ -3321,7 +3374,7 @@ msgstr "تیکتهای بسته‌شده"
 msgid "Closing time"
 msgstr "زمان بستن"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:160
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:161
 #, fuzzy
 #| msgid "Content"
 msgid "Collapse sidebar"
@@ -3350,7 +3403,7 @@ msgid "Communication"
 msgstr "نحوه ارتباط"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:11
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:43
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:44
 msgid "Company Inc."
 msgstr "شرکت"
 
@@ -3487,7 +3540,7 @@ msgstr "پنجره تایید/ارسال"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:130
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:112
 #: app/assets/javascripts/app/views/agent_ticket_view/bulk.jst.eco:4
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:55
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:57
 msgid "Confirmation"
 msgstr "تایید"
 
@@ -3656,7 +3709,7 @@ msgstr ""
 msgid "Copied!"
 msgstr "رونوشت شد!"
 
-#: app/frontend/apps/desktop/composables/useCopyToClipboard.ts:21
+#: app/frontend/shared/composables/useCopyToClipboard.ts:21
 msgid "Copied."
 msgstr ""
 
@@ -3695,6 +3748,12 @@ msgstr "توکن CTI"
 msgid "Copy URL"
 msgstr "کپی"
 
+#: app/frontend/shared/entities/ticket-article/action/plugins/articlePermalink.ts:14
+#, fuzzy
+#| msgid "Article"
+msgid "Copy article permalink"
+msgstr "یادداشت"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:332
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "کپی شماره آبجکت کنونی (مثلا شماره تیکت) داخل کلیپ‌بورد"
@@ -3714,7 +3773,7 @@ msgid "Core Workflow Ajax Mode"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:3
-#: db/seeds/permissions.rb:239
+#: db/seeds/permissions.rb:251
 msgid "Core Workflows"
 msgstr "جریان‌های کاری اصلی"
 
@@ -3817,7 +3876,7 @@ msgstr "کشور"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:436
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:440
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "ایجاد"
@@ -4001,7 +4060,7 @@ msgstr "ایجاد:"
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:14
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:106
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:108
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -4183,7 +4242,7 @@ msgstr ""
 msgid "Customer selection based on sender and receiver list"
 msgstr "انتخاب مشتری براساس لیست ارسال‌کننده و دریافت‌کننده"
 
-#: db/seeds/permissions.rb:369
+#: db/seeds/permissions.rb:381
 #, fuzzy
 #| msgid "Recent Customer Tickets"
 msgid "Customer tickets"
@@ -4233,7 +4292,7 @@ msgstr "پیشخوان"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:3
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:3
-#: db/seeds/permissions.rb:251
+#: db/seeds/permissions.rb:263
 msgid "Data Privacy"
 msgstr "محرمانگی اطلاعات"
 
@@ -5269,7 +5328,7 @@ msgstr "حذف فایل"
 msgid "Delete Knowledge Base"
 msgstr "حذف پایگاه دانش"
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:29
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:31
 #, fuzzy
 #| msgid "Create a Test Ticket"
 msgid "Delete Object"
@@ -5301,7 +5360,7 @@ msgstr "حذف آواتار"
 msgid "Delete column"
 msgstr "حذف فایل"
 
-#: db/seeds/permissions.rb:252
+#: db/seeds/permissions.rb:264
 #, fuzzy
 #| msgid "Delete all existing records first."
 msgid "Delete existing data of your system."
@@ -5495,7 +5554,7 @@ msgstr "نتایجی یافت نشد."
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:37
-#: db/seeds/permissions.rb:428
+#: db/seeds/permissions.rb:440
 msgid "Devices"
 msgstr "دستگاه‌ها"
 
@@ -5582,8 +5641,8 @@ msgstr "نادیده گرفتن"
 
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:47
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:421
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:49
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:425
 msgid "Discard Changes"
 msgstr "نادیده گرفتن تغییرات"
 
@@ -5601,11 +5660,12 @@ msgstr "نادیده گرفتن بند"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:47
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:419
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:225
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:253
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:53
 msgid "Discard changes"
 msgstr "نادیده گرفتن تغییرات"
 
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:415
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:162
 msgid "Discard your unsaved changes"
@@ -5667,7 +5727,7 @@ msgstr "آیا واقعا مایل به حذف تصویر نمایه خود هس
 msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr "آیا میخواهید قابلیت مشاهده این بند را به عمومی تغییر دهید؟"
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:56
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:58
 #, fuzzy
 #| msgid "Do you really want to delete \"%s\"?"
 msgid "Do you want to continue?"
@@ -5756,13 +5816,13 @@ msgstr "بارگیری همه مدارک"
 msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:42
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:123
 #, fuzzy
 #| msgid "Do not sign email"
 msgid "Download original email"
 msgstr "عدم امضای ایمیل"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:63
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:137
 #, fuzzy
 #| msgid "Download Private Key"
 msgid "Download raw email"
@@ -5928,7 +5988,7 @@ msgstr "ویرایش پاسخ"
 msgid "Edit security keys"
 msgstr "امنیت"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:89
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Edit ticket title"
@@ -6019,7 +6079,7 @@ msgstr "آخرین همسان‌سازی"
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:132
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:167
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
 #: public/assets/form/form.js:32
 msgid "Email"
@@ -6247,7 +6307,7 @@ msgstr "فعالسازی حسابداری زمانی."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:401
 msgid "Enable/disable inline translations"
-msgstr "فعالسازی/غیرفعالسازی ترجمه بین خطی"
+msgstr "فعال‌سازی/غیرفعال‌سازی ترجمه بین‌خطی"
 
 #: db/seeds/settings.rb:3459
 msgid "Enable/disable online chat."
@@ -6778,7 +6838,7 @@ msgstr "تیکت‌‌های موجود"
 msgid "Existing tickets (open)"
 msgstr "تیکت‌های موجود (باز)"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:161
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:162
 #, fuzzy
 #| msgid "Content"
 msgid "Expand sidebar"
@@ -7243,8 +7303,7 @@ msgstr ""
 msgid "Format as ||italic||"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:78
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:92
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:96
 msgid "Forward"
 msgstr "جلو"
 
@@ -8374,7 +8433,7 @@ msgstr ""
 msgid "Include your own tickets in subscription for pending tickets."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:114
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:117
 msgid "Included ticket overviews"
 msgstr "نمای‌کلی‌های تیکت لحاظ شده"
 
@@ -8388,6 +8447,7 @@ msgid "Including private key."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:242
 #, fuzzy
 #| msgid "Incomplete credentials"
 msgid "Incomplete Ticket Checklist"
@@ -8471,7 +8531,7 @@ msgstr ""
 
 #: app/models/store.rb:94
 msgid "Inline content could not be generated."
-msgstr "امکان ایجاد محتوا وجود نداشت."
+msgstr "امکان ایجاد محتوای بین‌خطی وجود نداشت."
 
 #: app/models/object_manager/attribute/data_option_validator.rb:41
 msgid "Input field must be text, password, tel, fax, email or url type."
@@ -8557,7 +8617,7 @@ msgid "Integer field"
 msgstr "جانوشت عدد صحیح"
 
 #: app/assets/javascripts/app/controllers/integrations.coffee:3
-#: db/seeds/permissions.rb:209
+#: db/seeds/permissions.rb:221
 msgid "Integrations"
 msgstr "ارتباط با سایر سیستم‌ها"
 
@@ -8567,7 +8627,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:133
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:133
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:146
 msgid "Internal"
 msgstr "داخلی"
 
@@ -8902,7 +8962,7 @@ msgstr "پایگاه دانش"
 msgid "Knowledge Base Answer"
 msgstr "پاسخ موجود در پایگاه دانش"
 
-#: db/seeds/permissions.rb:332
+#: db/seeds/permissions.rb:344
 msgid "Knowledge Base Editor"
 msgstr "ویرایشگر پایگاه دانش"
 
@@ -8910,7 +8970,7 @@ msgstr "ویرایشگر پایگاه دانش"
 msgid "Knowledge Base Feed"
 msgstr "خوراک پایگاه دانش"
 
-#: db/seeds/permissions.rb:338
+#: db/seeds/permissions.rb:350
 msgid "Knowledge Base Reader"
 msgstr ""
 
@@ -8964,7 +9024,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:13
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:157
-#: db/seeds/permissions.rb:390
+#: db/seeds/permissions.rb:402
 msgid "Language"
 msgstr "زبان"
 
@@ -9171,7 +9231,7 @@ msgstr "لینک کردن قالب"
 #: app/assets/javascripts/app/views/widget/user.jst.eco:34
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:46
-#: db/seeds/permissions.rb:442
+#: db/seeds/permissions.rb:454
 msgid "Linked Accounts"
 msgstr "حسابهای لینک شده"
 
@@ -9370,7 +9430,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee:3
 #: app/assets/javascripts/app/views/maintenance.jst.eco:3
-#: db/seeds/permissions.rb:257
+#: db/seeds/permissions.rb:269
 msgid "Maintenance"
 msgstr "نگهداری"
 
@@ -9391,7 +9451,7 @@ msgstr "وضعیت نگهداری سیستم فعال شد!"
 msgid "Manage"
 msgstr "مدیریت"
 
-#: db/seeds/permissions.rb:216
+#: db/seeds/permissions.rb:228
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage API of your system."
@@ -9462,7 +9522,7 @@ msgstr "مدیریت احراز هویت دوعاملی"
 msgid "Manage WhatsApp channel of your system."
 msgstr "لینک سیستم %s خود را وارد نمایید"
 
-#: db/seeds/permissions.rb:276
+#: db/seeds/permissions.rb:288
 #, fuzzy
 #| msgid "Enter the Subdomain of your %s system"
 msgid "Manage active user sessions of your system."
@@ -9508,7 +9568,7 @@ msgstr "لینک سیستم %s خود را وارد نمایید"
 msgid "Manage core system settings."
 msgstr "مدیریت تنظیمات %s"
 
-#: db/seeds/permissions.rb:240
+#: db/seeds/permissions.rb:252
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage core workflows of your system."
@@ -9532,93 +9592,93 @@ msgstr "لینک سیستم %s خود را وارد نمایید"
 msgid "Manage groups of your system."
 msgstr "برای تنظیم سیستم."
 
-#: db/seeds/permissions.rb:210
+#: db/seeds/permissions.rb:222
 #, fuzzy
 #| msgid "Enter the Subdomain of your %s system"
 msgid "Manage integrations of your system."
 msgstr "زیردامنه سیستم %s خود را وارد نمایید"
 
-#: db/seeds/permissions.rb:258
+#: db/seeds/permissions.rb:270
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage maintenance mode of your system."
 msgstr "لینک سیستم %s خود را وارد نمایید"
 
-#: db/seeds/permissions.rb:264
+#: db/seeds/permissions.rb:276
 #, fuzzy
 #| msgid "Enter the Subdomain of your %s system"
 msgid "Manage monitoring of your system."
 msgstr "زیردامنه سیستم %s خود را وارد نمایید"
 
-#: db/seeds/permissions.rb:222
+#: db/seeds/permissions.rb:234
 msgid "Manage object attributes of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:270
+#: db/seeds/permissions.rb:282
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage packages of your system."
 msgstr "لینک سیستم %s خود را وارد نمایید"
 
-#: db/seeds/permissions.rb:436
+#: db/seeds/permissions.rb:448
 #, fuzzy
 #| msgid "Personal Access Tokens"
 msgid "Manage personal API tokens."
 msgstr "توکن دسترسی شخصی"
 
-#: db/seeds/permissions.rb:384
+#: db/seeds/permissions.rb:396
 msgid "Manage personal appearance settings."
 msgstr ""
 
-#: db/seeds/permissions.rb:398
+#: db/seeds/permissions.rb:410
 #, fuzzy
 #| msgid "Manage %s Settings"
 msgid "Manage personal avatar settings."
 msgstr "مدیریت تنظیمات %s"
 
-#: db/seeds/permissions.rb:470
+#: db/seeds/permissions.rb:482
 msgid "Manage personal calendar."
 msgstr ""
 
-#: db/seeds/permissions.rb:429
+#: db/seeds/permissions.rb:441
 #, fuzzy
 #| msgid "Clean up dead sessions."
 msgid "Manage personal devices and sessions."
 msgstr "پاکسازی نشست‌های غیرفعال."
 
-#: db/seeds/permissions.rb:391
+#: db/seeds/permissions.rb:403
 #, fuzzy
 #| msgid "Manage %s Settings"
 msgid "Manage personal language settings."
 msgstr "مدیریت تنظیمات %s"
 
-#: db/seeds/permissions.rb:443
+#: db/seeds/permissions.rb:455
 msgid "Manage personal linked accounts."
 msgstr ""
 
-#: db/seeds/permissions.rb:450
+#: db/seeds/permissions.rb:462
 #, fuzzy
 #| msgid "Manage your notification settings"
 msgid "Manage personal notifications settings."
 msgstr "مدیریت تنظیمات اعلان‌ها"
 
-#: db/seeds/permissions.rb:405
+#: db/seeds/permissions.rb:417
 #, fuzzy
 #| msgid "Manage your notification settings"
 msgid "Manage personal out of office settings."
 msgstr "مدیریت تنظیمات اعلان‌ها"
 
-#: db/seeds/permissions.rb:460
+#: db/seeds/permissions.rb:472
 msgid "Manage personal overviews."
 msgstr ""
 
-#: db/seeds/permissions.rb:377
+#: db/seeds/permissions.rb:389
 #, fuzzy
 #| msgid "Manage %s Settings"
 msgid "Manage personal settings."
 msgstr "مدیریت تنظیمات %s"
 
-#: db/seeds/permissions.rb:422
+#: db/seeds/permissions.rb:434
 #, fuzzy
 #| msgid ""
 #| "Login failed. Have you double-checked your credentials and completed the "
@@ -9656,7 +9716,7 @@ msgstr "لینک سیستم %s خود را وارد نمایید"
 msgid "Manage security settings of your system."
 msgstr ""
 
-#: db/seeds/permissions.rb:282
+#: db/seeds/permissions.rb:294
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage system report of your system."
@@ -9668,10 +9728,22 @@ msgstr "لینک سیستم %s خود را وارد نمایید"
 msgid "Manage text modules of your system."
 msgstr "لینک سیستم %s خود را وارد نمایید"
 
-#: db/seeds/permissions.rb:288
+#: db/seeds/permissions.rb:210
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket auto assignment settings of your system."
+msgstr "لینک سیستم %s خود را وارد نمایید"
+
+#: db/seeds/permissions.rb:300
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage ticket checklists of your system."
+msgstr "لینک سیستم %s خود را وارد نمایید"
+
+#: db/seeds/permissions.rb:216
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "Manage ticket duplicate detection settings of your system."
 msgstr "لینک سیستم %s خود را وارد نمایید"
 
 #: db/seeds/permissions.rb:48
@@ -9686,7 +9758,7 @@ msgstr "لینک سیستم %s خود را وارد نمایید"
 msgid "Manage ticket overviews of your system."
 msgstr "مرورکلی"
 
-#: db/seeds/permissions.rb:234
+#: db/seeds/permissions.rb:246
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage ticket priorities of your system."
@@ -9698,7 +9770,7 @@ msgstr "لینک سیستم %s خود را وارد نمایید"
 msgid "Manage ticket settings of your system."
 msgstr "لینک سیستم %s خود را وارد نمایید"
 
-#: db/seeds/permissions.rb:228
+#: db/seeds/permissions.rb:240
 #, fuzzy
 #| msgid "Enter the URL of your %s system"
 msgid "Manage ticket states of your system."
@@ -9722,7 +9794,7 @@ msgstr "لینک سیستم %s خود را وارد نمایید"
 msgid "Manage time accounting settings of your system."
 msgstr "فعالسازی حسابداری زمانی برای این تیکت‌ها."
 
-#: db/seeds/permissions.rb:246
+#: db/seeds/permissions.rb:258
 #, fuzzy
 #| msgid "Enter the Subdomain of your %s system"
 msgid "Manage translations of your system."
@@ -10137,7 +10209,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/monitoring.coffee:3
 #: app/assets/javascripts/app/views/monitoring.jst.eco:3
-#: db/seeds/permissions.rb:263
+#: db/seeds/permissions.rb:275
 msgid "Monitoring"
 msgstr "مانیتورینگ"
 
@@ -10166,7 +10238,7 @@ msgstr ""
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:137
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:141
 msgid "More ticket overviews"
 msgstr "نمای‌کلی‌های تیکت بیشتر"
 
@@ -10630,6 +10702,32 @@ msgid ""
 "target=\"zammad_app\">View this in #{config.product_name}</a>\n"
 "</div>\n"
 msgstr ""
+"تیکت جدید (#{ticket.title})\n"
+"\n"
+"<div>سلام #{recipient.firstname}،</div>\n"
+"<br>\n"
+"<div>تیکت جدید (#{ticket.title}) توسط \"<b>#{current_user.longname}</b>\" "
+"ایجاد شد.</div>\n"
+"<br>\n"
+"<div>\n"
+"گروه: #{ticket.group.name}<br>\n"
+"مسئول: #{ticket.owner.fullname}<br>\n"
+"وضعیت: #{t(ticket.state.name)}<br>\n"
+"</div>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  اطلاعات:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">مشاهده این در #{config.product_name}</a>\n"
+"</div>\n"
 
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:202
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:140
@@ -10802,7 +10900,7 @@ msgstr "بدون هیچ پیش‌نویسی"
 msgid "No email!"
 msgstr "بدون ایمیل!"
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:131
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:135
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:117
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:267
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:150
@@ -10947,6 +11045,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:245
 #, fuzzy
 #| msgid "You can no longer see the ticket."
 msgid "No, just close the ticket"
@@ -11053,7 +11152,7 @@ msgstr "یافت نشد"
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:48
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:35
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/note.ts:7
-#: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:12
+#: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:14
 #: db/seeds/object_manager_attributes.rb:1335
 msgid "Note"
 msgstr "یادداشت"
@@ -11163,7 +11262,7 @@ msgstr "صدای اعلان"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:34
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
-#: db/seeds/permissions.rb:449
+#: db/seeds/permissions.rb:461
 msgid "Notifications"
 msgstr "اعلان ها"
 
@@ -11249,7 +11348,7 @@ msgid "Object Manager"
 msgstr "مدیریت آبجکت"
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:330
-#: db/seeds/permissions.rb:221
+#: db/seeds/permissions.rb:233
 msgid "Objects"
 msgstr "آبجکت‌ها"
 
@@ -11571,13 +11670,13 @@ msgstr "پشتیبانی سازمان"
 msgid "Organization could not be updated."
 msgstr "سازمان به‌روزرسانی نشد."
 
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:47
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:48
 #, fuzzy
 #| msgid "Organization Logo"
 msgid "Organization logo"
 msgstr "لوگو سازمان"
 
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:40
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:41
 #, fuzzy
 #| msgid "Organization Name"
 msgid "Organization name"
@@ -11622,7 +11721,7 @@ msgid "Origin By"
 msgstr "از مبدا"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:92
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:45
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:44
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:55
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:21
 msgid "Original Formatting"
@@ -11642,7 +11741,7 @@ msgstr "سایر تنظیمات"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:126
-#: db/seeds/permissions.rb:404
+#: db/seeds/permissions.rb:416
 msgid "Out of Office"
 msgstr "مرخصی"
 
@@ -11784,7 +11883,7 @@ msgid "Package"
 msgstr "پکیج نرم‌افزاری"
 
 #: app/assets/javascripts/app/controllers/package.coffee:3
-#: db/seeds/permissions.rb:269
+#: db/seeds/permissions.rb:281
 msgid "Packages"
 msgstr "پکیج‌های نرم‌افزاری"
 
@@ -11832,7 +11931,7 @@ msgstr "گروه والد"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:83
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:52
-#: db/seeds/object_manager_attributes.rb:1249 db/seeds/permissions.rb:414
+#: db/seeds/object_manager_attributes.rb:1249 db/seeds/permissions.rb:426
 msgid "Password"
 msgstr "رمز"
 
@@ -11999,7 +12098,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/cti.coffee:322
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/phone.ts:7
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:12
-#: db/seeds/object_manager_attributes.rb:797 db/seeds/permissions.rb:308
+#: db/seeds/object_manager_attributes.rb:797 db/seeds/permissions.rb:320
 msgid "Phone"
 msgstr "تلفن"
 
@@ -12029,6 +12128,10 @@ msgstr ""
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
 "نامی برای برنامه انتخاب کنید ، و ما یک ژتون منحصر به فرد به شما می دهیم."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:224
+msgid "Pin this panel"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:24
 msgid "Pink"
@@ -12182,7 +12285,7 @@ msgstr "لطفا یک تیکت برای ادغام در آن انتخاب نما
 msgid "Please select at least one folder."
 msgstr "لطفا حداقل یک پوشه را انتخاب نمایید."
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:75
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:74
 msgid "Please select at least one ticket overview"
 msgstr "لطفا حداقل یک دید کلی تیکت را انتخاب نمایید"
 
@@ -12426,7 +12529,7 @@ msgid "Profile language updated successfully."
 msgstr "اجرای آزمایشی موفقیت‌آمیز بود."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/personal-settings.ts:7
-#: db/seeds/permissions.rb:376
+#: db/seeds/permissions.rb:388
 #, fuzzy
 #| msgid "Proxy Settings"
 msgid "Profile settings"
@@ -12466,7 +12569,7 @@ msgid "Proxy address"
 msgstr "آدرس پروکسی"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:138
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:151
 msgid "Public"
 msgstr "عمومی"
 
@@ -12716,7 +12819,6 @@ msgstr "از راه دور"
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:61
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:132
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:177
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:84
 #: app/frontend/shared/form/i18n/locales.ts:29
 msgid "Remove"
 msgstr "حذف کردن"
@@ -12850,8 +12952,8 @@ msgstr "فرد جانشین"
 msgid "Replacement agent"
 msgstr "فرد جانشین"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:89
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:84
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:221
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:26
@@ -12860,7 +12962,7 @@ msgstr "فرد جانشین"
 msgid "Reply"
 msgstr "پاسخ"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:104
+#: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:108
 msgid "Reply All"
 msgstr "پاسخ به همه"
 
@@ -13049,15 +13151,21 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:188
+#, fuzzy
+#| msgid "Close tab"
+msgid "Resize article panel"
+msgstr "بستن برگه"
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageHandler.vue:169
 msgid "Resize frame"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:308
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:309
 msgid "Resize side panel"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:133
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:134
 msgid "Resize sidebar"
 msgstr ""
 
@@ -13347,7 +13455,7 @@ msgstr "شنبه"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:216
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:70
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:69
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:138
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:100
 msgid "Save"
@@ -13378,7 +13486,7 @@ msgstr "مرخصی"
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSource.vue:53
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:146
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:115
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:138
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:131
 msgid "Save and Continue"
 msgstr "ذخیره و ادامه"
 
@@ -13598,8 +13706,8 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:22
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:178
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:183
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:196
 #: db/seeds/permissions.rb:197
 msgid "Security"
 msgstr "امنیت"
@@ -13919,7 +14027,7 @@ msgstr "زمان‌بندی نشست"
 
 #: app/assets/javascripts/app/controllers/session.coffee:3
 #: app/assets/javascripts/app/views/session.jst.eco:2
-#: db/seeds/permissions.rb:275
+#: db/seeds/permissions.rb:287
 msgid "Sessions"
 msgstr "نشست‌ها"
 
@@ -14013,13 +14121,6 @@ msgid ""
 "limits"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:94
-#, fuzzy
-#| msgid "set to internal"
-msgid "Set to external"
-msgstr "ست کردن به عنوان داخلی"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:99
 #: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts:33
 msgid "Set to internal"
 msgstr "تنظیم به داخلی"
@@ -14108,7 +14209,7 @@ msgid "Shared Drafts"
 msgstr "پیش‌نویس‌های اشتراکی"
 
 #: app/controllers/tickets_controller.rb:90
-#: app/services/service/ticket/create.rb:139
+#: app/services/service/ticket/create.rb:155
 msgid "Shared draft cannot be selected for this ticket."
 msgstr "پیش‌نویس‌های اشتراکی برای این تیکت قابل انتخاب نیست."
 
@@ -14212,7 +14313,7 @@ msgstr ""
 msgid "Show matching tickets in the warning"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts:135
+#: app/frontend/apps/mobile/pages/ticket/composable/useTicketArticleContext.ts:83
 msgid "Show meta data"
 msgstr "نمایش اطلاعات بیشتر"
 
@@ -14266,13 +14367,13 @@ msgstr ""
 msgid "Shown when the chat is closed."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:243
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:244
 #, fuzzy
 #| msgid "Close tab"
 msgid "Side panel"
 msgstr "بستن برگه"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:289
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:290
 msgid "Side panel footer"
 msgstr ""
 
@@ -14549,8 +14650,7 @@ msgstr "منابع"
 msgid "Special character required"
 msgstr "کاراکتر خاص (@, $, ...) موردنیاز است"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleActionList.vue:104
-#: app/frontend/shared/entities/ticket-article/action/plugins/split.ts:12
+#: app/frontend/shared/entities/ticket-article/action/plugins/split.ts:11
 msgid "Split"
 msgstr "جدا سازی"
 
@@ -14763,8 +14863,8 @@ msgstr "استان"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:40
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:13
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:87
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:171
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:33
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:184
 msgid "Subject"
 msgstr "موضوع"
 
@@ -14893,7 +14993,7 @@ msgid "System Address Display Name"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:89
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:28
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:29
 msgid "System Information"
 msgstr "اطلاعات سامانه"
 
@@ -14903,14 +15003,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/system_report.coffee:3
 #: app/assets/javascripts/app/views/system_report.jst.eco:2
-#: db/seeds/permissions.rb:281
+#: db/seeds/permissions.rb:293
 #, fuzzy
 #| msgid "System URL"
 msgid "System Report"
 msgstr "System URL"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:22
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:56
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:57
 msgid "System URL"
 msgstr "System URL"
 
@@ -15122,11 +15222,11 @@ msgstr "حداقل یک حرف الزامی است"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:11
 msgid "Text with disabled inline translations looks like"
-msgstr "متن با ترجمه بین خطی غیرفعال به مانند این است"
+msgstr "متن با ترجمه بین‌خطی غیرفعال، به مانند این است"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:12
 msgid "Text with enabled inline translations looks like"
-msgstr "متن با ترجمه بین خطی فعال به مانند این است"
+msgstr "متن با ترجمه بین‌خطی فعال، به مانند این است"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:37
 msgid "Textarea field"
@@ -15243,7 +15343,7 @@ msgid ""
 "protocol."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:60
+#: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:61
 msgid "The URL of this installation of Zammad."
 msgstr "پیوند این سامانه."
 
@@ -16262,6 +16362,16 @@ msgid ""
 "AS."
 msgstr ""
 
+#: app/services/service/ticket/update/validator/checklist_completed.rb:16
+#, fuzzy
+#| msgid "Enter the URL of your %s system"
+msgid "The ticket checklist is incomplete."
+msgstr "لینک سیستم %s خود را وارد نمایید"
+
+#: app/services/service/ticket/update/validator/time_accounting.rb:16
+msgid "The ticket time accounting condition is met."
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:111
 msgid "The tickets could not be merged."
 msgstr "تیکت‌ها قابل ادغام نیستند."
@@ -16657,66 +16767,48 @@ msgid "This field must be of the type \"%s\"."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts:225
-#, fuzzy
-#| msgid "Password needs to contain at least one digit."
 msgid "This field must contain a lowercase letter."
-msgstr "رمز عبور می‌بایست حداقل یک رقم را شامل باشد."
+msgstr "این جانوشت باید شامل یک حرف کوچک باشد."
 
 #: app/frontend/shared/form/i18n/locales.ts:499
 msgid "This field must contain a number."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts:205
-#, fuzzy
-#| msgid "Password needs to contain at least one digit."
 msgid "This field must contain a symbol."
-msgstr "رمز عبور می‌بایست حداقل یک رقم را شامل باشد."
+msgstr "این جانوشت باید شامل یک علامت باشد."
 
 #: app/frontend/shared/form/i18n/locales.ts:175
-#, fuzzy
-#| msgid "Invalid password, it must be at least %s characters long!"
 msgid "This field must contain alphabetical characters."
-msgstr "رمز عبور نامعتبر. حداقل بایستی دارای %s کاراکتر باشد."
+msgstr "این جانوشت باید شامل حروف الفبا باشد."
 
 #: app/frontend/shared/form/i18n/locales.ts:215
-#, fuzzy
-#| msgid "Password needs to contain at least one digit."
 msgid "This field must contain an uppercase letter."
-msgstr "رمز عبور می‌بایست حداقل یک رقم را شامل باشد."
+msgstr "این جانوشت باید شامل یک حرف بزرگ باشد."
 
 #: app/frontend/shared/form/i18n/locales.ts:407
-#, fuzzy
-#| msgid "Invalid password, it must be at least %s characters long!"
 msgid "This field must contain at least %s characters."
-msgstr "رمز عبور نامعتبر. حداقل بایستی دارای %s کاراکتر باشد."
+msgstr "این جانوشت باید شامل حداقل %s حرف باشد."
 
 #: app/frontend/shared/form/i18n/locales.ts:394
-#, fuzzy
-#| msgid "Password needs to contain at least one digit."
 msgid "This field must contain at least one character."
-msgstr "رمز عبور می‌بایست حداقل یک رقم را شامل باشد."
+msgstr "این جانوشت باید شامل حداقل یک حرف باشد."
 
 #: app/frontend/shared/form/i18n/locales.ts:412
 msgid "This field must contain between %s and %s characters."
 msgstr "مقدار باید بین %s تا %s حرف باشد."
 
 #: app/frontend/shared/form/i18n/locales.ts:185
-#, fuzzy
-#| msgid "Invalid password, it must be at least %s characters long!"
 msgid "This field must contain letters or numbers."
-msgstr "رمز عبور نامعتبر. حداقل بایستی دارای %s کاراکتر باشد."
+msgstr "این جانوشت باید شامل حروف یا اعداد باشد."
 
 #: app/frontend/shared/form/i18n/locales.ts:195
-#, fuzzy
-#| msgid "Invalid password, it must be at least %s characters long!"
 msgid "This field must contain letters or spaces."
-msgstr "رمز عبور نامعتبر. حداقل بایستی دارای %s کاراکتر باشد."
+msgstr "این جانوشت باید شامل حروف یا فاصله باشد."
 
 #: app/frontend/shared/form/i18n/locales.ts:235
-#, fuzzy
-#| msgid "Invalid password, it must be at least %s characters long!"
 msgid "This field must contain numbers."
-msgstr "رمز عبور نامعتبر. حداقل بایستی دارای %s کاراکتر باشد."
+msgstr "این جانوشت باید شامل اعداد باشد."
 
 #: app/frontend/shared/form/i18n/locales.ts:139
 msgid "This field must have a value that is after %s."
@@ -16747,10 +16839,8 @@ msgid "This field must have a value that is in the past."
 msgstr ""
 
 #: app/frontend/shared/form/i18n/locales.ts:400
-#, fuzzy
-#| msgid "Invalid password, it must be at least %s characters long!"
 msgid "This field must not contain more than %s characters."
-msgstr "رمز عبور نامعتبر. حداقل بایستی دارای %s کاراکتر باشد."
+msgstr "این جانوشت باید شامل بیش از %s حرف باشد."
 
 #: app/frontend/shared/form/i18n/locales.ts:295
 msgid "This field was configured incorrectly and can't be submitted."
@@ -16765,10 +16855,8 @@ msgid "This group or its children exceed the allowed nesting depth."
 msgstr ""
 
 #: lib/email_helper/probe.rb:287
-#, fuzzy
-#| msgid "The object could not be created."
 msgid "This host cannot be reached."
-msgstr "آبجکت قابل ایجاد نبود."
+msgstr "این میزبان قابل دسترسی نیست."
 
 #: app/assets/javascripts/app/views/version.jst.eco:6
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:175
@@ -16964,6 +17052,7 @@ msgstr "پنجشنبه"
 #: app/assets/javascripts/app/models/signature.coffee:15
 #: app/assets/javascripts/app/models/text_module.coffee:15
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:19
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/information.ts:10
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:10
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:10
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/ticket.ts:6
@@ -17002,6 +17091,12 @@ msgstr ""
 msgid "Ticket (censored):"
 msgstr "تیکت (سانسور شده):"
 
+#: db/seeds/permissions.rb:209
+#, fuzzy
+#| msgid "Auto Assignment"
+msgid "Ticket Auto Assignment"
+msgstr "تخصیص خودکار"
+
 #: db/seeds/settings.rb:2272
 msgid "Ticket Conditions Expert Mode"
 msgstr ""
@@ -17015,10 +17110,14 @@ msgid "Ticket Count"
 msgstr "تعداد تیکت"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:22
-#, fuzzy
-#| msgid "ticket.customer"
 msgid "Ticket Customer"
 msgstr "مشتری ایجاد‌کننده تیکت"
+
+#: db/seeds/permissions.rb:215
+#, fuzzy
+#| msgid "Duplicate Detection"
+msgid "Ticket Duplicate Detection"
+msgstr "شناسایی تکراری"
 
 #: db/seeds/settings.rb:2167
 msgid "Ticket Hook"
@@ -17053,18 +17152,16 @@ msgid "Ticket Number ignore system_id"
 msgstr ""
 
 #: db/seeds/settings.rb:5762
-#, fuzzy
-#| msgid "Tickets of Organization"
 msgid "Ticket Organization Reassignment"
-msgstr "تیکت‌های سازمان"
+msgstr "سازمان واگذاری دوباره تیکت"
 
 #: app/frontend/apps/mobile/pages/home/routes.ts:35
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:67
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:66
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:22
 msgid "Ticket Overview"
 msgstr "نمای‌کلی تیکت"
 
-#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:84
+#: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:83
 msgid "Ticket Overview settings are saved."
 msgstr "تنظیمات نمای‌کلی تیکت ذخیره شد."
 
@@ -17077,17 +17174,13 @@ msgid "Ticket Owner"
 msgstr "مسئول تیکت"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee:16
-#: db/seeds/permissions.rb:233
-#, fuzzy
-#| msgid "Ticket update"
+#: db/seeds/permissions.rb:245
 msgid "Ticket Priorities"
-msgstr "بروز شدن تیکت"
+msgstr "اولویت‌های تیکت"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee:3
-#, fuzzy
-#| msgid "Priority"
 msgid "Ticket Priority"
-msgstr "اولویت"
+msgstr "اولویت تیکت"
 
 #: db/seeds/settings.rb:973
 #, fuzzy
@@ -17100,23 +17193,17 @@ msgid "Ticket Selector"
 msgstr "انتخاب‌کننده تیکت"
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:21
-#, fuzzy
-#| msgid "Ticket update"
 msgid "Ticket Settings"
-msgstr "بروز شدن تیکت"
+msgstr "تنظیمات تیکت"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:3
-#, fuzzy
-#| msgid "Ticket update"
 msgid "Ticket State"
-msgstr "بروز شدن تیکت"
+msgstr "وضعیت تیکت"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:3
-#: db/seeds/permissions.rb:227
-#, fuzzy
-#| msgid "Ticket update"
+#: db/seeds/permissions.rb:239
 msgid "Ticket States"
-msgstr "بروز شدن تیکت"
+msgstr "وضعیت‌های تیکت"
 
 #: db/seeds/settings.rb:3094
 msgid "Ticket Subject Forward"
@@ -17143,28 +17230,20 @@ msgid "Ticket Trigger Loop Protection Articles per Ticket"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:105
-#, fuzzy
-#| msgid "Ticket escalation"
 msgid "Ticket actions"
-msgstr "دگرسپاری تیکتها"
+msgstr "عملیات تیکت"
 
 #: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:59
-#, fuzzy
-#| msgid "User could not be created."
 msgid "Ticket could not be created."
-msgstr "امکان ایجاد کاربر وجود نداشت."
+msgstr "تیکت نمی‌تواند ایجاد شود."
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:8
-#, fuzzy
-#| msgid "Ticket escalation"
 msgid "Ticket creation"
-msgstr "دگرسپاری تیکتها"
+msgstr "ایجاد کردن تیکت"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:103
-#, fuzzy
-#| msgid "The test run was successful."
 msgid "Ticket customer updated successfully."
-msgstr "اجرای آزمایشی موفقیت‌آمیز بود."
+msgstr "مشتری تیکت به‌روز شد."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:13
@@ -17181,23 +17260,17 @@ msgid "Ticket has %s viewers"
 msgstr "تیکت %s بازدید کننده داشته"
 
 #: app/frontend/shared/entities/ticket/composables/useTicketCreate.ts:41
-#, fuzzy
-#| msgid "The test run was successful."
 msgid "Ticket has been created successfully."
-msgstr "اجرای آزمایشی موفقیت‌آمیز بود."
+msgstr "ایجاد تیکت موفقیت‌آمیز بود."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:68
-#, fuzzy
-#| msgid "Block Notifications"
 msgid "Ticket info"
-msgstr "متوقف کردن اطلاع رسانی ها"
+msgstr "اطلاعات تیکت"
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:35
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationView.vue:71
-#, fuzzy
-#| msgid "Block Notifications"
 msgid "Ticket information"
-msgstr "متوقف کردن اطلاع رسانی ها"
+msgstr "اطلاعات تیکت"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:11
@@ -17238,22 +17311,16 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:37
-#, fuzzy
-#| msgid "User could not be created."
 msgid "Ticket tags could not be updated."
-msgstr "امکان ایجاد کاربر وجود نداشت."
+msgstr "برچسب‌های تیکت قابل به‌روز کردن نبود."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:61
-#, fuzzy
-#| msgid "The test run was successful."
 msgid "Ticket tags updated successfully."
-msgstr "اجرای آزمایشی موفقیت‌آمیز بود."
+msgstr "برچسب‌های تیکت به‌روز شدند."
 
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:84
-#, fuzzy
-#| msgid "Ticket update"
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:92
 msgid "Ticket title"
-msgstr "بروز شدن تیکت"
+msgstr "عنوان تیکت"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:67
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:9
@@ -17262,12 +17329,17 @@ msgstr "بروز شدن تیکت"
 msgid "Ticket update"
 msgstr "بروز شدن تیکت"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:135
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:306
 #, fuzzy
-#| msgid "The test run was successful."
+#| msgid "Ticket update"
+msgid "Ticket update failed."
+msgstr "بروز شدن تیکت"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:283
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:163
 msgid "Ticket updated successfully."
-msgstr "اجرای آزمایشی موفقیت‌آمیز بود."
+msgstr "تیکت به‌روز شد."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:29
 msgid "Ticket viewers"
@@ -17299,7 +17371,7 @@ msgid ""
 "</div>\n"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:39
+#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:38
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
 #: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:22
 msgid ""
@@ -17378,10 +17450,8 @@ msgid "Tickets of User"
 msgstr "تیکتهای کاربر"
 
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts:10
-#, fuzzy
-#| msgid "Tickets of User"
 msgid "Tickets with \"%s\""
-msgstr "تیکتهای کاربر"
+msgstr "تیکت‌های با «%s»"
 
 #: db/seeds/settings.rb:2641
 msgid "Tickets with the same attributes were found."
@@ -17407,38 +17477,28 @@ msgid "Time Accounting"
 msgstr "حسابداری زمانی"
 
 #: db/seeds/settings.rb:3994
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time Accounting Custom Unit"
-msgstr "حسابداری زمانی"
+msgstr "واحد سفارشی حسابداری زمان"
 
 #: db/seeds/settings.rb:4030
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time Accounting Default Type"
-msgstr "حسابداری زمانی"
+msgstr "نوع پیش‌فرض حسابداری زمان"
 
 #: db/seeds/settings.rb:3958
 msgid "Time Accounting Selector"
 msgstr ""
 
 #: db/seeds/settings.rb:4012
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time Accounting Types"
-msgstr "حسابداری زمانی"
+msgstr "انواع حسابداری زمان"
 
 #: db/seeds/settings.rb:3976
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time Accounting Unit"
-msgstr "حسابداری زمانی"
+msgstr "واحد حسابداری زمان"
 
 #: app/policies/ticket/time_accounting_policy.rb:6
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time Accounting is not enabled"
-msgstr "حسابداری زمانی"
+msgstr "حسابداری زمان فعال نشده است"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:14
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:11
@@ -17454,16 +17514,12 @@ msgid "Time Units Total"
 msgstr ""
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:16
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time accounting unit"
-msgstr "حسابداری زمانی"
+msgstr "واحد حسابداری زمان"
 
 #: app/assets/javascripts/app/models/trigger.coffee:7
-#, fuzzy
-#| msgid "Time Units"
 msgid "Time event"
-msgstr "واحد زمانی"
+msgstr "رویداد زمان"
 
 #: app/assets/javascripts/app/models/calendar.coffee:8
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:38
@@ -17526,8 +17582,8 @@ msgstr "عنوان فرم"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:84
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:85
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:148
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:36
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:161
 #: db/seeds/object_manager_attributes.rb:482
 msgid "To"
 msgstr "گیرنده"
@@ -17570,16 +17626,12 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:10
-#, fuzzy
-#| msgid ""
-#| "To make translations easier you can enable and disable the inline "
-#| "translation feature by pressing \"%s\"."
 msgid ""
 "To make translations easier you can enable and disable the inline "
 "translation feature by pressing \"%s\" at any time."
 msgstr ""
-"برای آسان‌سازی ترجمه، قابلیت ترجمه بین خطی را می‌تواند با فشردن \"%s\" فعال و "
-"غیرفعال کنید."
+"برای آسان‌سازی ترجمه، قابلیت ترجمه بین‌خطی را می‌توانید با فشردن \"%s\" در هر "
+"زمانی فعال و غیرفعال کنید."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco:3
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:354
@@ -17674,7 +17726,7 @@ msgstr "توکن"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:2
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:51
-#: db/seeds/permissions.rb:435
+#: db/seeds/permissions.rb:447
 msgid "Token Access"
 msgstr "دسترسی توکن"
 
@@ -17721,10 +17773,8 @@ msgid "Total"
 msgstr "کل"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:67
-#, fuzzy
-#| msgid "Accounted Time"
 msgid "Total Accounted Time"
-msgstr "زمان صرف‌شده"
+msgstr "مجموع زمان حساب‌شده"
 
 #: db/seeds/settings.rb:949
 msgid "Total display of the number of objects in a grouping."
@@ -17743,25 +17793,21 @@ msgid "Transfer conversation to another chat:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:227
-#, fuzzy
-#| msgid "Translations"
 msgid "Translate field contents"
-msgstr "ترجمه ها"
+msgstr "محتواهای جانوشت ترجمه"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 msgid "Translation"
 msgstr "ترجمه"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:78
-#, fuzzy
-#| msgid "Translations"
 msgid "Translation Source"
-msgstr "ترجمه ها"
+msgstr "منبع ترجمه"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:390
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
-#: db/seeds/permissions.rb:245
+#: db/seeds/permissions.rb:257
 msgid "Translations"
 msgstr "ترجمه ها"
 
@@ -17790,10 +17836,8 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:132
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:130
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue:64
-#, fuzzy
-#| msgid "try again"
 msgid "Try again"
-msgstr "تلاش مجدد"
+msgstr "تلاش دوباره"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/help_text.jst.eco:4
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:261
@@ -17871,16 +17915,12 @@ msgid "Twitter - tweet initials"
 msgstr ""
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco:25
-#, fuzzy
-#| msgid "New Access Token is"
 msgid "Twitter Access Token"
-msgstr "توکن دسترسی جدید عبارتست از"
+msgstr "توکن دسترسی توییتر"
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco:33
-#, fuzzy
-#| msgid "Twitter Secret"
 msgid "Twitter Access Token Secret"
-msgstr "رمز تویتر"
+msgstr "رمز توکن دسترسی توییتر"
 
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee:197
 msgid "Twitter Account"
@@ -17891,26 +17931,20 @@ msgid "Twitter App Credentials"
 msgstr "Twitter App Credentials"
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco:9
-#, fuzzy
-#| msgid "Twitter Key"
 msgid "Twitter Consumer Key"
-msgstr "کلید توییتر"
+msgstr "کلید استفاده‌کننده توییتر"
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco:17
-#, fuzzy
-#| msgid "Twitter Secret"
 msgid "Twitter Consumer Secret"
-msgstr "رمز تویتر"
+msgstr "رمز استفاده‌کننده توییتر"
 
 #: app/assets/javascripts/app/views/twitter/app_config.jst.eco:41
 msgid "Twitter Dev environment label"
 msgstr ""
 
 #: db/seeds/settings.rb:1348
-#, fuzzy
-#| msgid "Twitter Secret"
 msgid "Twitter Developer Site"
-msgstr "رمز تویتر"
+msgstr "سایت برنامه‌نویس توییتر"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/twitterDirectMessage.ts:7
 #, fuzzy
@@ -17933,26 +17967,20 @@ msgid "Twitter Status"
 msgstr "وضعیت توییتر"
 
 #: app/frontend/apps/mobile/pages/authentication/after-auth/plugins/twoFactorSetup.ts:12
-#, fuzzy
-#| msgid "Authentication required"
 msgid "Two-Factor Authentication Configuration Is Required"
-msgstr "تصدیق هویت الزامی است"
+msgstr "پیکربندی احراز هویت دوعاملی الزامی است"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:11
 #: app/assets/javascripts/app/views/profile/password.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:57
-#: db/seeds/permissions.rb:421
-#, fuzzy
-#| msgid "Authentication"
+#: db/seeds/permissions.rb:433
 msgid "Two-factor Authentication"
-msgstr "احراز هویت"
+msgstr "احراز هویت دوعاملی"
 
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:11
-#, fuzzy
-#| msgid "Authentication"
 msgid "Two-factor Authentication Methods"
-msgstr "احراز هویت"
+msgstr "روش‌های احراز هویت دوعاملی"
 
 #: app/controllers/application_controller/authenticates.rb:58
 msgid "Two-factor authentication is not supported with HTTP BasicAuth."
@@ -18027,10 +18055,8 @@ msgid "UID"
 msgstr "UID"
 
 #: db/seeds/settings.rb:1933
-#, fuzzy
-#| msgid "%s Attribute"
 msgid "UID Attribute Name"
-msgstr "مقدار %s"
+msgstr "نام مقدار UID"
 
 #: app/assets/javascripts/app/views/api.jst.eco:63
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:12
@@ -18088,19 +18114,19 @@ msgstr ""
 msgid "Unlock"
 msgstr "بازکردن قفل"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:224
+msgid "Unpin this panel"
+msgstr ""
+
 #: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:77
-#, fuzzy
-#| msgid "Service Notification"
 msgid "Unread notification"
-msgstr "اعلان سرویس"
+msgstr "اعلان خوانده‌نشده"
 
 #: app/frontend/apps/mobile/components/layout/LayoutBottomNavigation.vue:48
-#, fuzzy
-#| msgid "Service Notification"
 msgid "Unread notifications"
-msgstr "اعلان سرویس"
+msgstr "اعلان‌های خوانده‌نشده"
 
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:42
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:44
 #, fuzzy
 #| msgid "Discard Changes"
 msgid "Unsaved Changes"
@@ -18109,10 +18135,8 @@ msgstr "نادیده گرفتن تغییرات"
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:578
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:257
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:316
-#, fuzzy
-#| msgid "set optional"
 msgid "Unselect Option"
-msgstr "ست کردن بصورت اختیاری"
+msgstr "عدم انتخاب اختیار"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:703
 #, fuzzy
@@ -18156,6 +18180,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:57
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:13
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:424
 msgid "Update"
 msgstr "به‌روزرسانی"
 
@@ -18220,10 +18245,8 @@ msgid "Update successful."
 msgstr "بروزرسانی موفقیت‌آمیز بود."
 
 #: db/seeds/settings.rb:5774
-#, fuzzy
-#| msgid "The object could not be updated."
 msgid "Update the most recent tickets."
-msgstr "آبجکت قابل بروزرسانی نبود."
+msgstr "به‌روزرسانی تیکت‌های اخیر."
 
 #: app/assets/javascripts/app/models/application.coffee:11
 #: app/assets/javascripts/app/models/calendar.coffee:14
@@ -18326,6 +18349,37 @@ msgid ""
 "this in #{config.product_name}</a>\n"
 "</div>\n"
 msgstr ""
+"تیکت (#{ticket.title}) به‌روز شد\n"
+"\n"
+"<div>سلام #{recipient.firstname}،</div>\n"
+"<br>\n"
+"<div>\n"
+"تیکت (#{ticket.title}) توسط \"<b>#{current_user.longname}</b>\" به‌روز شد.\n"
+"</div>\n"
+"<br>\n"
+"<% if @objects[:changes].present? %>\n"
+"  <div>\n"
+"  Changes:<br>\n"
+"  <% @objects[:changes].each do |key, value| %>\n"
+"    <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>\n"
+"  <% end %>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  اطلاعات:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% "
+"if @objects[:article] %>/#{article.id}<% end %>\" "
+"target=\"zammad_app\">مشاهده این در #{config.product_name}</a>\n"
+"</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
 msgid "Updating Database"
@@ -18360,16 +18414,12 @@ msgid "Upload Private Key"
 msgstr "بارگذاری کلید خصوصی"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue:137
-#, fuzzy
-#| msgid "Uploading"
 msgid "Upload image"
-msgstr "در حال بارگزاری"
+msgstr "بارگزاری تصویر"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:99
-#, fuzzy
-#| msgid "Upload"
 msgid "Upload key"
-msgstr "بارگذاری"
+msgstr "بارگزاری کلید"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:17
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:24
@@ -18520,10 +18570,8 @@ msgid "User could not be created."
 msgstr "امکان ایجاد کاربر وجود نداشت."
 
 #: app/frontend/apps/mobile/entities/user/composables/useUserEdit.ts:86
-#, fuzzy
-#| msgid "User could not be created."
 msgid "User could not be updated."
-msgstr "امکان ایجاد کاربر وجود نداشت."
+msgstr "امکان به‌روزرسانی کاربر وجود نداشت."
 
 #: lib/external_credential/google.rb:44
 msgid "User email could not be extracted from 'id_token'."
@@ -18759,7 +18807,7 @@ msgstr "مشاهده از دید کاربر"
 #: app/views/mailer/ticket_update/zh-cn.html.erb:28
 #: app/views/mailer/ticket_update/zh-tw.html.erb:28
 msgid "View this in Zammad"
-msgstr "مشاهده در سیستم"
+msgstr "مشاهده در سامانه"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:35
 #, fuzzy
@@ -18773,7 +18821,7 @@ msgstr "تیکت‌ جدید"
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
-#: app/frontend/apps/mobile/pages/ticket/composable/useTicketEditForm.ts:125
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:138
 #: db/seeds/object_manager_attributes.rb:449
 msgid "Visibility"
 msgstr "قابلیت مشاهده"
@@ -19147,7 +19195,7 @@ msgstr "زرد"
 #: app/assets/javascripts/app/controllers/tag.coffee:133
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:121
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:23
-#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:58
+#: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:60
 msgid "Yes"
 msgstr "بله"
 
@@ -19158,6 +19206,7 @@ msgid "Yes, add attachments now"
 msgstr "ضمیمه دلخواه را برای آپلود اضافه کنید."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:244
 #, fuzzy
 #| msgid "Remove"
 msgid "Yes, open the checklist"
@@ -19174,21 +19223,25 @@ msgstr ""
 #: app/models/transaction/notification.rb:98
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
-msgstr ""
+msgstr "شما به دلیل اینکه عضوی از گروه این تیکت هستید، پیام را دریافت کرده‌اید."
 
 #: app/models/transaction/notification.rb:267
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
 msgstr ""
+"شما به دلیل اینکه جایگزین غیبت یکی از اعضای این تیکت هستید، پیام را دریافت "
+"کرده‌اید."
 
 #: app/models/transaction/notification.rb:70
 msgid "You are receiving this because you are the owner of this ticket."
-msgstr ""
+msgstr "شما به دلیل اینکه مسئول این تیکت هستید، پیام را دریافت کرده‌اید."
 
 #: app/models/transaction/notification.rb:64
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr ""
+"شما به دلیل اینکه در این تیکت مورد اشاره قرار گرفته‌اید، پیام را دریافت "
+"کرده‌اید."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:273
 msgid "You calendar subscription settings were updated."
@@ -19379,7 +19432,7 @@ msgstr "شما هیچ تیکتی ندارید که در این پنجره نما
 msgid "You have insufficient rights to view this organization."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:41
+#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:40
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
 #: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:24
 msgid "You have insufficient rights to view this ticket."
@@ -19423,6 +19476,14 @@ msgstr ""
 #| msgid "Please select at least one folder."
 msgid "You have unchecked items in the checklist."
 msgstr "لطفا حداقل یک پوشه را انتخاب نمایید."
+
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:239
+#, fuzzy
+#| msgid "Do you really want to delete this object?"
+msgid ""
+"You have unchecked items in the checklist. Do you want to handle them before "
+"closing this ticket?"
+msgstr "آیا واقعا مایل به حذف این آبجکت هستید؟"
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco:4
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue:42
@@ -19955,7 +20016,7 @@ msgstr "شامل یکی نباشد"
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:8
 msgid "created"
-msgstr "ایجاد شد"
+msgstr "ایجاد شده"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewHeader.vue:70
 msgid "created %s"
@@ -20453,7 +20514,7 @@ msgstr "برابر نیست با"
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:89
+#: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:93
 #, fuzzy
 #| msgid "Min. size of number"
 msgid "is not a number"
@@ -20914,10 +20975,8 @@ msgstr "انتخاب"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:350
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:470
-#, fuzzy
-#| msgid "set optional"
 msgid "select all options"
-msgstr "ست کردن بصورت اختیاری"
+msgstr "انتخاب همه اختیارات"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:101
@@ -20947,25 +21006,25 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
 msgid "set mandatory"
-msgstr "ست کردن بصورت اجباری"
+msgstr "تنظیم به اجباری"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
 msgid "set optional"
-msgstr "ست کردن بصورت اختیاری"
+msgstr "تنظیم به اختیاری"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
 msgid "set readonly"
-msgstr "ست کردن بصورت فقط خواندنی"
+msgstr "تنظیم به فقط خواندنی"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee:14
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:41
 msgid "set to internal"
-msgstr "ست کردن به عنوان داخلی"
+msgstr "تنظیم به داخلی"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee:8
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:38
 msgid "set to public"
-msgstr "ست کردن به عنوان عمومی"
+msgstr "تنظیم به عمومی"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:40
 msgid "show"
@@ -21265,6 +21324,14 @@ msgstr "...از تمام محدوده متن"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "میانگین زمان پاسخگویی (امروز)"
+
+#~ msgid "Article Type"
+#~ msgstr "نوع بند"
+
+#, fuzzy
+#~| msgid "set to internal"
+#~ msgid "Set to external"
+#~ msgstr "ست کردن به عنوان داخلی"
 
 #, fuzzy
 #~| msgid "Select Template"
