@@ -1,0 +1,24 @@
+تیکت جدید (#{ticket.title})
+
+<div>سلام #{recipient.firstname}،</div>
+<br>
+<div>تیکت جدید (#{ticket.title}) توسط "<b>#{current_user.longname}</b>" ایجاد شد.</div>
+<br>
+<div>
+گروه: #{ticket.group.name}<br>
+مسئول: #{ticket.owner.fullname}<br>
+وضعیت: #{t(ticket.state.name)}<br>
+</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  اطلاعات:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">مشاهده این در #{config.product_name}</a>
+</div>

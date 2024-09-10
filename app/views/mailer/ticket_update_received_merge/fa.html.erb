@@ -1,0 +1,11 @@
+یک تیکت دیگر با تیکت (#{ticket.title}) ادغام شد
+
+<div>سلام #{recipient.firstname}،</div>
+<br>
+<div>
+یک تیکت دیگر با تیکت (#{ticket.title}) توسط "<b>#{current_user.longname}</b>" ادغام شد.
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">مشاهده این در #{config.product_name}</a>
+</div>
