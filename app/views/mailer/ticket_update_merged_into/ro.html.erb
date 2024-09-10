@@ -1,0 +1,11 @@
+Tichetul (#{ticket.title}) a fuznionat cu alt tichet
+
+<div>Bună #{recipient.firstname},</div>
+<br>
+<div>
+Tichetul (#{ticket.title}) a fuzionat cu alt tichet de către "<b>#{current_user.longname}</b>".
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Vezi asta în #{config.product_name}</a>
+</div>

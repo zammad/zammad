@@ -1,0 +1,18 @@
+Tichetul va escalada (#{ticket.title})
+
+<div>Bună #{recipient.firstname},</div>
+<br>
+<div>Tichetul (#{ticket.title}) de la "<b>#{ticket.customer.longname}</b>" va escalada la "#{ticket.escalation_at}"!</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+  Informații:
+  <blockquote type="cite">
+  #{article.body_as_html}
+  </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Vezi asta în #{config.product_name}</a>
+</div>
