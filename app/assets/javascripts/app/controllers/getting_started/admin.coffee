@@ -101,7 +101,13 @@ class GettingStartedAdmin extends App.ControllerWizardFullScreen
 
       fail: (settings, details) =>
         @formEnable(e)
-        @form.showAlert(details.error_human || details.error || __('User could not be created.'))
+
+        message = if _.isArray(details.notice)
+                    App.i18n.translateContent(details.notice[0], details.notice[1])
+                  else
+                    details.error_human || details.error || __('User could not be created.')
+
+        @form.showAlert(message)
     )
 
   relogin: (data, status, xhr) =>

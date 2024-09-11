@@ -128,8 +128,7 @@ class ProfilePassword extends App.ControllerSubContent
   error: (xhr, status, error) =>
     return if xhr.status != 422
 
-    data = xhr.responseJSON
-
+    data    = xhr.responseJSON
     message = if data.notice
                 App.i18n.translateContent( data.notice[0], data.notice[1] )
               else

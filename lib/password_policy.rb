@@ -4,7 +4,15 @@
 class PasswordPolicy
   include ::Mixin::HasBackends
 
-  class PasswordPolicy::Error < StandardError; end
+  class PasswordPolicy::Error < StandardError
+    attr_reader :metadata
+
+    def initialize(metadata)
+      @metadata = metadata
+
+      super(metadata.try(:first))
+    end
+  end
 
   attr_reader :password
 
@@ -16,7 +24,7 @@ class PasswordPolicy
   def valid!
     return if valid?
 
-    raise PasswordPolicy::Error, error.first
+    raise PasswordPolicy::Error, error
   end
 
   def valid?

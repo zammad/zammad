@@ -554,7 +554,7 @@ curl http://localhost/api/v1/users/password_reset_verify -v -u #{login}:#{passwo
       render json: { message: 'failed' }, status: :ok
       return
     rescue PasswordPolicy::Error => e
-      render json: { message: 'failed', notice: [e] }, status: :ok
+      render json: { message: 'failed', notice: e.metadata }, status: :ok
       return
     end
 
@@ -602,7 +602,7 @@ curl http://localhost/api/v1/users/password_change -v -u #{login}:#{password} -H
         new_password:     params[:password_new]
       ).execute
     rescue PasswordPolicy::Error => e
-      render json: { message: 'failed', notice: [e.message] }, status: :unprocessable_entity
+      render json: { message: 'failed', notice: e.metadata }, status: :unprocessable_entity
       return
     rescue PasswordHash::Error
       render json: { message: 'failed', notice: [__('The current password you provided is incorrect.')] }, status: :unprocessable_entity
@@ -997,7 +997,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     begin
       signup.execute
     rescue PasswordPolicy::Error => e
-      render json: { error: e.message }, status: :unprocessable_entity
+      render json: { message: 'failed', notice: e.metadata }, status: :unprocessable_entity
       return
     rescue Service::CheckFeatureEnabled::FeatureDisabledError => e
       raise Exceptions::UnprocessableEntity, e.message
@@ -1020,7 +1020,7 @@ curl http://localhost/api/v1/users/avatar -v -u #{login}:#{password} -H "Content
     )
     render json: { message: 'ok' }, status: :created
   rescue PasswordPolicy::Error => e
-    render json: { error: e.message }, status: :unprocessable_entity
+    render json: { message: 'failed', notice: e.metadata }, status: :unprocessable_entity
   rescue Exceptions::MissingAttribute, Service::System::CheckSetup::SystemSetupError => e
     raise Exceptions::UnprocessableEntity, e.message
   end

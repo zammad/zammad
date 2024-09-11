@@ -52,7 +52,7 @@ RSpec.describe 'User password reset verify endpoint', authenticated_as: false, t
 
     it 'returns failure with notice', if: notice do
       send_request
-      expect(json_response).to include({ 'message' => 'failed', 'notice' => [include(notice)] })
+      expect(json_response).to include({ 'message' => 'failed', 'notice' => include(start_with(notice)) })
     end
   end
 

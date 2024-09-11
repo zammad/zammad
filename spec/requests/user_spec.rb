@@ -106,7 +106,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
       params = { email: 'some_new_customer@example.com', signup: true }
       post '/api/v1/users', params: params, headers: headers, as: :json
       expect(response).to have_http_status(:unprocessable_entity)
-      expect(json_response['error']).to be_truthy
+      expect(json_response['message']).to eq('failed')
 
       # already existing user with enabled feature, pretend signup is successful
       params = { email: 'rest-customer1@example.com', password: 'asd1ASDasd!', signup: true }
@@ -212,7 +212,7 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
         params = { email: 'some_new_customer@example.com', password: 'asdasdasdasd', signup: true }
         post '/api/v1/users', params: params, headers: headers, as: :json
         expect(response).to have_http_status(:unprocessable_entity)
-        expect(json_response['error']).to include('Invalid password')
+        expect(json_response['notice']).to include(include('Invalid password'))
       end
 
       it 'verified with no current user', authenticated_as: :admin do

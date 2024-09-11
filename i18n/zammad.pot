@@ -3337,7 +3337,7 @@ msgstr ""
 msgid "Could not parse any sender attribute from the email. Checked fields:"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/signup.coffee:133
+#: app/assets/javascripts/app/controllers/signup.coffee:139
 msgid "Could not process your request"
 msgstr ""
 
@@ -3349,7 +3349,7 @@ msgstr ""
 msgid "Could not remove the two-factor authentication method for this user."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:198
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:197
 msgid "Could not remove two-factor authentication method"
 msgstr ""
 
@@ -3358,7 +3358,7 @@ msgstr ""
 msgid "Could not remove two-factor authentication method."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:228
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:227
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:77
 msgid "Could not set two-factor authentication method as default"
 msgstr ""
@@ -5460,7 +5460,7 @@ msgstr ""
 msgid "Email sent to \"%s\". Please let the user verify their email account."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/signup.coffee:118
+#: app/assets/javascripts/app/controllers/signup.coffee:124
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:91
 msgid "Email sent to \"%s\". Please verify your email account."
 msgstr ""
@@ -6555,7 +6555,7 @@ msgstr ""
 msgid "Generate Token"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:241
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:240
 #: app/assets/javascripts/app/views/profile/password.jst.eco:113
 msgid "Generate recovery codes"
 msgstr ""
@@ -11544,7 +11544,7 @@ msgstr ""
 msgid "Remove selected values"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:177
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:176
 msgid "Remove two-factor authentication"
 msgstr ""
 
@@ -14299,7 +14299,7 @@ msgstr ""
 msgid "The parameter 'mentionable_type' is invalid."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:136
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:135
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:143
 msgid "The password could not be set. Please contact your administrator."
 msgstr ""
@@ -16177,13 +16177,13 @@ msgstr ""
 msgid "Two-factor authentication method could not be initiated."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:191
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:190
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:156
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:126
 msgid "Two-factor authentication method was removed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:221
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:220
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:98
 msgid "Two-factor authentication method was set as default."
 msgstr ""
@@ -16653,8 +16653,8 @@ msgstr ""
 msgid "User authorization failed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/getting_started/admin.coffee:104
-#: app/assets/javascripts/app/controllers/signup.coffee:98
+#: app/assets/javascripts/app/controllers/getting_started/admin.coffee:108
+#: app/assets/javascripts/app/controllers/signup.coffee:102
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts:55
 msgid "User could not be created."
 msgstr ""
