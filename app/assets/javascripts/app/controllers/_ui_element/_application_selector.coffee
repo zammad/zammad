@@ -62,11 +62,13 @@ class App.UiElement.ApplicationSelector
     operators_name =
       '_id$': [__('is'), __('is not')]
       '_ids$': [__('is'), __('is not')]
+      'active$': [__('is'), __('is not')]
 
     if attribute.hasChanged
       operators_name =
         '_id$': [__('is'), __('is not'), __('has changed')]
         '_ids$': [__('is'), __('is not'), __('has changed')]
+        'active$': [__('is'), __('is not'), __('has changed')]
 
     # merge config
     elements = {}

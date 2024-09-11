@@ -80,6 +80,7 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
     operatorsName =
       '_id$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
       '_ids$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
+      'active$': [__('is'), __('is not'), __('is set'), __('not set'), __('has changed'), __('changed to')]
 
     if attribute.disable_operators
       for key, value of operatorsType
