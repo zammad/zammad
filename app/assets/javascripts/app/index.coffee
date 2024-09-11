@@ -82,7 +82,7 @@ class App extends Spine.Controller
                    displayValue = attributeConfig.options[elem]
 
                    if displayValue && attributeConfig.translate
-                     displayValue = App.i18n.translateInline(displayValue)
+                     displayValue = App.i18n.translatePlain(displayValue)
 
                    value = displayValue || elem
 
@@ -121,7 +121,7 @@ class App extends Spine.Controller
           resultLocal = item.label
 
         if attributeConfig.translate
-          resultLocal = App.i18n.translateInline(resultLocal)
+          resultLocal = App.i18n.translatePlain(resultLocal)
 
       # execute callback on content
       if attributeConfig.callback
