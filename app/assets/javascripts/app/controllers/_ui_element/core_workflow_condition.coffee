@@ -235,6 +235,16 @@ class App.UiElement.core_workflow_condition extends App.UiElement.ApplicationSel
         __('just changed'),
         __('just changed to')
       ]
+      'active$': [
+        __('is'),
+        __('is not'),
+        __('is set'),
+        __('not set'),
+        __('is modified'),
+        __('is modified to'),
+        __('just changed'),
+        __('just changed to')
+      ]
 
     if attribute.disable_operators
       for key, value of operatorsType
