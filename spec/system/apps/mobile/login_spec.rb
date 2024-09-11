@@ -58,9 +58,17 @@ RSpec.describe 'Mobile > Login', app: :mobile, authenticated_as: false, type: :s
 
       saml_login_keycloak
 
-      # Workaround: SAML redirects in CI don't work because of missing HTTP referrer headers.
-      visit '/'
-      expect(page).to have_text('Home')
+      # Workaround: SAML redirects in CI don't work correctly because of missing HTTP referrer headers.
+      # The redirect will go to / instead of /mobile, so check where we are and switch to mobile if needed.
+      expect(page).to have_text('JD') # Logged in, either in legacy interface or in mobile.
+
+      begin
+        # Check if we are already in mobile.
+        page.find('span', text: 'Home', wait: 0)
+      rescue
+        visit '/'
+        expect(page).to have_text('Home')
+      end
 
       # Manual logout
       click_on 'JD' # avatar
