@@ -142,6 +142,15 @@ $(function() {
         'Your Message…': 'Sinu Teade…',
         'Your Name': 'Sinu Nimi',
       },
+      'fa': {
+        'Attachments': 'ضمایم',
+        'Email': 'رایانامه',
+        'Message': 'پیام',
+        'Name': 'نام',
+        'Your Email': 'ایمیل شما',
+        'Your Message…': 'پیام شما…',
+        'Your Name': 'نام شما',
+      },
       'fr': {
         'Attachments': 'Pièces jointes',
         'Email': 'E-mail',
