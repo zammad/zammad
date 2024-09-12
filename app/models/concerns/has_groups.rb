@@ -259,16 +259,22 @@ module HasGroups
   end
 
   def process_group_access_buffer
-
     flush_group_access_buffer do
-      destroy_group_relations
-
-      break if group_access_buffer.blank?
-
       foreign_key = group_through.foreign_key
-      entries     = group_access_buffer.collect do |entry|
+      entries     = Array.wrap(group_access_buffer).collect do |entry|
+        entry[:group_id]   = entry[:group_id].to_i
         entry[foreign_key] = id
-        entry
+        entry.symbolize_keys
+      end
+
+      group_through.klass.where(foreign_key => id).in_batches.each_record do |object|
+        entry = object.attributes.symbolize_keys
+        if entries.include?(entry)
+          entries -= [entry]
+          next
+        end
+
+        object.destroy!
       end
 
       group_through.klass.create!(entries)
