@@ -21,6 +21,12 @@ You're going to love Zammad!
 
 https://docs.zammad.org
 
+## Self-Hosting Options
+
+### Elestio
+
+[![Deploy on Elestio](https://elest.io/images/logos/deploy-to-elestio-btn.png)](https://elest.io/open-source/zammad)
+
 ## Screenshots
 
 https://zammad.org/screenshots
