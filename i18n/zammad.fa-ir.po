@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-10 04:02+0000\n"
+"PO-Revision-Date: 2024-09-11 05:19+0000\n"
 "Last-Translator: Sajjad Jazini <s.jazini@vatanmail.ir>\n"
 "Language-Team: Persian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fa/>\n"
@@ -964,9 +964,9 @@ msgstr "حساب‌های کاربری"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:718
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:115
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:80
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:82
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:109
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:107
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:109
 #: app/assets/javascripts/app/models/core_workflow.coffee:11
 #: app/assets/javascripts/app/models/trigger.coffee:7
 #: app/assets/javascripts/app/views/api.jst.eco:62
@@ -2670,8 +2670,8 @@ msgid "CTI integration"
 msgstr "یکپارچه‌سازی CTI"
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:3
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:117
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:144
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:119
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:146
 #: app/assets/javascripts/app/controllers/calendar.coffee:3
 #: app/assets/javascripts/app/models/sla.coffee:8
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:3
@@ -3808,7 +3808,7 @@ msgstr "احراز هویت دوعاملی را برای این کاربر نم�
 msgid "Could not parse any sender attribute from the email. Checked fields:"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/signup.coffee:133
+#: app/assets/javascripts/app/controllers/signup.coffee:139
 msgid "Could not process your request"
 msgstr ""
 
@@ -3820,7 +3820,7 @@ msgstr ""
 msgid "Could not remove the two-factor authentication method for this user."
 msgstr "احراز هویت دوعاملی را از این کاربر نمی‌توان حذف کرد."
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:198
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:197
 msgid "Could not remove two-factor authentication method"
 msgstr ""
 
@@ -3835,7 +3835,7 @@ msgstr ""
 "ورود ناموفق. آیا مرحله تایید از طریق ایمیل را تکمیل نمودید و از صحت "
 "نام‌کاربری و رمزعبور خود اطمینان دارید؟"
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:228
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:227
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:77
 msgid "Could not set two-factor authentication method as default"
 msgstr "احراز هویت دوعاملی را نمی‌توان به عنوان احراز هویت پیش‌فرض تنظیم کرد"
@@ -6192,7 +6192,7 @@ msgstr ""
 "ایمیل به \"%s\" ارسال گردید. لطفا اجازه دهید تا کاربر ایمیل خود را تایید "
 "نماید."
 
-#: app/assets/javascripts/app/controllers/signup.coffee:118
+#: app/assets/javascripts/app/controllers/signup.coffee:124
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:91
 msgid "Email sent to \"%s\". Please verify your email account."
 msgstr "ایمیل به \"%s\" ارسال گردید. لطفا ایمیل خود را تایید نمایید."
@@ -6826,15 +6826,15 @@ msgstr ""
 msgid "Execution Time"
 msgstr "زمان اجرا"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:283
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:285
 msgid "Existing members"
 msgstr "اعضای موجود"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:255
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:257
 msgid "Existing tickets"
 msgstr "تیکت‌‌های موجود"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:260
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:262
 msgid "Existing tickets (open)"
 msgstr "تیکت‌های موجود (باز)"
 
@@ -7404,7 +7404,7 @@ msgstr "حذف رکوردها"
 msgid "Generate Token"
 msgstr "ایجاد توکن"
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:241
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:240
 #: app/assets/javascripts/app/views/profile/password.jst.eco:113
 msgid "Generate recovery codes"
 msgstr "تولید کدهای بازیابی"
@@ -7634,23 +7634,23 @@ msgstr "پیام خوشآمد"
 msgid "Group"
 msgstr "گروه"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:296
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:306
 msgid "Group (change)"
 msgstr "گروه (تغییر)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:287
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:297
 msgid "Group (create)"
 msgstr "گروه (ایجاد)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:314
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:324
 msgid "Group (full)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:305
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:315
 msgid "Group (overview)"
 msgstr "گروه (نمای‌کلی)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:278
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:288
 msgid "Group (read)"
 msgstr ""
 
@@ -9082,19 +9082,19 @@ msgstr "آخرین تغییر"
 msgid "Last closing time"
 msgstr "آخرین زمان بستن"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:230
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:232
 #: app/assets/javascripts/app/models/ticket.coffee:21
 #: app/graphql/gql/types/overview_type.rb:74
 msgid "Last contact"
 msgstr "آخرین تماس"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:234
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:236
 #: app/assets/javascripts/app/models/ticket.coffee:22
 #: app/graphql/gql/types/overview_type.rb:75
 msgid "Last contact (agent)"
 msgstr "آخرین تماس (کارشناس)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:238
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:240
 #: app/assets/javascripts/app/models/ticket.coffee:23
 #: app/graphql/gql/types/overview_type.rb:76
 msgid "Last contact (customer)"
@@ -9105,7 +9105,7 @@ msgid ""
 "Last created at of database objects (e.g. when was the last trigger created)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:222
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:224
 msgid "Last login"
 msgstr "آخرین ورود"
 
@@ -10183,7 +10183,7 @@ msgstr "تلفن همراه"
 msgid "Mode"
 msgstr "حالت"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:258
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:268
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:66
 msgid "Module"
 msgstr "ماژول"
@@ -10919,7 +10919,7 @@ msgstr "هیچ پرونده‌ای انتخاب نشده."
 msgid "No file formats allowed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:647
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:649
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:803
 msgid "No filter was configured."
 msgstr "هیچ صافی‌ای تنظیم نشده است."
@@ -11765,8 +11765,8 @@ msgstr ""
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
 msgstr "از بین تمام تیکت‌های باز٬ چه تعدادی به شما اختصاص داده شده است؟"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:163
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:190
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:165
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:192
 msgid "Out of office replacement"
 msgstr "جانشین هنگام مرخصی"
 
@@ -12067,7 +12067,7 @@ msgstr "حذف دائمی پایگاه دانش"
 msgid "Permission level for looking up tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:323
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:333
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:96
 #: app/assets/javascripts/app/models/role.coffee:7
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:5
@@ -12897,7 +12897,7 @@ msgstr "امنیت"
 msgid "Remove selected values"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:177
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:176
 msgid "Remove two-factor authentication"
 msgstr "حذف کردن احراز هویت دوعاملی"
 
@@ -13230,8 +13230,8 @@ msgstr ""
 msgid "Rocket Chat Notifications"
 msgstr "اعلان‌های راکت چت"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:269
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:214
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:279
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:216
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:81
 #: app/assets/javascripts/app/views/knowledge_base/permissions_dialog.jst.eco:3
@@ -14903,10 +14903,10 @@ msgid "Submit"
 msgstr "ارسال"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:139
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:176
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:359
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:178
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:369
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:148
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:204
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:206
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:4
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:57
 msgid "Subscribe"
@@ -15911,7 +15911,7 @@ msgstr "صفحه‌ای که بدنبال آن هستید وجود ندارد."
 msgid "The parameter 'mentionable_type' is invalid."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:136
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:135
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:143
 msgid "The password could not be set. Please contact your administrator."
 msgstr "امکان تنظیم رمز عبور وجود ندارد. لطفا با ادمین سیستم تماس بگیرید."
@@ -17468,8 +17468,8 @@ msgstr "تا تاریخ"
 msgid "Time"
 msgstr "زمان"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:105
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:132
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:107
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:134
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:12
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:3
 #: db/seeds/permissions.rb:107 db/seeds/settings.rb:3931
@@ -17999,13 +17999,13 @@ msgstr ""
 msgid "Two-factor authentication method could not be initiated."
 msgstr "روش احراز هویت دوعاملی نمی‌تواند شروع شود."
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:191
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:190
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:156
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:126
 msgid "Two-factor authentication method was removed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:221
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:220
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:98
 msgid "Two-factor authentication method was set as default."
 msgstr "روش احراز هویت دوعاملی برای پیش‌فرض تنظیم شد."
@@ -18139,10 +18139,8 @@ msgid "Unselect Option"
 msgstr "عدم انتخاب اختیار"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:703
-#, fuzzy
-#| msgid "Restore Defaults"
 msgid "Unset default"
-msgstr "بازیابی پیش تعریف"
+msgstr "عدم تنظیم پیش‌فرض"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:149
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:158
@@ -18280,7 +18278,7 @@ msgstr "به روز شد"
 msgid "Updated At"
 msgstr "زمان به‌روزرسانی"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:242
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:244
 #: app/assets/javascripts/app/models/checklist.coffee:10
 #: app/assets/javascripts/app/models/checklist_item.coffee:9
 #: app/assets/javascripts/app/models/checklist_template.coffee:11
@@ -18563,8 +18561,8 @@ msgstr ""
 msgid "User authorization failed."
 msgstr "دادن مجوز موفقیت‌آمیز نبود"
 
-#: app/assets/javascripts/app/controllers/getting_started/admin.coffee:104
-#: app/assets/javascripts/app/controllers/signup.coffee:98
+#: app/assets/javascripts/app/controllers/getting_started/admin.coffee:108
+#: app/assets/javascripts/app/controllers/signup.coffee:102
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts:55
 msgid "User could not be created."
 msgstr "امکان ایجاد کاربر وجود نداشت."
@@ -18689,10 +18687,8 @@ msgid "VIP"
 msgstr "VIP"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:105
-#, fuzzy
-#| msgid "Bulk action failed"
 msgid "Validation failed"
-msgstr "اقدام جمعی موفقیت‌آمیز نبود"
+msgstr "اعتبارسنجی ناموفق بود"
 
 msgid "Validation failed: %{errors}"
 msgstr ""
@@ -18730,10 +18726,8 @@ msgid "Verification email could not be sent."
 msgstr "ایمیل راستی‌آزمایی قابل ارسال نبود."
 
 #: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco:24
-#, fuzzy
-#| msgid "Generate Token"
 msgid "Verify Token"
-msgstr "ایجاد توکن"
+msgstr "تایید توکن"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:71
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:59
@@ -18783,10 +18777,8 @@ msgstr "ویدئو"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:62
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:41
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:10
-#, fuzzy
-#| msgid "Video"
 msgid "Video file"
-msgstr "ویدئو"
+msgstr "پرونده ویدئو"
 
 #: app/assets/javascripts/app/controllers/api.coffee:41
 msgid "View"
@@ -18810,10 +18802,8 @@ msgid "View this in Zammad"
 msgstr "مشاهده در سامانه"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:35
-#, fuzzy
-#| msgid "New Ticket"
 msgid "Viewing ticket"
-msgstr "تیکت‌ جدید"
+msgstr "در حال نمایش تیکت‌"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:683
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
@@ -18858,17 +18848,13 @@ msgstr "هشدار"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:34
 #: db/seeds/settings.rb:2628
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Warning message"
-msgstr "افزودن تگ"
+msgstr "پیام هشدار"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:33
 #: db/seeds/settings.rb:2611
-#, fuzzy
-#| msgid "Warning"
 msgid "Warning title"
-msgstr "هشدار"
+msgstr "عنوان هشدار"
 
 #: public/assets/chat/views/waiting_list_timeout.eco:2
 msgid ""
@@ -19019,10 +19005,8 @@ msgid "WhatsApp"
 msgstr "واتس‌اپ"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:111
-#, fuzzy
-#| msgid "Add Account"
 msgid "WhatsApp Account"
-msgstr "افزودن حساب کاربری"
+msgstr "حساب کاربری واتس‌اپ"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:10
 msgid "WhatsApp Business Account ID"
@@ -19041,10 +19025,8 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
-#, fuzzy
-#| msgid "Saved conditions"
 msgid "When conditions match"
-msgstr "شرایط ذخیره شده"
+msgstr "وقتی شرایط منطبق شدند"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:29
 msgid "When notification is being sent."
@@ -19060,7 +19042,7 @@ msgid ""
 "reason gets printed to the javascript console."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:672
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:674
 msgid "Where"
 msgstr "کجا"
 
@@ -19138,10 +19120,10 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/models/template.coffee
-#, fuzzy
-#| msgid "With templates you can pre-fill ticket attributes."
 msgid "With templates it is possible to pre-fill tickets quickly and easily."
-msgstr "با استفاده از قالبها میتوانید فیلدهای فرم را بصورت خودکار پر کنید."
+msgstr ""
+"با استفاده از قالب‌ها این امکان هست که تیکت‌ها به سرعت و به آسانی از قبل پر "
+"شوند."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:15
 msgid "With templates you can pre-fill ticket attributes."
@@ -19395,10 +19377,8 @@ msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb:73
 #: app/services/service/system/import/apply_freshdesk_configuration.rb:32
-#, fuzzy
-#| msgid "At least one user needs to have admin permissions."
 msgid "You do not have administrator permission."
-msgstr "حداقل یک کاربر بایستی دسترسی ادمین داشته باشد."
+msgstr "شما دسترسی مدیر ندارید."
 
 #: app/frontend/shared/router/guards/before/permission.ts:39
 msgid "You don't have the necessary permissions to access this page."
@@ -19416,10 +19396,8 @@ msgid "You have exceeded the character limit by %s"
 msgstr ""
 
 #: app/policies/ticket_policy.rb:65
-#, fuzzy
-#| msgid "You have no tickets to display in this overview."
 msgid "You have insufficient permissions to mention other users."
-msgstr "شما هیچ تیکتی ندارید که در این پنجره نمایش داده شود."
+msgstr "شما برای اشاره به دیگر کاربران کمبود مجوز دارید."
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:15
 #, fuzzy
@@ -19440,10 +19418,8 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:34
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:34
-#, fuzzy
-#| msgid "You have no tickets to display in this overview."
 msgid "You have insufficient rights to view this user."
-msgstr "شما هیچ تیکتی ندارید که در این پنجره نمایش داده شود."
+msgstr "شما برای مشاهده این کاربر کمبود دسترسی دارید."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee:56
 msgid ""
@@ -19545,10 +19521,8 @@ msgid "Your API key."
 msgstr ""
 
 #: public/assets/form/form.js:37
-#, fuzzy
-#| msgid "Email"
 msgid "Your Email"
-msgstr "ایمیل"
+msgstr "ایمیل شما"
 
 #: app/controllers/first_steps_controller.rb:59
 msgid "Your Email Configuration"
@@ -19564,10 +19538,8 @@ msgid "Your Message…"
 msgstr "پیام شما…"
 
 #: public/assets/form/form.js:28
-#, fuzzy
-#| msgid "Full Name"
 msgid "Your Name"
-msgstr "نام کامل"
+msgstr "نام شما"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:144
 msgid "Your New Personal Access Token"
@@ -19917,10 +19889,8 @@ msgid ""
 "another with the desired value)"
 msgstr ""
 
-#, fuzzy
-#| msgid "Group can't be blank"
 msgid "can't be blank"
-msgstr "گروه نباید خالی باشد"
+msgstr "نمی‌تواند خالی باشد"
 
 msgid "can't be empty"
 msgstr ""
@@ -20008,8 +19978,8 @@ msgstr "شامل یکی باشد"
 msgid "contains one not"
 msgstr "شامل یکی نباشد"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:85
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:112
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:4
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36
@@ -20023,13 +19993,13 @@ msgid "created %s"
 msgstr "%s ایجاد شد"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:144
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:537
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:539
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:632
 msgid "current user"
 msgstr "کاربر فعلی"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:427
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:543
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:545
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:637
 msgid "current user organization"
 msgstr "سازمان کاربر کنونی"
@@ -20045,10 +20015,8 @@ msgid "custom"
 msgstr "سفارشی"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:21
-#, fuzzy
-#| msgid "customer"
 msgid "custom unit"
-msgstr "مشتری"
+msgstr "واحد سفارشی"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:76
 msgid "d"
@@ -20089,10 +20057,8 @@ msgstr "حذف"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:156
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:20
-#, fuzzy
-#| msgid "Delete Customer"
 msgid "delivered to the customer"
-msgstr "حذف مشتری"
+msgstr "رسیده به مشتری"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:56
 #: app/assets/javascripts/app/models/overview.coffee:39
@@ -20101,10 +20067,8 @@ msgid "descending"
 msgstr "نزولی"
 
 #: db/seeds/settings.rb:1206
-#, fuzzy
-#| msgid "New password"
 msgid "developer password"
-msgstr "رمز عبور جدید"
+msgstr "رمز برنامه‌نویس"
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:13
 msgid "disconnect"
@@ -20129,18 +20093,14 @@ msgid "does not allow past dates"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee:164
-#, fuzzy
-#| msgid "not exist"
 msgid "does not exist"
 msgstr "وجود ندارد"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:60
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:188
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:87
-#, fuzzy
-#| msgid "not exist"
 msgid "does not match regex"
-msgstr "وجود ندارد"
+msgstr "با رجکس تطبیق ندارد"
 
 msgid "doesn't match %{attribute}"
 msgstr ""
@@ -20181,20 +20141,16 @@ msgid "edit"
 msgstr "اصلاح"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:41
-#, fuzzy
-#| msgid "edit"
 msgid "edited %s"
-msgstr "اصلاح"
+msgstr "%s ویرایش‌شده"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:44
 msgid "edited %s by %s"
 msgstr ""
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:41
-#, fuzzy
-#| msgid "edit"
 msgid "edited %s by me"
-msgstr "اصلاح"
+msgstr "%s توسط من ویرایش شده"
 
 #: db/seeds/ticket_article_types.rb:3
 msgid "email"
@@ -20310,19 +20266,15 @@ msgstr ""
 msgid "has changed"
 msgstr "تغییر کرده است"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:155
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:182
-#, fuzzy
-#| msgid "reached"
-msgid "has reached"
-msgstr "فرارسیده"
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:157
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:184
-#, fuzzy
-#| msgid "has changed"
+msgid "has reached"
+msgstr "فرا رسیده"
+
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:159
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:186
 msgid "has reached warning"
-msgstr "تغییر کرده است"
+msgstr "هشدار فرا رسیده"
 
 #: app/assets/javascripts/app/views/login.jst.eco:98
 msgid "here"
@@ -20390,20 +20342,16 @@ msgid "in %s months"
 msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts:92
-#, fuzzy
-#| msgid "2 weeks"
 msgid "in %s weeks"
-msgstr "هفته های 2"
+msgstr "در %s هفته"
 
 #: app/frontend/shared/i18n/dates.ts:78
 msgid "in %s years"
 msgstr "در %s سال"
 
 #: app/frontend/shared/i18n/dates.ts:98
-#, fuzzy
-#| msgid "1 day"
 msgid "in 1 day"
-msgstr "روز 1"
+msgstr "در 1 روز"
 
 #: app/frontend/shared/i18n/dates.ts:105
 msgid "in 1 hour"
@@ -20418,10 +20366,8 @@ msgid "in 1 month"
 msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts:91
-#, fuzzy
-#| msgid "1 week"
 msgid "in 1 week"
-msgstr "هفته 1"
+msgstr "در 1 هفته"
 
 #: app/frontend/shared/i18n/dates.ts:77
 msgid "in 1 year"
@@ -20449,10 +20395,8 @@ msgid "internal"
 msgstr "داخلی"
 
 #: db/seeds/settings.rb:1190
-#, fuzzy
-#| msgid "internal"
 msgid "internal database"
-msgstr "داخلی"
+msgstr "پایگاه داده داخلی"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:96
@@ -20470,8 +20414,8 @@ msgstr ""
 msgid "is any of"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:122
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:149
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:124
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:151
 msgid "is in working time"
 msgstr "در ساعت کاری"
 
@@ -20499,10 +20443,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:184
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
-#, fuzzy
-#| msgid "is not"
 msgid "is none of"
-msgstr "برابر نیست با"
+msgstr "هیچ نیست از"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:100
@@ -20515,39 +20457,33 @@ msgid "is not a color. Only Hex, RGB and HSL colors are supported."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:93
-#, fuzzy
-#| msgid "Min. size of number"
 msgid "is not a number"
-msgstr "حداقل اندازه عدد"
+msgstr "عدد نیست"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:122
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:149
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:124
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:151
 msgid "is not in working time"
 msgstr "خارج از ساعت کاری"
 
-#, fuzzy
-#| msgid "is not in working time"
 msgid "is not included in the list"
-msgstr "خارج از ساعت کاری"
+msgstr "در فهرست موجود نیست"
 
 #: app/assets/javascripts/app/models/_application_model.coffee:63
 msgid "is required"
 msgstr "الزامی است"
 
 #: lib/validations/object_manager/attribute_validator/required.rb:15
-#, fuzzy
-#| msgid "is required"
 msgid "is required but missing"
-msgstr "الزامی است"
+msgstr "الزامی است ولی وارد نشده"
 
 #, fuzzy
 #| msgid "is required"
 msgid "is reserved"
 msgstr "الزامی است"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:111
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:101
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:138
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
 msgid "is set"
 msgstr "تنظیم شده"
 
@@ -20612,15 +20548,15 @@ msgstr "نمایش موارد بیشتر"
 msgid "m"
 msgstr "دقیقه"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:263
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:273
 msgid "match all modules"
 msgstr "با تمام ماژول‌ها تطابق داشته باشد"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:263
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:273
 msgid "match no modules"
 msgstr "با هیچ ماژولی تطابق نداشته باشد"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:263
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:273
 msgid "match one module"
 msgstr "با یک ماژول تطابق داشته باشد"
 
@@ -20650,8 +20586,8 @@ msgstr "شاید:"
 msgid "merged"
 msgstr "ادغام شد"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:89
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:116
 #, fuzzy
 #| msgid "merged"
 msgid "merged into"
@@ -20788,13 +20724,13 @@ msgstr "هیچکدام"
 msgid "not reached"
 msgstr "در دسترس نبود"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:111
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:102
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:138
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
 msgid "not set"
 msgstr "بدون مقدار"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:540
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:542
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:634
 msgid "not set (not defined)"
 msgstr "بدون مقدار"
@@ -20901,8 +20837,8 @@ msgstr "فرارسیده"
 msgid "read by the customer"
 msgstr "ایجاد مشتری جدید"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:90
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:117
 msgid "received merge"
 msgstr ""
 
@@ -21075,13 +21011,13 @@ msgid "spaces are not allowed"
 msgstr "فاصله مجاز نیست"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:428
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:544
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:546
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:638
 msgid "specific organization"
 msgstr "سازمان خاص"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:417
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:538
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:540
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:633
 msgid "specific user"
 msgstr "کاربر خاص"
@@ -21226,8 +21162,8 @@ msgstr "خارج کردن از حالت فقط خواندنی"
 msgid "untouched"
 msgstr "دست نخورده"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:86
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:113
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:4
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36

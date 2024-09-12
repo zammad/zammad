@@ -1097,9 +1097,9 @@ msgstr "Comptes"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:718
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:115
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:80
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:82
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:109
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:107
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:109
 #: app/assets/javascripts/app/models/core_workflow.coffee:11
 #: app/assets/javascripts/app/models/trigger.coffee:7
 #: app/assets/javascripts/app/views/api.jst.eco:62
@@ -2928,8 +2928,8 @@ msgid "CTI integration"
 msgstr "Intégrations"
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:3
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:117
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:144
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:119
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:146
 #: app/assets/javascripts/app/controllers/calendar.coffee:3
 #: app/assets/javascripts/app/models/sla.coffee:8
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:3
@@ -4139,7 +4139,7 @@ msgstr ""
 msgid "Could not parse any sender attribute from the email. Checked fields:"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/signup.coffee:133
+#: app/assets/javascripts/app/controllers/signup.coffee:139
 msgid "Could not process your request"
 msgstr ""
 
@@ -4151,7 +4151,7 @@ msgstr ""
 msgid "Could not remove the two-factor authentication method for this user."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:198
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:197
 msgid "Could not remove two-factor authentication method"
 msgstr ""
 
@@ -4162,7 +4162,7 @@ msgstr ""
 msgid "Could not remove two-factor authentication method."
 msgstr "Identification"
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:228
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:227
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:77
 #, fuzzy
 #| msgid "Authentication"
@@ -6741,7 +6741,7 @@ msgstr ""
 msgid "Email sent to \"%s\". Please let the user verify their email account."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/signup.coffee:118
+#: app/assets/javascripts/app/controllers/signup.coffee:124
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:91
 msgid "Email sent to \"%s\". Please verify your email account."
 msgstr ""
@@ -7468,19 +7468,19 @@ msgstr "Exécuter les tâches planifiés."
 msgid "Execution Time"
 msgstr "Temps d'exécution"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:283
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:285
 #, fuzzy
 #| msgid "Waiting Customers"
 msgid "Existing members"
 msgstr "Clients en attente"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:255
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:257
 #, fuzzy
 #| msgid "New Ticket"
 msgid "Existing tickets"
 msgstr "Nouveau Ticket"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:260
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:262
 #, fuzzy
 #| msgid "assign tickets"
 msgid "Existing tickets (open)"
@@ -8101,7 +8101,7 @@ msgstr "Supprimer les enregistrements"
 msgid "Generate Token"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:241
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:240
 #: app/assets/javascripts/app/views/profile/password.jst.eco:113
 #, fuzzy
 #| msgid "Delete records"
@@ -8357,23 +8357,23 @@ msgstr ""
 msgid "Group"
 msgstr "Groupe ajouté"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:296
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:306
 msgid "Group (change)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:287
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:297
 msgid "Group (create)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:314
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:324
 msgid "Group (full)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:305
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:315
 msgid "Group (overview)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:278
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:288
 msgid "Group (read)"
 msgstr ""
 
@@ -9970,19 +9970,19 @@ msgstr "a changé"
 msgid "Last closing time"
 msgstr "Heure de fermeture"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:230
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:232
 #: app/assets/javascripts/app/models/ticket.coffee:21
 #: app/graphql/gql/types/overview_type.rb:74
 msgid "Last contact"
 msgstr "Dernier contact"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:234
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:236
 #: app/assets/javascripts/app/models/ticket.coffee:22
 #: app/graphql/gql/types/overview_type.rb:75
 msgid "Last contact (agent)"
 msgstr "Dernier contact (agent)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:238
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:240
 #: app/assets/javascripts/app/models/ticket.coffee:23
 #: app/graphql/gql/types/overview_type.rb:76
 msgid "Last contact (customer)"
@@ -9993,7 +9993,7 @@ msgid ""
 "Last created at of database objects (e.g. when was the last trigger created)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:222
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:224
 #, fuzzy
 #| msgid "Last run"
 msgid "Last login"
@@ -11126,7 +11126,7 @@ msgstr "Mobile"
 msgid "Mode"
 msgstr "Mode"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:258
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:268
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:66
 msgid "Module"
 msgstr ""
@@ -11882,7 +11882,7 @@ msgstr "Aucun filtre."
 msgid "No file formats allowed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:647
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:649
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:803
 msgid "No filter was configured."
 msgstr "Aucun filtre n'a été configuré."
@@ -12806,8 +12806,8 @@ msgstr ""
 "Sur tous les billets ouverts (à l'échelle de l'entreprise), combien vous "
 "sont attribués?"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:163
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:190
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:165
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:192
 msgid "Out of office replacement"
 msgstr "Remplacement pour hors bureau"
 
@@ -13136,7 +13136,7 @@ msgstr "Supprimer définitivement la base de connaissances"
 msgid "Permission level for looking up tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:323
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:333
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:96
 #: app/assets/javascripts/app/models/role.coffee:7
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:5
@@ -14029,7 +14029,7 @@ msgstr "Sécurité"
 msgid "Remove selected values"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:177
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:176
 #, fuzzy
 #| msgid "Authentication"
 msgid "Remove two-factor authentication"
@@ -14392,8 +14392,8 @@ msgstr ""
 msgid "Rocket Chat Notifications"
 msgstr "Bloquer les notifications"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:269
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:214
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:279
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:216
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:81
 #: app/assets/javascripts/app/views/knowledge_base/permissions_dialog.jst.eco:3
@@ -16232,10 +16232,10 @@ msgid "Submit"
 msgstr "Soumettre"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:139
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:176
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:359
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:178
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:369
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:148
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:204
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:206
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:4
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:57
 msgid "Subscribe"
@@ -17378,7 +17378,7 @@ msgstr ""
 msgid "The parameter 'mentionable_type' is invalid."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:136
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:135
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:143
 #, fuzzy
 #| msgid "Unable to verify email. Please contact your administrator."
@@ -19131,8 +19131,8 @@ msgstr "Jusqu'à"
 msgid "Time"
 msgstr "Date et heure"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:105
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:132
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:107
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:134
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:12
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:3
 #: db/seeds/permissions.rb:107 db/seeds/settings.rb:3931
@@ -19725,13 +19725,13 @@ msgstr ""
 msgid "Two-factor authentication method could not be initiated."
 msgstr "Identification"
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:191
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:190
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:156
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:126
 msgid "Two-factor authentication method was removed."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_profile/password.coffee:221
+#: app/assets/javascripts/app/controllers/_profile/password.coffee:220
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:98
 #, fuzzy
 #| msgid "Authentication"
@@ -20022,7 +20022,7 @@ msgstr ""
 msgid "Updated At"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:242
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:244
 #: app/assets/javascripts/app/models/checklist.coffee:10
 #: app/assets/javascripts/app/models/checklist_item.coffee:9
 #: app/assets/javascripts/app/models/checklist_template.coffee:11
@@ -20280,8 +20280,8 @@ msgstr ""
 msgid "User authorization failed."
 msgstr "Échec de l'opération du serveur."
 
-#: app/assets/javascripts/app/controllers/getting_started/admin.coffee:104
-#: app/assets/javascripts/app/controllers/signup.coffee:98
+#: app/assets/javascripts/app/controllers/getting_started/admin.coffee:108
+#: app/assets/javascripts/app/controllers/signup.coffee:102
 #: app/frontend/apps/mobile/entities/user/composables/useUserCreate.ts:55
 msgid "User could not be created."
 msgstr "L'utilisateur n'a pas pu être créé."
@@ -20800,7 +20800,7 @@ msgstr ""
 "Lorsque vous activez le débogage en définissant l'option §debug§ sur §true§, "
 "la raison est imprimée à la console javascript."
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:672
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:674
 msgid "Where"
 msgstr "Où"
 
@@ -21831,8 +21831,8 @@ msgstr "contient un"
 msgid "contains one not"
 msgstr "contient un, pas"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:85
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:112
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:4
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36
@@ -21848,13 +21848,13 @@ msgid "created %s"
 msgstr "créé"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:144
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:537
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:539
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:632
 msgid "current user"
 msgstr "utilisateur actuel"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:427
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:543
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:545
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:637
 msgid "current user organization"
 msgstr "organisation actuelle de l'utilisateur"
@@ -22142,15 +22142,15 @@ msgstr ""
 msgid "has changed"
 msgstr "a changé"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:155
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:182
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:184
 #, fuzzy
 #| msgid "reached"
 msgid "has reached"
 msgstr "atteint"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:157
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:184
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:159
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:186
 #, fuzzy
 #| msgid "has changed"
 msgid "has reached warning"
@@ -22312,8 +22312,8 @@ msgstr ""
 msgid "is any of"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:122
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:149
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:124
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:151
 msgid "is in working time"
 msgstr "est dans le temps de travail"
 
@@ -22362,8 +22362,8 @@ msgstr ""
 msgid "is not a number"
 msgstr "Taille minimale du nombre"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:122
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:149
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:124
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:151
 msgid "is not in working time"
 msgstr "n'est dans le temps de travail"
 
@@ -22385,9 +22385,9 @@ msgstr ""
 msgid "is reserved"
 msgstr "%s est requis!"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:111
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:101
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:138
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
 msgid "is set"
 msgstr ""
 
@@ -22451,15 +22451,15 @@ msgstr "Voir plus"
 msgid "m"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:263
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:273
 msgid "match all modules"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:263
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:273
 msgid "match no modules"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:263
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:273
 msgid "match one module"
 msgstr ""
 
@@ -22491,8 +22491,8 @@ msgstr "peut-être"
 msgid "merged"
 msgstr "fusionnée"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:89
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:116
 #, fuzzy
 #| msgid "merged"
 msgid "merged into"
@@ -22629,13 +22629,13 @@ msgstr "néant"
 msgid "not reached"
 msgstr "non atteint"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:111
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:102
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:138
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
 msgid "not set"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:540
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:542
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:634
 msgid "not set (not defined)"
 msgstr "non défini"
@@ -22746,8 +22746,8 @@ msgstr "atteint"
 msgid "read by the customer"
 msgstr "Créer un nouveau client"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:90
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:117
 msgid "received merge"
 msgstr ""
 
@@ -22924,13 +22924,13 @@ msgid "spaces are not allowed"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:428
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:544
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:546
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:638
 msgid "specific organization"
 msgstr "organisation spécifique"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:417
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:538
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:540
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:633
 msgid "specific user"
 msgstr "utilisateur spécifique"
@@ -23077,8 +23077,8 @@ msgstr ""
 msgid "untouched"
 msgstr "intact"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:86
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:113
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:4
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36
