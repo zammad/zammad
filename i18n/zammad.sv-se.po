@@ -1054,9 +1054,9 @@ msgstr "Konton"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:718
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:116
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:80
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:82
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:109
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:107
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:109
 #: app/assets/javascripts/app/models/core_workflow.coffee:11
 #: app/assets/javascripts/app/models/trigger.coffee:7
 #: app/assets/javascripts/app/views/api.jst.eco:62
@@ -2591,8 +2591,8 @@ msgid "CW"
 msgstr "KV"
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:3
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:117
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:144
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:119
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:146
 #: app/assets/javascripts/app/controllers/calendar.coffee:3
 #: app/assets/javascripts/app/models/sla.coffee:8
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:3
@@ -6521,15 +6521,15 @@ msgstr "Utför schemalagda jobb."
 msgid "Execution Time"
 msgstr "Utförande tid"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:283
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:285
 msgid "Existing members"
 msgstr "Nuvarande medlemmar"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:255
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:257
 msgid "Existing tickets"
 msgstr "Nuvarande ärenden"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:260
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:262
 msgid "Existing tickets (open)"
 msgstr "Nuvarande ärenden (Öppna)"
 
@@ -7232,23 +7232,23 @@ msgstr "Hälsning"
 msgid "Group"
 msgstr "Grupp"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:141
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:142
 msgid "Group (change)"
 msgstr "Grupp (ändring)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:132
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:133
 msgid "Group (create)"
 msgstr "Grupp (skapa)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:159
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:160
 msgid "Group (full)"
 msgstr "Grupp (full)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:150
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:151
 msgid "Group (overview)"
 msgstr "Grupp (översikt)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:123
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:124
 msgid "Group (read)"
 msgstr "Grupp (läs)"
 
@@ -8599,25 +8599,25 @@ msgstr "Senast ändrad"
 msgid "Last closing time"
 msgstr "Senaste stängningstid"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:230
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:232
 #: app/assets/javascripts/app/models/ticket.coffee:21
 #: app/graphql/gql/types/overview_type.rb:74
 msgid "Last contact"
 msgstr "Senast kontakt"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:234
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:236
 #: app/assets/javascripts/app/models/ticket.coffee:22
 #: app/graphql/gql/types/overview_type.rb:75
 msgid "Last contact (agent)"
 msgstr "Senast kontakt (handläggare)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:238
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:240
 #: app/assets/javascripts/app/models/ticket.coffee:23
 #: app/graphql/gql/types/overview_type.rb:76
 msgid "Last contact (customer)"
 msgstr "Senast kontakt (kund)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:222
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:224
 msgid "Last login"
 msgstr "Senaste inloggning"
 
@@ -9288,7 +9288,7 @@ msgstr "Mobil"
 msgid "Mode"
 msgstr "Läge"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:103
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:104
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:66
 msgid "Module"
 msgstr "Modul"
@@ -9911,7 +9911,7 @@ msgstr "Ingen fil vald."
 msgid "No file formats allowed."
 msgstr "Inga filformat tillåtna."
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:647
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:649
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:803
 msgid "No filter was configured."
 msgstr "Filter är inte konfigurerat."
@@ -10587,8 +10587,8 @@ msgstr "Frånvarohantering"
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
 msgstr "Hur många av alla öppna ärenden i din organisation har tilldelats dig?"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:163
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:190
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:165
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:192
 msgid "Out of office replacement"
 msgstr "Ersättare"
 
@@ -10850,7 +10850,7 @@ msgstr "Radera kunskapsbank, permanent"
 msgid "Permission level for looking up tickets"
 msgstr "Behörighetsnivå för att söka ärenden"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:168
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:169
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:96
 #: app/assets/javascripts/app/models/role.coffee:7
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:5
@@ -11851,8 +11851,8 @@ msgstr "Retweetar konverteras till ärenden."
 msgid "Rocket Chat Notifications"
 msgstr "Rocket Chat Notifieringar"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:114
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:214
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:115
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:216
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:81
 #: app/assets/javascripts/app/views/knowledge_base/permissions_dialog.jst.eco:3
@@ -13354,9 +13354,9 @@ msgstr "Ämne"
 msgid "Submit"
 msgstr "Skicka"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:176
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:204
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:204
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:178
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:205
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:206
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:4
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:54
 msgid "Subscribe"
@@ -15810,8 +15810,8 @@ msgstr "Till"
 msgid "Time"
 msgstr "Tid"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:105
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:132
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:107
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:134
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:12
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:3
 #: db/seeds/permissions.rb:54 db/seeds/settings.rb:3904
@@ -16536,7 +16536,7 @@ msgstr "Uppdaterad"
 msgid "Updated At"
 msgstr "Uppdaterades"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:242
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:244
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:8
 #: app/assets/javascripts/app/models/organization.coffee:11
 #: app/assets/javascripts/app/models/ticket.coffee:30
@@ -17296,7 +17296,7 @@ msgstr ""
 "När du aktiverar felsökning genom att ställa in alternativet §debug§ till "
 "§true§ kommer anledningen att skrivas ut till javascript-konsolen."
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:672
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:674
 msgid "Where"
 msgstr "Var"
 
@@ -18138,8 +18138,8 @@ msgstr "innehåller en"
 msgid "contains one not"
 msgstr "innehåller inte en"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:85
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:112
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:4
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36
@@ -18153,13 +18153,13 @@ msgid "created %s"
 msgstr "%s skapad"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:375
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:537
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:539
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:632
 msgid "current user"
 msgstr "nuvarande användare"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:383
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:543
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:545
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:637
 msgid "current user organization"
 msgstr "nuvarande användares organisation"
@@ -18416,13 +18416,13 @@ msgstr "har redan tagits"
 msgid "has changed"
 msgstr "har ändrats"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:155
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:182
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:184
 msgid "has reached"
 msgstr "har uppnåtts"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:157
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:184
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:159
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:186
 msgid "has reached warning"
 msgstr "har nått varning"
 
@@ -18566,8 +18566,8 @@ msgstr "används redan"
 msgid "is any of"
 msgstr "är någon av"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:122
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:149
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:124
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:151
 msgid "is in working time"
 msgstr "är under arbetstid"
 
@@ -18602,8 +18602,8 @@ msgstr "är inte en färg. Endast Hex-, RGB- och HSL-färger stöds."
 msgid "is not a number"
 msgstr "är inte ett tal"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:122
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:149
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:124
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:151
 msgid "is not in working time"
 msgstr "är inte i arbetstid"
 
@@ -18621,9 +18621,9 @@ msgstr "är obligatorisk men saknas"
 msgid "is reserved"
 msgstr "är reserverat"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:111
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:138
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
 msgid "is set"
 msgstr "satt"
 
@@ -18670,15 +18670,15 @@ msgstr "läs in %s fler"
 msgid "m"
 msgstr "m"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:108
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:109
 msgid "match all modules"
 msgstr "matcha alla moduler"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:108
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:109
 msgid "match no modules"
 msgstr "matcha inga moduler"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:108
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:109
 msgid "match one module"
 msgstr "matcha en modul"
 
@@ -18704,8 +18704,8 @@ msgstr "kanske:"
 msgid "merged"
 msgstr "sammanfogat"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:89
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:116
 msgid "merged into"
 msgstr "sammanfogat med"
 
@@ -18837,13 +18837,13 @@ msgstr "inga"
 msgid "not reached"
 msgstr "inte uppnått"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:111
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:138
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
 msgid "not set"
 msgstr "ej satt"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:540
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:542
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:634
 msgid "not set (not defined)"
 msgstr "inte angivet (ej definierad)"
@@ -18930,8 +18930,8 @@ msgstr "uppnådd"
 msgid "read by the customer"
 msgstr "Läst av kunden"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:90
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:117
 msgid "received merge"
 msgstr "mottagen sammanslagning"
 
@@ -19090,13 +19090,13 @@ msgid "spaces are not allowed"
 msgstr "mellanslag är inte tillåtna"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:384
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:544
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:546
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:638
 msgid "specific organization"
 msgstr "specifik organisation"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:376
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:538
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:540
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:633
 msgid "specific user"
 msgstr "specifik användare"
@@ -19216,8 +19216,8 @@ msgstr "avaktivera skrivskyddad"
 msgid "untouched"
 msgstr "oberörd"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:86
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:113
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:4
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36

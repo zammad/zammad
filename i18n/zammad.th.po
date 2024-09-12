@@ -1075,9 +1075,9 @@ msgstr "บัญชี"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:718
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:116
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:80
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:82
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:109
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:107
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:109
 #: app/assets/javascripts/app/models/core_workflow.coffee:11
 #: app/assets/javascripts/app/models/trigger.coffee:7
 #: app/assets/javascripts/app/views/api.jst.eco:62
@@ -2654,8 +2654,8 @@ msgid "CW"
 msgstr "ย่อมาจาก \"สัปดาห์ปฏิทิน\""
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:3
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:117
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:144
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:119
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:146
 #: app/assets/javascripts/app/controllers/calendar.coffee:3
 #: app/assets/javascripts/app/models/sla.coffee:8
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:3
@@ -6551,17 +6551,17 @@ msgstr "ดำเนินการงานที่วางแผนไว้
 msgid "Execution Time"
 msgstr "เวลาดำเนินการ"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:283
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:285
 msgid "Existing members"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:255
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:257
 #, fuzzy
 #| msgid "New Ticket"
 msgid "Existing tickets"
 msgstr "Ticket ใหม่"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:260
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:262
 #, fuzzy
 #| msgid "%s tickets found"
 msgid "Existing tickets (open)"
@@ -7316,23 +7316,23 @@ msgstr "การทักทาย"
 msgid "Group"
 msgstr "กลุ่ม"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:141
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:142
 msgid "Group (change)"
 msgstr "กลุ่ม (เปลี่ยน)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:132
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:133
 msgid "Group (create)"
 msgstr "กลุ่ม (สร้าง)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:159
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:160
 msgid "Group (full)"
 msgstr "กลุ่ม (เต็ม)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:150
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:151
 msgid "Group (overview)"
 msgstr "กลุ่ม (ภาพรวม)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:123
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:124
 msgid "Group (read)"
 msgstr "กลุ่ม (อ่าน)"
 
@@ -8689,25 +8689,25 @@ msgstr "มีการเปลี่ยนแปลง"
 msgid "Last closing time"
 msgstr "เวลาปิด"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:230
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:232
 #: app/assets/javascripts/app/models/ticket.coffee:21
 #: app/graphql/gql/types/overview_type.rb:74
 msgid "Last contact"
 msgstr "ผู้ติดต่อล่าสุด"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:234
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:236
 #: app/assets/javascripts/app/models/ticket.coffee:22
 #: app/graphql/gql/types/overview_type.rb:75
 msgid "Last contact (agent)"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:238
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:240
 #: app/assets/javascripts/app/models/ticket.coffee:23
 #: app/graphql/gql/types/overview_type.rb:76
 msgid "Last contact (customer)"
 msgstr "ติดต่อล่าสุด (ลูกค้า)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:222
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:224
 #, fuzzy
 #| msgid "Login"
 msgid "Last login"
@@ -9405,7 +9405,7 @@ msgstr "มือถือ"
 msgid "Mode"
 msgstr "โหมดการบำรุงรักษา"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:103
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:104
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:66
 msgid "Module"
 msgstr "มอดูล"
@@ -10020,7 +10020,7 @@ msgstr ""
 msgid "No file formats allowed."
 msgstr "ไม่อนุญาตให้ใช้รูปแบบไฟล์"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:647
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:649
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:803
 msgid "No filter was configured."
 msgstr "No filter was configured."
@@ -10720,8 +10720,8 @@ msgstr "ไม่อยู่ที่ทำงาน"
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
 msgstr "จาก tickets ที่เปิดอยู่ทั้งหมด (ทั่วทั้งบริษัท) คุณได้รับมอบหมายกี่ใบ?"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:163
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:190
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:165
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:192
 msgid "Out of office replacement"
 msgstr "ลางาน รับหน้าที่แทน"
 
@@ -10994,7 +10994,7 @@ msgstr "ลบศูนย์การเรียนรู้อย่างถ
 msgid "Permission level for looking up tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:168
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:169
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:96
 #: app/assets/javascripts/app/models/role.coffee:7
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:5
@@ -12079,8 +12079,8 @@ msgstr ""
 msgid "Rocket Chat Notifications"
 msgstr "ปิดกั้นการแจ้งเตือน"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:114
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:214
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:115
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:216
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:81
 #: app/assets/javascripts/app/views/knowledge_base/permissions_dialog.jst.eco:3
@@ -13649,9 +13649,9 @@ msgstr "หัวเรื่อง"
 msgid "Submit"
 msgstr "ส่ง"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:176
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:204
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:204
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:178
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:205
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:206
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:4
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:54
 msgid "Subscribe"
@@ -16230,8 +16230,8 @@ msgstr "จนถึง"
 msgid "Time"
 msgstr "เวลา"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:105
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:132
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:107
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:134
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:12
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:3
 #: db/seeds/permissions.rb:54 db/seeds/settings.rb:3904
@@ -16994,7 +16994,7 @@ msgstr "อัปเดตแล้ว"
 msgid "Updated At"
 msgstr "อัพเดทที่"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:242
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:244
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:8
 #: app/assets/javascripts/app/models/organization.coffee:11
 #: app/assets/javascripts/app/models/ticket.coffee:30
@@ -17739,7 +17739,7 @@ msgid ""
 "reason gets printed to the javascript console."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:672
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:674
 msgid "Where"
 msgstr "ที่ไหน"
 
@@ -18562,8 +18562,8 @@ msgstr ""
 msgid "contains one not"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:85
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:112
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:4
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36
@@ -18577,13 +18577,13 @@ msgid "created %s"
 msgstr "สร้าง %s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:375
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:537
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:539
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:632
 msgid "current user"
 msgstr "ผู้ใช้ปัจจุบัน"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:383
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:543
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:545
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:637
 msgid "current user organization"
 msgstr "องค์กร ผู้ใช้ปัจจุบัน"
@@ -18856,15 +18856,15 @@ msgstr ""
 msgid "has changed"
 msgstr "มีการเปลี่ยนแปลง"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:155
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:182
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:184
 #, fuzzy
 #| msgid "reached"
 msgid "has reached"
 msgstr "ถึง"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:157
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:184
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:159
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:186
 #, fuzzy
 #| msgid "has changed"
 msgid "has reached warning"
@@ -19014,8 +19014,8 @@ msgstr "รายการนี้อยู่แล้ว!."
 msgid "is any of"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:122
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:149
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:124
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:151
 msgid "is in working time"
 msgstr "อยู่ในเวลาทำงาน"
 
@@ -19054,8 +19054,8 @@ msgstr ""
 msgid "is not a number"
 msgstr "ต่ำสุด. ขนาดของตัวเลข"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:122
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:149
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:124
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:151
 msgid "is not in working time"
 msgstr "ไม่ได้อยู่ในเวลาทำงาน"
 
@@ -19079,9 +19079,9 @@ msgstr "%s จำเป็น"
 msgid "is reserved"
 msgstr "%s จำเป็น"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:111
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:138
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
 msgid "is set"
 msgstr "ถูกตั้งค่า"
 
@@ -19130,15 +19130,15 @@ msgstr "แสดงเพิ่ม"
 msgid "m"
 msgstr "ม."
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:108
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:109
 msgid "match all modules"
 msgstr "จับคู่โมดูลทั้งหมด"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:108
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:109
 msgid "match no modules"
 msgstr "ไม่ตรงกับโมดูล"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:108
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:109
 msgid "match one module"
 msgstr "จับคู่หนึ่งโมดูล"
 
@@ -19166,8 +19166,8 @@ msgstr "อาจจะ:"
 msgid "merged"
 msgstr "ผสาน"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:89
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:116
 #, fuzzy
 #| msgid "merged"
 msgid "merged into"
@@ -19306,13 +19306,13 @@ msgstr "ไม่มี"
 msgid "not reached"
 msgstr "ไม่ถึง"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:111
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:138
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
 msgid "not set"
 msgstr "ยังไม่ได้ตั้งค่า"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:540
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:542
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:634
 msgid "not set (not defined)"
 msgstr "ไม่ได้ตั้ง (ไม่ได้กำหนดไว้ )"
@@ -19401,8 +19401,8 @@ msgstr "ถึง"
 msgid "read by the customer"
 msgstr "สร้างลูกค้าใหม่"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:90
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:117
 msgid "received merge"
 msgstr ""
 
@@ -19573,13 +19573,13 @@ msgid "spaces are not allowed"
 msgstr "ไม่ได้เปิดใช้งานคุณสมบัติ!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:384
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:544
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:546
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:638
 msgid "specific organization"
 msgstr "เฉพาะองค์กร"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:376
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:538
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:540
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:633
 msgid "specific user"
 msgstr "ผู้ใช้เฉพาะ"
@@ -19701,8 +19701,8 @@ msgstr "ยกเลิกการตั้งค่าแบบอ่านอ
 msgid "untouched"
 msgstr "ไม่ถูกแตะต้อง"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:86
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:113
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:4
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36

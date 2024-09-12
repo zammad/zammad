@@ -1058,9 +1058,9 @@ msgstr "Računi"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:718
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:116
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:80
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:82
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:109
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:107
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:109
 #: app/assets/javascripts/app/models/core_workflow.coffee:11
 #: app/assets/javascripts/app/models/trigger.coffee:7
 #: app/assets/javascripts/app/views/api.jst.eco:62
@@ -2600,8 +2600,8 @@ msgid "CW"
 msgstr "KT"
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:3
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:117
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:144
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:119
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:146
 #: app/assets/javascripts/app/controllers/calendar.coffee:3
 #: app/assets/javascripts/app/models/sla.coffee:8
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:3
@@ -6516,15 +6516,15 @@ msgstr "Izvrši planirane zadatke."
 msgid "Execution Time"
 msgstr "Vrijeme izvođenja"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:283
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:285
 msgid "Existing members"
 msgstr "Postojeći članovi"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:255
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:257
 msgid "Existing tickets"
 msgstr "Postojeći ticketi"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:260
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:262
 msgid "Existing tickets (open)"
 msgstr "Postojećih ticketa (otvoreni)"
 
@@ -7229,23 +7229,23 @@ msgstr "Pozdrav"
 msgid "Group"
 msgstr "Grupa"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:141
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:142
 msgid "Group (change)"
 msgstr "Grupa (promjena)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:132
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:133
 msgid "Group (create)"
 msgstr "Grupa (kreiraj)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:159
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:160
 msgid "Group (full)"
 msgstr "Grupa (sve dozvole)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:150
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:151
 msgid "Group (overview)"
 msgstr "Grupa (pregled)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:123
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:124
 msgid "Group (read)"
 msgstr "Grupa (čitanje)"
 
@@ -8601,25 +8601,25 @@ msgstr "Zadnja promjena"
 msgid "Last closing time"
 msgstr "Zadnje vrijeme zatvaranja"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:230
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:232
 #: app/assets/javascripts/app/models/ticket.coffee:21
 #: app/graphql/gql/types/overview_type.rb:74
 msgid "Last contact"
 msgstr "Zadnji kontakt"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:234
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:236
 #: app/assets/javascripts/app/models/ticket.coffee:22
 #: app/graphql/gql/types/overview_type.rb:75
 msgid "Last contact (agent)"
 msgstr "Zadnji kontakt (agent)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:238
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:240
 #: app/assets/javascripts/app/models/ticket.coffee:23
 #: app/graphql/gql/types/overview_type.rb:76
 msgid "Last contact (customer)"
 msgstr "Zadnji kontakt (klijent)"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:222
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:224
 msgid "Last login"
 msgstr "Zadnja prijava"
 
@@ -9294,7 +9294,7 @@ msgstr "Mobilni"
 msgid "Mode"
 msgstr "Način rada"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:103
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:104
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:66
 msgid "Module"
 msgstr "Modul"
@@ -9917,7 +9917,7 @@ msgstr "Nije odabrana nijedna datoteka."
 msgid "No file formats allowed."
 msgstr "Nema dozvoljenih formata datoteka."
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:647
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:649
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:803
 msgid "No filter was configured."
 msgstr "Nema konfiguriranih filtera."
@@ -10592,8 +10592,8 @@ msgid "Out of all open tickets (company-wide), how many are assigned to you?"
 msgstr ""
 "Od svih otvorenih ticketa (u cijeloj tvrtki), koliko ih je dodijeljeno Vama?"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:163
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:190
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:165
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:192
 msgid "Out of office replacement"
 msgstr "Zamjena u odsutnosti"
 
@@ -10854,7 +10854,7 @@ msgstr "Trajno brisanje Knowledge Base-a"
 msgid "Permission level for looking up tickets"
 msgstr "Razina ovlasti za pretraživanje ticketa"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:168
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:169
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:96
 #: app/assets/javascripts/app/models/role.coffee:7
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:5
@@ -11859,8 +11859,8 @@ msgstr "Retweetovi će biti pretvoreni u tickete."
 msgid "Rocket Chat Notifications"
 msgstr "Rocket Chat obavijesti"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:114
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:214
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:115
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:216
 #: app/assets/javascripts/app/controllers/role.coffee:3
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:81
 #: app/assets/javascripts/app/views/knowledge_base/permissions_dialog.jst.eco:3
@@ -13367,9 +13367,9 @@ msgstr "Predmet"
 msgid "Submit"
 msgstr "Pošalji"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:176
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:204
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:204
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:178
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:205
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:206
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:4
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:54
 msgid "Subscribe"
@@ -15807,8 +15807,8 @@ msgstr "Do"
 msgid "Time"
 msgstr "Vrijeme"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:105
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:132
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:107
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:134
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:12
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:3
 #: db/seeds/permissions.rb:54 db/seeds/settings.rb:3904
@@ -16536,7 +16536,7 @@ msgstr "Ažurirano"
 msgid "Updated At"
 msgstr "Ažurirano u"
 
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:242
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:244
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:8
 #: app/assets/javascripts/app/models/organization.coffee:11
 #: app/assets/javascripts/app/models/ticket.coffee:30
@@ -17295,7 +17295,7 @@ msgstr ""
 "Kada uključite ispravljanje pogrešaka postavljanjem opcije §debug§ na "
 "§true§, razlog se ispisuje u javascript konzolu."
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:672
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:674
 msgid "Where"
 msgstr "Gdje"
 
@@ -18137,8 +18137,8 @@ msgstr "sadrži jedan"
 msgid "contains one not"
 msgstr "ne sadrži jedan"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:85
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:112
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:4
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36
@@ -18152,13 +18152,13 @@ msgid "created %s"
 msgstr "kreirao %s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:375
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:537
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:539
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:632
 msgid "current user"
 msgstr "trenutni korisnik"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:383
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:543
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:545
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:637
 msgid "current user organization"
 msgstr "Organizacija trenutnog korisnika"
@@ -18415,13 +18415,13 @@ msgstr "je već zauzeto"
 msgid "has changed"
 msgstr "je promijenjeno"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:155
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:182
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:157
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:184
 msgid "has reached"
 msgstr "je dosegao"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:157
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:184
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:159
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:186
 msgid "has reached warning"
 msgstr "upozorenje dostignuto"
 
@@ -18565,8 +18565,8 @@ msgstr "se već koristi"
 msgid "is any of"
 msgstr "je bilo koji od"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:122
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:149
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:124
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:151
 msgid "is in working time"
 msgstr "je unutar radnog vremena"
 
@@ -18601,8 +18601,8 @@ msgstr "nije boja. Podržane su samo Hex, RGB i HSL boje."
 msgid "is not a number"
 msgstr "nije broj"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:122
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:149
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:124
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:151
 msgid "is not in working time"
 msgstr "je izvan radnog vremena"
 
@@ -18620,9 +18620,9 @@ msgstr "je obavezan, ali nedostaje"
 msgid "is reserved"
 msgstr "je rezervirano"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:111
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:138
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
 msgid "is set"
 msgstr "je postavljeno"
 
@@ -18669,15 +18669,15 @@ msgstr "učitaj još %s"
 msgid "m"
 msgstr "m"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:108
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:109
 msgid "match all modules"
 msgstr "podudaranje svih modula"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:108
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:109
 msgid "match no modules"
 msgstr "ne podudara se sa nijednim modulom"
 
-#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:108
+#: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:109
 msgid "match one module"
 msgstr "odgovara modulu"
 
@@ -18703,8 +18703,8 @@ msgstr "možda:"
 msgid "merged"
 msgstr "objedinjeno"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:87
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:114
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:89
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:116
 msgid "merged into"
 msgstr "spojeno u"
 
@@ -18835,13 +18835,13 @@ msgstr "nema"
 msgid "not reached"
 msgstr "nije dostignuto"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:111
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:138
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
 msgid "not set"
 msgstr "nije postavljeno"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:540
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:542
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:634
 msgid "not set (not defined)"
 msgstr "nije postavljeno"
@@ -18928,8 +18928,8 @@ msgstr "dostignuto"
 msgid "read by the customer"
 msgstr "pročitano od klijenta"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:90
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:117
 msgid "received merge"
 msgstr "spajano u"
 
@@ -19086,13 +19086,13 @@ msgid "spaces are not allowed"
 msgstr "razmaci nisu dopušteni"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:384
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:544
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:546
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:638
 msgid "specific organization"
 msgstr "određena organizacija"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:376
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:538
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:540
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:633
 msgid "specific user"
 msgstr "određeni korisnik"
@@ -19212,8 +19212,8 @@ msgstr "isključi samo za pregled"
 msgid "untouched"
 msgstr "nije promijenjeno"
 
-#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:86
-#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:113
+#: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:88
+#: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:115
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:4
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36
