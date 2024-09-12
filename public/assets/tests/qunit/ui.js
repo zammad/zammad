@@ -31,7 +31,9 @@ QUnit.test("date picker", assert => {
 
 // pretty date
 QUnit.test("check pretty date", assert => {
-  var current = new Date()
+  var current = new Date('1995-12-17T03:24:00')
+  clock = sinon.useFakeTimers({now: current})
+
   // use date formatting as functions to make it more flexible
   prettyDateRelative(current, '', true, 'relative');
   prettyDateAbsolute(current, '', true, 'absolute');
@@ -108,7 +110,8 @@ QUnit.test("check pretty date", assert => {
     assert.equal(result, mm+'/'+dd+'/'+yyyy, '30 days')
 
     // future
-    current = new Date()
+    current = new Date('1995-12-17T03:24:00')
+
     result = App.PrettyDate.humanTime(current, escalation, long, type);
     assert.equal(result, 'just now', 'just now')
 
@@ -200,7 +203,7 @@ QUnit.test("check pretty date", assert => {
     assert.equal(result, getAbsolute(new Date(current - (60000 * 60 * 24 * 2.5) - (60000 * 5)), diff), '2.5 days')
 
     // future
-    current = new Date()
+    current = new Date('1995-12-17T03:24:00')
     result = App.PrettyDate.humanTime(current, escalation, long, type);
     assert.equal(result, 'just now', 'just now') // no change, because < 1 min = just now
 
@@ -291,7 +294,7 @@ QUnit.test("check pretty date", assert => {
     assert.equal(result, getTimestamp(new Date(current - (60000 * 60 * 24 * 2.5) - (60000 * 5))), '2.5 days')
 
     // future
-    current = new Date()
+    current = new Date('1995-12-17T03:24:00')
     result = App.PrettyDate.humanTime(current, escalation, long, type);
     assert.equal(result, 'just now', 'just now') // no change, because < 1 min = just now
 
