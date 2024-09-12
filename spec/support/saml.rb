@@ -67,6 +67,8 @@ module ZammadSpecSupportSAML
 
       click_on 'Sign In'
     end
+
+    expect(page).to have_no_text('Sign In')
   end
 
 end
