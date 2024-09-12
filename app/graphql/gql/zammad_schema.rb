@@ -103,7 +103,7 @@ class Gql::ZammadSchema < GraphQL::Schema
     extensions = {
       type: err.class.name,
     }
-    if Rails.env.development? || Rails.env.test?
+    if Rails.env.local?
       extensions[:backtrace] = Rails.backtrace_cleaner.clean(err.backtrace)
     end
 

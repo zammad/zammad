@@ -5,8 +5,8 @@ module HasGroupRelationDefinition
 
   included do
 
-    self.table_name   = "groups_#{group_relation_model_identifier}s"
-    self.primary_keys = ref_key, :group_id, :access
+    self.table_name  = "groups_#{group_relation_model_identifier}s"
+    self.primary_key = ref_key, :group_id, :access
 
     belongs_to group_relation_model_identifier, optional: true
     belongs_to :group, optional: true

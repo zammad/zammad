@@ -22,7 +22,9 @@ class KnowledgeBase
     end
 
     def update_using_params!(params)
-      roles_to_permissions = params[:permissions].transform_keys { |key| Role.find key }
+      roles_to_permissions = params[:permissions]
+        .to_hash
+        .transform_keys { |key| Role.find key }
 
       update!(**roles_to_permissions)
     end

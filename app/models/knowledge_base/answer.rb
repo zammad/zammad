@@ -33,8 +33,14 @@ class KnowledgeBase::Answer < ApplicationModel
 
   acts_as_list scope: :category, top_of_list: 0
 
-  # provide consistent naming with KB category
-  alias_attribute :parent, :category
+  # Provide consistent naming with KB category
+  #
+  # Originally this used alias_attribute. But alias_attribute for relations for deprecated in Rails 7.1 and removed in 7.2
+  # However, alias_association was not merged in time for 7.2... So here is a workaround that will hopefully get removed in 7.3!
+  #
+  # Related PR: https://github.com/rails/rails/pull/49801
+  alias parent category
+  alias parent= category=
 
   alias assets_essential assets
 

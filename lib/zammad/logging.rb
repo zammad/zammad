@@ -7,7 +7,7 @@ module Zammad
       console.formatter = Rails.logger.formatter
       console.level = Rails.logger.level
 
-      Rails.logger.extend(ActiveSupport::Logger.broadcast(console))
+      Rails.logger.broadcast_to(console)
     end
   end
 end

@@ -20,7 +20,7 @@ end
 module Zammad
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 7.1
 
     Rails.autoloaders.each do |autoloader|
       autoloader.ignore            "#{config.root}/app/frontend"
@@ -43,11 +43,11 @@ module Zammad
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.add_autoload_paths_to_load_path = false
-    config.autoload_paths += %W[#{config.root}/lib]
+    config.autoload_lib(ignore: %w[tasks templates])
 
     # zeitwerk:check will only check preloaded paths. To make sure that also lib/ gets validated,
     #   add it to the eager_load_paths only if zeitwerk:check is running.
-    config.eager_load_paths += %W[#{config.root}/lib] if ArgvHelper.argv[0].eql? 'zeitwerk:check'
+    Rails.autoloaders.main.do_not_eager_load(config.root.join('lib')) if ArgvHelper.argv[0] != 'zeitwerk:check'
 
     config.active_job.queue_adapter = :delayed_job
 

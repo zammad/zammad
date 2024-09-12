@@ -40,13 +40,11 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   def search_index_attribute_lookup(include_references: true)
     attrs = super
 
-    attrs.merge({
-                  title:      ActionController::Base.helpers.strip_tags(attrs['title']),
-                  content:    content&.search_index_attribute_lookup,
-                  scope_id:   answer.category_id,
-                  attachment: answer.attachments_for_search_index_attribute_lookup,
-                  tags:       answer.tag_list
-                })
+    attrs.merge('title'      => ActionController::Base.helpers.strip_tags(attrs['title']),
+                'content'    => content&.search_index_attribute_lookup,
+                'scope_id'   => answer.category_id,
+                'attachment' => answer.attachments_for_search_index_attribute_lookup,
+                'tags'       => answer.tag_list)
   end
 
   def inline_linked_objects

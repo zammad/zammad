@@ -22,7 +22,7 @@
         bundle exec rake zammad:ci:test:prepare[with_elasticsearch] zammad:setup:auto_wizard[contrib/auto_wizard_browser_test.json] zammad:ci:app:start
         echo -e "\\e[0Ksection_end:`date +%s`:zammad_ci_test_prepare\\r\\e[0K"
       fi
-      bundle exec rails test --fail-fast test/browser --profile
+      bundle exec rails test --fail-fast test/browser
 
 .template_browser-core_chrome:
   extends:

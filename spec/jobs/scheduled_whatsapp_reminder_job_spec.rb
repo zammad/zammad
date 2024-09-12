@@ -14,7 +14,7 @@ RSpec.describe ScheduledWhatsappReminderJob, type: :job do
         .to have_attributes(
           arguments:    [ticket, locale],
           lock_key:     "ScheduledWhatsappReminderJob/#{ticket.id}",
-          scheduled_at: reminder_time.to_f,
+          scheduled_at: reminder_time,
         )
     end
   end

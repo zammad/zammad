@@ -1,9 +1,6 @@
 .template_unit:
   extends:
     - .job_rules_default
-  variables:
-    # Teach minitest to output information about the slowest tests
-    TESTOPTS: '--profile'
   script:
     - !reference [.scripts, zammad_db_init]
     - bundle exec rake test:units

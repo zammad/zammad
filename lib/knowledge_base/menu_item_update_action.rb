@@ -33,7 +33,9 @@ class KnowledgeBase
       return if params.blank?
 
       params
-        .map { |location_params| update_location_using_params! knowledge_base, location_params }.sum(&:reload)
+        .map { |location_params| update_location_using_params! knowledge_base, location_params }
+        .tap { |arr| arr.each(&:reload) }
+        .flatten
     end
 
     # Mass-update KB menu items in a given location

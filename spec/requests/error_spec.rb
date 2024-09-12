@@ -6,7 +6,7 @@ RSpec.describe 'Error handling', type: :request do
 
   shared_examples 'JSON response format' do
 
-    let(:as) { :json }
+    let(:expected_type) { 'application/json' }
 
     it { expect(response).to have_http_status(http_status) }
     it { expect(json_response).to be_a(Hash) }
@@ -25,7 +25,7 @@ RSpec.describe 'Error handling', type: :request do
   end
 
   shared_examples 'HTML response format' do
-    let(:as) { :html }
+    let(:expected_type) { 'text/html' }
 
     it { expect(response).to have_http_status(http_status) }
     it { expect(response.content_type).to start_with('text/html') }
@@ -38,7 +38,7 @@ RSpec.describe 'Error handling', type: :request do
   context 'URL route does not exist' do
 
     before do
-      get url, as: as
+      get url, headers: { 'Accept' => expected_type }
     end
 
     let(:url)         { '/not_existing_url' }
@@ -69,7 +69,7 @@ RSpec.describe 'Error handling', type: :request do
     before do
       stub_const('Auth::BRUTE_FORCE_SLEEP', 0)
       authenticated_as(create(:agent), password: 'wrongpw')
-      get '/api/v1/organizations', as: as
+      get '/api/v1/organizations', headers: { 'Accept' => expected_type }
     end
 
     let(:message)     { 'Invalid BasicAuth credentials' }
@@ -90,7 +90,7 @@ RSpec.describe 'Error handling', type: :request do
   context 'request is forbidden' do
 
     before do
-      get '/api/v1/organizations', as: as
+      get '/api/v1/organizations', headers: { 'Accept' => expected_type }
     end
 
     let(:message) { 'Authentication required' }
@@ -113,7 +113,7 @@ RSpec.describe 'Error handling', type: :request do
 
     before do
       authenticated_as(create(user))
-      get '/tests/raised_exception', params: { origin: origin, exception: exception.name, message: message }, as: as
+      get '/tests/raised_exception', params: { origin: origin, exception: exception.name, message: message }, headers: { 'Accept' => expected_type }
     end
 
     shared_examples 'exception check' do |message, exception, http_status, title, headline|

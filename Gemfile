@@ -4,13 +4,12 @@ source 'https://rubygems.org'
 
 # core - base
 ruby '3.2.4'
-gem 'rails', '~> 7.0.8'
+gem 'rails', '~> 7.1.4'
 
 # core - rails additions
 gem 'activerecord-import'
 gem 'activerecord-session_store'
 gem 'bootsnap', require: false
-gem 'composite_primary_keys'
 gem 'json'
 gem 'parallel'
 
@@ -207,7 +206,6 @@ gem 'listen'
 group :development, :test do
 
   # test frameworks
-  gem 'minitest-profile', require: false
   gem 'rails-controller-testing'
   gem 'rspec-rails'
   gem 'rspec-retry'
