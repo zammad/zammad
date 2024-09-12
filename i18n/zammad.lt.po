@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-06 22:16+0000\n"
+"PO-Revision-Date: 2024-09-12 05:38+0000\n"
 "Last-Translator: Mantas Masalskis <mantas@idev.lt>\n"
 "Language-Team: Lithuanian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/lt/>\n"
@@ -1651,7 +1651,7 @@ msgstr "Įvyko netikėta klaida."
 
 #: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb:26
 msgid "An unexpected error occurred during system setup."
-msgstr "Sistemos sąrankos metu įvyko netikėta klaida."
+msgstr "Sistemos konfigūravimo metu įvyko netikėta klaida."
 
 #: lib/calendar_subscriptions.rb:50
 msgid "An unknown method name was requested."
@@ -2233,7 +2233,7 @@ msgstr "Automatinis vedlys išjungtas"
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue:8
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue:84
 msgid "Automated Setup"
-msgstr "Automatizuota sąranka"
+msgstr "Automatizuotas konfigūravimas"
 
 #: db/seeds/settings.rb:1248
 msgid "Automatic account link on initial logon"
@@ -6666,7 +6666,7 @@ msgstr "Baigti"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:118
 msgid "Finish Setup"
-msgstr "Baigti sąranką"
+msgstr "Baigti konfigūravimą"
 
 #: lib/excel_sheet/ticket.rb:62
 msgid "First Response At"
@@ -8729,7 +8729,8 @@ msgstr "Kraunama…"
 
 #: lib/email_helper.rb:26
 msgid "Local MTA (Sendmail/Postfix/Exim/…) - use server setup"
-msgstr "Vietinis MTA (Sendmail/Postfix/Exim/...) - naudokite serverio sąranką"
+msgstr ""
+"Vietinis MTA (Sendmail/Postfix/Exim/...) - naudokite serverio konfigūraciją"
 
 #: app/assets/javascripts/app/models/job.coffee:13
 #: app/assets/javascripts/app/models/trigger.coffee:12 db/seeds/settings.rb:163
@@ -11039,7 +11040,7 @@ msgstr "Paruoštas Webhook skirtas %s."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:34
 msgid "Press the button below to finish the setup."
-msgstr "Paspauskite žemiau esantį mygtuką, kad baigtumėte sąranką."
+msgstr "Paspauskite žemiau esantį mygtuką, kad baigtumėte konfigūravimą."
 
 #: db/seeds/settings.rb:204
 msgid "Pretty Date"
@@ -11590,7 +11591,7 @@ msgstr "Reikalauja dviejų veiksnių autentifikacijos nurodytoms rolėms."
 #: app/assets/javascripts/app/views/signup/verify.jst.eco:11
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:157
 msgid "Resend verification email"
-msgstr "Persiųsti patvirtinimo laišką"
+msgstr "Persiųsti patikrinimo laišką"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:97
 #: app/assets/javascripts/app/views/monitoring.jst.eco:13
@@ -12267,7 +12268,7 @@ msgstr "Nepavyko sukonfigūruoti saugumo rakto."
 #: app/assets/javascripts/app/controllers/widget/two_factor_login/method/security_keys.coffee:48
 #: app/frontend/shared/entities/two-factor/plugins/security_keys.ts:40
 msgid "Security key verification failed."
-msgstr "Nepavyko patvirtinti saugumo rakto."
+msgstr "Nepavyko patikrinti saugumo rakto."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/security_keys/index.jst.eco:1
 msgid ""
@@ -12644,7 +12645,7 @@ msgstr "Nustatymai %s"
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:79
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualFinish.vue:15
 msgid "Setup Finished"
-msgstr "Sąranka baigta"
+msgstr "Konfigūravimas baigtas"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:66
 msgid "Shared"
@@ -13349,7 +13350,7 @@ msgstr "Sistemos informacija"
 
 #: db/seeds/settings.rb:17
 msgid "System Init Done"
-msgstr "Sistemos sąranka baigta"
+msgstr "Sistemos konfigūraivmas baigtas"
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:22
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:55
@@ -13701,7 +13702,7 @@ msgstr "Šio Zammad serverio adresas."
 
 #: lib/whatsapp/webhook/configuration.rb:25
 msgid "The WhatsApp channel webhook configuration could not be verified."
-msgstr "Nepavyko patvirtinti WhatsApp kanalo webhook konfigūracijos."
+msgstr "Nepavyko patikrinti WhatsApp kanalo webhook konfigūracijos."
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:156
 msgid "The WhatsApp connection could not be saved."
@@ -13808,7 +13809,7 @@ msgstr "Nepavyko rasti šio privataus rakto sertifikato."
 
 #: lib/secure_mailing/smime/incoming.rb:69
 msgid "The certificate for verification could not be found."
-msgstr "Nepavyko rasti sertifikato patvirtinimui."
+msgstr "Nepavyko rasti sertifikato patikrinimui."
 
 #: app/models/setting/validation/saml/security.rb:64
 msgid "The certificate is not usable (e.g. expired)."
@@ -13851,6 +13852,9 @@ msgid ""
 "hackers to steal your credentials. If you are sure that you are using a self-"
 "signed certificate, you can press \"Proceed\". Otherwise, please \"Cancel\"."
 msgstr ""
+"Nepavyko patikrinti „%s“ domeno sertifikato. Tai gali leisti hakeriams "
+"pavogti jūsų prisijungimus. Jei esate tikras, kad naudojate savadarbį "
+"sertifikatą, spauskite „Tęsti“. Kitu atveju spauskite „Atšaukti“."
 
 #: lib/secure_mailing/smime/security_options.rb:68
 msgid "The certificates for %s were found."
@@ -14504,10 +14508,8 @@ msgid "The selected date is invalid."
 msgstr "Pasirinkta data yra netinkama."
 
 #: app/services/service/system/import/apply_configuration_base.rb:38
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The server presented a certificate that could not be verified."
-msgstr "%s% iš naujo atidarytas"
+msgstr "Serveris pateikė sertifikatą kurio nepavyko patikrinti."
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:585
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:201
@@ -14563,7 +14565,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:280
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:85
 msgid "The signature was successfully verified."
-msgstr ""
+msgstr "Parašas buvo sėkmingai patikrintas."
 
 #: app/controllers/tickets_controller.rb:387
 #, fuzzy
@@ -14618,7 +14620,7 @@ msgstr "Nepavyko sugeneruoti žetono."
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:83
 msgid "The token could not be verified. Please contact your administrator."
-msgstr "Nepavyko patvirtinti žetono. Susisiekite su administratoriumi."
+msgstr "Nepavyko patikrinti žetono. Susisiekite su administratoriumi."
 
 #: app/assets/javascripts/app/views/login.jst.eco:61
 #: app/frontend/apps/desktop/pages/authentication/composables/useAdminPasswordAuthVerify.ts:62
@@ -14673,22 +14675,20 @@ msgid "The username or password is incorrect."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:97
-#, fuzzy
-#| msgid "%s% have been reopened"
 msgid "The verification email could not be resent."
-msgstr "%s% iš naujo atidarytas"
+msgstr "Nepavyko persiųsti patikrinimo laiško."
 
 #: app/models/setting/validation/saml/tls.rb:37
 msgid ""
 "The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
-msgstr ""
+msgstr "Nepavyko patikrinti TLS ryšio. Patikrinkiter SAML IDP sertifikatą."
 
 #: app/models/setting/validation/saml/tls.rb:39
 msgid ""
 "The verification of the TLS connection is not possible. Please check the "
 "SAML IDP connection."
-msgstr ""
+msgstr "Neįmanoma patikrinti TLS ryšio. Patikrinkite SAML IDP ryšį."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee:29
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:11
@@ -16149,7 +16149,7 @@ msgstr ""
 msgid ""
 "Turning off SSL verification is a security risk and should be used only "
 "temporary. Use this option at your own risk!"
-msgstr ""
+msgstr "Išjungti SSL nesaugu. Tai turėtų būti naudojama nebent laikinai!"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco:5
 msgid "Tweets containing search terms are automatically turned into tickets."
@@ -16912,20 +16912,20 @@ msgstr "Tiekėjas"
 
 #: lib/email_helper/verify.rb:54
 msgid "Verification Email not found in mailbox."
-msgstr ""
+msgstr "Nepavyko paštadėžėje rasti patikrinimo laiško."
 
 #: app/assets/javascripts/app/controllers/_plugin/user_signup_check.coffee:67
 msgid "Verification email could not be sent."
-msgstr ""
+msgstr "Nepavyko išsiųsti patikrinimo laiško."
 
 #: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco:24
 msgid "Verify Token"
-msgstr "Patvirtinimo žetonas"
+msgstr "Patikrinimo žetonas"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:71
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:59
 msgid "Verify sending and receiving"
-msgstr ""
+msgstr "Siuntimo ir gavimo patikrinimas"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:172
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualEmailNotification.vue:93
@@ -17324,7 +17324,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/email_verify.coffee:35
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:45
 msgid "Woo hoo! Your email address has been verified!"
-msgstr ""
+msgstr "Jūsų el. pašto adresas patvirtintas!"
 
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:116
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:125
@@ -17719,7 +17719,7 @@ msgstr ""
 msgid ""
 "Your account has not been verified. Please click on the link in the "
 "verification email."
-msgstr ""
+msgstr "Jūsų paskyra nėra patvirtinta. Paspauskite nuorodą patikrinimo laiške."
 
 #: app/assets/javascripts/app/views/exchange/app_config.jst.eco:31
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco:23

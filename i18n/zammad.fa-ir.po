@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-09 22:16+0000\n"
+"PO-Revision-Date: 2024-09-12 05:38+0000\n"
 "Last-Translator: Sajjad Jazini <s.jazini@vatanmail.ir>\n"
 "Language-Team: Persian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fa/>\n"
@@ -15413,10 +15413,8 @@ msgid "Unselect Option"
 msgstr "عدم انتخاب اختیار"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:703
-#, fuzzy
-#| msgid "Restore Defaults"
 msgid "Unset default"
-msgstr "بازیابی پیش تعریف"
+msgstr "عدم تنظیم پیش‌فرض"
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:7
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:54
@@ -15919,10 +15917,8 @@ msgid "VIP"
 msgstr "VIP"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:105
-#, fuzzy
-#| msgid "Bulk action failed"
 msgid "Validation failed"
-msgstr "اقدام جمعی موفقیت‌آمیز نبود"
+msgstr "اعتبارسنجی ناموفق بود"
 
 msgid "Validation failed: %{errors}"
 msgstr ""
@@ -15960,10 +15956,8 @@ msgid "Verification email could not be sent."
 msgstr "ایمیل راستی‌آزمایی قابل ارسال نبود."
 
 #: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco:24
-#, fuzzy
-#| msgid "Generate Token"
 msgid "Verify Token"
-msgstr "ایجاد توکن"
+msgstr "تایید توکن"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:71
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:59
@@ -16013,10 +16007,8 @@ msgstr "ویدئو"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:62
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:40
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:10
-#, fuzzy
-#| msgid "Video"
 msgid "Video file"
-msgstr "ویدئو"
+msgstr "پرونده ویدئو"
 
 #: app/assets/javascripts/app/controllers/api.coffee:41
 msgid "View"
@@ -16040,10 +16032,8 @@ msgid "View this in Zammad"
 msgstr "مشاهده در سامانه"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewersDialog.vue:32
-#, fuzzy
-#| msgid "New Ticket"
 msgid "Viewing ticket"
-msgstr "تیکت‌ جدید"
+msgstr "در حال نمایش تیکت‌"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:639
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:6
@@ -16088,17 +16078,13 @@ msgstr "هشدار"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:34
 #: db/seeds/settings.rb:2602
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Warning message"
-msgstr "افزودن تگ"
+msgstr "پیام هشدار"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:33
 #: db/seeds/settings.rb:2585
-#, fuzzy
-#| msgid "Warning"
 msgid "Warning title"
-msgstr "هشدار"
+msgstr "عنوان هشدار"
 
 #: public/assets/chat/views/waiting_list_timeout.eco:2
 msgid ""
@@ -16248,10 +16234,8 @@ msgid "WhatsApp"
 msgstr "واتس‌اپ"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:111
-#, fuzzy
-#| msgid "Add Account"
 msgid "WhatsApp Account"
-msgstr "افزودن حساب کاربری"
+msgstr "حساب کاربری واتس‌اپ"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:10
 msgid "WhatsApp Business Account ID"
@@ -16268,10 +16252,8 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
-#, fuzzy
-#| msgid "Saved conditions"
 msgid "When conditions match"
-msgstr "شرایط ذخیره شده"
+msgstr "وقتی شرایط منطبق شدند"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:29
 msgid "When notification is being sent."
@@ -16343,10 +16325,10 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/models/template.coffee
-#, fuzzy
-#| msgid "With templates you can pre-fill ticket attributes."
 msgid "With templates it is possible to pre-fill tickets quickly and easily."
-msgstr "با استفاده از قالبها میتوانید فیلدهای فرم را بصورت خودکار پر کنید."
+msgstr ""
+"با استفاده از قالب‌ها این امکان هست که تیکت‌ها به سرعت و به آسانی از قبل پر "
+"شوند."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:15
 msgid "With templates you can pre-fill ticket attributes."
@@ -16574,10 +16556,8 @@ msgstr ""
 
 #: app/controllers/import_freshdesk_controller.rb:73
 #: app/services/service/system/import/apply_freshdesk_configuration.rb:32
-#, fuzzy
-#| msgid "At least one user needs to have admin permissions."
 msgid "You do not have administrator permission."
-msgstr "حداقل یک کاربر بایستی دسترسی ادمین داشته باشد."
+msgstr "شما دسترسی مدیر ندارید."
 
 #: app/frontend/shared/router/guards/before/permission.ts:37
 msgid "You don't have the necessary permissions to access this page."
@@ -16595,10 +16575,8 @@ msgid "You have exceeded the character limit by %s"
 msgstr ""
 
 #: app/policies/ticket_policy.rb:65
-#, fuzzy
-#| msgid "You have no tickets to display in this overview."
 msgid "You have insufficient permissions to mention other users."
-msgstr "شما هیچ تیکتی ندارید که در این پنجره نمایش داده شود."
+msgstr "شما برای اشاره به دیگر کاربران کمبود مجوز دارید."
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationDetail.ts:35
 msgid "You have insufficient rights to view this organization."
@@ -16609,10 +16587,8 @@ msgid "You have insufficient rights to view this ticket."
 msgstr ""
 
 #: app/frontend/apps/mobile/entities/user/composables/useUserDetail.ts:32
-#, fuzzy
-#| msgid "You have no tickets to display in this overview."
 msgid "You have insufficient rights to view this user."
-msgstr "شما هیچ تیکتی ندارید که در این پنجره نمایش داده شود."
+msgstr "شما برای مشاهده این کاربر کمبود دسترسی دارید."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_batch.coffee:56
 msgid ""
@@ -16699,10 +16675,8 @@ msgid "Your API key."
 msgstr ""
 
 #: public/assets/form/form.js:37
-#, fuzzy
-#| msgid "Email"
 msgid "Your Email"
-msgstr "ایمیل"
+msgstr "ایمیل شما"
 
 #: app/controllers/first_steps_controller.rb:59
 msgid "Your Email Configuration"
@@ -16718,10 +16692,8 @@ msgid "Your Message…"
 msgstr "پیام شما…"
 
 #: public/assets/form/form.js:28
-#, fuzzy
-#| msgid "Full Name"
 msgid "Your Name"
-msgstr "نام کامل"
+msgstr "نام شما"
 
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:130
 msgid "Your New Personal Access Token"
@@ -16980,10 +16952,8 @@ msgid ""
 "another with the desired value)"
 msgstr ""
 
-#, fuzzy
-#| msgid "Group can't be blank"
 msgid "can't be blank"
-msgstr "گروه نباید خالی باشد"
+msgstr "نمی‌تواند خالی باشد"
 
 msgid "can't be empty"
 msgstr ""
@@ -17094,10 +17064,8 @@ msgid "custom"
 msgstr "سفارشی"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:21
-#, fuzzy
-#| msgid "customer"
 msgid "custom unit"
-msgstr "مشتری"
+msgstr "واحد سفارشی"
 
 #: lib/calendar_subscriptions/tickets.rb:133
 msgid "customer"
@@ -17142,10 +17110,8 @@ msgstr "حذف"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:156
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:35
-#, fuzzy
-#| msgid "Delete Customer"
 msgid "delivered to the customer"
-msgstr "حذف مشتری"
+msgstr "رسیده به مشتری"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:56
 #: app/assets/javascripts/app/models/overview.coffee:39
@@ -17154,10 +17120,8 @@ msgid "descending"
 msgstr "نزولی"
 
 #: db/seeds/settings.rb:1206
-#, fuzzy
-#| msgid "New password"
 msgid "developer password"
-msgstr "رمز عبور جدید"
+msgstr "رمز برنامه‌نویس"
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:13
 msgid "disconnect"
@@ -17182,18 +17146,14 @@ msgid "does not allow past dates"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/cti.coffee:164
-#, fuzzy
-#| msgid "not exist"
 msgid "does not exist"
 msgstr "وجود ندارد"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:60
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:87
-#, fuzzy
-#| msgid "not exist"
 msgid "does not match regex"
-msgstr "وجود ندارد"
+msgstr "با رجکس تطبیق ندارد"
 
 msgid "doesn't match %{attribute}"
 msgstr ""
@@ -17228,20 +17188,16 @@ msgid "edit"
 msgstr "اصلاح"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:39
-#, fuzzy
-#| msgid "edit"
 msgid "edited %s"
-msgstr "اصلاح"
+msgstr "%s ویرایش‌شده"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:42
 msgid "edited %s by %s"
 msgstr ""
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:39
-#, fuzzy
-#| msgid "edit"
 msgid "edited %s by me"
-msgstr "اصلاح"
+msgstr "%s توسط من ویرایش شده"
 
 #: db/seeds/ticket_article_types.rb:3
 msgid "email"
@@ -17357,17 +17313,13 @@ msgstr "تغییر کرده است"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:155
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:182
-#, fuzzy
-#| msgid "reached"
 msgid "has reached"
-msgstr "فرارسیده"
+msgstr "فرا رسیده"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:157
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:184
-#, fuzzy
-#| msgid "has changed"
 msgid "has reached warning"
-msgstr "تغییر کرده است"
+msgstr "هشدار فرا رسیده"
 
 #: app/assets/javascripts/app/views/login.jst.eco:98
 msgid "here"
@@ -17435,20 +17387,16 @@ msgid "in %s months"
 msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts:92
-#, fuzzy
-#| msgid "2 weeks"
 msgid "in %s weeks"
-msgstr "هفته های 2"
+msgstr "در %s هفته"
 
 #: app/frontend/shared/i18n/dates.ts:78
 msgid "in %s years"
 msgstr "در %s سال"
 
 #: app/frontend/shared/i18n/dates.ts:98
-#, fuzzy
-#| msgid "1 day"
 msgid "in 1 day"
-msgstr "روز 1"
+msgstr "در 1 روز"
 
 #: app/frontend/shared/i18n/dates.ts:105
 msgid "in 1 hour"
@@ -17463,10 +17411,8 @@ msgid "in 1 month"
 msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts:91
-#, fuzzy
-#| msgid "1 week"
 msgid "in 1 week"
-msgstr "هفته 1"
+msgstr "در 1 هفته"
 
 #: app/frontend/shared/i18n/dates.ts:77
 msgid "in 1 year"
@@ -17494,10 +17440,8 @@ msgid "internal"
 msgstr "داخلی"
 
 #: db/seeds/settings.rb:1190
-#, fuzzy
-#| msgid "internal"
 msgid "internal database"
-msgstr "داخلی"
+msgstr "پایگاه داده داخلی"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:67
@@ -17534,10 +17478,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
-#, fuzzy
-#| msgid "is not"
 msgid "is none of"
-msgstr "برابر نیست با"
+msgstr "هیچ نیست از"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
@@ -17550,30 +17492,24 @@ msgid "is not a color. Only Hex, RGB and HSL colors are supported."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:93
-#, fuzzy
-#| msgid "Min. size of number"
 msgid "is not a number"
-msgstr "حداقل اندازه عدد"
+msgstr "عدد نیست"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:122
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:149
 msgid "is not in working time"
 msgstr "خارج از ساعت کاری"
 
-#, fuzzy
-#| msgid "is not in working time"
 msgid "is not included in the list"
-msgstr "خارج از ساعت کاری"
+msgstr "در فهرست موجود نیست"
 
 #: app/assets/javascripts/app/models/_application_model.coffee:63
 msgid "is required"
 msgstr "الزامی است"
 
 #: lib/validations/object_manager/attribute_validator/required.rb:15
-#, fuzzy
-#| msgid "is required"
 msgid "is required but missing"
-msgstr "الزامی است"
+msgstr "الزامی است ولی وارد نشده"
 
 #, fuzzy
 #| msgid "is required"

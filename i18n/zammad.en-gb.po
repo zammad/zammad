@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-01-13 03:30+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2024-09-12 05:38+0000\n"
+"Last-Translator: Andi Chandler <andi@gowling.com>\n"
 "Language-Team: English (United Kingdom) <https://translations.zammad.org/"
-"projects/zammad/zammad-development/en_GB/>\n"
+"projects/zammad/zammad-stable/en_GB/>\n"
 "Language: en-gb\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.10.1\n"
+"X-Generator: Weblate 5.7\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -53,6 +53,11 @@ msgid ""
 "compatible object filesystem. You can switch between the modules even on a "
 "system that is already in production without any loss of data."
 msgstr ""
+"\"Database\" stores all attachments in the database (not recommended for "
+"storing large amounts of data). \"Filesystem\" stores the data in the "
+"filesystem. \"Simple Storage (S3)\" stores the data in a remote S3-"
+"compatible object filesystem. You can switch between the modules even on a "
+"system that is already in production without any loss of data."
 
 #. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -70,6 +75,17 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Created by #{current_user.longname} at #{ticket"
+".updated_at}_\n"
+"* Group: #{ticket.group.name}\n"
+"* Owner: #{ticket.owner.fullname}\n"
+"* State: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -85,6 +101,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Escalated at #{ticket.escalation_at}_\n"
+"The ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" has been "
+"escalated since \"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -101,6 +126,16 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Last updated at #{ticket.updated_at}_\n"
+"* Group: #{ticket.group.name}\n"
+"* Owner: #{ticket.owner.fullname}\n"
+"* State: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -116,6 +151,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Reminder reached!_\n"
+"A ticket needs attention: reminder reached for (#{ticket.title}) with "
+"customer \"*#{ticket.customer.longname}*\".\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_update/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -135,6 +179,19 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Updated by #{current_user.longname} at #{ticket"
+".updated_at}_\n"
+"<% if @objects[:changes].present? %>\n"
+"  <% @objects[:changes].each do |key, value| %>\n"
+"  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
+"  <% end %>\n"
+"<% end %>\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -150,6 +207,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Will escalate at #{ticket.escalation_at}_\n"
+"The ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" will "
+"escalate at \"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/mailer/user_auth_provider/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -168,6 +234,18 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"#{config.product_name} account linked with a third-party application\n"
+"\n"
+"<div>Hi #{user.firstname},</div>\n"
+"<br>\n"
+"<div>It looks like you linked your account <b>with a third-party "
+"application</b> \"#{t(provider)}\".</div>\n"
+"<br>\n"
+"<div>If this wasn't you, please remove the linked account from your profile "
+"and change your third-party application password. Somebody might have gained "
+"unauthorizsed access to your account on the third-party service.</div>\n"
+"<br>\n"
+"<div>Your #{config.product_name} Team</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -198,6 +276,30 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"#{config.product_name} login from a new country\n"
+"\n"
+"<div>Hi #{user.firstname},</div>\n"
+"<br>\n"
+"<div>It looks like you used your account with a <b>known device but from a "
+"new country</b> on \"#{user_device.created_at}\":</div>\n"
+"<br>\n"
+"<div>\n"
+"Your device: #{user_device.name}<br>\n"
+"Your location (relative): #{user_device.location}<br>\n"
+"Your IP: #{user_device.ip}<br>\n"
+"</div>\n"
+"<br>\n"
+"<div>The country has been added to your list of known devices, which you can "
+"view here:</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
+">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<br>\n"
+"<div>If this wasn't you, please remove the device, change your account "
+"password, and contact your administrator. Somebody might have gained "
+"unauthorised access to your account.</div>\n"
+"<br>\n"
+"<div>Your #{config.product_name} Team</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -228,14 +330,38 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"#{config.product_name} login from a new device\n"
+"\n"
+"<div>Hi #{user.firstname},</div>\n"
+"<br>\n"
+"<div>It looks like you logged into your account <b>using a new device</b> on "
+"\"#{user_device.created_at}\":</div>\n"
+"<br>\n"
+"<div>\n"
+"Your device: #{user_device.name}<br>\n"
+"Your location (relative): #{user_device.location}<br>\n"
+"Your IP: #{user_device.ip}<br>\n"
+"</div>\n"
+"<br>\n"
+"<div>Your device has been added to your list of known devices, which you can "
+"view here:</div>\n"
+"<br>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
+">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<br>\n"
+"<div>If this wasn't you, please remove the device, change your account "
+"password, and contact your administrator. Somebody might have gained "
+"unauthorised access to your account.</div>\n"
+"<br>\n"
+"<div>Your #{config.product_name} Team</div>\n"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:148
 msgid "%s (confirm)"
-msgstr ""
+msgstr "%s (confirm)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:155
 msgid "%s (method)"
-msgstr ""
+msgstr "%s (method)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:190
 msgid "%s (option)"
@@ -902,7 +1028,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/tag/table.jst.eco:6
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco:12
 msgid "Action"
-msgstr ""
+msgstr "Action"
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
 msgid "Action execution"
@@ -1293,7 +1419,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:109
 msgid "Agents"
-msgstr ""
+msgstr "Agents"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:27
 msgid "Alarm"
@@ -2769,7 +2895,7 @@ msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:1128
 msgid "City"
-msgstr ""
+msgstr "City"
 
 #: db/seeds/schedulers.rb:178
 msgid "Clean up 'Cti::Log'."
@@ -2944,7 +3070,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
 msgid "Comment"
-msgstr ""
+msgstr "Comment"
 
 #: app/models/report.rb:234
 msgid "Communication"
@@ -3024,7 +3150,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee:45
 msgid "Confirm"
-msgstr ""
+msgstr "Confirm"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:4
 msgid "Confirm Password"
@@ -3297,7 +3423,7 @@ msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:1168
 msgid "Country"
-msgstr ""
+msgstr "Country"
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:19
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:81
@@ -3701,7 +3827,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:5
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:33
 msgid "Date"
-msgstr ""
+msgstr "Date"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:53
 msgid "Date & time field"
@@ -4781,7 +4907,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/sla/index.jst.eco:8
 #: app/assets/javascripts/app/views/translation/index.jst.eco:9
 msgid "Description"
-msgstr ""
+msgstr "Description"
 
 #: app/assets/javascripts/app/models/public_link.coffee:8
 msgid "Description (shown as title tag for screen readers)"
@@ -5012,7 +5138,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue:169
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:127
 msgid "Done"
-msgstr ""
+msgstr "Done"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_image_view.coffee:4
 msgid "Download"
@@ -7016,7 +7142,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:8
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_idoit.jst.eco:4
 msgid "ID:"
@@ -8092,7 +8218,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/payload_example.coffee:34
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:51
 msgid "Loading failed."
-msgstr ""
+msgstr "Loading failed."
 
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee:151
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:647
@@ -9371,7 +9497,7 @@ msgstr ""
 #: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:12
 #: db/seeds/object_manager_attributes.rb:1335
 msgid "Note"
-msgstr ""
+msgstr "Note"
 
 #: db/seeds/settings.rb:630
 msgid "Note - default visibility"
@@ -9977,7 +10103,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:51
 #: db/seeds/object_manager_attributes.rb:1249 db/seeds/permissions.rb:326
 msgid "Password"
-msgstr ""
+msgstr "Password"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:3
 #: app/assets/javascripts/app/views/profile/password.jst.eco:3
@@ -11524,7 +11650,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:343
 msgid "See less"
-msgstr ""
+msgstr "See less"
 
 #: app/assets/javascripts/app/controllers/_ui_element/ticket_duplicate_detection.coffee:68
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:443
@@ -11534,7 +11660,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:343
 msgid "See more"
-msgstr ""
+msgstr "See more"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:9
 msgid ""
@@ -12444,7 +12570,7 @@ msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:1049
 msgid "Street"
-msgstr ""
+msgstr "Street"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:196
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:26
@@ -12486,7 +12612,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:53
 #: app/frontend/shared/form/i18n/locales.ts:40
 msgid "Submit"
-msgstr ""
+msgstr "Submit"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:176
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:204
@@ -14997,7 +15123,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:5
 msgid "Total"
-msgstr ""
+msgstr "Total"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:65
 msgid "Total Accounted Time"
@@ -15259,7 +15385,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:8
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:50
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:677
 msgid "URL (AJAX endpoint)"
@@ -15650,7 +15776,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/user/routes.ts:7
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:42
 msgid "User"
-msgstr ""
+msgstr "User"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:16
 msgid "User (censored):"
@@ -15803,7 +15929,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:89
 #: app/assets/javascripts/app/views/settings/form.jst.eco:7
 msgid "Value"
-msgstr ""
+msgstr "Value"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:503
 msgid "Variables"
@@ -17574,7 +17700,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco:7
 #: db/seeds/settings.rb:2205
 msgid "none"
-msgstr ""
+msgstr "none"
 
 #: app/assets/javascripts/app/controllers/cti.coffee:162
 msgid "not reached"
