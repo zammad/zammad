@@ -329,11 +329,11 @@ class App.User extends App.Model
 
   @outOfOfficeTextPlaceholder: ->
     today = new Date()
-    outOfOfficeText = App.i18n.translateContent('Christmas holiday')
+    outOfOfficeText = App.i18n.translatePlain('Christmas holiday')
     if today.getMonth() < 3
-      outOfOfficeText = App.i18n.translateContent('Easter holiday')
+      outOfOfficeText = App.i18n.translatePlain('Easter holiday')
     else if today.getMonth() < 9
-      outOfOfficeText = App.i18n.translateContent('Summer holiday')
+      outOfOfficeText = App.i18n.translatePlain('Summer holiday')
     outOfOfficeText
 
   outOfOfficeText: ->
