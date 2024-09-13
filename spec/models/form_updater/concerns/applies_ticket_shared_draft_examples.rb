@@ -39,13 +39,6 @@ RSpec.shared_examples 'FormUpdater::AppliesTicketSharedDraft' do
         include_examples 'sets the draft value for the field'
       end
 
-      context 'when the field is dirty and has a value' do
-        let(:data)         { { field_name => 'previous value' } }
-        let(:dirty_fields) { [field_name] }
-
-        include_examples 'skips the field'
-      end
-
       context 'when a value is present, but the field is not marked as dirty' do
         let(:data) { { field_name: 'already present' } }
 

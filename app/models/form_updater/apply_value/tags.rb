@@ -15,7 +15,7 @@ class FormUpdater::ApplyValue::Tags < FormUpdater::ApplyValue::Base
     template_tags = config['value'].split(%r{,\s*}).presence || []
 
     tag_values = if config['operator'] == 'add'
-                   if meta[:dirty_fields]&.include?('tags')
+                   if dirty_fields&.include?('tags')
                      selected_tags | template_tags
                    else
                      template_tags

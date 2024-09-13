@@ -52,7 +52,7 @@ module Gql::Types::User
     end
 
     def form_new_article_present
-      false # || @object.state&.dig('article', 'type').present?
+      @object.state&.dig('article', 'type').present?
     end
 
     def changed

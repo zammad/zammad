@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { keyBy } from 'lodash-es'
 import { computed, shallowRef } from 'vue'
 
 import type { FieldEditorContext } from '#shared/components/Form/fields/FieldEditor/types.ts'
@@ -33,6 +34,10 @@ export const useTicketEditForm = (
   const ticketArticleTypes = computed(() => {
     return ticket.value ? createArticleTypes(ticket.value, appName) : []
   })
+
+  const ticketArticleTypeValueLookup = computed(() =>
+    keyBy(ticketArticleTypes.value, 'value'),
+  )
 
   const currentArticleType = shallowRef<AppSpecificTicketArticleType>()
 
@@ -153,7 +158,6 @@ export const useTicketEditForm = (
             },
           ],
         },
-        triggerFormUpdater: false,
       },
       {
         if: '$currentArticleType.fields.to',
@@ -187,7 +191,6 @@ export const useTicketEditForm = (
         props: {
           maxlength: 200,
         },
-        triggerFormUpdater: false,
         required: articleTypeFieldProps.subject.required,
       },
       {
@@ -196,7 +199,6 @@ export const useTicketEditForm = (
         label: __('Security'),
         type: 'security',
         validation: articleTypeFieldProps.security.validation,
-        triggerFormUpdater: false,
       },
       {
         name: 'body',
@@ -210,7 +212,6 @@ export const useTicketEditForm = (
           meta: editorMeta,
         },
         required: articleTypeFieldProps.body.required,
-        triggerFormUpdater: true,
       },
       {
         if: '$currentArticleType.fields.attachments',
@@ -243,7 +244,7 @@ export const useTicketEditForm = (
   }
 
   const articleTypeChangeHandler = () => {
-    const executeHandler = (
+    const executeTypeChangeHandler = (
       execution: FormHandlerExecution,
       schemaData: ReactiveFormSchemData,
       changedField?: ChangedField,
@@ -260,11 +261,21 @@ export const useTicketEditForm = (
       reactivity,
       data,
     ) => {
-      const { formNode, changedField } = data
+      const { formNode, changedField, formUpdaterData } = data
       const { schemaData } = reactivity
 
       if (
-        !executeHandler(execution, schemaData, changedField) ||
+        execution === FormHandlerExecution.Initial &&
+        formUpdaterData?.fields.articleType?.value
+      ) {
+        currentArticleType.value =
+          ticketArticleTypeValueLookup.value[
+            formUpdaterData.fields.articleType.value
+          ]
+      }
+
+      if (
+        !executeTypeChangeHandler(execution, schemaData, changedField) ||
         !ticket.value ||
         !formNode
       )
@@ -278,9 +289,9 @@ export const useTicketEditForm = (
         currentArticleType.value?.onDeselected?.(ticket.value, context)
       }
 
-      const newType = ticketArticleTypes.value.find(
-        (type) => type.value === changedField?.newValue,
-      )
+      if (!changedField?.newValue) return
+      const newType =
+        ticketArticleTypeValueLookup.value[changedField?.newValue as string]
       if (!newType) return
 
       if (!formNode.context?._open) {
@@ -305,9 +316,9 @@ export const useTicketEditForm = (
     // (because dialog was opened before, and type was changed then, but we still need to trigger select, because visually it's what happens)
     formNode.on('article-reply-open', ({ payload }) => {
       if (!payload || !ticket.value) return
-      const articleType = ticketArticleTypes.value.find(
-        (type) => type.value === payload,
-      )
+
+      const articleType = ticketArticleTypeValueLookup.value[payload as string]
+
       if (!articleType) return
       const body = formNode.find('body', 'name') as FormKitNode
       const context = {

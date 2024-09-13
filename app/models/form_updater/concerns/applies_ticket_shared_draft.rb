@@ -14,7 +14,7 @@ module FormUpdater::Concerns::AppliesTicketSharedDraft
   private
 
   def apply_draft
-    apply_value = FormUpdater::ApplyValue.new(context:, data:, meta:, result:)
+    apply_value = FormUpdater::ApplyValue.new(context:, data:, result:)
 
     new_attachments = UserInfo.with_user_id(context[:current_user].id) do
       selected_draft.clone_attachments('UploadCache', meta[:form_id])

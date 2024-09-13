@@ -206,6 +206,6 @@ RSpec.describe(FormUpdater::Updater::Ticket::Create) do
   include_examples 'FormUpdater::AppliesTicketTemplate'
   include_examples 'FormUpdater::AppliesTicketSharedDraft'
   include_examples 'FormUpdater::AppliesSplitTicketArticle'
-  include_examples 'FormUpdater::StoresTaskbarState', taskbar_key: 'TicketCreateScreen-1234', taskbar_callback: 'TicketCreate', store_state_group_key: nil, store_state_group_skip_keys: nil
+  include_examples 'FormUpdater::StoresTaskbarState', taskbar_key: 'TicketCreateScreen-1234', taskbar_callback: 'TicketCreate', store_state_collect_group_key: nil, store_state_group_keys: nil
   include_examples 'FormUpdater::AppliesTaskbarState', taskbar_key: 'TicketCreateScreen-1234', taskbar_callback: 'TicketCreate', apply_state_group_keys: nil
 end

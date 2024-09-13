@@ -42,6 +42,7 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import { useTaskbarTab } from '#desktop/entities/user/current/composables/useTaskbarTab.ts'
+import { useTaskbarTabStateUpdates } from '#desktop/entities/user/current/composables/useTaskbarTabStateUpdates.ts'
 
 import ArticleList from '../components/TicketDetailView/ArticleList.vue'
 import ArticleReply from '../components/TicketDetailView/ArticleReply.vue'
@@ -68,12 +69,6 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const {
-  activeTaskbarTab,
-  activeTaskbarTabFormId,
-  activeTaskbarTabNewArticlePresent,
-} = useTaskbarTab(EnumTaskbarEntity.TicketZoom)
-
 const { ticket, ticketId, canUpdateTicket, ...ticketInformation } =
   initializeTicketInformation(toRef(props, 'internalId'))
 
@@ -89,8 +84,23 @@ provide(ARTICLES_INFORMATION_KEY, {
   articlesQuery,
 })
 
-const { form, flags, isDisabled, isDirty, formNodeId, formReset, formSubmit } =
-  useForm()
+const {
+  form,
+  flags,
+  isDisabled,
+  isDirty,
+  formNodeId,
+  formReset,
+  formSubmit,
+  triggerFormUpdater,
+} = useForm()
+
+const {
+  activeTaskbarTab,
+  activeTaskbarTabFormId,
+  activeTaskbarTabNewArticlePresent,
+} = useTaskbarTab(EnumTaskbarEntity.TicketZoom)
+const { setSkipNextStateUpdate } = useTaskbarTabStateUpdates(triggerFormUpdater)
 
 const sidebarContext = computed<TicketSidebarContext>(() => ({
   screenType: TicketSidebarScreenType.TicketDetailView,
@@ -394,6 +404,7 @@ const articleReplyPinned = useLocalStorage(
             }"
             @submit="submitEditTicket($event as FormSubmitData<TicketFormData>)"
             @settled="onEditFormSettled"
+            @changed="setSkipNextStateUpdate(true)"
           />
         </div>
       </div>

@@ -3,6 +3,8 @@
 module FormUpdater::Concerns::AppliesTaskbarState
   extend ActiveSupport::Concern
 
+  SKIP_FIELDS = %w[attachments].freeze
+
   class_methods do
     def apply_state_group_keys(group_keys)
       @apply_state_group_keys ||= group_keys
@@ -20,13 +22,17 @@ module FormUpdater::Concerns::AppliesTaskbarState
   private
 
   def apply_taskbar_state
-    apply_value = FormUpdater::ApplyValue.new(context:, data:, meta:, result:)
+    apply_value = FormUpdater::ApplyValue.new(context:, data:, result:)
 
     apply_state_group_keys = self.class.instance_variable_get(:@apply_state_group_keys)
 
     current_taskbar.state.each_pair do |field, value|
+      next if SKIP_FIELDS.include?(field)
+
       if apply_state_group_keys.present? && apply_state_group_keys.include?(field) && value.is_a?(Hash)
         value.each_pair do |sub_field, sub_value|
+          next if SKIP_FIELDS.include?(sub_field)
+
           apply_value.perform(field: sub_field, config: { 'value' => sub_value }, include_blank: true, parent_field: field)
         end
       else

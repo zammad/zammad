@@ -1203,8 +1203,21 @@ class App.TicketZoom extends App.Controller
     return {} if !App.TaskManager.get(@taskKey)
     @localTaskData = App.TaskManager.get(@taskKey).state || {}
 
+    # Set the article type_id if the type is set.
+    if @localTaskData.article && @localTaskData.article.type && !@localTaskData.article.type_id
+      @localTaskData.article.type_id = App.TicketArticleType.findByAttribute('name', @localTaskData.article.type).id
+
+    if @localTaskData.form_id
+      if !@localTaskData.article
+        @localTaskData.article = {}
+      @localTaskData.article.form_id = @localTaskData.form_id
+
+    # Remove inline images.
     if _.isObject(@localTaskData.article) && _.isArray(App.TaskManager.get(@taskKey).attachments)
-      @localTaskData.article['attachments'] = App.TaskManager.get(@taskKey).attachments
+      @localTaskData.article['attachments'] = _.filter( App.TaskManager.get(@taskKey).attachments, (attachment) ->
+        return if attachment.preferences && attachment.preferences['Content-Disposition'] is 'inline'
+        return attachment
+      )
 
     if area
       if !@localTaskData[area]
@@ -1216,6 +1229,10 @@ class App.TicketZoom extends App.Controller
 
   taskUpdate: (area, data) =>
     @localTaskData[area] = data
+
+    # Set the article type if the type_id is set.
+    if @localTaskData[area]['type_id'] && !@localTaskData[area]['type']
+      @localTaskData[area]['type'] = App.TicketArticleType.find(@localTaskData[area]['type_id']).name
 
     taskData = { 'state': @localTaskData }
     if _.isArray(data.attachments)
@@ -1233,6 +1250,10 @@ class App.TicketZoom extends App.Controller
   taskUpdateAll: (data) =>
     @localTaskData = data
     @localTaskData.article['form_id'] = @form_id
+
+    # Set the article type if the type_id is set.
+    if @localTaskData.article['type_id'] && !@localTaskData.article['type']
+      @localTaskData.article['type'] = App.TicketArticleType.find(@localTaskData.article['type_id']).name
 
     taskData = { 'state': @localTaskData }
     if _.isArray(data.attachments)

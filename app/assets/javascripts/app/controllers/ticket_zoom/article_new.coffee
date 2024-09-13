@@ -509,18 +509,7 @@ class App.TicketZoomArticleNew extends App.Controller
               @bodyAllowNoCaption = articleType.bodyAllowNoCaption
 
     # convert remote src images to data uri
-    @$('[data-name=body] img').each( (i,image) ->
-      $image = $(image)
-      src = $image.attr('src')
-      if !_.isEmpty(src) && !src.match(/^data:image/i)
-        canvas = document.createElement('canvas')
-        canvas.width = image.width
-        canvas.height = image.height
-        ctx = canvas.getContext('2d')
-        ctx.drawImage(image, 0, 0)
-        dataURL = canvas.toDataURL()
-        $image.attr('src', dataURL)
-    )
+    App.Utils.htmlImage2DataUrlAsyncInline(@$('[data-name=body]'))
 
     @scrollToBottom() if wasScrolledToBottom
 

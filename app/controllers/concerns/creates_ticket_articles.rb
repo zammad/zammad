@@ -68,7 +68,7 @@ module CreatesTicketArticles # rubocop:disable Metrics/ModuleLength
         .new(form_id)
         .attachments
         .reject do |elem|
-          UploadCache.files_include_attachment?(attachments_inline, elem)
+          UploadCache.files_include_attachment?(attachments_inline, elem) || elem.inline?
         end
     end
 

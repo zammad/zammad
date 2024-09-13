@@ -14,7 +14,7 @@ module FormUpdater::Concerns::AppliesSplitTicketArticle
   private
 
   def apply_value
-    @apply_value ||= FormUpdater::ApplyValue.new(context:, data:, meta:, result:)
+    @apply_value ||= FormUpdater::ApplyValue.new(context:, data:, result:)
   end
 
   def apply_ticket_article

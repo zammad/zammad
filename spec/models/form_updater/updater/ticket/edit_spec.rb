@@ -238,69 +238,71 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
       end
     end
 
-    context 'when time accounting should be triggered' do
-      let(:id) do
-        Gql::ZammadSchema.id_from_object(create(:ticket, group: group))
-      end
-
-      before do
-        Setting.set('time_accounting', true)
-      end
-
-      it 'checks that time_accounting flag is present' do
-        # Trigger first object authorization check.
-        resolved_result.authorized?
-
-        flags = resolved_result.resolve[:flags]
-        expect(flags[:time_accounting]).to be_truthy
-      end
-    end
-
-    context 'when new article was applied' do
+    context 'when auto save should be applied' do
       let(:taskbar_key)     { 'TicketZoom-1234' }
       let(:taskbar)         { create(:taskbar, key: taskbar_key, callback: 'Ticket', user_id: user.id, state: taskbar_state) }
-      let(:taskbar_state)   { { 'title' => 'test', 'article' => { 'articleType' => 'email' } } }
+      let(:taskbar_state)   { { 'title' => 'test', 'owner_id' => 1 } }
       let(:field_name)      { 'title' }
       let(:field_result)    { { value: 'test' } }
       let(:additional_data) { { 'taskbarId' => Gql::ZammadSchema.id_from_object(taskbar), 'applyTaskbarState' => true } }
       let(:meta)            { { additional_data: } }
 
       before do
-        skip 'TODO: This is a known issue and should be fixed in the future.'
-      end
-
-      it 'checks that newArticlePresent flag is present' do
         # Trigger first object authorization check.
         resolved_result.authorized?
+      end
 
-        flags = resolved_result.resolve[:flags]
-        expect(flags[:newArticlePresent]).to be_truthy
+      it 'owner_id should be nil for system user' do
+        fields = resolved_result.resolve[:fields]
+        expect(fields['owner_id'][:value]).to be_nil
+      end
+
+      context 'when new article exists' do
+        let(:taskbar_state) { { 'title' => 'test', 'article' => { 'articleType' => 'email' } } }
+
+        it 'checks that newArticlePresent flag is present' do
+          flags = resolved_result.resolve[:flags]
+          expect(flags[:newArticlePresent]).to be_truthy
+        end
       end
     end
 
-    context 'when new article is saved' do
-      let(:data)            { { 'title' => 'test', 'article' => { 'articleType' => 'email' } } }
-      let(:result)          { { 'ticket' => include({ 'title' => 'test' }), 'article' => { 'type' => 'email' } } }
+    context 'when data should be stored' do
       let(:taskbar_key)     { 'TicketZoom-1234' }
       let(:taskbar)         { create(:taskbar, key: taskbar_key, callback: 'Ticket', user_id: user.id) }
       let(:additional_data) { { 'taskbarId' => Gql::ZammadSchema.id_from_object(taskbar) } }
       let(:meta)            { { additional_data: } }
 
-      before do
-        skip 'TODO: This is a known issue and should be fixed in the future.'
+      let(:id) do
+        Gql::ZammadSchema.id_from_object(create(:ticket, group: group, state_id: 1))
       end
 
-      it 'checks that data was stored correctly' do
-        # Trigger first object authorization check.
-        resolved_result.authorized?
+      shared_examples 'stores the form value of the field' do
+        it 'checks that data was stored correctly' do
+          # Trigger first object authorization check.
+          resolved_result.authorized?
 
-        resolved_result.resolve
-        state = taskbar.reload.state
+          resolved_result.resolve
+          state = taskbar.reload.state
 
-        expect(state).to include(result)
+          expect(state).to include(result)
+        end
+      end
+
+      context 'when new article is saved' do
+        let(:result)          { { 'ticket' => include({ 'title' => 'test' }), 'article' => { 'type' => 'email' } } }
+        let(:data)            { { 'title' => 'test', 'article' => { 'articleType' => 'email' } } }
+
+        include_examples 'stores the form value of the field'
+      end
+
+      context 'when data should be skipped' do
+        let(:data)            { { 'title' => 'test', 'state_id' => 1 } }
+        let(:result)          { { 'ticket' => { 'title' => 'test' } } }
+
+        include_examples 'stores the form value of the field'
       end
     end
-
   end
 
   include_examples 'FormUpdater::ChecksCoreWorkflow', object_name: 'Ticket'
@@ -312,8 +314,6 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
     end
 
     before do
-      skip 'TODO: This is a known issue and should be fixed in the future.'
-
       # Trigger creation of the ticket and handover the id.
       id
 
@@ -321,7 +321,7 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
       resolved_result.authorized?
     end
 
-    include_examples 'FormUpdater::StoresTaskbarState', taskbar_key: 'TicketZoom-1234', taskbar_callback: 'Ticket', store_state_group_key: 'ticket', store_state_group_skip_keys: ['article'] # gitleaks:allow
+    include_examples 'FormUpdater::StoresTaskbarState', taskbar_key: 'TicketZoom-1234', taskbar_callback: 'Ticket', store_state_collect_group_key: 'ticket', store_state_group_keys: ['article'] # gitleaks:allow
     include_examples 'FormUpdater::AppliesTaskbarState', taskbar_key: 'TicketZoom-1234', taskbar_callback: 'Ticket', apply_state_group_keys: %w[ticket article] # gitleaks:allow
   end
 end

@@ -3,13 +3,13 @@
 class FormUpdater::ApplyValue
   include Mixin::RequiredSubPaths
 
-  attr_reader :context, :data, :meta, :result
+  attr_reader :context, :data, :dirty_fields, :result
 
-  def initialize(context:, data:, meta:, result:)
+  def initialize(context:, data:, result:, dirty_fields: nil)
     @context = context
     @data    = data
-    @meta    = meta
-    @result  = result
+    @dirty_fields = dirty_fields
+    @result = result
   end
 
   FIELD_RENAMING_MAP = {
@@ -35,7 +35,7 @@ class FormUpdater::ApplyValue
     end
 
     # Simple fields
-    return if meta[:dirty_fields]&.include?(field) && data[field].present?
+    return if dirty_fields&.include?(field) && data[field].present?
 
     result[field][:value] = config['value']
   end
@@ -46,7 +46,7 @@ class FormUpdater::ApplyValue
     FormUpdater::ApplyValue::Base
       .descendants
       .lazy
-      .map { |handler_class| handler_class.new(context:, data:, meta:, result:) }
+      .map { |handler_class| handler_class.new(context:, data:, dirty_fields:, result:) }
       .find { |elem| elem.can_handle_field?(field:, field_attribute:) }
   end
 end

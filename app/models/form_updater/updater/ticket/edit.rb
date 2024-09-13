@@ -1,16 +1,17 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class FormUpdater::Updater::Ticket::Edit < FormUpdater::Updater
-  # include FormUpdater::Concerns::AppliesTaskbarState
+  include FormUpdater::Concerns::AppliesTaskbarState
   include FormUpdater::Concerns::ChecksCoreWorkflow
   include FormUpdater::Concerns::HasSecurityOptions
-  # include FormUpdater::Concerns::StoresTaskbarState
+  include FormUpdater::Concerns::StoresTaskbarState
+  include FormUpdater::Updater::Ticket::Concerns::HasOwnerId
 
   core_workflow_screen 'edit'
 
-  # apply_state_group_keys %w[ticket article]
-  # store_state_group_key 'ticket'
-  # store_state_group_skip_keys ['article']
+  apply_state_group_keys %w[ticket article]
+  store_state_collect_group_key 'ticket'
+  store_state_group_keys ['article']
 
   def resolve
     set_default_follow_up_state if !meta[:initial]
@@ -23,13 +24,17 @@ class FormUpdater::Updater::Ticket::Edit < FormUpdater::Updater
   end
 
   def handle_updater_flags
-    flags[:newArticlePresent] = result['articleType'].present?
+    flags[:newArticlePresent] = result['articleType'].present? || (!meta.dig(:additional_data, 'applyTaskbarState') && data.dig('article', 'articleType').present?)
   end
 
   def after_store_taskbar_preperation(state)
-    return if data.dig('article', 'articleType').nil?
+    # Remove owner_id when it's the system user and this is also the current ticket value.
+    if object && state['ticket']&.key?('owner_id') && state.dig('ticket', 'owner_id').nil? && object.owner_id == 1
+      state['ticket'].delete('owner_id')
+    end
 
-    # TODO: change to "type", but for now we need to keep it as "articleType" for compatibility reasons without apply_value mapping.
+    return if state.dig('article', 'articleType').nil?
+
     state['article']['type'] = state['article'].delete('articleType')
   end
 
@@ -58,7 +63,8 @@ class FormUpdater::Updater::Ticket::Edit < FormUpdater::Updater
     result['state_id'][:value] = ::Ticket::State.find_by(default_follow_up: true)&.id
   end
 
-  # Ported from App.TicketZoom.setDefaultFollowUpState().
+  # Hanlding for customer to change the closed state to open, when a new article will be started.
+  # Additional handling of reseting state when body will be removed again.
   def set_default_follow_up_state
     result_initialize_field('state_id')
     result_initialize_field('isDefaultFollowUpStateSet')

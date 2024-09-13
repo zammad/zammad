@@ -14,7 +14,7 @@ module FormUpdater::Concerns::AppliesTicketTemplate
   private
 
   def apply_template
-    apply_value = FormUpdater::ApplyValue.new(context:, data:, meta:, result:)
+    apply_value = FormUpdater::ApplyValue.new(context:, data:, dirty_fields: meta[:dirty_fields], result:)
     selected_template.options.each_pair do |fieldpath, config|
       apply_value.perform(field: fieldpath.split('.').last, config:)
     end

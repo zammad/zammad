@@ -2,13 +2,13 @@
 
 class FormUpdater::ApplyValue::Base
 
-  attr_reader :context, :data, :meta, :result
+  attr_reader :context, :data, :dirty_fields, :result
 
-  def initialize(context:, data:, meta:, result:)
+  def initialize(context:, data:, dirty_fields:, result:)
     @context = context
     @data    = data
-    @meta    = meta
-    @result  = result
+    @dirty_fields = dirty_fields
+    @result = result
   end
 
   def can_handle_field?(field:, field_attribute:)
@@ -22,6 +22,6 @@ class FormUpdater::ApplyValue::Base
   end
 
   def skip_dirty_field?(field:)
-    meta[:dirty_fields]&.include?(field) && data[field].present?
+    dirty_fields&.include?(field) && data[field].present?
   end
 end

@@ -81,6 +81,53 @@ RSpec.shared_examples 'FormUpdater::AppliesTaskbarState' do |taskbar_key:, taskb
 
         include_examples 'applies the form value of the field'
       end
+
+      context 'with formId + attachments field' do
+        let(:form_id) { SecureRandom.uuid }
+
+        let(:taskbar_state) do
+          if taskbar_key.start_with?('TicketCreate')
+            {
+              'form_id' => form_id,
+            }
+          elsif taskbar_key.start_with?('TicketZoom')
+            {
+              'ticket'  => {},
+              'article' => {
+                'form_id' => form_id,
+              },
+            }
+          end
+        end
+
+        let(:field_name) { 'attachments' }
+        let(:field_result) do
+          {
+            value: [
+              {
+                id:   Gql::ZammadSchema.id_from_object(Store.last),
+                name: 'some_file.pdf',
+                size: '12',
+                type: 'application/pdf',
+              }
+            ]
+          }
+        end
+
+        before do
+          create(:store,
+                 object:      'UploadCache',
+                 o_id:        form_id,
+                 data:        'dGVzdCAxMjM=',
+                 filename:    'some_file.pdf',
+                 preferences: {
+                   'Content-Type': 'application/pdf',
+                   'Content-ID':   'application/pdf@01CAB192.K8H512Y9',
+                 })
+        end
+
+        include_examples 'applies the form value of the field'
+      end
     end
   end
 end

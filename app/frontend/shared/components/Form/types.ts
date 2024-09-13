@@ -1,7 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import type { Sizes } from '#shared/components/CommonIcon/types.ts'
-import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
+import type {
+  EnumObjectManagerObjects,
+  FormUpdaterQuery,
+} from '#shared/graphql/types.ts'
 import type { FormUpdaterOptions } from '#shared/types/form.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
@@ -220,6 +223,8 @@ export interface FormHandlerFunctionData {
   values: FormValues
   changedField?: ChangedField
   initialEntityObject?: ObjectLike
+
+  formUpdaterData?: FormUpdaterQuery['formUpdater']
 }
 
 type UpdateSchemaDataFieldFunction = (

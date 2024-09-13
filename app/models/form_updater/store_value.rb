@@ -9,10 +9,10 @@ class FormUpdater::StoreValue
     'articleSenderType' => 'formSenderType',
   }.freeze
 
-  attr_reader :store_state_group_skip_keys
+  attr_reader :store_state_group_keys
 
-  def initialize(store_state_group_skip_keys)
-    @store_state_group_skip_keys = store_state_group_skip_keys || []
+  def initialize(store_state_group_keys)
+    @store_state_group_keys = store_state_group_keys || []
   end
 
   def perform(field:, value:)
@@ -20,7 +20,7 @@ class FormUpdater::StoreValue
     result = {}
 
     # If the field is in the skip keys and the value is a hash, handle it recursively
-    if store_state_group_skip_keys.include?(field) && value.is_a?(Hash)
+    if store_state_group_keys.include?(field) && value.is_a?(Hash)
       sub_result = {}
 
       value.each do |sub_field, sub_value|

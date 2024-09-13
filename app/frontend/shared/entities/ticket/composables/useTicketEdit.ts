@@ -41,6 +41,8 @@ export const useTicketEdit = (
       return
     }
 
+    console.log('HERE', newTicket, oldTicket)
+
     // We need only to reset the form, when really something was changed (updatedAt is not relevant for the form).
     if (
       isEqualWith(newTicket, oldTicket, (value1, value2, key) => {
@@ -50,12 +52,14 @@ export const useTicketEdit = (
       return
     }
 
+    console.log('HERE2')
+
     const ticketId = initialTicketValue.id || newTicket.id
     const { internalId: ownerInternalId } = newTicket.owner
     initialTicketValue.id = newTicket.id
     // show Zammad user as empty
     initialTicketValue.owner_id = ownerInternalId === 1 ? null : ownerInternalId
-
+    console.log('form', form.value)
     // TODO: check why article type was changed back to initial?!
     form.value?.resetForm(initialTicketValue, newTicket, {
       // don't reset to new values, if user changes something

@@ -221,6 +221,10 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
       },
     )
 
+    const activeTaskbarTabId = computed(
+      () => activeTaskbarTab.value?.taskbarTabId,
+    )
+
     const hasTaskbarTabs = computed(() => taskbarTabList.value?.length > 0)
 
     const taskbarTabListByTabEntityKey = computed(() =>
@@ -492,6 +496,7 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
 
     return {
       taskbarTabIDsInDeletion,
+      activeTaskbarTabId,
       activeTaskbarTab,
       activeTaskbarTabEntityKey,
       activeTaskbarTabContext,

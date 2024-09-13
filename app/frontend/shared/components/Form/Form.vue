@@ -2,7 +2,6 @@
 
 <script setup lang="ts">
 import { getNode, createMessage } from '@formkit/core'
-import { cloneAny } from '@formkit/utils'
 import { FormKit, FormKitMessages, FormKitSchema } from '@formkit/vue'
 import { refDebounced, watchOnce } from '@vueuse/shared'
 import { isEqual, cloneDeep, merge, isEmpty } from 'lodash-es'
@@ -343,17 +342,6 @@ const onSubmit = (values: FormSubmitData) => {
           formNode.value.reset()
         } else {
           formNode.value.reset(values)
-          // "dirty" check checks "_init" instead of "initial"
-          // "initial" is updated with resetValues in "reset" function, but "_init" is static
-          // TODO: keep an eye on https://github.com/formkit/formkit/issues/791
-          formNode.value.props._init = cloneAny(formNode.value.props.initial)
-          formNode.value.walk((node) => {
-            if (node.name in flatValues) {
-              node.props._init = cloneAny(flatValues[node.name])
-            } else if (node.name in values) {
-              node.props._init = cloneAny(values[node.name])
-            }
-          })
         }
         result?.()
       })
@@ -376,7 +364,7 @@ let formUpdaterQueryHandler: QueryHandler<
 >
 
 const triggerFormUpdater = (options?: FormUpdaterOptions) => {
-  handlesFormUpdater('manual', undefined, options)
+  handlesFormUpdater('manual', undefined, undefined, options)
 }
 
 const delayedSubmitPlugin = (node: FormKitNode) => {
@@ -578,7 +566,7 @@ const getResetFormValues = (
 }
 
 const resetForm = (
-  values: FormValues = {},
+  values: FormValues = props.initialValues || {},
   object: EntityObject | undefined = undefined,
   {
     resetDirty = true,
@@ -844,6 +832,7 @@ const executeFormHandler = (
   execution: FormHandlerExecution,
   currentValues: FormValues,
   changedField?: ChangedField,
+  formUpdaterData?: FormUpdaterQuery['formUpdater'],
 ) => {
   if (formHandlerExecution[execution].length === 0) return
 
@@ -862,6 +851,7 @@ const executeFormHandler = (
         values: currentValues,
         changedField,
         initialEntityObject: props.initialEntityObject,
+        formUpdaterData,
       },
     )
   })
@@ -890,6 +880,7 @@ const executeFormUpdaterRefetch = () => {
 const handlesFormUpdater = (
   trigger: FormUpdaterTrigger,
   changedField?: FormUpdaterChangedFieldInput,
+  changedFieldNode?: FormKitNode,
   options?: FormUpdaterOptions,
 ) => {
   if (!props.formUpdaterId || !formUpdaterQueryHandler) return
@@ -930,7 +921,7 @@ const handlesFormUpdater = (
     meta.dirtyFields = dirtyFields
   }
 
-  const data = {
+  const data: FormValues = {
     ...values.value,
   }
 
@@ -938,8 +929,23 @@ const handlesFormUpdater = (
     meta.reset = true
   } else if (changedField) {
     meta.changedField = changedField
-    // TODO: we need to reflect the group, when it's not flatten...
-    data[changedField.name] = changedField.newValue
+
+    const parentName = changedFieldNode?.parent?.name
+
+    // Currently we are only supporting one level.
+    if (
+      formNode.value &&
+      parentName &&
+      parentName !== formNode.value.name &&
+      (!props.flattenFormGroups ||
+        !props.flattenFormGroups.includes(parentName))
+    ) {
+      data[parentName] ||= {}
+      ;(data[parentName] as Record<string, FormFieldValue>)[changedField.name] =
+        changedField.newValue
+    } else {
+      data[changedField.name] = changedField.newValue
+    }
   }
 
   // We mark this as raw, because we want no deep reactivity on the form updater query variables.
@@ -969,11 +975,15 @@ const changedInputValueHandling = (inputNode: FormKitNode) => {
       inputNode.props.triggerFormUpdater &&
       !updaterChangedFields.has(node.name)
     ) {
-      handlesFormUpdater(inputNode.props.formUpdaterTrigger, {
-        name: node.name,
-        newValue,
-        oldValue,
-      })
+      handlesFormUpdater(
+        inputNode.props.formUpdaterTrigger,
+        {
+          name: node.name,
+          newValue,
+          oldValue,
+        },
+        node,
+      )
     }
 
     emit('changed', node.name, newValue, oldValue)
@@ -1278,7 +1288,12 @@ const initializeFormSchema = () => {
     formUpdaterQueryHandler.onResult((queryResult) => {
       // Execute the form handler function so that they can manipulate the form updater result.
       if (!formSchemaInitialized.value) {
-        executeFormHandler(FormHandlerExecution.Initial, localInitialValues)
+        executeFormHandler(
+          FormHandlerExecution.Initial,
+          localInitialValues,
+          undefined,
+          queryResult?.data?.formUpdater,
+        )
       }
 
       if (queryResult?.data?.formUpdater) {

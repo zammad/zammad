@@ -22,14 +22,13 @@ import {
   EnumTaskbarEntity,
 } from '#shared/graphql/types.ts'
 import { useWalker } from '#shared/router/walker.ts'
-import SubscriptionHandler from '#shared/server/apollo/handler/SubscriptionHandler.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonContentPanel from '#desktop/components/CommonContentPanel/CommonContentPanel.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import { useTaskbarTab } from '#desktop/entities/user/current/composables/useTaskbarTab.ts'
-import { useUserCurrentTaskbarItemStateUpdatesSubscription } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemStateUpdates.api.ts'
+import { useTaskbarTabStateUpdates } from '#desktop/entities/user/current/composables/useTaskbarTabStateUpdates.ts'
 import type { TaskbarTabContext } from '#desktop/entities/user/current/types.ts'
 
 import ApplyTemplate from '../components/ApplyTemplate.vue'
@@ -309,38 +308,10 @@ const tabContext = computed<TaskbarTabContext>((currentContext) => {
   return newContext
 })
 
-// TODO: create a useTicketCreateInformation-Data composable which provides/inject support
-
 const { activeTaskbarTab, activeTaskbarTabFormId, activeTaskbarTabDelete } =
   useTaskbarTab(EnumTaskbarEntity.TicketCreate, tabContext)
 
-const stateUpdatesSubscription = new SubscriptionHandler(
-  useUserCurrentTaskbarItemStateUpdatesSubscription(
-    () => ({
-      taskbarItemId: activeTaskbarTab.value?.taskbarTabId as string,
-    }),
-    () => ({
-      fetchPolicy: 'no-cache',
-      enabled: !!activeTaskbarTab.value?.taskbarTabId,
-    }),
-  ),
-)
-
-stateUpdatesSubscription.onResult((result) => {
-  const taskbarTabId = activeTaskbarTab.value?.taskbarTabId
-
-  if (
-    taskbarTabId &&
-    result.data?.userCurrentTaskbarItemStateUpdates.stateChanged
-  ) {
-    triggerFormUpdater({
-      additionalParams: {
-        taskbarId: taskbarTabId,
-        applyTaskbarState: true,
-      },
-    })
-  }
-})
+const { setSkipNextStateUpdate } = useTaskbarTabStateUpdates(triggerFormUpdater)
 
 const { waitForVariantConfirmation } = useConfirmation()
 const discardChanges = async () => {
@@ -405,6 +376,7 @@ const submitCreateTicket = async (event: FormSubmitData<TicketFormData>) => {
         use-object-attributes
         form-class="flex flex-col gap-3"
         @submit="submitCreateTicket($event as FormSubmitData<TicketFormData>)"
+        @changed="setSkipNextStateUpdate(true)"
       />
     </div>
     <template #sideBar="{ isCollapsed, toggleCollapse }">
