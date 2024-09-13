@@ -1,4 +1,4 @@
-FROM node:20-slim as node
+FROM node:20-slim AS node
 RUN npm -g install pnpm
 RUN rm /usr/local/bin/yarn /usr/local/bin/yarnpkg
 
