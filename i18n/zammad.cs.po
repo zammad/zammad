@@ -9610,23 +9610,23 @@ msgid ""
 "characters!"
 msgstr "Neplatné heslo, musí obsahovat nejméně 2 malá a 2 velká písmena!"
 
-#: lib/knowledge_base/permissions_update.rb:86
+#: lib/knowledge_base/permissions_update.rb:88
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "Neplatná oprávnění, zabraňte vlastnímu uzamčení."
 
-#: lib/knowledge_base/permissions_update.rb:113
+#: lib/knowledge_base/permissions_update.rb:115
 #, fuzzy
 #| msgid "Invalid signer."
 msgid "Invalid permissions."
 msgstr "Neplatný podepisovatel."
 
-#: lib/knowledge_base/permissions_update.rb:115
+#: lib/knowledge_base/permissions_update.rb:117
 msgid ""
 "Invalid permissions. This role does not have access to this category because "
 "parent category is not visible for it."
 msgstr ""
 
-#: lib/knowledge_base/permissions_update.rb:113
+#: lib/knowledge_base/permissions_update.rb:115
 msgid ""
 "Invalid permissions. This role has editor access to parent category. "
 "Limiting access is not effective."
@@ -13608,7 +13608,7 @@ msgid "Protocol"
 msgstr "Protokol"
 
 #: app/controllers/knowledge_base/categories_controller.rb:23
-#: lib/knowledge_base/menu_item_update_action.rb:90
+#: lib/knowledge_base/menu_item_update_action.rb:92
 msgid "Provide position of all items in scope"
 msgstr "Zadejte pozici všech dotčených položek"
 

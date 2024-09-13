@@ -9687,17 +9687,17 @@ msgid ""
 "characters!"
 msgstr "Geçersiz şifre, en az 2 küçük harf ve 2 büyük harf içermelidir!"
 
-#: lib/knowledge_base/permissions_update.rb:86
+#: lib/knowledge_base/permissions_update.rb:88
 #, fuzzy
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "True"
 
-#: lib/knowledge_base/permissions_update.rb:113
+#: lib/knowledge_base/permissions_update.rb:115
 #, fuzzy
 msgid "Invalid permissions."
 msgstr "True"
 
-#: lib/knowledge_base/permissions_update.rb:115
+#: lib/knowledge_base/permissions_update.rb:117
 #, fuzzy
 msgid ""
 "Invalid permissions. This role does not have access to this category because "
@@ -9706,7 +9706,7 @@ msgstr ""
 "Geçersiz izinler. Bu rolün bu kategoriye erişimi yok çünkü üst kategori onun "
 "için görünür değil."
 
-#: lib/knowledge_base/permissions_update.rb:113
+#: lib/knowledge_base/permissions_update.rb:115
 #, fuzzy
 msgid ""
 "Invalid permissions. This role has editor access to parent category. "
@@ -13962,7 +13962,7 @@ msgid "Protocol"
 msgstr "Protocol"
 
 #: app/controllers/knowledge_base/categories_controller.rb:23
-#: lib/knowledge_base/menu_item_update_action.rb:90
+#: lib/knowledge_base/menu_item_update_action.rb:92
 #, fuzzy
 msgid "Provide position of all items in scope"
 msgstr "True"

@@ -9824,23 +9824,23 @@ msgstr ""
 "Senha inválida, deve conter pelo menos 2 letras minúsculas e 2 letras "
 "maiúsculas!"
 
-#: lib/knowledge_base/permissions_update.rb:86
+#: lib/knowledge_base/permissions_update.rb:88
 msgid "Invalid permissions, do not lock yourself out."
 msgstr ""
 
-#: lib/knowledge_base/permissions_update.rb:113
+#: lib/knowledge_base/permissions_update.rb:115
 #, fuzzy
 #| msgid "Any recipient"
 msgid "Invalid permissions."
 msgstr "Qualquer destinatário"
 
-#: lib/knowledge_base/permissions_update.rb:115
+#: lib/knowledge_base/permissions_update.rb:117
 msgid ""
 "Invalid permissions. This role does not have access to this category because "
 "parent category is not visible for it."
 msgstr ""
 
-#: lib/knowledge_base/permissions_update.rb:113
+#: lib/knowledge_base/permissions_update.rb:115
 msgid ""
 "Invalid permissions. This role has editor access to parent category. "
 "Limiting access is not effective."
@@ -13910,7 +13910,7 @@ msgid "Protocol"
 msgstr "Protocol"
 
 #: app/controllers/knowledge_base/categories_controller.rb:23
-#: lib/knowledge_base/menu_item_update_action.rb:90
+#: lib/knowledge_base/menu_item_update_action.rb:92
 msgid "Provide position of all items in scope"
 msgstr ""
 

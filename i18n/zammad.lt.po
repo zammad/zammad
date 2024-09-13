@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-12 05:39+0000\n"
+"PO-Revision-Date: 2024-09-12 09:16+0000\n"
 "Last-Translator: Mantas Masalskis <mantas@idev.lt>\n"
 "Language-Team: Lithuanian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/lt/>\n"
@@ -9014,15 +9014,15 @@ msgid ""
 msgstr ""
 "Netinkamas slaptažodis. Turi būti bent 2 mažosios ir 2 didžiosios raidės!"
 
-#: lib/knowledge_base/permissions_update.rb:86
+#: lib/knowledge_base/permissions_update.rb:88
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "Netinkami leidimai, neužsiblokuokite savęs."
 
-#: lib/knowledge_base/permissions_update.rb:113
+#: lib/knowledge_base/permissions_update.rb:115
 msgid "Invalid permissions."
 msgstr "Netinkami leidimai."
 
-#: lib/knowledge_base/permissions_update.rb:115
+#: lib/knowledge_base/permissions_update.rb:117
 msgid ""
 "Invalid permissions. This role does not have access to this category because "
 "parent category is not visible for it."
@@ -9030,7 +9030,7 @@ msgstr ""
 "Netinkami leidimai. Ši rolė neturi prieigos prie šitos kategorijos, nes "
 "neturi prieigos prie tėvinės kategorijos."
 
-#: lib/knowledge_base/permissions_update.rb:113
+#: lib/knowledge_base/permissions_update.rb:115
 msgid ""
 "Invalid permissions. This role has editor access to parent category. "
 "Limiting access is not effective."
@@ -12668,7 +12668,7 @@ msgid "Protocol"
 msgstr "Protokolas"
 
 #: app/controllers/knowledge_base/categories_controller.rb:23
-#: lib/knowledge_base/menu_item_update_action.rb:90
+#: lib/knowledge_base/menu_item_update_action.rb:92
 msgid "Provide position of all items in scope"
 msgstr "Pateikite visų elementų eiliškumą"
 

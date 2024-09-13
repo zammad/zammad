@@ -9076,15 +9076,15 @@ msgid ""
 msgstr ""
 "Ogiltigt lösenord, det måste innehålla minst två gemener och två versaler!"
 
-#: lib/knowledge_base/permissions_update.rb:86
+#: lib/knowledge_base/permissions_update.rb:88
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "Ogiltiga behörigheter, lås inte ut dig själv."
 
-#: lib/knowledge_base/permissions_update.rb:113
+#: lib/knowledge_base/permissions_update.rb:115
 msgid "Invalid permissions."
 msgstr "Ogiltiga behörigheter."
 
-#: lib/knowledge_base/permissions_update.rb:115
+#: lib/knowledge_base/permissions_update.rb:117
 msgid ""
 "Invalid permissions. This role does not have access to this category because "
 "parent category is not visible for it."
@@ -9092,7 +9092,7 @@ msgstr ""
 "Ogiltiga behörigheter. Den här rollen har inte åtkomst till den här "
 "kategorin eftersom den överordnade kategorin inte är synlig för den."
 
-#: lib/knowledge_base/permissions_update.rb:113
+#: lib/knowledge_base/permissions_update.rb:115
 msgid ""
 "Invalid permissions. This role has editor access to parent category. "
 "Limiting access is not effective."
@@ -12745,7 +12745,7 @@ msgid "Protocol"
 msgstr "Protokoll"
 
 #: app/controllers/knowledge_base/categories_controller.rb:23
-#: lib/knowledge_base/menu_item_update_action.rb:90
+#: lib/knowledge_base/menu_item_update_action.rb:92
 msgid "Provide position of all items in scope"
 msgstr "Ange position för samtliga objekt"
 

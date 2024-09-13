@@ -9226,15 +9226,15 @@ msgstr ""
 "¡Contraseña inválida, debe contener al menos 2 letras minúsculas y 2 letras "
 "mayúsculas!"
 
-#: lib/knowledge_base/permissions_update.rb:86
+#: lib/knowledge_base/permissions_update.rb:88
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "Permisos no válidos, no se autoexpulse."
 
-#: lib/knowledge_base/permissions_update.rb:113
+#: lib/knowledge_base/permissions_update.rb:115
 msgid "Invalid permissions."
 msgstr "Permisos no válidos."
 
-#: lib/knowledge_base/permissions_update.rb:115
+#: lib/knowledge_base/permissions_update.rb:117
 msgid ""
 "Invalid permissions. This role does not have access to this category because "
 "parent category is not visible for it."
@@ -9242,7 +9242,7 @@ msgstr ""
 "Permisos no válidos. Este rol no tiene acceso a esta categoría porque no "
 "tiene visibilidad de la categoría padre."
 
-#: lib/knowledge_base/permissions_update.rb:113
+#: lib/knowledge_base/permissions_update.rb:115
 msgid ""
 "Invalid permissions. This role has editor access to parent category. "
 "Limiting access is not effective."
@@ -12922,7 +12922,7 @@ msgid "Protocol"
 msgstr "Protocolo"
 
 #: app/controllers/knowledge_base/categories_controller.rb:23
-#: lib/knowledge_base/menu_item_update_action.rb:90
+#: lib/knowledge_base/menu_item_update_action.rb:92
 msgid "Provide position of all items in scope"
 msgstr "Indique la posición de todos los ítems en el ámbito"
 

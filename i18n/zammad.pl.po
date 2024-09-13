@@ -9411,15 +9411,15 @@ msgid ""
 msgstr ""
 "Niewłaściwe hasło, musi zawierać przynajmniej 2 małe i 2 WIELKIE litery!"
 
-#: lib/knowledge_base/permissions_update.rb:86
+#: lib/knowledge_base/permissions_update.rb:88
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "Nieprawidłowe uprawnienia, nie blokuj się."
 
-#: lib/knowledge_base/permissions_update.rb:113
+#: lib/knowledge_base/permissions_update.rb:115
 msgid "Invalid permissions."
 msgstr "Nieprawidłowe uprawnienia."
 
-#: lib/knowledge_base/permissions_update.rb:115
+#: lib/knowledge_base/permissions_update.rb:117
 msgid ""
 "Invalid permissions. This role does not have access to this category because "
 "parent category is not visible for it."
@@ -9427,7 +9427,7 @@ msgstr ""
 "Nieprawidłowe uprawnienia. Ta rola nie ma dostępu do tej kategorii, ponieważ "
 "kategoria nadrzędna nie jest dla niej widoczna."
 
-#: lib/knowledge_base/permissions_update.rb:113
+#: lib/knowledge_base/permissions_update.rb:115
 msgid ""
 "Invalid permissions. This role has editor access to parent category. "
 "Limiting access is not effective."
@@ -13329,7 +13329,7 @@ msgid "Protocol"
 msgstr "Protokół"
 
 #: app/controllers/knowledge_base/categories_controller.rb:23
-#: lib/knowledge_base/menu_item_update_action.rb:90
+#: lib/knowledge_base/menu_item_update_action.rb:92
 msgid "Provide position of all items in scope"
 msgstr "Podaj pozycję wszystkich elementów w zakresie"
 

@@ -9139,15 +9139,15 @@ msgstr ""
 "Ongeldig wachtwoord, het moet minimaal 2 kleine letters en 2 hoofdletters "
 "bevatten!"
 
-#: lib/knowledge_base/permissions_update.rb:86
+#: lib/knowledge_base/permissions_update.rb:88
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "Ongeldige rechten, sluit jezelf niet buiten."
 
-#: lib/knowledge_base/permissions_update.rb:113
+#: lib/knowledge_base/permissions_update.rb:115
 msgid "Invalid permissions."
 msgstr "Ongeldige permissies."
 
-#: lib/knowledge_base/permissions_update.rb:115
+#: lib/knowledge_base/permissions_update.rb:117
 msgid ""
 "Invalid permissions. This role does not have access to this category because "
 "parent category is not visible for it."
@@ -9155,7 +9155,7 @@ msgstr ""
 "Ongeldige permissies. Deze rol heeft geen toegang tot deze categorie omdat "
 "de bovenliggende categorie niet zichtbaar is."
 
-#: lib/knowledge_base/permissions_update.rb:113
+#: lib/knowledge_base/permissions_update.rb:115
 msgid ""
 "Invalid permissions. This role has editor access to parent category. "
 "Limiting access is not effective."
@@ -12821,7 +12821,7 @@ msgid "Protocol"
 msgstr "Protocol"
 
 #: app/controllers/knowledge_base/categories_controller.rb:23
-#: lib/knowledge_base/menu_item_update_action.rb:90
+#: lib/knowledge_base/menu_item_update_action.rb:92
 msgid "Provide position of all items in scope"
 msgstr "Geef de positie van alle items in het bereik op"
 

@@ -9183,15 +9183,15 @@ msgstr ""
 "Senha inválida, é necessário ter 2 caracteres pequenos e 2 caracteres "
 "grandes!"
 
-#: lib/knowledge_base/permissions_update.rb:86
+#: lib/knowledge_base/permissions_update.rb:88
 msgid "Invalid permissions, do not lock yourself out."
 msgstr "Permissões inválidas, você não pode bloquear você mesmo."
 
-#: lib/knowledge_base/permissions_update.rb:113
+#: lib/knowledge_base/permissions_update.rb:115
 msgid "Invalid permissions."
 msgstr "Permissões inválidas."
 
-#: lib/knowledge_base/permissions_update.rb:115
+#: lib/knowledge_base/permissions_update.rb:117
 msgid ""
 "Invalid permissions. This role does not have access to this category because "
 "parent category is not visible for it."
@@ -9199,7 +9199,7 @@ msgstr ""
 "Permissões inválidas. Este cargo não tem acesso a esta categoria porque a "
 "categoria pai não é visível para ele."
 
-#: lib/knowledge_base/permissions_update.rb:113
+#: lib/knowledge_base/permissions_update.rb:115
 msgid ""
 "Invalid permissions. This role has editor access to parent category. "
 "Limiting access is not effective."
@@ -12880,7 +12880,7 @@ msgid "Protocol"
 msgstr "Protocolo"
 
 #: app/controllers/knowledge_base/categories_controller.rb:23
-#: lib/knowledge_base/menu_item_update_action.rb:90
+#: lib/knowledge_base/menu_item_update_action.rb:92
 msgid "Provide position of all items in scope"
 msgstr "Provê a posição de todos os itens de um escopo"
 
