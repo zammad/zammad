@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, type ComputedRef, toValue } from 'vue'
+import { computed, type Ref } from 'vue'
 
 import CommonDateTime from '#shared/components/CommonDateTime/CommonDateTime.vue'
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
@@ -8,8 +8,6 @@ import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { lookupArticlePlugin } from '#desktop/pages/ticket/components/TicketDetailView/article-type/index.ts'
 import ArticleMetaFieldAddress from '#desktop/pages/ticket/components/TicketDetailView/ArticleMeta/ArticleMetaAddress.vue'
 import type { ChannelMetaField } from '#desktop/pages/ticket/components/TicketDetailView/ArticleMeta/types.ts'
-
-import type { MaybeRefOrGetter } from '@vueuse/core'
 
 const getNestedProperty = (article: TicketArticle, nestedKeys: string[]) => {
   return nestedKeys.reduce((accumulator, currentKey) => {
@@ -22,7 +20,7 @@ const getNestedProperty = (article: TicketArticle, nestedKeys: string[]) => {
 
 const addNewFields = (
   fields: ChannelMetaField[],
-  article: ComputedRef<TicketArticle>,
+  article: Ref<TicketArticle>,
 ) => {
   const plugin = lookupArticlePlugin(article.value.type?.name as string)
   if (!plugin?.additionalFields?.length) return fields
@@ -32,7 +30,7 @@ const addNewFields = (
 
     const fieldValue = getNestedProperty(article.value, nestedKeys)
 
-    if (field.show !== undefined && !field.show?.(article.value)) return fields
+    if (field.show !== undefined && !field.show?.(article)) return fields
 
     if (fieldValue)
       fields.push({
@@ -47,11 +45,7 @@ const addNewFields = (
   return fields
 }
 
-export const useArticleMeta = (
-  ticketArticle: MaybeRefOrGetter<TicketArticle>,
-) => {
-  const article = computed(() => toValue(ticketArticle))
-
+export const useArticleMeta = (article: Ref<TicketArticle>) => {
   const links = computed(() => article.value.preferences?.links || [])
 
   const fields = computed(() => {

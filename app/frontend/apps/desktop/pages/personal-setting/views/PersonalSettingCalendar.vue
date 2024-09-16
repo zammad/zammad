@@ -310,7 +310,6 @@ const tabs = [
       />
 
       <FormKit
-        :key="alarmLocalValue"
         v-model="alarmLocalValue"
         type="toggle"
         :label="__('Add alarm to pending reminder and escalated tickets')"

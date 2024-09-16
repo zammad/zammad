@@ -1,13 +1,13 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 
-import type { Component } from 'vue'
+import type { Component, Ref } from 'vue'
 
 export interface ChannelField {
   name: string
   label: string
   order: number
-  show?: (article: TicketArticle) => boolean
+  show?: (article: Ref<TicketArticle>) => boolean
   icon?: string
   component?: Component
 }

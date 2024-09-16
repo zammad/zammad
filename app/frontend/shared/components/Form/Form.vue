@@ -16,6 +16,7 @@ import {
   markRaw,
   useSlots,
   onBeforeUnmount,
+  effectScope,
 } from 'vue'
 
 import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
@@ -1252,7 +1253,12 @@ const handleFormUpdaterAutosaveNotification = () => {
   })
 }
 
-onBeforeUnmount(cleanupFormUpdaterAutosaveNotification)
+const formUpdaterScope = effectScope()
+
+onBeforeUnmount(() => {
+  if (formUpdaterScope.active) formUpdaterScope.stop()
+  cleanupFormUpdaterAutosaveNotification()
+})
 
 const initializeFormSchema = () => {
   buildStaticSchema()
@@ -1270,18 +1276,20 @@ const initializeFormSchema = () => {
       relationFields,
     })
 
-    formUpdaterQueryHandler = new QueryHandler(
-      useFormUpdaterQuery(
-        formUpdaterVariables as Ref<FormUpdaterQueryVariables>,
-        {
-          // TODO: we can try it like that to improve a little bit the loading situation, but could
-          // lead to an flickering when something changes from server perspective...
-          // fetchPolicy: 'cache-and-network',
-          // nextFetchPolicy: 'no-cache',
-          fetchPolicy: 'no-cache',
-        },
-      ),
-    )
+    formUpdaterScope.run(() => {
+      formUpdaterQueryHandler = new QueryHandler(
+        useFormUpdaterQuery(
+          formUpdaterVariables as Ref<FormUpdaterQueryVariables>,
+          {
+            // TODO: we can try it like that to improve a little bit the loading situation, but could
+            // lead to an flickering when something changes from server perspective...
+            // fetchPolicy: 'cache-and-network',
+            // nextFetchPolicy: 'no-cache',
+            fetchPolicy: 'no-cache',
+          },
+        ),
+      )
+    })
 
     handleFormUpdaterAutosaveNotification()
 

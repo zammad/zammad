@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, toValue } from 'vue'
+import { computed, type Ref } from 'vue'
 
 import {
   NotificationTypes,
@@ -12,13 +12,7 @@ import { useTicketArticleRetrySecurityProcessMutation } from '#shared/entities/t
 import { i18n } from '#shared/i18n/index.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 
-import type { MaybeRefOrGetter } from '@vueuse/core'
-
-export const useArticleSecurity = (
-  ticketArticle: MaybeRefOrGetter<TicketArticle>,
-) => {
-  const article = computed(() => toValue(ticketArticle))
-
+export const useArticleSecurity = (article: Ref<TicketArticle>) => {
   const { notify } = useNotifications()
 
   const signingSuccess = computed(

@@ -118,6 +118,7 @@ export interface ExtendedMountingOptions<Props>
     [prop: string]: unknown
   }
   visuals?: SharedVisualConfig
+  plugins?: Plugin[]
 }
 
 type UserEvent = ReturnType<(typeof userEvent)['setup']>
@@ -433,25 +434,25 @@ const renderComponent = <Props>(
   initializeAppName(appName)
 
   // Store and Router needs only to be initalized once for a test suit.
-  if (wrapperOptions?.router) {
+  if (wrapperOptions.router) {
     initializeRouter(
-      wrapperOptions?.routerRoutes,
-      wrapperOptions?.routerBeforeGuards,
+      wrapperOptions.routerRoutes,
+      wrapperOptions.routerBeforeGuards,
     )
   }
-  if (wrapperOptions?.store) {
+  if (wrapperOptions.store) {
     initializePiniaStore()
   }
-  if (wrapperOptions?.form) {
+  if (wrapperOptions.form) {
     initializeForm()
   }
-  if (wrapperOptions?.dialog) {
+  if (wrapperOptions.dialog) {
     mountDialog()
   }
-  if (wrapperOptions?.flyout) {
+  if (wrapperOptions.flyout) {
     mountFlyout()
   }
-  if (wrapperOptions?.confirmation) {
+  if (wrapperOptions.confirmation) {
     mountConfirmation()
   }
 
@@ -463,11 +464,17 @@ const renderComponent = <Props>(
     initDefaultVisuals()
   }
 
-  if (wrapperOptions?.form && wrapperOptions?.formField) {
+  if (wrapperOptions.form && wrapperOptions.formField) {
     defaultWrapperOptions.props ||= {}
 
     // Reset the default of 20ms for testing.
     defaultWrapperOptions.props.delay = 0
+  }
+
+  if (wrapperOptions.plugins) {
+    plugins.push(...wrapperOptions.plugins)
+
+    delete wrapperOptions.plugins
   }
 
   const { startWatchingModel } = setupVModel(wrapperOptions)

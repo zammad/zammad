@@ -1,11 +1,15 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { effectScope, ref } from 'vue'
 
-import type { LocalesQuery } from '#shared/graphql/types.ts'
-import getAvailableLocales from '#shared/i18n/availableLocales.ts'
+import { useLocalesLazyQuery } from '#shared/graphql/queries/locales.api.ts'
+import type {
+  LocalesQuery,
+  LocalesQueryVariables,
+} from '#shared/graphql/types.ts'
 import localeForBrowserLanguage from '#shared/i18n/localeForBrowserLanguage.ts'
+import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import log from '#shared/utils/log.ts'
 
 import { useTranslationsStore } from './translations.ts'
@@ -13,6 +17,19 @@ import { useTranslationsStore } from './translations.ts'
 import type { LastArrayElement } from 'type-fest'
 
 type Locale = LastArrayElement<LocalesQuery['locales']>
+
+let localesQuery: QueryHandler<LocalesQuery, LocalesQueryVariables>
+
+const getLocalesQuery = () => {
+  if (localesQuery) return localesQuery
+
+  const scope = effectScope()
+  scope.run(() => {
+    localesQuery = new QueryHandler(useLocalesLazyQuery({ onlyActive: true }))
+  })
+
+  return localesQuery
+}
 
 export const useLocaleStore = defineStore(
   'locale',
@@ -23,7 +40,10 @@ export const useLocaleStore = defineStore(
     const loadLocales = async (): Promise<void> => {
       if (locales.value) return
 
-      locales.value = await getAvailableLocales()
+      const currentQuery = getLocalesQuery()
+      const { data: result } = await currentQuery.query()
+
+      locales.value = result?.locales || null
     }
 
     const setLocale = async (locale?: string): Promise<void> => {

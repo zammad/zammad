@@ -2,7 +2,7 @@
 
 import { cloneDeep } from 'lodash-es'
 import { defineStore } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, effectScope, ref } from 'vue'
 
 import useFingerprint from '#shared/composables/useFingerprint.ts'
 import { useCurrentUserLazyQuery } from '#shared/graphql/queries/currentUser.api.ts'
@@ -38,22 +38,25 @@ const getSessionQuery = () => {
 
   const { fingerprint } = useFingerprint()
 
-  sessionQuery = new QueryHandler(
-    useSessionLazyQuery({
-      fetchPolicy: 'network-only',
-      context: {
-        error: {
-          logLevel: 'silent',
+  const scope = effectScope()
+  scope.run(() => {
+    sessionQuery = new QueryHandler(
+      useSessionLazyQuery({
+        fetchPolicy: 'network-only',
+        context: {
+          error: {
+            logLevel: 'silent',
+          },
+          headers: {
+            'X-Browser-Fingerprint': fingerprint.value,
+          },
         },
-        headers: {
-          'X-Browser-Fingerprint': fingerprint.value,
-        },
+      }),
+      {
+        errorShowNotification: false,
       },
-    }),
-    {
-      errorShowNotification: false,
-    },
-  )
+    )
+  })
 
   return sessionQuery
 }
@@ -63,9 +66,12 @@ let currentUserQuery: QueryHandler<CurrentUserQuery, CurrentUserQueryVariables>
 const getCurrentUserQuery = () => {
   if (currentUserQuery) return currentUserQuery
 
-  currentUserQuery = new QueryHandler(
-    useCurrentUserLazyQuery({ fetchPolicy: 'network-only' }),
-  )
+  const scope = effectScope()
+  scope.run(() => {
+    currentUserQuery = new QueryHandler(
+      useCurrentUserLazyQuery({ fetchPolicy: 'network-only' }),
+    )
+  })
 
   return currentUserQuery
 }
@@ -120,19 +126,22 @@ export const useSessionStore = defineStore(
 
       if (user.value) {
         if (!currentUserUpdateSubscription) {
-          currentUserUpdateSubscription = new SubscriptionHandler(
-            useCurrentUserUpdatesSubscription(() => ({
-              userId: (user.value as UserData)?.id,
-            })),
-          )
+          const scope = effectScope()
+          scope.run(() => {
+            currentUserUpdateSubscription = new SubscriptionHandler(
+              useCurrentUserUpdatesSubscription(() => ({
+                userId: (user.value as UserData)?.id,
+              })),
+            )
 
-          currentUserUpdateSubscription.onResult((result) => {
-            const updatedUser = result.data?.userUpdates.user
-            if (!updatedUser) {
-              testFlags.set('useCurrentUserUpdatesSubscription.subscribed')
-            } else {
-              user.value = updatedUser
-            }
+            currentUserUpdateSubscription.onResult((result) => {
+              const updatedUser = result.data?.userUpdates.user
+              if (!updatedUser) {
+                testFlags.set('useCurrentUserUpdatesSubscription.subscribed')
+              } else {
+                user.value = updatedUser
+              }
+            })
           })
         } else {
           currentUserUpdateSubscription.start()

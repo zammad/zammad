@@ -75,7 +75,6 @@ const { updateTitle } = useTicketEditTitle(computed(() => props.ticket))
           block
           :disabled="!ticket.policy.update"
           :value="ticket.title"
-          :parent="$refs.parentContainer as HTMLElement"
           :classes="{
             label: hideDetails
               ? 'dark:text-white font-medium line-clamp-1'

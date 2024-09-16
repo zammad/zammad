@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { defineStore } from 'pinia'
-import { computed, ref, type Ref } from 'vue'
+import { computed, effectScope, ref, type Ref } from 'vue'
 
 import { useNotifications } from '#shared/components/CommonNotifications/index.ts'
 import { useApplicationLoaded } from '#shared/composables/useApplicationLoaded.ts'
@@ -28,9 +28,12 @@ let applicationConfigQuery: QueryHandler<
 const getApplicationConfigQuery = () => {
   if (applicationConfigQuery) return applicationConfigQuery
 
-  applicationConfigQuery = new QueryHandler(
-    useApplicationConfigQuery({ fetchPolicy: 'no-cache' }),
-  )
+  const scope = effectScope()
+  scope.run(() => {
+    applicationConfigQuery = new QueryHandler(
+      useApplicationConfigQuery({ fetchPolicy: 'no-cache' }),
+    )
+  })
 
   return applicationConfigQuery
 }
@@ -78,20 +81,23 @@ export const useApplicationStore = defineStore(
     const config = ref<Record<string, unknown>>({})
 
     const initializeConfigUpdateSubscription = (): void => {
-      const configUpdatesSubscription = new SubscriptionHandler(
-        useConfigUpdatesSubscription(),
-      )
+      const scope = effectScope()
+      scope.run(() => {
+        const configUpdatesSubscription = new SubscriptionHandler(
+          useConfigUpdatesSubscription(),
+        )
 
-      configUpdatesSubscription.onResult((result) => {
-        const updatedSetting = result.data?.configUpdates.setting
-        if (updatedSetting) {
-          config.value[updatedSetting.key] = updatedSetting.value
-        } else {
-          testFlags.set('useConfigUpdatesSubscription.subscribed')
-        }
+        configUpdatesSubscription.onResult((result) => {
+          const updatedSetting = result.data?.configUpdates.setting
+          if (updatedSetting) {
+            config.value[updatedSetting.key] = updatedSetting.value
+          } else {
+            testFlags.set('useConfigUpdatesSubscription.subscribed')
+          }
+        })
+
+        configUpdatesSubscriptionInitialized = true
       })
-
-      configUpdatesSubscriptionInitialized = true
     }
 
     const getConfig = async (): Promise<void> => {

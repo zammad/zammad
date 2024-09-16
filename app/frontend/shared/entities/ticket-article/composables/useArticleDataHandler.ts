@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { noop } from 'lodash-es'
-import { computed, type ComputedRef, nextTick, type Ref, toValue } from 'vue'
+import { computed, type ComputedRef, nextTick, type Ref } from 'vue'
 
 import { useTicketArticlesQuery } from '#shared/entities/ticket/graphql/queries/ticket/articles.api.ts'
 import { TicketArticleUpdatesDocument } from '#shared/entities/ticket/graphql/subscriptions/ticketArticlesUpdates.api.ts'
@@ -14,8 +14,6 @@ import type {
 import { getApolloClient } from '#shared/server/apollo/client.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
-import type { MaybeRefOrGetter } from '@vueuse/core'
-
 export interface AddArticleCallbackArgs {
   updates: TicketArticleUpdatesSubscription['ticketArticleUpdates']
   previousArticlesEdges: TicketArticlesQuery['articles']['edges']
@@ -27,24 +25,22 @@ export interface AddArticleCallbackArgs {
 }
 
 export const useArticleDataHandler = (
-  ticketId: MaybeRefOrGetter<string>,
+  ticketId: Ref<string>,
   options: {
     pageSize: number
-    firstArticlesCount?: MaybeRefOrGetter<number>
+    firstArticlesCount?: Ref<number>
     onAddArticleCallback?: (args: AddArticleCallbackArgs) => void
   } = {
     pageSize: 20,
-    firstArticlesCount: 5,
   },
 ) => {
-  const graphqlTicketId = computed(() => toValue(ticketId))
-
-  const firstArticlesCount = computed(() =>
-    options.firstArticlesCount ? toValue(options.firstArticlesCount) : 5,
+  const firstArticlesCount = computed(
+    () => options.firstArticlesCount?.value || 5,
   )
+
   const articlesQuery = new QueryHandler(
     useTicketArticlesQuery(() => ({
-      ticketId: graphqlTicketId.value,
+      ticketId: ticketId.value,
       pageSize: options.pageSize || 20,
       firstArticlesCount: firstArticlesCount.value,
     })),
@@ -64,7 +60,7 @@ export const useArticleDataHandler = (
 
   const refetchArticlesQuery = (pageSize: Maybe<number>) => {
     articlesQuery.refetch({
-      ticketId: graphqlTicketId.value,
+      ticketId: ticketId.value,
       pageSize,
     })
   }
@@ -90,7 +86,7 @@ export const useArticleDataHandler = (
   >(() => ({
     document: TicketArticleUpdatesDocument,
     variables: {
-      ticketId: graphqlTicketId.value,
+      ticketId: ticketId.value,
     },
     onError: noop,
     updateQuery(previous, { subscriptionData }) {

@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { defineStore } from 'pinia'
-import { ref } from 'vue'
+import { effectScope, ref } from 'vue'
 
 import { useTranslationsLazyQuery } from '#shared/graphql/queries/translations.api.ts'
 import type {
@@ -47,13 +47,16 @@ let translationsQuery: QueryHandler<
 const getTranslationsQuery = () => {
   if (translationsQuery) return translationsQuery
 
-  translationsQuery = new QueryHandler(
-    useTranslationsLazyQuery({} as TranslationsQueryVariables),
-    {
-      // Don't show an error while app is loading as this would cause startup failure.
-      errorShowNotification: useApplicationStore().loaded,
-    },
-  )
+  const scope = effectScope()
+  scope.run(() => {
+    translationsQuery = new QueryHandler(
+      useTranslationsLazyQuery({} as TranslationsQueryVariables),
+      {
+        // Don't show an error while app is loading as this would cause startup failure.
+        errorShowNotification: useApplicationStore().loaded,
+      },
+    )
+  })
 
   return translationsQuery
 }

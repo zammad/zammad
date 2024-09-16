@@ -3,6 +3,7 @@
 import { NetworkStatus } from '@apollo/client/core'
 import { useSubscription } from '@vue/apollo-composable'
 import { createMockSubscription } from 'mock-apollo-client'
+import { effectScope } from 'vue'
 
 import { SampleTypedSubscriptionDocument } from '#tests/fixtures/graphqlSampleTypes.ts'
 import type {
@@ -52,6 +53,8 @@ const mockClient = () => {
   subscriptionFunctionCallSpy.mockClear()
 }
 
+const scope = effectScope()
+
 describe('SubscriptionHandler', () => {
   const sampleSubscription = (
     variables: SampleUpdatedSubscriptionVariables,
@@ -70,32 +73,38 @@ describe('SubscriptionHandler', () => {
     })
 
     it('instance can be created', () => {
-      const subscriptionHandlerObject = new SubscriptionHandler(
-        sampleSubscription({ id: 1 }),
-      )
-      expect(subscriptionHandlerObject).toBeInstanceOf(SubscriptionHandler)
+      scope.run(() => {
+        const subscriptionHandlerObject = new SubscriptionHandler(
+          sampleSubscription({ id: 1 }),
+        )
+        expect(subscriptionHandlerObject).toBeInstanceOf(SubscriptionHandler)
+      })
     })
 
     it('default handler options can be changed', () => {
-      const errorNotificationMessage = 'A test message.'
+      scope.run(() => {
+        const errorNotificationMessage = 'A test message.'
 
-      const subscriptionHandlerObject = new SubscriptionHandler(
-        sampleSubscription({ id: 1 }),
-        {
-          errorNotificationMessage,
-        },
-      )
-      expect(
-        subscriptionHandlerObject.handlerOptions.errorNotificationMessage,
-      ).toBe(errorNotificationMessage)
+        const subscriptionHandlerObject = new SubscriptionHandler(
+          sampleSubscription({ id: 1 }),
+          {
+            errorNotificationMessage,
+          },
+        )
+        expect(
+          subscriptionHandlerObject.handlerOptions.errorNotificationMessage,
+        ).toBe(errorNotificationMessage)
+      })
     })
 
     it('given subscription function was executed', () => {
-      const subscriptionHandlerObject = new SubscriptionHandler(
-        sampleSubscription({ id: 1 }),
-      )
-      expect(subscriptionFunctionCallSpy).toBeCalled()
-      expect(subscriptionHandlerObject.operationResult).toBeTruthy()
+      scope.run(() => {
+        const subscriptionHandlerObject = new SubscriptionHandler(
+          sampleSubscription({ id: 1 }),
+        )
+        expect(subscriptionFunctionCallSpy).toBeCalled()
+        expect(subscriptionHandlerObject.operationResult).toBeTruthy()
+      })
     })
   })
 
@@ -105,22 +114,24 @@ describe('SubscriptionHandler', () => {
     })
 
     it('loading state will be updated', async () => {
-      expect.assertions(2)
+      await scope.run(async () => {
+        expect.assertions(2)
 
-      const subscriptionHandlerObject = new SubscriptionHandler(
-        sampleSubscription({ id: 1 }),
-      )
-      expect(subscriptionHandlerObject.loading().value).toBe(true)
+        const subscriptionHandlerObject = new SubscriptionHandler(
+          sampleSubscription({ id: 1 }),
+        )
+        expect(subscriptionHandlerObject.loading().value).toBe(true)
 
-      const subscribed = subscriptionHandlerObject.onSubscribed()
+        const subscribed = subscriptionHandlerObject.onSubscribed()
 
-      mockSubscription.next({
-        data: subscriptionSampleResult,
+        mockSubscription.next({
+          data: subscriptionSampleResult,
+        })
+
+        await subscribed
+
+        expect(subscriptionHandlerObject.loading().value).toBe(false)
       })
-
-      await subscribed
-
-      expect(subscriptionHandlerObject.loading().value).toBe(false)
     })
   })
 
@@ -130,78 +141,84 @@ describe('SubscriptionHandler', () => {
     })
 
     it('subscribed', async () => {
-      expect.assertions(1)
-      const subscriptionHandlerObject = new SubscriptionHandler(
-        sampleSubscription({ id: 1 }),
-      )
+      await scope.run(async () => {
+        expect.assertions(1)
+        const subscriptionHandlerObject = new SubscriptionHandler(
+          sampleSubscription({ id: 1 }),
+        )
 
-      const subscribed = subscriptionHandlerObject.onSubscribed()
+        const subscribed = subscriptionHandlerObject.onSubscribed()
 
-      mockSubscription.next({
-        data: subscriptionSampleResult,
+        mockSubscription.next({
+          data: subscriptionSampleResult,
+        })
+
+        const result = await subscribed
+
+        expect(result).toEqual(subscriptionSampleResult)
       })
-
-      const result = await subscribed
-
-      expect(result).toEqual(subscriptionSampleResult)
     })
 
     it('watch on result change', async () => {
-      expect.assertions(2)
-      const subscriptionHandlerObject = new SubscriptionHandler(
-        sampleSubscription({ id: 1 }),
-      )
-
-      const subscribed = subscriptionHandlerObject.onSubscribed()
-
-      mockSubscription.next({
-        data: subscriptionSampleResult,
-      })
-
-      await subscribed
-
-      let watchCount = 0
-      subscriptionHandlerObject.watchOnResult((result) => {
-        expect(result).toEqual(
-          watchCount === 0
-            ? subscriptionSampleResult
-            : subscriptionSampleResultUpdated,
+      await scope.run(async () => {
+        expect.assertions(2)
+        const subscriptionHandlerObject = new SubscriptionHandler(
+          sampleSubscription({ id: 1 }),
         )
-        watchCount += 1
-      })
 
-      mockSubscription.next({
-        data: subscriptionSampleResultUpdated,
+        const subscribed = subscriptionHandlerObject.onSubscribed()
+
+        mockSubscription.next({
+          data: subscriptionSampleResult,
+        })
+
+        await subscribed
+
+        let watchCount = 0
+        subscriptionHandlerObject.watchOnResult((result) => {
+          expect(result).toEqual(
+            watchCount === 0
+              ? subscriptionSampleResult
+              : subscriptionSampleResultUpdated,
+          )
+          watchCount += 1
+        })
+
+        mockSubscription.next({
+          data: subscriptionSampleResultUpdated,
+        })
       })
     })
 
     it('register onResult callback', async () => {
-      expect.assertions(1)
+      await scope.run(async () => {
+        expect.assertions(1)
 
-      const subscriptionHandlerObject = new SubscriptionHandler(
-        sampleSubscription({ id: 1 }),
-      )
+        const subscriptionHandlerObject = new SubscriptionHandler(
+          sampleSubscription({ id: 1 }),
+        )
 
-      const resultCallbackSpy = vi.fn()
+        const resultCallbackSpy = vi.fn()
 
-      const subscribed = subscriptionHandlerObject.onSubscribed()
+        const subscribed = subscriptionHandlerObject.onSubscribed()
 
-      mockSubscription.next({
-        data: subscriptionSampleResult,
-      })
+        mockSubscription.next({
+          data: subscriptionSampleResult,
+        })
 
-      await subscribed
+        await subscribed
 
-      subscriptionHandlerObject.onResult((result) => {
-        resultCallbackSpy(result)
-      })
+        subscriptionHandlerObject.onResult((result) => {
+          resultCallbackSpy(result)
+        })
 
-      mockSubscription.next({
-        data: subscriptionSampleResultUpdated,
-      })
+        mockSubscription.next({
+          data: subscriptionSampleResultUpdated,
+        })
 
-      expect(resultCallbackSpy).toHaveBeenCalledWith({
-        data: subscriptionSampleResultUpdated,
+        expect(resultCallbackSpy).toHaveBeenCalledWith({
+          data: subscriptionSampleResultUpdated,
+        })
       })
     })
   })
@@ -213,37 +230,41 @@ describe('SubscriptionHandler', () => {
       })
 
       it('notification is triggerd', () => {
-        const subscriptionHandlerObject = new SubscriptionHandler(
-          sampleSubscription({ id: 1 }),
-        )
+        scope.run(() => {
+          const subscriptionHandlerObject = new SubscriptionHandler(
+            sampleSubscription({ id: 1 }),
+          )
 
-        mockSubscription.next(subscriptionSampleErrorResult)
+          mockSubscription.next(subscriptionSampleErrorResult)
 
-        expect(subscriptionHandlerObject.operationError().value).toBeTruthy()
+          expect(subscriptionHandlerObject.operationError().value).toBeTruthy()
 
-        const { notifications } = useNotifications()
-        expect(notifications.value.length).toBe(1)
+          const { notifications } = useNotifications()
+          expect(notifications.value.length).toBe(1)
+        })
       })
 
       it('use error callback', () => {
-        const errorCallbackSpy = vi.fn()
+        scope.run(() => {
+          const errorCallbackSpy = vi.fn()
 
-        const subscriptionHandlerObject = new SubscriptionHandler(
-          sampleSubscription({ id: 1 }),
-          {
-            errorCallback: (error) => {
-              errorCallbackSpy(error)
+          const subscriptionHandlerObject = new SubscriptionHandler(
+            sampleSubscription({ id: 1 }),
+            {
+              errorCallback: (error) => {
+                errorCallbackSpy(error)
+              },
             },
-          },
-        )
+          )
 
-        mockSubscription.next(subscriptionSampleErrorResult)
+          mockSubscription.next(subscriptionSampleErrorResult)
 
-        expect(subscriptionHandlerObject.operationError().value).toBeTruthy()
+          expect(subscriptionHandlerObject.operationError().value).toBeTruthy()
 
-        expect(errorCallbackSpy).toHaveBeenCalledWith({
-          type: 'Exceptions::UnknownError',
-          message: 'GraphQL Error',
+          expect(errorCallbackSpy).toHaveBeenCalledWith({
+            type: 'Exceptions::UnknownError',
+            message: 'GraphQL Error',
+          })
         })
       })
     })
@@ -255,11 +276,13 @@ describe('SubscriptionHandler', () => {
     })
 
     it('use returned query options', () => {
-      const subscriptionHandlerObject = new SubscriptionHandler(
-        sampleSubscription({ id: 1 }),
-      )
+      scope.run(() => {
+        const subscriptionHandlerObject = new SubscriptionHandler(
+          sampleSubscription({ id: 1 }),
+        )
 
-      expect(subscriptionHandlerObject.options()).toBeTruthy()
+        expect(subscriptionHandlerObject.options()).toBeTruthy()
+      })
     })
   })
 })

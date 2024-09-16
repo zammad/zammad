@@ -23,13 +23,13 @@ export const useSystemSetupInfoStore = defineStore('systemSetupInfo', () => {
     {},
   )
 
-  const setSystemSetupInfo = async () => {
-    const systemSetupInfoQuery = new QueryHandler(
-      useSystemSetupInfoLazyQuery({
-        fetchPolicy: 'network-only',
-      }),
-    )
+  const systemSetupInfoQuery = new QueryHandler(
+    useSystemSetupInfoLazyQuery({
+      fetchPolicy: 'network-only',
+    }),
+  )
 
+  const setSystemSetupInfo = async () => {
     const systemSetupInfoResult = await systemSetupInfoQuery.query()
     const newSystemSetupInfo = systemSetupInfoResult.data?.systemSetupInfo
 
