@@ -2354,10 +2354,10 @@ msgid "Attached Files"
 msgstr "Eklenmiş Dosyalar"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:203
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:219
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:220
 msgid "Attachment"
 msgstr "Ek"
 
@@ -2592,11 +2592,11 @@ msgstr ""
 "Otomatik olarak chat.css dosyasını yükler. Kendi css dosyanızı kullanmak "
 "istiyorsanız, bunu false olarak ayarlamanız yeterlidir."
 
-#: app/frontend/shared/components/Form/Form.vue:1227
+#: app/frontend/shared/components/Form/Form.vue:1237
 msgid "Autosave in progress…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1236
+#: app/frontend/shared/components/Form/Form.vue:1246
 msgid "Autosaving is taking longer than expected…"
 msgstr ""
 
@@ -2901,11 +2901,11 @@ msgstr "CA"
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:95
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:168
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:167
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:86
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:37
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:173
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:177
 #: db/seeds/object_manager_attributes.rb:508
 msgid "CC"
 msgstr "CC"
@@ -3077,7 +3077,7 @@ msgstr "İptal"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:428
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:400
 msgid "Cancel & Go Back"
 msgstr "İptal Et & Geri Dön"
 
@@ -3124,7 +3124,7 @@ msgstr "%s harici veri kaynağı işlenemiyor. %S"
 msgid "Cannot set online notifications as seen"
 msgstr "Çevrimiçi bildirimler görüldü olarak ayarlanamıyor"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:808
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:797
 msgid "Cannot upload file"
 msgstr "Dosya yüklenemiyor"
 
@@ -3244,7 +3244,7 @@ msgstr "Veritabanı güncellemesi gerektiren değişiklikler yapıldı."
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:106
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:128
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:133
 msgid "Channel"
 msgstr "Kanal"
 
@@ -4186,7 +4186,7 @@ msgstr "Ülke"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:440
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:412
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Oluştur"
@@ -6164,7 +6164,7 @@ msgstr "Discard"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:49
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:425
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:397
 msgid "Discard Changes"
 msgstr "Evet"
 
@@ -6187,7 +6187,7 @@ msgstr "Makaleyi sil"
 msgid "Discard changes"
 msgstr "Değişiklikleri gözardı et"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:415
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:76
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:162
 msgid "Discard your unsaved changes"
@@ -6365,6 +6365,12 @@ msgstr "Draft"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:9
 msgid "Draft available"
 msgstr "Taslak mevcut"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:38
+#, fuzzy
+#| msgid "Draft"
+msgid "Drafts"
+msgstr "Draft"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:51
 msgid "Drag and drop to reorder ticket overview list items."
@@ -7709,7 +7715,7 @@ msgstr "Dosya yükleniyor '%s'"
 msgid "File format is not allowed: %s"
 msgstr "True"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:869
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:858
 #: app/frontend/shared/components/Form/fields/FieldFile/composable/useFileValidation.ts:26
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:38
 #, fuzzy
@@ -9376,7 +9382,7 @@ msgid "Including private key."
 msgstr "Özel anahtar dahil."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:242
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:251
 #, fuzzy
 #| msgid "Incomplete credentials"
 msgid "Incomplete Ticket Checklist"
@@ -9568,7 +9574,7 @@ msgstr "İndirilen WhatsApp medyasının bütünlük doğrulaması başarısız 
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:133
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:146
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:151
 msgid "Internal"
 msgstr "Internal"
 
@@ -10467,6 +10473,7 @@ msgstr "True"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:3
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:69
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:39
 #: db/seeds/permissions.rb:47
 msgid "Macros"
 msgstr "Makrolar"
@@ -11771,7 +11778,7 @@ msgstr "Yeni Şablon"
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:38
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:15
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:109
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:108
 msgid "New Ticket"
 msgstr "Yeni Destek Talebi"
 
@@ -12254,7 +12261,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "True"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:245
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:254
 #, fuzzy
 #| msgid "You have closed a ticket"
 msgid "No, just close the ticket"
@@ -12656,7 +12663,7 @@ msgstr "True"
 msgid "Only %s attachment allowed"
 msgstr "%s dosya ekte"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:834
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:823
 msgid "Only %s attachment allowed."
 msgstr "Yalnızca %s ekine izin verilir."
 
@@ -13992,7 +13999,7 @@ msgid "Proxy address"
 msgstr "Proxy address."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:151
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:156
 msgid "Public"
 msgstr "Public"
 
@@ -15075,6 +15082,12 @@ msgstr "Kayıtlı şartlar"
 msgid "Save as"
 msgstr "True"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:55
+#, fuzzy
+#| msgid "Draft"
+msgid "Save as draft"
+msgstr "Draft"
+
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:340
 #, fuzzy
 #| msgid "Discard Changes"
@@ -15329,10 +15342,10 @@ msgstr "True"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:22
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:178
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:177
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:196
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:199
 #: db/seeds/permissions.rb:197
 msgid "Security"
 msgstr "Güvenlik"
@@ -16674,7 +16687,7 @@ msgstr "cadde"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:13
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:33
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:184
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:188
 msgid "Subject"
 msgstr "Konu"
 
@@ -17673,7 +17686,7 @@ msgstr "%s Object(s) are created."
 msgid "The file does not belong to the specified article."
 msgstr "True"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:863
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:852
 #: app/frontend/shared/components/Form/fields/FieldFile/features/filesTypeError.ts:22
 #, fuzzy
 msgid "The file type %s is not allowed."
@@ -19661,7 +19674,7 @@ msgstr "%s Object(s) are created."
 msgid "Ticket tags updated successfully."
 msgstr "The test run was successful."
 
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:92
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:97
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket title"
@@ -19674,14 +19687,14 @@ msgstr "Konu güncellenmesi"
 msgid "Ticket update"
 msgstr "Konu güncellenmesi"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:306
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:320
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket update failed."
 msgstr "Konu güncellenmesi"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:283
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:297
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:163
 #, fuzzy
 #| msgid "The test run was successful."
@@ -19951,7 +19964,7 @@ msgstr "Title of the form"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:84
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:85
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:36
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:161
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:165
 #: db/seeds/object_manager_attributes.rb:482
 msgid "To"
 msgstr "Kime"
@@ -20631,7 +20644,7 @@ msgstr "True"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:57
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:13
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:424
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:85
 msgid "Update"
 msgstr "Güncelle"
 
@@ -21311,7 +21324,7 @@ msgstr "Destek talebini inceliyor"
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:138
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:143
 #: db/seeds/object_manager_attributes.rb:449
 msgid "Visibility"
 msgstr "Visibility"
@@ -21751,7 +21764,7 @@ msgid "Yes, add attachments now"
 msgstr "Yüklemek için ek seçeneği ekleyin."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:244
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:253
 #, fuzzy
 #| msgid "Remove"
 msgid "Yes, open the checklist"
@@ -22068,7 +22081,7 @@ msgstr "True"
 msgid "You have unchecked items in the checklist."
 msgstr "True"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:239
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:248
 #, fuzzy
 #| msgid "Do you really want to delete this object?"
 msgid ""

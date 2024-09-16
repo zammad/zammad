@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-03-19 02:05+0000\n"
-"Last-Translator: Philip Gabrielsen <philip@digno.no>\n"
+"PO-Revision-Date: 2024-09-16 05:40+0000\n"
+"Last-Translator: Peter-Hans de Zwarte <peter-hans@zwarte.no>\n"
 "Language-Team: Norwegian Bokmål <https://translations.zammad.org/projects/"
 "zammad/zammad-development/nb_NO/>\n"
 "Language: no-no\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4.2\n"
+"X-Generator: Weblate 5.7\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -402,10 +402,8 @@ msgid "%s Group"
 msgstr "%s Gruppe"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:51
-#, fuzzy
-#| msgid "Import"
 msgid "%s Import Status"
-msgstr "Importer"
+msgstr "%s Importstatus"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:61
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:65
@@ -488,16 +486,11 @@ msgstr "%s dager siden"
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:114
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:90
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:29
-#, fuzzy
-#| msgid ""
-#| "We have already found %s email(s) in your mailbox. Zammad will move it "
-#| "all from your mailbox into Zammad."
 msgid ""
 "%s email(s) were found in your mailbox. They will all be moved from your "
 "mailbox into Zammad."
 msgstr ""
-"We have already found %s email(s) in your mailbox. We will move it all from "
-"your mailbox into this system."
+"%s e-post(er) ble funnet. Alle blir flyttet fra postkassen din til Zammad."
 
 #: app/assets/javascripts/app/models/user.coffee:222
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts:33
@@ -526,10 +519,8 @@ msgid "%s is inactive, please select an active one."
 msgstr "%s er inaktiv. Vennligst velg en som er aktiv."
 
 #: app/frontend/shared/form/i18n/locales.ts:533
-#, fuzzy
-#| msgid "%s required!"
 msgid "%s is required."
-msgstr "%s er obligatorisk!"
+msgstr "%s er obligatorisk."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:67
 msgid "%s is sent without text caption"
@@ -2386,10 +2377,10 @@ msgid "Attached Files"
 msgstr "Vedlagte filer"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:203
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:219
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:220
 #, fuzzy
 #| msgid "Attachments"
 msgid "Attachment"
@@ -2643,11 +2634,11 @@ msgstr ""
 "Laster inn chat.css automatisk. Fjern avkrysningen hvis du vil bruke din "
 "egen CSS."
 
-#: app/frontend/shared/components/Form/Form.vue:1227
+#: app/frontend/shared/components/Form/Form.vue:1237
 msgid "Autosave in progress…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1236
+#: app/frontend/shared/components/Form/Form.vue:1246
 msgid "Autosaving is taking longer than expected…"
 msgstr ""
 
@@ -2960,11 +2951,11 @@ msgstr "CA"
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:95
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:168
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:167
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:86
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:37
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:173
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:177
 #: db/seeds/object_manager_attributes.rb:508
 msgid "CC"
 msgstr "CC"
@@ -3151,7 +3142,7 @@ msgstr "Avbryt"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:428
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:400
 msgid "Cancel & Go Back"
 msgstr "Avbryt & gå tilbake"
 
@@ -3200,7 +3191,7 @@ msgstr ""
 msgid "Cannot set online notifications as seen"
 msgstr "Administrer meldingsinnstillingene dine"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:808
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:797
 msgid "Cannot upload file"
 msgstr ""
 
@@ -3330,7 +3321,7 @@ msgstr "Det er utført endringer som krever en databaseoppdatering."
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:106
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:128
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:133
 msgid "Channel"
 msgstr "Kanal"
 
@@ -4345,7 +4336,7 @@ msgstr "Land"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:440
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:412
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Opprett"
@@ -6266,7 +6257,7 @@ msgstr "Kast"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:49
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:425
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:397
 msgid "Discard Changes"
 msgstr "Kast endringer"
 
@@ -6293,7 +6284,7 @@ msgstr "Kast endringer"
 msgid "Discard changes"
 msgstr "Kast endringer"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:415
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:76
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:162
 #, fuzzy
@@ -6478,6 +6469,12 @@ msgstr "Kladd"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:9
 msgid "Draft available"
 msgstr "Kladd tilgjengelig"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:38
+#, fuzzy
+#| msgid "Draft"
+msgid "Drafts"
+msgstr "Kladd"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:51
 msgid "Drag and drop to reorder ticket overview list items."
@@ -7823,7 +7820,7 @@ msgstr ""
 msgid "File format is not allowed: %s"
 msgstr "Ingen filformater er tillatt."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:869
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:858
 #: app/frontend/shared/components/Form/fields/FieldFile/composable/useFileValidation.ts:26
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:38
 #, fuzzy
@@ -9422,7 +9419,7 @@ msgid "Including private key."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:242
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:251
 msgid "Incomplete Ticket Checklist"
 msgstr ""
 
@@ -9612,7 +9609,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:133
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:146
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:151
 msgid "Internal"
 msgstr "Intern"
 
@@ -10459,6 +10456,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/macro.coffee:3
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:69
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:39
 #: db/seeds/permissions.rb:47
 msgid "Macros"
 msgstr "Makroer"
@@ -11721,7 +11719,7 @@ msgstr "Maler"
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:38
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:15
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:109
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:108
 msgid "New Ticket"
 msgstr "Ny sak"
 
@@ -12171,7 +12169,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:245
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:254
 #, fuzzy
 #| msgid "You have closed a ticket"
 msgid "No, just close the ticket"
@@ -12556,7 +12554,7 @@ msgstr ""
 msgid "Only %s attachment allowed"
 msgstr "%s vedlagte filer"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:834
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:823
 msgid "Only %s attachment allowed."
 msgstr ""
 
@@ -13816,7 +13814,7 @@ msgid "Proxy address"
 msgstr "Proxy adresse. "
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:151
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:156
 msgid "Public"
 msgstr "Offentlig"
 
@@ -14902,6 +14900,12 @@ msgstr "Fortsett"
 msgid "Save as"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:55
+#, fuzzy
+#| msgid "Save Draft"
+msgid "Save as draft"
+msgstr "Lagre utkast"
+
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:340
 #, fuzzy
 #| msgid "Discard Changes"
@@ -15141,10 +15145,10 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:22
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:178
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:177
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:196
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:199
 #: db/seeds/permissions.rb:197
 msgid "Security"
 msgstr "Sikkerhet"
@@ -16464,7 +16468,7 @@ msgstr "Gate"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:13
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:33
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:184
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:188
 msgid "Subject"
 msgstr "Emne"
 
@@ -17403,7 +17407,7 @@ msgstr "%s objekt(er) er opprettet."
 msgid "The file does not belong to the specified article."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:863
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:852
 #: app/frontend/shared/components/Form/fields/FieldFile/features/filesTypeError.ts:22
 #, fuzzy
 #| msgid "Time Accounting"
@@ -19270,7 +19274,7 @@ msgstr "%s objekt(er) er opprettet."
 msgid "Ticket tags updated successfully."
 msgstr "Testkjøringen var vellykket."
 
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:92
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:97
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket title"
@@ -19283,14 +19287,14 @@ msgstr "Sakoppdatering"
 msgid "Ticket update"
 msgstr "Sakoppdatering"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:306
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:320
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket update failed."
 msgstr "Sakoppdatering"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:283
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:297
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:163
 #, fuzzy
 #| msgid "The test run was successful."
@@ -19561,7 +19565,7 @@ msgstr "Tittel på skjema"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:84
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:85
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:36
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:161
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:165
 #: db/seeds/object_manager_attributes.rb:482
 msgid "To"
 msgstr "Til"
@@ -20217,7 +20221,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:57
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:13
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:424
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:85
 msgid "Update"
 msgstr "Oppdater"
 
@@ -20861,7 +20865,7 @@ msgstr "Ny sak"
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:138
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:143
 #: db/seeds/object_manager_attributes.rb:449
 msgid "Visibility"
 msgstr "Synlighet"
@@ -21276,7 +21280,7 @@ msgid "Yes, add attachments now"
 msgstr "Legg til vedleggsmulighet til opplasting."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:244
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:253
 #, fuzzy
 #| msgid "Remove"
 msgid "Yes, open the checklist"
@@ -21562,7 +21566,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:239
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:248
 #, fuzzy
 #| msgid "Do you really want to delete this object?"
 msgid ""

@@ -2265,10 +2265,10 @@ msgid "Attached Files"
 msgstr "Bijlagen"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:203
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:219
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:220
 msgid "Attachment"
 msgstr "Bijlage"
 
@@ -2498,11 +2498,11 @@ msgstr ""
 "Het chat.css-bestand wordt automatisch geladen. Als je eigen CSS wilt "
 "gebruiken, zet deze waarde op false."
 
-#: app/frontend/shared/components/Form/Form.vue:1227
+#: app/frontend/shared/components/Form/Form.vue:1237
 msgid "Autosave in progress…"
 msgstr "Autosave bezig…"
 
-#: app/frontend/shared/components/Form/Form.vue:1236
+#: app/frontend/shared/components/Form/Form.vue:1246
 msgid "Autosaving is taking longer than expected…"
 msgstr "Het automatisch opslaan duurt langer dan verwacht…"
 
@@ -2797,11 +2797,11 @@ msgstr "CA"
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:95
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:168
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:167
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:86
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:37
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:173
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:177
 #: db/seeds/object_manager_attributes.rb:508
 msgid "CC"
 msgstr "CC"
@@ -2973,7 +2973,7 @@ msgstr "Annuleren"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:188
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:428
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:400
 msgid "Cancel & Go Back"
 msgstr "Annuleer & ga terug"
 
@@ -3022,7 +3022,7 @@ msgstr "Externe databron %s kan niet verwerkt worden. %s"
 msgid "Cannot set online notifications as seen"
 msgstr "Kan online meldingen niet instellen zoals gezien"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:808
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:797
 msgid "Cannot upload file"
 msgstr "Kan bestand niet uploaden"
 
@@ -3136,7 +3136,7 @@ msgstr "Er zijn wijzigingen aangebracht die een database update vereisen."
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:106
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:128
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:133
 msgid "Channel"
 msgstr "Kanaal"
 
@@ -4017,7 +4017,7 @@ msgstr "Land"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:440
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:412
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Aanmaken"
@@ -5945,7 +5945,7 @@ msgstr "Annuleren"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:49
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:425
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:397
 msgid "Discard Changes"
 msgstr "Wijzigingen annuleren"
 
@@ -5966,7 +5966,7 @@ msgstr "Notitie weggooien"
 msgid "Discard changes"
 msgstr "Wijzigingen annuleren"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:415
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:76
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:162
 msgid "Discard your unsaved changes"
@@ -6135,6 +6135,12 @@ msgstr "Concept"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:9
 msgid "Draft available"
 msgstr "Concept beschikbaar"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:38
+#, fuzzy
+#| msgid "Draft"
+msgid "Drafts"
+msgstr "Concept"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:51
 msgid "Drag and drop to reorder ticket overview list items."
@@ -7401,7 +7407,7 @@ msgstr "Bestand '%s' wordt geüpload"
 msgid "File format is not allowed: %s"
 msgstr "Bestandsformaat is niet toegestaan: %s"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:869
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:858
 #: app/frontend/shared/components/Form/fields/FieldFile/composable/useFileValidation.ts:26
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:38
 msgid "File is too big. %s has to be %s or smaller."
@@ -8863,7 +8869,7 @@ msgid "Including private key."
 msgstr "Inclusief private key."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:242
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:251
 msgid "Incomplete Ticket Checklist"
 msgstr "Onvolledige Ticket Checklist"
 
@@ -9033,7 +9039,7 @@ msgstr "Integriteitsverificatie van de gedownloade WhatsApp-media is mislukt."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:133
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:146
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:151
 msgid "Internal"
 msgstr "Intern"
 
@@ -9840,6 +9846,7 @@ msgstr "Macrogroepsbeperkingen dekken niet alle tickets"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:3
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:69
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:39
 #: db/seeds/permissions.rb:47
 msgid "Macros"
 msgstr "Macro's"
@@ -10928,7 +10935,7 @@ msgstr "Nieuw sjabloon"
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:38
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:15
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:109
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:108
 msgid "New Ticket"
 msgstr "Nieuw ticket"
 
@@ -11352,7 +11359,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Geen x-zammad-session-user-id, geen afzender ingesteld!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:245
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:254
 msgid "No, just close the ticket"
 msgstr "Nee, sluit het ticket"
 
@@ -11702,7 +11709,7 @@ msgstr "Online Service"
 msgid "Only %s attachment allowed"
 msgstr "Alleen %s bijlage toegestaan"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:834
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:823
 msgid "Only %s attachment allowed."
 msgstr "Alleen %s bijlage toegestaan."
 
@@ -12846,7 +12853,7 @@ msgid "Proxy address"
 msgstr "Proxy adres"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:151
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:156
 msgid "Public"
 msgstr "Publiekelijk"
 
@@ -13786,6 +13793,12 @@ msgstr "Opslaan en doorgaan"
 msgid "Save as"
 msgstr "Opslaan als"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:55
+#, fuzzy
+#| msgid "Save Draft"
+msgid "Save as draft"
+msgstr "Concept opslaan"
+
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:340
 msgid "Save changes"
 msgstr "Wijzigingen opslaan"
@@ -14005,10 +14018,10 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:22
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:178
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:177
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:196
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:199
 #: db/seeds/permissions.rb:197
 msgid "Security"
 msgstr "Beveiliging"
@@ -15163,7 +15176,7 @@ msgstr "Straat"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:13
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:33
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:184
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:188
 msgid "Subject"
 msgstr "Onderwerp"
 
@@ -16021,7 +16034,7 @@ msgstr "Het bestand kon niet worden geupload."
 msgid "The file does not belong to the specified article."
 msgstr "Het bestand behoort niet tot de opgegeven notitie."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:863
+#: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:852
 #: app/frontend/shared/components/Form/fields/FieldFile/features/filesTypeError.ts:22
 msgid "The file type %s is not allowed."
 msgstr "Het bestandstype %s is niet toegestaan."
@@ -17748,7 +17761,7 @@ msgstr "Tickettags kunnen niet worden bijgewerkt."
 msgid "Ticket tags updated successfully."
 msgstr "Tickettags zijn bijgewerkt."
 
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:92
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:97
 msgid "Ticket title"
 msgstr "Ticket titel"
 
@@ -17759,14 +17772,14 @@ msgstr "Ticket titel"
 msgid "Ticket update"
 msgstr "Ticket bijwerken"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:306
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:320
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket update failed."
 msgstr "Ticket bijwerken"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:283
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:297
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:163
 msgid "Ticket updated successfully."
 msgstr "Ticket succesvol geüpdatet."
@@ -18041,7 +18054,7 @@ msgstr "Titel van het formulier"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:84
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:85
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:36
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:161
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:165
 #: db/seeds/object_manager_attributes.rb:482
 msgid "To"
 msgstr "Aan"
@@ -18644,7 +18657,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:57
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:13
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:424
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:85
 msgid "Update"
 msgstr "Update"
 
@@ -19291,7 +19304,7 @@ msgstr "Bekijkt ticket"
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:138
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:143
 #: db/seeds/object_manager_attributes.rb:449
 msgid "Visibility"
 msgstr "Zichtbaarheid"
@@ -19689,7 +19702,7 @@ msgid "Yes, add attachments now"
 msgstr "Ja, voeg bijlagen toe"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:244
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:253
 msgid "Yes, open the checklist"
 msgstr "Ja, open de checklist"
 
@@ -19979,7 +19992,7 @@ msgstr "Je moet toegang tot de webcam toestaan."
 msgid "You have unchecked items in the checklist."
 msgstr "Er zijn niet-afgevinkte items in de checklist."
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:239
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:248
 #, fuzzy
 #| msgid "Do you want to handle them before closing this ticket?"
 msgid ""
