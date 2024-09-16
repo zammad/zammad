@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-03-19 02:05+0000\n"
-"Last-Translator: Philip Gabrielsen <philip@digno.no>\n"
+"PO-Revision-Date: 2024-09-16 05:40+0000\n"
+"Last-Translator: Peter-Hans de Zwarte <peter-hans@zwarte.no>\n"
 "Language-Team: Norwegian Bokmål <https://translations.zammad.org/projects/"
-"zammad/zammad-development/nb_NO/>\n"
+"zammad/zammad-stable/nb_NO/>\n"
 "Language: no-no\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.4.2\n"
+"X-Generator: Weblate 5.7\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -393,10 +393,8 @@ msgid "%s Group"
 msgstr "%s Gruppe"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:50
-#, fuzzy
-#| msgid "Import"
 msgid "%s Import Status"
-msgstr "Importer"
+msgstr "%s Importstatus"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:61
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:65
@@ -478,16 +476,11 @@ msgstr "%s dager siden"
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:114
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:90
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:29
-#, fuzzy
-#| msgid ""
-#| "We have already found %s email(s) in your mailbox. Zammad will move it "
-#| "all from your mailbox into Zammad."
 msgid ""
 "%s email(s) were found in your mailbox. They will all be moved from your "
 "mailbox into Zammad."
 msgstr ""
-"We have already found %s email(s) in your mailbox. We will move it all from "
-"your mailbox into this system."
+"%s e-post(er) ble funnet. Alle blir flyttet fra postkassen din til Zammad."
 
 #: app/assets/javascripts/app/models/user.coffee:213
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts:32
@@ -516,10 +509,8 @@ msgid "%s is inactive, please select an active one."
 msgstr "%s er inaktiv. Vennligst velg en som er aktiv."
 
 #: app/frontend/shared/form/i18n/locales.ts:531
-#, fuzzy
-#| msgid "%s required!"
 msgid "%s is required."
-msgstr "%s er obligatorisk!"
+msgstr "%s er obligatorisk."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:67
 msgid "%s is sent without text caption"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-12 05:38+0000\n"
+"PO-Revision-Date: 2024-09-16 05:40+0000\n"
 "Last-Translator: Sajjad Jazini <s.jazini@vatanmail.ir>\n"
 "Language-Team: Persian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fa/>\n"
@@ -1069,7 +1069,7 @@ msgstr "افزودن گواهینامه SSL"
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/tags.jst.eco:19
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:14
 msgid "Add Tag"
-msgstr "افزودن تگ"
+msgstr "افزودن برچسب"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:108
 msgid "Add Telegram Bot"
@@ -1366,11 +1366,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:16
 msgid "Allow users to add new tags."
-msgstr "اجازه افزودن تگ‌های جدید به کاربران."
+msgstr "اجازه افزودن برچسب‌های جدید به کاربران."
 
 #: db/seeds/settings.rb:4024
 msgid "Allow users to create new tags."
-msgstr "مجوز ایجاد تگ‌‌های جدید به کاربران."
+msgstr "مجوز ایجاد برچسب‌های جدید به کاربران."
 
 #: db/seeds/settings.rb:1163
 msgid "Allow using one email address for multiple users."
@@ -4101,7 +4101,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:2826
 msgid "Defines if a customer can create tickets via the web interface."
-msgstr "آیا مشتری اجازه ساخت تیکت از درگاه وب را دارد."
+msgstr "مشخص می‌کند آیا مشتری اجازه ساخت تیکت از درگاه وب را دارد."
 
 #: db/seeds/settings.rb:20
 msgid "Defines if application is in init mode."
@@ -8016,7 +8016,7 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/account/views/AccountAvatar.vue:210
 msgid "Library"
-msgstr "کتابخانه"
+msgstr "پرونده‌ها"
 
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:25
 msgid "Light"
@@ -8293,7 +8293,7 @@ msgstr "مدیریت تنظیمات %s"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:20
 msgid "Manage Tags"
-msgstr "مدیریت تگ‌ها"
+msgstr "مدیریت برچسب‌ها"
 
 #: app/assets/javascripts/app/controllers/user.coffee:162
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
@@ -8980,7 +8980,7 @@ msgstr "منبع جدید"
 #: app/assets/javascripts/app/views/tag/index.jst.eco:14
 #: db/seeds/settings.rb:4021
 msgid "New Tags"
-msgstr "تگ‌های جدید"
+msgstr "برچسب‌های جدید"
 
 #: app/assets/javascripts/app/controllers/template.coffee:22
 msgid "New Template"
@@ -12709,7 +12709,7 @@ msgstr "برچسب «%s» قبلا ایجاد شده."
 #: db/seeds/object_manager_attributes.rb:392 db/seeds/permissions.rb:68
 #: lib/excel_sheet/ticket.rb:33
 msgid "Tags"
-msgstr "تگ‌ها"
+msgstr "برچسب‌ها"
 
 #: db/seeds/settings.rb:3232
 msgid ""
@@ -16899,8 +16899,6 @@ msgid "at"
 msgstr "در"
 
 #: app/models/object_manager/attribute.rb:556
-#, fuzzy
-#| msgid "At least one letter is required"
 msgid "at least one letter is required"
 msgstr "حداقل یک حرف الزامی است"
 
@@ -17193,7 +17191,7 @@ msgstr "%s ویرایش‌شده"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:42
 msgid "edited %s by %s"
-msgstr ""
+msgstr "%s ویرایش‌شده توسط %s"
 
 #: app/frontend/apps/mobile/composables/useEditedBy.ts:39
 msgid "edited %s by me"
@@ -17511,10 +17509,8 @@ msgstr "الزامی است"
 msgid "is required but missing"
 msgstr "الزامی است ولی وارد نشده"
 
-#, fuzzy
-#| msgid "is required"
 msgid "is reserved"
-msgstr "الزامی است"
+msgstr "رزرو شده"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
@@ -17558,10 +17554,8 @@ msgstr "چپ"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorMore.vue:18
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:137
-#, fuzzy
-#| msgid "show more"
 msgid "load %s more"
-msgstr "نمایش موارد بیشتر"
+msgstr "بارگیری %s مورد بیشتر"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:120
 msgid "m"
@@ -17582,18 +17576,14 @@ msgstr "با یک ماژول تطابق داشته باشد"
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:6
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco:15
 #: app/assets/javascripts/app/views/translation/form.jst.eco:5
-#, fuzzy
-#| msgid "matches"
 msgid "matches found"
-msgstr "تطابق دارد"
+msgstr "مطابق یافت شد"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:60
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:87
-#, fuzzy
-#| msgid "matches"
 msgid "matches regex"
-msgstr "تطابق دارد"
+msgstr "رجکس تطبیق"
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:69
 #: app/assets/javascripts/app/views/cti/caller_log_avatar.jst.eco:2
@@ -17607,10 +17597,8 @@ msgstr "ادغام شد"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:89
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:116
-#, fuzzy
-#| msgid "merged"
 msgid "merged into"
-msgstr "ادغام شد"
+msgstr "ادغام شده در"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:573
 msgid "message"
@@ -17639,10 +17627,8 @@ msgstr ""
 msgid "must be an integer"
 msgstr ""
 
-#, fuzzy
-#| msgid "Group can't be blank"
 msgid "must be blank"
-msgstr "گروه نباید خالی باشد"
+msgstr "باید خالی باشد"
 
 msgid "must be equal to %{count}"
 msgstr ""
@@ -17675,10 +17661,8 @@ msgstr ""
 msgid "must begin with a slash (\"/\")"
 msgstr ""
 
-#, fuzzy
-#| msgid "not exist"
 msgid "must exist"
-msgstr "وجود ندارد"
+msgstr "باید موجود باشد"
 
 #: app/models/knowledge_base.rb:221
 msgid "must not end with a slash (\"/\")"
@@ -17760,10 +17744,8 @@ msgid "note"
 msgstr "یادداشت"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:95
-#, fuzzy
-#| msgid "Notification Sender"
 msgid "notification sent to '%s'"
-msgstr "ارسال کننده پیغام"
+msgstr "اعلان به '%s' ارسال شد"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:48
 msgid "now"
@@ -17835,10 +17817,8 @@ msgstr "فرارسیده"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:31
-#, fuzzy
-#| msgid "Create new Customer"
 msgid "read by the customer"
-msgstr "ایجاد مشتری جدید"
+msgstr "خوانده‌شده توسط مشتری"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:90
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:117
@@ -17876,10 +17856,8 @@ msgid "reply"
 msgstr "پاسخ"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:53
-#, fuzzy
-#| msgid "reply"
 msgid "reply all"
-msgstr "پاسخ"
+msgstr "پاسخ به همه"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:111
 msgid "required"
@@ -17917,17 +17895,13 @@ msgid "select attachment…"
 msgstr "انتخاب فایل ضمیمه…"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:463
-#, fuzzy
-#| msgid "Select All"
 msgid "select visible options"
-msgstr "انتخاب همه"
+msgstr "انتخاب اختیارات نمایان"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:39
-#, fuzzy
-#| msgid "Create new Customer"
 msgid "sent to the customer"
-msgstr "ایجاد مشتری جدید"
+msgstr "ارسال‌شده به مشتری"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:171
 msgid "set fixed to"
@@ -18020,18 +17994,14 @@ msgid "split"
 msgstr "جدا سازی"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
-#, fuzzy
-#| msgid "Start new"
 msgid "starts with"
-msgstr "شروع مجدد"
+msgstr "شروع‌شده با"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
-#, fuzzy
-#| msgid "Start new"
 msgid "starts with one of"
-msgstr "شروع مجدد"
+msgstr "شروع‌شده با یکی از"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:16
 msgid "support@example.com"
@@ -18152,10 +18122,8 @@ msgid "welcome message"
 msgstr "پیام خوشامدگویی"
 
 #: db/seeds/ticket_article_types.rb:16
-#, fuzzy
-#| msgid "Add Tag"
 msgid "whatsapp message"
-msgstr "افزودن تگ"
+msgstr "پیام واتس‌اپ"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:71
 msgid "will be created"

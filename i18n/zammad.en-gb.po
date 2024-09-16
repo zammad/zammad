@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-12 05:38+0000\n"
+"PO-Revision-Date: 2024-09-16 05:40+0000\n"
 "Last-Translator: Andi Chandler <andi@gowling.com>\n"
 "Language-Team: English (United Kingdom) <https://translations.zammad.org/"
 "projects/zammad/zammad-stable/en_GB/>\n"
@@ -365,7 +365,7 @@ msgstr "%s (method)"
 
 #: app/frontend/shared/components/Form/fields/FieldSecurity/FieldSecurity.vue:190
 msgid "%s (option)"
-msgstr ""
+msgstr "%s (option)"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:254
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:227
@@ -376,75 +376,75 @@ msgstr ""
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:313
 #: app/frontend/shared/composables/useSelectOptions.ts:137
 msgid "%s (unknown)"
-msgstr ""
+msgstr "%s (unknown)"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:9
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:6
 msgid "%s API Token"
-msgstr ""
+msgstr "%s API Token"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:144
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:179
 msgid "%s Attribute"
-msgstr ""
+msgstr "%s Attribute"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:203
 msgid "%s Group"
-msgstr ""
+msgstr "%s Group"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:50
 msgid "%s Import Status"
-msgstr ""
+msgstr "%s Import Status"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:61
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:65
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:46
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:62
 msgid "%s Migration"
-msgstr ""
+msgstr "%s Migration"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:204
 msgid "%s Role"
-msgstr ""
+msgstr "%s Role"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:5
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:5
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:5
 msgid "%s URL"
-msgstr ""
+msgstr "%s URL"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:85
 msgid "%s ago"
-msgstr ""
+msgstr "%s ago"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:292
 msgid "%s attached files"
-msgstr ""
+msgstr "%s attached files"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:32
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:38
 msgid "%s completed data privacy task to delete user ID |%s|"
-msgstr ""
+msgstr "%s completed data privacy task to delete user ID |%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:49
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:24
 msgid "%s created article for |%s|"
-msgstr ""
+msgstr "%s created article for |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:28
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:26
 msgid "%s created data privacy task to delete user ID |%s|"
-msgstr ""
+msgstr "%s created data privacy task to delete user ID |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee:30
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts:25
 msgid "%s created group |%s|"
-msgstr ""
+msgstr "%s created group |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee:87
 #: app/frontend/shared/components/ActivityMessage/builders/organization.ts:24
 msgid "%s created organization |%s|"
-msgstr ""
+msgstr "%s created organisation |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee:27
 #: app/frontend/shared/components/ActivityMessage/builders/role.ts:25
