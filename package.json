@@ -29,7 +29,7 @@
   },
   "packageManager": "pnpm@9.10.0",
   "devDependencies": {
-    "@faker-js/faker": "^9.0.0",
+    "@faker-js/faker": "^9.0.1",
     "@graphql-codegen/cli": "^5.0.2",
     "@graphql-codegen/introspection": "^4.0.3",
     "@graphql-codegen/near-operation-file-preset": "^3.0.0",
