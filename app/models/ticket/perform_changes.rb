@@ -28,7 +28,7 @@ module Ticket::PerformChanges
   end
 
   def additional_object_action(object_name, object_key, action_value, _prepared_actions)
-    return if !object_name.eql?('article')
+    return if object_name != 'article'
     return if %w[note].exclude?(object_key)
 
     { name: :"article_#{object_key.to_sym}", value: action_value }

@@ -30,7 +30,17 @@
 module CanPerformChanges
   extend ActiveSupport::Concern
 
-  def perform_changes(performable, origin, context_data = nil, user_id = nil, activator_type: nil)
+  # Perform changes on self according to perform rules
+  #
+  # @param performable [Trigger, Macro, Job] object
+  # @param origin [String] name of the object to be performed
+  # @param context_data [Hash]
+  # @param user_id [Integer] to run as
+  # @param activator_type [String] activator of time-based triggers reminder_reached, escalation, null otherwise
+  # @yield [object, save_needed] alternative way to save object during application
+  # @yieldparam [object, [Ticket, User, Organization] object performed on
+  # @yieldparam [save_needed, [Boolean] if changes were applied that should be saved
+  def perform_changes(performable, origin, context_data = nil, user_id = nil, activator_type: nil, &)
     return if !execute?(performable, activator_type)
 
     perform_changes_data = {
@@ -44,7 +54,7 @@ module CanPerformChanges
 
     try(:pre_execute, perform_changes_data)
 
-    execute(perform_changes_data)
+    execute(perform_changes_data, &)
 
     true
   end
@@ -76,7 +86,13 @@ module CanPerformChanges
       instance.execute(prepared_actions)
     end
 
-    execute_before_save(prepared_actions[:before_save])
+    save_needed = execute_before_save(prepared_actions[:before_save])
+
+    if block_given?
+      yield(self, save_needed)
+    elsif save_needed
+      save!
+    end
 
     prepared_actions[:after_save]&.each(&:execute)
 
@@ -84,15 +100,13 @@ module CanPerformChanges
   end
 
   def execute_before_save(before_save_actions)
-    save_needed = false
+    return if !before_save_actions
 
-    before_save_actions&.each do |instance|
-      changed = instance.execute
+    before_save_actions.reduce(false) do |memo, elem|
+      changed = elem.execute
 
-      save_needed = true if changed && !save_needed
+      memo || changed
     end
-
-    save! if save_needed
   end
 
   def prepare_actions(perform_changes_data)

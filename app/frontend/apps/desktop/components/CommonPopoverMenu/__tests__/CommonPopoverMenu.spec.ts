@@ -217,4 +217,57 @@ describe('rendering section', () => {
 
     expect(fn).toBeCalledWith({ id: 'example', name: 'vitest' })
   })
+
+  it('supports display of groups', () => {
+    const items = [
+      { key: 'group-test', label: 'group test', groupLabel: 'test group' },
+      {
+        key: 'group-test-2',
+        label: 'group test 2',
+        groupLabel: 'test group',
+      },
+      {
+        key: 'group-test-2',
+        label: 'group test 3',
+        groupLabel: 'test group',
+      },
+      {
+        key: 'single-group-test-2',
+        label: 'single-group test 3',
+        groupLabel: 'single group',
+      },
+      { key: 'single-test', label: 'single test' },
+    ]
+
+    const view = renderComponent(CommonPopoverMenu, {
+      shallow: false,
+      props: {
+        popover: null,
+        items,
+      },
+      router: true,
+    })
+
+    expect(view.getByRole('button', { name: 'group test' })).toBeInTheDocument()
+    expect(
+      view.getByRole('button', { name: 'group test 2' }),
+    ).toBeInTheDocument()
+    expect(
+      view.getByRole('button', { name: 'group test 3' }),
+    ).toBeInTheDocument()
+    expect(
+      view.getByRole('button', { name: 'single-group test 3' }),
+    ).toBeInTheDocument()
+    expect(
+      view.getByRole('button', { name: 'single test' }),
+    ).toBeInTheDocument()
+
+    expect(
+      view.getByRole('heading', { name: 'test group', level: 3 }),
+    ).toBeInTheDocument()
+
+    expect(
+      view.getByRole('heading', { name: 'single group', level: 3 }),
+    ).toBeInTheDocument()
+  })
 })

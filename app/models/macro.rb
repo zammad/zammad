@@ -5,6 +5,7 @@ class Macro < ApplicationModel
   include ChecksHtmlSanitized
   include CanSeed
   include HasCollectionUpdate
+  include Macro::TriggersSubscriptions
 
   store     :perform
   validates :perform,         'validations/verify_perform_rules': true
@@ -17,6 +18,13 @@ class Macro < ApplicationModel
   sanitized_html :note
 
   collection_push_permission('ticket.agent')
+
+  scope :available_in_groups, lambda { |groups|
+    left_outer_joins(:groups_macros)
+    .where(groups_macros: { group_id: [nil] + Array(groups) })
+    .where(active: true)
+    .distinct
+  }
 
   ApplicableOn = Struct.new(:result, :blocking_tickets) do
     delegate :==, to: :result
@@ -35,5 +43,12 @@ class Macro < ApplicationModel
     blocking = tickets.reject { |elem| group_ids.include? elem.group_id }
 
     ApplicableOn.new(blocking.none?, blocking)
+  end
+
+  def performable_on?(object, activator_type:)
+    return false if !active
+    return true if group_ids.blank?
+
+    group_ids.include? object.group_id
   end
 end

@@ -9,11 +9,15 @@ RSpec.describe Service::Ticket::Update, current_user_id: -> { user.id } do
   let(:ticket)      { create(:ticket) }
   let(:group)       { ticket.group }
   let(:new_title)   { Faker::Lorem.word }
+  let(:new_body)    { Faker::Lorem.sentence }
   let(:ticket_data) { { title: new_title } }
+
+  let(:ticket_data_with_article) do
+    ticket_data.merge(article: { body: new_body })
+  end
 
   describe '#execute' do
     it 'updates a ticket with given metadata' do
-
       service.execute(ticket: ticket, ticket_data:)
 
       expect(ticket)
@@ -31,16 +35,36 @@ RSpec.describe Service::Ticket::Update, current_user_id: -> { user.id } do
     end
 
     it 'adds article when present' do
-      sample_body = Faker::Lorem.sentence
-      ticket_data[:article] = {
-        body: sample_body
-      }
-
-      service.execute(ticket: ticket, ticket_data:)
+      service.execute(ticket: ticket, ticket_data: ticket_data_with_article)
 
       expect(Ticket.last.articles.last)
         .to have_attributes(
-          body: sample_body
+          body: new_body
+        )
+    end
+
+    it 'updates ticket with given macro' do
+      macro = create(:macro, perform: { 'ticket.title' => { 'value' => new_title } })
+
+      service.execute(ticket: ticket, ticket_data:, macro:)
+
+      expect(ticket)
+        .to have_attributes(
+          title: new_title,
+        )
+    end
+
+    it 'adds article note via macro' do
+      macro = create(:macro, perform: {
+                       'article.note' => { 'body' => 'note body', 'internal' => 'true', 'subject' => 'test' }
+                     })
+
+      service.execute(ticket: ticket, ticket_data: ticket_data_with_article, macro:)
+
+      expect(ticket.articles.reload)
+        .to contain_exactly(
+          have_attributes(body: new_body),
+          have_attributes(body: 'note body'),
         )
     end
   end

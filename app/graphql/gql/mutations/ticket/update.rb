@@ -8,7 +8,7 @@ module Gql::Mutations
 
     argument :ticket_id, GraphQL::Types::ID, loads: Gql::Types::TicketType, description: 'The ticket to be updated'
     argument :input, Gql::Types::Input::Ticket::UpdateInputType, description: 'The ticket data'
-    argument :skip_validator, String, required: false, description: 'The ticket update validator to skip'
+    argument :meta, Gql::Types::Input::Ticket::UpdateMetaInputType, required: false, description: 'The ticket metadata'
 
     field :ticket, Gql::Types::TicketType, description: 'The updated ticket. If this is present but empty, the mutation was successful but the user has no rights to view the updated ticket.'
 
@@ -16,13 +16,13 @@ module Gql::Mutations
       ctx.current_user.permissions?(['ticket.agent', 'ticket.customer'])
     end
 
-    def resolve(ticket:, input:, skip_validator: nil)
+    def resolve(ticket:, input:, meta: nil)
       return group_has_no_email_error if !group_has_email?(input: input)
 
       {
         ticket: Service::Ticket::Update
           .new(current_user: context.current_user)
-          .execute(ticket: ticket, ticket_data: input, skip_validator: skip_validator)
+          .execute(ticket: ticket, ticket_data: input, skip_validator: meta&.dig(:skip_validator), macro: meta&.dig(:macro))
       }
     rescue => e
       raise e if !e.class.name.starts_with?('Service::Ticket::Update::Validator')

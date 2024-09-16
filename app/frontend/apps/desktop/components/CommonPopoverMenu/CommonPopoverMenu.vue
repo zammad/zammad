@@ -79,6 +79,36 @@ const getHoverFocusStyles = (variant?: Variant) => {
         <ul role="menu" v-bind="$attrs" class="flex w-full flex-col">
           <template v-for="item in filteredMenuItems" :key="item.key">
             <li
+              v-if="'array' in item"
+              class="flex flex-col overflow-clip pt-2.5 last:rounded-b-[10px] [&:nth-child(n+2)]:border-t [&:nth-child(n+2)]:border-neutral-100 [&:nth-child(n+2)]:dark:border-gray-900"
+              role="menuitem"
+            >
+              <CommonLabel
+                size="small"
+                class="line-clamp-1 px-2 text-stone-200 dark:text-neutral-500"
+                role="heading"
+                aria-level="3"
+                >{{ item.groupLabel }}</CommonLabel
+              >
+              <template v-for="i in item.array" :key="i.key">
+                <slot :name="`item-${i.key}`" v-bind="i">
+                  <component
+                    :is="i.component || CommonPopoverMenuItem"
+                    class="flex grow p-2.5"
+                    :class="getHoverFocusStyles(i.variant)"
+                    :label="i.label"
+                    :variant="i.variant"
+                    :link="i.link"
+                    :icon="i.icon"
+                    :label-placeholder="i.labelPlaceholder"
+                    @click="onClickItem($event, i)"
+                  />
+                  <slot :name="`itemRight-${i.key}`" v-bind="i" />
+                </slot>
+              </template>
+            </li>
+            <li
+              v-else
               role="menuitem"
               class="group flex items-center justify-between last:rounded-b-[10px]"
               :class="[

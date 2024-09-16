@@ -4,18 +4,18 @@ import { inject, computed, provide } from 'vue'
 
 import { useSessionStore } from '#shared/stores/session.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
+import getUuid from '#shared/utils/getUuid.ts'
 
-import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
+import type {
+  GroupItem,
+  MenuItem,
+  MenuItems,
+  UsePopoverMenuReturn,
+} from '#desktop/components/CommonPopoverMenu/types.ts'
 
-import type { ComputedRef, Ref } from 'vue'
+import type { Ref } from 'vue'
 
 const POPOVER_MENU_SYMBOL = Symbol('popover-menu')
-
-interface UsePopoverMenuReturn {
-  filteredMenuItems: ComputedRef<MenuItem[] | undefined>
-  singleMenuItemPresent: ComputedRef<boolean>
-  singleMenuItem: ComputedRef<MenuItem | undefined>
-}
 
 export const usePopoverMenu = (
   items: Ref<MenuItem[] | undefined>,
@@ -55,7 +55,25 @@ export const usePopoverMenu = (
   const filteredMenuItems = computed(() => {
     if (!items.value || !items.value.length) return
 
-    return filterItems()
+    const filteredItems = filterItems()
+
+    return filteredItems?.reduce((acc: MenuItems, item) => {
+      if (!item.groupLabel) {
+        acc.push(item)
+        return acc
+      }
+
+      const foundedItem = acc.find(
+        (group) => group.groupLabel === item.groupLabel,
+      )
+
+      const { groupLabel, ...rest } = item
+
+      if (!foundedItem) acc.push({ groupLabel, key: getUuid(), array: [rest] })
+      else (foundedItem as GroupItem).array.push(rest)
+
+      return acc
+    }, [])
   })
 
   const singleMenuItemPresent = computed(() => {

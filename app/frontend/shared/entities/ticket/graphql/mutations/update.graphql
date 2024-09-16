@@ -1,9 +1,9 @@
 mutation ticketUpdate(
   $ticketId: ID!
   $input: TicketUpdateInput!
-  $skipValidator: String
+  $meta: TicketUpdateMetaInput!
 ) {
-  ticketUpdate(ticketId: $ticketId, input: $input, skipValidator: $skipValidator) {
+  ticketUpdate(ticketId: $ticketId, input: $input, meta: $meta) {
     ticket {
       ...ticketAttributes
     }

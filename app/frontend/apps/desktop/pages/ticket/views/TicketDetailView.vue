@@ -24,6 +24,7 @@ import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { setErrors } from '#shared/components/Form/utils.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
+import { useTicketMacros } from '#shared/entities/macro/composables/useMacros.ts'
 import { useTicketArticleReplyAction } from '#shared/entities/ticket/composables/useTicketArticleReplyAction.ts'
 import { useTicketEdit } from '#shared/entities/ticket/composables/useTicketEdit.ts'
 import { useTicketEditForm } from '#shared/entities/ticket/composables/useTicketEditForm.ts'
@@ -38,11 +39,10 @@ import { EnumTaskbarEntity, EnumFormUpdaterId } from '#shared/graphql/types.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import { useTaskbarTab } from '#desktop/entities/user/current/composables/useTaskbarTab.ts'
-import { useTaskbarTabStateUpdates } from '#desktop/entities/user/current/composables/useTaskbarTabStateUpdates.ts'
+import TicketDetailBottomBar from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue'
 
 import ArticleList from '../components/TicketDetailView/ArticleList.vue'
 import ArticleReply from '../components/TicketDetailView/ArticleReply.vue'
@@ -69,6 +69,12 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const {
+  activeTaskbarTab,
+  activeTaskbarTabFormId,
+  activeTaskbarTabNewArticlePresent,
+} = useTaskbarTab(EnumTaskbarEntity.TicketZoom)
+
 const { ticket, ticketId, canUpdateTicket, ...ticketInformation } =
   initializeTicketInformation(toRef(props, 'internalId'))
 
@@ -86,21 +92,14 @@ provide(ARTICLES_INFORMATION_KEY, {
 
 const {
   form,
+  values,
   flags,
   isDisabled,
   isDirty,
   formNodeId,
   formReset,
   formSubmit,
-  triggerFormUpdater,
 } = useForm()
-
-const {
-  activeTaskbarTab,
-  activeTaskbarTabFormId,
-  activeTaskbarTabNewArticlePresent,
-} = useTaskbarTab(EnumTaskbarEntity.TicketZoom)
-const { setSkipNextStateUpdate } = useTaskbarTabStateUpdates(triggerFormUpdater)
 
 const sidebarContext = computed<TicketSidebarContext>(() => ({
   screenType: TicketSidebarScreenType.TicketDetailView,
@@ -278,13 +277,18 @@ const handleUserErrorException = (exception: string) => {
     return handleIncompleteChecklist(exception)
 }
 
+const { macroId, executeMacro, resetMacroId } = useTicketMacros(formSubmit)
+
 const submitEditTicket = async (formData: FormSubmitData<TicketFormData>) => {
   const updateFormData = currentArticleType.value?.updateForm
   if (updateFormData) {
     formData = updateFormData(formData)
   }
 
-  return editTicket(formData, skipValidator.value)
+  return editTicket(formData, {
+    macroId: macroId.value,
+    skipValidator: skipValidator.value,
+  })
     .then((result) => {
       if (result?.ticketUpdate?.ticket) {
         notify({
@@ -318,6 +322,7 @@ const submitEditTicket = async (formData: FormSubmitData<TicketFormData>) => {
     })
     .finally(() => {
       skipValidator.value = undefined
+      resetMacroId()
     })
 }
 
@@ -404,7 +409,6 @@ const articleReplyPinned = useLocalStorage(
             }"
             @submit="submitEditTicket($event as FormSubmitData<TicketFormData>)"
             @settled="onEditFormSettled"
-            @changed="setSkipNextStateUpdate(true)"
           />
         </div>
       </div>
@@ -417,23 +421,16 @@ const articleReplyPinned = useLocalStorage(
       />
     </template>
     <template #bottomBar>
-      <CommonButton
-        v-if="isDirty"
-        size="large"
-        variant="danger"
+      <TicketDetailBottomBar
+        :dirty="isDirty"
         :disabled="isDisabled"
-        @click="discardChanges"
-        >{{ __('Discard your unsaved changes') }}</CommonButton
-      >
-      <CommonButton
-        size="large"
-        variant="submit"
-        type="button"
-        :form="formNodeId"
-        :disabled="isDisabled"
-        @click="checkSubmitEditTicket"
-        >{{ __('Update') }}</CommonButton
-      >
+        :form-node-id="formNodeId"
+        :can-update-ticket="canUpdateTicket"
+        :form-values="values"
+        @submit="checkSubmitEditTicket"
+        @discard="discardChanges"
+        @execute-macro="executeMacro"
+      />
     </template>
   </LayoutContent>
 </template>

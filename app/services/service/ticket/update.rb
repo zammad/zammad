@@ -3,7 +3,7 @@
 class Service::Ticket::Update < Service::BaseWithCurrentUser
   include Service::Concerns::HandlesCoreWorkflow
 
-  def execute(ticket:, ticket_data:, skip_validator: nil)
+  def execute(ticket:, ticket_data:, skip_validator: nil, macro: nil)
     Pundit.authorize current_user, ticket, :update?
     set_core_workflow_information(ticket_data, ::Ticket, 'edit')
 
@@ -11,15 +11,35 @@ class Service::Ticket::Update < Service::BaseWithCurrentUser
 
     validate!(current_user, ticket, ticket_data, article_data, skip_validator)
 
-    ticket.with_lock do
-      ticket.update!(ticket_data)
-      create_article(ticket, article_data)
-    end
+    save_ticket!(ticket, ticket_data, article_data, macro)
 
     ticket
   end
 
   private
+
+  def save_ticket!(ticket, ticket_data, article_data, macro)
+    ticket.with_lock do
+      if macro
+        save_ticket_attributes_and_apply_macro!(ticket, ticket_data, article_data, macro)
+      else
+        save_ticket_attributes!(ticket, ticket_data, article_data)
+      end
+    end
+  end
+
+  def save_ticket_attributes!(ticket, ticket_data, article_data)
+    ticket.update!(ticket_data)
+    create_article(ticket, article_data)
+  end
+
+  def save_ticket_attributes_and_apply_macro!(ticket, ticket_data, article_data, macro)
+    ticket.assign_attributes(ticket_data)
+    ticket.perform_changes(macro, 'macro', ticket, current_user.id) do |object, _save_needed|
+      object.save!
+      create_article(ticket, article_data)
+    end
+  end
 
   def create_article(ticket, article_data)
     return if article_data.blank?

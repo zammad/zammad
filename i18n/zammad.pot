@@ -4977,7 +4977,7 @@ msgstr ""
 msgid "Discard changes"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:426
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:76
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:162
 msgid "Discard your unsaved changes"
@@ -5142,6 +5142,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:9
 msgid "Draft available"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:38
+msgid "Drafts"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:51
@@ -7521,7 +7525,7 @@ msgid "Including private key."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:252
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:251
 msgid "Incomplete Ticket Checklist"
 msgstr ""
 
@@ -8418,6 +8422,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/macro.coffee:3
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:69
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:39
 #: db/seeds/permissions.rb:47
 msgid "Macros"
 msgstr ""
@@ -9838,7 +9843,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:255
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:254
 msgid "No, just close the ticket"
 msgstr ""
 
@@ -12082,6 +12087,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
 msgid "Save as"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:55
+msgid "Save as draft"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:340
@@ -15568,12 +15577,12 @@ msgstr ""
 msgid "Ticket update"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:316
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:320
 msgid "Ticket update failed."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:293
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:297
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:163
 msgid "Ticket updated successfully."
 msgstr ""
@@ -16344,7 +16353,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:57
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:13
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:435
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:85
 msgid "Update"
 msgstr ""
 
@@ -17229,7 +17238,7 @@ msgid "Yes, add attachments now"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:254
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:253
 msgid "Yes, open the checklist"
 msgstr ""
 
@@ -17443,7 +17452,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:249
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:248
 msgid "You have unchecked items in the checklist. Do you want to handle them before closing this ticket?"
 msgstr ""
 

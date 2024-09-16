@@ -16,10 +16,10 @@ class Service::Ticket::Update::Validator
   def validate!
     validators.each do |validator|
       validator.new(
-        user:         @user,
-        ticket:       @ticket,
-        ticket_data:  @ticket_data,
-        article_data: @article,
+        user:         user,
+        ticket:       ticket,
+        ticket_data:  ticket_data,
+        article_data: article_data,
       ).validate!
     end
   end
@@ -27,6 +27,8 @@ class Service::Ticket::Update::Validator
   private
 
   def validators
-    Service::Ticket::Update::Validator::Base.descendants.reject { |klass| @skip_validator&.starts_with?(klass.name) }
+    Service::Ticket::Update::Validator::Base
+      .descendants
+      .reject { |klass| skip_validator&.starts_with?(klass.name) }
   end
 end

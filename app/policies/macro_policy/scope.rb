@@ -3,14 +3,11 @@
 class MacroPolicy < ApplicationPolicy
   class Scope < ApplicationPolicy::Scope
 
-    def resolve
-      if user.permissions?('admin.macro')
+    def resolve(include_admin: true)
+      if include_admin && user.permissions?('admin.macro')
         scope.all
       elsif user.permissions?('ticket.agent')
-        scope
-          .joins('LEFT OUTER JOIN groups_macros ON groups_macros.macro_id = macros.id')
-          .distinct
-          .where(agent_having_groups)
+        agent_macros
       else
         scope.none
       end
@@ -18,17 +15,10 @@ class MacroPolicy < ApplicationPolicy
 
     private
 
-    def agent_having_groups
-      no_assigned_groups = 'groups_macros.group_id IS NULL'
+    def agent_macros
+      accessible_group_ids = user.group_ids_access(%i[change create])
 
-      groups = user.groups.access(:change, :create)
-
-      if groups.any?
-        groups_matcher = groups.map(&:id).join(',')
-        return "#{no_assigned_groups} OR groups_macros.group_id IN (#{groups_matcher})"
-      end
-
-      no_assigned_groups
+      scope.available_in_groups accessible_group_ids
     end
   end
 end

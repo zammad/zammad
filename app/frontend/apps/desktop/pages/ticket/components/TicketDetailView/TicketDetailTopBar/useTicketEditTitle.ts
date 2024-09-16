@@ -19,6 +19,7 @@ export const useTicketEditTitle = (ticket: ComputedRef<TicketById>) => {
       .send({
         ticketId: ticket.value.id,
         input: { title },
+        meta: {},
       })
       .then(() => {
         notify({

@@ -15,7 +15,10 @@ import { useObjectAttributes } from '#shared/entities/object-attributes/composab
 import { useTicketUpdateMutation } from '#shared/entities/ticket/graphql/mutations/update.api.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import type { TicketArticleFormValues } from '#shared/entities/ticket-article/action/plugins/types.ts'
-import type { TicketUpdateInput } from '#shared/graphql/types.ts'
+import type {
+  TicketUpdateInput,
+  TicketUpdateMetaInput,
+} from '#shared/graphql/types.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 import type { PartialRequired } from '#shared/types/utils.ts'
@@ -108,7 +111,7 @@ export const useTicketEdit = (
 
   const editTicket = async (
     formData: FormSubmitData,
-    skipValidator?: string,
+    meta?: TicketUpdateMetaInput,
   ) => {
     if (!ticket.value || !form.value) return undefined
 
@@ -124,6 +127,8 @@ export const useTicketEdit = (
       | undefined
     const article = processArticle(form.value.formId, formArticle)
 
+    const ticketMeta = meta || {}
+
     return mutationUpdate.send({
       ticketId: ticket.value.id,
       input: {
@@ -131,7 +136,7 @@ export const useTicketEdit = (
         objectAttributeValues: additionalObjectAttributeValues,
         article,
       } as TicketUpdateInput,
-      skipValidator,
+      meta: ticketMeta,
     })
   }
 

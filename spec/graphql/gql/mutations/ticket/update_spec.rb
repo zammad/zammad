@@ -5,8 +5,8 @@ require 'rails_helper'
 RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graphql do
   let(:query) do
     <<~QUERY
-      mutation ticketUpdate($ticketId: ID!, $input: TicketUpdateInput!, $skipValidator: String) {
-        ticketUpdate(ticketId: $ticketId, input: $input, skipValidator: $skipValidator) {
+      mutation ticketUpdate($ticketId: ID!, $input: TicketUpdateInput!, $meta: TicketUpdateMetaInput) {
+        ticketUpdate(ticketId: $ticketId, input: $input, meta: $meta) {
           ticket {
             id
             title
@@ -118,9 +118,39 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
           expect(Ticket.last.articles.last.sender.name).to eq('Agent')
         end
 
+        context 'with macro' do
+          let(:new_title) { Faker::Lorem.word }
+          let(:macro)     { create(:macro, perform: { 'ticket.title' => { 'value' => new_title } }) }
+
+          let(:variables) do
+            {
+              ticketId: gql.id(ticket),
+              input:    input_payload,
+              meta:     {
+                macroId: gql.id(macro)
+              }
+            }
+          end
+
+          it 'adds a new article with time unit' do
+            gql.execute(query, variables:)
+
+            expect(ticket.reload).to have_attributes(title: new_title)
+          end
+        end
+
         context 'with time unit' do
           let(:time_accounting_enabled) { true }
-          let(:variables)               { { ticketId: gql.id(ticket), input: input_payload, skipValidator: 'Service::Ticket::Update::Validator::TimeAccounting::ConditionMatchesError' } }
+
+          let(:variables) do
+            {
+              ticketId: gql.id(ticket),
+              input:    input_payload,
+              meta:     {
+                skipValidator: 'Service::Ticket::Update::Validator::TimeAccounting::ConditionMatchesError'
+              }
+            }
+          end
 
           let(:article_payload) do
             {
@@ -256,7 +286,15 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
         end
 
         context 'when validator is being skipped' do
-          let(:variables) { { ticketId: gql.id(ticket), input: input_payload, skipValidator: 'Service::Ticket::Update::Validator::ChecklistCompleted::IncompleteChecklistError' } }
+          let(:variables) do
+            {
+              ticketId: gql.id(ticket),
+              input:    input_payload,
+              meta:     {
+                skipValidator: 'Service::Ticket::Update::Validator::ChecklistCompleted::IncompleteChecklistError'
+              }
+            }
+          end
 
           it 'updates the ticket' do
             expect(gql.result.data['ticket']).to eq(expected_response)
