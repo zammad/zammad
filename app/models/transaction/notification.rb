@@ -27,9 +27,39 @@ class Transaction::Notification
   },
 =end
 
+  attr_accessor :recipients_and_channels, :recipients_reason
+
   def initialize(item, params = {})
-    @item = item
-    @params = params
+    @item                    = item
+    @params                  = params
+    @recipients_and_channels = []
+    @recipients_reason       = {}
+  end
+
+  def ticket
+    @ticket ||= Ticket.find_by(id: @item[:object_id])
+  end
+
+  def article_by_item
+    return if !@item[:article_id]
+
+    article = Ticket::Article.find(@item[:article_id])
+
+    # ignore notifications
+    sender = Ticket::Article::Sender.lookup(id: article.sender_id)
+    if sender&.name == 'System'
+      return if @item[:changes].blank? && article.preferences[:notification] != true
+
+      if article.preferences[:notification] != true
+        article = nil
+      end
+    end
+
+    article
+  end
+
+  def article
+    @article ||= article_by_item
   end
 
   def perform
@@ -38,36 +68,17 @@ class Transaction::Notification
     return if Setting.get('import_mode')
     return if @item[:object] != 'Ticket'
     return if @params[:disable_notification]
-
-    ticket = Ticket.find_by(id: @item[:object_id])
     return if !ticket
 
-    if @item[:article_id]
-      article = Ticket::Article.find(@item[:article_id])
-
-      # ignore notifications
-      sender = Ticket::Article::Sender.lookup(id: article.sender_id)
-      if sender&.name == 'System'
-        return if @item[:changes].blank? && article.preferences[:notification] != true
-
-        if article.preferences[:notification] != true
-          article = nil
-        end
-      end
-    end
-
-    (recipients_and_channels, recipients_reason) = recipients_and_reasons(ticket)
+    prepare_recipients_and_reasons
 
     # send notifications
-    recipients_and_channels.each do |item|
-      send_to_single_recipient(item, article, ticket, recipients_reason)
+    recipients_and_channels.each do |recipient_settings|
+      send_to_single_recipient(recipient_settings)
     end
   end
 
-  def recipients_and_reasons(ticket)
-    # find recipients
-    recipients_and_channels = []
-    recipients_reason = {}
+  def prepare_recipients_and_reasons
 
     # loop through all group users
     possible_recipients = possible_recipients_of_group(ticket.group_id)
@@ -81,14 +92,14 @@ class Transaction::Notification
         next if !mention_user.group_access?(ticket.group_id, 'read')
 
         possible_recipients.push mention_user
-        recipients_reason[mention_user.id] = __('You are receiving this because you were mentioned in this ticket.')
+        @recipients_reason[mention_user.id] = __('You are receiving this because you were mentioned in this ticket.')
       end
     end
 
     # apply owner
     if ticket.owner_id != 1
       possible_recipients.push ticket.owner
-      recipients_reason[ticket.owner_id] = __('You are receiving this because you are the owner of this ticket.')
+      @recipients_reason[ticket.owner_id] = __('You are receiving this because you are the owner of this ticket.')
     end
 
     # apply out of office agents
@@ -107,6 +118,10 @@ class Transaction::Notification
       possible_recipients |= possible_recipients_additions.to_a
     end
 
+    recipients_reason_by_notifications_settings(possible_recipients)
+  end
+
+  def recipients_reason_by_notifications_settings(possible_recipients)
     already_checked_recipient_ids = {}
     possible_recipients.each do |user|
       result = NotificationFactory::Mailer.notification_settings(user, ticket, @item[:type])
@@ -114,18 +129,16 @@ class Transaction::Notification
       next if already_checked_recipient_ids[user.id]
 
       already_checked_recipient_ids[user.id] = true
-      recipients_and_channels.push result
+      @recipients_and_channels.push result
       next if recipients_reason[user.id]
 
-      recipients_reason[user.id] = __('You are receiving this because you are a member of the group of this ticket.')
+      @recipients_reason[user.id] = __('You are receiving this because you are a member of the group of this ticket.')
     end
-
-    [recipients_and_channels, recipients_reason]
   end
 
-  def send_to_single_recipient(item, article, ticket, recipients_reason)
-    user = item[:user]
-    channels = item[:channels]
+  def send_to_single_recipient(recipient_settings)
+    user     = recipient_settings[:user]
+    channels = recipient_settings[:channels]
 
     # ignore user who changed it by him self via web
     if @params[:interface_handle] == 'application_server'
