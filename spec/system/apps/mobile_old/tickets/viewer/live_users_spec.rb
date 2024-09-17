@@ -11,7 +11,7 @@ RSpec.describe 'Mobile > Ticket > Viewers > Live Users', app: :mobile, authentic
   let(:ticket)        { create(:ticket, customer: customer, group: group) }
 
   def wait_for_viewers_subscription(number: 1)
-    wait_for_gql('apps/mobile/pages/ticket/graphql/subscriptions/live-user/ticketLiveUserUpdates.graphql', number: number)
+    wait_for_gql('shared/entities/ticket/graphql/subscriptions/ticketLiveUserUpdates.graphql', number: number)
   end
 
   def open_viewers_dialog()

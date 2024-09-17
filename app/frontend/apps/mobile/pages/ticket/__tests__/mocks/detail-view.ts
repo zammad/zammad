@@ -15,6 +15,7 @@ import { ObjectManagerFrontendAttributesDocument } from '#shared/entities/object
 import { TicketArticlesDocument } from '#shared/entities/ticket/graphql/queries/ticket/articles.api.ts'
 import { TicketDocument } from '#shared/entities/ticket/graphql/queries/ticket.api.ts'
 import { TicketArticleUpdatesDocument } from '#shared/entities/ticket/graphql/subscriptions/ticketArticlesUpdates.api.ts'
+import { TicketLiveUserUpdatesDocument } from '#shared/entities/ticket/graphql/subscriptions/ticketLiveUserUpdates.api.ts'
 import { TicketUpdatesDocument } from '#shared/entities/ticket/graphql/subscriptions/ticketUpdates.api.ts'
 import type { TicketView } from '#shared/entities/ticket/types.ts'
 import { TicketState } from '#shared/entities/ticket/types.ts'
@@ -39,7 +40,6 @@ import { TicketWithMentionLimitDocument } from '#mobile/entities/ticket/graphql/
 
 import { TicketLiveUserDeleteDocument } from '../../graphql/mutations/live-user/delete.api.ts'
 import { TicketLiveUserUpsertDocument } from '../../graphql/mutations/live-user/ticketLiveUserUpsert.api.ts'
-import { TicketLiveUserUpdatesDocument } from '../../graphql/subscriptions/live-user/ticketLiveUserUpdates.api.ts'
 
 const ticketDate = new Date(2022, 0, 29, 0, 0, 0, 0)
 

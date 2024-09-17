@@ -33,6 +33,7 @@ export interface TicketLiveAppUser {
   editing: boolean
   lastInteraction: string
   app: EnumTaskbarApp
+  isIdle?: boolean
 }
 
 export type TicketById = TicketQuery['ticket']

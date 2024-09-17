@@ -5,12 +5,12 @@ module Taskbar::TriggersSubscriptions
   extend ActiveSupport::Concern
 
   included do
-    attr_accessor :skip_trigger
+    attr_accessor :skip_live_user_trigger, :skip_item_trigger
 
-    after_commit :trigger_live_user_subscriptions
-    after_create_commit  :trigger_taskbar_item_create_subscriptions,  unless: :skip_trigger
-    after_update_commit  :trigger_taskbar_item_update_subscriptions,  unless: :skip_trigger
-    after_destroy_commit :trigger_taskbar_item_destroy_subscriptions, unless: :skip_trigger
+    after_commit :trigger_live_user_subscriptions, unless: :skip_live_user_trigger
+    after_create_commit  :trigger_taskbar_item_create_subscriptions,  unless: :skip_item_trigger
+    after_update_commit  :trigger_taskbar_item_update_subscriptions,  unless: :skip_item_trigger
+    after_destroy_commit :trigger_taskbar_item_destroy_subscriptions, unless: :skip_item_trigger
 
     after_update_commit  :trigger_taskbar_item_state_update_subscriptions
   end
@@ -20,8 +20,7 @@ module Taskbar::TriggersSubscriptions
   def trigger_live_user_subscriptions
     return true if !saved_change_to_attribute?('preferences')
 
-    # For now it's only needed in the mobile view context.
-    return true if !app.eql?('mobile') && !persisted?
+    return true if !persisted?
 
     Gql::Subscriptions::TicketLiveUserUpdates.trigger(
       self,

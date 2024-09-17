@@ -31,7 +31,7 @@ const { viewingUsers, idleUsers } = useTicketLiveUsersDisplay(
   >
     <CommonSectionMenu
       v-if="viewingUsers.length > 0"
-      class="py-2"
+      class="gap-3 py-2"
       :header-label="__('Viewing ticket')"
     >
       <TicketViewerItem
@@ -44,7 +44,7 @@ const { viewingUsers, idleUsers } = useTicketLiveUsersDisplay(
     </CommonSectionMenu>
     <CommonSectionMenu
       v-if="idleUsers.length > 0"
-      class="py-2"
+      class="gap-3 py-2"
       :header-label="__('Opened in tabs')"
       :help="
         __(

@@ -7,11 +7,9 @@ module Gql::Types::User
     description 'Users taskbar item'
 
     field :user_id, ID, null: false
-    field :last_contact, GraphQL::Types::ISO8601DateTime, null: false
     field :key, String, null: false
     field :callback, Gql::Types::Enum::TaskbarEntityType, null: false # TODO: rename to something understable like type? maybe with "property: :callback"
     field :state, GraphQL::Types::JSON
-    field :preferences, GraphQL::Types::JSON
     field :params, GraphQL::Types::JSON
     field :prio, Integer, null: false
     field :notify, Boolean, null: false

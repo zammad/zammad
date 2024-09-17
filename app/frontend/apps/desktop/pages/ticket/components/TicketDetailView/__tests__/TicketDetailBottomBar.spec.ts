@@ -5,6 +5,7 @@ import { ref } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
 
+import type { TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import {
   mockMacrosQuery,
@@ -15,7 +16,9 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import TicketDetailBottomBar, {
   type Props,
-} from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue'
+} from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue'
+
+import liveUserList from './mocks/live-user-list.json'
 
 vi.mock('#desktop/pages/ticket/composables/useTicketInformation.ts', () => ({
   useTicketInformation: () => ({
@@ -23,7 +26,7 @@ vi.mock('#desktop/pages/ticket/composables/useTicketInformation.ts', () => ({
   }),
 }))
 
-const renderTicketSideBarBottomBar = (props?: Partial<Props>) =>
+const renderTicketDetailBottomBar = (props?: Partial<Props>) =>
   renderComponent(TicketDetailBottomBar, {
     props: {
       disabled: false,
@@ -31,20 +34,21 @@ const renderTicketSideBarBottomBar = (props?: Partial<Props>) =>
       dirty: false,
       canUpdateTicket: true,
       groupId: convertToGraphQLId('Group', 2),
+      liveUserList: [],
       ...props,
     },
     store: true,
   })
 
-describe('TicketSideBarBottomBar', () => {
+describe('TicketDetailBottomBar', () => {
   it('renders submit button if form node id is provided', () => {
-    const wrapper = renderTicketSideBarBottomBar()
+    const wrapper = renderTicketDetailBottomBar()
 
     expect(wrapper.getByRole('button', { name: 'Update' })).toBeInTheDocument()
   })
 
   it('renders discard unsaved changes button if dirty prop is true', async () => {
-    const wrapper = renderTicketSideBarBottomBar({
+    const wrapper = renderTicketDetailBottomBar({
       dirty: true,
     })
 
@@ -62,7 +66,7 @@ describe('TicketSideBarBottomBar', () => {
   })
 
   it('should disable buttons if disabled prop is true', () => {
-    const wrapper = renderTicketSideBarBottomBar({
+    const wrapper = renderTicketDetailBottomBar({
       dirty: true,
       disabled: true,
     })
@@ -77,7 +81,7 @@ describe('TicketSideBarBottomBar', () => {
   it.each(['submit', 'discard'])(
     'emits %s event when button is clicked',
     async (eventName) => {
-      const wrapper = renderTicketSideBarBottomBar({
+      const wrapper = renderTicketDetailBottomBar({
         formNodeId: 'form-node-id-test',
         dirty: true,
         disabled: false,
@@ -121,7 +125,7 @@ describe('TicketSideBarBottomBar', () => {
       ],
     })
 
-    const wrapper = renderTicketSideBarBottomBar()
+    const wrapper = renderTicketDetailBottomBar()
 
     const actionMenu = await wrapper.findByLabelText('Action menu button')
 
@@ -130,16 +134,13 @@ describe('TicketSideBarBottomBar', () => {
     const menu = await wrapper.findByRole('menu')
 
     expect(menu).toBeInTheDocument()
-
     expect(within(menu).getByText('Macros')).toBeInTheDocument()
-
     expect(within(menu).getByText('Macro 1')).toBeInTheDocument()
-
     expect(within(menu).getByText('Macro 2')).toBeInTheDocument()
   })
 
   it('hides action menu, submit and cancel buttons for agent without update permission', async () => {
-    const wrapper = renderTicketSideBarBottomBar({
+    const wrapper = renderTicketDetailBottomBar({
       canUpdateTicket: false,
     })
 
@@ -161,7 +162,7 @@ describe('TicketSideBarBottomBar', () => {
       macros: [],
     })
 
-    renderTicketSideBarBottomBar()
+    renderTicketDetailBottomBar()
 
     const calls = await waitForMacrosQueryCalls()
 
@@ -217,7 +218,7 @@ describe('TicketSideBarBottomBar', () => {
       ],
     })
 
-    const wrapper = renderTicketSideBarBottomBar()
+    const wrapper = renderTicketDetailBottomBar()
 
     const actionMenu = await wrapper.findByLabelText('Action menu button')
 
@@ -241,12 +242,34 @@ describe('TicketSideBarBottomBar', () => {
   })
 
   it('hides macros if there is no group id', async () => {
-    const wrapper = renderTicketSideBarBottomBar({
+    const wrapper = renderTicketDetailBottomBar({
       groupId: undefined,
     })
 
     expect(
       wrapper.queryByLabelText('Action menu button'),
     ).not.toBeInTheDocument()
+  })
+
+  it('shows live user information as avatars', async () => {
+    const wrapper = renderTicketDetailBottomBar({
+      liveUserList: liveUserList as TicketLiveAppUser[],
+    })
+
+    expect(
+      wrapper.getByRole('img', { name: 'Avatar (Nicole Braun) (VIP)' }),
+    ).toBeInTheDocument()
+
+    expect(
+      wrapper.getByRole('img', { name: 'Avatar (Test Admin Agent)' }),
+    ).toBeInTheDocument()
+
+    expect(
+      wrapper.getByRole('img', { name: 'Avatar (Agent 1 Test)' }),
+    ).toBeInTheDocument()
+
+    expect(
+      wrapper.getByRole('img', { name: 'Avatar (Agent 2 Test)' }),
+    ).toBeInTheDocument()
   })
 })

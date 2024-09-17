@@ -387,7 +387,6 @@ describe('UserTaskbarTabs.vue', () => {
           changed: false,
           dirty: false,
           notify: false,
-          lastContact: '2024-07-25T07:20:32.146Z',
           updatedAt: '2024-07-24T15:42:28.212Z',
         },
         {
@@ -413,7 +412,6 @@ describe('UserTaskbarTabs.vue', () => {
           changed: false,
           dirty: false,
           notify: false,
-          lastContact: '2024-07-25T07:20:32.146Z',
           updatedAt: '2024-07-24T15:42:28.212Z',
         },
       ],

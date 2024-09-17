@@ -110,4 +110,7 @@ export default {
   trash: 'trash3',
   'reply-alt': 'reply-all',
   web: 'globe',
+
+  // Conflicting names
+  mobile: 'phone',
 }

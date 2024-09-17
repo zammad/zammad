@@ -94,7 +94,7 @@ const articlePanel = ref<HTMLElement>()
 watch(
   () => [props.newArticlePresent, pinned.value],
   ([newArticlePresent, pinned]) => {
-    if (!newArticlePresent && pinned) return
+    if (!newArticlePresent || pinned) return
 
     nextTick(() => {
       // NB: Give editor a chance to initialize its height.
@@ -164,6 +164,10 @@ const articleForm = ref<HTMLElement>()
 const { reachedTop: articleFormReachedTop } = useElementScroll(
   articleForm as MaybeRef<HTMLElement>,
 )
+
+defineExpose({
+  articlePanel,
+})
 </script>
 
 <template>

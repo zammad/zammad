@@ -33,6 +33,7 @@ import {
 import { useTicketArticleReplyAction } from '#shared/entities/ticket/composables/useTicketArticleReplyAction.ts'
 import { useTicketEdit } from '#shared/entities/ticket/composables/useTicketEdit.ts'
 import { useTicketEditForm } from '#shared/entities/ticket/composables/useTicketEditForm.ts'
+import { useTicketLiveUserList } from '#shared/entities/ticket/composables/useTicketLiveUserList.ts'
 import type {
   TicketArticleTimeAccountingFormData,
   TicketUpdateFormData,
@@ -46,6 +47,7 @@ import UserError from '#shared/errors/UserError.ts'
 import {
   EnumTaskbarEntity,
   EnumFormUpdaterId,
+  EnumTaskbarApp,
   EnumUserErrorException,
 } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
@@ -58,7 +60,7 @@ import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
 import { useTaskbarTab } from '#desktop/entities/user/current/composables/useTaskbarTab.ts'
 import { useTaskbarTabStateUpdates } from '#desktop/entities/user/current/composables/useTaskbarTabStateUpdates.ts'
-import TicketDetailBottomBar from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue'
+import TicketDetailBottomBar from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue'
 import { useTicketScreenBehavior } from '#desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/useTicketScreenBehavior.ts'
 
 import ArticleList from '../components/TicketDetailView/ArticleList.vue'
@@ -92,9 +94,11 @@ const {
   activeTaskbarTabNewArticlePresent,
 } = useTaskbarTab(EnumTaskbarEntity.TicketZoom)
 
+const internalId = toRef(props, 'internalId')
+
 // TODO: isTicketEditable and canUpdateTicket is the same in the end?
 const { ticket, ticketId, canUpdateTicket, ...ticketInformation } =
-  initializeTicketInformation(toRef(props, 'internalId'))
+  initializeTicketInformation(internalId)
 
 const onAddArticleCallback = ({ articlesQuery }: AddArticleCallbackArgs) => {
   return (articlesQuery as QueryHandler).refetch()
@@ -148,6 +152,7 @@ const {
   currentArticleType,
   ticketArticleTypes,
   securityIntegration,
+  isTicketAgent,
   isTicketCustomer,
   isTicketEditable,
   articleTypeHandler,
@@ -168,6 +173,12 @@ const {
   newTicketArticlePresent,
   showTicketArticleReplyForm,
 } = useTicketArticleReply(form, activeTaskbarTabNewArticlePresent)
+
+const { liveUserList } = useTicketLiveUserList(
+  internalId,
+  isTicketAgent,
+  EnumTaskbarApp.Desktop,
+)
 
 provideTicketInformation({
   ticket,
@@ -575,6 +586,7 @@ watch(ticketId, () => {
         :form-node-id="formNodeId"
         :can-update-ticket="canUpdateTicket"
         :group-id="groupId"
+        :live-user-list="liveUserList"
         @submit="checkSubmitEditTicket"
         @discard="discardChanges"
         @execute-macro="executeMacro"

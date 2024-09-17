@@ -29,7 +29,6 @@ export const UserCurrentTaskbarItemAttributesFragmentDoc = gql`
   }
   entityAccess
   prio
-  lastContact
   changed
   dirty
   notify

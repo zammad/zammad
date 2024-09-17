@@ -80,7 +80,8 @@ export const useTicketEditForm = (
     return acc
   }, {} as TicketArticleTypeFields)
 
-  const { isTicketCustomer, isTicketEditable } = useTicketView(ticket)
+  const { isTicketAgent, isTicketCustomer, isTicketEditable } =
+    useTicketView(ticket)
 
   const isMobileApp = appName === 'mobile'
 
@@ -347,6 +348,7 @@ export const useTicketEditForm = (
     currentArticleType,
     ticketArticleTypes,
     securityIntegration,
+    isTicketAgent,
     isTicketCustomer,
     isTicketEditable,
     articleTypeHandler: articleTypeChangeHandler,

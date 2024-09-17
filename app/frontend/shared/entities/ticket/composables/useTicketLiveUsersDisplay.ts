@@ -10,37 +10,45 @@ import type { TicketLiveAppUser } from '../types.ts'
 const IDLE_TIME_MS = 5 * 60 * 1000
 
 export const useTicketLiveUsersDisplay = (
-  liveUsers: Ref<TicketLiveAppUser[]>,
+  liveUserList: Ref<TicketLiveAppUser[]>,
 ) => {
+  const liveUsers = ref<TicketLiveAppUser[]>([])
   const viewingUsers = ref<TicketLiveAppUser[]>([])
   const idleUsers = ref<TicketLiveAppUser[]>([])
 
   const reactiveNow = useReactiveNow()
 
   watch(
-    [liveUsers, reactiveNow],
+    [liveUserList, reactiveNow],
     () => {
-      const localViewingUsers: TicketLiveAppUser[] = []
-      const localIdleUsers: TicketLiveAppUser[] = []
+      const localLiveUsers: TicketLiveAppUser[] = []
 
-      liveUsers.value.forEach((liveUser) => {
+      liveUserList.value?.forEach((liveUser) => {
         if (
           new Date(liveUser.lastInteraction).getTime() + IDLE_TIME_MS <
           reactiveNow.value.getTime()
         ) {
-          localIdleUsers.push(liveUser)
+          localLiveUsers.push({
+            ...liveUser,
+            isIdle: true,
+          })
         } else {
-          localViewingUsers.push(liveUser)
+          localLiveUsers.push({
+            ...liveUser,
+            isIdle: false,
+          })
         }
       })
 
-      viewingUsers.value = localViewingUsers
-      idleUsers.value = localIdleUsers
+      liveUsers.value = localLiveUsers
+      viewingUsers.value = localLiveUsers.filter((user) => !user.isIdle)
+      idleUsers.value = localLiveUsers.filter((user) => user.isIdle)
     },
     { immediate: true },
   )
 
   return {
+    liveUsers,
     viewingUsers,
     idleUsers,
   }

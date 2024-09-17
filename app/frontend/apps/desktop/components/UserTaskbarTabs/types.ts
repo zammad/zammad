@@ -18,7 +18,6 @@ export interface UserTaskbarTab<T = Maybe<ObjectWithId | ObjectWithUid>> {
   entityAccess?: Maybe<EnumTaskbarEntityAccess>
   tabEntityKey: string
   taskbarTabId?: ID
-  lastContact: Scalars['ISO8601DateTime']['output']
   updatedAt?: Scalars['ISO8601DateTime']['output']
   order: number
   formId?: Maybe<Scalars['FormId']['input']>

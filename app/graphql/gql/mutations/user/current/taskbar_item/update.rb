@@ -22,7 +22,7 @@ module Gql::Mutations
 
       taskbar_item.update!(hash)
 
-      { taskbar_item: taskbar_item }
+      { taskbar_item: }
     end
   end
 end

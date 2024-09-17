@@ -1,0 +1,94 @@
+[
+  {
+    "user": {
+      "__typename": "User",
+      "id": "gid://Zammad/User/2",
+      "internalId": 2,
+      "firstname": "Nicole",
+      "lastname": "Braun",
+      "fullname": "Nicole Braun",
+      "email": "nicole.braun@zammad.org",
+      "vip": true,
+      "outOfOffice": false,
+      "outOfOfficeStartAt": null,
+      "outOfOfficeEndAt": null,
+      "active": true,
+      "image": null,
+      "createdAt": "2024-09-17T11:24:42Z",
+      "updatedAt": "2024-09-17T11:24:42Z",
+      "policy": { "update": true, "destroy": true }
+    },
+    "editing": false,
+    "lastInteraction": "2024-09-17T11:45:41Z",
+    "app": "desktop"
+  },
+  {
+    "user": {
+      "__typename": "User",
+      "id": "gid://Zammad/User/3",
+      "internalId": 3,
+      "firstname": "Test Admin",
+      "lastname": "Agent",
+      "fullname": "Test Admin Agent",
+      "email": "admin@example.com",
+      "vip": false,
+      "outOfOffice": false,
+      "outOfOfficeStartAt": null,
+      "outOfOfficeEndAt": null,
+      "active": true,
+      "image": null,
+      "createdAt": "2024-09-17T11:24:42Z",
+      "updatedAt": "2024-09-17T11:24:42Z",
+      "policy": { "update": true, "destroy": true }
+    },
+    "editing": true,
+    "lastInteraction": "2024-09-17T11:50:41Z",
+    "app": "desktop"
+  },
+  {
+    "user": {
+      "__typename": "User",
+      "id": "gid://Zammad/User/4",
+      "internalId": 4,
+      "firstname": "Agent 1",
+      "lastname": "Test",
+      "fullname": "Agent 1 Test",
+      "email": "agent1@example.com",
+      "vip": false,
+      "outOfOffice": false,
+      "outOfOfficeStartAt": null,
+      "outOfOfficeEndAt": null,
+      "active": true,
+      "image": null,
+      "createdAt": "2024-09-17T11:24:42Z",
+      "updatedAt": "2024-09-17T11:24:42Z",
+      "policy": { "update": true, "destroy": true }
+    },
+    "editing": false,
+    "lastInteraction": "2024-09-17T11:50:41Z",
+    "app": "mobile"
+  },
+  {
+    "user": {
+      "__typename": "User",
+      "id": "gid://Zammad/User/5",
+      "internalId": 5,
+      "firstname": "Agent 2",
+      "lastname": "Test",
+      "fullname": "Agent 2 Test",
+      "email": "agent2@example.com",
+      "vip": false,
+      "outOfOffice": false,
+      "outOfOfficeStartAt": null,
+      "outOfOfficeEndAt": null,
+      "active": true,
+      "image": null,
+      "createdAt": "2024-09-17T11:24:42Z",
+      "updatedAt": "2024-09-17T11:24:42Z",
+      "policy": { "update": true, "destroy": true }
+    },
+    "editing": true,
+    "lastInteraction": "2024-09-17T11:50:41Z",
+    "app": "mobile"
+  }
+]

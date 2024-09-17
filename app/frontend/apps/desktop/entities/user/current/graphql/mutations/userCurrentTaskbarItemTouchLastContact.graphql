@@ -1,0 +1,10 @@
+mutation userCurrentTaskbarItemTouchLastContact($id: ID!) {
+  userCurrentTaskbarItemTouchLastContact(id: $id) {
+    taskbarItem {
+      ...userCurrentTaskbarItemAttributes
+    }
+    errors {
+      ...errors
+    }
+  }
+}

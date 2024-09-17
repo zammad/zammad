@@ -88,6 +88,14 @@ class Taskbar < ApplicationModel
     self.class.related_taskbars(self)
   end
 
+  def touch_last_contact!
+    # Don't inform the current user (only!) about live user and item updates.
+    self.skip_live_user_trigger = true
+    self.skip_item_trigger      = true
+    self.last_contact           = Time.zone.now
+    save!
+  end
+
   private
 
   def update_last_contact
@@ -151,7 +159,7 @@ class Taskbar < ApplicationModel
       taskbar.with_lock do
         taskbar.preferences = preferences
         taskbar.local_update = true
-        taskbar.skip_trigger = true
+        taskbar.skip_item_trigger = true
         taskbar.save!
       end
     end

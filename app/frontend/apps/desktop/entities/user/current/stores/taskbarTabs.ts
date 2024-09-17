@@ -32,6 +32,7 @@ import type { UserTaskbarTab } from '#desktop/components/UserTaskbarTabs/types.t
 
 import { useUserCurrentTaskbarItemAddMutation } from '../graphql/mutations/userCurrentTaskbarItemAdd.api.ts'
 import { useUserCurrentTaskbarItemDeleteMutation } from '../graphql/mutations/userCurrentTaskbarItemDelete.api.ts'
+import { useUserCurrentTaskbarItemTouchLastContactMutation } from '../graphql/mutations/userCurrentTaskbarItemTouchLastContact.api.ts'
 import { useUserCurrentTaskbarItemUpdateMutation } from '../graphql/mutations/userCurrentTaskbarItemUpdate.api.ts'
 import {
   UserCurrentTaskbarItemListDocument,
@@ -169,7 +170,6 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
                 entityAccess: taskbarTab.entityAccess,
                 tabEntityKey: taskbarTab.key,
                 taskbarTabId: taskbarTab.id,
-                lastContact: taskbarTab.lastContact,
                 order: taskbarTab.prio,
                 formId: taskbarTab.formId,
                 formNewArticlePresent: taskbarTab.formNewArticlePresent,
@@ -322,7 +322,6 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
             type: taskbarTabEntity,
             entity: cachedEntity,
             tabEntityKey,
-            lastContact: new Date().toISOString(),
             order,
           })
         }
@@ -396,6 +395,16 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
       })
     }
 
+    const taskbarTouchMutation = new MutationHandler(
+      useUserCurrentTaskbarItemTouchLastContactMutation(),
+    )
+
+    const touchTaskbarTab = (taskbarTabId: ID) => {
+      taskbarTouchMutation.send({
+        id: taskbarTabId,
+      })
+    }
+
     const upsertTaskbarTab = (
       taskbarTabEntity: EnumTaskbarEntity,
       tabEntityKey: string,
@@ -407,7 +416,10 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
         addTaskbarTab(taskbarTabEntity, tabEntityKey, tabEntityInternalId)
       }
 
-      // TODO: Do something for existing tabs here???
+      const taskbarTab = taskbarTabListByTabEntityKey.value[tabEntityKey]
+      if (!taskbarTab || !taskbarTab.taskbarTabId) return
+
+      touchTaskbarTab(taskbarTab.taskbarTabId)
     }
 
     const resetActiveTaskbarTab = () => {

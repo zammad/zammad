@@ -24,9 +24,7 @@ module Gql::Mutations
 
       taskbar_item ||= Taskbar.where(user: context.current_user, app: input[:app], key: input[:key]).first
 
-      {
-        taskbar_item:
-      }
+      { taskbar_item: }
     end
   end
 end

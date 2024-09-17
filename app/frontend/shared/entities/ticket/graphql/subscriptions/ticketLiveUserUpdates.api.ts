@@ -1,7 +1,7 @@
 import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
-import { TicketLiveUserAttributesFragmentDoc } from '../../fragments/live-user/ticketLiveUserAttributes.api';
+import { TicketLiveUserAttributesFragmentDoc } from '../fragments/ticketLiveUserAttributes.api';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;

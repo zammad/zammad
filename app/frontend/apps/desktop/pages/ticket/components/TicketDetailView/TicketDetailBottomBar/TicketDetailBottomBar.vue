@@ -5,10 +5,13 @@ import { computed, toRef } from 'vue'
 
 import { useMacros } from '#shared/entities/macro/composables/useMacros.ts'
 import type { MacroById } from '#shared/entities/macro/types.ts'
+import type { TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
 
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import TicketScreenBehavior from '#desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/TicketScreenBehavior.vue'
+
+import TicketLiveUsers from './TicketLiveUsers.vue'
 
 export interface Props {
   dirty: boolean
@@ -16,6 +19,7 @@ export interface Props {
   formNodeId?: string
   canUpdateTicket: boolean
   groupId?: string
+  liveUserList: TicketLiveAppUser[]
 }
 
 const props = defineProps<Props>()
@@ -60,8 +64,7 @@ const actionItems = computed(() => {
 </script>
 
 <template>
-  <!--  Add live user handling-->
-  <!--  <div class="ltr:mr-auto rtl:ml-auto">live user -> COMPONENT</div>-->
+  <TicketLiveUsers v-if="liveUserList?.length" :live-user-list="liveUserList" />
   <template v-if="canUpdateTicket">
     <CommonButton
       v-if="dirty"
@@ -85,6 +88,8 @@ const actionItems = computed(() => {
     >
     <CommonActionMenu
       v-if="actionItems"
+      class="flex"
+      button-size="large"
       no-single-action-mode
       placement="arrowEnd"
       :actions="actionItems"
