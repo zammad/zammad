@@ -2,6 +2,7 @@
 
 <script setup lang="ts">
 import { useLocalStorage } from '@vueuse/core'
+import { cloneDeep } from 'lodash-es'
 import {
   computed,
   toRef,
@@ -13,6 +14,7 @@ import {
   nextTick,
   watch,
   ref,
+  type Ref,
 } from 'vue'
 
 import {
@@ -24,25 +26,40 @@ import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { setErrors } from '#shared/components/Form/utils.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
-import { useTicketMacros } from '#shared/entities/macro/composables/useMacros.ts'
+import {
+  useTicketMacros,
+  macroScreenBehaviourMapping,
+} from '#shared/entities/macro/composables/useMacros.ts'
 import { useTicketArticleReplyAction } from '#shared/entities/ticket/composables/useTicketArticleReplyAction.ts'
 import { useTicketEdit } from '#shared/entities/ticket/composables/useTicketEdit.ts'
 import { useTicketEditForm } from '#shared/entities/ticket/composables/useTicketEditForm.ts'
-import type { TicketFormData } from '#shared/entities/ticket/types.ts'
+import type {
+  TicketArticleTimeAccountingFormData,
+  TicketUpdateFormData,
+} from '#shared/entities/ticket/types.ts'
 import type { AppSpecificTicketArticleType } from '#shared/entities/ticket-article/action/plugins/types.ts'
 import {
   useArticleDataHandler,
   type AddArticleCallbackArgs,
 } from '#shared/entities/ticket-article/composables/useArticleDataHandler.ts'
 import UserError from '#shared/errors/UserError.ts'
-import { EnumTaskbarEntity, EnumFormUpdaterId } from '#shared/graphql/types.ts'
+import {
+  EnumTaskbarEntity,
+  EnumFormUpdaterId,
+  EnumUserErrorException,
+} from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
+import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
+import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
 import { useTaskbarTab } from '#desktop/entities/user/current/composables/useTaskbarTab.ts'
+import { useTaskbarTabStateUpdates } from '#desktop/entities/user/current/composables/useTaskbarTabStateUpdates.ts'
 import TicketDetailBottomBar from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue'
+import { useTicketScreenBehavior } from '#desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/useTicketScreenBehavior.ts'
 
 import ArticleList from '../components/TicketDetailView/ArticleList.vue'
 import ArticleReply from '../components/TicketDetailView/ArticleReply.vue'
@@ -75,6 +92,7 @@ const {
   activeTaskbarTabNewArticlePresent,
 } = useTaskbarTab(EnumTaskbarEntity.TicketZoom)
 
+// TODO: isTicketEditable and canUpdateTicket is the same in the end?
 const { ticket, ticketId, canUpdateTicket, ...ticketInformation } =
   initializeTicketInformation(toRef(props, 'internalId'))
 
@@ -97,9 +115,19 @@ const {
   isDisabled,
   isDirty,
   formNodeId,
+  isInitialSettled,
   formReset,
   formSubmit,
+  triggerFormUpdater,
 } = useForm()
+
+const groupId = computed(() =>
+  isInitialSettled.value && values.value.group_id
+    ? convertToGraphQLId('Group', values.value.group_id as number)
+    : undefined,
+)
+
+const { setSkipNextStateUpdate } = useTaskbarTabStateUpdates(triggerFormUpdater)
 
 const sidebarContext = computed<TicketSidebarContext>(() => ({
   screenType: TicketSidebarScreenType.TicketDetailView,
@@ -121,9 +149,14 @@ const {
   ticketArticleTypes,
   securityIntegration,
   isTicketCustomer,
+  isTicketEditable,
   articleTypeHandler,
   articleTypeSelectHandler,
 } = useTicketEditForm(ticket, form)
+
+const hasInternalArticle = computed(
+  () => (values.value as TicketUpdateFormData).article?.internal,
+)
 
 const formEditAttributeLocation = computed(() => {
   if (activeSidebar.value === 'information') return '#ticketEditAttributeForm'
@@ -194,15 +227,16 @@ const ticketEditSchema = [
 
 const { waitForConfirmation, waitForVariantConfirmation } = useConfirmation()
 
+const { handleScreenBehavior } = useTicketScreenBehavior()
+
 const discardChanges = async () => {
   const confirm = await waitForVariantConfirmation('unsaved')
 
   if (confirm) {
     newTicketArticlePresent.value = false
 
-    nextTick(() => {
-      formReset()
-    })
+    await nextTick()
+    formReset()
   }
 }
 
@@ -226,23 +260,55 @@ const formAdditionalRouteQueryParams = computed(() => ({
 
 const { notify } = useNotifications()
 
+const { userId } = useSessionStore()
+
+const articleReplyPinned = useLocalStorage(
+  `${userId}-article-reply-pinned`,
+  false,
+)
+
+const contentContainerElement = ref<HTMLElement>()
+const headerElement = ref<InstanceType<typeof TicketDetailTopBar>>()
+
+const { isScrollingDown: hideDetails } = useElementScroll(
+  contentContainerElement as Ref<HTMLElement>,
+  {
+    scrollStartThreshold: computed(() => headerElement.value?.$el.clientHeight),
+  },
+)
+
+const { reachedBottom } = useElementScroll(
+  contentContainerElement as Ref<HTMLElement>,
+)
+
+const scrollToArticlesEnd = () => {
+  nextTick(() => {
+    const scrollHeight = contentContainerElement.value?.scrollHeight
+    if (scrollHeight)
+      contentContainerElement.value?.scrollTo({
+        top: scrollHeight,
+      })
+  })
+}
+
 const checkSubmitEditTicket = () => {
   if (!isFormValid.value) {
     if (activeSidebar.value !== 'information') switchSidebar('information')
 
-    if (newTicketArticlePresent.value && !isArticleFormGroupValid.value) {
-      document
-        .querySelector('#ticketArticleReplyForm')
-        ?.scrollIntoView({ behavior: 'smooth' })
-    }
+    if (
+      newTicketArticlePresent.value &&
+      !isArticleFormGroupValid.value &&
+      !articleReplyPinned.value
+    )
+      scrollToArticlesEnd()
   }
 
   formSubmit()
 }
 
-const skipValidator = ref<string>()
+const skipValidators = ref<EnumUserErrorException[]>([])
 
-const handleIncompleteChecklist = async (validator: string) => {
+const handleIncompleteChecklist = async (error: UserError) => {
   const confirmed = await waitForConfirmation(
     __(
       'You have unchecked items in the checklist. Do you want to handle them before closing this ticket?',
@@ -261,7 +327,8 @@ const handleIncompleteChecklist = async (validator: string) => {
   }
 
   if (confirmed === false) {
-    skipValidator.value = validator
+    const exception = error.getFirstErrorException()
+    if (exception) skipValidators.value?.push(exception)
     formSubmit()
     return true
   }
@@ -269,25 +336,75 @@ const handleIncompleteChecklist = async (validator: string) => {
   return false
 }
 
-const handleUserErrorException = (exception: string) => {
-  if (
-    exception ===
-    'Service::Ticket::Update::Validator::ChecklistCompleted::IncompleteChecklistError'
-  )
-    return handleIncompleteChecklist(exception)
+const timeAccountingData = ref<TicketArticleTimeAccountingFormData>()
+
+const timeAccountingFlyout = useFlyout({
+  name: 'ticket-time-accounting',
+  component: () =>
+    import('../components/TicketDetailView/TimeAccountingFlyout.vue'),
+})
+
+const handleTimeAccounting = (error: UserError) => {
+  timeAccountingFlyout.open({
+    onAccountTime: (data: TicketArticleTimeAccountingFormData) => {
+      timeAccountingData.value = data
+      formSubmit()
+    },
+    onSkip: () => {
+      const exception = error.getFirstErrorException()
+      if (exception) skipValidators.value?.push(exception)
+      formSubmit()
+    },
+  })
+
+  return false
 }
 
-const { macroId, executeMacro, resetMacroId } = useTicketMacros(formSubmit)
+const handleUserErrorException = (error: UserError) => {
+  if (
+    error.getFirstErrorException() ===
+    EnumUserErrorException.ServiceTicketUpdateValidatorChecklistCompletedError
+  )
+    return handleIncompleteChecklist(error)
 
-const submitEditTicket = async (formData: FormSubmitData<TicketFormData>) => {
-  const updateFormData = currentArticleType.value?.updateForm
-  if (updateFormData) {
-    formData = updateFormData(formData)
+  if (
+    error.getFirstErrorException() ===
+    EnumUserErrorException.ServiceTicketUpdateValidatorTimeAccountingError
+  )
+    return handleTimeAccounting(error)
+
+  return true
+}
+
+const { activeMacro, executeMacro, disposeActiveMacro } =
+  useTicketMacros(formSubmit)
+
+const submitEditTicket = async (
+  formData: FormSubmitData<TicketUpdateFormData>,
+) => {
+  let data = cloneDeep(formData)
+  if (currentArticleType.value?.updateForm)
+    data = currentArticleType.value.updateForm(data)
+
+  if (data.article && timeAccountingData.value) {
+    data.article = {
+      ...data.article,
+      timeUnit:
+        timeAccountingData.value.time_unit !== undefined
+          ? parseFloat(timeAccountingData.value.time_unit)
+          : undefined,
+      accountedTimeTypeId: timeAccountingData.value.accounted_time_type_id
+        ? convertToGraphQLId(
+            'Ticket::TimeAccounting::Type',
+            timeAccountingData.value.accounted_time_type_id,
+          )
+        : undefined,
+    }
   }
 
-  return editTicket(formData, {
-    macroId: macroId.value,
-    skipValidator: skipValidator.value,
+  return editTicket(data, {
+    macroId: activeMacro.value?.id,
+    skipValidators: skipValidators.value,
   })
     .then((result) => {
       if (result?.ticketUpdate?.ticket) {
@@ -297,22 +414,47 @@ const submitEditTicket = async (formData: FormSubmitData<TicketFormData>) => {
           message: __('Ticket updated successfully.'),
         })
 
-        newTicketArticlePresent.value = false
+        const screenBehaviour = activeMacro.value
+          ? macroScreenBehaviourMapping[activeMacro.value?.uxFlowNextUp]
+          : undefined
 
-        return true // will reset the ticket form, because of the reset inside the Form component
+        handleScreenBehavior({
+          screenBehaviour,
+          ticket: result.ticketUpdate.ticket,
+        })
+
+        skipValidators.value.length = 0
+        timeAccountingData.value = undefined
+
+        // Await subscription to update article list before we scroll to the bottom.
+        watch(articleResult, scrollToArticlesEnd, {
+          once: true,
+        })
+
+        // Reset article form after ticket update and reset form.
+        return () => {
+          newTicketArticlePresent.value = false
+
+          formReset({ ticket: undefined })
+        }
       }
 
       return false
     })
     .catch((error) => {
       if (error instanceof UserError) {
-        const exception = error.getFirstErrorException()
-        if (exception) return handleUserErrorException(exception)
+        if (error.getFirstErrorException())
+          return handleUserErrorException(error)
+        skipValidators.value.length = 0
+        timeAccountingData.value = undefined
         if (form.value?.formNode) {
           setErrors(form.value.formNode, error)
           return
         }
       }
+
+      skipValidators.value.length = 0
+      timeAccountingData.value = undefined
 
       notify({
         id: 'ticket-update-failed',
@@ -321,8 +463,7 @@ const submitEditTicket = async (formData: FormSubmitData<TicketFormData>) => {
       })
     })
     .finally(() => {
-      skipValidator.value = undefined
-      resetMacroId()
+      disposeActiveMacro()
     })
 }
 
@@ -345,15 +486,9 @@ const onEditFormSettled = () => {
 // Reset newTicketArticlePresent when ticket changed, that the
 // taskbar information is used for the start.
 watch(ticketId, () => {
+  initialTicketValue.value = undefined
   newTicketArticlePresent.value = undefined
 })
-
-const { userId } = useSessionStore()
-
-const articleReplyPinned = useLocalStorage(
-  `${userId}-article-reply-pinned`,
-  false,
-)
 </script>
 
 <template>
@@ -363,10 +498,12 @@ const articleReplyPinned = useLocalStorage(
     background-variant="primary"
     :show-sidebar="hasSidebar"
     content-alignment="center"
+    no-scrollable
   >
     <CommonLoader class="mt-8" :loading="!ticket">
       <div
-        class="grid h-full w-full"
+        ref="contentContainerElement"
+        class="relative grid h-full w-full overflow-y-auto"
         :class="{
           'grid-rows-[max-content_max-content_max-content]':
             !newTicketArticlePresent || !articleReplyPinned,
@@ -374,16 +511,23 @@ const articleReplyPinned = useLocalStorage(
             newTicketArticlePresent && articleReplyPinned,
         }"
       >
-        <TicketDetailTopBar />
+        <TicketDetailTopBar
+          ref="headerElement"
+          :hide-details="hideDetails"
+          class="sticky left-0 right-0 top-0 w-full"
+        />
+
         <ArticleList :aria-busy="isLoadingArticles" />
 
         <ArticleReply
-          v-if="ticket?.id"
+          v-if="ticket?.id && isTicketEditable"
           :ticket="ticket"
           :new-article-present="newTicketArticlePresent"
           :create-article-type="ticket.createArticleType?.name"
           :ticket-article-types="ticketArticleTypes"
           :is-ticket-customer="isTicketCustomer"
+          :has-internal-article="hasInternalArticle"
+          :parent-reached-bottom-scroll="reachedBottom"
           @show-article-form="handleShowArticleForm"
         />
 
@@ -391,10 +535,11 @@ const articleReplyPinned = useLocalStorage(
           <Form
             v-if="ticket?.id && initialTicketValue"
             id="form-ticket-edit"
-            :key="ticketId"
+            :key="ticket.id"
             ref="form"
             :form-id="activeTaskbarTabFormId"
             :schema="ticketEditSchema"
+            :disabled="!isTicketEditable"
             :flatten-form-groups="['ticket']"
             :handlers="[articleTypeHandler()]"
             :form-kit-plugins="[articleTypeSelectHandler]"
@@ -407,8 +552,11 @@ const articleReplyPinned = useLocalStorage(
             :schema-component-library="{
               Teleport: markRaw(Teleport) as unknown as Component,
             }"
-            @submit="submitEditTicket($event as FormSubmitData<TicketFormData>)"
+            @submit="
+              submitEditTicket($event as FormSubmitData<TicketUpdateFormData>)
+            "
             @settled="onEditFormSettled"
+            @changed="setSkipNextStateUpdate(true)"
           />
         </div>
       </div>
@@ -426,7 +574,7 @@ const articleReplyPinned = useLocalStorage(
         :disabled="isDisabled"
         :form-node-id="formNodeId"
         :can-update-ticket="canUpdateTicket"
-        :form-values="values"
+        :group-id="groupId"
         @submit="checkSubmitEditTicket"
         @discard="discardChanges"
         @execute-macro="executeMacro"

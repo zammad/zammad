@@ -80,7 +80,7 @@ export const useTicketEditForm = (
     return acc
   }, {} as TicketArticleTypeFields)
 
-  const { isTicketCustomer } = useTicketView(ticket)
+  const { isTicketCustomer, isTicketEditable } = useTicketView(ticket)
 
   const isMobileApp = appName === 'mobile'
 
@@ -135,6 +135,9 @@ export const useTicketEditForm = (
         type: 'select',
         hidden: computed(() => ticketArticleTypes.value.length === 1),
         props: {
+          // We need to disable the auto preselection when the field
+          // is initialized, so that we have a correct dirty state.
+          noInitialAutoPreselect: true,
           options: ticketArticleTypes,
         },
       },
@@ -280,6 +283,7 @@ export const useTicketEditForm = (
         !formNode
       )
         return
+
       const body = formNode.find('body', 'name')
       const context = {
         body: body?.context as unknown as FieldEditorContext,
@@ -344,6 +348,7 @@ export const useTicketEditForm = (
     ticketArticleTypes,
     securityIntegration,
     isTicketCustomer,
+    isTicketEditable,
     articleTypeHandler: articleTypeChangeHandler,
     articleTypeSelectHandler,
   }

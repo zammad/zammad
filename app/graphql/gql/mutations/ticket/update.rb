@@ -22,14 +22,14 @@ module Gql::Mutations
       {
         ticket: Service::Ticket::Update
           .new(current_user: context.current_user)
-          .execute(ticket: ticket, ticket_data: input, skip_validator: meta&.dig(:skip_validator), macro: meta&.dig(:macro))
+          .execute(ticket: ticket, ticket_data: input, skip_validators: meta&.dig(:skip_validators), macro: meta&.dig(:macro))
       }
     rescue => e
       raise e if !e.class.name.starts_with?('Service::Ticket::Update::Validator')
 
       error_response(
         message:   e.message,
-        exception: e.class.name,
+        exception: e.class,
       )
     end
   end

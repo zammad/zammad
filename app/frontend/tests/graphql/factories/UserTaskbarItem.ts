@@ -30,5 +30,6 @@ export default (): DeepPartial<UserTaskbarItem> => {
       updatedAt: '2024-07-29T09:39:03.000',
     },
     dirty: true,
+    formNewArticlePresent: false,
   }
 }

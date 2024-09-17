@@ -4626,6 +4626,12 @@
               "deprecationReason": null
             },
             {
+              "name": "FormUpdater__Updater__Ticket__TimeAccounting",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "FormUpdater__Updater__User__Create",
               "description": null,
               "isDeprecated": false,
@@ -5184,6 +5190,41 @@
         },
         {
           "kind": "ENUM",
+          "name": "EnumTicketScreenBehavior",
+          "description": "Option to choose the ticket screen behavior",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "closeTab",
+              "description": "Close tab",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "closeTabOnTicketClose",
+              "description": "Close tab on ticket close",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "closeNextInOverview",
+              "description": "Next in overview",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "stayOnTab",
+              "description": "Stay on tab",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "kind": "ENUM",
           "name": "EnumTicketStateColorCode",
           "description": "Ticket state color code",
           "fields": null,
@@ -5257,6 +5298,29 @@
             {
               "name": "phone",
               "description": "User phone number",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "kind": "ENUM",
+          "name": "EnumUserErrorException",
+          "description": "All user error exception values",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "Service__Ticket__Update__Validator__ChecklistCompleted__Error",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "Service__Ticket__Update__Validator__TimeAccounting__Error",
+              "description": null,
               "isDeprecated": false,
               "deprecationReason": null
             }
@@ -10980,6 +11044,33 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "UserCurrentTaskbarItemUpdatePayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "userCurrentTicketScreenBehavior",
+              "description": "Update user ticket screen behavior settings",
+              "args": [
+                {
+                  "name": "behavior",
+                  "description": "Ticket screen behavior to set",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "EnumTicketScreenBehavior",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "UserCurrentTicketScreenBehaviorPayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -19889,6 +19980,16 @@
               "defaultValue": null
             },
             {
+              "name": "accountedTimeTypeId",
+              "description": "The article accounted time activity type.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
               "name": "preferences",
               "description": "The article preferences.",
               "type": {
@@ -23016,12 +23117,20 @@
               "defaultValue": null
             },
             {
-              "name": "skipValidator",
-              "description": "The ticket update validator to skip",
+              "name": "skipValidators",
+              "description": "The ticket update validators to skip",
               "type": {
-                "kind": "SCALAR",
-                "name": "String",
-                "ofType": null
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "ENUM",
+                    "name": "EnumUserErrorException",
+                    "ofType": null
+                  }
+                }
               },
               "defaultValue": null
             },
@@ -25932,6 +26041,59 @@
         },
         {
           "kind": "OBJECT",
+          "name": "UserCurrentTicketScreenBehaviorPayload",
+          "description": "Autogenerated return type of UserCurrentTicketScreenBehavior.",
+          "fields": [
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "success",
+              "description": "Whether the user ticket screen behavior setting was updated successfully",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Boolean",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
           "name": "UserCurrentTwoFactorRecoveryCodesGeneratePayload",
           "description": "Autogenerated return type of UserCurrentTwoFactorRecoveryCodesGenerate.",
           "fields": [
@@ -26522,8 +26684,8 @@
 
               ],
               "type": {
-                "kind": "SCALAR",
-                "name": "String",
+                "kind": "ENUM",
+                "name": "EnumUserErrorException",
                 "ofType": null
               },
               "isDeprecated": false,

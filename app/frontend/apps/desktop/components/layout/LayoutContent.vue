@@ -35,6 +35,10 @@ export interface Props {
   showInlineHelp?: boolean
   showSidebar?: boolean
   noPadding?: boolean
+  /**
+   * Disables the vertical scroll on the main element
+   */
+  noScrollable?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -85,6 +89,7 @@ const { durations } = useTransitionConfig()
       :style="$slots.sideBar && showSidebar ? gridColumns : undefined"
     >
       <LayoutMain
+        :class="{ 'overflow-y-hidden': noScrollable }"
         :no-padding="noPadding"
         :background-variant="backgroundVariant"
       >

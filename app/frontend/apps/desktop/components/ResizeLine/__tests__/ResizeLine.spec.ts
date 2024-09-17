@@ -18,6 +18,7 @@ describe('ResizeLine', () => {
 
     expect(wrapper.queryByRole('separator')).not.toBeInTheDocument()
     expect(wrapper.getByRole('button')).toBeDisabled()
+    expect(wrapper.getByRole('button')).not.toHaveAccessibleName('test-label')
 
     await wrapper.events.click(wrapper.getByRole('button'))
     expect(wrapper.emitted('mousedown-event')).toBeUndefined()

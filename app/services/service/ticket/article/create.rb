@@ -4,9 +4,10 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
   def execute(article_data:, ticket:)
     article_data.delete(:ticket_id)
 
-    attachments_raw = article_data.delete(:attachments) || {}
-    time_unit       = article_data.delete(:time_unit)
-    subtype         = article_data.delete(:subtype)
+    attachments_raw     = article_data.delete(:attachments) || {}
+    time_unit           = article_data.delete(:time_unit)
+    accounted_time_type = article_data.delete(:accounted_time_type)
+    subtype             = article_data.delete(:subtype)
 
     preprocess_article_data(article_data, ticket)
 
@@ -17,7 +18,7 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
 
       article.save!
 
-      time_accounting(article, time_unit)
+      time_accounting(article, time_unit, accounted_time_type)
       form_id_cleanup(attachments_raw)
     end
   end
@@ -104,13 +105,14 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
       end
   end
 
-  def time_accounting(article, time_unit)
+  def time_accounting(article, time_unit, accounted_time_type)
     return if time_unit.blank?
 
     time_accounting = Ticket::TimeAccounting.new(
       ticket_id:         article.ticket_id,
       ticket_article_id: article.id,
       time_unit:         time_unit,
+      type:              accounted_time_type,
     )
 
     policy = Ticket::TimeAccountingPolicy.new(current_user, time_accounting)

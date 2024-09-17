@@ -2,7 +2,7 @@
 
 class CoreWorkflow::Custom::TicketTimeAccountingCheck < CoreWorkflow::Custom::Backend
   def saved_attribute_match?
-    @saved_attribute_match ||= ticket_edit? && enabled?
+    @saved_attribute_match ||= !@result_object.form_updater && ticket_edit? && enabled?
   end
 
   def selected_attribute_match?

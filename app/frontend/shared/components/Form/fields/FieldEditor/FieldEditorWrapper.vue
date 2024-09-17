@@ -1,6 +1,6 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
-import { computed, defineAsyncComponent } from 'vue'
+import { computed, defineAsyncComponent, nextTick } from 'vue'
 
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 
@@ -37,7 +37,7 @@ const preContext = {
   addSignature: (signature: PossibleSignature) =>
     queueAction((context) => context.addSignature(signature)),
   removeSignature: () => queueAction((context) => context.removeSignature()),
-  focus: () => queueAction((context) => context.focus()),
+  focus: () => queueAction((context) => nextTick(() => context.focus())),
 }
 
 Object.assign(props.context, preContext)

@@ -44,6 +44,7 @@ export const useBubbleStyleGuide = (
   const internalNoteClass = computed(() => {
     if (!isArticleTypeNote.value) return ''
 
+    // Uses `.bg-stripes` class which is defined in `app/frontend/apps/desktop/styles/main.css`.
     return position.value === 'right'
       ? 'bg-stripes before:rounded-2xl relative z-0 rounded-xl outline outline-1 outline-blue-700 ltr:rounded-br-none rtl:rounded-bl-none ltr:before:rounded-br-none rtl:before:rounded-bl-none'
       : 'bg-stripes before:rounded-2xl relative z-0 rounded-xl outline outline-1 outline-blue-700 ltr:rounded-bl-none rtl:rounded-br-none ltr:before:rounded-bl-none rtl:before:rounded-br-none'

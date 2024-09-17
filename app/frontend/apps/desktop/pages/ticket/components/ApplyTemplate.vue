@@ -3,15 +3,10 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import CommonPopover from '#shared/components/CommonPopover/CommonPopover.vue'
-import { usePopover } from '#shared/components/CommonPopover/usePopover.ts'
-import { EnumTextDirection } from '#shared/graphql/types.ts'
-import { useLocaleStore } from '#shared/stores/locale.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
-import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import CommonPopoverMenu from '#desktop/components/CommonPopoverMenu/CommonPopoverMenu.vue'
-import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types'
+import CommonDropdown from '#desktop/components/CommonDropdown/CommonDropdown.vue'
+import type { DropdownItem } from '#desktop/components/CommonDropdown/types.ts'
 
 import { useApplyTemplate } from '../composables/useApplyTemplate.ts'
 
@@ -21,64 +16,30 @@ const emit = defineEmits<{
 
 const { hasPermission } = useSessionStore()
 
-const { popover, popoverTarget, toggle } = usePopover()
-
-const locale = useLocaleStore()
-
 const { templateList } = useApplyTemplate()
 
-const templateAccess = computed(() => {
-  if (
+const templateAccess = computed(
+  () =>
     templateList &&
     templateList.value.length > 0 &&
-    hasPermission('ticket.agent')
-  ) {
-    return true
-  }
+    hasPermission('ticket.agent'),
+)
 
-  return false
-})
-
-const items = computed(() => {
-  const menuItems: MenuItem[] = []
-
-  templateList.value.forEach((template) => {
-    menuItems.push({
-      key: template.id,
-      label: template.name,
-      onClick: () => {
-        emit('select-template', template.id)
-      },
-    })
-  })
-
-  return menuItems
-})
-
-const currentPopoverPlacement = computed(() => {
-  if (locale.localeData?.dir === EnumTextDirection.Rtl) return 'start'
-  return 'end'
-})
+const items = computed<DropdownItem[]>(() =>
+  templateList.value.map((template) => ({
+    key: template.id,
+    label: template.name,
+  })),
+)
 </script>
 
 <template>
   <template v-if="templateAccess">
-    <CommonPopover
-      ref="popover"
-      :owner="popoverTarget"
-      :placement="currentPopoverPlacement"
+    <CommonDropdown
+      :items="items"
+      :action-label="$t('Apply Template')"
       orientation="top"
-    >
-      <CommonPopoverMenu :popover="popover" :items="items" />
-    </CommonPopover>
-    <CommonButton
-      ref="popoverTarget"
-      size="large"
-      suffix-icon="chevron-up"
-      variant="secondary"
-      @click="toggle(true)"
-    >
-      {{ $t('Apply Template') }}
-    </CommonButton>
+      @handle-action="emit('select-template', $event.key)"
+    />
   </template>
 </template>

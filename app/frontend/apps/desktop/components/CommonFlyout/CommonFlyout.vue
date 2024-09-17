@@ -74,11 +74,11 @@ defineOptions({
 
 const emit = defineEmits<{
   action: []
-  close: []
+  close: [boolean?]
 }>()
 
-const close = async () => {
-  emit('close')
+const close = async (isCancel?: boolean) => {
+  emit('close', isCancel)
   await closeFlyout(props.name)
 }
 
@@ -297,7 +297,7 @@ onMounted(() => {
       <slot name="footer" v-bind="{ action, close }">
         <CommonFlyoutActionFooter
           v-bind="footerActionOptions"
-          @cancel="close()"
+          @cancel="close(true)"
           @action="action()"
         />
       </slot>

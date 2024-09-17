@@ -30,9 +30,7 @@ const renderTicketSideBarBottomBar = (props?: Partial<Props>) =>
       formNodeId: 'form-node-id-test',
       dirty: false,
       canUpdateTicket: true,
-      formValues: {
-        group_id: 2,
-      },
+      groupId: convertToGraphQLId('Group', 2),
       ...props,
     },
     store: true,
@@ -244,7 +242,7 @@ describe('TicketSideBarBottomBar', () => {
 
   it('hides macros if there is no group id', async () => {
     const wrapper = renderTicketSideBarBottomBar({
-      formValues: {},
+      groupId: undefined,
     })
 
     expect(

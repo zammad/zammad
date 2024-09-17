@@ -16,6 +16,7 @@ module Gql::Types::Input::Ticket
     argument :subtype, String, required: false, description: 'The article subtype.'
     argument :in_reply_to, String, required: false, description: 'Message id of the article this article replies to.', default_value: ''
     argument :time_unit, Float, required: false, description: 'The article accounted time.'
+    argument :accounted_time_type_id, GraphQL::Types::ID, required: false, loads: Gql::Types::Ticket::TimeAccounting::TypeType, description: 'The article accounted time activity type.'
     argument :preferences, GraphQL::Types::JSON, required: false, description: 'The article preferences.'
     argument :attachments, Gql::Types::Input::AttachmentInputType, required: false, description: 'The article attachments.'
     argument :security, Gql::Types::Input::Ticket::SecurityInputType, required: false, description: 'The article security options.'

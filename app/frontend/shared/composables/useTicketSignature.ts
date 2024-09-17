@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { effectScope, type Ref } from 'vue'
+
 import type { FieldEditorContext } from '#shared/components/Form/fields/FieldEditor/types.ts'
 import type {
   FormHandler,
@@ -20,8 +22,6 @@ import {
 } from '#shared/graphql/utils.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
-import type { Ref } from 'vue'
-
 let signatureQuery: QueryHandler<
   TicketSignatureQuery,
   TicketSignatureQueryVariables
@@ -30,9 +30,13 @@ let signatureQuery: QueryHandler<
 export const getTicketSignatureQuery = () => {
   if (signatureQuery) return signatureQuery
 
-  signatureQuery = new QueryHandler(
-    useTicketSignatureLazyQuery({ groupId: '' }),
-  )
+  const scope = effectScope()
+
+  scope.run(() => {
+    signatureQuery = new QueryHandler(
+      useTicketSignatureLazyQuery({ groupId: '' }),
+    )
+  })
 
   return signatureQuery
 }

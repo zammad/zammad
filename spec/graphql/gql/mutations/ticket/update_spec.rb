@@ -141,22 +141,24 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
 
         context 'with time unit' do
           let(:time_accounting_enabled) { true }
-
+          let(:exception)               { Gql::Types::Enum::BaseEnum.graphql_compatible_name('Service::Ticket::Update::Validator::TimeAccounting::Error') }
+          let(:accounted_time_type)     { create(:ticket_time_accounting_type) }
           let(:variables) do
             {
               ticketId: gql.id(ticket),
               input:    input_payload,
               meta:     {
-                skipValidator: 'Service::Ticket::Update::Validator::TimeAccounting::ConditionMatchesError'
-              }
+                skipValidators: [exception],
+              },
             }
           end
 
           let(:article_payload) do
             {
-              body:     'dummy',
-              type:     'web',
-              timeUnit: 123,
+              body:                'dummy',
+              type:                'web',
+              timeUnit:            123,
+              accountedTimeTypeId: gql.id(accounted_time_type),
             }
           end
 
@@ -169,6 +171,7 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
               .to change(Ticket::Article, :count).by(1)
 
             expect(Ticket.last.articles.last.ticket_time_accounting.time_unit).to eq(123)
+            expect(Ticket.last.articles.last.ticket_time_accounting.type).to eq(accounted_time_type)
           end
 
           context 'when time accounting disabled' do
@@ -255,6 +258,7 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
 
       context 'when ticket has a checklist and is being closed' do
         let(:checklist) { create(:checklist, ticket: ticket) }
+        let(:exception) { Gql::Types::Enum::BaseEnum.graphql_compatible_name('Service::Ticket::Update::Validator::ChecklistCompleted::Error') }
 
         let(:input_base_payload) do
           {
@@ -280,7 +284,7 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
                                           'errors' => [
                                             'message'   => 'The ticket checklist is incomplete.',
                                             'field'     => nil,
-                                            'exception' => 'Service::Ticket::Update::Validator::ChecklistCompleted::IncompleteChecklistError',
+                                            'exception' => exception,
                                           ],
                                         })
         end
@@ -291,8 +295,8 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
               ticketId: gql.id(ticket),
               input:    input_payload,
               meta:     {
-                skipValidator: 'Service::Ticket::Update::Validator::ChecklistCompleted::IncompleteChecklistError'
-              }
+                skipValidators: [exception],
+              },
             }
           end
 

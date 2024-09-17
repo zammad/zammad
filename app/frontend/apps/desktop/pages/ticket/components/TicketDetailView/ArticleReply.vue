@@ -10,7 +10,6 @@ import { useSessionStore } from '#shared/stores/session.ts'
 import type { ButtonVariant } from '#shared/types/button.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import { useMainLayoutContainer } from '#desktop/components/layout/composables/useMainLayoutContainer.ts'
 import ResizeLine from '#desktop/components/ResizeLine/ResizeLine.vue'
 import { useResizeLine } from '#desktop/components/ResizeLine/useResizeLine.ts'
 import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
@@ -21,6 +20,8 @@ interface Props {
   createArticleType?: string | null
   ticketArticleTypes: AppSpecificTicketArticleType[]
   isTicketCustomer?: boolean
+  hasInternalArticle?: boolean
+  parentReachedBottomScroll: boolean
 }
 
 const props = defineProps<Props>()
@@ -71,12 +72,6 @@ const availableArticleTypes = computed(() => {
   })
 })
 
-const { node: mainLayoutContainerElement } = useMainLayoutContainer()
-
-const { reachedBottom: mainLayoutReachedBottom } = useElementScroll(
-  mainLayoutContainerElement as MaybeRef<HTMLElement>,
-)
-
 const { userId } = useSessionStore()
 
 const pinned = useLocalStorage(`${userId}-article-reply-pinned`, false)
@@ -99,7 +94,7 @@ watch(
       // NB: Give editor a chance to initialize its height.
       setTimeout(() => {
         articlePanel.value?.scrollIntoView?.(true)
-      }, 100)
+      }, 300)
     })
   },
 )
@@ -172,76 +167,89 @@ const { reachedTop: articleFormReachedTop } = useElementScroll(
     class="mx-auto w-full"
     :class="{
       'max-w-6xl px-12 py-4': !pinned,
-      'sticky bottom-0 border-t border-t-neutral-300 bg-neutral-50 dark:border-t-gray-900 dark:bg-gray-500':
+      'sticky bottom-0 z-20 border-t border-t-neutral-300 bg-neutral-50 dark:border-t-gray-900 dark:bg-gray-500':
         pinned,
     }"
-    :style="{
-      height: pinned ? `${articlePanelHeight}px` : 'auto',
-    }"
+    aria-labelledby="article-reply-form-title"
     role="complementary"
     :aria-expanded="!pinned"
   >
-    <ResizeLine
-      v-if="pinned"
-      ref="resizeLine"
-      class="group absolute h-3 w-full -translate-y-1.5 py-1"
-      :label="$t('Resize article panel')"
-      orientation="horizontal"
-      :values="{
-        max: articlePanelMaxHeight,
-        min: MINIMUM_ARTICLE_PANEL_HEIGHT,
-        current: articlePanelHeight,
-      }"
-      @mousedown-event="startResizing"
-      @touchstart-event="startResizing"
-      @dblclick="resetHeight"
-    />
-
     <div
-      class="flex h-full flex-col"
       :class="{
-        'rounded-xl border border-neutral-300 bg-neutral-50 dark:border-gray-900 dark:bg-gray-500':
-          !pinned,
+        'bg-stripes relative z-0 rounded-xl outline outline-1 outline-blue-700 before:rounded-2xl':
+          hasInternalArticle && !pinned,
+        'border-stripes': hasInternalArticle && pinned,
+      }"
+      :style="{
+        height: pinned ? `${articlePanelHeight}px` : 'auto',
       }"
     >
+      <ResizeLine
+        v-if="pinned"
+        ref="resizeLine"
+        class="group absolute h-3 w-full -translate-y-1.5 py-1"
+        :label="$t('Resize article panel')"
+        orientation="horizontal"
+        :values="{
+          max: articlePanelMaxHeight,
+          min: MINIMUM_ARTICLE_PANEL_HEIGHT,
+          current: articlePanelHeight,
+        }"
+        @mousedown-event="startResizing"
+        @touchstart-event="startResizing"
+        @dblclick="resetHeight"
+      />
+
       <div
-        class="flex h-10 items-center justify-between p-3"
+        class="flex h-full flex-col"
         :class="{
-          'bg-neutral-50 dark:bg-gray-500': pinned,
-          'border-b border-b-transparent': articleFormReachedTop,
-          'border-b border-b-neutral-300 dark:border-b-gray-900':
-            !articleFormReachedTop,
+          'rounded-xl border border-neutral-300 bg-neutral-50 dark:border-gray-900 dark:bg-gray-500':
+            !pinned,
         }"
       >
-        <CommonLabel
-          class="text-stone-200 dark:text-neutral-500"
-          tag="h2"
-          size="small"
+        <div
+          class="flex h-10 items-center justify-between p-3"
+          :class="{
+            'bg-neutral-50 dark:bg-gray-500': pinned,
+            'border-b border-b-transparent': pinned && articleFormReachedTop,
+            'border-b border-b-neutral-300 dark:border-b-gray-900':
+              pinned && !articleFormReachedTop,
+          }"
         >
-          {{ $t('Reply') }}
-        </CommonLabel>
-        <CommonButton
-          v-tooltip="pinned ? $t('Unpin this panel') : $t('Pin this panel')"
-          :icon="pinned ? 'pin' : 'pin-angle'"
-          variant="neutral"
-          size="small"
-          @click="togglePinned"
-        />
+          <CommonLabel
+            id="article-reply-form-title"
+            class="text-stone-200 dark:text-neutral-500"
+            tag="h2"
+            size="small"
+          >
+            {{ $t('Reply') }}
+          </CommonLabel>
+          <CommonButton
+            v-tooltip="pinned ? $t('Unpin this panel') : $t('Pin this panel')"
+            :icon="pinned ? 'pin' : 'pin-angle'"
+            variant="neutral"
+            size="small"
+            @click="togglePinned"
+          />
+        </div>
+        <div
+          id="ticketArticleReplyForm"
+          ref="articleForm"
+          class="h-full px-3 pb-3"
+          :class="{
+            'overflow-y-auto': pinned,
+            'my-[5px] px-4 pt-2': hasInternalArticle && pinned,
+          }"
+        ></div>
       </div>
-      <div
-        id="ticketArticleReplyForm"
-        ref="articleForm"
-        class="h-full px-3 pb-3"
-        :class="{ 'overflow-y-auto': pinned }"
-      ></div>
     </div>
   </div>
   <div
     v-else-if="newArticlePresent !== undefined"
-    class="-:border-t-transparent sticky bottom-0 flex w-full justify-center gap-2.5 border-t py-1.5"
+    class="-:border-t-transparent sticky bottom-0 z-20 flex w-full justify-center gap-2.5 border-t py-1.5"
     :class="{
       'border-t-neutral-100 bg-neutral-50 dark:border-t-gray-900 dark:bg-gray-500':
-        !mainLayoutReachedBottom,
+        !parentReachedBottomScroll,
     }"
   >
     <CommonButton
@@ -258,3 +266,59 @@ const { reachedTop: articleFormReachedTop } = useElementScroll(
     </CommonButton>
   </div>
 </template>
+
+<style scoped>
+.border-stripes {
+  position: relative;
+  background-color: theme('colors.neutral.50');
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 40px;
+    bottom: 0;
+    right: 0;
+    border: 5px solid transparent;
+    background-image: repeating-linear-gradient(
+      45deg,
+      theme('colors.blue.400'),
+      theme('colors.blue.400') 5px,
+      theme('colors.blue.700') 5px,
+      theme('colors.blue.700') 10px
+    );
+    background-position: -1px;
+    background-attachment: fixed;
+    mask:
+      linear-gradient(#fff 0 0) padding-box,
+      linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 40px;
+    bottom: 0;
+    right: 0;
+    outline: 1px solid theme('colors.blue.700');
+    outline-offset: -5px;
+    pointer-events: none;
+  }
+}
+
+[data-theme='dark'] .border-stripes {
+  background-color: theme('colors.gray.500');
+
+  &::before {
+    background-image: repeating-linear-gradient(
+      45deg,
+      theme('colors.blue.700'),
+      theme('colors.blue.700') 5px,
+      theme('colors.blue.900') 5px,
+      theme('colors.blue.900') 10px
+    );
+  }
+}
+</style>

@@ -3,14 +3,18 @@
 class Service::Ticket::Update::Validator
   include Mixin::RequiredSubPaths
 
-  attr_reader :user, :ticket, :ticket_data, :article_data, :skip_validator
+  def self.exceptions
+    BaseError.descendants
+  end
 
-  def initialize(user:, ticket:, ticket_data:, article_data:, skip_validator:)
-    @user           = user
-    @ticket         = ticket
-    @ticket_data    = ticket_data
-    @article_data   = article_data
-    @skip_validator = skip_validator
+  attr_reader :user, :ticket, :ticket_data, :article_data, :skip_validators
+
+  def initialize(user:, ticket:, ticket_data:, article_data:, skip_validators:)
+    @user             = user
+    @ticket           = ticket
+    @ticket_data      = ticket_data
+    @article_data     = article_data
+    @skip_validators  = skip_validators
   end
 
   def validate!
@@ -20,15 +24,15 @@ class Service::Ticket::Update::Validator
         ticket:       ticket,
         ticket_data:  ticket_data,
         article_data: article_data,
-      ).validate!
+      ).valid!
     end
   end
 
   private
 
   def validators
-    Service::Ticket::Update::Validator::Base
-      .descendants
-      .reject { |klass| skip_validator&.starts_with?(klass.name) }
+    Service::Ticket::Update::Validator::Base.descendants.reject do |klass|
+      skip_validators&.any? { |validator| validator.name.starts_with?(klass.name) }
+    end
   end
 end

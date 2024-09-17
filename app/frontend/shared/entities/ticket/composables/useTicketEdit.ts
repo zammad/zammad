@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { isEqualWith } from 'lodash-es'
-import { computed, reactive, watch } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 import { populateEditorNewLines } from '#shared/components/Form/fields/FieldEditor/utils.ts'
 import type {
@@ -36,15 +36,13 @@ export const useTicketEdit = (
   ticket: ComputedRef<TicketById | undefined>,
   form: ShallowRef<FormRef | undefined>,
 ) => {
-  const initialTicketValue = reactive<FormValues>({})
+  const initialTicketValue = ref<FormValues>()
   const mutationUpdate = new MutationHandler(useTicketUpdateMutation({}))
 
   watch(ticket, (newTicket, oldTicket) => {
     if (!newTicket) {
       return
     }
-
-    console.log('HERE', newTicket, oldTicket)
 
     // We need only to reset the form, when really something was changed (updatedAt is not relevant for the form).
     if (
@@ -55,16 +53,16 @@ export const useTicketEdit = (
       return
     }
 
-    console.log('HERE2')
-
-    const ticketId = initialTicketValue.id || newTicket.id
+    const ticketId = initialTicketValue.value?.id || newTicket.id
     const { internalId: ownerInternalId } = newTicket.owner
-    initialTicketValue.id = newTicket.id
-    // show Zammad user as empty
-    initialTicketValue.owner_id = ownerInternalId === 1 ? null : ownerInternalId
-    console.log('form', form.value)
+
+    initialTicketValue.value = {
+      id: newTicket.id,
+      owner_id: ownerInternalId === 1 ? null : ownerInternalId,
+    }
+
     // TODO: check why article type was changed back to initial?!
-    form.value?.resetForm(initialTicketValue, newTicket, {
+    form.value?.resetForm(initialTicketValue.value, newTicket, {
       // don't reset to new values, if user changes something
       // if ticket is different, it's probably navigation to another ticket,
       // so we can safely reset the form
@@ -106,6 +104,8 @@ export const useTicketEdit = (
       contentType,
       attachments: convertFilesToAttachmentInput(formId, article.attachments),
       security: article.security,
+      timeUnit: article.timeUnit,
+      accountedTimeTypeId: article.accountedTimeTypeId,
     }
   }
 

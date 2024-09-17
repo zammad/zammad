@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import type { EnumUserErrorException } from '#shared/graphql/types.ts'
 import type { UserErrors, UserFieldError } from '#shared/types/error.ts'
 import getUuid from '#shared/utils/getUuid.ts'
 
@@ -32,7 +33,7 @@ export default class UserError extends Error {
     return this.errors[0].message
   }
 
-  public getFirstErrorException(): string | undefined | null {
+  public getFirstErrorException(): EnumUserErrorException | undefined | null {
     return this.errors[0].exception
   }
 

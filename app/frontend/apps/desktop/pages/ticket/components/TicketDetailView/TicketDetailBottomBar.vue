@@ -1,25 +1,26 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
 
-import type { FormValues } from '#shared/components/Form/types.ts'
 import { useMacros } from '#shared/entities/macro/composables/useMacros.ts'
 import type { MacroById } from '#shared/entities/macro/types.ts'
-import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import TicketScreenBehavior from '#desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/TicketScreenBehavior.vue'
 
 export interface Props {
   dirty: boolean
   disabled: boolean
   formNodeId?: string
   canUpdateTicket: boolean
-  formValues: FormValues
+  groupId?: string
 }
 
 const props = defineProps<Props>()
+
+const groupId = toRef(props, 'groupId')
 
 const emit = defineEmits<{
   submit: [MouseEvent]
@@ -27,11 +28,6 @@ const emit = defineEmits<{
   'execute-macro': [MacroById]
 }>()
 
-const groupId = computed(() =>
-  props.formValues.group_id
-    ? convertToGraphQLId('Group', props.formValues.group_id as number)
-    : undefined,
-)
 const { macros } = useMacros(groupId)
 
 const groupLabels = {
@@ -75,6 +71,9 @@ const actionItems = computed(() => {
       @click="$emit('discard', $event)"
       >{{ $t('Discard your unsaved changes') }}</CommonButton
     >
+
+    <TicketScreenBehavior />
+
     <CommonButton
       size="large"
       variant="submit"

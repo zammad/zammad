@@ -70,3 +70,15 @@
     opacity: 0;
   }
 }
+
+.pseudo-transition {
+  &-enter-active,
+  &-leave-active {
+    transition: transform 0.3s ease;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    transform: translateY(0);
+  }
+}

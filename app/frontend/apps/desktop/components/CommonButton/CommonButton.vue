@@ -155,31 +155,33 @@ const iconSizeClass = computed(() => {
     :form="form"
     :aria-disabled="disabled ? 'true' : undefined"
   >
-    <CommonIcon
-      v-if="prefixIcon"
-      class="pointer-events-none shrink-0"
-      decorative
-      :size="iconSizeClass"
-      :name="prefixIcon"
-    />
+    <slot name="label">
+      <CommonIcon
+        v-if="prefixIcon"
+        class="pointer-events-none shrink-0"
+        decorative
+        :size="iconSizeClass"
+        :name="prefixIcon"
+      />
 
-    <CommonIcon
-      v-if="icon"
-      class="pointer-events-none shrink-0"
-      decorative
-      :size="iconSizeClass"
-      :name="icon"
-    />
-    <span v-else class="truncate">
-      <slot>{{ $t(startCase(variant)) }}</slot>
-    </span>
+      <CommonIcon
+        v-if="icon"
+        class="pointer-events-none shrink-0"
+        decorative
+        :size="iconSizeClass"
+        :name="icon"
+      />
+      <span v-else class="truncate">
+        <slot>{{ $t(startCase(variant)) }}</slot>
+      </span>
 
-    <CommonIcon
-      v-if="suffixIcon"
-      class="pointer-events-none shrink-0"
-      decorative
-      :size="iconSizeClass"
-      :name="suffixIcon"
-    />
+      <CommonIcon
+        v-if="suffixIcon"
+        class="pointer-events-none shrink-0"
+        decorative
+        :size="iconSizeClass"
+        :name="suffixIcon"
+      />
+    </slot>
   </button>
 </template>

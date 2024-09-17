@@ -238,6 +238,25 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
       end
     end
 
+    context 'when time accounting should be triggered' do
+      let(:id) do
+        Gql::ZammadSchema.id_from_object(create(:ticket, group: group))
+      end
+
+      before do
+        Setting.set('time_accounting', true)
+      end
+
+      it 'checks that time_accounting flag is not present' do
+        # Trigger first object authorization check.
+        resolved_result.authorized?
+
+        # Time accounting check was moved into a separate validator, the flag should be absent.
+        flags = resolved_result.resolve[:flags]
+        expect(flags).not_to have_key(:time_accounting)
+      end
+    end
+
     context 'when auto save should be applied' do
       let(:taskbar_key)     { 'TicketZoom-1234' }
       let(:taskbar)         { create(:taskbar, key: taskbar_key, callback: 'Ticket', user_id: user.id, state: taskbar_state) }

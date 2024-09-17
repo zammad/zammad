@@ -177,8 +177,13 @@ const handleTooltipAddEvent = (event: MouseEvent | TouchEvent) => {
 
   if (!event.target) return
 
+  // Do not show the tooltip if the target element is missing.
   const tooltipTargetNode = findTooltipTarget(event.target as HTMLDivElement)
   if (!tooltipTargetNode) return
+
+  // Do not show the tooltip if the message is absent or empty.
+  const message = tooltipTargetNode.getAttribute('aria-label')
+  if (!message) return
 
   // Do not show the tooltip if it was temporarily suspended.
   //   This is signaled by any ancestors having a special CSS class assigned.
@@ -197,7 +202,6 @@ const handleTooltipAddEvent = (event: MouseEvent | TouchEvent) => {
   if (!isTruncated && tooltipRecord?.modifiers.truncate) return
 
   if (tooltipTimeout) clearTimeout(tooltipTimeout)
-  const message = tooltipTargetNode.getAttribute('aria-label')
 
   tooltipTimeout = setTimeout(() => {
     addTooltip(tooltipTargetNode, message as string, {

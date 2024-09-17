@@ -5,27 +5,26 @@ require 'rails_helper'
 RSpec.describe Service::Ticket::Update::Validator::ChecklistCompleted do
   subject(:validator) { described_class.new(user: user, ticket: ticket, ticket_data: ticket_data, article_data: article_data) }
 
-  let(:user)           { create(:agent, groups: [group]) }
-  let(:ticket)         { create(:ticket) }
-  let(:group)          { ticket.group }
-  let(:new_title)      { Faker::Lorem.unique.word }
-  let(:ticket_data)    { { title: new_title } }
-  let(:article_data)   { nil }
-  let(:skip_validator) { nil }
+  let(:user)          { create(:agent, groups: [group]) }
+  let(:ticket)        { create(:ticket) }
+  let(:group)         { ticket.group }
+  let(:new_title)     { Faker::Lorem.unique.word }
+  let(:ticket_data)   { { title: new_title } }
+  let(:article_data)  { nil }
 
   shared_examples 'not raising an error' do
     it 'does not raise an error' do
-      expect { validator.validate! }.not_to raise_error
+      expect { validator.valid! }.not_to raise_error
     end
   end
 
   shared_examples 'raising an error' do
     it 'raises an error' do
-      expect { validator.validate! }.to raise_error(Service::Ticket::Update::Validator::ChecklistCompleted::IncompleteChecklistError)
+      expect { validator.valid! }.to raise_error(Service::Ticket::Update::Validator::ChecklistCompleted::Error, 'The ticket checklist is incomplete.')
     end
   end
 
-  describe '#validate!' do
+  describe '#valid!' do
     it_behaves_like 'not raising an error'
 
     context 'when ticket has a checklist' do

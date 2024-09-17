@@ -15,7 +15,9 @@ export class FieldResolverBoolean extends FieldResolver {
       props: {
         variants,
       },
-      wrapperClass: 'mt-6',
+      // Add top margin only in multi-column mode, so the field aligns nicely with other which have visible labels.
+      //   More info in `app/frontend/apps/desktop/styles/main.css:77`.
+      wrapperClass: '@lg/form-group:mt-6',
     }
   }
 }

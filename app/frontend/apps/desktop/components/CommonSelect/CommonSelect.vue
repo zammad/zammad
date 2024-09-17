@@ -414,7 +414,7 @@ const goToChildPage = ({
         v-if="showDropdown"
         id="common-select"
         ref="dropdownElement"
-        class="fixed z-10 flex min-h-9 antialiased"
+        class="fixed z-50 flex min-h-9 antialiased"
         :style="dropdownStyle"
       >
         <div class="w-full" role="menu">

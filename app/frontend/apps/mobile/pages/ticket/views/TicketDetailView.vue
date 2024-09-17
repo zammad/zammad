@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { noop } from 'lodash-es'
+import { cloneDeep, noop } from 'lodash-es'
 import { computed, provide, ref, reactive, toRef } from 'vue'
 import {
   onBeforeRouteLeave,
@@ -24,14 +24,17 @@ import { useTicketEdit } from '#shared/entities/ticket/composables/useTicketEdit
 import { useTicketEditForm } from '#shared/entities/ticket/composables/useTicketEditForm.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import { TicketUpdatesDocument } from '#shared/entities/ticket/graphql/subscriptions/ticketUpdates.api.ts'
-import type { TicketFormData } from '#shared/entities/ticket/types.ts'
+import type { TicketUpdateFormData } from '#shared/entities/ticket/types.ts'
 import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
 import UserError from '#shared/errors/UserError.ts'
 import type {
   TicketUpdatesSubscription,
   TicketUpdatesSubscriptionVariables,
 } from '#shared/graphql/types.ts'
-import { EnumFormUpdaterId } from '#shared/graphql/types.ts'
+import {
+  EnumFormUpdaterId,
+  EnumUserErrorException,
+} from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
@@ -148,13 +151,19 @@ const { isTicketAgent } = useTicketView(ticket)
 
 const { notify } = useNotifications()
 
-const saveTicketForm = async (formData: FormSubmitData<TicketFormData>) => {
-  const updateFormData = currentArticleType.value?.updateForm
-  if (updateFormData) {
-    formData = updateFormData(formData)
-  }
+const saveTicketForm = async (
+  formData: FormSubmitData<TicketUpdateFormData>,
+) => {
+  let data = cloneDeep(formData)
+
+  if (currentArticleType.value?.updateForm)
+    data = currentArticleType.value.updateForm(formData)
+
   try {
-    const result = await editTicket(formData)
+    const result = await editTicket(
+      data,
+      { skipValidators: Object.values(EnumUserErrorException) }, // skip all validators, they are irrelevant for mobile view
+    )
 
     if (result?.ticketUpdate?.ticket) {
       notify({
@@ -345,7 +354,7 @@ const showBottomBanner = computed(() => {
         use-object-attributes
         :aria-hidden="!formVisible"
         :class="formVisible ? 'visible' : 'hidden'"
-        @submit="saveTicketForm($event as FormSubmitData<TicketFormData>)"
+        @submit="saveTicketForm($event as FormSubmitData<TicketUpdateFormData>)"
       />
     </CommonLoader>
   </Teleport>

@@ -42,6 +42,7 @@ const iconColor = computed(() => {
     class="block cursor-pointer leading-snug hover:no-underline focus-visible:!outline-none"
     data-test-id="popover-menu-item"
   >
+    <slot name="leading" />
     <CommonLabel
       class="gap-2"
       :class="[labelClass, variantClass]"

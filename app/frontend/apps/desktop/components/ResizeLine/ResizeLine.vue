@@ -94,7 +94,7 @@ defineExpose({
   <div class="hover-area" :class="[`hover-area--${props.orientation}`]">
     <button
       ref="resizeLine"
-      v-tooltip="label"
+      v-tooltip="!disabled ? label : undefined"
       :aria-describedby="id"
       :disabled="disabled"
       tabindex="0"

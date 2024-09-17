@@ -41,7 +41,7 @@ const useSelectPreselect = (
   }
 
   onMounted(() => {
-    preselectOption()
+    if (!context.value.noInitialAutoPreselect) preselectOption()
 
     watch(
       () =>

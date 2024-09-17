@@ -21,7 +21,7 @@ export interface TicketInformation {
     TicketWithMentionLimitQuery,
     TicketWithMentionLimitQueryVariables
   >
-  initialFormTicketValue: FormValues
+  initialFormTicketValue: Ref<FormValues | undefined>
   ticket: ComputedRef<TicketById | undefined>
   newTicketArticleRequested: Ref<boolean>
   newTicketArticlePresent: Ref<boolean>

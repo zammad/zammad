@@ -21,7 +21,7 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
       expect(article).to be_persisted.and(have_attributes(ticket_id: ticket.id))
     end
 
-    describe 'time accounting' do
+    describe 'time accounting', :aggregate_failures do
       let(:time_accounting_enabled) { true }
 
       before do
@@ -30,8 +30,23 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
         payload[:time_unit] = 60
       end
 
-      it 'adds time accounting if present' do
-        expect(article.ticket_time_accounting).to be_present
+      it 'adds time accounting without type' do
+        expect(article.ticket_time_accounting.time_unit).to be_present
+        expect(article.ticket_time_accounting.type).to be_nil
+      end
+
+      context 'with accounting type' do
+        let(:accounted_time_type) { create(:ticket_time_accounting_type) }
+
+        before do
+          payload[:accounted_time_type] = accounted_time_type
+        end
+
+        it 'adds time accounting with type' do
+          expect(article.ticket_time_accounting.time_unit).to be_present
+          expect(article.ticket_time_accounting.type).to eq(accounted_time_type)
+        end
+
       end
 
       context 'when time accounting is not enabled' do

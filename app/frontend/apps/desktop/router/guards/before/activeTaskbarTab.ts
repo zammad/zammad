@@ -54,12 +54,6 @@ const activeTaskbarTab: NavigationGuard = async (
     taskbarTabEntityKey,
     tabEntityInternalId,
   )
-  console.log(
-    'activeTaskbarTab',
-    taskbarTabEntityType,
-    taskbarTabEntityKey,
-    tabEntityInternalId,
-  )
 
   next()
 }

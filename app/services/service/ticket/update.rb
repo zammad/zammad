@@ -3,13 +3,13 @@
 class Service::Ticket::Update < Service::BaseWithCurrentUser
   include Service::Concerns::HandlesCoreWorkflow
 
-  def execute(ticket:, ticket_data:, skip_validator: nil, macro: nil)
+  def execute(ticket:, ticket_data:, skip_validators: nil, macro: nil)
     Pundit.authorize current_user, ticket, :update?
     set_core_workflow_information(ticket_data, ::Ticket, 'edit')
 
     article_data = ticket_data.delete(:article)
 
-    validate!(current_user, ticket, ticket_data, article_data, skip_validator)
+    validate!(current_user, ticket, ticket_data, article_data, skip_validators)
 
     save_ticket!(ticket, ticket_data, article_data, macro)
 
@@ -57,7 +57,7 @@ class Service::Ticket::Update < Service::BaseWithCurrentUser
     article_input[:from] = current_user.fullname
   end
 
-  def validate!(user, ticket, ticket_data, article_data, skip_validator)
-    Service::Ticket::Update::Validator.new(user:, ticket:, ticket_data:, article_data:, skip_validator:).validate!
+  def validate!(user, ticket, ticket_data, article_data, skip_validators)
+    Service::Ticket::Update::Validator.new(user:, ticket:, ticket_data:, article_data:, skip_validators:).validate!
   end
 end

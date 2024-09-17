@@ -6,8 +6,8 @@ import { toBeDisabled } from '@testing-library/jest-dom/matchers'
 import { configure } from '@testing-library/vue'
 import { expect } from 'vitest'
 import * as matchers from 'vitest-axe/matchers'
-
 import 'vitest-axe/extend-expect'
+
 import { ServiceWorkerHelper } from '#shared/utils/testSw.ts'
 
 import * as assertions from './support/assertions/index.ts'
@@ -160,7 +160,11 @@ vi.mock(
           },
         })
 
-        return { value, name: props.context.node.name, id: props.context.id }
+        return {
+          value,
+          name: props.context.node.name,
+          id: props.context.id,
+        }
       },
       template: `<textarea :id="id" :name="name" v-model="value" />`,
     })

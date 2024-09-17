@@ -7,6 +7,6 @@ module Gql::Types
 
     field :message, String, null: false
     field :field, String
-    field :exception, String
+    field :exception, Gql::Types::Enum::UserErrorExceptionType
   end
 end

@@ -9,6 +9,7 @@ import { useRouter } from 'vue-router'
 import {
   EnumTaskbarApp,
   EnumTaskbarEntity,
+  // EnumTicketStateColorCode,
   type UserCurrentTaskbarItemListQuery,
   type UserCurrentTaskbarItemListUpdatesSubscription,
   type UserCurrentTaskbarItemListUpdatesSubscriptionVariables,
@@ -404,11 +405,9 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
 
       if (!taskbarTabExists(taskbarTabEntity, tabEntityKey)) {
         addTaskbarTab(taskbarTabEntity, tabEntityKey, tabEntityInternalId)
-        return
       }
 
       // TODO: Do something for existing tabs here???
-      console.log('HERE-SOMETHING-FOR-EXISTING-TABS')
     }
 
     const resetActiveTaskbarTab = () => {

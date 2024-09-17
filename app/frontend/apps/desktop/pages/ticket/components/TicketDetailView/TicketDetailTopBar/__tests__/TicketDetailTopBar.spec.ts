@@ -1,12 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { beforeEach, describe, expect } from 'vitest'
-import { computed, provide, ref } from 'vue'
+import { ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
-import { MAIN_LAYOUT_KEY } from '#desktop/components/layout/composables/useMainLayoutContainer.ts'
 import { provideTicketInformationMocks } from '#desktop/entities/ticket/__tests__/mocks/provideTicketInformationMocks.ts'
 import { testOptionsTopBar } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/__tests__/support/testOptions.ts'
 import TicketDetailTopBar from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue'
@@ -17,24 +16,20 @@ vi.mock('#shared/composables/useCopyToClipboard.ts', async () => ({
   useCopyToClipboard: () => ({ copyToClipboard: copyToClipboardMock }),
 }))
 
-const renderTopBar = (options = testOptionsTopBar) => {
+const renderTopBar = (
+  // eslint-disable-next-line default-param-last
+  options = testOptionsTopBar,
+  props?: { hideDetails: boolean },
+) => {
   return renderComponent(
     {
       components: { TicketDetailTopBar },
-      template: `<div ref="parent"><TicketDetailTopBar /></div>`,
       setup() {
-        const parent = ref<HTMLElement>()
-        const parentContainer = computed(() => parent.value)
-
-        provide(
-          MAIN_LAYOUT_KEY,
-          computed(() => parentContainer.value),
-        )
-
         provideTicketInformationMocks(options)
-
-        return {}
+        const hideDetails = ref(!!props?.hideDetails)
+        return { hideDetails }
       },
+      template: `<div ref="parent"><TicketDetailTopBar :hide-details="hideDetails"  /></div>`,
     },
     { form: true, router: true },
   )
@@ -52,8 +47,13 @@ describe('TicketDetailTopBar', () => {
     expect(wrapper.getByText('Ticket#89001')).toBeInTheDocument()
   })
 
-  it.todo('hides details on scroll', () => {
-    //   :TODO write this in cypress when available for desktop
+  it('hides details on scroll', () => {
+    const wrapper = renderTopBar(testOptionsTopBar, { hideDetails: true })
+
+    expect(wrapper.getByText('Welcome to Zammad!')).toBeInTheDocument()
+    expect(wrapper.queryByText('Nicole Braun')).not.toBeInTheDocument()
+    expect(wrapper.queryByText('Zammad Foundation')).not.toBeInTheDocument()
+    expect(wrapper.getByText('Highlight')).toBeInTheDocument()
   })
 
   it('shows infos about the ticket', () => {

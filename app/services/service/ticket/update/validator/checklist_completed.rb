@@ -3,15 +3,15 @@
 class Service::Ticket::Update::Validator
   class ChecklistCompleted < Base
 
-    def validate!
+    def valid!
       return if !ticket.checklist
       return if ticket.checklist.completed?
       return if !ticket_closed? && !ticket_pending_close?
 
-      raise IncompleteChecklistError
+      raise Error
     end
 
-    class IncompleteChecklistError < StandardError
+    class Error < Service::Ticket::Update::Validator::BaseError
       def initialize
         super(__('The ticket checklist is incomplete.'))
       end

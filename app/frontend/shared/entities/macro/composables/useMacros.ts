@@ -1,16 +1,27 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed, type ComputedRef, ref } from 'vue'
+import { computed, type Ref, ref } from 'vue'
 
 import type { MacroById } from '#shared/entities/macro/types.ts'
 import { useMacrosQuery } from '#shared/graphql/queries/macros.api.ts'
 import { useMacrosUpdateSubscription } from '#shared/graphql/subscriptions/macrosUpdate.api.ts'
+import { EnumTicketScreenBehavior } from '#shared/graphql/types.ts'
 import {
   QueryHandler,
   SubscriptionHandler,
 } from '#shared/server/apollo/handler/index.ts'
 
-export const useMacros = (groupId: ComputedRef<ID | undefined>) => {
+export const macroScreenBehaviourMapping: Record<
+  string,
+  EnumTicketScreenBehavior
+> = {
+  next_task: EnumTicketScreenBehavior.CloseTab,
+  next_from_overview: EnumTicketScreenBehavior.CloseNextInOverview,
+  next_task_on_close: EnumTicketScreenBehavior.CloseTabOnTicketClose,
+  none: EnumTicketScreenBehavior.StayOnTab,
+}
+
+export const useMacros = (groupId: Ref<ID | undefined>) => {
   const macroQuery = new QueryHandler(
     useMacrosQuery(
       () => ({
@@ -38,16 +49,16 @@ export const useMacros = (groupId: ComputedRef<ID | undefined>) => {
 }
 
 export const useTicketMacros = (formSubmit: () => void) => {
-  const macroId = ref<ID>()
+  const activeMacro = ref<MacroById>()
 
   const executeMacro = async (macro: MacroById) => {
-    macroId.value = macro.id
+    activeMacro.value = macro
     formSubmit()
   }
 
-  const resetMacroId = () => {
-    macroId.value = undefined
+  const disposeActiveMacro = () => {
+    activeMacro.value = undefined
   }
 
-  return { macroId, executeMacro, resetMacroId }
+  return { activeMacro, executeMacro, disposeActiveMacro }
 }

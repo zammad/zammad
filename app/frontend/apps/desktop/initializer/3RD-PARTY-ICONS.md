@@ -77,6 +77,7 @@
 - `assets/speedometer2.svg`
 - `assets/spinner.svg`
 - `assets/square.svg`
+- `assets/stopwatch.svg`
 - `assets/sun.svg`
 - `assets/telegram.svg`
 - `assets/telephone-inbound.svg`

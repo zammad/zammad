@@ -11,6 +11,8 @@ import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/moc
 import { EnumTicketArticleSenderName } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
+import { mockUserCurrentTaskbarItemListQuery } from '#desktop/entities/user/current/graphql/queries/userCurrentTaskbarItemList.mocks.ts'
+
 type FormUpdaterType = {
   __typename: 'FormUpdaterResult'
   fields: {
@@ -109,7 +111,7 @@ export const setupMocks = async (setup?: {
   const defaults = {
     permission: 'ticket.agent',
     allowInternalNote: true,
-    ticketInfo: createDummyTicket({
+    ticket: createDummyTicket({
       state: {
         id: convertToGraphQLId('Ticket::State', 1),
         name: 'open',
@@ -292,5 +294,13 @@ export const setupMocks = async (setup?: {
       __typename: 'FormUpdaterResult',
       fields: defaults.fields,
     },
+  })
+
+  mockUserCurrentTaskbarItemListQuery({
+    userCurrentTaskbarItemList: [
+      {
+        formNewArticlePresent: false,
+      },
+    ],
   })
 }

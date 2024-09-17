@@ -12,6 +12,7 @@ import type {
   TicketArticle,
   TicketById,
   TicketFormData,
+  TicketUpdateFormData,
 } from '#shared/entities/ticket/types.ts'
 import type { getTicketView } from '#shared/entities/ticket/utils/getTicketView.ts'
 import type { AppName } from '#shared/types/app.ts'
@@ -38,6 +39,8 @@ export interface TicketArticleFormValues {
   attachments?: FileUploaded[]
   contentType?: string
   security?: SecurityValue
+  timeUnit?: number
+  accountedTimeTypeId?: ID
 }
 
 export interface TicketArticlePerformOptions {
@@ -152,8 +155,8 @@ export interface AppSpecificTicketArticleType {
   ): void
 
   updateForm?(
-    formValues: FormSubmitData<TicketFormData>,
-  ): FormSubmitData<TicketFormData>
+    formValues: FormSubmitData<TicketFormData | TicketUpdateFormData>,
+  ): FormSubmitData<TicketFormData | TicketUpdateFormData>
 
   performReply?(ticket: TicketById): MaybeRecord<TicketArticleFormValues>
 }
