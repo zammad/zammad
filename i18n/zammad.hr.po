@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-03-29 17:00+0000\n"
+"PO-Revision-Date: 2024-09-17 05:57+0000\n"
 "Last-Translator: Ivan Perovic <ip@zammad.com>\n"
 "Language-Team: Croatian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hr/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.4.2\n"
+"X-Generator: Weblate 5.7\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -76,8 +76,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Stvoreno od strane #{current_user.longname} u "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Stvoreno od strane #{current_user.longname} u "
 "#{ticket.updated_at}_\n"
 "* Grupa: #{ticket.group.name}\n"
 "* Vlasnik: #{ticket.owner.fullname}\n"
@@ -102,8 +102,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: eskalirao u #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: eskalirao u #{ticket.escalation_at}_\n"
 "Ticket (#{ticket.title}) od „#{ticket.customer.longname}” je eskalirao u "
 "„#{ticket.escalation_at}”!\n"
 "\n"
@@ -127,8 +127,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Zadnja promjena u # {ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Zadnja promjena u # {ticket.updated_at}_\n"
 "* Grupa: #{ticket.group.name}\n"
 "* Vlasnik: #{ticket.owner.fullname}\n"
 "* Status: #{t(ticket.state.name)}\n"
@@ -152,9 +152,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Dostignuto vrijeme čekanja!_\n"
-"Ticket zahtijeva pažnju: dostignuto je vrijeme čekanja za (#{ticket.title}) "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Dosegnuto vrijeme čekanja!_\n"
+"Ticket zahtijeva pažnju: dosegnuto je vrijeme čekanja za (#{ticket.title}) "
 "sa klijentom „*#{ticket.customer.longname}*”.\n"
 "\n"
 "<% if @objects[:article] %>\n"
@@ -180,9 +180,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Izmijenjeno od strane #{current_user.longname} u "
-"#{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Izmijenjeno od strane #{current_user.longname} "
+"u #{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
 "  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
@@ -208,8 +208,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: će eskalirati u #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: će eskalirati u #{ticket.escalation_at}_\n"
 "Ticket (#{ticket.title}) od „#{ticket.customer.longname}” će eskalirati u "
 "„#{ticket.escalation_at}”!\n"
 "\n"
@@ -241,7 +241,7 @@ msgstr ""
 "<div>Izgleda da ste povezali svoj račun <b> sa aplikacijom treće strane </b> "
 "\"#{t(provider)}\".</div>\n"
 "<br>\n"
-"<div>Ukoliko ovo niste bili vi, molimo, uklonite povezani račun iz svog "
+"<div>Ukoliko ovo niste bili Vi, molimo, uklonite povezani račun iz svog "
 "profila i promijenite lozinku za već spomenutu aplikaciju. Postoji osnovana "
 "mogućnost, da je netko dobio neovlašteni pristup Vašem profilu u aplikaciji "
 "treće strane.</div>\n"
@@ -286,17 +286,17 @@ msgstr ""
 "<br>\n"
 "<div>\n"
 "Vaš uređaj: #{user_device.name}<br>\n"
-"Vaša lokacija (okvirna): #{user_device.location}<br>\n"
+"Vaša lokacija (okvirno): #{user_device.location}<br>\n"
 "Vaš IP: #{user_device.ip}<br>\n"
 "</div>\n"
 "<br>\n"
 "<div>Država je dodana na Vašu listu poznatih uređaja, koju možete pregledati "
 "ovdje:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
-"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
+">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
-"<div>Ukoliko ovo niste bili Vi, molimo uklonite uređaj, promijenite vašu "
+"<div>Ukoliko ovo niste bili Vi, molimo uklonite uređaj, promijenite Vašu "
 "lozinku i kontaktirajte svog administratora. Postoji mogućnost da je netko "
 "neovlašteno pristupio Vašem računu.</div>\n"
 "<br>\n"
@@ -340,19 +340,19 @@ msgstr ""
 "<br>\n"
 "<div>\n"
 "Vaš uređaj: #{user_device.name}<br>\n"
-"Vaša lokacija (okvirna): #{user_device.location}<br>\n"
+"Vaša lokacija (okvirno): #{user_device.location}<br>\n"
 "Vaš IP: #{user_device.ip}<br>\n"
 "</div>\n"
 "<br>\n"
-"<div>Uređaj je dodan na listu poznatih uređaja, koju možete pregledati ovdje:"
-"</div>\n"
+"<div>Uređaj je dodan na listu poznatih uređaja, koju možete pregledati "
+"ovdje:</div>\n"
 "<br>\n"
-"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
-"devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
+"<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/devices\""
+">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
-"<div>Ukoliko ovo niste bili vi, molimo uklonite uređaj, promijenite vašu "
+"<div>Ukoliko ovo niste bili vi, molimo uklonite uređaj, promijenite Vašu "
 "lozinku i kontaktirajte svog administratora. Postoji mogućnost da je neko "
-"neovlašteno pristupio vašem računu.</div>\n"
+"neovlašteno pristupio Vašem računu.</div>\n"
 "<br>\n"
 "<div>Vaš #{config.product_name} tim</div>\n"
 
@@ -387,11 +387,11 @@ msgstr "%s API token"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:144
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:179
 msgid "%s Attribute"
-msgstr "Atribut"
+msgstr "%s atribut"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:203
 msgid "%s Group"
-msgstr "%s Grupa"
+msgstr "%s grupa"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:50
 msgid "%s Import Status"
@@ -402,17 +402,17 @@ msgstr "%s status uvoza"
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:46
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:62
 msgid "%s Migration"
-msgstr "%s Migracija"
+msgstr "%s migracija"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:204
 msgid "%s Role"
-msgstr "%s Uloga"
+msgstr "%s uloga"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:5
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:5
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:5
 msgid "%s URL"
-msgstr "%s URL"
+msgstr "%s linka"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:85
 msgid "%s ago"
@@ -426,8 +426,8 @@ msgstr "%s privitak(a)"
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:38
 msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
-"%s završenih zadataka zaštite podataka prilikom brisanja korisničkog ID-a |"
-"%s|"
+"%s završenih zadataka zaštite podataka prilikom brisanja korisničkog ID-a "
+"|%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:49
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:24
@@ -437,8 +437,7 @@ msgstr "%s kreirana stavka za |%s|"
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:28
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:26
 msgid "%s created data privacy task to delete user ID |%s|"
-msgstr ""
-"%s stvorenih zadataka zaštite podataka za brisanje korisničkog ID-a %s|"
+msgstr "%s stvorenih zadataka zaštite podataka za brisanje korisničkog ID-a %s|"
 
 #: app/assets/javascripts/app/models/group.coffee:30
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts:25
@@ -453,7 +452,7 @@ msgstr "%s kreirana organizacija |%s|"
 #: app/assets/javascripts/app/models/role.coffee:27
 #: app/frontend/shared/components/ActivityMessage/builders/role.ts:25
 msgid "%s created role |%s|"
-msgstr "%s kreirana grupa |%s|"
+msgstr "%s kreirana uloga |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee:109
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:24
@@ -535,23 +534,23 @@ msgstr "%s objek(a(t(a) je kreiran (je kreirano)."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco:24
 msgid "%s object(s) have been updated."
-msgstr "%s objekt je ažuriran."
+msgstr "%s objek(a(t(a) je ažuriran(o)."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco:18
 msgid "%s object(s) were deleted."
-msgstr "%s objekt je izbrisan."
+msgstr "%s objek(a)t(a) je obrisan(o)."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco:13
 msgid "%s object(s) will be created."
-msgstr "%s objekt će biti kreiran."
+msgstr "%s objek(a)t(a) će biti kreiran(o)."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco:10
 msgid "%s object(s) will be deleted."
-msgstr "%s objekt će biti izbrisan."
+msgstr "%s objek(a)t(a) će biti obrisan(o)."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco:16
 msgid "%s object(s) will be updated."
-msgstr "%s objekt će biti ažuriran."
+msgstr "%s objek(a)t(a) će biti ažuriran(o)."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:233
 msgid "%s of %s"
@@ -559,15 +558,15 @@ msgstr "%s od %s"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco:11
 msgid "%s of my tickets are currently in process."
-msgstr "%s Vaših ticketa je trenutno u obradi."
+msgstr "%s mojih ticketa je trenutno u obradi."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:11
 msgid "%s of my tickets escalated"
-msgstr "%s mojih ticketa koji su eskalirali"
+msgstr "%s mojih eskaliranih ticketa"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 msgid "%s people"
-msgstr "%s osobe"
+msgstr "%s osoba"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:49
 msgid ""
@@ -584,7 +583,7 @@ msgstr "%s je obavezno!"
 #: app/assets/javascripts/app/models/user.coffee:203
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts:28
 msgid "%s started a new session"
-msgstr "%s započeta nova sesija"
+msgstr "%s započeo novu sesiju"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:11
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:11
@@ -594,21 +593,21 @@ msgstr "%s poddomena"
 #: app/assets/javascripts/app/models/user.coffee:208
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts:30
 msgid "%s switched to |%s|!"
-msgstr "%s prebačeno na |%s|!"
+msgstr "%s započeo sesiju kao |%s|!"
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue:54
 #: app/frontend/apps/mobile/components/User/UserItem.vue:30
 msgid "%s tickets"
-msgstr "dodijeli %s ticketa"
+msgstr "%s ticketa"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:118
 msgid "%s tickets found"
-msgstr "Pronađeno je %s ticketa"
+msgstr "Pronađeno %s ticketa"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:26
 msgid "%s updated article for |%s|"
-msgstr "%s ažurirana stavka za |%s|"
+msgstr "%s ažuriranih stavki za |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:30
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:32
@@ -619,27 +618,27 @@ msgstr ""
 #: app/assets/javascripts/app/models/group.coffee:32
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts:27
 msgid "%s updated group |%s|"
-msgstr "%s ažurirana grupa |%s|"
+msgstr "%s ažurirao grupu |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee:89
 #: app/frontend/shared/components/ActivityMessage/builders/organization.ts:26
 msgid "%s updated organization |%s|"
-msgstr "%s ažurirana organizacija |%s|"
+msgstr "%s ažurirao organizaciju |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee:29
 #: app/frontend/shared/components/ActivityMessage/builders/role.ts:27
 msgid "%s updated role |%s|"
-msgstr "%s ažurirana uloga |%s|"
+msgstr "%s ažurirao ulogu |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee:111
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:26
 msgid "%s updated ticket |%s|"
-msgstr "%s ažuriran ticket |%s|"
+msgstr "%s ažurirao ticket |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee:201
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts:26
 msgid "%s updated user |%s|"
-msgstr "%s ažuriran korisnik |%s|"
+msgstr "%s ažurirao korisnika |%s|"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:34
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:2
@@ -674,15 +673,15 @@ msgstr "%{model} može imati potpuna ili djelomična prava u grupi"
 
 #: app/models/object_manager/attribute.rb:572
 msgid "%{name} already exists"
-msgstr "%{ime} već postoji"
+msgstr "%{name} već postoji"
 
 #: app/models/object_manager/attribute.rb:561
 msgid "%{name} is a reserved word"
-msgstr "%{ime} je rezervirana riječ"
+msgstr "%{name} je rezervirana riječ"
 
 #: app/frontend/shared/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue:62
 msgid "(state: %s)"
-msgstr "(status: %s)"
+msgstr "(state: %s)"
 
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 msgid ""
@@ -700,7 +699,7 @@ msgstr ""
 "\"Naplata\".\n"
 "\n"
 "Kada omogućite praćenje vrste aktivnosti, korisnici mogu odabrati vrstu s "
-"ovog popisa. Osim toga, stupac s praćenom vrstom aktivnosti za svaki unos u "
+"ovog popisa. Dodatno, stupac s praćenom vrstom aktivnosti za svaki unos u "
 "tablici **Aktivnost** prikazuje se u kartici **Praćenje vremena**."
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
@@ -745,10 +744,10 @@ msgstr ""
 "definirati ciljeve poput odgovaranja na svaki upit unutar 8 sati. Ukoliko "
 "ste blizu tog limita, Zammad će Vas upozoriti.\n"
 "\n"
-"Možete definirati ciljeve za 3 različita mjerila: **vrijeme reakcije ** "
-"(vrijeme između kreiranja ticketa i prve reakcije agenta), **vrijeme "
-"ažuriranja** (vrijeme između korisnikova upita i agentove reakcije) i "
-"**vrijeme rješenja** (vrijeme između kreiranja i zatvaranja ticketa).\n"
+"Možete definirati ciljeve za 3 različita mjerila: **vrijeme reakcije ** ("
+"vrijeme između kreiranja ticketa i prve reakcije agenta), **vrijeme "
+"ažuriranja** (vrijeme između korisnikova upita i agentove reakcije) i **"
+"vrijeme rješenja** (vrijeme između kreiranja i zatvaranja ticketa).\n"
 "\n"
 "Svi eskalirani ticketi (npr. ticketi koji su prekoračili prethodno "
 "definirani limit) su prikazani u zasebnom dijelu Vaših pregleda. Ujedno "
@@ -772,7 +771,7 @@ msgstr "1 sat"
 
 #: app/frontend/shared/i18n/dates.ts:103
 msgid "1 hour ago"
-msgstr "prije 1 sata"
+msgstr "prije jednog sata"
 
 #: db/seeds/ticket_priorities.rb:3
 msgid "1 low"
@@ -780,7 +779,7 @@ msgstr "1 nizak"
 
 #: app/frontend/shared/i18n/dates.ts:110
 msgid "1 minute ago"
-msgstr "prije minutu"
+msgstr "prije jednu minutu"
 
 #: app/frontend/shared/i18n/dates.ts:82
 msgid "1 month ago"
@@ -832,7 +831,7 @@ msgstr "3 tjedna"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:24
 msgid "3. Ticket Reminder Reached"
-msgstr "3. Dostignuto vrijeme čekanja ticketa"
+msgstr "3. Dosegnuto vrijeme podsjetnika na ticket"
 
 #: db/seeds/settings.rb:1106
 msgid "4 weeks"
@@ -879,7 +878,7 @@ msgstr "Popis aktivnih pozadinskih sustava uvoza koji se automatski zakazuju."
 
 #: lib/validations/mention_validator.rb:7
 msgid "A mentioned user has no agent access to this ticket"
-msgstr "Spomenuti korisnik nema agent prava pristupa ovom ticketu"
+msgstr "Spomenuti korisnik nema agent prava za pristup ovom ticketu"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:26
 msgid ""
@@ -895,8 +894,7 @@ msgstr "Dostupna je nova verzija Zammada, molimo osvježite stranicu."
 #: app/frontend/shared/composables/useAppMaintenanceCheck.ts:72
 msgid ""
 "A newer version of the app is available. Please reload at your earliest."
-msgstr ""
-"Dostupna je novija verzija aplikacije. Molimo, ažurirajte je što prije."
+msgstr "Dostupna je novija verzija aplikacije. Molimo, ažurirajte je što prije."
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:156
 msgid "A powerful service to get more information about your customers."
@@ -911,7 +909,7 @@ msgid ""
 "A team communication tool for the 21st century. Compatible with tools like "
 "%s."
 msgstr ""
-"Komunikacijski alat za timove 21. stoljeća. Kompatabilan sa alatima poput %s."
+"Komunikacijski alat za timove 21. stoljeća. Kompatibilan sa alatima poput %s."
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:1
 msgid ""
@@ -993,7 +991,7 @@ msgstr ""
 
 #: db/seeds/permissions.rb:381
 msgid "Access to %s"
-msgstr "Pristup %s"
+msgstr "Pristup ka %s"
 
 #: db/seeds/permissions.rb:430
 msgid "Access to Agent Tickets based on Group Access"
@@ -1019,7 +1017,7 @@ msgstr "SID računa"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:6
 msgid "Account Time"
-msgstr "Vrijeme rada"
+msgstr "Obračunato vrijeme"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:582
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:198
@@ -1096,7 +1094,7 @@ msgstr "Obavljanje zadatka"
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:16
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
 msgid "Actions"
-msgstr "Radnje"
+msgstr "Akcije"
 
 #: db/seeds/settings.rb:2717
 msgid "Activate the recursive processing of ticket triggers."
@@ -1104,7 +1102,7 @@ msgstr "Aktivirajte ponavljajuću obradu ticket triggera."
 
 #: app/assets/javascripts/app/models/trigger.coffee:7
 msgid "Activated by"
-msgstr "Aktivirano"
+msgstr "Aktivirano kroz"
 
 #: db/seeds/settings.rb:1083
 msgid ""
@@ -1171,7 +1169,7 @@ msgstr "Vrste aktivnosti"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:39
 msgid "Adapter"
-msgstr "Prilagodnik"
+msgstr "Adapter"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:90
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:75
@@ -1216,7 +1214,7 @@ msgstr "Dodaj račun"
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:7
 msgid "Add Bot"
-msgstr "Dodaj Bota"
+msgstr "Dodaj bota"
 
 #: app/assets/javascripts/app/controllers/_integration/smime.coffee:77
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:88
@@ -1252,7 +1250,7 @@ msgstr "Dodaj oznaku"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:108
 msgid "Add Telegram Bot"
-msgstr "Dodaj Telegram Bota"
+msgstr "Dodaj Telegram bota"
 
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco:7
 #: app/assets/javascripts/app/views/user_profile/object.jst.eco:6
@@ -1343,7 +1341,7 @@ msgstr "Dodaj naslov treće razine"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:85
 msgid "Add this class to a button on your page that should open the chat."
-msgstr "Dodaj ovu razinu gumbu na stranici koja bi trebala otvoriti chat."
+msgstr "Dodaj ovu razinu gumbu na stranici koji bi trebao otvoriti chat."
 
 #: app/controllers/first_steps_controller.rb:109
 msgid "Additional Channels"
@@ -1389,7 +1387,7 @@ msgstr "Administracijsko sučelje"
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee:23
 #: app/frontend/apps/desktop/pages/authentication/routes.ts:26
 msgid "Admin Password Login"
-msgstr "Prijava administratora putem privremene lozinke"
+msgstr "Prijava administratora putem lozinke"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:4
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:56
@@ -1928,10 +1926,8 @@ msgid "Article - visibility confirmation dialog"
 msgstr "Stavka - dijaloški okvir za potvrdu vidljivosti"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
-#, fuzzy
-#| msgid "Article Type"
 msgid "Article > Text (HTML)"
-msgstr "Vrsta članka"
+msgstr "Vrsta članka > Tekst (HTML)"
 
 #: lib/excel_sheet/ticket.rb:72
 msgid "Article Count"
@@ -2432,10 +2428,8 @@ msgid "Block caller IDs based on sender caller ID."
 msgstr "Blokiraj caller IDs na temelju sender caller ID-a."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:42
-#, fuzzy
-#| msgid "Blocked countries"
 msgid "Blocked Content"
-msgstr "Blokirane države"
+msgstr "Blokirani sadržaj"
 
 #: app/assets/javascripts/app/models/chat.coffee:254
 msgid "Blocked IPs (separated by ;)"
@@ -2462,10 +2456,8 @@ msgid "Body - Search for follow-up also in mail body."
 msgstr "Tekst -potraži ponavljanja u tekstu maila."
 
 #: lib/validations/ticket_article_validator/sms_twilio.rb:14
-#, fuzzy
-#| msgid "A user is required!"
 msgid "Body text is required"
-msgstr "Potreban je korisnik!"
+msgstr "Obavezan unos teksta"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:41
 msgid "Boolean field"
@@ -3065,7 +3057,7 @@ msgstr "Božićni blagdani"
 
 #: db/seeds/object_manager_attributes.rb:1128
 msgid "City"
-msgstr "Mjesto"
+msgstr "Grad"
 
 #: db/seeds/schedulers.rb:178
 msgid "Clean up 'Cti::Log'."
@@ -5239,6 +5231,8 @@ msgid ""
 "Deleting your knowledge base requires an additional verification step. To "
 "proceed, enter its name below (\"%s\"). THIS ACTION CANNOT BE UNDONE."
 msgstr ""
+"Brisanje Vaše baze podataka zahtijeva dodatni korak provjere. Za nastavak "
+"unesite naziv ispod (\"%s\"). OVA RADNJA SE NE MOŽE PONIŠTITI."
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:94
 msgid "Deletion Task"
@@ -7743,15 +7737,10 @@ msgid "If this regex matches, no notification will be sent by the sender."
 msgstr "Ako se ovaj regex podudara, obavijest neće biti poslana pošiljatelju."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:178
-#, fuzzy
-#| msgid ""
-#| "Zammad Chat requires jQuery. If you don't already use it on your website, "
-#| "you can add it like this:"
 msgid ""
 "If you don't already use jQuery on your website, you can add it like this:"
 msgstr ""
-"Zammad Chat zahtijeva jQuery. Ako ga već ne upotrebljavate na svojoj web-"
-"stranici, možete ga dodati ovako:"
+"Ako već ne koristite jQuery na svojoj web-stranici, možete ga dodati ovako:"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:5
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco:5
@@ -9152,10 +9141,8 @@ msgid "Merge to Ticket#"
 msgstr "Spoji sa Ticket#"
 
 #: app/models/report.rb:75
-#, fuzzy
-#| msgid "Merge"
 msgid "Merged"
-msgstr "Objedini"
+msgstr "Spojeno"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
 #: app/assets/javascripts/app/views/maintenance.jst.eco:32
@@ -14771,24 +14758,16 @@ msgid "The verification email could not be resent."
 msgstr "Nije moguće ponovno poslati potvrdni e-mail."
 
 #: app/models/setting/validation/saml/tls.rb:37
-#, fuzzy
-#| msgid ""
-#| "The verification of the TLS connection failed. Please check the IDP "
-#| "certificate."
 msgid ""
 "The verification of the TLS connection failed. Please check the SAML IDP "
 "certificate."
-msgstr "Provjera TLS veze nije uspjela. Molimo, provjerite IDP certifikat."
+msgstr "Provjera TLS veze nije uspjela. Molimo, provjerite SAML IDP certifikat."
 
 #: app/models/setting/validation/saml/tls.rb:39
-#, fuzzy
-#| msgid ""
-#| "The verification of the TLS connection failed. Please check the IDP "
-#| "certificate."
 msgid ""
 "The verification of the TLS connection is not possible. Please check the "
 "SAML IDP connection."
-msgstr "Provjera TLS veze nije uspjela. Molimo, provjerite IDP certifikat."
+msgstr "Provjera TLS veze nije uspjela. Molimo, provjerite SAML IDP vezu."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee:29
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:11
@@ -15220,6 +15199,9 @@ msgid ""
 "This message contains images or other content hosted by an external source. "
 "We blocked it, but you can download the original formatting here."
 msgstr ""
+"Ova poruka sadrži slike ili drugi sadržaj sa poveznicama na vanjskim "
+"izvorima. Blokirali smo poveznicu, ali poruku u izvornom obliku možete "
+"preuzeti ovdje."
 
 #: lib/secure_mailing/smime/incoming.rb:86
 msgid "This message was not signed by its sender."
@@ -16352,7 +16334,7 @@ msgstr "UID ime atributa"
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:8
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:50
 msgid "URL"
-msgstr "URL"
+msgstr "Poveznica"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:677
 msgid "URL (AJAX endpoint)"
