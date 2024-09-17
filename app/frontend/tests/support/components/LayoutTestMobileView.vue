@@ -10,7 +10,9 @@ import DynamicInitializer from '#shared/components/DynamicInitializer/DynamicIni
 import useAuthenticationChanges from '#shared/composables/authentication/useAuthenticationUpdates.ts'
 
 import CommonConfirmation from '#mobile/components/CommonConfirmation/CommonConfirmation.vue'
-import LayoutHeader from '#mobile/components/layout/LayoutHeader.vue'
+import LayoutHeader, {
+  type Props as HeaderProps,
+} from '#mobile/components/layout/LayoutHeader.vue'
 import { headerOptions as header } from '#mobile/composables/useHeader.ts'
 
 defineProps<{ testKey: number }>()
@@ -40,7 +42,11 @@ useAuthenticationChanges()
 
 <template>
   <div>
-    <LayoutHeader v-if="showHeader" v-bind="header" :title="title" />
+    <LayoutHeader
+      v-if="showHeader"
+      v-bind="header as HeaderProps"
+      :title="title"
+    />
     <component :is="mainContainer" data-test-id="appMain">
       <RouterView :key="testKey" />
     </component>

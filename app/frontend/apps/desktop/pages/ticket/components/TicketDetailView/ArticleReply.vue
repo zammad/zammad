@@ -27,7 +27,10 @@ interface Props {
 const props = defineProps<Props>()
 
 const emit = defineEmits<{
-  'show-article-form': [articleType: string, performReply: void]
+  'show-article-form': [
+    articleType: string,
+    performReply: AppSpecificTicketArticleType['performReply'],
+  ]
 }>()
 
 const currentTicketArticleType = computed(() => {
@@ -67,7 +70,10 @@ const availableArticleTypes = computed(() => {
           availableArticleTypes.length === 2)
           ? 'primary'
           : 'secondary',
-      performReply: () => type.performReply?.(props.ticket),
+      performReply: (() =>
+        type.performReply?.(
+          props.ticket,
+        )) as AppSpecificTicketArticleType['performReply'],
     }
   })
 })

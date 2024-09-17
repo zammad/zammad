@@ -17,7 +17,7 @@ export interface HeaderOptions {
   refetch?: ComputedRef<boolean>
   actionTitle?: string | ComputedRef<string>
   actionHidden?: boolean | ComputedRef<boolean> | Ref<boolean>
-  onAction?(): unknown
+  onAction?(): void
 }
 
 export const headerOptions = ref<HeaderOptions>({})

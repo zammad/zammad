@@ -17,7 +17,7 @@ interface Props {
 const props = defineProps<Props>()
 
 defineEmits<{
-  'image-cropped': [void]
+  'image-cropped': [ImageFileData | undefined]
 }>()
 
 const croppedImage = ref<ImageFileData>()

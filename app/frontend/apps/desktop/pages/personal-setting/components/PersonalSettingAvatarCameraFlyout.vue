@@ -10,7 +10,7 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
 
 defineEmits<{
-  'avatar-captured': [void]
+  'avatar-captured': [ImageFileData | undefined]
 }>()
 
 const image = ref<ImageFileData>()
