@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-12 05:39+0000\n"
+"PO-Revision-Date: 2024-09-17 05:57+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -6078,10 +6078,8 @@ msgid "Draft available"
 msgstr "Доступан нацрт"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:38
-#, fuzzy
-#| msgid "Draft"
 msgid "Drafts"
-msgstr "Нацрт"
+msgstr "Нацрти"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:51
 msgid "Drag and drop to reorder ticket overview list items."
@@ -13673,10 +13671,8 @@ msgid "Save as"
 msgstr "Сачувај као"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:55
-#, fuzzy
-#| msgid "Save Draft"
 msgid "Save as draft"
-msgstr "Сачувај нацрт"
+msgstr "Сачувај као нацрт"
 
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:340
 msgid "Save changes"
@@ -19521,12 +19517,12 @@ msgstr "Да, започни прави увоз."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Ви сте тренутно <strong>%s.</strong> у реду за чекање."
 
-#: app/models/transaction/notification.rb:98
+#: app/models/transaction/notification.rb:113
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Добијате ово зато што сте члан групе овог тикета."
 
-#: app/models/transaction/notification.rb:267
+#: app/models/transaction/notification.rb:280
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -19534,11 +19530,11 @@ msgstr ""
 "Добијате ово зато што сте замена за ван канцеларија једног од учесника овог "
 "тикета."
 
-#: app/models/transaction/notification.rb:70
+#: app/models/transaction/notification.rb:81
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "Добијате ово зато што сте власник овог тикета."
 
-#: app/models/transaction/notification.rb:64
+#: app/models/transaction/notification.rb:75
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Добијате ово зато што сте поменути у овом тикету."
 

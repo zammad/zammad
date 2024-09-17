@@ -19714,12 +19714,12 @@ msgstr "Ja, start de import."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Je bevindt zich op wachtlijstpositie <strong>%s</strong>."
 
-#: app/models/transaction/notification.rb:98
+#: app/models/transaction/notification.rb:113
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Je ontvangt dit omdat je lid bent van de groep van dit ticket."
 
-#: app/models/transaction/notification.rb:267
+#: app/models/transaction/notification.rb:280
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -19727,11 +19727,11 @@ msgstr ""
 "Je ontvangt dit omdat je de out-of-office vervanger bent voor een "
 "participant van deze ticket."
 
-#: app/models/transaction/notification.rb:70
+#: app/models/transaction/notification.rb:81
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "Je ontvangt dit omdat je de behandelaar bent van dit ticket."
 
-#: app/models/transaction/notification.rb:64
+#: app/models/transaction/notification.rb:75
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Je ontvangt dit omdat je bent genoemd in dit ticket."
 

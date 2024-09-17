@@ -21033,12 +21033,12 @@ msgstr "Ano, začít se skutečným importem."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Jste <strong>%s</strong>. v pořadí na čekací listině."
 
-#: app/models/transaction/notification.rb:98
+#: app/models/transaction/notification.rb:113
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Toto jste obdrželi, jelikož jste členem skupiny tohoto ticketu."
 
-#: app/models/transaction/notification.rb:267
+#: app/models/transaction/notification.rb:280
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -21046,11 +21046,11 @@ msgstr ""
 "Toto jste obdrželi, jelikož jste určeni jako zástupce vlastníka ticketu, "
 "který je mimo kancelář."
 
-#: app/models/transaction/notification.rb:70
+#: app/models/transaction/notification.rb:81
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "Toto jste obdrželi, jelikož jste vlastníkem tohoto ticketu."
 
-#: app/models/transaction/notification.rb:64
+#: app/models/transaction/notification.rb:75
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Toto jste obdrželi, jelikož jste byli v tomto ticketu zmíněni."
 

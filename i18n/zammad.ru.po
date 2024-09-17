@@ -19889,23 +19889,23 @@ msgstr "Да, начать настоящий импорт."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Вы находитесь в списке ожидания <strong>%s</strong>."
 
-#: app/models/transaction/notification.rb:98
+#: app/models/transaction/notification.rb:113
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Вы получаете это, потому что являетесь членом группы этой заявки."
 
-#: app/models/transaction/notification.rb:267
+#: app/models/transaction/notification.rb:280
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
 msgstr ""
 "Вы получаете это, потому что Вы вне офиса заменяете участника этой заявки."
 
-#: app/models/transaction/notification.rb:70
+#: app/models/transaction/notification.rb:81
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "Вы получаете это, потому что являетесь владельцем этой заявки."
 
-#: app/models/transaction/notification.rb:64
+#: app/models/transaction/notification.rb:75
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Вы получаете это, потому что были упомянуты в этой заявке."
 

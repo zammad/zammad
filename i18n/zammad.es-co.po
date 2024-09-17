@@ -21585,26 +21585,26 @@ msgstr "Sí, iniciar la importación real."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Está en la posición de la lista de espera <strong>%s</strong>."
 
-#: app/models/transaction/notification.rb:98
+#: app/models/transaction/notification.rb:113
 #, fuzzy
 #| msgid "You are receiving this because you \"%s\"."
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Estás recibiendo esto porque eres \"%s\"."
 
-#: app/models/transaction/notification.rb:267
+#: app/models/transaction/notification.rb:280
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:70
+#: app/models/transaction/notification.rb:81
 #, fuzzy
 #| msgid "You are receiving this because you \"%s\"."
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "Estás recibiendo esto porque eres \"%s\"."
 
-#: app/models/transaction/notification.rb:64
+#: app/models/transaction/notification.rb:75
 #, fuzzy
 #| msgid "You are receiving this because you \"%s\"."
 msgid "You are receiving this because you were mentioned in this ticket."

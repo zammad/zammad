@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-14 09:16+0000\n"
+"PO-Revision-Date: 2024-09-17 05:57+0000\n"
 "Last-Translator: Andi Chandler <andi@gowling.com>\n"
 "Language-Team: English (United Kingdom) <https://translations.zammad.org/"
 "projects/zammad/zammad-development/en_GB/>\n"
@@ -457,27 +457,27 @@ msgstr "%s created organisation |%s|"
 #: app/assets/javascripts/app/models/role.coffee:27
 #: app/frontend/shared/components/ActivityMessage/builders/role.ts:26
 msgid "%s created role |%s|"
-msgstr ""
+msgstr "%s created role |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee:109
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:25
 msgid "%s created ticket |%s|"
-msgstr ""
+msgstr "%s created ticket |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee:208
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts:25
 msgid "%s created user |%s|"
-msgstr ""
+msgstr "%s created user |%s|"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:33
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:33
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:30
 msgid "%s credentials"
-msgstr ""
+msgstr "%s credentials"
 
 #: app/frontend/shared/i18n/dates.ts:97
 msgid "%s days ago"
-msgstr ""
+msgstr "%s days ago"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:662
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:261
@@ -488,119 +488,123 @@ msgid ""
 "%s email(s) were found in your mailbox. They will all be moved from your "
 "mailbox into Zammad."
 msgstr ""
+"%s email(s) were found in your mailbox. They will all be moved from your "
+"mailbox into Zammad."
 
 #: app/assets/javascripts/app/models/user.coffee:222
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts:33
 msgid "%s ended switch to |%s|!"
-msgstr ""
+msgstr "%s ended switch to |%s|!"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:40
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:8
 msgid "%s folders"
-msgstr ""
+msgstr "%s folders"
 
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:39
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:8
 msgid "%s groups to %s roles assignments"
-msgstr ""
+msgstr "%s groups to %s roles assignments"
 
 #: app/frontend/shared/i18n/dates.ts:104
 msgid "%s hours ago"
-msgstr ""
+msgstr "%s hours ago"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:91
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:58
 #: app/assets/javascripts/app/views/google/list.jst.eco:61
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:62
 msgid "%s is inactive, please select an active one."
-msgstr ""
+msgstr "%s is inactive, please select an active one."
 
 #: app/frontend/shared/form/i18n/locales.ts:533
 msgid "%s is required."
-msgstr ""
+msgstr "%s is required."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:67
 msgid "%s is sent without text caption"
-msgstr ""
+msgstr "%s is sent without text caption"
 
 #: app/frontend/shared/i18n/dates.ts:111
 msgid "%s minutes ago"
-msgstr ""
+msgstr "%s minutes ago"
 
 #: app/frontend/shared/i18n/dates.ts:83
 msgid "%s months ago"
-msgstr ""
+msgstr "%s months ago"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco:21
 msgid "%s object(s) have been created."
-msgstr ""
+msgstr "%s object(s) have been created."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco:24
 msgid "%s object(s) have been updated."
-msgstr ""
+msgstr "%s object(s) have been updated."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco:18
 msgid "%s object(s) were deleted."
-msgstr ""
+msgstr "%s object(s) were deleted."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco:13
 msgid "%s object(s) will be created."
-msgstr ""
+msgstr "%s object(s) will be created."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco:10
 msgid "%s object(s) will be deleted."
-msgstr ""
+msgstr "%s object(s) will be deleted."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco:16
 msgid "%s object(s) will be updated."
-msgstr ""
+msgstr "%s object(s) will be updated."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:234
 msgid "%s of %s"
-msgstr ""
+msgstr "%s of %s"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco:11
 msgid "%s of my tickets are currently in process."
-msgstr ""
+msgstr "%s of my tickets are currently in process."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:11
 msgid "%s of my tickets escalated"
-msgstr ""
+msgstr "%s of my tickets escalated"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 #: app/graphql/gql/queries/autocomplete_search/generic.rb:64
 msgid "%s people"
-msgstr ""
+msgstr "%s people"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:49
 msgid ""
 "%s recommends using OAuth. %s announced it's going to drop Basic "
 "Authentication support in the future."
 msgstr ""
+"%s recommends using OAuth. %s announced it's going to drop Basic "
+"Authentication support in the future."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:65
 msgid "%s required!"
-msgstr ""
+msgstr "%s required!"
 
 #: app/assets/javascripts/app/models/user.coffee:212
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts:29
 msgid "%s started a new session"
-msgstr ""
+msgstr "%s started a new session"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:11
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:11
 msgid "%s subdomain"
-msgstr ""
+msgstr "%s subdomain"
 
 #: app/assets/javascripts/app/models/user.coffee:217
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts:31
 msgid "%s switched to |%s|!"
-msgstr ""
+msgstr "%s switched to |%s|!"
 
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue:57
 #: app/frontend/apps/mobile/components/User/UserItem.vue:33
 msgid "%s tickets"
-msgstr ""
+msgstr "%s tickets"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:121
 msgid "%s tickets found"
@@ -18471,22 +18475,22 @@ msgstr ""
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr ""
 
-#: app/models/transaction/notification.rb:98
+#: app/models/transaction/notification.rb:113
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:267
+#: app/models/transaction/notification.rb:280
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:70
+#: app/models/transaction/notification.rb:81
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:64
+#: app/models/transaction/notification.rb:75
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr ""
 
@@ -19253,7 +19257,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:76
 msgid "days"
-msgstr ""
+msgstr "days"
 
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:4

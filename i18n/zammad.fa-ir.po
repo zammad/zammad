@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-16 08:40+0000\n"
+"PO-Revision-Date: 2024-09-17 05:57+0000\n"
 "Last-Translator: Sajjad Jazini <s.jazini@vatanmail.ir>\n"
 "Language-Team: Persian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fa/>\n"
@@ -8768,7 +8768,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:58
 msgid "John Smith"
-msgstr "جان اسمیت"
+msgstr "علی شاکری"
 
 #: app/assets/javascripts/app/views/signup.jst.eco:4
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:50
@@ -19100,12 +19100,12 @@ msgstr ""
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr ""
 
-#: app/models/transaction/notification.rb:98
+#: app/models/transaction/notification.rb:113
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "شما به دلیل اینکه عضوی از گروه این تیکت هستید، پیام را دریافت کرده‌اید."
 
-#: app/models/transaction/notification.rb:267
+#: app/models/transaction/notification.rb:280
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -19113,11 +19113,11 @@ msgstr ""
 "شما به دلیل اینکه جایگزین غیبت یکی از اعضای این تیکت هستید، پیام را دریافت "
 "کرده‌اید."
 
-#: app/models/transaction/notification.rb:70
+#: app/models/transaction/notification.rb:81
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "شما به دلیل اینکه مسئول این تیکت هستید، پیام را دریافت کرده‌اید."
 
-#: app/models/transaction/notification.rb:64
+#: app/models/transaction/notification.rb:75
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr ""
 "شما به دلیل اینکه در این تیکت مورد اشاره قرار گرفته‌اید، پیام را دریافت "

@@ -19895,12 +19895,12 @@ msgstr ""
 "Vous êtes actuellement en position <strong>%s</strong> dans la file "
 "d'attente."
 
-#: app/models/transaction/notification.rb:98
+#: app/models/transaction/notification.rb:113
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Vous recevez ceci parce que vous êtes membre du groupe de ce ticket."
 
-#: app/models/transaction/notification.rb:267
+#: app/models/transaction/notification.rb:280
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -19908,11 +19908,11 @@ msgstr ""
 "Vous recevez ceci parce que vous êtes le remplaçant d'un participant de ce "
 "ticket."
 
-#: app/models/transaction/notification.rb:70
+#: app/models/transaction/notification.rb:81
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "Vous recevez ceci parce que vous êtes le propriétaire de ce ticket."
 
-#: app/models/transaction/notification.rb:64
+#: app/models/transaction/notification.rb:75
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Vous recevez ceci parce que vous avez été mentionné dans ce ticket."
 

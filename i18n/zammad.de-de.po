@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-12 05:38+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2024-09-17 05:57+0000\n"
+"Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -6200,10 +6200,8 @@ msgid "Draft available"
 msgstr "Entwurf verfügbar"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:38
-#, fuzzy
-#| msgid "Draft"
 msgid "Drafts"
-msgstr "Entwurf"
+msgstr "Entwürfe"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:51
 msgid "Drag and drop to reorder ticket overview list items."
@@ -8588,9 +8586,9 @@ msgid ""
 "detection reads out the host from the <script> tag. If you don't include it "
 "via a <script> tag you need to specify the host."
 msgstr ""
-"Wenn dies leer bleibt, wird der Host automatisch erkannt - in diesem Fall% "
-"s. Die automatische Erkennung liest den Host aus dem <script> -Tag aus. Wenn "
-"Sie es nicht über ein <script> -Tag einfügen, müssen Sie den Host angeben."
+"Wenn dies leer bleibt, wird der Host automatisch erkannt - in diesem Fall "
+"%s. Die automatische Erkennung liest den Host aus dem <script>-Tag aus. Wenn "
+"Sie es nicht über ein <script>-Tag einfügen, müssen Sie den Host angeben."
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee:7
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee:7
@@ -13916,10 +13914,8 @@ msgid "Save as"
 msgstr "Speichern als"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:55
-#, fuzzy
-#| msgid "Save Draft"
 msgid "Save as draft"
-msgstr "Entwurf speichern"
+msgstr "Als Entwurf speichern"
 
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:340
 msgid "Save changes"
@@ -19901,12 +19897,12 @@ msgstr "Ja, den echten Import starten."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Sie sind in der Warteliste auf Position <strong>%s</strong>."
 
-#: app/models/transaction/notification.rb:98
+#: app/models/transaction/notification.rb:113
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Sie erhalten dies, weil Sie Mitglied der Gruppe dieses Tickets sind."
 
-#: app/models/transaction/notification.rb:267
+#: app/models/transaction/notification.rb:280
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -19914,11 +19910,11 @@ msgstr ""
 "Sie erhalten dies, weil Sie Abwesenheits-Vertretung für einen Teilnehmer "
 "dieses Tickets sind."
 
-#: app/models/transaction/notification.rb:70
+#: app/models/transaction/notification.rb:81
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "Sie erhalten dies, weil Sie der Besitzer dieses Tickets sind."
 
-#: app/models/transaction/notification.rb:64
+#: app/models/transaction/notification.rb:75
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Sie erhalten dies, weil Sie in diesem Ticket erwähnt wurden."
 

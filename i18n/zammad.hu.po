@@ -20380,12 +20380,12 @@ msgstr "Igen, a valódi importálás megkezdése."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Ön a várólistán a <strong>%s</strong> helyen szerepel."
 
-#: app/models/transaction/notification.rb:98
+#: app/models/transaction/notification.rb:113
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Ezt azért kapja, mert Ön tagja az ehhez a jegyhez tartozó csoportnak."
 
-#: app/models/transaction/notification.rb:267
+#: app/models/transaction/notification.rb:280
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -20393,11 +20393,11 @@ msgstr ""
 "Ezt azért kapja, mert Ön a jegy egyik résztvevőjének hivatalon kívüli "
 "helyettesítője."
 
-#: app/models/transaction/notification.rb:70
+#: app/models/transaction/notification.rb:81
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "Ezt azért kapja, mert Ön ennek a jegynek a tulajdonosa."
 
-#: app/models/transaction/notification.rb:64
+#: app/models/transaction/notification.rb:75
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Ezt azért kapja, mert Önt megemlítették ebben a jegyben."
 
