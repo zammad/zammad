@@ -53,7 +53,7 @@ describe('ticket create view - shared drafts sidebar', async () => {
       const view = await visitView('/ticket/create')
 
       await view.events.type(
-        view.getByLabelText('Text'),
+        await view.findByLabelText('Text'),
         'foobar<div data-signature="true">Signature here</div>',
       )
 
@@ -147,7 +147,7 @@ describe('ticket create view - shared drafts sidebar', async () => {
         ticketSharedDraftStartList: [draftToMock],
       })
 
-      await view.events.click(view.getByLabelText('Group'))
+      await view.events.click(await view.findByLabelText('Group'))
       await view.events.click(view.getByRole('option', { name: 'Users' }))
 
       await waitForTicketSharedDraftStartListQueryCalls()
@@ -262,7 +262,7 @@ describe('ticket create view - shared drafts sidebar', async () => {
         ],
       })
 
-      await view.events.click(view.getByLabelText('Group'))
+      await view.events.click(await view.findByLabelText('Group'))
       await view.events.click(view.getByRole('option', { name: 'Users' }))
 
       await waitForTicketSharedDraftStartListQueryCalls()
@@ -365,7 +365,7 @@ describe('ticket create view - shared drafts sidebar', async () => {
         ],
       })
 
-      await view.events.click(view.getByLabelText('Group'))
+      await view.events.click(await view.findByLabelText('Group'))
       await view.events.click(view.getByRole('option', { name: 'Users' }))
 
       await waitForTicketSharedDraftStartListQueryCalls()
@@ -456,7 +456,7 @@ describe('ticket create view - shared drafts sidebar', async () => {
     it('does not show', async () => {
       const view = await visitView('/ticket/create')
 
-      await view.events.click(view.getByLabelText('Group'))
+      await view.events.click(await view.findByLabelText('Group'))
       await view.events.click(view.getByRole('option', { name: 'Users' }))
 
       await waitForFormUpdaterQueryCalls()

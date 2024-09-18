@@ -127,7 +127,7 @@ describe('ticket create view', async () => {
     it('shows send email article type', async () => {
       const view = await visitView('/ticket/create')
 
-      await view.events.click(view.getByText('Send Email'))
+      await view.events.click(await view.findByText('Send Email'))
 
       expect(
         view.getByRole('tab', { selected: true, name: 'Send Email' }),
@@ -139,7 +139,7 @@ describe('ticket create view', async () => {
     it('shows outbound call article type', async () => {
       const view = await visitView('/ticket/create')
 
-      await view.events.click(view.getByText('Outbound Call'))
+      await view.events.click(await view.findByText('Outbound Call'))
 
       expect(
         view.getByRole('tab', { selected: true, name: 'Outbound Call' }),
@@ -165,7 +165,7 @@ describe('ticket create view', async () => {
 
       const view = await visitView('/ticket/create')
 
-      await view.events.type(view.getByLabelText('Title'), 'foo title')
+      await view.events.type(await view.findByLabelText('Title'), 'foo title')
 
       await waitFor(() =>
         expect(view.getByText('Similar tickets found')).toBeInTheDocument(),
@@ -185,7 +185,7 @@ describe('ticket create view', async () => {
 
       const view = await visitView('/ticket/create')
 
-      await view.events.type(view.getByLabelText('Title'), 'Test Ticket')
+      await view.events.type(await view.findByLabelText('Title'), 'Test Ticket')
 
       await view.events.click(view.getByRole('button', { name: 'Create' }))
 
@@ -244,7 +244,7 @@ describe('ticket create view', async () => {
 
       const view = await visitView('/ticket/create')
 
-      await view.events.type(view.getByLabelText('Title'), 'Test Ticket')
+      await view.events.type(await view.findByLabelText('Title'), 'Test Ticket')
 
       await view.events.click(
         await view.findByRole('button', { name: 'Discard Changes' }),
@@ -268,7 +268,7 @@ describe('ticket create view', async () => {
 
       const view = await visitView('/ticket/create')
 
-      await view.events.type(view.getByLabelText('Title'), 'Test Ticket')
+      await view.events.type(await view.findByLabelText('Title'), 'Test Ticket')
 
       // Page title updates when title is set
       expect(
@@ -417,7 +417,7 @@ describe('ticket create view', async () => {
         const view = await visitView('/ticket/create')
 
         await view.events.type(
-          view.getByLabelText('Title'),
+          await view.findByLabelText('Title'),
           'Test Customer Ticket',
         )
 

@@ -15,7 +15,7 @@ import createMockClient from './mock-apollo-client.ts'
 import { waitForNextTick } from './utils.ts'
 
 import type { DocumentNode, GraphQLFormattedError } from 'graphql'
-import type { SpyInstance } from 'vitest'
+import type { MockInstance } from 'vitest'
 
 interface Result {
   [key: string]: unknown
@@ -41,11 +41,11 @@ export interface MockGraphQLInstance {
   willFailWithNotFoundError(message?: string): MockGraphQLInstance
   willFailWithNetworkError(error: Error): MockGraphQLInstance
   spies: {
-    behave: SpyInstance
-    resolve: SpyInstance
-    error: SpyInstance
-    userError: SpyInstance
-    networkError: SpyInstance
+    behave: MockInstance
+    resolve: MockInstance
+    error: MockInstance
+    userError: MockInstance
+    networkError: MockInstance
   }
   calls: {
     behave: number
