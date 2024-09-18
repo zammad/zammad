@@ -37,7 +37,7 @@ class Stats::TicketLoadMeasure
 
     return result if !result.key?(:used_for_average)
 
-    if result[:total] < 1 || result[:average_per_agent].to_d == BigDecimal(0.0)
+    if result[:total] < 1 || result[:average_per_agent].to_d == BigDecimal('0.0')
       result[:state] = 'supergood'
       return result
     end
