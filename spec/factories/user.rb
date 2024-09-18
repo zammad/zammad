@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :user do
     transient do
-      intro_clues { true }
+      hide_clues  { true }
       slug        { "#{firstname}.#{lastname}".parameterize }
     end
 
@@ -18,10 +18,11 @@ FactoryBot.define do
     created_by_id    { 1 }
 
     callback(:after_stub, :before_create) do |object, context|
-      next if !context.intro_clues
+      next if !context.hide_clues
 
       object.preferences ||= {}
-      object.preferences[:intro] = true
+      object.preferences[:intro]                    = true
+      object.preferences[:keyboard_shortcuts_clues] = true
     end
 
     factory :customer do

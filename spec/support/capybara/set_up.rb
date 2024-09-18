@@ -11,7 +11,8 @@ RSpec.configure do |config|
     # skip intro/clues for created agents/admins
     %w[admin@example.com agent1@example.com].each do |login|
       user = User.find_by(login: login)
-      user.preferences[:intro] = true
+      user.preferences[:intro]                    = true
+      user.preferences[:keyboard_shortcuts_clues] = true
       user.save!
     end
   end

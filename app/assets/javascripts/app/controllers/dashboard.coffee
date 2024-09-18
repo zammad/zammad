@@ -51,13 +51,33 @@ class App.Dashboard extends App.Controller
     return if @Config.get('switch_back_to_possible')
     preferences = @Session.get('preferences')
     @clueAccess = false
-    return if preferences['intro']
+
+    # If and only if the initial clue has been already completed by the user, show the one about new keyboard shortcuts.
+    if preferences['intro']
+      return if preferences['keyboard_shortcuts_clues']
+
+      new App.KeyboardShortcutsClues(
+        appEl: @appEl
+        onComplete: =>
+          App.Ajax.request(
+            id:          'preferences'
+            type:        'PUT'
+            url:         "#{@apiPath}/users/preferences"
+            data:        JSON.stringify(keyboard_shortcuts_clues: true)
+            processData: true
+          )
+      )
+
+      return
+
     @clues()
 
   clues: (e) =>
     @clueAccess = false
     if e
       e.preventDefault()
+
+    # Initial clue has its own controller, so it can be triggered via a route change later.
     @navigate '#clues'
 
   active: (state) =>

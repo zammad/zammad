@@ -3392,8 +3392,8 @@ msgstr ""
 msgid "Country"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:19
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:81
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:19
 #: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:14
 #: app/assets/javascripts/app/models/group.coffee:45
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:56
@@ -3772,8 +3772,8 @@ msgstr ""
 msgid "Dark Mode"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:5
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:125
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:5
 #: app/assets/javascripts/app/controllers/dashboard.coffee:28
 #: app/assets/javascripts/app/controllers/package.coffee:42
 #: app/frontend/apps/desktop/pages/dashboard/routes.ts:8
@@ -6266,7 +6266,7 @@ msgid "Fingerprint"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:251
-#: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco:15
+#: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco:17
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue:79
 msgid "Finish"
@@ -6762,6 +6762,10 @@ msgstr ""
 msgid "Google Client Secret"
 msgstr ""
 
+#: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
+msgid "Got it!"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:16
 msgid "Green"
 msgstr ""
@@ -7011,7 +7015,7 @@ msgstr ""
 msgid "Here you can add further links to your public FAQ page, which will be displayed either in the header or footer."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:20
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:20
 msgid "Here you can create new tickets, customers and organizations (depending on your configured permissions)."
 msgstr ""
 
@@ -7023,7 +7027,7 @@ msgstr ""
 msgid "Here you can override any translation string for a more customized look and feel. Both recognized system and custom strings are supported, simply add a new translation in order to identify the source string and provide its new translation for the target language."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:14
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:14
 msgid "Here you can search for tickets, customers, and organizations. Use the asterisk §*§ to find anything, e.g. §smi*§ or §rosent*l§. You also can use ||quotation marks|| for searching phrases: §\"some phrase\"§."
 msgstr ""
 
@@ -7031,7 +7035,7 @@ msgstr ""
 msgid "Here you can set up and manage two-factor authentication methods for your Zammad account."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:29
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:29
 msgid "Here you can sign out, change the frontend language, and see your last viewed items."
 msgstr ""
 
@@ -7039,11 +7043,11 @@ msgstr ""
 msgid "Here you define which authorization has access to the attribute."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:39
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:39
 msgid "Here you find your ticket overviews for open, assigned, and escalated tickets."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:6
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:6
 msgid "Here you see a quick overview of your and other agents' performance."
 msgstr ""
 
@@ -9424,6 +9428,10 @@ msgstr ""
 msgid "New Group"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/clues/keyboard_shortcuts_clues.coffee:5
+msgid "New Keyboard Shortcuts"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/macro.coffee:22
 msgid "New Macro"
 msgstr ""
@@ -9567,7 +9575,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/webhook.coffee:124
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:106
-#: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco:17
+#: app/assets/javascripts/app/views/clues/clues_content.jst.eco:19
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:31
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:17
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:57
@@ -10558,9 +10566,9 @@ msgstr ""
 msgid "Overview bulk mask"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:38
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:136
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:38
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
@@ -10815,7 +10823,7 @@ msgstr ""
 msgid "Personal Access Tokens"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:28
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:28
 msgid "Personal Settings"
 msgstr ""
 
@@ -11136,7 +11144,7 @@ msgstr ""
 msgid "Preview owner tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco:10
+#: app/assets/javascripts/app/views/clues/clues_content.jst.eco:11
 #: app/frontend/shared/form/i18n/locales.ts:70
 msgid "Previous"
 msgstr ""
@@ -12165,8 +12173,8 @@ msgstr ""
 msgid "Scroll down to see new messages"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:13
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:147
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:13
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:201
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
@@ -17370,6 +17378,10 @@ msgstr ""
 
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts:18
 msgid "You can no longer see the user."
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/clues/keyboard_shortcuts_clues.coffee:6
+msgid "You can open the Keyboard Shortcuts dialog here and view the new and improved layout, or revert to the old one if you prefer it."
 msgstr ""
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:282

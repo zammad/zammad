@@ -1,4 +1,4 @@
-class Clues extends App.Controller
+class FirstStepsClues extends App.Controller
   constructor: ->
     super
     @navupdate '#', true
@@ -12,10 +12,16 @@ class Clues extends App.Controller
           id:          'preferences'
           type:        'PUT'
           url:         "#{@apiPath}/users/preferences"
-          data:        JSON.stringify(intro: true)
+
+          # Initial clue is special in that sense that once completed,
+          #   it will prevent further clues from being shown to the same user.
+          data: JSON.stringify(
+            intro: true
+            keyboard_shortcuts_clues: true
+          )
           processData: true
         )
         @navigate '#'
     )
 
-App.Config.set('clues', Clues, 'Routes')
+App.Config.set('clues', FirstStepsClues, 'Routes')

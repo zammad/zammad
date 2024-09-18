@@ -3067,6 +3067,11 @@ input.has-error {
     .btn.is-disabled {
       color: var(--text-normal);
     }
+
+    &:only-child {
+      @include ltr(margin-left, auto);
+      @include rtl(margin-right, auto);
+    }
   }
 
   .modal-header {
@@ -4550,7 +4555,7 @@ footer {
     left: 0;
     width: $mobileNavigationWidth;
     height: 100%;
-    z-index: 999;
+    z-index: 499;
 
     &:empty {
       display: none !important;
@@ -9408,6 +9413,12 @@ li.list-item-none {
 
 .dropdown-menu > li > a span {
   display: block;
+}
+
+.dropdown-menu > li > a.is-hovered {
+  color: var(--text-inverted);
+  text-decoration: none;
+  background-color: var(--background-secondary-hover);
 }
 
 .dropdown-menu .badge--text {

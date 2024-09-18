@@ -6,13 +6,15 @@
   <div class="modal-header"><%- @T(@headline) %></div>
   <div class="modal-body"><%- @T(@text) %></div>
   <div class="modal-controls">
+    <% if @max > 1: %>
     <div class="modal-control">
       <div class="<% if @position is 0: %>is-disabled <% end %>btn btn--text js-previous"><%- @T( 'Previous' ) %></div>
     </div>
     <div class="modal-control clue-count"><%= @position+1 %>/<%= @max %></div>
+    <% end %>
     <div class="modal-control">
       <% if @position+1 is @max: %>
-        <div class="btn btn--text js-next"><%- @T( 'Finish' ) %></div>
+        <div class="btn btn--text js-next"><% if @max > 1: %><%- @T('Finish') %><% else: %><%- @T('Got it!') %><% end %></div>
       <% else: %>
         <div class="btn btn--text js-next"><%- @T( 'Next' ) %></div>
       <% end %>
