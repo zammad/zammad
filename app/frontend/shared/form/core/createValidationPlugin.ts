@@ -34,7 +34,7 @@ const createValidationPlugin = (): FormKitPlugin => {
   return formKitCreateValidationPlugin({
     ...defaultRules,
     ...rules,
-  })
+  } as unknown as FormValidationRules)
 }
 
 export default createValidationPlugin
