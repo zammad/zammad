@@ -317,7 +317,7 @@ importers:
         version: 8.5.0(eslint@8.57.0)(typescript@5.5.4)
       '@vitejs/plugin-vue':
         specifier: ^5.1.3
-        version: 5.1.3(vite@5.4.2(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0))(vue@3.5.6(typescript@5.5.4))
+        version: 5.1.3(vite@5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0))(vue@3.5.6(typescript@5.5.4))
       '@vue/compiler-dom':
         specifier: ^3.5.6
         version: 3.5.6
@@ -445,14 +445,14 @@ importers:
         specifier: ^5.5.4
         version: 5.5.4
       vite:
-        specifier: ^5.4.2
-        version: 5.4.2(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
+        specifier: ^5.4.6
+        version: 5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
       vite-plugin-pwa:
-        specifier: ^0.20.2
-        version: 0.20.2(vite@5.4.2(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.1.0)
+        specifier: ^0.20.5
+        version: 0.20.5(vite@5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.1.0)
       vite-plugin-ruby:
-        specifier: ^5.0.0
-        version: 5.0.0(vite@5.4.2(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0))
+        specifier: ^5.1.0
+        version: 5.1.0(vite@5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0))
       vitest:
         specifier: ^2.0.5
         version: 2.0.5(@types/node@18.11.4)(jsdom@25.0.0)(sass@1.78.0)(terser@5.31.0)
@@ -6209,11 +6209,11 @@ packages:
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
 
-  vite-plugin-pwa@0.20.2:
-    resolution: {integrity: sha512-9wLqHt/NjP7YKj6CCEKS5+Fhffo6tHGrAa+wvoqCG59oZkmpX5lBBl38MVjLaO4ELrLqjdtUhILJDwZu+q/hGQ==}
+  vite-plugin-pwa@0.20.5:
+    resolution: {integrity: sha512-aweuI/6G6n4C5Inn0vwHumElU/UEpNuO+9iZzwPZGTCH87TeZ6YFMrEY6ZUBQdIHHlhTsbMDryFARcSuOdsz9Q==}
     engines: {node: '>=16.0.0'}
     peerDependencies:
-      '@vite-pwa/assets-generator': ^0.2.4
+      '@vite-pwa/assets-generator': ^0.2.6
       vite: ^3.1.0 || ^4.0.0 || ^5.0.0
       workbox-build: ^7.1.0
       workbox-window: ^7.1.0
@@ -6221,13 +6221,13 @@ packages:
       '@vite-pwa/assets-generator':
         optional: true
 
-  vite-plugin-ruby@5.0.0:
-    resolution: {integrity: sha512-c8PjTp21Ah/ttgnNUyu0qvCXZI08Jr9I24oUKg3TRIRhF5GcOZ++6wtlTCrNFd9COEQbpXHxlRIXd/MEg0iZJw==}
+  vite-plugin-ruby@5.1.0:
+    resolution: {integrity: sha512-Dgd/dCvb/8GYxZx2NEgxygEoUpHz9vfad7itlO4fXqYwdfAEwFwwOohC630yf/+kxIGBZXI5yk+Y3WkL9VkwcA==}
     peerDependencies:
       vite: '>=5.0.0'
 
-  vite@5.4.2:
-    resolution: {integrity: sha512-dDrQTRHp5C1fTFzcSaMxjk6vdpKvT+2/mIdE07Gw2ykehT49O0z/VHS3zZ8iV/Gh8BJJKHWOe5RjaNrW5xf/GA==}
+  vite@5.4.6:
+    resolution: {integrity: sha512-IeL5f8OO5nylsgzd9tq4qD2QqI0k2CQLGrWD0rCN0EQJZpBK5vJAx0I+GDkMOXxQX/OfFHMuLIx6ddAxGX/k+Q==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -8835,9 +8835,9 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vitejs/plugin-vue@5.1.3(vite@5.4.2(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0))(vue@3.5.6(typescript@5.5.4))':
+  '@vitejs/plugin-vue@5.1.3(vite@5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0))(vue@3.5.6(typescript@5.5.4))':
     dependencies:
-      vite: 5.4.2(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
+      vite: 5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
       vue: 3.5.6(typescript@5.5.4)
 
   '@vitest/expect@2.0.5':
@@ -13207,7 +13207,7 @@ snapshots:
       debug: 4.3.6
       pathe: 1.1.2
       tinyrainbow: 1.2.0
-      vite: 5.4.2(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
+      vite: 5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -13219,26 +13219,26 @@ snapshots:
       - supports-color
       - terser
 
-  vite-plugin-pwa@0.20.2(vite@5.4.2(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.1.0):
+  vite-plugin-pwa@0.20.5(vite@5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.1.0):
     dependencies:
       debug: 4.3.6
       pretty-bytes: 6.1.1
       tinyglobby: 0.2.0
-      vite: 5.4.2(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
+      vite: 5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
       workbox-build: 7.1.0
       workbox-window: 7.1.0
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-ruby@5.0.0(vite@5.4.2(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)):
+  vite-plugin-ruby@5.1.0(vite@5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)):
     dependencies:
-      debug: 4.3.4
+      debug: 4.3.6
       fast-glob: 3.3.2
-      vite: 5.4.2(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
+      vite: 5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
     transitivePeerDependencies:
       - supports-color
 
-  vite@5.4.2(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0):
+  vite@5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.47
@@ -13277,7 +13277,7 @@ snapshots:
       tinybench: 2.9.0
       tinypool: 1.0.1
       tinyrainbow: 1.2.0
-      vite: 5.4.2(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
+      vite: 5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
       vite-node: 2.0.5(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
