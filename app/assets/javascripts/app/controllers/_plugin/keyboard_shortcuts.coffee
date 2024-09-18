@@ -1,12 +1,23 @@
 class App.KeyboardShortcutPlugin extends App.Controller
   @include App.LogInclude
+  @hasSelectionWhenShiftWasPressed: undefined
 
   constructor: ->
     super
     @observerKeys()
     @lastKey = undefined
 
+    $(document).on('keydown', (e) ->
+      return if e.keyCode isnt 16
+      return if !App.KeyboardShortcutPlugin.hasSelection()
+
+      App.KeyboardShortcutPlugin.hasSelectionWhenShiftWasPressed = true
+    )
+
     $(document).on('keyup', (e) =>
+      if e.keyCode is 16
+        App.KeyboardShortcutPlugin.hasSelectionWhenShiftWasPressed = false
+
       return if e.keyCode isnt 27
       @lastKey = undefined
     )
@@ -29,6 +40,13 @@ class App.KeyboardShortcutPlugin extends App.Controller
 
   @isInput: ->
     return true if (_.contains(['INPUT', 'TEXTAREA', 'SELECT'], document.activeElement.nodeName) || document.activeElement.getAttribute('contenteditable') == 'true')
+    false
+
+  @hasSelection: ->
+    return true if App.KeyboardShortcutPlugin.hasSelectionWhenShiftWasPressed
+    return window.getSelection().type is 'Range' if window.getSelection
+    return document.getSelection().type is 'Range' if document.getSelection
+    return document.selection.type is 'Range' if document.selection
     false
 
   @useOldShortcutLayout: ->
@@ -78,6 +96,7 @@ class App.KeyboardShortcutPlugin extends App.Controller
                     return if App.KeyboardShortcutPlugin.isDisabled()
                     return if e.key != '?'
                     return if shortcut.onlyOutsideInputs && App.KeyboardShortcutPlugin.isInput()
+                    return if shortcut.onlyWithoutSelection && App.KeyboardShortcutPlugin.hasSelection()
                     e.preventDefault()
 
                     shortcut.callback(shortcut)
@@ -87,6 +106,7 @@ class App.KeyboardShortcutPlugin extends App.Controller
                 $(document).on('keydown.shortcuts', {keys: modifier}, (e) =>
                   return if App.KeyboardShortcutPlugin.isDisabled()
                   return if shortcut.onlyOutsideInputs && App.KeyboardShortcutPlugin.isInput()
+                  return if shortcut.onlyWithoutSelection && App.KeyboardShortcutPlugin.hasSelection()
                   e.preventDefault()
                   if @lastKey && @lastKey.modifier is modifier && @lastKey.time + 5500  > new Date().getTime()
                     @lastKey.count += 1
@@ -226,6 +246,7 @@ App.Config.set(
               keyDisplay: ['tab', ['shift', '▶']]
               hotkeys: [true, false]
               onlyOutsideInputs: true
+              onlyWithoutSelection: true
               description: __('Show next tab')
               globalEvent: 'next-in-tab'
               callback: ->
@@ -250,7 +271,8 @@ App.Config.set(
               key: ['shift+tab', 'shift+left']
               keyDisplay: [['shift', 'tab'], ['shift', '◀']]
               hotkeys: [true, false]
-              onlyOutsideInputs: false
+              onlyOutsideInputs: true
+              onlyWithoutSelection: true
               description: __('Show previous tab')
               globalEvent: 'previous-in-tab'
               callback: ->
@@ -272,8 +294,8 @@ App.Config.set(
                   scrollIfNeeded(last)
             }
             {
-              key: ['return', 'shift+return']
-              keyDisplay: ['enter', ['shift', 'enter']]
+              key: ['return', 'ctrl+return']
+              keyDisplay: ['enter', ['ctrl', 'enter']]
               hotkeys: [true, false]
               description: __('Confirm/submit dialog')
               globalEvent: 'submit'
