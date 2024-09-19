@@ -1052,6 +1052,7 @@ msgid "Account SID"
 msgstr "帐号 SID"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:6
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:113
 msgid "Account Time"
 msgstr "计算时间"
 
@@ -1070,6 +1071,7 @@ msgstr "账号尚未通过验证"
 #: app/assets/javascripts/app/models/ticket.coffee:16
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:2
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:2
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:68
 #: app/graphql/gql/types/overview_type.rb:69
 msgid "Accounted Time"
 msgstr "佔用時間"
@@ -1205,6 +1207,7 @@ msgstr "活动流"
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:16
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:4
 #: app/controllers/time_accountings_controller.rb:117
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:95
 msgid "Activity Type"
 msgstr "激活类型"
 
@@ -1340,7 +1343,7 @@ msgstr "新增消息"
 msgid "Add agreement text before submit."
 msgstr "在提交前添加协议文本。"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:316
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:315
 msgid "Add alarm to pending reminder and escalated tickets"
 msgstr "为待处理的提醒和升级的工单添加警报"
 
@@ -1433,7 +1436,7 @@ msgstr "添加有序列表"
 msgid "Add phone call"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:59
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:63
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:37
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:88
 msgid "Add reply"
@@ -1922,7 +1925,7 @@ msgstr "Twitter的应用程序凭据。"
 msgid "App secret"
 msgstr "应用密码"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:409
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:431
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee:3
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:3
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
@@ -1959,7 +1962,7 @@ msgstr "应用草稿"
 msgid "Apply Shared Draft"
 msgstr "应用共享草稿"
 
-#: app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue:81
+#: app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue:40
 msgid "Apply Template"
 msgstr "应用模板"
 
@@ -2074,7 +2077,7 @@ msgstr "你确定吗？您所做的更改将会丢失。"
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:45
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:417
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:251
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:260
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:51
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "你确定吗？您有未保存的更改，这些更改将会丢失。"
@@ -2118,7 +2121,7 @@ msgid "Article meta information"
 msgstr "文章元信息"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:77
-#: app/frontend/shared/composables/useArticleSecurity.ts:99
+#: app/frontend/shared/composables/useArticleSecurity.ts:93
 msgid "Article uses different security mechanism."
 msgstr "文章使用不同的安全机制。"
 
@@ -2216,7 +2219,7 @@ msgstr "附件"
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:220
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
 msgstr "附件"
 
@@ -2437,11 +2440,11 @@ msgid ""
 "set it to false."
 msgstr "自动加载chat.css文件。如果要使用自己的CSS，请将其设置为false。"
 
-#: app/frontend/shared/components/Form/Form.vue:1237
+#: app/frontend/shared/components/Form/Form.vue:1238
 msgid "Autosave in progress…"
 msgstr "自动保存正在进行中…"
 
-#: app/frontend/shared/components/Form/Form.vue:1246
+#: app/frontend/shared/components/Form/Form.vue:1247
 msgid "Autosaving is taking longer than expected…"
 msgstr "自动保存花费的时间比预期要长…"
 
@@ -2727,12 +2730,12 @@ msgstr "证书颁发机构"
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:89
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:167
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:86
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:37
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:177
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:181
 #: db/seeds/object_manager_attributes.rb:508
 msgid "CC"
 msgstr "抄送（CC）"
@@ -3055,9 +3058,9 @@ msgstr "已更改需要数据库更新。"
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:106
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:100
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:133
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:134
 msgid "Channel"
 msgstr "渠道"
 
@@ -3411,7 +3414,7 @@ msgstr "以分钟为单位关闭"
 msgid "Close chat sessions where participants are offline."
 msgstr "参与者离线，关闭会话。"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:218
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:238
 msgid "Close current tab"
 msgstr "关闭当前标签"
 
@@ -3425,12 +3428,14 @@ msgstr "关闭侧面板"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:32
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:12
 #: db/seeds/settings.rb:2913
 msgid "Close tab"
 msgstr "从列表关闭"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:37
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:16
 #: db/seeds/settings.rb:2914
 msgid "Close tab on ticket close"
 msgstr "当工单关闭时关闭tab页"
@@ -3622,7 +3627,7 @@ msgstr ""
 "<br>\n"
 "<div>您的#{config.product_name}团队</div>\n"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:278
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:300
 msgid "Confirm/submit dialog"
 msgstr "确认/提交对话框"
 
@@ -3730,7 +3735,7 @@ msgstr "无法加载内容。"
 msgid "Content preview could not be generated."
 msgstr "无法生成内容预览。"
 
-#: app/frontend/apps/desktop/components/layout/LayoutContent.vue:131
+#: app/frontend/apps/desktop/components/layout/LayoutContent.vue:136
 msgid "Content sidebar"
 msgstr "内容侧边栏"
 
@@ -3833,11 +3838,11 @@ msgstr "复制URL"
 msgid "Copy article permalink"
 msgstr "文章永久链接"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:332
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:354
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "將當前物件號碼（例如 工單號#）複製到剪貼板"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader.vue:63
 msgid "Copy ticket number"
 msgstr "复制工单编号"
 
@@ -3937,8 +3942,8 @@ msgstr "计数条目。需要一些时间处理。"
 msgid "Country"
 msgstr "国家"
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:19
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:81
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:19
 #: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:14
 #: app/assets/javascripts/app/models/group.coffee:45
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:56
@@ -4151,7 +4156,7 @@ msgstr "创建:"
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:14
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:108
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:107
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -4189,7 +4194,7 @@ msgstr "创建外部工单"
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
 #: app/controllers/time_accountings_controller.rb:122
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:105
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:56
 #: app/graphql/gql/types/overview_type.rb:80
 msgid "Created at"
 msgstr "创建时间"
@@ -4367,8 +4372,8 @@ msgstr "黑暗"
 msgid "Dark Mode"
 msgstr "黑暗模式"
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:5
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:125
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:145
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:5
 #: app/assets/javascripts/app/controllers/dashboard.coffee:28
 #: app/assets/javascripts/app/controllers/package.coffee:42
 #: app/frontend/apps/desktop/pages/dashboard/routes.ts:8
@@ -4468,13 +4473,13 @@ msgid "Decryption failed!"
 msgstr "解密失败！"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:113
-#: app/frontend/shared/composables/useArticleSecurity.ts:130
+#: app/frontend/shared/composables/useArticleSecurity.ts:124
 msgid "Decryption failed! %s"
 msgstr "解密失败！ %s"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:291
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:107
-#: app/frontend/shared/composables/useArticleSecurity.ts:124
+#: app/frontend/shared/composables/useArticleSecurity.ts:118
 msgid "Decryption was successful."
 msgstr "解密成功。"
 
@@ -5684,7 +5689,7 @@ msgstr "直接消息组"
 msgid "Direct URL"
 msgstr "顯示 URL"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:333
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:332
 msgid "Direct subscription URL"
 msgstr "直接订阅URL"
 
@@ -5746,12 +5751,12 @@ msgstr "丢弃文章"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:47
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:419
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:253
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:262
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:53
 msgid "Discard changes"
 msgstr "放弃更改"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:76
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:75
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:162
 msgid "Discard your unsaved changes"
@@ -5921,7 +5926,7 @@ msgstr "草稿"
 msgid "Draft available"
 msgstr "草稿可用"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:38
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:38
 #, fuzzy
 #| msgid "Draft"
 msgid "Drafts"
@@ -6066,7 +6071,7 @@ msgstr "编辑回复"
 msgid "Edit security keys"
 msgstr "编辑安全密钥"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:89
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:88
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Edit ticket title"
@@ -6078,6 +6083,12 @@ msgstr "编辑中"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:38
 msgid "Editing on Desktop"
+msgstr "在桌面上编辑"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketLiveUsers.vue:57
+#, fuzzy
+#| msgid "Editing on Desktop"
+msgid "Editing on Mobile"
 msgstr "在桌面上编辑"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
@@ -6387,7 +6398,7 @@ msgstr "启用机票自动分配。"
 msgid "Enable time accounting."
 msgstr "启用时间会计。"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:401
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:423
 msgid "Enable/disable inline translations"
 msgstr "打开/关闭 用户界面翻译"
 
@@ -6516,7 +6527,7 @@ msgstr "加密电子邮件（如果不可能，无论如何都要发送通知）
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:62
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:165
-#: app/frontend/shared/composables/useArticleSecurity.ts:163
+#: app/frontend/shared/composables/useArticleSecurity.ts:157
 msgid "Encrypted"
 msgstr "加密"
 
@@ -6526,7 +6537,7 @@ msgid "Encryption"
 msgstr "加密"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:65
-#: app/frontend/shared/composables/useArticleSecurity.ts:163
+#: app/frontend/shared/composables/useArticleSecurity.ts:157
 msgid "Encryption error"
 msgstr "加密错误"
 
@@ -6652,6 +6663,7 @@ msgid "Enter the security code generated by the authenticator app:"
 msgstr "输入Authenticator应用程序生成的安全代码："
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:37
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:71
 msgid "Enter the time you want to record"
 msgstr "输入您要记录的时间"
 
@@ -7202,7 +7214,7 @@ msgid "Fingerprint"
 msgstr "指纹"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:251
-#: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco:15
+#: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco:17
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue:79
 msgid "Finish"
@@ -7361,11 +7373,11 @@ msgstr "无法找到 FormSchema。"
 msgid "Format"
 msgstr "格式"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:558
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:580
 msgid "Format as //strikethrough//"
 msgstr "//删除线//格式"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:540
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:562
 msgid "Format as _underlined_"
 msgstr "_下划线_格式"
 
@@ -7373,15 +7385,15 @@ msgstr "_下划线_格式"
 msgid "Format as bold"
 msgstr "粗体"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:607
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:629
 msgid "Format as h1 heading"
 msgstr "格式化為H1標題"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:613
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:635
 msgid "Format as h2 heading"
 msgstr "格式化為H2標題"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:619
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:641
 msgid "Format as h3 heading"
 msgstr "格式化為h3標題"
 
@@ -7389,7 +7401,7 @@ msgstr "格式化為h3標題"
 msgid "Format as italic"
 msgstr "斜体"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:601
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:623
 msgid "Format as ordered list"
 msgstr "格式化為排序列表"
 
@@ -7401,15 +7413,15 @@ msgstr "删除线"
 msgid "Format as underlined"
 msgstr "下划线"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:595
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:617
 msgid "Format as unordered list"
 msgstr "格式化為非排序列表"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:546
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:568
 msgid "Format as |bold|"
 msgstr "|加粗|格式"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:552
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:574
 msgid "Format as ||italic||"
 msgstr "||斜体||格式"
 
@@ -7444,7 +7456,7 @@ msgstr "星期五"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:11
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:73
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:67
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:80
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:35
 msgid "From"
@@ -7702,6 +7714,10 @@ msgstr "Google 客户端ID"
 msgid "Google Client Secret"
 msgstr "Google 客户端密码"
 
+#: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
+msgid "Got it!"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:16
 msgid "Green"
 msgstr "绿色"
@@ -7956,7 +7972,7 @@ msgid ""
 "displayed either in the header or footer."
 msgstr "您可以在此处向 FAQ 解答页面添加更多链接，该链接将显示在页眉或页脚中。"
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:20
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:20
 msgid ""
 "Here you can create new tickets, customers and organizations (depending on "
 "your configured permissions)."
@@ -7976,7 +7992,7 @@ msgstr ""
 "在这里，您可以覆盖任何翻译字符串以获得更加自定义的外观和感觉。支持识别的系统"
 "字符串和自定义字符串，只需添加新翻译即可识别源字符串并为目标语言提供新翻译。"
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:14
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:14
 msgid ""
 "Here you can search for tickets, customers, and organizations. Use the "
 "asterisk §*§ to find anything, e.g. §smi*§ or §rosent*l§. You also can use ||"
@@ -7991,7 +8007,7 @@ msgid ""
 "Zammad account."
 msgstr "在这里，您可以为您的Zammad帐户设置和管理两因素身份验证方法。"
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:29
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:29
 msgid ""
 "Here you can sign out, change the frontend language, and see your last "
 "viewed items."
@@ -8001,13 +8017,13 @@ msgstr "您可以在此处退出、更改前端语言以及查看您上次查看
 msgid "Here you define which authorization has access to the attribute."
 msgstr "您可以在此处定义有权访问该属性的授权。"
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:39
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:39
 msgid ""
 "Here you find your ticket overviews for open, assigned, and escalated "
 "tickets."
 msgstr "您可以在此处找到未处理、已分配和升级的工单的工单概述。"
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:6
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:6
 msgid "Here you see a quick overview of your and other agents' performance."
 msgstr "您可以在这里快速查看您和其他服务人员的工作情况."
 
@@ -8558,7 +8574,7 @@ msgid "Including private key."
 msgstr "包括私钥。"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:251
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:328
 #, fuzzy
 #| msgid "Incomplete credentials"
 msgid "Incomplete Ticket Checklist"
@@ -8685,19 +8701,19 @@ msgstr ""
 "将widget代码插入聊天可见的每个页面的源代码中。它应该放置在页面源代码末尾的 "
 "§</body>§ 结束标记之前。"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:589
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:611
 msgid "Inserts a horizontal rule"
 msgstr "插入水平線"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:522
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:544
 msgid "Inserts a mention for a user"
 msgstr "插入用户提及"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:516
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:538
 msgid "Inserts knowledge base answer"
 msgstr "插入知识库答案"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:510
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:532
 msgid "Inserts text module"
 msgstr "插入文本模块"
 
@@ -8728,7 +8744,7 @@ msgstr "下载的WhatsApp媒体的完整性验证失败。"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:133
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:151
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:155
 msgid "Internal"
 msgstr "內部"
 
@@ -9382,7 +9398,7 @@ msgstr "所有用户任务栏选项卡的列表"
 msgid "List of installed addons"
 msgstr "已安装的插件列表"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:190
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:210
 msgid "List of shortcuts"
 msgstr "列出所有快捷键"
 
@@ -9497,7 +9513,7 @@ msgstr "登录失败。请仔细检查您的双因素身份验证方法。"
 msgid "Logo"
 msgstr "标志"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:207
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:227
 msgid "Logout"
 msgstr "退出"
 
@@ -9527,7 +9543,7 @@ msgstr "宏组限制并不涵盖所有门票"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:3
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:69
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:39
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:39
 #: db/seeds/permissions.rb:47
 msgid "Macros"
 msgstr "宏处理"
@@ -10372,7 +10388,7 @@ msgstr "将所有内容从“%s”移动到“%s”："
 msgid "Move down"
 msgstr "下移"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:317
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:339
 msgid "Move left and right"
 msgstr "左右移动"
 
@@ -10380,7 +10396,7 @@ msgstr "左右移动"
 msgid "Move up"
 msgstr "上移"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:313
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:335
 msgid "Move up and down"
 msgstr "上下移动"
 
@@ -10544,7 +10560,7 @@ msgstr "此安全键的名称"
 msgid "Name of form submit button"
 msgstr "提交按钮显示文字"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:500
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:522
 msgid "Navigate through article"
 msgstr "瀏覽文章"
 
@@ -10554,7 +10570,7 @@ msgstr "瀏覽文章"
 msgid "Navigate to %s"
 msgstr "导航"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:115
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:135
 #: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:29
 msgid "Navigation"
 msgstr "导航"
@@ -10668,6 +10684,12 @@ msgstr "新删除任务"
 msgid "New Group"
 msgstr "新建组"
 
+#: app/assets/javascripts/app/controllers/clues/keyboard_shortcuts_clues.coffee:5
+#, fuzzy
+#| msgid "Keyboard Shortcuts"
+msgid "New Keyboard Shortcuts"
+msgstr "键盘快捷键"
+
 #: app/assets/javascripts/app/controllers/macro.coffee:22
 msgid "New Macro"
 msgstr "增加宏处理"
@@ -10732,7 +10754,7 @@ msgstr "新增标签"
 msgid "New Template"
 msgstr "模板"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:168
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:188
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:7
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:484
@@ -10911,7 +10933,7 @@ msgstr "新增用户"
 #: app/assets/javascripts/app/controllers/webhook.coffee:124
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:106
-#: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco:17
+#: app/assets/javascripts/app/views/clues/clues_content.jst.eco:19
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:31
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:17
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:57
@@ -10928,6 +10950,7 @@ msgstr "状态"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:43
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco:12
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:21
 #: db/seeds/settings.rb:2915
 msgid "Next in overview"
 msgstr "回到工单概览"
@@ -11248,7 +11271,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "没有 x-zammad-session-user-id，没有设置发件人！"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:254
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:331
 #, fuzzy
 #| msgid "You have closed a ticket"
 msgid "No, just close the ticket"
@@ -11310,7 +11333,7 @@ msgstr "未分配"
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:115
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:25
 #: app/controllers/application_controller/handles_errors.rb:60
-#: app/services/service/ticket/article/create.rb:119
+#: app/services/service/ticket/article/create.rb:121
 msgid "Not authorized"
 msgstr "未经授权"
 
@@ -11467,7 +11490,7 @@ msgid "Notification sound"
 msgstr "通知音"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:12
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:157
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:177
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:5
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:2
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:1
@@ -11738,11 +11761,11 @@ msgstr "在新选项卡中打开"
 msgid "Open link"
 msgstr "处理中的工单"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:478
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:500
 msgid "Open macro selection"
 msgstr "开放宏选择"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:438
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:460
 msgid "Open note box"
 msgstr "打开注释输入框"
 
@@ -12057,9 +12080,9 @@ msgstr "工单概览"
 msgid "Overview bulk mask"
 msgstr "概述散装面具"
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:38
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:136
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:156
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:38
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
@@ -12256,11 +12279,11 @@ msgstr "糊状证书"
 msgid "Paste Private Key"
 msgstr "粘贴私钥"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:564
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:586
 msgid "Paste from clipboard"
 msgstr "从剪贴板粘贴"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:571
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:593
 msgid "Paste from clipboard (plain text)"
 msgstr "剪贴板粘贴（纯文本）"
 
@@ -12324,7 +12347,7 @@ msgstr "权限"
 msgid "Personal Access Tokens"
 msgstr "個人存取 Token"
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:28
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:28
 msgid "Personal Settings"
 msgstr "个性化设置"
 
@@ -12371,7 +12394,7 @@ msgstr "另一个WhatsApp帐户已经在使用电话号码。"
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "為應用程序建立名稱，我們將為您提供一個唯一的 token"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:224
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:238
 msgid "Pin this panel"
 msgstr ""
 
@@ -12677,7 +12700,7 @@ msgstr "预览客户工单"
 msgid "Preview owner tickets"
 msgstr "预览拥有者工单"
 
-#: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco:10
+#: app/assets/javascripts/app/views/clues/clues_content.jst.eco:11
 #: app/frontend/shared/form/i18n/locales.ts:70
 msgid "Previous"
 msgstr "上一步"
@@ -12817,7 +12840,7 @@ msgid "Proxy address"
 msgstr "代理服务器地址"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:156
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:160
 msgid "Public"
 msgstr "公開的"
 
@@ -13147,11 +13170,11 @@ msgstr "删除选定的值"
 msgid "Remove two-factor authentication"
 msgstr "删除双因素身份验证"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:625
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:647
 msgid "Removes any hyperlink"
 msgstr "刪除任何超連結"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:577
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:599
 msgid "Removes the formatting"
 msgstr "刪除格式"
 
@@ -13198,7 +13221,7 @@ msgstr "代理人"
 msgid "Replacement agent"
 msgstr "代理人"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:221
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:235
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
@@ -13216,7 +13239,7 @@ msgstr "回复所有"
 msgid "Reply allowed only for open tickets"
 msgstr "仅允许对开放工单进行回复"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:453
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:475
 msgid "Reply to last article"
 msgstr "回复最新的信件"
 
@@ -13432,7 +13455,7 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr "重置机票概述的顺序失败。"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:188
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:201
 #, fuzzy
 #| msgid "Resize side panel"
 msgid "Resize article panel"
@@ -13777,7 +13800,7 @@ msgstr "保存并继续"
 msgid "Save as"
 msgstr "另存为"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:55
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:55
 #, fuzzy
 #| msgid "Save Draft"
 msgid "Save as draft"
@@ -13846,8 +13869,8 @@ msgstr "向下滚动查看 %s 个新回复"
 msgid "Scroll down to see new messages"
 msgstr "向下滚动以查看新消息"
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:13
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:147
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:167
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:13
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:201
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
@@ -13996,7 +14019,7 @@ msgstr "仅在给出主要组织时才允许二级组织。"
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:177
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:199
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:203
 #: db/seeds/permissions.rb:197
 msgid "Security"
 msgstr "安全"
@@ -14108,7 +14131,7 @@ msgstr "选择模板"
 msgid "Select default ticket type"
 msgstr "选择默认票类型"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:321
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:343
 msgid "Select item"
 msgstr "选中"
 
@@ -14339,7 +14362,7 @@ msgstr "为您的工单设置标题"
 msgid "Set agent limit"
 msgstr "设定代理限制"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:468
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:490
 msgid "Set article to internal/public"
 msgstr "设置内容为内部/外部可见"
 
@@ -14598,7 +14621,7 @@ msgstr "在警告中显示匹配的门票"
 msgid "Show meta data"
 msgstr "显示元数据"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:229
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:250
 msgid "Show next tab"
 msgstr "显示下一个选项卡"
 
@@ -14608,7 +14631,7 @@ msgid ""
 "third-party authentication is enabled."
 msgstr "在登录页面上显示用户的密码登录。仅当启用第三方身份验证时，禁用才生效。"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:254
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:276
 msgid "Show previous tab"
 msgstr "显示上一个选项卡"
 
@@ -14680,7 +14703,7 @@ msgid "Sign email (if not possible, send notification anyway)"
 msgstr "签署电子邮件（如果不可能，请无论如何发送通知）"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:76
-#: app/frontend/shared/composables/useArticleSecurity.ts:160
+#: app/frontend/shared/composables/useArticleSecurity.ts:154
 msgid "Sign error"
 msgstr "登录错误"
 
@@ -14735,7 +14758,7 @@ msgid "Signature verification failed!"
 msgstr "签名验证失败！"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:96
-#: app/frontend/shared/composables/useArticleSecurity.ts:114
+#: app/frontend/shared/composables/useArticleSecurity.ts:108
 msgid "Signature verification failed! %s"
 msgstr "签名认证失败！ %s"
 
@@ -14747,7 +14770,7 @@ msgstr "回复签名"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:73
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:171
-#: app/frontend/shared/composables/useArticleSecurity.ts:160
+#: app/frontend/shared/composables/useArticleSecurity.ts:154
 msgid "Signed"
 msgstr "签"
 
@@ -14846,6 +14869,7 @@ msgstr "站点"
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco:21
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:97
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:115
 msgid "Skip"
 msgstr "跳过"
 
@@ -15089,6 +15113,7 @@ msgstr "状态:"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:49
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:8
 #: db/seeds/settings.rb:2916
 msgid "Stay on tab"
 msgstr "保持在列表"
@@ -15155,7 +15180,7 @@ msgstr "街道"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:13
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:33
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:188
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:192
 msgid "Subject"
 msgstr "主题"
 
@@ -15229,7 +15254,7 @@ msgstr "订阅者"
 msgid "Subscription Settings"
 msgstr "订阅设置"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:322
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:321
 #, fuzzy
 #| msgid "Subscription Settings"
 msgid "Subscription settings"
@@ -15481,7 +15506,7 @@ msgstr "正文"
 msgid "Text Modules"
 msgstr "文本模块"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:531
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:553
 msgid "Text editing"
 msgstr "编辑"
 
@@ -16544,7 +16569,7 @@ msgstr "RETRISE附件下载失败。"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:67
-#: app/frontend/shared/composables/useArticleSecurity.ts:89
+#: app/frontend/shared/composables/useArticleSecurity.ts:83
 msgid "The retried security process failed!"
 msgstr "RETRED安全过程失败了！"
 
@@ -16611,7 +16636,7 @@ msgstr "此PGP电子邮件的签名部分缺少或根据RFC 3156的内容类型�
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:280
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:90
-#: app/frontend/shared/composables/useArticleSecurity.ts:108
+#: app/frontend/shared/composables/useArticleSecurity.ts:102
 msgid "The signature was successfully verified."
 msgstr "签名已成功验证。"
 
@@ -16676,7 +16701,7 @@ msgstr "電子郵件回覆中主旨開頭的文本，例如RE，AW或AS"
 msgid "The ticket checklist is incomplete."
 msgstr "輸入您的 ％s 系統的網址 URL"
 
-#: app/services/service/ticket/update/validator/time_accounting.rb:16
+#: app/services/service/ticket/update/validator/time_accounting.rb:19
 msgid "The ticket time accounting condition is met."
 msgstr ""
 
@@ -17863,6 +17888,12 @@ msgstr ""
 "target=\"zammad_app\">#{t('View this in Zammad')}</a>\n"
 "</div>\n"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/TicketScreenBehavior.vue:56
+#, fuzzy
+#| msgid "The test run was successful."
+msgid "Ticket screen behavior updated successfully"
+msgstr "測試運行成功"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:131
 msgid ""
 "Ticket selector contains expert conditions. If you turn off the expert mode, "
@@ -17882,7 +17913,7 @@ msgstr "％s 对象已创建。"
 msgid "Ticket tags updated successfully."
 msgstr "測試運行成功"
 
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:97
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:98
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket title"
@@ -17895,15 +17926,15 @@ msgstr "工單更新"
 msgid "Ticket update"
 msgstr "工單更新"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:320
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:473
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket update failed."
 msgstr "工單更新"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:297
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:163
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:425
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:172
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Ticket updated successfully."
@@ -17984,7 +18015,7 @@ msgstr ""
 "</div>\n"
 
 #: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:38
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:71
 #: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:22
 msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
@@ -18017,7 +18048,7 @@ msgstr "票＃"
 msgid "TicketID"
 msgstr "Ticketid"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:428
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:450
 #: app/assets/javascripts/app/controllers/widget/user.coffee:87
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:94
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:98
@@ -18086,6 +18117,7 @@ msgstr "时间"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:134
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:12
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:3
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:122
 #: db/seeds/permissions.rb:107 db/seeds/settings.rb:3931
 msgid "Time Accounting"
 msgstr "工时"
@@ -18208,10 +18240,10 @@ msgstr "表单标题"
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:84
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:78
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:85
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:36
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:165
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:169
 #: db/seeds/object_manager_attributes.rb:482
 msgid "To"
 msgstr "收件人"
@@ -18330,7 +18362,7 @@ msgstr "切换AM/PM模式"
 msgid "Toggle Group"
 msgstr "父"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:419
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:441
 msgid "Toggle dark mode"
 msgstr "切换暗模式"
 
@@ -18457,7 +18489,7 @@ msgstr "语言"
 msgid "Translation Source"
 msgstr "语言"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:390
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:412
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
 #: db/seeds/permissions.rb:257
@@ -18797,7 +18829,7 @@ msgstr "除非您已经拥有，否则请在您的移动设备上安装以下身
 msgid "Unlock"
 msgstr "开锁"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:224
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:238
 msgid "Unpin this panel"
 msgstr ""
 
@@ -18868,7 +18900,7 @@ msgstr "该语言的百分比最多已被翻译。请帮助使Zammad变得更好
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:57
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:13
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:85
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:87
 msgid "Update"
 msgstr "更新"
 
@@ -18901,7 +18933,7 @@ msgstr "应用共享草稿"
 msgid "Update Time"
 msgstr "更新时间"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:488
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:510
 msgid "Update as closed"
 msgstr "提交更改并关闭"
 
@@ -19212,31 +19244,31 @@ msgstr "使用上一篇客户文章的时间。"
 msgid "Use this switch to start synchronization of your ldap sources."
 msgstr "使用此开关开始同步您的LDAP源。"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:119
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:139
 msgid "Used anywhere"
 msgstr "适用在任何地方"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:394
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:416
 msgid "Used anywhere (admin only)"
 msgstr "适用在任何地方 (限管理员)"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:309
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:331
 msgid "Used in lists (views and results)"
 msgstr "適用在搜尋清單 (視圖與結果)"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:326
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:348
 msgid "Used in object views"
 msgstr "適用在物件選項視角"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:505
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:527
 msgid "Used when composing a Ticket article"
 msgstr "撰写票文时使用"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:535
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:557
 msgid "Used when composing a text"
 msgstr "适用在编辑文字时"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:432
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:454
 msgid "Used when viewing a Ticket"
 msgstr "适用在查看工单时"
 
@@ -19333,7 +19365,7 @@ msgid ""
 "permissions."
 msgstr "无法检索用户信息，请检查您的绑定用户权限。"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:179
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:199
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue:44
 #, fuzzy
 #| msgid "Username"
@@ -19585,7 +19617,7 @@ msgstr "新的工单"
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:143
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:147
 #: db/seeds/object_manager_attributes.rb:449
 msgid "Visibility"
 msgstr "隱私內部與公開"
@@ -19999,7 +20031,7 @@ msgid "Yes, add attachments now"
 msgstr "允许上传附件。"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:253
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:330
 #, fuzzy
 #| msgid "Remove %s"
 msgid "Yes, open the checklist"
@@ -20167,6 +20199,12 @@ msgstr "您关闭了一个工单"
 msgid "You can no longer see the user."
 msgstr "您无法再看到用户。"
 
+#: app/assets/javascripts/app/controllers/clues/keyboard_shortcuts_clues.coffee:6
+msgid ""
+"You can open the Keyboard Shortcuts dialog here and view the new and "
+"improved layout, or revert to the old one if you prefer it."
+msgstr ""
+
 #: app/assets/javascripts/app/models/knowledge_base.coffee:282
 msgid ""
 "You can provide different versions of your knowledge base for different "
@@ -20253,7 +20291,7 @@ msgid "You have insufficient rights to view this organization."
 msgstr "您没有足够的权利来查看该组织。"
 
 #: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:40
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:73
 #: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:24
 msgid "You have insufficient rights to view this ticket."
 msgstr "您没有足够的权利来查看这张票。"
@@ -20295,7 +20333,7 @@ msgstr "您必须允许访问网络摄像头。"
 msgid "You have unchecked items in the checklist."
 msgstr "请选择至少一张门票概述"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:248
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:325
 #, fuzzy
 #| msgid "Do you really want to delete this object?"
 msgid ""
@@ -20970,7 +21008,7 @@ msgid "delete"
 msgstr "刪除"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:156
-#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:20
+#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 #, fuzzy
 #| msgid "Delete Customer"
 msgid "delivered to the customer"
@@ -21225,6 +21263,7 @@ msgid "hour"
 msgstr "小时"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:9
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:42
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:26
 #, fuzzy
 #| msgid "Hour(s)"
@@ -21574,6 +21613,7 @@ msgid "minute"
 msgstr "分钟"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:17
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:46
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:30
 #, fuzzy
 #| msgid "Minute(s)"
@@ -21798,6 +21838,7 @@ msgid "published"
 msgstr "發布"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:13
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:44
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:28
 msgid "quarter-hour(s)"
 msgstr "四分之一小时"
@@ -21807,7 +21848,7 @@ msgid "reached"
 msgstr "已達"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:153
-#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:13
+#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "read by the customer"
@@ -21908,7 +21949,7 @@ msgid "select visible options"
 msgstr "选择"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:159
-#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:24
+#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "sent to the customer"
@@ -22251,19 +22292,19 @@ msgstr ""
 msgid "|Right| means |Some Subject [Ticket#12345]|"
 msgstr "|右邊|表示|某些主旨[Ticket＃12345] |"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:383
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:405
 #, fuzzy
 #| msgid "...add object link URL"
 msgid "…add object link URL"
 msgstr "...添加对象链接 URL"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:376
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:398
 #, fuzzy
 #| msgid "...add object title"
 msgid "…add object title"
 msgstr "...添加对象标题"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:583
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:605
 #, fuzzy
 #| msgid "...of whole textarea"
 msgid "…of whole text area"

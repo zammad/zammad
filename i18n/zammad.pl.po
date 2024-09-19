@@ -1096,6 +1096,7 @@ msgid "Account SID"
 msgstr "SID konta"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:6
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:113
 msgid "Account Time"
 msgstr "Zliczaj czas"
 
@@ -1114,6 +1115,7 @@ msgstr "Konto niezweryfikowane"
 #: app/assets/javascripts/app/models/ticket.coffee:16
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:2
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:2
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:68
 #: app/graphql/gql/types/overview_type.rb:69
 msgid "Accounted Time"
 msgstr "Czas wykonywania zadania"
@@ -1251,6 +1253,7 @@ msgstr "Ostatnie akcje"
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:16
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:4
 #: app/controllers/time_accountings_controller.rb:117
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:95
 msgid "Activity Type"
 msgstr "Rodzaj aktywności"
 
@@ -1384,7 +1387,7 @@ msgstr "Dodaj wiadomość"
 msgid "Add agreement text before submit."
 msgstr "Dodaj tekst umowy przed zatwierdzeniem."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:316
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:315
 msgid "Add alarm to pending reminder and escalated tickets"
 msgstr "Dodaj alarm do oczekujących na przypomnienie i eskalowanych zgłoszeń."
 
@@ -1473,7 +1476,7 @@ msgstr "Dodaj listę uporządkowaną"
 msgid "Add phone call"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:59
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:63
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:37
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:88
 msgid "Add reply"
@@ -1984,7 +1987,7 @@ msgstr "Uwierzytelnienie aplikacji dla Twittera."
 msgid "App secret"
 msgstr "Sekret aplikacji"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:409
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:431
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee:3
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:3
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
@@ -2021,7 +2024,7 @@ msgstr "Zastosuj szkic"
 msgid "Apply Shared Draft"
 msgstr "Zastosuj udostępniony szkic"
 
-#: app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue:81
+#: app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue:40
 #, fuzzy
 #| msgid "Template"
 msgid "Apply Template"
@@ -2148,7 +2151,7 @@ msgstr "Jesteś pewny? Masz zmiany, które zostaną utracone."
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:45
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:417
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:251
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:260
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:51
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "Jesteś pewny? Masz niezapisane zmiany, które zostaną utracone."
@@ -2197,7 +2200,7 @@ msgid "Article meta information"
 msgstr "Informacje o zgłoszeniach"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:77
-#: app/frontend/shared/composables/useArticleSecurity.ts:99
+#: app/frontend/shared/composables/useArticleSecurity.ts:93
 msgid "Article uses different security mechanism."
 msgstr "Artykuł wykorzystuje różne mechanizmy bezpieczeństwa."
 
@@ -2304,7 +2307,7 @@ msgstr "Załączone pliki"
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:220
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
 msgstr "Załącznik"
 
@@ -2538,11 +2541,11 @@ msgstr ""
 "Automatycznie ładuj plik chat.css. Jeżeli chcesz używać własnego css-a ustaw "
 "na false."
 
-#: app/frontend/shared/components/Form/Form.vue:1237
+#: app/frontend/shared/components/Form/Form.vue:1238
 msgid "Autosave in progress…"
 msgstr "Trwa automatyczne zapisywanie…"
 
-#: app/frontend/shared/components/Form/Form.vue:1246
+#: app/frontend/shared/components/Form/Form.vue:1247
 msgid "Autosaving is taking longer than expected…"
 msgstr "Automatyczne zapisywanie trwa dłużej niż oczekiwano…"
 
@@ -2845,12 +2848,12 @@ msgstr "CA"
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:89
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:167
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:86
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:37
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:177
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:181
 #: db/seeds/object_manager_attributes.rb:508
 msgid "CC"
 msgstr "DW"
@@ -3188,9 +3191,9 @@ msgstr "Dokonano zmian, które wymagają aktualizacji bazy danych."
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:106
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:100
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:133
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:134
 msgid "Channel"
 msgstr "Kanał"
 
@@ -3549,7 +3552,7 @@ msgstr "Zamknij w min"
 msgid "Close chat sessions where participants are offline."
 msgstr "Zamknij sesje czatu, w których uczestnicy są offline."
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:218
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:238
 msgid "Close current tab"
 msgstr "Zamknij bieżącą zakładkę"
 
@@ -3567,12 +3570,14 @@ msgstr "Zamknij zakładkę"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:32
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:12
 #: db/seeds/settings.rb:2913
 msgid "Close tab"
 msgstr "Zamknij zakładkę"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:37
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:16
 #: db/seeds/settings.rb:2914
 msgid "Close tab on ticket close"
 msgstr "Zamknij zakładkę przy zamykaniu zgłoszenia"
@@ -3776,7 +3781,7 @@ msgstr ""
 "<br>\n"
 "<div>Zespół #{config.product_name}</div>\n"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:278
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:300
 msgid "Confirm/submit dialog"
 msgstr "Okno dialogowe Potwierdź/wyślij"
 
@@ -3884,7 +3889,7 @@ msgstr "Nie udało się wczytać treści."
 msgid "Content preview could not be generated."
 msgstr "Nie udało się wygenerować podglądu treści."
 
-#: app/frontend/apps/desktop/components/layout/LayoutContent.vue:131
+#: app/frontend/apps/desktop/components/layout/LayoutContent.vue:136
 #, fuzzy
 #| msgid "Content"
 msgid "Content sidebar"
@@ -4003,11 +4008,11 @@ msgstr "Kopiuj"
 msgid "Copy article permalink"
 msgstr "Rodzaj artykułu"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:332
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:354
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Skopiuj aktualny numer obiektu (np. Zgłoszenie#) do schowka"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader.vue:63
 #, fuzzy
 #| msgid "Ticket Customer"
 msgid "Copy ticket number"
@@ -4128,8 +4133,8 @@ msgstr "Liczenie wpisów. To może chwilę potrwać."
 msgid "Country"
 msgstr "Kraj"
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:19
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:81
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:19
 #: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:14
 #: app/assets/javascripts/app/models/group.coffee:45
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:56
@@ -4349,7 +4354,7 @@ msgstr "Utwórz:"
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:14
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:108
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:107
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -4387,7 +4392,7 @@ msgstr "Utworzono artykuł wewnętrzny"
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
 #: app/controllers/time_accountings_controller.rb:122
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:105
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:56
 #: app/graphql/gql/types/overview_type.rb:80
 msgid "Created at"
 msgstr "Utworzono"
@@ -4575,8 +4580,8 @@ msgstr "Ciemny"
 msgid "Dark Mode"
 msgstr "Tryb ciemny"
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:5
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:125
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:145
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:5
 #: app/assets/javascripts/app/controllers/dashboard.coffee:28
 #: app/assets/javascripts/app/controllers/package.coffee:42
 #: app/frontend/apps/desktop/pages/dashboard/routes.ts:8
@@ -4679,13 +4684,13 @@ msgid "Decryption failed!"
 msgstr "Odszyfrowanie nie powiodło się!"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:113
-#: app/frontend/shared/composables/useArticleSecurity.ts:130
+#: app/frontend/shared/composables/useArticleSecurity.ts:124
 msgid "Decryption failed! %s"
 msgstr "Odszyfrowanie nie powiodło się! %s"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:291
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:107
-#: app/frontend/shared/composables/useArticleSecurity.ts:124
+#: app/frontend/shared/composables/useArticleSecurity.ts:118
 msgid "Decryption was successful."
 msgstr "Odszyfrowanie powiodło się."
 
@@ -6064,7 +6069,7 @@ msgstr "Grupa wiadomości bezpośrednich"
 msgid "Direct URL"
 msgstr "Bezpośredni URL"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:333
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:332
 #, fuzzy
 #| msgid "Ticket Subscriptions"
 msgid "Direct subscription URL"
@@ -6134,12 +6139,12 @@ msgstr "Odrzuć artykuł"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:47
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:419
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:253
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:262
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:53
 msgid "Discard changes"
 msgstr "Odrzuć zmiany"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:76
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:75
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:162
 msgid "Discard your unsaved changes"
@@ -6317,7 +6322,7 @@ msgstr "Szkic"
 msgid "Draft available"
 msgstr "Dostępny szkic"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:38
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:38
 #, fuzzy
 #| msgid "Draft"
 msgid "Drafts"
@@ -6485,7 +6490,7 @@ msgstr "Edytuj odpowiedź"
 msgid "Edit security keys"
 msgstr "Klucze Bezpieczeństwa"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:89
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:88
 #, fuzzy
 #| msgid "Ticket title"
 msgid "Edit ticket title"
@@ -6497,6 +6502,12 @@ msgstr "Edytowanie"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:38
 msgid "Editing on Desktop"
+msgstr "Edytowanie na pulpicie"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketLiveUsers.vue:57
+#, fuzzy
+#| msgid "Editing on Desktop"
+msgid "Editing on Mobile"
 msgstr "Edytowanie na pulpicie"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
@@ -6831,7 +6842,7 @@ msgstr "Włącz automatyczne przypisywanie zgłoszeń."
 msgid "Enable time accounting."
 msgstr "Włącz rozliczanie czasu dla tych zgłoszeń."
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:401
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:423
 msgid "Enable/disable inline translations"
 msgstr "Włączanie/wyłączanie tłumaczeń inline"
 
@@ -6973,7 +6984,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:62
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:165
-#: app/frontend/shared/composables/useArticleSecurity.ts:163
+#: app/frontend/shared/composables/useArticleSecurity.ts:157
 msgid "Encrypted"
 msgstr "Zaszyfrowane"
 
@@ -6983,7 +6994,7 @@ msgid "Encryption"
 msgstr "Szyfrowanie"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:65
-#: app/frontend/shared/composables/useArticleSecurity.ts:163
+#: app/frontend/shared/composables/useArticleSecurity.ts:157
 msgid "Encryption error"
 msgstr "Błąd szyfrowania"
 
@@ -7115,6 +7126,7 @@ msgstr ""
 "Wprowadź kod bezpieczeństwa wygenerowany przez aplikację uwierzytelniającą:"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:37
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:71
 msgid "Enter the time you want to record"
 msgstr "Podaj czas, który chcesz zapisać"
 
@@ -7692,7 +7704,7 @@ msgid "Fingerprint"
 msgstr "Odcisk palca"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:251
-#: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco:15
+#: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco:17
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue:79
 msgid "Finish"
@@ -7854,11 +7866,11 @@ msgstr "Nie można znaleźć FormSchema."
 msgid "Format"
 msgstr "Format"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:558
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:580
 msgid "Format as //strikethrough//"
 msgstr "Formatuj jako //strikethrough//"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:540
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:562
 msgid "Format as _underlined_"
 msgstr "Formatuj jako _underlined_"
 
@@ -7866,15 +7878,15 @@ msgstr "Formatuj jako _underlined_"
 msgid "Format as bold"
 msgstr "Formatuj jako pogrubione"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:607
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:629
 msgid "Format as h1 heading"
 msgstr "Formatuj jako nagłówek h1"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:613
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:635
 msgid "Format as h2 heading"
 msgstr "Formatuj jako nagłówek h2"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:619
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:641
 msgid "Format as h3 heading"
 msgstr "Formatuj jako nagłówek h3"
 
@@ -7882,7 +7894,7 @@ msgstr "Formatuj jako nagłówek h3"
 msgid "Format as italic"
 msgstr "Formatuj jako kursywa"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:601
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:623
 msgid "Format as ordered list"
 msgstr "Formatuj jako lista uporządkowana"
 
@@ -7894,15 +7906,15 @@ msgstr "Formatuj jako przekreślenie"
 msgid "Format as underlined"
 msgstr "Formatuj jako podkreślone"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:595
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:617
 msgid "Format as unordered list"
 msgstr "Formatuj jako lista nieuporządkowana"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:546
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:568
 msgid "Format as |bold|"
 msgstr "Formatuj jako |bold|"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:552
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:574
 msgid "Format as ||italic||"
 msgstr "Formatuj jako ||italic||"
 
@@ -7937,7 +7949,7 @@ msgstr "Piątek"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:11
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:73
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:67
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:80
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:35
 msgid "From"
@@ -8206,6 +8218,10 @@ msgstr "Identyfikator klienta Google"
 msgid "Google Client Secret"
 msgstr "Sekret klienta Google"
 
+#: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
+msgid "Got it!"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:16
 msgid "Green"
 msgstr "Zielony"
@@ -8469,7 +8485,7 @@ msgstr ""
 "Tutaj możesz dodać dalsze linki do swojej publicznej strony FAQ, które będą "
 "wyświetlane w nagłówku lub stopce."
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:20
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:20
 msgid ""
 "Here you can create new tickets, customers and organizations (depending on "
 "your configured permissions)."
@@ -8494,7 +8510,7 @@ msgstr ""
 "tłumaczenie, aby zidentyfikować ciąg źródłowy i zapewnić jego nowe "
 "tłumaczenie dla języka docelowego."
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:14
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:14
 msgid ""
 "Here you can search for tickets, customers, and organizations. Use the "
 "asterisk §*§ to find anything, e.g. §smi*§ or §rosent*l§. You also can use ||"
@@ -8512,7 +8528,7 @@ msgstr ""
 "Tutaj możesz skonfigurować i zarządzać metodami uwierzytelniania "
 "dwuskładnikowego dla swojego konta Zammad."
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:29
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:29
 msgid ""
 "Here you can sign out, change the frontend language, and see your last "
 "viewed items."
@@ -8524,14 +8540,14 @@ msgstr ""
 msgid "Here you define which authorization has access to the attribute."
 msgstr "Tutaj zdefiniuj, która autoryzacja ma dostęp do atrybutu."
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:39
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:39
 msgid ""
 "Here you find your ticket overviews for open, assigned, and escalated "
 "tickets."
 msgstr ""
 "Tutaj znajdziesz przegląd zgłoszeń otwartych, przypisanych i eskalowanych."
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:6
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:6
 msgid "Here you see a quick overview of your and other agents' performance."
 msgstr "Tu zobaczysz szybki przegląd postępu swoich i innych osób zadań."
 
@@ -9126,7 +9142,7 @@ msgid "Including private key."
 msgstr "W tym klucz prywatny."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:251
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:328
 #, fuzzy
 #| msgid "Incomplete credentials"
 msgid "Incomplete Ticket Checklist"
@@ -9268,19 +9284,19 @@ msgstr ""
 "Wklej kod widżetu na każdą stronę, gdzie czat powinien być widoczny. "
 "Powinien być umieszczony na końcu strony przed tagiem  §</body>§."
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:589
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:611
 msgid "Inserts a horizontal rule"
 msgstr "Dodaj linię poziomą"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:522
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:544
 msgid "Inserts a mention for a user"
 msgstr "Wstawia wzmiankę o użytkowniku"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:516
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:538
 msgid "Inserts knowledge base answer"
 msgstr "Wstawia odpowiedź z bazy wiedzy"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:510
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:532
 msgid "Inserts text module"
 msgstr "Wstawia moduł tekstowy"
 
@@ -9312,7 +9328,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:133
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:151
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:155
 msgid "Internal"
 msgstr "Wewnętrzny"
 
@@ -9976,7 +9992,7 @@ msgstr "Lista wszystkich zakładek paska zadań użytkownika"
 msgid "List of installed addons"
 msgstr "Lista zainstalowanych dodatków"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:190
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:210
 msgid "List of shortcuts"
 msgstr "Lista skrótów"
 
@@ -10095,7 +10111,7 @@ msgstr ""
 msgid "Logo"
 msgstr "Logo"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:207
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:227
 msgid "Logout"
 msgstr "Wyloguj"
 
@@ -10125,7 +10141,7 @@ msgstr "Ograniczenia grup makr nie obejmują wszystkich zgłoszeń"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:3
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:69
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:39
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:39
 #: db/seeds/permissions.rb:47
 msgid "Macros"
 msgstr "Makra"
@@ -10992,7 +11008,7 @@ msgstr "Przenieś wszystkie z \"%s\" do \"%s\":"
 msgid "Move down"
 msgstr "Przesuń w dół"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:317
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:339
 msgid "Move left and right"
 msgstr "Przenieś w lewo i w prawo"
 
@@ -11000,7 +11016,7 @@ msgstr "Przenieś w lewo i w prawo"
 msgid "Move up"
 msgstr "Przenieś w górę"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:313
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:335
 msgid "Move up and down"
 msgstr "Przesuń w górę i w dół"
 
@@ -11154,7 +11170,7 @@ msgstr "Nazwa dla tego klucza bezpieczeństwa"
 msgid "Name of form submit button"
 msgstr "Nazwa przycisku wysyłania formularza"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:500
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:522
 msgid "Navigate through article"
 msgstr "Nawiguj przez artykuł"
 
@@ -11162,7 +11178,7 @@ msgstr "Nawiguj przez artykuł"
 msgid "Navigate to %s"
 msgstr "Przejdź do %s"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:115
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:135
 #: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:29
 msgid "Navigation"
 msgstr "Nawigacja"
@@ -11278,6 +11294,12 @@ msgstr "Nowe zadanie usuwania"
 msgid "New Group"
 msgstr "Nowa grupa"
 
+#: app/assets/javascripts/app/controllers/clues/keyboard_shortcuts_clues.coffee:5
+#, fuzzy
+#| msgid "Keyboard Shortcuts"
+msgid "New Keyboard Shortcuts"
+msgstr "Skróty klawiszowe"
+
 #: app/assets/javascripts/app/controllers/macro.coffee:22
 msgid "New Macro"
 msgstr "Nowe makro"
@@ -11334,7 +11356,7 @@ msgstr "Nowe tagi"
 msgid "New Template"
 msgstr "Nowy Szablon"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:168
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:188
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:7
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:484
@@ -11479,7 +11501,7 @@ msgstr "Nowy użytkownik?"
 #: app/assets/javascripts/app/controllers/webhook.coffee:124
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:106
-#: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco:17
+#: app/assets/javascripts/app/views/clues/clues_content.jst.eco:19
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:31
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:17
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:57
@@ -11494,6 +11516,7 @@ msgstr "Następny Stan"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:43
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco:12
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:21
 #: db/seeds/settings.rb:2915
 msgid "Next in overview"
 msgstr "Następny w widoku"
@@ -11789,7 +11812,7 @@ msgstr ""
 "Brak identyfikatora użytkownika x-zammad-session, brak ustawionego nadawcy!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:254
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:331
 #, fuzzy
 #| msgid "You can no longer see the ticket."
 msgid "No, just close the ticket"
@@ -11852,7 +11875,7 @@ msgstr "nie przypisany"
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:115
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:25
 #: app/controllers/application_controller/handles_errors.rb:60
-#: app/services/service/ticket/article/create.rb:119
+#: app/services/service/ticket/article/create.rb:121
 msgid "Not authorized"
 msgstr "Nieautoryzowany"
 
@@ -12002,7 +12025,7 @@ msgid "Notification sound"
 msgstr "Dźwięk powiadomienia"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:12
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:157
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:177
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:5
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:2
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:1
@@ -12268,11 +12291,11 @@ msgstr "Otwórz w nowej karcie"
 msgid "Open link"
 msgstr "Otwarte zgłoszenia"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:478
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:500
 msgid "Open macro selection"
 msgstr "Otwórz wybór makr"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:438
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:460
 msgid "Open note box"
 msgstr "otwórz okno notatki"
 
@@ -12592,9 +12615,9 @@ msgstr "Przegląd"
 msgid "Overview bulk mask"
 msgstr "Przegląd maski zbiorczej"
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:38
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:136
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:156
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:38
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
@@ -12791,11 +12814,11 @@ msgstr "Wklej certyfikat"
 msgid "Paste Private Key"
 msgstr "Wklej klucz prywatny"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:564
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:586
 msgid "Paste from clipboard"
 msgstr "Wklej ze schowka"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:571
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:593
 msgid "Paste from clipboard (plain text)"
 msgstr "Wklej ze schowka (zwykły tekst)"
 
@@ -12859,7 +12882,7 @@ msgstr "uprawnienia"
 msgid "Personal Access Tokens"
 msgstr "Osobisty token dostępu"
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:28
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:28
 msgid "Personal Settings"
 msgstr "Ustawienia osobiste"
 
@@ -12906,7 +12929,7 @@ msgstr "Numer telefonu jest już używany przez inne konto WhatsApp."
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "Wybierz nazwę dla aplikacji, my przygotujemy Ci unikalny token."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:224
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:238
 msgid "Pin this panel"
 msgstr ""
 
@@ -13227,7 +13250,7 @@ msgstr "Przejrzyj zgłoszenia klienta"
 msgid "Preview owner tickets"
 msgstr "Przejrzyj zgłoszenia właściciela"
 
-#: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco:10
+#: app/assets/javascripts/app/views/clues/clues_content.jst.eco:11
 #: app/frontend/shared/form/i18n/locales.ts:70
 msgid "Previous"
 msgstr "Poprzednie"
@@ -13361,7 +13384,7 @@ msgid "Proxy address"
 msgstr "Adres proxy"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:156
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:160
 msgid "Public"
 msgstr "Publiczny"
 
@@ -13700,11 +13723,11 @@ msgstr "Usuń wybrane wartości"
 msgid "Remove two-factor authentication"
 msgstr "Usuń uwierzytelnianie dwuskładnikowe"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:625
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:647
 msgid "Removes any hyperlink"
 msgstr "Usuń wszystkie hyperlinki"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:577
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:599
 msgid "Removes the formatting"
 msgstr "Usuń całe formatowanie"
 
@@ -13751,7 +13774,7 @@ msgstr "Zastępstwo"
 msgid "Replacement agent"
 msgstr "Zastępstwo"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:221
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:235
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
@@ -13769,7 +13792,7 @@ msgstr "Odpowiedz wszystkim"
 msgid "Reply allowed only for open tickets"
 msgstr "Odpowiedź jest dozwolona tylko dla otwartych zgłoszeń"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:453
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:475
 msgid "Reply to last article"
 msgstr "Odpowiedź na ostatni wpis"
 
@@ -13992,7 +14015,7 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:188
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:201
 #, fuzzy
 #| msgid "resize sidebar"
 msgid "Resize article panel"
@@ -14346,7 +14369,7 @@ msgstr "Zapisz i kontynuuj"
 msgid "Save as"
 msgstr "Zapisz jako"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:55
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:55
 #, fuzzy
 #| msgid "Save Draft"
 msgid "Save as draft"
@@ -14415,8 +14438,8 @@ msgstr "Przewiń w dół, aby zobaczyć %s nowych odpowiedzi"
 msgid "Scroll down to see new messages"
 msgstr "Skroluj w dół, aby zobaczyć wiadomości"
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:13
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:147
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:167
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:13
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:201
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
@@ -14577,7 +14600,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:177
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:199
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:203
 #: db/seeds/permissions.rb:197
 msgid "Security"
 msgstr "Bezpieczeństwo"
@@ -14699,7 +14722,7 @@ msgstr "Wybierz szablon"
 msgid "Select default ticket type"
 msgstr "Wybierz domyślny typ zgłoszenia"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:321
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:343
 msgid "Select item"
 msgstr "Wybierz pozycję"
 
@@ -14934,7 +14957,7 @@ msgstr "Utwórz tytuł swojego zgłoszenia"
 msgid "Set agent limit"
 msgstr "Ustaw limit agentów"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:468
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:490
 msgid "Set article to internal/public"
 msgstr "Ustaw widoczność artykułu na wewnętrzny lub publiczny"
 
@@ -15205,7 +15228,7 @@ msgstr "Pokaż pasujące zgłoszenia w ostrzeżeniu"
 msgid "Show meta data"
 msgstr "Pokaż wyniki wyszukiwania"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:229
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:250
 msgid "Show next tab"
 msgstr "Pokaż następną kartę"
 
@@ -15218,7 +15241,7 @@ msgstr ""
 "działa tylko wtedy, gdy włączone jest uwierzytelnianie za pomocą innego "
 "dostawcy tożsamości."
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:254
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:276
 msgid "Show previous tab"
 msgstr "Pokaż poprzednią zakładkę"
 
@@ -15293,7 +15316,7 @@ msgstr ""
 "Podpisz e-mail (jeśli nie jest to możliwe, wyślij powiadomienie mimo to)"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:76
-#: app/frontend/shared/composables/useArticleSecurity.ts:160
+#: app/frontend/shared/composables/useArticleSecurity.ts:154
 msgid "Sign error"
 msgstr "Błąd Podpisu"
 
@@ -15348,7 +15371,7 @@ msgid "Signature verification failed!"
 msgstr "Weryfikacja podpisu nieudana!"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:96
-#: app/frontend/shared/composables/useArticleSecurity.ts:114
+#: app/frontend/shared/composables/useArticleSecurity.ts:108
 msgid "Signature verification failed! %s"
 msgstr "Weryfikacja podpisu nieudana! %s"
 
@@ -15360,7 +15383,7 @@ msgstr "Podpisy"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:73
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:171
-#: app/frontend/shared/composables/useArticleSecurity.ts:160
+#: app/frontend/shared/composables/useArticleSecurity.ts:154
 msgid "Signed"
 msgstr "Zweryfikowano"
 
@@ -15469,6 +15492,7 @@ msgstr "Strona"
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco:21
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:97
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:115
 msgid "Skip"
 msgstr "Pomiń"
 
@@ -15715,6 +15739,7 @@ msgstr "Status:"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:49
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:8
 #: db/seeds/settings.rb:2916
 msgid "Stay on tab"
 msgstr "Zostań na zakładce"
@@ -15781,7 +15806,7 @@ msgstr "Ulica"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:13
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:33
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:188
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:192
 msgid "Subject"
 msgstr "Temat"
 
@@ -15855,7 +15880,7 @@ msgstr "Obserwujący"
 msgid "Subscription Settings"
 msgstr "Ustawienia subskrypcji"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:322
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:321
 #, fuzzy
 #| msgid "Subscription Settings"
 msgid "Subscription settings"
@@ -16112,7 +16137,7 @@ msgstr "Treść"
 msgid "Text Modules"
 msgstr "Moduły tekstowe"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:531
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:553
 msgid "Text editing"
 msgstr "Edycja tekstu"
 
@@ -17235,7 +17260,7 @@ msgstr "Ponowna próba pobrania załącznika nie powiodła się."
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:67
-#: app/frontend/shared/composables/useArticleSecurity.ts:89
+#: app/frontend/shared/composables/useArticleSecurity.ts:83
 msgid "The retried security process failed!"
 msgstr "Ponowny proces zabezpieczeń nie powiódł się!"
 
@@ -17306,7 +17331,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:280
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:90
-#: app/frontend/shared/composables/useArticleSecurity.ts:108
+#: app/frontend/shared/composables/useArticleSecurity.ts:102
 msgid "The signature was successfully verified."
 msgstr "Podpis został pomyślnie zweryfikowany."
 
@@ -17380,7 +17405,7 @@ msgstr ""
 msgid "The ticket checklist is incomplete."
 msgstr "Wprowadź URL Twojego systemu %s."
 
-#: app/services/service/ticket/update/validator/time_accounting.rb:16
+#: app/services/service/ticket/update/validator/time_accounting.rb:19
 msgid "The ticket time accounting condition is met."
 msgstr ""
 
@@ -18410,6 +18435,12 @@ msgstr ""
 "target=\"zammad_app\"> Zobacz w #{config.product_name}</a>\n"
 "</div>\n"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/TicketScreenBehavior.vue:56
+#, fuzzy
+#| msgid "Ticket customer updated successfully."
+msgid "Ticket screen behavior updated successfully"
+msgstr "Klient zgłoszenia został pomyślnie zaktualizowany."
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:131
 msgid ""
 "Ticket selector contains expert conditions. If you turn off the expert mode, "
@@ -18426,7 +18457,7 @@ msgstr "Nie można zaktualizować tagów zgłoszeń."
 msgid "Ticket tags updated successfully."
 msgstr "Znaczniki zgłoszeń zostały pomyślnie zaktualizowane."
 
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:97
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:98
 msgid "Ticket title"
 msgstr "Tytuł zgłoszenia"
 
@@ -18437,15 +18468,15 @@ msgstr "Tytuł zgłoszenia"
 msgid "Ticket update"
 msgstr "Aktualizacja zgłoszenia"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:320
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:473
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket update failed."
 msgstr "Aktualizacja zgłoszenia"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:297
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:163
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:425
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:172
 msgid "Ticket updated successfully."
 msgstr "Zgłoszenie zostało pomyślnie zaktualizowane."
 
@@ -18500,7 +18531,7 @@ msgstr ""
 "</div>\n"
 
 #: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:38
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:71
 #: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:22
 msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
@@ -18533,7 +18564,7 @@ msgstr "Zgłoszenie#"
 msgid "TicketID"
 msgstr "Identyfikator zgłoszenia"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:428
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:450
 #: app/assets/javascripts/app/controllers/widget/user.coffee:87
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:94
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:98
@@ -18604,6 +18635,7 @@ msgstr "Czas"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:134
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:12
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:3
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:122
 #: db/seeds/permissions.rb:107 db/seeds/settings.rb:3931
 msgid "Time Accounting"
 msgstr "Zliczanie czasu"
@@ -18712,10 +18744,10 @@ msgstr "Tytuł formularza"
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:84
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:78
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:85
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:36
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:165
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:169
 #: db/seeds/object_manager_attributes.rb:482
 msgid "To"
 msgstr "Do"
@@ -18837,7 +18869,7 @@ msgstr "Przełącz tryb ciemny"
 msgid "Toggle Group"
 msgstr "Grupa rodziców"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:419
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:441
 msgid "Toggle dark mode"
 msgstr "Przełącz tryb ciemny"
 
@@ -18956,7 +18988,7 @@ msgstr "Tłumaczenie"
 msgid "Translation Source"
 msgstr "Źródło Tłumaczenia"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:390
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:412
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
 #: db/seeds/permissions.rb:257
@@ -19281,7 +19313,7 @@ msgstr ""
 msgid "Unlock"
 msgstr "Odblokuj"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:224
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:238
 msgid "Unpin this panel"
 msgstr ""
 
@@ -19346,7 +19378,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:57
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:13
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:85
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:87
 msgid "Update"
 msgstr "Aktualizacja"
 
@@ -19379,7 +19411,7 @@ msgstr "Zastosuj udostępniony szkic"
 msgid "Update Time"
 msgstr "Czas aktualizacji"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:488
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:510
 msgid "Update as closed"
 msgstr "Zaktualizuj jako zamknięty"
 
@@ -19656,31 +19688,31 @@ msgstr "Wykorzystaj czas ostatniego artykułu klienta."
 msgid "Use this switch to start synchronization of your ldap sources."
 msgstr "Użyj tego przełącznika, aby rozpocząć synchronizację źródeł LDAP."
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:119
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:139
 msgid "Used anywhere"
 msgstr "Używany wszędzie"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:394
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:416
 msgid "Used anywhere (admin only)"
 msgstr "Używane wszędzie (tylko dla administratora)"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:309
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:331
 msgid "Used in lists (views and results)"
 msgstr "Używany w listach (widoki i wyniki)"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:326
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:348
 msgid "Used in object views"
 msgstr "Używany w widokach obiektów"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:505
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:527
 msgid "Used when composing a Ticket article"
 msgstr "Używane podczas tworzenia artykułu w zgłoszeniu"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:535
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:557
 msgid "Used when composing a text"
 msgstr "Używane podczas komponowania tekstu"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:432
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:454
 msgid "Used when viewing a Ticket"
 msgstr "Używane podczas przeglądania zgłoszenia"
 
@@ -19769,7 +19801,7 @@ msgstr ""
 "Nie można pobrać informacji o użytkowniku, sprawdź uprawnienia użytkownika "
 "powiązania."
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:179
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:199
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue:44
 msgid "User menu"
 msgstr "Menu użytkownika"
@@ -20001,7 +20033,7 @@ msgstr "Przeglądający zgłoszenie"
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:143
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:147
 #: db/seeds/object_manager_attributes.rb:449
 msgid "Visibility"
 msgstr "Widoczność"
@@ -20406,7 +20438,7 @@ msgid "Yes, add attachments now"
 msgstr "Ponów próbę pobrania załącznika"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:253
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:330
 #, fuzzy
 #| msgid "Remove %s"
 msgid "Yes, open the checklist"
@@ -20575,6 +20607,12 @@ msgstr "Nie można już zobaczyć tego zgłoszenia."
 msgid "You can no longer see the user."
 msgstr "Nie można już zobaczyć tego użytkownika."
 
+#: app/assets/javascripts/app/controllers/clues/keyboard_shortcuts_clues.coffee:6
+msgid ""
+"You can open the Keyboard Shortcuts dialog here and view the new and "
+"improved layout, or revert to the old one if you prefer it."
+msgstr ""
+
 #: app/assets/javascripts/app/models/knowledge_base.coffee:282
 msgid ""
 "You can provide different versions of your knowledge base for different "
@@ -20657,7 +20695,7 @@ msgid "You have insufficient rights to view this organization."
 msgstr "Nie masz wystarczających uprawnień, aby wyświetlić tę organizację."
 
 #: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:40
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:73
 #: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:24
 msgid "You have insufficient rights to view this ticket."
 msgstr "Nie masz wystarczających uprawnień, aby wyświetlić te zgłoszenie."
@@ -20701,7 +20739,7 @@ msgstr "Musisz zezwolić na dostęp do swojej kamery internetowej."
 msgid "You have unchecked items in the checklist."
 msgstr "Wybierz co najmniej jeden widok zgłoszeń"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:248
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:325
 #, fuzzy
 #| msgid "Do you really want to delete this object?"
 msgid ""
@@ -21343,7 +21381,7 @@ msgid "delete"
 msgstr "usuń"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:156
-#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:20
+#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 msgid "delivered to the customer"
 msgstr "dostarczone do klienta"
 
@@ -21578,6 +21616,7 @@ msgid "hour"
 msgstr "godzina"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:9
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:42
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:26
 msgid "hour(s)"
 msgstr "godzina(y)"
@@ -21885,6 +21924,7 @@ msgid "minute"
 msgstr "minuta"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:17
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:46
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:30
 msgid "minute(s)"
 msgstr "minuta(y)"
@@ -22099,6 +22139,7 @@ msgid "published"
 msgstr "opublikowany"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:13
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:44
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:28
 msgid "quarter-hour(s)"
 msgstr "kwadrans(y)"
@@ -22108,7 +22149,7 @@ msgid "reached"
 msgstr "osiągnięto"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:153
-#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:13
+#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
 msgid "read by the customer"
 msgstr "odczytane przez klienta"
 
@@ -22197,7 +22238,7 @@ msgid "select visible options"
 msgstr "wybierz widoczne opcje"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:159
-#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:24
+#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 msgid "sent to the customer"
 msgstr "wysłane do klienta"
 
@@ -22515,15 +22556,15 @@ msgstr ""
 msgid "|Right| means |Some Subject [Ticket#12345]|"
 msgstr "|Right| oznacza |Jakiś temat [Ticket#12345]|"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:383
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:405
 msgid "…add object link URL"
 msgstr "... dodaj link URL do obiektu"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:376
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:398
 msgid "…add object title"
 msgstr "...dodaj tytuł obiektu"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:583
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:605
 msgid "…of whole text area"
 msgstr "...całego pola tekstowego"
 

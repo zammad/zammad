@@ -1054,6 +1054,7 @@ msgid "Account SID"
 msgstr "Reiknings SID"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:6
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:113
 msgid "Account Time"
 msgstr "Skrá tíma"
 
@@ -1072,6 +1073,7 @@ msgstr "Aðgangur hefur ekki verið staðfestur"
 #: app/assets/javascripts/app/models/ticket.coffee:16
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:2
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:2
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:68
 #: app/graphql/gql/types/overview_type.rb:69
 msgid "Accounted Time"
 msgstr "Gjaldfærður tími"
@@ -1209,6 +1211,7 @@ msgstr "Virknistraumur"
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:16
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:4
 #: app/controllers/time_accountings_controller.rb:117
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:95
 msgid "Activity Type"
 msgstr "Gerð athafnar"
 
@@ -1348,7 +1351,7 @@ msgstr "Bæta við merki"
 msgid "Add agreement text before submit."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:316
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:315
 #, fuzzy
 #| msgid "Pending reminder reached for Ticket |%s|"
 msgid "Add alarm to pending reminder and escalated tickets"
@@ -1451,7 +1454,7 @@ msgstr "Forsníða sem númeraðan lista"
 msgid "Add phone call"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:59
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:63
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:37
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:88
 #, fuzzy
@@ -1927,7 +1930,7 @@ msgstr "Aðgangsupplýsingar fyrir Twitter forrit."
 msgid "App secret"
 msgstr "Leyndarmál forrits"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:409
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:431
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee:3
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:3
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
@@ -1966,7 +1969,7 @@ msgstr "Virkja"
 msgid "Apply Shared Draft"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue:81
+#: app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue:40
 #, fuzzy
 #| msgid "Templates"
 msgid "Apply Template"
@@ -2095,7 +2098,7 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:45
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:417
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:251
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:260
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:51
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr ""
@@ -2141,7 +2144,7 @@ msgid "Article meta information"
 msgstr "Loka fyrir tilkynningar"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:77
-#: app/frontend/shared/composables/useArticleSecurity.ts:99
+#: app/frontend/shared/composables/useArticleSecurity.ts:93
 msgid "Article uses different security mechanism."
 msgstr ""
 
@@ -2251,7 +2254,7 @@ msgstr "Viðhengdar skrár"
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:220
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
 msgstr "Viðhengi"
 
@@ -2488,11 +2491,11 @@ msgid ""
 "set it to false."
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1237
+#: app/frontend/shared/components/Form/Form.vue:1238
 msgid "Autosave in progress…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1246
+#: app/frontend/shared/components/Form/Form.vue:1247
 msgid "Autosaving is taking longer than expected…"
 msgstr ""
 
@@ -2784,12 +2787,12 @@ msgstr ""
 #: app/assets/javascripts/app/models/ticket_article.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:89
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:167
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:86
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:37
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:177
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:181
 #: db/seeds/object_manager_attributes.rb:508
 msgid "CC"
 msgstr ""
@@ -3136,9 +3139,9 @@ msgstr "Breytingar framkvæmdar krefjast þess að gagnagrunnur sé uppfærður.
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:106
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:100
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:133
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:134
 msgid "Channel"
 msgstr "Rás"
 
@@ -3496,7 +3499,7 @@ msgstr ""
 msgid "Close chat sessions where participants are offline."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:218
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:238
 msgid "Close current tab"
 msgstr "Loka núverandi flipa"
 
@@ -3514,12 +3517,14 @@ msgstr "Loka flipa"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:32
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:12
 #: db/seeds/settings.rb:2913
 msgid "Close tab"
 msgstr "Loka flipa"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:37
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:16
 #: db/seeds/settings.rb:2914
 msgid "Close tab on ticket close"
 msgstr ""
@@ -3717,7 +3722,7 @@ msgid ""
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:278
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:300
 msgid "Confirm/submit dialog"
 msgstr "Staðfesta/senda gluggi"
 
@@ -3831,7 +3836,7 @@ msgstr "Ekki tókst að hlaða innihaldi."
 msgid "Content preview could not be generated."
 msgstr "Forskoðun innihalds misheppnaðist."
 
-#: app/frontend/apps/desktop/components/layout/LayoutContent.vue:131
+#: app/frontend/apps/desktop/components/layout/LayoutContent.vue:136
 #, fuzzy
 #| msgid "Contents"
 msgid "Content sidebar"
@@ -3944,11 +3949,11 @@ msgstr "Sérsniðin slóð"
 msgid "Copy article permalink"
 msgstr "Tegund efnisgreinar"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:332
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:354
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader.vue:63
 #, fuzzy
 #| msgid "Edit Customer"
 msgid "Copy ticket number"
@@ -4052,8 +4057,8 @@ msgstr "Tel færslur. Þessi aðgerð gæti tekið smá stund."
 msgid "Country"
 msgstr "Land"
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:19
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:81
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:19
 #: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:14
 #: app/assets/javascripts/app/models/group.coffee:45
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:56
@@ -4262,7 +4267,7 @@ msgstr "Stofna:"
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:14
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:108
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:107
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -4306,7 +4311,7 @@ msgstr "Stofna prufu miða"
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:23
 #: app/controllers/time_accountings_controller.rb:122
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:105
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:56
 #: app/graphql/gql/types/overview_type.rb:80
 msgid "Created at"
 msgstr "Stofnað þann"
@@ -4490,8 +4495,8 @@ msgstr ""
 msgid "Dark Mode"
 msgstr "Hamur"
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:5
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:125
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:145
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:5
 #: app/assets/javascripts/app/controllers/dashboard.coffee:28
 #: app/assets/javascripts/app/controllers/package.coffee:42
 #: app/frontend/apps/desktop/pages/dashboard/routes.ts:8
@@ -4605,7 +4610,7 @@ msgid "Decryption failed!"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:113
-#: app/frontend/shared/composables/useArticleSecurity.ts:130
+#: app/frontend/shared/composables/useArticleSecurity.ts:124
 #, fuzzy
 #| msgid "Delivery failed"
 msgid "Decryption failed! %s"
@@ -4613,7 +4618,7 @@ msgstr "Afhending mistókst"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:291
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:107
-#: app/frontend/shared/composables/useArticleSecurity.ts:124
+#: app/frontend/shared/composables/useArticleSecurity.ts:118
 msgid "Decryption was successful."
 msgstr "Afkóðun heppnaðist."
 
@@ -5857,7 +5862,7 @@ msgstr ""
 msgid "Direct URL"
 msgstr "Bein slóð"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:333
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:332
 #, fuzzy
 #| msgid "Ticket Subscriptions"
 msgid "Direct subscription URL"
@@ -5921,14 +5926,14 @@ msgstr "Hunsa breytingar"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:47
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:419
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:253
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:262
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:53
 #, fuzzy
 #| msgid "Discard Changes"
 msgid "Discard changes"
 msgstr "Hunsa breytingar"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:76
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:75
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:162
 msgid "Discard your unsaved changes"
@@ -6119,7 +6124,7 @@ msgstr "Drög"
 msgid "Draft available"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:38
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:38
 #, fuzzy
 #| msgid "Draft"
 msgid "Drafts"
@@ -6275,7 +6280,7 @@ msgstr "svara"
 msgid "Edit security keys"
 msgstr "Öryggi"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:89
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:88
 #, fuzzy
 #| msgid "Ticket title"
 msgid "Edit ticket title"
@@ -6291,6 +6296,12 @@ msgstr "Breyta"
 #, fuzzy
 #| msgid "assign tickets"
 msgid "Editing on Desktop"
+msgstr "úthluta miða"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketLiveUsers.vue:57
+#, fuzzy
+#| msgid "assign tickets"
+msgid "Editing on Mobile"
 msgstr "úthluta miða"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
@@ -6613,7 +6624,7 @@ msgstr ""
 msgid "Enable time accounting."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:401
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:423
 msgid "Enable/disable inline translations"
 msgstr "Virkja/afvirkja þýðingar í viðmóti"
 
@@ -6744,7 +6755,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:62
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:165
-#: app/frontend/shared/composables/useArticleSecurity.ts:163
+#: app/frontend/shared/composables/useArticleSecurity.ts:157
 msgid "Encrypted"
 msgstr ""
 
@@ -6754,7 +6765,7 @@ msgid "Encryption"
 msgstr "Dulkóðun"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:65
-#: app/frontend/shared/composables/useArticleSecurity.ts:163
+#: app/frontend/shared/composables/useArticleSecurity.ts:157
 #, fuzzy
 #| msgid "Encrypt"
 msgid "Encryption error"
@@ -6888,6 +6899,7 @@ msgid "Enter the security code generated by the authenticator app:"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:37
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:71
 msgid "Enter the time you want to record"
 msgstr "Vinsamlegast sláðu inn þann tíma sem þú vilt skrá"
 
@@ -7453,7 +7465,7 @@ msgid "Fingerprint"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:251
-#: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco:15
+#: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco:17
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue:79
 msgid "Finish"
@@ -7621,11 +7633,11 @@ msgstr "FormSchema fannst ekki."
 msgid "Format"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:558
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:580
 msgid "Format as //strikethrough//"
 msgstr "Forsníða sem //yfirstrikað//"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:540
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:562
 msgid "Format as _underlined_"
 msgstr "Forsníða sem _undirstrikað_"
 
@@ -7635,15 +7647,15 @@ msgstr "Forsníða sem _undirstrikað_"
 msgid "Format as bold"
 msgstr "Forsníða sem |feitletrað|"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:607
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:629
 msgid "Format as h1 heading"
 msgstr "Forsníða sem h1 titil"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:613
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:635
 msgid "Format as h2 heading"
 msgstr "Forsníða sem h2 titil"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:619
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:641
 msgid "Format as h3 heading"
 msgstr "Forsníða sem h3 titil"
 
@@ -7653,7 +7665,7 @@ msgstr "Forsníða sem h3 titil"
 msgid "Format as italic"
 msgstr "Forsníða sem ||skáletrað||"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:601
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:623
 msgid "Format as ordered list"
 msgstr "Forsníða sem númeraðan lista"
 
@@ -7669,15 +7681,15 @@ msgstr "Forsníða sem //yfirstrikað//"
 msgid "Format as underlined"
 msgstr "Forsníða sem _undirstrikað_"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:595
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:617
 msgid "Format as unordered list"
 msgstr "Forsníða sem lista"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:546
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:568
 msgid "Format as |bold|"
 msgstr "Forsníða sem |feitletrað|"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:552
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:574
 msgid "Format as ||italic||"
 msgstr "Forsníða sem ||skáletrað||"
 
@@ -7712,7 +7724,7 @@ msgstr "Föstudagur"
 #: app/assets/javascripts/app/views/generic/calender_preview.jst.eco:11
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:16
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:73
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:67
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:80
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:35
 msgid "From"
@@ -8000,6 +8012,10 @@ msgstr ""
 msgid "Google Client Secret"
 msgstr "Leyndarmál biðlara"
 
+#: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
+msgid "Got it!"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:16
 msgid "Green"
 msgstr "Grænn"
@@ -8278,7 +8294,7 @@ msgid ""
 "displayed either in the header or footer."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:20
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:20
 msgid ""
 "Here you can create new tickets, customers and organizations (depending on "
 "your configured permissions)."
@@ -8296,7 +8312,7 @@ msgid ""
 "translation for the target language."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:14
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:14
 msgid ""
 "Here you can search for tickets, customers, and organizations. Use the "
 "asterisk §*§ to find anything, e.g. §smi*§ or §rosent*l§. You also can use ||"
@@ -8309,7 +8325,7 @@ msgid ""
 "Zammad account."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:29
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:29
 #, fuzzy
 #| msgid ""
 #| "Here you can sign out, change the frontend language and see your last "
@@ -8325,13 +8341,13 @@ msgstr ""
 msgid "Here you define which authorization has access to the attribute."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:39
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:39
 msgid ""
 "Here you find your ticket overviews for open, assigned, and escalated "
 "tickets."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:6
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:6
 msgid "Here you see a quick overview of your and other agents' performance."
 msgstr ""
 
@@ -8919,7 +8935,7 @@ msgid "Including private key."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:251
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:328
 msgid "Incomplete Ticket Checklist"
 msgstr ""
 
@@ -9060,21 +9076,21 @@ msgid ""
 "the §</body>§ closing tag."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:589
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:611
 msgid "Inserts a horizontal rule"
 msgstr "Setur inn lárétta línu"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:522
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:544
 msgid "Inserts a mention for a user"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:516
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:538
 #, fuzzy
 #| msgid "Delete Knowledge Base"
 msgid "Inserts knowledge base answer"
 msgstr "Eyða þekkingarbrunni"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:510
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:532
 #, fuzzy
 #| msgid "Text modules"
 msgid "Inserts text module"
@@ -9109,7 +9125,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:105
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:133
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:151
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:155
 msgid "Internal"
 msgstr ""
 
@@ -9777,7 +9793,7 @@ msgstr ""
 msgid "List of installed addons"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:190
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:210
 msgid "List of shortcuts"
 msgstr "Listi yfir flýtivísanir"
 
@@ -9894,7 +9910,7 @@ msgstr ""
 msgid "Logo"
 msgstr "Lógó"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:207
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:227
 msgid "Logout"
 msgstr "Útskrá"
 
@@ -9926,7 +9942,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/macro.coffee:3
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:69
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:39
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:39
 #: db/seeds/permissions.rb:47
 msgid "Macros"
 msgstr "Fjölvar"
@@ -10733,7 +10749,7 @@ msgstr "Flytja allt frá \"%s\" til \"%s\":"
 msgid "Move down"
 msgstr "Flytja upp og niður"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:317
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:339
 msgid "Move left and right"
 msgstr "Færa til hægri og vinstri"
 
@@ -10743,7 +10759,7 @@ msgstr "Færa til hægri og vinstri"
 msgid "Move up"
 msgstr "Flutt út"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:313
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:335
 msgid "Move up and down"
 msgstr "Flytja upp og niður"
 
@@ -10897,7 +10913,7 @@ msgstr ""
 msgid "Name of form submit button"
 msgstr "Nafn á senda takka"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:500
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:522
 msgid "Navigate through article"
 msgstr "Flakka um efnisgrein"
 
@@ -10905,7 +10921,7 @@ msgstr "Flakka um efnisgrein"
 msgid "Navigate to %s"
 msgstr "Flakka til %s"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:115
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:135
 #: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:29
 msgid "Navigation"
 msgstr ""
@@ -11019,6 +11035,12 @@ msgstr ""
 msgid "New Group"
 msgstr "Nýr hópur"
 
+#: app/assets/javascripts/app/controllers/clues/keyboard_shortcuts_clues.coffee:5
+#, fuzzy
+#| msgid "Keyboard Shortcuts"
+msgid "New Keyboard Shortcuts"
+msgstr "Flýtivísanir"
+
 #: app/assets/javascripts/app/controllers/macro.coffee:22
 msgid "New Macro"
 msgstr "Nýr fjölvi"
@@ -11083,7 +11105,7 @@ msgstr "Ný merkispjöld"
 msgid "New Template"
 msgstr "Skapalón"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:168
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:188
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:7
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:484
@@ -11204,7 +11226,7 @@ msgstr "Nýr notandi?"
 #: app/assets/javascripts/app/controllers/webhook.coffee:124
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:2
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:106
-#: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco:17
+#: app/assets/javascripts/app/views/clues/clues_content.jst.eco:19
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:31
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:17
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:57
@@ -11221,6 +11243,7 @@ msgstr "Staða"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:43
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco:12
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:21
 #: db/seeds/settings.rb:2915
 msgid "Next in overview"
 msgstr "Næst í yfirsýn"
@@ -11521,7 +11544,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:254
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:331
 #, fuzzy
 #| msgid "You can no longer see the ticket."
 msgid "No, just close the ticket"
@@ -11581,7 +11604,7 @@ msgstr "Ekki úthlutað"
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:115
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:25
 #: app/controllers/application_controller/handles_errors.rb:60
-#: app/services/service/ticket/article/create.rb:119
+#: app/services/service/ticket/article/create.rb:121
 msgid "Not authorized"
 msgstr ""
 
@@ -11729,7 +11752,7 @@ msgid "Notification sound"
 msgstr "Tilkynningarhljóð"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:12
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:157
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:177
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:5
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:2
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:1
@@ -11992,11 +12015,11 @@ msgstr "Næsti flipi"
 msgid "Open link"
 msgstr "Opnar beiðnir"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:478
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:500
 msgid "Open macro selection"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:438
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:460
 msgid "Open note box"
 msgstr "Opna athugasemdakassa"
 
@@ -12326,9 +12349,9 @@ msgstr "Yfirlit"
 msgid "Overview bulk mask"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:38
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:136
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:156
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:38
 #: app/assets/javascripts/app/controllers/overview.coffee:3
 #: app/assets/javascripts/app/controllers/ticket_overview.coffee:258
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:6
@@ -12535,11 +12558,11 @@ msgstr ""
 msgid "Paste Private Key"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:564
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:586
 msgid "Paste from clipboard"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:571
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:593
 msgid "Paste from clipboard (plain text)"
 msgstr ""
 
@@ -12607,7 +12630,7 @@ msgstr "Réttindi"
 msgid "Personal Access Tokens"
 msgstr "Persónulegir aðgangstókar"
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:28
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:28
 msgid "Personal Settings"
 msgstr "Persónulegar stillingar"
 
@@ -12656,7 +12679,7 @@ msgstr ""
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "Veldu nafn fyrir forrit, og við látum þig fá einhvæman tóka."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:224
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:238
 msgid "Pin this panel"
 msgstr ""
 
@@ -12971,7 +12994,7 @@ msgstr ""
 msgid "Preview owner tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/views/dashboard/first_steps_clues_content.jst.eco:10
+#: app/assets/javascripts/app/views/clues/clues_content.jst.eco:11
 #: app/frontend/shared/form/i18n/locales.ts:70
 msgid "Previous"
 msgstr "Fyrri"
@@ -13113,7 +13136,7 @@ msgid "Proxy address"
 msgstr "Vistfang vefsels"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:109
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:156
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:160
 msgid "Public"
 msgstr ""
 
@@ -13473,11 +13496,11 @@ msgstr ""
 msgid "Remove two-factor authentication"
 msgstr "Auðkenning"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:625
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:647
 msgid "Removes any hyperlink"
 msgstr "Fjarlægir allar vefslóðir"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:577
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:599
 msgid "Removes the formatting"
 msgstr "Fjarlægir forsnið"
 
@@ -13528,7 +13551,7 @@ msgstr ""
 msgid "Replacement agent"
 msgstr "Opnir miðar"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:221
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:235
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
@@ -13550,7 +13573,7 @@ msgstr "svara"
 msgid "Reply allowed only for open tickets"
 msgstr "Einungir hægt að svara opnum beiðnum"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:453
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:475
 msgid "Reply to last article"
 msgstr "Svara síðustu efnisgrein"
 
@@ -13741,7 +13764,7 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:188
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:201
 #, fuzzy
 #| msgid "Close tab"
 msgid "Resize article panel"
@@ -14094,7 +14117,7 @@ msgstr "Halda áfram"
 msgid "Save as"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:55
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:55
 #, fuzzy
 #| msgid "Draft"
 msgid "Save as draft"
@@ -14167,8 +14190,8 @@ msgstr "Skrunaðu niður til að sjá nýju skilaboðin"
 msgid "Scroll down to see new messages"
 msgstr "Skrunaðu niður til að sjá nýju skilaboðin"
 
-#: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:13
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:147
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:167
+#: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:13
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:201
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
 #: app/assets/javascripts/app/views/knowledge_base/search_field_widget.jst.eco:1
@@ -14331,7 +14354,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:177
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:199
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:203
 #: db/seeds/permissions.rb:197
 msgid "Security"
 msgstr "Öryggi"
@@ -14451,7 +14474,7 @@ msgstr "Veldu skapalón"
 msgid "Select default ticket type"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:321
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:343
 msgid "Select item"
 msgstr "Veldu hlut"
 
@@ -14692,7 +14715,7 @@ msgstr "Stofna þinn fyrsta miða"
 msgid "Set agent limit"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:468
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:490
 msgid "Set article to internal/public"
 msgstr "Setja efnisgrein sem innanhúss/opna"
 
@@ -14977,7 +15000,7 @@ msgstr ""
 msgid "Show meta data"
 msgstr "Birta leitarniðurstöður"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:229
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:250
 msgid "Show next tab"
 msgstr ""
 
@@ -14987,7 +15010,7 @@ msgid ""
 "third-party authentication is enabled."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:254
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:276
 #, fuzzy
 #| msgid "Previous tab"
 msgid "Show previous tab"
@@ -15069,7 +15092,7 @@ msgid "Sign email (if not possible, send notification anyway)"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:76
-#: app/frontend/shared/composables/useArticleSecurity.ts:160
+#: app/frontend/shared/composables/useArticleSecurity.ts:154
 #, fuzzy
 #| msgid "Sign out"
 msgid "Sign error"
@@ -15128,7 +15151,7 @@ msgid "Signature verification failed!"
 msgstr "Ekki tókst að staðfesta undirritun!"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:96
-#: app/frontend/shared/composables/useArticleSecurity.ts:114
+#: app/frontend/shared/composables/useArticleSecurity.ts:108
 #, fuzzy
 #| msgid "Resend verification email"
 msgid "Signature verification failed! %s"
@@ -15142,7 +15165,7 @@ msgstr "Undirskriftir"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:73
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:171
-#: app/frontend/shared/composables/useArticleSecurity.ts:160
+#: app/frontend/shared/composables/useArticleSecurity.ts:154
 msgid "Signed"
 msgstr ""
 
@@ -15248,6 +15271,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/channel.jst.eco:21
 #: app/assets/javascripts/app/views/getting_started/email_notification.jst.eco:17
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:97
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:115
 msgid "Skip"
 msgstr "Sleppa"
 
@@ -15509,6 +15533,7 @@ msgstr "Staða:"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:49
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/behaviorOptions.ts:8
 #: db/seeds/settings.rb:2916
 msgid "Stay on tab"
 msgstr "Halda áfram í flipa"
@@ -15577,7 +15602,7 @@ msgstr "Gata"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:13
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:33
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:188
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:192
 msgid "Subject"
 msgstr "Viðfangsefni"
 
@@ -15651,7 +15676,7 @@ msgstr "Áskrifendur"
 msgid "Subscription Settings"
 msgstr "Áskriftarstillingar"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:322
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:321
 #, fuzzy
 #| msgid "Subscription Settings"
 msgid "Subscription settings"
@@ -15899,7 +15924,7 @@ msgstr "Texti"
 msgid "Text Modules"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:531
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:553
 msgid "Text editing"
 msgstr "Textaumsýsla"
 
@@ -17012,7 +17037,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:302
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:67
-#: app/frontend/shared/composables/useArticleSecurity.ts:89
+#: app/frontend/shared/composables/useArticleSecurity.ts:83
 msgid "The retried security process failed!"
 msgstr ""
 
@@ -17081,7 +17106,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:280
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:90
-#: app/frontend/shared/composables/useArticleSecurity.ts:108
+#: app/frontend/shared/composables/useArticleSecurity.ts:102
 #, fuzzy
 #| msgid "The import was successful."
 msgid "The signature was successfully verified."
@@ -17145,7 +17170,7 @@ msgstr ""
 msgid "The ticket checklist is incomplete."
 msgstr "Yfirlit"
 
-#: app/services/service/ticket/update/validator/time_accounting.rb:16
+#: app/services/service/ticket/update/validator/time_accounting.rb:19
 msgid "The ticket time accounting condition is met."
 msgstr ""
 
@@ -18138,6 +18163,12 @@ msgid ""
 "</div>\n"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/TicketScreenBehavior.vue:56
+#, fuzzy
+#| msgid "Ticket customer updated successfully."
+msgid "Ticket screen behavior updated successfully"
+msgstr "Breyting á viðskiptavini beiðnar heppnaðist."
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:131
 msgid ""
 "Ticket selector contains expert conditions. If you turn off the expert mode, "
@@ -18152,7 +18183,7 @@ msgstr "Ekki tókst að uppfæra merkispjöld beiðna."
 msgid "Ticket tags updated successfully."
 msgstr "Breyting á merkispjöldum beiðnar heppnaðist."
 
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:97
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:98
 msgid "Ticket title"
 msgstr "Titill Beiðnar"
 
@@ -18163,15 +18194,15 @@ msgstr "Titill Beiðnar"
 msgid "Ticket update"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:320
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:473
 #, fuzzy
 #| msgid "2. Ticket Update"
 msgid "Ticket update failed."
 msgstr "2. Uppfæra Beiðni"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:297
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:163
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:425
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:172
 msgid "Ticket updated successfully."
 msgstr "Breyting beiðnar heppnaðist."
 
@@ -18208,7 +18239,7 @@ msgid ""
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:38
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:68
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:71
 #: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:22
 msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
@@ -18239,7 +18270,7 @@ msgstr ""
 msgid "TicketID"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:428
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:450
 #: app/assets/javascripts/app/controllers/widget/user.coffee:87
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:94
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:98
@@ -18308,6 +18339,7 @@ msgstr "Tími"
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:134
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting_modal.coffee:12
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:3
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:122
 #: db/seeds/permissions.rb:107 db/seeds/settings.rb:3931
 msgid "Time Accounting"
 msgstr "Tímabókhald"
@@ -18430,10 +18462,10 @@ msgstr "Titill á formi"
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:18
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:52
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:28
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:84
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:78
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:85
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:36
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:165
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:169
 #: db/seeds/object_manager_attributes.rb:482
 msgid "To"
 msgstr "Til"
@@ -18539,7 +18571,7 @@ msgstr ""
 msgid "Toggle Group"
 msgstr "Foreldri"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:419
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:441
 msgid "Toggle dark mode"
 msgstr ""
 
@@ -18666,7 +18698,7 @@ msgstr "Þýðingar"
 msgid "Translation Source"
 msgstr "Þýðingar"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:390
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:412
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
 #: db/seeds/permissions.rb:257
@@ -18994,7 +19026,7 @@ msgstr ""
 msgid "Unlock"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:224
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:238
 msgid "Unpin this panel"
 msgstr ""
 
@@ -19063,7 +19095,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:57
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:13
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar.vue:85
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:87
 msgid "Update"
 msgstr "Uppfæra"
 
@@ -19096,7 +19128,7 @@ msgstr "Samnýtt"
 msgid "Update Time"
 msgstr "Uppfæra tíma"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:488
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:510
 msgid "Update as closed"
 msgstr "Uppfæra sem lokað"
 
@@ -19336,31 +19368,31 @@ msgstr ""
 msgid "Use this switch to start synchronization of your ldap sources."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:119
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:139
 msgid "Used anywhere"
 msgstr "Notað hvar sem er"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:394
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:416
 msgid "Used anywhere (admin only)"
 msgstr "Notað hvar sem er ( kerfisstjórar eingöngu )"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:309
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:331
 msgid "Used in lists (views and results)"
 msgstr "Notað í listum (yfirliti og niðurstöðum)"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:326
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:348
 msgid "Used in object views"
 msgstr "Notað í hlutasýn"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:505
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:527
 msgid "Used when composing a Ticket article"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:535
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:557
 msgid "Used when composing a text"
 msgstr "Notað við að semja texta"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:432
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:454
 msgid "Used when viewing a Ticket"
 msgstr "Notað þegar beiðni er skoðuð"
 
@@ -19447,7 +19479,7 @@ msgid ""
 "permissions."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:179
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:199
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue:44
 #, fuzzy
 #| msgid "Username"
@@ -19683,7 +19715,7 @@ msgstr "Skoða beiðni"
 #: app/assets/javascripts/app/models/ticket_article.coffee:14
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/article.jst.eco:3
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:3
-#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:143
+#: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:147
 #: db/seeds/object_manager_attributes.rb:449
 msgid "Visibility"
 msgstr "Sýnileiki"
@@ -20076,7 +20108,7 @@ msgid "Yes, add attachments now"
 msgstr "Reyndu aftur að hala niður viðhengi"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:253
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:330
 #, fuzzy
 #| msgid "Remove"
 msgid "Yes, open the checklist"
@@ -20227,6 +20259,12 @@ msgstr "Þú getur ekki séð beiðnina lengur."
 msgid "You can no longer see the user."
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/clues/keyboard_shortcuts_clues.coffee:6
+msgid ""
+"You can open the Keyboard Shortcuts dialog here and view the new and "
+"improved layout, or revert to the old one if you prefer it."
+msgstr ""
+
 #: app/assets/javascripts/app/models/knowledge_base.coffee:282
 msgid ""
 "You can provide different versions of your knowledge base for different "
@@ -20297,7 +20335,7 @@ msgid "You have insufficient rights to view this organization."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:40
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:70
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:73
 #: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:24
 msgid "You have insufficient rights to view this ticket."
 msgstr ""
@@ -20337,7 +20375,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:248
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:325
 #, fuzzy
 #| msgid "Tab has changed, do you really want to close it?"
 msgid ""
@@ -20973,7 +21011,7 @@ msgid "delete"
 msgstr "eyða"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:156
-#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:20
+#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
 #, fuzzy
 #| msgid "Delete Customer"
 msgid "delivered to the customer"
@@ -21223,6 +21261,7 @@ msgid "hour"
 msgstr "klukkustund og"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:9
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:42
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:26
 msgid "hour(s)"
 msgstr ""
@@ -21551,6 +21590,7 @@ msgid "minute"
 msgstr "mínútu"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:17
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:46
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:30
 msgid "minute(s)"
 msgstr "mínúta(-ur)"
@@ -21771,6 +21811,7 @@ msgid "published"
 msgstr "útgefin"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:13
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:44
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:28
 msgid "quarter-hour(s)"
 msgstr ""
@@ -21780,7 +21821,7 @@ msgid "reached"
 msgstr "náð"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:153
-#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:13
+#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "read by the customer"
@@ -21881,7 +21922,7 @@ msgid "select visible options"
 msgstr "svara"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:159
-#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:24
+#: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "sent to the customer"
@@ -22202,17 +22243,17 @@ msgstr ""
 msgid "|Right| means |Some Subject [Ticket#12345]|"
 msgstr "|Hægri| táknar |Eitthvað Efni [Beiðni#12345]|"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:383
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:405
 msgid "…add object link URL"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:376
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:398
 #, fuzzy
 #| msgid "...add object title"
 msgid "…add object title"
 msgstr "...bæta við titil á hlut"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:583
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:605
 #, fuzzy
 #| msgid "...of whole textarea"
 msgid "…of whole text area"
