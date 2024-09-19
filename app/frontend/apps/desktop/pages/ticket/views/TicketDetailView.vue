@@ -96,8 +96,7 @@ const {
 
 const internalId = toRef(props, 'internalId')
 
-// TODO: isTicketEditable and canUpdateTicket is the same in the end?
-const { ticket, ticketId, canUpdateTicket, ...ticketInformation } =
+const { ticket, ticketId, ...ticketInformation } =
   initializeTicketInformation(internalId)
 
 const onAddArticleCallback = ({ articlesQuery }: AddArticleCallbackArgs) => {
@@ -183,7 +182,7 @@ const { liveUserList } = useTicketLiveUserList(
 provideTicketInformation({
   ticket,
   ticketId,
-  canUpdateTicket,
+  isTicketEditable,
   form,
   newTicketArticlePresent,
   showTicketArticleReplyForm,
@@ -584,7 +583,7 @@ watch(ticketId, () => {
         :dirty="isDirty"
         :disabled="isDisabled"
         :form-node-id="formNodeId"
-        :can-update-ticket="canUpdateTicket"
+        :is-ticket-editable="isTicketEditable"
         :group-id="groupId"
         :live-user-list="liveUserList"
         @submit="checkSubmitEditTicket"

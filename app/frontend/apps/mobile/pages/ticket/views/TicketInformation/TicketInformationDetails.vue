@@ -35,7 +35,6 @@ const {
   ticket,
   updateFormLocation,
   ticketQuery,
-  canUpdateTicket,
 } = useTicketInformation()
 
 const ticketFormGroupNode = computed(() => {
@@ -163,7 +162,7 @@ const hasEscalation = computed(() => {
   </FormKit>
 
   <ObjectAttributes
-    v-if="!canUpdateTicket && ticket"
+    v-if="!isTicketEditable && ticket"
     :object="ticket"
     :attributes="objectAttributes"
     :skip-attributes="['title']"

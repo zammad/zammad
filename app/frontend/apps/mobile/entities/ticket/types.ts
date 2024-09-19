@@ -27,7 +27,7 @@ export interface TicketInformation {
   newTicketArticlePresent: Ref<boolean>
   form: FormRefParameter
   updateFormLocation: (newLocation: string) => void
-  canUpdateTicket: ComputedRef<boolean>
+  isTicketEditable: ComputedRef<boolean>
   showArticleReplyDialog: () => Promise<void>
   liveUserList?: Ref<TicketLiveAppUser[]>
   refetchingStatus: Ref<boolean>

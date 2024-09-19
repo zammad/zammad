@@ -11,7 +11,7 @@ export class FieldResolverDate extends FieldResolver {
   public fieldTypeAttributes() {
     return {
       props: {
-        clearable: this.attributeConfig.null || false,
+        clearable: !!this.attributeConfig.null,
       },
     }
   }

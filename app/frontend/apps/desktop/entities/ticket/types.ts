@@ -9,7 +9,7 @@ export interface TicketInformation {
   ticket: ComputedRef<TicketById | undefined>
   ticketId: ComputedRef<ID>
   ticketInternalId: Ref<number>
-  canUpdateTicket: ComputedRef<boolean>
+  isTicketEditable: ComputedRef<boolean>
   form: FormRefParameter
   showTicketArticleReplyForm: () => void
   newTicketArticlePresent: Ref<boolean | undefined>

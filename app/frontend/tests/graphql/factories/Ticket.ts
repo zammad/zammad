@@ -30,7 +30,7 @@ export default (
     policy: {
       destroy: true,
       update: true,
-      agentReadAccess: permissions?.names.includes('ticket.agent') ?? false,
+      agentReadAccess: !!permissions?.names.includes('ticket.agent'),
     },
     createArticleType: {
       __typename: 'TicketArticleType',

@@ -73,7 +73,7 @@ export const useTicketEditForm = (
         () => currentArticleType.value?.fields?.[field]?.validation || null,
       ),
       required: computed(
-        () => currentArticleType.value?.fields?.[field]?.required || false,
+        () => !!currentArticleType.value?.fields?.[field]?.required,
       ),
     }
 

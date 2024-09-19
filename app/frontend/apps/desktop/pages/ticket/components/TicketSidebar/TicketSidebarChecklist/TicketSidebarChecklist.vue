@@ -19,7 +19,7 @@ defineProps<TicketSidebarProps>()
 
 const emit = defineEmits<TicketSidebarEmits>()
 
-const { incompleteItemCount, checklist, isLoadingChecklist, canUpdateTicket } =
+const { incompleteItemCount, checklist, isLoadingChecklist, isTicketEditable } =
   useTicketChecklist()
 
 const badge = computed<TicketSidebarButtonBadgeDetails | undefined>(() => {
@@ -52,7 +52,7 @@ onMounted(() => {
       :sidebar-plugin="sidebarPlugin"
       :checklist="checklist"
       :loading="isLoadingChecklist"
-      :readonly="!canUpdateTicket"
+      :readonly="!isTicketEditable"
     />
   </TicketSidebarWrapper>
 </template>

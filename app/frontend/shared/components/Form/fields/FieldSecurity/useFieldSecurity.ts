@@ -34,7 +34,7 @@ export const useFieldSecurity = (
   )
 
   const isCurrentSecurityOption = (option: SecurityOption) =>
-    localValue.value?.options.includes(option) ?? false
+    !!localValue.value?.options.includes(option)
 
   const isSecurityOptionDisabled = (option: SecurityOption) =>
     context.value.disabled ||

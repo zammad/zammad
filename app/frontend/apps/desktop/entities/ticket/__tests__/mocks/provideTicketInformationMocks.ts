@@ -21,7 +21,7 @@ export const provideTicketInformationMocks = (
     ticketInternalId: ref(ticket.internalId),
     ticketId: computed(() => ticket.id),
     ticket: computed(() => ticket),
-    canUpdateTicket: computed(() => ticket.policy.update || false),
+    isTicketEditable: computed(() => !!ticket.policy.update),
     ...overrideProvideOptions,
   } as TicketInformation)
 }

@@ -46,13 +46,10 @@ export const initializeTicketInformation = (
 
   const ticket = computed(() => result.value?.ticket as TicketById)
 
-  const canUpdateTicket = computed(() => !!ticket.value?.policy.update)
-
   return {
     ticket,
     ticketId,
     ticketInternalId: internalId as Ref<number>,
-    canUpdateTicket,
   }
 }
 

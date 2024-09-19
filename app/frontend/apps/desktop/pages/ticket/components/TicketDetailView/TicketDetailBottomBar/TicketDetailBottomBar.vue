@@ -17,7 +17,7 @@ export interface Props {
   dirty: boolean
   disabled: boolean
   formNodeId?: string
-  canUpdateTicket: boolean
+  isTicketEditable: boolean
   groupId?: string
   liveUserList: TicketLiveAppUser[]
 }
@@ -65,7 +65,7 @@ const actionItems = computed(() => {
 
 <template>
   <TicketLiveUsers v-if="liveUserList?.length" :live-user-list="liveUserList" />
-  <template v-if="canUpdateTicket">
+  <template v-if="isTicketEditable">
     <CommonButton
       v-if="dirty"
       size="large"

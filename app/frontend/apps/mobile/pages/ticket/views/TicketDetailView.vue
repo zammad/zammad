@@ -97,11 +97,19 @@ const { form, canSubmit, isDirty, formSubmit, formReset } = useForm()
 const { initialTicketValue, isTicketFormGroupValid, editTicket } =
   useTicketEdit(ticket, form)
 
-const canUpdateTicket = computed(() => !!ticket.value?.policy.update)
+const {
+  currentArticleType,
+  ticketSchema,
+  articleSchema,
+  securityIntegration,
+  isTicketEditable,
+  articleTypeHandler,
+  articleTypeSelectHandler,
+} = useTicketEditForm(ticket, form)
 
-const needSpaceForSaveBanner = computed(() => {
-  return canUpdateTicket.value && isDirty.value
-})
+const needSpaceForSaveBanner = computed(
+  () => isTicketEditable.value && isDirty.value,
+)
 
 const {
   articleReplyDialog,
@@ -111,15 +119,6 @@ const {
   openArticleReplyDialog,
   closeArticleReplyDialog,
 } = useTicketArticleReply(ticket, form, needSpaceForSaveBanner)
-
-const {
-  currentArticleType,
-  ticketSchema,
-  articleSchema,
-  securityIntegration,
-  articleTypeHandler,
-  articleTypeSelectHandler,
-} = useTicketEditForm(ticket, form)
 
 const ticketEditSchema = [
   {
@@ -240,7 +239,7 @@ provide<TicketInformation>(TICKET_INFORMATION_SYMBOL, {
   newTicketArticleRequested,
   newTicketArticlePresent,
   updateFormLocation,
-  canUpdateTicket,
+  isTicketEditable,
   showArticleReplyDialog,
   liveUserList,
   refetchingStatus,
@@ -300,7 +299,7 @@ const { isOpened: commonSelectOpened } = useCommonSelect()
 const showReplyButton = computed(() => {
   if (articleReplyDialog.isOpened.value) return false
 
-  return canUpdateTicket.value
+  return isTicketEditable.value
 })
 
 const showScrollDown = computed(() => {
@@ -321,7 +320,7 @@ const showBottomBanner = computed(() => {
     return false
 
   return (
-    (canUpdateTicket.value && isDirty.value) ||
+    (isTicketEditable.value && isDirty.value) ||
     showReplyButton.value ||
     showScrollDown.value
   )
@@ -333,7 +332,7 @@ const showBottomBanner = computed(() => {
   <div class="pb-safe-16"></div>
   <!-- submit form is always present in the DOM, so we can access FormKit validity state -->
   <!-- if it's visible, it's moved to the [data-ticket-edit-form] element, which is in TicketInformationDetail -->
-  <Teleport v-if="canUpdateTicket" :to="formLocation">
+  <Teleport v-if="isTicketEditable" :to="formLocation">
     <CommonLoader
       :class="formVisible ? 'visible' : 'hidden'"
       :loading="!ticket"
@@ -364,7 +363,7 @@ const showBottomBanner = computed(() => {
       :new-replies-count="newArticlesIds.size"
       :new-article-present="newTicketArticlePresent"
       :can-reply="showReplyButton"
-      :can-save="canUpdateTicket && isDirty"
+      :can-save="isTicketEditable && isDirty"
       :can-scroll-down="showScrollDown"
       :hidden="!showBottomBanner"
       @reply="showArticleReplyDialog"

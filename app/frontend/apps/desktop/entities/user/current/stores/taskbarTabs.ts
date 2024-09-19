@@ -388,7 +388,7 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
           app: EnumTaskbarApp.Desktop,
           callback: taskbarTab.type,
           key: taskbarTab.tabEntityKey,
-          notify: taskbarTab.notify ?? false,
+          notify: !!taskbarTab.notify,
           prio: taskbarTab.order,
           dirty: taskbarTab.dirty,
         },

@@ -16,7 +16,7 @@ export class FieldResolverAutocompletionExternalDataSource extends FieldResolver
   public fieldTypeAttributes() {
     return {
       props: {
-        clearable: this.attributeConfig.nulloption || false,
+        clearable: !!this.attributeConfig.nulloption,
         noOptionsLabelTranslation: !this.attributeConfig.translate,
         object: this.object,
         searchTemplateRenderContext: (

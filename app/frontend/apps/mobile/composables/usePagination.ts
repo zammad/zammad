@@ -25,13 +25,8 @@ export default function usePagination<
     return (result[resultKey] as BaseConnection)?.pageInfo
   })
 
-  const hasNextPage = computed(() => {
-    return pageInfo.value?.hasNextPage ?? false
-  })
-
-  const hasPreviousPage = computed(() => {
-    return pageInfo.value?.hasPreviousPage ?? false
-  })
+  const hasNextPage = computed(() => !!pageInfo.value?.hasNextPage)
+  const hasPreviousPage = computed(() => !!pageInfo.value?.hasPreviousPage)
 
   const getInitialCurrentPage = (): number => {
     const result: OperationQueryResult = query.result().value || {}

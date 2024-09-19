@@ -299,11 +299,11 @@ const relationFields: FormUpdaterRelationField[] = []
 const relationFieldBelongsToObjectField: Record<string, string> = {}
 
 const formUpdaterProcessing = computed(
-  () => formNode.value?.context?.state.formUpdaterProcessing || false,
+  () => !!formNode.value?.context?.state.formUpdaterProcessing,
 )
 
 const uploadProcessing = computed(
-  () => formNode.value?.context?.state.uploadProcessing || false,
+  () => !!formNode.value?.context?.state.uploadProcessing,
 )
 
 let delayedSubmit = false
@@ -682,7 +682,7 @@ const updateSchemaDataField = (
   if (schemaData.fields[field.name]) {
     schemaData.fields[field.name] = {
       show: showField,
-      updateFields: updateFields || false,
+      updateFields: !!updateFields,
       staticCondition: showWithStaticCondition,
       props: Object.assign(
         schemaData.fields[field.name].props,
@@ -718,7 +718,7 @@ const updateSchemaDataField = (
 
     schemaData.fields[field.name] = {
       show: showField,
-      updateFields: updateFields || false,
+      updateFields: !!updateFields,
       staticCondition: showWithStaticCondition,
       props: combinedFieldProps,
     }

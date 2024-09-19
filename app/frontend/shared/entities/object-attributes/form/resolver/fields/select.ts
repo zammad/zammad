@@ -29,7 +29,7 @@ export class FieldResolverSelect extends FieldResolver {
     const attributes: Partial<FormSchemaField> = {}
     const props: FormFieldAdditionalProps = {
       noOptionsLabelTranslation: !this.attributeConfig.translate,
-      clearable: this.attributeConfig.nulloption || false,
+      clearable: !!this.attributeConfig.nulloption,
       options: [],
       historicalOptions: this.attributeConfig.historical_options,
     }

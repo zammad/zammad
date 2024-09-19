@@ -32,7 +32,7 @@ const renderTicketDetailBottomBar = (props?: Partial<Props>) =>
       disabled: false,
       formNodeId: 'form-node-id-test',
       dirty: false,
-      canUpdateTicket: true,
+      isTicketEditable: true,
       groupId: convertToGraphQLId('Group', 2),
       liveUserList: [],
       ...props,
@@ -141,7 +141,7 @@ describe('TicketDetailBottomBar', () => {
 
   it('hides action menu, submit and cancel buttons for agent without update permission', async () => {
     const wrapper = renderTicketDetailBottomBar({
-      canUpdateTicket: false,
+      isTicketEditable: false,
     })
 
     expect(
