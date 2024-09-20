@@ -395,7 +395,7 @@ class App.User extends App.Model
     (@preferences.tickets_closed || 0) + (@preferences.tickets_open || 0)
 
   isInOrganization: (organization_id) ->
-    _.contains(@allOrganizationIds(), organization_id)
+    _.contains(@allOrganizationIds(), parseInt(organization_id, 10))
 
   allOrganizationIds: ->
     result = []

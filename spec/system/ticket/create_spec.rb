@@ -962,6 +962,25 @@ RSpec.describe 'Ticket Create', type: :system do
         click '.js-submit'
         wait.until { Ticket.last.organization_id == user1.organizations[0].id }
       end
+
+      it 'restores saved organization selection correctly (#5347)' do
+        find('[name=customer_id_completion]').fill_in with: user1.firstname
+        wait.until { page.all("li.recipientList-entry.js-object[data-object-id='#{user1.id}']").present? }
+        find("li.recipientList-entry.js-object[data-object-id='#{user1.id}']").click
+
+        find('div[data-attribute-name=organization_id] .js-input').fill_in with: organization2.name, fill_options: { clear: :backspace }
+        wait.until { page.all("div[data-attribute-name=organization_id] .js-option[data-value='#{organization2.id}']").present? }
+
+        taskbar_timestamp = Taskbar.last.updated_at
+
+        page.find("div[data-attribute-name=organization_id] .js-option[data-value='#{organization2.id}'] span").click
+
+        wait.until { Taskbar.last.updated_at != taskbar_timestamp }
+
+        refresh
+
+        expect(find('div[data-attribute-name=organization_id] .js-input').value).to eq(organization2.name)
+      end
     end
 
     context 'when customer' do

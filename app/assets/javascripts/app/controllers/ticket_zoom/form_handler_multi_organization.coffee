@@ -10,18 +10,27 @@ class App.TicketZoomFormHandlerMultiOrganization
     # for customers there is no customer field so run it on title field
     return if attribute.name isnt 'title' && ui.permissionCheck('ticket.customer') && !ui.permissionCheck('ticket.agent')
 
-    organization_id = form.find('div[data-attribute-name=organization_id] .js-input')
-    return if !organization_id
+    organization_input = form.find('div[data-attribute-name=organization_id] .js-input')
+    return if !organization_input
 
     if ui.permissionCheck('ticket.agent')
       customer = App.User.find(params.customer_id)
     else
       customer = App.Session.get()
 
-    if customer && customer.organization_ids.length > 0
-      if customer.organization_id
-        customer_organization = App.Organization.find(customer.organization_id)
-        if customer_organization
-          organization_id.get(0).selectValue(customer_organization.id, customer_organization.name)
+    return if not customer?.organization_ids.length
+
+    # Select current or default customer organization (#5347).
+    organization_id =
+      if params.organization_id and customer.isInOrganization(params.organization_id)
+      then params.organization_id
+      else customer.organization_id
+
+    return if not organization_id
+
+    customer_organization = App.Organization.find(organization_id)
+    return if not customer_organization
+
+    organization_input.get(0).selectValue(customer_organization.id, customer_organization.name)
 
 App.Config.set('200-MultiOrganization', App.TicketZoomFormHandlerMultiOrganization, 'TicketCreateFormHandler')
