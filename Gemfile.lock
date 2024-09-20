@@ -651,7 +651,7 @@ GEM
       hashie
       version_gem (~> 1.1, >= 1.1.1)
     sorbet-runtime (0.5.11292)
-    sprockets (3.7.4)
+    sprockets (3.7.5)
       base64
       concurrent-ruby (~> 1.0)
       rack (> 1, < 3)
