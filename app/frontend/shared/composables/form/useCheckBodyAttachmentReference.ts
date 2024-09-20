@@ -6,16 +6,7 @@ import { domFrom } from '#shared/utils/dom.ts'
 
 import { useConfirmation } from '../useConfirmation.ts'
 
-const referenceMatchwords = [
-  __('Attachment'),
-  __('attachment'),
-  __('Attached'),
-  __('attached'),
-  __('Enclosed'),
-  __('enclosed'),
-  __('Enclosure'),
-  __('enclosure'),
-]
+const referenceMatchwords = __('attachment,attached,enclosed,enclosure')
 
 const removeQuotingFromBody = (body: string) => {
   const dom = domFrom(body)
@@ -31,14 +22,11 @@ const removeQuotingFromBody = (body: string) => {
 const bodyAttachmentReferenceMatchwordExists = (body: string) => {
   const cleanBody = removeQuotingFromBody(body)
 
-  return referenceMatchwords.some((word) => {
-    let findWord = new RegExp(word, 'i')
+  const matchwords = referenceMatchwords.split(',')
+  const translatedMatchwords = i18n.t(referenceMatchwords).split(',')
 
-    if (findWord.test(cleanBody)) return true
-
-    // Translate the word in the user locale.
-    findWord = new RegExp(i18n.t(word), 'i')
-
+  return matchwords.concat(translatedMatchwords).some((word) => {
+    const findWord = new RegExp(word, 'i')
     return findWord.test(cleanBody)
   })
 }

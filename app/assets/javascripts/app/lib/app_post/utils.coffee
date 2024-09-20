@@ -1050,16 +1050,18 @@ class App.Utils
     tmp.find('blockquote').remove()
     text = tmp.text()
 
-    matchwords = [__('Attachment'), __('attachment'), __('Attached'), __('attached'), __('Enclosed'), __('enclosed'), __('Enclosure'), __('enclosure')]
-    for word in matchwords
-      # en
-      attachmentTranslatedRegExp = new RegExp("\\W#{word}\\W", 'i')
-      return word if text.match(attachmentTranslatedRegExp)
+    matchwords = __('attachment,attached,enclosed,enclosure')
 
-      # user locale
-      attachmentTranslated = App.i18n.translateContent(word)
-      attachmentTranslatedRegExp = new RegExp("\\W#{attachmentTranslated}\\W", 'i')
-      return attachmentTranslated if text.match(attachmentTranslatedRegExp)
+    #en
+    for word in matchwords.split(',')
+      regexp = new RegExp("\\W#{word}\\W", 'i')
+      return word if text.match(regexp)
+
+    # user locale
+    for word in App.i18n.translateContent(matchwords).split(',')
+      regexp = new RegExp("\\W#{word}\\W", 'i')
+      return word if text.match(regexp)
+
     false
 
   # human readable file size

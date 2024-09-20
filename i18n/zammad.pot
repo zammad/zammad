@@ -1750,20 +1750,13 @@ msgstr ""
 msgid "Attach files"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
-msgid "Attached"
-msgstr ""
-
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco:4
 #: app/views/knowledge_base/public/answers/show.html.erb:17
 msgid "Attached Files"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
 msgstr ""
@@ -4901,7 +4894,7 @@ msgstr ""
 msgid "Did you know? You can help translating %s at:"
 msgstr ""
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:49
 msgid "Did you plan to include attachments with this message?"
 msgstr ""
 
@@ -5648,16 +5641,6 @@ msgstr ""
 
 #: db/seeds/settings.rb:1057
 msgid "Enables users to create their own account via web interface. This setting is only effective if the password login is enabled."
-msgstr ""
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
-msgid "Enclosed"
-msgstr ""
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
-msgid "Enclosure"
 msgstr ""
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
@@ -9866,7 +9849,7 @@ msgstr ""
 msgid "No, just close the ticket"
 msgstr ""
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:52
 msgid "No, thanks"
 msgstr ""
 
@@ -17259,7 +17242,7 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
 msgid "Yes, add attachments now"
 msgstr ""
 
@@ -17778,13 +17761,8 @@ msgid "at least one letter is required"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
-msgid "attached"
-msgstr ""
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
-msgid "attachment"
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+msgid "attachment,attached,enclosed,enclosure"
 msgstr ""
 
 #: app/models/object_manager/attribute.rb:580
@@ -18093,16 +18071,6 @@ msgstr ""
 msgid "email sent to '%s'"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
-msgid "enclosed"
-msgstr ""
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
-msgid "enclosure"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 msgid "ends with"
 msgstr ""
@@ -18314,7 +18282,7 @@ msgid "in process"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1426
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1428
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4

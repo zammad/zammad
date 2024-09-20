@@ -1349,12 +1349,12 @@ QUnit.test("check check attachment reference", assert => {
   assert.equal(verify, result)
 
   message = 'some attachment for you'
-  result = 'Attachment'
+  result = 'attachment'
   verify = App.Utils.checkAttachmentReference(message)
   assert.equal(verify, result)
 
   message = 'your attachment.'
-  result = 'Attachment'
+  result = 'attachment'
   verify = App.Utils.checkAttachmentReference(message)
   assert.equal(verify, result)
 
@@ -1374,7 +1374,7 @@ QUnit.test("check check attachment reference", assert => {
   assert.equal(verify, result)
 
   message = 'As enclosed you will find.'
-  result = 'Enclosed'
+  result = 'enclosed'
   verify = App.Utils.checkAttachmentReference(message)
   assert.equal(verify, result)
 
