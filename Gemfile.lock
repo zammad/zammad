@@ -650,7 +650,6 @@ GEM
     snaky_hash (2.0.1)
       hashie
       version_gem (~> 1.1, >= 1.1.1)
-    sorbet-runtime (0.5.11292)
     sprockets (3.7.5)
       base64
       concurrent-ruby (~> 1.0)
@@ -736,10 +735,9 @@ GEM
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
-    whatsapp_sdk (0.12.1)
+    whatsapp_sdk (0.13.0)
       faraday (~> 2)
       faraday-multipart (~> 1)
-      sorbet-runtime (~> 0.5)
       zeitwerk (~> 2)
     write_xlsx (1.12.1)
       nkf
