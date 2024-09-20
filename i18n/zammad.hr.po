@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-17 05:57+0000\n"
+"PO-Revision-Date: 2024-09-20 04:50+0000\n"
 "Last-Translator: Ivan Perovic <ip@zammad.com>\n"
 "Language-Team: Croatian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hr/>\n"
@@ -1449,7 +1449,7 @@ msgstr "Nakon odobrenja, molimo, ponovno povežite Vaš Exchange račun."
 
 #: app/assets/javascripts/app/views/microsoft365/admin_consent.jst.eco:4
 msgid "After approval, please re-connect your Microsoft365 mailbox."
-msgstr "Nakon odobrenja, molimo ponovno povežite vaš Microsoft365 pretinac."
+msgstr "Nakon odobrenja, molimo ponovno povežite Vaš Microsoft365 pretinac."
 
 #: app/assets/javascripts/app/views/package.jst.eco:12
 msgid ""
@@ -1465,11 +1465,11 @@ msgid ""
 "will become your username, and the token itself will be your password."
 msgstr ""
 "Nakon završetka uvoza, račun povezan s API tokenom će postati Vaše "
-"korisničko ime, a sam token vaša lozinka."
+"korisničko ime, a sam token Vaša lozinka."
 
 #: app/assets/javascripts/app/views/session.jst.eco:11
 msgid "Age"
-msgstr "Godina"
+msgstr "Starost"
 
 #: app/assets/javascripts/app/views/popover/ticket.jst.eco:6
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:13
@@ -1485,7 +1485,7 @@ msgstr "Ime agenta"
 
 #: db/seeds/settings.rb:3103
 msgid "Agent Name + FromSeparator + System Address Display Name"
-msgstr "Ime agenta + FromSeparator + Zaslonsko ime adrese sustava"
+msgstr "Ime agenta + od + ime adrese sustava"
 
 #: db/seeds/settings.rb:3456
 msgid "Agent idle timeout"

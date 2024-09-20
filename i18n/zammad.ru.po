@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-19 04:37+0000\n"
+"PO-Revision-Date: 2024-09-20 04:50+0000\n"
 "Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
@@ -3757,7 +3757,7 @@ msgstr "Создать перевод"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue:83
 msgid "Create account"
-msgstr "Создать аккаунт"
+msgstr "Создать учётную запись"
 
 #: db/seeds/permissions.rb:473
 msgid "Create and set up %s"
@@ -3798,7 +3798,7 @@ msgstr "Создать новую заявку для этого пользов�
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:65
 msgid "Create organizations automatically if record has one."
-msgstr "Создавать организации автоматически если запись содержит ..."
+msgstr "Создавать организации автоматически, если запись содержит одну."
 
 #: app/assets/javascripts/app/models/sla.coffee:7
 msgid ""
@@ -3905,7 +3905,7 @@ msgstr "Создал"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:542
 msgid "Creating new tickets via web is disabled."
-msgstr "Создание новых заявок через Интернет отключено."
+msgstr "Создание новых заявок через веб отключено."
 
 #: app/models/report.rb:85
 msgid "Creation Channels"
@@ -3917,7 +3917,7 @@ msgstr "Маска создания"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:154
 msgid "Crop Image"
-msgstr "Обрезать Изображение"
+msgstr "Обрезать изображение"
 
 #: app/assets/javascripts/app/views/monitoring.jst.eco:26
 msgid "Current Status"
@@ -3931,7 +3931,7 @@ msgstr "Текущий ключ"
 #: app/assets/javascripts/app/models/signature.coffee:21
 #: app/assets/javascripts/app/models/text_module.coffee:21
 msgid "Current User"
-msgstr "Текущий Пользователь"
+msgstr "Текущий пользователь"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:71
 msgid "Current password"
@@ -3940,7 +3940,7 @@ msgstr "Текущий пароль"
 #: app/controllers/application_controller/has_user.rb:42
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
 msgstr ""
-"Текущий пользователь не имеет разрешения на использование 'From'/'X-On-"
+"Текущий пользователь не имеет разрешения на использование 'From' / 'X-On-"
 "Behalf-Of'!"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue:227
@@ -4019,7 +4019,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/organization.coffee:7
 #: db/seeds/object_manager_attributes.rb:1552
 msgid "Customers in the organization can view each other's items."
-msgstr "Сотрудники одной организации могут просматривать заявки друг друга."
+msgstr "Клиенты одной организации могут просматривать заявки друг друга."
 
 #: app/assets/javascripts/app/models/job.coffee:12
 #: app/assets/javascripts/app/models/trigger.coffee:11
@@ -4102,7 +4102,7 @@ msgstr "День"
 
 #: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee:7
 msgid "Day(s)"
-msgstr "День (и)"
+msgstr "День(дни)"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:2
 msgid "Days"
