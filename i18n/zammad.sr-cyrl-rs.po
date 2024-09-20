@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-17 05:57+0000\n"
+"PO-Revision-Date: 2024-09-20 04:50+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -1383,7 +1383,7 @@ msgstr "Додај све вредности"
 msgid "Add attachment option to upload."
 msgstr "Додај опцију прилога за отпремање."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:271
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:270
 msgid "Add bullet list"
 msgstr "Додај листу са тачкама"
 
@@ -1404,7 +1404,7 @@ msgstr "Додај имејл поруку"
 msgid "Add empty checklist"
 msgstr "Додај празан списак"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:193
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
 msgid "Add first level heading"
 msgstr "Додај наслов првог реда"
 
@@ -1412,11 +1412,11 @@ msgstr "Додај наслов првог реда"
 msgid "Add from a template"
 msgstr "Додај по шаблону"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:186
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
 msgid "Add heading"
 msgstr "Додај наслов"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:131
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:130
 msgid "Add image"
 msgstr "Додај слику"
 
@@ -1424,7 +1424,7 @@ msgstr "Додај слику"
 msgid "Add internal note"
 msgstr "Додај интерну напомену"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:153
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
 msgid "Add link"
 msgstr "Додај везу"
 
@@ -1438,7 +1438,7 @@ msgstr "Додај поруку"
 msgid "Add note"
 msgstr "Додај напомену"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:258
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:257
 msgid "Add ordered list"
 msgstr "Додај листу са бројевима"
 
@@ -1452,7 +1452,7 @@ msgstr "Додај позив"
 msgid "Add reply"
 msgstr "Додај одговор"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:204
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:203
 msgid "Add second level heading"
 msgstr "Додај наслов другог реда"
 
@@ -1473,7 +1473,7 @@ msgstr "Додај SMS"
 msgid "Add subclause"
 msgstr "Додај потклаузулу"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:215
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:214
 msgid "Add third level heading"
 msgstr "Додај наслов трећег реда"
 
@@ -2104,8 +2104,8 @@ msgstr "Да ли сте сигурни? Имате измене које ће �
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:45
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:417
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:260
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:51
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:259
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:50
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "Да ли сте сигурни? Имате незапамћене измене које ће бити изгубљене."
 
@@ -3076,7 +3076,7 @@ msgstr "Измени редослед"
 msgid "Change personal account password."
 msgstr "Измена личне лозинке налога."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:228
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
 msgid "Change text color"
 msgstr "Измени боју текста"
 
@@ -5906,14 +5906,14 @@ msgstr "Откажи чланак"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:47
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:419
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:262
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:53
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:261
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:52
 msgid "Discard changes"
 msgstr "Откажи промене"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:75
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:162
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:161
 msgid "Discard your unsaved changes"
 msgstr "Откажи своје несачуване измене"
 
@@ -6236,10 +6236,8 @@ msgid "Editing on Desktop"
 msgstr "Мења у основном приказу"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketLiveUsers.vue:57
-#, fuzzy
-#| msgid "Editing on Desktop"
 msgid "Editing on Mobile"
-msgstr "Мења у основном приказу"
+msgstr "Мења у мобилном приказу"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 msgid "Editor"
@@ -6788,7 +6786,7 @@ msgstr "Унеси исправну имејл адресу."
 msgid "Enter credentials"
 msgstr "Унеси креденцијале"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:158
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
 msgid "Enter link URL"
 msgstr "Унеси URL линка"
 
@@ -6992,7 +6990,7 @@ msgstr "Ескалација у"
 
 #: app/assets/javascripts/app/lib/app_post/popover_provider/escalation_popover_provider.coffee:8
 #: app/assets/javascripts/app/views/sla/index.jst.eco:35
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:182
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:181
 msgid "Escalation Times"
 msgstr "Времена ескалације"
 
@@ -7421,7 +7419,7 @@ msgstr "Први одзив у мин"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:17
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:5
 #: app/assets/javascripts/app/views/sla/index.jst.eco:37
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:186
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:185
 msgid "First Response Time"
 msgstr "Време првог одзива"
 
@@ -7560,7 +7558,7 @@ msgstr "Форматирај као //прецртано//"
 msgid "Format as _underlined_"
 msgstr "Форматирај као _подвучено_"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:99
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:98
 msgid "Format as bold"
 msgstr "Форматирај као подебљано"
 
@@ -7576,7 +7574,7 @@ msgstr "Форматирај као h2 заглавље"
 msgid "Format as h3 heading"
 msgstr "Форматирај као h3 заглавље"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:107
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:106
 msgid "Format as italic"
 msgstr "Форматирај као курзив"
 
@@ -7584,11 +7582,11 @@ msgstr "Форматирај као курзив"
 msgid "Format as ordered list"
 msgstr "Форматирај као листу са бројевима"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:123
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:122
 msgid "Format as strikethrough"
 msgstr "Форматирај као прецртано"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:115
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:114
 msgid "Format as underlined"
 msgstr "Форматирај као подвучено"
 
@@ -7734,7 +7732,7 @@ msgstr "Сервис географске локације"
 msgid "Get Started"
 msgstr "Први кораци"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:218
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:217
 msgid "Get notified"
 msgstr "Буди обавештен(а)"
 
@@ -7895,7 +7893,7 @@ msgstr "Google клијентска шифра"
 
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
 msgid "Got it!"
-msgstr ""
+msgstr "Разумем!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:16
 msgid "Green"
@@ -8795,7 +8793,7 @@ msgid "Including private key."
 msgstr "Укључује и тајни кључ."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:328
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:327
 msgid "Incomplete Ticket Checklist"
 msgstr "Некомплетан списак задатака"
 
@@ -8825,7 +8823,7 @@ msgstr "Увећај вредност минута"
 msgid "Increment seconds value"
 msgstr "Увећај вредност секунди"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:236
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
 msgid "Indent text"
 msgstr "Увуци текст"
 
@@ -8875,7 +8873,7 @@ msgid "Input field must be text, password, tel, fax, email or url type."
 msgstr ""
 "Поље уноса мора бити типа текста, лозинке, телефона, факса, имејла или URL-а."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:320
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
 msgid "Insert code block"
 msgstr "Додај блок кôда"
 
@@ -8887,7 +8885,7 @@ msgstr "Додај колону после"
 msgid "Insert column before"
 msgstr "Додај колону пре"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:309
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
 msgid "Insert inline code"
 msgstr "Додај уметнути кôд"
 
@@ -8899,15 +8897,15 @@ msgstr "Додај ред изнад"
 msgid "Insert row below"
 msgstr "Додај ред испод"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:292
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
 msgid "Insert table"
 msgstr "Додај табелу"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:343
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
 msgid "Insert text from Knowledge Base article"
 msgstr "Убаци текст из чланка базе знања"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:351
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:350
 msgid "Insert text from text module"
 msgstr "Убаци текст из текстуалног исечка"
 
@@ -10256,7 +10254,7 @@ msgstr "Успешно преузимање медијског прилога."
 msgid "Members"
 msgstr "Чланови"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:335
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 msgid "Mention user"
 msgstr "Помени корисника"
 
@@ -10786,10 +10784,8 @@ msgid "New Group"
 msgstr "Нова група"
 
 #: app/assets/javascripts/app/controllers/clues/keyboard_shortcuts_clues.coffee:5
-#, fuzzy
-#| msgid "Keyboard Shortcuts"
 msgid "New Keyboard Shortcuts"
-msgstr "Пречице на тастатури"
+msgstr "Нове пречице на тастатури"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:22
 msgid "New Macro"
@@ -11280,7 +11276,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Без x-zammad-session-user-id, пошиљалац није подешен!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:331
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:330
 msgid "No, just close the ticket"
 msgstr "Не, само затвори тикет"
 
@@ -12002,7 +11998,7 @@ msgstr "Одлазнo:"
 msgid "Outdated Browser"
 msgstr "Застарео претраживач"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:247
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:246
 msgid "Outdent text"
 msgstr "Развуци текст"
 
@@ -13047,7 +13043,7 @@ msgstr "Уклони апликацију за аутентификацију"
 msgid "Remove checklist"
 msgstr "Обриши списак"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:284
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:283
 msgid "Remove formatting"
 msgstr "Уклони форматирање"
 
@@ -14791,7 +14787,7 @@ msgstr "SMS"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:71
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:17
 #: app/assets/javascripts/app/views/sla/index.jst.eco:49
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:194
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:193
 msgid "Solution Time"
 msgstr "Време решења"
 
@@ -15136,7 +15132,7 @@ msgstr "Претплаћени тикети"
 msgid "Subscribed tickets"
 msgstr "Претплаћени тикети"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:212
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:211
 msgid "Subscribers"
 msgstr "Претплатници"
 
@@ -15268,7 +15264,7 @@ msgstr "Ознака „%s” већ постоји."
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:145
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:78
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:204
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:203
 #: app/views/knowledge_base/public/answers/show.html.erb:30
 #: db/seeds/object_manager_attributes.rb:392 db/seeds/permissions.rb:59
 #: lib/excel_sheet/ticket.rb:33
@@ -17597,10 +17593,8 @@ msgstr ""
 "</div>\n"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/TicketScreenBehavior.vue:56
-#, fuzzy
-#| msgid "Ticket customer updated successfully."
 msgid "Ticket screen behavior updated successfully"
-msgstr "Клијент тикета је успешно освежен."
+msgstr "Понашање екрана тикета је успешно освежено"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:131
 msgid ""
@@ -17629,13 +17623,13 @@ msgstr "Наслов тикета"
 msgid "Ticket update"
 msgstr "Освежавање тикета"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:473
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:472
 msgid "Ticket update failed."
 msgstr "Неуспело освежавање тикета."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:425
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:172
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:424
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:171
 msgid "Ticket updated successfully."
 msgstr "Тикет је успешно освежен."
 
@@ -18529,7 +18523,7 @@ msgstr "Освежи заједнички нацрт"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:32
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:11
 #: app/assets/javascripts/app/views/sla/index.jst.eco:41
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:190
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:189
 msgid "Update Time"
 msgstr "Време освежавања"
 
@@ -19537,7 +19531,7 @@ msgid "Yes, add attachments now"
 msgstr "Да, додај прилог одмах"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:330
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:329
 msgid "Yes, open the checklist"
 msgstr "Да, прикажи списак"
 
@@ -19708,6 +19702,8 @@ msgid ""
 "You can open the Keyboard Shortcuts dialog here and view the new and "
 "improved layout, or revert to the old one if you prefer it."
 msgstr ""
+"Овде можете отворити дијалог пречица на тастатури и прегледати нови и "
+"побољшани распоред, или се вратити на стари уколико желите."
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:282
 msgid ""
@@ -19830,7 +19826,7 @@ msgstr "Морате да дозволите приступ вашој каме�
 msgid "You have unchecked items in the checklist."
 msgstr "Имате неодзначене задатке на списку."
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:325
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:324
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -20034,7 +20030,7 @@ msgstr ""
 msgid "Zammad"
 msgstr "Zammad"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:328
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:327
 msgid "Zammad Features"
 msgstr "Zammad функције"
 
@@ -21063,7 +21059,7 @@ msgstr "ново и отворено"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:52
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:85
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:84
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:16
 #: db/seeds/settings.rb:590
@@ -21569,7 +21565,7 @@ msgstr "у следећих (релативно)"
 #: app/assets/javascripts/app/models/public_link.coffee:10
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:15
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:84
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:83
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:15
 #: db/seeds/object_manager_attributes.rb:1301 db/seeds/settings.rb:589

@@ -1369,7 +1369,7 @@ msgstr ""
 msgid "Add attachment option to upload."
 msgstr "Bæta við viðhengisvalkost fyrir að hlaða upp skrám."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:271
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:270
 msgid "Add bullet list"
 msgstr ""
 
@@ -1396,7 +1396,7 @@ msgstr "tölvupóstur"
 msgid "Add empty checklist"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:193
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
 msgid "Add first level heading"
 msgstr ""
 
@@ -1406,13 +1406,13 @@ msgstr ""
 msgid "Add from a template"
 msgstr "Vista sem skapalón"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:186
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
 #, fuzzy
 #| msgid "Add Tag"
 msgid "Add heading"
 msgstr "Bæta við merkispjaldi"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:131
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:130
 #, fuzzy
 #| msgid "Add Tag"
 msgid "Add image"
@@ -1424,7 +1424,7 @@ msgstr "Bæta við merki"
 msgid "Add internal note"
 msgstr "Bæta við athugasemd"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:153
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
 #, fuzzy
 #| msgid "Add Link"
 msgid "Add link"
@@ -1444,7 +1444,7 @@ msgstr "Bæta við merki"
 msgid "Add note"
 msgstr "Bæta við þjark"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:258
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:257
 #, fuzzy
 #| msgid "Format as ordered list"
 msgid "Add ordered list"
@@ -1462,7 +1462,7 @@ msgstr ""
 msgid "Add reply"
 msgstr "svara"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:204
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:203
 msgid "Add second level heading"
 msgstr ""
 
@@ -1485,7 +1485,7 @@ msgstr "Bæta við merki"
 msgid "Add subclause"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:215
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:214
 msgid "Add third level heading"
 msgstr ""
 
@@ -2098,8 +2098,8 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:45
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:417
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:260
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:51
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:259
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:50
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr ""
 
@@ -3102,7 +3102,7 @@ msgstr "Breyta röðun"
 msgid "Change personal account password."
 msgstr "Breyta lykilorði þíns reiknings."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:228
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
 #, fuzzy
 #| msgid "Change order"
 msgid "Change text color"
@@ -5926,8 +5926,8 @@ msgstr "Hunsa breytingar"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:47
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:419
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:262
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:53
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:261
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:52
 #, fuzzy
 #| msgid "Discard Changes"
 msgid "Discard changes"
@@ -5935,7 +5935,7 @@ msgstr "Hunsa breytingar"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:75
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:162
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:161
 msgid "Discard your unsaved changes"
 msgstr "Fleygja óvistuðum breytingum"
 
@@ -6847,7 +6847,7 @@ msgstr "Sláðu inn gilt netfang."
 msgid "Enter credentials"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:158
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
 msgid "Enter link URL"
 msgstr ""
 
@@ -7019,7 +7019,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/popover_provider/escalation_popover_provider.coffee:8
 #: app/assets/javascripts/app/views/sla/index.jst.eco:35
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:182
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:181
 msgid "Escalation Times"
 msgstr ""
 
@@ -7496,7 +7496,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:17
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:5
 #: app/assets/javascripts/app/views/sla/index.jst.eco:37
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:186
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:185
 msgid "First Response Time"
 msgstr "Tími fyrsta viðbragð"
 
@@ -7641,7 +7641,7 @@ msgstr "Forsníða sem //yfirstrikað//"
 msgid "Format as _underlined_"
 msgstr "Forsníða sem _undirstrikað_"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:99
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:98
 #, fuzzy
 #| msgid "Format as |bold|"
 msgid "Format as bold"
@@ -7659,7 +7659,7 @@ msgstr "Forsníða sem h2 titil"
 msgid "Format as h3 heading"
 msgstr "Forsníða sem h3 titil"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:107
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:106
 #, fuzzy
 #| msgid "Format as ||italic||"
 msgid "Format as italic"
@@ -7669,13 +7669,13 @@ msgstr "Forsníða sem ||skáletrað||"
 msgid "Format as ordered list"
 msgstr "Forsníða sem númeraðan lista"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:123
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:122
 #, fuzzy
 #| msgid "Format as //strikethrough//"
 msgid "Format as strikethrough"
 msgstr "Forsníða sem //yfirstrikað//"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:115
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:114
 #, fuzzy
 #| msgid "Format as _underlined_"
 msgid "Format as underlined"
@@ -7836,7 +7836,7 @@ msgstr "Staðsetningarþjónusta"
 msgid "Get Started"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:218
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:217
 #, fuzzy
 #| msgid "Account not verified"
 msgid "Get notified"
@@ -8935,7 +8935,7 @@ msgid "Including private key."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:328
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:327
 msgid "Incomplete Ticket Checklist"
 msgstr ""
 
@@ -8973,7 +8973,7 @@ msgstr "mínútur"
 msgid "Increment seconds value"
 msgstr "mínútur"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:236
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
 #, fuzzy
 #| msgid "Text modules"
 msgid "Indent text"
@@ -9025,7 +9025,7 @@ msgstr "Inline content could not be generated."
 msgid "Input field must be text, password, tel, fax, email or url type."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:320
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
 msgid "Insert code block"
 msgstr ""
 
@@ -9037,7 +9037,7 @@ msgstr ""
 msgid "Insert column before"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:309
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
 #, fuzzy
 #| msgid "Text modules"
 msgid "Insert inline code"
@@ -9051,19 +9051,19 @@ msgstr ""
 msgid "Insert row below"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:292
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
 #, fuzzy
 #| msgid "Text modules"
 msgid "Insert table"
 msgstr "Texta einingar"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:343
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
 #, fuzzy
 #| msgid "Delete Knowledge Base"
 msgid "Insert text from Knowledge Base article"
 msgstr "Eyða þekkingarbrunni"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:351
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:350
 #, fuzzy
 #| msgid "Text modules"
 msgid "Insert text from text module"
@@ -10462,7 +10462,7 @@ msgstr "Niðurhal miðils heppnaðist."
 msgid "Members"
 msgstr "Meðlimir"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:335
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 #, fuzzy
 #| msgid "current user"
 msgid "Mention user"
@@ -11544,7 +11544,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:331
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:330
 #, fuzzy
 #| msgid "You can no longer see the ticket."
 msgid "No, just close the ticket"
@@ -12334,7 +12334,7 @@ msgstr "Útfarandi:"
 msgid "Outdated Browser"
 msgstr "Vafri"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:247
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:246
 msgid "Outdent text"
 msgstr ""
 
@@ -13455,7 +13455,7 @@ msgstr "Auðkenning"
 msgid "Remove checklist"
 msgstr "Fjarlægja"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:284
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:283
 #, fuzzy
 #| msgid "Removes the formatting"
 msgid "Remove formatting"
@@ -15302,7 +15302,7 @@ msgstr "sms"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:71
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:17
 #: app/assets/javascripts/app/views/sla/index.jst.eco:49
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:194
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:193
 msgid "Solution Time"
 msgstr "Úrlausnartími"
 
@@ -15668,7 +15668,7 @@ msgstr ""
 msgid "Subscribed tickets"
 msgstr "Mínar Beiðnir í Áskrift"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:212
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:211
 msgid "Subscribers"
 msgstr "Áskrifendur"
 
@@ -15803,7 +15803,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:145
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:78
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:204
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:203
 #: app/views/knowledge_base/public/answers/show.html.erb:30
 #: db/seeds/object_manager_attributes.rb:392 db/seeds/permissions.rb:59
 #: lib/excel_sheet/ticket.rb:33
@@ -18194,15 +18194,15 @@ msgstr "Titill Beiðnar"
 msgid "Ticket update"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:473
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:472
 #, fuzzy
 #| msgid "2. Ticket Update"
 msgid "Ticket update failed."
 msgstr "2. Uppfæra Beiðni"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:425
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:172
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:424
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:171
 msgid "Ticket updated successfully."
 msgstr "Breyting beiðnar heppnaðist."
 
@@ -19124,7 +19124,7 @@ msgstr "Samnýtt"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:32
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:11
 #: app/assets/javascripts/app/views/sla/index.jst.eco:41
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:190
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:189
 msgid "Update Time"
 msgstr "Uppfæra tíma"
 
@@ -20108,7 +20108,7 @@ msgid "Yes, add attachments now"
 msgstr "Reyndu aftur að hala niður viðhengi"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:330
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:329
 #, fuzzy
 #| msgid "Remove"
 msgid "Yes, open the checklist"
@@ -20375,7 +20375,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:325
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:324
 #, fuzzy
 #| msgid "Tab has changed, do you really want to close it?"
 msgid ""
@@ -20579,7 +20579,7 @@ msgstr ""
 msgid "Zammad"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:328
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:327
 #, fuzzy
 #| msgid "This is Zammad version %s"
 msgid "Zammad Features"
@@ -21675,7 +21675,7 @@ msgstr "ný & opin"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:52
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:85
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:84
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:16
 #: db/seeds/settings.rb:590
@@ -22214,7 +22214,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/public_link.coffee:10
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:15
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:84
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:83
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:15
 #: db/seeds/object_manager_attributes.rb:1301 db/seeds/settings.rb:589

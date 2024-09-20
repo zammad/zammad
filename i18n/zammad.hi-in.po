@@ -1341,7 +1341,7 @@ msgstr ""
 msgid "Add attachment option to upload."
 msgstr " अपलोड करने के लिए अनुलग्नक विकल्प जोड़ें।"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:271
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:270
 msgid "Add bullet list"
 msgstr ""
 
@@ -1368,7 +1368,7 @@ msgstr "ईमेल"
 msgid "Add empty checklist"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:193
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
 msgid "Add first level heading"
 msgstr ""
 
@@ -1376,13 +1376,13 @@ msgstr ""
 msgid "Add from a template"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:186
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
 #, fuzzy
 #| msgid "Add Tag"
 msgid "Add heading"
 msgstr " टैग जोड़ो"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:131
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:130
 #, fuzzy
 #| msgid "Add Tag"
 msgid "Add image"
@@ -1394,7 +1394,7 @@ msgstr " टैग जोड़ो"
 msgid "Add internal note"
 msgstr " टिप्पणी जोड़ें"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:153
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
 #, fuzzy
 #| msgid "Add Link"
 msgid "Add link"
@@ -1414,7 +1414,7 @@ msgstr " टैग जोड़ो"
 msgid "Add note"
 msgstr "बॉट जोड़ें"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:258
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:257
 msgid "Add ordered list"
 msgstr ""
 
@@ -1430,7 +1430,7 @@ msgstr ""
 msgid "Add reply"
 msgstr " जवाब दे दो"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:204
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:203
 msgid "Add second level heading"
 msgstr ""
 
@@ -1453,7 +1453,7 @@ msgstr " टैग जोड़ो"
 msgid "Add subclause"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:215
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:214
 msgid "Add third level heading"
 msgstr ""
 
@@ -2082,8 +2082,8 @@ msgstr ""
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:45
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:417
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:260
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:51
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:259
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:50
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr ""
 
@@ -3092,7 +3092,7 @@ msgstr ""
 msgid "Change personal account password."
 msgstr "आप अपने पासवर्ड का अनुरोध कर सकते हैं"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:228
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
 #, fuzzy
 #| msgid "Customer"
 msgid "Change text color"
@@ -5910,8 +5910,8 @@ msgstr "बनाएँ"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:47
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:419
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:262
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:53
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:261
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:52
 #, fuzzy
 #| msgid "Discard your unsaved changes."
 msgid "Discard changes"
@@ -5919,7 +5919,7 @@ msgstr "अपने सहेजे न गए परिवर्तनों �
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:75
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:162
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:161
 #, fuzzy
 #| msgid "Discard your unsaved changes."
 msgid "Discard your unsaved changes"
@@ -6825,7 +6825,7 @@ msgstr ""
 msgid "Enter credentials"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:158
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
 msgid "Enter link URL"
 msgstr ""
 
@@ -7003,7 +7003,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/popover_provider/escalation_popover_provider.coffee:8
 #: app/assets/javascripts/app/views/sla/index.jst.eco:35
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:182
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:181
 msgid "Escalation Times"
 msgstr ""
 
@@ -7463,7 +7463,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:17
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:5
 #: app/assets/javascripts/app/views/sla/index.jst.eco:37
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:186
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:185
 msgid "First Response Time"
 msgstr ""
 
@@ -7606,7 +7606,7 @@ msgstr ""
 msgid "Format as _underlined_"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:99
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:98
 msgid "Format as bold"
 msgstr ""
 
@@ -7622,7 +7622,7 @@ msgstr ""
 msgid "Format as h3 heading"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:107
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:106
 msgid "Format as italic"
 msgstr ""
 
@@ -7630,11 +7630,11 @@ msgstr ""
 msgid "Format as ordered list"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:123
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:122
 msgid "Format as strikethrough"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:115
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:114
 msgid "Format as underlined"
 msgstr ""
 
@@ -7787,7 +7787,7 @@ msgstr ""
 msgid "Get Started"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:218
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:217
 #, fuzzy
 #| msgid "Account not verified"
 msgid "Get notified"
@@ -8853,7 +8853,7 @@ msgid "Including private key."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:328
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:327
 msgid "Incomplete Ticket Checklist"
 msgstr ""
 
@@ -8891,7 +8891,7 @@ msgstr "मिनटों"
 msgid "Increment seconds value"
 msgstr "मिनटों"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:236
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
 #, fuzzy
 #| msgid "Text modules"
 msgid "Indent text"
@@ -8943,7 +8943,7 @@ msgstr "% s ऑब्जेक्ट (s) बनाए जाते हैं।"
 msgid "Input field must be text, password, tel, fax, email or url type."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:320
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
 msgid "Insert code block"
 msgstr ""
 
@@ -8955,7 +8955,7 @@ msgstr ""
 msgid "Insert column before"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:309
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
 #, fuzzy
 #| msgid "Text modules"
 msgid "Insert inline code"
@@ -8969,17 +8969,17 @@ msgstr ""
 msgid "Insert row below"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:292
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
 #, fuzzy
 #| msgid "Text modules"
 msgid "Insert table"
 msgstr "पाठ मॉड्यूल"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:343
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
 msgid "Insert text from Knowledge Base article"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:351
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:350
 #, fuzzy
 #| msgid "Text modules"
 msgid "Insert text from text module"
@@ -10386,7 +10386,7 @@ msgstr " पंजीकरण सफल!"
 msgid "Members"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:335
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 msgid "Mention user"
 msgstr ""
 
@@ -11492,7 +11492,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:331
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:330
 #, fuzzy
 #| msgid "You have closed a ticket"
 msgid "No, just close the ticket"
@@ -12308,7 +12308,7 @@ msgstr " आउटबाउंड"
 msgid "Outdated Browser"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:247
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:246
 msgid "Outdent text"
 msgstr ""
 
@@ -13428,7 +13428,7 @@ msgstr " सत्यापन ईमेल पुनः भेजे"
 msgid "Remove checklist"
 msgstr "हटायें"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:284
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:283
 #, fuzzy
 #| msgid "Removes the formatting"
 msgid "Remove formatting"
@@ -15253,7 +15253,7 @@ msgstr "एसएमएस"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:71
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:17
 #: app/assets/javascripts/app/views/sla/index.jst.eco:49
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:194
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:193
 msgid "Solution Time"
 msgstr "समाधान समय"
 
@@ -15617,7 +15617,7 @@ msgstr ""
 msgid "Subscribed tickets"
 msgstr "मेरे टिकट"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:212
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:211
 #, fuzzy
 #| msgid "My Tickets"
 msgid "Subscribers"
@@ -15756,7 +15756,7 @@ msgstr "% s ऑब्जेक्ट (s) हटा दिए गए हैं।
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:145
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:78
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:204
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:203
 #: app/views/knowledge_base/public/answers/show.html.erb:30
 #: db/seeds/object_manager_attributes.rb:392 db/seeds/permissions.rb:59
 #: lib/excel_sheet/ticket.rb:33
@@ -18328,15 +18328,15 @@ msgstr "टिकट अपडेट"
 msgid "Ticket update"
 msgstr "टिकट अपडेट"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:473
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:472
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket update failed."
 msgstr "टिकट अपडेट"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:425
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:172
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:424
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:171
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Ticket updated successfully."
@@ -19283,7 +19283,7 @@ msgstr "पर अपडेट किया गया"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:32
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:11
 #: app/assets/javascripts/app/views/sla/index.jst.eco:41
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:190
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:189
 msgid "Update Time"
 msgstr "अद्यतन समय"
 
@@ -20303,7 +20303,7 @@ msgid "Yes, add attachments now"
 msgstr " अपलोड करने के लिए अनुलग्नक विकल्प जोड़ें।"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:330
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:329
 #, fuzzy
 #| msgid "Remove"
 msgid "Yes, open the checklist"
@@ -20593,7 +20593,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:325
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:324
 #, fuzzy
 #| msgid "Sure to delete this object?"
 msgid ""
@@ -20814,7 +20814,7 @@ msgstr "ईमेल सत्यापित करने में असम�
 msgid "Zammad"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:328
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:327
 #, fuzzy
 #| msgid "This is Zammad version %s"
 msgid "Zammad Features"
@@ -21902,7 +21902,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:52
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:85
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:84
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:16
 #: db/seeds/settings.rb:590
@@ -22441,7 +22441,7 @@ msgstr "अगले (रिश्तेदार) के भीतर"
 #: app/assets/javascripts/app/models/public_link.coffee:10
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:15
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:84
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:83
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:15
 #: db/seeds/object_manager_attributes.rb:1301 db/seeds/settings.rb:589

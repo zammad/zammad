@@ -1359,7 +1359,7 @@ msgstr "添加所有值"
 msgid "Add attachment option to upload."
 msgstr "允许上传附件。"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:271
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:270
 msgid "Add bullet list"
 msgstr "添加项目符号列表"
 
@@ -1386,7 +1386,7 @@ msgstr "E-Mail"
 msgid "Add empty checklist"
 msgstr "添加项目符号列表"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:193
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
 msgid "Add first level heading"
 msgstr "添加一级标题"
 
@@ -1396,11 +1396,11 @@ msgstr "添加一级标题"
 msgid "Add from a template"
 msgstr "保存为模板"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:186
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
 msgid "Add heading"
 msgstr "新增标题"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:131
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:130
 msgid "Add image"
 msgstr "添加图片"
 
@@ -1410,7 +1410,7 @@ msgstr "添加图片"
 msgid "Add internal note"
 msgstr "增加注释"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:153
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
 msgid "Add link"
 msgstr "添加链接"
 
@@ -1428,7 +1428,7 @@ msgstr "新增消息"
 msgid "Add note"
 msgstr "添加机器人"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:258
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:257
 msgid "Add ordered list"
 msgstr "添加有序列表"
 
@@ -1442,7 +1442,7 @@ msgstr ""
 msgid "Add reply"
 msgstr "添加回复"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:204
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:203
 msgid "Add second level heading"
 msgstr "添加二级标题"
 
@@ -1465,7 +1465,7 @@ msgstr "添加图片"
 msgid "Add subclause"
 msgstr "添加子句"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:215
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:214
 msgid "Add third level heading"
 msgstr "添加三级标题"
 
@@ -2077,8 +2077,8 @@ msgstr "你确定吗？您所做的更改将会丢失。"
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:45
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:417
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:260
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:51
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:259
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:50
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "你确定吗？您有未保存的更改，这些更改将会丢失。"
 
@@ -3023,7 +3023,7 @@ msgstr "更改顺序"
 msgid "Change personal account password."
 msgstr "修改个人账户密码。"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:228
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
 msgid "Change text color"
 msgstr "更改字体颜色"
 
@@ -5751,14 +5751,14 @@ msgstr "丢弃文章"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:47
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:419
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:262
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:53
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:261
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:52
 msgid "Discard changes"
 msgstr "放弃更改"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:75
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:162
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:161
 msgid "Discard your unsaved changes"
 msgstr "放弃未保存的改动"
 
@@ -6611,7 +6611,7 @@ msgstr "输入一个有效的电子邮件地址。"
 msgid "Enter credentials"
 msgstr "輸入憑證"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:158
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
 msgid "Enter link URL"
 msgstr "输入链接URL"
 
@@ -6803,7 +6803,7 @@ msgstr "升级在"
 
 #: app/assets/javascripts/app/lib/app_post/popover_provider/escalation_popover_provider.coffee:8
 #: app/assets/javascripts/app/views/sla/index.jst.eco:35
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:182
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:181
 msgid "Escalation Times"
 msgstr "SLA層級提升時間"
 
@@ -7243,7 +7243,7 @@ msgstr "最小的第一回应"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:17
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:5
 #: app/assets/javascripts/app/views/sla/index.jst.eco:37
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:186
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:185
 msgid "First Response Time"
 msgstr "第一响应时间"
 
@@ -7381,7 +7381,7 @@ msgstr "//删除线//格式"
 msgid "Format as _underlined_"
 msgstr "_下划线_格式"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:99
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:98
 msgid "Format as bold"
 msgstr "粗体"
 
@@ -7397,7 +7397,7 @@ msgstr "格式化為H2標題"
 msgid "Format as h3 heading"
 msgstr "格式化為h3標題"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:107
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:106
 msgid "Format as italic"
 msgstr "斜体"
 
@@ -7405,11 +7405,11 @@ msgstr "斜体"
 msgid "Format as ordered list"
 msgstr "格式化為排序列表"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:123
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:122
 msgid "Format as strikethrough"
 msgstr "删除线"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:115
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:114
 msgid "Format as underlined"
 msgstr "下划线"
 
@@ -7556,7 +7556,7 @@ msgstr "Geo 地理位置 服務"
 msgid "Get Started"
 msgstr "开始"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:218
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:217
 msgid "Get notified"
 msgstr "收到通知"
 
@@ -8574,7 +8574,7 @@ msgid "Including private key."
 msgstr "包括私钥。"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:328
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:327
 #, fuzzy
 #| msgid "Incomplete credentials"
 msgid "Incomplete Ticket Checklist"
@@ -8608,7 +8608,7 @@ msgstr "增加分钟值"
 msgid "Increment seconds value"
 msgstr "增加秒值"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:236
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
 msgid "Indent text"
 msgstr "缩进文本"
 
@@ -8656,7 +8656,7 @@ msgstr "无法生成内联内容。"
 msgid "Input field must be text, password, tel, fax, email or url type."
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:320
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
 msgid "Insert code block"
 msgstr "插入代码块"
 
@@ -8668,7 +8668,7 @@ msgstr "在此列后插入列"
 msgid "Insert column before"
 msgstr "在此列前插入列"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:309
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
 msgid "Insert inline code"
 msgstr "插入内联代码"
 
@@ -8680,15 +8680,15 @@ msgstr "在上方插入行"
 msgid "Insert row below"
 msgstr "在下方插入行"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:292
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
 msgid "Insert table"
 msgstr "插入表格"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:343
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
 msgid "Insert text from Knowledge Base article"
 msgstr "插入知识库文章中的文本"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:351
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:350
 msgid "Insert text from text module"
 msgstr "从文本模块插入文本"
 
@@ -10127,7 +10127,7 @@ msgstr "媒体下载成功。"
 msgid "Members"
 msgstr "成员"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:335
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 msgid "Mention user"
 msgstr "提及用户"
 
@@ -11271,7 +11271,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "没有 x-zammad-session-user-id，没有设置发件人！"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:331
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:330
 #, fuzzy
 #| msgid "You have closed a ticket"
 msgid "No, just close the ticket"
@@ -12065,7 +12065,7 @@ msgstr "发送:"
 msgid "Outdated Browser"
 msgstr "过旧的浏览器"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:247
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:246
 msgid "Outdent text"
 msgstr "减少缩进文本"
 
@@ -13137,7 +13137,7 @@ msgstr "验证"
 msgid "Remove checklist"
 msgstr "删除%s"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:284
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:283
 msgid "Remove formatting"
 msgstr "删除格式"
 
@@ -14896,7 +14896,7 @@ msgstr "短信"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:71
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:17
 #: app/assets/javascripts/app/views/sla/index.jst.eco:49
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:194
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:193
 msgid "Solution Time"
 msgstr "解决时间"
 
@@ -15246,7 +15246,7 @@ msgstr "关注工单"
 msgid "Subscribed tickets"
 msgstr "关注工单"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:212
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:211
 msgid "Subscribers"
 msgstr "订阅者"
 
@@ -15379,7 +15379,7 @@ msgstr "标签“%s”已存在。"
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:145
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:78
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:204
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:203
 #: app/views/knowledge_base/public/answers/show.html.erb:30
 #: db/seeds/object_manager_attributes.rb:392 db/seeds/permissions.rb:59
 #: lib/excel_sheet/ticket.rb:33
@@ -17926,15 +17926,15 @@ msgstr "工單更新"
 msgid "Ticket update"
 msgstr "工單更新"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:473
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:472
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket update failed."
 msgstr "工單更新"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:425
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:172
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:424
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:171
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Ticket updated successfully."
@@ -18929,7 +18929,7 @@ msgstr "应用共享草稿"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:32
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:11
 #: app/assets/javascripts/app/views/sla/index.jst.eco:41
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:190
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:189
 msgid "Update Time"
 msgstr "更新时间"
 
@@ -20031,7 +20031,7 @@ msgid "Yes, add attachments now"
 msgstr "允许上传附件。"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:330
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:329
 #, fuzzy
 #| msgid "Remove %s"
 msgid "Yes, open the checklist"
@@ -20333,7 +20333,7 @@ msgstr "您必须允许访问网络摄像头。"
 msgid "You have unchecked items in the checklist."
 msgstr "请选择至少一张门票概述"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:325
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:324
 #, fuzzy
 #| msgid "Do you really want to delete this object?"
 msgid ""
@@ -20559,7 +20559,7 @@ msgstr "無法驗證電子郵件 請與您的管理員聯繫"
 msgid "Zammad"
 msgstr "扎马德"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:328
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:327
 #, fuzzy
 #| msgid "This is Zammad version %s"
 msgid "Zammad Features"
@@ -21702,7 +21702,7 @@ msgstr "新建并打开"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:52
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:85
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:84
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:16
 #: db/seeds/settings.rb:590
@@ -22251,7 +22251,7 @@ msgstr "在下一個 (相對)"
 #: app/assets/javascripts/app/models/public_link.coffee:10
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:15
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:84
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:83
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:15
 #: db/seeds/object_manager_attributes.rb:1301 db/seeds/settings.rb:589

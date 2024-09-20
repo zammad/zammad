@@ -1383,7 +1383,7 @@ msgstr "Lägg till alla värden"
 msgid "Add attachment option to upload."
 msgstr "Lägg till bifogningsalternativ till uppladdning."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:271
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:270
 msgid "Add bullet list"
 msgstr "Lägg till punktlista"
 
@@ -1404,7 +1404,7 @@ msgstr "Lägg till E-post"
 msgid "Add empty checklist"
 msgstr "Lägg till tom checklista"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:193
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
 msgid "Add first level heading"
 msgstr "Lägg till rubrik"
 
@@ -1412,11 +1412,11 @@ msgstr "Lägg till rubrik"
 msgid "Add from a template"
 msgstr "Lägg till från en mall"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:186
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
 msgid "Add heading"
 msgstr "Lägg till rubrik"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:131
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:130
 msgid "Add image"
 msgstr "Lägg till bild"
 
@@ -1424,7 +1424,7 @@ msgstr "Lägg till bild"
 msgid "Add internal note"
 msgstr "Lägg till intern anteckning"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:153
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
 msgid "Add link"
 msgstr "Lägg till länk"
 
@@ -1438,7 +1438,7 @@ msgstr "Lägg till meddelande"
 msgid "Add note"
 msgstr "Lägg till notering"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:258
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:257
 msgid "Add ordered list"
 msgstr "Lägg till ordnad lista"
 
@@ -1452,7 +1452,7 @@ msgstr "Lägg till telefonsamtal"
 msgid "Add reply"
 msgstr "Svara"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:204
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:203
 msgid "Add second level heading"
 msgstr "Lägg till underrubrik"
 
@@ -1473,7 +1473,7 @@ msgstr "Lägg till sms"
 msgid "Add subclause"
 msgstr "Lägg till subclause"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:215
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:214
 msgid "Add third level heading"
 msgstr "Lägg till underrubrik"
 
@@ -2102,8 +2102,8 @@ msgstr "Är du säker? Du har ändringar som kommer förloras."
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:79
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:45
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:417
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:260
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:51
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:259
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:50
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "Är du säker? Du har osparade ändringar som kommer förloras."
 
@@ -3076,7 +3076,7 @@ msgstr "Ändra ordning"
 msgid "Change personal account password."
 msgstr "Ändra Lösenord för personligt konto."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:228
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
 msgid "Change text color"
 msgstr "Ändra textfärg"
 
@@ -5926,14 +5926,14 @@ msgstr "Kassera artikel"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:66
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:47
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:419
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:262
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:53
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:261
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:52
 msgid "Discard changes"
 msgstr "Avbryt ändringar"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:75
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:162
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:161
 msgid "Discard your unsaved changes"
 msgstr "Kasta dina osparade ändringar"
 
@@ -6807,7 +6807,7 @@ msgstr "Ange en giltig e-postadress."
 msgid "Enter credentials"
 msgstr "Ange Inloggningsuppgifter"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:158
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:157
 msgid "Enter link URL"
 msgstr "Ange länkadress"
 
@@ -7015,7 +7015,7 @@ msgstr "Eskalering Vid"
 
 #: app/assets/javascripts/app/lib/app_post/popover_provider/escalation_popover_provider.coffee:8
 #: app/assets/javascripts/app/views/sla/index.jst.eco:35
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:182
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:181
 msgid "Escalation Times"
 msgstr "Eskaleringstider"
 
@@ -7443,7 +7443,7 @@ msgstr "Första svar i Min"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:17
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:5
 #: app/assets/javascripts/app/views/sla/index.jst.eco:37
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:186
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:185
 msgid "First Response Time"
 msgstr "Första svarstid"
 
@@ -7582,7 +7582,7 @@ msgstr "Formatera som //genomstruken//"
 msgid "Format as _underlined_"
 msgstr "Formatera som _understruken_"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:99
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:98
 msgid "Format as bold"
 msgstr "Formatera som fet"
 
@@ -7598,7 +7598,7 @@ msgstr "Formatera som h2-rubrik"
 msgid "Format as h3 heading"
 msgstr "Formatera som h3-rubrik"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:107
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:106
 msgid "Format as italic"
 msgstr "Formatera som kursiv"
 
@@ -7606,11 +7606,11 @@ msgstr "Formatera som kursiv"
 msgid "Format as ordered list"
 msgstr "Formatera som ordnad lista"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:123
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:122
 msgid "Format as strikethrough"
 msgstr "Formatera som genomstruken"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:115
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:114
 msgid "Format as underlined"
 msgstr "Formatera som understruken"
 
@@ -7755,7 +7755,7 @@ msgstr "Geo Location Service"
 msgid "Get Started"
 msgstr "Kom igång"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:218
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:217
 msgid "Get notified"
 msgstr "Bli notifierad"
 
@@ -8822,7 +8822,7 @@ msgid "Including private key."
 msgstr "Inklusive privat nyckel."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:328
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:327
 msgid "Incomplete Ticket Checklist"
 msgstr "Checklistan i ärendet är ofullständig"
 
@@ -8852,7 +8852,7 @@ msgstr "Öka minutvärdet"
 msgid "Increment seconds value"
 msgstr "Öka sekundvärdet"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:236
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
 msgid "Indent text"
 msgstr "Indrag text"
 
@@ -8903,7 +8903,7 @@ msgstr ""
 "Inmatningsfältet måste vara av typen text, lösenord, tel, fax, E-post eller "
 "URL."
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:320
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
 msgid "Insert code block"
 msgstr "Infoga kodblock"
 
@@ -8915,7 +8915,7 @@ msgstr "Infoga kolumn efter"
 msgid "Insert column before"
 msgstr "Infoga kolumn före"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:309
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
 msgid "Insert inline code"
 msgstr "Infoga inline-kod"
 
@@ -8927,15 +8927,15 @@ msgstr "Infoga rad ovanför"
 msgid "Insert row below"
 msgstr "Infoga rad nedan"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:292
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
 msgid "Insert table"
 msgstr "Infoga tabell"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:343
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
 msgid "Insert text from Knowledge Base article"
 msgstr "Infoga text från kunskapsbasartikel"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:351
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:350
 msgid "Insert text from text module"
 msgstr "Infoga text från textmodul"
 
@@ -10286,7 +10286,7 @@ msgstr "Nedladdningen av media lyckades."
 msgid "Members"
 msgstr "Medlemmar"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:335
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 msgid "Mention user"
 msgstr "Nämn användare"
 
@@ -11311,7 +11311,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Inget x-zammad-session-user-id, ingen avsändare angiven!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:331
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:330
 msgid "No, just close the ticket"
 msgstr "Nej, stäng bara ärendet"
 
@@ -12039,7 +12039,7 @@ msgstr "Utgående:"
 msgid "Outdated Browser"
 msgstr "Webbläsaren är för gammal"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:247
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:246
 msgid "Outdent text"
 msgstr "Förskjut text"
 
@@ -13085,7 +13085,7 @@ msgstr "Ta bort Authenticator App"
 msgid "Remove checklist"
 msgstr "Ta bort checklista"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:284
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:283
 msgid "Remove formatting"
 msgstr "Ta bort formatering"
 
@@ -14822,7 +14822,7 @@ msgstr "Sms"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:71
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:17
 #: app/assets/javascripts/app/views/sla/index.jst.eco:49
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:194
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:193
 msgid "Solution Time"
 msgstr "Lösningstid"
 
@@ -15168,7 +15168,7 @@ msgstr "Följda ärenden"
 msgid "Subscribed tickets"
 msgstr "Följda ärenden"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:212
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:211
 msgid "Subscribers"
 msgstr "Följare"
 
@@ -15300,7 +15300,7 @@ msgstr "Etikett \"%s\" finns redan."
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:145
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:78
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:204
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:203
 #: app/views/knowledge_base/public/answers/show.html.erb:30
 #: db/seeds/object_manager_attributes.rb:392 db/seeds/permissions.rb:59
 #: lib/excel_sheet/ticket.rb:33
@@ -17677,13 +17677,13 @@ msgstr "Ärendetitel"
 msgid "Ticket update"
 msgstr "Ärendeuppdatering"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:473
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:472
 msgid "Ticket update failed."
 msgstr "Uppdatering av ärende misslyckades."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:425
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:172
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:424
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:171
 msgid "Ticket updated successfully."
 msgstr "Ärendet uppdaterades."
 
@@ -18579,7 +18579,7 @@ msgstr "Uppdatera delat utkast"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:32
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:11
 #: app/assets/javascripts/app/views/sla/index.jst.eco:41
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:190
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:189
 msgid "Update Time"
 msgstr "Uppdatera tid"
 
@@ -19589,7 +19589,7 @@ msgid "Yes, add attachments now"
 msgstr "Ja, lägg till bifogade filer nu"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:330
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:329
 msgid "Yes, open the checklist"
 msgstr "Ja, öppna checklistan"
 
@@ -19881,7 +19881,7 @@ msgstr "Du måste tillåta åtkomst till din webbkamera."
 msgid "You have unchecked items in the checklist."
 msgstr "Du har omarkerade poster i checklistan."
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:325
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:324
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -20083,7 +20083,7 @@ msgstr ""
 msgid "Zammad"
 msgstr "Zammad"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:328
+#: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:327
 msgid "Zammad Features"
 msgstr "Zammad Funktioner"
 
@@ -21113,7 +21113,7 @@ msgstr "ny och öppen"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:52
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:85
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:84
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:16
 #: db/seeds/settings.rb:590
@@ -21620,7 +21620,7 @@ msgstr "inom nästa (relativ)"
 #: app/assets/javascripts/app/models/public_link.coffee:10
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:15
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:84
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:83
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:15
 #: db/seeds/object_manager_attributes.rb:1301 db/seeds/settings.rb:589
