@@ -2187,20 +2187,13 @@ msgstr "Fayl əlavə et"
 msgid "Attach files"
 msgstr "Faylları əlavə et"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
-msgid "Attached"
-msgstr "Əlavə edildi"
-
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco:4
 #: app/views/knowledge_base/public/answers/show.html.erb:17
 msgid "Attached Files"
 msgstr "Əlavə edilmiş fayllar"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 #, fuzzy
 msgid "Attachment"
@@ -5955,7 +5948,7 @@ msgstr ""
 msgid "Did you know? You can help translating %s at:"
 msgstr "Siz biliydinizmi? %s -i tərcümə etməyə kömək edə bilərsiniz:"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:49
 msgid "Did you plan to include attachments with this message?"
 msgstr ""
 
@@ -6875,16 +6868,6 @@ msgid ""
 msgstr ""
 "Veb interfeys üzərindən istifadəçilərin öz hesablarını yaratmalarına icazə "
 "verir. Bu parametr yalnız şifrə ilə giriş aktiv edildiyi təqdirdə işləyir."
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
-msgid "Enclosed"
-msgstr "Qapalı"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
-msgid "Enclosure"
-msgstr "Qapalı"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
@@ -11833,7 +11816,7 @@ msgstr ""
 msgid "No, just close the ticket"
 msgstr "Qapalı Biletlər"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:52
 #, fuzzy
 msgid "No, thanks"
 msgstr "Xeyr, təşəkkür edirəm!"
@@ -20017,7 +20000,7 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
 #, fuzzy
 msgid "Yes, add attachments now"
 msgstr "Yalnız %s qoşmasına icazə verilir"
@@ -20652,13 +20635,8 @@ msgid "at least one letter is required"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
-msgid "attached"
-msgstr ""
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
-msgid "attachment"
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+msgid "attachment,attached,enclosed,enclosure"
 msgstr ""
 
 #: app/models/object_manager/attribute.rb:580
@@ -20975,16 +20953,6 @@ msgstr ""
 msgid "email sent to '%s'"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
-msgid "enclosed"
-msgstr ""
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
-msgid "enclosure"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 msgid "ends with"
 msgstr ""
@@ -21198,7 +21166,7 @@ msgid "in process"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1426
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1428
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -22050,6 +22018,15 @@ msgstr ""
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr ""
+
+#~ msgid "Attached"
+#~ msgstr "Əlavə edildi"
+
+#~ msgid "Enclosed"
+#~ msgstr "Qapalı"
+
+#~ msgid "Enclosure"
+#~ msgstr "Qapalı"
 
 #~ msgid "Article Type"
 #~ msgstr "Məqalə növü"

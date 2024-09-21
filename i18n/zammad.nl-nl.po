@@ -2257,20 +2257,13 @@ msgstr "Bijlage toevoegen"
 msgid "Attach files"
 msgstr "Bijlage toevoegen"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
-msgid "Attached"
-msgstr "Bijgevoegd"
-
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco:4
 #: app/views/knowledge_base/public/answers/show.html.erb:17
 msgid "Attached Files"
 msgstr "Bijlagen"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
 msgstr "Bijlage"
@@ -5883,7 +5876,7 @@ msgstr "Wist je dat?"
 msgid "Did you know? You can help translating %s at:"
 msgstr "Wist je dat je kan helpen %s te vertalen op:"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:49
 msgid "Did you plan to include attachments with this message?"
 msgstr "Was je van plan bijlagen toe te voegen aan dit bericht?"
 
@@ -6738,16 +6731,6 @@ msgid ""
 msgstr ""
 "Hiermee kunnen gebruikers hun eigen account aanmaken via webinterface. Dit "
 "werkt enkel als de wachtwoord login actief is."
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
-msgid "Enclosed"
-msgstr "Bijgevoegd"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
-msgid "Enclosure"
-msgstr "Omsluiting"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
@@ -11386,7 +11369,7 @@ msgstr "Geen x-zammad-session-user-id, geen afzender ingesteld!"
 msgid "No, just close the ticket"
 msgstr "Nee, sluit het ticket"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:52
 msgid "No, thanks"
 msgstr "Nee, bedankt"
 
@@ -19729,7 +19712,7 @@ msgstr "Geel"
 msgid "Yes"
 msgstr "Ja"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
 msgid "Yes, add attachments now"
 msgstr "Ja, voeg bijlagen toe"
 
@@ -20428,14 +20411,9 @@ msgid "at least one letter is required"
 msgstr "minimaal één letter is vereist"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
-msgid "attached"
-msgstr "bijgevoegd"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
-msgid "attachment"
-msgstr "bijlage"
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+msgid "attachment,attached,enclosed,enclosure"
+msgstr ""
 
 #: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"
@@ -20751,16 +20729,6 @@ msgstr "e-mail"
 msgid "email sent to '%s'"
 msgstr "E-mail verzonden naar '%s'"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
-msgid "enclosed"
-msgstr "bijgevoegd"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
-msgid "enclosure"
-msgstr "omsluiting"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 msgid "ends with"
 msgstr "eindigt met"
@@ -20976,7 +20944,7 @@ msgid "in process"
 msgstr "In behandeling"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1426
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1428
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -21822,6 +21790,27 @@ msgstr "…van geheel tekstvak"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Wachttijd vandaag"
+
+#~ msgid "Attached"
+#~ msgstr "Bijgevoegd"
+
+#~ msgid "Enclosed"
+#~ msgstr "Bijgevoegd"
+
+#~ msgid "Enclosure"
+#~ msgstr "Omsluiting"
+
+#~ msgid "attached"
+#~ msgstr "bijgevoegd"
+
+#~ msgid "attachment"
+#~ msgstr "bijlage"
+
+#~ msgid "enclosed"
+#~ msgstr "bijgevoegd"
+
+#~ msgid "enclosure"
+#~ msgstr "omsluiting"
 
 #~ msgid "Article Type"
 #~ msgstr "Notitie Type"

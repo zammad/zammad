@@ -2327,20 +2327,13 @@ msgstr "Vedhæft filer"
 msgid "Attach files"
 msgstr "Vedhæft filer"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
-msgid "Attached"
-msgstr "Vedhæftet"
-
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco:4
 #: app/views/knowledge_base/public/answers/show.html.erb:17
 msgid "Attached Files"
 msgstr "Vedhæftede Filer"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
 msgstr "Vedhæftning"
@@ -5889,7 +5882,7 @@ msgstr ""
 msgid "Did you know? You can help translating %s at:"
 msgstr ""
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:49
 msgid "Did you plan to include attachments with this message?"
 msgstr ""
 
@@ -6753,18 +6746,6 @@ msgid ""
 "Enables users to create their own account via web interface. This setting is "
 "only effective if the password login is enabled."
 msgstr ""
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
-msgid "Enclosed"
-msgstr "Vedlagt"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
-#, fuzzy
-#| msgid "close"
-msgid "Enclosure"
-msgstr "luk"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
@@ -11462,7 +11443,7 @@ msgstr ""
 msgid "No, just close the ticket"
 msgstr "Du har lukket en ticket"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:52
 #, fuzzy
 #| msgid "No Thanks!"
 msgid "No, thanks"
@@ -20129,7 +20110,7 @@ msgstr "Gul"
 msgid "Yes"
 msgstr ""
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
 #, fuzzy
 #| msgid "Add attachment option to upload."
 msgid "Yes, add attachments now"
@@ -20796,14 +20777,9 @@ msgid "at least one letter is required"
 msgstr "En bruger er påkrævet!"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
-msgid "attached"
-msgstr "vedhæftet"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
-msgid "attachment"
-msgstr "vedhæftning"
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+msgid "attachment,attached,enclosed,enclosure"
+msgstr ""
 
 #: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"
@@ -21131,18 +21107,6 @@ msgstr "mail"
 msgid "email sent to '%s'"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
-msgid "enclosed"
-msgstr "vedlagt"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
-#, fuzzy
-#| msgid "close"
-msgid "enclosure"
-msgstr "luk"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 msgid "ends with"
 msgstr ""
@@ -21378,7 +21342,7 @@ msgid "in process"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1426
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1428
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -22254,6 +22218,31 @@ msgstr "…af hele tekstfeltet"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "Ventetid i dag"
+
+#~ msgid "Attached"
+#~ msgstr "Vedhæftet"
+
+#~ msgid "Enclosed"
+#~ msgstr "Vedlagt"
+
+#, fuzzy
+#~| msgid "close"
+#~ msgid "Enclosure"
+#~ msgstr "luk"
+
+#~ msgid "attached"
+#~ msgstr "vedhæftet"
+
+#~ msgid "attachment"
+#~ msgstr "vedhæftning"
+
+#~ msgid "enclosed"
+#~ msgstr "vedlagt"
+
+#, fuzzy
+#~| msgid "close"
+#~ msgid "enclosure"
+#~ msgstr "luk"
 
 #~ msgid "Article Type"
 #~ msgstr "Artikel Type"

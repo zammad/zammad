@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-20 04:50+0000\n"
+"PO-Revision-Date: 2024-09-21 09:16+0000\n"
 "Last-Translator: Mantas Masalskis <mantas@idev.lt>\n"
 "Language-Team: Lithuanian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/lt/>\n"
@@ -2234,20 +2234,13 @@ msgstr "Prisegti failą"
 msgid "Attach files"
 msgstr "Prisegti failus"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
-msgid "Attached"
-msgstr "Prisegti"
-
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco:4
 #: app/views/knowledge_base/public/answers/show.html.erb:17
 msgid "Attached Files"
 msgstr "Prisegtukai"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
 msgstr "Prisegtukas"
@@ -5792,7 +5785,7 @@ msgstr "Ar žinojote?"
 msgid "Did you know? You can help translating %s at:"
 msgstr "Ar žinojote? Galite padėti versti %s:"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:49
 msgid "Did you plan to include attachments with this message?"
 msgstr "Ar planavote prie šios žinutės pridėti prisegtukų?"
 
@@ -6630,16 +6623,6 @@ msgid ""
 msgstr ""
 "Leidžia naudotojams patiems užsiregistruoti per web sąsają. Šis nustatymas "
 "efektyvus tik jei leidžiama prisijungti su slaptažodžiu."
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
-msgid "Enclosed"
-msgstr "Pridėtas"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
-msgid "Enclosure"
-msgstr "Pridėtasis"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
@@ -11230,7 +11213,7 @@ msgstr "Nėra x-zammad-session-user-id, siuntėjas nenustatytas!"
 msgid "No, just close the ticket"
 msgstr "Ne, tiesiog uždarysiu triktį"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:52
 msgid "No, thanks"
 msgstr "Ne, ačiū"
 
@@ -19447,7 +19430,7 @@ msgstr "Geltona"
 msgid "Yes"
 msgstr "Taip"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
 msgid "Yes, add attachments now"
 msgstr "Taip, pridėti prisegtukus dabar"
 
@@ -20136,14 +20119,9 @@ msgid "at least one letter is required"
 msgstr "reikia bent vienos raidės"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
-msgid "attached"
-msgstr "prisegta"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
-msgid "attachment"
-msgstr "prisegtukas"
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+msgid "attachment,attached,enclosed,enclosure"
+msgstr "prisegu,failas,pridedu,prisegamas,prisegtas,failai,prisegti,prisegami"
 
 #: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"
@@ -20455,16 +20433,6 @@ msgstr "el. paštas"
 msgid "email sent to '%s'"
 msgstr "laiškas išsiųstas „%s“"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
-msgid "enclosed"
-msgstr "įtrauktas"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
-msgid "enclosure"
-msgstr "vokas"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 msgid "ends with"
 msgstr "baigiasi"
@@ -20680,7 +20648,7 @@ msgid "in process"
 msgstr "vykdoma"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1426
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1428
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -21526,6 +21494,27 @@ msgstr "...viso teksto laukelio"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Laukimo laikas šiandien"
+
+#~ msgid "Attached"
+#~ msgstr "Prisegti"
+
+#~ msgid "Enclosed"
+#~ msgstr "Pridėtas"
+
+#~ msgid "Enclosure"
+#~ msgstr "Pridėtasis"
+
+#~ msgid "attached"
+#~ msgstr "prisegta"
+
+#~ msgid "attachment"
+#~ msgstr "prisegtukas"
+
+#~ msgid "enclosed"
+#~ msgstr "įtrauktas"
+
+#~ msgid "enclosure"
+#~ msgstr "vokas"
 
 #~ msgid "Article Type"
 #~ msgstr "Įrašo tipas"

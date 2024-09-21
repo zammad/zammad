@@ -2364,20 +2364,13 @@ msgstr "ไฟล์แนบ"
 msgid "Attach files"
 msgstr "ไฟล์แนบ"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
-msgid "Attached"
-msgstr "แฟ้มแนบ"
-
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco:4
 #: app/views/knowledge_base/public/answers/show.html.erb:17
 msgid "Attached Files"
 msgstr "ไฟล์แนบ"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
 msgstr "แฟ้มแนบ"
@@ -6061,7 +6054,7 @@ msgstr ""
 msgid "Did you know? You can help translating %s at:"
 msgstr "เธอรู้รึเปล่า? คุณสามารถช่วยแปล %s ได้ที่:"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:49
 msgid "Did you plan to include attachments with this message?"
 msgstr ""
 
@@ -6951,16 +6944,6 @@ msgid ""
 msgstr ""
 "ช่วยให้ผู้ใช้สามารถสร้างบัญชีของตนเองผ่านเว็บอินเตอร์เฟส "
 "การตั้งค่านี้จะมีผลก็ต่อเมื่อเปิดใช้งานการเข้าสู่ระบบด้วยรหัสผ่านเท่านั้น"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
-msgid "Enclosed"
-msgstr "สิ่งที่ส่งมาด้วย"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
-msgid "Enclosure"
-msgstr "สิ่งที่ส่งมาด้วย"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
@@ -11854,7 +11837,7 @@ msgstr ""
 msgid "No, just close the ticket"
 msgstr "ปิด ticket แล้ว"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:52
 #, fuzzy
 #| msgid "No Thanks!"
 msgid "No, thanks"
@@ -20692,7 +20675,7 @@ msgstr "เหลือง"
 msgid "Yes"
 msgstr "ใช่"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
 #, fuzzy
 #| msgid "Add attachment option to upload."
 msgid "Yes, add attachments now"
@@ -21404,14 +21387,9 @@ msgid "at least one letter is required"
 msgstr "ต้องมีตัวอักษรอย่างน้อยหนึ่งตัว"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
-msgid "attached"
-msgstr "ติดใหม่"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
-msgid "attachment"
-msgstr "เอกสารแนบ"
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+msgid "attachment,attached,enclosed,enclosure"
+msgstr ""
 
 #: app/models/object_manager/attribute.rb:580
 #, fuzzy
@@ -21744,16 +21722,6 @@ msgstr "อีเมล์"
 msgid "email sent to '%s'"
 msgstr "อีเมลที่ส่งไปที่ '%s'"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
-msgid "enclosed"
-msgstr "ล้อมรอบ"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
-msgid "enclosure"
-msgstr "กรอบ กรงขัง"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 msgid "ends with"
 msgstr ""
@@ -21975,7 +21943,7 @@ msgid "in process"
 msgstr "อยู่ในระหว่างการดำเนินงาน"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1426
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1428
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -22881,6 +22849,27 @@ msgstr "‎... ของพื้นที่ข้อความทั้ง�
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ รอเวลาวันนี้"
+
+#~ msgid "Attached"
+#~ msgstr "แฟ้มแนบ"
+
+#~ msgid "Enclosed"
+#~ msgstr "สิ่งที่ส่งมาด้วย"
+
+#~ msgid "Enclosure"
+#~ msgstr "สิ่งที่ส่งมาด้วย"
+
+#~ msgid "attached"
+#~ msgstr "ติดใหม่"
+
+#~ msgid "attachment"
+#~ msgstr "เอกสารแนบ"
+
+#~ msgid "enclosed"
+#~ msgstr "ล้อมรอบ"
+
+#~ msgid "enclosure"
+#~ msgstr "กรอบ กรงขัง"
 
 #, fuzzy
 #~| msgid "Article"

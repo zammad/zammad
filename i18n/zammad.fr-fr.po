@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-13 05:39+0000\n"
+"PO-Revision-Date: 2024-09-21 09:16+0000\n"
 "Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fr/>\n"
@@ -103,10 +103,10 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}> : Escaladé à #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}> : Escaladé le #{ticket.escalation_at}_\n"
 "Le ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" a été "
-"escaladé depuis \"#{ticket.escalation_at}\" !\n"
+"escaladé le \"#{ticket.escalation_at}\" !\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -209,10 +209,10 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}> : Sera escaladé à #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}> : Sera escaladé le #{ticket.escalation_at}_\n"
 "Le ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" va être "
-"escaladé à \"#{ticket.escalation_at}\" !\n"
+"escaladé le \"#{ticket.escalation_at}\" !\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -2275,20 +2275,13 @@ msgstr "Joindre un fichier"
 msgid "Attach files"
 msgstr "Joindre des fichiers"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
-msgid "Attached"
-msgstr "Joint"
-
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco:4
 #: app/views/knowledge_base/public/answers/show.html.erb:17
 msgid "Attached Files"
 msgstr "Fichiers joints"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
 msgstr "Pièce jointe"
@@ -3510,7 +3503,7 @@ msgstr "Durée de clôture en min"
 
 #: lib/excel_sheet/ticket.rb:60
 msgid "Close Escalation At"
-msgstr "Escalade de fermeture à"
+msgstr "Escalade de fermeture le"
 
 #: lib/excel_sheet/ticket.rb:61
 msgid "Close In Min"
@@ -5955,7 +5948,7 @@ msgstr "Le saviez-vous ?"
 msgid "Did you know? You can help translating %s at:"
 msgstr "Le saviez-vous ? Vous pouvez aider à traduire %s ici :"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:49
 msgid "Did you plan to include attachments with this message?"
 msgstr "Avez-vous prévu d'inclure des pièces jointes à ce message ?"
 
@@ -6216,10 +6209,8 @@ msgid "Draft available"
 msgstr "Brouillon disponible"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:38
-#, fuzzy
-#| msgid "Draft"
 msgid "Drafts"
-msgstr "Brouillon"
+msgstr "Brouillons"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:51
 msgid "Drag and drop to reorder ticket overview list items."
@@ -6376,10 +6367,8 @@ msgid "Editing on Desktop"
 msgstr "Modification sur le bureau"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketLiveUsers.vue:57
-#, fuzzy
-#| msgid "Editing on Desktop"
 msgid "Editing on Mobile"
-msgstr "Modification sur le bureau"
+msgstr "Édition sur mobile"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 msgid "Editor"
@@ -6822,16 +6811,6 @@ msgstr ""
 "Autoriser les utilisateurs à créer un compte à partir de l'interface web. Ce "
 "paramètre n'est actif que si le login par mot de passe est activé."
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
-msgid "Enclosed"
-msgstr "Ci-oint"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
-msgid "Enclosure"
-msgstr "Pièce jointe"
-
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
 #: app/frontend/apps/desktop/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:50
@@ -7153,22 +7132,22 @@ msgstr "Délais d'escalade"
 #: app/assets/javascripts/app/models/ticket.coffee:17
 #: app/graphql/gql/types/overview_type.rb:70
 msgid "Escalation at"
-msgstr "Escaladé à"
+msgstr "Escaladé le"
 
 #: app/assets/javascripts/app/models/ticket.coffee:20
 #: app/graphql/gql/types/overview_type.rb:73
 msgid "Escalation at (Close Time)"
-msgstr "Escalade à (heure de fermeture)"
+msgstr "Escaladé le (heure de fermeture)"
 
 #: app/assets/javascripts/app/models/ticket.coffee:18
 #: app/graphql/gql/types/overview_type.rb:71
 msgid "Escalation at (First Response Time)"
-msgstr "Escalade à (temps de première réponse)"
+msgstr "Escaladé le (temps de première réponse)"
 
 #: app/assets/javascripts/app/models/ticket.coffee:19
 #: app/graphql/gql/types/overview_type.rb:72
 msgid "Escalation at (Update Time)"
-msgstr "Escalade à (heure de mise à jour)"
+msgstr "Escaladé le (heure de mise à jour)"
 
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:51
 msgid "Event Ending"
@@ -8069,7 +8048,7 @@ msgstr "Google Client Secret"
 
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
 msgid "Got it!"
-msgstr ""
+msgstr "J'ai compris !"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:16
 msgid "Green"
@@ -10996,10 +10975,8 @@ msgid "New Group"
 msgstr "Nouveau groupe"
 
 #: app/assets/javascripts/app/controllers/clues/keyboard_shortcuts_clues.coffee:5
-#, fuzzy
-#| msgid "Keyboard Shortcuts"
 msgid "New Keyboard Shortcuts"
-msgstr "Raccourcis clavier"
+msgstr "Nouveaux raccourcis clavier"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:22
 msgid "New Macro"
@@ -11317,7 +11294,7 @@ msgstr "Aucun certificat trouvé."
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:416
 msgid "No checklist added to this ticket yet."
-msgstr "Aucune liste n'a été ajoutée à ce ticket."
+msgstr "Aucune checklist n'a encore été ajoutée à ce ticket."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:179
 msgid "No checklist items yet"
@@ -11326,7 +11303,7 @@ msgstr "Aucun élément dans la checklist pour le moment"
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:15
 msgid "No checklist templates have been created yet."
-msgstr "Aucun modèle de liste créé pour l'instant."
+msgstr "Aucun modèle de checklist n'a encore été créé."
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:5
 msgid "No configuration set."
@@ -11492,9 +11469,9 @@ msgstr "\"x-zammad-session-user-id\" absent, aucun expéditeur défini !"
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
 #: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:330
 msgid "No, just close the ticket"
-msgstr "Non, uniqement fermer le ticket"
+msgstr "Non, fermer simplement le ticket"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:52
 msgid "No, thanks"
 msgstr "Non merci"
 
@@ -11942,7 +11919,7 @@ msgstr "Ouvrir dans un nouvel onglet"
 
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:75
 msgid "Open link"
-msgstr "Lien ouvert"
+msgstr "Ouvrir le lien"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:500
 msgid "Open macro selection"
@@ -12021,7 +11998,7 @@ msgstr "Les options ou relations sont requises."
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:8
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue:22
 msgid "Or choose a checklist template."
-msgstr "Ou choisir un modèle de liste."
+msgstr "Ou choisir un modèle de checklist."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue:76
 msgid "Or migrate from another system"
@@ -13940,10 +13917,8 @@ msgid "Save as"
 msgstr "Enregistrer sous"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:55
-#, fuzzy
-#| msgid "Save Draft"
 msgid "Save as draft"
-msgstr "Enregistrer le brouillon"
+msgstr "Enregistrer comme brouillon"
 
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:340
 msgid "Save changes"
@@ -17937,10 +17912,8 @@ msgstr ""
 "</div>\n"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/TicketScreenBehavior.vue:56
-#, fuzzy
-#| msgid "Ticket customer updated successfully."
 msgid "Ticket screen behavior updated successfully"
-msgstr "Le client du ticket a été mis à jour avec succès."
+msgstr "Le comportement de l'écran du ticket a été mis à jour avec succès"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:131
 msgid ""
@@ -18014,7 +17987,7 @@ msgstr ""
 "<div>Bonjour #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>Le ticket (#{ticket.title}) de \"<b>#{ticket.customer.longname}</b>\" "
-"sera escaladé à \"#{ticket.escalation_at}\" !</div>\n"
+"sera escaladé le \"#{ticket.escalation_at}\" !</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -18252,7 +18225,7 @@ msgstr "Titre du formulaire"
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:169
 #: db/seeds/object_manager_attributes.rb:482
 msgid "To"
-msgstr "À"
+msgstr "Destinataire"
 
 #: db/seeds/settings.rb:3375
 msgid ""
@@ -19908,7 +19881,7 @@ msgstr "Jaune"
 msgid "Yes"
 msgstr "Oui"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
 msgid "Yes, add attachments now"
 msgstr "Oui, ajouter des pièces jointes maintenant"
 
@@ -20088,6 +20061,9 @@ msgid ""
 "You can open the Keyboard Shortcuts dialog here and view the new and "
 "improved layout, or revert to the old one if you prefer it."
 msgstr ""
+"Vous pouvez ouvrir la boîte de dialogue Raccourcis clavier ici et afficher "
+"la nouvelle disposition améliorée, ou revenir à l'ancienne si vous le "
+"préférez."
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:282
 msgid ""
@@ -20567,14 +20543,14 @@ msgstr "admin"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:67
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "after (absolute)"
-msgstr "après (absolu)"
+msgstr "après le (valeur absolue)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:479
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "after (relative)"
-msgstr "après (relatif)"
+msgstr "après le (valeur relative)"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:8
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco:8
@@ -20616,14 +20592,9 @@ msgid "at least one letter is required"
 msgstr "au moins une lettre est requise"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
-msgid "attached"
-msgstr "joint"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
-msgid "attachment"
-msgstr "pièce jointe"
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+msgid "attachment,attached,enclosed,enclosure"
+msgstr "joint,attaché"
 
 #: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"
@@ -20637,14 +20608,14 @@ msgstr "sélection auto"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "before (absolute)"
-msgstr "avant (absolu)"
+msgstr "avant le (valeur absolue)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:476
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "before (relative)"
-msgstr "avant (relatif)"
+msgstr "avant le (valeur relative)"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:41
 #: app/assets/javascripts/app/views/sla/index.jst.eco:45
@@ -20774,13 +20745,13 @@ msgstr "créé %s"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:539
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:632
 msgid "current user"
-msgstr "utilisateur courant"
+msgstr "l'utilisateur actuel"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:427
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:545
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:637
 msgid "current user organization"
-msgstr "organisation de l'utilisateur actuel"
+msgstr "l'organisation de l'utilisateur actuel"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/password.ts:27
 msgid ""
@@ -20939,16 +20910,6 @@ msgstr "e-mail"
 msgid "email sent to '%s'"
 msgstr "email envoyé à '%s'"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
-msgid "enclosed"
-msgstr "joint"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
-msgid "enclosure"
-msgstr "pièce jointe"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 msgid "ends with"
 msgstr "se termine par"
@@ -20957,7 +20918,7 @@ msgstr "se termine par"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "ends with one of"
-msgstr "se termine par un de"
+msgstr "se termine par une des valeurs"
 
 #: app/assets/javascripts/app/models/ticket.coffee:84
 msgid "escalated"
@@ -21026,7 +20987,7 @@ msgstr "de"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "from (relative)"
-msgstr "de (relatif)"
+msgstr "A partir du (valeur relative)"
 
 #: app/controllers/integration/pgp_controller.rb:48
 msgid "gpg (GnuPG) 2.2.0 or newer is required"
@@ -21164,7 +21125,7 @@ msgid "in process"
 msgstr "en cours"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1426
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1428
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -21194,7 +21155,7 @@ msgstr "est déjà utilisé"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:183
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "is any of"
-msgstr "est un parmi"
+msgstr "est une valeur parmi"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:124
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:151
@@ -21224,7 +21185,7 @@ msgstr "est modifié en"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:184
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "is none of"
-msgstr "n'est pas un de"
+msgstr "n'est pas une valeur parmi"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:100
@@ -21615,8 +21576,8 @@ msgstr "relatif"
 #: db/seeds/settings.rb:216
 msgid "relative - e. g. \"2 hours ago\" or \"2 days and 15 minutes ago\""
 msgstr ""
-"relatif - par exemple \"il y a deux heures\" ou \"il y a deux jours et 15 "
-"minutes\""
+"valeur relative - par exemple \"il y a deux heures\" ou \"il y a deux jours "
+"et 15 minutes\""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:40
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco:17
@@ -21766,13 +21727,13 @@ msgstr "les espaces ne sont pas autorisés"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:546
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:638
 msgid "specific organization"
-msgstr "organisation spécifique"
+msgstr "une organisation spécifique"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:417
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:540
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:633
 msgid "specific user"
-msgstr "utilisateur spécifique"
+msgstr "un utilisateur spécifique"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/split.coffee:7
 msgid "split"
@@ -21786,7 +21747,7 @@ msgstr "commence par"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:185
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "starts with one of"
-msgstr "commence par un de"
+msgstr "commence par une des valeurs"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts:24
 msgid "subscription,calendars,ticket,ical"
@@ -21834,7 +21795,7 @@ msgstr "ticket.customer"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:72
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "till (relative)"
-msgstr "jusqu'à (relatif)"
+msgstr "jusqu'au (valeur relative)"
 
 #: db/seeds/settings.rb:218
 msgid "timestamp - e. g. \"2018-08-30 14:30\""
@@ -21880,11 +21841,11 @@ msgstr "essayez à nouveau"
 
 #: db/seeds/ticket_article_types.rb:9
 msgid "twitter direct-message"
-msgstr "Message direct par Twitter"
+msgstr "message direct par Twitter"
 
 #: db/seeds/ticket_article_types.rb:8
 msgid "twitter status"
-msgstr "Statut Twitter"
+msgstr "statut Twitter"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:26
 msgid "twofactor,2fa,security key,passkey,authenticator app"
@@ -21948,14 +21909,14 @@ msgstr "sera supprimé"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:71
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within last (relative)"
-msgstr "au sein des derniers (relatif)"
+msgstr "au sein des derniers (valeur relative)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:477
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:70
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within next (relative)"
-msgstr "au sein des suivants (relatif)"
+msgstr "au sein des prochains (valeur relative)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee:9
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:22
@@ -22009,6 +21970,27 @@ msgstr "... de toute la zone de texte"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Temps d'attente aujourd'hui"
+
+#~ msgid "Attached"
+#~ msgstr "Joint"
+
+#~ msgid "Enclosed"
+#~ msgstr "Ci-oint"
+
+#~ msgid "Enclosure"
+#~ msgstr "Pièce jointe"
+
+#~ msgid "attached"
+#~ msgstr "joint"
+
+#~ msgid "attachment"
+#~ msgstr "pièce jointe"
+
+#~ msgid "enclosed"
+#~ msgstr "joint"
+
+#~ msgid "enclosure"
+#~ msgstr "pièce jointe"
 
 #~ msgid "Article Type"
 #~ msgstr "Type d'article"

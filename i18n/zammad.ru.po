@@ -2276,20 +2276,13 @@ msgstr "Прикрепить файл"
 msgid "Attach files"
 msgstr "Прикрепить файлы"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
-msgid "Attached"
-msgstr "Вложенный"
-
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco:4
 #: app/views/knowledge_base/public/answers/show.html.erb:17
 msgid "Attached Files"
 msgstr "Прикрепленные файлы"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
 msgstr "Вложение"
@@ -5927,7 +5920,7 @@ msgstr "Знаете ли Вы?"
 msgid "Did you know? You can help translating %s at:"
 msgstr "Вы знали? Вы можете помочь перевести %s на:"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:49
 msgid "Did you plan to include attachments with this message?"
 msgstr "Планировали ли Вы включить вложения в это сообщение?"
 
@@ -6787,16 +6780,6 @@ msgstr ""
 "Позволяет пользователям создавать свои собственные учётные записи через веб-"
 "интерфейс. Этот параметр действует только в том случае, если включен вход по "
 "паролю."
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
-msgid "Enclosed"
-msgstr "Приложенный"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
-msgid "Enclosure"
-msgstr "Вложение"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
@@ -11455,7 +11438,7 @@ msgstr "Ни x-zammad-session-user-id, ни отправителя не зада
 msgid "No, just close the ticket"
 msgstr "Нет, только закрыть заявку"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:52
 msgid "No, thanks"
 msgstr "Спасибо, не надо"
 
@@ -19834,7 +19817,7 @@ msgstr "Желтый"
 msgid "Yes"
 msgstr "Да"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
 msgid "Yes, add attachments now"
 msgstr "Да, добавить вложения сейчас"
 
@@ -20542,14 +20525,9 @@ msgid "at least one letter is required"
 msgstr "необходим хотя бы один символ"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
-msgid "attached"
-msgstr "прикрепленный"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
-msgid "attachment"
-msgstr "вложение"
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+msgid "attachment,attached,enclosed,enclosure"
+msgstr ""
 
 #: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"
@@ -20865,16 +20843,6 @@ msgstr "email"
 msgid "email sent to '%s'"
 msgstr "письмо отправлено на '%s'"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
-msgid "enclosed"
-msgstr "приложенный"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
-msgid "enclosure"
-msgstr "приложение"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 msgid "ends with"
 msgstr "заканчивается"
@@ -21090,7 +21058,7 @@ msgid "in process"
 msgstr "в процессе"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1426
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1428
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -21935,6 +21903,27 @@ msgstr "…всей текстовой области"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Время ожидания сегодня"
+
+#~ msgid "Attached"
+#~ msgstr "Вложенный"
+
+#~ msgid "Enclosed"
+#~ msgstr "Приложенный"
+
+#~ msgid "Enclosure"
+#~ msgstr "Вложение"
+
+#~ msgid "attached"
+#~ msgstr "прикрепленный"
+
+#~ msgid "attachment"
+#~ msgstr "вложение"
+
+#~ msgid "enclosed"
+#~ msgstr "приложенный"
+
+#~ msgid "enclosure"
+#~ msgstr "приложение"
 
 #~ msgid "Article Type"
 #~ msgstr "Тип статьи"

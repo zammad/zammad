@@ -2359,22 +2359,13 @@ msgstr "Archivos adjuntos"
 msgid "Attach files"
 msgstr "Archivos adjuntos"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
-#, fuzzy
-#| msgid "Attachments"
-msgid "Attached"
-msgstr "Adjuntos"
-
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco:4
 #: app/views/knowledge_base/public/answers/show.html.erb:17
 msgid "Attached Files"
 msgstr "Archivos adjuntos"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 #, fuzzy
 #| msgid "Attachments"
@@ -6321,7 +6312,7 @@ msgstr ""
 msgid "Did you know? You can help translating %s at:"
 msgstr "¿Sabías? Puedes ayudar a traducir %s en:"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:49
 msgid "Did you plan to include attachments with this message?"
 msgstr ""
 
@@ -7268,20 +7259,6 @@ msgid ""
 "only effective if the password login is enabled."
 msgstr ""
 "Permite a los usuarios crear su propia cuenta a través de la interfaz web."
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
-#, fuzzy
-#| msgid "closed"
-msgid "Enclosed"
-msgstr "cerrado"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
-#, fuzzy
-#| msgid "close"
-msgid "Enclosure"
-msgstr "cerrar"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
@@ -12373,7 +12350,7 @@ msgstr "¡Sin x-zammad-session-user-id, sin remitente establecido!"
 msgid "No, just close the ticket"
 msgstr "¡No se pudo encontrar el ticket de origen!"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:52
 #, fuzzy
 #| msgid "No Thanks!"
 msgid "No, thanks"
@@ -21596,7 +21573,7 @@ msgstr "Amarillo"
 msgid "Yes"
 msgstr "Si"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
 #, fuzzy
 #| msgid "Add attachment option to upload."
 msgid "Yes, add attachments now"
@@ -22358,18 +22335,9 @@ msgid "at least one letter is required"
 msgstr "Se requiere al menos una letra"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
-#, fuzzy
-#| msgid "reached"
-msgid "attached"
-msgstr "alcanzado"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
-#, fuzzy
-#| msgid "Attachments"
-msgid "attachment"
-msgstr "Adjuntos"
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+msgid "attachment,attached,enclosed,enclosure"
+msgstr ""
 
 #: app/models/object_manager/attribute.rb:580
 #, fuzzy
@@ -22714,20 +22682,6 @@ msgstr "correo"
 msgid "email sent to '%s'"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
-#, fuzzy
-#| msgid "closed"
-msgid "enclosed"
-msgstr "cerrado"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
-#, fuzzy
-#| msgid "close"
-msgid "enclosure"
-msgstr "cerrar"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 msgid "ends with"
 msgstr ""
@@ -22971,7 +22925,7 @@ msgid "in process"
 msgstr "en proceso"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1426
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1428
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -23903,6 +23857,41 @@ msgstr "…de toda el área de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Tiempo de espera de hoy"
+
+#, fuzzy
+#~| msgid "Attachments"
+#~ msgid "Attached"
+#~ msgstr "Adjuntos"
+
+#, fuzzy
+#~| msgid "closed"
+#~ msgid "Enclosed"
+#~ msgstr "cerrado"
+
+#, fuzzy
+#~| msgid "close"
+#~ msgid "Enclosure"
+#~ msgstr "cerrar"
+
+#, fuzzy
+#~| msgid "reached"
+#~ msgid "attached"
+#~ msgstr "alcanzado"
+
+#, fuzzy
+#~| msgid "Attachments"
+#~ msgid "attachment"
+#~ msgstr "Adjuntos"
+
+#, fuzzy
+#~| msgid "closed"
+#~ msgid "enclosed"
+#~ msgstr "cerrado"
+
+#, fuzzy
+#~| msgid "close"
+#~ msgid "enclosure"
+#~ msgstr "cerrar"
 
 #, fuzzy
 #~| msgid "Article"

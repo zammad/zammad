@@ -2346,20 +2346,13 @@ msgstr "Dosya ekle"
 msgid "Attach files"
 msgstr "Dosyaları ekle"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
-msgid "Attached"
-msgstr "Eklenmiş"
-
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco:4
 #: app/views/knowledge_base/public/answers/show.html.erb:17
 msgid "Attached Files"
 msgstr "Eklenmiş Dosyalar"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
 msgstr "Ek"
@@ -6096,7 +6089,7 @@ msgstr ""
 msgid "Did you know? You can help translating %s at:"
 msgstr "Biliyor muydunuz? %s çevirilerine yardımcı olabilirsiniz:"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:49
 msgid "Did you plan to include attachments with this message?"
 msgstr ""
 
@@ -7000,16 +6993,6 @@ msgid ""
 msgstr ""
 "Kullanıcıların web arayüzü üzerinden kendi hesaplarını oluşturmalarını "
 "sağlar. Bu ayar yalnızca parolayla oturum açma etkinleştirilmişse etkilidir."
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
-msgid "Enclosed"
-msgstr "Kapalı"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
-msgid "Enclosure"
-msgstr "Muhafaza"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
@@ -12290,7 +12273,7 @@ msgstr "True"
 msgid "No, just close the ticket"
 msgstr "You have closed a ticket"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:52
 #, fuzzy
 msgid "No, thanks"
 msgstr "True"
@@ -21789,7 +21772,7 @@ msgstr "Yellow"
 msgid "Yes"
 msgstr "Evet"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
 #, fuzzy
 #| msgid "Add attachment option to upload."
 msgid "Yes, add attachments now"
@@ -22587,18 +22570,9 @@ msgid "at least one letter is required"
 msgstr "En az bir harf gereklidir"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
-#, fuzzy
-#| msgid "reached"
-msgid "attached"
-msgstr "reached"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
-#, fuzzy
-#| msgid "Attachments"
-msgid "attachment"
-msgstr "Attachments"
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+msgid "attachment,attached,enclosed,enclosure"
+msgstr ""
 
 #: app/models/object_manager/attribute.rb:580
 #, fuzzy
@@ -22949,20 +22923,6 @@ msgstr "e-posta"
 msgid "email sent to '%s'"
 msgstr "True"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
-#, fuzzy
-#| msgid "closed"
-msgid "enclosed"
-msgstr "kapalı"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
-#, fuzzy
-#| msgid "close"
-msgid "enclosure"
-msgstr "close"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 msgid "ends with"
 msgstr "ile biter"
@@ -23212,7 +23172,7 @@ msgid "in process"
 msgstr "işleniyor"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1426
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1428
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -24188,6 +24148,35 @@ msgstr "...of whole textarea"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "Bugünkü bekleme süresi"
+
+#~ msgid "Attached"
+#~ msgstr "Eklenmiş"
+
+#~ msgid "Enclosed"
+#~ msgstr "Kapalı"
+
+#~ msgid "Enclosure"
+#~ msgstr "Muhafaza"
+
+#, fuzzy
+#~| msgid "reached"
+#~ msgid "attached"
+#~ msgstr "reached"
+
+#, fuzzy
+#~| msgid "Attachments"
+#~ msgid "attachment"
+#~ msgstr "Attachments"
+
+#, fuzzy
+#~| msgid "closed"
+#~ msgid "enclosed"
+#~ msgstr "kapalı"
+
+#, fuzzy
+#~| msgid "close"
+#~ msgid "enclosure"
+#~ msgstr "close"
 
 #~ msgid "Article Type"
 #~ msgstr "Yazı Türü"

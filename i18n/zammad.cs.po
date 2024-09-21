@@ -2375,20 +2375,13 @@ msgstr "Přiložit soubory"
 msgid "Attach files"
 msgstr "Přiložit soubory"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
-msgid "Attached"
-msgstr "Přiloženo"
-
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco:4
 #: app/views/knowledge_base/public/answers/show.html.erb:17
 msgid "Attached Files"
 msgstr "Přiložené soubory"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
 msgstr "Příloha"
@@ -6174,7 +6167,7 @@ msgstr ""
 msgid "Did you know? You can help translating %s at:"
 msgstr "Věděli jste? Můžete pomoci s překladem %s na:"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:49
 msgid "Did you plan to include attachments with this message?"
 msgstr ""
 
@@ -7091,16 +7084,6 @@ msgid ""
 msgstr ""
 "Povolí uživatelům vytvořit svůj vlastní účet pomocí webového rozhraní. "
 "Nastavení je platné pouze, je-li povoleno přihlášení heslem."
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
-msgid "Enclosed"
-msgstr "Přiloženo"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
-msgid "Enclosure"
-msgstr "Příloha"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
@@ -12068,7 +12051,7 @@ msgstr "Žádný x-zammad-session-user-id, žádný nastavený odesílatel!"
 msgid "No, just close the ticket"
 msgstr "Již nemůžete zobrazit tento ticket."
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:52
 #, fuzzy
 #| msgid "No Thanks!"
 msgid "No, thanks"
@@ -21044,7 +21027,7 @@ msgstr "Žlutá"
 msgid "Yes"
 msgstr "Ano"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
 #, fuzzy
 #| msgid "Add attachment option to upload."
 msgid "Yes, add attachments now"
@@ -21781,14 +21764,9 @@ msgid "at least one letter is required"
 msgstr "je vyžadováno nejméně jedno písmeno"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
-msgid "attached"
-msgstr "přiloženo"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
-msgid "attachment"
-msgstr "příloha"
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+msgid "attachment,attached,enclosed,enclosure"
+msgstr ""
 
 #: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"
@@ -22115,16 +22093,6 @@ msgstr "email"
 msgid "email sent to '%s'"
 msgstr "e-mail odeslán '%s'"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
-msgid "enclosed"
-msgstr "přiloženo"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
-msgid "enclosure"
-msgstr "příloha"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 msgid "ends with"
 msgstr ""
@@ -22342,7 +22310,7 @@ msgid "in process"
 msgstr "zpracovává se"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1426
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1428
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -23224,6 +23192,27 @@ msgstr "...celé textové oblasti"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "dnešní ∅ čekací doby"
+
+#~ msgid "Attached"
+#~ msgstr "Přiloženo"
+
+#~ msgid "Enclosed"
+#~ msgstr "Přiloženo"
+
+#~ msgid "Enclosure"
+#~ msgstr "Příloha"
+
+#~ msgid "attached"
+#~ msgstr "přiloženo"
+
+#~ msgid "attachment"
+#~ msgstr "příloha"
+
+#~ msgid "enclosed"
+#~ msgstr "přiloženo"
+
+#~ msgid "enclosure"
+#~ msgstr "příloha"
 
 #~ msgid "Article Type"
 #~ msgstr "Typ článku"

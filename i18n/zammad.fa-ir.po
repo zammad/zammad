@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-18 09:16+0000\n"
+"PO-Revision-Date: 2024-09-21 09:16+0000\n"
 "Last-Translator: Sajjad Jazini <s.jazini@vatanmail.ir>\n"
 "Language-Team: Persian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fa/>\n"
@@ -2019,20 +2019,13 @@ msgstr "ضمیمه پرونده"
 msgid "Attach files"
 msgstr "ضمیمه پرونده‌ها"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
-msgid "Attached"
-msgstr "ضمیمه‌شده"
-
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco:4
 #: app/views/knowledge_base/public/answers/show.html.erb:17
 msgid "Attached Files"
 msgstr "فایل‌های ضمیمه"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
 msgstr "ضمیمه"
@@ -2966,7 +2959,7 @@ msgstr ""
 
 #: app/controllers/ticket_checklist_controller.rb:17
 msgid "Checklist is already created for this ticket"
-msgstr "فهرست بررسی از قبل برای این تیکت ایجاد شده است."
+msgstr "فهرست بررسی از قبل برای این تیکت ایجاد شده است"
 
 #: app/models/checklist/item.rb:97
 msgid "Checklist items are limited to 100 items per checklist."
@@ -3718,14 +3711,8 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:124
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:107
-#, fuzzy
-#| msgid ""
-#| "Login failed. Have you double-checked your credentials and completed the "
-#| "email verification step?"
 msgid "Could not remove two-factor authentication method."
-msgstr ""
-"ورود ناموفق. آیا مرحله تایید از طریق ایمیل را تکمیل نمودید و از صحت "
-"نام‌کاربری و رمزعبور خود اطمینان دارید؟"
+msgstr "نمی‌توان روش احراز هویت دوعاملی را حذف کرد."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:227
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:77
@@ -3867,10 +3854,8 @@ msgid "Create account"
 msgstr "ایجاد حساب کاربری"
 
 #: db/seeds/permissions.rb:114
-#, fuzzy
-#| msgid "Create Knowledge Base"
 msgid "Create and set up Knowledge Base."
-msgstr "ایجاد پایگاه دانش"
+msgstr "ایجاد و تنظیم پایگاه دانش."
 
 #: app/assets/javascripts/app/views/signup.jst.eco:8
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:151
@@ -4360,10 +4345,8 @@ msgid "Default type for a new ticket"
 msgstr "نوع پیش‌فرض برای تیکت جدید"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:47
-#, fuzzy
-#| msgid "A user is required!"
 msgid "Default value is required."
-msgstr "یک کاربر الزامی است!"
+msgstr "مقدار پیش‌فرض الزامی است."
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:15
 #: db/seeds/settings.rb:2486
@@ -5311,16 +5294,12 @@ msgid "Delete table"
 msgstr "حذف فایل"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:154
-#, fuzzy
-#| msgid "Delete Avatar?"
 msgid "Delete this access token"
-msgstr "حذف آواتار؟"
+msgstr "حذف این توکن دسترسی"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:352
-#, fuzzy
-#| msgid "Delete Avatar?"
 msgid "Delete this avatar"
-msgstr "حذف آواتار؟"
+msgstr "حذف این آواتار"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:121
 #, fuzzy
@@ -5470,7 +5449,7 @@ msgstr ""
 msgid "Did you know? You can help translating %s at:"
 msgstr "آیا میدانید که شما میتوانید در ترجمه %s کمک کنید :"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:49
 msgid "Did you plan to include attachments with this message?"
 msgstr ""
 
@@ -6306,16 +6285,6 @@ msgid ""
 "Enables users to create their own account via web interface. This setting is "
 "only effective if the password login is enabled."
 msgstr ""
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
-msgid "Enclosed"
-msgstr "بسته شده"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
-msgid "Enclosure"
-msgstr "پیوست"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
@@ -10966,7 +10935,7 @@ msgstr ""
 msgid "No, just close the ticket"
 msgstr "شما دیگر نمی‌توانید تیکت را ببینید."
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:52
 #, fuzzy
 #| msgid "No Thanks!"
 msgid "No, thanks"
@@ -19109,7 +19078,7 @@ msgstr "زرد"
 msgid "Yes"
 msgstr "بله"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
 #, fuzzy
 #| msgid "Add attachment option to upload."
 msgid "Yes, add attachments now"
@@ -19766,14 +19735,9 @@ msgid "at least one letter is required"
 msgstr "حداقل یک حرف الزامی است"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
-msgid "attached"
-msgstr "ضمیمه‌شده"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
-msgid "attachment"
-msgstr "ضمیمه‌شده"
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+msgid "attachment,attached,enclosed,enclosure"
+msgstr ""
 
 #: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"
@@ -20090,16 +20054,6 @@ msgstr "ایمیل"
 msgid "email sent to '%s'"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
-msgid "enclosed"
-msgstr "پیوست‌شده"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
-msgid "enclosure"
-msgstr "پیوست"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 msgid "ends with"
 msgstr ""
@@ -20313,7 +20267,7 @@ msgid "in process"
 msgstr "در حال پردازش"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1426
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1428
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -21163,6 +21117,27 @@ msgstr "...از تمام محدوده متن"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "میانگین زمان پاسخگویی (امروز)"
+
+#~ msgid "Attached"
+#~ msgstr "ضمیمه‌شده"
+
+#~ msgid "Enclosed"
+#~ msgstr "بسته شده"
+
+#~ msgid "Enclosure"
+#~ msgstr "پیوست"
+
+#~ msgid "attached"
+#~ msgstr "ضمیمه‌شده"
+
+#~ msgid "attachment"
+#~ msgstr "ضمیمه‌شده"
+
+#~ msgid "enclosed"
+#~ msgstr "پیوست‌شده"
+
+#~ msgid "enclosure"
+#~ msgstr "پیوست"
 
 #~ msgid "Article Type"
 #~ msgstr "نوع بند"

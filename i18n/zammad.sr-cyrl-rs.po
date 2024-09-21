@@ -2237,20 +2237,13 @@ msgstr "Приложи датотеку"
 msgid "Attach files"
 msgstr "Приложи датотеке"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
-msgid "Attached"
-msgstr "Приложено"
-
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco:4
 #: app/views/knowledge_base/public/answers/show.html.erb:17
 msgid "Attached Files"
 msgstr "Attached Files"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
 msgstr "Прилог"
@@ -5826,7 +5819,7 @@ msgstr "Да ли сте знали?"
 msgid "Did you know? You can help translating %s at:"
 msgstr "Да ли сте знали? Овде можете помоћи са преводом на %s:"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:49
 msgid "Did you plan to include attachments with this message?"
 msgstr "Да ли сте можда заборавили да убаците прилоге у ову поруку?"
 
@@ -6672,16 +6665,6 @@ msgid ""
 msgstr ""
 "Укључује отварање корисничких налога преко веб интерфејса. Ово подешавање је "
 "делотворно само уколико је укључено пријављивање лозинком."
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
-msgid "Enclosed"
-msgstr "Приложен"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
-msgid "Enclosure"
-msgstr "Прилог"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
@@ -11280,7 +11263,7 @@ msgstr "Без x-zammad-session-user-id, пошиљалац није подеш�
 msgid "No, just close the ticket"
 msgstr "Не, само затвори тикет"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:52
 msgid "No, thanks"
 msgstr "Не, хвала"
 
@@ -19526,7 +19509,7 @@ msgstr "Жута"
 msgid "Yes"
 msgstr "Да"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
 msgid "Yes, add attachments now"
 msgstr "Да, додај прилог одмах"
 
@@ -20223,14 +20206,9 @@ msgid "at least one letter is required"
 msgstr "неопходно је бар једно слово"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
-msgid "attached"
-msgstr "приложено"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
-msgid "attachment"
-msgstr "прилог"
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+msgid "attachment,attached,enclosed,enclosure"
+msgstr ""
 
 #: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"
@@ -20545,16 +20523,6 @@ msgstr "имејл"
 msgid "email sent to '%s'"
 msgstr "имејл послат на ’%s’"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
-msgid "enclosed"
-msgstr "приложено"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
-msgid "enclosure"
-msgstr "прилог"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 msgid "ends with"
 msgstr "завршава са"
@@ -20770,7 +20738,7 @@ msgid "in process"
 msgstr "у обради"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1426
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1428
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -21611,6 +21579,27 @@ msgstr "…целог текстуалног поља"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "Attached"
+#~ msgstr "Приложено"
+
+#~ msgid "Enclosed"
+#~ msgstr "Приложен"
+
+#~ msgid "Enclosure"
+#~ msgstr "Прилог"
+
+#~ msgid "attached"
+#~ msgstr "приложено"
+
+#~ msgid "attachment"
+#~ msgstr "прилог"
+
+#~ msgid "enclosed"
+#~ msgstr "приложено"
+
+#~ msgid "enclosure"
+#~ msgstr "прилог"
 
 #~ msgid "Article Type"
 #~ msgstr "Тип чланка"

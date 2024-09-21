@@ -2255,22 +2255,13 @@ msgstr "Priložené súbory"
 msgid "Attach files"
 msgstr "Priložené súbory"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
-#, fuzzy
-#| msgid "Attachments"
-msgid "Attached"
-msgstr "Prílohy"
-
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco:4
 #: app/views/knowledge_base/public/answers/show.html.erb:17
 msgid "Attached Files"
 msgstr "Priložené súbory"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 #, fuzzy
 #| msgid "Attachments"
@@ -5914,7 +5905,7 @@ msgstr ""
 msgid "Did you know? You can help translating %s at:"
 msgstr ""
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:49
 msgid "Did you plan to include attachments with this message?"
 msgstr ""
 
@@ -6759,20 +6750,6 @@ msgid ""
 "Enables users to create their own account via web interface. This setting is "
 "only effective if the password login is enabled."
 msgstr "Umožňuje používateľom vytvoriť ich vlastný účet cez web rozhranie."
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
-#, fuzzy
-#| msgid "closed"
-msgid "Enclosed"
-msgstr "zatvorený"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
-#, fuzzy
-#| msgid "close"
-msgid "Enclosure"
-msgstr "zavrieť"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
@@ -11520,7 +11497,7 @@ msgstr ""
 msgid "No, just close the ticket"
 msgstr "K tiketu nemáte viac prístup."
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:52
 msgid "No, thanks"
 msgstr ""
 
@@ -20029,7 +20006,7 @@ msgstr "Žltá"
 msgid "Yes"
 msgstr ""
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
 #, fuzzy
 #| msgid "Add attachment option to upload."
 msgid "Yes, add attachments now"
@@ -20692,18 +20669,9 @@ msgid "at least one letter is required"
 msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
-#, fuzzy
-#| msgid "Attached Files"
-msgid "attached"
-msgstr "Priložené súbory"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
-#, fuzzy
-#| msgid "Attachments"
-msgid "attachment"
-msgstr "Prílohy"
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+msgid "attachment,attached,enclosed,enclosure"
+msgstr ""
 
 #: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"
@@ -21030,20 +20998,6 @@ msgstr "e-mail"
 msgid "email sent to '%s'"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
-#, fuzzy
-#| msgid "closed"
-msgid "enclosed"
-msgstr "zatvorený"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
-#, fuzzy
-#| msgid "close"
-msgid "enclosure"
-msgstr "zavrieť"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 msgid "ends with"
 msgstr ""
@@ -21271,7 +21225,7 @@ msgid "in process"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1426
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1428
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -22158,6 +22112,41 @@ msgstr "...celej textovej plochy"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ čakacia doba dnes"
+
+#, fuzzy
+#~| msgid "Attachments"
+#~ msgid "Attached"
+#~ msgstr "Prílohy"
+
+#, fuzzy
+#~| msgid "closed"
+#~ msgid "Enclosed"
+#~ msgstr "zatvorený"
+
+#, fuzzy
+#~| msgid "close"
+#~ msgid "Enclosure"
+#~ msgstr "zavrieť"
+
+#, fuzzy
+#~| msgid "Attached Files"
+#~ msgid "attached"
+#~ msgstr "Priložené súbory"
+
+#, fuzzy
+#~| msgid "Attachments"
+#~ msgid "attachment"
+#~ msgstr "Prílohy"
+
+#, fuzzy
+#~| msgid "closed"
+#~ msgid "enclosed"
+#~ msgstr "zatvorený"
+
+#, fuzzy
+#~| msgid "close"
+#~ msgid "enclosure"
+#~ msgstr "zavrieť"
 
 #, fuzzy
 #~| msgid "Article"

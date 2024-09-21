@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-20 04:50+0000\n"
+"PO-Revision-Date: 2024-09-21 09:16+0000\n"
 "Last-Translator: Ivan Perovic <ip@zammad.com>\n"
 "Language-Team: Croatian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/hr/>\n"
@@ -1772,7 +1772,7 @@ msgstr "Svi agenti"
 
 #: public/assets/chat/views/waiting.eco:7
 msgid "All colleagues are busy."
-msgstr "Svi kolege su zauzeti."
+msgstr "Svi agenti su zauzeti."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:144
 #, fuzzy
@@ -1800,7 +1800,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:325
 msgid "Allow future"
-msgstr "Dozvoljene vrijednosti u budućnosti"
+msgstr "Dozvoli buduće vrijednosti"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:65
 msgid "Allow future dates toggle value is required."
@@ -1808,7 +1808,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:334
 msgid "Allow past"
-msgstr "Dozvoljene vrijednosti u prošlosti"
+msgstr "Dozvoljene prošle vrijednosti"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:71
 #, fuzzy
@@ -1828,7 +1828,7 @@ msgstr "Dopusti korisnicima dodavanje novih tagova."
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:16
 msgid "Allow users to add new tags."
-msgstr "Dopusti korisnicima dodavanje novih tagova."
+msgstr "Dopusti dodavanje novih tagova."
 
 #: db/seeds/settings.rb:5793
 #, fuzzy
@@ -1838,7 +1838,7 @@ msgstr "Dopusti korisnicima stvaranje novih tagova."
 
 #: db/seeds/settings.rb:4051
 msgid "Allow users to create new tags."
-msgstr "Dopusti korisnicima stvaranje novih tagova."
+msgstr "Dopusti stvaranje novih tagova."
 
 #: db/seeds/settings.rb:1163
 msgid "Allow using one email address for multiple users."
@@ -1856,8 +1856,7 @@ msgstr "Također obavijesti putem e-maila"
 #: db/seeds/settings.rb:5079
 msgid ""
 "Alternative FQDN for callbacks if you operate Zammad in an internal network."
-msgstr ""
-"Alternativni FQDN za callbackove ako koristite Zammad u internoj mreži."
+msgstr "Alternativni FQDN za callbackove ako koristite Zammad u internoj mreži."
 
 #: app/helpers/knowledge_base_breadcrumb_helper.rb:20
 #: app/helpers/knowledge_base_public_page_title_helper.rb:27
@@ -1881,12 +1880,12 @@ msgid ""
 "An email was sent to _%s_. Click the link in the email to verify your "
 "account."
 msgstr ""
-"Poslan je e-mail na _%s_. Kliknite na vezu u e-mailu kako biste potvrdili "
-"svoj račun."
+"Poslan je e-mail na _%s_. Kliknite na poveznicu u e-mailu kako biste "
+"potvrdili svoj račun."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_calendar_view.coffee:50
 msgid "An error has occurred"
-msgstr "Došlo je do pogreške"
+msgstr "Došlo je do greške"
 
 #: app/frontend/shared/server/apollo/handler/BaseHandler.ts:150
 msgid "An error occured during the operation."
@@ -1896,7 +1895,7 @@ msgstr "Došlo je do greške prilikom izvođenja promjena."
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:5
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:5
 msgid "An error occurred: %s"
-msgstr "Dogodila se pogreška: %s"
+msgstr "Dogodila se greška: %s"
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee:57
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee:26
@@ -1907,15 +1906,15 @@ msgstr "Alat za nadgledanje sustava otvorenog koda."
 
 #: app/frontend/shared/components/Form/utils.ts:23
 msgid "An unexpected error has occurred."
-msgstr "Došlo je do neočekivane pogreške."
+msgstr "Došlo je do neočekivane greške."
 
 #: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb:26
 msgid "An unexpected error occurred during system setup."
-msgstr "Došlo je do neočekivane pogreške prilikom postavljanja sustava."
+msgstr "Došlo je do neočekivane greške prilikom postavljanja sustava."
 
 #: lib/calendar_subscriptions.rb:31
 msgid "An unknown method name was requested."
-msgstr ""
+msgstr "Zatraženo je nepoznato ime metode."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:187
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:147
@@ -1986,7 +1985,7 @@ msgstr "Bilo koji primatelj"
 
 #: db/seeds/settings.rb:1426
 msgid "App ID"
-msgstr "ID aplikacije"
+msgstr "App-ID"
 
 #: db/seeds/settings.rb:1432
 msgid "App Secret"
@@ -1994,7 +1993,7 @@ msgstr "App tajna"
 
 #: db/seeds/settings.rb:1765
 msgid "App Tenant ID"
-msgstr "Tenant ID aplikacije"
+msgstr "Tenant ID (App)"
 
 #: db/seeds/settings.rb:27
 msgid "App Version"
@@ -2014,7 +2013,7 @@ msgstr "Korisnički podaci aplikacije za Facebook."
 
 #: db/seeds/settings.rb:1358
 msgid "App credentials for Twitter."
-msgstr "Prijavni podaci Twitter aplikacije."
+msgstr "Twitter prijavni podaci."
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:28
 msgid "App secret"
@@ -2065,7 +2064,7 @@ msgstr "Predložak"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:10
 msgid "Apply current defaults to all agents"
-msgstr "Postavi standardne postavke za sve agente"
+msgstr "Postavi trenutne postavke kao standard za sve agente"
 
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:76
 #, fuzzy
@@ -2085,7 +2084,7 @@ msgstr "Travanj"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:141
 msgid "Archive"
-msgstr "Arhiv"
+msgstr "Arhiva"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:113
 msgid "Archived"
@@ -2204,11 +2203,11 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:10
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:10
 msgid "Article"
-msgstr "Stavka"
+msgstr "Članak"
 
 #: db/seeds/settings.rb:658
 msgid "Article - visibility confirmation dialog"
-msgstr "Stavka - dijaloški okvir za potvrdu vidljivosti"
+msgstr "Članak - dijaloški okvir za potvrdu vidljivosti"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
 msgid "Article > Text (HTML)"
@@ -2216,7 +2215,7 @@ msgstr "Vrsta članka > Tekst (HTML)"
 
 #: lib/excel_sheet/ticket.rb:73
 msgid "Article Count"
-msgstr "Broj članaka"
+msgstr "Ukupan broj članaka"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:282
 msgid "Article actions"
@@ -2224,7 +2223,7 @@ msgstr "Radnje članaka"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee:61
 msgid "Article could not be deleted."
-msgstr "Stavka nije mogla biti obrisana."
+msgstr "Članak nije mogao biti obrisan."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:125
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:27
@@ -2241,20 +2240,20 @@ msgstr "Članak koristi drugačiji sigurnosni mehanizam."
 #: app/assets/javascripts/app/models/ticket.coffee:15
 #: app/graphql/gql/types/overview_type.rb:68
 msgid "Article#"
-msgstr "Stavka#"
+msgstr "Članak#"
 
 #: db/seeds/object_manager_attributes.rb:1989
 msgid "Assign Follow-Ups"
-msgstr "Dodijeli ponavljanje"
+msgstr "Dodijeli kod naknadnih upita"
 
 #: app/assets/javascripts/app/models/group.coffee:11
 #: db/seeds/object_manager_attributes.rb:1998
 msgid "Assign follow-up to latest agent again."
-msgstr "Prilikom ponavljanja, ponovno dodijeli zadnjem agentu."
+msgstr "Prilikom naknadnih upita, ponovno dodijeli zadnjem agentu."
 
 #: app/assets/javascripts/app/models/group.coffee:11
 msgid "Assign follow-ups"
-msgstr "Dodijeli prilikom ponavljanja"
+msgstr "Dodijeli prilikom naknadnih upita"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:591
 msgid "Assign signup roles"
@@ -2304,8 +2303,7 @@ msgstr ""
 
 #: app/models/postmaster_filter.rb:29
 msgid "At least one match rule is required, but none was provided."
-msgstr ""
-"Potrebno je barem jedno pravilo podudaranja, ali nijedno nije navedeno."
+msgstr "Potrebno je barem jedno pravilo podudaranja, ali nijedno nije navedeno."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:155
 msgid "At least one object must be selected."
@@ -2327,20 +2325,13 @@ msgstr "Priloži datoteku"
 msgid "Attach files"
 msgstr "Priloži datoteke"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
-msgid "Attached"
-msgstr "Priloženo"
-
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco:4
 #: app/views/knowledge_base/public/answers/show.html.erb:17
 msgid "Attached Files"
 msgstr "Priložene datoteke"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
 msgstr "Privitak"
@@ -2356,7 +2347,7 @@ msgstr "Privitak - potraži ponavljanja u prilozima."
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/ticket-article-attachment.ts:12
 #: public/assets/form/form.js:50
 msgid "Attachments"
-msgstr "Privitci"
+msgstr "Privici"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:10
 msgid "Attachments are stored in a Simple Storage Service."
@@ -6047,7 +6038,7 @@ msgstr ""
 msgid "Did you know? You can help translating %s at:"
 msgstr "Jeste li znali? Možete pomoći u prevođenju %s na:"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:49
 msgid "Did you plan to include attachments with this message?"
 msgstr ""
 
@@ -6941,16 +6932,6 @@ msgid ""
 msgstr ""
 "Omogućuje korisnicima stvaranje računa putem web sučelja. Ova postavka je "
 "aktivna samo ako je omogućena prijava lozinkom."
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
-msgid "Enclosed"
-msgstr "Zatvoreno"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
-msgid "Enclosure"
-msgstr "Ograda"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
@@ -11781,7 +11762,7 @@ msgstr "Bez x-zammad-session-user-id, pošiljatelj nije postavljen!"
 msgid "No, just close the ticket"
 msgstr "Više ne možete vidjeti ticket."
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:52
 #, fuzzy
 #| msgid "No Thanks!"
 msgid "No, thanks"
@@ -20324,7 +20305,7 @@ msgstr "Žuto"
 msgid "Yes"
 msgstr "Da"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
 #, fuzzy
 #| msgid "Retry attachment download"
 msgid "Yes, add attachments now"
@@ -21055,14 +21036,9 @@ msgid "at least one letter is required"
 msgstr "Potrebno je barem jedno slovo"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
-msgid "attached"
-msgstr "priloženo"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
-msgid "attachment"
-msgstr "privitak"
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+msgid "attachment,attached,enclosed,enclosure"
+msgstr ""
 
 #: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"
@@ -21381,16 +21357,6 @@ msgstr "E-mail"
 msgid "email sent to '%s'"
 msgstr "e-mail poslan na ’%s’"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
-msgid "enclosed"
-msgstr "priloženo"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
-msgid "enclosure"
-msgstr "privitak"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 msgid "ends with"
 msgstr "završava na"
@@ -21606,7 +21572,7 @@ msgid "in process"
 msgstr "u tijeku"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1426
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1428
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -22462,6 +22428,27 @@ msgstr "... cijelog tekstnog polja"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ vrijeme čekanja danas"
+
+#~ msgid "Attached"
+#~ msgstr "Priloženo"
+
+#~ msgid "Enclosed"
+#~ msgstr "Zatvoreno"
+
+#~ msgid "Enclosure"
+#~ msgstr "Ograda"
+
+#~ msgid "attached"
+#~ msgstr "priloženo"
+
+#~ msgid "attachment"
+#~ msgstr "privitak"
+
+#~ msgid "enclosed"
+#~ msgstr "priloženo"
+
+#~ msgid "enclosure"
+#~ msgstr "privitak"
 
 #~ msgid "Article Type"
 #~ msgstr "Vrsta članka"

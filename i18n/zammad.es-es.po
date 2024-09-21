@@ -2267,20 +2267,13 @@ msgstr "Adjuntar archivo"
 msgid "Attach files"
 msgstr "Adjuntar ficheros"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:12
-msgid "Attached"
-msgstr "Adjunto(s)"
-
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco:4
 #: app/views/knowledge_base/public/answers/show.html.erb:17
 msgid "Attached Files"
 msgstr "Ficheros Adjuntos"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:10
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
 msgstr "Adjunto(s)"
@@ -5940,7 +5933,7 @@ msgstr "¿Lo sabías?"
 msgid "Did you know? You can help translating %s at:"
 msgstr "¿Lo sabía? Puede ayudar a traducir %s en:"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:61
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:49
 msgid "Did you plan to include attachments with this message?"
 msgstr "¿Pensabas incluir archivos adjuntos con este mensaje?"
 
@@ -6800,16 +6793,6 @@ msgstr ""
 "Permite a los usuarios crear su propia cuenta a través de la interfaz web. "
 "Esta configuración solamente será efectiva si se habilita la entrada con "
 "contraseña."
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:14
-msgid "Enclosed"
-msgstr "Adjunto"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:16
-msgid "Enclosure"
-msgstr "Recinto"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
@@ -11474,7 +11457,7 @@ msgstr ""
 msgid "No, just close the ticket"
 msgstr "No, sólo cierra el ticket"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:64
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:52
 msgid "No, thanks"
 msgstr "No, gracias"
 
@@ -19864,7 +19847,7 @@ msgstr "Amarillo"
 msgid "Yes"
 msgstr "Sí"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:63
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
 msgid "Yes, add attachments now"
 msgstr "Sí, añadir archivos adjuntos ahora"
 
@@ -20565,14 +20548,9 @@ msgid "at least one letter is required"
 msgstr "al menos se requiere de una letra"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:13
-msgid "attached"
-msgstr "adjunto"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:11
-msgid "attachment"
-msgstr "adjunto"
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
+msgid "attachment,attached,enclosed,enclosure"
+msgstr ""
 
 #: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"
@@ -20888,16 +20866,6 @@ msgstr "correo"
 msgid "email sent to '%s'"
 msgstr "mensaje enviado a '%s'"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:15
-msgid "enclosed"
-msgstr "adjunto"
-
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:17
-msgid "enclosure"
-msgstr "recinto"
-
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:186
 msgid "ends with"
 msgstr "termina con"
@@ -21113,7 +21081,7 @@ msgid "in process"
 msgstr "en proceso"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1426
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1428
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -21955,6 +21923,27 @@ msgstr "...de toda la zona de texto"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ tiempo de espera de hoy"
+
+#~ msgid "Attached"
+#~ msgstr "Adjunto(s)"
+
+#~ msgid "Enclosed"
+#~ msgstr "Adjunto"
+
+#~ msgid "Enclosure"
+#~ msgstr "Recinto"
+
+#~ msgid "attached"
+#~ msgstr "adjunto"
+
+#~ msgid "attachment"
+#~ msgstr "adjunto"
+
+#~ msgid "enclosed"
+#~ msgstr "adjunto"
+
+#~ msgid "enclosure"
+#~ msgstr "recinto"
 
 #~ msgid "Article Type"
 #~ msgstr "Tipo de artículo"
