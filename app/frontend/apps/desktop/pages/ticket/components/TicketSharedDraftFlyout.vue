@@ -11,13 +11,19 @@ import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvat
 import type { FormRef } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
-import { useTicketSharedDraftStartDeleteMutation } from '#shared/entities/ticket-shared-draft-start/graphql/mutations/ticketSharedDraftStartDelete.api.ts'
-import { useTicketSharedDraftStartSingleQuery } from '#shared/entities/ticket-shared-draft-start/graphql/queries/ticketSharedDraftStartSingle.api.ts'
+import type {
+  TicketSharedDraftStartSingleQuery,
+  TicketSharedDraftZoomShowQuery,
+} from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import {
   MutationHandler,
   QueryHandler,
 } from '#shared/server/apollo/handler/index.ts'
+import type {
+  OperationMutationFunction,
+  OperationQueryFunction,
+} from '#shared/types/server/apollo/handler'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
@@ -28,6 +34,9 @@ import CommonObjectAttributeContainer from '#desktop/components/CommonObjectAttr
 const props = defineProps<{
   sharedDraftId: string
   form: FormRef | undefined
+  draftType: 'start' | 'detail-view'
+  metaInformationQuery: OperationQueryFunction
+  deleteMutation: OperationMutationFunction
 }>()
 
 const emit = defineEmits<{
@@ -35,18 +44,41 @@ const emit = defineEmits<{
   'shared-draft-deleted': [id: string]
 }>()
 
-// TODO: Make this more generic when the `zoom` shared draft query is made available.
-const sharedDraftStartSingleQuery = new QueryHandler(
-  useTicketSharedDraftStartSingleQuery(() => ({
+const { metaInformationQuery, deleteMutation } = props
+
+const metaInformationQueryHandler = new QueryHandler(
+  metaInformationQuery({
     sharedDraftId: props.sharedDraftId,
-  })),
+  }),
 )
 
-const sharedDraftStartSingleResult = sharedDraftStartSingleQuery.result()
+const metaInformationQueryResult = metaInformationQueryHandler.result()
 
-const sharedDraftStart = computed(
-  () => sharedDraftStartSingleResult.value?.ticketSharedDraftStartSingle,
-)
+const sharedDraft = computed(() => {
+  if (props.draftType === 'start') {
+    return metaInformationQueryResult.value
+      ?.ticketSharedDraftStartSingle as TicketSharedDraftStartSingleQuery['ticketSharedDraftStartSingle']
+  }
+
+  return metaInformationQueryResult.value
+    ?.ticketSharedDraftZoomShow as TicketSharedDraftZoomShowQuery['ticketSharedDraftZoomShow']
+})
+
+const sharedDraftContent = computed(() => {
+  if (props.draftType === 'start') {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const content: any =
+      sharedDraft.value as TicketSharedDraftStartSingleQuery['ticketSharedDraftStartSingle']
+
+    return content.content.body
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const newArticle: any =
+    sharedDraft.value as TicketSharedDraftZoomShowQuery['ticketSharedDraftZoomShow']
+
+  return newArticle.newArticle.body
+})
 
 const close = () => {
   closeFlyout('shared-draft')
@@ -56,31 +88,33 @@ const { waitForConfirmation, waitForVariantConfirmation } = useConfirmation()
 
 const { notify } = useNotifications()
 
-// TODO: Make this more generic when the `zoom` shared draft mutation is made available.
-const sharedDraftStartDeleteMutation = new MutationHandler(
-  useTicketSharedDraftStartDeleteMutation(),
-)
+const sharedDrafteleteMutation = new MutationHandler(deleteMutation({}))
 
 const { isDirty, triggerFormUpdater, updateFieldValues, values } = useForm(
   toRef(props, 'form'),
 )
 
-const deleteSharedDraft = async (sharedDraftStartId: string) => {
+const deleteSharedDraft = async (sharedDraftId: string) => {
   const confirmed = await waitForVariantConfirmation('delete')
   if (!confirmed) return
 
-  sharedDraftStartDeleteMutation
+  sharedDrafteleteMutation
     .send({
-      sharedDraftId: sharedDraftStartId,
+      sharedDraftId,
     })
     .then(() => {
       // Reset shared draft internal ID, if currently set to the same value in the form.
-      // TODO: Make this more generic when the `zoom` shared draft is made available.
       if (
-        convertToGraphQLId(
-          'Ticket::SharedDraftStart',
-          Number(values.value.shared_draft_id),
-        ) === sharedDraftStartId
+        (props.draftType === 'start' &&
+          convertToGraphQLId(
+            'Ticket::SharedDraftStart',
+            Number(values.value.shared_draft_id),
+          ) === sharedDraftId) ||
+        (props.draftType === 'detail-view' &&
+          convertToGraphQLId(
+            'Ticket::SharedDraftZoom',
+            Number(values.value.shared_draft_id),
+          ) === sharedDraftId)
       ) {
         updateFieldValues({
           shared_draft_id: null,
@@ -93,13 +127,13 @@ const deleteSharedDraft = async (sharedDraftStartId: string) => {
         message: __('Shared draft has been deleted.'),
       })
 
-      emit('shared-draft-deleted', sharedDraftStartId)
+      emit('shared-draft-deleted', sharedDraftId)
 
       close()
     })
 }
 
-const applySharedDraft = async (sharedDraftStartId: string) => {
+const applySharedDraft = async (sharedDraftId: string) => {
   if (isDirty.value) {
     const confirmed = await waitForConfirmation(
       __('There is existing content. Do you want to overwrite it?'),
@@ -112,23 +146,32 @@ const applySharedDraft = async (sharedDraftStartId: string) => {
     if (!confirmed) return
   }
 
-  triggerFormUpdater({
-    additionalParams: {
-      sharedDraftStartId,
-    },
-  })
+  const additionalParams = {
+    sharedDraftId,
+    draftType: props.draftType,
+  }
+
+  triggerFormUpdater({ additionalParams })
 
   // NB: Skip notifying the user via toast, since they will immediately see the shared draft applied on screen.
 
-  emit('shared-draft-applied', sharedDraftStartId)
+  emit('shared-draft-applied', sharedDraftId)
 
   close()
 }
+
+const headerTitle = computed(() => {
+  if (props.draftType === 'start') {
+    return __('Preview Shared Draft')
+  }
+
+  return __('Apply Shared Draft')
+})
 </script>
 
 <template>
   <CommonFlyout
-    :header-title="__('Preview Shared Draft')"
+    :header-title="headerTitle"
     :footer-action-options="{
       actionLabel: __('Apply'),
       actionButton: { variant: 'primary' },
@@ -136,35 +179,30 @@ const applySharedDraft = async (sharedDraftStartId: string) => {
     header-icon="file-text"
     name="shared-draft"
   >
-    <div v-if="sharedDraftStart" class="flex flex-col gap-3">
+    <div v-if="sharedDraft" class="flex flex-col gap-3">
       <!-- TODO: Surely we should also display the name of the shared draft somewhere, no? -->
       <!-- <CommonObjectAttributeContainer>
         <CommonObjectAttribute :label="__('Name')">
-          {{ sharedDraftStart?.name }}
+          {{ sharedDraft?.name }}
         </CommonObjectAttribute>
       </CommonObjectAttributeContainer> -->
 
       <div class="flex items-start gap-y-3">
         <CommonObjectAttributeContainer
-          v-if="sharedDraftStart?.updatedBy"
+          v-if="sharedDraft?.updatedBy"
           class="grow"
         >
           <CommonObjectAttribute :label="__('Author')">
             <div class="flex items-center gap-1.5">
-              <CommonUserAvatar
-                :entity="sharedDraftStart?.updatedBy"
-                size="small"
-              />
-              <CommonLabel>{{
-                sharedDraftStart.updatedBy.fullname
-              }}</CommonLabel>
+              <CommonUserAvatar :entity="sharedDraft?.updatedBy" size="small" />
+              <CommonLabel>{{ sharedDraft.updatedBy.fullname }}</CommonLabel>
             </div>
           </CommonObjectAttribute>
         </CommonObjectAttributeContainer>
 
         <CommonObjectAttributeContainer class="grow">
           <CommonObjectAttribute :label="__('Last changed')">
-            <CommonDateTime :date-time="sharedDraftStart?.updatedAt" />
+            <CommonDateTime :date-time="sharedDraft?.updatedAt" />
           </CommonObjectAttribute>
         </CommonObjectAttributeContainer>
       </div>
@@ -174,10 +212,10 @@ const applySharedDraft = async (sharedDraftStartId: string) => {
           But keep in mind this might not be easily possible, since we are missing some information from the query.
           For example, we have only `owner_id`/`state_id`/`priority_id`, what about lookup objects?!
       -->
-      <CommonObjectAttributeContainer v-if="sharedDraftStart?.content.body">
+      <CommonObjectAttributeContainer v-if="sharedDraftContent">
         <CommonObjectAttribute :label="__('Text')">
           <!-- eslint-disable vue/no-v-html -->
-          <span v-html="sharedDraftStart.content.body" />
+          <span v-html="sharedDraftContent" />
         </CommonObjectAttribute>
       </CommonObjectAttributeContainer>
     </div>

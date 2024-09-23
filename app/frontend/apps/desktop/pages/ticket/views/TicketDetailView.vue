@@ -118,7 +118,6 @@ const {
   flags,
   isDisabled,
   isDirty,
-  formNodeId,
   isInitialSettled,
   formReset,
   formSubmit,
@@ -239,6 +238,17 @@ const ticketEditSchema = [
 const { waitForConfirmation, waitForVariantConfirmation } = useConfirmation()
 
 const { handleScreenBehavior } = useTicketScreenBehavior()
+
+const canUseDraft = computed(() => {
+  return flags.value.hasSharedDraft
+})
+
+const hasAvailableDraft = computed(() => {
+  const sharedDraftZoomId = ticket.value?.sharedDraftZoomId
+  if (!sharedDraftZoomId) return false
+
+  return canUseDraft.value
+})
 
 const discardChanges = async () => {
   const confirm = await waitForVariantConfirmation('unsaved')
@@ -583,12 +593,17 @@ watch(ticketId, () => {
     </template>
     <template #bottomBar>
       <TicketDetailBottomBar
+        :can-use-draft="canUseDraft"
         :dirty="isDirty"
         :disabled="isDisabled"
-        :form-node-id="formNodeId"
-        :is-ticket-editable="isTicketEditable"
+        :form="form"
         :group-id="groupId"
+        :is-ticket-agent="isTicketAgent"
+        :is-ticket-editable="isTicketEditable"
+        :has-available-draft="hasAvailableDraft"
         :live-user-list="liveUserList"
+        :shared-draft-id="ticket?.sharedDraftZoomId"
+        :ticket-id="ticketId"
         @submit="checkSubmitEditTicket"
         @discard="discardChanges"
         @execute-macro="executeMacro"

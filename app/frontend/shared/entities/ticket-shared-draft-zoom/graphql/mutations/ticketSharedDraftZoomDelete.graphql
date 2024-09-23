@@ -1,0 +1,8 @@
+mutation ticketSharedDraftZoomDelete($sharedDraftId: ID!) {
+  ticketSharedDraftZoomDelete(sharedDraftId: $sharedDraftId) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

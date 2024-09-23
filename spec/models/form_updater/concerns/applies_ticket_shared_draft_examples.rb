@@ -1,16 +1,22 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-RSpec.shared_examples 'FormUpdater::AppliesTicketSharedDraft' do
+RSpec.shared_examples 'FormUpdater::AppliesTicketSharedDraft' do |draft_type: 'start'|
   context 'when applying a ticket shared draft' do
 
     let(:object_name)           { 'ticket' }
     let(:field_name)            { 'title' }
     let(:field_draft_value)     { 'test' }
     let(:field_result)          { { value: 'test' } }
-    let(:draft)                 { create(:ticket_shared_draft_start, group: user.groups.first, content: { field_name => field_draft_value }) }
     let(:dirty_fields)          { [] }
-    let(:additional_data)       { { 'sharedDraftStartId' => Gql::ZammadSchema.id_from_object(draft) } }
+    let(:additional_data)       { { 'sharedDraftId' => Gql::ZammadSchema.id_from_object(draft), 'draftType' => draft_type } }
     let(:meta)                  { { additional_data:, dirty_fields: } }
+    let(:draft) do
+      if draft_type == 'start'
+        create(:ticket_shared_draft_start, group: user.groups.first, content: { field_name => field_draft_value })
+      elsif draft_type == 'detail-view'
+        create(:ticket_shared_draft_zoom, ticket: create(:ticket, group: group), new_article: { body: '4711' }, ticket_attributes: { field_name => field_draft_value })
+      end
+    end
 
     shared_examples 'skips the field' do
       it 'skips the field' do
@@ -194,7 +200,13 @@ RSpec.shared_examples 'FormUpdater::AppliesTicketSharedDraft' do
         let(:group)    { create(:group, name: 'Example 1') }
         let(:user)     { create(:agent, groups: [group]) }
         let(:context)  { { current_user: user } }
-        let(:draft)    { create(:ticket_shared_draft_start, group: user.groups.first, content: { 'group_id' => group.id.to_s, 'owner_id' => user.id.to_s }) }
+        let(:draft) do
+          if draft_type == 'start'
+            create(:ticket_shared_draft_start, group: user.groups.first, content: { 'group_id' => group.id.to_s, 'owner_id' => user.id.to_s })
+          elsif draft_type == 'detail-view'
+            create(:ticket_shared_draft_zoom, ticket: create(:ticket, group: group), new_article: { body: '4711' }, ticket_attributes: { 'group_id' => group.id.to_s, 'owner_id' => user.id.to_s })
+          end
+        end
 
         it 'sets the draft value for both fields', :aggregate_failures do
           expect(resolved_result.resolve[:fields]['group_id']).to include(value: group.id)

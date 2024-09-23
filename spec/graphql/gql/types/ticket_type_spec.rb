@@ -54,5 +54,30 @@ RSpec.describe Gql::Types::TicketType do
         expect(instance.state_color_code).to eq('closed')
       end
     end
+
+  end
+
+  describe 'field :shared_draft_zoom_id' do
+    context 'when ticket has no shared draft' do
+      let(:ticket) { create(:ticket) }
+
+      it 'returns nil' do
+        expect(instance.shared_draft_zoom_id).to be_nil
+      end
+    end
+
+    context 'when ticket has a shared draft' do
+      let(:ticket) do
+        t = create(:ticket)
+        s = create(:ticket_shared_draft_zoom, ticket: t)
+        t.update(shared_draft: s)
+
+        t
+      end
+
+      it 'returns the id' do
+        expect(instance.shared_draft_zoom_id).to eq(Gql::ZammadSchema.id_from_object(ticket.shared_draft))
+      end
+    end
   end
 end

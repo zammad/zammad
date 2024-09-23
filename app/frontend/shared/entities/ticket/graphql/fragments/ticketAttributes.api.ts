@@ -95,6 +95,7 @@ export const TicketAttributesFragmentDoc = gql`
   subscribed
   preferences
   stateColorCode
+  sharedDraftZoomId
   firstResponseEscalationAt
   closeEscalationAt
   updateEscalationAt

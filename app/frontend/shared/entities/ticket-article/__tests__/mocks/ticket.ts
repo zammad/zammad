@@ -69,6 +69,7 @@ export const defaultGroup = {
   id: convertToGraphQLId('Group', 2),
   name: 'Test Agents',
   emailAddress: null,
+  sharedDrafts: true,
 }
 
 export const defaultPriority = {

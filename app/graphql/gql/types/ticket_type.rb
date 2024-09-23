@@ -65,6 +65,7 @@ module Gql::Types
     scoped_fields do
       field :time_unit, Float
       field :time_units_per_type, [Gql::Types::Ticket::TimeAccountingTypeSumType]
+      field :shared_draft_zoom_id, GraphQL::Types::ID, null: true, description: 'The Shared draft ID if the ticket has a shared draft.'
     end
 
     internal_fields do
@@ -103,6 +104,12 @@ module Gql::Types
       else
         time_units_per_type
       end
+    end
+
+    def shared_draft_zoom_id
+      return nil if !@object.shared_draft
+
+      Gql::ZammadSchema.id_from_object(@object.shared_draft)
     end
 
     private

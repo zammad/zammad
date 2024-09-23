@@ -19,6 +19,7 @@ module Gql::Types
       field :assignment_timeout, Integer
       field :follow_up_possible, String
       field :follow_up_assignment, Boolean
+      field :shared_drafts, Boolean
     end
 
     def email_address

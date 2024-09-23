@@ -7,7 +7,9 @@ import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { pushComponent } from '#shared/components/DynamicInitializer/manage.ts'
 import { waitForTicketSharedDraftStartCreateMutationCalls } from '#shared/entities/ticket-shared-draft-start/graphql/mutations/ticketSharedDraftStartCreate.mocks.ts'
+import { useTicketSharedDraftStartDeleteMutation } from '#shared/entities/ticket-shared-draft-start/graphql/mutations/ticketSharedDraftStartDelete.api.ts'
 import { waitForTicketSharedDraftStartUpdateMutationCalls } from '#shared/entities/ticket-shared-draft-start/graphql/mutations/ticketSharedDraftStartUpdate.mocks.ts'
+import { useTicketSharedDraftStartSingleQuery } from '#shared/entities/ticket-shared-draft-start/graphql/queries/ticketSharedDraftStartSingle.api.ts'
 import type { TicketSharedDraftStartListQuery } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
@@ -174,6 +176,9 @@ describe('TicketSidebarSharedDraftStartContent.vue', () => {
           formId: 'test-form',
         },
         sharedDraftId: convertToGraphQLId('Ticket::SharedDraftStart', 1),
+        draftType: 'start',
+        metaInformationQuery: useTicketSharedDraftStartSingleQuery,
+        deleteMutation: useTicketSharedDraftStartDeleteMutation,
       },
     )
   })

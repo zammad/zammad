@@ -62,6 +62,11 @@ export type OperationMutationFunction<
   options: OperationMutationOptions<TResult, TVariables>,
 ) => UseMutationReturn<TResult, TVariables>
 
+export type OperationQueryFunction<
+  TResult = OperationQueryResult,
+  TVariables extends OperationVariables = OperationVariables,
+> = (options: OperationVariables) => UseQueryReturn<TResult, TVariables>
+
 export type BaseConnection = {
   __typename?: string
   pageInfo: PageInfo

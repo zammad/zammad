@@ -14,7 +14,7 @@ class FormUpdater::ApplyValue
 
   FIELD_RENAMING_MAP = {
     'formSenderType' => 'articleSenderType',
-    'article.type'   => 'articleType'
+    'article.type'   => 'articleType',
   }.freeze
 
   def perform(field:, config:, include_blank: false, parent_field: nil)

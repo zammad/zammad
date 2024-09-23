@@ -38,7 +38,7 @@ const isLiveUserMobile = (liveUser: TicketLiveAppUser) =>
 </script>
 
 <template>
-  <div class="flex items-center gap-2.5 ltr:mr-auto rtl:ml-auto">
+  <div class="flex items-center gap-2.5">
     <div
       v-for="liveUser in visibleLiveUsers"
       :key="liveUser.user.id"

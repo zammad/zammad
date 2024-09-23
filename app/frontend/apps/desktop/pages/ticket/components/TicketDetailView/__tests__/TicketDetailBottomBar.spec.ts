@@ -4,6 +4,7 @@ import { within } from '@testing-library/vue'
 import { ref } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import type { TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
@@ -20,9 +21,11 @@ import TicketDetailBottomBar, {
 
 import liveUserList from './mocks/live-user-list.json'
 
+const ticket = createDummyTicket()
+
 vi.mock('#desktop/pages/ticket/composables/useTicketInformation.ts', () => ({
   useTicketInformation: () => ({
-    ticket: ref(createDummyTicket()),
+    ticket: ref(ticket),
   }),
 }))
 
@@ -30,11 +33,12 @@ const renderTicketDetailBottomBar = (props?: Partial<Props>) =>
   renderComponent(TicketDetailBottomBar, {
     props: {
       disabled: false,
-      formNodeId: 'form-node-id-test',
       dirty: false,
       isTicketEditable: true,
       groupId: convertToGraphQLId('Group', 2),
       liveUserList: [],
+      ticketId: ticket.id,
+      isTicketAgent: true,
       ...props,
     },
     store: true,
@@ -82,7 +86,6 @@ describe('TicketDetailBottomBar', () => {
     'emits %s event when button is clicked',
     async (eventName) => {
       const wrapper = renderTicketDetailBottomBar({
-        formNodeId: 'form-node-id-test',
         dirty: true,
         disabled: false,
       })
@@ -105,171 +108,188 @@ describe('TicketDetailBottomBar', () => {
     },
   )
 
-  it('displays action menu button for macros for agent with update permission', async () => {
-    mockMacrosQuery({
-      macros: [
-        {
-          __typename: 'Macro',
-          id: convertToGraphQLId('Macro', 1),
-          active: true,
-          name: 'Macro 1',
-          uxFlowNextUp: 'next_task',
-        },
-        {
-          __typename: 'Macro',
-          id: convertToGraphQLId('Macro', 2),
-          active: true,
-          name: 'Macro 2',
-          uxFlowNextUp: 'next_task',
-        },
-      ],
-    })
-
-    const wrapper = renderTicketDetailBottomBar()
-
-    const actionMenu = await wrapper.findByLabelText('Action menu button')
-
-    await wrapper.events.click(actionMenu)
-
-    const menu = await wrapper.findByRole('menu')
-
-    expect(menu).toBeInTheDocument()
-    expect(within(menu).getByText('Macros')).toBeInTheDocument()
-    expect(within(menu).getByText('Macro 1')).toBeInTheDocument()
-    expect(within(menu).getByText('Macro 2')).toBeInTheDocument()
+  describe('Drafts', () => {
+    it.todo('should not display draft information if ticket has no draft')
+    it.todo('should display draft information if ticket has a draft')
   })
 
-  it('hides action menu, submit and cancel buttons for agent without update permission', async () => {
-    const wrapper = renderTicketDetailBottomBar({
-      isTicketEditable: false,
+  describe('Macros', () => {
+    it('displays action menu button for macros for agent with update permission', async () => {
+      mockPermissions(['ticket.agent'])
+
+      mockMacrosQuery({
+        macros: [
+          {
+            __typename: 'Macro',
+            id: convertToGraphQLId('Macro', 1),
+            active: true,
+            name: 'Macro 1',
+            uxFlowNextUp: 'next_task',
+          },
+          {
+            __typename: 'Macro',
+            id: convertToGraphQLId('Macro', 2),
+            active: true,
+            name: 'Macro 2',
+            uxFlowNextUp: 'next_task',
+          },
+        ],
+      })
+
+      const wrapper = renderTicketDetailBottomBar()
+
+      const actionMenu = await wrapper.findByLabelText(
+        'Additional ticket edit actions',
+      )
+
+      await wrapper.events.click(actionMenu)
+
+      const menu = await wrapper.findByRole('menu')
+
+      expect(menu).toBeInTheDocument()
+      expect(within(menu).getByText('Macros')).toBeInTheDocument()
+      expect(within(menu).getByText('Macro 1')).toBeInTheDocument()
+      expect(within(menu).getByText('Macro 2')).toBeInTheDocument()
     })
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Update' }),
-    ).not.toBeInTheDocument()
+    it('hides action menu, submit and cancel buttons for agent without update permission', async () => {
+      const wrapper = renderTicketDetailBottomBar({
+        isTicketEditable: false,
+      })
 
-    expect(
-      wrapper.queryByRole('button', { name: 'Discard your unsaved changes' }),
-    ).not.toBeInTheDocument()
+      expect(
+        wrapper.queryByRole('button', { name: 'Update' }),
+      ).not.toBeInTheDocument()
 
-    expect(
-      wrapper.queryByLabelText('Action menu button'),
-    ).not.toBeInTheDocument()
+      expect(
+        wrapper.queryByRole('button', { name: 'Discard your unsaved changes' }),
+      ).not.toBeInTheDocument()
+
+      expect(
+        wrapper.queryByLabelText('Additional ticket edit actions'),
+      ).not.toBeInTheDocument()
+    })
+
+    it('reloads macro query if subscription is triggered', async () => {
+      mockMacrosQuery({
+        macros: [],
+      })
+
+      renderTicketDetailBottomBar()
+
+      const calls = await waitForMacrosQueryCalls()
+
+      expect(calls?.at(-1)?.variables).toEqual({
+        groupId: convertToGraphQLId('Group', 2),
+      })
+
+      await getMacrosUpdateSubscriptionHandler().trigger({
+        macrosUpdate: {
+          macroUpdated: true,
+        },
+      })
+
+      mockMacrosQuery({
+        macros: [
+          {
+            __typename: 'Macro',
+            id: convertToGraphQLId('Macro', 1),
+            active: true,
+            name: 'Macro 1',
+            uxFlowNextUp: 'next_task',
+          },
+          {
+            __typename: 'Macro',
+            id: convertToGraphQLId('Macro', 2),
+            active: true,
+            name: 'Macro updated',
+            uxFlowNextUp: 'next_task',
+          },
+        ],
+      })
+
+      expect(calls.length).toBe(2)
+    })
+
+    it('submits event if macro is clicked', async () => {
+      mockPermissions(['ticket.agent'])
+
+      mockMacrosQuery({
+        macros: [
+          {
+            __typename: 'Macro',
+            id: convertToGraphQLId('Macro', 1),
+            active: true,
+            name: 'Macro 1',
+            uxFlowNextUp: 'next_task',
+          },
+          {
+            __typename: 'Macro',
+            id: convertToGraphQLId('Macro', 2),
+            active: true,
+            name: 'Macro 2',
+            uxFlowNextUp: 'next_task',
+          },
+        ],
+      })
+
+      const wrapper = renderTicketDetailBottomBar()
+
+      const actionMenu = await wrapper.findByLabelText(
+        'Additional ticket edit actions',
+      )
+
+      await wrapper.events.click(actionMenu)
+
+      const menu = await wrapper.findByRole('menu')
+
+      await wrapper.events.click(within(menu).getByText('Macro 1'))
+
+      expect(wrapper.emitted('execute-macro')).toEqual([
+        [
+          {
+            __typename: 'Macro',
+            id: convertToGraphQLId('Macro', 1),
+            active: true,
+            name: 'Macro 1',
+            uxFlowNextUp: 'next_task',
+          },
+        ],
+      ])
+    })
+
+    it('hides macros if there is no group id', async () => {
+      const wrapper = renderTicketDetailBottomBar({
+        groupId: undefined,
+      })
+
+      expect(
+        wrapper.queryByLabelText('Additional ticket edit actions'),
+      ).not.toBeInTheDocument()
+    })
   })
 
-  it('reloads macro query if subscription is triggered', async () => {
-    mockMacrosQuery({
-      macros: [],
+  describe('Live Users', () => {
+    it('shows live user information as avatars', async () => {
+      const wrapper = renderTicketDetailBottomBar({
+        liveUserList: liveUserList as TicketLiveAppUser[],
+      })
+
+      expect(
+        wrapper.getByRole('img', { name: 'Avatar (Nicole Braun) (VIP)' }),
+      ).toBeInTheDocument()
+
+      expect(
+        wrapper.getByRole('img', { name: 'Avatar (Test Admin Agent)' }),
+      ).toBeInTheDocument()
+
+      expect(
+        wrapper.getByRole('img', { name: 'Avatar (Agent 1 Test)' }),
+      ).toBeInTheDocument()
+
+      expect(
+        wrapper.getByRole('img', { name: 'Avatar (Agent 2 Test)' }),
+      ).toBeInTheDocument()
     })
-
-    renderTicketDetailBottomBar()
-
-    const calls = await waitForMacrosQueryCalls()
-
-    expect(calls?.at(-1)?.variables).toEqual({
-      groupId: convertToGraphQLId('Group', 2),
-    })
-
-    await getMacrosUpdateSubscriptionHandler().trigger({
-      macrosUpdate: {
-        macroUpdated: true,
-      },
-    })
-
-    mockMacrosQuery({
-      macros: [
-        {
-          __typename: 'Macro',
-          id: convertToGraphQLId('Macro', 1),
-          active: true,
-          name: 'Macro 1',
-          uxFlowNextUp: 'next_task',
-        },
-        {
-          __typename: 'Macro',
-          id: convertToGraphQLId('Macro', 2),
-          active: true,
-          name: 'Macro updated',
-          uxFlowNextUp: 'next_task',
-        },
-      ],
-    })
-
-    expect(calls.length).toBe(2)
-  })
-
-  it('submits event if macro is clicked', async () => {
-    mockMacrosQuery({
-      macros: [
-        {
-          __typename: 'Macro',
-          id: convertToGraphQLId('Macro', 1),
-          active: true,
-          name: 'Macro 1',
-          uxFlowNextUp: 'next_task',
-        },
-        {
-          __typename: 'Macro',
-          id: convertToGraphQLId('Macro', 2),
-          active: true,
-          name: 'Macro 2',
-          uxFlowNextUp: 'next_task',
-        },
-      ],
-    })
-
-    const wrapper = renderTicketDetailBottomBar()
-
-    const actionMenu = await wrapper.findByLabelText('Action menu button')
-
-    await wrapper.events.click(actionMenu)
-
-    const menu = await wrapper.findByRole('menu')
-
-    await wrapper.events.click(within(menu).getByText('Macro 1'))
-
-    expect(wrapper.emitted('execute-macro')).toEqual([
-      [
-        {
-          __typename: 'Macro',
-          id: convertToGraphQLId('Macro', 1),
-          active: true,
-          name: 'Macro 1',
-          uxFlowNextUp: 'next_task',
-        },
-      ],
-    ])
-  })
-
-  it('hides macros if there is no group id', async () => {
-    const wrapper = renderTicketDetailBottomBar({
-      groupId: undefined,
-    })
-
-    expect(
-      wrapper.queryByLabelText('Action menu button'),
-    ).not.toBeInTheDocument()
-  })
-
-  it('shows live user information as avatars', async () => {
-    const wrapper = renderTicketDetailBottomBar({
-      liveUserList: liveUserList as TicketLiveAppUser[],
-    })
-
-    expect(
-      wrapper.getByRole('img', { name: 'Avatar (Nicole Braun) (VIP)' }),
-    ).toBeInTheDocument()
-
-    expect(
-      wrapper.getByRole('img', { name: 'Avatar (Test Admin Agent)' }),
-    ).toBeInTheDocument()
-
-    expect(
-      wrapper.getByRole('img', { name: 'Avatar (Agent 1 Test)' }),
-    ).toBeInTheDocument()
-
-    expect(
-      wrapper.getByRole('img', { name: 'Avatar (Agent 2 Test)' }),
-    ).toBeInTheDocument()
   })
 })

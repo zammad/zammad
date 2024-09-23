@@ -2,6 +2,7 @@
 
 class FormUpdater::Updater::Ticket::Edit < FormUpdater::Updater
   include FormUpdater::Concerns::AppliesTaskbarState
+  include FormUpdater::Concerns::AppliesTicketSharedDraft
   include FormUpdater::Concerns::ChecksCoreWorkflow
   include FormUpdater::Concerns::HasSecurityOptions
   include FormUpdater::Concerns::StoresTaskbarState
@@ -9,6 +10,7 @@ class FormUpdater::Updater::Ticket::Edit < FormUpdater::Updater
 
   core_workflow_screen 'edit'
 
+  apply_shared_draft_group_keys %i[article ticket]
   apply_state_group_keys %w[ticket article]
   store_state_collect_group_key 'ticket'
   store_state_group_keys ['article']
@@ -25,6 +27,8 @@ class FormUpdater::Updater::Ticket::Edit < FormUpdater::Updater
 
   def handle_updater_flags
     flags[:newArticlePresent] = result['articleType'].present? || (!meta.dig(:additional_data, 'applyTaskbarState') && data.dig('article', 'articleType').present?)
+
+    flags[:hasSharedDraft] = check_shared_draft
   end
 
   def after_store_taskbar_preperation(state)
@@ -85,5 +89,15 @@ class FormUpdater::Updater::Ticket::Edit < FormUpdater::Updater
     return if object.state.default_create
 
     set_resultant_field_values
+  end
+
+  def check_shared_draft
+    current_group_id = data['group_id']
+    return false if current_group_id.nil?
+
+    current_group = ::Group.find_by(id: current_group_id)
+    return false if current_group.nil? || !current_group.shared_drafts
+
+    current_user.group_access?(current_group, 'change')
   end
 end

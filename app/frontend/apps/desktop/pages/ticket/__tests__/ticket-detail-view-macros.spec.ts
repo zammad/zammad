@@ -5,6 +5,7 @@ import { expect } from 'vitest'
 
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/formUpdater.mocks.ts'
 import { mockTicketQuery } from '#shared/entities/ticket/graphql/queries/ticket.mocks.ts'
@@ -16,6 +17,8 @@ import { getUserCurrentTaskbarItemUpdatesSubscriptionHandler } from '#desktop/en
 
 describe('Ticket detail view macros', () => {
   it('executes example macro which closes current tab', async () => {
+    mockPermissions(['ticket.agent'])
+
     const ticket = createDummyTicket()
 
     mockTicketQuery({ ticket })
@@ -110,10 +113,9 @@ describe('Ticket detail view macros', () => {
 
     const view = await visitView('/tickets/1')
 
-    const updateButton = view.getByRole('button', { name: 'Update' })
-    const footer = updateButton.parentElement!
-    const actionMenu =
-      await within(footer).findByLabelText('Action menu button')
+    const actionMenu = await view.findByLabelText(
+      'Additional ticket edit actions',
+    )
 
     await view.events.click(actionMenu)
 

@@ -90,6 +90,7 @@ fragment ticketAttributes on Ticket {
   subscribed
   preferences
   stateColorCode
+  sharedDraftZoomId
   firstResponseEscalationAt
   closeEscalationAt
   updateEscalationAt

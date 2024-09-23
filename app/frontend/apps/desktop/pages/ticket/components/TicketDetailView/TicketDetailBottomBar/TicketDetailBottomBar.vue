@@ -3,22 +3,35 @@
 <script setup lang="ts">
 import { computed, toRef } from 'vue'
 
+import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
+import type { FormRef } from '#shared/components/Form/types.ts'
 import { useMacros } from '#shared/entities/macro/composables/useMacros.ts'
 import type { MacroById } from '#shared/entities/macro/types.ts'
 import type { TicketLiveAppUser } from '#shared/entities/ticket/types.ts'
+import { useTicketSharedDraftZoomCreateMutation } from '#shared/entities/ticket-shared-draft-zoom/graphql/mutations/ticketSharedDraftZoomCreate.api.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
+import { useDialog } from '#desktop/components/CommonDialog/useDialog.ts'
 import TicketScreenBehavior from '#desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/TicketScreenBehavior.vue'
+import { useTicketSharedDraft } from '#desktop/pages/ticket/composables/useTicketSharedDraft.ts'
 
 import TicketLiveUsers from './TicketLiveUsers.vue'
+import TicketSharedDraftZoom from './TicketSharedDraftZoom.vue'
 
 export interface Props {
   dirty: boolean
   disabled: boolean
-  formNodeId?: string
   isTicketEditable: boolean
+  isTicketAgent: boolean
+  ticketId: string
   groupId?: string
+  form?: FormRef
+  hasAvailableDraft?: boolean
+  canUseDraft?: boolean
+  sharedDraftId?: string | null
   liveUserList: TicketLiveAppUser[]
 }
 
@@ -33,6 +46,8 @@ const emit = defineEmits<{
 }>()
 
 const { macros } = useMacros(groupId)
+
+const { notify } = useNotifications()
 
 const groupLabels = {
   drafts: __('Drafts'),
@@ -50,21 +65,67 @@ const actionItems = computed(() => {
   }))
 
   return [
-    // :TODO add later drafts action item
-    // {
-    //   label: __('Save as draft'),
-    //   groupLabel: groupLabels.drafts,
-    //   icon: 'floppy',
-    //   key: 'macro1',
-    //   onClick: () => {},
-    // },
+    {
+      label: __('Save as draft'),
+      groupLabel: groupLabels.drafts,
+      icon: 'floppy',
+      key: 'save-draft',
+      show: () => props.canUseDraft,
+      onClick: () => {
+        const { mapSharedDraftParams } = useTicketSharedDraft()
+
+        if (props.sharedDraftId) {
+          const sharedDraftConflictDialog = useDialog({
+            name: 'shared-draft-conflict',
+            component: () => import('../TicketSharedDraftConflictDialog.vue'),
+          })
+
+          sharedDraftConflictDialog.open({
+            sharedDraftId: props.sharedDraftId,
+            sharedDraftParams: mapSharedDraftParams(props.ticketId, props.form),
+            form: props.form,
+          })
+
+          return
+        }
+
+        const draftCreateMutation = new MutationHandler(
+          useTicketSharedDraftZoomCreateMutation(),
+          {
+            errorNotificationMessage: __('Draft could not be saved.'),
+          },
+        )
+
+        draftCreateMutation
+          .send({ input: mapSharedDraftParams(props.ticketId, props.form) })
+          .then(() => {
+            notify({
+              id: 'shared-draft-detail-view-created',
+              type: NotificationTypes.Success,
+              message: __('Shared draft has been created successfully.'),
+            })
+          })
+      },
+    },
     ...(groupId.value ? macroMenu : []),
   ]
 })
 </script>
 
 <template>
-  <TicketLiveUsers v-if="liveUserList?.length" :live-user-list="liveUserList" />
+  <div class="flex gap-4 ltr:mr-auto rtl:ml-auto">
+    <TicketLiveUsers
+      v-if="liveUserList?.length"
+      :live-user-list="liveUserList"
+    />
+
+    <TicketSharedDraftZoom
+      v-if="hasAvailableDraft"
+      :form="form"
+      :shared-draft-id="sharedDraftId"
+    />
+  </div>
+
   <template v-if="isTicketEditable">
     <CommonButton
       v-if="dirty"
@@ -72,8 +133,8 @@ const actionItems = computed(() => {
       variant="danger"
       :disabled="disabled"
       @click="$emit('discard', $event)"
-      >{{ $t('Discard your unsaved changes') }}</CommonButton
-    >
+      >{{ $t('Discard your unsaved changes') }}
+    </CommonButton>
 
     <TicketScreenBehavior />
 
@@ -81,17 +142,17 @@ const actionItems = computed(() => {
       size="large"
       variant="submit"
       type="button"
-      :form="formNodeId"
       :disabled="disabled"
       @click="$emit('submit', $event)"
-      >{{ $t('Update') }}</CommonButton
-    >
+      >{{ $t('Update') }}
+    </CommonButton>
     <CommonActionMenu
-      v-if="actionItems"
+      v-if="isTicketAgent && actionItems"
       class="flex"
       button-size="large"
       no-single-action-mode
       placement="arrowEnd"
+      custom-menu-button-label="Additional ticket edit actions"
       :actions="actionItems"
     />
   </template>

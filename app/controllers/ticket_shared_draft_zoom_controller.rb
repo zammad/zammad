@@ -39,7 +39,7 @@ class TicketSharedDraftZoomController < ApplicationController
   end
 
   def import_attachments
-    new_attachments = ticket.shared_draft.clone_attachments 'UploadCache', params[:form_id]
+    new_attachments = ticket.shared_draft.clone_attachments 'UploadCache', params[:form_id], only_attached_attachments: true
 
     render json: {
       attachments: new_attachments

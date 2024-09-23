@@ -221,7 +221,8 @@ describe('ticket create view - shared drafts sidebar', async () => {
         expect.objectContaining({
           meta: expect.objectContaining({
             additionalData: expect.objectContaining({
-              sharedDraftStartId: draftToMock.id,
+              sharedDraftId: draftToMock.id,
+              draftType: 'start',
             }),
           }),
         }),

@@ -4,6 +4,7 @@ require 'rails_helper'
 
 require 'models/form_updater/concerns/checks_core_workflow_examples'
 require 'models/form_updater/concerns/has_security_options_examples'
+require 'models/form_updater/concerns/applies_ticket_shared_draft_examples'
 require 'models/form_updater/concerns/stores_taskbar_state_examples'
 require 'models/form_updater/concerns/applies_taskbar_state_examples'
 
@@ -326,6 +327,7 @@ RSpec.describe(FormUpdater::Updater::Ticket::Edit) do
 
   include_examples 'FormUpdater::ChecksCoreWorkflow', object_name: 'Ticket'
   include_examples 'FormUpdater::HasSecurityOptions', type: 'edit'
+  include_examples 'FormUpdater::AppliesTicketSharedDraft', draft_type: 'detail-view'
 
   context 'when data should be stored and applied' do
     let(:id) do

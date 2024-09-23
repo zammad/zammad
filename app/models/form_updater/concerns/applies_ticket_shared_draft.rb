@@ -3,6 +3,12 @@
 module FormUpdater::Concerns::AppliesTicketSharedDraft
   extend ActiveSupport::Concern
 
+  class_methods do
+    def apply_shared_draft_group_keys(group_keys)
+      @apply_shared_draft_group_keys ||= group_keys
+    end
+  end
+
   def resolve
     if agent? && selected_draft.present?
       apply_draft
@@ -22,10 +28,18 @@ module FormUpdater::Concerns::AppliesTicketSharedDraft
 
     apply_value.perform(field: 'attachments', config: { 'value' => new_attachments.reject(&:inline?) })
 
+    apply_shared_draft_group_keys = self.class.instance_variable_get(:@apply_shared_draft_group_keys)
+
     selected_draft
       .content_with_form_id_body_urls(meta[:form_id])
       .each_pair do |field, value|
-        apply_value.perform(field: field, config: { 'value' => value })
+        if apply_shared_draft_group_keys.present? && apply_shared_draft_group_keys.include?(field) && value.is_a?(Hash)
+          value.each_pair do |sub_field, sub_value|
+            apply_value.perform(field: sub_field, config: { 'value' => sub_value }, parent_field: field)
+          end
+        else
+          apply_value.perform(field: field, config: { 'value' => value })
+        end
       end
 
     # Include shared draft internal ID for a subsequent reference.
@@ -34,9 +48,10 @@ module FormUpdater::Concerns::AppliesTicketSharedDraft
 
   def selected_draft
     @selected_draft ||= begin
-      id = meta.dig(:additional_data, 'sharedDraftStartId')
+      id         = meta.dig(:additional_data, 'sharedDraftId')
+      draft_type = meta.dig(:additional_data, 'draftType') == 'start' ? ::Ticket::SharedDraftStart : ::Ticket::SharedDraftZoom
 
-      Gql::ZammadSchema.authorized_object_from_id(id, type: Ticket::SharedDraftStart, user: context[:current_user]) if id.present?
+      Gql::ZammadSchema.authorized_object_from_id(id, type: draft_type, user: context[:current_user]) if id.present?
     end
   end
 

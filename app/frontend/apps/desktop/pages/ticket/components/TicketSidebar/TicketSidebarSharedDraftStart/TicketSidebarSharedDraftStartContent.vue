@@ -8,16 +8,15 @@ import {
   NotificationTypes,
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
-import type { FormFieldValue } from '#shared/components/Form/types.ts'
 import { useTicketSharedDraftStartCreateMutation } from '#shared/entities/ticket-shared-draft-start/graphql/mutations/ticketSharedDraftStartCreate.api.ts'
 import { useTicketSharedDraftStartUpdateMutation } from '#shared/entities/ticket-shared-draft-start/graphql/mutations/ticketSharedDraftStartUpdate.api.ts'
 import type { TicketSharedDraftStartListQuery } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
-import MutationHandler from '#shared/server/apollo/handler/MutationHandler.ts'
-import { domFrom } from '#shared/utils/dom.ts'
+import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import { removeSignatureFromBody } from '#shared/utils/dom.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
-import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
+import { useTicketSharedDraft } from '#desktop/pages/ticket/composables/useTicketSharedDraft.ts'
 import type { TicketSidebarContentProps } from '#desktop/pages/ticket/types/sidebar.ts'
 
 import TicketSidebarContent from '../TicketSidebarContent.vue'
@@ -63,26 +62,12 @@ const supportedFields = () =>
     ),
   )
 
-const prepareSharedDraftBody = (input: FormFieldValue) => {
-  if (!input || typeof input !== 'string') {
-    return input
-  }
-
-  const dom = domFrom(input)
-
-  dom
-    .querySelectorAll('div[data-signature="true"]')
-    .forEach((elem) => elem.remove())
-
-  return dom.innerHTML
-}
-
 const sharedDraftContent = () => ({
   ...supportedFields(),
   formSenderType: props.context.formValues.articleSenderType, // different key
   cc: ((props.context.formValues.cc as string[]) || []).join(', '),
   tags: ((props.context.formValues.tags as string[]) || []).join(', '),
-  body: prepareSharedDraftBody(props.context.formValues.body),
+  body: removeSignatureFromBody(props.context.formValues.body),
 })
 
 const createSharedDraft = () => {
@@ -146,16 +131,10 @@ const updateSharedDraft = () => {
     })
 }
 
-const sharedDraftFlyout = useFlyout({
-  name: 'shared-draft',
-  component: () => import('./TicketSidebarSharedDraftFlyout.vue'),
-})
+const { openSharedDraftFlyout } = useTicketSharedDraft()
 
 const openFlyout = (sharedDraftStartId: string) => {
-  sharedDraftFlyout.open({
-    sharedDraftId: sharedDraftStartId,
-    form: props.context.form,
-  })
+  openSharedDraftFlyout('start', sharedDraftStartId, props.context.form)
 }
 </script>
 

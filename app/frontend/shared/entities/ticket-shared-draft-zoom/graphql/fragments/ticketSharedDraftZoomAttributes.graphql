@@ -1,0 +1,21 @@
+fragment ticketSharedDraftZoomAttributes on TicketSharedDraftZoom {
+  id
+  ticketId
+  newArticle
+  ticketAttributes
+  updatedAt
+  updatedBy {
+    id
+    internalId
+    firstname
+    lastname
+    fullname
+    email
+    phone
+    image
+    outOfOffice
+    outOfOfficeStartAt
+    outOfOfficeEndAt
+    active
+  }
+}
