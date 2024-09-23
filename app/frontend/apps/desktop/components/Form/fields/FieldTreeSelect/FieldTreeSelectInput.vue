@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { useElementBounding, useWindowSize } from '@vueuse/core'
 import { escapeRegExp } from 'lodash-es'
-import { computed, nextTick, ref, toRef, watch } from 'vue'
+import { computed, nextTick, ref, toRef, watch, useTemplateRef } from 'vue'
 
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import type {
@@ -17,7 +17,6 @@ import { useFormBlock } from '#shared/form/useFormBlock.ts'
 import { i18n } from '#shared/i18n.ts'
 
 import CommonInputSearch from '#desktop/components/CommonInputSearch/CommonInputSearch.vue'
-import type { CommonSelectInstance } from '#desktop/components/CommonSelect/types.ts'
 
 import FieldTreeSelectInputDropdown from './FieldTreeSelectInputDropdown.vue'
 import useFlatSelectOptions from './useFlatSelectOptions.ts'
@@ -61,13 +60,14 @@ const currentParent = computed<FlatSelectOption>(
   () => currentPath.value[currentPath.value.length - 1] ?? null,
 )
 
-const input = ref<HTMLDivElement>()
-const outputElement = ref<HTMLOutputElement>()
-const filter = ref('')
-const filterInput = ref<HTMLInputElement>()
-const select = ref<CommonSelectInstance>()
+const inputElement = useTemplateRef('input')
+const outputElement = useTemplateRef('output')
+const filterInputElement = useTemplateRef('filter-input')
+const selectInstance = useTemplateRef('select')
 
-const { activateTabTrap, deactivateTabTrap } = useTrapTab(input, true)
+const filter = ref('')
+
+const { activateTabTrap, deactivateTabTrap } = useTrapTab(inputElement, true)
 
 const clearFilter = () => {
   filter.value = ''
@@ -152,7 +152,7 @@ const clearValue = () => {
   focusOutputElement()
 }
 
-const inputElementBounds = useElementBounding(input)
+const inputElementBounds = useElementBounding(inputElement)
 const windowSize = useWindowSize()
 
 const isBelowHalfScreen = computed(() => {
@@ -160,19 +160,19 @@ const isBelowHalfScreen = computed(() => {
 })
 
 const openSelectDropdown = () => {
-  if (select.value?.isOpen || props.context.disabled) return
+  if (selectInstance.value?.isOpen || props.context.disabled) return
 
-  select.value?.openDropdown(inputElementBounds, windowSize.height)
+  selectInstance.value?.openDropdown(inputElementBounds, windowSize.height)
 
   requestAnimationFrame(() => {
     activateTabTrap()
     if (props.context.noFiltering) outputElement.value?.focus()
-    else filterInput.value?.focus()
+    else filterInputElement.value?.focus()
   })
 }
 
 const openOrMoveFocusToDropdown = (lastOption = false) => {
-  if (!select.value?.isOpen) {
+  if (!selectInstance.value?.isOpen) {
     openSelectDropdown()
     return
   }
@@ -181,7 +181,7 @@ const openOrMoveFocusToDropdown = (lastOption = false) => {
 
   nextTick(() => {
     requestAnimationFrame(() => {
-      select.value?.moveFocusToDropdown(lastOption)
+      selectInstance.value?.moveFocusToDropdown(lastOption)
     })
   })
 }
@@ -203,8 +203,8 @@ const onPathPop = () => {
 const onHandleToggleDropdown = (event: MouseEvent) => {
   if ((event.target as HTMLElement)?.closest('input')) return
 
-  if (select.value?.isOpen) {
-    select.value.closeDropdown()
+  if (selectInstance.value?.isOpen) {
+    selectInstance.value.closeDropdown()
     return onCloseDropdown()
   }
 
@@ -224,9 +224,9 @@ setupMissingOrDisabledOptionHandling()
     :class="[
       context.classes.input,
       {
-        'rounded-lg': !select?.isOpen,
-        'rounded-t-lg': select?.isOpen && !isBelowHalfScreen,
-        'rounded-b-lg': select?.isOpen && isBelowHalfScreen,
+        'rounded-lg': !selectInstance?.isOpen,
+        'rounded-t-lg': selectInstance?.isOpen && !isBelowHalfScreen,
+        'rounded-b-lg': selectInstance?.isOpen && isBelowHalfScreen,
         'bg-blue-200 dark:bg-gray-700': !context.alternativeBackground,
         'bg-neutral-50 dark:bg-gray-500': context.alternativeBackground,
       },
@@ -257,7 +257,7 @@ setupMissingOrDisabledOptionHandling()
       <!-- https://www.w3.org/WAI/ARIA/apg/patterns/combobox/ -->
       <output
         :id="context.id"
-        ref="outputElement"
+        ref="output"
         role="combobox"
         :name="context.node.name"
         class="flex grow items-center gap-2.5 px-2.5 py-2 text-black focus:outline-none dark:text-white"
@@ -332,7 +332,7 @@ setupMissingOrDisabledOptionHandling()
         </div>
         <CommonInputSearch
           v-if="expanded && !context.noFiltering"
-          ref="filterInput"
+          ref="filter-input"
           v-model="filter"
           :suggestion="suggestedOptionLabel"
           :alternative-background="context.alternativeBackground"

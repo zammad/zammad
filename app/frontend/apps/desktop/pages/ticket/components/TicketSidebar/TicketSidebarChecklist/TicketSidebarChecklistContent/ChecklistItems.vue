@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { animations } from '@formkit/drag-and-drop'
 import { dragAndDrop } from '@formkit/drag-and-drop/vue'
-import { computed, ref } from 'vue'
+import { computed, type Ref, ref, useTemplateRef } from 'vue'
 
 import {
   type ChecklistItem as ChecklistItemType,
@@ -45,12 +45,12 @@ const checklistItems = computed({
   },
 })
 
-const checklistNodes = ref<InstanceType<typeof ChecklistItem>[]>()
-const checklistContainer = ref<HTMLElement>()
-const checklistTitleComponent = ref<InstanceType<typeof CommonInlineEdit>>()
+const checklistInstance = useTemplateRef('checklist')
+const containerElement = useTemplateRef<HTMLElement>('container')
+const checklistTitleInstance = useTemplateRef('title')
 
 dragAndDrop({
-  parent: checklistContainer,
+  parent: containerElement as Ref<HTMLElement>,
   values: checklistCopy,
   plugins: [animations()],
   draggable: (el) => {
@@ -65,7 +65,7 @@ dragAndDrop({
 })
 
 const focusNewItem = () => {
-  checklistNodes.value?.at(-1)?.focusInput()
+  checklistInstance.value?.at(-1)?.focusInput()
 }
 
 const addNewItem = () => {
@@ -91,9 +91,9 @@ const startReordering = () => {
 }
 
 defineExpose({
-  focusTitle: () => checklistTitleComponent.value?.activateEditing(),
+  focusTitle: () => checklistTitleInstance.value?.activateEditing(),
   quitItemEditing: (index: number) =>
-    checklistNodes.value?.at(index)?.quitEditing(),
+    checklistInstance.value?.at(index)?.quitEditing(),
   quitReordering: resetOrder,
   focusNewItem,
 })
@@ -103,7 +103,7 @@ defineExpose({
   <div class="grid grid-cols-2 gap-x-2">
     <CommonInlineEdit
       id="checklistTitle"
-      ref="checklistTitleComponent"
+      ref="title"
       :value="title"
       :initial-edit-value="noDefaultTitle ? title : ''"
       block
@@ -119,7 +119,7 @@ defineExpose({
 
     <TransitionGroup
       v-if="checklistItems.length"
-      ref="checklistContainer"
+      ref="container"
       tag="ul"
       name="none"
       class="col-span-2 mb-2 space-y-2"
@@ -162,7 +162,7 @@ defineExpose({
 
         <ChecklistItem
           v-else
-          ref="checklistNodes"
+          ref="checklist"
           :item="item"
           :class="{
             'cursor-grab active:cursor-grabbing': isReordering,

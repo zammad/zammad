@@ -405,7 +405,6 @@ const classes = getFieldEditorClasses()
 <template>
   <div :class="classes.input.container">
     <EditorContent
-      ref="editorVueInstance"
       class="text-base ltr:text-left rtl:text-right"
       data-test-id="field-editor"
       :editor="editor"

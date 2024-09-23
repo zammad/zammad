@@ -4,7 +4,7 @@
 import { animations, parents } from '@formkit/drag-and-drop'
 import { dragAndDrop } from '@formkit/drag-and-drop/vue'
 import { cloneDeep, isEqual } from 'lodash-es'
-import { ref, watch } from 'vue'
+import { ref, watch, useTemplateRef, type Ref } from 'vue'
 
 import { startAndEndEventsDNDPlugin } from '#shared/utils/startAndEndEventsDNDPlugin.ts'
 
@@ -22,7 +22,7 @@ const dndEndCallback = (parent: HTMLElement) => {
   localValue.value = cloneDeep(parentData.getValues(parent))
 }
 
-const dndParentRef = ref()
+const dndParentElement = useTemplateRef('dnd-parent')
 const dndLocalValue = ref(localValue.value || [])
 
 watch(localValue, (newValue) => {
@@ -32,7 +32,7 @@ watch(localValue, (newValue) => {
 })
 
 dragAndDrop({
-  parent: dndParentRef,
+  parent: dndParentElement as Ref<HTMLElement>,
   values: dndLocalValue,
   plugins: [
     startAndEndEventsDNDPlugin(undefined, dndEndCallback),
@@ -51,7 +51,7 @@ dragAndDrop({
       {{ $t('Drag and drop to reorder ticket overview list items.') }}
     </span>
 
-    <ul ref="dndParentRef" class="flex flex-col p-1">
+    <ul ref="dnd-parent" class="flex flex-col p-1">
       <li
         v-for="value in dndLocalValue"
         :key="value.id"

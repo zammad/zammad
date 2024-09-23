@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { useVModel } from '@vueuse/core'
-import { shallowRef } from 'vue'
+import { useTemplateRef } from 'vue'
 
 export interface CommonInputSearchProps {
   modelValue?: string
@@ -26,7 +26,7 @@ const emit = defineEmits<CommonInputSearchEmits>()
 
 const filter = useVModel(props, 'modelValue', emit)
 
-const filterInput = shallowRef<HTMLInputElement>()
+const filterInput = useTemplateRef('filter-input')
 
 const focus = () => {
   filterInput.value?.focus()
@@ -58,7 +58,7 @@ export default {
       decorative
     />
     <input
-      ref="filterInput"
+      ref="filter-input"
       v-model="filter"
       v-bind="$attrs"
       :placeholder="i18n.t(placeholder)"

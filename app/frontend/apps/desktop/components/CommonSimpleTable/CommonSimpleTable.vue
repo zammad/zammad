@@ -1,8 +1,6 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { ref } from 'vue'
-
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 
@@ -38,8 +36,6 @@ const rowBackgroundClasses = 'bg-blue-200 dark:bg-gray-700'
 
 const columnSeparatorClasses =
   'border-r border-neutral-100 dark:border-gray-900'
-
-const contentCells = ref()
 
 const getTooltipText = (item: TableItem, header: TableHeader) => {
   return header.truncate ? item[header.key] : undefined
@@ -98,7 +94,6 @@ const getTooltipText = (item: TableItem, header: TableHeader) => {
             :header="header"
           >
             <CommonLabel
-              ref="contentCells"
               v-tooltip.truncate="getTooltipText(item, header)"
               class="inline text-black dark:text-white"
             >

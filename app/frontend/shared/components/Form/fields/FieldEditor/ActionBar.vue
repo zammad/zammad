@@ -3,6 +3,7 @@
 <script setup lang="ts">
 import { onKeyDown, useEventListener, whenever } from '@vueuse/core'
 import { storeToRefs } from 'pinia'
+import { useTemplateRef } from 'vue'
 import { computed, nextTick, type Ref, ref, toRef } from 'vue'
 
 import type { EditorButton } from '#shared/components/Form/fields/FieldEditor/useEditorActions.ts'
@@ -26,7 +27,7 @@ interface Props {
   noGradient?: boolean
 }
 
-const actionBar = ref<HTMLElement>()
+const actionBar = useTemplateRef('action-bar')
 
 const props = withDefaults(defineProps<Props>(), {
   visible: true,
@@ -148,7 +149,7 @@ const leftgradientvalue = computed(() => classes.actionBar.leftGradient.left)
   <div class="relative">
     <!-- eslint-disable vuejs-accessibility/no-static-element-interactions -->
     <div
-      ref="actionBar"
+      ref="action-bar"
       data-test-id="action-bar"
       class="Menubar relative flex max-w-full overflow-x-auto overflow-y-hidden"
       :class="[classes.actionBar.buttonContainer]"

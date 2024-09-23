@@ -6,6 +6,7 @@ import { FormKit, FormKitMessages, FormKitSchema } from '@formkit/vue'
 import { refDebounced, watchOnce } from '@vueuse/shared'
 import { isEqual, cloneDeep, merge, isEmpty } from 'lodash-es'
 import {
+  useTemplateRef,
   computed,
   ref,
   nextTick,
@@ -185,7 +186,7 @@ const debouncedShowInitialLoadingAnimation = refDebounced(
 const formKitInitialNodesSettled = ref(false)
 const formResetRunning = ref(false)
 const formNode: Ref<FormKitNode | undefined> = ref()
-const formElement = ref<HTMLElement>()
+const formElement = useTemplateRef('form')
 
 const changeFields = toRef(props, 'changeFields')
 
@@ -1477,7 +1478,7 @@ export default {
         v-show="
           formKitInitialNodesSettled && !debouncedShowInitialLoadingAnimation
         "
-        ref="formElement"
+        ref="form"
         :class="formClass"
       >
         <FormKitSchema

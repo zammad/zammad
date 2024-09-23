@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { onClickOutside, onKeyUp, useVModel } from '@vueuse/core'
-import { nextTick, type Ref, shallowRef, watch } from 'vue'
+import { nextTick, type Ref, watch, useTemplateRef } from 'vue'
 
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import stopEvent from '#shared/utils/events.ts'
@@ -54,10 +54,10 @@ const onItemClick = (item: PopupItemDescriptor) => {
   }
 }
 
-const wrapper = shallowRef<HTMLElement>()
+const wrapperElement = useTemplateRef('wrapper')
 
 // ignore clicks while it's rendering
-onClickOutside(wrapper, () => !animating && hidePopup(), {
+onClickOutside(wrapperElement, () => !animating && hidePopup(), {
   ignore: ['button > [data-ignore-click]'],
 })
 onKeyUp(
@@ -68,14 +68,14 @@ onKeyUp(
       hidePopup()
     }
   },
-  { target: wrapper as Ref<EventTarget> },
+  { target: wrapperElement as Ref<EventTarget> },
 )
 
-useTrapTab(wrapper)
+useTrapTab(wrapperElement)
 
 const focusFirstFocusableElementInside = async () => {
   await nextTick()
-  const firstElement = getFirstFocusableElement(wrapper.value)
+  const firstElement = getFirstFocusableElement(wrapperElement.value)
   firstElement?.focus()
   firstElement?.scrollIntoView({ block: 'nearest' })
 }

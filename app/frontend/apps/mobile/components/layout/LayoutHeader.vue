@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref, useSlots } from 'vue'
+import { computed, useTemplateRef, useSlots } from 'vue'
 
 import CommonBackButton from '#mobile/components/CommonBackButton/CommonBackButton.vue'
 import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
@@ -27,7 +27,7 @@ export interface Props {
   onAction?(): void
 }
 
-const headerElement = ref()
+const headerElement = useTemplateRef<HTMLElement>('header')
 
 defineExpose({
   headerElement,
@@ -53,7 +53,7 @@ const headerClass = computed(() => {
   <component
     :is="containerTag"
     v-if="title || backUrl || (onAction && actionTitle) || hasSlots"
-    ref="headerElement"
+    ref="header"
     class="grid h-[64px] shrink-0 grid-cols-[75px_auto_75px] border-b-[0.5px] border-white/10 bg-black px-4"
     data-test-id="appHeader"
   >

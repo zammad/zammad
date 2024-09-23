@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { useActiveElement } from '@vueuse/core'
-import { computed, ref, watch } from 'vue'
+import { computed, useTemplateRef, watch } from 'vue'
 
 import CollapseButton from '#desktop/components/CollapseButton/CollapseButton.vue'
 import { useCollapseHandler } from '#desktop/components/CollapseButton/composables/useCollapseHandler.ts'
@@ -50,15 +50,16 @@ const { toggleCollapse, isCollapsed } = useCollapseHandler(emit, {
   storageKey: `${props.name}-sidebar-collapsed`,
 })
 
-// a11y keyboard navigation
-const resizeLineComponent = ref<InstanceType<typeof ResizeLine>>()
+// a11y keyboard navigation // TS: Does not infer type for some reason?
+const resizeLineInstance =
+  useTemplateRef<InstanceType<typeof ResizeLine>>('resize-line')
 
 const activeElement = useActiveElement()
 
 const handleKeyStroke = (e: KeyboardEvent, adjustment: number) => {
   if (
     !props.currentWidth ||
-    activeElement.value !== resizeLineComponent.value?.resizeLine
+    activeElement.value !== resizeLineInstance.value?.resizeLine
   )
     return
 
@@ -71,7 +72,7 @@ const handleKeyStroke = (e: KeyboardEvent, adjustment: number) => {
 
 const { startResizing, isResizing } = useResizeLine(
   (positionX) => emit('resize-horizontal', positionX),
-  resizeLineComponent.value?.resizeLine,
+  resizeLineInstance.value?.resizeLine,
   handleKeyStroke,
   {
     calculateFromRight: props.position === SidebarPosition.End,
@@ -130,15 +131,15 @@ const collapseButtonClass = computed(() => {
 
     <ResizeLine
       v-if="resizable"
-      ref="resizeLineComponent"
+      ref="resize-line"
       :label="$t('Resize sidebar')"
-      class="resize-line absolute z-20 has-[+div:hover]:opacity-100"
+      class="absolute z-20 has-[+div:hover]:opacity-100"
       :class="{
         'ltr:right-0 ltr:translate-x-1/2 rtl:left-0 rtl:-translate-x-1/2':
           position === SidebarPosition.Start,
         'ltr:left-0 ltr:-translate-x-1/2 rtl:right-0 rtl:translate-x-1/2':
           position === SidebarPosition.End,
-        peer: !resizeLineComponent?.resizing,
+        peer: !resizeLineInstance?.resizing,
       }"
       :values="{
         max: Number(maxWidth)?.toFixed(2),

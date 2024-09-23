@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref, toRef, watch } from 'vue'
+import { computed, useTemplateRef, toRef, watch } from 'vue'
 
 import { useTicketUpdatesSubscription } from '#shared/entities/ticket/graphql/subscriptions/ticketUpdates.api.ts'
 import { EnumTicketStateColorCode, type Ticket } from '#shared/graphql/types.ts'
@@ -28,7 +28,7 @@ const ticketUpdatesSubscription = new SubscriptionHandler(
   }),
 )
 
-const ticketLink = ref()
+const ticketLink = useTemplateRef('ticket-link')
 
 const isTicketUpdated = computed(() => {
   if (ticketLink.value?.isExactActive) return false
@@ -122,7 +122,7 @@ const currentViewTitle = computed(
 <template>
   <CommonLink
     v-if="taskbarTabLink"
-    ref="ticketLink"
+    ref="ticket-link"
     v-tooltip="currentViewTitle"
     class="flex grow gap-2 rounded-md px-2 py-3 hover:no-underline focus-visible:rounded-md focus-visible:outline-none group-hover/tab:bg-blue-600 group-hover/tab:dark:bg-blue-900"
     :link="taskbarTabLink"

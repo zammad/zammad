@@ -13,6 +13,7 @@ import {
   reactive,
   nextTick,
   watch,
+  useTemplateRef,
   ref,
   type Ref,
 } from 'vue'
@@ -277,13 +278,15 @@ const articleReplyPinned = useLocalStorage(
   false,
 )
 
-const contentContainerElement = ref<HTMLElement>()
-const headerElement = ref<InstanceType<typeof TicketDetailTopBar>>()
+const contentContainerElement = useTemplateRef('content-container')
+const topBarInstance = useTemplateRef('top-bar')
 
 const { isScrollingDown: hideDetails } = useElementScroll(
   contentContainerElement as Ref<HTMLElement>,
   {
-    scrollStartThreshold: computed(() => headerElement.value?.$el.clientHeight),
+    scrollStartThreshold: computed(
+      () => topBarInstance.value?.$el.clientHeight,
+    ),
   },
 )
 
@@ -512,7 +515,7 @@ watch(ticketId, () => {
   >
     <CommonLoader class="mt-8" :loading="!ticket">
       <div
-        ref="contentContainerElement"
+        ref="content-container"
         class="relative grid h-full w-full overflow-y-auto"
         :class="{
           'grid-rows-[max-content_max-content_max-content]':
@@ -522,7 +525,7 @@ watch(ticketId, () => {
         }"
       >
         <TicketDetailTopBar
-          ref="headerElement"
+          ref="top-bar"
           :hide-details="hideDetails"
           class="sticky left-0 right-0 top-0 w-full"
         />

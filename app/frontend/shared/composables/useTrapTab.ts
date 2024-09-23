@@ -1,12 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { onKeyStroke } from '@vueuse/core'
-import { ref, type Ref } from 'vue'
+import { ref, type Ref, type ShallowRef } from 'vue'
 
 import { getFocusableElements } from '#shared/utils/getFocusableElements.ts'
 
-export const useTrapTab = (
-  container: Ref<HTMLElement | undefined>,
+export const useTrapTab = <T extends HTMLElement>(
+  container: Readonly<ShallowRef<T | null>>,
   noAutoActivation = false,
 ) => {
   const trapFocus = (e: KeyboardEvent) => {

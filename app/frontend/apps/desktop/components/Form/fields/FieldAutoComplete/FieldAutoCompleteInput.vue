@@ -11,6 +11,7 @@ import {
 } from '@vueuse/core'
 import gql from 'graphql-tag'
 import { cloneDeep, escapeRegExp, isEqual, uniqBy } from 'lodash-es'
+import { useTemplateRef } from 'vue'
 import {
   computed,
   markRaw,
@@ -37,7 +38,6 @@ import type { ObjectLike } from '#shared/types/utils.ts'
 
 import CommonInputSearch from '#desktop/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonSelect from '#desktop/components/CommonSelect/CommonSelect.vue'
-import type { CommonSelectInstance } from '#desktop/components/CommonSelect/types'
 
 import FieldAutoCompleteOptionIcon from './FieldAutoCompleteOptionIcon.vue'
 
@@ -141,11 +141,12 @@ if (!props.context.multiple && props.context.initialOptionBuilder) {
   }
 }
 
-const input = ref<HTMLDivElement>()
-const outputElement = ref<HTMLOutputElement>()
+const input = useTemplateRef('input')
+const outputElement = useTemplateRef('output')
+const filterInput = useTemplateRef('filter-input')
+const select = useTemplateRef('select')
+
 const filter = ref('')
-const filterInput = ref<HTMLInputElement>()
-const select = ref<CommonSelectInstance>()
 
 const { activateTabTrap, deactivateTabTrap } = useTrapTab(input, true)
 
@@ -513,7 +514,7 @@ useFormBlock(
     >
       <output
         :id="context.id"
-        ref="outputElement"
+        ref="output"
         role="combobox"
         aria-controls="common-select"
         aria-owns="common-select"
@@ -605,7 +606,7 @@ useFormBlock(
         </div>
         <CommonInputSearch
           v-if="expanded || !hasValue"
-          ref="filterInput"
+          ref="filter-input"
           v-model="filter"
           :class="{ 'pointer-events-none': !expanded }"
           :tabindex="!expanded ? '-1' : undefined"

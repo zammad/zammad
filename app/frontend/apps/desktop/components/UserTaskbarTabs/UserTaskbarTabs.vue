@@ -5,7 +5,7 @@ import { animations, parents } from '@formkit/drag-and-drop'
 import { dragAndDrop } from '@formkit/drag-and-drop/vue'
 import { cloneDeep } from 'lodash-es'
 import { storeToRefs } from 'pinia'
-import { ref, watch } from 'vue'
+import { type Ref, ref, watch, useTemplateRef } from 'vue'
 
 import CommonPopover from '#shared/components/CommonPopover/CommonPopover.vue'
 import { usePopover } from '#shared/components/CommonPopover/usePopover.ts'
@@ -96,7 +96,7 @@ const dndEndCallback = (parent: HTMLElement) => {
   }, 0)
 }
 
-const dndParentRef = ref()
+const dndParentElement = useTemplateRef('dnd-parent')
 const dndTaskbarTabListOrder = ref(taskbarTabListOrder.value || [])
 
 watch(taskbarTabListOrder, (newValue) => {
@@ -104,7 +104,7 @@ watch(taskbarTabListOrder, (newValue) => {
 })
 
 dragAndDrop({
-  parent: dndParentRef,
+  parent: dndParentElement as Ref<HTMLElement>,
   values: dndTaskbarTabListOrder,
   plugins: [
     startAndEndEventsDNDPlugin(dndStartCallback, dndEndCallback),
@@ -237,7 +237,7 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
         </span>
 
         <ul
-          ref="dndParentRef"
+          ref="dnd-parent"
           class="flex flex-col gap-1.5 overflow-y-auto p-1"
           data-theme="dark"
           :style="{ colorScheme: 'dark' }"

@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import QRCode from 'qrcode'
-import { computed, ref } from 'vue'
+import { computed, ref, useTemplateRef } from 'vue'
 
 import {
   NotificationTypes,
@@ -46,7 +46,7 @@ const initiationResult = initiationQuery.result()
 
 const { notify } = useNotifications()
 
-const canvasElement = ref<HTMLCanvasElement>()
+const canvasElement = useTemplateRef('canvas')
 const showSecretOverlay = ref(false)
 const initiationError = ref<string | null>(null)
 
@@ -228,7 +228,7 @@ defineExpose({
           @keydown.enter="toggleSecretCodeOverlay"
         >
           <canvas
-            ref="canvasElement"
+            ref="canvas"
             class="rounded-lg"
             role="img"
             :aria-label="$t('Authenticator app QR code')"

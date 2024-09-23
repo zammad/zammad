@@ -9,6 +9,7 @@ import {
   nextTick,
   watch,
   onMounted,
+  useTemplateRef,
 } from 'vue'
 
 import CommonLabel from '#shared/components/CommonLabel/CommonLabel.vue'
@@ -53,12 +54,12 @@ const emit = defineEmits<{
   'cancel-edit': []
 }>()
 
-const target = ref<HTMLElement>()
+const target = useTemplateRef('target')
 
 const isHoverTargetLink = ref(false)
 
 const isValid = ref(false) // default user made no changes
-const labelComponent = ref<InstanceType<typeof CommonLabel>>()
+const labelInstance = useTemplateRef('label')
 const newEditValue = ref(props.value)
 
 const isEditing = defineModel<boolean>('editing', {
@@ -168,8 +169,8 @@ useTrapTab(target)
 watch(
   () => props.value,
   () => {
-    if (props.detectLinks && labelComponent.value?.$el)
-      setupLinksHandlers(labelComponent.value?.$el)
+    if (props.detectLinks && labelInstance.value?.$el)
+      setupLinksHandlers(labelInstance.value?.$el)
   },
   {
     flush: 'post',
@@ -178,8 +179,8 @@ watch(
 
 onMounted(() => {
   nextTick(() => {
-    if (props.detectLinks && labelComponent.value?.$el)
-      setupLinksHandlers(labelComponent.value?.$el)
+    if (props.detectLinks && labelInstance.value?.$el)
+      setupLinksHandlers(labelInstance.value?.$el)
   })
 })
 
@@ -293,7 +294,7 @@ defineExpose({
       <!--   eslint-disable vue/no-v-text-v-html-on-component vue/no-v-html   -->
       <CommonLabel
         :id="id"
-        ref="labelComponent"
+        ref="label"
         class="z-10 break-words"
         style="word-break: break-word"
         v-bind="labelAttrs"
@@ -305,7 +306,6 @@ defineExpose({
 
     <div
       v-else
-      ref="inputContainer"
       class="flex max-w-full items-center gap-2 before:absolute before:-left-[5px] before:top-1/2 before:z-0 before:h-[calc(100%+10px)] before:w-[calc(100%+10px)] before:-translate-y-1/2 before:rounded-md"
       :class="[
         { 'w-full': block },

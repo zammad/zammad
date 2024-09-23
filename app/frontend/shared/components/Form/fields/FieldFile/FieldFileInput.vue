@@ -1,6 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
 import { useDropZone } from '@vueuse/core'
+import { useTemplateRef } from 'vue'
 import { toRef, computed, ref, type ComputedRef } from 'vue'
 
 import CommonFilePreview from '#shared/components/CommonFilePreview/CommonFilePreview.vue'
@@ -73,7 +74,8 @@ const canInteract = computed(
 const { setFileUploadProcessing, removeFileUploadProcessing } =
   useFileUploadProcessing(props.context.formId, props.context.node.name)
 
-const fileInput = ref<HTMLInputElement>()
+const fileInput = useTemplateRef('file-input')
+
 const reset = () => {
   loadingFiles.value = []
   const input = fileInput.value
@@ -216,7 +218,7 @@ const onFilesScroll = (event: UIEvent) => {
 
 const { showImage } = useImageViewer(uploadFilesWithContent)
 
-const filesContainer = ref<HTMLDivElement>()
+const filesContainer = useTemplateRef('files-container')
 
 useTraverseOptions(filesContainer, {
   direction: 'vertical',
@@ -243,8 +245,9 @@ const showGradient = computed(() => {
 
 const acceptableFileTypes = computed(() => props.context.accept?.split(','))
 
-const dropZoneRef = ref<HTMLDivElement>()
-const { isOverDropZone } = useDropZone(dropZoneRef, {
+const dropZoneElement = useTemplateRef('drop-zone')
+
+const { isOverDropZone } = useDropZone(dropZoneElement, {
   dataTypes: acceptableFileTypes as ComputedRef<string[]>, // TODO: Maybe add a PR in vueuse, that the ref can also be undefined.
   onDrop: (files: File[] | null) => {
     if (!files) return
@@ -256,7 +259,7 @@ const { isOverDropZone } = useDropZone(dropZoneRef, {
 
 <template>
   <div class="relative" :class="context.classes.input">
-    <div ref="dropZoneRef">
+    <div ref="drop-zone">
       <div v-if="showGradient" class="relative w-full">
         <div
           class="file-list show-gradient top-gradient absolute h-5 w-full"
@@ -264,7 +267,7 @@ const { isOverDropZone } = useDropZone(dropZoneRef, {
       </div>
       <div
         v-if="uploadFiles.length || loadingFiles.length"
-        ref="filesContainer"
+        ref="files-container"
         role="list"
         class="overflow-auto"
         :class="{
@@ -321,7 +324,7 @@ const { isOverDropZone } = useDropZone(dropZoneRef, {
         </component>
         <input
           :id="context.id"
-          ref="fileInput"
+          ref="file-input"
           data-test-id="fileInput"
           type="file"
           :name="context.node.name"

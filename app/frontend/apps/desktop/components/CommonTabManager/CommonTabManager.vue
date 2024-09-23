@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, nextTick, onMounted, ref } from 'vue'
+import { computed, nextTick, onMounted } from 'vue'
 
 import CommonTab from '#desktop/components/CommonTabManager/CommonTab.vue'
 import type { Tab } from '#desktop/components/CommonTabManager/types.ts'
@@ -17,8 +17,6 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   size: 'large',
 })
-
-const tabNodes = ref<InstanceType<typeof CommonTab>[]>()
 
 const emit = defineEmits<{
   'update:modelValue': [Tab['key'] | Tab['key'][]]
@@ -75,7 +73,6 @@ const labelSize = computed(() => (props.size === 'large' ? 'medium' : 'small'))
     <CommonTab
       v-for="(tab, index) in tabs"
       :id="isTabMode ? `tab-label-${tab.key}` : undefined"
-      ref="tabNodes"
       :key="`${tab.key}-${index}`"
       :role="isTabMode ? 'tab' : 'option'"
       :aria-controls="isTabMode ? `tab-panel-${tab.key}` : undefined"

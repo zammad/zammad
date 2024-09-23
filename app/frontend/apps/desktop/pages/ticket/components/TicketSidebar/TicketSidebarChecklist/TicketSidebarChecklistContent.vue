@@ -2,7 +2,7 @@
 
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash-es'
-import { computed, watch, nextTick, ref } from 'vue'
+import { computed, watch, nextTick, useTemplateRef } from 'vue'
 
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { handleUserErrors } from '#shared/errors/utils.ts'
@@ -19,7 +19,6 @@ import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import ChecklistEmptyTemplates from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue'
-import type ChecklistItemsType from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue'
 import ChecklistItems from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue'
 import ChecklistTemplates from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue'
 import type { AddNewChecklistInput } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/types.ts'
@@ -43,7 +42,7 @@ interface Props extends TicketSidebarContentProps {
 
 const props = defineProps<Props>()
 
-const checklistItemsComponent = ref<InstanceType<typeof ChecklistItemsType>>()
+const checklistItemsInstance = useTemplateRef('checklist-items')
 
 const { cache: apolloCache } = getApolloClient()
 
@@ -65,7 +64,7 @@ const createNewChecklist = async (
 ) => {
   if (options.focusLastItem)
     watch(
-      checklistItemsComponent,
+      checklistItemsInstance,
       (component) => {
         nextTick(() => component?.focusNewItem())
       },
@@ -284,7 +283,7 @@ const addNewItem = async () => {
   watch(
     () => props.checklist,
     () => {
-      nextTick(() => checklistItemsComponent.value?.focusNewItem())
+      nextTick(() => checklistItemsInstance.value?.focusNewItem())
     },
     { once: true },
   )
@@ -354,7 +353,7 @@ const checklistActions: MenuItem[] = [
     key: 'rename',
     label: __('Rename checklist'),
     icon: 'input-cursor-text',
-    onClick: () => checklistItemsComponent.value?.focusTitle(),
+    onClick: () => checklistItemsInstance.value?.focusTitle(),
     show: () => !!props.checklist,
   },
   {
@@ -381,7 +380,7 @@ const { isLoadingTemplates, checklistTemplatesMenuItems } =
       <div class="flex flex-col gap-3">
         <ChecklistItems
           v-if="checklist"
-          ref="checklistItemsComponent"
+          ref="checklist-items"
           :no-default-title="!!checklist.name"
           :title="checklistTitle"
           :items="<ChecklistItem[]>checklist?.items"

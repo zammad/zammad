@@ -33,7 +33,6 @@ const handleSelectColor = (color: string) => {
 <template>
   <div v-if="editor" class="relative">
     <div
-      ref="colorMenuActionBar"
       data-test-id="color-menu-action-bar"
       class="Menubar relative flex max-w-md flex-col flex-wrap overflow-x-auto overflow-y-hidden"
       :class="[classes.actionBar.tableMenuContainer]"

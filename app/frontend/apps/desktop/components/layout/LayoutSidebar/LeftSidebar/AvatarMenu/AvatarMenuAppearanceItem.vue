@@ -2,21 +2,20 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { computed, ref } from 'vue'
+import { computed, useTemplateRef } from 'vue'
 
 import CommonPopoverMenuItem, {
   type Props,
 } from '#desktop/components/CommonPopoverMenu/CommonPopoverMenuItem.vue'
 import ThemeSwitch from '#desktop/components/ThemeSwitch/ThemeSwitch.vue'
-import type { ThemeSwitchInstance } from '#desktop/components/ThemeSwitch/types.ts'
 import { useThemeStore } from '#desktop/stores/theme.ts'
 
 defineProps<Props>()
 
-const themeSwitch = ref<ThemeSwitchInstance>()
+const themeSwitchInstance = useTemplateRef('theme-switch')
 
 const cycleThemeSwitchValue = () => {
-  themeSwitch.value?.cycleValue()
+  themeSwitchInstance.value?.cycleValue()
 }
 
 const themeStore = useThemeStore()
@@ -36,7 +35,7 @@ const modelTheme = computed({
   />
   <div class="flex items-center px-2">
     <ThemeSwitch
-      ref="themeSwitch"
+      ref="theme-switch"
       v-model="modelTheme"
       class="hover:outline-blue-300 focus:outline-blue-600 hover:focus:outline-blue-600 dark:hover:outline-blue-950 dark:focus:outline-blue-900 dark:hover:focus:outline-blue-900"
       size="small"

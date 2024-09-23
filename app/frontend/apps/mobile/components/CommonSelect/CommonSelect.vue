@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { onClickOutside, onKeyDown, useVModel } from '@vueuse/core'
-import { onUnmounted, computed, nextTick, ref } from 'vue'
+import { useTemplateRef, onUnmounted, computed, nextTick, ref } from 'vue'
 
 import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
 import { useFocusWhenTyping } from '#shared/composables/useFocusWhenTyping.ts'
@@ -41,7 +41,7 @@ const emit = defineEmits<{
   close: []
 }>()
 
-const dialogElement = ref<HTMLElement>()
+const dialogElement = useTemplateRef('dialog')
 const localValue = useVModel(props, 'modelValue', emit)
 
 // TODO: do we really want this initial transfomring of the value, when it's null?
@@ -197,7 +197,7 @@ const duration = VITE_TEST_MODE ? undefined : { enter: 300, leave: 200 }
             class="flex min-w-[294px] max-w-[90vw] flex-col items-start rounded-xl bg-gray-400/80 backdrop-blur-[15px]"
           >
             <div
-              ref="dialogElement"
+              ref="dialog"
               :aria-label="$t('Select…')"
               role="listbox"
               :aria-multiselectable="multiple"

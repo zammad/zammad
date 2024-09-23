@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { onKeyUp, usePointerSwipe } from '@vueuse/core'
-import { nextTick, onMounted, ref, type Events } from 'vue'
+import { nextTick, onMounted, ref, type Events, useTemplateRef } from 'vue'
 
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import type { EventHandlers } from '#shared/types/utils.ts'
@@ -31,8 +31,8 @@ const emit = defineEmits<{
 const PX_SWIPE_CLOSE = -150
 
 const top = ref('0')
-const dialogElement = ref<HTMLElement>()
-const contentElement = ref<HTMLElement>()
+const dialogElement = useTemplateRef('dialog')
+const contentElement = useTemplateRef('content')
 
 const close = async () => {
   emit('close')
@@ -108,7 +108,7 @@ export default {
     role="dialog"
   >
     <div
-      ref="dialogElement"
+      ref="dialog"
       data-common-dialog
       class="flex h-full grow flex-col overflow-x-hidden bg-black"
       :class="{ 'transition-all duration-200 ease-linear': !isSwiping }"
@@ -149,7 +149,7 @@ export default {
         </div>
       </div>
       <div
-        ref="contentElement"
+        ref="content"
         v-bind="$attrs"
         class="flex grow flex-col items-start overflow-y-auto bg-black text-white"
       >

@@ -11,6 +11,7 @@ import {
 import {
   computed,
   nextTick,
+  useTemplateRef,
   onMounted,
   type Ref,
   ref,
@@ -97,8 +98,6 @@ const flyoutSize = { medium: 500 }
 
 // Width control over flyout
 let flyoutContainerWidth: Ref<number>
-const commonOverlayContainer =
-  ref<InstanceType<typeof CommonOverlayContainer>>()
 
 const gap = 16 // Gap between sidebar and flyout
 
@@ -127,7 +126,7 @@ if (props.persistResizeWidth) {
   flyoutContainerWidth = ref(flyoutSize[props.size || 'medium'])
 }
 
-const resizeHandleComponent = ref<InstanceType<typeof ResizeLine>>()
+const resizeHandleInstance = useTemplateRef('resize-handle')
 
 const resizeCallback = (valueX: number) => {
   if (valueX >= flyoutMaxWidth.value) return
@@ -140,7 +139,7 @@ const activeElement = useActiveElement()
 const handleKeyStroke = (e: KeyboardEvent, adjustment: number) => {
   if (
     !flyoutContainerWidth.value ||
-    activeElement.value !== resizeHandleComponent.value?.resizeLine
+    activeElement.value !== resizeHandleInstance.value?.resizeLine
   )
     return
 
@@ -155,7 +154,7 @@ const handleKeyStroke = (e: KeyboardEvent, adjustment: number) => {
 
 const { startResizing, isResizing } = useResizeLine(
   resizeCallback,
-  resizeHandleComponent.value?.resizeLine,
+  resizeHandleInstance.value?.resizeLine,
   handleKeyStroke,
   {
     calculateFromRight: true,
@@ -189,9 +188,9 @@ onKeyUp('Escape', (e) => {
 })
 
 // Style
-const contentElement = ref<HTMLDivElement>()
-const headerElement = ref<HTMLDivElement>()
-const footerElement = ref<HTMLDivElement>()
+const contentElement = useTemplateRef('content')
+const headerElement = useTemplateRef('header')
+const footerElement = useTemplateRef('footer')
 
 const { arrivedState } = useScroll(contentElement)
 
@@ -233,7 +232,6 @@ onMounted(() => {
 <template>
   <CommonOverlayContainer
     :id="flyoutId"
-    ref="commonOverlayContainer"
     tag="aside"
     tabindex="-1"
     class="overflow-clip-x fixed bottom-0 top-0 z-40 flex max-h-dvh min-w-min flex-col border-y border-neutral-100 bg-neutral-50 ltr:right-0 ltr:rounded-l-xl ltr:border-l rtl:left-0 rtl:rounded-r-xl rtl:border-r dark:border-gray-900 dark:bg-gray-500"
@@ -246,7 +244,7 @@ onMounted(() => {
     @click-background="close()"
   >
     <header
-      ref="headerElement"
+      ref="header"
       class="sticky top-0 flex items-center border-b border-neutral-100 border-b-transparent bg-neutral-50 p-3 ltr:rounded-tl-xl rtl:rounded-tr-xl dark:bg-gray-500"
       :class="{
         'border-b-neutral-100 dark:border-b-gray-900':
@@ -276,17 +274,13 @@ onMounted(() => {
       />
     </header>
 
-    <div
-      ref="contentElement"
-      class="h-full overflow-y-scroll px-3"
-      v-bind="$attrs"
-    >
+    <div ref="content" class="h-full overflow-y-scroll px-3" v-bind="$attrs">
       <slot />
     </div>
 
     <footer
       v-if="$slots.footer || !hideFooter"
-      ref="footerElement"
+      ref="footer"
       :aria-label="$t('Side panel footer')"
       class="sticky bottom-0 border-t border-t-transparent bg-neutral-50 p-3 ltr:rounded-bl-xl rtl:rounded-br-xl dark:bg-gray-500"
       :class="{
@@ -305,7 +299,7 @@ onMounted(() => {
 
     <ResizeLine
       v-if="resizable"
-      ref="resizeHandleComponent"
+      ref="resize-handle"
       :label="$t('Resize side panel')"
       class="absolute top-2 h-[calc(100%-16px)] overflow-clip ltr:left-px ltr:-translate-x-1/2 rtl:right-px rtl:translate-x-1/2"
       orientation="vertical"

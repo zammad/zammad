@@ -116,6 +116,56 @@ UpperCamelCase: e.g. CommonDateTime.vue
 
 ##### Typescript-Files / Other
 
+##### Vue Template Refs:
+
+- Use SnakeCase for template ref f.g `ref="resize-line"`
+- Component instance variables should contain `${ComponentName}Instance`
+- Prefer to use `useTemplateRef` over `ref` for template references
+
+###### useTemplateRef
+[docs](https://vuejs.org/api/composition-api-helpers.html#usetemplateref)
+
+```vue 
+<script setup lang="ts">
+import { useTemplateRef } from 'vue'
+  
+const buttonInstance =  useTemplateRef('button')
+const resizeLineInstance = useTemplateRef('resize-line')
+  
+const listElement = useTemplateRef('list')
+</script>
+
+<template>
+  <CommonButton ref="button"/>
+  <ResizeLine ref="resize-line"/>
+  
+  <ul ref="list"/>
+</template>
+```
+
+###### ref
+[docs](https://vuejs.org/api/reactivity-core.html#ref)
+
+```vue
+<script>
+  import { ref } from 'vue'
+
+  export const usePopoverTarget = () => {
+    const popoverTarget = ref()
+    return { popoverTarget }
+  }
+</script>
+
+<script setup lang="ts">
+  const { popoverTarget } = usePopoverTarget()
+
+</script>
+
+<template>
+  <button ref="popoverTarget"/>
+</template>
+```
+
 TBD
 
 ### Template

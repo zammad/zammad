@@ -7,7 +7,14 @@ import {
   onKeyDown,
   useVModel,
 } from '@vueuse/core'
-import { onUnmounted, computed, nextTick, ref, toRef } from 'vue'
+import {
+  useTemplateRef,
+  onUnmounted,
+  computed,
+  nextTick,
+  ref,
+  toRef,
+} from 'vue'
 
 import type {
   FlatSelectOption,
@@ -63,7 +70,7 @@ const emit = defineEmits<{
 
 const locale = useLocaleStore()
 
-const dropdownElement = ref<HTMLElement>()
+const dropdownElement = useTemplateRef('dropdown')
 const localValue = useVModel(props, 'modelValue', emit)
 
 // TODO: do we really want this initial transforming of the value, when it's null?
@@ -107,7 +114,9 @@ const dropdownStyle = computed(() => {
   return style
 })
 
-const { activateTabTrap, deactivateTabTrap } = useTrapTab(dropdownElement)
+const { activateTabTrap, deactivateTabTrap } = useTrapTab(
+  dropdownElement as Ref<HTMLElement>,
+)
 
 let lastFocusableOutsideElement: HTMLElement | null = null
 
@@ -417,7 +426,7 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
       <div
         v-if="showDropdown"
         id="field-tree-select-input-dropdown"
-        ref="dropdownElement"
+        ref="dropdown"
         class="fixed z-10 flex min-h-9 antialiased"
         :style="dropdownStyle"
       >

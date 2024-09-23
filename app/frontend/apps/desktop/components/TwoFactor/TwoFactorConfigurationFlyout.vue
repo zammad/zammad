@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, useTemplateRef } from 'vue'
 
 import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
 import { i18n } from '#shared/i18n.ts'
@@ -22,7 +22,8 @@ import type {
 
 const props = defineProps<TwoFactorConfigurationProps>()
 
-const activeComponentInstance = ref<TwoFactorConfigurationComponentInstance>()
+const activeComponentInstance =
+  useTemplateRef<TwoFactorConfigurationComponentInstance>('active-component')
 
 const headerTitle = computed(() => {
   switch (props.type) {
@@ -91,7 +92,7 @@ const onFooterButtonAction = () => {
   >
     <component
       :is="activeComponent"
-      ref="activeComponentInstance"
+      ref="active-component"
       :type="type"
       :options="componentOptions"
       :form-submit-callback="handleActionPayload"

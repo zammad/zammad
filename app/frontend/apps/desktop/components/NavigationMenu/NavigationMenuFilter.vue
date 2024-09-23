@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { useActiveElement, useMagicKeys, onClickOutside } from '@vueuse/core'
-import { nextTick, ref, shallowRef, watchEffect } from 'vue'
+import { nextTick, ref, watchEffect, useTemplateRef } from 'vue'
 
 import CommonIcon from '#shared/components/CommonIcon/CommonIcon.vue'
 import { useTransitionConfig } from '#shared/composables/useTransitionConfig.ts'
@@ -11,11 +11,11 @@ import { i18n } from '#shared/i18n.ts'
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 
 const filterFieldOpen = ref(false)
-const containerNode = ref<HTMLDivElement>()
+const containerElement = useTemplateRef('container')
 const searchText = defineModel<string>({ required: true, default: '' })
-const searchTextField = shallowRef<HTMLInputElement>()
+const searchTextElement = useTemplateRef('search-text')
 
-onClickOutside(containerNode, () => {
+onClickOutside(containerElement, () => {
   if (searchText.value !== '') return
 
   filterFieldOpen.value = false
@@ -27,7 +27,7 @@ const { escape } = useMagicKeys()
 const openFilterField = () => {
   filterFieldOpen.value = true
 
-  nextTick(() => searchTextField.value?.focus())
+  nextTick(() => searchTextElement.value?.focus())
 }
 
 const closeFilterField = () => {
@@ -37,7 +37,7 @@ const closeFilterField = () => {
 
 watchEffect(() => {
   if (!escape.value) return
-  if (activeElement.value !== searchTextField.value) return
+  if (activeElement.value !== searchTextElement.value) return
 
   closeFilterField()
 })
@@ -47,7 +47,7 @@ const { durations } = useTransitionConfig()
 
 <template>
   <div
-    ref="containerNode"
+    ref="container"
     class="mb-2 flex h-10 shrink-0 items-center gap-2 rounded-lg transition-colors"
     :class="{
       'bg-blue-200 px-2 has-[input:focus]:outline has-[input:hover]:outline has-[input:focus]:outline-1 has-[input:hover]:outline-1 has-[input:focus]:outline-offset-1 has-[input:hover]:outline-offset-1 has-[input:focus]:outline-blue-800 has-[input:hover]:has-[input:focus]:outline-blue-800 has-[input:hover]:outline-blue-600 dark:bg-gray-700 dark:has-[input:hover]:has-[input:focus]:outline-blue-800 dark:has-[input:hover]:outline-blue-900':
@@ -71,7 +71,7 @@ const { durations } = useTransitionConfig()
     </CommonButton>
 
     <input
-      ref="searchTextField"
+      ref="search-text"
       v-model.trim="searchText"
       :placeholder="$t('Apply filter…')"
       :aria-label="$t('Navigation filter')"

@@ -7,6 +7,7 @@ import {
   onKeyDown,
   useVModel,
 } from '@vueuse/core'
+import { useTemplateRef } from 'vue'
 import {
   computed,
   type ConcreteComponent,
@@ -80,7 +81,7 @@ const emit = defineEmits<{
   'focus-filter-input': []
 }>()
 
-const dropdownElement = ref<HTMLElement>()
+const dropdownElement = useTemplateRef('dropdown')
 const localValue = useVModel(props, 'modelValue', emit)
 
 // TODO: do we really want this initial transforming of the value, when it's null?
@@ -413,7 +414,7 @@ const goToChildPage = ({
       <div
         v-if="showDropdown"
         id="common-select"
-        ref="dropdownElement"
+        ref="dropdown"
         class="fixed z-50 flex min-h-9 antialiased"
         :style="dropdownStyle"
       >

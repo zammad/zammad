@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 <script setup lang="ts">
 import { useDropZone } from '@vueuse/core'
-import { computed, ref, toRef } from 'vue'
+import { useTemplateRef, computed, toRef } from 'vue'
 
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
@@ -41,7 +41,7 @@ const imageUploadOrPlaceholder = computed<string>(() => {
 
 const MAX_IMAGE_SIZE_IN_MB = 8
 
-const imageUploadInput = ref<HTMLInputElement>()
+const imageUploadInput = useTemplateRef('image-upload')
 
 const reset = () => {
   imageUpload.value = ''
@@ -81,9 +81,9 @@ const onFileChanged = async ($event: Event) => {
   if (files) await loadImages(files)
 }
 
-const dropZoneRef = ref<HTMLDivElement>()
+const dropZoneElement = useTemplateRef('drop-zone')
 
-const { isOverDropZone } = useDropZone(dropZoneRef, {
+const { isOverDropZone } = useDropZone(dropZoneElement, {
   onDrop: loadImages,
   dataTypes: (types) => types.every((type) => type.startsWith('image/')),
 })
@@ -91,7 +91,7 @@ const { isOverDropZone } = useDropZone(dropZoneRef, {
 
 <template>
   <div
-    ref="dropZoneRef"
+    ref="drop-zone"
     class="flex w-full flex-col items-center gap-2 p-2"
     :class="context.classes.input"
   >
@@ -139,7 +139,7 @@ const { isOverDropZone } = useDropZone(dropZoneRef, {
     </template>
     <input
       :id="context.id"
-      ref="imageUploadInput"
+      ref="image-upload"
       data-test-id="imageUploadInput"
       type="file"
       :name="context.node.name"

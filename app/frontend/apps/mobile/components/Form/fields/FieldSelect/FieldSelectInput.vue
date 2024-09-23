@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { ref, toRef } from 'vue'
+import { toRef, useTemplateRef } from 'vue'
 
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import type { SelectContext } from '#shared/components/Form/fields/FieldSelect/types.ts'
@@ -12,7 +12,6 @@ import { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 
 import CommonSelect from '#mobile/components/CommonSelect/CommonSelect.vue'
-import type { CommonSelectInstance } from '#mobile/components/CommonSelect/types.ts'
 import CommonTicketStateIndicator from '#mobile/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
 
 interface Props {
@@ -35,7 +34,7 @@ const {
   setupMissingOrDisabledOptionHandling,
 } = useSelectOptions(toRef(props.context, 'options'), contextReactive)
 
-const select = ref<CommonSelectInstance>()
+const select = useTemplateRef('select')
 
 const openSelectDialog = () => {
   if (

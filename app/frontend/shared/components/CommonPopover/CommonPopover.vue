@@ -15,6 +15,7 @@ import {
   onUnmounted,
   ref,
   type UnwrapRef,
+  useTemplateRef,
 } from 'vue'
 
 import { useTransitionConfig } from '#shared/composables/useTransitionConfig.ts'
@@ -53,7 +54,7 @@ const emit = defineEmits<{
   close: []
 }>()
 
-const popoverElement = ref<HTMLElement>()
+const popoverElement = useTemplateRef('popover')
 
 const showPopover = ref(false)
 
@@ -363,7 +364,7 @@ const classes = getPopoverClasses()
         v-if="persistent"
         v-show="showPopover"
         :id="id"
-        ref="popoverElement"
+        ref="popover"
         role="region"
         class="popover fixed z-50 flex"
         :class="[classes.base]"
@@ -383,7 +384,7 @@ const classes = getPopoverClasses()
       <div
         v-else-if="showPopover"
         :id="id"
-        ref="popoverElement"
+        ref="popover"
         role="region"
         class="popover fixed z-50 flex"
         :class="[classes.base]"

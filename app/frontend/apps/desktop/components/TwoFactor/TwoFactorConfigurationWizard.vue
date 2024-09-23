@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { ref, computed, useTemplateRef } from 'vue'
 
 import { useTwoFactorPlugins } from '#shared/entities/two-factor/composables/useTwoFactorPlugins.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
@@ -16,7 +16,8 @@ import type {
   TwoFactorConfigurationType,
 } from './types.ts'
 
-const activeComponentInstance = ref<TwoFactorConfigurationComponentInstance>()
+const activeComponentInstance =
+  useTemplateRef<TwoFactorConfigurationComponentInstance>('active-component')
 
 const emit = defineEmits<{
   redirect: [url: string]
@@ -90,7 +91,7 @@ const cancel = () => {
   <div class="mb-8">
     <component
       :is="activeComponent"
-      ref="activeComponentInstance"
+      ref="active-component"
       :type="state"
       :options="componentOptions"
       :form-submit-callback="handleActionPayload"

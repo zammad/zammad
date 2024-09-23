@@ -5,7 +5,16 @@
 import { reset } from '@formkit/core'
 import gql from 'graphql-tag'
 import { storeToRefs } from 'pinia'
-import { computed, h, onMounted, reactive, ref, watch, type Ref } from 'vue'
+import {
+  computed,
+  h,
+  onMounted,
+  reactive,
+  ref,
+  watch,
+  type Ref,
+  useTemplateRef,
+} from 'vue'
 
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import CommonPopover from '#shared/components/CommonPopover/CommonPopover.vue'
@@ -46,7 +55,6 @@ import CommonTabManager from '#desktop/components/CommonTabManager/CommonTabMana
 import { useTabManager } from '#desktop/components/CommonTabManager/useTabManager.ts'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
 import ThemeSwitch from '#desktop/components/ThemeSwitch/ThemeSwitch.vue'
-import type { ThemeSwitchInstance } from '#desktop/components/ThemeSwitch/types.ts'
 
 const alphabetOptions = computed(() =>
   [...Array(26).keys()].map((i) => ({
@@ -885,10 +893,10 @@ const { user } = storeToRefs(session)
 
 const { isOpen: popoverIsOpen, popover, popoverTarget, toggle } = usePopover()
 
-const themeSwitch = ref<ThemeSwitchInstance>()
+const themeSwitchInstance = useTemplateRef('theme-switch')
 
 const cycleThemeSwitchValue = () => {
-  themeSwitch.value?.cycleValue()
+  themeSwitchInstance.value?.cycleValue()
 }
 
 const appearance = ref('auto')
@@ -1524,7 +1532,7 @@ const inlineEditValue = ref('Edit me inline')
               <template #itemRight-appearance>
                 <div class="flex items-center px-2">
                   <ThemeSwitch
-                    ref="themeSwitch"
+                    ref="theme-switch"
                     v-model="appearance"
                     size="small"
                   />

@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, useTemplateRef } from 'vue'
 
 import { type ChecklistItem as ChecklistItemType } from '#shared/graphql/types.ts'
 import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
@@ -29,7 +29,7 @@ const isTicketItem = computed(() => !!props.item.ticket)
 
 const noAccessToLinkedTicket = computed(() => !verifyAccess(props.item))
 
-const inlineEditComponent = ref<InstanceType<typeof CommonInlineEdit>>()
+const inlineEditInstance = useTemplateRef('inline-edit')
 
 const removeItem = () => {
   emit('remove-item', props.item)
@@ -68,7 +68,7 @@ const actions: MenuItem[] = [
     icon: 'pencil',
     label: __('Edit item'),
     show: () => !isTicketItem.value && !noAccessToLinkedTicket.value,
-    onClick: () => inlineEditComponent.value?.activateEditing(),
+    onClick: () => inlineEditInstance.value?.activateEditing(),
   },
   {
     key: 'remove',
@@ -80,7 +80,7 @@ const actions: MenuItem[] = [
 ]
 
 defineExpose({
-  focusInput: () => inlineEditComponent.value?.activateEditing(),
+  focusInput: () => inlineEditInstance.value?.activateEditing(),
   quitEditing: () => {
     isEditing.value = false
   },
@@ -137,7 +137,7 @@ defineExpose({
 
     <CommonInlineEdit
       v-else
-      ref="inlineEditComponent"
+      ref="inline-edit"
       v-model:editing="isEditing"
       detect-links
       alternative-background
@@ -154,7 +154,7 @@ defineExpose({
     />
 
     <CommonActionMenu
-      v-if="!inlineEditComponent?.isEditing && !isReordering"
+      v-if="!inlineEditInstance?.isEditing && !isReordering"
       button-size="small"
       class="mt-0.5 flex"
       placement="arrowEnd"

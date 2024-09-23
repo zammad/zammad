@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref, toRefs } from 'vue'
+import { computed, toRefs } from 'vue'
 
 import type { Sizes } from '#shared/components/CommonIcon/types.ts'
 import CommonPopover from '#shared/components/CommonPopover/CommonPopover.vue'
@@ -46,8 +46,6 @@ const props = withDefaults(defineProps<Props>(), {
   defaultIcon: 'three-dots-vertical',
   noPaddedDefaultButton: true,
 })
-
-const popoverMenu = ref<InstanceType<typeof CommonPopoverMenu>>()
 
 const { popover, isOpen: popoverIsOpen, popoverTarget, toggle } = usePopover()
 
@@ -152,11 +150,7 @@ const variantClasses = computed(() => {
         :orientation="orientation"
         :owner="popoverTarget"
       >
-        <CommonPopoverMenu
-          ref="popoverMenu"
-          :entity="entity"
-          :popover="popover"
-        />
+        <CommonPopoverMenu :entity="entity" :popover="popover" />
       </CommonPopover>
     </template>
   </div>

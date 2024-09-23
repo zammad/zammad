@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { useVModel } from '@vueuse/core'
-import { computed, ref } from 'vue'
+import { computed, ref, useTemplateRef } from 'vue'
 
 import type { Sizes } from '#shared/components/CommonIcon/types.ts'
 import type { SelectOption } from '#shared/components/CommonSelect/types.ts'
@@ -11,7 +11,6 @@ import { i18n } from '#shared/i18n.ts'
 import stopEvent from '#shared/utils/events.ts'
 
 import CommonSelect from '#mobile/components/CommonSelect/CommonSelect.vue'
-import type { CommonSelectInstance } from '#mobile/components/CommonSelect/types.ts'
 
 interface Props {
   orderBy?: string
@@ -70,7 +69,7 @@ const directionOptions = computed(() => [
 const directionElement = ref<HTMLDivElement>()
 const selectButton = ref<HTMLButtonElement>()
 
-const selector = ref<CommonSelectInstance>()
+const selector = useTemplateRef('select')
 
 const advanceFocus = (event: KeyboardEvent, idx: number) => {
   const { key } = event
@@ -96,12 +95,7 @@ const advanceFocus = (event: KeyboardEvent, idx: number) => {
 </script>
 
 <template>
-  <CommonSelect
-    ref="selector"
-    v-model="localOrderBy"
-    :options="options"
-    no-close
-  >
+  <CommonSelect ref="select" v-model="localOrderBy" :options="options" no-close>
     <template #default="{ open, state: expanded }">
       <button
         ref="selectButton"

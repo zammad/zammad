@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { onKeyUp } from '@vueuse/core'
-import { nextTick, onMounted, ref } from 'vue'
+import { useTemplateRef, nextTick, onMounted } from 'vue'
 
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import stopEvent from '#shared/utils/events.ts'
@@ -45,9 +45,9 @@ const emit = defineEmits<{
   close: [cancel?: boolean]
 }>()
 
-const dialogElement = ref<HTMLElement>()
-const footerElement = ref<HTMLElement>()
-const contentElement = ref<HTMLElement>()
+const dialogElement = useTemplateRef<HTMLElement>('dialog')
+const footerElement = useTemplateRef('footer')
+const contentElement = useTemplateRef('content')
 
 const close = async (cancel?: boolean) => {
   emit('close', cancel)
@@ -92,7 +92,7 @@ onMounted(() => {
   >
     <component
       :is="wrapperTag"
-      ref="dialogElement"
+      ref="dialog"
       data-common-dialog
       class="flex flex-col gap-3 rounded-xl border border-neutral-100 bg-neutral-50 p-3 dark:border-gray-900 dark:bg-gray-500"
     >
@@ -116,14 +116,14 @@ onMounted(() => {
           @click="close()"
         />
       </div>
-      <div ref="contentElement" v-bind="$attrs" class="py-6 text-center">
+      <div ref="content" v-bind="$attrs" class="py-6 text-center">
         <slot>
           <CommonLabel size="large">{{
             $t(content, ...(contentPlaceholder || []))
           }}</CommonLabel>
         </slot>
       </div>
-      <div v-if="$slots.footer || !hideFooter" ref="footerElement">
+      <div v-if="$slots.footer || !hideFooter" ref="footer">
         <slot name="footer">
           <CommonDialogActionFooter
             v-bind="footerActionOptions"
