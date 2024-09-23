@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-12 22:16+0000\n"
+"PO-Revision-Date: 2024-09-23 05:23+0000\n"
 "Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
@@ -103,10 +103,10 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}> : Escaladé à #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}> : Escaladé le #{ticket.escalation_at}_\n"
 "Le ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" a été "
-"escaladé depuis \"#{ticket.escalation_at}\" !\n"
+"escaladé le \"#{ticket.escalation_at}\" !\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -209,10 +209,10 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}> : Sera escaladé à #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}> : Sera escaladé le #{ticket.escalation_at}_\n"
 "Le ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" va être "
-"escaladé à \"#{ticket.escalation_at}\" !\n"
+"escaladé le \"#{ticket.escalation_at}\" !\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -3232,7 +3232,7 @@ msgstr "Durée de clôture en min"
 
 #: lib/excel_sheet/ticket.rb:59
 msgid "Close Escalation At"
-msgstr "Escalade de fermeture à"
+msgstr "Escalade de fermeture le"
 
 #: lib/excel_sheet/ticket.rb:60
 msgid "Close In Min"
@@ -6510,22 +6510,22 @@ msgstr "Délais d'escalade"
 #: app/assets/javascripts/app/models/ticket.coffee:17
 #: app/graphql/gql/types/overview_type.rb:70
 msgid "Escalation at"
-msgstr "Escaladé à"
+msgstr "Escaladé le"
 
 #: app/assets/javascripts/app/models/ticket.coffee:20
 #: app/graphql/gql/types/overview_type.rb:73
 msgid "Escalation at (Close Time)"
-msgstr "Escalade à (heure de fermeture)"
+msgstr "Escaladé le (heure de fermeture)"
 
 #: app/assets/javascripts/app/models/ticket.coffee:18
 #: app/graphql/gql/types/overview_type.rb:71
 msgid "Escalation at (First Response Time)"
-msgstr "Escalade à (temps de première réponse)"
+msgstr "Escaladé le (temps de première réponse)"
 
 #: app/assets/javascripts/app/models/ticket.coffee:19
 #: app/graphql/gql/types/overview_type.rb:72
 msgid "Escalation at (Update Time)"
-msgstr "Escalade à (heure de mise à jour)"
+msgstr "Escaladé le (heure de mise à jour)"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:271
 msgid ""
@@ -15968,7 +15968,7 @@ msgstr ""
 "<div>Bonjour #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>Le ticket (#{ticket.title}) de \"<b>#{ticket.customer.longname}</b>\" "
-"sera escaladé à \"#{ticket.escalation_at}\" !</div>\n"
+"sera escaladé le \"#{ticket.escalation_at}\" !</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -16198,7 +16198,7 @@ msgstr "Titre du formulaire"
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:35
 #: db/seeds/object_manager_attributes.rb:482
 msgid "To"
-msgstr "À"
+msgstr "Destinataire"
 
 #: db/seeds/settings.rb:3348
 msgid ""
@@ -18278,14 +18278,14 @@ msgstr "admin"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "after (absolute)"
-msgstr "après (absolu)"
+msgstr "après le (valeur absolue)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:435
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "after (relative)"
-msgstr "après (relatif)"
+msgstr "après le (valeur relative)"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:8
 #: app/assets/javascripts/app/views/password/reset_sent.jst.eco:8
@@ -18338,14 +18338,14 @@ msgstr "sélection auto"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "before (absolute)"
-msgstr "avant (absolu)"
+msgstr "avant le (valeur absolue)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:432
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "before (relative)"
-msgstr "avant (relatif)"
+msgstr "avant le (valeur relative)"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:41
 #: app/assets/javascripts/app/views/sla/index.jst.eco:45
@@ -18467,13 +18467,13 @@ msgstr "créé %s"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:539
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:632
 msgid "current user"
-msgstr "utilisateur courant"
+msgstr "l'utilisateur actuel"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:383
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:545
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:637
 msgid "current user organization"
-msgstr "organisation de l'utilisateur actuel"
+msgstr "l'organisation de l'utilisateur actuel"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:269
 msgid "custom"
@@ -18640,7 +18640,7 @@ msgstr "se termine par"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "ends with one of"
-msgstr "se termine par un de"
+msgstr "se termine par une des valeurs"
 
 #: app/assets/javascripts/app/models/ticket.coffee:84
 msgid "escalated"
@@ -18708,7 +18708,7 @@ msgstr "de"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "from (relative)"
-msgstr "de (relatif)"
+msgstr "A partir du (valeur relative)"
 
 #: app/controllers/integration/pgp_controller.rb:48
 msgid "gpg (GnuPG) 2.2.0 or newer is required"
@@ -18876,7 +18876,7 @@ msgstr "est déjà utilisé"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "is any of"
-msgstr "est un parmi"
+msgstr "est une valeur parmi"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:124
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:151
@@ -18898,7 +18898,7 @@ msgstr "est plus long que la taille autorisée de %{maxlength}"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "is none of"
-msgstr "n'est pas un de"
+msgstr "n'est pas une valeur parmi"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
@@ -19259,8 +19259,8 @@ msgstr "relatif"
 #: db/seeds/settings.rb:216
 msgid "relative - e. g. \"2 hours ago\" or \"2 days and 15 minutes ago\""
 msgstr ""
-"relatif - par exemple \"il y a deux heures\" ou \"il y a deux jours et 15 "
-"minutes\""
+"valeur relative - par exemple \"il y a deux heures\" ou \"il y a deux jours "
+"et 15 minutes\""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:40
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco:17
@@ -19406,13 +19406,13 @@ msgstr "les espaces ne sont pas autorisés"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:546
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:638
 msgid "specific organization"
-msgstr "organisation spécifique"
+msgstr "une organisation spécifique"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:376
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:540
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:633
 msgid "specific user"
-msgstr "utilisateur spécifique"
+msgstr "un utilisateur spécifique"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/split.coffee:7
 msgid "split"
@@ -19426,7 +19426,7 @@ msgstr "commence par"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "starts with one of"
-msgstr "commence par un de"
+msgstr "commence par une des valeurs"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:16
 msgid "support@example.com"
@@ -19471,7 +19471,7 @@ msgstr "ticket.customer"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "till (relative)"
-msgstr "jusqu'à (relatif)"
+msgstr "jusqu'au (valeur relative)"
 
 #: db/seeds/settings.rb:218
 msgid "timestamp - e. g. \"2018-08-30 14:30\""
@@ -19509,11 +19509,11 @@ msgstr "essayez à nouveau"
 
 #: db/seeds/ticket_article_types.rb:9
 msgid "twitter direct-message"
-msgstr "Message direct par Twitter"
+msgstr "message direct par Twitter"
 
 #: db/seeds/ticket_article_types.rb:8
 msgid "twitter status"
-msgstr "Statut Twitter"
+msgstr "statut Twitter"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:379
 msgid "unassign user"
@@ -19564,14 +19564,14 @@ msgstr "sera supprimé"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within last (relative)"
-msgstr "au sein des derniers (relatif)"
+msgstr "au sein des derniers (valeur relative)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:433
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "within next (relative)"
-msgstr "au sein des suivants (relatif)"
+msgstr "au sein des prochains (valeur relative)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/boolean.coffee:9
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:22
