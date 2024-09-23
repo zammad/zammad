@@ -187,6 +187,6 @@
     "prosemirror-model": "1.22.3",
     "prosemirror-state": "1.4.3",
     "prosemirror-transform": "1.10.0",
-    "prosemirror-view": "1.34.2"
+    "prosemirror-view": "1.34.3"
   }
 }
