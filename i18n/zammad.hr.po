@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-21 09:16+0000\n"
+"PO-Revision-Date: 2024-09-23 15:43+0000\n"
 "Last-Translator: Ivan Perovic <ip@zammad.com>\n"
 "Language-Team: Croatian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/hr/>\n"
@@ -368,12 +368,12 @@ msgstr "%s (metoda)"
 msgid "%s (option)"
 msgstr "%s (opcija)"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:301
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:568
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:248
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:364
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:302
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:569
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:251
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:373
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
-#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:109
+#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:108
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:135
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:315
 #: app/frontend/shared/composables/useSelectOptions.ts:140
@@ -392,7 +392,7 @@ msgstr "%s atribut"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:55
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:54
 #, fuzzy
 #| msgid "Checksum"
 msgid "%s Checklist"
@@ -1195,7 +1195,7 @@ msgstr "Obavljanje zadatka"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:19
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:16
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
-#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:76
+#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:72
 msgid "Actions"
 msgstr "Akcije"
 
@@ -1331,7 +1331,7 @@ msgstr "Dodaj bota"
 msgid "Add Certificate"
 msgstr "Dodaj certifikat"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:403
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:402
 msgid "Add Empty Checklist"
 msgstr ""
 
@@ -1856,7 +1856,8 @@ msgstr "Također obavijesti putem e-maila"
 #: db/seeds/settings.rb:5079
 msgid ""
 "Alternative FQDN for callbacks if you operate Zammad in an internal network."
-msgstr "Alternativni FQDN za callbackove ako koristite Zammad u internoj mreži."
+msgstr ""
+"Alternativni FQDN za callbackove ako koristite Zammad u internoj mreži."
 
 #: app/helpers/knowledge_base_breadcrumb_helper.rb:20
 #: app/helpers/knowledge_base_public_page_title_helper.rb:27
@@ -2043,16 +2044,17 @@ msgid "Applications"
 msgstr "Primjene"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:107
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:141
 msgid "Apply"
 msgstr "Primjeni"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:107
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:141
 msgid "Apply Draft"
 msgstr "Preuzmi skicu"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:2
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:168
 msgid "Apply Shared Draft"
 msgstr "Preuzmi zajedničku skicu"
 
@@ -2098,7 +2100,7 @@ msgstr "Arhivirano"
 msgid "Are you sure to remove this article?"
 msgstr "Jeste li sigurni, da želite obrisati ovaj članak?"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:153
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:155
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Želite li zaista obrisati \"%s\"?"
 
@@ -2303,7 +2305,8 @@ msgstr ""
 
 #: app/models/postmaster_filter.rb:29
 msgid "At least one match rule is required, but none was provided."
-msgstr "Potrebno je barem jedno pravilo podudaranja, ali nijedno nije navedeno."
+msgstr ""
+"Potrebno je barem jedno pravilo podudaranja, ali nijedno nije navedeno."
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:155
 msgid "At least one object must be selected."
@@ -2313,15 +2316,15 @@ msgstr "Mora biti odabran barem jedan objekt."
 msgid "At least one user needs to have admin permissions."
 msgstr "Barem jedan agent mora imati administratorske dozvole."
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:191
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:193
 msgid "Attach another file"
 msgstr "Priloži druge datoteke"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:186
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:188
 msgid "Attach file"
 msgstr "Priloži datoteku"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:189
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:191
 msgid "Attach files"
 msgstr "Priloži datoteke"
 
@@ -2388,8 +2391,7 @@ msgid ""
 "Attention: These will be your login and password after the import is "
 "completed."
 msgstr ""
-"Pažnja: To će također biti Vaše korisničko ime i lozinka nakon dovršetka "
-"uvoza."
+"Pažnja: To će također biti Vaš pristup i lozinka nakon dovršetka uvoza."
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:154
 msgid "Attribute"
@@ -2405,7 +2407,7 @@ msgid ""
 "returned by the IDP is used."
 msgstr ""
 "Atribut koji jedinstveno identificira korisnika. Ako nije postavljen, "
-"koristi se identifikator naziva kojeg vraća IDP."
+"koristi se identifikator naziva dobiven od IDP-a."
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:31
 #: app/assets/javascripts/app/models/overview.coffee:16
@@ -2486,7 +2488,7 @@ msgid "Authenticator app secret"
 msgstr "Autentifikacija putem tajne (app secret)"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:152
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:195
 msgid "Author"
 msgstr "Autor"
 
@@ -2507,7 +2509,7 @@ msgstr "Automatska dodjela"
 
 #: db/seeds/settings.rb:2483
 msgid "Auto Assignment Ignored Users"
-msgstr "Iznimke automatske dodjele"
+msgstr "Ignoriraj korisnika kod automatske dodjele"
 
 #: db/seeds/settings.rb:2466
 msgid "Auto Assignment Selector"
@@ -2557,7 +2559,7 @@ msgid ""
 "intel. Map data directly to object fields."
 msgstr ""
 "Automatsko obogaćivanje Vaših klijenata i organizacija novim, ažurnim "
-"informacijama. Unesite podatke izravno u polja objekata."
+"informacijama. Povežite podatke izravno sa poljima objekata."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:97
 msgid ""
@@ -2567,11 +2569,11 @@ msgstr ""
 "Automatsko učitavanje datoteke chat.css. Ako želite koristiti vlastiti css, "
 "samo ga postavite na lažno (false)."
 
-#: app/frontend/shared/components/Form/Form.vue:1238
+#: app/frontend/shared/components/Form/Form.vue:1239
 msgid "Autosave in progress…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1247
+#: app/frontend/shared/components/Form/Form.vue:1248
 msgid "Autosaving is taking longer than expected…"
 msgstr ""
 
@@ -2638,10 +2640,10 @@ msgid "BCC address for all outgoing emails"
 msgstr "BCC adresa za sve izlazne mailove"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:435
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:446
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:436
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:455
 msgid "Back"
-msgstr "Natrag"
+msgstr "Povratak"
 
 #: app/assets/javascripts/app/views/widget/switch_back_to_user.jst.eco:4
 msgid "Back to my view"
@@ -2649,10 +2651,10 @@ msgstr "Povratak na moj pregled"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:3
 msgid "Back to overview"
-msgstr "Natrag na pregled"
+msgstr "Povratak na pregled"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:435
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:446
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:436
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:455
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:197
 msgid "Back to previous page"
 msgstr "Natrag na prethodnu stranicu"
@@ -2695,7 +2697,7 @@ msgstr "Base DN"
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:61
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts:16
 msgid "Base Objects"
-msgstr "Base objekti"
+msgstr "Osnovni objekti"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:736
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:10
@@ -2731,12 +2733,12 @@ msgstr "Beta"
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:41
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:97
 msgid "Bind Password"
-msgstr "Poveži lozinku"
+msgstr "Bind lozinka"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:38
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:94
 msgid "Bind User"
-msgstr "Poveži korisnika"
+msgstr "Bind korisnik"
 
 #: db/seeds/settings.rb:3349
 msgid "Block Notifications"
@@ -2770,11 +2772,11 @@ msgstr "Plavo"
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:31
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco:14
 msgid "Body"
-msgstr "Tijelo"
+msgstr "Sadržaj"
 
 #: db/seeds/settings.rb:3229
 msgid "Body - Search for follow-up also in mail body."
-msgstr "Tekst -potraži ponavljanja u tekstu maila."
+msgstr "Sadržaj -potraži ponavljanja u tekstu maila."
 
 #: lib/validations/ticket_article_validator/sms_twilio.rb:14
 msgid "Body text is required"
@@ -2801,7 +2803,7 @@ msgstr "Pošalji pozivnicu"
 
 #: app/assets/javascripts/app/views/session.jst.eco:9
 msgid "Browser"
-msgstr "Browser"
+msgstr "Preglednik"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:22
 msgid "Bulk action executed!"
@@ -2813,7 +2815,7 @@ msgstr "Obavljanje višestrukog zadatka neuspjelo"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:199
 msgid "Bulk action stopped by error(s): %s!"
-msgstr "Višestruki zadatak zaustavljen greskom/ama: %s!"
+msgstr "Višestruki zadatak zaustavljen greškom/ama: %s!"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:5
 msgid "Bulk import allows you to create and update many records at once."
@@ -2835,9 +2837,9 @@ msgid ""
 "setting lets you add more fields for which the follow-up check will be "
 "executed."
 msgstr ""
-"Prema zadanim postavkama, provjera ponavljanja vrši se putem predmeta e-"
+"Prema zadanim postavkama, provjera naknadnih upita vrši se putem predmeta e-"
 "maila. Ova postavka omogućuje dodavanje dodatnih polja za koja će se "
-"izvršiti provjera ponavljanja."
+"izvršiti provjera upita."
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:121
 msgid ""
@@ -2967,11 +2969,11 @@ msgstr "Blokirani pozivni ID"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:100
 msgid "Caller Log Filter"
-msgstr "Filter zapisnika pozivatelja"
+msgstr "Filter liste poziva"
 
 #: app/assets/javascripts/app/views/cti/index.jst.eco:2
 msgid "Caller log"
-msgstr "Zapisnik pozivatelja"
+msgstr "Lista poziva"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:238
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:7
@@ -3044,10 +3046,11 @@ msgstr "Odustani"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:119
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:188
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:71
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:226
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:400
 msgid "Cancel & Go Back"
-msgstr "Odustani i vrati se natrag"
+msgstr "Odustani i povratak natrag"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue:28
 #, fuzzy
@@ -3057,7 +3060,7 @@ msgstr "Odustani & odjavi se"
 
 #: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee:3
 msgid "Cancel & Sign out"
-msgstr "Odustani & odjavi se"
+msgstr "Odustani & odjavi"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:20
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:111
@@ -3077,7 +3080,7 @@ msgstr "Nije moguće izbrisati zapis jer %{zapis} ovisi o njemu"
 #: app/policies/ticket_policy.rb:47
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr ""
-"Daljnje praćenje zatvorenih ticketa nije moguće. Molim, kreirajte novi "
+"Daljnje praćenje zatvorenih ticketa nije moguće. Molimo, kreirajte novi "
 "ticket."
 
 #: app/models/sla.rb:44
@@ -3252,7 +3255,8 @@ msgstr "%s zatvara chat"
 
 #: app/assets/javascripts/app/controllers/chat.coffee:371
 msgid "Chat not answered, automatically set to offline."
-msgstr "Na chat nije odgovoreno, automatski postavljen na offline."
+msgstr ""
+"Na chat nije odgovoreno, automatski postavljen na bezmrežan način rada."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:381
 msgid "Chats"
@@ -3407,7 +3411,7 @@ msgstr "Odaberite grupu gdje će biti dodane objave stranice."
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco:7
 msgid "Choose your language."
-msgstr "Odaberi željeni jezik."
+msgstr "Odaberite željeni jezik."
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:140
 msgid "Choose your new password"
@@ -3420,9 +3424,7 @@ msgstr "Unesite novu lozinku."
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco:7
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue:46
 msgid "Choose your preferred two-factor authentication method to set it up."
-msgstr ""
-"Odaberite Vašu preferiranu dvofaktorsku metodu autentifikacije, kako biste "
-"je postavili."
+msgstr "Postavite Vašu preferiranu dvofaktorsku metodu autentifikacije."
 
 #: app/assets/javascripts/app/models/user.coffee:332
 msgid "Christmas holiday"
@@ -3474,13 +3476,13 @@ msgid "Clear Search"
 msgstr "Očisti pretraživanje"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:56
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:651
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:652
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:311
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:314
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:364
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:155
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:159
-#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:138
+#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:137
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:220
 msgid "Clear Selection"
 msgstr "Poništi odabir"
@@ -3583,7 +3585,7 @@ msgstr "Zatvori trenutnu karticu"
 msgid "Close dialog"
 msgstr "Potvrdite dijaloški okvir"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:273
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:271
 #, fuzzy
 #| msgid "Close tab"
 msgid "Close side panel"
@@ -3635,7 +3637,7 @@ msgstr "Zatvoreni ticketi"
 msgid "Closing time"
 msgstr "Vrijeme zatvaranja"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:161
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:162
 #, fuzzy
 #| msgid "Content"
 msgid "Collapse sidebar"
@@ -3880,8 +3882,8 @@ msgstr "Povezivanje…"
 msgid "Connection lost"
 msgstr "Veza prekinuta"
 
-#: public/assets/chat/chat-no-jquery.coffee:207
-#: public/assets/chat/chat.coffee:205
+#: public/assets/chat/chat-no-jquery.coffee:206
+#: public/assets/chat/chat.coffee:204
 msgid "Connection re-established"
 msgstr "Veza je ponovno uspostavljena"
 
@@ -4186,7 +4188,7 @@ msgstr "Stvori Knowledge Base"
 msgid "Create Macros"
 msgstr "Kreiraj makro"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:173
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:152
 #, fuzzy
 #| msgid "Create a shared draft"
 msgid "Create Shared Draft"
@@ -4270,7 +4272,7 @@ msgid "Create a new template in the admin interface."
 msgstr "Stvorite novi predložak u administracijskom sučelju."
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:168
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:147
 msgid "Create a shared draft"
 msgstr "Kreirajte dijeljenu skicu"
 
@@ -5757,9 +5759,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:83
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:38
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:195
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:233
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:162
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:156
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:158
 msgid "Delete"
 msgstr "Obrisati"
 
@@ -6133,7 +6135,7 @@ msgstr "Odbaci članak"
 msgid "Discard changes"
 msgstr "Odbaci promjene"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:75
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:136
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:161
 msgid "Discard your unsaved changes"
@@ -6306,11 +6308,29 @@ msgstr "Preuzimanje privitaka…"
 msgid "Draft"
 msgstr "Nacrt"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketSharedDraftZoom.vue:24
+#, fuzzy
+#| msgid "Draft available"
+msgid "Draft Available"
+msgstr "Nacrt dostupan"
+
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:9
 msgid "Draft available"
 msgstr "Nacrt dostupan"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:38
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:95
+#, fuzzy
+#| msgid "Changes could not be saved."
+msgid "Draft could not be saved."
+msgstr "Promjene nije moguće spremiti."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:33
+#, fuzzy
+#| msgid "User could not be updated."
+msgid "Draft could not be updated."
+msgstr "Nije moguće ažurirati korisnika."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:53
 #, fuzzy
 #| msgid "Draft"
 msgid "Drafts"
@@ -6333,7 +6353,7 @@ msgstr "Vucite za promjenu redoslijeda"
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:28
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:44
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:119
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:352
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:355
 msgid "Drop files here"
 msgstr "Ovdje ispustite datoteke"
 
@@ -7405,7 +7425,7 @@ msgstr "Postojeći ticketi"
 msgid "Existing tickets (open)"
 msgstr "Postojećih ticketa (otvoreni)"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:162
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:163
 #, fuzzy
 #| msgid "Sidebar"
 msgid "Expand sidebar"
@@ -7514,13 +7534,13 @@ msgstr "Facebook poruka aktivnosti"
 msgid "Failed Tasks"
 msgstr "Neuspjeli zadaci"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:146
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:145
 #, fuzzy
 #| msgid "Create new customer"
 msgid "Failed to add new checklist item."
 msgstr "Stvori novog klijenta"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:167
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:166
 #, fuzzy
 #| msgid "Create new customer"
 msgid "Failed to delete checklist item."
@@ -7536,7 +7556,7 @@ msgstr "Sigurnosnu kopiju kanala nije moguće pronaći!"
 msgid "Failed to roll back the migration of the channel!"
 msgstr "Poništavanje migracije kanala nije uspjelo!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:153
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:152
 msgid "Failed to save checklist order."
 msgstr ""
 
@@ -7556,7 +7576,7 @@ msgstr "Slanje maila na \"%s\" nije uspjelo. Obratite se administratoru."
 msgid "Failed to set up QR code. Please try again."
 msgstr "Netočan sigurnosni kod! Molimo pokušajte ponovno, sa novim kodom."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:160
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:159
 #, fuzzy
 #| msgid "Create new customer"
 msgid "Failed to update checklist item."
@@ -7968,7 +7988,7 @@ msgstr "Generirajte pristupni token za |%s|"
 msgid "Generate Recovery Codes"
 msgstr "Generiraj kodove oporavka"
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:31
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:32
 #, fuzzy
 #| msgid "Generate recovery codes"
 msgid "Generate Recovery Codes: %s"
@@ -8120,7 +8140,7 @@ msgstr "Gmail"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:98
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:105
 #: app/assets/javascripts/app/views/signup/verify.jst.eco:10
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue:51
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:88
 msgid "Go Back"
 msgstr "Povratak"
@@ -9090,7 +9110,7 @@ msgid "Including private key."
 msgstr "Uključuje privatni ključ."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:327
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:340
 #, fuzzy
 #| msgid "Incomplete credentials"
 msgid "Incomplete Ticket Checklist"
@@ -9747,7 +9767,7 @@ msgid "Last change %s %s by %s"
 msgstr "Posljednja promjena %s %s od strane %s"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:11
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:204
 msgid "Last changed"
 msgstr "Zadnja promjena"
 
@@ -9981,7 +10001,7 @@ msgstr "Učitavanje nije uspjelo."
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:647
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco:3
 #: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:40
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:509
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:510
 #: app/frontend/shared/form/i18n/locales.ts:58
 #: app/views/init/spinner-loading.html.erb:260
 msgid "Loading…"
@@ -10086,7 +10106,7 @@ msgstr "Grupna ograničenja makronaredbi ne odnose se na sve tickete"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:3
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:69
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:39
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:54
 #: db/seeds/permissions.rb:47
 msgid "Macros"
 msgstr "Macros"
@@ -11096,8 +11116,8 @@ msgstr "Nagios integracija"
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:31
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:103
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:142
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:169
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:185
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:148
 #: db/seeds/object_manager_attributes.rb:1507 public/assets/form/form.js:24
 msgid "Name"
 msgstr "Ime"
@@ -11571,7 +11591,7 @@ msgid "No certificate found."
 msgstr "Zertifikat nije pronađen."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:416
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:415
 #, fuzzy
 #| msgid "You have not created a ticket yet."
 msgid "No checklist added to this ticket yet."
@@ -11678,8 +11698,8 @@ msgid "No related article found to process the status message on."
 msgstr "Nije pronađen nijedan povezani članak za obradu statusne poruke."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:336
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:511
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:337
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:520
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:101
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:402
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:348
@@ -11705,7 +11725,7 @@ msgstr "Nema dostupnih sesija."
 msgid "No settings with area 'Dashboard::Stats' defined"
 msgstr "Nema spremljenih postavki za ’Dashboard::Stats’ polje"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:224
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:203
 #, fuzzy
 #| msgid "Shared Drafts"
 msgid "No shared drafts yet"
@@ -11756,7 +11776,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Bez x-zammad-session-user-id, pošiljatelj nije postavljen!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:330
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:343
 #, fuzzy
 #| msgid "You can no longer see the ticket."
 msgid "No, just close the ticket"
@@ -11771,7 +11791,7 @@ msgstr "Ne, hvala!"
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
-#: app/graphql/gql/types/ticket_type.rb:98 db/seeds/settings.rb:1957
+#: app/graphql/gql/types/ticket_type.rb:99 db/seeds/settings.rb:1957
 msgid "None"
 msgstr "Prazno"
 
@@ -12083,7 +12103,7 @@ msgstr "Lis"
 msgid "October"
 msgstr "listopad"
 
-#: public/assets/chat/chat.coffee:206
+#: public/assets/chat/chat.coffee:205
 msgid "Offline"
 msgstr "Odsutan"
 
@@ -12110,7 +12130,7 @@ msgstr ""
 "Mora se navesti jedan od potrebnih parametara, ali nijedan nije pronađen."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
-#: public/assets/chat/chat.coffee:207
+#: public/assets/chat/chat.coffee:206
 msgid "Online"
 msgstr "Dostupan(a)"
 
@@ -12219,7 +12239,7 @@ msgstr ""
 msgid "Open in new tab"
 msgstr "Otvori u novoj kartici"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:75
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:76
 #, fuzzy
 #| msgid "Open Tickets"
 msgid "Open link"
@@ -12559,13 +12579,14 @@ msgstr "Pregled višestrukih radnji"
 msgid "Overviews"
 msgstr "Pregledi"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:108
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:142
 #, fuzzy
 #| msgid "Overwrite Draft"
 msgid "Overwrite Content"
 msgstr "Preinači skicu"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee:5
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:82
 msgid "Overwrite Draft"
 msgstr "Preinači skicu"
 
@@ -13163,8 +13184,8 @@ msgstr "Pretpregled %s"
 msgid "Preview Calendar"
 msgstr "Novi kalendar"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:131
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:193
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:165
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:172
 #, fuzzy
 #| msgid "Select Shared Draft"
 msgid "Preview Shared Draft"
@@ -13585,7 +13606,7 @@ msgstr "Ukloni"
 msgid "Remove %s"
 msgstr "Ukloni %s"
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:36
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:37
 #, fuzzy
 #| msgid "Remove two-factor authentication"
 msgid "Remove Two-factor Authentication: %s"
@@ -13620,7 +13641,7 @@ msgid "Remove authenticator app"
 msgstr "Autentifikacijska aplikacija"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:362
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:361
 #, fuzzy
 #| msgid "Remove %s"
 msgid "Remove checklist"
@@ -13672,7 +13693,7 @@ msgid "Removes the shadows for a flat look."
 msgstr "Uklanja sjene za ravan dizajn."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:355
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:354
 msgid "Rename checklist"
 msgstr ""
 
@@ -13961,11 +13982,11 @@ msgstr "Zatvori karticu"
 msgid "Resize frame"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:309
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:303
 msgid "Resize side panel"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:134
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:135
 msgid "Resize sidebar"
 msgstr ""
 
@@ -14297,7 +14318,7 @@ msgstr "Spremi i nastavi"
 msgid "Save as"
 msgstr "Spremi kao"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:55
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:69
 #, fuzzy
 #| msgid "Save Draft"
 msgid "Save as draft"
@@ -14696,8 +14717,8 @@ msgstr "Kriteriji"
 msgid "Selects the ticket number generator module."
 msgstr "Odabire način generiranja broja ticketa."
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:471
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:475
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:472
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:484
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue:201
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:302
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:173
@@ -14870,7 +14891,7 @@ msgstr "Postavi"
 msgid "Set Up Two-factor Authentication"
 msgstr "Postavi dvofaktorsku autentifikaciju"
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:41
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:42
 #, fuzzy
 #| msgid "Set up two-factor authentication"
 msgid "Set Up Two-factor Authentication: %s"
@@ -15045,19 +15066,21 @@ msgstr "Zajedničke skice"
 msgid "Shared draft cannot be selected for this ticket."
 msgstr "Za ovaj ticket ne može se odabrati zajednička skica."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:119
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:104
 #, fuzzy
 #| msgid "Ticket has been created successfully."
 msgid "Shared draft has been created successfully."
 msgstr "Ticket je uspješno stvoren."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:127
 #, fuzzy
 #| msgid "The avatar could not be deleted."
 msgid "Shared draft has been deleted."
 msgstr "Avatar nije moguće obrisati."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:144
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:49
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:129
 #, fuzzy
 #| msgid "Ticket has been created successfully."
 msgid "Shared draft has been updated successfully."
@@ -15102,6 +15125,7 @@ msgid "Show %s more"
 msgstr "Pokaži više %s"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee:23
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:79
 msgid "Show Draft"
 msgstr "Pokaži skicu"
 
@@ -15206,13 +15230,13 @@ msgstr "Broj unosa u zapisniku poziva."
 msgid "Shown when the chat is closed."
 msgstr "Pokazuje se kada je chat zatvoren."
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:244
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:242
 #, fuzzy
 #| msgid "Close tab"
 msgid "Side panel"
 msgstr "Zatvori karticu"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:290
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:284
 msgid "Side panel footer"
 msgstr ""
 
@@ -15524,7 +15548,7 @@ msgid "Standard Group/Pool for Tickets."
 msgstr "Standardna grupa za tickete."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee:34
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:77
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:78
 msgid "Start Editing"
 msgstr "Započni uređivanje"
 
@@ -15589,7 +15613,7 @@ msgstr "Traži ili unesi telefonski broj…"
 msgid "Start typing to search or enter an email address…"
 msgstr "Traži ili unesi e-mail adresu…"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:71
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:72
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:41
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:409
 msgid "Start typing to search…"
@@ -16045,7 +16069,7 @@ msgstr "Testiranje"
 #: app/assets/javascripts/app/models/signature.coffee:8
 #: app/assets/javascripts/app/models/ticket_article.coffee:11
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:20
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:178
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:216
 #: db/seeds/object_manager_attributes.rb:536
 msgid "Text"
 msgstr "Tekst"
@@ -17491,7 +17515,7 @@ msgid "There is an existing draft. Do you want to overwrite it?"
 msgstr "Skica već postoji. Želite li je prebrisati?"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:57
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:139
 msgid "There is existing content. Do you want to overwrite it?"
 msgstr "Sadržaj već postoji. Želite li ga prebrisati?"
 
@@ -18354,14 +18378,14 @@ msgstr "Naslov ticketa"
 msgid "Ticket update"
 msgstr "Ažuriranje ticketa"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:472
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:485
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket update failed."
 msgstr "Ažuriranje ticketa"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:424
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:437
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:171
 msgid "Ticket updated successfully."
 msgstr "Ticket je uspješno ažuriran."
@@ -18475,7 +18499,7 @@ msgid ""
 "Tickets are only assigned automatically if they do not already have an owner."
 msgstr "Automatski se dodjeljuju samo oni ticketi koji nemaju vlasnika."
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:35
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:34
 msgid "Tickets are ordered by \"%s\" column (%s)."
 msgstr "Ticketi se sortiraju po stupcu \"%s\" (%s)."
 
@@ -19211,8 +19235,8 @@ msgstr "Nepročitane obavijesti"
 msgid "Unsaved Changes"
 msgstr "Odbaci promjene"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:578
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:257
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:579
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:260
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:316
 msgid "Unselect Option"
 msgstr "Poništi odabir opcije"
@@ -19258,7 +19282,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:57
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:13
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:147
 msgid "Update"
 msgstr "Ažuriranje"
 
@@ -19278,7 +19302,7 @@ msgstr "Ažuriranje eskalacije u"
 msgid "Update In Min"
 msgstr "Ažuriranje u minutama"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:211
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:190
 #, fuzzy
 #| msgid "Apply Shared Draft"
 msgid "Update Shared Draft"
@@ -20312,7 +20336,7 @@ msgid "Yes, add attachments now"
 msgstr "Ponovi preuzimanje privitka"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:329
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:342
 #, fuzzy
 #| msgid "Remove %s"
 msgid "Yes, open the checklist"
@@ -20613,7 +20637,7 @@ msgstr "Morate odobriti pristup svojoj web-kameri."
 msgid "You have unchecked items in the checklist."
 msgstr "Molimo, odaberite barem jedan pregled ticketa"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:324
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:337
 #, fuzzy
 #| msgid "Do you really want to delete this object?"
 msgid ""
@@ -21019,7 +21043,7 @@ msgstr "arhivirano"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:55
 #: app/assets/javascripts/app/models/overview.coffee:38
-#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:38
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:37
 msgid "ascending"
 msgstr "uzlazno"
 
@@ -21259,7 +21283,7 @@ msgstr "dostavljeno klijentu"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:56
 #: app/assets/javascripts/app/models/overview.coffee:39
-#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:39
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:38
 msgid "descending"
 msgstr "silazno"
 
@@ -22083,8 +22107,8 @@ msgstr "pokreni makronaredbu"
 msgid "select"
 msgstr "izaberi"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:350
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:470
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:351
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:479
 msgid "select all options"
 msgstr "označi sve opcije"
 
@@ -22093,7 +22117,7 @@ msgstr "označi sve opcije"
 msgid "select attachment…"
 msgstr "odaberi privitak…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:469
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:478
 msgid "select visible options"
 msgstr "odaberi vidljive opcije"
 

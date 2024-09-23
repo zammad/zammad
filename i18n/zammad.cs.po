@@ -372,12 +372,12 @@ msgstr "%s (metoda)"
 msgid "%s (option)"
 msgstr "%s (možnost)"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:301
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:568
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:248
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:364
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:302
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:569
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:251
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:373
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
-#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:109
+#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:108
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:135
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:315
 #: app/frontend/shared/composables/useSelectOptions.ts:140
@@ -396,7 +396,7 @@ msgstr "Atribut %s"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:55
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:54
 #, fuzzy
 #| msgid "Checksum"
 msgid "%s Checklist"
@@ -1206,7 +1206,7 @@ msgstr "Hromadná akce"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:19
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:16
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
-#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:76
+#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:72
 msgid "Actions"
 msgstr "Akce"
 
@@ -1342,7 +1342,7 @@ msgstr "Přidat Bota"
 msgid "Add Certificate"
 msgstr "Přidat certifikát"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:403
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:402
 msgid "Add Empty Checklist"
 msgstr ""
 
@@ -2089,16 +2089,17 @@ msgid "Applications"
 msgstr "Aplikace"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:107
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:141
 msgid "Apply"
 msgstr "Použít"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:107
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:141
 msgid "Apply Draft"
 msgstr "Použít koncept"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:2
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:168
 msgid "Apply Shared Draft"
 msgstr "Použít sdílený koncept"
 
@@ -2144,7 +2145,7 @@ msgstr "Archivováno"
 msgid "Are you sure to remove this article?"
 msgstr "Jste si jisti, že chcete smazat tento článek?"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:153
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:155
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Jste si jistí, že chcete smazat \"%s\"?"
 
@@ -2361,17 +2362,17 @@ msgstr "Musí být zvolen nejméně jeden objekt."
 msgid "At least one user needs to have admin permissions."
 msgstr "Nejméně jeden uživatel musí mít oprávnění správce."
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:191
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:193
 msgid "Attach another file"
 msgstr "Přiložit další soubor"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:186
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:188
 #, fuzzy
 #| msgid "Attach files"
 msgid "Attach file"
 msgstr "Přiložit soubory"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:189
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:191
 msgid "Attach files"
 msgstr "Přiložit soubory"
 
@@ -2539,7 +2540,7 @@ msgid "Authenticator app secret"
 msgstr "Tajný kód autentizační aplikace"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:152
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:195
 msgid "Author"
 msgstr "Autor"
 
@@ -2622,11 +2623,11 @@ msgstr ""
 "Automaticky načítá soubor chat.css. Pokud chcete použít vlastní css, "
 "nastavte hodnotu na vypnuto."
 
-#: app/frontend/shared/components/Form/Form.vue:1238
+#: app/frontend/shared/components/Form/Form.vue:1239
 msgid "Autosave in progress…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1247
+#: app/frontend/shared/components/Form/Form.vue:1248
 msgid "Autosaving is taking longer than expected…"
 msgstr ""
 
@@ -2693,8 +2694,8 @@ msgid "BCC address for all outgoing emails"
 msgstr "Adresa slepé kopie (Bcc) pro všechny odchozí e-maily"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:435
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:446
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:436
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:455
 msgid "Back"
 msgstr "Zpět"
 
@@ -2706,8 +2707,8 @@ msgstr "Zpět do mého pohledu"
 msgid "Back to overview"
 msgstr "Zpět do přehledu"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:435
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:446
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:436
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:455
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:197
 msgid "Back to previous page"
 msgstr "Zpět na předchozí stránku"
@@ -3110,7 +3111,8 @@ msgstr "Storno"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:119
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:188
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:71
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:226
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:400
 msgid "Cancel & Go Back"
 msgstr "Zrušit a jít zpět"
@@ -3534,13 +3536,13 @@ msgid "Clear Search"
 msgstr "Obnovit hledání"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:56
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:651
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:652
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:311
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:314
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:364
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:155
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:159
-#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:138
+#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:137
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:220
 msgid "Clear Selection"
 msgstr "Zrušit výběr"
@@ -3643,7 +3645,7 @@ msgstr "Zavřít aktuální záložku"
 msgid "Close dialog"
 msgstr "Potvrzovací dialog"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:273
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:271
 #, fuzzy
 #| msgid "Close tab"
 msgid "Close side panel"
@@ -3695,7 +3697,7 @@ msgstr "Uzavřené tickety"
 msgid "Closing time"
 msgstr "Zavírací doba"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:161
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:162
 #, fuzzy
 #| msgid "Content"
 msgid "Collapse sidebar"
@@ -3963,8 +3965,8 @@ msgstr "Připojuji …"
 msgid "Connection lost"
 msgstr "Připojení ztraceno"
 
-#: public/assets/chat/chat-no-jquery.coffee:207
-#: public/assets/chat/chat.coffee:205
+#: public/assets/chat/chat-no-jquery.coffee:206
+#: public/assets/chat/chat.coffee:204
 msgid "Connection re-established"
 msgstr "Připojení obnoveno"
 
@@ -4285,7 +4287,7 @@ msgstr "Vytvořit Znalostní bázi"
 msgid "Create Macros"
 msgstr "Vytvořit Makra"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:173
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:152
 #, fuzzy
 #| msgid "Create a shared draft"
 msgid "Create Shared Draft"
@@ -4369,7 +4371,7 @@ msgid "Create a new template in the admin interface."
 msgstr "Vytvořte novou šablonu v rozhraní pro správu."
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:168
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:147
 msgid "Create a shared draft"
 msgstr "Vytvořit sdílený koncept"
 
@@ -5887,9 +5889,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:83
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:38
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:195
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:233
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:162
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:156
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:158
 msgid "Delete"
 msgstr "Vymazat"
 
@@ -6262,7 +6264,7 @@ msgstr "Zahodit odstavec"
 msgid "Discard changes"
 msgstr "Zahodit změny"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:75
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:136
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:161
 msgid "Discard your unsaved changes"
@@ -6441,11 +6443,29 @@ msgstr "zvolte přílohu…"
 msgid "Draft"
 msgstr "Koncept"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketSharedDraftZoom.vue:24
+#, fuzzy
+#| msgid "Draft available"
+msgid "Draft Available"
+msgstr "Koncept k dispozici"
+
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:9
 msgid "Draft available"
 msgstr "Koncept k dispozici"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:38
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:95
+#, fuzzy
+#| msgid "Changes could not be saved."
+msgid "Draft could not be saved."
+msgstr "Změny se nepodařilo uložit."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:33
+#, fuzzy
+#| msgid "User could not be updated."
+msgid "Draft could not be updated."
+msgstr "Uživatele se nepodařilo aktualizovat."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:53
 #, fuzzy
 #| msgid "Draft"
 msgid "Drafts"
@@ -6468,7 +6488,7 @@ msgstr "Přetáhnout"
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:28
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:44
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:119
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:352
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:355
 msgid "Drop files here"
 msgstr "Zde přesuňte soubory"
 
@@ -7593,7 +7613,7 @@ msgstr "Prohlížení ticketu"
 msgid "Existing tickets (open)"
 msgstr "nalezeno %s ticketů"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:162
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:163
 #, fuzzy
 #| msgid "Content"
 msgid "Expand sidebar"
@@ -7704,13 +7724,13 @@ msgstr "příspěvek facebook feedu"
 msgid "Failed Tasks"
 msgstr "Nezdařené úlohy"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:146
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:145
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "Failed to add new checklist item."
 msgstr "Vytvořit nového Zákazníka"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:167
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:166
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "Failed to delete checklist item."
@@ -7726,7 +7746,7 @@ msgstr "Nepodařilo se najít zálohu na kanále!"
 msgid "Failed to roll back the migration of the channel!"
 msgstr "Nezdařilo se vrátit zpět migraci kanálu!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:153
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:152
 msgid "Failed to save checklist order."
 msgstr ""
 
@@ -7743,7 +7763,7 @@ msgstr ""
 msgid "Failed to set up QR code. Please try again."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:160
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:159
 #, fuzzy
 #| msgid "Create new Customer"
 msgid "Failed to update checklist item."
@@ -8162,7 +8182,7 @@ msgstr "Vygenerovat přístupový token pro |%s|"
 msgid "Generate Recovery Codes"
 msgstr "Vymazat záznamy"
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:31
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:32
 #, fuzzy
 #| msgid "Delete records"
 msgid "Generate Recovery Codes: %s"
@@ -8321,7 +8341,7 @@ msgstr "Gmail"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:98
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:105
 #: app/assets/javascripts/app/views/signup/verify.jst.eco:10
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue:51
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:88
 msgid "Go Back"
 msgstr "Jít Zpět"
@@ -9326,7 +9346,7 @@ msgid "Including private key."
 msgstr "Včetně soukromého klíče."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:327
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:340
 #, fuzzy
 #| msgid "Incomplete credentials"
 msgid "Incomplete Ticket Checklist"
@@ -9988,7 +10008,7 @@ msgid "Last change %s %s by %s"
 msgstr "Poslední změna %s %s uživatelem %s"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:11
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:204
 #, fuzzy
 #| msgid "has changed"
 msgid "Last changed"
@@ -10230,7 +10250,7 @@ msgstr "Nahrávání se nezdařilo."
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:647
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco:3
 #: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:40
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:509
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:510
 #: app/frontend/shared/form/i18n/locales.ts:58
 #: app/views/init/spinner-loading.html.erb:260
 msgid "Loading…"
@@ -10339,7 +10359,7 @@ msgstr "Omezení skupin makrem nepokrývá všechy tickety"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:3
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:69
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:39
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:54
 #: db/seeds/permissions.rb:47
 msgid "Macros"
 msgstr "Makra"
@@ -11369,8 +11389,8 @@ msgstr "Integrace Nagiosu"
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:31
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:103
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:142
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:169
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:185
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:148
 #: db/seeds/object_manager_attributes.rb:1507 public/assets/form/form.js:24
 msgid "Name"
 msgstr "Jméno"
@@ -11854,7 +11874,7 @@ msgid "No certificate found."
 msgstr "Národní prostředí nenalezeno"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:416
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:415
 #, fuzzy
 #| msgid "You have not created a ticket yet."
 msgid "No checklist added to this ticket yet."
@@ -11967,8 +11987,8 @@ msgid "No related article found to process the status message on."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:336
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:511
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:337
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:520
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:101
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:402
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:348
@@ -11994,7 +12014,7 @@ msgstr "Není k dispozici žádné sezení."
 msgid "No settings with area 'Dashboard::Stats' defined"
 msgstr "Nejsou definována žádná nastavení s oblastí 'Dashboard::Stats'"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:224
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:203
 #, fuzzy
 #| msgid "Shared Drafts"
 msgid "No shared drafts yet"
@@ -12045,7 +12065,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Žádný x-zammad-session-user-id, žádný nastavený odesílatel!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:330
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:343
 #, fuzzy
 #| msgid "You can no longer see the ticket."
 msgid "No, just close the ticket"
@@ -12060,7 +12080,7 @@ msgstr "Ne, děkuji!"
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
-#: app/graphql/gql/types/ticket_type.rb:98 db/seeds/settings.rb:1957
+#: app/graphql/gql/types/ticket_type.rb:99 db/seeds/settings.rb:1957
 msgid "None"
 msgstr "Žádný"
 
@@ -12377,7 +12397,7 @@ msgstr "Říj"
 msgid "October"
 msgstr "Říjen"
 
-#: public/assets/chat/chat.coffee:206
+#: public/assets/chat/chat.coffee:205
 msgid "Offline"
 msgstr "Offline"
 
@@ -12406,7 +12426,7 @@ msgstr ""
 "Jeden z požadovaných parametrů musí být vložen, ale žádný nebyl nalezen."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
-#: public/assets/chat/chat.coffee:207
+#: public/assets/chat/chat.coffee:206
 msgid "Online"
 msgstr "Online"
 
@@ -12521,7 +12541,7 @@ msgstr ""
 msgid "Open in new tab"
 msgstr "Otevřít v nové záložce"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:75
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:76
 #, fuzzy
 #| msgid "Open Tickets"
 msgid "Open link"
@@ -12864,13 +12884,14 @@ msgstr "Hromadná maska přehledu"
 msgid "Overviews"
 msgstr "Přehledy"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:108
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:142
 #, fuzzy
 #| msgid "Overwrite Draft"
 msgid "Overwrite Content"
 msgstr "Přepsat koncept"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee:5
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:82
 msgid "Overwrite Draft"
 msgstr "Přepsat koncept"
 
@@ -13483,8 +13504,8 @@ msgstr "Náhled %s"
 msgid "Preview Calendar"
 msgstr "Nový Kalendář"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:131
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:193
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:165
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:172
 #, fuzzy
 #| msgid "Select Shared Draft"
 msgid "Preview Shared Draft"
@@ -13920,7 +13941,7 @@ msgstr "Odstranit"
 msgid "Remove %s"
 msgstr "Odstranit %s"
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:36
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:37
 #, fuzzy
 #| msgid "Authentication"
 msgid "Remove Two-factor Authentication: %s"
@@ -13957,7 +13978,7 @@ msgid "Remove authenticator app"
 msgstr "Autentizacční aplikace"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:362
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:361
 #, fuzzy
 #| msgid "Remove %s"
 msgid "Remove checklist"
@@ -14015,7 +14036,7 @@ msgid "Removes the shadows for a flat look."
 msgstr "Odstraní stíny textu, čímž se dosáhne ploché zobrazení."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:355
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:354
 msgid "Rename checklist"
 msgstr ""
 
@@ -14356,11 +14377,11 @@ msgstr "Zavřít záložku"
 msgid "Resize frame"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:309
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:303
 msgid "Resize side panel"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:134
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:135
 msgid "Resize sidebar"
 msgstr ""
 
@@ -14700,7 +14721,7 @@ msgstr "Uložené podmínky"
 msgid "Save as"
 msgstr "Uložit jako"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:55
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:69
 #, fuzzy
 #| msgid "Save Draft"
 msgid "Save as draft"
@@ -15119,8 +15140,8 @@ msgstr "Selektor"
 msgid "Selects the ticket number generator module."
 msgstr "Zvolte modul generování čísla ticketu."
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:471
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:475
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:472
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:484
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue:201
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:302
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:173
@@ -15294,7 +15315,7 @@ msgstr ""
 msgid "Set Up Two-factor Authentication"
 msgstr "Autentizace"
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:41
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:42
 #, fuzzy
 #| msgid "Authentication"
 msgid "Set Up Two-factor Authentication: %s"
@@ -15473,19 +15494,21 @@ msgstr "Sdílené koncepty"
 msgid "Shared draft cannot be selected for this ticket."
 msgstr "Sdílený koncept není možné pro tento ticket vybrat."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:119
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:104
 #, fuzzy
 #| msgid "Ticket has been created successfully."
 msgid "Shared draft has been created successfully."
 msgstr "Ticket byl úspěšně vytvořen."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:127
 #, fuzzy
 #| msgid "The avatar could not be deleted."
 msgid "Shared draft has been deleted."
 msgstr "Avatar se nepodařilo smazat."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:144
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:49
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:129
 #, fuzzy
 #| msgid "Ticket has been created successfully."
 msgid "Shared draft has been updated successfully."
@@ -15530,6 +15553,7 @@ msgid "Show %s more"
 msgstr "Zobrazit dalších %s"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee:23
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:79
 msgid "Show Draft"
 msgstr "Zobrazit koncept"
 
@@ -15637,13 +15661,13 @@ msgstr "Zobrazených záznamů v historii volání."
 msgid "Shown when the chat is closed."
 msgstr "Zobrazí se, když je chat zavřený."
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:244
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:242
 #, fuzzy
 #| msgid "Close tab"
 msgid "Side panel"
 msgstr "Zavřít záložku"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:290
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:284
 msgid "Side panel footer"
 msgstr ""
 
@@ -15966,7 +15990,7 @@ msgid "Standard Group/Pool for Tickets."
 msgstr "Standardní skupina pro tickety."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee:34
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:77
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:78
 msgid "Start Editing"
 msgstr "Začněte upravovat"
 
@@ -16039,7 +16063,7 @@ msgstr "Vyhledejte nebo vložte telefonní číslo…"
 msgid "Start typing to search or enter an email address…"
 msgstr "Hledejte nebo zadejte e-mailovou adresu…"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:71
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:72
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:41
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:409
 msgid "Start typing to search…"
@@ -16509,7 +16533,7 @@ msgstr "Testování"
 #: app/assets/javascripts/app/models/signature.coffee:8
 #: app/assets/javascripts/app/models/ticket_article.coffee:11
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:20
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:178
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:216
 #: db/seeds/object_manager_attributes.rb:536
 msgid "Text"
 msgstr "Text"
@@ -18091,7 +18115,7 @@ msgid "There is an existing draft. Do you want to overwrite it?"
 msgstr "Koncept již existuje. Přejete si jej přepsat?"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:57
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:139
 msgid "There is existing content. Do you want to overwrite it?"
 msgstr "Obsah již existuje. Přejete si jej přepsat?"
 
@@ -19001,14 +19025,14 @@ msgstr "Titulek ticketu"
 msgid "Ticket update"
 msgstr "Aktualizace ticketu"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:472
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:485
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket update failed."
 msgstr "Aktualizace ticketu"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:424
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:437
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:171
 msgid "Ticket updated successfully."
 msgstr "Ticket byl úspěšně aktualizován."
@@ -19122,7 +19146,7 @@ msgid ""
 "Tickets are only assigned automatically if they do not already have an owner."
 msgstr "Tickety se přiřadí automaticky pouze pokud ještě nemají vlastníka."
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:35
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:34
 msgid "Tickets are ordered by \"%s\" column (%s)."
 msgstr "Tickety jsou řazeny \"%s\" sloupcem (%s)."
 
@@ -19899,8 +19923,8 @@ msgstr "Nepřečtená oznámení"
 msgid "Unsaved Changes"
 msgstr "Zahodit změny"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:578
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:257
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:579
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:260
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:316
 #, fuzzy
 #| msgid "set optional"
@@ -19950,7 +19974,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:57
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:13
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:147
 msgid "Update"
 msgstr "Aktualizovat"
 
@@ -19970,7 +19994,7 @@ msgstr "Eskalace aktualizace v"
 msgid "Update In Min"
 msgstr "Aktualizace v min"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:211
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:190
 #, fuzzy
 #| msgid "Apply Shared Draft"
 msgid "Update Shared Draft"
@@ -21034,7 +21058,7 @@ msgid "Yes, add attachments now"
 msgstr "Přidat možnost nahrávání příloh."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:329
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:342
 #, fuzzy
 #| msgid "Remove %s"
 msgid "Yes, open the checklist"
@@ -21338,7 +21362,7 @@ msgstr "Musíte povolit přístup k vaší webkameře."
 msgid "You have unchecked items in the checklist."
 msgstr "Zvolte prosím alespoň jeden přehled ticketů"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:324
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:337
 #, fuzzy
 #| msgid "Do you really want to delete this object?"
 msgid ""
@@ -21747,7 +21771,7 @@ msgstr "archivovaný"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:55
 #: app/assets/javascripts/app/models/overview.coffee:38
-#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:38
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:37
 msgid "ascending"
 msgstr "vzestupně"
 
@@ -21993,7 +22017,7 @@ msgstr "Smazat zákazníka"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:56
 #: app/assets/javascripts/app/models/overview.coffee:39
-#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:39
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:38
 msgid "descending"
 msgstr "sestupně"
 
@@ -22834,8 +22858,8 @@ msgstr "spustit makro"
 msgid "select"
 msgstr "zvolit"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:350
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:470
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:351
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:479
 #, fuzzy
 #| msgid "set optional"
 msgid "select all options"
@@ -22846,7 +22870,7 @@ msgstr "nastavit volitelné"
 msgid "select attachment…"
 msgstr "zvolte přílohu…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:469
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:478
 #, fuzzy
 #| msgid "Select All"
 msgid "select visible options"

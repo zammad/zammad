@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-17 05:57+0000\n"
-"Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
+"PO-Revision-Date: 2024-09-23 15:43+0000\n"
+"Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -368,12 +368,12 @@ msgstr "%s (Methode)"
 msgid "%s (option)"
 msgstr "%s (Option)"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:301
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:568
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:248
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:364
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:302
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:569
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:251
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:373
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
-#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:109
+#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:108
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:135
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:315
 #: app/frontend/shared/composables/useSelectOptions.ts:140
@@ -392,7 +392,7 @@ msgstr "%s-Attribut"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:55
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:54
 msgid "%s Checklist"
 msgstr "%s Checkliste"
 
@@ -1184,7 +1184,7 @@ msgstr "Schaltfläche Aktionsmenü für Sicherheits-Schlüssel"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:19
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:16
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
-#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:76
+#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:72
 msgid "Actions"
 msgstr "Aktionen"
 
@@ -1320,7 +1320,7 @@ msgstr "Bot hinzufügen"
 msgid "Add Certificate"
 msgstr "Zertifikat hinzufügen"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:403
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:402
 msgid "Add Empty Checklist"
 msgstr "Leere Checkliste hinzufügen"
 
@@ -1999,16 +1999,17 @@ msgid "Applications"
 msgstr "Anwendungen"
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:107
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:141
 msgid "Apply"
 msgstr "Übernehmen"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:107
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:141
 msgid "Apply Draft"
 msgstr "Entwurf übernehmen"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:2
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:168
 msgid "Apply Shared Draft"
 msgstr "Gemeinsamen Entwurf übernehmen"
 
@@ -2050,7 +2051,7 @@ msgstr "Archiviert am"
 msgid "Are you sure to remove this article?"
 msgstr "Sind Sie sicher, dass Sie diesen Artikel löschen wollen?"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:153
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:155
 msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Wollen Sie \"%s\" wirklich löschen?"
 
@@ -2265,15 +2266,15 @@ msgstr "Wählen Sie mindestens ein Objekt aus."
 msgid "At least one user needs to have admin permissions."
 msgstr "Mindestens ein Benutzer muss administrative Berechtigungen besitzen."
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:191
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:193
 msgid "Attach another file"
 msgstr "Weitere Datei anhängen"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:186
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:188
 msgid "Attach file"
 msgstr "Datei anhängen"
 
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:189
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:191
 msgid "Attach files"
 msgstr "Dateien anhängen"
 
@@ -2439,7 +2440,7 @@ msgid "Authenticator app secret"
 msgstr "Geheimnis der Authentifizierungs-App"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:152
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:195
 msgid "Author"
 msgstr "Autor"
 
@@ -2520,11 +2521,11 @@ msgstr ""
 "Lädt automatisch die Datei chat.css. Wenn Sie Ihre eigene CSS-Datei "
 "verwenden möchten, setzen Sie dies einfach auf false."
 
-#: app/frontend/shared/components/Form/Form.vue:1238
+#: app/frontend/shared/components/Form/Form.vue:1239
 msgid "Autosave in progress…"
 msgstr "Automatisches Speichern läuft…"
 
-#: app/frontend/shared/components/Form/Form.vue:1247
+#: app/frontend/shared/components/Form/Form.vue:1248
 msgid "Autosaving is taking longer than expected…"
 msgstr "Das automatische Speichern dauert länger als erwartet…"
 
@@ -2587,8 +2588,8 @@ msgid "BCC address for all outgoing emails"
 msgstr "BCC-Adresse für alle ausgehenden E-Mails"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:435
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:446
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:436
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:455
 msgid "Back"
 msgstr "Zurück"
 
@@ -2600,8 +2601,8 @@ msgstr "Zurück zu meiner Ansicht"
 msgid "Back to overview"
 msgstr "Zurück zur Übersicht"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:435
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:446
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:436
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:455
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:197
 msgid "Back to previous page"
 msgstr "Zurück zur vorherigen Seite"
@@ -2993,7 +2994,8 @@ msgstr "Abbrechen"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:119
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:158
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:188
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:71
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:226
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:400
 msgid "Cancel & Go Back"
 msgstr "Abbrechen & Zurück"
@@ -3408,13 +3410,13 @@ msgid "Clear Search"
 msgstr "Suche löschen"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:56
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:651
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:652
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:311
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:314
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:364
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:155
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:159
-#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:138
+#: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:137
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:220
 msgid "Clear Selection"
 msgstr "Auswahl löschen"
@@ -3512,7 +3514,7 @@ msgstr "Aktuellen Tab schließen"
 msgid "Close dialog"
 msgstr "Dialog schließen"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:273
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:271
 msgid "Close side panel"
 msgstr "Seitenbereich schließen"
 
@@ -3558,7 +3560,7 @@ msgstr "Geschlossene Tickets"
 msgid "Closing time"
 msgstr "Schließzeit"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:161
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:162
 msgid "Collapse sidebar"
 msgstr "Seitenleiste einklappen"
 
@@ -3796,8 +3798,8 @@ msgstr "Verbinde…"
 msgid "Connection lost"
 msgstr "Verbindung verloren"
 
-#: public/assets/chat/chat-no-jquery.coffee:207
-#: public/assets/chat/chat.coffee:205
+#: public/assets/chat/chat-no-jquery.coffee:206
+#: public/assets/chat/chat.coffee:204
 msgid "Connection re-established"
 msgstr "Verbindung wieder aufgebaut"
 
@@ -4079,7 +4081,7 @@ msgstr "Knowledge Base erstellen"
 msgid "Create Macros"
 msgstr "Makros erstellen"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:173
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:152
 msgid "Create Shared Draft"
 msgstr "Gemeinsamen Entwurf erstellen"
 
@@ -4157,7 +4159,7 @@ msgid "Create a new template in the admin interface."
 msgstr "Eine neue Vorlage in der Administrations-Oberfläche erstellen."
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:168
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:147
 msgid "Create a shared draft"
 msgstr "Gemeinsamen Entwurf erstellen"
 
@@ -5670,9 +5672,9 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:83
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:38
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:195
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:233
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:162
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:156
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:158
 msgid "Delete"
 msgstr "Löschen"
 
@@ -6023,7 +6025,7 @@ msgstr "Artikel verwerfen"
 msgid "Discard changes"
 msgstr "Änderungen verwerfen"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:75
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:136
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:161
 msgid "Discard your unsaved changes"
@@ -6193,11 +6195,29 @@ msgstr "Herunterladen von Anhängen…"
 msgid "Draft"
 msgstr "Entwurf"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketSharedDraftZoom.vue:24
+#, fuzzy
+#| msgid "Draft available"
+msgid "Draft Available"
+msgstr "Entwurf verfügbar"
+
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:9
 msgid "Draft available"
 msgstr "Entwurf verfügbar"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:38
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:95
+#, fuzzy
+#| msgid "Changes could not be saved."
+msgid "Draft could not be saved."
+msgstr "Änderungen konnten nicht gespeichert werden."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:33
+#, fuzzy
+#| msgid "User could not be updated."
+msgid "Draft could not be updated."
+msgstr "Benutzer konnte nicht aktualisiert werden."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:53
 msgid "Drafts"
 msgstr "Entwürfe"
 
@@ -6218,7 +6238,7 @@ msgstr "Ziehen zur Neuordnung"
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:28
 #: app/assets/javascripts/app/views/knowledge_base/sidebar/attachments.jst.eco:44
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:119
-#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:352
+#: app/frontend/shared/components/Form/fields/FieldFile/FieldFileInput.vue:355
 msgid "Drop files here"
 msgstr "Dateien hier ablegen"
 
@@ -6355,10 +6375,8 @@ msgid "Editing on Desktop"
 msgstr "Am Desktop in Bearbeitung"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketLiveUsers.vue:57
-#, fuzzy
-#| msgid "Editing on Desktop"
 msgid "Editing on Mobile"
-msgstr "Am Desktop in Bearbeitung"
+msgstr "In mobiler Ansicht in Bearbeitung"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 msgid "Editor"
@@ -7286,7 +7304,7 @@ msgstr "Vorhandene Tickets"
 msgid "Existing tickets (open)"
 msgstr "Vorhandene Tickets (offen)"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:162
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:163
 msgid "Expand sidebar"
 msgstr "Seitenleiste ausklappen"
 
@@ -7385,11 +7403,11 @@ msgstr "Facebook Feed-Beitrag"
 msgid "Failed Tasks"
 msgstr "Fehlgeschlagene Aufträge"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:146
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:145
 msgid "Failed to add new checklist item."
 msgstr "Das Hinzufügen eines neuen Checklisten-Elements ist fehlgeschlagen."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:167
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:166
 msgid "Failed to delete checklist item."
 msgstr "Checklisten-Element konnte nicht gelöscht werden."
 
@@ -7403,7 +7421,7 @@ msgstr "Backup des Kanals konnte nicht gefunden werden!"
 msgid "Failed to roll back the migration of the channel!"
 msgstr "Die Rücknahme der Kanal-Migration ist fehlgeschlagen!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:153
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:152
 msgid "Failed to save checklist order."
 msgstr "Die Reihenfolge der Checkliste konnte nicht gespeichert werden."
 
@@ -7424,7 +7442,7 @@ msgid "Failed to set up QR code. Please try again."
 msgstr ""
 "QR-Code konnte nicht eingerichtet werden. Bitte versuchen Sie es erneut."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:160
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:159
 msgid "Failed to update checklist item."
 msgstr "Aktualisierung des Checklisten-Elements ist fehlgeschlagen."
 
@@ -7830,7 +7848,7 @@ msgstr "Zugangs-Token für |%s| generieren"
 msgid "Generate Recovery Codes"
 msgstr "Wiederherstellungs-Codes erzeugen"
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:31
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:32
 msgid "Generate Recovery Codes: %s"
 msgstr "Wiederherstellungs-Codes erzeugen: %s"
 
@@ -7980,7 +7998,7 @@ msgstr "Gmail"
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:98
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:105
 #: app/assets/javascripts/app/views/signup/verify.jst.eco:10
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue:51
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationWizard.vue:52
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:88
 msgid "Go Back"
 msgstr "Zurück"
@@ -8037,7 +8055,7 @@ msgstr "Google-Client-Passwort"
 
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
 msgid "Got it!"
-msgstr ""
+msgstr "Verstanden!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:16
 msgid "Green"
@@ -8964,7 +8982,7 @@ msgid "Including private key."
 msgstr "Beinhaltet privaten Schlüssel."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:327
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:340
 msgid "Incomplete Ticket Checklist"
 msgstr "Unvollständige Ticket-Checkliste"
 
@@ -9603,7 +9621,7 @@ msgid "Last change %s %s by %s"
 msgstr "Letzte Änderung %s %s durch %s"
 
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:11
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:204
 msgid "Last changed"
 msgstr "Zuletzt geändert"
 
@@ -9839,7 +9857,7 @@ msgstr "Laden fehlgeschlagen."
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:647
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco:3
 #: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:40
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:509
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:510
 #: app/frontend/shared/form/i18n/locales.ts:58
 #: app/views/init/spinner-loading.html.erb:260
 msgid "Loading…"
@@ -9944,7 +9962,7 @@ msgstr "Die Makro-Gruppenbeschränkungen gelten nicht für alle Tickets"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:3
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:69
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:39
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:54
 #: db/seeds/permissions.rb:47
 msgid "Macros"
 msgstr "Makros"
@@ -10839,8 +10857,8 @@ msgstr "Nagios-Integration"
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:31
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:103
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:142
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:169
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:185
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:148
 #: db/seeds/object_manager_attributes.rb:1507 public/assets/form/form.js:24
 msgid "Name"
 msgstr "Name"
@@ -10971,10 +10989,8 @@ msgid "New Group"
 msgstr "Neue Gruppe"
 
 #: app/assets/javascripts/app/controllers/clues/keyboard_shortcuts_clues.coffee:5
-#, fuzzy
-#| msgid "Keyboard Shortcuts"
 msgid "New Keyboard Shortcuts"
-msgstr "Tastaturkürzel"
+msgstr "Neue Tastaturkürzel"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:22
 msgid "New Macro"
@@ -11290,7 +11306,7 @@ msgid "No certificate found."
 msgstr "Kein Zertifikat gefunden."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:416
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:415
 msgid "No checklist added to this ticket yet."
 msgstr "Diesem Ticket wurde noch keine Checkliste hinzugefügt."
 
@@ -11392,8 +11408,8 @@ msgstr ""
 "bearbeiten."
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:336
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:511
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:337
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:520
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:101
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:402
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:348
@@ -11419,7 +11435,7 @@ msgstr "Keine Sitzung verfügbar."
 msgid "No settings with area 'Dashboard::Stats' defined"
 msgstr "Keine Einstellungen mit Bereich 'Dashboard::Stats' definiert"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:224
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:203
 msgid "No shared drafts yet"
 msgstr "Noch keine gemeinsamen Entwürfe"
 
@@ -11468,7 +11484,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Keine 'x-zammad-session-user-id', kein Absender gesetzt!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:330
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:343
 msgid "No, just close the ticket"
 msgstr "Nein, Ticket nur schließen"
 
@@ -11479,7 +11495,7 @@ msgstr "Nein, danke"
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
-#: app/graphql/gql/types/ticket_type.rb:98 db/seeds/settings.rb:1957
+#: app/graphql/gql/types/ticket_type.rb:99 db/seeds/settings.rb:1957
 msgid "None"
 msgstr "Keine"
 
@@ -11774,7 +11790,7 @@ msgstr "Okt"
 msgid "October"
 msgstr "Oktober"
 
-#: public/assets/chat/chat.coffee:206
+#: public/assets/chat/chat.coffee:205
 msgid "Offline"
 msgstr "Offline"
 
@@ -11802,7 +11818,7 @@ msgstr ""
 "gefunden werden."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
-#: public/assets/chat/chat.coffee:207
+#: public/assets/chat/chat.coffee:206
 msgid "Online"
 msgstr "Online"
 
@@ -11919,7 +11935,7 @@ msgstr ""
 msgid "Open in new tab"
 msgstr "In neuem Tab öffnen"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:75
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:76
 msgid "Open link"
 msgstr "Link öffnen"
 
@@ -12230,11 +12246,12 @@ msgstr "Übersicht Bulk-Maske"
 msgid "Overviews"
 msgstr "Übersichten"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:108
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:142
 msgid "Overwrite Content"
 msgstr "Inhalt überschreiben"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee:5
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:82
 msgid "Overwrite Draft"
 msgstr "Entwurf überschreiben"
 
@@ -12829,8 +12846,8 @@ msgstr "Vorschau für %s"
 msgid "Preview Calendar"
 msgstr "Kalender-Vorschau"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:131
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:193
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:165
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:172
 msgid "Preview Shared Draft"
 msgstr "Vorschau für gemeinsamen Entwurf"
 
@@ -13231,7 +13248,7 @@ msgstr "Entfernen"
 msgid "Remove %s"
 msgstr "%s entfernen"
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:36
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:37
 msgid "Remove Two-factor Authentication: %s"
 msgstr "Zwei-Faktor-Authentifizierung entfernen: %s"
 
@@ -13260,7 +13277,7 @@ msgid "Remove authenticator app"
 msgstr "Authentifizierungs-App entfernen"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:362
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:361
 msgid "Remove checklist"
 msgstr "Checkliste entfernen"
 
@@ -13306,7 +13323,7 @@ msgid "Removes the shadows for a flat look."
 msgstr "Entfernt die Schatten für ein flaches Design."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:355
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:354
 msgid "Rename checklist"
 msgstr "Checkliste umbenennen"
 
@@ -13584,11 +13601,11 @@ msgstr "Größe des Artikel-Bereichs ändern"
 msgid "Resize frame"
 msgstr "Rahmengröße ändern"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:309
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:303
 msgid "Resize side panel"
 msgstr "Größe des Seitenbereichs ändern"
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:134
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:135
 msgid "Resize sidebar"
 msgstr "Größe der Seitenleiste ändern"
 
@@ -13919,7 +13936,7 @@ msgstr "Speichern und weiter"
 msgid "Save as"
 msgstr "Speichern als"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:55
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:69
 msgid "Save as draft"
 msgstr "Als Entwurf speichern"
 
@@ -14314,8 +14331,8 @@ msgstr "Auswahl"
 msgid "Selects the ticket number generator module."
 msgstr "Wählt den Generator zum Erstellen der Ticketnummern aus."
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:471
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:475
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:472
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:484
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue:201
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:302
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:173
@@ -14483,7 +14500,7 @@ msgstr "Einrichten"
 msgid "Set Up Two-factor Authentication"
 msgstr "Zwei-Faktor-Authentifizierung einrichten"
 
-#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:41
+#: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:42
 msgid "Set Up Two-factor Authentication: %s"
 msgstr "Zwei-Faktor-Authentifizierung einrichten: %s"
 
@@ -14649,15 +14666,17 @@ msgstr "Gemeinsame Entwürfe"
 msgid "Shared draft cannot be selected for this ticket."
 msgstr "Der gemeinsame Entwurf kann für dieses Ticket nicht ausgewählt werden."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:119
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:104
 msgid "Shared draft has been created successfully."
 msgstr "Gemeinsamer Entwurf wurde erfolgreich erstellt."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:127
 msgid "Shared draft has been deleted."
 msgstr "Gemeinsamer Entwurf wurde gelöscht."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:144
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:49
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:129
 msgid "Shared draft has been updated successfully."
 msgstr "Der gemeinsam Entwurf wurde erfolgreich aktualisiert."
 
@@ -14698,6 +14717,7 @@ msgid "Show %s more"
 msgstr "%s mehr anzeigen"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_overwrite_modal.coffee:23
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:79
 msgid "Show Draft"
 msgstr "Entwurf anzeigen"
 
@@ -14803,11 +14823,11 @@ msgstr "Anzahl der Einträge im Anrufprotokoll."
 msgid "Shown when the chat is closed."
 msgstr "Wird angezeigt wenn der Chat geschlossen ist."
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:244
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:242
 msgid "Side panel"
 msgstr "Seitenbereich"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:290
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:284
 msgid "Side panel footer"
 msgstr "Fußzeile des Seitenbereichs"
 
@@ -15116,7 +15136,7 @@ msgid "Standard Group/Pool for Tickets."
 msgstr "Standard-Gruppe/Pool für Tickets."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/reader_list_controller.coffee:34
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:77
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:78
 msgid "Start Editing"
 msgstr "Bearbeitung starten"
 
@@ -15175,7 +15195,7 @@ msgstr "Tippen Sie, um zu suchen, oder geben Sie eine Rufnummer ein…"
 msgid "Start typing to search or enter an email address…"
 msgstr "Tippen Sie, um zu suchen, oder geben Sie eine E-Mail-Adresse ein…"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:71
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:72
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:41
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:409
 msgid "Start typing to search…"
@@ -15631,7 +15651,7 @@ msgstr "Überprüfen"
 #: app/assets/javascripts/app/models/signature.coffee:8
 #: app/assets/javascripts/app/models/ticket_article.coffee:11
 #: app/assets/javascripts/app/views/ticket_shared_draft_modal.jst.eco:20
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:178
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:216
 #: db/seeds/object_manager_attributes.rb:536
 msgid "Text"
 msgstr "Text"
@@ -17071,7 +17091,7 @@ msgid "There is an existing draft. Do you want to overwrite it?"
 msgstr "Es ist bereits ein Entwurf vorhanden. Möchten Sie ihn überschreiben?"
 
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:57
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftFlyout.vue:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:139
 msgid "There is existing content. Do you want to overwrite it?"
 msgstr "Es ist bereits Inhalt vorhanden. Möchten Sie diesen überschreiben?"
 
@@ -17919,10 +17939,8 @@ msgstr ""
 "</div>\n"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/TicketScreenBehavior.vue:56
-#, fuzzy
-#| msgid "Ticket customer updated successfully."
 msgid "Ticket screen behavior updated successfully"
-msgstr "Ticket-Kunde erfolgreich aktualisiert."
+msgstr "Verhalten der Ticket-Ansicht erfolgreich aktualisiert"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:131
 msgid ""
@@ -17951,12 +17969,12 @@ msgstr "Ticket-Titel"
 msgid "Ticket update"
 msgstr "Ticket-Änderung"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:472
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:485
 msgid "Ticket update failed."
 msgstr "Aktualisierung des Tickets fehlgeschlagen."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:424
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:437
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:171
 msgid "Ticket updated successfully."
 msgstr "Ticket erfolgreich aktualisiert."
@@ -18072,7 +18090,7 @@ msgstr ""
 "Es werden nur Ticket automatisch zugewiesen, wenn diese noch keinen Besitzer "
 "haben."
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:35
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:34
 msgid "Tickets are ordered by \"%s\" column (%s)."
 msgstr "Tickets sind sortiert nach Spalte \"%s\" (%s)."
 
@@ -18804,8 +18822,8 @@ msgstr "Ungelesene Benachrichtigungen"
 msgid "Unsaved Changes"
 msgstr "Nicht gespeicherte Änderungen"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:578
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:257
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:579
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:260
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:316
 msgid "Unselect Option"
 msgstr "Option abwählen"
@@ -18851,7 +18869,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:57
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:9
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyoutActionFooter.vue:13
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:147
 msgid "Update"
 msgstr "Aktualisierung"
 
@@ -18871,7 +18889,7 @@ msgstr "Aktualisierung Eskalation um"
 msgid "Update In Min"
 msgstr "Aktualisierung in Min"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:211
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:190
 msgid "Update Shared Draft"
 msgstr "Gemeinsamen Entwurf aktualisieren"
 
@@ -19900,7 +19918,7 @@ msgid "Yes, add attachments now"
 msgstr "Ja, jetzt Anhänge hinzufügen"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:329
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:342
 msgid "Yes, open the checklist"
 msgstr "Ja, Checkliste öffnen"
 
@@ -20075,6 +20093,9 @@ msgid ""
 "You can open the Keyboard Shortcuts dialog here and view the new and "
 "improved layout, or revert to the old one if you prefer it."
 msgstr ""
+"Sie können das Dialogfeld \"Tastaturkürzel\" hier öffnen und das neue und "
+"verbesserte Layout ansehen oder zum alten Layout zurückkehren, wenn Sie es "
+"bevorzugen."
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:282
 msgid ""
@@ -20201,7 +20222,7 @@ msgstr "Sie müssen den Zugriff auf Ihre Webcam genehmigen."
 msgid "You have unchecked items in the checklist."
 msgstr "Sie haben noch nicht abgehakte Elemente in der Checkliste."
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:324
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:337
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -20587,7 +20608,7 @@ msgstr "archiviert"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:55
 #: app/assets/javascripts/app/models/overview.coffee:38
-#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:38
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:37
 msgid "ascending"
 msgstr "aufsteigend"
 
@@ -20606,7 +20627,7 @@ msgstr "mindestens ein Buchstabe ist erforderlich"
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
 msgid "attachment,attached,enclosed,enclosure"
-msgstr ""
+msgstr "Anhang,angehängt,beigefügt,anbei"
 
 #: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"
@@ -20825,7 +20846,7 @@ msgstr "dem Kunden zugestellt"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:56
 #: app/assets/javascripts/app/models/overview.coffee:39
-#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:39
+#: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketOrderBySelector.vue:38
 msgid "descending"
 msgstr "absteigend"
 
@@ -21636,8 +21657,8 @@ msgstr "Makro ausführen"
 msgid "select"
 msgstr "auswählen"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:350
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:470
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:351
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:479
 msgid "select all options"
 msgstr "alle Optionen auswählen"
 
@@ -21646,7 +21667,7 @@ msgstr "alle Optionen auswählen"
 msgid "select attachment…"
 msgstr "Dateien wählen…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:469
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:478
 msgid "select visible options"
 msgstr "sichtbare Optionen auswählen"
 
