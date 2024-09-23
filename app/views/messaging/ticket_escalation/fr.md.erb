@@ -1,6 +1,6 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}> : Escaladé à #{ticket.escalation_at}_
-Le ticket (#{ticket.title}) de "#{ticket.customer.longname}" a été escaladé depuis "#{ticket.escalation_at}" !
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}> : Escaladé le #{ticket.escalation_at}_
+Le ticket (#{ticket.title}) de "#{ticket.customer.longname}" a été escaladé le "#{ticket.escalation_at}" !
 
 <% if @objects[:article] %>
 #{article.body_as_text}

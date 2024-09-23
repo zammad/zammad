@@ -161,7 +161,7 @@ $(function() {
         'Your Name': 'Votre nom',
       },
       'hr': {
-        'Attachments': 'Privitci',
+        'Attachments': 'Privici',
         'Email': 'E-pošta',
         'Message': 'Poruka',
         'Name': 'Ime',
