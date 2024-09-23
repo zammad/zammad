@@ -1077,7 +1077,7 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
       },
       'hr': {
         '<strong>Chat</strong> with us!': '<strong>Čavrljajte</strong> sa nama!',
-        'All colleagues are busy.': 'Svi kolege su zauzeti.',
+        'All colleagues are busy.': 'Svi agenti su zauzeti.',
         'Chat closed by %s': '%s zatvara chat',
         'Compose your message…': 'Sastavite poruku…',
         'Connecting': 'Povezivanje',
