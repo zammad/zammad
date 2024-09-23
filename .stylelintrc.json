@@ -56,6 +56,7 @@
     "**/fineuploader.css",
     "**/qunit*.css",
     "**/svg-dimensions.css",
+    "tmp/**",
     "vendor/**",
     "coverage/**"
   ]

@@ -12,3 +12,6 @@ public/assets/form/**/*.js
 
 public/assets/frontend/vite/**/*.js
 public/assets/frontend/vite-dev/**/*.js
+
+# Cache
+tmp/**/*

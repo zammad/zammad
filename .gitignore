@@ -32,6 +32,7 @@
 # Bundler
 /.bundle
 /Gemfile.local
+/vendor/bundle
 
 # Clutter ======================================================================
 # These files are automatically generated;

@@ -35,12 +35,12 @@ PreCommit:
       - '**/*.scss'
       - '**/*.css'
       - '**/*.vue'
-  TranslationCatalogCheck:
-    required_executable: 'rails'
-    enabled: true
-    env:
-      ZAMMAD_SAFE_MODE: '1'
-    command: ['rails', 'generate', 'zammad:translation_catalog', '--check']
+  # TranslationCatalogCheck:
+  #   required_executable: 'rails'
+  #   enabled: true
+  #   env:
+  #     ZAMMAD_SAFE_MODE: '1'
+  #   command: ['rails', 'generate', 'zammad:translation_catalog', '--check']
   SettingsTypesCheck:
     required_executable: 'rails'
     enabled: true

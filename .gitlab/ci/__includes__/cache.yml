@@ -14,7 +14,8 @@
     files:
       - pnpm-lock.yaml
   paths:
-    - .pnpm-store
+    - tmp/cache/pnpm-store
+    - tmp/cache/cypress
 
 .cache_eslint: &cache_eslint
   key:

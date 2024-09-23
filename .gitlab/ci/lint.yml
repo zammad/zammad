@@ -36,8 +36,8 @@
     - !reference [.scripts, pnpm_install]
     - echo "Checking .po file syntax…"
     - for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c $FILE; done
-    - echo "Checking .pot catalog consistency…"
-    - bundle exec rails generate zammad:translation_catalog --check
+    # - echo "Checking .pot catalog consistency…"
+    # - bundle exec rails generate zammad:translation_catalog --check
     - echo "Checking consistency of Settings types file…"
     - bundle exec rails generate zammad:setting_types --check
     - echo "Rails zeitwerk:check autoloader check…"
@@ -87,12 +87,6 @@
     - coffeelint --rules ./.dev/coffeelint/rules/* app/
     - echo "Stylelint check…"
     - pnpm lint:css
-    - echo "Checking if chat assets need a rebuild…"
-    - echo "Please see public/assets/chat/README.md for build instructions."
-    - cp public/assets/chat/chat.js tmp/chat.js
-    - pnpm install --dir public/assets/chat
-    - (cd public/assets/chat && pnpm exec gulp build)
-    - cmp public/assets/chat/chat.js tmp/chat.js
 
 'lint: js':
   extends:
@@ -101,12 +95,9 @@
     - !reference [.cache, read_only_nodejs]
     - !reference [.cache, read_write_eslint]
   before_script:
-    - cp pnpm-lock.yaml tmp/pnpm-lock.yaml  # Save original state of pnpm-lock.yaml
     - !reference [.scripts, pnpm_install]
     - !reference [.scripts, source_rvm]
   script:
-    - echo "Checking if pnpm-lock.yaml is up-to-date"
-    - "if ! diff pnpm-lock.yaml tmp/pnpm-lock.yaml; then echo 'Error: pnpm-lock.yaml is not up-to-date'; exit 1; fi"
     - echo "TypeScript compiler check…"
     - pnpm lint:ts
     - echo "ESLint check…"

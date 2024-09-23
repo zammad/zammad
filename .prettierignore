@@ -3,3 +3,4 @@
 !**/graphql/**/*.spec.ts
 !**/tests/graphql/**
 public/**/*
+tmp/**/*
