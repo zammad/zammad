@@ -3161,8 +3161,8 @@ msgstr ""
 msgid "Connection lost"
 msgstr ""
 
-#: public/assets/chat/chat-no-jquery.coffee:206
-#: public/assets/chat/chat.coffee:204
+#: public/assets/chat/chat-no-jquery.coffee:207
+#: public/assets/chat/chat.coffee:205
 msgid "Connection re-established"
 msgstr ""
 
@@ -10146,7 +10146,7 @@ msgstr ""
 msgid "October"
 msgstr ""
 
-#: public/assets/chat/chat.coffee:205
+#: public/assets/chat/chat.coffee:206
 msgid "Offline"
 msgstr ""
 
@@ -10172,7 +10172,7 @@ msgid "One of the required parameters must be provided, but none was found."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
-#: public/assets/chat/chat.coffee:206
+#: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr ""
 
