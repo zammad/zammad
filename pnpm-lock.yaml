@@ -40,10 +40,10 @@ importers:
         version: 1.6.6
       '@formkit/tailwindcss':
         specifier: ^1.6.6
-        version: 1.6.6(tailwindcss@3.4.11)
+        version: 1.6.6(tailwindcss@3.4.12)
       '@formkit/themes':
         specifier: ^1.6.6
-        version: 1.6.6(tailwindcss@3.4.11)
+        version: 1.6.6(tailwindcss@3.4.12)
       '@formkit/utils':
         specifier: ^1.6.6
         version: 1.6.6
@@ -52,7 +52,7 @@ importers:
         version: 1.6.6
       '@formkit/vue':
         specifier: ^1.6.6
-        version: 1.6.6(tailwindcss@3.4.11)(vue@3.5.6(typescript@5.6.2))
+        version: 1.6.6(tailwindcss@3.4.12)(vue@3.5.6(typescript@5.6.2))
       '@github/webauthn-json':
         specifier: ^2.1.1
         version: 2.1.1
@@ -281,7 +281,7 @@ importers:
         version: 0.1.5(pinia@2.2.2(typescript@5.6.2)(vue@3.5.6(typescript@5.6.2)))(vue@3.5.6(typescript@5.6.2))
       '@tailwindcss/container-queries':
         specifier: ^0.1.1
-        version: 0.1.1(tailwindcss@3.4.11)
+        version: 0.1.1(tailwindcss@3.4.12)
       '@testing-library/jest-dom':
         specifier: ^6.5.0
         version: 6.5.0
@@ -317,7 +317,7 @@ importers:
         version: 8.6.0(eslint@8.57.0)(typescript@5.6.2)
       '@vitejs/plugin-vue':
         specifier: ^5.1.3
-        version: 5.1.3(vite@5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0))(vue@3.5.6(typescript@5.6.2))
+        version: 5.1.3(vite@5.4.6(@types/node@18.11.4)(sass@1.79.3)(terser@5.31.0))(vue@3.5.6(typescript@5.6.2))
       '@vue/compiler-dom':
         specifier: ^3.5.6
         version: 3.5.6
@@ -400,8 +400,8 @@ importers:
         specifier: ^0.14.1
         version: 0.14.1
       sass:
-        specifier: ^1.78.0
-        version: 1.78.0
+        specifier: ^1.79.3
+        version: 1.79.3
       stylelint:
         specifier: ^16.9.0
         version: 16.9.0(typescript@5.6.2)
@@ -430,11 +430,11 @@ importers:
         specifier: ^3.3.2
         version: 3.3.2
       tailwindcss:
-        specifier: ^3.4.11
-        version: 3.4.11
+        specifier: ^3.4.12
+        version: 3.4.12
       tailwindcss-unimportant:
         specifier: ^2.1.1
-        version: 2.1.1(tailwindcss@3.4.11)
+        version: 2.1.1(tailwindcss@3.4.12)
       timezone-mock:
         specifier: ^1.3.6
         version: 1.3.6
@@ -446,19 +446,19 @@ importers:
         version: 5.6.2
       vite:
         specifier: ^5.4.6
-        version: 5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
+        version: 5.4.6(@types/node@18.11.4)(sass@1.79.3)(terser@5.31.0)
       vite-plugin-pwa:
         specifier: ^0.20.5
-        version: 0.20.5(vite@5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.1.0)
+        version: 0.20.5(vite@5.4.6(@types/node@18.11.4)(sass@1.79.3)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.1.0)
       vite-plugin-ruby:
         specifier: ^5.1.0
-        version: 5.1.0(vite@5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0))
+        version: 5.1.0(vite@5.4.6(@types/node@18.11.4)(sass@1.79.3)(terser@5.31.0))
       vitest:
         specifier: ^2.0.5
-        version: 2.0.5(@types/node@18.11.4)(jsdom@25.0.0)(sass@1.78.0)(terser@5.31.0)
+        version: 2.0.5(@types/node@18.11.4)(jsdom@25.0.0)(sass@1.79.3)(terser@5.31.0)
       vitest-axe:
         specifier: ^0.1.0
-        version: 0.1.0(vitest@2.0.5(@types/node@18.11.4)(jsdom@25.0.0)(sass@1.78.0)(terser@5.31.0))
+        version: 0.1.0(vitest@2.0.5(@types/node@18.11.4)(jsdom@25.0.0)(sass@1.79.3)(terser@5.31.0))
       vue-tsc:
         specifier: ^2.1.6
         version: 2.1.6(typescript@5.6.2)
@@ -2839,6 +2839,10 @@ packages:
   chokidar@3.5.3:
     resolution: {integrity: sha512-Dr3sfKRP6oTcjf2JmUmFJfeVMvXBdegxB0iVQ5eb2V10uFJUCAS8OByZdVAyVb8xXNz3GjjTgj9kLWsZTqE6kw==}
     engines: {node: '>= 8.10.0'}
+
+  chokidar@4.0.1:
+    resolution: {integrity: sha512-n8enUVCED/KVRQlab1hr3MVpcVMvxtZjmEa956u+4YijlmQED223XMSYj2tLuKvr4jcCTzNNMpQDUer72MMmzA==}
+    engines: {node: '>= 14.16.0'}
 
   class-utils@0.3.6:
     resolution: {integrity: sha512-qOhPa/Fj7s6TY8H8esGu5QNpMMQxz79h+urzrNYN6mn+9BnxlDGf5QZ+XeCDsxSjPqsSR56XOZOJmpeurnLMeg==}
@@ -5278,6 +5282,10 @@ packages:
     resolution: {integrity: sha512-hOS089on8RduqdbhvQ5Z37A0ESjsqz6qnRcffsMU3495FuTdqSm+7bhJ29JvIOsBDEEnan5DPu9t3To9VRlMzA==}
     engines: {node: '>=8.10.0'}
 
+  readdirp@4.0.1:
+    resolution: {integrity: sha512-GkMg9uOTpIWWKbSsgwb5fA4EavTR+SG/PMPoAY8hkhHfEEY0/vqljY+XHqtDf2cr2IJtoNRDbrrEpZUiZCkYRw==}
+    engines: {node: '>= 14.16.0'}
+
   redent@3.0.0:
     resolution: {integrity: sha512-6tDA8g98We0zd0GvVeMT9arEOnTw9qM03L9cJXaCjrip1OO764RDBLBfrB4cwzNGDj5OA5ioymC9GkizgWJDUg==}
     engines: {node: '>=8'}
@@ -5484,8 +5492,8 @@ packages:
   safer-buffer@2.1.2:
     resolution: {integrity: sha512-YZo3K82SD7Riyi0E1EQPojLz7kpepnSQI9IyPbHHg1XXXevb5dJI7tpyN2ADxGcQbHG7vcyRHk0cbwqcQriUtg==}
 
-  sass@1.78.0:
-    resolution: {integrity: sha512-AaIqGSrjo5lA2Yg7RvFZrlXDBCp3nV4XP73GrLGvdRWWwk+8H3l0SDvq/5bA4eF+0RFPLuWUk3E+P1U/YqnpsQ==}
+  sass@1.79.3:
+    resolution: {integrity: sha512-m7dZxh0W9EZ3cw50Me5GOuYm/tVAJAn91SUnohLRo9cXBixGUOdvmryN+dXpwR831bhoY3Zv7rEFt85PUwTmzA==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -5859,8 +5867,8 @@ packages:
     peerDependencies:
       tailwindcss: ^3.0.0
 
-  tailwindcss@3.4.11:
-    resolution: {integrity: sha512-qhEuBcLemjSJk5ajccN9xJFtM/h0AVCPaA6C92jNP+M2J8kX+eMJHI7R2HFKUvvAsMpcfLILMCFYSeDwpMmlUg==}
+  tailwindcss@3.4.12:
+    resolution: {integrity: sha512-Htf/gHj2+soPb9UayUNci/Ja3d8pTmu9ONTfh4QY8r3MATTZOzmv6UYWF7ZwikEIC8okpfqmGqrmDehua8mF8w==}
     engines: {node: '>=14.0.0'}
     hasBin: true
 
@@ -6662,7 +6670,7 @@ snapshots:
   '@babel/code-frame@7.24.2':
     dependencies:
       '@babel/highlight': 7.24.5
-      picocolors: 1.0.1
+      picocolors: 1.1.0
 
   '@babel/compat-data@7.24.4': {}
 
@@ -6843,7 +6851,7 @@ snapshots:
       '@babel/helper-validator-identifier': 7.24.5
       chalk: 2.4.2
       js-tokens: 4.0.0
-      picocolors: 1.0.1
+      picocolors: 1.1.0
 
   '@babel/parser@7.24.7':
     dependencies:
@@ -7542,19 +7550,19 @@ snapshots:
       '@formkit/utils': 1.6.6
       '@formkit/validation': 1.6.6
 
-  '@formkit/tailwindcss@1.6.6(tailwindcss@3.4.11)':
+  '@formkit/tailwindcss@1.6.6(tailwindcss@3.4.12)':
     dependencies:
-      '@formkit/themes': 1.6.6(tailwindcss@3.4.11)
-      tailwindcss: 3.4.11
+      '@formkit/themes': 1.6.6(tailwindcss@3.4.12)
+      tailwindcss: 3.4.12
     transitivePeerDependencies:
       - unocss
       - windicss
 
-  '@formkit/themes@1.6.6(tailwindcss@3.4.11)':
+  '@formkit/themes@1.6.6(tailwindcss@3.4.12)':
     dependencies:
       '@formkit/core': 1.6.6
     optionalDependencies:
-      tailwindcss: 3.4.11
+      tailwindcss: 3.4.12
 
   '@formkit/utils@1.6.6': {}
 
@@ -7564,7 +7572,7 @@ snapshots:
       '@formkit/observer': 1.6.6
       '@formkit/utils': 1.6.6
 
-  '@formkit/vue@1.6.6(tailwindcss@3.4.11)(vue@3.5.6(typescript@5.6.2))':
+  '@formkit/vue@1.6.6(tailwindcss@3.4.12)(vue@3.5.6(typescript@5.6.2))':
     dependencies:
       '@formkit/core': 1.6.6
       '@formkit/dev': 1.6.6
@@ -7572,7 +7580,7 @@ snapshots:
       '@formkit/inputs': 1.6.6
       '@formkit/observer': 1.6.6
       '@formkit/rules': 1.6.6
-      '@formkit/themes': 1.6.6(tailwindcss@3.4.11)
+      '@formkit/themes': 1.6.6(tailwindcss@3.4.12)
       '@formkit/utils': 1.6.6
       '@formkit/validation': 1.6.6
       vue: 3.5.6(typescript@5.6.2)
@@ -8251,7 +8259,7 @@ snapshots:
       fast-glob: 3.3.2
       is-glob: 4.0.3
       open: 9.1.0
-      picocolors: 1.0.1
+      picocolors: 1.1.0
       tslib: 2.7.0
 
   '@popperjs/core@2.11.6': {}
@@ -8374,9 +8382,9 @@ snapshots:
       magic-string: 0.25.9
       string.prototype.matchall: 4.0.7
 
-  '@tailwindcss/container-queries@0.1.1(tailwindcss@3.4.11)':
+  '@tailwindcss/container-queries@0.1.1(tailwindcss@3.4.12)':
     dependencies:
-      tailwindcss: 3.4.11
+      tailwindcss: 3.4.12
 
   '@testing-library/dom@9.3.3':
     dependencies:
@@ -8835,9 +8843,9 @@ snapshots:
 
   '@ungap/structured-clone@1.2.0': {}
 
-  '@vitejs/plugin-vue@5.1.3(vite@5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0))(vue@3.5.6(typescript@5.6.2))':
+  '@vitejs/plugin-vue@5.1.3(vite@5.4.6(@types/node@18.11.4)(sass@1.79.3)(terser@5.31.0))(vue@3.5.6(typescript@5.6.2))':
     dependencies:
-      vite: 5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
+      vite: 5.4.6(@types/node@18.11.4)(sass@1.79.3)(terser@5.31.0)
       vue: 3.5.6(typescript@5.6.2)
 
   '@vitest/expect@2.0.5':
@@ -8902,7 +8910,7 @@ snapshots:
       '@vue/shared': 3.4.31
       entities: 4.5.0
       estree-walker: 2.0.2
-      source-map-js: 1.2.0
+      source-map-js: 1.2.1
 
   '@vue/compiler-core@3.5.6':
     dependencies:
@@ -9599,6 +9607,10 @@ snapshots:
     optionalDependencies:
       fsevents: 2.3.3
 
+  chokidar@4.0.1:
+    dependencies:
+      readdirp: 4.0.1
+
   class-utils@0.3.6:
     dependencies:
       arr-union: 3.1.0
@@ -9746,7 +9758,7 @@ snapshots:
   css-tree@2.2.1:
     dependencies:
       mdn-data: 2.0.28
-      source-map-js: 1.2.0
+      source-map-js: 1.2.1
 
   css-tree@2.3.1:
     dependencies:
@@ -12184,6 +12196,8 @@ snapshots:
     dependencies:
       picomatch: 2.3.1
 
+  readdirp@4.0.1: {}
+
   redent@3.0.0:
     dependencies:
       indent-string: 4.0.0
@@ -12390,11 +12404,11 @@ snapshots:
 
   safer-buffer@2.1.2: {}
 
-  sass@1.78.0:
+  sass@1.79.3:
     dependencies:
-      chokidar: 3.5.3
+      chokidar: 4.0.1
       immutable: 4.1.0
-      source-map-js: 1.2.0
+      source-map-js: 1.2.1
 
   saxes@6.0.0:
     dependencies:
@@ -12844,11 +12858,11 @@ snapshots:
       string-width: 4.2.3
       strip-ansi: 6.0.1
 
-  tailwindcss-unimportant@2.1.1(tailwindcss@3.4.11):
+  tailwindcss-unimportant@2.1.1(tailwindcss@3.4.12):
     dependencies:
-      tailwindcss: 3.4.11
+      tailwindcss: 3.4.12
 
-  tailwindcss@3.4.11:
+  tailwindcss@3.4.12:
     dependencies:
       '@alloc/quick-lru': 5.2.0
       arg: 5.0.2
@@ -12863,7 +12877,7 @@ snapshots:
       micromatch: 4.0.8
       normalize-path: 3.0.0
       object-hash: 3.0.0
-      picocolors: 1.0.1
+      picocolors: 1.1.0
       postcss: 8.4.47
       postcss-import: 15.1.0(postcss@8.4.47)
       postcss-js: 4.0.1(postcss@8.4.47)
@@ -13150,13 +13164,13 @@ snapshots:
     dependencies:
       browserslist: 4.23.0
       escalade: 3.1.1
-      picocolors: 1.0.1
+      picocolors: 1.1.0
 
   update-browserslist-db@1.1.0(browserslist@4.23.3):
     dependencies:
       browserslist: 4.23.3
       escalade: 3.1.2
-      picocolors: 1.0.1
+      picocolors: 1.1.0
 
   upper-case-first@2.0.2:
     dependencies:
@@ -13201,13 +13215,13 @@ snapshots:
       - rollup
       - supports-color
 
-  vite-node@2.0.5(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0):
+  vite-node@2.0.5(@types/node@18.11.4)(sass@1.79.3)(terser@5.31.0):
     dependencies:
       cac: 6.7.14
       debug: 4.3.6
       pathe: 1.1.2
       tinyrainbow: 1.2.0
-      vite: 5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
+      vite: 5.4.6(@types/node@18.11.4)(sass@1.79.3)(terser@5.31.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -13219,26 +13233,26 @@ snapshots:
       - supports-color
       - terser
 
-  vite-plugin-pwa@0.20.5(vite@5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.1.0):
+  vite-plugin-pwa@0.20.5(vite@5.4.6(@types/node@18.11.4)(sass@1.79.3)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.1.0):
     dependencies:
       debug: 4.3.6
       pretty-bytes: 6.1.1
       tinyglobby: 0.2.0
-      vite: 5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
+      vite: 5.4.6(@types/node@18.11.4)(sass@1.79.3)(terser@5.31.0)
       workbox-build: 7.1.0
       workbox-window: 7.1.0
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-ruby@5.1.0(vite@5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)):
+  vite-plugin-ruby@5.1.0(vite@5.4.6(@types/node@18.11.4)(sass@1.79.3)(terser@5.31.0)):
     dependencies:
       debug: 4.3.6
       fast-glob: 3.3.2
-      vite: 5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
+      vite: 5.4.6(@types/node@18.11.4)(sass@1.79.3)(terser@5.31.0)
     transitivePeerDependencies:
       - supports-color
 
-  vite@5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0):
+  vite@5.4.6(@types/node@18.11.4)(sass@1.79.3)(terser@5.31.0):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.47
@@ -13246,10 +13260,10 @@ snapshots:
     optionalDependencies:
       '@types/node': 18.11.4
       fsevents: 2.3.3
-      sass: 1.78.0
+      sass: 1.79.3
       terser: 5.31.0
 
-  vitest-axe@0.1.0(vitest@2.0.5(@types/node@18.11.4)(jsdom@25.0.0)(sass@1.78.0)(terser@5.31.0)):
+  vitest-axe@0.1.0(vitest@2.0.5(@types/node@18.11.4)(jsdom@25.0.0)(sass@1.79.3)(terser@5.31.0)):
     dependencies:
       aria-query: 5.3.0
       axe-core: 4.4.3
@@ -13257,9 +13271,9 @@ snapshots:
       dom-accessibility-api: 0.5.14
       lodash-es: 4.17.21
       redent: 3.0.0
-      vitest: 2.0.5(@types/node@18.11.4)(jsdom@25.0.0)(sass@1.78.0)(terser@5.31.0)
+      vitest: 2.0.5(@types/node@18.11.4)(jsdom@25.0.0)(sass@1.79.3)(terser@5.31.0)
 
-  vitest@2.0.5(@types/node@18.11.4)(jsdom@25.0.0)(sass@1.78.0)(terser@5.31.0):
+  vitest@2.0.5(@types/node@18.11.4)(jsdom@25.0.0)(sass@1.79.3)(terser@5.31.0):
     dependencies:
       '@ampproject/remapping': 2.3.0
       '@vitest/expect': 2.0.5
@@ -13277,8 +13291,8 @@ snapshots:
       tinybench: 2.9.0
       tinypool: 1.0.1
       tinyrainbow: 1.2.0
-      vite: 5.4.6(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
-      vite-node: 2.0.5(@types/node@18.11.4)(sass@1.78.0)(terser@5.31.0)
+      vite: 5.4.6(@types/node@18.11.4)(sass@1.79.3)(terser@5.31.0)
+      vite-node: 2.0.5(@types/node@18.11.4)(sass@1.79.3)(terser@5.31.0)
       why-is-node-running: 2.3.0
     optionalDependencies:
       '@types/node': 18.11.4
