@@ -1,5 +1,8 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+# This type counts user or organization tickets accessible to *current user*
+# It is very similar to what TicketUserTicketCounterJob does but not the same!
+# This counter is used exclusively in New Tech stack
 module Gql::Types
   class TicketCountType < Gql::Types::BaseObject
     description 'Open and closed ticket information'
@@ -28,14 +31,14 @@ module Gql::Types
     end
 
     def object_key_column
-      case @object.class.name
-      when 'Organization'
-        return 'organization_id'
-      when 'User'
-        return 'customer_id'
+      case @object
+      when ::Organization
+        'organization_id'
+      when ::User
+        'customer_id'
+      else
+        raise "Unknown object type #{@object.class}"
       end
-
-      raise "Unknown object type #{@object.class.name}"
     end
   end
 end

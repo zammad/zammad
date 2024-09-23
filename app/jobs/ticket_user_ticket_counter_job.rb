@@ -1,5 +1,8 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+# This job counts *all* user tickets and stores the count in the user preferences
+# It is very similar to what Gql::Types::TicketCountType does but not the same!
+# Results of this job are used exclusively in the old UI
 class TicketUserTicketCounterJob < ApplicationJob
   include HasActiveJobLock
 
