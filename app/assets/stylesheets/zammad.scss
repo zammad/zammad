@@ -2987,10 +2987,11 @@ input.has-error {
 }
 
 .modal--clue {
+  @extend .zIndex-6;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  z-index: 500;
 
   .modal-backdrop {
     bottom: 0;
@@ -9418,7 +9419,7 @@ li.list-item-none {
 .dropdown-menu > li > a.is-hovered {
   color: var(--text-inverted);
   text-decoration: none;
-  background-color: var(--background-secondary-hover);
+  background: var(--menu-background-active);
 }
 
 .dropdown-menu .badge--text {
