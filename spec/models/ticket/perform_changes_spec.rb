@@ -331,6 +331,37 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
           .with(hash_including(objects: { ticket: object, article: new_article }))
       end
     end
+
+    context 'when dispatching email through an inactive channel' do
+      let!(:article) { create(:ticket_article, ticket: object) }
+      let(:trigger) do
+        build(:trigger,
+              perform: {
+                'notification.email' => {
+                  body:      'Sample notification',
+                  recipient: 'ticket_customer',
+                  subject:   'Sample subject'
+                }
+              })
+      end
+
+      # required by Ticket#perform_changes for email notifications
+      before do
+        allow(NotificationFactory::Mailer).to receive(:template).and_call_original
+        allow(Rails.logger).to receive(:info)
+
+        article.ticket.group.update(email_address: create(:email_address, channel: create(:channel, active: false)))
+      end
+
+      it 'does not pass the article to NotificationFactory::Mailer' do
+        object.perform_changes(trigger, 'trigger', { article_id: article.id }, 1)
+
+        expect(Rails.logger).to have_received(:info).with(match(%r{because the channel .* is not active}))
+
+        # no specific email content awaiting needed, since we do not expect to receive any mail (what ever it is) at the point
+        expect(NotificationFactory::Mailer).not_to have_received(:template)
+      end
+    end
   end
 
   context 'with a notification trigger' do

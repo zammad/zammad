@@ -94,6 +94,9 @@ class Ticket::PerformChanges::Action::NotificationEmail < Ticket::PerformChanges
       elsif !email_address.channel_id
         Rails.logger.info "Unable to send trigger based notification to #{recipient_string} because no channel is set for email address '#{email_address.email}' (id: #{email_address.id})"
         nil
+      elsif !email_address.channel.active
+        Rails.logger.info "Unable to send trigger based notification to #{recipient_string} because the channel for email address '#{email_address.email} is not active' (id: #{email_address.id})"
+        nil
       else
         email_address
       end
