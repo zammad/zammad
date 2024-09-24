@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-23 05:24+0000\n"
+"PO-Revision-Date: 2024-09-24 03:39+0000\n"
 "Last-Translator: Ivan Perovic <ip@zammad.com>\n"
 "Language-Team: Croatian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hr/>\n"
@@ -2096,9 +2096,7 @@ msgstr ""
 msgid ""
 "Attention: These will be your login and password after the import is "
 "completed."
-msgstr ""
-"Pažnja: To će također biti Vaše korisničko ime i lozinka nakon dovršetka "
-"uvoza."
+msgstr "Pažnja: To će također biti Vaš pristup i lozinka nakon dovršetka uvoza."
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:154
 msgid "Attribute"
@@ -2114,7 +2112,7 @@ msgid ""
 "returned by the IDP is used."
 msgstr ""
 "Atribut koji jedinstveno identificira korisnika. Ako nije postavljen, "
-"koristi se identifikator naziva kojeg vraća IDP."
+"koristi se identifikator naziva dobiven od IDP-a."
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:31
 #: app/assets/javascripts/app/models/overview.coffee:16
@@ -2209,7 +2207,7 @@ msgstr "Automatska dodjela"
 
 #: db/seeds/settings.rb:2457
 msgid "Auto Assignment Ignored Users"
-msgstr "Iznimke automatske dodjele"
+msgstr "Ignoriraj korisnika kod automatske dodjele"
 
 #: db/seeds/settings.rb:2440
 msgid "Auto Assignment Selector"
@@ -2259,7 +2257,7 @@ msgid ""
 "intel. Map data directly to object fields."
 msgstr ""
 "Automatsko obogaćivanje Vaših klijenata i organizacija novim, ažurnim "
-"informacijama. Unesite podatke izravno u polja objekata."
+"informacijama. Povežite podatke izravno sa poljima objekata."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:97
 msgid ""
@@ -2319,7 +2317,7 @@ msgstr "BCC adresa za sve izlazne mailove"
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:442
 msgid "Back"
-msgstr "Natrag"
+msgstr "Povratak"
 
 #: app/assets/javascripts/app/views/widget/switch_back_to_user.jst.eco:4
 msgid "Back to my view"
@@ -2327,7 +2325,7 @@ msgstr "Povratak na moj pregled"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:3
 msgid "Back to overview"
-msgstr "Natrag na pregled"
+msgstr "Povratak na pregled"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:442
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:195
@@ -2372,7 +2370,7 @@ msgstr "Base DN"
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:61
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts:15
 msgid "Base Objects"
-msgstr "Base objekti"
+msgstr "Osnovni objekti"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:736
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:10
@@ -2408,12 +2406,12 @@ msgstr "Beta"
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:41
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:97
 msgid "Bind Password"
-msgstr "Poveži lozinku"
+msgstr "Bind lozinka"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:38
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:94
 msgid "Bind User"
-msgstr "Poveži korisnika"
+msgstr "Bind korisnik"
 
 #: db/seeds/settings.rb:3322
 msgid "Block Notifications"
@@ -2447,11 +2445,11 @@ msgstr "Plavo"
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:31
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco:14
 msgid "Body"
-msgstr "Tijelo"
+msgstr "Sadržaj"
 
 #: db/seeds/settings.rb:3203
 msgid "Body - Search for follow-up also in mail body."
-msgstr "Tekst -potraži ponavljanja u tekstu maila."
+msgstr "Sadržaj -potraži ponavljanja u tekstu maila."
 
 #: lib/validations/ticket_article_validator/sms_twilio.rb:14
 msgid "Body text is required"
@@ -2472,7 +2470,7 @@ msgstr "Brendiranje"
 
 #: app/assets/javascripts/app/views/session.jst.eco:9
 msgid "Browser"
-msgstr "Browser"
+msgstr "Preglednik"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:22
 msgid "Bulk action executed!"
@@ -2484,7 +2482,7 @@ msgstr "Obavljanje višestrukog zadatka neuspjelo"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:199
 msgid "Bulk action stopped by error(s): %s!"
-msgstr "Višestruki zadatak zaustavljen greskom/ama: %s!"
+msgstr "Višestruki zadatak zaustavljen greškom/ama: %s!"
 
 #: app/assets/javascripts/app/views/generic/object_import/index.jst.eco:5
 msgid "Bulk import allows you to create and update many records at once."
@@ -2506,9 +2504,9 @@ msgid ""
 "setting lets you add more fields for which the follow-up check will be "
 "executed."
 msgstr ""
-"Prema zadanim postavkama, provjera ponavljanja vrši se putem predmeta e-"
+"Prema zadanim postavkama, provjera naknadnih upita vrši se putem predmeta e-"
 "maila. Ova postavka omogućuje dodavanje dodatnih polja za koja će se "
-"izvršiti provjera ponavljanja."
+"izvršiti provjera upita."
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:121
 msgid ""
@@ -2640,11 +2638,11 @@ msgstr "Blokirani pozivni ID"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:100
 msgid "Caller Log Filter"
-msgstr "Filter zapisnika pozivatelja"
+msgstr "Filter liste poziva"
 
 #: app/assets/javascripts/app/views/cti/index.jst.eco:2
 msgid "Caller log"
-msgstr "Zapisnik pozivatelja"
+msgstr "Lista poziva"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:238
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:7
@@ -2711,11 +2709,11 @@ msgstr "Odustani"
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:154
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:138
 msgid "Cancel & Go Back"
-msgstr "Odustani i vrati se natrag"
+msgstr "Odustani i povratak natrag"
 
 #: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee:3
 msgid "Cancel & Sign out"
-msgstr "Odustani & odjavi se"
+msgstr "Odustani & odjavi"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:20
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:111
@@ -2735,7 +2733,7 @@ msgstr "Nije moguće izbrisati zapis jer %{zapis} ovisi o njemu"
 #: app/policies/ticket_policy.rb:47
 msgid "Cannot follow-up on a closed ticket. Please create a new ticket."
 msgstr ""
-"Daljnje praćenje zatvorenih ticketa nije moguće. Molim, kreirajte novi "
+"Daljnje praćenje zatvorenih ticketa nije moguće. Molimo, kreirajte novi "
 "ticket."
 
 #: app/models/sla.rb:44
@@ -2932,7 +2930,7 @@ msgstr "%s zatvara chat"
 
 #: app/assets/javascripts/app/controllers/chat.coffee:371
 msgid "Chat not answered, automatically set to offline."
-msgstr "Na chat nije odgovoreno, automatski postavljen na offline."
+msgstr "Na chat nije odgovoreno, automatski postavljen na bezmrežan način rada."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:381
 msgid "Chats"
@@ -3033,7 +3031,7 @@ msgstr "Odaberite grupu gdje će biti dodane objave stranice."
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco:7
 msgid "Choose your language."
-msgstr "Odaberi željeni jezik."
+msgstr "Odaberite željeni jezik."
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:136
 msgid "Choose your new password"
@@ -3045,9 +3043,7 @@ msgstr "Unesite novu lozinku."
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco:7
 msgid "Choose your preferred two-factor authentication method to set it up."
-msgstr ""
-"Odaberite Vašu preferiranu dvofaktorsku metodu autentifikacije, kako biste "
-"je postavili."
+msgstr "Postavite Vašu preferiranu dvofaktorsku metodu autentifikacije."
 
 #: app/assets/javascripts/app/models/user.coffee:323
 msgid "Christmas holiday"
@@ -3095,7 +3091,7 @@ msgstr "Ukloni mobilne trake zadataka."
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue:153
 msgid "Clear"
-msgstr "Poništi"
+msgstr "Obriši"
 
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:117
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue:77
