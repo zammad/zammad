@@ -33,8 +33,7 @@ class Navigation extends App.Controller
 
     # rerender view, e. g. on langauge change
     @controllerBind('ui:rerender', =>
-      @renderMenu()
-      @renderPersonal()
+      @render()
     )
 
     # rerender menu
@@ -199,18 +198,14 @@ class Navigation extends App.Controller
       user: user
     ))
 
+    @taskbar?.releaseController()
     @taskbar = new App.TaskbarWidget(el: navigation.find('.tasks'))
 
-    @el = navigation
-    if !@appEl.find('#navigation').get(0)
-      @appEl.prepend(navigation)
-      @delegateEvents(@events)
-      @refreshElements()
-      @el.on('remove', @releaseController)
-      @el.on('remove', @release)
-    else
+    if @appEl.find('#navigation').length < 1
+      @appEl.prepend('<div id="navigation"></div>')
       @el = @appEl.find('#navigation')
-      @html(navigation)
+
+    @replace(navigation)
 
     # renderMenu
     @renderMenu()

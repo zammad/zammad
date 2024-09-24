@@ -11387,7 +11387,7 @@ msgstr ""
 msgid "Recently Viewed Tickets"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:491
+#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:486
 msgid "Recently viewed"
 msgstr ""
 
