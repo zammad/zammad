@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-23 15:43+0000\n"
+"PO-Revision-Date: 2024-09-24 09:16+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
@@ -3740,8 +3740,8 @@ msgstr "Ansluter …"
 msgid "Connection lost"
 msgstr "Anslutningen försvann"
 
-#: public/assets/chat/chat-no-jquery.coffee:206
-#: public/assets/chat/chat.coffee:204
+#: public/assets/chat/chat-no-jquery.coffee:207
+#: public/assets/chat/chat.coffee:205
 msgid "Connection re-established"
 msgstr "Anslutningen återupprättas"
 
@@ -6092,8 +6092,6 @@ msgid "Draft"
 msgstr "Utkast"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketSharedDraftZoom.vue:24
-#, fuzzy
-#| msgid "Draft available"
 msgid "Draft Available"
 msgstr "Utkast tillgängligt"
 
@@ -6102,16 +6100,12 @@ msgid "Draft available"
 msgstr "Utkast tillgängligt"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:95
-#, fuzzy
-#| msgid "Changes could not be saved."
 msgid "Draft could not be saved."
-msgstr "Ändringar kunde inte sparas."
+msgstr "Utkast kunde inte sparas."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:33
-#, fuzzy
-#| msgid "User could not be updated."
 msgid "Draft could not be updated."
-msgstr "Användaren kunde inte uppdateras."
+msgstr "Utkast kunde inte uppdateras."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:53
 msgid "Drafts"
@@ -11615,7 +11609,7 @@ msgstr "okt"
 msgid "October"
 msgstr "oktober"
 
-#: public/assets/chat/chat.coffee:205
+#: public/assets/chat/chat.coffee:206
 msgid "Offline"
 msgstr "Offline"
 
@@ -11641,7 +11635,7 @@ msgid "One of the required parameters must be provided, but none was found."
 msgstr "En av de obligatoriska parametrarna måste anges, men ingen hittades."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
-#: public/assets/chat/chat.coffee:206
+#: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "Online"
 
@@ -12920,7 +12914,7 @@ msgstr "Senaste loggar"
 msgid "Recently Viewed Tickets"
 msgstr "Senaste visade ärenden"
 
-#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:491
+#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:486
 msgid "Recently viewed"
 msgstr "Senast öppnade"
 

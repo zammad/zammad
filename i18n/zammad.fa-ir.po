@@ -3495,8 +3495,8 @@ msgstr "در حال اتصال…"
 msgid "Connection lost"
 msgstr "ارتباط قطع شد"
 
-#: public/assets/chat/chat-no-jquery.coffee:206
-#: public/assets/chat/chat.coffee:204
+#: public/assets/chat/chat-no-jquery.coffee:207
+#: public/assets/chat/chat.coffee:205
 msgid "Connection re-established"
 msgstr "ارتباط مجددا برقرار شد"
 
@@ -11266,7 +11266,7 @@ msgstr "اکتبر"
 msgid "October"
 msgstr "اکتبر"
 
-#: public/assets/chat/chat.coffee:205
+#: public/assets/chat/chat.coffee:206
 msgid "Offline"
 msgstr "برون خط"
 
@@ -11292,7 +11292,7 @@ msgid "One of the required parameters must be provided, but none was found."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
-#: public/assets/chat/chat.coffee:206
+#: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "آنلاین"
 
@@ -12600,7 +12600,7 @@ msgstr "لاگ‌های اخیر"
 msgid "Recently Viewed Tickets"
 msgstr "تیکت‌های تازه مشاهده شده"
 
-#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:491
+#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:486
 msgid "Recently viewed"
 msgstr "به تازگی مشاهده شده"
 

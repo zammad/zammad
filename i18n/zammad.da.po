@@ -3870,8 +3870,8 @@ msgstr "Forbinder …"
 msgid "Connection lost"
 msgstr "Forbindelse mistet"
 
-#: public/assets/chat/chat-no-jquery.coffee:206
-#: public/assets/chat/chat.coffee:204
+#: public/assets/chat/chat-no-jquery.coffee:207
+#: public/assets/chat/chat.coffee:205
 msgid "Connection re-established"
 msgstr "Forbindelse genoprettet"
 
@@ -11778,7 +11778,7 @@ msgstr "Okt"
 msgid "October"
 msgstr "Oktober"
 
-#: public/assets/chat/chat.coffee:205
+#: public/assets/chat/chat.coffee:206
 msgid "Offline"
 msgstr "Offline"
 
@@ -11806,7 +11806,7 @@ msgid "One of the required parameters must be provided, but none was found."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
-#: public/assets/chat/chat.coffee:206
+#: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "Online"
 
@@ -13163,7 +13163,7 @@ msgstr ""
 msgid "Recently Viewed Tickets"
 msgstr "Senest Sete Sager"
 
-#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:491
+#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:486
 msgid "Recently viewed"
 msgstr "Senest set"
 

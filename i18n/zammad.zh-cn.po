@@ -3701,8 +3701,8 @@ msgstr "正在连接…"
 msgid "Connection lost"
 msgstr "连接丢失"
 
-#: public/assets/chat/chat-no-jquery.coffee:206
-#: public/assets/chat/chat.coffee:204
+#: public/assets/chat/chat-no-jquery.coffee:207
+#: public/assets/chat/chat.coffee:205
 msgid "Connection re-established"
 msgstr "正在重新建立连接"
 
@@ -11613,7 +11613,7 @@ msgstr "十月"
 msgid "October"
 msgstr "十月"
 
-#: public/assets/chat/chat.coffee:205
+#: public/assets/chat/chat.coffee:206
 msgid "Offline"
 msgstr "离线"
 
@@ -11641,7 +11641,7 @@ msgid "One of the required parameters must be provided, but none was found."
 msgstr "必须提供所需参数之一，但未找到任何参数。"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
-#: public/assets/chat/chat.coffee:206
+#: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "在线"
 
@@ -12968,7 +12968,7 @@ msgstr "最近记录"
 msgid "Recently Viewed Tickets"
 msgstr "最近查看过的工单"
 
-#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:491
+#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:486
 msgid "Recently viewed"
 msgstr "最近看过的工单"
 

@@ -3965,8 +3965,8 @@ msgstr "Připojuji …"
 msgid "Connection lost"
 msgstr "Připojení ztraceno"
 
-#: public/assets/chat/chat-no-jquery.coffee:206
-#: public/assets/chat/chat.coffee:204
+#: public/assets/chat/chat-no-jquery.coffee:207
+#: public/assets/chat/chat.coffee:205
 msgid "Connection re-established"
 msgstr "Připojení obnoveno"
 
@@ -12397,7 +12397,7 @@ msgstr "Říj"
 msgid "October"
 msgstr "Říjen"
 
-#: public/assets/chat/chat.coffee:205
+#: public/assets/chat/chat.coffee:206
 msgid "Offline"
 msgstr "Offline"
 
@@ -12426,7 +12426,7 @@ msgstr ""
 "Jeden z požadovaných parametrů musí být vložen, ale žádný nebyl nalezen."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
-#: public/assets/chat/chat.coffee:206
+#: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "Online"
 
@@ -13801,7 +13801,7 @@ msgstr "Nedávné záznamy"
 msgid "Recently Viewed Tickets"
 msgstr "Nedávno prohlédnuté tickety"
 
-#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:491
+#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:486
 msgid "Recently viewed"
 msgstr "Nedávno shlédnuto"
 

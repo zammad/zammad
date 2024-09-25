@@ -3737,8 +3737,8 @@ msgstr "Jungiamasi …"
 msgid "Connection lost"
 msgstr "Dingo ryšys"
 
-#: public/assets/chat/chat-no-jquery.coffee:206
-#: public/assets/chat/chat.coffee:204
+#: public/assets/chat/chat-no-jquery.coffee:207
+#: public/assets/chat/chat.coffee:205
 msgid "Connection re-established"
 msgstr "Ryšys atnaujintas"
 
@@ -11533,7 +11533,7 @@ msgstr "Spa"
 msgid "October"
 msgstr "Spalis"
 
-#: public/assets/chat/chat.coffee:205
+#: public/assets/chat/chat.coffee:206
 msgid "Offline"
 msgstr "Atsijungęs"
 
@@ -11559,7 +11559,7 @@ msgid "One of the required parameters must be provided, but none was found."
 msgstr "Nei vienas iš reikalingų parametrų nebuvo pateiktas."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
-#: public/assets/chat/chat.coffee:206
+#: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "Prisijungęs"
 
@@ -12824,7 +12824,7 @@ msgstr "Naujausi žurnalai"
 msgid "Recently Viewed Tickets"
 msgstr "Neseniai žiūrėtos triktys"
 
-#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:491
+#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:486
 msgid "Recently viewed"
 msgstr "Neseniai žiūrėta"
 

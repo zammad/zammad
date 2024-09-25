@@ -3855,8 +3855,8 @@ msgstr "Łączę …"
 msgid "Connection lost"
 msgstr "Utracono połączenie"
 
-#: public/assets/chat/chat-no-jquery.coffee:206
-#: public/assets/chat/chat.coffee:204
+#: public/assets/chat/chat-no-jquery.coffee:207
+#: public/assets/chat/chat.coffee:205
 msgid "Connection re-established"
 msgstr "Ponowne nawiązanie połączenia"
 
@@ -12144,7 +12144,7 @@ msgstr "Paź"
 msgid "October"
 msgstr "Październik"
 
-#: public/assets/chat/chat.coffee:205
+#: public/assets/chat/chat.coffee:206
 msgid "Offline"
 msgstr "Offline"
 
@@ -12171,7 +12171,7 @@ msgstr ""
 "Należy podać jeden z wymaganych parametrów, ale nie znaleziono żadnego."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
-#: public/assets/chat/chat.coffee:206
+#: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "Online"
 
@@ -13516,7 +13516,7 @@ msgstr "Najnowsze dzienniki"
 msgid "Recently Viewed Tickets"
 msgstr "Ostatnio oglądanie zgłoszenia"
 
-#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:491
+#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:486
 msgid "Recently viewed"
 msgstr "Ostatnio oglądane"
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-20 04:50+0000\n"
+"PO-Revision-Date: 2024-09-25 05:07+0000\n"
 "Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ru/>\n"
@@ -3791,8 +3791,8 @@ msgstr "Подключение…"
 msgid "Connection lost"
 msgstr "Подключение потеряно"
 
-#: public/assets/chat/chat-no-jquery.coffee:206
-#: public/assets/chat/chat.coffee:204
+#: public/assets/chat/chat-no-jquery.coffee:207
+#: public/assets/chat/chat.coffee:205
 msgid "Connection re-established"
 msgstr "Подключение восстановлено"
 
@@ -6177,26 +6177,20 @@ msgid "Draft"
 msgstr "Черновик"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketSharedDraftZoom.vue:24
-#, fuzzy
-#| msgid "Draft available"
 msgid "Draft Available"
-msgstr "Доступен черновик"
+msgstr "Черновик доступен"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:9
 msgid "Draft available"
 msgstr "Доступен черновик"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:95
-#, fuzzy
-#| msgid "Changes could not be saved."
 msgid "Draft could not be saved."
-msgstr "Не удалось сохранить изменения."
+msgstr "Не удалось сохранить черновик."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:33
-#, fuzzy
-#| msgid "User could not be updated."
 msgid "Draft could not be updated."
-msgstr "Не удалось обновить пользователя."
+msgstr "Не удалось обновить черновик."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:53
 msgid "Drafts"
@@ -11759,7 +11753,7 @@ msgstr "Окт"
 msgid "October"
 msgstr "Октябрь"
 
-#: public/assets/chat/chat.coffee:205
+#: public/assets/chat/chat.coffee:206
 msgid "Offline"
 msgstr "Оффлайн"
 
@@ -11787,7 +11781,7 @@ msgstr ""
 "найден."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
-#: public/assets/chat/chat.coffee:206
+#: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "В сети"
 
@@ -13076,7 +13070,7 @@ msgstr "Последние журналы"
 msgid "Recently Viewed Tickets"
 msgstr "Недавно просмотренные заявки"
 
-#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:491
+#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:486
 msgid "Recently viewed"
 msgstr "Недавно Вы просматривали"
 

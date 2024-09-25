@@ -3811,8 +3811,8 @@ msgstr "Yhdistetään…"
 msgid "Connection lost"
 msgstr ""
 
-#: public/assets/chat/chat-no-jquery.coffee:206
-#: public/assets/chat/chat.coffee:204
+#: public/assets/chat/chat-no-jquery.coffee:207
+#: public/assets/chat/chat.coffee:205
 msgid "Connection re-established"
 msgstr "Yhteys muodostettu uudelleen"
 
@@ -11856,7 +11856,7 @@ msgstr "Loka"
 msgid "October"
 msgstr "Lokakuu"
 
-#: public/assets/chat/chat.coffee:205
+#: public/assets/chat/chat.coffee:206
 msgid "Offline"
 msgstr "Poissa"
 
@@ -11884,7 +11884,7 @@ msgid "One of the required parameters must be provided, but none was found."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
-#: public/assets/chat/chat.coffee:206
+#: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "Online"
 
@@ -13261,7 +13261,7 @@ msgstr "Uusimmat lokit"
 msgid "Recently Viewed Tickets"
 msgstr "Äskettäin katsellut tiketit"
 
-#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:491
+#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:486
 msgid "Recently viewed"
 msgstr "Äskettäin katseltu"
 

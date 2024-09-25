@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-23 15:43+0000\n"
+"PO-Revision-Date: 2024-09-24 09:16+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -3739,8 +3739,8 @@ msgstr "Повезивање …"
 msgid "Connection lost"
 msgstr "Веза је изгубљена"
 
-#: public/assets/chat/chat-no-jquery.coffee:206
-#: public/assets/chat/chat.coffee:204
+#: public/assets/chat/chat-no-jquery.coffee:207
+#: public/assets/chat/chat.coffee:205
 msgid "Connection re-established"
 msgstr "Веза је поново успостављена"
 
@@ -6074,8 +6074,6 @@ msgid "Draft"
 msgstr "Нацрт"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketSharedDraftZoom.vue:24
-#, fuzzy
-#| msgid "Draft available"
 msgid "Draft Available"
 msgstr "Доступан нацрт"
 
@@ -6084,16 +6082,12 @@ msgid "Draft available"
 msgstr "Доступан нацрт"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:95
-#, fuzzy
-#| msgid "Changes could not be saved."
 msgid "Draft could not be saved."
-msgstr "Није било могуће сачувати измене."
+msgstr "Није било могуће сачувати нацрт."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:33
-#, fuzzy
-#| msgid "User could not be updated."
 msgid "Draft could not be updated."
-msgstr "Није било могуће освежити корисника."
+msgstr "Није било могуће освежити нацрт."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:53
 msgid "Drafts"
@@ -11584,7 +11578,7 @@ msgstr "окт"
 msgid "October"
 msgstr "октобар"
 
-#: public/assets/chat/chat.coffee:205
+#: public/assets/chat/chat.coffee:206
 msgid "Offline"
 msgstr "Одсутан(а)"
 
@@ -11610,7 +11604,7 @@ msgid "One of the required parameters must be provided, but none was found."
 msgstr "Неопходан је бар један обавезни параметар, али ниједан није пронађен."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
-#: public/assets/chat/chat.coffee:206
+#: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "Доступан(а)"
 
@@ -12884,7 +12878,7 @@ msgstr "Недавни уноси евиденције"
 msgid "Recently Viewed Tickets"
 msgstr "Недавно виђени тикети"
 
-#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:491
+#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:486
 msgid "Recently viewed"
 msgstr "Недавно виђени"
 

@@ -3803,8 +3803,8 @@ msgstr "Se conectează …"
 msgid "Connection lost"
 msgstr "Conexiune pierdută"
 
-#: public/assets/chat/chat-no-jquery.coffee:206
-#: public/assets/chat/chat.coffee:204
+#: public/assets/chat/chat-no-jquery.coffee:207
+#: public/assets/chat/chat.coffee:205
 msgid "Connection re-established"
 msgstr "Conexiune restabilită"
 
@@ -12012,7 +12012,7 @@ msgstr "Oct"
 msgid "October"
 msgstr "Octombrie"
 
-#: public/assets/chat/chat.coffee:205
+#: public/assets/chat/chat.coffee:206
 msgid "Offline"
 msgstr "Offline"
 
@@ -12040,7 +12040,7 @@ msgstr ""
 "fost găsit."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
-#: public/assets/chat/chat.coffee:206
+#: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "Online"
 
@@ -13380,7 +13380,7 @@ msgstr "Jurnale recente"
 msgid "Recently Viewed Tickets"
 msgstr "Tichete vizualizate recent"
 
-#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:491
+#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:486
 msgid "Recently viewed"
 msgstr "Vizualizate recent"
 

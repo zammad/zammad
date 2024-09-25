@@ -3767,8 +3767,8 @@ msgstr "Bezig met verbinden…"
 msgid "Connection lost"
 msgstr "Verbinding verbroken"
 
-#: public/assets/chat/chat-no-jquery.coffee:206
-#: public/assets/chat/chat.coffee:204
+#: public/assets/chat/chat-no-jquery.coffee:207
+#: public/assets/chat/chat.coffee:205
 msgid "Connection re-established"
 msgstr "Verbinding hersteld"
 
@@ -11691,7 +11691,7 @@ msgstr "okt"
 msgid "October"
 msgstr "oktober"
 
-#: public/assets/chat/chat.coffee:205
+#: public/assets/chat/chat.coffee:206
 msgid "Offline"
 msgstr "Offline"
 
@@ -11719,7 +11719,7 @@ msgstr ""
 "gevonden."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
-#: public/assets/chat/chat.coffee:206
+#: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "Online"
 
@@ -13002,7 +13002,7 @@ msgstr "Recente Logs"
 msgid "Recently Viewed Tickets"
 msgstr "Recent Bekeken Tickets"
 
-#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:491
+#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:486
 msgid "Recently viewed"
 msgstr "Onlangs bekeken"
 

@@ -3786,8 +3786,8 @@ msgstr "परीक्षण कनेक्शन"
 msgid "Connection lost"
 msgstr ""
 
-#: public/assets/chat/chat-no-jquery.coffee:206
-#: public/assets/chat/chat.coffee:204
+#: public/assets/chat/chat-no-jquery.coffee:207
+#: public/assets/chat/chat.coffee:205
 msgid "Connection re-established"
 msgstr ""
 
@@ -11824,7 +11824,7 @@ msgstr "अक्टूबर"
 msgid "October"
 msgstr "अक्टूबर"
 
-#: public/assets/chat/chat.coffee:205
+#: public/assets/chat/chat.coffee:206
 #, fuzzy
 #| msgid "Online"
 msgid "Offline"
@@ -11856,7 +11856,7 @@ msgid "One of the required parameters must be provided, but none was found."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
-#: public/assets/chat/chat.coffee:206
+#: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr " ऑनलाइन"
 
@@ -13243,7 +13243,7 @@ msgstr " हाल ही में लॉग"
 msgid "Recently Viewed Tickets"
 msgstr " हाल ही में देखे गए टिकट"
 
-#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:491
+#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:486
 msgid "Recently viewed"
 msgstr " हाल में ही देखा गया"
 

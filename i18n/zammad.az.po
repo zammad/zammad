@@ -3762,8 +3762,8 @@ msgstr "Qoşulma prosesi…"
 msgid "Connection lost"
 msgstr "Bağlantı itirildi"
 
-#: public/assets/chat/chat-no-jquery.coffee:206
-#: public/assets/chat/chat.coffee:204
+#: public/assets/chat/chat-no-jquery.coffee:207
+#: public/assets/chat/chat.coffee:205
 msgid "Connection re-established"
 msgstr "Bağlantı bərpa edildi"
 
@@ -12159,7 +12159,7 @@ msgstr "Oktyabr"
 msgid "October"
 msgstr "Oktyabr"
 
-#: public/assets/chat/chat.coffee:205
+#: public/assets/chat/chat.coffee:206
 msgid "Offline"
 msgstr "Oflayn"
 
@@ -12190,7 +12190,7 @@ msgstr ""
 "Tələb olunan parametrlərdən biri göstərilməlidir, lakin heç biri tapılmadı."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
-#: public/assets/chat/chat.coffee:206
+#: public/assets/chat/chat.coffee:207
 msgid "Online"
 msgstr "Onlayn"
 
@@ -13576,7 +13576,7 @@ msgstr ""
 msgid "Recently Viewed Tickets"
 msgstr "Son baxılan biletlər"
 
-#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:491
+#: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:486
 #, fuzzy
 msgid "Recently viewed"
 msgstr "Bu yaxınlarda baxılıb"
