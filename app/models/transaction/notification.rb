@@ -62,6 +62,10 @@ class Transaction::Notification
     @article ||= article_by_item
   end
 
+  def current_user
+    @current_user ||= User.lookup(id: @item[:user_id]) || User.lookup(id: 1)
+  end
+
   def perform
 
     # return if we run import mode
@@ -237,11 +241,6 @@ class Transaction::Notification
                else
                  raise "unknown type for notification #{@item[:type]}"
                end
-
-    current_user = User.lookup(id: @item[:user_id])
-    if !current_user
-      current_user = User.lookup(id: 1)
-    end
 
     attachments = []
     if article
