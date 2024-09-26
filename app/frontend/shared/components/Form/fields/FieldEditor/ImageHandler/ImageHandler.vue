@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { NodeViewWrapper, nodeViewProps } from '@tiptap/vue-3'
+import { NodeViewWrapper, type NodeViewProps } from '@tiptap/vue-3'
 import { computed, nextTick, reactive, ref, type ComputedRef } from 'vue'
 import DraggableResizable from 'vue3-draggable-resizable'
 import 'vue3-draggable-resizable/dist/Vue3DraggableResizable.css'
@@ -12,7 +12,8 @@ import { useImageUpload } from '../useImageUpload.ts'
 
 import ImageFailedUploadOverlay from './ImageFailedUploadOverlay.vue'
 
-const props = defineProps(nodeViewProps)
+// eslint-disable-next-line vue/prop-name-casing
+const props = defineProps<NodeViewProps>()
 const initialHeight = props.node.attrs.height
 const initialWidth = props.node.attrs.width
 
