@@ -20306,14 +20306,14 @@ msgstr "Da, porniți importul real."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Aveți poziția <strong>%s</strong> în lista de așteptare."
 
-#: app/models/transaction/notification.rb:113
+#: app/models/transaction/notification.rb:117
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr ""
 "Primești acest mesaj deoarece ești membru al grupului asociat cu acest "
 "tichet."
 
-#: app/models/transaction/notification.rb:280
+#: app/models/transaction/notification.rb:279
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -20321,11 +20321,11 @@ msgstr ""
 "Primești acest mesaj deoarece ești înlocuitorul pentru perioada de absență "
 "al unui participant la acest tichet."
 
-#: app/models/transaction/notification.rb:81
+#: app/models/transaction/notification.rb:85
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "Primești acest mesaj deoarece ești proprietarul acestui tichet."
 
-#: app/models/transaction/notification.rb:75
+#: app/models/transaction/notification.rb:79
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Primești acest mesaj deoarece ești menționat în acest tichet."
 

@@ -19123,12 +19123,12 @@ msgstr ""
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr ""
 
-#: app/models/transaction/notification.rb:113
+#: app/models/transaction/notification.rb:117
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "شما به دلیل اینکه عضوی از گروه این تیکت هستید، پیام را دریافت کرده‌اید."
 
-#: app/models/transaction/notification.rb:280
+#: app/models/transaction/notification.rb:279
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -19136,11 +19136,11 @@ msgstr ""
 "شما به دلیل اینکه جایگزین غیبت یکی از اعضای این تیکت هستید، پیام را دریافت "
 "کرده‌اید."
 
-#: app/models/transaction/notification.rb:81
+#: app/models/transaction/notification.rb:85
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "شما به دلیل اینکه مسئول این تیکت هستید، پیام را دریافت کرده‌اید."
 
-#: app/models/transaction/notification.rb:75
+#: app/models/transaction/notification.rb:79
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr ""
 "شما به دلیل اینکه در این تیکت مورد اشاره قرار گرفته‌اید، پیام را دریافت "

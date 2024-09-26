@@ -21818,25 +21818,25 @@ msgstr "Yes, start real import."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "True"
 
-#: app/models/transaction/notification.rb:113
+#: app/models/transaction/notification.rb:117
 #, fuzzy
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "True"
 
-#: app/models/transaction/notification.rb:280
+#: app/models/transaction/notification.rb:279
 #, fuzzy
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
 msgstr "True"
 
-#: app/models/transaction/notification.rb:81
+#: app/models/transaction/notification.rb:85
 #, fuzzy
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "True"
 
-#: app/models/transaction/notification.rb:75
+#: app/models/transaction/notification.rb:79
 #, fuzzy
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "True"

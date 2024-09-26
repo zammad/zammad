@@ -20459,23 +20459,23 @@ msgstr "Tak, rozpocznij prawdziwy import."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Jesteś na pozycji listy oczekujących <strong>%s</strong>."
 
-#: app/models/transaction/notification.rb:113
+#: app/models/transaction/notification.rb:117
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Otrzymujesz to, ponieważ jesteś członkiem grupy tego zgłoszenia."
 
-#: app/models/transaction/notification.rb:280
+#: app/models/transaction/notification.rb:279
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
 msgstr ""
 "Otrzymujesz to, ponieważ jesteś zastępcą dla uczestnika tego zgłoszenia."
 
-#: app/models/transaction/notification.rb:81
+#: app/models/transaction/notification.rb:85
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "Otrzymujesz to, ponieważ jesteś właścicielem tego zgłoszenia."
 
-#: app/models/transaction/notification.rb:75
+#: app/models/transaction/notification.rb:79
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Otrzymujesz to, ponieważ zostałeś wymieniony w tym zgłoszeniu."
 

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-24 04:16+0000\n"
+"PO-Revision-Date: 2024-09-25 09:16+0000\n"
 "Last-Translator: Martin Gruner <mg@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -19924,12 +19924,12 @@ msgstr "Ja, den echten Import starten."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Sie sind in der Warteliste auf Position <strong>%s</strong>."
 
-#: app/models/transaction/notification.rb:113
+#: app/models/transaction/notification.rb:117
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Sie erhalten dies, weil Sie Mitglied der Gruppe dieses Tickets sind."
 
-#: app/models/transaction/notification.rb:280
+#: app/models/transaction/notification.rb:279
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -19937,11 +19937,11 @@ msgstr ""
 "Sie erhalten dies, weil Sie Abwesenheits-Vertretung für einen Teilnehmer "
 "dieses Tickets sind."
 
-#: app/models/transaction/notification.rb:81
+#: app/models/transaction/notification.rb:85
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "Sie erhalten dies, weil Sie der Besitzer dieses Tickets sind."
 
-#: app/models/transaction/notification.rb:75
+#: app/models/transaction/notification.rb:79
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Sie erhalten dies, weil Sie in diesem Ticket erwähnt wurden."
 
@@ -20088,8 +20088,8 @@ msgid ""
 "improved layout, or revert to the old one if you prefer it."
 msgstr ""
 "Sie können das Dialogfeld \"Tastaturkürzel\" hier öffnen und das neue und "
-"verbesserte Layout ansehen oder zum alten Layout zurückkehren, wenn Sie es "
-"bevorzugen."
+"verbesserte Layout ansehen oder zum alten Layout zurückkehren, wenn Sie "
+"dieses bevorzugen."
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:282
 msgid ""
@@ -20621,7 +20621,7 @@ msgstr "mindestens ein Buchstabe ist erforderlich"
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
 msgid "attachment,attached,enclosed,enclosure"
-msgstr "Anhang,angehängt,beigefügt,anbei"
+msgstr "Anhang,Anhänge,angehängt,anhängend,beigefügt,anbei"
 
 #: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"

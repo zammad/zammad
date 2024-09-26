@@ -19544,12 +19544,12 @@ msgstr "Да, започни прави увоз."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Ви сте тренутно <strong>%s.</strong> у реду за чекање."
 
-#: app/models/transaction/notification.rb:113
+#: app/models/transaction/notification.rb:117
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Добијате ово зато што сте члан групе овог тикета."
 
-#: app/models/transaction/notification.rb:280
+#: app/models/transaction/notification.rb:279
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -19557,11 +19557,11 @@ msgstr ""
 "Добијате ово зато што сте замена за ван канцеларија једног од учесника овог "
 "тикета."
 
-#: app/models/transaction/notification.rb:81
+#: app/models/transaction/notification.rb:85
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "Добијате ово зато што сте власник овог тикета."
 
-#: app/models/transaction/notification.rb:75
+#: app/models/transaction/notification.rb:79
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Добијате ово зато што сте поменути у овом тикету."
 

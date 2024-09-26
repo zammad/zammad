@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-08-20 09:16+0000\n"
-"Last-Translator: \"Decio E. Silva\" <decio@verinatec.com.br>\n"
+"PO-Revision-Date: 2024-09-26 05:07+0000\n"
+"Last-Translator: \"Odilon A. S. Junir\" <odilonjunir@gmail.com>\n"
 "Language-Team: Portuguese (Brazil) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/pt_BR/>\n"
 "Language: pt-br\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.6.2\n"
+"X-Generator: Weblate 5.7\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -5781,6 +5781,9 @@ msgid ""
 "Deleting your knowledge base requires an additional verification step. To "
 "proceed, enter its name below (\"%s\"). THIS ACTION CANNOT BE UNDONE."
 msgstr ""
+"Excluir sua base de conhecimento requer uma etapa de verificação adicional. "
+"Para prosseguir, insira o nome abaixo (\"%s\"). ESTA AÇÃO NÃO PODE SER "
+"DESFEITA."
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:94
 msgid "Deletion Task"
@@ -19836,12 +19839,12 @@ msgstr "Sim, comece a importa de verdade."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Você está na posição <strong>%s</strong> da lista de espera."
 
-#: app/models/transaction/notification.rb:113
+#: app/models/transaction/notification.rb:117
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Você está recebendo isso porque é membro do grupo deste ticket."
 
-#: app/models/transaction/notification.rb:280
+#: app/models/transaction/notification.rb:279
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -19849,11 +19852,11 @@ msgstr ""
 "Você está recebendo isso porque é um substituto de alguém que está fora do "
 "escritório deste ticket."
 
-#: app/models/transaction/notification.rb:81
+#: app/models/transaction/notification.rb:85
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "Você está recebendo isso porque é o proprietário deste ticket."
 
-#: app/models/transaction/notification.rb:75
+#: app/models/transaction/notification.rb:79
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Você está recebendo isso porque foi mencionado neste ticket."
 

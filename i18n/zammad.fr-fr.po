@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-21 09:16+0000\n"
+"PO-Revision-Date: 2024-09-26 05:07+0000\n"
 "Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fr/>\n"
@@ -6207,8 +6207,6 @@ msgid "Draft"
 msgstr "Brouillon"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketSharedDraftZoom.vue:24
-#, fuzzy
-#| msgid "Draft available"
 msgid "Draft Available"
 msgstr "Brouillon disponible"
 
@@ -6217,16 +6215,12 @@ msgid "Draft available"
 msgstr "Brouillon disponible"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:95
-#, fuzzy
-#| msgid "Changes could not be saved."
 msgid "Draft could not be saved."
-msgstr "Les modifications n'ont pas pu être sauvegardées."
+msgstr "Le brouillon n'a pas pu être enregistré."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:33
-#, fuzzy
-#| msgid "User could not be updated."
 msgid "Draft could not be updated."
-msgstr "L'utilisateur n'a pas pu être modifié."
+msgstr "Le brouillon n'a pas pu être mis à jour."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:53
 msgid "Drafts"
@@ -19924,12 +19918,12 @@ msgstr ""
 "Vous êtes actuellement en position <strong>%s</strong> dans la file "
 "d'attente."
 
-#: app/models/transaction/notification.rb:113
+#: app/models/transaction/notification.rb:117
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Vous recevez ceci parce que vous êtes membre du groupe de ce ticket."
 
-#: app/models/transaction/notification.rb:280
+#: app/models/transaction/notification.rb:279
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -19937,11 +19931,11 @@ msgstr ""
 "Vous recevez ceci parce que vous êtes le remplaçant d'un participant de ce "
 "ticket."
 
-#: app/models/transaction/notification.rb:81
+#: app/models/transaction/notification.rb:85
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "Vous recevez ceci parce que vous êtes le propriétaire de ce ticket."
 
-#: app/models/transaction/notification.rb:75
+#: app/models/transaction/notification.rb:79
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Vous recevez ceci parce que vous avez été mentionné dans ce ticket."
 

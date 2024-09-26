@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-25 05:07+0000\n"
+"PO-Revision-Date: 2024-09-25 09:16+0000\n"
 "Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ru/>\n"
@@ -19852,23 +19852,23 @@ msgstr "Да, начать настоящий импорт."
 msgid "You are on waiting list position <strong>%s</strong>."
 msgstr "Вы находитесь в списке ожидания <strong>%s</strong>."
 
-#: app/models/transaction/notification.rb:113
+#: app/models/transaction/notification.rb:117
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Вы получаете это, потому что являетесь членом группы этой заявки."
 
-#: app/models/transaction/notification.rb:280
+#: app/models/transaction/notification.rb:279
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
 msgstr ""
 "Вы получаете это, потому что Вы вне офиса заменяете участника этой заявки."
 
-#: app/models/transaction/notification.rb:81
+#: app/models/transaction/notification.rb:85
 msgid "You are receiving this because you are the owner of this ticket."
 msgstr "Вы получаете это, потому что являетесь владельцем этой заявки."
 
-#: app/models/transaction/notification.rb:75
+#: app/models/transaction/notification.rb:79
 msgid "You are receiving this because you were mentioned in this ticket."
 msgstr "Вы получаете это, потому что были упомянуты в этой заявке."
 
@@ -20545,7 +20545,7 @@ msgstr "необходим хотя бы один символ"
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
 msgid "attachment,attached,enclosed,enclosure"
-msgstr ""
+msgstr "вложение, вложенный, прикреплённый"
 
 #: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"
