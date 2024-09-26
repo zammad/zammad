@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-06-26 08:21+0000\n"
-"Last-Translator: Darkey Zhanbolat <darzhankz@gmail.com>\n"
+"PO-Revision-Date: 2024-09-26 05:07+0000\n"
+"Last-Translator: Amir Marlen <amirmarlen7@gmail.com>\n"
 "Language-Team: Kazakh <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/kk/>\n"
 "Language: kk\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.6\n"
+"X-Generator: Weblate 5.7\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -234,6 +234,13 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"<div>Сәлеметсіз бе, #{user.firstname},</div> <br> <div>Сіздің <b>үшінші "
+"тарап қолданбасымен</b> \"#{t(provider)}\" есептік жазбаңызды "
+"байланыстырғаныңыз көрініп тұр.</div> <br> <div>Егер бұл сіздің қатысыңыз "
+"болмаса, байланыстырылған аккаунтты профильден жойып, үшінші тарап "
+"қолданбасы үшін құпиясөзді өзгертіңіз. Біреу сіздің есептік жазбаңызға "
+"үшінші тарап қолданбасында рұқсатсыз кіріп кетуі мүмкін.</div> <br> "
+"<div>Сіздің командаңыз #{config.product_name}</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -294,6 +301,18 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"<div>Сәлеметсіз бе, #{user.firstname},</div> <br> <div>Сіз <b>жаңа құрылғыны "
+"пайдаланып</b> есептік жазбаңызға \"#{user_device.created_at}\" күні кірген "
+"сияқтысыз:</div> <br> <div> Сіздің құрылғыңыз: #{user_device.name}<br> "
+"Сіздің орналасуыңыз (қатысты): #{user_device.location}<br> Сіздің IP: "
+"#{user_device.ip}<br> </div> <br> <div>Бұл құрылғы сіздің белгілі құрылғылар "
+"тізіміңізге қосылды, оны мына жерден көре аласыз:</div> <br> <div><a href=\""
+"#{config.http_type}://#{config.fqdn}/#profile/devices\">#{config."
+"http_type}://#{config.fqdn}/#profile/devices</a></div> <br> <div>Егер бұл "
+"сіз емес болса, құрылғыны жойып, есептік жазбаңыздың құпиясөзін өзгертіңіз "
+"және әкімшіңізбен хабарласыңыз. Біреу сіздің есептік жазбаңызға рұқсатсыз "
+"кіріп кетуі мүмкін.</div> <br> <div>Сіздің #{config.product_name} "
+"командыңыз</div>\n"
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:148
 msgid "%s (confirm)"
@@ -377,11 +396,13 @@ msgstr "%s үшін артикль жасады |%s|"
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:26
 msgid "%s created data privacy task to delete user ID |%s|"
 msgstr ""
+"%s деректерді қорғау тапсырмасын жасау үшін пайдаланушы идентификаторын жою "
+"|%s|"
 
 #: app/assets/javascripts/app/models/group.coffee:30
 #: app/frontend/shared/components/ActivityMessage/builders/group.ts:25
 msgid "%s created group |%s|"
-msgstr ""
+msgstr "%s |%s| тобын құрды"
 
 #: app/assets/javascripts/app/models/organization.coffee:87
 #: app/frontend/shared/components/ActivityMessage/builders/organization.ts:24
