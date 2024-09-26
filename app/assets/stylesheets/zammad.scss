@@ -7066,6 +7066,30 @@ a.list-group-item.active > .badge,
   }
 }
 
+.article-reaction {
+  position: absolute;
+  bottom: -12px;
+  width: 24px;
+  height: 24px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background-article-customer-meta);
+  border: 1px solid var(--border-alt);
+  border-radius: 5px;
+  cursor: default;
+
+  @include ltr(right, 7px);
+  @include rtl(left, 7px);
+
+  span {
+    width: 14px;
+    height: 14px;
+    font-size: 14px;
+    line-height: 14px;
+  }
+}
+
 .article-content-meta {
   position: absolute;
   width: 100%;

@@ -38,8 +38,17 @@
     </div>
     <p class="help-text">
       <%- @T('Send out automatic reminders to customers asking them for reply if the 24-hour window is about to expire.') %>
-      <%- @T('To find out more about the 24-hour customer service window see %l.', 'https://admin-docs.zammad.org/en/latest/channels/whatsapp/index.html#limitations') %>
+      <%- @T('To find out more about the 24-hour customer service window see %l.', 'https://admin-docs.zammad.org/en/latest/channels/whatsapp/limitations.html') %>
     </p>
+  </div>
+
+  <div class="input form-group js-reminderMessage" <% if not @reminder_active: %>style="display: none;"<% end %>>
+    <div class="formGroup-label">
+      <label for="reminder_message"><%- @T('Reminder message') %></label>
+    </div>
+    <div class="controls">
+      <textarea id="reminder_message" name="reminder_message" rows="3" maxlength="4096" placeholder="<%- @Ti('Hello, the customer service window for this conversation is about to expire, please reply to keep it open.') %>" class="form-control" autocomplete="off"><%= @params?.reminder_message || @channel?.options?.reminder_message %></textarea>
+    </div>
   </div>
 
   <div class="input form-group">

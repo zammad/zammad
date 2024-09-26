@@ -34,6 +34,20 @@ export const OnlineNotificationsDocument = gql`
             internalId
             title
           }
+          ... on TicketArticle {
+            id
+            internalId
+            ticket {
+              id
+              internalId
+              title
+            }
+            to {
+              raw
+            }
+            bodyWithUrls
+            preferences
+          }
         }
       }
       cursor

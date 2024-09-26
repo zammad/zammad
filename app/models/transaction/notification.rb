@@ -70,7 +70,7 @@ class Transaction::Notification
 
     # return if we run import mode
     return if Setting.get('import_mode')
-    return if @item[:object] != 'Ticket'
+    return if %w[Ticket Ticket::Article].exclude?(@item[:object])
     return if @params[:disable_notification]
     return if !ticket
 
@@ -203,8 +203,8 @@ class Transaction::Notification
 
       OnlineNotification.add(
         type:          @item[:type],
-        object:        'Ticket',
-        o_id:          ticket.id,
+        object:        @item[:object],
+        o_id:          @item[:object].eql?('Ticket') ? ticket.id : article.id,
         seen:          seen,
         created_by_id: created_by_id,
         user_id:       user.id,
@@ -238,6 +238,8 @@ class Transaction::Notification
                  'ticket_update_merged_into'
                when 'update.received_merge'
                  'ticket_update_received_merge'
+               when 'update.reaction'
+                 'ticket_article_update_reaction'
                else
                  raise "unknown type for notification #{@item[:type]}"
                end

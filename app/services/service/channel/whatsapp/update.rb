@@ -14,7 +14,7 @@ module Service::Channel::Whatsapp
     def options
       channel.options.merge(
         params.slice(
-          :business_id, :access_token, :app_secret, :phone_number_id, :welcome, :reminder_active
+          :business_id, :access_token, :app_secret, :phone_number_id, :welcome, :reminder_active, :reminder_message
         )
       )
     end

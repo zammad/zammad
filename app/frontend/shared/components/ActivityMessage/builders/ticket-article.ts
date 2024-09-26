@@ -2,11 +2,12 @@
 
 import type { TicketArticle } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
+import { textCleanup, textTruncate } from '#shared/utils/helpers.ts'
 
 import type { ActivityMessageBuilder } from '../types.ts'
 
 const path = (metaObject: TicketArticle) => {
-  return `tickets/${metaObject.ticket.internalId}`
+  return `tickets/${metaObject.ticket.internalId}#article-${metaObject.internalId}`
 }
 
 const messageText = (
@@ -18,13 +19,21 @@ const messageText = (
     return i18n.t('You can no longer see the ticket.')
   }
 
-  const objectTitle = metaObject.ticket.title || '-'
+  const ticketTitle = metaObject.ticket?.title || '-'
 
   switch (type) {
     case 'create':
-      return i18n.t('%s created article for |%s|', authorName, objectTitle)
+      return i18n.t('%s created article for |%s|', authorName, ticketTitle)
     case 'update':
-      return i18n.t('%s updated article for |%s|', authorName, objectTitle)
+      return i18n.t('%s updated article for |%s|', authorName, ticketTitle)
+    case 'update.reaction':
+      return i18n.t(
+        '%s reacted with a %s to %s message |%s|',
+        metaObject.preferences?.whatsapp?.reaction?.author || '-',
+        metaObject.preferences?.whatsapp?.reaction?.emoji || '-',
+        authorName,
+        textTruncate(textCleanup(metaObject.bodyWithUrls)) || '-',
+      )
     default:
       return null
   }

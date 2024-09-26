@@ -19,7 +19,7 @@ const { hasChannelAlert, channelAlert } = useTicketChannel(ticket)
 </script>
 
 <template>
-  <div v-if="isTicketAgent && isTicketEditable && hasChannelAlert">
+  <div v-if="isTicketAgent && isTicketEditable && hasChannelAlert" class="z-10">
     <TopBarHeader :hide-details="hideDetails" />
 
     <CommonAlert

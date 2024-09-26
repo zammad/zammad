@@ -10,7 +10,7 @@
       <label for="business_id"><%- @T('WhatsApp Business Account ID') %><% if !@channel: %> <span>*</span><% end %></label>
     </div>
     <div class="controls">
-      <input id="business_id" type="text" name="business_id" value="<%= @params?.business_id || @channel?.options?.business_id %>" class="form-control">
+      <input id="business_id" type="text" name="business_id" value="<%= @params?.business_id || @channel?.options?.business_id %>" class="form-control" autocomplete="off">
     </div>
   </div>
 

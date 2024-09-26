@@ -57,6 +57,16 @@ export const textToHtml = (text: string) => {
   return text.replace(/<div><\/div>/g, '<div><br></div>')
 }
 
+export const textTruncate = (text: string, length = 100) => {
+  if (!text) return text
+
+  text = text.replace(/<([^>]+)>/g, '')
+
+  if (text.length < length) return text
+
+  return `${text.substring(0, length)}…`
+}
+
 export const debouncedQuery = <A extends unknown[], R>(
   fn: (...args: A) => Promise<R>,
   defaultValue: R,

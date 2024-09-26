@@ -99,6 +99,7 @@ const markSeen = (id: string) => {
         :article-id="row.article.id"
         :attachments="filterAttachments(row.article)"
         :remote-content-warning="remoteContentWarning(row.article)"
+        :reaction="row.article.preferences?.whatsapp?.reaction?.emoji"
         @seen="markSeen(row.key)"
         @show-context="showArticleContext(row.article, ticket)"
       />
@@ -112,6 +113,7 @@ const markSeen = (id: string) => {
         v-if="row.type === 'system'"
         :to="row.to"
         :subject="row.subject"
+        :reaction="row.reaction"
         @seen="markSeen(row.key)"
       />
       <ArticleSeparatorDate v-if="row.type === 'date'" :date="row.date" />

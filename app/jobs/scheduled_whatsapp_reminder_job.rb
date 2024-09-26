@@ -3,11 +3,10 @@
 class ScheduledWhatsappReminderJob < ApplicationJob
   include HasActiveJobLock
 
-  REMINDER_TEMPLATE = __('Hello, the customer service window for this conversation is about to expire, please reply to keep it open.').freeze
+  DEFAULT_REMINDER_MESSAGE = __('Hello, the customer service window for this conversation is about to expire, please reply to keep it open.').freeze
 
   def lock_key
-    # "ScheduledWhatsappReminderJob/1"
-    "#{self.class.name}/#{arguments[0].id}"
+    "#{self.class.name}/#{SecureRandom.uuid}"
   end
 
   def self.perform_at(scheduled_time, ticket, locale)
@@ -24,7 +23,8 @@ class ScheduledWhatsappReminderJob < ApplicationJob
     profile_name = ticket.preferences.dig(:whatsapp, :from, :display_name)
     phone_number = ticket.preferences.dig(:whatsapp, :from, :phone_number)
 
-    translated_reminder_message = Translation.translate(locale, REMINDER_TEMPLATE)
+    reminder_message = channel.options[:reminder_message].presence || DEFAULT_REMINDER_MESSAGE
+    translated_reminder_message = Translation.translate(locale, reminder_message)
 
     UserInfo.with_user_id(1) do
       Ticket::Article.create!(

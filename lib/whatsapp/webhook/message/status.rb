@@ -15,6 +15,7 @@ class Whatsapp::Webhook::Message::Status
     raise Whatsapp::Webhook::Payload::ProcessableError, __('No related article found to process the status message on.') if @related_article.nil?
 
     @ticket = @related_article.ticket
+    return if ticket_done?
 
     create_article
     update_related_article
@@ -22,6 +23,11 @@ class Whatsapp::Webhook::Message::Status
   end
 
   private
+
+  def ticket_done?
+    state_ids = Ticket::State.where(name: %w[closed merged removed]).pluck(:id)
+    state_ids.include?(@ticket.state_id)
+  end
 
   def body
     raise NotImplementedError
@@ -56,7 +62,9 @@ class Whatsapp::Webhook::Message::Status
   def update_related_article
     return if !update_related_article? || update_related_article_attributes.blank?
 
-    @related_article.update!(update_related_article_attributes)
+    UserInfo.with_user_id(@related_article.updated_by_id) do
+      @related_article.update!(update_related_article_attributes)
+    end
   end
 
   def create_article?
@@ -94,6 +102,8 @@ class Whatsapp::Webhook::Message::Status
   def update_ticket
     return if !update_ticket? || update_ticket_attributes.blank?
 
-    @ticket.update!(update_ticket_attributes)
+    UserInfo.with_user_id(@ticket.updated_by_id) do
+      @ticket.update!(update_ticket_attributes)
+    end
   end
 end

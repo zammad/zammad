@@ -27,6 +27,7 @@ import { textToHtml } from '#shared/utils/helpers.ts'
 
 import { useArticleSeen } from '../../composable/useArticleSeen.ts'
 
+import ArticleReactionBadge from './ArticleReactionBadge.vue'
 import ArticleRemoteContentBadge from './ArticleRemoteContentBadge.vue'
 import ArticleSecurityBadge from './ArticleSecurityBadge.vue'
 import ArticleWhatsappMediaBadge from './ArticleWhatsappMediaBadge.vue'
@@ -43,6 +44,7 @@ interface Props {
   attachments: Attachment[]
   remoteContentWarning?: string
   mediaError?: boolean | null
+  reaction?: string
 }
 
 const props = defineProps<Props>()
@@ -244,6 +246,11 @@ const onContextClick = () => {
               : 'ltr:right-10 rtl:left-10',
           ]"
         >
+          <ArticleReactionBadge
+            v-if="reaction"
+            :class="[colorClasses]"
+            :reaction="reaction"
+          />
           <ArticleWhatsappMediaBadge
             v-if="props.mediaError"
             :article-id="articleId"

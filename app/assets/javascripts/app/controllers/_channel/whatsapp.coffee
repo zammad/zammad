@@ -164,9 +164,12 @@ class WhatsappAccountPhoneNumberModal extends App.ControllerModal
   small: true
 
   content: =>
+    reminder_active = if _.isUndefined(@channel?.options?.reminder_active) then true else @channel.options.reminder_active
+
     content = $(App.view('whatsapp/account_phone_number')(
-      channel: @channel
-      params:  @params
+      channel:         @channel
+      params:          @params
+      reminder_active: reminder_active
     ))
 
     preselected_group_id = if @channel then @channel.group_id else 1
@@ -176,8 +179,14 @@ class WhatsappAccountPhoneNumberModal extends App.ControllerModal
       null: false
       default: true
       display: __('Automatic reminders')
-      value: if _.isUndefined(@channel?.options?.reminder_active) then true else @channel.options.reminder_active
+      value: reminder_active
     )
+
+    content.find('.js-switch input[name="reminder_active"]')
+      .off('change.reminder')
+      .on('change.reminder', (e) ->
+        $('.js-reminderMessage').toggle(e.target.checked)
+      )
 
     content.find('.js-messagesGroup').replaceWith App.UiElement.tree_select.render(
       name: 'group_id'

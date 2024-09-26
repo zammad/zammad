@@ -141,6 +141,11 @@
           </div>
         <% end %>
         <%- @attachments %>
+        <% if @article.preferences?.whatsapp?.reaction?.emoji: %>
+          <div class="article-reaction">
+            <span><%= @article.preferences?.whatsapp?.reaction?.emoji %></span>
+          </div>
+        <% end %>
       </div>
     </div>
   </div>

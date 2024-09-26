@@ -13,7 +13,7 @@ RSpec.describe ScheduledWhatsappReminderJob, type: :job do
       expect(described_class.perform_at(reminder_time, ticket, locale))
         .to have_attributes(
           arguments:    [ticket, locale],
-          lock_key:     "ScheduledWhatsappReminderJob/#{ticket.id}",
+          lock_key:     a_string_starting_with('ScheduledWhatsappReminderJob/'),
           scheduled_at: reminder_time,
         )
     end
@@ -35,9 +35,9 @@ RSpec.describe ScheduledWhatsappReminderJob, type: :job do
         sender_id:    Ticket::Article::Sender.lookup(name: 'System').id,
         from:         "#{channel.options[:name]} (#{channel.options[:phone_number]})",
         to:           article.from,
-        subject:      described_class::REMINDER_TEMPLATE.truncate(100, omission: '…'),
+        subject:      described_class::DEFAULT_REMINDER_MESSAGE.truncate(100, omission: '…'),
         internal:     false,
-        body:         described_class::REMINDER_TEMPLATE,
+        body:         described_class::DEFAULT_REMINDER_MESSAGE,
         content_type: 'text/plain',
       )
     end
@@ -80,6 +80,25 @@ RSpec.describe ScheduledWhatsappReminderJob, type: :job do
 
       it 'skips the reminder article' do
         expect(job.perform(ticket, locale)).to be_falsey
+      end
+    end
+
+    context 'with customized reminder message' do
+      let(:reminder_message) { Faker::Lorem.unique.sentence }
+      let(:channel)          { create(:whatsapp_channel, reminder_message:) }
+
+      it 'adds a reminder article to the ticket' do
+        expect(job.perform(ticket, locale)).to have_attributes(
+          ticket_id:    ticket.id,
+          type_id:      Ticket::Article::Type.lookup(name: 'whatsapp message').id,
+          sender_id:    Ticket::Article::Sender.lookup(name: 'System').id,
+          from:         "#{channel.options[:name]} (#{channel.options[:phone_number]})",
+          to:           article.from,
+          subject:      reminder_message.truncate(100, omission: '…'),
+          internal:     false,
+          body:         reminder_message,
+          content_type: 'text/plain',
+        )
       end
     end
   end

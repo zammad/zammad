@@ -394,6 +394,7 @@ FactoryBot.define do
           name:,
           phone_number:,
           reminder_active:,
+          reminder_message:,
           callback_url_uuid:,
           verify_token:,
         }
@@ -408,6 +409,7 @@ FactoryBot.define do
         name              { Faker::Company.name }
         phone_number      { Faker::PhoneNumber.unique.cell_phone_with_country_code }
         reminder_active   { true }
+        reminder_message  { '' }
         callback_url_uuid { SecureRandom.uuid }
         verify_token      { SecureRandom.urlsafe_base64(12) }
       end

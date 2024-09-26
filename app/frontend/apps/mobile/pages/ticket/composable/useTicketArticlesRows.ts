@@ -39,6 +39,7 @@ interface SystemRaw {
   type: 'system'
   subject?: Maybe<string>
   to?: Maybe<string>
+  reaction?: Maybe<string>
 }
 
 type TicketArticleRow = (
@@ -89,6 +90,7 @@ export const useTicketArticleRows = (
           type: 'system',
           subject: article.subject,
           to: article.to?.raw || '',
+          reaction: article.preferences?.whatsapp?.reaction?.emoji,
           key: article.id,
         })
       } else {

@@ -40,6 +40,8 @@ RSpec.describe 'Manage > Channels > WhatsApp', :use_vcr, required_envs: %w[WHATS
 
         check_switch_field_value('reminder_active', true)
 
+        fill_in 'reminder_message', with: Faker::Lorem.unique.sentence
+
         click_on 'Submit'
       end
 
@@ -65,6 +67,7 @@ RSpec.describe 'Manage > Channels > WhatsApp', :use_vcr, required_envs: %w[WHATS
              phone_number_id:   phone_number_id,
              phone_number:      phone_number,
              reminder_active:   false,
+             reminder_message:  '',
              name:              phone_number_name,
              app_secret:        app_secret,
              callback_url_uuid: callback_url_uuid,
@@ -95,6 +98,8 @@ RSpec.describe 'Manage > Channels > WhatsApp', :use_vcr, required_envs: %w[WHATS
         fill_in 'welcome', with: Faker::Lorem.unique.sentence
 
         check_switch_field_value('reminder_active', false)
+
+        expect(page).to have_no_field('reminder_message')
 
         click_on 'Submit'
       end

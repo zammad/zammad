@@ -1,3 +1,8 @@
 <div class="small task-subline">
 "<%= @article.subject %>" -&gt; "<%= @article.to %>"
+<% if @article.preferences?.whatsapp?.reaction?.emoji: %>
+  <div class="article-reaction relative">
+    <span><%= @article.preferences?.whatsapp?.reaction?.emoji %></span>
+  </div>
+<% end %>
 </div>

@@ -85,6 +85,7 @@ const actionPlugin: TicketArticleActionPlugin = {
       label: __('Reply'),
       name: 'whatsapp message',
       icon: 'reply',
+      alwaysVisible: true,
       view: {
         agent: ['change'],
       },

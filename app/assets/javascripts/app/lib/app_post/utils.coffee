@@ -1611,3 +1611,13 @@ class App.Utils
       display_name = '"' + display_name.replace(/([\\"])/g, '\\$1') + '"'
 
     return display_name + ' <' + email + '>'
+
+  # Truncate the passed text to desired length
+  @truncate: (input, length = 100) ->
+    return input if not input
+
+    string = input.replace(/<([^>]+)>/g, '')
+
+    return string if string.length < length
+
+    string.substring(0, length) + '…'

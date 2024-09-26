@@ -152,6 +152,7 @@ watch(
         role="article"
         :subject="row.subject"
         :to="row.to"
+        :reaction="row.reaction"
       />
     </article>
   </section>

@@ -20,6 +20,7 @@ import ArticleBubbleSecurityStatusBar from '#desktop/pages/ticket/components/Tic
 import ArticleBubbleSecurityWarning from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue'
 import { useBubbleHeader } from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useBubbleHeader.ts'
 import { useBubbleStyleGuide } from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useBubbleStyleGuide.ts'
+import ArticleReactionBadge from '#desktop/pages/ticket/components/TicketDetailView/ArticleReactionBadge.vue'
 
 const ArticleBubbleHeader = defineAsyncComponent(
   () =>
@@ -185,5 +186,10 @@ const { showPreview } = useFilePreviewViewer(
     </div>
 
     <ArticleBubbleActionList :article="article" :position="position" />
+
+    <ArticleReactionBadge
+      :position="position"
+      :reaction="article.preferences?.whatsapp?.reaction?.emoji"
+    />
   </div>
 </template>
