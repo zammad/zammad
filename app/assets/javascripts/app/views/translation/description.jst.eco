@@ -5,6 +5,7 @@
   <p><%- @T('System translations can be contributed and shared with the community on our public platform %l. It sports a very convenient user interface based on Weblate, give it a try!', 'https://translations.zammad.org') %></p>
 </div>
 
+<% if @keyboardShortcutsEnabled: %>
 <div>
   <h2><%- @T('On-screen Translation') %></h2>
   <p><%- @T('To make translations easier you can enable and disable the inline translation feature by pressing "%s" at any time.', @inlineTranslationKey ) %></p>
@@ -12,3 +13,4 @@
   <p><%- @T('Text with enabled inline translations looks like') %> <button class="btn btn-primary u-unclickable"><span class="translation"><%- @Ti('Some Text') %></button></span></p>
   <p><%- @T('Just click into the highlighted area and update the words right there. Enjoy!') %></p>
 </div>
+<% end %>

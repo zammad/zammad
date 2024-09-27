@@ -13,6 +13,8 @@ class Translation extends App.ControllerSubContent
     @controllerBind('i18n:translation_update_todo', @load)
     @controllerBind('i18n:translation_update_list', @load)
     @controllerBind('i18n:translation_update', @load)
+    @controllerBind('toggle-shortcut-enable', => @rerender(true))
+    @controllerBind('toggle-shortcut-layout', => @rerender(true))
 
   load: =>
     @startLoading()
@@ -133,16 +135,26 @@ class Translation extends App.ControllerSubContent
   release: =>
     @rerender()
 
-  rerender: =>
-    return if not @hasModifiedTranslations
+  rerender: (force) =>
+    return if not @hasModifiedTranslations and not force
 
     App.Delay.set(->
       App.Event.trigger('ui:rerender')
     , 400)
 
+  inlineTranslationKey: ->
+    key = ''
+
+    # In case of old shortcut layout, require hotkeys in the combination.
+    key += "#{App.Browser.hotkeysDisplay().join('+')}+" if App.KeyboardShortcutPlugin.useOldShortcutLayout()
+    key += 't'
+
+    key
+
   description: ->
     $(App.view('translation/description')(
-      inlineTranslationKey: App.Browser.hotkeys().split('+').reverse().join('+') + '+t'
+      inlineTranslationKey: @inlineTranslationKey()
+      keyboardShortcutsEnabled: App.KeyboardShortcutPlugin.isEnabled()
     ))
 
   showDescriptionModal: =>

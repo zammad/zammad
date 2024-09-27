@@ -38,6 +38,8 @@ class App.KeyboardShortcutPlugin extends App.Controller
     else
       App.LocalStorage.set('keyboardShortcuts', false)
 
+    App.Event.trigger('toggle-shortcut-enable')
+
   @isInput: ->
     return true if (_.contains(['INPUT', 'TEXTAREA', 'SELECT'], document.activeElement.nodeName) || document.activeElement.getAttribute('contenteditable') == 'true')
     false
