@@ -392,7 +392,7 @@ class App.UiElement.ApplicationSelector
     selection = $('<select class="form-control"></select>')
     for groupKey, groupMeta of groups
       groupKeyClass = groupKey.replace('.', '-')
-      displayName = App.i18n.translateInline(groupMeta.name)
+      displayName = App.i18n.translatePlain(groupMeta.name)
       selection.closest('select').append("<optgroup label=\"#{displayName}\" class=\"js-#{groupKeyClass}\"></optgroup>")
       optgroup = selection.find("optgroup.js-#{groupKeyClass}")
       for elementKey, elementGroup of elements
@@ -400,7 +400,7 @@ class App.UiElement.ApplicationSelector
         if spacer is groupKey
           attributeConfig = elements[elementKey]
           if attributeConfig.operator
-            displayName = App.i18n.translateInline(attributeConfig.display)
+            displayName = App.i18n.translatePlain(attributeConfig.display)
             optgroup.append("<option value=\"#{elementKey}\">#{displayName}</option>")
     selection
 
@@ -473,7 +473,7 @@ class App.UiElement.ApplicationSelector
           break
 
       for operator in attributeConfig.operator
-        operatorName = App.i18n.translateInline(@mapOperatorDisplayName(operator))
+        operatorName = App.i18n.translatePlain(@mapOperatorDisplayName(operator))
         selected = ''
         if !groupAndAttribute.match(/^ticket/) && operator is 'has changed'
           # do nothing, only show "has changed" in ticket attributes
@@ -536,22 +536,22 @@ class App.UiElement.ApplicationSelector
     options = {}
     if preCondition is 'user'
       if attributeConfig.noCurrentUser isnt true
-        options['current_user.id'] = App.i18n.translateInline('current user')
-      options['specific'] = App.i18n.translateInline('specific user')
+        options['current_user.id'] = App.i18n.translatePlain('current user')
+      options['specific'] = App.i18n.translatePlain('specific user')
       if attributeConfig.noNotSet isnt true
-        options['not_set'] = App.i18n.translateInline('not set (not defined)')
+        options['not_set'] = App.i18n.translatePlain('not set (not defined)')
     else if preCondition is 'org'
       if attributeConfig.noCurrentUser isnt true
-        options['current_user.organization_id'] = App.i18n.translateInline('current user organization')
-      options['specific'] = App.i18n.translateInline('specific organization')
+        options['current_user.organization_id'] = App.i18n.translatePlain('current user organization')
+      options['specific'] = App.i18n.translatePlain('specific organization')
       if attributeConfig.noNotSet isnt true
-        options['not_set'] = App.i18n.translateInline('not set (not defined)')
+        options['not_set'] = App.i18n.translatePlain('not set (not defined)')
 
     for key, value of options
       selected = ''
       if key is meta.pre_condition
         selected = 'selected="selected"'
-      selection.append("<option value=\"#{key}\" #{selected}>#{App.i18n.translateInline(value)}</option>")
+      selection.append("<option value=\"#{key}\" #{selected}>#{App.i18n.translatePlain(value)}</option>")
     elementRow.find('.js-preCondition').closest('.controls').removeClass('hide')
     elementRow.find('.js-preCondition select').replaceWith(selection)
 
