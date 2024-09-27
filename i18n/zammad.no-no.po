@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-16 05:40+0000\n"
-"Last-Translator: Peter-Hans de Zwarte <peter-hans@zwarte.no>\n"
+"PO-Revision-Date: 2024-09-27 05:23+0000\n"
+"Last-Translator: Rob <robertborge@outlook.com>\n"
 "Language-Team: Norwegian Bokmål <https://translations.zammad.org/projects/"
 "zammad/zammad-stable/nb_NO/>\n"
 "Language: no-no\n"
@@ -514,7 +514,7 @@ msgstr "%s er obligatorisk."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:67
 msgid "%s is sent without text caption"
-msgstr ""
+msgstr "%s er sendt uten tekst"
 
 #: app/frontend/shared/i18n/dates.ts:111
 msgid "%s minutes ago"
@@ -549,20 +549,16 @@ msgid "%s object(s) will be updated."
 msgstr "%s objekt(er) vil bli oppdatert."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:233
-#, fuzzy
-#| msgid "Manage %s"
 msgid "%s of %s"
-msgstr "Administrer %s"
+msgstr "%s av %s"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco:11
 msgid "%s of my tickets are currently in process."
 msgstr "%s av mine saker er under behandling."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:11
-#, fuzzy
-#| msgid "%s of my tickets escalated."
 msgid "%s of my tickets escalated"
-msgstr "%s av sakene mine eskalerte."
+msgstr "%s av mine eskalerte saker"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 msgid "%s people"
@@ -647,10 +643,8 @@ msgid "%s user to %s user"
 msgstr "%s bruker til %s bruker"
 
 #: lib/whatsapp/webhook/message.rb:53
-#, fuzzy
-#| msgid "Channel"
 msgid "%s via WhatsApp"
-msgstr "Kanal"
+msgstr "%s via WhatsApp"
 
 #: app/frontend/shared/i18n/dates.ts:90
 msgid "%s weeks ago"
@@ -881,7 +875,7 @@ msgstr "En liste med aktive import-backends som kjøres automatisk."
 
 #: lib/validations/mention_validator.rb:7
 msgid "A mentioned user has no agent access to this ticket"
-msgstr ""
+msgstr "Påropt bruker har ingen agent tilgang til denne saken"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:26
 msgid ""
@@ -932,6 +926,8 @@ msgid ""
 "A ticket's priority is simply a ranking of how urgent or important it is. "
 "Different priorities allow you to see the importance of your tickets better."
 msgstr ""
+"Sakens prioriteritet er å rangere hvor mye det haster og viktighet. "
+"Forskjellige prioriteter tillater at du kan se viktigheten enklere."
 
 #: app/assets/javascripts/app/models/ticket_state.coffee
 msgid ""
@@ -972,10 +968,8 @@ msgid "API Token Access"
 msgstr "API Token-tilgang"
 
 #: lib/whatsapp/webhook/payload.rb:21
-#, fuzzy
-#| msgid "Sign out"
 msgid "API error."
-msgstr "Logg ut"
+msgstr "API feil."
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:42
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:43
@@ -1007,10 +1001,8 @@ msgid "Access to customer tickets"
 msgstr "Siste kundehenvendelser"
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:19
-#, fuzzy
-#| msgid "Access to %s"
 msgid "Access token"
-msgstr "Tilgang til %s"
+msgstr "Tilgangsnøkkel"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:45
 #: app/frontend/apps/mobile/pages/account/routes.ts:8
@@ -1364,14 +1356,12 @@ msgid "Additional information"
 msgstr "Ytterligere informasjon"
 
 #: app/frontend/apps/desktop/components/layout/LayoutPublicPage/LayoutPublicPage.vue:56
-#, fuzzy
-#| msgid "Block Notifications"
 msgid "Additional information and links"
-msgstr "Blokker notifikasjoner"
+msgstr "Ekstra informasjon og linker"
 
 #: db/seeds/settings.rb:848
 msgid "Additional notes for ticket create types."
-msgstr ""
+msgstr "Ekstra notater for saksopprettelse typer."
 
 #: db/seeds/object_manager_attributes.rb:1208
 msgid "Address"
@@ -1401,37 +1391,12 @@ msgstr "Passordinnlogging for Administrator"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:4
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:56
-#, fuzzy
-#| msgid "We've sent password reset instructions to your email address."
 msgid "Admin password login instructions were sent to your email address."
-msgstr ""
-"Vi har sendt instruksjoner for tilbakestilling av passord til e-postadressen "
-"din."
+msgstr "Admin passord påloggingsdetaljer har blitt sendt til din epost adresse."
 
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/admin_password_auth/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Administration login to #{config.product_name}\n"
-#| "\n"
-#| "<div>Hi #{user.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>We received a request for an administration login for your #{config."
-#| "product_name} account <b>#{user.login}</b>.</div>\n"
-#| "<br>\n"
-#| "<div>Please, click on the link below (or copy and paste the URL into your "
-#| "browser) to proceed:</div>\n"
-#| "<br>\n"
-#| "<div><a href=\"#{config.http_type}://#{config.fqdn}/#login/admin/#{token."
-#| "token}\">#{config.http_type}://#{config.fqdn}/#login/admin/#{token.token}"
-#| "</a></div>\n"
-#| "<br>\n"
-#| "<div>This link takes you to a page where you can log in.</div>\n"
-#| "<br>\n"
-#| "<div>If you don't want to log in, please ignore this message.</div>\n"
-#| "<br>\n"
-#| "<div>Your #{config.product_name} Team</div>\n"
 msgid ""
 "Administration login to #{config.product_name}\n"
 "\n"
@@ -1465,8 +1430,8 @@ msgstr ""
 "<br>\n"
 "<div>Lenken peker til en påloggingsside.</div>\n"
 "<br>\n"
-"<div>Hvis du ikke ønsker å logge inn, kan du ignorere denne beskjeden.</"
-"div>\n"
+"<div>Hvis du ikke ønsker å logge inn, kan du ignorere denne beskjeden.</div>"
+"\n"
 "<br>\n"
 "<div>Dine #{config.product_name}-administratorer</div>\n"
 
@@ -1678,20 +1643,16 @@ msgid "An open-source monitoring tool."
 msgstr "Et overvåkningsverktøy med åpen kildekode."
 
 #: app/frontend/shared/components/Form/utils.ts:21
-#, fuzzy
-#| msgid "An error has occurred"
 msgid "An unexpected error has occurred."
-msgstr "En feil har oppstått"
+msgstr "En uforventet feil har oppstått"
 
 #: app/graphql/gql/mutations/system/setup/run_auto_wizard.rb:26
-#, fuzzy
-#| msgid "An error has occurred"
 msgid "An unexpected error occurred during system setup."
-msgstr "En feil har oppstått"
+msgstr "En uforventet feil har oppstått under system initiering."
 
 #: lib/calendar_subscriptions.rb:50
 msgid "An unknown method name was requested."
-msgstr ""
+msgstr "Ett ukjent metodenavn ble forsøkt."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:187
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:147
@@ -1793,10 +1754,8 @@ msgid "App credentials for Twitter."
 msgstr "App-legitimasjon for Twitter."
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:28
-#, fuzzy
-#| msgid "App Secret"
 msgid "App secret"
-msgstr "App-hemmelighet"
+msgstr "App hemmelighet"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:349
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee:3
@@ -2301,16 +2260,14 @@ msgid "Auto-close state"
 msgstr "Status ved automatisk lukking"
 
 #: lib/auto_wizard.rb:127
-#, fuzzy
-#| msgid "Auto Wizard"
 msgid "AutoWizard is disabled"
-msgstr "Auto-veiviser"
+msgstr "Auto veiviser er skrudd av"
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:31
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue:8
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue:84
 msgid "Automated Setup"
-msgstr ""
+msgstr "Automatisert installasjon"
 
 #: db/seeds/settings.rb:1248
 msgid "Automatic account link on initial logon"
@@ -2324,7 +2281,7 @@ msgstr "Automatisk kontokobling på første innlogging"
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:178
 msgid "Automatic reminders"
-msgstr ""
+msgstr "Automatisk påminnelse"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:6
 msgid ""
@@ -2404,10 +2361,8 @@ msgstr "Tilbake til oversikten"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:442
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:195
-#, fuzzy
-#| msgid "Back to my view"
 msgid "Back to previous page"
-msgstr "Tilbake til visningen min"
+msgstr "Tilbake til forrige side"
 
 #: app/assets/javascripts/app/views/knowledge_base/reader.jst.eco:7
 msgid "Back to search results"
@@ -2452,10 +2407,8 @@ msgstr "Basisobjekter"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:736
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:10
-#, fuzzy
-#| msgid "Authentication"
 msgid "Basic Authentication"
-msgstr "Autentisering"
+msgstr "Basis autentisering"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:6
 msgid "Basic Settings"
@@ -2479,7 +2432,7 @@ msgstr "Videresendt melding"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSelection.vue:53
 msgid "Beta"
-msgstr ""
+msgstr "Beta"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:41
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:97
@@ -2502,10 +2455,8 @@ msgid "Block caller IDs based on sender caller ID."
 msgstr "Blokker caller ID-er basert på avsenders caller ID."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:42
-#, fuzzy
-#| msgid "Blocked countries"
 msgid "Blocked Content"
-msgstr "Blokkerte land"
+msgstr "Blokkert innhold"
 
 #: app/assets/javascripts/app/models/chat.coffee:254
 msgid "Blocked IPs (separated by ;)"
@@ -2532,10 +2483,8 @@ msgid "Body - Search for follow-up also in mail body."
 msgstr "Innhold - Søk etter oppfølging i e-postteksten også."
 
 #: lib/validations/ticket_article_validator/sms_twilio.rb:14
-#, fuzzy
-#| msgid "A user is required!"
 msgid "Body text is required"
-msgstr "En bruker er påkrevd!"
+msgstr "Innholdstekst er påkrevd"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:41
 msgid "Boolean field"
@@ -2667,20 +2616,16 @@ msgid "CTI Token"
 msgstr "CTI-token"
 
 #: db/seeds/settings.rb:5098
-#, fuzzy
-#| msgid "Config"
 msgid "CTI config"
-msgstr "Konfig"
+msgstr "CTI konfigurasjon"
 
 #: db/seeds/settings.rb:5132
 msgid "CTI customer last activity"
 msgstr "CTI-kundes siste aktivitet"
 
 #: db/seeds/settings.rb:5070
-#, fuzzy
-#| msgid "Integrations"
 msgid "CTI integration"
-msgstr "Integrasjoner"
+msgstr "CTI integrasjoner"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/FieldDateTimeInput.vue:95
 msgid "CW"
@@ -9836,10 +9781,8 @@ msgid "Moved out"
 msgstr "Flyttet ut"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:61
-#, fuzzy
-#| msgid "Bulk action executed!"
 msgid "Multiple selection field"
-msgstr " Bulk action utført!"
+msgstr "Bulk action utført!"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:69
 msgid "Multiple tree selection field"
@@ -12795,10 +12738,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1084
-#, fuzzy
-#| msgid "Bulk action executed!"
 msgid "Saving failed."
-msgstr " Bulk action utført!"
+msgstr "Bulk action utført!"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:125
 msgid "Schedule for"
@@ -17962,10 +17903,8 @@ msgid "VIP"
 msgstr "VIP"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:105
-#, fuzzy
-#| msgid "Bulk action executed!"
 msgid "Validation failed"
-msgstr " Bulk action utført!"
+msgstr "Bulk action utført!"
 
 msgid "Validation failed: %{errors}"
 msgstr ""
@@ -19604,48 +19543,36 @@ msgid "in %s months"
 msgstr ""
 
 #: app/frontend/shared/i18n/dates.ts:92
-#, fuzzy
-#| msgid "2 weeks"
 msgid "in %s weeks"
-msgstr "2 uker"
+msgstr "om %s uker"
 
 #: app/frontend/shared/i18n/dates.ts:78
-#, fuzzy
-#| msgid "in %s"
 msgid "in %s years"
-msgstr "i %s"
+msgstr "om %s år"
 
 #: app/frontend/shared/i18n/dates.ts:98
-#, fuzzy
-#| msgid "1 day"
 msgid "in 1 day"
-msgstr "1 dag"
+msgstr "om 1 dag"
 
 #: app/frontend/shared/i18n/dates.ts:105
-#, fuzzy
-#| msgid "in hours"
 msgid "in 1 hour"
-msgstr "i timer"
+msgstr "om en time"
 
 #: app/frontend/shared/i18n/dates.ts:112
-#, fuzzy
-#| msgid "minute"
 msgid "in 1 minute"
-msgstr "minutt"
+msgstr "om et minutt"
 
 #: app/frontend/shared/i18n/dates.ts:84
 msgid "in 1 month"
-msgstr ""
+msgstr "i løpet av 1 måned"
 
 #: app/frontend/shared/i18n/dates.ts:91
-#, fuzzy
-#| msgid "1 week"
 msgid "in 1 week"
-msgstr "1 uke"
+msgstr "om en uke"
 
 #: app/frontend/shared/i18n/dates.ts:77
 msgid "in 1 year"
-msgstr ""
+msgstr "i løpet av 1 år"
 
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:6
 msgid "in hours"
@@ -19669,10 +19596,8 @@ msgid "internal"
 msgstr "Intern"
 
 #: db/seeds/settings.rb:1190
-#, fuzzy
-#| msgid "internal"
 msgid "internal database"
-msgstr "Intern"
+msgstr "intern database"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:67
@@ -19682,13 +19607,13 @@ msgstr "er"
 
 #: app/models/knowledge_base/has_unique_title.rb:21
 msgid "is already used"
-msgstr ""
+msgstr "er allerede i bruk"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
 msgid "is any of"
-msgstr ""
+msgstr "er noen av"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:124
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:151
@@ -19696,23 +19621,21 @@ msgid "is in working time"
 msgstr "er i arbeidstiden"
 
 msgid "is invalid"
-msgstr ""
+msgstr "er ugyldig"
 
 #: lib/validations/object_manager/attribute_validator/min_max.rb:30
 msgid "is larger than the allowed maximum value of %{max_value}"
-msgstr ""
+msgstr "er større enn tillatt maksimal verdi for %{max_value}"
 
 #: lib/validations/object_manager/attribute_validator/max_length.rb:25
 msgid "is longer than the allowed length %{maxlength}"
-msgstr ""
+msgstr "er lengre enn den tillatte lengden %{maxlength}"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
-#, fuzzy
-#| msgid "is not"
 msgid "is none of"
-msgstr "er ikke"
+msgstr "er ikke noen av"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
@@ -19722,42 +19645,36 @@ msgstr "er ikke"
 
 #: lib/validations/color_validator.rb:13
 msgid "is not a color. Only Hex, RGB and HSL colors are supported."
-msgstr ""
+msgstr "er ikke en farge. Bare Hex-, RGB- og HSL-farger kan benyttes."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:93
-#, fuzzy
-#| msgid "Min. size of number"
 msgid "is not a number"
-msgstr "Minimum tall str. "
+msgstr "er ikke et tall"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:124
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:151
 msgid "is not in working time"
 msgstr "er ikke i arbeidstiden"
 
-#, fuzzy
-#| msgid "is not in working time"
 msgid "is not included in the list"
-msgstr "er ikke i arbeidstiden"
+msgstr "er ikke i listen"
 
 #: app/assets/javascripts/app/models/_application_model.coffee:63
 msgid "is required"
-msgstr ""
+msgstr "er obligatorisk"
 
 #: lib/validations/object_manager/attribute_validator/required.rb:15
 msgid "is required but missing"
-msgstr ""
+msgstr "er obligatorisk, men mangler"
 
-#, fuzzy
-#| msgid "%s required!"
 msgid "is reserved"
-msgstr "%s er obligatorisk!"
+msgstr "er reservert"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:113
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
 msgid "is set"
-msgstr ""
+msgstr "er satt"
 
 #: lib/validations/object_manager/attribute_validator/min_max.rb:23
 msgid "is smaller than the allowed minimum value of %{min_value}"
@@ -19961,7 +19878,7 @@ msgstr "ingen problemer"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:5
 msgid "no unit"
-msgstr ""
+msgstr "ingen enhet"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee:25
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:63
@@ -19986,7 +19903,7 @@ msgstr "ikke nådd"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:68
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:140
 msgid "not set"
-msgstr ""
+msgstr "ikke satt"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:542
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:634
@@ -19999,20 +19916,16 @@ msgid "note"
 msgstr "notat"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:95
-#, fuzzy
-#| msgid "Notification Sender"
 msgid "notification sent to '%s'"
-msgstr "Varsel-avsender"
+msgstr "varsel er sendt til '%s'"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:48
-#, fuzzy
-#| msgid "no"
 msgid "now"
-msgstr "nei"
+msgstr "nå"
 
 #: app/models/object_manager/attribute.rb:553
 msgid "only lowercase letters, numbers, and '_' are allowed"
-msgstr ""
+msgstr "kun små bokstaver, nummer, og '_' er tillatt"
 
 #: app/frontend/apps/mobile/components/CommonTicketStateList/CommonTicketStateList.vue:43
 #: db/seeds/ticket_state_types.rb:4 db/seeds/ticket_states.rb:11
@@ -20021,7 +19934,7 @@ msgstr "åpen"
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:279
 msgid "optional"
-msgstr ""
+msgstr "valgfri"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:144
 #: app/assets/javascripts/app/views/integration/smime_certificate_add.jst.eco:14
@@ -20034,19 +19947,19 @@ msgstr "eller"
 
 #: app/assets/javascripts/app/views/login.jst.eco:69
 msgid "or sign in using"
-msgstr "login ved å bruke"
+msgstr "eller logg på med"
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:18
 msgid "pending"
-msgstr "Venter"
+msgstr "venter"
 
 #: db/seeds/ticket_state_types.rb:6
 msgid "pending action"
-msgstr ""
+msgstr "avventende tiltak"
 
 #: db/seeds/ticket_states.rb:35
 msgid "pending close"
-msgstr "Avslutt automatisk"
+msgstr "avslutt automatisk"
 
 #: db/seeds/ticket_state_types.rb:5 db/seeds/ticket_states.rb:17
 msgid "pending reminder"
@@ -20058,10 +19971,8 @@ msgid "phone"
 msgstr "telefon"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:554
-#, fuzzy
-#| msgid "Public"
 msgid "public"
-msgstr "Offentlig"
+msgstr "offentlig"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:91
 msgid "published"
@@ -20070,7 +19981,7 @@ msgstr "publisert"
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:13
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:26
 msgid "quarter-hour(s)"
-msgstr ""
+msgstr "kvarter"
 
 #: app/assets/javascripts/app/models/ticket.coffee:82
 msgid "reached"
@@ -20078,38 +19989,36 @@ msgstr "nådd"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:31
-#, fuzzy
-#| msgid "Create new Customer"
 msgid "read by the customer"
-msgstr "Lag ny kunde"
+msgstr "lest av kunden"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:90
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:117
 msgid "received merge"
-msgstr ""
+msgstr "mottatt sammenslåing"
 
 #: app/assets/javascripts/app/views/widget/two_factor_login/try_another_method.jst.eco:21
 msgid "recovery codes"
-msgstr ""
+msgstr "gjenopprettingskoder"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:104
-#, fuzzy
-#| msgid "active"
 msgid "relative"
-msgstr "aktiv"
+msgstr "relativ"
 
 #: db/seeds/settings.rb:216
 msgid "relative - e. g. \"2 hours ago\" or \"2 days and 15 minutes ago\""
 msgstr ""
+"relativ - f.eks. \"for 2 timer siden\" eller \"for 2 dager og 15 minutter "
+"siden\""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:40
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco:17
 msgid "remove"
-msgstr ""
+msgstr "fjerne"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "remove option"
-msgstr ""
+msgstr "alternativ for fjerning"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:10
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/facebook_reply.coffee:8
@@ -20121,20 +20030,16 @@ msgid "reply"
 msgstr "svar"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:53
-#, fuzzy
-#| msgid "reply"
 msgid "reply all"
-msgstr "svar"
+msgstr "besvar alle"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:111
-#, fuzzy
-#| msgid "%s required!"
 msgid "required"
-msgstr "%s er obligatorisk!"
+msgstr "obligatorisk"
 
 #: db/seeds/settings.rb:2204
 msgid "right"
-msgstr ""
+msgstr "høyre"
 
 #: app/assets/javascripts/app/controllers/cti.coffee:154
 msgid "ringing"
@@ -20143,7 +20048,7 @@ msgstr "ringer"
 #: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco:27
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:27
 msgid "row"
-msgstr ""
+msgstr "rad"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco:6
 msgid "run macro"
@@ -20151,14 +20056,12 @@ msgstr "kjør macro"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:43
 msgid "select"
-msgstr ""
+msgstr "velg"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:335
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:464
-#, fuzzy
-#| msgid "reply"
 msgid "select all options"
-msgstr "svar"
+msgstr "velg alle valg"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:101
@@ -20166,47 +20069,43 @@ msgid "select attachment…"
 msgstr "velg vedlegg…"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:463
-#, fuzzy
-#| msgid "reply"
 msgid "select visible options"
-msgstr "svar"
+msgstr "velg synlige valg"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:39
-#, fuzzy
-#| msgid "Create new Customer"
 msgid "sent to the customer"
-msgstr "Lag ny kunde"
+msgstr "sendt til kunde"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:171
 msgid "set fixed to"
-msgstr ""
+msgstr "fastsett til"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:165
 msgid "set mandatory"
-msgstr ""
+msgstr "sett obligatorisk"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:166
 msgid "set optional"
-msgstr ""
+msgstr "sett valgfritt"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:167
 msgid "set readonly"
-msgstr ""
+msgstr "sett kun les"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee:14
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:41
 msgid "set to internal"
-msgstr "sett til intern"
+msgstr "sett internt"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/internal.coffee:8
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:38
 msgid "set to public"
-msgstr "sett til offentlig"
+msgstr "sett offentlig"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:40
 msgid "show"
-msgstr ""
+msgstr "vis"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:10
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco:23
@@ -20215,29 +20114,27 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/organization.jst.eco:32
 #: app/assets/javascripts/app/views/widget/user.jst.eco:18
 msgid "show more"
-msgstr ""
+msgstr "vis mer"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:110
 msgid "shown"
-msgstr ""
+msgstr "vist"
 
 #: db/seeds/settings.rb:5015
-#, fuzzy
-#| msgid "Placetel"
 msgid "sipgate.io Token"
-msgstr "Placetel"
+msgstr "sipgate.io Token"
 
 #: db/seeds/settings.rb:5049
 msgid "sipgate.io alternative FQDN"
-msgstr ""
+msgstr "sipgate.io alternativ FQDN"
 
 #: db/seeds/settings.rb:5036
 msgid "sipgate.io config"
-msgstr ""
+msgstr "sipgate.io konfig"
 
 #: db/seeds/settings.rb:4987
 msgid "sipgate.io integration"
-msgstr ""
+msgstr "sipgate.io integrasjon"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:4
@@ -20252,7 +20149,7 @@ msgstr "sms"
 
 #: app/models/object_manager/attribute.rb:550
 msgid "spaces are not allowed"
-msgstr ""
+msgstr "mellomrom er ikke tillatt"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:384
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:546
@@ -20268,25 +20165,21 @@ msgstr "spesifikk bruker"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/split.coffee:7
 msgid "split"
-msgstr "splitt"
+msgstr "del"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
-#, fuzzy
-#| msgid "Start new"
 msgid "starts with"
-msgstr "Start ny"
+msgstr "starter ny"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:36
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:76
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:63
-#, fuzzy
-#| msgid "Start new"
 msgid "starts with one of"
-msgstr "Start ny"
+msgstr "starter med en av"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:16
 msgid "support@example.com"
-msgstr "support@example.com"
+msgstr "support@example.no"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:268
 #, fuzzy
@@ -20308,7 +20201,7 @@ msgstr "Retweets konverteres til saker"
 #: app/frontend/apps/mobile/components/User/UserItem.vue:29
 #: lib/calendar_subscriptions/tickets.rb:61
 msgid "ticket"
-msgstr ""
+msgstr "sak"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:114
 #, fuzzy
@@ -20318,30 +20211,30 @@ msgstr "Retweets konverteres til saker"
 
 #: lib/calendar_subscriptions/tickets.rb:190
 msgid "ticket escalation"
-msgstr ""
+msgstr "sak eskalering"
 
 #: db/seeds/settings.rb:1131
 msgid "ticket.agent"
-msgstr ""
+msgstr "sak.agent"
 
 #: db/seeds/settings.rb:1139
 msgid "ticket.customer"
-msgstr ""
+msgstr "sak.kunde"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:436
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:64
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "till (relative)"
-msgstr ""
+msgstr "til (relativ)"
 
 #: db/seeds/settings.rb:218
 msgid "timestamp - e. g. \"2018-08-30 14:30\""
-msgstr ""
+msgstr "dato og tid - f.eks \"30.08.2018 14:30\""
 
 #: app/views/knowledge_base/public/not_found.html.erb:8
 msgid "to go to the homepage."
-msgstr ""
+msgstr "for å gå til forsiden."
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
@@ -20362,15 +20255,15 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:105
 msgid "trigger '%s' was performed because ticket will escalate soon"
-msgstr ""
+msgstr "trigger '%s' var utført fordi saken snart blir eskalert"
 
 #: app/assets/javascripts/app/views/password/reset_failed.jst.eco:6
 msgid "try again"
-msgstr ""
+msgstr "prøv igjen"
 
 #: db/seeds/ticket_article_types.rb:9
 msgid "twitter direct-message"
-msgstr "twitter direct-message"
+msgstr "twitter direktemelding"
 
 #: db/seeds/ticket_article_types.rb:8
 msgid "twitter status"
@@ -20402,11 +20295,11 @@ msgstr "oppdatert"
 
 #: db/seeds/ticket_article_types.rb:13
 msgid "web"
-msgstr ""
+msgstr "nett"
 
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:15
 msgid "welcome message"
-msgstr ""
+msgstr "Velkomstbeskjed"
 
 #: db/seeds/ticket_article_types.rb:16
 #, fuzzy

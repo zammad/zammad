@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-26 05:07+0000\n"
+"PO-Revision-Date: 2024-09-26 15:35+0000\n"
 "Last-Translator: Ivan Perovic <ip@zammad.com>\n"
 "Language-Team: Croatian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hr/>\n"
@@ -5936,8 +5936,8 @@ msgid ""
 "administrators get logged out_ and _only administrators can start a new "
 "session_."
 msgstr ""
-"Omogući ili onemogući način održavanja Zammada. Ako je omogućen, _svi koji "
-"nisu administratori će biti izlogirani_, a samo administratori mogu započeti "
+"Omogući ili onemogući način održavanja Zammada. Ako je omogućen, svi koji "
+"nisu administratori će biti izlogirani, a samo administratori mogu započeti "
 "novu sesiju."
 
 #: db/seeds/settings.rb:40
@@ -5956,11 +5956,11 @@ msgstr "Omogući automatsku dodjelu ticketa."
 
 #: db/seeds/settings.rb:3907
 msgid "Enable time accounting."
-msgstr "Omogući računanje vremena."
+msgstr "Omogući računanje utrošenog vremena."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:341
 msgid "Enable/disable inline translations"
-msgstr "Omogući/onemogući usporedno prevođenje"
+msgstr "Omogući/onemogući usporedne prijevode"
 
 #: db/seeds/settings.rb:3432
 msgid "Enable/disable online chat."
@@ -5968,7 +5968,7 @@ msgstr "Omogući/onemogući mrežni chat."
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco:37
 msgid "Enabled"
-msgstr "Omogućen"
+msgstr "Aktiviran"
 
 #: db/seeds/settings.rb:823
 msgid "Enables a sidebar to show an overview of all attachments."
@@ -6019,9 +6019,9 @@ msgid ""
 "account via Profile -> Linked Accounts."
 msgstr ""
 "Omogućava automatsko povezivanje postojećeg računa prilikom prve prijave "
-"putem aplikacije treće strane. Ako je to deaktivirano, postojeći korisnik se "
-"prvo mora prijaviti u Zammad, a zatim povezati svoj račun \"treće strane\" "
-"sa svojim Zammad računom putem profila -> povezani računi."
+"putem aplikacije trećih osoba. Ako je to deaktivirano, postojeći korisnik se "
+"prvo mora prijaviti u Zammad, a zatim povezati svoj račun kod \"treće osobe\""
+" sa svojim Zammad računom putem profila -> povezani računi."
 
 #: db/seeds/settings.rb:1188
 msgid "Enables user authentication via %s."
@@ -6067,21 +6067,21 @@ msgid ""
 "Enables users to create their own account via web interface. This setting is "
 "only effective if the password login is enabled."
 msgstr ""
-"Omogućuje korisnicima stvaranje računa putem web sučelja. Ova postavka je "
-"aktivna samo ako je omogućena prijava lozinkom."
+"Omogućuje korisnicima stvaranje računa putem mrežnog sučelja. Ova postavka "
+"je aktivna samo ako je omogućena prijava lozinkom."
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
 msgid "Enclosed"
-msgstr "Zatvoreno"
+msgstr "Priloženo"
 
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1052
 msgid "Enclosure"
-msgstr "Ograda"
+msgstr "Privitak"
 
 #: app/assets/javascripts/app/views/agent_ticket_create.jst.eco:41
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:77
 msgid "Encrypt"
-msgstr "Šifrirati"
+msgstr "Šifriraj"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:619
 msgid "Encrypt email (if not possible, discard notification)"
@@ -6123,17 +6123,17 @@ msgstr "Šifriranje:"
 #: app/assets/javascripts/app/views/integration/idoit.jst.eco:15
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:3
 msgid "Endpoint"
-msgstr "Endpoint"
+msgstr "Krajnja točka"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:3
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:3
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:3
 msgid "Endpoint Settings"
-msgstr "Endpoint postavke"
+msgstr "Postavke krajnje točke"
 
 #: db/seeds/settings.rb:5710
 msgid "Enforce the setup of the two-factor authentication"
-msgstr "Nametnite obaveznu postavku dvofaktorske provjere autentičnosti"
+msgstr "Postavite dvofaktorsku autentifikaciju kao obavezno"
 
 #: db/seeds/settings.rb:5717
 msgid "Enforced for user roles"
@@ -6164,7 +6164,7 @@ msgstr "Unesite naslov…"
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:125
 msgid ""
 "Enter a domain name that will be associated with this key, e.g. example.com."
-msgstr "Unesite domenu koja ce biti povezana sa ovim ključem, npr. primjer.hr."
+msgstr "Unesite domenu koja ce biti povezana sa ovim ključem, poput primjer.hr."
 
 #: app/assets/javascripts/app/views/generic/input.jst.eco:2
 msgid "Enter a valid email address."
@@ -6184,7 +6184,7 @@ msgstr "Unesite URL poveznice"
 #: app/frontend/apps/desktop/pages/authentication/components/LoginRecoveryCode.vue:35
 #: app/frontend/apps/mobile/pages/authentication/components/LoginRecoveryCode.vue:32
 msgid "Enter one of your unused recovery codes."
-msgstr "Unesite jedan od Vaših nekorištenih kodova za oporavak."
+msgstr "Unesite jedan od Vaših neiskorištenih kodova za oporavak."
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:217
 msgid "Enter search and select a type to search for"
@@ -6228,7 +6228,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:28
 msgid "Enter the security code generated by the authenticator app:"
-msgstr "Unesite sigurnosni kod generiran u autentifikacijskoj aplikaciji:"
+msgstr "Unesite sigurnosni kod iz autentifikacijske aplikacije:"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_accounting.coffee:37
 msgid "Enter the time you want to record"
@@ -6236,7 +6236,7 @@ msgstr "Unesite utrošeno vrijeme"
 
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee:35
 msgid "Enter time zone"
-msgstr "Unesite vremensku zonu"
+msgstr "Dodajte vremensku zonu"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:36
 msgid "Enter your %s API token gained from your account profile settings."
@@ -6261,9 +6261,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:66
 msgid "Enter your Zendesk API token gained from your admin interface."
-msgstr ""
-"Unesite svoj Zendesk API token, kojeg možete kreirati u administratorskom "
-"sučelju."
+msgstr "Unesite svoj Zendesk API token iz administratorskog sučelja."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:9
 msgid "Enter your current password, insert a new one and confirm it."
@@ -6281,15 +6279,13 @@ msgid ""
 "Enter your email address and the %s API token gained from your admin "
 "interface."
 msgstr ""
-"Unesite svoju e-mail adresu i %s API token, kojeg možete kreirati u "
-"administratorskom sučelju."
+"Unesite svoju e-mail adresu i %s API token iz administratorskog sučelja."
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:42
 msgid ""
 "Enter your email address from your Kayako account which should be used for "
 "the import."
-msgstr ""
-"Unesite e-mail adresu Vašeg Kayako računa koji će se koristiti za uvoz."
+msgstr "Unesite e-mail adresu Vašeg Kayako računa koji će se koristiti za uvoz."
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:51
 msgid ""
@@ -6349,7 +6345,7 @@ msgstr ""
 "<div>Bok #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>Ticket (#{ticket.title}) od „<b>#{ticket.customer.longname}</b>” je "
-"eskalirao od „#{ticket.escalation_at}”!</div>\n"
+"eskalirao u „#{ticket.escalation_at}”!</div>\n"
 "<br>\n"
 "<% if @objects[:article] %>\n"
 "  <div>\n"
@@ -6373,7 +6369,7 @@ msgstr "Eskalacija u"
 #: app/assets/javascripts/app/views/sla/index.jst.eco:35
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:177
 msgid "Escalation Times"
-msgstr "Vrijeme eskalacije"
+msgstr "Vremena eskalacije"
 
 #: app/assets/javascripts/app/models/ticket.coffee:17
 #: app/graphql/gql/types/overview_type.rb:70
@@ -6405,7 +6401,7 @@ msgstr ""
 "Svaka kategorija u Vašoj bazi podataka trebala bi imati jedinstvenu ikonu za "
 "maksimalnu vizualnu jasnoću. Svaki od sljedećih setova nudi širok raspon "
 "simbola, ali pripazite - ne možete kombinirati i dodijeliti različite "
-"simbole iz različitih skupova. Pažljivo birajte!"
+"simbole iz različitih skupova. Odaberite pažljivo!"
 
 #: app/assets/javascripts/app/models/trigger.coffee
 msgid ""
@@ -6423,9 +6419,9 @@ msgid ""
 "certain changes, and then fire off whenever those changes occur."
 msgstr ""
 "Svaki put kada klijent kreira novi ticket, automatski prima e-mail s "
-"potvrdom kako bi ga znao da je njegov upit uspješno poslan. Takvo ponašanje "
-"ugrađeno je u Zammad, ali je također vrlo prilagodljivo, a možete postaviti "
-"i druge automatske radnje poput ove.\n"
+"potvrdom kako bi znao da je njegov upit uspješno poslan. Takvo ponašanje je "
+"ugrađeno u Zammad, ali je također vrlo prilagodljivo, a možete postaviti i "
+"druge automatske radnje poput ove.\n"
 "\n"
 "Možda želite dati veći prioritet bilo kojem ticketu koji u naslovu ima riječ "
 "\"hitno\". Možda želite izbjeći slanje mailova sa automatskim odgovorom "
@@ -6458,7 +6454,7 @@ msgstr "Primjeri:"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_auto_assignment.coffee:39
 msgid "Excepted users"
-msgstr "Osim korisnika"
+msgstr "Izuzeti korisnici"
 
 #: app/assets/javascripts/app/controllers/_integration/exchange.coffee:3
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:21
@@ -6545,7 +6541,7 @@ msgstr "Ističe u"
 
 #: app/assets/javascripts/app/controllers/search.coffee:50
 msgid "Extended Search"
-msgstr "Napredno pretraživanje"
+msgstr "Prošireno pretraživanje"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:73
 msgid "External data source field"
@@ -6688,7 +6684,7 @@ msgstr "Pronađi prijedlog prijevoda"
 
 #: app/assets/javascripts/app/views/search/index.jst.eco:6
 msgid "Find what you're looking for, e.g. \"search phrase\""
-msgstr "Pronađite ono što tražite, npr. \"izraz za pretraživanje\""
+msgstr "Pronađite ono što tražite, npr. \"pojam za pretraživanje\""
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:16
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:13
@@ -6751,7 +6747,7 @@ msgstr "Prvi odgovor"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:3
 msgid "Fixed Email Accounts"
-msgstr "Fiksni računi e-pošte"
+msgstr "Fiksni e-mail računi"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:122
 msgid "Flat Design"
@@ -6778,16 +6774,16 @@ msgstr "Mape"
 #: app/assets/javascripts/app/models/group.coffee:9
 #: db/seeds/object_manager_attributes.rb:1933
 msgid "Follow-up for closed ticket possible or not."
-msgstr "Praćenje zatvorenog ticketa: da ili ne."
+msgstr "Naknadni upit za zatvoreni ticket: da ili ne."
 
 #: app/assets/javascripts/app/models/group.coffee:9
 #: db/seeds/object_manager_attributes.rb:1923
 msgid "Follow-up possible"
-msgstr "Praćenje je moguće"
+msgstr "Naknadni upit je moguć"
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee:5
 msgid "Font Awesome"
-msgstr "Font Awesome"
+msgstr "Font Super"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:113
 msgid "Font size"
@@ -6962,7 +6958,7 @@ msgstr "Puno ime"
 
 #: db/seeds/settings.rb:263
 msgid "Fully Qualified Domain Name"
-msgstr "Fully Qualified Domain Name"
+msgstr "Potpuno definirano ime domene"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:686
 msgid "GET"
@@ -7069,7 +7065,7 @@ msgstr "GitHub integracija"
 
 #: lib/github/http_client.rb:35
 msgid "GitHub request failed! Please have a look at the log file for details"
-msgstr "GitHub zahtjev nije uspio! Detalje potražite u datoteci zapisnika"
+msgstr "GitHub zahtjev nije uspio! Detalje potražite u datoteci zapisa"
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:86
@@ -7130,12 +7126,12 @@ msgstr "Gmail"
 #: app/assets/javascripts/app/views/signup/verify.jst.eco:10
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:88
 msgid "Go Back"
-msgstr "Povratak"
+msgstr "Natrag"
 
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue:41
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:89
 msgid "Go back"
-msgstr "Povratak"
+msgstr "Natrag"
 
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue:41
 msgid "Go home"
@@ -7143,7 +7139,7 @@ msgstr "Na početnu stranicu"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:258
 msgid "Go to Login"
-msgstr "Idi na Prijava"
+msgstr "Idi na Prijavu"
 
 #: lib/secure_mailing/pgp/incoming.rb:55
 msgid "Good signature"
@@ -7321,19 +7317,19 @@ msgstr "HTTP autentifikacijski token"
 
 #: app/assets/javascripts/app/models/webhook.coffee:11
 msgid "HTTP Basic Authentication Password"
-msgstr "HTTP Basic autentifikacijska lozinka"
+msgstr "HTTP osnovna autentifikacijska lozinka"
 
 #: app/assets/javascripts/app/models/webhook.coffee:10
 msgid "HTTP Basic Authentication Username"
-msgstr "HTTP Basic autentifikacijsko korisničko ime"
+msgstr "HTTP osnovno autentifikacijsko korisničko ime"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:759
 msgid "HTTP Basic Authentication password"
-msgstr "HTTP Basic autentifikacijska lozinka"
+msgstr "HTTP osnovna autentifikacijska lozinka"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:748
 msgid "HTTP Basic Authentication username"
-msgstr "HTTP Basic autentifikacijsko korisničko ime"
+msgstr "HTTP osnovno autentifikacijsko korisničko ime"
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee:45
 msgid "HTTP Log"
@@ -7373,7 +7369,7 @@ msgstr "Ugodan dan Vam želim."
 #: app/frontend/apps/desktop/pages/authentication/views/Login.vue:253
 #: app/frontend/apps/mobile/pages/authentication/views/Login.vue:140
 msgid "Having problems?"
-msgstr "Imate li problema?"
+msgstr "Imate li pitanja?"
 
 #: app/assets/javascripts/app/views/widget/payload_example.jst.eco:8
 msgid "Header"
@@ -7385,7 +7381,7 @@ msgstr "Boja zaglavlja"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:201
 msgid "Header Link Color"
-msgstr "Boja veze zaglavlja"
+msgstr "Boja poveznice zaglavlja"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_manager.coffee:28
 msgid "Header Menu"
@@ -7401,7 +7397,7 @@ msgstr "Provjeru stanja može se preuzeti kao JSON putem:"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:69
 msgid "Hello! I need help with your product."
-msgstr "Pozdrav! Trebam pomoć u vezi Vaše usluge."
+msgstr "Pozdrav! Trebam pomoć u vezi Vašeg proizvoda."
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco:44
 msgid "Hello, my name is %s, what can I do for you?"
@@ -7424,8 +7420,8 @@ msgid ""
 "Here you can add further links to your public FAQ page, which will be "
 "displayed either in the header or footer."
 msgstr ""
-"Ovdje možete dodati dodatne veze na Vašu javnu stranicu s često postavljenim "
-"pitanjima, koji će se prikazati u zaglavlju ili u podnožju."
+"Ovdje možete dodati dodatne poveznice na Vašu javnu stranicu s često "
+"postavljenim pitanjima, koji će se prikazati u zaglavlju ili u podnožju."
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:20
 msgid ""
@@ -7447,9 +7443,9 @@ msgid ""
 "translation for the target language."
 msgstr ""
 "Ovdje možete promijeniti bilo koji prijevodni niz za prilagođeniji izgled i "
-"dojam. Podržani su i prepoznati sistemski i prilagođeni nizovi, jednostavno "
-"dodajte novi prijevod kako biste identificirali izvorni niz i osigurali "
-"njegov novi prijevod za ciljani jezik."
+"dojam. Podržani su i prepoznati sistemski i prilagođeni nizovi, samo dodajte "
+"novi prijevod kako biste identificirali izvorni niz i osigurali njegov novi "
+"prijevod za ciljani jezik."
 
 #: app/assets/javascripts/app/controllers/_dashboard/first_steps_clues.coffee:14
 msgid ""
@@ -7458,9 +7454,9 @@ msgid ""
 "quotation marks|| for searching phrases: §\"some phrase\"§."
 msgstr ""
 "Ovdje ćete pronaći tickete, klijente i organizacije. Znak §*§ može se "
-"koristiti kao zamjenski znak. Na primjer, §schmid*§ ili §rosent*l§. Pomoću "
-"|| dvostrukih navodnika|| mogu se pronaći cijeli odlomci teksta kao što je "
-"§\"određeni izraz\"§ ."
+"koristiti kao zamjenski znak. Na primjer, §schmid*§ ili §rosent*l§. Pomoću ||"
+" dvostrukih navodnika|| mogu se pronaći cijeli odlomci teksta kao što je §"
+"\"neki izraz\"§ ."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:23
 msgid ""
@@ -7476,7 +7472,7 @@ msgid ""
 "viewed items."
 msgstr ""
 "Ovdje se možete odjaviti, promijeniti jezik sučelja i vidjeti posljednje "
-"prikazane stavke."
+"pregledane tickete."
 
 #: app/assets/javascripts/app/views/object_manager/attribute.jst.eco:4
 msgid "Here you define which authorization has access to the attribute."
@@ -7516,7 +7512,7 @@ msgstr "Boja oznake"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:8
 msgid "Highlight icon"
-msgstr "Simbol oznake"
+msgstr "Označi simbol"
 
 #: db/seeds/settings.rb:5450
 msgid "Highlights if the note a user is writing is public or private"
