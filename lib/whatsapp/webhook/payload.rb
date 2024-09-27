@@ -3,6 +3,7 @@
 module Whatsapp::Webhook
   class Payload
     include Whatsapp::Webhook::Concerns::HasChannel
+    include Whatsapp::Webhook::Concerns::HandlesError
 
     def initialize(json:, uuid:, signature:)
       channel = find_channel!(uuid)
@@ -34,7 +35,10 @@ module Whatsapp::Webhook
     private
 
     def process_message
-      raise ProcessableError if message_error?
+      if message_error?
+        handle_error
+        raise ProcessableError
+      end
 
       type = @data[:entry].first[:changes].first[:value][:messages].first[:type]
       klass = "Whatsapp::Webhook::Message::#{type.capitalize}"
@@ -69,6 +73,10 @@ module Whatsapp::Webhook
 
     def message_error?
       @data[:entry].first[:changes].first[:value][:messages].first.key?(:errors)
+    end
+
+    def error
+      @data[:entry].first[:changes].first[:value][:messages].first[:errors].first
     end
 
     def message?

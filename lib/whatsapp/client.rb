@@ -48,9 +48,16 @@ class Whatsapp::Client
     def retryable?
       return true if !original_error
 
-      # WhatsApp API returns code 100 for various input errors
-      # Such as too long body or too large attachment
-      original_error.code != 100
+      # https://developers.facebook.com/docs/graph-api/guides/error-handling
+      recoverable_errors = [
+        130_472, # User's number is part of an experiment'
+        131_021, # Recipient cannot be sender'
+        131_026, # Message undeliverable'
+        131_047, # Re-engagement message
+        131_052, # Media download error'
+        131_053  # Media upload error'
+      ]
+      recoverable_errors.include?(original_error.code)
     end
   end
 

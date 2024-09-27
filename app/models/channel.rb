@@ -276,7 +276,7 @@ send via account
   def handle_delivery_error!(error, adapter)
     message = "Can't use Channel::Driver::#{adapter.to_classname}: #{error.inspect}"
 
-    if error.respond_to?(:retryable?) && !error.retryable?
+    if error.respond_to?(:retryable?) && error.retryable?
       self.status_out = 'ok'
       self.last_log_out = ''
     else

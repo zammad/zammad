@@ -18,11 +18,18 @@
       <div class="action <% if channel.active isnt true: %>is-inactive<% end %>" data-id="<%= channel.id %>">
         <div class="action-block action-row">
           <h2>
-            <%- @Icon('status', 'supergood-color inline') %>
+            <%- @Icon('status', channel.status_out + " inline") %>
             <%= channel.options.name %>
             <span class="text-muted"><%= channel.options.phone_number %></span>
          </h2>
         </div>
+        <% if !_.isEmpty(channel.last_log_out): %>
+        <div class="action-block action-row">
+          <div class="alert alert--danger">
+            <%= channel.last_log_out %>
+          </div>
+        </div>
+        <% end %>
         <div class="action-flow action-flow--row">
           <div class="action-block">
             <h3><%- @T('Messages') %></h3>
