@@ -170,7 +170,7 @@ msgid "%s ago"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:31
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:222
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:224
 msgid "%s attached files"
 msgstr ""
 
@@ -180,7 +180,7 @@ msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:49
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:25
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:26
 msgid "%s created article for |%s|"
 msgstr ""
 
@@ -315,6 +315,11 @@ msgstr ""
 msgid "%s people"
 msgstr ""
 
+#: app/assets/javascripts/app/models/ticket_article.coffee:53
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:31
+msgid "%s reacted with a %s to %s message |%s|"
+msgstr ""
+
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:49
 msgid "%s recommends using OAuth. %s announced it's going to drop Basic Authentication support in the future."
 msgstr ""
@@ -348,7 +353,7 @@ msgid "%s tickets found"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:27
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
 msgid "%s updated article for |%s|"
 msgstr ""
 
@@ -442,7 +447,7 @@ msgid "**Service Level Agreements**, abbreviated **SLAs**, help you to meet spec
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:221
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:223
 msgid "1 attached file"
 msgstr ""
 
@@ -1064,7 +1069,7 @@ msgstr ""
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:53
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts:125
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:201
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:202
 msgid "Add message"
 msgstr ""
 
@@ -1656,7 +1661,7 @@ msgstr ""
 msgid "Article Count"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:282
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:289
 msgid "Article actions"
 msgstr ""
 
@@ -8876,7 +8881,7 @@ msgstr ""
 msgid "May"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:79
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
 msgid "Me"
 msgstr ""
 
@@ -9664,7 +9669,7 @@ msgstr ""
 msgid "No Thanks!"
 msgstr ""
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:122
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:123
 msgid "No additional text can be sent with this media type. Please remove the text."
 msgstr ""
 
@@ -11786,7 +11791,7 @@ msgstr ""
 msgid "Resize article panel"
 msgstr ""
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageHandler.vue:169
+#: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageHandler.vue:170
 msgid "Resize frame"
 msgstr ""
 
@@ -12384,7 +12389,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:447
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:118
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:280
 msgid "See less"
 msgstr ""
 
@@ -12396,7 +12401,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:118
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue:17
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:280
 msgid "See more"
 msgstr ""
 
@@ -16524,6 +16529,12 @@ msgstr ""
 msgid "Updated ticket (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>\nTicket (#{ticket.title}) has been updated by \"<b>#{current_user.longname}</b>\".\n</div>\n<br>\n<% if @objects[:changes].present? %>\n  <div>\n  Changes:<br>\n  <% @objects[:changes].each do |key, value| %>\n    <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>\n  <% end %>\n  </div>\n<% end %>\n<br>\n<% if @objects[:article] %>\n  <div>\n  Information:\n  <blockquote type=\"cite\">\n  #{article.body_as_html}\n  </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
 msgstr ""
 
+#. This is the template file app/views/mailer/ticket_article_update_reaction/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/ticket_article_update_reaction/en.html.erb
+msgid "Updated ticket article (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>\n<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> reacted with a <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> to #{article.created_by.fullname} message \"<b>#{article.body_as_html}</b>\".\n</div>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
+msgstr ""
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
 msgid "Updating Database"
 msgstr ""
@@ -17112,7 +17123,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:37
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:3
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:200
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:201
 #: db/seeds/permissions.rb:179
 msgid "WhatsApp"
 msgstr ""
@@ -17290,7 +17301,7 @@ msgstr ""
 msgid "You are receiving this because you are a member of the group of this ticket."
 msgstr ""
 
-#: app/models/transaction/notification.rb:279
+#: app/models/transaction/notification.rb:281
 msgid "You are receiving this because you are out-of-office replacement for a participant of this ticket."
 msgstr ""
 
@@ -17381,7 +17392,7 @@ msgstr ""
 msgid "You can no longer see the role."
 msgstr ""
 
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:18
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:19
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:18
 msgid "You can no longer see the ticket."
 msgstr ""
@@ -18166,7 +18177,7 @@ msgstr ""
 msgid "forward"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:143
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:150
 msgid "from"
 msgstr ""
 
@@ -18737,6 +18748,10 @@ msgstr ""
 msgid "reached"
 msgstr ""
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
+msgid "reacted with a %s to %s message '%s'"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
 msgid "read by the customer"
@@ -18770,6 +18785,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "remove option"
+msgstr ""
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:135
+msgid "removed reaction to %s message '%s'"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:10
