@@ -63,7 +63,7 @@ class TagsController < ApplicationController
 
   # GET /api/v1/tag_list
   def admin_list
-    list = Tag::Item.reorder(name: :asc).limit(params[:limit] || 1000)
+    list = Tag::Item.reorder(name: :asc).limit(params[:limit] || 5000)
     results = []
     list.each do |item|
       result = {
