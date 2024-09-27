@@ -11,7 +11,7 @@
       <%- @Icon('arrow-right') %>
       <%- @Icon('arrow-down') %>
       <% end %>
-      <%- @T(@attribute.display) %>
+      <%- @Ti(@attribute.display) %>
       <span><% if !@attribute.null: %>*<% end %></span>
     </label>
     <% if @attribute.collapsible: %></a><% end %>
