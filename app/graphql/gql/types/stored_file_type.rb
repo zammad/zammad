@@ -14,7 +14,7 @@ module Gql::Types
     field :preferences, GraphQL::Types::JSON
 
     def type
-      object.preferences['Content-Type']
+      object.preferences['Content-Type'] || object.preferences['Mime-Type']
     end
   end
 end

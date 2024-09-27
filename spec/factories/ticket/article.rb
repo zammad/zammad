@@ -391,6 +391,21 @@ FactoryBot.define do
           article.save!
         end
       end
+
+      trait :with_media_error do
+        after(:create) do |article, _context|
+          article.preferences.tap do |prefs|
+            prefs['whatsapp'] = {
+              entry_id:    Faker::Number.unique.number.to_s,
+              message_id:  "wamid.#{Faker::Number.unique.number}",
+              type:        'document',
+              media_id:    Faker::Number.unique.number.to_s,
+              media_error: true,
+            }
+          end
+          article.save!
+        end
+      end
     end
 
     factory :telegram_article do

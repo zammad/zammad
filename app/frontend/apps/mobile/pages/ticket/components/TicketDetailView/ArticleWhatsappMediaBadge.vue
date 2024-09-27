@@ -1,14 +1,9 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, toRef } from 'vue'
 
-import {
-  NotificationTypes,
-  useNotifications,
-} from '#shared/components/CommonNotifications/index.ts'
-import { useTicketArticleRetryMediaDownloadMutation } from '#shared/entities/ticket-article/graphql/mutations/ticketArticleRetryMediaDownload.api.ts'
-import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import { useTicketArticleRetryMediaDownload } from '#shared/entities/ticket-article/composables/useTicketArticleRetryMediaDownload.ts'
 
 import CommonSectionPopup from '#mobile/components/CommonSectionPopup/CommonSectionPopup.vue'
 
@@ -21,40 +16,9 @@ const props = defineProps<Props>()
 
 const showPopup = ref(false)
 
-const retryMutation = new MutationHandler(
-  useTicketArticleRetryMediaDownloadMutation(() => ({
-    variables: {
-      articleId: props.articleId,
-    },
-  })),
+const { loading, tryAgain } = useTicketArticleRetryMediaDownload(
+  toRef(props, 'articleId'),
 )
-
-const { notify } = useNotifications()
-
-const loading = ref(false)
-
-const tryAgain = async () => {
-  loading.value = true
-  const result = await retryMutation.send()
-
-  if (result?.ticketArticleRetryMediaDownload?.success) {
-    notify({
-      id: 'media-download-success',
-      type: NotificationTypes.Success,
-      message: __('Media download was successful.'),
-    })
-
-    showPopup.value = false
-  } else {
-    notify({
-      id: 'media-download-failed',
-      type: NotificationTypes.Error,
-      message: __('Media download failed. Please try again later.'),
-    })
-  }
-
-  loading.value = false
-}
 
 const popupItems = computed(() =>
   props.mediaError && !loading.value
@@ -62,7 +26,14 @@ const popupItems = computed(() =>
         {
           type: 'button' as const,
           label: __('Try again'),
-          onAction: tryAgain,
+          onAction: async () => {
+            try {
+              await tryAgain()
+              showPopup.value = false
+            } catch {
+              // no-op
+            }
+          },
           noHideOnSelect: true,
         },
       ]

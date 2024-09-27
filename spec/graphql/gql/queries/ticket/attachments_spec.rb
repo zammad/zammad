@@ -21,6 +21,10 @@ RSpec.describe Gql::Queries::Ticket::Attachments, authenticated_as: :user, type:
   let(:ticket) { create(:ticket) }
   let(:cid)    { "#{SecureRandom.uuid}@zammad.example.com" }
 
+  let(:attachment_file_type)    { 'image/jpeg' }
+  let(:attachment_content_type) { attachment_file_type }
+  let(:attachment_mime_type)    { attachment_file_type }
+
   let(:articles) do
     create_list(:ticket_article, 2, ticket: ticket, content_type: 'text/html', body: "<img src=\"cid:#{cid}\"> some text") do |article, _i|
       create(
@@ -30,8 +34,8 @@ RSpec.describe Gql::Queries::Ticket::Attachments, authenticated_as: :user, type:
         data:        'fake',
         filename:    'inline_image.jpg',
         preferences: {
-          'Content-Type'        => 'image/jpeg',
-          'Mime-Type'           => 'image/jpeg',
+          'Content-Type'        => attachment_content_type,
+          'Mime-Type'           => attachment_mime_type,
           'Content-ID'          => "<#{cid}>",
           'Content-Disposition' => 'inline',
         }
@@ -43,8 +47,8 @@ RSpec.describe Gql::Queries::Ticket::Attachments, authenticated_as: :user, type:
         data:        'fake',
         filename:    'attached_image.jpg',
         preferences: {
-          'Content-Type' => 'image/jpeg',
-          'Mime-Type'    => 'image/jpeg',
+          'Content-Type' => attachment_content_type,
+          'Mime-Type'    => attachment_mime_type,
           'Content-ID'   => "<#{cid}.not.referenced>",
         }
       )
@@ -66,7 +70,18 @@ RSpec.describe Gql::Queries::Ticket::Attachments, authenticated_as: :user, type:
                                            'id'         => gql.id(articles.first.attachments.last),
                                            'internalId' => articles.first.attachments.last.id,
                                            'name'       => 'attached_image.jpg',
+                                           'type'       => attachment_file_type,
                                          ))
+    end
+
+    context 'when the attachment has mime type only' do
+      let(:attachment_content_type) { nil }
+
+      it 'returns inferred attachment file type' do
+        expect(gql.result.data).to include(hash_including(
+                                             'type' => attachment_file_type,
+                                           ))
+      end
     end
 
     context 'when the ticket is in a group the agent is not a member of' do
