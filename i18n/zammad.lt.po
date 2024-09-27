@@ -2141,7 +2141,7 @@ msgstr "Įrašo veiksmai"
 msgid "Article could not be deleted."
 msgstr "Nepavyko ištrinti įrašo."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:125
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:126
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:27
 msgid "Article meta information"
 msgstr "Įrašo meta informacija"
@@ -2453,7 +2453,7 @@ msgstr "Automatinis paskyros susiejimas pirmą kartą prisijungus"
 msgid "Automatic account linking notification"
 msgstr "Automatinio paskyros susiejimo pranešimas"
 
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:178
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:181
 msgid "Automatic reminders"
 msgstr "Automatiniai priminimai"
 
@@ -3101,7 +3101,7 @@ msgstr "Atlikus tokius pakeitimus, reikia atnaujinti duombazę."
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:33
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:157
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:100
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:134
@@ -3274,7 +3274,7 @@ msgstr "Pasirinkite grupę, į kurią bus nukreipti paminėjimai."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:34
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:31
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:51
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:60
 msgid "Choose the group to which messages will get added."
 msgstr "Pasirinkite grupę, į kurią bus nukreiptos žinutės."
 
@@ -7346,7 +7346,7 @@ msgstr "Raskite ko ieškote, pvz „paieškos frazė“"
 msgid "Fingerprint"
 msgstr "Pirštų atspaudas"
 
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:251
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:260
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco:17
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue:79
@@ -7874,7 +7874,7 @@ msgstr "Pasisveikinimas"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:31
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco:11
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:38
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:47
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:56
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:33
 #: app/graphql/gql/types/overview_type.rb:63
 #: app/views/mailer/ticket_create/fr.html.erb:8
@@ -8086,6 +8086,7 @@ msgstr "Sveiki! Man reikia pagalbos su jūsų produktu."
 msgid "Hello, my name is %s, what can I do for you?"
 msgstr "Sveiki, mano vardas %s. Kuo galiu jums padėti?"
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:50
 #: app/jobs/scheduled_whatsapp_reminder_job.rb:6
 msgid ""
 "Hello, the customer service window for this conversation is about to expire, "
@@ -11149,6 +11150,12 @@ msgstr "Privataus rakto nerasta."
 msgid "No proxy for the following hosts."
 msgstr "Nenaudoti proxy šiems serveriams."
 
+#: lib/whatsapp/webhook/message/reaction.rb:13
+#, fuzzy
+#| msgid "No related article found to process the status message on."
+msgid "No related article found to process the reaction message on."
+msgstr "Nerasta susijusio įrašo, kuriame būtų galima apdoroti statuso žinutę."
+
 #: lib/whatsapp/webhook/message/status.rb:15
 msgid "No related article found to process the status message on."
 msgstr "Nerasta susijusio įrašo, kuriame būtų galima apdoroti statuso žinutę."
@@ -12914,6 +12921,12 @@ msgstr "Perkrauti programą"
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:69
 msgid "Remember me"
 msgstr "Prisiminti mane"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:47
+#, fuzzy
+#| msgid "Welcome message"
+msgid "Reminder message"
+msgstr "Pasisveikinimo žinutė"
 
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco:18
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco:17

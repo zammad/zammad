@@ -2179,7 +2179,7 @@ msgstr "Acțiuni articol"
 msgid "Article could not be deleted."
 msgstr "Articolul nu a putut fi șters."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:125
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:126
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:27
 msgid "Article meta information"
 msgstr "Informații meta ale articolului"
@@ -2496,7 +2496,7 @@ msgstr "Link-ul automat al contului la prima autentificare"
 msgid "Automatic account linking notification"
 msgstr "Notificare privind legarea automată a contului"
 
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:178
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:181
 msgid "Automatic reminders"
 msgstr "Mementouri automate"
 
@@ -3157,7 +3157,7 @@ msgstr "S-au făcut modificări care necesită o actualizare a bazei de date."
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:33
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:157
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:100
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:134
@@ -3339,7 +3339,7 @@ msgstr "Alege grupul în care vor fi adăugate mențiunile."
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:34
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:31
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:51
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:60
 msgid "Choose the group to which messages will get added."
 msgstr "Alege grupul în care vor fi adăugate mesajele."
 
@@ -7618,7 +7618,7 @@ msgstr "Caută ce vrei să găsești, de ex. \"frază căutată\""
 msgid "Fingerprint"
 msgstr "Amprentă"
 
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:251
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:260
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco:17
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue:79
@@ -8161,7 +8161,7 @@ msgstr "Salutare"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:31
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco:11
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:38
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:47
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:56
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:33
 #: app/graphql/gql/types/overview_type.rb:63
 #: app/views/mailer/ticket_create/fr.html.erb:8
@@ -8377,6 +8377,7 @@ msgstr "Bună! Am nevoie de ajutor pentru produsul dumneavoastră."
 msgid "Hello, my name is %s, what can I do for you?"
 msgstr "Bună, numele meu este %s. Cu ce vă pot ajuta?"
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:50
 #: app/jobs/scheduled_whatsapp_reminder_job.rb:6
 msgid ""
 "Hello, the customer service window for this conversation is about to expire, "
@@ -11606,6 +11607,12 @@ msgstr "Nu a fost găsită nici o cheie privată."
 msgid "No proxy for the following hosts."
 msgstr "Nu folosi proxy pentru următoarele host-uri."
 
+#: lib/whatsapp/webhook/message/reaction.rb:13
+#, fuzzy
+#| msgid "No related article found to process the status message on."
+msgid "No related article found to process the reaction message on."
+msgstr "Niciun articol corelat găsit pentru a procesa mesajul de status."
+
 #: lib/whatsapp/webhook/message/status.rb:15
 msgid "No related article found to process the status message on."
 msgstr "Niciun articol corelat găsit pentru a procesa mesajul de status."
@@ -13475,6 +13482,12 @@ msgstr "Reîncarcă aplicația"
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:69
 msgid "Remember me"
 msgstr "Ține-mă minte"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:47
+#, fuzzy
+#| msgid "Welcome message"
+msgid "Reminder message"
+msgstr "Mesaj de bun venit"
 
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco:18
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco:17

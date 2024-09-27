@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-24 09:16+0000\n"
+"PO-Revision-Date: 2024-09-26 15:36+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -2143,7 +2143,7 @@ msgstr "Радње чланака"
 msgid "Article could not be deleted."
 msgstr "Није било могуће обрисати чланак."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:125
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:126
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:27
 msgid "Article meta information"
 msgstr "Мета информације чланка"
@@ -2456,7 +2456,7 @@ msgstr "Аутоматско повезивање налога приликом 
 msgid "Automatic account linking notification"
 msgstr "Обавештавање о аутоматском повезивању налога"
 
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:178
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:181
 msgid "Automatic reminders"
 msgstr "Аутоматски подсетници"
 
@@ -3105,7 +3105,7 @@ msgstr "Направљене измене захтевају освежење б
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:33
 #: app/assets/javascripts/app/models/email_address.coffee:34
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:8
-#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:152
+#: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:157
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:100
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:90
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:134
@@ -3278,7 +3278,7 @@ msgstr "Изабери групу којој ће бити додата поми
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:34
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:31
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:51
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:60
 msgid "Choose the group to which messages will get added."
 msgstr "Изабери групу којој ће бити додате поруке."
 
@@ -7386,7 +7386,7 @@ msgstr "Пронађите шта тражите, нпр. „кључне реч
 msgid "Fingerprint"
 msgstr "Отисак"
 
-#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:251
+#: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:260
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
 #: app/assets/javascripts/app/views/getting_started/email_pre_configured.jst.eco:17
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmailPreConfigured.vue:79
@@ -7914,7 +7914,7 @@ msgstr "Поздрав"
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:31
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco:11
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:38
-#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:47
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:56
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:33
 #: app/graphql/gql/types/overview_type.rb:63
 #: app/views/mailer/ticket_create/fr.html.erb:8
@@ -8127,6 +8127,7 @@ msgstr "Здраво! Потребна ми је помоћ за ваш прои
 msgid "Hello, my name is %s, what can I do for you?"
 msgstr "Здраво, зовем се %s, како могу да вам помогнем?"
 
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:50
 #: app/jobs/scheduled_whatsapp_reminder_job.rb:6
 msgid ""
 "Hello, the customer service window for this conversation is about to expire, "
@@ -11192,6 +11193,12 @@ msgstr "Није пронађен јавни кључ."
 msgid "No proxy for the following hosts."
 msgstr "Без проксија за следеће сервере."
 
+#: lib/whatsapp/webhook/message/reaction.rb:13
+#, fuzzy
+#| msgid "No related article found to process the status message on."
+msgid "No related article found to process the reaction message on."
+msgstr "Нису пронађен повезани чланак за обраду поруке статуса."
+
 #: lib/whatsapp/webhook/message/status.rb:15
 msgid "No related article found to process the status message on."
 msgstr "Нису пронађен повезани чланак за обраду поруке статуса."
@@ -12968,6 +12975,12 @@ msgstr "Освежи апликацију"
 #: app/frontend/apps/mobile/pages/authentication/components/LoginCredentialsForm.vue:69
 msgid "Remember me"
 msgstr "Запамти ме"
+
+#: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:47
+#, fuzzy
+#| msgid "Welcome message"
+msgid "Reminder message"
+msgstr "Порука добродошлице"
 
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco:18
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco:17
@@ -20226,7 +20239,7 @@ msgstr "неопходно је бар једно слово"
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
 msgid "attachment,attached,enclosed,enclosure"
-msgstr "прилог,приложен,атачмент"
+msgstr "прилог,приложен,атачован,атачмент"
 
 #: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"
