@@ -47,9 +47,6 @@ interface Props {
   tabId?: string
 }
 
-// - handover context to useTaskbarTab composable
-// - Default output for TicketCreate-TabEntity without a "entity/state"
-
 defineOptions({
   beforeRouteEnter(to) {
     const { ticketCreateEnabled, checkUniqueTicketCreateRoute } =
@@ -324,6 +321,9 @@ const discardChanges = async () => {
 }
 
 const applyTemplate = (templateId: string) => {
+  // Skip subscription for the current tab, to avoid not needed form updater requests.
+  setSkipNextStateUpdate(true)
+
   triggerFormUpdater({
     includeDirtyFields: true,
     additionalParams: {

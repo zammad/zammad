@@ -31,6 +31,7 @@ const emit = defineEmits<{
     articleType: string,
     performReply: AppSpecificTicketArticleType['performReply'],
   ]
+  'discard-form': []
 }>()
 
 const currentTicketArticleType = computed(() => {
@@ -218,7 +219,7 @@ defineExpose({
         }"
       >
         <div
-          class="flex h-10 items-center justify-between p-3"
+          class="flex h-10 items-center p-3"
           :class="{
             'bg-neutral-50 dark:bg-gray-500': pinned,
             'border-b border-b-transparent': pinned && articleFormReachedTop,
@@ -228,12 +229,19 @@ defineExpose({
         >
           <CommonLabel
             id="article-reply-form-title"
-            class="text-stone-200 dark:text-neutral-500"
+            class="text-stone-200 ltr:mr-auto rtl:ml-auto dark:text-neutral-500"
             tag="h2"
             size="small"
           >
             {{ $t('Reply') }}
           </CommonLabel>
+          <CommonButton
+            v-tooltip="$t('Discard unsaved reply')"
+            class="text-red-500 ltr:mr-2 rtl:ml-2"
+            variant="none"
+            icon="trash"
+            @click="$emit('discard-form')"
+          />
           <CommonButton
             v-tooltip="pinned ? $t('Unpin this panel') : $t('Pin this panel')"
             :icon="pinned ? 'pin' : 'pin-angle'"

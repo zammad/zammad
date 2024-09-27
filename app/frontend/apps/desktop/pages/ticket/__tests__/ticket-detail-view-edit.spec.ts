@@ -674,5 +674,281 @@ describe('Ticket detail view', () => {
         view.queryByRole('textbox', { name: 'Text' }),
       ).not.toBeInTheDocument()
     })
+
+    it('discards reply form and it keeps the ticket attribute fields state', async () => {
+      mockTicketQuery({
+        ticket: createDummyTicket({
+          articleType: 'phone',
+          defaultPolicy: {
+            update: true,
+            agentReadAccess: true,
+          },
+        }),
+      })
+
+      mockTicketArticlesQuery({
+        articles: {
+          totalCount: 1,
+          edges: [
+            {
+              node: createDummyArticle({
+                articleType: 'phone',
+                internal: false,
+              }),
+            },
+          ],
+        },
+      })
+
+      mockFormUpdaterQuery({
+        formUpdater: {
+          fields: {
+            group_id: {
+              options: [
+                {
+                  value: 1,
+                  label: 'Users',
+                },
+                {
+                  value: 2,
+                  label: 'test group',
+                },
+              ],
+            },
+            owner_id: {
+              options: [
+                {
+                  value: 3,
+                  label: 'Test Admin Agent',
+                },
+              ],
+            },
+            state_id: {
+              options: [
+                {
+                  value: 4,
+                  label: 'closed',
+                },
+                {
+                  value: 2,
+                  label: 'open',
+                },
+                {
+                  value: 6,
+                  label: 'pending close',
+                },
+                {
+                  value: 3,
+                  label: 'pending reminder',
+                },
+              ],
+            },
+            pending_time: {
+              show: false,
+            },
+            priority_id: {
+              options: [
+                {
+                  value: 1,
+                  label: '1 low',
+                },
+                {
+                  value: 2,
+                  label: '2 normal',
+                },
+                {
+                  value: 3,
+                  label: '3 high',
+                },
+              ],
+            },
+          },
+          flags: {
+            newArticlePresent: false,
+          },
+        },
+      })
+
+      const view = await visitView('/tickets/1')
+
+      // Discard changes inside the reply form
+      await view.events.click(
+        view.getByRole('button', { name: 'Add phone call' }),
+      )
+
+      expect(
+        await view.findByRole('heading', { level: 2, name: 'Reply' }),
+      ).toBeInTheDocument()
+
+      // Sets dirty set for a ticket attribute
+      await view.events.click(view.getByLabelText('State'))
+      await view.events.click(
+        await view.findByRole('option', { name: 'closed' }),
+      )
+
+      await view.events.click(
+        view.getByRole('button', { name: 'Discard unsaved reply' }),
+      )
+
+      expect(
+        await view.findByRole('dialog', { name: 'Unsaved Changes' }),
+      ).toBeInTheDocument()
+
+      await view.events.click(
+        view.getByRole('button', { name: 'Discard Changes' }),
+      )
+
+      // Verify that ticket attributes state is not lost
+      expect(view.getByLabelText('State')).toHaveTextContent('closed')
+    })
+
+    // TODO: Currently we have a problem in our resetForm-Function but also Formkit has an bug inside the own reset handling
+    //  (null / false will currently ignored when setting back the initial value).
+    // So we will improve our own reset function and create an issue on FormKit side to fix this.
+    it.skip('discards complete form with an reply and afterwards only the reply directly', async () => {
+      mockTicketQuery({
+        ticket: createDummyTicket({
+          group: {
+            id: convertToGraphQLId('Group', 1),
+            emailAddress: {
+              name: 'Zammad Helpdesk',
+              emailAddress: 'zammad@localhost',
+            },
+          },
+          defaultPolicy: {
+            update: true,
+            agentReadAccess: true,
+          },
+        }),
+      })
+
+      mockTicketArticlesQuery({
+        articles: {
+          totalCount: 1,
+          edges: [
+            {
+              node: createDummyArticle({
+                articleType: 'phone',
+                internal: false,
+              }),
+            },
+          ],
+        },
+      })
+
+      mockFormUpdaterQuery({
+        formUpdater: {
+          fields: {
+            group_id: {
+              options: [
+                {
+                  value: 1,
+                  label: 'Users',
+                },
+                {
+                  value: 2,
+                  label: 'test group',
+                },
+              ],
+            },
+            owner_id: {
+              options: [
+                {
+                  value: 3,
+                  label: 'Test Admin Agent',
+                },
+              ],
+            },
+            state_id: {
+              options: [
+                {
+                  value: 4,
+                  label: 'closed',
+                },
+                {
+                  value: 2,
+                  label: 'open',
+                },
+                {
+                  value: 6,
+                  label: 'pending close',
+                },
+                {
+                  value: 3,
+                  label: 'pending reminder',
+                },
+              ],
+            },
+            pending_time: {
+              show: false,
+            },
+            priority_id: {
+              options: [
+                {
+                  value: 1,
+                  label: '1 low',
+                },
+                {
+                  value: 2,
+                  label: '2 normal',
+                },
+                {
+                  value: 3,
+                  label: '3 high',
+                },
+              ],
+            },
+          },
+          flags: {
+            newArticlePresent: false,
+          },
+        },
+      })
+
+      const view = await visitView('/tickets/1')
+
+      // Discard changes inside the reply form
+      await view.events.click(view.getByRole('button', { name: 'Add reply' }))
+
+      await view.events.click(
+        await view.findByRole('button', {
+          name: 'Discard your unsaved changes',
+        }),
+      )
+
+      expect(
+        await view.findByRole('dialog', { name: 'Unsaved Changes' }),
+      ).toBeInTheDocument()
+
+      await view.events.click(
+        view.getByRole('button', { name: 'Discard Changes' }),
+      )
+
+      expect(
+        view.queryByRole('button', {
+          name: 'Discard your unsaved changes',
+        }),
+      ).not.toBeInTheDocument()
+
+      await view.events.click(view.getByRole('button', { name: 'Add reply' }))
+
+      await view.events.click(
+        view.getByRole('button', { name: 'Discard unsaved reply' }),
+      )
+
+      expect(
+        await view.findByRole('dialog', { name: 'Unsaved Changes' }),
+      ).toBeInTheDocument()
+
+      await view.events.click(
+        view.getByRole('button', { name: 'Discard Changes' }),
+      )
+
+      expect(
+        view.queryByRole('button', {
+          name: 'Discard your unsaved changes',
+        }),
+      ).not.toBeInTheDocument()
+    })
   })
 })

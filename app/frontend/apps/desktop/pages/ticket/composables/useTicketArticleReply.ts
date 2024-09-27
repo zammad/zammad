@@ -11,7 +11,7 @@ export const useTicketArticleReply = (
   initialNewTicketArticlePresent: Ref<boolean | undefined>,
 ) => {
   const localNewTicketArticlePresent = ref<boolean>()
-  // TODO: swichting tabs when you added a new article is shortly showing the buttons (because taskbar tab don't has the information yet?)
+  // TODO: switching tabs when you added a new article is shortly showing the buttons (because taskbar tab don't has the information yet?)
   const newTicketArticlePresent = computed({
     get: () => {
       if (localNewTicketArticlePresent.value !== undefined)

@@ -257,6 +257,10 @@ const discardChanges = async () => {
     newTicketArticlePresent.value = false
 
     await nextTick()
+
+    // Skip subscription for the current tab, to avoid not needed form updater requests.
+    setSkipNextStateUpdate(true)
+
     formReset()
   }
 }
@@ -490,6 +494,21 @@ const submitEditTicket = async (
     })
 }
 
+const discardReplyForm = async () => {
+  const confirm = await waitForVariantConfirmation('unsaved')
+
+  if (!confirm) return
+
+  newTicketArticlePresent.value = false
+
+  await nextTick()
+
+  // Skip subscription for the current tab, to avoid not needed form updater requests.
+  setSkipNextStateUpdate(true)
+
+  return triggerFormUpdater()
+}
+
 const handleShowArticleForm = (
   articleType: string,
   performReply: AppSpecificTicketArticleType['performReply'],
@@ -552,6 +571,7 @@ watch(ticketId, () => {
           :has-internal-article="hasInternalArticle"
           :parent-reached-bottom-scroll="reachedBottom"
           @show-article-form="handleShowArticleForm"
+          @discard-form="discardReplyForm"
         />
 
         <div id="wrapper-form-ticket-edit" class="hidden" aria-hidden="true">
