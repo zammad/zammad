@@ -436,7 +436,7 @@ msgid "%s ago"
 msgstr "ezelőtt: %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:31
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:222
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:224
 msgid "%s attached files"
 msgstr "%s csatolt fájl"
 
@@ -448,7 +448,7 @@ msgstr ""
 "törléséhez"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:49
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:25
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:26
 msgid "%s created article for |%s|"
 msgstr "%s létrehozott egy cikket |%s| számára"
 
@@ -589,6 +589,13 @@ msgstr "%s a jegyeim közül eszkalálódott"
 msgid "%s people"
 msgstr "emberek"
 
+#: app/assets/javascripts/app/models/ticket_article.coffee:53
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:31
+#, fuzzy
+#| msgid "%s ended switch to |%s|!"
+msgid "%s reacted with a %s to %s message |%s|"
+msgstr "%s befejezte az átváltást erre: |%s|!"
+
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:49
 msgid ""
 "%s recommends using OAuth. %s announced it's going to drop Basic "
@@ -626,7 +633,7 @@ msgid "%s tickets found"
 msgstr "%s talált jegy"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:27
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
 msgid "%s updated article for |%s|"
 msgstr "%s cikket frissített |%s| számára"
 
@@ -777,7 +784,7 @@ msgstr ""
 "értesítések** beállítását is."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:221
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:223
 msgid "1 attached file"
 msgstr "1 mellékelt fájl"
 
@@ -1470,7 +1477,7 @@ msgstr "Hivatkozás hozzáadása"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:53
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts:125
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:201
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:202
 #, fuzzy
 #| msgid "Add a message"
 msgid "Add message"
@@ -1490,7 +1497,7 @@ msgstr "Rendezett lista hozzáadása"
 msgid "Add phone call"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:63
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:64
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:37
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:88
 msgid "Add reply"
@@ -2209,7 +2216,7 @@ msgstr "Cikk > Szöveg (HTML)"
 msgid "Article Count"
 msgstr "Cikkek száma"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:282
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:289
 msgid "Article actions"
 msgstr "Cikk műveletek"
 
@@ -6159,6 +6166,12 @@ msgstr "Cikk elvetése"
 msgid "Discard changes"
 msgstr "Változások elvetése"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:239
+#, fuzzy
+#| msgid "Discard your unsaved changes"
+msgid "Discard unsaved reply"
+msgstr "A nem mentett változtatásainak elvetése"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:136
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:161
@@ -9169,7 +9182,7 @@ msgid "Including private key."
 msgstr "Beleértve a privát kulcsot."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:340
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:341
 #, fuzzy
 #| msgid "Incomplete credentials"
 msgid "Incomplete Ticket Checklist"
@@ -10693,7 +10706,7 @@ msgstr "Az áttekintésekben megjelenített jegyek maximális száma"
 msgid "May"
 msgstr "május"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:79
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
 msgid "Me"
 msgstr "Én"
 
@@ -11554,7 +11567,7 @@ msgstr "Nincs SSL"
 msgid "No Thanks!"
 msgstr "Nem, köszönöm!"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:122
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:123
 msgid ""
 "No additional text can be sent with this media type. Please remove the text."
 msgstr ""
@@ -11776,7 +11789,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Nincs x-zammad-session-user-id, nincs beállított feladó!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:343
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:344
 #, fuzzy
 #| msgid "You can no longer see the ticket."
 msgid "No, just close the ticket"
@@ -12869,7 +12882,7 @@ msgstr "A telefonszámot már egy másik WhatsApp-fiók használja."
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "Válasszon egy nevet az alkalmazásnak, és mi adunk egy egyedi tokent."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:238
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
 msgid "Pin this panel"
 msgstr ""
 
@@ -13700,7 +13713,7 @@ msgstr "Helyettesítő"
 msgid "Replacement agent"
 msgstr "Helyettesítő ügynök"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:235
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:236
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
@@ -13941,13 +13954,13 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:201
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:202
 #, fuzzy
 #| msgid "Resize side panel"
 msgid "Resize article panel"
 msgstr "Oldalpanel átméretezése"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageHandler.vue:169
+#: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageHandler.vue:170
 msgid "Resize frame"
 msgstr ""
 
@@ -14575,7 +14588,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:447
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:118
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:280
 msgid "See less"
 msgstr "Kevesebb"
 
@@ -14587,7 +14600,7 @@ msgstr "Kevesebb"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:118
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue:17
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:280
 msgid "See more"
 msgstr "Több"
 
@@ -18442,14 +18455,14 @@ msgstr "Jegy címe"
 msgid "Ticket update"
 msgstr "Jegyfrissítés"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:485
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:486
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket update failed."
 msgstr "Jegyfrissítés"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:437
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:438
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:171
 msgid "Ticket updated successfully."
 msgstr "A jegy sikeresen frissült."
@@ -19291,7 +19304,7 @@ msgstr ""
 msgid "Unlock"
 msgstr "Feloldás"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:238
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
 msgid "Unpin this panel"
 msgstr ""
 
@@ -19560,6 +19573,56 @@ msgstr ""
 "   <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}"
 "<% if @objects[:article] %>/#{article.id}<% end %>\" "
 "target=\"zammad_app\">Tekintse meg ebben: #{config.product_name}</a>\n"
+"</div>\n"
+
+#. This is the template file app/views/mailer/ticket_article_update_reaction/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/ticket_article_update_reaction/en.html.erb
+#, fuzzy
+#| msgid ""
+#| "Another ticket was merged into ticket (#{ticket.title})\n"
+#| "\n"
+#| "<div>Hi #{recipient.firstname},</div>\n"
+#| "<br>\n"
+#| "<div>\n"
+#| "Another ticket was merged into ticket (#{ticket.title}) by "
+#| "\"<b>#{current_user.longname}</b>\".\n"
+#| "</div>\n"
+#| "<br>\n"
+#| "<div>\n"
+#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+#| "id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n"
+#| "</div>\n"
+msgid ""
+"Updated ticket article (#{ticket.title})\n"
+"\n"
+"<div>Hi #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>\n"
+"<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> "
+"reacted with a <%= @objects[:article].preferences.dig('whatsapp', "
+"'reaction', 'emoji') %> to #{article.created_by.fullname} message "
+"\"<b>#{article.body_as_html}</b>\".\n"
+"</div>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
+"#{article.id}\" target=\"zammad_app\">View this in #{config.product_name}</"
+"a>\n"
+"</div>\n"
+msgstr ""
+"Egy másik jegyet egyesítettünk a jegybe (#{ticket.title})\n"
+"\n"
+"<div>Üdvözöljük #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>\n"
+"Egy másik jegy lett egyesítve a jegybe (#{ticket.title}) \"<b>#{current_user."
+"longname}\" által.</b>\".\n"
+"</div>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}\" "
+"target=\"zammad_app\">Tekintse meg itt: #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
@@ -20213,7 +20276,7 @@ msgstr "A %s milyen értékeit kell szinkronizálni a felhasználókkal."
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:37
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:3
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:200
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:201
 #: db/seeds/permissions.rb:179
 msgid "WhatsApp"
 msgstr "WhatsApp"
@@ -20418,7 +20481,7 @@ msgid "Yes, add attachments now"
 msgstr "A melléklet letöltésének megismétlése"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:342
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:343
 #, fuzzy
 #| msgid "Remove %s"
 msgid "Yes, open the checklist"
@@ -20437,7 +20500,7 @@ msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Ezt azért kapja, mert Ön tagja az ehhez a jegyhez tartozó csoportnak."
 
-#: app/models/transaction/notification.rb:279
+#: app/models/transaction/notification.rb:281
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -20577,7 +20640,7 @@ msgstr "A továbbiakban nem láthatja a szervezetet."
 msgid "You can no longer see the role."
 msgstr "A továbbiakban nem láthatja a szerepkört."
 
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:18
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:19
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:18
 msgid "You can no longer see the ticket."
 msgstr "A továbbiakban nem láthatja a jegyet."
@@ -20725,7 +20788,7 @@ msgstr "Engedélyeznie kell az Ön webkamerájához való hozzáférést."
 msgid "You have unchecked items in the checklist."
 msgstr "Kérjük, válasszon ki legalább egy jegy áttekintést"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:337
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:338
 #, fuzzy
 #| msgid "Do you really want to delete this object?"
 msgid ""
@@ -21548,7 +21611,7 @@ msgstr "egy ügynök számára, hogy válaszoljon"
 msgid "forward"
 msgstr "továbbítás"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:143
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:150
 msgid "from"
 msgstr "feladó"
 
@@ -22141,6 +22204,10 @@ msgstr "negyedóra"
 msgid "reached"
 msgstr "elérte"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
+msgid "reacted with a %s to %s message '%s'"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
 msgid "read by the customer"
@@ -22178,6 +22245,10 @@ msgstr "eltávolít"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "remove option"
 msgstr "lehetőség eltávolítása"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:135
+msgid "removed reaction to %s message '%s'"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:10
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/facebook_reply.coffee:8

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-25 09:16+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2024-09-27 09:16+0000\n"
+"Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -426,7 +426,7 @@ msgid "%s ago"
 msgstr "vor %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:31
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:222
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:224
 msgid "%s attached files"
 msgstr "%s anhängende Dateien"
 
@@ -438,7 +438,7 @@ msgstr ""
 "abgeschlossen"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:49
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:25
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:26
 msgid "%s created article for |%s|"
 msgstr "%s erstellte einen Artikel für |%s|"
 
@@ -578,6 +578,11 @@ msgstr "%s meiner Tickets sind eskaliert"
 msgid "%s people"
 msgstr "%s Personen"
 
+#: app/assets/javascripts/app/models/ticket_article.coffee:53
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:31
+msgid "%s reacted with a %s to %s message |%s|"
+msgstr "%s hat mit %s auf %s reagiert |%s|!"
+
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:49
 msgid ""
 "%s recommends using OAuth. %s announced it's going to drop Basic "
@@ -615,7 +620,7 @@ msgid "%s tickets found"
 msgstr "%s Tickets gefunden"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:27
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
 msgid "%s updated article for |%s|"
 msgstr "%s aktualisierte Artikel für |%s|"
 
@@ -771,7 +776,7 @@ msgstr ""
 "angezeigt. Sie können außerdem **E-Mail-Benachrichtigungen** konfigurieren."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:221
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:223
 msgid "1 attached file"
 msgstr "1 angehängte Datei"
 
@@ -1449,7 +1454,7 @@ msgstr "Verknüpfung hinzufügen"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:53
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts:125
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:201
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:202
 msgid "Add message"
 msgstr "Nachricht hinzufügen"
 
@@ -1465,7 +1470,7 @@ msgstr "Sortierte Liste hinzufügen"
 msgid "Add phone call"
 msgstr "Telefonanruf hinzufügen"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:63
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:64
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:37
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:88
 msgid "Add reply"
@@ -2172,7 +2177,7 @@ msgstr "Artikel > Text (HTML)"
 msgid "Article Count"
 msgstr "Artikelanzahl"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:282
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:289
 msgid "Article actions"
 msgstr "Artikel-Aktionen"
 
@@ -6025,6 +6030,12 @@ msgstr "Artikel verwerfen"
 msgid "Discard changes"
 msgstr "Änderungen verwerfen"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:239
+#, fuzzy
+#| msgid "Discard your unsaved changes"
+msgid "Discard unsaved reply"
+msgstr "Verwerfen der ungespeicherten Änderungen"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:136
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:161
@@ -8977,7 +8988,7 @@ msgid "Including private key."
 msgstr "Beinhaltet privaten Schlüssel."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:340
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:341
 msgid "Incomplete Ticket Checklist"
 msgstr "Unvollständige Ticket-Checkliste"
 
@@ -10429,7 +10440,7 @@ msgstr "Maximalanzahl angezeigter Tickets in Übersichten"
 msgid "May"
 msgstr "Mai"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:79
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
 msgid "Me"
 msgstr "Ich"
 
@@ -11273,7 +11284,7 @@ msgstr "kein SSL"
 msgid "No Thanks!"
 msgstr "Nein danke!"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:122
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:123
 msgid ""
 "No additional text can be sent with this media type. Please remove the text."
 msgstr ""
@@ -11397,12 +11408,8 @@ msgid "No proxy for the following hosts."
 msgstr "Kein Proxy für die folgenden Hosts."
 
 #: lib/whatsapp/webhook/message/reaction.rb:13
-#, fuzzy
-#| msgid "No related article found to process the status message on."
 msgid "No related article found to process the reaction message on."
-msgstr ""
-"Es wurde kein verwandter Artikel gefunden, um die Statusmeldung zu "
-"bearbeiten."
+msgstr "Es wurde kein Artikel gefunden, um die Statusmeldung zu verarbeiten."
 
 #: lib/whatsapp/webhook/message/status.rb:15
 msgid "No related article found to process the status message on."
@@ -11487,7 +11494,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Keine 'x-zammad-session-user-id', kein Absender gesetzt!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:343
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:344
 msgid "No, just close the ticket"
 msgstr "Nein, Ticket nur schließen"
 
@@ -12548,7 +12555,7 @@ msgstr ""
 "Wählen Sie den Namen der Applikation, danach wird ein eindeutiger Token "
 "generiert."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:238
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
 msgid "Pin this panel"
 msgstr "Diesen Bereich anheften"
 
@@ -13213,10 +13220,8 @@ msgid "Remember me"
 msgstr "An mich erinnern"
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:47
-#, fuzzy
-#| msgid "Welcome message"
 msgid "Reminder message"
-msgstr "Willkommens-Nachricht"
+msgstr "Erinnerungs-Nachricht"
 
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco:18
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco:17
@@ -13366,7 +13371,7 @@ msgstr "Vertreter"
 msgid "Replacement agent"
 msgstr "Vertretungs-Agent"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:235
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:236
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
@@ -13602,11 +13607,11 @@ msgid "Resetting the order of your ticket overviews failed."
 msgstr ""
 "Das Zurücksetzen der Reihenfolge der Ticket-Übersichten ist fehlgeschlagen."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:201
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:202
 msgid "Resize article panel"
 msgstr "Größe des Artikel-Bereichs ändern"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageHandler.vue:169
+#: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageHandler.vue:170
 msgid "Resize frame"
 msgstr "Rahmengröße ändern"
 
@@ -14241,7 +14246,7 @@ msgstr "Siehe HTTPLog für Details."
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:447
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:118
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:280
 msgid "See less"
 msgstr "Weniger anzeigen"
 
@@ -14253,7 +14258,7 @@ msgstr "Weniger anzeigen"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:118
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue:17
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:280
 msgid "See more"
 msgstr "Mehr anzeigen"
 
@@ -17978,12 +17983,12 @@ msgstr "Ticket-Titel"
 msgid "Ticket update"
 msgstr "Ticket-Änderung"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:485
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:486
 msgid "Ticket update failed."
 msgstr "Aktualisierung des Tickets fehlgeschlagen."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:437
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:438
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:171
 msgid "Ticket updated successfully."
 msgstr "Ticket erfolgreich aktualisiert."
@@ -18815,7 +18820,7 @@ msgstr ""
 msgid "Unlock"
 msgstr "Entsperren"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:238
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
 msgid "Unpin this panel"
 msgstr "Diesen Bereich lösen"
 
@@ -19078,6 +19083,44 @@ msgstr ""
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% "
 "if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app\">In "
 "#{config.product_name} anzeigen</a>\n"
+"</div>\n"
+
+#. This is the template file app/views/mailer/ticket_article_update_reaction/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/ticket_article_update_reaction/en.html.erb
+msgid ""
+"Updated ticket article (#{ticket.title})\n"
+"\n"
+"<div>Hi #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>\n"
+"<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> "
+"reacted with a <%= @objects[:article].preferences.dig('whatsapp', "
+"'reaction', 'emoji') %> to #{article.created_by.fullname} message "
+"\"<b>#{article.body_as_html}</b>\".\n"
+"</div>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
+"#{article.id}\" target=\"zammad_app\">View this in #{config.product_name}</"
+"a>\n"
+"</div>\n"
+msgstr ""
+"Aktualisierter Ticket Artikel (#{ticket.title})\n"
+"\n"
+"<div>Hallo #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>\n"
+"<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> "
+"reagierte mit <%= @objects[:article].preferences.dig('whatsapp', 'reaction', "
+"'emoji') %> auf #{article.created_by.fullname} die Nachricht \"<b>#{article."
+"body_as_html}</b>\".\n"
+"</div>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
+"#{article.id}\" target=\"zammad_app\">Dies in #{config.product_name} "
+"ansehen</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
@@ -19729,7 +19772,7 @@ msgstr "Welche Werte von %s für Benutzer zu übernehmen sind."
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:37
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:3
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:200
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:201
 #: db/seeds/permissions.rb:179
 msgid "WhatsApp"
 msgstr "WhatsApp"
@@ -19927,7 +19970,7 @@ msgid "Yes, add attachments now"
 msgstr "Ja, jetzt Anhänge hinzufügen"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:342
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:343
 msgid "Yes, open the checklist"
 msgstr "Ja, Checkliste öffnen"
 
@@ -19944,7 +19987,7 @@ msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Sie erhalten dies, weil Sie Mitglied der Gruppe dieses Tickets sind."
 
-#: app/models/transaction/notification.rb:279
+#: app/models/transaction/notification.rb:281
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -20088,7 +20131,7 @@ msgstr "Sie können die Organisation nicht mehr einsehen."
 msgid "You can no longer see the role."
 msgstr "Sie können die Rolle nicht mehr einsehen."
 
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:18
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:19
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:18
 msgid "You can no longer see the ticket."
 msgstr "Sie können das Ticket nicht mehr einsehen."
@@ -20231,7 +20274,7 @@ msgstr "Sie müssen den Zugriff auf Ihre Webcam genehmigen."
 msgid "You have unchecked items in the checklist."
 msgstr "Sie haben noch nicht abgehakte Elemente in der Checkliste."
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:337
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:338
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -21021,7 +21064,7 @@ msgstr "für einen Agenten zu reagieren"
 msgid "forward"
 msgstr "weiterleiten"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:143
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:150
 msgid "from"
 msgstr "von"
 
@@ -21593,6 +21636,10 @@ msgstr "Viertelstunde(n)"
 msgid "reached"
 msgstr "erreicht"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
+msgid "reacted with a %s to %s message '%s'"
+msgstr "reagierte mit %s auf %s Nachricht '%s'"
+
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
 msgid "read by the customer"
@@ -21627,6 +21674,10 @@ msgstr "entfernen"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "remove option"
 msgstr "Option entfernen"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:135
+msgid "removed reaction to %s message '%s'"
+msgstr "hat die Reaktion auf %s Nachricht '%s' entfernt"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:10
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/facebook_reply.coffee:8

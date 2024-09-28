@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-26 15:36+0000\n"
+"PO-Revision-Date: 2024-09-27 09:16+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -427,7 +427,7 @@ msgid "%s ago"
 msgstr "пре %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:31
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:222
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:224
 msgid "%s attached files"
 msgstr "%s прилог(а)"
 
@@ -437,7 +437,7 @@ msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr "Извршен захтев од стране %s за брисање корисничког ID |%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:49
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:25
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:26
 msgid "%s created article for |%s|"
 msgstr "Додат чланак од стране %s за |%s|"
 
@@ -576,6 +576,11 @@ msgstr "%s мојих тикета је ескалирано"
 msgid "%s people"
 msgstr "%s особа(е)"
 
+#: app/assets/javascripts/app/models/ticket_article.coffee:53
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:31
+msgid "%s reacted with a %s to %s message |%s|"
+msgstr "%s је реаговао(ла) са %s на %s поруку |%s|"
+
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:49
 msgid ""
 "%s recommends using OAuth. %s announced it's going to drop Basic "
@@ -613,7 +618,7 @@ msgid "%s tickets found"
 msgstr "%s тикет(а) пронађен(о)"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:27
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
 msgid "%s updated article for |%s|"
 msgstr "Освежен чланак од стране %s за |%s|"
 
@@ -765,7 +770,7 @@ msgstr ""
 "обавештења**."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:221
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:223
 msgid "1 attached file"
 msgstr "1 приложена датотека"
 
@@ -1430,7 +1435,7 @@ msgstr "Додај везу"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:53
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts:125
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:201
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:202
 msgid "Add message"
 msgstr "Додај поруку"
 
@@ -1446,7 +1451,7 @@ msgstr "Додај листу са бројевима"
 msgid "Add phone call"
 msgstr "Додај позив"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:63
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:64
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:37
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:88
 msgid "Add reply"
@@ -2135,7 +2140,7 @@ msgstr "Чланак > Текст (HTML)"
 msgid "Article Count"
 msgstr "Број чланака"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:282
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:289
 msgid "Article actions"
 msgstr "Радње чланака"
 
@@ -5906,6 +5911,12 @@ msgstr "Откажи чланак"
 msgid "Discard changes"
 msgstr "Откажи промене"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:239
+#, fuzzy
+#| msgid "Discard your unsaved changes"
+msgid "Discard unsaved reply"
+msgstr "Откажи своје несачуване измене"
+
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:136
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:161
@@ -8791,7 +8802,7 @@ msgid "Including private key."
 msgstr "Укључује и тајни кључ."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:340
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:341
 msgid "Incomplete Ticket Checklist"
 msgstr "Некомплетан списак задатака"
 
@@ -10227,7 +10238,7 @@ msgstr "Максимални број тикета у прегледима"
 msgid "May"
 msgstr "мај"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:79
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
 msgid "Me"
 msgstr "Ја"
 
@@ -11071,7 +11082,7 @@ msgstr "Без SSL"
 msgid "No Thanks!"
 msgstr "Не, хвала!"
 
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:122
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:123
 msgid ""
 "No additional text can be sent with this media type. Please remove the text."
 msgstr ""
@@ -11194,10 +11205,8 @@ msgid "No proxy for the following hosts."
 msgstr "Без проксија за следеће сервере."
 
 #: lib/whatsapp/webhook/message/reaction.rb:13
-#, fuzzy
-#| msgid "No related article found to process the status message on."
 msgid "No related article found to process the reaction message on."
-msgstr "Нису пронађен повезани чланак за обраду поруке статуса."
+msgstr "Није пронађен повезани чланак за обраду поруке реакције."
 
 #: lib/whatsapp/webhook/message/status.rb:15
 msgid "No related article found to process the status message on."
@@ -11280,7 +11289,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Без x-zammad-session-user-id, пошиљалац није подешен!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:343
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:344
 msgid "No, just close the ticket"
 msgstr "Не, само затвори тикет"
 
@@ -12322,7 +12331,7 @@ msgstr "Одабрани број телефона се већ користи з
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "Изаберите назив апликације, и добићете јединствени кључ."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:238
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
 msgid "Pin this panel"
 msgstr "Закачи овај панел"
 
@@ -12977,10 +12986,8 @@ msgid "Remember me"
 msgstr "Запамти ме"
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:47
-#, fuzzy
-#| msgid "Welcome message"
 msgid "Reminder message"
-msgstr "Порука добродошлице"
+msgstr "Порука подсетника"
 
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco:18
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco:17
@@ -13130,7 +13137,7 @@ msgstr "Замена"
 msgid "Replacement agent"
 msgstr "Оператер на замени"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:235
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:236
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
@@ -13362,11 +13369,11 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr "Поништавање редоследа ваших прегледа тикета није успело."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:201
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:202
 msgid "Resize article panel"
 msgstr "Промени висину панела чланка"
 
-#: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageHandler.vue:169
+#: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageHandler.vue:170
 msgid "Resize frame"
 msgstr "Промени ширину рама"
 
@@ -13992,7 +13999,7 @@ msgstr "Погледајте HTTPLog за детаље."
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:447
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:119
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:118
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:280
 msgid "See less"
 msgstr "Прикажи мање"
 
@@ -14004,7 +14011,7 @@ msgstr "Прикажи мање"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:134
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBody.vue:118
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMore.vue:17
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:273
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:280
 msgid "See more"
 msgstr "Прикажи више"
 
@@ -17637,12 +17644,12 @@ msgstr "Наслов тикета"
 msgid "Ticket update"
 msgstr "Освежавање тикета"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:485
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:486
 msgid "Ticket update failed."
 msgstr "Неуспело освежавање тикета."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:437
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:438
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:171
 msgid "Ticket updated successfully."
 msgstr "Тикет је успешно освежен."
@@ -18447,7 +18454,7 @@ msgstr ""
 msgid "Unlock"
 msgstr "Откључај"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:238
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
 msgid "Unpin this panel"
 msgstr "Откачи овај панел"
 
@@ -18708,6 +18715,43 @@ msgstr ""
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% "
 "if @objects[:article] %>/#{article.id}<% end %>\" "
 "target=\"zammad_app\">Погледај у #{config.product_name}</a>\n"
+"</div>\n"
+
+#. This is the template file app/views/mailer/ticket_article_update_reaction/en.html.erb in ERB/HTML format.
+#. Please make sure to translate it to a valid corresponding output structure.
+#: app/views/mailer/ticket_article_update_reaction/en.html.erb
+msgid ""
+"Updated ticket article (#{ticket.title})\n"
+"\n"
+"<div>Hi #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>\n"
+"<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> "
+"reacted with a <%= @objects[:article].preferences.dig('whatsapp', "
+"'reaction', 'emoji') %> to #{article.created_by.fullname} message "
+"\"<b>#{article.body_as_html}</b>\".\n"
+"</div>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
+"#{article.id}\" target=\"zammad_app\">View this in #{config.product_name}</"
+"a>\n"
+"</div>\n"
+msgstr ""
+"Освежен чланак тикета (#{ticket.title})\n"
+"\n"
+"<div>Здраво #{recipient.firstname},</div>\n"
+"<br>\n"
+"<div>\n"
+"<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> "
+"је реаговао(ла) са <%= @objects[:article].preferences.dig('whatsapp', "
+"'reaction', 'emoji') %> на #{article.created_by.fullname} поруку "
+"\"<b>#{article.body_as_html}</b>\".\n"
+"</div>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
+"#{article.id}\" target=\"zammad_app\">Погледај у #{config.product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
@@ -19352,7 +19396,7 @@ msgstr "Које вредности %s се синхронизују са кор
 
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:37
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:3
-#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:200
+#: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:201
 #: db/seeds/permissions.rb:179
 msgid "WhatsApp"
 msgstr "WhatsApp"
@@ -19545,7 +19589,7 @@ msgid "Yes, add attachments now"
 msgstr "Да, додај прилог одмах"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:342
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:343
 msgid "Yes, open the checklist"
 msgstr "Да, прикажи списак"
 
@@ -19562,7 +19606,7 @@ msgid ""
 "You are receiving this because you are a member of the group of this ticket."
 msgstr "Добијате ово зато што сте члан групе овог тикета."
 
-#: app/models/transaction/notification.rb:279
+#: app/models/transaction/notification.rb:281
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
@@ -19702,7 +19746,7 @@ msgstr "Више немате приступ организацији."
 msgid "You can no longer see the role."
 msgstr "Више немате приступ улози."
 
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:18
+#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:19
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:18
 msgid "You can no longer see the ticket."
 msgstr "Више немате приступ тикету."
@@ -19840,7 +19884,7 @@ msgstr "Морате да дозволите приступ вашој каме�
 msgid "You have unchecked items in the checklist."
 msgstr "Имате неодзначене задатке на списку."
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:337
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:338
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -20622,7 +20666,7 @@ msgstr "док оператер не одговори"
 msgid "forward"
 msgstr "проследи"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:143
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:150
 msgid "from"
 msgstr "од"
 
@@ -21193,6 +21237,10 @@ msgstr "четврт сат(а)"
 msgid "reached"
 msgstr "достигнуто"
 
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
+msgid "reacted with a %s to %s message '%s'"
+msgstr "је реаговао(ла) са %s на %s поруку '%s'"
+
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
 msgid "read by the customer"
@@ -21227,6 +21275,10 @@ msgstr "уклони"
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "remove option"
 msgstr "уклони опцију"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:135
+msgid "removed reaction to %s message '%s'"
+msgstr "је уклонио(ла) реакцију на %s поруку '%s'"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:10
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/facebook_reply.coffee:8
