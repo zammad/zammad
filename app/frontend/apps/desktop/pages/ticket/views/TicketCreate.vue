@@ -354,7 +354,7 @@ const submitCreateTicket = async (event: FormSubmitData<TicketFormData>) => {
     content-alignment="center"
     :show-sidebar="hasSidebar"
   >
-    <div class="w-full max-w-screen-2xl px-28 pt-3.5">
+    <div class="w-full max-w-screen-2xl px-28 py-3.5">
       <Form
         id="ticket-create"
         ref="form"
