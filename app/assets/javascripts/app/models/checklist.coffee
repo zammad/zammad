@@ -36,3 +36,28 @@ class App.Checklist extends App.Model
       success: (data, status, xhr) ->
         callback(data)
     )
+
+  @calculateState: (ticket) ->
+    checklist = App.Checklist.findByAttribute('ticket_id', ticket.id)
+
+    return if !checklist
+
+    all  = checklist.sorted_items().length
+    open = checklist.open_items().length
+
+    return undefined if !open
+
+    {
+      all:  all,
+      open: open
+    }
+
+  @calculateReferences: (ticket) ->
+    items            = App.ChecklistItem
+      .findAllByAttribute('ticket_id', ticket.id)
+      .filter (elem) -> !elem.ticket_inaccessible
+
+    checklist_ids    = _.unique items.map (elem) -> elem.checklist_id
+    checklists       = App.Checklist.findAll checklist_ids
+
+    App.Ticket.findAll checklists.map (elem) -> elem.ticket_id

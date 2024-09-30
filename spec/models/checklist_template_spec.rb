@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe ChecklistTemplate, :aggregate_failures, type: :model do
+RSpec.describe ChecklistTemplate, :aggregate_failures, current_user_id: 1, type: :model do
   describe 'validations' do
     context 'when limits are reached' do
       it 'does not allow more than 100 items' do

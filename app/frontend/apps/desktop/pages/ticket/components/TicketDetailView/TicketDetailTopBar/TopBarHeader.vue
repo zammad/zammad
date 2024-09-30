@@ -6,8 +6,8 @@ import { computed } from 'vue'
 import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
 
 import CommonBreadcrumb from '#desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue'
-import HighlightMenu from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/HighlightMenu.vue'
-import TicketInformation from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue'
+import HighlightMenu from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue'
+import TicketInformation from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import { useTicketNumber } from '#desktop/pages/ticket/composables/useTicketNumber.ts'
 
@@ -78,10 +78,8 @@ const detailViewActiveClasses = computed(() => {
     />
 
     <TicketInformation
-      v-if="ticket"
       :hide-details="hideDetails"
       :style="{ gridArea: hideDetails ? 'breadcrumbs' : 'info' }"
-      :ticket="ticket"
       :class="{ 'mx-10': !hideDetails }"
     />
   </header>

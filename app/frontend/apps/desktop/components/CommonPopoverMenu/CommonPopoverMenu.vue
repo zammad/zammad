@@ -90,20 +90,20 @@ const getHoverFocusStyles = (variant?: Variant) => {
                 aria-level="3"
                 >{{ item.groupLabel }}</CommonLabel
               >
-              <template v-for="i in item.array" :key="i.key">
-                <slot :name="`item-${i.key}`" v-bind="i">
+              <template v-for="subItem in item.array" :key="subItem.key">
+                <slot :name="`item-${subItem.key}`" v-bind="subItem">
                   <component
-                    :is="i.component || CommonPopoverMenuItem"
+                    :is="subItem.component || CommonPopoverMenuItem"
                     class="flex grow p-2.5"
-                    :class="getHoverFocusStyles(i.variant)"
-                    :label="i.label"
-                    :variant="i.variant"
-                    :link="i.link"
-                    :icon="i.icon"
-                    :label-placeholder="i.labelPlaceholder"
-                    @click="onClickItem($event, i)"
+                    :class="getHoverFocusStyles(subItem.variant)"
+                    :label="subItem.label"
+                    :variant="subItem.variant"
+                    :link="subItem.link"
+                    :icon="subItem.icon"
+                    :label-placeholder="subItem.labelPlaceholder"
+                    @click="onClickItem($event, subItem)"
                   />
-                  <slot :name="`itemRight-${i.key}`" v-bind="i" />
+                  <slot :name="`itemRight-${subItem.key}`" v-bind="subItem" />
                 </slot>
               </template>
             </li>

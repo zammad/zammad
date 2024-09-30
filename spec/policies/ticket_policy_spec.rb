@@ -338,8 +338,8 @@ describe TicketPolicy do
     context 'when user is agent' do
       let(:user) { create(:agent, groups: [record.group]) }
 
-      it 'does not forbid time unit fields' do
-        expect(policy.show?).to permit_fields(%i[time_unit time_units_per_type])
+      it 'does not forbid time unit and checklist fields' do
+        expect(policy.show?).to permit_fields(%i[time_unit time_units_per_type checklist referencing_checklist_tickets])
       end
     end
 
@@ -348,10 +348,10 @@ describe TicketPolicy do
 
       before { record.update!(customer: user) }
 
-      it 'forbids time unit fields' do
+      it 'forbids time unit and checklist fields' do
         expect(policy.show?)
           .to be_truthy
-          .and(forbid_fields(%i[time_unit time_units_per_type]))
+          .and(forbid_fields(%i[time_unit time_units_per_type checklist referencing_checklist_tickets]))
       end
 
       it 'permits other fields' do
@@ -365,10 +365,10 @@ describe TicketPolicy do
       let(:customer)     { create(:customer, organization:) }
       let(:record)       { create(:ticket, customer:) }
 
-      it 'forbids time unit fields' do
+      it 'forbids time unit and checklist fields' do
         expect(policy.show?)
           .to be_truthy
-          .and(forbid_fields(%i[time_unit time_units_per_type]))
+          .and(forbid_fields(%i[time_unit time_units_per_type checklist referencing_checklist_tickets]))
       end
 
       it 'permits other fields' do

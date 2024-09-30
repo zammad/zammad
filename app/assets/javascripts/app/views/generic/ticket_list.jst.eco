@@ -1,34 +1,44 @@
 <div class="tasks tasks--standalone">
   <% for ticket, i in @tickets: %>
-  <% if i == @show_max: %>
-  <% id = _.uniqueId('show_all_') %>
-  <div class="collapse" id="<%= id %>">
-  <% end %>
-  <div class="task">
-    <div class="icon-holder" title="<%- ticket.iconTitle() %>">
-      <%- @Icon('task-state', ticket.iconClass()) %>
-    </div>
-    <div class="task-text">
-      <a class="name ticket-popover" data-id="<%- ticket.id %>" href="<%- ticket.uiUrl() %>">
-        <% if @show_id: %>
-          <span class="task-id">#<%= ticket.number %></span>
-        <% end %>
-        <%= ticket.title || '-' %>
-      </a>
-      <%- @humanTime(ticket.created_at, false, 'time') %>
-    </div>
-    <% if @object && @editable: %>
-    <a class="list-item-delete js-delete" data-object="<%= @object %>" data-object-id="<%= ticket.id %>" data-link-type="<%= @linkType || 'normal' %>" data-type="remove">
-      <%- @Icon('diagonal-cross') %>
-    </a>
+    <% if i == @show_max: %>
+      <% id = _.uniqueId('show_all_') %>
+      <div class="collapse" id="<%= id %>">
     <% end %>
-  </div>
+    <div class="task">
+      <% if ticket instanceof App.Ticket: %>
+        <div class="icon-holder" title="<%- ticket.iconTitle() %>">
+          <%- @Icon('task-state', ticket.iconClass()) %>
+        </div>
+        <div class="task-text">
+          <a class="name ticket-popover" data-id="<%- ticket.id %>" href="<%- ticket.uiUrl() %>">
+            <% if @show_id: %>
+              <span class="task-id"><%- @C('ticket_hook') %><%= ticket.number %></span>
+            <% end %>
+            <%= ticket.title || '-' %>
+          </a>
+          <%- @humanTime(ticket.created_at, false, 'time') %>
+        </div>
+        <% if @object && @editable: %>
+          <a class="list-item-delete js-delete" data-object="<%= @object %>" data-object-id="<%= ticket.id %>" data-link-type="<%= @linkType || 'normal' %>" data-type="remove">
+            <%- @Icon('diagonal-cross') %>
+          </a>
+        <% end %>
+      <% else if typeof ticket == 'string': %>
+        <div class="icon-holder" title="">
+          <%- @Icon('task-state', undefined) %>
+        </div>
+        <div class="task-text">
+          <span>#<%= ticket %></span>
+        </div>
+      <% end %>
+    </div>
   <% end %>
+
   <% if @tickets.length > @show_max: %>
-  </div>
-  <div class="btn btn--text btn-show-all" role="button" data-toggle="collapse" data-target="#<%= id %>" aria-expanded="false" aria-controls="<%= id %>">
-    <div data-show="open"><%- @Icon('arrow-down') %> <span><%- @T('Show all…') %></span></div>
-    <div data-show="collapsed"><%- @Icon('arrow-up') %> <span><%- @T('Show less') %></span></div>
-  </div>
+    </div>
+    <div class="btn btn--text btn-show-all" role="button" data-toggle="collapse" data-target="#<%= id %>" aria-expanded="false" aria-controls="<%= id %>">
+      <div data-show="open"><%- @Icon('arrow-down') %> <span><%- @T('Show all…') %></span></div>
+      <div data-show="collapsed"><%- @Icon('arrow-up') %> <span><%- @T('Show less') %></span></div>
+    </div>
   <% end %>
 </div>

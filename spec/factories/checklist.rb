@@ -3,11 +3,9 @@
 FactoryBot.define do
   factory :checklist do
     name            { '' }
-    updated_by_id   { 1 }
-    created_by_id   { 1 }
     sorted_item_ids { [] }
 
-    ticket { association :ticket, **{ group: Group.first }.compact }
+    ticket
 
     transient do
       item_count { 5 }

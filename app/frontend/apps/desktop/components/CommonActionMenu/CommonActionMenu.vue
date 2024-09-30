@@ -67,10 +67,10 @@ const singleActionAriaLabel = computed(() => {
 
 const buttonVariantClassExtension = computed(() => {
   if (props.defaultButtonVariant === 'neutral-dark')
-    return 'border border-neutral-100 !outline-transparent  hover:border-blue-700 dark:hover:border-blue-700 hover:border-blue-800 bg-neutral-50 hover:bg-white text-gray-100 dark:border-gray-900 dark:bg-gray-500 dark:text-neutral-400'
+    return 'border border-neutral-100 !outline-transparent dark:hover:border-blue-700 hover:border-blue-800 bg-neutral-50 hover:bg-white text-gray-100 dark:border-gray-900 dark:bg-gray-500 dark:text-neutral-400'
 
   if (props.defaultButtonVariant === 'neutral-light')
-    return 'border border-neutral-100 !outline-transparent  hover:border-blue-700 dark:hover:border-blue-700 hover:border-blue-800 hover:bg-white bg-blue-100 text-gray-100 dark:border-gray-900 dark:bg-stone-500 dark:text-neutral-400'
+    return 'border border-neutral-100 !outline-transparent dark:hover:border-blue-700 hover:border-blue-800 hover:bg-white bg-blue-100 text-gray-100 dark:border-gray-900 dark:bg-stone-500 dark:text-neutral-400'
 
   return ''
 })

@@ -66,6 +66,8 @@ module Gql::Types
       field :time_unit, Float
       field :time_units_per_type, [Gql::Types::Ticket::TimeAccountingTypeSumType]
       field :shared_draft_zoom_id, GraphQL::Types::ID, null: true, description: 'The Shared draft ID if the ticket has a shared draft.'
+      field :checklist, Gql::Types::ChecklistType, description: 'Returns the checklist of this ticket, if present'
+      field :referencing_checklist_tickets, [Gql::Types::TicketType, { null: false }], description: 'Returns (only accessible) other tickets which reference the current ticket'
     end
 
     internal_fields do
@@ -110,6 +112,10 @@ module Gql::Types
       return nil if !@object.shared_draft
 
       Gql::ZammadSchema.id_from_object(@object.shared_draft)
+    end
+
+    def referencing_checklist_tickets
+      ::Checklist.tickets_referencing(@object, context.current_user)
     end
 
     private

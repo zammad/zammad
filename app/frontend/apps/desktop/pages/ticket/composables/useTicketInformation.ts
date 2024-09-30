@@ -21,7 +21,7 @@ export const initializeTicketInformation = (
     convertToGraphQLId('Ticket', internalId.value),
   )
 
-  // TODO: stay witht his for now, but need to be re-implemented for the tab situation.
+  // TODO: stay with his for now, but need to be re-implemented for the tab situation.
   const { createQueryErrorHandler } = useErrorHandler()
 
   const ticketQuery = new QueryHandler(

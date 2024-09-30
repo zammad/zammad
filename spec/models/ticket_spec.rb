@@ -1355,7 +1355,7 @@ RSpec.describe Ticket, type: :model do
           .to(false)
       end
 
-      it 'destroys all related dependencies' do
+      it 'destroys all related dependencies', current_user_id: 1 do
         refs_known = {
           'Ticket::Article'         => { 'ticket_id' => 1 },
           'Ticket::TimeAccounting'  => { 'ticket_id' => 1 },

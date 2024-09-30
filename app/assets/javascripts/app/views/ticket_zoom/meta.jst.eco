@@ -1,13 +1,34 @@
 <small class="task-subline">
   <span class="ticket-number-copy">
     <%- @C('ticket_hook') %><span class="ticket-number js-objectNumber" data-number="<%- @C('ticket_hook') %><%= @ticket.number %>"><%= @ticket.number %></span>
-    <svg class="icon icon-clipboard ticketNumberCopy-icon u-clickable">
-      <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/images/icons.svg#icon-clipboard"></use>
-    </svg>
+    <%- @Icon('clipboard', 'ticketNumberCopy-icon u-clickable') %>
   </span>
   - <%- @T('created') %> <%- @humanTime(@ticket.created_at) %>
 
-<% if !@isCustomer: %>
-  <% if @ticket.escalation_at: %> - <span class="escalation-popover" data-id="<%= @ticket.id %>"><%- @T('escalation') %> <%- @humanTime(@ticket.escalation_at, true, '', false) %><% end %></span>
-<% end %>
+  <% if !@isCustomer: %>
+    <% if @ticket.escalation_at: %> - <span class="escalation-popover" data-id="<%= @ticket.id %>"><%- @T('escalation') %> <%- @humanTime(@ticket.escalation_at, true, '', false) %><% end %></span>
+  <% end %>
 </small>
+
+<% if @checklistState || @checklistReferences: %>
+  <small class="task-subline ticket-meta-checklist-details">
+    <% if @checklistState: %>
+      <span class="ticket-meta-checklist-entry js-checklist-state u-clickable">
+        <%- @Icon('checklist', 'ticket-meta-checklist-icon') %>
+
+        <%- @Tp('Checked %s', '<span class="ticket-meta-highlighted">' + @T('%s of %s', @checklistState.all - @checklistState.open, @checklistState.all) + '</span>') %>
+      </span>
+    <% end %>
+
+    <% if @checklistReferences?.length: %>
+      <span class="ticket-references-popover ticket-meta-checklist-entry">
+        <%- @Icon('checklist', 'ticket-meta-checklist-icon') %>
+
+        <% if @checklistReferences?.length == 1: %>
+            <%- @Tp('Tracked in %s', '<span class="ticket-meta-highlighted">' +@C('ticket_hook') + @checklistReferences[0].number) + '</span>' %>
+        <% else if @checklistReferences?.length > 1: %>
+            <%- @Tp('Tracked in %s','<span class="ticket-meta-highlighted">' + @T('%s tickets', @checklistReferences.length) + '</span>' ) %>
+      </span>
+    <% end %>
+  </small>
+<% end %>

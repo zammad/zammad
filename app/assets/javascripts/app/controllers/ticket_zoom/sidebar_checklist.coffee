@@ -65,9 +65,10 @@ class SidebarChecklist extends App.Controller
     sid = App.Ticket.subscribeItem(
       @ticket.id,
       =>
-        @badgeRenderLocal()
-        return if @widget?.actionController
-        @shown()
+        @delay =>
+          @badgeRenderLocal()
+
+          @shown() if !@widget?.actionController
     )
     @subscriptions.push(
       object: 'Ticket',

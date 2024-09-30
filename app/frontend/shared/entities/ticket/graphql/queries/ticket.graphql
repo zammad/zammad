@@ -20,5 +20,14 @@ query ticket($ticketId: ID, $ticketInternalId: Int, $ticketNumber: String) {
         cursor
       }
     }
+    checklist {
+      id
+      completed
+      total
+      complete
+    }
+    referencingChecklistTickets {
+      ...referencingTicket
+    }
   }
 }

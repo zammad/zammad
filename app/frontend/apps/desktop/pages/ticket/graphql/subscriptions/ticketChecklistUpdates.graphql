@@ -9,18 +9,11 @@ subscription ticketChecklistUpdates($ticketId: ID!) {
         id
         text
         checked
-        ticket {
-          id
-          internalId
-          number
-          title
-          state {
-            id
-            name
+        ticketReference {
+          ticket {
+            ...referencingTicket
           }
-          stateColorCode
         }
-        ticketAccess
       }
     }
     removedTicketChecklist

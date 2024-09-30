@@ -4,12 +4,11 @@ import {
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
 import { useTicketUpdateMutation } from '#shared/entities/ticket/graphql/mutations/update.api.ts'
-import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 
 import type { ComputedRef } from 'vue'
 
-export const useTicketEditTitle = (ticket: ComputedRef<TicketById>) => {
+export const useTicketEditTitle = (ticketId: ComputedRef<string>) => {
   const { notify } = useNotifications()
 
   const mutationUpdate = new MutationHandler(useTicketUpdateMutation())
@@ -17,7 +16,7 @@ export const useTicketEditTitle = (ticket: ComputedRef<TicketById>) => {
   const updateTitle = async (title: string) => {
     return mutationUpdate
       .send({
-        ticketId: ticket.value.id,
+        ticketId: ticketId.value,
         input: { title },
         meta: {},
       })

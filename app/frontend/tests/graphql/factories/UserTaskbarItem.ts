@@ -28,6 +28,8 @@ export default (): DeepPartial<UserTaskbarItem> => {
         name: 'open',
       },
       updatedAt: '2024-07-29T09:39:03.000',
+      checklist: null,
+      referencingChecklistTickets: [],
     },
     dirty: true,
     formNewArticlePresent: false,

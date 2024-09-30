@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Ticket Checklist Items', authenticated_as: :agent, type: :request do
+RSpec.describe 'Ticket Checklist Items', authenticated_as: :agent, current_user_id: 1, type: :request do
   let(:group)  { create(:group) }
   let(:agent)  { create(:agent, groups: [group], group_names_access_map: { group.name => %w[read change] }) }
   let(:ticket) { create(:ticket, group: group) }

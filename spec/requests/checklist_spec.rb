@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Checklist', type: :request do
+RSpec.describe 'Checklist', authenticated_as: :agent_1, current_user_id: 1, type: :request do
   let(:group_1)        { create(:group) }
   let(:group_2)        { create(:group) }
   let(:agent_1)        { create(:agent, groups: [group_1]) }
@@ -20,7 +20,6 @@ RSpec.describe 'Checklist', type: :request do
   end
 
   it 'does list checklists', :aggregate_failures do
-    authenticated_as(agent_1)
     get '/api/v1/checklists', params: {}, as: :json
     expect(response).to have_http_status(:ok)
     expect(json_response).to include(hash_including('id' => checklist_1.id))
@@ -28,52 +27,44 @@ RSpec.describe 'Checklist', type: :request do
   end
 
   it 'does show checklist', :aggregate_failures do
-    authenticated_as(agent_1)
     get "/api/v1/checklists/#{checklist_1.id}", params: {}, as: :json
     expect(response).to have_http_status(:ok)
     expect(json_response).to include('id' => checklist_1.id)
   end
 
   it 'does not show checklist' do
-    authenticated_as(agent_1)
     get "/api/v1/checklists/#{checklist_2.id}", params: {}, as: :json
     expect(response).to have_http_status(:not_found)
   end
 
   it 'does create checklist', :aggregate_failures do
-    authenticated_as(agent_1)
     post '/api/v1/checklists', params: { name: SecureRandom.uuid, ticket_id: ticket_1_empty.id }, as: :json
     expect(response).to have_http_status(:created)
     expect(json_response).to include('id' => Checklist.last.id)
   end
 
   it 'does not create checklist' do
-    authenticated_as(agent_1)
     post '/api/v1/checklists', params: { name: SecureRandom.uuid, ticket_id: ticket_2_empty.id }, as: :json
     expect(response).to have_http_status(:forbidden)
   end
 
   it 'does update checklist', :aggregate_failures do
-    authenticated_as(agent_1)
     put "/api/v1/checklists/#{checklist_1.id}", params: { name: SecureRandom.uuid }, as: :json
     expect(response).to have_http_status(:ok)
     expect(json_response).to include('id' => checklist_1.id)
   end
 
   it 'does not update checklist' do
-    authenticated_as(agent_1)
     put "/api/v1/checklists/#{checklist_2.id}", params: { name: SecureRandom.uuid }, as: :json
     expect(response).to have_http_status(:forbidden)
   end
 
   it 'does destroy checklist' do
-    authenticated_as(agent_1)
     delete "/api/v1/checklists/#{checklist_1.id}", params: {}, as: :json
     expect(response).to have_http_status(:ok)
   end
 
   it 'does not destroy checklist' do
-    authenticated_as(agent_1)
     delete "/api/v1/checklists/#{checklist_2.id}", params: {}, as: :json
     expect(response).to have_http_status(:forbidden)
   end

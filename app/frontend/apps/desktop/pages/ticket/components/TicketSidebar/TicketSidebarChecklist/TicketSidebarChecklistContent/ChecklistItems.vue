@@ -5,17 +5,13 @@ import { animations } from '@formkit/drag-and-drop'
 import { dragAndDrop } from '@formkit/drag-and-drop/vue'
 import { computed, type Ref, ref, useTemplateRef } from 'vue'
 
-import {
-  type ChecklistItem as ChecklistItemType,
-  EnumChecklistItemTicketAccess,
-} from '#shared/graphql/types.ts'
+import { type ChecklistItem as ChecklistItemType } from '#shared/graphql/types.ts'
 import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonInlineEdit from '#desktop/components/CommonInlineEdit/CommonInlineEdit.vue'
+import CommonTicketLabel from '#desktop/components/CommonTicketLabel/CommonTicketLabel.vue'
 import ChecklistItem from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue'
-import ChecklistTicketItem from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTicketItem.vue'
-import { verifyAccess } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/utils.ts'
 
 interface Props {
   title: string
@@ -116,7 +112,6 @@ defineExpose({
       class="col-span-2 mb-3 w-full"
       @submit-edit="onUpdateTitle"
     />
-
     <TransitionGroup
       v-if="checklistItems.length"
       ref="container"
@@ -126,12 +121,7 @@ defineExpose({
     >
       <template v-for="item in checklistItems" :key="item.id">
         <li v-if="readOnly" class="flex gap-2 py-2">
-          <template
-            v-if="
-              item.ticketAccess !== EnumChecklistItemTicketAccess.Forbidden &&
-              !item.ticket
-            "
-          >
+          <template v-if="!item.ticketReference">
             <CommonIcon
               tabindex="0"
               class="me-0.5 ms-1 mt-1 text-gray-100 outline-none focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800 dark:text-neutral-400"
@@ -153,10 +143,10 @@ defineExpose({
             />
           </template>
           <!-- No CommonLabel to preserve the link detection -->
-          <ChecklistTicketItem
+          <CommonTicketLabel
             v-else
-            :unauthorized="!verifyAccess(item)"
-            :ticket="item.ticket"
+            :unauthorized="!item.ticketReference.ticket"
+            :ticket="item.ticketReference.ticket"
           />
         </li>
 
@@ -185,14 +175,14 @@ defineExpose({
           v-if="!isReordering"
           prefix-icon="list"
           @click="startReordering"
-          >{{ $t('Reorder') }}</CommonButton
-        >
+          >{{ $t('Reorder') }}
+        </CommonButton>
         <CommonButton
           v-else
           :prefix-icon="isReordering ? 'check2' : 'list'"
           @click="resetOrder"
-          >{{ $t('Cancel') }}</CommonButton
-        >
+          >{{ $t('Cancel') }}
+        </CommonButton>
       </Transition>
     </template>
 

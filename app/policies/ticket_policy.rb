@@ -118,6 +118,6 @@ class TicketPolicy < ApplicationPolicy
   end
 
   def customer_field_scope
-    @customer_field_scope ||= ApplicationPolicy::FieldScope.new(deny: %i[time_unit time_units_per_type])
+    @customer_field_scope ||= ApplicationPolicy::FieldScope.new(deny: %i[time_unit time_units_per_type checklist referencing_checklist_tickets])
   end
 end

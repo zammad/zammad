@@ -15,19 +15,23 @@ module Ticket::TriggersSubscriptions
     Gql::Subscriptions::TicketUpdates.trigger(self, arguments: { ticket_id: Gql::ZammadSchema.id_from_object(self) })
   end
 
+  TRIGGER_CHECKLIST_UPDATE_ON = %w[title state_id group_id].freeze
+
   def trigger_checklist_subscriptions
-    return if checklist_items.none?
-    return if %i[title state_id].none? { |attr| saved_change_to_attribute?(attr) }
+    return if !saved_changes.keys.intersect? TRIGGER_CHECKLIST_UPDATE_ON
 
-    checklists = checklist_items.compact.map(&:checklist).uniq
+    referenced_in_checklists = checklist_items.pluck(:checklist_id)
 
-    checklists.each do |checklist|
-      Gql::Subscriptions::Ticket::ChecklistUpdates.trigger(
-        checklist,
-        arguments: {
-          ticket_id: Gql::ZammadSchema.id_from_object(checklist.ticket),
-        }
-      )
-    end
+    Checklist
+      .where(id: referenced_in_checklists)
+      .includes(:ticket)
+      .each do |elem|
+        Gql::Subscriptions::Ticket::ChecklistUpdates.trigger(
+          elem,
+          arguments: {
+            ticket_id: Gql::ZammadSchema.id_from_object(elem.ticket),
+          }
+        )
+      end
   end
 end

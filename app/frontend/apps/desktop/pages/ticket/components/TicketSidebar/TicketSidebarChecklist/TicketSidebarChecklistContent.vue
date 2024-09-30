@@ -9,7 +9,7 @@ import { handleUserErrors } from '#shared/errors/utils.ts'
 import type {
   ChecklistItem,
   TicketChecklistItemInput,
-  TicketChecklistQuery,
+  Checklist,
 } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n/index.ts'
 import { getApolloClient } from '#shared/server/apollo/client.ts'
@@ -35,7 +35,7 @@ import { useTicketChecklistTitleUpdateMutation } from '#desktop/pages/ticket/gra
 import type { TicketSidebarContentProps } from '#desktop/pages/ticket/types/sidebar.ts'
 
 interface Props extends TicketSidebarContentProps {
-  checklist?: TicketChecklistQuery['ticketChecklist']
+  checklist?: Checklist
   loading: boolean
   readonly: boolean
 }
@@ -169,7 +169,7 @@ const itemDeleteMutation = new MutationHandler(
 
 const modifyIncompleteItemCountCache = (increase: boolean) => {
   const currentCheckList = props.checklist!
-  const previousIncomplteItemCount = currentCheckList.incomplete
+  const previousIncompleteItemCount = currentCheckList.incomplete
   const previousCompleted = currentCheckList.completed
 
   let incompleteItemCount = currentCheckList.incomplete ?? 0
@@ -193,8 +193,14 @@ const modifyIncompleteItemCountCache = (increase: boolean) => {
       incomplete() {
         return incompleteItemCount
       },
+      total() {
+        return currentCheckList.items.length
+      },
       completed() {
         return incompleteItemCount === 0
+      },
+      complete() {
+        return currentCheckList.items.length - incompleteItemCount
       },
     },
   })
@@ -205,10 +211,16 @@ const modifyIncompleteItemCountCache = (increase: boolean) => {
       id: checklistId,
       fields: {
         incomplete() {
-          return previousIncomplteItemCount
+          return previousIncompleteItemCount
         },
         completed() {
           return previousCompleted
+        },
+        total() {
+          return currentCheckList.items.length
+        },
+        complete() {
+          return currentCheckList.items.length - previousIncompleteItemCount
         },
       },
     })
@@ -255,7 +267,7 @@ const modifyItemsCache = (items: ChecklistItem[]) => {
     id: checklistId,
     fields: {
       items(_, { toReference }) {
-        // We need to transform it to an real reference, that we do not loose the connection.
+        // We need to transform it to a real reference, that we do not lose the connection.
         // Side effect is that data updates on single items are not applied.
         return items.map((item) => toReference(item, true))
       },
@@ -383,7 +395,7 @@ const { isLoadingTemplates, checklistTemplatesMenuItems } =
           ref="checklist-items"
           :no-default-title="!!checklist.name"
           :title="checklistTitle"
-          :items="<ChecklistItem[]>checklist?.items"
+          :items="checklist?.items"
           :read-only="readonly"
           @add-item="addNewItem"
           @remove-item="removeItem"

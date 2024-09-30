@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Queries::Checklist::Templates, type: :graphql do
+RSpec.describe Gql::Queries::Checklist::Templates, current_user_id: 1, type: :graphql do
   let(:agent)              { create(:agent) }
   let(:checklist_template) { create(:checklist_template) }
   let(:only_active)        { false }

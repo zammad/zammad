@@ -38,6 +38,8 @@ export default (
       name: 'email',
       communication: false,
     },
+    checklist: null,
+    referencingChecklistTickets: [],
   }
   if (meta.variables.ticketNumber) {
     ticket.number = meta.variables.ticketNumber as string

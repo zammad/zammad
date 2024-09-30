@@ -3,6 +3,7 @@
 import { computed } from 'vue'
 
 import type {
+  Checklist,
   TicketChecklistQuery,
   TicketChecklistUpdatesSubscription,
   TicketChecklistUpdatesSubscriptionVariables,
@@ -22,26 +23,6 @@ export const useTicketChecklist = () => {
     })),
   )
 
-  const checklistResult = checklistQuery.result()
-  const checklistLoading = checklistQuery.loading()
-
-  const checklist = computed(() => checklistResult.value?.ticketChecklist)
-
-  const isLoadingChecklist = computed(() => {
-    // Return true when the ticket is not loaded yet, because some output is related to the ticket data (e.g. readonly).
-    if (!ticket.value) return true
-
-    // Return already true when an checklist result already exists from the cache, also
-    // when maybe a loading is in progress(because of cache + network).
-    if (checklist.value !== undefined) return false
-
-    return checklistLoading.value
-  })
-
-  const incompleteItemCount = computed(
-    () => checklistResult.value?.ticketChecklist?.incomplete,
-  )
-
   checklistQuery.subscribeToMore<
     TicketChecklistUpdatesSubscriptionVariables,
     TicketChecklistUpdatesSubscription
@@ -58,23 +39,39 @@ export const useTicketChecklist = () => {
         return null as unknown as TicketChecklistQuery
       }
 
-      const { ticketChecklist, removedTicketChecklist } =
-        subscriptionData.data.ticketChecklistUpdates
+      const { ticketChecklist } = subscriptionData.data.ticketChecklistUpdates
 
       // When a complete checklist was removed, we need to update the result.
-      if (
-        removedTicketChecklist ||
-        (prev.ticketChecklist === null && ticketChecklist !== null)
-      ) {
+      if (!ticketChecklist || prev.ticketChecklist === null) {
         return {
           ticketChecklist,
         }
       }
 
-      // Always return null when we need not to change anything related to the data.
+      // Always return null when we need not change anything related to the data.
       return null as unknown as TicketChecklistQuery
     },
   }))
+
+  const checklistResult = checklistQuery.result()
+  const checklistLoading = checklistQuery.loading()
+
+  const checklist = computed(
+    () => checklistResult?.value?.ticketChecklist as Checklist,
+  )
+
+  const isLoadingChecklist = computed(() => {
+    // Return true when the ticket is not loaded yet, because some output is related to the ticket data (e.g. readonly).
+    if (!ticket.value) return true
+
+    // Return already true when a checklist result already exists from the cache, also
+    // when maybe a loading is in progress(because of cache + network).
+    if (checklist.value !== undefined) return false
+
+    return checklistLoading.value
+  })
+
+  const incompleteItemCount = computed(() => checklist.value?.incomplete)
 
   return {
     checklist,

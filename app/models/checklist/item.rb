@@ -5,6 +5,7 @@ class Checklist::Item < ApplicationModel
   include HasHistory
   include HasDefaultModelUserRelations
   include Checklist::Item::Assets
+  include Checklist::Item::TriggersSubscriptions
 
   attr_accessor :initial_clone
 
@@ -13,17 +14,15 @@ class Checklist::Item < ApplicationModel
 
   scope :for_user, ->(user) { joins(checklist: :ticket).where(tickets: { group: user.group_ids_access('read') }) }
 
-  before_validation :detect_ticket_reference, on: %i[create update], unless: :initial_clone
+  before_validation :detect_ticket_reference, unless: :initial_clone
+  before_validation :ensure_text_not_nil
 
   validate :detect_ticket_loop_reference, on: %i[create update], unless: -> { ticket.blank? || checklist.blank? }
   validate :validate_item_count, on: :create
 
-  after_create :update_checklist
-  after_update :update_checklist
   after_update :history_update_checked, if: -> { saved_change_to_checked? }
-  after_destroy :update_checklist
-
-  validates :text, presence: { allow_blank: true }
+  after_destroy :update_checklist_on_destroy
+  after_save :update_checklist_on_save
 
   history_attributes_ignored :checked
 
@@ -65,14 +64,19 @@ class Checklist::Item < ApplicationModel
 
   private
 
-  def update_checklist
-    if persisted?
-      checklist.sorted_item_ids |= [id.to_s]
-    else
-      checklist.sorted_item_ids -= [id.to_s]
-    end
-    checklist.updated_at    = Time.zone.now
-    checklist.updated_by_id = UserInfo.current_user_id || updated_by_id
+  def update_checklist_on_save
+    checklist.sorted_item_ids |= [id.to_s]
+    # It is necessary to make checklist dirty if checklist item was edited, but sorting was not changed
+    # Otherwise legacy UI will not update properly
+    checklist.updated_at = Time.current
+    checklist.save!
+  end
+
+  def update_checklist_on_destroy
+    # do not touch checklist if this item is destroyed by checklist's dependent: destroy
+    return if destroyed_by_association
+
+    checklist.sorted_item_ids -= [id.to_s]
     checklist.save!
   end
 
@@ -102,5 +106,9 @@ class Checklist::Item < ApplicationModel
     #   - closed
     #   - merged
     !ticket.state.state_type.name.match?(%r{^(closed|merged)$}i)
+  end
+
+  def ensure_text_not_nil
+    self.text ||= ''
   end
 end

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Mutations::Ticket::Checklist::ItemOrderUpdate, type: :graphql do
+RSpec.describe Gql::Mutations::Ticket::Checklist::ItemOrderUpdate, current_user_id: 1, type: :graphql do
   let(:group)     { create(:group) }
   let(:agent)     { create(:agent, groups: [group]) }
   let(:ticket)    { create(:ticket, group: group) }
@@ -51,7 +51,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemOrderUpdate, type: :graphq
     context 'without access to the ticket' do
       let(:agent) { create(:agent) }
 
-      it_behaves_like 'raising an error', Pundit::NotAuthorizedError
+      it_behaves_like 'raising an error', Exceptions::Forbidden
     end
 
     context 'with ticket read permission' do

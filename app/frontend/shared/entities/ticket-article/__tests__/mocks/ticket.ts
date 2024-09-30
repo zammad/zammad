@@ -96,7 +96,7 @@ export const defaultMentions = {
  * Options: can be expanded
  * Make sure to set old values as defaults to be backwards compatible
  * * */
-export const createDummyTicket = (options?: {
+export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
   ticketId?: string
   owner?: TicketQuery['ticket']['owner']
   customer?: TicketQuery['ticket']['customer']
@@ -108,7 +108,12 @@ export const createDummyTicket = (options?: {
   defaultPolicy?: TicketQuery['ticket']['policy']
   mentions?: TicketQuery['ticket']['mentions']
   colorCode?: EnumTicketStateColorCode
-}) => {
+  title?: TicketQuery['ticket']['title']
+  number?: TicketQuery['ticket']['number']
+  checklist?: TicketQuery['ticket']['checklist']
+  referencingChecklistTickets?: TicketQuery['ticket']['referencingChecklistTickets']
+  // eslint-disable-next-line sonarjs/cognitive-complexity
+}): R => {
   return nullableMock({
     __typename: 'Ticket',
     createArticleType: {
@@ -118,8 +123,8 @@ export const createDummyTicket = (options?: {
     },
     id: convertToGraphQLId('Ticket', options?.ticketId || 1),
     internalId: options?.ticketId || 1,
-    number: '89002',
-    title: 'Test Ticket',
+    number: options?.number || '89002',
+    title: options?.title || 'Test Ticket',
     createdAt: mockTicketCreateDate.toISOString(),
     escalationAt: null,
     updatedAt: mockTicketUpdateDate.toISOString(),
@@ -153,5 +158,7 @@ export const createDummyTicket = (options?: {
     updateEscalationAt: null,
     initialChannel: null,
     mentions: options?.mentions || defaultMentions,
-  }) as TicketQuery['ticket']
+    checklist: options?.checklist || null,
+    referencingChecklistTickets: options?.referencingChecklistTickets || [],
+  }) as R
 }

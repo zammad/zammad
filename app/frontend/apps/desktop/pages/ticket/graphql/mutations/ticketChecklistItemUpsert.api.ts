@@ -17,18 +17,19 @@ export const TicketChecklistItemUpsertDocument = gql`
       id
       text
       checked
-      ticket {
-        id
-        internalId
-        number
-        title
-        state {
+      ticketReference {
+        ticket {
           id
-          name
+          internalId
+          number
+          title
+          state {
+            id
+            name
+          }
+          stateColorCode
         }
-        stateColorCode
       }
-      ticketAccess
     }
     errors {
       ...errors

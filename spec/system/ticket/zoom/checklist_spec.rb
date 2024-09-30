@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, type: :system do
+RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, current_user_id: 1, type: :system do
   let(:action_user) { create(:agent, groups: Group.all) }
   let(:other_agent) { create(:agent, groups: Group.all) }
   let(:ticket)      { create(:ticket, group: Group.first) }

@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'Manage > Checklists', type: :system do
+RSpec.describe 'Manage > Checklists', current_user_id: 1, type: :system do
   context 'when enabling/disabling checklists' do
     before do
       visit 'manage/checklists'

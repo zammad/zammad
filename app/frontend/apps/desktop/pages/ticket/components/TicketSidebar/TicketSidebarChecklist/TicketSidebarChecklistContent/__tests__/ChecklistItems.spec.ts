@@ -5,8 +5,8 @@ import renderComponent from '#tests/support/components/renderComponent.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import {
   type ChecklistItem,
-  EnumChecklistItemTicketAccess,
   EnumTicketStateColorCode,
+  type Ticket,
 } from '#shared/graphql/types.ts'
 
 import ChecklistItems from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue'
@@ -15,22 +15,19 @@ const items: Partial<ChecklistItem>[] = [
   {
     id: '1',
     text: 'Foo',
-    ticket: null,
-    ticketAccess: null,
+    ticketReference: null,
     checked: false,
   },
   {
     id: '2',
     text: 'Foo 2',
-    ticket: null,
-    ticketAccess: null,
+    ticketReference: null,
     checked: true,
   },
   {
     id: '3',
     text: 'Foo 3',
-    ticket: null,
-    ticketAccess: null,
+    ticketReference: null,
     checked: false,
   },
 ]
@@ -82,14 +79,14 @@ describe('ChecklistItems', () => {
   })
 
   it('displays of ticket checklist item', async () => {
-    const ticket = createDummyTicket() as ChecklistItem['ticket']
+    const ticket = createDummyTicket<Ticket>()
 
     const checklistItems: Partial<ChecklistItem>[] = [
       {
         id: '1',
         text: `${ticket?.title}`,
         checked: false,
-        ticket,
+        ticketReference: { ticket },
       },
     ]
 
@@ -115,16 +112,18 @@ describe('ChecklistItems', () => {
 
     expect(wrapper.queryByRole('checkbox')).not.toBeInTheDocument()
 
-    const newTicket = createDummyTicket({
+    const newTicket = createDummyTicket<Ticket>({
       colorCode: EnumTicketStateColorCode.Escalating,
-    }) as ChecklistItem['ticket']
+    })
 
     const newChecklistItems: Partial<ChecklistItem>[] = [
       {
         id: '1',
         text: `${ticket?.title}`,
         checked: false,
-        ticket: newTicket,
+        ticketReference: {
+          ticket: newTicket,
+        },
       },
     ]
 
@@ -142,13 +141,15 @@ describe('ChecklistItems', () => {
   })
 
   it('displays denied access if authorization is not granted on linked ticket', () => {
-    const ticket = createDummyTicket() as ChecklistItem['ticket']
+    const ticket = createDummyTicket()
 
     const checklistItems: Partial<ChecklistItem>[] = [
       {
         id: '1',
         text: `${ticket?.title}`,
-        ticketAccess: EnumChecklistItemTicketAccess.Forbidden,
+        ticketReference: {
+          ticket: null,
+        },
         checked: false,
       },
     ]
@@ -160,13 +161,15 @@ describe('ChecklistItems', () => {
   })
 
   it('displays denied access if authorization is not granted', () => {
-    const ticket = createDummyTicket() as ChecklistItem['ticket']
+    const ticket = createDummyTicket<Ticket>()
 
     const checklistItems: Partial<ChecklistItem>[] = [
       {
         id: '1',
         text: `${ticket?.title}`,
-        ticketAccess: EnumChecklistItemTicketAccess.Forbidden,
+        ticketReference: {
+          ticket: null,
+        },
         checked: false,
       },
     ]
@@ -190,8 +193,7 @@ describe('ChecklistItems', () => {
         {
           id: '2',
           text: '',
-          ticket: null,
-          ticketAccess: null,
+          ticketReference: null,
           checked: false,
         },
       ],

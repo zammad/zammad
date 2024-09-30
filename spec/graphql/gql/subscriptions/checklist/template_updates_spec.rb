@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Subscriptions::Checklist::TemplateUpdates, type: :graphql do
+RSpec.describe Gql::Subscriptions::Checklist::TemplateUpdates, current_user_id: 1, type: :graphql do
   let(:agent)              { create(:agent) }
   let(:only_active)        { false }
   let(:variables)          { { onlyActive: only_active } }
@@ -22,6 +22,7 @@ RSpec.describe Gql::Subscriptions::Checklist::TemplateUpdates, type: :graphql do
   end
 
   before do
+    template if defined?(template)
     gql.execute(subscription, variables: variables, context: { channel: mock_channel })
   end
 
@@ -48,13 +49,8 @@ RSpec.describe Gql::Subscriptions::Checklist::TemplateUpdates, type: :graphql do
       ))
     end
 
-    context 'with an existing template', authenticated_as: :authenticate do
+    context 'with an existing template' do
       let(:template) { create(:checklist_template) }
-
-      def authenticate
-        template
-        agent
-      end
 
       it 'triggers after template update' do
         template.update!(name: 'foobar')

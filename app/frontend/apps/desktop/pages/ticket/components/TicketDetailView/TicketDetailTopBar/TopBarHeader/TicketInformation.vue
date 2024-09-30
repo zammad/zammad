@@ -1,46 +1,45 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { ref } from 'vue'
 
 import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import type { TicketById } from '#shared/entities/ticket/types.ts'
 
 import CommonInlineEdit from '#desktop/components/CommonInlineEdit/CommonInlineEdit.vue'
-import CommonTicketEscalationIndicator from '#desktop/components/CommonTicketEscalationIndicator/CommonTicketEscalationIndicator.vue'
-import CommonTicketPriorityIndicator from '#desktop/components/CommonTicketPriorityIndicator/CommonTicketPriorityIndicator.vue'
-import CommonTicketStateIndicator from '#desktop/components/CommonTicketStateIndicator/CommonTicketStateIndicator.vue'
+import TicketInformationBadgeList from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList.vue'
 import { useTicketEditTitle } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts'
+import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 interface Props {
-  ticket: TicketById
   hideDetails?: boolean
 }
+const { ticket, ticketId } = useTicketInformation()
 
-const props = defineProps<Props>()
+defineProps<Props>()
 
 const isUpdatingTitle = ref(false)
 
-const { updateTitle } = useTicketEditTitle(computed(() => props.ticket))
+const { updateTitle } = useTicketEditTitle(ticketId)
 </script>
 
 <template>
   <div
+    v-if="ticket"
     class="-:gap-4 grid grid-cols-[max-content_1fr]"
     :class="{ 'items-center gap-3': hideDetails }"
   >
     <div class="flex" :class="{ 'mt-1': !hideDetails }">
       <CommonUserAvatar
-        v-if="ticket?.customer"
+        v-if="ticket.customer"
         :size="hideDetails ? 'medium' : 'normal'"
-        :entity="ticket?.customer"
+        :entity="ticket.customer"
       />
       <CommonOrganizationAvatar
-        v-if="ticket?.customer?.organization"
+        v-if="ticket.customer?.organization"
         class="ltr:-translate-x- -z-10 ltr:-translate-x-1.5 rtl:translate-x-1.5"
         :size="hideDetails ? 'medium' : 'normal'"
-        :entity="ticket?.customer.organization"
+        :entity="ticket.customer.organization"
       />
     </div>
 
@@ -57,14 +56,14 @@ const { updateTitle } = useTicketEditTitle(computed(() => props.ticket))
             class="flex items-center gap-1"
             :class="{
               'after:inline-block after:h-[.12rem] after:w-[.12rem] after:shrink-0 after:rounded-full after:bg-current':
-                ticket?.customer?.organization,
+                ticket.customer?.organization,
             }"
           >
-            {{ ticket?.customer.fullname }}
+            {{ ticket.customer.fullname }}
           </CommonLabel>
-          <CommonLabel v-if="ticket?.customer.organization?.name">{{
-            ticket?.customer.organization?.name
-          }}</CommonLabel>
+          <CommonLabel v-if="ticket.customer.organization?.name">
+            {{ ticket.customer.organization?.name }}
+          </CommonLabel>
         </div>
 
         <CommonInlineEdit
@@ -90,25 +89,7 @@ const { updateTitle } = useTicketEditTitle(computed(() => props.ticket))
         />
       </div>
 
-      <div v-if="!hideDetails" class="flex h-7 gap-2.5">
-        <CommonTicketEscalationIndicator :escalation-at="ticket.escalationAt" />
-        <CommonTicketStateIndicator
-          :color-code="ticket.stateColorCode"
-          :label="ticket.state.name"
-        />
-        <CommonTicketPriorityIndicator :priority="ticket.priority" />
-        <CommonBadge variant="tertiary" class="uppercase">
-          <CommonDateTime
-            :date-time="ticket.createdAt"
-            absolute-format="date"
-            class="ms-1"
-          >
-            <template #prefix>
-              {{ $t('Created') }}
-            </template>
-          </CommonDateTime>
-        </CommonBadge>
-      </div>
+      <TicketInformationBadgeList v-if="!hideDetails" />
     </div>
   </div>
 </template>

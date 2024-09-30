@@ -24,14 +24,11 @@ class TicketChecklistItemsController < ApplicationController
   private
 
   def checklist
-    @checklist ||= Checklist.find_by(ticket: params[:ticket_id])
-    raise ActiveRecord::RecordNotFound if !@checklist
-
-    @checklist
+    @checklist ||= Checklist.find_by!(ticket: params[:ticket_id])
   end
 
   def checklist_item
-    @checklist_item ||= checklist.items.find_by(id: params[:id])
+    @checklist_item ||= checklist.items.find(params[:id])
   end
 
   def checklist_params

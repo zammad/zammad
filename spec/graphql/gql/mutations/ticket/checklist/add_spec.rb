@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Mutations::Ticket::Checklist::Add, type: :graphql do
+RSpec.describe Gql::Mutations::Ticket::Checklist::Add, current_user_id: 1, type: :graphql do
   let(:group)  { create(:group) }
   let(:agent)  { create(:agent, groups: [group]) }
   let(:ticket) { create(:ticket, group: group) }
@@ -45,6 +45,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::Add, type: :graphql do
   end
 
   before do
+    checklist if defined?(checklist)
     gql.execute(query, variables: variables)
   end
 
@@ -75,18 +76,13 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::Add, type: :graphql do
       it_behaves_like 'raising an error', Exceptions::Forbidden
     end
 
-    context 'when ticket checklist already exists', authenticated_as: :authenticate do
+    context 'when ticket checklist already exists' do
       let(:checklist) { create(:checklist, ticket: ticket) }
-
-      def authenticate
-        checklist
-        agent
-      end
 
       it_behaves_like 'returning an error message', 'This field has already been taken'
     end
 
-    context 'when creating from a checklist template', authenticated_as: :authenticate do
+    context 'when creating from a checklist template' do
       let(:template)  { create(:checklist_template) }
       let(:variables) { { ticketId: gql.id(ticket), templateId: gql.id(template) } }
 
@@ -103,10 +99,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::Add, type: :graphql do
         }
       end
 
-      def authenticate
-        template
-        agent
-      end
+      before { template }
 
       it_behaves_like 'creating the ticket checklist'
 

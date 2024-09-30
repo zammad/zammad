@@ -2,6 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { ObjectAttributeValuesFragmentDoc } from '../../../../graphql/fragments/objectAttributeValues.api';
+import { ReferencingTicketFragmentDoc } from './referencingTicket.api';
 export const TicketAttributesFragmentDoc = gql`
     fragment ticketAttributes on Ticket {
   id
@@ -100,5 +101,15 @@ export const TicketAttributesFragmentDoc = gql`
   closeEscalationAt
   updateEscalationAt
   initialChannel
+  checklist {
+    id
+    completed
+    total
+    complete
+  }
+  referencingChecklistTickets {
+    ...referencingTicket
+  }
 }
-    ${ObjectAttributeValuesFragmentDoc}`;
+    ${ObjectAttributeValuesFragmentDoc}
+${ReferencingTicketFragmentDoc}`;

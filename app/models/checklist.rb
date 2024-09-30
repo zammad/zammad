@@ -8,18 +8,23 @@ class Checklist < ApplicationModel
   include Checklist::Assets
   include CanChecklistSortedItems
 
-  belongs_to :ticket, optional: true
+  belongs_to :ticket
   has_many :items, inverse_of: :checklist, dependent: :destroy
 
   scope :for_user, ->(user) { joins(:ticket).where(ticket: { group: user.group_ids_access('read') }) }
 
-  after_update :update_ticket
-  after_destroy :update_ticket
+  before_validation :ensure_text_not_nil
 
-  validates :name,      presence: { allow_blank: true }
-  validates :ticket_id, presence: true, uniqueness: { allow_nil: true }
+  validates :ticket_id, uniqueness: true
 
   history_attributes_ignored :sorted_item_ids
+
+  # Those callbacks are necessary to trigger updates in legacy UI.
+  # First checklist item is created right after the checklist itself
+  # and it triggers update on the freshly created ticket.
+  # Thus no need for after_create callback.
+  after_update :update_ticket
+  after_destroy :update_ticket
 
   def history_log_attributes
     {
@@ -55,9 +60,42 @@ class Checklist < ApplicationModel
     end
   end
 
+  def total
+    items.count
+  end
+
+  def complete
+    total - incomplete
+  end
+
+  # Returns scope to tickets tracking the given target ticket in their checklists.
+  # If a user is given, it returns tickets acccessible to that user only.
+  #
+  # @param target_ticket [Ticket, Integer] target ticket or it's id
+  # @param user [User] to optionally filter accessible tickets
+  def self.tickets_referencing(target_ticket, user = nil)
+    source_ticket_ids = joins(:items)
+      .where(items: { ticket: target_ticket })
+      .group(:id)
+      .pluck(:ticket_id)
+
+    scope = Ticket.where(id: source_ticket_ids)
+
+    return scope if !user
+
+    TicketPolicy::ReadScope
+      .new(user, scope)
+      .resolve
+  end
+
+  private
+
+  def ensure_text_not_nil
+    self.name ||= ''
+  end
+
   def update_ticket
-    ticket.updated_at    = Time.zone.now
-    ticket.updated_by_id = UserInfo.current_user_id || updated_by_id
+    ticket.updated_at = Time.current
     ticket.save!
   end
 end

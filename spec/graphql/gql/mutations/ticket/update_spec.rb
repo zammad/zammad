@@ -256,7 +256,7 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
         end
       end
 
-      context 'when ticket has a checklist and is being closed' do
+      context 'when ticket has a checklist and is being closed', current_user_id: 1 do
         let(:checklist) { create(:checklist, ticket: ticket) }
         let(:exception) { Gql::Types::Enum::BaseEnum.graphql_compatible_name('Service::Ticket::Update::Validator::ChecklistCompleted::Error') }
 

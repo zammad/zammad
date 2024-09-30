@@ -3364,6 +3364,24 @@
           "description": "Ticket checklist",
           "fields": [
             {
+              "name": "complete",
+              "description": null,
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "completed",
               "description": null,
               "args": [
@@ -3490,6 +3508,42 @@
               "deprecationReason": null
             },
             {
+              "name": "ticket",
+              "description": "resolver for Rails' belongs_to relationship",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Ticket",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "total",
+              "description": null,
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "updatedAt",
               "description": "Last update date/time of the record",
               "args": [
@@ -3546,6 +3600,24 @@
                 "ofType": {
                   "kind": "SCALAR",
                   "name": "Boolean",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "checklist",
+              "description": "resolver for Rails' belongs_to relationship",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "OBJECT",
+                  "name": "Checklist",
                   "ofType": null
                 }
               },
@@ -3621,28 +3693,14 @@
               "deprecationReason": null
             },
             {
-              "name": "ticket",
+              "name": "ticketReference",
               "description": null,
               "args": [
 
               ],
               "type": {
                 "kind": "OBJECT",
-                "name": "Ticket",
-                "ofType": null
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "ticketAccess",
-              "description": null,
-              "args": [
-
-              ],
-              "type": {
-                "kind": "ENUM",
-                "name": "EnumChecklistItemTicketAccess",
+                "name": "TicketReference",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -4552,29 +4610,6 @@
             {
               "name": "starttls",
               "description": null,
-              "isDeprecated": false,
-              "deprecationReason": null
-            }
-          ],
-          "possibleTypes": null
-        },
-        {
-          "kind": "ENUM",
-          "name": "EnumChecklistItemTicketAccess",
-          "description": "All checklist item ticket access type values",
-          "fields": null,
-          "inputFields": null,
-          "interfaces": null,
-          "enumValues": [
-            {
-              "name": "Granted",
-              "description": "Access to this ticket is granted",
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "Forbidden",
-              "description": "Access to this ticket is forbidden",
               "isDeprecated": false,
               "deprecationReason": null
             }
@@ -18487,6 +18522,20 @@
           "description": "Tickets",
           "fields": [
             {
+              "name": "checklist",
+              "description": "Returns the checklist of this ticket, if present",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Checklist",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "closeAt",
               "description": null,
               "args": [
@@ -18998,6 +19047,28 @@
                   "kind": "OBJECT",
                   "name": "TicketPriority",
                   "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "referencingChecklistTickets",
+              "description": "Returns (only accessible) other tickets which reference the current ticket",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "Ticket",
+                    "ofType": null
+                  }
                 }
               },
               "isDeprecated": false,
@@ -22215,6 +22286,33 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "User",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketReference",
+          "description": "Refer to a ticket without raising authorization errors in case of missing permissions",
+          "fields": [
+            {
+              "name": "ticket",
+              "description": "The ticket, if there is read permission",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "Ticket",
                 "ofType": null
               },
               "isDeprecated": false,

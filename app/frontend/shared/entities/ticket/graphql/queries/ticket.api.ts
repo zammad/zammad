@@ -2,6 +2,7 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { TicketAttributesFragmentDoc } from '../fragments/ticketAttributes.api';
+import { ReferencingTicketFragmentDoc } from '../fragments/referencingTicket.api';
 import { TicketMentionFragmentDoc } from '../fragments/ticketMention.api';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
@@ -26,10 +27,20 @@ export const TicketDocument = gql`
         cursor
       }
     }
+    checklist {
+      id
+      completed
+      total
+      complete
+    }
+    referencingChecklistTickets {
+      ...referencingTicket
+    }
   }
 }
     ${TicketAttributesFragmentDoc}
-${TicketMentionFragmentDoc}`;
+${TicketMentionFragmentDoc}
+${ReferencingTicketFragmentDoc}`;
 export function useTicketQuery(variables: Types.TicketQueryVariables | VueCompositionApi.Ref<Types.TicketQueryVariables> | ReactiveFunction<Types.TicketQueryVariables> = {}, options: VueApolloComposable.UseQueryOptions<Types.TicketQuery, Types.TicketQueryVariables> | VueCompositionApi.Ref<VueApolloComposable.UseQueryOptions<Types.TicketQuery, Types.TicketQueryVariables>> | ReactiveFunction<VueApolloComposable.UseQueryOptions<Types.TicketQuery, Types.TicketQueryVariables>> = {}) {
   return VueApolloComposable.useQuery<Types.TicketQuery, Types.TicketQueryVariables>(TicketDocument, variables, options);
 }

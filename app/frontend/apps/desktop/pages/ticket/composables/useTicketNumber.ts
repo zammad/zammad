@@ -7,7 +7,7 @@ import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 export const useTicketNumber = (ticket: Ref<TicketById | undefined>) => {
-  const ticketNumber = computed(() => ticket.value?.number?.toString())
+  const ticketNumber = computed(() => ticket?.value?.number?.toString())
 
   const { config } = storeToRefs(useApplicationStore())
 

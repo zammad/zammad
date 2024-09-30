@@ -2,7 +2,7 @@
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
-import HighlightMenu from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/HighlightMenu.vue'
+import HighlightMenu from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue'
 
 describe('CommonHighlightMenu', () => {
   it('renders component correctly', () => {

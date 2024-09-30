@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe 'ChecklistTemplates', type: :request do
+RSpec.describe 'ChecklistTemplates', current_user_id: 1, type: :request do
   let(:unauthorized_user) { create(:agent) }
   let(:authorized_user)   { create(:admin) }
 

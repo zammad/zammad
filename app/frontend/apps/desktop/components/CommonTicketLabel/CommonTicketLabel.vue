@@ -3,18 +3,17 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import {
-  type ChecklistItem,
-  EnumTicketStateColorCode,
-} from '#shared/graphql/types.ts'
+import type { TicketById } from '#shared/entities/ticket/types.ts'
+import { EnumTicketStateColorCode } from '#shared/graphql/types.ts'
 
 import CommonTicketStateIndicatorIcon from '#desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue'
 
 interface Props {
-  ticket: ChecklistItem['ticket']
-  unauthorized: boolean
+  ticket?: Partial<TicketById> | null
+  unauthorized?: boolean
   classes?: {
-    indicator: string
+    indicator?: string
+    label?: string
   }
 }
 
@@ -22,11 +21,11 @@ const props = defineProps<Props>()
 
 const ticketId = computed(() => `ticket-${props.ticket?.internalId}`)
 
-const currentState = computed(() => {
+const ticketState = computed(() => {
   return props.ticket?.state?.name || ''
 })
 
-const colorCode = computed(() => {
+const ticketColorCode = computed(() => {
   return props.ticket?.stateColorCode || EnumTicketStateColorCode.Open
 })
 </script>
@@ -42,18 +41,22 @@ const colorCode = computed(() => {
     v-else
     class="flex grow items-start gap-2 break-words rounded-md hover:no-underline focus-visible:rounded-md focus-visible:outline-none group-hover/tab:bg-blue-600 group-hover/tab:dark:bg-blue-900"
     style="word-break: break-word"
-    :link="`/ticket/${ticket?.internalId}`"
+    :link="`/tickets/${ticket?.internalId}`"
     internal
   >
     <CommonTicketStateIndicatorIcon
       class="ms-0.5 mt-1 shrink-0"
       :class="classes?.indicator || ''"
-      :color-code="colorCode"
-      :label="currentState"
+      :color-code="ticketColorCode"
+      :label="ticketState"
       :aria-labelledby="ticketId"
       icon-size="tiny"
     />
-    <CommonLabel :id="ticketId" class="mt-0.5 text-blue-800">
+    <CommonLabel
+      :id="ticketId"
+      class="mt-0.5 text-blue-800"
+      :class="classes?.label"
+    >
       {{ ticket?.title }}
     </CommonLabel>
   </CommonLink>

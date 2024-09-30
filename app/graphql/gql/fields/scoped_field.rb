@@ -24,7 +24,7 @@ module Gql::Fields
     def field_authorized?(object)
       pundit_result = object.cached_pundit_authorize
       # Check if the pundit result is a 'FieldScope' object.
-      pundit_result.respond_to?(:field_authorized?) ? pundit_result.field_authorized?(name) : !!pundit_result
+      pundit_result.respond_to?(:field_authorized?) ? pundit_result.field_authorized?(original_name) : !!pundit_result
     end
   end
 end

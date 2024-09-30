@@ -9,8 +9,7 @@ import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import CommonInlineEdit from '#desktop/components/CommonInlineEdit/CommonInlineEdit.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
-import ChecklistTicketItem from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTicketItem.vue'
-import { verifyAccess } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/utils.ts'
+import CommonTicketLabel from '#desktop/components/CommonTicketLabel/CommonTicketLabel.vue'
 
 interface Props {
   item: ChecklistItemType
@@ -25,9 +24,11 @@ const emit = defineEmits<{
   'set-item-checked': [ChecklistItemType]
 }>()
 
-const isTicketItem = computed(() => !!props.item.ticket)
+const isTicketItem = computed(() => !!props.item.ticketReference)
 
-const noAccessToLinkedTicket = computed(() => !verifyAccess(props.item))
+const noAccessToLinkedTicket = computed(
+  () => !props.item.ticketReference?.ticket,
+)
 
 const inlineEditInstance = useTemplateRef('inline-edit')
 
@@ -52,22 +53,20 @@ const actions: MenuItem[] = [
     label: __('Check item'),
     icon: 'check2-square',
     onClick: () => setItemCheckedState(true),
-    show: (entity) =>
-      !entity?.checked && !isTicketItem.value && !noAccessToLinkedTicket.value,
+    show: (entity) => !entity?.checked && !isTicketItem.value,
   },
   {
     key: 'uncheck',
     label: __('Uncheck item'),
     icon: 'check2-square',
     onClick: () => setItemCheckedState(false),
-    show: (entity) =>
-      entity?.checked && !isTicketItem.value && !noAccessToLinkedTicket.value,
+    show: (entity) => entity?.checked && !isTicketItem.value,
   },
   {
     key: 'edit',
     icon: 'pencil',
     label: __('Edit item'),
-    show: () => !isTicketItem.value && !noAccessToLinkedTicket.value,
+    show: () => !isTicketItem.value,
     onClick: () => inlineEditInstance.value?.activateEditing(),
   },
   {
@@ -112,7 +111,7 @@ defineExpose({
     </template>
     <template v-else>
       <FormKit
-        v-if="!isTicketItem && !noAccessToLinkedTicket"
+        v-if="!isTicketItem"
         :id="`checked_${item.id}`"
         type="checkbox"
         :classes="{
@@ -126,13 +125,13 @@ defineExpose({
       />
     </template>
 
-    <ChecklistTicketItem
-      v-if="isTicketItem || noAccessToLinkedTicket"
+    <CommonTicketLabel
+      v-if="isTicketItem"
       :classes="{
         indicator: isReordering ? '-ms-0.5' : '',
       }"
       :unauthorized="noAccessToLinkedTicket"
-      :ticket="item.ticket"
+      :ticket="item.ticketReference?.ticket"
     />
 
     <CommonInlineEdit

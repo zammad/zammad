@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Service::Ticket::Update::Validator do
+RSpec.describe Service::Ticket::Update::Validator, current_user_id: 1 do
   subject(:validator) { described_class.new(user: user, ticket: ticket, ticket_data: ticket_data, article_data: article_data, skip_validators: skip_validators) }
 
   let(:user)            { create(:agent, groups: [group]) }

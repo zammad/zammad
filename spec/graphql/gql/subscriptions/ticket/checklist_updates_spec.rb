@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Subscriptions::Ticket::ChecklistUpdates, type: :graphql do
+RSpec.describe Gql::Subscriptions::Ticket::ChecklistUpdates, :aggregate_failures, type: :graphql do
   let(:group)        { create(:group) }
   let(:agent)        { create(:agent, groups: [group]) }
   let(:ticket)       { create(:ticket, group: group) }
@@ -21,18 +21,6 @@ RSpec.describe Gql::Subscriptions::Ticket::ChecklistUpdates, type: :graphql do
               id
               text
               checked
-              ticket {
-                id
-                internalId
-                number
-                title
-                state {
-                  id
-                  name
-                }
-                stateColorCode
-              }
-              ticketAccess
             }
           }
           removedTicketChecklist
@@ -68,17 +56,14 @@ RSpec.describe Gql::Subscriptions::Ticket::ChecklistUpdates, type: :graphql do
       ))
     end
 
-    context 'with an existing checklist', authenticated_as: :authenticate do
+    context 'with an existing checklist' do
       let(:checklist) { create(:checklist, ticket: ticket, item_count: 1) }
 
-      def authenticate
-        checklist
-        agent
-      end
-
       it 'triggers after checklist update' do
-        checklist.update!(name: 'foobar')
+        checklist
+        mock_channel.mock_broadcasted_messages.clear
 
+        checklist.update!(name: 'foobar')
         result = mock_channel.mock_broadcasted_messages.first[:result]['data']['ticketChecklistUpdates']
 
         expect(result).to include('ticketChecklist' => include(
@@ -87,16 +72,20 @@ RSpec.describe Gql::Subscriptions::Ticket::ChecklistUpdates, type: :graphql do
       end
 
       it 'triggers after checklist destroy' do
-        checklist.destroy!
+        checklist
+        mock_channel.mock_broadcasted_messages.clear
 
+        checklist.destroy!
         result = mock_channel.mock_broadcasted_messages.first[:result]['data']['ticketChecklistUpdates']
 
         expect(result).to include('ticketChecklist' => nil, 'removedTicketChecklist' => true)
       end
 
       it 'triggers after checklist item create' do
-        checklist.items.create!(text: 'foobar')
+        checklist
+        mock_channel.mock_broadcasted_messages.clear
 
+        checklist.items.create!(text: 'foobar')
         result = mock_channel.mock_broadcasted_messages.first[:result]['data']['ticketChecklistUpdates']
 
         expect(result).to include('ticketChecklist' => include(
@@ -109,8 +98,10 @@ RSpec.describe Gql::Subscriptions::Ticket::ChecklistUpdates, type: :graphql do
       end
 
       it 'triggers after checklist item update' do
-        checklist.items.last.update!(text: 'foobar')
+        checklist
+        mock_channel.mock_broadcasted_messages.clear
 
+        checklist.items.last.update!(text: 'foobar')
         result = mock_channel.mock_broadcasted_messages.first[:result]['data']['ticketChecklistUpdates']
 
         expect(result).to include('ticketChecklist' => include(
@@ -123,8 +114,10 @@ RSpec.describe Gql::Subscriptions::Ticket::ChecklistUpdates, type: :graphql do
       end
 
       it 'triggers after checklist item destroy' do
-        checklist.items.last.destroy!
+        checklist
+        mock_channel.mock_broadcasted_messages.clear
 
+        checklist.items.last.destroy!
         result = mock_channel.mock_broadcasted_messages.first[:result]['data']['ticketChecklistUpdates']
 
         expect(result['ticketChecklist']['items']).to be_empty

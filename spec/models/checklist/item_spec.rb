@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Checklist::Item, :aggregate_failures, type: :model do
+RSpec.describe Checklist::Item, :aggregate_failures, current_user_id: 1, type: :model do
   describe 'history entries for checked' do
     let(:checklist) do
       create(:checklist, item_count: 1)

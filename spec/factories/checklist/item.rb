@@ -6,7 +6,5 @@ FactoryBot.define do
 
     text          { Faker::Lorem.unique.sentence }
     checked       { false }
-    updated_by_id { 1 }
-    created_by_id { 1 }
   end
 end

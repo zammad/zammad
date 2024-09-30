@@ -3,8 +3,6 @@
 FactoryBot.define do
   factory :checklist_template do
     name            { Faker::Name.unique.name }
-    updated_by_id   { 1 }
-    created_by_id   { 1 }
     active          { true }
     sorted_item_ids { [] }
 

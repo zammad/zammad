@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Queries::Ticket::Checklist, type: :graphql do
+RSpec.describe Gql::Queries::Ticket::Checklist, current_user_id: 1, type: :graphql do
   let(:group)     { create(:group) }
   let(:agent)     { create(:agent, groups: [group]) }
   let(:ticket)    { create(:ticket, group: group) }
@@ -22,22 +22,17 @@ RSpec.describe Gql::Queries::Ticket::Checklist, type: :graphql do
           name
           completed
           incomplete
+          complete
+          total
           items {
             id
             text
             checked
-            ticket {
-              id
-              internalId
-              number
-              title
-              state {
+            ticketReference {
+              ticket {
                 id
-                name
               }
-              stateColorCode
             }
-            ticketAccess
           }
         }
       }
@@ -52,13 +47,14 @@ RSpec.describe Gql::Queries::Ticket::Checklist, type: :graphql do
       'name'       => checklist.name,
       'completed'  => false,
       'incomplete' => 5,
+      'complete'   => 0,
+      'total'      => 5,
       'items'      => checklist.items.sort_by(&:id).map do |item|
         {
-          'id'           => gql.id(item),
-          'text'         => item.text,
-          'checked'      => item.checked,
-          'ticket'       => nil,
-          'ticketAccess' => nil,
+          'id'              => gql.id(item),
+          'text'            => item.text,
+          'checked'         => item.checked,
+          'ticketReference' => nil,
         }
       end,
     }
@@ -123,13 +119,12 @@ RSpec.describe Gql::Queries::Ticket::Checklist, type: :graphql do
       end
     end
 
-    context 'with ticket checklist item', authenticated_as: :authenticate do
-      let(:checklist) { create(:checklist, name: 'foobar', ticket: ticket, item_count: 1) }
-
-      def authenticate
-        checklist.items.last.update!(text: "Ticket##{another_ticket.number}", ticket_id: another_ticket.id)
-        checklist.reload
-        agent
+    context 'with ticket checklist item' do
+      let(:checklist) do
+        create(:checklist, name: 'foobar', ticket: ticket, item_count: 1).tap do |checklist|
+          checklist.items.last.update!(text: "Ticket##{another_ticket.number}", ticket_id: another_ticket.id)
+          checklist.reload
+        end
       end
 
       context 'with an open ticket' do
@@ -141,23 +136,18 @@ RSpec.describe Gql::Queries::Ticket::Checklist, type: :graphql do
             'name'       => checklist.name,
             'completed'  => false,
             'incomplete' => 1,
+            'complete'   => 0,
+            'total'      => 1,
             'items'      => [
               {
-                'id'           => gql.id(checklist.items.last),
-                'text'         => checklist.items.last.text,
-                'checked'      => checklist.items.last.checked,
-                'ticket'       => {
-                  'id'             => gql.id(another_ticket),
-                  'internalId'     => another_ticket.id,
-                  'number'         => another_ticket.number,
-                  'title'          => another_ticket.title,
-                  'state'          => {
-                    'id'   => gql.id(another_ticket.state),
-                    'name' => another_ticket.state.name,
+                'id'              => gql.id(checklist.items.last),
+                'text'            => checklist.items.last.text,
+                'checked'         => checklist.items.last.checked,
+                'ticketReference' => {
+                  'ticket' => {
+                    'id' => gql.id(another_ticket),
                   },
-                  'stateColorCode' => 'open',
                 },
-                'ticketAccess' => 'Granted',
               },
             ],
           }
@@ -175,23 +165,18 @@ RSpec.describe Gql::Queries::Ticket::Checklist, type: :graphql do
             'name'       => checklist.name,
             'completed'  => true,
             'incomplete' => 0,
+            'complete'   => 1,
+            'total'      => 1,
             'items'      => [
               {
-                'id'           => gql.id(checklist.items.last),
-                'text'         => checklist.items.last.text,
-                'checked'      => checklist.items.last.checked,
-                'ticket'       => {
-                  'id'             => gql.id(another_ticket),
-                  'internalId'     => another_ticket.id,
-                  'number'         => another_ticket.number,
-                  'title'          => another_ticket.title,
-                  'state'          => {
-                    'id'   => gql.id(another_ticket.state),
-                    'name' => another_ticket.state.name,
+                'id'              => gql.id(checklist.items.last),
+                'text'            => checklist.items.last.text,
+                'checked'         => checklist.items.last.checked,
+                'ticketReference' => {
+                  'ticket' => {
+                    'id' => gql.id(another_ticket),
                   },
-                  'stateColorCode' => 'closed',
                 },
-                'ticketAccess' => 'Granted',
               },
             ],
           }
@@ -201,7 +186,14 @@ RSpec.describe Gql::Queries::Ticket::Checklist, type: :graphql do
       end
 
       context 'when the agent has no access to the linked ticket' do
-        let(:another_ticket) { create(:ticket, state: Ticket::State.find_by(name: 'new')) }
+        let(:another_ticket) do
+          create(:ticket, state: Ticket::State.find_by(name: 'new')).tap do |t|
+            create(:checklist, name: 'foobar', ticket: t, item_count: 1).tap do |checklist|
+              checklist.items.last.update!(text: "Ticket##{ticket.number}", ticket_id: ticket.id)
+              checklist.reload
+            end
+          end
+        end
 
         let(:response) do
           {
@@ -209,13 +201,16 @@ RSpec.describe Gql::Queries::Ticket::Checklist, type: :graphql do
             'name'       => checklist.name,
             'completed'  => false,
             'incomplete' => 1,
+            'complete'   => 0,
+            'total'      => 1,
             'items'      => [
               {
-                'id'           => gql.id(checklist.items.last),
-                'text'         => checklist.items.last.text,
-                'checked'      => checklist.items.last.checked,
-                'ticket'       => nil,
-                'ticketAccess' => 'Forbidden',
+                'id'              => gql.id(checklist.items.last),
+                'text'            => checklist.items.last.text,
+                'checked'         => checklist.items.last.checked,
+                'ticketReference' => {
+                  'ticket' => nil,
+                },
               },
             ],
           }

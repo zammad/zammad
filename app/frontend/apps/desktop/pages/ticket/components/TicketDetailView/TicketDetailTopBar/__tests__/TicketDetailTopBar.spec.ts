@@ -9,12 +9,15 @@ import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { provideTicketInformationMocks } from '#desktop/entities/ticket/__tests__/mocks/provideTicketInformationMocks.ts'
 import { testOptionsTopBar } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/__tests__/support/testOptions.ts'
 import TicketDetailTopBar from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketDetailTopBar.vue'
+import { mockChecklistTemplatesQuery } from '#desktop/pages/ticket/graphql/queries/checklistTemplates.mocks.ts'
 
 const copyToClipboardMock = vi.fn()
 
 vi.mock('#shared/composables/useCopyToClipboard.ts', async () => ({
   useCopyToClipboard: () => ({ copyToClipboard: copyToClipboardMock }),
 }))
+
+vi.mock('#desktop/pages/ticket/composables/useTicketSidebar.ts')
 
 const renderTopBar = (
   // eslint-disable-next-line default-param-last
@@ -38,6 +41,9 @@ describe('TicketDetailTopBar', () => {
   beforeEach(() => {
     mockApplicationConfig({
       ticket_hook: 'Ticket#',
+    })
+    mockChecklistTemplatesQuery({
+      checklistTemplates: [],
     })
   })
 

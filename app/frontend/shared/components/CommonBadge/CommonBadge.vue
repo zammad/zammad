@@ -10,11 +10,13 @@ import type { BadgeSize, BadgeVariant } from './types.ts'
 export interface Props {
   variant?: BadgeVariant
   size?: BadgeSize
+  tag?: 'span' | 'div'
 }
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'info',
   size: 'small',
+  tag: 'span',
 })
 
 const sizeClasses = computed(() => {
@@ -57,7 +59,8 @@ const classMap = getBadgeClasses()
 </script>
 
 <template>
-  <span
+  <component
+    :is="tag"
     :class="[
       classMap.base,
       classMap[props.variant],
@@ -68,5 +71,5 @@ const classMap = getBadgeClasses()
     data-test-id="common-badge"
   >
     <slot />
-  </span>
+  </component>
 </template>

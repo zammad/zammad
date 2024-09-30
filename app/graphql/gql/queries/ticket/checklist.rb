@@ -13,10 +13,6 @@ module Gql::Queries
       ctx.current_user.permissions?(['ticket.agent'])
     end
 
-    def authorized?(ticket:, template_id: nil)
-      Pundit.authorize(context.current_user, ticket, :show?)
-    end
-
     def resolve(ticket:)
       ::Checklist.find_by(ticket:)
     end

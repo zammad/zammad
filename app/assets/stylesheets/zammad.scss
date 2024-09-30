@@ -7008,6 +7008,30 @@ a.list-group-item.active > .badge,
   }
 }
 
+.ticket-meta-highlighted {
+  color: var(--header-primary);
+}
+
+.ticket-meta-checklist-details {
+  display: block;
+  margin-top: 8px;
+
+  .ticket-meta-checklist-icon {
+    width: 14px;
+    height: 12.25px;
+    position: relative;
+    top: 2px;
+  }
+
+  .ticket-meta-checklist-entry {
+    display: inline-block;
+  }
+
+  .ticket-meta-checklist-entry + .ticket-meta-checklist-entry {
+    @include bidi-style(padding-left, 14px, padding-right, 0);
+  }
+}
+
 .task-subline {
   text-align: center;
   display: block;
