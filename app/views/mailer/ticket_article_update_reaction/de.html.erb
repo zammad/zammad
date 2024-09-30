@@ -1,0 +1,11 @@
+Aktualisierter Ticket Artikel (#{ticket.title})
+
+<div>Hallo #{recipient.firstname},</div>
+<br>
+<div>
+<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> reagierte mit <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> auf #{article.created_by.fullname} die Nachricht "<b>#{article.body_as_html}</b>".
+</div>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">Dies in #{config.product_name} ansehen</a>
+</div>
