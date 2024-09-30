@@ -178,8 +178,8 @@ class SecureMailing::PGP::Incoming < SecureMailing::Backend::HandlerIncoming
 
     decrypted_body = result[:stdout]
 
-    # If we're not getting a content type header, we need to add a newline, otherwise it's fucked up.
-    if !decrypted_body.starts_with?('Content-Type:')
+    # If we're not getting a content header, we need to add a newline, otherwise it's fucked up.
+    if !decrypted_body.starts_with?(%r{Content-\w+:})
       decrypted_body = "\n#{decrypted_body}"
     end
 
