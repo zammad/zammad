@@ -28,7 +28,7 @@ const messageText = (
       return i18n.t('%s updated article for |%s|', authorName, ticketTitle)
     case 'update.reaction':
       return i18n.t(
-        '%s reacted with a %s to %s message |%s|',
+        '%s reacted with a %s to message from %s |%s|',
         metaObject.preferences?.whatsapp?.reaction?.author || '-',
         metaObject.preferences?.whatsapp?.reaction?.emoji || '-',
         authorName,
