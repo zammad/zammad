@@ -127,7 +127,19 @@ RSpec.describe Service::Ticket::Article::Type::WhatsappMessage::Deliver do
         end
 
         context 'with unsuccessful response' do
-          let(:internal_response) { Struct.new(:data, :error, :raw_response).new(nil, Struct.new(:message).new('error message'), '{}') }
+          before do
+            allow_any_instance_of(WhatsappSdk::Api::Messages).to receive(:send_text).and_return(internal_response)
+          end
+
+          let(:internal_response) do
+            Struct
+              .new(:data,
+                   :error,
+                   :raw_response)
+              .new(nil,
+                   Struct.new(:message).new('error message'),
+                   '{}')
+          end
 
           it 'raises an temporary delivery error and increased retry count', :aggregate_failures do
             expect { service.execute }.to raise_error(Service::Ticket::Article::Type::TemporaryDeliveryError)

@@ -77,7 +77,7 @@ class Service::Ticket::Article::Type::BaseDeliver < Service::Base
     )
     Rails.logger.error message
 
-    if !error.retryable?
+    if error.respond_to?(:retryable?) && !error.retryable?
       create_delivery_failed_article(message:)
 
       raise Service::Ticket::Article::Type::PermanentDeliveryError, message
