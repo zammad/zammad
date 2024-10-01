@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-30 04:55+0000\n"
+"PO-Revision-Date: 2024-10-01 04:54+0000\n"
 "Last-Translator: Ivan Perovic <ip@zammad.com>\n"
 "Language-Team: Croatian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hr/>\n"
@@ -8856,7 +8856,7 @@ msgstr "Izgubljena lozinka"
 
 #: app/assets/javascripts/app/lib/app_post/websocket.coffee:351
 msgid "Lost network connection!"
-msgstr "Izgubljena internetska veza!"
+msgstr "Internetska veza prekinuta!"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
 msgid "Low priority"
@@ -8874,7 +8874,7 @@ msgstr "Grupna ograničenja makronaredbi ne odnose se na sve tickete"
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:69
 #: db/seeds/permissions.rb:61
 msgid "Macros"
-msgstr "Macros"
+msgstr "Makronaredbe"
 
 #: app/assets/javascripts/app/models/macro.coffee
 msgid ""
@@ -8907,16 +8907,16 @@ msgstr "Održavanje"
 
 #: app/controllers/application_controller/authenticates.rb:122
 msgid "Maintenance mode enabled!"
-msgstr "Održavanje uključeno!"
+msgstr "Održavanje aktivirano!"
 
 #: app/assets/javascripts/app/controllers/manage.coffee:15
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:85
 msgid "Manage"
-msgstr "Upravljanje"
+msgstr "Upravljaj"
 
 #: db/seeds/permissions.rb:10
 msgid "Manage %s"
-msgstr "Upravljanje %s"
+msgstr "Upravljaj %s"
 
 #: db/seeds/permissions.rb:192
 msgid "Manage %s Settings"
@@ -8924,12 +8924,12 @@ msgstr "Upravljaj postavkama %s"
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:20
 msgid "Manage Tags"
-msgstr "Upravljanje tagovima"
+msgstr "Upravljanje oznakama"
 
 #: app/assets/javascripts/app/controllers/user.coffee:162
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
 msgid "Manage Two-Factor Authentication"
-msgstr "Upravljajte dvofaktorskom autentifikacijom"
+msgstr "Postavi dvofaktorsku autentifikaciju"
 
 #: app/assets/javascripts/app/views/api.jst.eco:48
 msgid ""
@@ -8941,7 +8941,7 @@ msgstr ""
 
 #: app/views/mailer/application.html.erb:47
 msgid "Manage your notification settings"
-msgstr "Podesite svoje postavke obavijesti"
+msgstr "Upravljajte svojim postavkama obavijesti"
 
 #: app/assets/javascripts/app/views/api.jst.eco:2
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:3
@@ -8994,7 +8994,7 @@ msgstr "ožujak"
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:4
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:125
 msgid "Mark all as read"
-msgstr "Označi sve kao pročitane"
+msgstr "Označi sve kao pročitano"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:534
 msgid "Match all (AND)"
@@ -9002,7 +9002,7 @@ msgstr "Uskladi sve (I)"
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:9
 msgid "Match all of the following"
-msgstr "Podudaranje sa sljedećim kriterijima"
+msgstr "Podudaranje sa svim sljedećim kriterijima"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:535
 msgid "Match any (OR)"
@@ -9120,7 +9120,7 @@ msgstr "Grupa za spominjanja"
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:7
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
 msgid "Merge"
-msgstr "Objedini"
+msgstr "Spoji"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:48
 msgid "Merge tickets"
@@ -9305,7 +9305,7 @@ msgstr "Nadzor"
 
 #: db/seeds/settings.rb:3407
 msgid "Monitoring Token"
-msgstr "Token za nadgledanje"
+msgstr "Token za nadzor"
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:3
 msgid "Month"
@@ -9400,7 +9400,7 @@ msgstr "Ticketi na koje sam pretplaćen(a)"
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:57
 #: db/seeds/overviews.rb:213
 msgid "My Tickets"
-msgstr "Moji kartice"
+msgstr "Moji ticketi"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:15
 msgid "My handling time: %s minutes"
@@ -9506,7 +9506,7 @@ msgstr "Za dodavanje privitaka novom obrascu potreban je \"form_id\"."
 #: app/controllers/concerns/creates_ticket_articles.rb:13
 #: lib/validations/ticket_article_validator/default.rb:8
 msgid "Need at least an 'article body' field."
-msgstr "Potrebno je barem jedno polje teksta članka."
+msgstr "Potrebno je barem polje teksta članka."
 
 #: app/controllers/application_controller/handles_devices.rb:47
 msgid "Need fingerprint param!"
@@ -9526,15 +9526,15 @@ msgstr "Potreban user_id ili organization_id kao parametar"
 
 #: db/seeds/settings.rb:2055
 msgid "Needed"
-msgstr "Potreban"
+msgstr "obavezan"
 
 #: app/controllers/sessions_controller.rb:46
 msgid ""
 "Neither an SSO environment variable 'REMOTE_USER' nor a 'X-Forwarded-User' "
 "header could be found."
 msgstr ""
-"Nije moguće pronaći SSO varijablu okruženja 'REMOTE_USER' ni zaglavlje \"X-"
-"Proslijeđeni korisnik\"."
+"Nije moguće pronaći SSO varijablu okruženja 'REMOTE_USER' ni zaglavlje \"X"
+"-Forwarded-User\"."
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:15
 msgid "Network"
@@ -9580,7 +9580,7 @@ msgstr "Nova grupa"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:22
 msgid "New Macro"
-msgstr "Novi Macro"
+msgstr "Nova makronaredba"
 
 #: app/assets/javascripts/app/controllers/organization.coffee:28
 msgid "New Organization"
@@ -9612,7 +9612,7 @@ msgstr "Novi SLA"
 
 #: app/assets/javascripts/app/controllers/job.coffee:24
 msgid "New Scheduler"
-msgstr "Novi zadatak"
+msgstr "Nova automatizacija"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:27
 msgid "New Source"
@@ -9621,7 +9621,7 @@ msgstr "Novi izvor"
 #: app/assets/javascripts/app/views/tag/index.jst.eco:14
 #: db/seeds/settings.rb:4021
 msgid "New Tags"
-msgstr "Novi tagovi"
+msgstr "Nove oznake"
 
 #: app/assets/javascripts/app/controllers/template.coffee:22
 msgid "New Template"
@@ -9636,7 +9636,7 @@ msgstr "Novi predložak"
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
 msgid "New Ticket"
-msgstr "Nova kartica"
+msgstr "Novi ticket"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:21
 msgid "New Ticket State"
@@ -9648,7 +9648,7 @@ msgstr "Novi prijevod"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:25
 msgid "New Trigger"
-msgstr "Novi Trigger"
+msgstr "Novi okidač"
 
 #: app/assets/javascripts/app/controllers/user.coffee:33
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:89
@@ -9670,11 +9670,11 @@ msgstr "Novi webhook"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:24
 msgid "New Workflow"
-msgstr "Novi radni tijek"
+msgstr "Novi temeljni radni tijek"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:66
 msgid "New organizations are shared."
-msgstr "Nove organizacije kreiraju se sa dijeljenim sadržajem."
+msgstr "Nove organizacije standardno dijele sadržaj."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:72
 msgid "New password"
@@ -9728,7 +9728,7 @@ msgstr ""
 "<br>\n"
 "<div>\n"
 "Grupa: #{ticket.group.name}<br>\n"
-"Vlasnik/ca: #{ticket.owner.fullname}<br>\n"
+"Vlasnik: #{ticket.owner.fullname}<br>\n"
 "Status: #{t(ticket.state.name)}<br>\n"
 "</div>\n"
 "<br>\n"
@@ -9770,7 +9770,7 @@ msgstr "Idući status"
 #: app/assets/javascripts/app/views/ticket_zoom/overview_navigator.jst.eco:12
 #: db/seeds/settings.rb:2889
 msgid "Next in overview"
-msgstr "Idi na sljedeći pregled"
+msgstr "Sljedeći pregled"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:59
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:6
@@ -9852,7 +9852,7 @@ msgstr "Nema kategorija"
 
 #: app/models/setting/validation/saml/security.rb:33
 msgid "No certificate found."
-msgstr "Zertifikat nije pronađen."
+msgstr "Certifikat nije pronađen."
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:5
 msgid "No configuration set."
@@ -9880,7 +9880,7 @@ msgstr "Nema e-maila!"
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:263
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:147
 msgid "No entries"
-msgstr "Nema stavki"
+msgstr "Nema unosa"
 
 #: app/controllers/integration/exchange_controller.rb:58
 msgid "No entries were found in the selected folder(s)."
@@ -9897,7 +9897,7 @@ msgstr "Nema dozvoljenih formata datoteka."
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:649
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:803
 msgid "No filter was configured."
-msgstr "Nema konfiguriranih filtera."
+msgstr "Nijedan filter nije konfiguriran."
 
 #: app/controllers/integration/exchange_controller.rb:45
 msgid "No folders were found for the given user credentials."
@@ -9942,7 +9942,7 @@ msgstr "Nije pronađen nijedan povezani članak za obradu statusne poruke."
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:346
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue:94
 msgid "No results found"
-msgstr "Nema zapisa"
+msgstr "Nema pronađenih rezultata"
 
 #: app/views/layouts/knowledge_base.html.erb:41
 msgid "No results were found."
@@ -9959,7 +9959,7 @@ msgstr "Nema dostupnih sesija."
 
 #: lib/stats.rb:21
 msgid "No settings with area 'Dashboard::Stats' defined"
-msgstr "Nema spremljenih postavki za ’Dashboard::Stats’ polje"
+msgstr "Nema spremljenih postavki za polje ’Dashboard::Stats’"
 
 #: app/controllers/organizations_controller.rb:166
 #: app/controllers/text_modules_controller.rb:71
@@ -9983,7 +9983,7 @@ msgstr "Nema prijevoda za ovaj jezik"
 
 #: app/models/ticket.rb:399
 msgid "No triggers active"
-msgstr "Nema aktivnih triggera"
+msgstr "Nema aktivnih okidača"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:8
 msgid "No unread notifications for you. :)"
@@ -9994,8 +9994,8 @@ msgid ""
 "No webhook available, please create a new one or activate an existing one at "
 "\"Manage > Webhook\""
 msgstr ""
-"Nema dostupnih webhook-ova, molimo dodajte novi ili aktivirajte postojeći u "
-"„Upravljanje > Webhook”"
+"Nema dostupnih webhook-ova, molimo dodajte novi ili aktivirajte postojeći u „"
+"Upravljanje > Webhook”"
 
 #: app/models/channel/email_parser.rb:109
 msgid "No x-zammad-session-user-id, no sender set!"
