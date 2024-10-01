@@ -298,8 +298,9 @@ msgstr ""
 msgid "%s object(s) will be updated."
 msgstr ""
 
+#: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:19
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:234
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/ChecklistBadgeList.vue:21
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadgeList.vue:48
 msgid "%s of %s"
 msgstr ""
 
@@ -318,7 +319,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:53
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:31
-msgid "%s reacted with a %s to %s message |%s|"
+msgid "%s reacted with a %s to message from %s |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:49
@@ -344,7 +345,8 @@ msgstr ""
 msgid "%s switched to |%s|!"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/ChecklistBadgeList.vue:26
+#: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:30
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:71
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue:57
 #: app/frontend/apps/mobile/components/User/UserItem.vue:33
 msgid "%s tickets"
@@ -655,8 +657,8 @@ msgstr ""
 msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:37
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:18
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTicketItem.vue:41
 msgid "Access denied"
 msgstr ""
 
@@ -942,7 +944,7 @@ msgstr ""
 msgid "Add Certificate"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:402
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:414
 msgid "Add Empty Checklist"
 msgstr ""
 
@@ -2387,7 +2389,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:185
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:259
@@ -2668,7 +2670,7 @@ msgstr ""
 msgid "Checklist Template items are limited to 100 items per checklist."
 msgstr ""
 
-#: app/models/checklist/item.rb:96
+#: app/models/checklist/item.rb:101
 msgid "Checklist items are limited to 100 items per checklist."
 msgstr ""
 
@@ -3449,7 +3451,7 @@ msgstr ""
 msgid "Create a Test Ticket"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:194
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:193
 msgid "Create a new checklist item"
 msgstr ""
 
@@ -3558,7 +3560,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:14
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformationBadgeList.vue:34
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList.vue:43
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -5292,7 +5294,7 @@ msgstr ""
 msgid "Edit security keys"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:87
 msgid "Edit ticket title"
 msgstr ""
 
@@ -7076,7 +7078,7 @@ msgstr ""
 msgid "High priority"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/HighlightMenu.vue:70
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:70
 msgid "Highlight"
 msgstr ""
 
@@ -9700,11 +9702,11 @@ msgid "No certificate found."
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:415
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:427
 msgid "No checklist added to this ticket yet."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:170
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:169
 msgid "No checklist items yet"
 msgstr ""
 
@@ -9886,7 +9888,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
-#: app/graphql/gql/types/ticket_type.rb:99
+#: app/graphql/gql/types/ticket_type.rb:101
 #: db/seeds/settings.rb:1957
 msgid "None"
 msgstr ""
@@ -10265,6 +10267,10 @@ msgstr ""
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:71
 msgid "Open %s"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadgeList.vue:35
+msgid "Open Checklist"
 msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:3
@@ -11557,7 +11563,7 @@ msgid "Remove authenticator app"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:361
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:373
 msgid "Remove checklist"
 msgstr ""
 
@@ -11603,7 +11609,7 @@ msgid "Removes the shadows for a flat look."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:354
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:366
 msgid "Rename checklist"
 msgstr ""
 
@@ -11625,7 +11631,7 @@ msgid "Reopening time in days"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:14
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:179
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:178
 msgid "Reorder"
 msgstr ""
 
@@ -12092,7 +12098,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:121
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:207
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:206
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:69
@@ -12867,7 +12873,7 @@ msgstr ""
 msgid "Show additional notes for ticket creation depending on the selected type."
 msgstr ""
 
-#: app/assets/javascripts/app/views/generic/ticket_list.jst.eco:30
+#: app/assets/javascripts/app/views/generic/ticket_list.jst.eco:40
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco:11
 msgid "Show all…"
 msgstr ""
@@ -12884,7 +12890,7 @@ msgstr ""
 msgid "Show chat automatically"
 msgstr ""
 
-#: app/assets/javascripts/app/views/generic/ticket_list.jst.eco:31
+#: app/assets/javascripts/app/views/generic/ticket_list.jst.eco:41
 msgid "Show less"
 msgstr ""
 
@@ -12936,6 +12942,14 @@ msgstr ""
 
 #: db/seeds/settings.rb:2645
 msgid "Show to user roles"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:54
+msgid "Show tracked ticket"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:55
+msgid "Show tracked tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:95
@@ -14190,7 +14204,7 @@ msgstr ""
 msgid "The given article is not a media article."
 msgstr ""
 
-#: app/graphql/gql/mutations/ticket/checklist/item_delete.rb:13
+#: app/graphql/gql/mutations/ticket/checklist/item_delete.rb:17
 msgid "The given checklist item does not belong to the given checklist."
 msgstr ""
 
@@ -15631,7 +15645,7 @@ msgstr ""
 msgid "Ticket update failed."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
 #: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:441
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:171
 msgid "Ticket updated successfully."
@@ -16036,8 +16050,12 @@ msgstr ""
 msgid "Track retweets"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/ChecklistBadgeList.vue:99
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:85
 msgid "Tracked as checklist item in"
+msgstr ""
+
+#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_references_popover_provider.coffee:8
+msgid "Tracked by checklist item by"
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:27
@@ -16546,7 +16564,7 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_article_update_reaction/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_article_update_reaction/en.html.erb
-msgid "Updated ticket article (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>\n<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> reacted with a <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> to #{article.created_by.fullname} message \"<b>#{article.body_as_html}</b>\".\n</div>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
+msgid "Updated ticket article (#{ticket.title})\n\n<div>Hi #{recipient.firstname},</div>\n<br>\n<div>\n<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> reacted with a <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> to message from #{article.created_by.fullname}:\n</div>\n<br>\n<% if @objects[:article] %>\n  <div>\n    <blockquote type=\"cite\">\n    #{article.body_as_html}\n    </blockquote>\n  </div>\n<% end %>\n<br>\n<div>\n  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n</div>\n"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
@@ -17877,7 +17895,7 @@ msgstr ""
 msgid "chat"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/ChecklistBadgeList.vue:51
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadgeList.vue:44
 msgid "checked"
 msgstr ""
 
@@ -17955,7 +17973,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:4
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:4
-#: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:8
+#: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:6
 msgid "created"
 msgstr ""
 
@@ -18142,7 +18160,7 @@ msgid "escalated"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:19
-#: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:11
+#: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:9
 msgid "escalation"
 msgstr ""
 
@@ -18767,11 +18785,11 @@ msgid "reached"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:140
-msgid "reacted to %s message '%s'"
+msgid "reacted to message from %s '%s'"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:134
-msgid "reacted with a %s to %s message '%s'"
+msgid "reacted with a %s to message from %s '%s'"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:153
@@ -18788,7 +18806,7 @@ msgstr ""
 msgid "recovery codes"
 msgstr ""
 
-#: app/models/checklist/item.rb:90
+#: app/models/checklist/item.rb:95
 msgid "reference must not be the checklist ticket."
 msgstr ""
 
@@ -18810,7 +18828,7 @@ msgid "remove option"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:143
-msgid "removed reaction to %s message '%s'"
+msgid "removed reaction to message from %s '%s'"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:10
@@ -19043,7 +19061,7 @@ msgstr ""
 msgid "token access,token,api,access token,application"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/ChecklistBadge.vue:8
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadge.vue:8
 msgid "tracked in"
 msgstr ""
 
