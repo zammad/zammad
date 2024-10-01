@@ -101,10 +101,21 @@ class SecureMailing::SMIME::Incoming < SecureMailing::Backend::HandlerIncoming
     subject_hashes = subjects.map { |subject| subject.hash.to_s(16) }
     return if subject_hashes.blank?
 
-    existing_certs = ::SMIMECertificate.where(subject_hash: subject_hashes).sort_by do |certificate|
-      # ensure that we have the same order as the certificates in the mail
+    # Try to find CA/Public key for the sender certificate
+    # 1. In the SMIME store with the mail chain certifiates (reordered)
+    # 2. In the SMIME store with the issuer of the sender certificate
+    # 3. In the SSL store with the issuer of the sender certificate
+    certificates_by_mail_chain = ::SMIMECertificate.where(subject_hash: subject_hashes).sort_by do |certificate|
       subject_hashes.index(certificate.parsed.subject.hash.to_s(16))
-    end
+    end.presence
+    certificate_by_issuer_smime_store = ::SMIMECertificate.where(subject_hash: certificates.first.issuer.hash.to_s(16)).presence
+    certificate_by_issuer_ssl_store   = ::SSLCertificate.where(subject: certificates.first.issuer.to_s, ca: true).filter_map do |cert|
+      ::SMIMECertificate.new(public_key: cert.certificate)
+    rescue
+      next
+    end.presence
+    existing_certs = certificates_by_mail_chain || certificate_by_issuer_smime_store || certificate_by_issuer_ssl_store
+
     return if existing_certs.blank?
 
     if subject_hashes.size > existing_certs.size

@@ -417,6 +417,54 @@ RSpec.describe SecureMailing::SMIME do
           expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
         end
 
+        context 'when the mail is not containing the certificate chain but Intermediate CA is present on incoming mails (#5357)' do
+          let(:ca_fixture) { 'IntermediateCA' }
+
+          context 'when present in the SMIME store' do
+            let(:mail) do
+              smime_mail = build_mail
+              mail       = Channel::EmailParser.new.parse(smime_mail.to_s)
+
+              sender_certificate.destroy!
+              create(:smime_certificate, fixture: ca_fixture)
+
+              SecureMailing.incoming(mail)
+
+              mail
+            end
+
+            it 'does verify' do
+              expect(mail[:body]).to include(raw_body)
+              expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be true
+              expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq(intermediate_ca_certificate_subject)
+              expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
+              expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
+            end
+          end
+
+          context 'when present in the SSL store' do
+            let(:mail) do
+              smime_mail = build_mail
+              mail       = Channel::EmailParser.new.parse(smime_mail.to_s)
+
+              sender_certificate.destroy!
+              create(:ssl_certificate, fixture: ca_fixture)
+
+              SecureMailing.incoming(mail)
+
+              mail
+            end
+
+            it 'does verify' do
+              expect(mail[:body]).to include(raw_body)
+              expect(mail['x-zammad-article-preferences'][:security][:sign][:success]).to be true
+              expect(mail['x-zammad-article-preferences'][:security][:sign][:comment]).to eq(intermediate_ca_certificate_subject)
+              expect(mail['x-zammad-article-preferences'][:security][:encryption][:success]).to be false
+              expect(mail['x-zammad-article-preferences'][:security][:encryption][:comment]).to be_nil
+            end
+          end
+        end
+
         context 'public key present in signature' do
 
           let(:not_related_fixture)      { 'smime3@example.com' }
