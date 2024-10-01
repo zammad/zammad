@@ -7,26 +7,30 @@ class Zammad::TranslationCatalog::Writer::Pot < Zammad::TranslationCatalog::Writ
   def write(extracted_strings)
 
     pot = build_pot_content(extracted_strings)
-
     target_filename = "#{target_path}.pot"
 
-    # rubocop:disable Rails/Output
-    if options['check']
-      original_file_content = File.read(target_filename)
-      if original_file_content.eql? pot
-        puts "File #{target_filename} is up-to-date."
-        return
-      else
-        puts "File #{target_filename} is not up-to-date, please run 'rails generate zammad:translation_catalog' to update it."
-        exit! # rubocop:disable Rails/Exit
-      end
-    end
-    # rubocop:enable Rails/Output
+    return check_pot_file_consistency!(pot, target_filename) if options['check']
 
     create_or_update_file(target_filename, pot)
   end
 
   private
+
+  def check_pot_file_consistency!(pot, target_filename)
+    # rubocop:disable Rails/Output
+    original_file_content = File.read(target_filename)
+    if strip_pot_metadata(original_file_content).eql? strip_pot_metadata(pot)
+      puts "File #{target_filename} is up-to-date."
+    else
+      puts "File #{target_filename} is not up-to-date, please run 'rails generate zammad:translation_catalog' to update it."
+      exit! # rubocop:disable Rails/Exit
+    end
+    # rubocop:enable Rails/Output
+  end
+
+  def strip_pot_metadata(pot)
+    pot.gsub(%r{^#.*\n}, '')
+  end
 
   DATE_FORMAT_LEGEND = <<~LEGEND.chomp
     #. These placeholders are supported:
@@ -78,7 +82,7 @@ class Zammad::TranslationCatalog::Writer::Pot < Zammad::TranslationCatalog::Writ
 
     extracted_strings.sorted_values.each { |s| pot += string_to_pot(s) }
 
-    pot
+    pot.chomp
   end
 
   def string_to_pot(string)

@@ -36,8 +36,8 @@
     - !reference [.scripts, pnpm_install]
     - echo "Checking .po file syntax…"
     - for FILE in i18n/*.pot i18n/*.po; do echo "Checking $FILE"; msgfmt -o /dev/null -c $FILE; done
-    # - echo "Checking .pot catalog consistency…"
-    # - bundle exec rails generate zammad:translation_catalog --check
+    - echo "Checking .pot catalog consistency…"
+    - bundle exec rails generate zammad:translation_catalog --check
     - echo "Checking consistency of Settings types file…"
     - bundle exec rails generate zammad:setting_types --check
     - echo "Rails zeitwerk:check autoloader check…"
