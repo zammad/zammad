@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { cloneDeep, noop } from 'lodash-es'
-import { computed, provide, ref, reactive, toRef } from 'vue'
+import { computed, provide, ref, reactive, toRef, nextTick } from 'vue'
 import {
   onBeforeRouteLeave,
   onBeforeRouteUpdate,
@@ -16,7 +16,10 @@ import {
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
 import Form from '#shared/components/Form/Form.vue'
-import type { FormSubmitData } from '#shared/components/Form/types.ts'
+import type {
+  FormSubmitData,
+  FormValues,
+} from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useOnlineNotificationSeen } from '#shared/composables/useOnlineNotificationSeen.ts'
@@ -172,13 +175,19 @@ const saveTicketForm = async (
       })
 
       // Reset article form after ticket update and reset form.
-      return () => {
-        newTicketArticlePresent.value = false
-        closeArticleReplyDialog().then(() => {
-          // after the dialog is closed, form changes value from reseted { ticket, article } to { ticket }
-          // which makes it dirty, so we reset it again to be just { ticket }
-          formReset({ ticket: formData.ticket })
-        })
+      newTicketArticlePresent.value = false
+
+      return {
+        reset: (
+          values: FormSubmitData<TicketUpdateFormData>,
+          formNodeValues: FormValues,
+        ) => {
+          nextTick(() => {
+            closeArticleReplyDialog().then(() => {
+              formReset({ values: { ticket: formNodeValues.ticket } })
+            })
+          })
+        },
       }
     }
   } catch (errors) {

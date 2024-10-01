@@ -4,7 +4,6 @@ import { computed, shallowRef } from 'vue'
 
 import type { MutationSendError } from '#shared/types/error.ts'
 import type { FormUpdaterOptions } from '#shared/types/form.ts'
-import type { ObjectLike } from '#shared/types/utils.ts'
 
 import { setErrors } from './utils.ts'
 
@@ -14,6 +13,7 @@ import type {
   FormFieldValue,
   FormValues,
   FormSchemaField,
+  FormResetData,
 } from './types.ts'
 import type { FormKitNode } from '@formkit/core'
 import type { ShallowRef, Ref } from 'vue'
@@ -33,7 +33,7 @@ export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
 
   const isSettled = computed(() => !!state.value?.settled)
 
-  const isInitialSettled = computed(() => !!state.value?.initialSettled)
+  const isInitialSettled = computed(() => !!form.value?.formInitialSettled)
 
   const isDirty = computed(() => !!state.value?.dirty)
 
@@ -61,21 +61,16 @@ export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
     return isDirty.value
   })
 
-  const formReset = (
-    values?: FormValues,
-    object?: ObjectLike,
-    options?: FormResetOptions,
-  ) => {
-    form.value?.resetForm(values, object, options)
+  const formReset = (data?: FormResetData, options?: FormResetOptions) => {
+    form.value?.resetForm(data, options)
   }
 
   const formGroupReset = (
     groupNode: FormKitNode,
-    values?: FormValues,
-    object?: ObjectLike,
+    data: FormResetData,
     options?: FormResetOptions,
   ) => {
-    form.value?.resetForm(values, object, options, groupNode)
+    form.value?.resetForm(data, { groupNode, ...options })
   }
 
   const formSubmit = () => {

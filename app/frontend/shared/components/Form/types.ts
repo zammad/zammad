@@ -5,6 +5,7 @@ import type {
   EnumObjectManagerObjects,
   FormUpdaterQuery,
 } from '#shared/graphql/types.ts'
+import type { EntityObject } from '#shared/types/entity.ts'
 import type { FormUpdaterOptions } from '#shared/types/form.ts'
 import type { ObjectLike } from '#shared/types/utils.ts'
 
@@ -250,17 +251,39 @@ export interface FormHandler {
   callback: FormHandlerFunction
 }
 
+// With this it's possible to add an own reset handling to the form submit
+// and also an finally function after the reset.
+// A use case is when you have two groups inside a form but one group is not available
+// when you start with the from (e.g. article in ticket context). With the normal reset
+// the default initial values will be set with the two groups (when both are active during the submit).
+export interface FormOnSubmitFunctionCallbacks {
+  reset?: (values: FormSubmitData, nodeValues: FormValues) => void
+  finally?: () => void
+}
+
+export interface FormResetData {
+  values?: FormValues
+  object?: EntityObject
+}
+
 export interface FormResetOptions {
   /**
    * Should reset dirty fields to new values.
    * @default true
    */
   resetDirty?: boolean
+  /**
+   * Should reset flags to false.
+   * @default true
+   */
+  resetFlags?: boolean
+  groupNode?: FormKitNode
 }
 
 export interface FormRef {
   formId: string
   formNode: FormKitNode
+  formInitialSettled: boolean
   values: FormValues
   flags: Record<string, boolean>
   updateSchemaDataField: UpdateSchemaDataFieldFunction
@@ -272,12 +295,7 @@ export interface FormRef {
 
   findNodeByName(name: string): FormKitNode | undefined
 
-  resetForm(
-    initialValues?: FormValues,
-    object?: ObjectLike,
-    options?: FormResetOptions,
-    groupNode?: FormKitNode,
-  ): void
+  resetForm(data?: FormResetData, options?: FormResetOptions): void
 
   triggerFormUpdater(options?: FormUpdaterOptions): void
 }

@@ -23,7 +23,10 @@ import {
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
 import Form from '#shared/components/Form/Form.vue'
-import type { FormSubmitData } from '#shared/components/Form/types.ts'
+import type {
+  FormSubmitData,
+  FormValues,
+} from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { setErrors } from '#shared/components/Form/utils.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
@@ -459,10 +462,17 @@ const submitEditTicket = async (
         })
 
         // Reset article form after ticket update and reset form.
-        return () => {
-          newTicketArticlePresent.value = false
+        newTicketArticlePresent.value = false
 
-          formReset({ ticket: undefined })
+        return {
+          reset: (
+            values: FormSubmitData<TicketUpdateFormData>,
+            formNodeValues: FormValues,
+          ) => {
+            nextTick(() => {
+              formReset({ values: { ticket: formNodeValues.ticket } })
+            })
+          },
         }
       }
 

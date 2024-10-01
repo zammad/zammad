@@ -49,6 +49,7 @@ const renderForm = (options: any = {}) => {
 const getFormContext = (): FormRef => {
   return {
     formId: 'test-form',
+    formInitialSettled: true,
     formNode: getNode('test-form') as FormKitNode,
     values: getNode('test-form')?.value as FormValues,
     flags: {},

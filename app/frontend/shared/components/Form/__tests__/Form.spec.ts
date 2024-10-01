@@ -260,6 +260,41 @@ describe('Form.vue', () => {
     expect(title).toHaveDisplayValue('')
   })
 
+  it('use complex submit function return signature for special reset handling', async () => {
+    const submitCallbackResetSpy = vi.fn()
+    const submitCallbackFinallySpy = vi.fn()
+
+    const wrapper = await renderForm({
+      props: {
+        clearValuesAfterSubmit: true,
+        onSubmit: () => {
+          return {
+            reset: submitCallbackResetSpy,
+            finally: submitCallbackFinallySpy,
+          }
+        },
+      },
+    })
+
+    const text = wrapper.getByLabelText('Title')
+    await wrapper.events.type(text, 'Example title')
+    await wrapper.events.type(text, '{Enter}')
+
+    expect(wrapper.emitted().submit).toBeTruthy()
+
+    expect(submitCallbackResetSpy).toHaveBeenCalledWith(
+      {
+        title: 'Example title',
+        text: 'Some text',
+      },
+      {
+        title: 'Example title',
+        text: 'Some text',
+      },
+    )
+    expect(submitCallbackFinallySpy).toHaveBeenCalledTimes(1)
+  })
+
   it('implements changed event', async () => {
     const wrapper = await renderForm()
 
@@ -988,9 +1023,11 @@ describe('Form.vue - Reset', () => {
     expect(example).toHaveValue('Some example')
 
     form.value.resetForm({
-      title: 'New title',
-      text: 'New text',
-      example: 'New example',
+      values: {
+        title: 'New title',
+        text: 'New text',
+        example: 'New example',
+      },
     })
     await waitForNextTick()
     expect(input).toHaveValue('New title')
@@ -1008,7 +1045,10 @@ describe('Form.vue - Reset', () => {
     await view.events.clear(example)
     await view.events.type(example, 'New example')
 
-    form.value.resetForm({ text: 'Some text' }, {}, { resetDirty: false })
+    form.value.resetForm(
+      { values: { text: 'Some text' } },
+      { resetDirty: false },
+    )
     await waitForNextTick()
 
     expect(input).toHaveValue('New title')
@@ -1035,9 +1075,7 @@ describe('Form.vue - Reset', () => {
 
     form.value.resetForm(
       {},
-      undefined,
-      undefined,
-      form.value.findNodeByName('example'),
+      { groupNode: form.value.findNodeByName('example') },
     )
     await waitForNextTick()
     expect(input).toHaveValue('New title')
@@ -1087,9 +1125,11 @@ describe('Form.vue - Reset', () => {
     expect(example).toHaveValue('Some example')
 
     form.value.resetForm({
-      title: 'New title',
-      text: 'New text',
-      example: 'New example',
+      values: {
+        title: 'New title',
+        text: 'New text',
+        example: 'New example',
+      },
     })
     await waitForNextTick()
 

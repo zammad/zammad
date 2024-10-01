@@ -105,7 +105,7 @@ watch(initialFormValues, (newValues) => {
   // No reset needed when the form has already the correct state.
   if (isEqual(values.value, newValues) && !isDirty.value) return
 
-  formReset(newValues, user.value!)
+  formReset({ values: newValues, object: user.value! })
 })
 
 const buildFormChangesHash = (enabled: boolean) => {

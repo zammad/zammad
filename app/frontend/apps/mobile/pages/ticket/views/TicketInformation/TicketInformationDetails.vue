@@ -57,10 +57,14 @@ const discardTicketEditDialog = async () => {
   if (!confirmed) return
 
   form.value?.resetForm(
-    initialFormTicketValue.value,
-    ticket.value,
-    { resetDirty: true },
-    ticketFormGroupNode.value,
+    {
+      values: initialFormTicketValue.value,
+      object: ticket.value,
+    },
+    {
+      resetDirty: true,
+      groupNode: ticketFormGroupNode.value,
+    },
   )
 }
 

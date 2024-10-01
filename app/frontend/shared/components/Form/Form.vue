@@ -4,7 +4,7 @@
 import { getNode, createMessage } from '@formkit/core'
 import { FormKit, FormKitMessages, FormKitSchema } from '@formkit/vue'
 import { refDebounced, watchOnce } from '@vueuse/shared'
-import { isEqual, cloneDeep, merge, isEmpty } from 'lodash-es'
+import { isEqual, cloneDeep, merge, isEmpty, isObject } from 'lodash-es'
 import {
   useTemplateRef,
   computed,
@@ -70,11 +70,14 @@ import type {
   FormFieldValue,
   FormHandler,
   FormHandlerFunction,
+  FormOnSubmitFunctionCallbacks,
   FormSchemaField,
   FormSchemaLayout,
   FormSchemaNode,
   FormValues,
   ReactiveFormSchemData,
+  FormResetData,
+  FormResetOptions,
 } from './types.ts'
 import type {
   FormKitPlugin,
@@ -134,7 +137,12 @@ export interface Props {
   onSubmit?: (
     values: FormSubmitData,
     flags?: Record<string, boolean>,
-  ) => Promise<void | (() => void) | false> | void | (() => void) | false
+  ) =>
+    | Promise<void | (() => void) | FormOnSubmitFunctionCallbacks | false>
+    | void
+    | (() => void)
+    | FormOnSubmitFunctionCallbacks
+    | false
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -184,6 +192,7 @@ const debouncedShowInitialLoadingAnimation = refDebounced(
 )
 
 const formKitInitialNodesSettled = ref(false)
+const formInitialSettled = ref(false)
 const formResetRunning = ref(false)
 const formNode: Ref<FormKitNode | undefined> = ref()
 const formElement = useTemplateRef('form')
@@ -247,16 +256,7 @@ const setFormNode = (node: FormKitNode) => {
       testFlags.set(`${formName}.settled`)
       emit('settled')
 
-      // Set the initial settled flag when all things are executed.
-      // This means form is settled and also the initial form updater values are set.
-      node.store.set(
-        createMessage({
-          blocking: false,
-          key: 'initialSettled',
-          value: true,
-          visible: false,
-        }),
-      )
+      formInitialSettled.value = true
 
       executeFormHandler(FormHandlerExecution.InitialSettled, values.value)
 
@@ -314,6 +314,44 @@ const onSubmitRaw = () => {
   }
 }
 
+const afterSubmitReset = (values: FormSubmitData) => {
+  if (!formNode.value) return
+
+  if (props.clearValuesAfterSubmit) {
+    formNode.value.reset()
+  } else {
+    formNode.value.reset(values)
+  }
+}
+
+const afterSubmitHandling = (
+  submitReturn: void | (() => void) | FormOnSubmitFunctionCallbacks,
+  values: FormSubmitData,
+) => {
+  if (!formNode.value) return
+
+  schemaData.flags = {}
+
+  if (
+    isObject(submitReturn) &&
+    ('reset' in submitReturn || 'finally' in submitReturn)
+  ) {
+    if (submitReturn.reset) {
+      submitReturn.reset(values, formNode.value.value as FormValues)
+    } else {
+      afterSubmitReset(values)
+    }
+
+    submitReturn.finally?.()
+
+    return
+  }
+
+  afterSubmitReset(values)
+
+  if (typeof submitReturn === 'function') submitReturn()
+}
+
 const onSubmit = (values: FormSubmitData) => {
   // Needs to be checked, because the 'onSubmit' function is not required.
   if (!props.onSubmit) return undefined
@@ -337,27 +375,14 @@ const onSubmit = (values: FormSubmitData) => {
         // it's possible to destroy Form before this is called and the reset should not run when errors exists.
         if (!formNode.value || formNode.value.context?.state.errors) return
 
-        schemaData.flags = {}
-
-        // TODO: maybe should do some similar thing like in the formReset function for the form updater
-        if (props.clearValuesAfterSubmit) {
-          formNode.value.reset()
-        } else {
-          formNode.value.reset(values)
-        }
-        result?.()
+        afterSubmitHandling(result, values)
       })
       .catch((errors: UserError) => {
         if (formNode.value) setErrors(formNode.value, errors)
       })
   }
 
-  schemaData.flags = {}
-  formNode.value?.reset(!props.clearValuesAfterSubmit ? values : undefined)
-
-  submitResult?.()
-
-  return submitResult
+  afterSubmitHandling(submitResult, values)
 }
 
 let formUpdaterQueryHandler: QueryHandler<
@@ -496,7 +521,7 @@ const getInitialEntityObjectValue = (
 
 const getResetFormValues = (
   rootNode: FormKitNode,
-  values: FormValues,
+  values?: FormValues,
   object?: EntityObject,
   groupNode?: FormKitNode,
   resetDirty = true,
@@ -517,6 +542,42 @@ const getResetFormValues = (
     }
 
     resetValues[name] = value
+  }
+
+  const checkValue = (
+    name: string,
+    values: FormValues,
+    parentName?: string,
+  ) => {
+    if (name in values) {
+      setResetFormValue(name, values[name], parentName)
+
+      return true
+    }
+    if (parentName && parentName in values && values[parentName]) {
+      const value = (values[parentName] as Record<string, FormFieldValue>)[name]
+
+      setResetFormValue(name, value, parentName)
+
+      return true
+    }
+
+    return false
+  }
+
+  const checkObjectValue = (
+    name: string,
+    object: EntityObject,
+    parentName?: string,
+  ) => {
+    const objectValue = getInitialEntityObjectValue(name, object)
+    if (objectValue !== undefined) {
+      setResetFormValue(name, objectValue, parentName)
+
+      return true
+    }
+
+    return false
   }
 
   Object.entries(schemaData.fields).forEach(([field, { props }]) => {
@@ -541,22 +602,11 @@ const getResetFormValues = (
       dirtyValues[field] = formElement._value as FormFieldValue
     }
 
-    if (field in values) {
-      setResetFormValue(field, values[field], parentName)
-      return
-    }
-    if (parentName && parentName in values && values[parentName]) {
-      const value = (values[parentName] as Record<string, FormFieldValue>)[
-        field
-      ]
+    // We should only do something related to the given values, when something was given.
+    if (values && checkValue(field, values, parentName)) return
 
-      setResetFormValue(field, value, parentName)
-      return
-    }
-
-    const objectValue = getInitialEntityObjectValue(field, object)
-    if (objectValue !== undefined) {
-      setResetFormValue(field, objectValue, parentName)
+    if (object) {
+      checkObjectValue(field, object, parentName)
     }
   })
 
@@ -568,15 +618,13 @@ const getResetFormValues = (
 }
 
 const resetForm = (
-  values: FormValues = props.initialValues || {},
-  object: EntityObject | undefined = undefined,
-  {
-    resetDirty = true,
-    resetFlags = true,
-  }: { resetDirty?: boolean; resetFlags?: boolean } = {},
-  groupNode: FormKitNode | undefined = undefined,
+  data: FormResetData = {},
+  options: FormResetOptions = {},
 ) => {
   if (!formNode.value) return
+
+  const { object, values } = data
+  const { resetDirty = true, resetFlags = true, groupNode } = options
 
   formResetRunning.value = true
 
@@ -611,7 +659,7 @@ const resetForm = (
   formResetRunning.value = false
 
   // Trigger the formUpdater, when the reset is done.
-  handlesFormUpdater('form-reset')
+  handlesFormUpdater(resetDirty ? 'form-reset' : 'form-refresh')
 }
 
 const localInitialValues: FormValues = { ...props.initialValues }
@@ -890,6 +938,7 @@ const handlesFormUpdater = (
   if (
     trigger !== 'manual' &&
     trigger !== 'form-reset' &&
+    trigger !== 'form-refresh' &&
     (!changedField || props.formUpdaterInitialOnly)
   )
     return
@@ -1396,6 +1445,7 @@ const classMap = getFormClasses()
 
 defineExpose({
   formNode,
+  formInitialSettled,
   formId,
   values,
   flags: schemaData.flags,

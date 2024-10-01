@@ -55,6 +55,7 @@ export type FormUpdaterTrigger =
   | 'delayed'
   | 'blur'
   | 'form-reset'
+  | 'form-refresh' // When form is refreshed without dirty reset.
   | 'manual'
 
 export type FormUpdaterAdditionalParams = Record<string, unknown>

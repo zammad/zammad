@@ -64,14 +64,16 @@ export const useTicketEdit = (
         return
       }
 
-      // TODO: check why article type was changed back to initial?!
-      form.value?.resetForm(initialTicketValue.value, newTicket, {
-        // don't reset to new values, if user changes something
-        // if ticket is different, it's probably navigation to another ticket,
-        // so we can safely reset the form
-        // TODO: navigation to another ticket is currently always a re-render of the form, because of the component key(=newTicket.id) or?
-        resetDirty: ticketId !== newTicket.id,
-      })
+      form.value?.resetForm(
+        { values: initialTicketValue.value, object: newTicket },
+        {
+          // don't reset to new values, if user changes something
+          // if ticket is different, it's probably navigation to another ticket,
+          // so we can safely reset the form
+          // TODO: navigation to another ticket is currently always a re-render of the form, because of the component key(=newTicket.id) or?
+          resetDirty: ticketId !== newTicket.id,
+        },
+      )
     },
     { immediate: true },
   )

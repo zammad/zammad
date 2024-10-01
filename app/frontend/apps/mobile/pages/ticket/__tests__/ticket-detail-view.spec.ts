@@ -16,6 +16,7 @@ import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { mockUserCurrent } from '#tests/support/mock-userCurrent.ts'
 import { nullableMock, waitUntil } from '#tests/support/utils.ts'
 
+import { TicketUpdateDocument } from '#shared/entities/ticket/graphql/mutations/update.api.ts'
 import { TicketArticlesDocument } from '#shared/entities/ticket/graphql/queries/ticket/articles.api.ts'
 import { TicketArticleUpdatesDocument } from '#shared/entities/ticket/graphql/subscriptions/ticketArticlesUpdates.api.ts'
 import { TicketUpdatesDocument } from '#shared/entities/ticket/graphql/subscriptions/ticketUpdates.api.ts'
@@ -942,6 +943,55 @@ describe('ticket add/edit reply article', () => {
     expect(view.getByText('This field is required.')).toBeInTheDocument()
 
     expect(form?.find('body', 'name')?.value).toBe('Testing')
+  })
+
+  it('save one reply and cancel second reply (save button should not be visible)', async () => {
+    const { waitUntilTicketLoaded, ticket } = mockTicketDetailViewGql({
+      mockFrontendObjectAttributes: true,
+    })
+
+    const view = await visitView('/tickets/1')
+
+    await waitUntilTicketLoaded()
+
+    await view.events.click(view.getByRole('button', { name: 'Add reply' }))
+
+    expect(
+      await view.findByRole('dialog', { name: 'Add reply' }),
+    ).toBeInTheDocument()
+
+    await view.events.type(view.getByLabelText('Text'), 'Testing')
+
+    expect(
+      await view.findByRole('button', { name: 'Save' }),
+    ).toBeInTheDocument()
+
+    mockGraphQLApi(TicketUpdateDocument).willResolve({
+      ticketUpdate: {
+        ticket,
+        errors: null,
+        __typename: 'TicketUpdatePayload',
+      },
+    })
+
+    await view.events.click(view.getByRole('button', { name: 'Save' }))
+
+    expect(
+      await view.findByRole('button', { name: 'Add reply' }),
+    ).toBeInTheDocument()
+
+    await view.events.click(view.getByRole('button', { name: 'Add reply' }))
+
+    expect(
+      await view.findByRole('dialog', { name: 'Add reply' }),
+    ).toBeInTheDocument()
+
+    await view.events.click(view.getByRole('button', { name: 'Cancel' }))
+
+    expect(
+      await view.findByRole('button', { name: 'Add reply' }),
+    ).toBeInTheDocument()
+    expect(view.queryByRole('button', { name: 'Save' })).not.toBeInTheDocument()
   })
 })
 

@@ -106,7 +106,7 @@ watch(initialFormValues, (newValues) => {
   // No reset needed when the form has already the correct state.
   if (isEqual(values.value, newValues) && !isDirty.value) return
 
-  formReset(newValues)
+  formReset({ values: newValues })
 })
 
 onChangedField('file', (fileName) => {
@@ -151,7 +151,9 @@ const resetFormToDefaults = (
   personalSettings: UserData['personalSettings'],
 ) => {
   form.value?.resetForm({
-    matrix: personalSettings?.notificationConfig?.matrix || {},
+    values: {
+      matrix: personalSettings?.notificationConfig?.matrix || {},
+    },
   })
 }
 
