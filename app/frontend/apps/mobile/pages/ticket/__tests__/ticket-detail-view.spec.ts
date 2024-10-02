@@ -1013,6 +1013,21 @@ it('correctly redirects from ticket hash-based routes', async () => {
 it('correctly redirects from ticket hash-based routes with other ids', async () => {
   const { waitUntilTicketLoaded } = mockTicketDetailViewGql({
     ticketView: 'agent',
+    articles: [
+      defaultArticles(),
+      {
+        articles: {
+          edges: [],
+          pageInfo: {
+            endCursor: null,
+            startCursor: null,
+            hasPreviousPage: false,
+            __typename: 'PageInfo',
+          },
+          totalCount: 5,
+        },
+      },
+    ],
   })
 
   await visitView('/#ticket/zoom/1/20')
@@ -1022,6 +1037,7 @@ it('correctly redirects from ticket hash-based routes with other ids', async () 
   const route = router.currentRoute.value
 
   expect(route.name).toBe('TicketDetailArticlesView')
+
   expect(route.params).toEqual({ internalId: '1' })
 })
 

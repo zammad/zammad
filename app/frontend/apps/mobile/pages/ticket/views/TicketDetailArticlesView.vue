@@ -226,9 +226,14 @@ const initialScroll = async () => {
 const stopScrollWatch = watch(
   () => articles.value.length,
   async () => {
+    // Do nothing for initial article computed value, because this is initialy an empty error, when
+    // nothing is used from the cache.
+    if (articles.value.length === 0) return
+
     if (hasScroll() && !isAtTheBottom()) {
       scrollDownState.value = true
     }
+
     const scrolled = await initialScroll()
     if (scrolled) stopScrollWatch()
   },
