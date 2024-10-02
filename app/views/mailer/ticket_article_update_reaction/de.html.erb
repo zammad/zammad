@@ -1,11 +1,19 @@
-Aktualisierter Ticket Artikel (#{ticket.title})
+Aktualisierter Ticket-Artikel (#{ticket.title})
 
-<div>Hallo #{recipient.firstname},</div>
+<div>Hallo #{recipient.fullname},</div>
 <br>
 <div>
-<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> reagierte mit <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> auf #{article.created_by.fullname} die Nachricht "<b>#{article.body_as_html}</b>".
+<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> reagierte mit <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> auf die Nachricht von #{article.created_by.fullname}:
 </div>
 <br>
+<% if @objects[:article] %>
+  <div>
+    <blockquote type="cite">
+    #{article.body_as_html}
+    </blockquote>
+  </div>
+<% end %>
+<br>
 <div>
-  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">Dies in #{config.product_name} ansehen</a>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">In #{config.product_name} anzeigen</a>
 </div>

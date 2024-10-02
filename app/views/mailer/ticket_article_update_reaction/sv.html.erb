@@ -1,8 +1,18 @@
+Updaterat ärende (#{ticket.title})
+
 <div>Hej #{recipient.firstname},</div>
 <br>
 <div>
-<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> reagerade med <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> på #{article.created_by.fullname} meddelande "<b>#{article.body_as_html}</b>".
+<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> reagerade med <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> på meddelande från #{article.created_by.fullname}
 </div>
+<br>
+<% if @objects[:article] %>
+  <div>
+    <blockquote type="cite">
+    #{article.body_as_html}
+    </blockquote>
+  </div>
+<% end %>
 <br>
 <div>
   <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">Visa i #{config.product_name}</a>

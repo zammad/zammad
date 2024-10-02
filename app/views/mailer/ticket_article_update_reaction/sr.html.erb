@@ -3,8 +3,16 @@
 <div>Здраво #{recipient.firstname},</div>
 <br>
 <div>
-<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> је реаговао(ла) са <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> на #{article.created_by.fullname} поруку "<b>#{article.body_as_html}</b>".
+<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> је реаговао(ла) са <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> на поруку од #{article.created_by.fullname}:
 </div>
+<br>
+<% if @objects[:article] %>
+  <div>
+    <blockquote type="cite">
+    #{article.body_as_html}
+    </blockquote>
+  </div>
+<% end %>
 <br>
 <div>
   <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">Погледај у #{config.product_name}</a>
