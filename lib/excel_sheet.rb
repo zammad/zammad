@@ -15,6 +15,7 @@ class ExcelSheet
     @locale          = locale || Locale.default
     @tempfile        = Tempfile.new('excel-export.xlsx')
     @workbook        = WriteXLSX.new(@tempfile)
+    @format_decimal  = @workbook.add_format(num_format: '0.00')
     @worksheet       = @workbook.add_worksheet
     @contents        = nil
     @current_row     = 0
@@ -83,7 +84,9 @@ class ExcelSheet
       begin
         if item.acts_like?(:time) || item.acts_like?(:date)
           value_convert(item, nil, { data_type: 'datetime' })
-        elsif item.is_a?(Integer) || item.is_a?(Float)
+        elsif item.is_a?(Float) || item.is_a?(BigDecimal)
+          value_convert(item, nil, { data_type: 'float' })
+        elsif item.is_a?(Integer)
           value_convert(item, nil, { data_type: 'integer' })
         else
           value_convert(item, nil, { data_type: 'string' })
@@ -170,6 +173,8 @@ class ExcelSheet
       @worksheet.write_date_time(@current_row, @current_column, value.to_s, @format_date) if value.present?
     when 'integer'
       @worksheet.write_number(@current_row, @current_column, value) if value.present?
+    when 'float'
+      @worksheet.write_number(@current_row, @current_column, value, @format_decimal) if value.present?
     else
       @worksheet.write_string(@current_row, @current_column, value.to_s) if value.present?
     end

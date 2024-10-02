@@ -119,8 +119,9 @@ class TimeAccountingsController < ApplicationController
           }]
         end),
       {
-        name:  __('Created at'),
-        width: 20,
+        name:      __('Created at'),
+        width:     20,
+        data_type: 'datetime',
       },
     ]
 
