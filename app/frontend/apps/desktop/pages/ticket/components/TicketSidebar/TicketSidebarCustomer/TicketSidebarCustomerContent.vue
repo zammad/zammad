@@ -11,6 +11,7 @@ import type {
 import { normalizeEdges } from '#shared/utils/helpers.ts'
 
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
+import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/CommonSectionCollapse.vue'
 import CommonSimpleEntityList from '#desktop/components/CommonSimpleEntityList/CommonSimpleEntityList.vue'
 import { EntityType } from '#desktop/components/CommonSimpleEntityList/types.ts'
 import NavigationMenuList from '#desktop/components/NavigationMenu/NavigationMenuList.vue'
@@ -78,24 +79,16 @@ const actions: MenuItem[] = [
 
     <CommonSimpleEntityList
       v-if="secondaryOrganizations.totalCount"
+      id="customer-secondary-organizations"
       :type="EntityType.Organization"
-      :label="$t('Secondary organizations')"
+      :label="__('Secondary organizations')"
       :entity="secondaryOrganizations"
       @load-more="$emit('load-more-secondary-organizations')"
     />
 
-    <div class="flex flex-col">
-      <CommonLabel
-        id="customer-tickets"
-        size="small"
-        class="mt-2 text-stone-200 dark:text-neutral-500"
-      >
-        {{ $t('Tickets') }}
-      </CommonLabel>
-
+    <CommonSectionCollapse id="customer-tickets" :title="__('Tickets')">
       <NavigationMenuList
         class="mt-1"
-        aria-labelledby="customer-tickets"
         :density="NavigationMenuDensity.Dense"
         :items="[
           {
@@ -114,6 +107,6 @@ const actions: MenuItem[] = [
           },
         ]"
       />
-    </div>
+    </CommonSectionCollapse>
   </TicketSidebarContent>
 </template>

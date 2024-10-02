@@ -79,6 +79,7 @@
 - `assets/square.svg`
 - `assets/stopwatch.svg`
 - `assets/sun.svg`
+- `assets/tag.svg`
 - `assets/telegram.svg`
 - `assets/telephone-inbound.svg`
 - `assets/telephone-outbound.svg`

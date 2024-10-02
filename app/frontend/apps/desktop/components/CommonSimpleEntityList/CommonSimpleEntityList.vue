@@ -5,6 +5,7 @@ import { computed } from 'vue'
 
 import type { ObjectLike } from '#shared/types/utils.ts'
 
+import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/CommonSectionCollapse.vue'
 import CommonShowMoreButton from '#desktop/components/CommonShowMoreButton/CommonShowMoreButton.vue'
 import entityModules from '#desktop/components/CommonSimpleEntityList/plugins/index.ts'
 import {
@@ -13,6 +14,7 @@ import {
 } from '#desktop/components/CommonSimpleEntityList/types.ts'
 
 interface Props {
+  id: string
   entity: Entity<ObjectLike>
   type: EntityType
   label?: string
@@ -35,14 +37,7 @@ const entitySetup = computed(() => {
 </script>
 
 <template>
-  <div class="flex flex-col gap-1.5">
-    <CommonLabel
-      v-if="label"
-      class="-:inline-flex items-center text-xs leading-snug text-stone-200 dark:text-neutral-500"
-    >
-      {{ label }}
-    </CommonLabel>
-
+  <CommonSectionCollapse :id="id" :title="label" :no-header="!label">
     <ul v-if="entity.array?.length" class="flex flex-col gap-1.5">
       <li v-for="item in entitySetup.array" :key="`entity-${item.id}`">
         <component
@@ -64,5 +59,5 @@ const entitySetup = computed(() => {
       :total-count="entity.totalCount"
       @click="$emit('load-more')"
     />
-  </div>
+  </CommonSectionCollapse>
 </template>

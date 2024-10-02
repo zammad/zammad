@@ -17,6 +17,7 @@ describe('CommonSimpleEntityList', () => {
       const wrapper = renderComponent(CommonSimpleEntityList, {
         router: true,
         props: {
+          id: 'test-id',
           type: EntityType.User,
           entity: {
             array: userOption,
@@ -44,6 +45,7 @@ describe('CommonSimpleEntityList', () => {
       const wrapper = renderComponent(CommonSimpleEntityList, {
         router: true,
         props: {
+          id: 'test-id',
           type: EntityType.Organization,
           entity: {
             array: organizationOption,
@@ -68,6 +70,7 @@ describe('CommonSimpleEntityList', () => {
     const wrapper = renderComponent(CommonSimpleEntityList, {
       router: true,
       props: {
+        id: 'test-id',
         label: 'Foo Label',
         type: EntityType.User,
         entity: {
@@ -84,6 +87,7 @@ describe('CommonSimpleEntityList', () => {
     const wrapper = renderComponent(CommonSimpleEntityList, {
       router: true,
       props: {
+        id: 'test-id',
         type: EntityType.User,
         entity: {
           array: userOption,
@@ -103,6 +107,7 @@ describe('CommonSimpleEntityList', () => {
     const wrapper = renderComponent(CommonSimpleEntityList, {
       router: true,
       props: {
+        id: 'test-id',
         type: EntityType.User,
         entity: {
           array: userOption,
@@ -124,6 +129,7 @@ describe('CommonSimpleEntityList', () => {
     const wrapper = renderComponent(CommonSimpleEntityList, {
       router: true,
       props: {
+        id: 'test-id',
         type: EntityType.User,
         entity: {
           array: [],

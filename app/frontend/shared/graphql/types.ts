@@ -5696,6 +5696,22 @@ export type PublicLinkUpdatesSubscriptionVariables = Exact<{
 
 export type PublicLinkUpdatesSubscription = { __typename?: 'Subscriptions', publicLinkUpdates: { __typename?: 'PublicLinkUpdatesPayload', publicLinks?: Array<{ __typename?: 'PublicLink', id: string, link: string, title: string, description?: string | null, newTab: boolean }> | null } };
 
+export type TagAssignmentAddMutationVariables = Exact<{
+  objectId: Scalars['ID']['input'];
+  tag: Scalars['String']['input'];
+}>;
+
+
+export type TagAssignmentAddMutation = { __typename?: 'Mutations', tagAssignmentAdd?: { __typename?: 'TagAssignmentAddPayload', success?: boolean | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null, exception?: EnumUserErrorException | null }> | null } | null };
+
+export type TagAssignmentRemoveMutationVariables = Exact<{
+  objectId: Scalars['ID']['input'];
+  tag: Scalars['String']['input'];
+}>;
+
+
+export type TagAssignmentRemoveMutation = { __typename?: 'Mutations', tagAssignmentRemove?: { __typename?: 'TagAssignmentRemovePayload', success?: boolean | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null, exception?: EnumUserErrorException | null }> | null } | null };
+
 export type TagAssignmentUpdateMutationVariables = Exact<{
   objectId: Scalars['ID']['input'];
   tags: Array<Scalars['String']['input']> | Scalars['String']['input'];

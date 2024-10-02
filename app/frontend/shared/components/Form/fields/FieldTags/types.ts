@@ -7,6 +7,7 @@ import type { AutoCompleteProps } from '../FieldAutocomplete/types.ts'
 export interface FieldTagsProps {
   canCreate?: boolean
   sorting?: 'label' | 'value'
+  onDeactivate?: () => void
 }
 
 export type FieldTagsContext = FormFieldContext<

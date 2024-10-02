@@ -100,7 +100,9 @@ describe('TicketSidebarCustomerContent.vue', () => {
 
     await waitForNextTick()
 
-    expect(wrapper.getByRole('heading')).toHaveTextContent('Customer')
+    expect(wrapper.getByRole('heading', { level: 2 })).toHaveTextContent(
+      'Customer',
+    )
 
     expect(
       wrapper.getByRole('button', { name: 'Action menu button' }),

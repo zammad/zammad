@@ -7,10 +7,9 @@ import { computed, ref } from 'vue'
 import { i18n } from '#shared/i18n.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
+import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/CommonSectionCollapse.vue'
 import NavigationMenuFilter from '#desktop/components/NavigationMenu/NavigationMenuFilter.vue'
-import NavigationMenuHeader from '#desktop/components/NavigationMenu/NavigationMenuHeader.vue'
 import NavigationMenuList from '#desktop/components/NavigationMenu/NavigationMenuList.vue'
-import { useTransitionCollapse } from '#desktop/composables/useTransitionCollapse.ts'
 
 import type { NavigationMenuCategory, NavigationMenuEntry } from './types'
 
@@ -46,13 +45,6 @@ const permittedEntries = computed(() => {
 })
 
 const searchText = ref('')
-const collapsedCategories = ref<Set<string>>(new Set([]))
-
-const toggleCategory = (categoryLabel: string) => {
-  return collapsedCategories.value.has(categoryLabel)
-    ? collapsedCategories.value.delete(categoryLabel)
-    : collapsedCategories.value.add(categoryLabel)
-}
 
 const normalizeString = (input: string) => deburr(input).toLocaleLowerCase()
 
@@ -84,9 +76,6 @@ const allFilteredEntries = computed<NavigationMenuEntry[]>(() => {
     .flat()
     .filter((entry) => isMatchingFilter(entry))
 })
-
-const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
-  useTransitionCollapse()
 </script>
 
 <template>
@@ -105,37 +94,21 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
       v-for="category in categories"
       :key="category.label"
       class="bg-neutral-00 relative z-0 mb-1"
-      :class="{ 'overflow-clip': collapsedCategories.has(category.label) }"
     >
-      <template v-if="permittedEntries[category.label].length > 0">
-        <NavigationMenuHeader
-          :id="category.id"
-          class="mb-1"
-          :collapsed="collapsedCategories.has(category.label)"
-          :title="category.label"
-          :icon="category.icon"
-          collapsible
-          @toggle-collapsed="toggleCategory"
-        />
-
-        <Transition
-          name="collapse"
-          :duration="collapseDuration"
-          @enter="collapseEnter"
-          @after-enter="collapseAfterEnter"
-          @leave="collapseLeave"
-        >
+      <CommonSectionCollapse
+        v-if="permittedEntries[category.label].length > 0"
+        :id="category.id"
+        :title="category.label"
+        size="large"
+        no-negative-margin
+      >
+        <template #default="{ headerId }">
           <NavigationMenuList
-            v-show="
-              permittedEntries[category.label] &&
-              !collapsedCategories.has(category.label)
-            "
-            :id="category.id"
-            :aria-label="$t(category.label)"
+            :aria-labelledby="headerId"
             :items="permittedEntries[category.label]"
           />
-        </Transition>
-      </template>
+        </template>
+      </CommonSectionCollapse>
     </li>
   </ul>
 </template>

@@ -61,6 +61,7 @@ const classMap = getBadgeClasses()
 <template>
   <component
     :is="tag"
+    class="cursor-default"
     :class="[
       classMap.base,
       classMap[props.variant],

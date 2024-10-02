@@ -10,7 +10,7 @@ import FieldTagsWrapper from './FieldTagsWrapper.vue'
 
 const fieldDefinition = createInput(
   FieldTagsWrapper,
-  [...autoCompleteProps, 'canCreate'],
+  [...autoCompleteProps, 'canCreate', 'onDeactivate'],
   {
     features: [addLink, formUpdaterTrigger()],
   },

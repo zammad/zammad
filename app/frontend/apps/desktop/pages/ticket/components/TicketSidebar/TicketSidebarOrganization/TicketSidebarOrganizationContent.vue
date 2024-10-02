@@ -71,8 +71,9 @@ const actions: MenuItem[] = [
     />
 
     <CommonSimpleEntityList
+      id="organization-members"
       :type="EntityType.User"
-      :label="$t('Members')"
+      :label="__('Members')"
       :entity="organizationMembers"
       @load-more="$emit('load-more-members')"
     />

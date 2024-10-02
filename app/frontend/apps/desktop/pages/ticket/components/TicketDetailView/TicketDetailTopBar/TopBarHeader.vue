@@ -4,6 +4,7 @@
 import { computed } from 'vue'
 
 import { useCopyToClipboard } from '#shared/composables/useCopyToClipboard.ts'
+import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 
 import CommonBreadcrumb from '#desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue'
 import HighlightMenu from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue'
@@ -17,6 +18,8 @@ interface Props {
 
 const props = defineProps<Props>()
 const { ticket } = useTicketInformation()
+
+const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
 
 const { copyToClipboard } = useCopyToClipboard()
 
@@ -70,9 +73,8 @@ const detailViewActiveClasses = computed(() => {
         />
       </template>
     </CommonBreadcrumb>
-    <!-- TODO: we should have some computed for this policy thing or maybe we have already something? -->
     <HighlightMenu
-      v-if="ticket?.policy?.update"
+      v-if="isTicketAgent && isTicketEditable"
       class="justify-self-end"
       :style="{ gridTemplate: 'actions' }"
     />

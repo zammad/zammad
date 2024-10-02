@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, useTemplateRef } from 'vue'
 
 import type { FieldTagsContext } from '#shared/components/Form/fields/FieldTags/types.ts'
 import { AutocompleteSearchTagDocument } from '#shared/entities/tags/graphql/queries/autocompleteTags.api.ts'
@@ -70,20 +70,38 @@ const onKeydownFilterInput = (
   }
 }
 
+const autocompleteInputInstance = useTemplateRef('autocomplete-input')
+
+const activate = () => {
+  autocompleteInputInstance.value?.openSelectDropdown()
+}
+
+const onCloseSelectDropdown = async () => {
+  await props.context.node.settled
+
+  const onDeactivate = props.context?.onDeactivate
+  if (typeof onDeactivate !== 'function') return
+
+  onDeactivate()
+}
+
 Object.assign(props.context, {
   actions,
   defaultFilter: '*', // show tag recommendations on initial opening
   emptyInitialLabelText,
-  multiple: true,
+  multiple: props.context.multiple ?? true,
   gqlQuery: AutocompleteSearchTagDocument,
+  activate,
 })
 </script>
 
 <template>
   <FieldAutoCompleteInput
+    ref="autocomplete-input"
     :context="context"
     v-bind="$attrs"
     @search-interaction-update="onSearchInteractionUpdate"
     @keydown-filter-input="onKeydownFilterInput"
+    @close-select-dropdown="onCloseSelectDropdown"
   />
 </template>

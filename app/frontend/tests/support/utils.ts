@@ -86,7 +86,10 @@ export const nullableMock = <T extends object>(obj: T): T => {
         return null
       }
       const value = Reflect.get(target, prop, receiver)
-      if (Array.isArray(value)) {
+      if (
+        Array.isArray(value) &&
+        value.every((item) => typeof item === 'object' && item !== null)
+      ) {
         return value.map(nullableMock)
       }
       if (typeof value === 'object' && value !== null) {

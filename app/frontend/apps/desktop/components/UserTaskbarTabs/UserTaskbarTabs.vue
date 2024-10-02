@@ -15,6 +15,7 @@ import { startAndEndEventsDNDPlugin } from '#shared/utils/startAndEndEventsDNDPl
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
+import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/CommonSectionCollapse.vue'
 import { useUserCurrentTaskbarItemListPrioMutation } from '#desktop/entities/user/current/graphql/mutations/userCurrentTaskbarItemListPrio.api.ts'
 import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
 
@@ -224,62 +225,60 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
       </div>
 
       <template v-else>
-        <CommonLabel
-          v-if="!props.collapsed"
-          class="mb-2 px-2 text-neutral-500"
-          size="small"
+        <CommonSectionCollapse
+          id="user-taskbar-tabs"
+          :title="__('Tabs')"
+          no-negative-margin
         >
-          {{ $t('Tabs') }}
-        </CommonLabel>
+          <span id="drag-and-drop-taskbar-tabs" class="sr-only">
+            {{ $t('Drag and drop to reorder your tabs.') }}
+          </span>
 
-        <span id="drag-and-drop-taskbar-tabs" class="sr-only">
-          {{ $t('Drag and drop to reorder your tabs.') }}
-        </span>
-
-        <ul
-          ref="dnd-parent"
-          class="flex flex-col gap-1.5 overflow-y-auto p-1"
-          data-theme="dark"
-          :style="{ colorScheme: 'dark' }"
-        >
-          <li
-            v-for="tabEntityKey in dndTaskbarTabListOrder"
-            :key="tabEntityKey"
-            class="draggable group/tab relative"
-            draggable="true"
-            aria-describedby="drag-and-drop-taskbar-tabs"
+          <ul
+            ref="dnd-parent"
+            class="flex flex-col gap-1.5 overflow-y-auto p-1"
+            data-theme="dark"
+            :style="{ colorScheme: 'dark' }"
           >
-            <component
-              :is="getTaskbarTabComponent(tabEntityKey)"
-              :entity="taskbarTabListByTabEntityKey[tabEntityKey].entity"
-              :context="
-                activeTaskbarTabEntityKey === tabEntityKey
-                  ? activeTaskbarTabContext
-                  : undefined
-              "
-              :taskbar-tab="taskbarTabListByTabEntityKey[tabEntityKey]"
-              :taskbar-tab-link="getTaskbarTabLink(tabEntityKey)"
-              class="active:cursor-grabbing"
-            />
+            <li
+              v-for="tabEntityKey in dndTaskbarTabListOrder"
+              :key="tabEntityKey"
+              class="draggable group/tab relative"
+              draggable="true"
+              aria-describedby="drag-and-drop-taskbar-tabs"
+            >
+              <component
+                :is="getTaskbarTabComponent(tabEntityKey)"
+                :entity="taskbarTabListByTabEntityKey[tabEntityKey].entity"
+                :context="
+                  activeTaskbarTabEntityKey === tabEntityKey
+                    ? activeTaskbarTabContext
+                    : undefined
+                "
+                :taskbar-tab="taskbarTabListByTabEntityKey[tabEntityKey]"
+                :taskbar-tab-link="getTaskbarTabLink(tabEntityKey)"
+                class="active:cursor-grabbing"
+              />
 
-            <UserTaskbarTabRemove
-              :taskbar-tab-id="
-                taskbarTabListByTabEntityKey[tabEntityKey].taskbarTabId
-              "
-              :dirty="
-                activeTaskbarTabEntityKey === tabEntityKey
-                  ? (activeTaskbarTabContext.formIsDirty ??
-                    taskbarTabListByTabEntityKey[tabEntityKey].dirty)
-                  : taskbarTabListByTabEntityKey[tabEntityKey].dirty
-              "
-              :plugin="
-                getTaskbarTabTypePlugin(
-                  taskbarTabListByTabEntityKey[tabEntityKey].type,
-                )
-              "
-            />
-          </li>
-        </ul>
+              <UserTaskbarTabRemove
+                :taskbar-tab-id="
+                  taskbarTabListByTabEntityKey[tabEntityKey].taskbarTabId
+                "
+                :dirty="
+                  activeTaskbarTabEntityKey === tabEntityKey
+                    ? (activeTaskbarTabContext.formIsDirty ??
+                      taskbarTabListByTabEntityKey[tabEntityKey].dirty)
+                    : taskbarTabListByTabEntityKey[tabEntityKey].dirty
+                "
+                :plugin="
+                  getTaskbarTabTypePlugin(
+                    taskbarTabListByTabEntityKey[tabEntityKey].type,
+                  )
+                "
+              />
+            </li>
+          </ul>
+        </CommonSectionCollapse>
       </template>
     </div>
   </CommonLoader>

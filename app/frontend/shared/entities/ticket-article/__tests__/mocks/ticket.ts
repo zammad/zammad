@@ -112,6 +112,7 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
   number?: TicketQuery['ticket']['number']
   checklist?: TicketQuery['ticket']['checklist']
   referencingChecklistTickets?: TicketQuery['ticket']['referencingChecklistTickets']
+  tags?: string[]
   // eslint-disable-next-line sonarjs/cognitive-complexity
 }): R => {
   return nullableMock({
@@ -147,7 +148,7 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
       options?.defaultPolicy === undefined
         ? defaultPolicy
         : options?.defaultPolicy,
-    tags: [],
+    tags: options?.tags || [],
     timeUnit: null,
     timeUnitsPerType: [],
     subscribed: false,

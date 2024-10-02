@@ -1,0 +1,8 @@
+mutation tagAssignmentRemove($objectId: ID!, $tag: String!) {
+  tagAssignmentRemove(objectId: $objectId, tag: $tag) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

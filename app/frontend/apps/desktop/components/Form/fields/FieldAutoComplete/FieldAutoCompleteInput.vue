@@ -68,6 +68,7 @@ const emit = defineEmits<{
     selectOption: SelectOptionFunction,
     clearFilter: ClearFilterInputFunction,
   ]
+  'close-select-dropdown': []
 }>()
 
 const props = defineProps<Props>()
@@ -403,6 +404,7 @@ const onCloseDropdown = () => {
   clearChildOptions()
   clearFilter()
   deactivateTabTrap()
+  emit('close-select-dropdown')
 }
 
 const foldDropdown = (event?: MouseEvent) => {
@@ -423,6 +425,8 @@ const openSelectDropdown = () => {
     else filterInput.value?.focus()
   })
 }
+
+defineExpose({ openSelectDropdown })
 
 const openOrMoveFocusToDropdown = (lastOption = false) => {
   if (!select.value?.isOpen) {

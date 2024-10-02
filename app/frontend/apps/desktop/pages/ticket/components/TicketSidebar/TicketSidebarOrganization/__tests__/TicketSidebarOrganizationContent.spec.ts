@@ -71,7 +71,9 @@ describe('TicketSidebarOrganizationContent.vue', () => {
 
     const wrapper = await renderTicketSidebarOrganizationContent()
 
-    expect(wrapper.getByRole('heading')).toHaveTextContent('Organization')
+    expect(wrapper.getByRole('heading', { level: 2 })).toHaveTextContent(
+      'Organization',
+    )
 
     expect(
       wrapper.getByRole('img', { name: 'Avatar (Zammad Foundation)' }),
