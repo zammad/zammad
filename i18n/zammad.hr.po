@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-01 04:54+0000\n"
+"PO-Revision-Date: 2024-10-02 05:08+0000\n"
 "Last-Translator: Ivan Perovic <ip@zammad.com>\n"
 "Language-Team: Croatian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hr/>\n"
@@ -10281,7 +10281,7 @@ msgstr "Nakon završetka…"
 #: app/models/application_model/can_creates_and_updates.rb:21
 msgid "One of the required parameters must be provided, but none was found."
 msgstr ""
-"Mora se navesti jedan od potrebnih parametara, ali nijedan nije pronađen."
+"Jedan od potrebnih parametara mora biti naveden, ali nijedan nije pronađen."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:49
 #: public/assets/chat/chat.coffee:207
@@ -10482,7 +10482,7 @@ msgstr "Organizacija"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:382
 msgid "Organization & Department Name"
-msgstr "Organizacija & Naziv odjela"
+msgstr "Organizacija & naziv odjela"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:46
 msgid "Organization Logo"
@@ -10589,7 +10589,7 @@ msgstr "Odlazno"
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:22
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:22
 msgid "Outbound Call"
-msgstr "Odlazni Poziv"
+msgstr "Odlazni poziv"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco:16
 msgid "Outbound:"
@@ -10797,7 +10797,7 @@ msgstr "Umetanje CSV podataka"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:106
 msgid "Paste key"
-msgstr "Zalijepi ključ"
+msgstr "Dodaj ključ"
 
 #: db/seeds/overviews.rb:132
 msgid "Pending Reached Tickets"
@@ -10806,7 +10806,7 @@ msgstr "Ticketi sa dostignutim vremenom čekanja"
 #: app/assets/javascripts/app/models/ticket.coffee:113
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:28
 msgid "Pending reminder reached for ticket |%s|"
-msgstr "Dostignuto vrijeme čekanja za ticket |%s|"
+msgstr "Dosegnuto vrijeme čekanja za ticket |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee:13
 #: app/graphql/gql/types/overview_type.rb:66
@@ -10824,7 +10824,7 @@ msgstr "Izvrši radnje"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/delete.coffee:49
 msgid "Permanently Delete Knowledge Base"
-msgstr "Trajno brisanje Knowledge Base-a"
+msgstr "Trajno brisanje baze podataka"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: db/seeds/settings.rb:2653
@@ -10880,12 +10880,11 @@ msgstr "Telefonski broj se već koristi u drugom WhatsApp računu."
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:7
 msgid "Pick a name for the application, and we'll give you a unique token."
-msgstr ""
-"Odaberite naziv aplikacije, a zatim će se generirati jedinstveni token."
+msgstr "Odaberite naziv aplikacije, a zatim će se generirati jedinstveni token."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:24
 msgid "Pink"
-msgstr "Pink"
+msgstr "Ružičasto"
 
 #: app/assets/javascripts/app/controllers/_integration/placetel.coffee:3
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:5
@@ -10923,7 +10922,7 @@ msgstr "Kliknite na donju tipku kako biste stvorili svoj prvi ticket."
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco:6
 msgid "Please click on the link in the verification email."
-msgstr "Molimo, kliknite na vezu u e-mailu za potvrdu."
+msgstr "Molimo, kliknite na poveznicu u mailu za potvrdu."
 
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:125
 msgid ""
@@ -10931,7 +10930,7 @@ msgid ""
 "email, check other places it might be, like your junk, spam, social, or "
 "other folders."
 msgstr ""
-"Molimo, kliknite na vezu u e-mailu za potvrdu. Ako ne vidite mail, "
+"Molimo, kliknite na poveznicu u mailu za potvrdu. Ako ne vidite mail, "
 "provjerite druga mjesta na kojima bi se mogao nalaziti, kao što su neželjena "
 "pošta, društvene mreže ili drugi pretinci."
 
@@ -10949,11 +10948,11 @@ msgid ""
 "triggers and schedulers)"
 msgstr ""
 "Molimo, omogućite korištenje execution_time funkcije (trenutno je dopuštena "
-"samo za triggere i automatizacije)"
+"samo za okidače i automatizacije)"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:342
 msgid "Please enter a text."
-msgstr "Unesite tekst."
+msgstr "Molimo, unesite tekst."
 
 #: app/assets/javascripts/app/controllers/webhook.coffee:93
 msgid "Please enter a valid JSON string."
@@ -10965,11 +10964,11 @@ msgstr "Molimo, unesite valjanu e-mail adresu."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:14
 msgid "Please enter the endpoint for accessing Exchange Web Services."
-msgstr "Molimo, unesite krajnju točku za pristup Exchange Web Services."
+msgstr "Molimo, unesite krajnju točku za pristup Exchange mrežnim uslugama."
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:29
 msgid "Please enter your Exchange credentials."
-msgstr "Molimo, unesite Exchange pristupne podatke."
+msgstr "Molimo, unesite Exchange prijavne podatke."
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:19
 msgid "Please execute database changes only in a maintenance window."
@@ -11008,7 +11007,7 @@ msgstr "Unesite svoju trenutnu lozinku."
 #: app/assets/javascripts/app/controllers/password_reset_verify.coffee:87
 #: app/controllers/users_controller.rb:479
 msgid "Please provide your new password."
-msgstr "Unesite svoju trenutnu lozinku."
+msgstr "Unesite svoju novu lozinku."
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/recovery_codes.jst.eco:2
 msgid ""
@@ -11137,7 +11136,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/ticket_number.jst.eco:13
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:16
 msgid "Preview"
-msgstr "Pregled"
+msgstr "Pretpregled"
 
 #: app/frontend/apps/mobile/components/CommonFilePreview/CommonFilePreview.vue:64
 msgid "Preview %s"
@@ -11272,12 +11271,12 @@ msgstr "Javni i privatni ključevi"
 
 #: app/assets/javascripts/app/controllers/public_link.coffee:3
 msgid "Public Link"
-msgstr "Javna veza"
+msgstr "Javna poveznica"
 
 #: app/assets/javascripts/app/controllers/public_link.coffee:3
 #: db/seeds/permissions.rb:313
 msgid "Public Links"
-msgstr "Javne veze"
+msgstr "Javne poveznice"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:113
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco:2
@@ -11310,12 +11309,12 @@ msgid ""
 "Put a message on the login page. To change it, click on the text area below "
 "and change it in-line."
 msgstr ""
-"Postavite poruku na stranicu za prijavu. Jednostavno kliknite na tekst kako "
+"Postavite poruku na prijavnu stranicu. Jednostavno kliknite na tekst kako "
 "biste ga izravno uredili."
 
 #: db/seeds/settings.rb:3582
 msgid "Puts Zammad into import mode (disables some triggers)."
-msgstr "Aktivira uvoz u Zammad (onemogućuje određene triggere)."
+msgstr "Aktivira uvoz u Zammad (onemogućuje određene okidače)."
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:21
 msgid "Queue"
@@ -11365,7 +11364,7 @@ msgstr "Nedavni ticketi klijenta"
 
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:2
 msgid "Recent Logs"
-msgstr "Nedavni evidentirani unosi"
+msgstr "Nedavno evidentirani unosi"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco:8
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco:36
@@ -11410,13 +11409,12 @@ msgstr ""
 
 #: db/seeds/settings.rb:2714
 msgid "Recursive Ticket Triggers"
-msgstr "Rekurzivni triggeri ticketa"
+msgstr "Rekurzivni okidači ticketa"
 
 #: db/seeds/settings.rb:3202
 msgid ""
 "References - Search for follow-up also in In-Reply-To or References headers."
-msgstr ""
-"Reference – u zaglavlju pošte pretražujte i polja In-Reply-To i References."
+msgstr "Reference – pretražite zaglavlje In-Reply-To i References."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:111
 msgid "Regenerate recovery codes"
@@ -11442,7 +11440,7 @@ msgstr "Povezani odgovori"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue:79
 msgid "Relax, your system is being set up…"
-msgstr "Opustite se, Vaš sustav se postavlja…"
+msgstr "Opustite se, postavljamo Vaš sustav…"
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco:52
 msgid "Reload application"
@@ -11529,7 +11527,7 @@ msgstr "Ukloni dvofaktorsku autentifikaciju"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:554
 msgid "Removes any hyperlink"
-msgstr "Uklanjanje hiperveza"
+msgstr "Uklanja hiperveze"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:506
 msgid "Removes the formatting"
