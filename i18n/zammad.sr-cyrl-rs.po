@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-27 09:16+0000\n"
+"PO-Revision-Date: 2024-10-01 09:16+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (cyrillic) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/sr_Cyrl/>\n"
@@ -559,7 +559,9 @@ msgstr "Биће обрисано %s објекат(а)."
 msgid "%s object(s) will be updated."
 msgstr "Биће измењено %s објекат(а)."
 
+#: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:19
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:234
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadgeList.vue:48
 msgid "%s of %s"
 msgstr "%s од %s"
 
@@ -578,8 +580,8 @@ msgstr "%s особа(е)"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:53
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:31
-msgid "%s reacted with a %s to %s message |%s|"
-msgstr "%s је реаговао(ла) са %s на %s поруку |%s|"
+msgid "%s reacted with a %s to message from %s |%s|"
+msgstr "%s је реаговао(ла) са %s на поруку од %s |%s|"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:49
 msgid ""
@@ -608,6 +610,8 @@ msgstr "%s поддомен"
 msgid "%s switched to |%s|!"
 msgstr "Прелазак од стране %s на |%s|!"
 
+#: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:30
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:71
 #: app/frontend/apps/mobile/components/Organization/OrganizationItem.vue:57
 #: app/frontend/apps/mobile/components/User/UserItem.vue:33
 msgid "%s tickets"
@@ -995,7 +999,7 @@ msgstr "API кључ"
 msgid "API Token Access"
 msgstr "Приступ API путем кључа"
 
-#: lib/whatsapp/webhook/payload.rb:21
+#: lib/whatsapp/webhook/payload.rb:22
 msgid "API error."
 msgstr "API грешка."
 
@@ -1015,8 +1019,8 @@ msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr ""
 "Прихватите политику приватности података и политику прихватљиве употребе"
 
+#: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:37
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:18
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTicketItem.vue:38
 msgid "Access denied"
 msgstr "Недозвољен приступ"
 
@@ -1306,7 +1310,7 @@ msgstr "Додај бота"
 msgid "Add Certificate"
 msgstr "Додај сертификат"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:402
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:414
 msgid "Add Empty Checklist"
 msgstr "Додај празан списак"
 
@@ -1949,7 +1953,7 @@ msgstr "Kреденцијали апликације за Twitter."
 msgid "App secret"
 msgstr "Шифра апликације"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:431
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:433
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee:3
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:3
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/appearance.ts:9
@@ -2069,7 +2073,7 @@ msgstr "Да ли сте сигурни да желите да уклоните 
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:61
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:123
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee:67
-#: app/assets/javascripts/app/controllers/translation.coffee:35
+#: app/assets/javascripts/app/controllers/translation.coffee:37
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:67
 msgid "Are you sure?"
 msgstr "Да ли сте сигурни?"
@@ -2148,7 +2152,7 @@ msgstr "Радње чланака"
 msgid "Article could not be deleted."
 msgstr "Није било могуће обрисати чланак."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:126
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:127
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:27
 msgid "Article meta information"
 msgstr "Мета информације чланка"
@@ -2248,7 +2252,7 @@ msgstr "Приложи датотеке"
 msgid "Attached Files"
 msgstr "Attached Files"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:202
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:199
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
@@ -2777,7 +2781,7 @@ msgstr "CA"
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:89
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:167
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:164
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:86
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:37
@@ -2926,7 +2930,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:194
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:259
@@ -3173,7 +3177,7 @@ msgid "Check channels."
 msgstr "Проверава канале."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:65
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:52
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:53
 msgid "Check item"
 msgstr "Означи задатак"
 
@@ -3211,11 +3215,7 @@ msgstr "Шаблон списка задатака"
 msgid "Checklist Template items are limited to 100 items per checklist."
 msgstr "Шаблони списка су ограничени на 100 задатака по списку."
 
-#: app/controllers/ticket_checklist_controller.rb:17
-msgid "Checklist is already created for this ticket"
-msgstr "Списак задатака већ постоји за овај тикет"
-
-#: app/models/checklist/item.rb:97
+#: app/models/checklist/item.rb:101
 msgid "Checklist items are limited to 100 items per checklist."
 msgstr "Спискови су ограничени на 100 задатака по списку."
 
@@ -3425,7 +3425,7 @@ msgstr "Клонирај"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:447
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:27
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:55
-#: app/assets/javascripts/app/controllers/translation.coffee:172
+#: app/assets/javascripts/app/controllers/translation.coffee:184
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:4
 #: app/assets/javascripts/app/controllers/widget/import_result.coffee:4
 #: app/assets/javascripts/app/views/generic/ticket_duplicate_detection/warning.jst.eco:1
@@ -3453,7 +3453,7 @@ msgstr "Решење у мин"
 msgid "Close chat sessions where participants are offline."
 msgstr "Затвори сесије ћаскања где су учесници недоступни."
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:238
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:240
 msgid "Close current tab"
 msgstr "Затвори тренутни прозор"
 
@@ -3665,7 +3665,7 @@ msgstr ""
 "<br>\n"
 "<div>Ваш #{config.product_name} тим</div>\n"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:300
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:302
 msgid "Confirm/submit dialog"
 msgstr "Потврди/пошаљи дијалог"
 
@@ -3875,7 +3875,7 @@ msgstr "Копирај URL"
 msgid "Copy article permalink"
 msgstr "Ископирај линк до чланка"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:354
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:356
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Копирај број тренутног објекта (нпр. Ticket#) у привремену меморију"
 
@@ -4088,7 +4088,7 @@ msgstr "Отвори тикет"
 msgid "Create a Test Ticket"
 msgstr "Отвори пробни тикет"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:203
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:193
 msgid "Create a new checklist item"
 msgstr "Додај нови задатак"
 
@@ -4198,7 +4198,7 @@ msgstr "Додај:"
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:14
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:107
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList.vue:43
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -4329,7 +4329,7 @@ msgstr "Прилагођено"
 msgid "Custom Payload"
 msgstr "Прилагођени подаци"
 
-#: app/assets/javascripts/app/controllers/translation.coffee:80
+#: app/assets/javascripts/app/controllers/translation.coffee:82
 msgid "Custom Translation"
 msgstr "Прилагођени превод"
 
@@ -4419,7 +4419,7 @@ msgstr "Тамни"
 msgid "Dark Mode"
 msgstr "Тамни изглед"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:145
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:147
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:5
 #: app/assets/javascripts/app/controllers/dashboard.coffee:28
 #: app/assets/javascripts/app/controllers/package.coffee:42
@@ -5563,7 +5563,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/tag/table.jst.eco:14
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:38
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:83
-#: app/assets/javascripts/app/views/whatsapp/index.jst.eco:38
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco:45
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:233
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:162
@@ -5725,7 +5725,7 @@ msgid "Department"
 msgstr "Одељење"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee:5
-#: app/assets/javascripts/app/controllers/translation.coffee:171
+#: app/assets/javascripts/app/controllers/translation.coffee:183
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:6
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:8
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:230
@@ -5807,7 +5807,7 @@ msgstr "Уређаји"
 msgid "Dialog window with selections"
 msgstr "Прозор дијалога са избором"
 
-#: app/assets/javascripts/app/controllers/translation.coffee:313
+#: app/assets/javascripts/app/controllers/translation.coffee:325
 msgid ""
 "Did you know that system translations can be contributed and shared with the "
 "community on our public platform %l? It sports a very convenient user "
@@ -5863,7 +5863,7 @@ msgstr "Правац"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:30
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:40
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:85
-#: app/assets/javascripts/app/views/whatsapp/index.jst.eco:40
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco:47
 msgid "Disable"
 msgstr "Искључи"
 
@@ -5912,10 +5912,8 @@ msgid "Discard changes"
 msgstr "Откажи промене"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:239
-#, fuzzy
-#| msgid "Discard your unsaved changes"
 msgid "Discard unsaved reply"
-msgstr "Откажи своје несачуване измене"
+msgstr "Откажи несачуван одговор"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:136
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
@@ -6166,7 +6164,7 @@ msgstr "Ускршњи празници"
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:59
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee:36
 #: app/assets/javascripts/app/controllers/tag.coffee:104
-#: app/assets/javascripts/app/controllers/translation.coffee:90
+#: app/assets/javascripts/app/controllers/translation.coffee:92
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:75
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:85
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:62
@@ -6180,7 +6178,7 @@ msgstr "Ускршњи празници"
 #: app/assets/javascripts/app/views/sla/index.jst.eco:60
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:44
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:89
-#: app/assets/javascripts/app/views/whatsapp/index.jst.eco:44
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco:51
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:11
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:157
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:76
@@ -6219,12 +6217,12 @@ msgstr "Измени организацију"
 msgid "Edit authenticator app"
 msgstr "Уреди апликацију за аутентификацију"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:115
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:111
 msgid "Edit checklist title"
 msgstr "Уреди наслов списка"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:81
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:69
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:68
 msgid "Edit item"
 msgstr "Уреди задатак"
 
@@ -6241,7 +6239,7 @@ msgstr "Измени одговор"
 msgid "Edit security keys"
 msgstr "Уреди безбедносне кључеве"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TicketInformation.vue:88
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:87
 msgid "Edit ticket title"
 msgstr "Уреди наслов тикета"
 
@@ -6465,7 +6463,7 @@ msgstr "Празно"
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:31
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:42
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:87
-#: app/assets/javascripts/app/views/whatsapp/index.jst.eco:42
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco:49
 msgid "Enable"
 msgstr "Укључи"
 
@@ -6579,7 +6577,7 @@ msgstr "Укључи аутоматску доделу тикета."
 msgid "Enable time accounting."
 msgstr "Укључи обрачун времена."
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:423
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:425
 msgid "Enable/disable inline translations"
 msgstr "Укључи/искључи непосредне преводе"
 
@@ -7272,6 +7270,10 @@ msgstr "Грешка при брисању задатка са списка."
 msgid "Failed to find backup on channel!"
 msgstr "Резервна копија на каналу није пронађена!"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleMediaError.vue:35
+msgid "Failed to load content."
+msgstr "Неуспешно учитавање садржаја."
+
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:223
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:235
 msgid "Failed to roll back the migration of the channel!"
@@ -7558,11 +7560,11 @@ msgstr "Није било могуће пронаћи FormSchema."
 msgid "Format"
 msgstr "Формат"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:580
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:582
 msgid "Format as //strikethrough//"
 msgstr "Форматирај као //прецртано//"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:562
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:564
 msgid "Format as _underlined_"
 msgstr "Форматирај као _подвучено_"
 
@@ -7570,15 +7572,15 @@ msgstr "Форматирај као _подвучено_"
 msgid "Format as bold"
 msgstr "Форматирај као подебљано"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:629
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:631
 msgid "Format as h1 heading"
 msgstr "Форматирај као h1 заглавље"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:635
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:637
 msgid "Format as h2 heading"
 msgstr "Форматирај као h2 заглавље"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:641
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:643
 msgid "Format as h3 heading"
 msgstr "Форматирај као h3 заглавље"
 
@@ -7586,7 +7588,7 @@ msgstr "Форматирај као h3 заглавље"
 msgid "Format as italic"
 msgstr "Форматирај као курзив"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:623
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:625
 msgid "Format as ordered list"
 msgstr "Форматирај као листу са бројевима"
 
@@ -7598,15 +7600,15 @@ msgstr "Форматирај као прецртано"
 msgid "Format as underlined"
 msgstr "Форматирај као подвучено"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:617
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:619
 msgid "Format as unordered list"
 msgstr "Форматирај као листу са тачкама"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:568
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:570
 msgid "Format as |bold|"
 msgstr "Форматирај као |подебљано|"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:574
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:576
 msgid "Format as ||italic||"
 msgstr "Форматирај као ||курзив||"
 
@@ -7926,7 +7928,7 @@ msgstr "Поздрав"
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco:11
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:38
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:56
-#: app/assets/javascripts/app/views/whatsapp/index.jst.eco:33
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco:40
 #: app/graphql/gql/types/overview_type.rb:63
 #: app/views/mailer/ticket_create/fr.html.erb:8
 #: app/views/mailer/ticket_create/zh-cn.html.erb:8
@@ -8245,7 +8247,7 @@ msgstr "Сакриј шифру апликације за аутентифика
 msgid "High priority"
 msgstr "Висок приоритет"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/HighlightMenu.vue:70
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:70
 msgid "Highlight"
 msgstr "Истакни"
 
@@ -8802,7 +8804,7 @@ msgid "Including private key."
 msgstr "Укључује и тајни кључ."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:341
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:344
 msgid "Incomplete Ticket Checklist"
 msgstr "Некомплетан списак задатака"
 
@@ -8928,19 +8930,19 @@ msgstr ""
 "буде видљиво. Неопходно је убацити га на крај изворног кода стране пре "
 "затвореног §</body>§ елемента."
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:611
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:613
 msgid "Inserts a horizontal rule"
 msgstr "Убацује хоризонталну линију"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:544
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:546
 msgid "Inserts a mention for a user"
 msgstr "Убацује помињање корисника"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:538
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:540
 msgid "Inserts knowledge base answer"
 msgstr "Убацује чланак базе знања"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:532
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:534
 msgid "Inserts text module"
 msgstr "Убацује текстуални исечак"
 
@@ -9266,7 +9268,7 @@ msgstr "јун"
 msgid "June"
 msgstr "јун"
 
-#: app/assets/javascripts/app/views/translation/description.jst.eco:13
+#: app/assets/javascripts/app/views/translation/description.jst.eco:14
 msgid ""
 "Just click into the highlighted area and update the words right there. Enjoy!"
 msgstr "Само кликните на означене површине и директно измените речи. Уживајте!"
@@ -9622,7 +9624,7 @@ msgstr "Листа свих корисничких прозора"
 msgid "List of installed addons"
 msgstr "Списак инсталираних додатака"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:210
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:212
 msgid "List of shortcuts"
 msgstr "Листа пречица"
 
@@ -9741,7 +9743,7 @@ msgstr ""
 msgid "Logo"
 msgstr "Лого"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:227
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:229
 msgid "Logout"
 msgstr "Одјави се"
 
@@ -10242,16 +10244,16 @@ msgstr "мај"
 msgid "Me"
 msgstr "Ја"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue:82
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue:53
 msgid "Media Download Error"
 msgstr "Грешка при преузимању медијског прилога"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue:52
+#: app/frontend/shared/entities/ticket-article/composables/useTicketArticleRetryMediaDownload.ts:43
 msgid "Media download failed. Please try again later."
 msgstr ""
 "Неуспешно преузимање медијског прилога. Молимо покушајте поново касније."
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue:44
+#: app/frontend/shared/entities/ticket-article/composables/useTicketArticleRetryMediaDownload.ts:35
 msgid "Media download was successful."
 msgstr "Успешно преузимање медијског прилога."
 
@@ -10317,7 +10319,7 @@ msgid "Message for login page."
 msgstr "Порука за страну пријављивања."
 
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:26
-#: app/assets/javascripts/app/views/whatsapp/index.jst.eco:28
+#: app/assets/javascripts/app/views/whatsapp/index.jst.eco:35
 msgid "Messages"
 msgstr "Поруке"
 
@@ -10435,7 +10437,7 @@ msgstr "Минут(и)"
 msgid "Minutes"
 msgstr "Минутима"
 
-#: lib/whatsapp/webhook/payload.rb:17
+#: lib/whatsapp/webhook/payload.rb:18
 msgid "Mismatching phone number id."
 msgstr "Број телефона се не подудара."
 
@@ -10520,7 +10522,7 @@ msgstr "Премести све из „%s” у „%s”:"
 msgid "Move down"
 msgstr "Помери на доле"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:339
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:341
 msgid "Move left and right"
 msgstr "Помери на леви и на десно"
 
@@ -10528,7 +10530,7 @@ msgstr "Помери на леви и на десно"
 msgid "Move up"
 msgstr "Помери на горе"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:335
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:337
 msgid "Move up and down"
 msgstr "Помери на горе и на доле"
 
@@ -10680,7 +10682,7 @@ msgstr "Назив овог безбедносног кључа"
 msgid "Name of form submit button"
 msgstr "Назив дугмета за слање"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:522
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:524
 msgid "Navigate through article"
 msgstr "Кретање кроз чланак"
 
@@ -10688,7 +10690,7 @@ msgstr "Кретање кроз чланак"
 msgid "Navigate to %s"
 msgstr "Иди у %s"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:135
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:137
 #: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:29
 msgid "Navigation"
 msgstr "Навигација"
@@ -10742,7 +10744,7 @@ msgstr "Мрежа"
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:12
 #: app/assets/javascripts/app/controllers/_channel/whatsapp.coffee:46
 #: app/assets/javascripts/app/controllers/_default_navbar.coffee:14
-#: app/assets/javascripts/app/controllers/translation.coffee:155
+#: app/assets/javascripts/app/controllers/translation.coffee:167
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:159
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:80
 msgid "New"
@@ -10850,7 +10852,7 @@ msgstr "Нове ознаке"
 msgid "New Template"
 msgstr "Нови шаблон"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:188
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:190
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:65
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:7
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:484
@@ -10860,7 +10862,7 @@ msgstr "Нови шаблон"
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:38
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:15
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:108
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:105
 msgid "New Ticket"
 msgstr "Нови тикет"
 
@@ -11110,11 +11112,11 @@ msgid "No certificate found."
 msgstr "Није пронађен сертификат."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:415
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:427
 msgid "No checklist added to this ticket yet."
 msgstr "Списак задатака још није додат у овај тикет."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:179
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:169
 msgid "No checklist items yet"
 msgstr "Без задатака за сада"
 
@@ -11289,7 +11291,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Без x-zammad-session-user-id, пошиљалац није подешен!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:344
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:347
 msgid "No, just close the ticket"
 msgstr "Не, само затвори тикет"
 
@@ -11300,7 +11302,7 @@ msgstr "Не, хвала"
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
-#: app/graphql/gql/types/ticket_type.rb:99 db/seeds/settings.rb:1957
+#: app/graphql/gql/types/ticket_type.rb:101 db/seeds/settings.rb:1957
 msgid "None"
 msgstr "Празно"
 
@@ -11484,7 +11486,7 @@ msgid "Notification sound"
 msgstr "Звук обавештења"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:12
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:177
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:179
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:5
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:2
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:1
@@ -11607,7 +11609,7 @@ msgstr "У реду"
 msgid "On %s, %s wrote:"
 msgstr "У %s, %s је написао/ла:"
 
-#: app/assets/javascripts/app/views/translation/description.jst.eco:9
+#: app/assets/javascripts/app/views/translation/description.jst.eco:10
 msgid "On-screen Translation"
 msgstr "Непосредни превод на екрану"
 
@@ -11711,6 +11713,10 @@ msgstr "Отвори"
 msgid "Open %s"
 msgstr "Отвори %s"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadgeList.vue:35
+msgid "Open Checklist"
+msgstr "Отвори списак задатака"
+
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:3
 msgid "Open Ticket# %s"
 msgstr "Отвори Tiket# %s"
@@ -11733,11 +11739,11 @@ msgstr "Отвори у новом прозору"
 msgid "Open link"
 msgstr "Отвори линк"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:500
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:502
 msgid "Open macro selection"
 msgstr "Отвори избор макроа"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:460
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:462
 msgid "Open note box"
 msgstr "Отвори поље напомене"
 
@@ -11943,7 +11949,7 @@ msgstr "Потиче од"
 msgid "Original Formatting"
 msgstr "Оригиналан формат"
 
-#: app/assets/javascripts/app/controllers/translation.coffee:79
+#: app/assets/javascripts/app/controllers/translation.coffee:81
 msgid "Original Translation"
 msgstr "Оригиналан превод"
 
@@ -12026,7 +12032,7 @@ msgstr "Преглед"
 msgid "Overview bulk mask"
 msgstr "Форма масовне радње прегледа"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:156
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:158
 #: app/assets/javascripts/app/controllers/_profile/overviews.coffee:79
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:38
 #: app/assets/javascripts/app/controllers/overview.coffee:3
@@ -12220,11 +12226,11 @@ msgstr "Налепи сертификат"
 msgid "Paste Private Key"
 msgstr "Налепи тајни кључ"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:586
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:588
 msgid "Paste from clipboard"
 msgstr "Налепи из привремене меморије"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:593
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:595
 msgid "Paste from clipboard (plain text)"
 msgstr "Налепи из привремене меморије (обичан текст)"
 
@@ -12994,7 +13000,7 @@ msgstr "Порука подсетника"
 msgid "Remote"
 msgstr "Удаљено"
 
-#: app/assets/javascripts/app/controllers/translation.coffee:106
+#: app/assets/javascripts/app/controllers/translation.coffee:108
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:45
 #: app/assets/javascripts/app/views/calendar/holiday_selector.jst.eco:23
 #: app/assets/javascripts/app/views/calendar/holiday_selector_placeholder.jst.eco:12
@@ -13057,7 +13063,7 @@ msgid "Remove authenticator app"
 msgstr "Уклони апликацију за аутентификацију"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:361
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:373
 msgid "Remove checklist"
 msgstr "Обриши списак"
 
@@ -13070,7 +13076,7 @@ msgid "Remove image"
 msgstr "Уклони слику"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:89
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:75
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:74
 msgid "Remove item"
 msgstr "Уклони задатак"
 
@@ -13090,11 +13096,11 @@ msgstr "Уклони одабране вредности"
 msgid "Remove two-factor authentication"
 msgstr "Уклони двофакторску аутентификацију"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:647
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:649
 msgid "Removes any hyperlink"
 msgstr "Уклони све линкове"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:599
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:601
 msgid "Removes the formatting"
 msgstr "Уклања форматирање"
 
@@ -13103,7 +13109,7 @@ msgid "Removes the shadows for a flat look."
 msgstr "Уклања сенке за пљоснатији изглед."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:354
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:366
 msgid "Rename checklist"
 msgstr "Промени наслов списка"
 
@@ -13125,7 +13131,7 @@ msgid "Reopening time in days"
 msgstr "Време поновног отварања у данима"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:14
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:188
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:178
 msgid "Reorder"
 msgstr "Измени редослед"
 
@@ -13155,7 +13161,7 @@ msgstr "Oдговори свима"
 msgid "Reply allowed only for open tickets"
 msgstr "Одговор је могућ само у отвореним тикетима"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:475
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:477
 msgid "Reply to last article"
 msgstr "Одговори на последњи чланак"
 
@@ -13237,7 +13243,7 @@ msgstr ""
 msgid "Resend verification email"
 msgstr "Пошаљи поново имејл поруку за потврду"
 
-#: app/assets/javascripts/app/controllers/translation.coffee:97
+#: app/assets/javascripts/app/controllers/translation.coffee:99
 #: app/assets/javascripts/app/views/monitoring.jst.eco:13
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:18
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:15
@@ -13414,6 +13420,10 @@ msgstr "Резултат:"
 #: app/frontend/apps/mobile/pages/authentication/components/LoginTwoFactor.vue:177
 msgid "Retry"
 msgstr "Покушај поново"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleMediaError.vue:43
+msgid "Retry Attachment Download"
+msgstr "Покушај поново преузимање прилога"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue:37
 msgid "Retry Security Process"
@@ -13669,7 +13679,7 @@ msgstr "субота"
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:121
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:44
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:216
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:206
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:69
@@ -13773,7 +13783,7 @@ msgstr "Скролуј на доле за %s нов(их) одговор(а)"
 msgid "Scroll down to see new messages"
 msgstr "Скролујте на доле за нове поруке"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:167
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:169
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:13
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:201
 #: app/assets/javascripts/app/views/integration/idoit_object_selector.jst.eco:3
@@ -13931,7 +13941,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:22
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:177
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:174
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:203
@@ -14052,7 +14062,7 @@ msgstr "Изабери шаблон"
 msgid "Select default ticket type"
 msgstr "Изабери подразумевани тип тикета"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:343
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:345
 msgid "Select item"
 msgstr "Изабери ставку"
 
@@ -14276,7 +14286,7 @@ msgstr "Одреди наслов свог тикета"
 msgid "Set agent limit"
 msgstr "Подеси ограничење броја оператера"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:490
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:492
 msgid "Set article to internal/public"
 msgstr "Подеси чланак као интерни/јаван"
 
@@ -14495,7 +14505,7 @@ msgid ""
 msgstr ""
 "Приказује додатне напомене тикета при отварању на основу одабраног типа."
 
-#: app/assets/javascripts/app/views/generic/ticket_list.jst.eco:30
+#: app/assets/javascripts/app/views/generic/ticket_list.jst.eco:40
 #: app/assets/javascripts/app/views/widget/ticket_stats_list.jst.eco:11
 msgid "Show all…"
 msgstr "Прикажи све…"
@@ -14512,7 +14522,7 @@ msgstr "Прикажи бројеве недеља у прозору поља д
 msgid "Show chat automatically"
 msgstr "Прикажи ћаскање аутоматски"
 
-#: app/assets/javascripts/app/views/generic/ticket_list.jst.eco:31
+#: app/assets/javascripts/app/views/generic/ticket_list.jst.eco:41
 msgid "Show less"
 msgstr "Прикажи мање"
 
@@ -14528,7 +14538,7 @@ msgstr "Прикажи сличне тикете као део упозорењ�
 msgid "Show meta data"
 msgstr "Прикажи мета податке"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:250
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:252
 msgid "Show next tab"
 msgstr "Прикажи следећи прозор"
 
@@ -14541,7 +14551,7 @@ msgstr ""
 "Искључивање ове опције је делотворно само ако је аутентификација преко "
 "трећег лица укључена."
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:276
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:278
 msgid "Show previous tab"
 msgstr "Прикажи претходни прозор"
 
@@ -14572,6 +14582,14 @@ msgstr "Прикажи наслов у форми."
 #: db/seeds/settings.rb:2645
 msgid "Show to user roles"
 msgstr "Прикажи корисничким улогама"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:54
+msgid "Show tracked ticket"
+msgstr "Прикажи тикет праћења"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:55
+msgid "Show tracked tickets"
+msgstr "Прикажи тикете праћења"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:95
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:114
@@ -14812,7 +14830,7 @@ msgstr "SMS"
 msgid "Solution Time"
 msgstr "Време решења"
 
-#: app/assets/javascripts/app/views/translation/description.jst.eco:11
+#: app/assets/javascripts/app/views/translation/description.jst.eco:12
 msgid "Some Text"
 msgstr "Неки текст"
 
@@ -15308,7 +15326,7 @@ msgstr "Преузми Reply-To заглавље као од/за поље им�
 msgid "Target"
 msgstr "Циљ"
 
-#: app/assets/javascripts/app/controllers/translation.coffee:81
+#: app/assets/javascripts/app/controllers/translation.coffee:83
 msgid "Target Language"
 msgstr "Циљни језик"
 
@@ -15413,7 +15431,7 @@ msgstr "Текст"
 msgid "Text Modules"
 msgstr "Текстуални исечци"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:553
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:555
 msgid "Text editing"
 msgstr "Уређивање текста"
 
@@ -15449,15 +15467,15 @@ msgid "Text or attachment is required"
 msgstr "Неопходни су текст или прилог"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_item_edit.jst.eco:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:146
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:145
 msgid "Text or ticket identifier"
 msgstr "Текст или идентификатор тикета"
 
-#: app/assets/javascripts/app/views/translation/description.jst.eco:11
+#: app/assets/javascripts/app/views/translation/description.jst.eco:12
 msgid "Text with disabled inline translations looks like"
 msgstr "Текст са неомогућеним непосредним преводима игледаће као"
 
-#: app/assets/javascripts/app/views/translation/description.jst.eco:12
+#: app/assets/javascripts/app/views/translation/description.jst.eco:13
 msgid "Text with enabled inline translations looks like"
 msgstr "Текст са омогућеним непосредним преводима игледаће као"
 
@@ -15602,11 +15620,11 @@ msgstr "Није било могуће сачувати WhatsApp конфигу�
 msgid "The WhatsApp webhook channel could not be found."
 msgstr "Није било могуће пронаћи WhatsApp канал повратног позива."
 
-#: lib/whatsapp/webhook/payload.rb:110
+#: lib/whatsapp/webhook/payload.rb:118
 msgid "The WhatsApp webhook payload could not be processed."
 msgstr "Није било могуће обрадити податке WhatsApp повратног позива."
 
-#: lib/whatsapp/webhook/payload.rb:101
+#: lib/whatsapp/webhook/payload.rb:109
 msgid "The WhatsApp webhook payload could not be validated."
 msgstr "Није било могуће проверити податке WhatsApp повратног позива."
 
@@ -15973,7 +15991,7 @@ msgstr "Формат предмета."
 msgid "The given article is not a media article."
 msgstr "Задат чланак не садржи медијски прилог."
 
-#: app/graphql/gql/mutations/ticket/checklist/item_delete.rb:13
+#: app/graphql/gql/mutations/ticket/checklist/item_delete.rb:17
 msgid "The given checklist item does not belong to the given checklist."
 msgstr "Задатак не припада наведеном списку."
 
@@ -16065,7 +16083,7 @@ msgstr "Тајни кључ је прекратке дужине."
 msgid "The limit of %s displayable tickets was reached (%s remaining)"
 msgstr "Достигнуто је ограничење од %s тикет(а) за приказ (преостало је %s)"
 
-#: app/assets/javascripts/app/controllers/translation.coffee:225
+#: app/assets/javascripts/app/controllers/translation.coffee:237
 msgid ""
 "The limit of displayable suggestions was reached, please narrow down your "
 "search."
@@ -17644,12 +17662,12 @@ msgstr "Наслов тикета"
 msgid "Ticket update"
 msgstr "Освежавање тикета"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:486
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:489
 msgid "Ticket update failed."
 msgstr "Неуспело освежавање тикета."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:28
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:438
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:441
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:171
 msgid "Ticket updated successfully."
 msgstr "Тикет је успешно освежен."
@@ -17736,7 +17754,7 @@ msgstr "Ticket#"
 msgid "TicketID"
 msgstr "TicketID"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:450
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:452
 #: app/assets/javascripts/app/controllers/widget/user.coffee:87
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:94
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:98
@@ -17969,7 +17987,7 @@ msgstr ""
 "За инсталацију %s апликације, кликни на %s „Подели” а затим на дугме %s "
 "„Додај на почетни екран”."
 
-#: app/assets/javascripts/app/views/translation/description.jst.eco:10
+#: app/assets/javascripts/app/views/translation/description.jst.eco:11
 msgid ""
 "To make translations easier you can enable and disable the inline "
 "translation feature by pressing \"%s\" at any time."
@@ -18035,7 +18053,7 @@ msgstr "Укључи/искључи AM/PM индикатор"
 msgid "Toggle Group"
 msgstr "Укључи/искључи групу"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:441
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:443
 msgid "Toggle dark mode"
 msgstr "Укључи/искључи тамни изглед"
 
@@ -18128,6 +18146,14 @@ msgstr "Укупно: %s"
 msgid "Track retweets"
 msgstr "Прати ретвитове"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:85
+msgid "Tracked as checklist item in"
+msgstr "Праћено као задатак у"
+
+#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_references_popover_provider.coffee:8
+msgid "Tracked by checklist item by"
+msgstr "Праћено као задатак у"
+
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:27
 msgid "Transfer conversation to another chat:"
 msgstr "Пренеси разговор у друго ћаскање:"
@@ -18140,11 +18166,11 @@ msgstr "Преведи садржај поља"
 msgid "Translation"
 msgstr "Превод"
 
-#: app/assets/javascripts/app/controllers/translation.coffee:78
+#: app/assets/javascripts/app/controllers/translation.coffee:80
 msgid "Translation Source"
 msgstr "Изворни превод"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:412
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:414
 #: app/assets/javascripts/app/controllers/translation.coffee:3
 #: app/assets/javascripts/app/views/translation/index.jst.eco:4
 #: db/seeds/permissions.rb:257
@@ -18178,7 +18204,7 @@ msgstr "Покушајте други метод"
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordReset.vue:132
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:130
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue:64
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue:28
 msgid "Try again"
 msgstr "Покушај поново"
 
@@ -18370,7 +18396,7 @@ msgstr "Метод двофакторске аутентификације је 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:411
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:248
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:79
-#: app/assets/javascripts/app/controllers/translation.coffee:277
+#: app/assets/javascripts/app/controllers/translation.coffee:289
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:70
 #: app/assets/javascripts/app/models/ticket_article.coffee:12
 #: app/assets/javascripts/app/models/ticket_state.coffee:7
@@ -18487,15 +18513,15 @@ msgstr "Поништи подразумевано"
 msgid "Unsubscribe"
 msgstr "Откажи претплату"
 
-#: lib/whatsapp/webhook/payload.rb:42
+#: lib/whatsapp/webhook/payload.rb:46
 msgid "Unsupported message type."
 msgstr "Тип поруке није подржан."
 
-#: lib/whatsapp/webhook/payload.rb:22
+#: lib/whatsapp/webhook/payload.rb:23
 msgid "Unsupported subscription type."
 msgstr "Тип претплате није подржан."
 
-#: lib/whatsapp/webhook/payload.rb:30
+#: lib/whatsapp/webhook/payload.rb:31
 msgid "Unsupported webhook payload."
 msgstr "Подаци повратног позива нису подржани."
 
@@ -18548,7 +18574,7 @@ msgstr "Освежи заједнички нацрт"
 msgid "Update Time"
 msgstr "Време освежавања"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:510
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:512
 msgid "Update as closed"
 msgstr "Означи као затворено"
 
@@ -18728,9 +18754,16 @@ msgid ""
 "<div>\n"
 "<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> "
 "reacted with a <%= @objects[:article].preferences.dig('whatsapp', "
-"'reaction', 'emoji') %> to #{article.created_by.fullname} message "
-"\"<b>#{article.body_as_html}</b>\".\n"
+"'reaction', 'emoji') %> to message from #{article.created_by.fullname}:\n"
 "</div>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"    <blockquote type=\"cite\">\n"
+"    #{article.body_as_html}\n"
+"    </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
@@ -18745,9 +18778,16 @@ msgstr ""
 "<div>\n"
 "<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> "
 "је реаговао(ла) са <%= @objects[:article].preferences.dig('whatsapp', "
-"'reaction', 'emoji') %> на #{article.created_by.fullname} поруку "
-"\"<b>#{article.body_as_html}</b>\".\n"
+"'reaction', 'emoji') %> на поруку од #{article.created_by.fullname}:\n"
 "</div>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"    <blockquote type=\"cite\">\n"
+"    #{article.body_as_html}\n"
+"    </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
 "<br>\n"
 "<div>\n"
 "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
@@ -18859,31 +18899,31 @@ msgstr "Користи време последњег чланка клијент
 msgid "Use this switch to start synchronization of your ldap sources."
 msgstr "Користи овај прекидач за извршавање синхронизације ваших LDAP извора."
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:139
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:141
 msgid "Used anywhere"
 msgstr "Користи се било где"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:416
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:418
 msgid "Used anywhere (admin only)"
 msgstr "Користи се било где (само за администраторе)"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:331
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:333
 msgid "Used in lists (views and results)"
 msgstr "Користи се у листама (прегледи и резултати)"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:348
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:350
 msgid "Used in object views"
 msgstr "Користи се у прегледима објекта"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:527
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:529
 msgid "Used when composing a Ticket article"
 msgstr "Користи се приликом писања чланка тикета"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:557
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:559
 msgid "Used when composing a text"
 msgstr "Користи се приликом писања текста"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:454
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:456
 msgid "Used when viewing a Ticket"
 msgstr "Користи се приликом гледања тикета"
 
@@ -18970,7 +19010,7 @@ msgstr ""
 "Није било могуће учитати информаиције о кориснику, молимо проверите дозволе "
 "вашег корисника за повезивање."
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:199
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:201
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue:44
 msgid "User menu"
 msgstr "Кориснички мени"
@@ -19589,7 +19629,7 @@ msgid "Yes, add attachments now"
 msgstr "Да, додај прилог одмах"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:343
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:346
 msgid "Yes, open the checklist"
 msgstr "Да, прикажи списак"
 
@@ -19884,7 +19924,7 @@ msgstr "Морате да дозволите приступ вашој каме�
 msgid "You have unchecked items in the checklist."
 msgstr "Имате неодзначене задатке на списку."
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:338
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:341
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -20349,6 +20389,10 @@ msgstr "није могуће да буде подређени надређен�
 msgid "chat"
 msgstr "ћаскање"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadgeList.vue:44
+msgid "checked"
+msgstr "означено"
+
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
 msgid "checked checklist item '%s'"
 msgstr "oзначен задатак ’%s’"
@@ -20422,7 +20466,7 @@ msgstr "не садржи једно"
 #: app/assets/javascripts/app/views/integration/exchange_summary.jst.eco:4
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:36
 #: app/assets/javascripts/app/views/integration/ldap_summary.jst.eco:4
-#: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:8
+#: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:6
 msgid "created"
 msgstr "додато"
 
@@ -20450,7 +20494,7 @@ msgstr ""
 "тренутна,нова,потврди,промени,тренутна лозинка,нова лозинка,потврди лозинку,"
 "промени лозинку"
 
-#: app/assets/javascripts/app/controllers/translation.coffee:269
+#: app/assets/javascripts/app/controllers/translation.coffee:281
 msgid "custom"
 msgstr "прилагођен"
 
@@ -20613,7 +20657,7 @@ msgid "escalated"
 msgstr "ескалирано"
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:19
-#: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:11
+#: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:9
 msgid "escalation"
 msgstr "ескалација"
 
@@ -20666,7 +20710,7 @@ msgstr "док оператер не одговори"
 msgid "forward"
 msgstr "проследи"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:150
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:158
 msgid "from"
 msgstr "од"
 
@@ -21237,9 +21281,13 @@ msgstr "четврт сат(а)"
 msgid "reached"
 msgstr "достигнуто"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:133
-msgid "reacted with a %s to %s message '%s'"
-msgstr "је реаговао(ла) са %s на %s поруку '%s'"
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:140
+msgid "reacted to message from %s '%s'"
+msgstr "је реаговао(ла) на поруку од %s '%s'"
+
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:134
+msgid "reacted with a %s to message from %s '%s'"
+msgstr "је реаговао(ла) са %s на поруку од %s '%s'"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
@@ -21255,7 +21303,7 @@ msgstr "примљено спајање"
 msgid "recovery codes"
 msgstr "шифри за опоравак"
 
-#: app/models/checklist/item.rb:91
+#: app/models/checklist/item.rb:95
 msgid "reference must not be the checklist ticket."
 msgstr "Референца не може бити тикет списка."
 
@@ -21276,9 +21324,9 @@ msgstr "уклони"
 msgid "remove option"
 msgstr "уклони опцију"
 
-#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:135
-msgid "removed reaction to %s message '%s'"
-msgstr "је уклонио(ла) реакцију на %s поруку '%s'"
+#: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:143
+msgid "removed reaction to message from %s '%s'"
+msgstr "је уклонио(ла) реакцију на поруку %s '%s'"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:10
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/facebook_reply.coffee:8
@@ -21449,7 +21497,7 @@ msgstr "претплата,календари,тикет,ical"
 msgid "support@example.com"
 msgstr "support@example.com"
 
-#: app/assets/javascripts/app/controllers/translation.coffee:268
+#: app/assets/javascripts/app/controllers/translation.coffee:280
 msgid "system"
 msgstr "системски"
 
@@ -21509,6 +21557,10 @@ msgstr "данас"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:26
 msgid "token access,token,api,access token,application"
 msgstr "кључ приступа,api,приступни кључ,апликација"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadge.vue:8
+msgid "tracked in"
+msgstr "праћено у"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:24
 msgid "translation,locale,localization"
@@ -21647,21 +21699,24 @@ msgstr ""
 msgid "|Right| means |Some Subject [Ticket#12345]|"
 msgstr "|Десно| значи |Неки наслов [Ticket#12345]|"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:405
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:407
 msgid "…add object link URL"
 msgstr "…додај URL линк објекта"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:398
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:400
 msgid "…add object title"
 msgstr "…додај наслов објекта"
 
-#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:605
+#: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:607
 msgid "…of whole text area"
 msgstr "…целог текстуалног поља"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
+
+#~ msgid "Checklist is already created for this ticket"
+#~ msgstr "Списак задатака већ постоји за овај тикет"
 
 #~ msgid "Attached"
 #~ msgstr "Приложено"
@@ -22306,9 +22361,6 @@ msgstr "∅ Време чекања данас"
 #~ msgid "Can't send spool, session not authenticated"
 #~ msgstr ""
 #~ "Није било могуће послати нагомилане поруке, неаутентификована сесија"
-
-#~ msgid "Save ticket"
-#~ msgstr "Сачувај тикет"
 
 #~ msgid "Error - %s"
 #~ msgstr "Грешка - %s"
