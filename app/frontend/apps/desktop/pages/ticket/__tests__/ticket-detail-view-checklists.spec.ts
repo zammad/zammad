@@ -15,6 +15,7 @@ import {
 } from '#shared/entities/ticket/graphql/mutations/update.mocks.ts'
 import { mockTicketArticlesQuery } from '#shared/entities/ticket/graphql/queries/ticket/articles.mocks.ts'
 import { mockTicketQuery } from '#shared/entities/ticket/graphql/queries/ticket.mocks.ts'
+import { getTicketUpdatesSubscriptionHandler } from '#shared/entities/ticket/graphql/subscriptions/ticketUpdates.mocks.ts'
 import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mocks/ticket-articles.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { EnumUserErrorException } from '#shared/graphql/types.ts'
@@ -134,7 +135,15 @@ describe('Ticket detail view', () => {
 
     it('updates incomplete checklist item count', async () => {
       mockTicketQuery({
-        ticket: createDummyTicket(),
+        ticket: createDummyTicket({
+          checklist: {
+            id: convertToGraphQLId('Checklist', 1),
+            complete: 1,
+            completed: false,
+            total: 2,
+            incomplete: 1,
+          },
+        }),
       })
 
       const testArticle = createDummyArticle({
@@ -192,6 +201,16 @@ describe('Ticket detail view', () => {
               { text: 'Item 2', checked: true },
             ],
             incomplete: 0,
+          },
+        },
+      })
+
+      await getTicketUpdatesSubscriptionHandler().trigger({
+        ticketUpdates: {
+          ticket: {
+            checklist: {
+              incomplete: 0,
+            },
           },
         },
       })

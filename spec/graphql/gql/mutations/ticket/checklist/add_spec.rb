@@ -45,6 +45,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::Add, current_user_id: 1, type:
   end
 
   before do
+    setup if defined?(setup)
     checklist if defined?(checklist)
     gql.execute(query, variables: variables)
   end
@@ -69,6 +70,14 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::Add, current_user_id: 1, type:
 
   context 'with authenticated session', authenticated_as: :agent do
     it_behaves_like 'creating the ticket checklist'
+
+    context 'with disabled checklist feature' do
+      let(:setup) do
+        Setting.set('checklist', false)
+      end
+
+      it_behaves_like 'raising an error', Exceptions::Forbidden
+    end
 
     context 'without access to the ticket' do
       let(:agent) { create(:agent) }

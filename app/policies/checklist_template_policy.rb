@@ -2,22 +2,26 @@
 
 class ChecklistTemplatePolicy < ApplicationPolicy
   def show?
-    agent? || admin?
+    checklist_feature_enabled? && (agent? || admin?)
   end
 
   def create?
-    admin?
+    checklist_feature_enabled? && admin?
   end
 
   def update?
-    admin?
+    checklist_feature_enabled? && admin?
   end
 
   def destroy?
-    admin?
+    checklist_feature_enabled? && admin?
   end
 
   private
+
+  def checklist_feature_enabled?
+    Setting.get('checklist')
+  end
 
   def agent?
     user.permissions?('ticket.agent')

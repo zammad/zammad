@@ -15,7 +15,7 @@ module CanChecklistSortedItems
     end
 
     def default_sorted_item_ids
-      self.sorted_item_ids = [] if sorted_item_ids.nil?
+      self.sorted_item_ids ||= []
     end
   end
 end

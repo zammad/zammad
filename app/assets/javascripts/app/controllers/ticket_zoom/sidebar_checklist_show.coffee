@@ -59,6 +59,7 @@ class App.SidebarChecklistShow extends App.Controller
     item.checklist_id = @checklist.id
     item.text = ''
 
+
     item.save(
       done: ->
         App.ChecklistItem.full(@id, callbackDone, force: true)
@@ -235,8 +236,6 @@ class App.SidebarChecklistShow extends App.Controller
     sorted_items = @checklist.sorted_items()
 
     for object in sorted_items
-      ticket = undefined
-      ticketAccess = undefined
       if object.ticket_id
         ticket = App.Ticket.find(object.ticket_id)
         ticketAccess = if ticket then ticket.userGroupAccess('read') else false
@@ -272,6 +271,7 @@ class App.SidebarChecklistShow extends App.Controller
     if @enterEditModeId
       cell                = @table.find("tbody tr[data-id='" + @enterEditModeId + "']").find('.checklistItemValue')[0]
       row                 = $(cell).closest('tr')
+      return if !row.length
       @enterEditModeId = undefined
       @activateItemEditMode(cell, row, row.data('id'))
 
@@ -283,6 +283,7 @@ class ChecklistItemEdit extends App.Controller
   events:
     'click .js-cancel':             'onCancel'
     'click .js-confirm':            'onConfirm'
+    'blur .js-input':               'onConfirm'
     'keyup #checklistItemEditText': 'onKeyUp'
 
   constructor: ->

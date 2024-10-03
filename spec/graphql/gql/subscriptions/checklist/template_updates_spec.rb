@@ -22,6 +22,7 @@ RSpec.describe Gql::Subscriptions::Checklist::TemplateUpdates, current_user_id: 
   end
 
   before do
+    setup if defined?(setup)
     template if defined?(template)
     gql.execute(subscription, variables: variables, context: { channel: mock_channel })
   end
@@ -35,6 +36,16 @@ RSpec.describe Gql::Subscriptions::Checklist::TemplateUpdates, current_user_id: 
   context 'with an authenticated user', authenticated_as: :agent do
     it 'subscribes to template updates' do
       expect(gql.result.data).not_to be_nil
+    end
+
+    context 'with disabled checklist feature' do
+      let(:setup) do
+        Setting.set('checklist', false)
+      end
+
+      it 'denies subscription with an error' do
+        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+      end
     end
 
     it 'triggers after template create' do

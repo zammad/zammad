@@ -105,41 +105,41 @@ RSpec.describe Gql::Queries::Ticket, current_user_id: 1, type: :graphql do
     context 'with an agent', authenticated_as: :agent do
       context 'with permission' do
         let(:agent) { create(:agent, groups: [ticket.group]) }
+        let(:base_expected_result) do
+          {
+            'id'                          => gql.id(ticket),
+            'internalId'                  => ticket.id,
+            'number'                      => ticket.number,
+            # Agent is allowed to see user data
+            'owner'                       => include(
+              'firstname' => ticket.owner.firstname,
+              'email'     => ticket.owner.email,
+              'createdBy' => { 'internalId' => 1 },
+              'updatedBy' => { 'internalId' => 1 },
+            ),
+            'tags'                        => %w[tag1 tag2],
+            'policy'                      => {
+              'agentReadAccess'   => true,
+              'agentUpdateAccess' => true,
+              'createMentions'    => true,
+              'destroy'           => false,
+              'followUp'          => true,
+              'update'            => true
+            },
+            'stateColorCode'              => 'open',
+            'checklist'                   => {
+              'name' => checklist.name
+            },
+            'referencingChecklistTickets' => [
+              {
+                'id' => gql.id(another_ticket)
+              }
+            ]
+          }
+        end
+        let(:expected_result) { base_expected_result }
 
         shared_examples 'finds the ticket' do
-          let(:expected_result) do
-            {
-              'id'                          => gql.id(ticket),
-              'internalId'                  => ticket.id,
-              'number'                      => ticket.number,
-              # Agent is allowed to see user data
-              'owner'                       => include(
-                'firstname' => ticket.owner.firstname,
-                'email'     => ticket.owner.email,
-                'createdBy' => { 'internalId' => 1 },
-                'updatedBy' => { 'internalId' => 1 },
-              ),
-              'tags'                        => %w[tag1 tag2],
-              'policy'                      => {
-                'agentReadAccess'   => true,
-                'agentUpdateAccess' => true,
-                'createMentions'    => true,
-                'destroy'           => false,
-                'followUp'          => true,
-                'update'            => true
-              },
-              'stateColorCode'              => 'open',
-              'checklist'                   => {
-                'name' => checklist.name
-              },
-              'referencingChecklistTickets' => [
-                {
-                  'id' => gql.id(another_ticket)
-                }
-              ]
-            }
-          end
-
           it 'finds the ticket' do
             expect(gql.result.data).to include(expected_result)
           end
@@ -167,6 +167,15 @@ RSpec.describe Gql::Queries::Ticket, current_user_id: 1, type: :graphql do
           it 'raises an exception' do
             expect(gql.result.error_type).to eq(GraphQL::Schema::Validator::ValidationFailedError)
           end
+        end
+
+        context 'with having checklist feature disabled' do
+          let(:setup) do
+            Setting.set('checklist', false)
+          end
+          let(:expected_result) { base_expected_result.merge({ 'checklist' => nil, 'referencingChecklistTickets' => nil }) }
+
+          include_examples 'finds the ticket'
         end
 
         context 'with having time accounting enabled' do

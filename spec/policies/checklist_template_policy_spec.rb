@@ -18,6 +18,14 @@ describe ChecklistTemplatePolicy do
     let(:user) { create(:admin) }
 
     it { is_expected.to permit_actions(:show, :create, :update, :destroy) }
+
+    context 'when checklist feature is disabled' do
+      before do
+        Setting.set('checklist', false)
+      end
+
+      it { is_expected.to forbid_actions(:show, :create, :update, :destroy) }
+    end
   end
 
   context 'when user is a customer' do

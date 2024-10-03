@@ -20,10 +20,14 @@ class Service::Ticket::Update::Validator
     private
 
     def ticket_closed?
+      return false if !ticket_data[:state]
+
       ticket_data[:state].state_type.name == 'closed'
     end
 
     def ticket_pending_close?
+      return false if !ticket_data[:state]
+
       ticket_data[:state].state_type.name == 'pending action' && ticket_data[:state].next_state.state_type.name == 'closed'
     end
   end

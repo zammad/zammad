@@ -3,7 +3,7 @@
 <script setup lang="ts">
 import { computed, onMounted } from 'vue'
 
-import { useTicketChecklist } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/useTicketChecklist.ts'
+import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import {
   type TicketSidebarProps,
   type TicketSidebarEmits,
@@ -19,17 +19,20 @@ defineProps<TicketSidebarProps>()
 
 const emit = defineEmits<TicketSidebarEmits>()
 
-const { incompleteItemCount, checklist, isLoadingChecklist, isTicketEditable } =
-  useTicketChecklist()
+const { ticket } = useTicketInformation()
+
+const incompleteChecklistItemsCount = computed(
+  () => ticket.value?.checklist?.incomplete,
+)
 
 const badge = computed<TicketSidebarButtonBadgeDetails | undefined>(() => {
   const label = __('Incomplete checklist items')
 
-  if (!incompleteItemCount.value) return
+  if (!incompleteChecklistItemsCount.value) return
 
   return {
     type: TicketSidebarButtonBadgeType.Info,
-    value: incompleteItemCount.value,
+    value: incompleteChecklistItemsCount.value,
     label,
   }
 })
@@ -50,9 +53,6 @@ onMounted(() => {
     <TicketSidebarChecklistContent
       :context="context"
       :sidebar-plugin="sidebarPlugin"
-      :checklist="checklist"
-      :loading="isLoadingChecklist"
-      :readonly="!isTicketEditable"
     />
   </TicketSidebarWrapper>
 </template>

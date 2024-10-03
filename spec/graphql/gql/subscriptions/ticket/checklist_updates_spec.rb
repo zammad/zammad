@@ -30,6 +30,7 @@ RSpec.describe Gql::Subscriptions::Ticket::ChecklistUpdates, :aggregate_failures
   end
 
   before do
+    setup if defined?(setup)
     gql.execute(subscription, variables: variables, context: { channel: mock_channel })
   end
 
@@ -42,6 +43,16 @@ RSpec.describe Gql::Subscriptions::Ticket::ChecklistUpdates, :aggregate_failures
   context 'with an authenticated user', authenticated_as: :agent do
     it 'subscribes to checklist updates' do
       expect(gql.result.data).not_to be_nil
+    end
+
+    context 'with disabled checklist feature' do
+      let(:setup) do
+        Setting.set('checklist', false)
+      end
+
+      it 'denies subscription with an error' do
+        expect(gql.result.error_type).to eq(Exceptions::Forbidden)
+      end
     end
 
     it 'triggers after checklist create' do

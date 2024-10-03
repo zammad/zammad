@@ -29,6 +29,14 @@ describe ChecklistPolicy do
     let(:user) { create(:agent, groups: [ticket.group]) }
 
     it { is_expected.to permit_actions(:show, :create, :update, :destroy) }
+
+    context 'when checklist feature is disabled' do
+      before do
+        Setting.set('checklist', false)
+      end
+
+      it { is_expected.to forbid_actions(:show, :create, :update, :destroy) }
+    end
   end
 
   context 'when user has access to the ticket by having customer access' do

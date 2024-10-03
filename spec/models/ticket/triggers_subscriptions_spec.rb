@@ -56,6 +56,15 @@ RSpec.describe Ticket::TriggersSubscriptions do
         .with(referenced_checklist, arguments: { ticket_id: referenced_checklist.ticket.to_global_id.to_s })
     end
 
+    it 'triggers checklist update ticket is tracked in twice on state and group change' do
+      ticket.update state: Ticket::State.find_by(name: 'closed'), group: create(:group)
+
+      expect(Gql::Subscriptions::Ticket::ChecklistUpdates)
+        .to have_received(:trigger)
+        .with(referenced_checklist, arguments: { ticket_id: referenced_checklist.ticket.to_global_id.to_s })
+        .twice
+    end
+
     it 'triggers checklist update once per checklist' do
       ticket.update title: 'new title'
 

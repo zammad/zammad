@@ -61,6 +61,7 @@ RSpec.describe Gql::Queries::Ticket::Checklist, current_user_id: 1, type: :graph
   end
 
   before do
+    setup if defined?(setup)
     checklist
     gql.execute(query, variables: variables)
   end
@@ -79,6 +80,14 @@ RSpec.describe Gql::Queries::Ticket::Checklist, current_user_id: 1, type: :graph
 
   context 'with authenticated session', authenticated_as: :agent do
     it_behaves_like 'returning checklist data'
+
+    context 'with disabled checklist feature' do
+      let(:setup) do
+        Setting.set('checklist', false)
+      end
+
+      it_behaves_like 'raising an error', Exceptions::Forbidden
+    end
 
     context 'without access to the ticket' do
       let(:agent) { create(:agent) }

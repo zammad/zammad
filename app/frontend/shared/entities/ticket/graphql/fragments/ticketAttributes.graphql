@@ -95,13 +95,4 @@ fragment ticketAttributes on Ticket {
   closeEscalationAt
   updateEscalationAt
   initialChannel
-  checklist {
-    id
-    completed
-    total
-    complete
-  }
-  referencingChecklistTickets {
-    ...referencingTicket
-  }
 }

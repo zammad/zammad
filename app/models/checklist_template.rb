@@ -9,7 +9,7 @@ class ChecklistTemplate < ApplicationModel
 
   has_many :items, inverse_of: :checklist_template, dependent: :destroy
 
-  validates :name, presence: { allow_blank: true }
+  validates :name, length: { maximum: 250 }
 
   def create_from_template!(ticket_id:)
     raise ActiveRecord::RecordInvalid if !active

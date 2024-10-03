@@ -2,8 +2,8 @@ import * as Types from '#shared/graphql/types.ts';
 
 import gql from 'graphql-tag';
 import { TicketAttributesFragmentDoc } from '../fragments/ticketAttributes.api';
-import { ReferencingTicketFragmentDoc } from '../fragments/referencingTicket.api';
 import { TicketMentionFragmentDoc } from '../fragments/ticketMention.api';
+import { ReferencingTicketFragmentDoc } from '../fragments/referencingTicket.api';
 import * as VueApolloComposable from '@vue/apollo-composable';
 import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
@@ -30,6 +30,7 @@ export const TicketDocument = gql`
     checklist {
       id
       completed
+      incomplete
       total
       complete
     }

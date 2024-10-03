@@ -42,6 +42,13 @@ class ChecklistTemplate extends App.ControllerSubContent
 
     @html elLocal
 
+    value = @checklistSetting.prop('checked')
+    checklistTemplatesTable = elLocal.find('.js-checklistTemplatesTable')
+    if value is true
+      checklistTemplatesTable.show()
+    else
+      checklistTemplatesTable.hide()
+
   validateOnSubmit: (params) ->
     errors = {}
     if !params.items || params.items.length is 0

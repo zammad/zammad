@@ -17,22 +17,20 @@ RSpec.describe 'Checklist Item', authenticated_as: :agent_1, current_user_id: 1,
     checklist_2
   end
 
-  it 'does list checklist items', :aggregate_failures do
-    get '/api/v1/checklist_items', params: {}, as: :json
-    expect(response).to have_http_status(:ok)
-    expect(json_response).to include(hash_including('id' => checklist_1.items.first.id))
-    expect(json_response).not_to include(hash_including('id' => checklist_2.items.first.id))
-  end
-
   it 'does show checklist items', :aggregate_failures do
     get "/api/v1/checklist_items/#{checklist_1.items.first.id}", params: {}, as: :json
     expect(response).to have_http_status(:ok)
     expect(json_response).to include('id' => checklist_1.items.first.id)
   end
 
-  it 'does not show checklist items' do
+  it 'does not show inaccessible checklist items' do
     get "/api/v1/checklist_items/#{checklist_2.items.first.id}", params: {}, as: :json
-    expect(response).to have_http_status(:not_found)
+    expect(response).to have_http_status(:forbidden)
+  end
+
+  it 'does not show nonexistant checklist items' do
+    get '/api/v1/checklist_items/1234', params: {}, as: :json
+    expect(response).to have_http_status(:forbidden)
   end
 
   it 'does create checklist items', :aggregate_failures do

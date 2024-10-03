@@ -4,28 +4,21 @@ class Checklist::Item
   module Assets
     extend ActiveSupport::Concern
 
-    def assets(...)
-      data = super
+    def assets(data)
+      app_model = self.class.to_app_model
 
-      checklist.assets(data)
+      if !data[ app_model ]
+        data[ app_model ] = {}
+      end
+      Rails.logger.debug [app_model, id, data[app_model]]
+      return data if data[ app_model ][ id ]
+
+      data[ app_model ][ id ] = attributes_with_association_ids
+
       ticket&.assets(data) if ticket&.authorized_asset?
-
-      add_referencing_ticket_assets(data)
+      checklist.assets(data)
 
       data
-    end
-
-    private
-
-    def add_referencing_ticket_assets(data)
-      return if !ticket
-
-      if !checklist.ticket.authorized_asset?
-        data[self.class.to_app_model][id]['ticket_inaccessible'] = true
-        return
-      end
-
-      ticket.assets(data)
     end
   end
 end

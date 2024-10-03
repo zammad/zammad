@@ -974,17 +974,16 @@ class App.TicketZoom extends App.Controller
     isPendingClose = ticketState.state_type.name is 'pending action' && App.TicketState.find(ticketState.next_state_id).state_type.name is 'closed'
     return @submitTimeAccounting(e, ticket, macro, editContollerForm) if !isClosed && !isPendingClose
 
-    App.Checklist.completedForTicketId(ticket.id, (data) =>
-      return @submitTimeAccounting(e, ticket, macro, editContollerForm) if !data || data.completed is null || data.completed
+    if !ticket.checklist_incomplete
+      return @submitTimeAccounting(e, ticket, macro, editContollerForm)
 
-      new App.TicketZoomChecklistModal(
-        container: @el.closest('.content')
-        ticket: ticket
-        cancelCallback: =>
-          @submitEnable(e)
-        submitCallback: =>
-          @submitTimeAccounting(e, ticket, macro, editContollerForm)
-      )
+    new App.TicketZoomChecklistModal(
+      container: @el.closest('.content')
+      ticket: ticket
+      cancelCallback: =>
+        @submitEnable(e)
+      submitCallback: =>
+        @submitTimeAccounting(e, ticket, macro, editContollerForm)
     )
 
   submitTimeAccounting: (e, ticket, macro, editContollerForm) =>

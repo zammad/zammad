@@ -29,6 +29,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemUpsert, current_user_id: 1
   let(:variables) { { checklistId: gql.id(checklist), input: input } }
 
   before do
+    setup if defined?(setup)
     gql.execute(query, variables: variables)
   end
 
@@ -59,6 +60,14 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemUpsert, current_user_id: 1
 
   context 'with authenticated session', authenticated_as: :agent do
     it_behaves_like 'creating the ticket checklist item'
+
+    context 'with disabled checklist feature' do
+      let(:setup) do
+        Setting.set('checklist', false)
+      end
+
+      it_behaves_like 'raising an error', Exceptions::Forbidden
+    end
 
     context 'when providing both checked state and text' do
       let(:input) { { 'checked' => true, 'text' => '' } }

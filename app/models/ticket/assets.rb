@@ -23,19 +23,29 @@ returns
 =end
 
   def assets(data)
-    app_model_ticket = Ticket.to_app_model
+    app_model = self.class.to_app_model
 
-    if !data[ app_model_ticket ]
-      data[ app_model_ticket ] = {}
+    if !data[ app_model ]
+      data[ app_model ] = {}
     end
-    return data if data[ app_model_ticket ][ id ]
+    Rails.logger.debug [app_model, id, data[app_model]]
+    return data if data[ app_model ][ id ]
 
-    data[app_model_ticket][id] = attributes_with_association_ids
+    data[ app_model ][ id ] = attributes_with_association_ids
 
     group.assets(data)
     organization&.assets(data)
-    checklist&.assets(data)
     assets_user(data)
+
+    if Setting.get('checklist')
+      checklist&.assets(data)
+      referencing_checklists
+        .includes(:ticket)
+        .each do |elem|
+          elem.assets(data)
+          elem.ticket.assets(data) if elem.ticket.authorized_asset?
+        end
+    end
 
     data
   end

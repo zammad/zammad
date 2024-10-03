@@ -18,6 +18,7 @@ subscription ticketUpdates($ticketId: ID!, $initial: Boolean = false) {
       checklist {
         id
         completed
+        incomplete
         total
         complete
       }

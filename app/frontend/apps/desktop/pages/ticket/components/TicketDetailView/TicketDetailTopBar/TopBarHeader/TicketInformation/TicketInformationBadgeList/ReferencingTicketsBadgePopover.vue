@@ -51,8 +51,8 @@ const menuItemKeys = computed(() =>
     ref="popoverTarget"
     v-tooltip="
       referencingTicketsCount === 1
-        ? $t('Show tracked ticket')
-        : $t('Show tracked tickets')
+        ? $t('Show tracking ticket')
+        : $t('Show tracking tickets')
     "
     role="button"
     tag="div"

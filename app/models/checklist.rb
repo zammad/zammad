@@ -11,11 +11,8 @@ class Checklist < ApplicationModel
   belongs_to :ticket
   has_many :items, inverse_of: :checklist, dependent: :destroy
 
-  scope :for_user, ->(user) { joins(:ticket).where(ticket: { group: user.group_ids_access('read') }) }
-
-  before_validation :ensure_text_not_nil
-
   validates :ticket_id, uniqueness: true
+  validates :name, length: { maximum: 250 }
 
   history_attributes_ignored :sorted_item_ids
 
@@ -55,9 +52,7 @@ class Checklist < ApplicationModel
   end
 
   def incomplete
-    Auth::RequestCache.fetch_value("Checklist/#{id}/incomplete") do
-      items.count(&:incomplete?)
-    end
+    items.incomplete.count
   end
 
   def total
@@ -88,11 +83,14 @@ class Checklist < ApplicationModel
       .resolve
   end
 
-  private
+  def self.ticket_closed?(ticket)
+    state      = Ticket::State.lookup id: ticket.state_id
+    state_type = Ticket::StateType.lookup id: state.state_type_id
 
-  def ensure_text_not_nil
-    self.name ||= ''
+    %w[closed merged].include? state_type.name
   end
+
+  private
 
   def update_ticket
     ticket.updated_at = Time.current

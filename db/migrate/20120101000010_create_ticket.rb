@@ -549,7 +549,7 @@ class CreateTicket < ActiveRecord::Migration[4.2]
     end
 
     create_table :checklists do |t|
-      t.string :name,      limit: 250,     null: false
+      t.string :name,      limit: 250,     null: false, default: ''
       if Rails.application.config.db_column_array
         t.string :sorted_item_ids, null: false, array: true, default: []
       else
@@ -557,12 +557,16 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       end
       t.references :created_by, null: false, foreign_key: { to_table: :users }
       t.references :updated_by, null: false, foreign_key: { to_table: :users }
-      t.references :ticket, null: true, foreign_key: true, index: { unique: true }
+      t.references :ticket, null: false, foreign_key: true, index: { unique: true }
       t.timestamps limit: 3, null: false
     end
 
     create_table :checklist_items do |t|
-      t.text    :text,          null: false
+      if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2'
+        t.text :text, null: false
+      else
+        t.text :text, null: false, default: ''
+      end
       t.boolean :checked,       null: false, default: false
       t.references :checklist,  null: false, foreign_key: true
       t.references :created_by, null: false, foreign_key: { to_table: :users }
@@ -570,9 +574,10 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.references :ticket,     null: true,  foreign_key: true
       t.timestamps limit: 3,    null: false
     end
+    add_index :checklist_items, [:checked]
 
     create_table :checklist_templates do |t|
-      t.string  :name,      limit: 250,     null: false
+      t.string  :name,      limit: 250,     null: false, default: ''
       t.boolean :active,    default: true,  null: false
       if Rails.application.config.db_column_array
         t.string :sorted_item_ids, null: false, array: true, default: []
@@ -583,9 +588,14 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       t.references :updated_by, null: false, foreign_key: { to_table: :users }
       t.timestamps limit: 3, null: false
     end
+    add_index :checklist_templates, [:active]
 
     create_table :checklist_template_items do |t|
-      t.text :text,          null: false
+      if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2'
+        t.text :text, null: false
+      else
+        t.text :text, null: false, default: ''
+      end
       t.references :checklist_template,  null: false, foreign_key: true
       t.references :created_by, null: false, foreign_key: { to_table: :users }
       t.references :updated_by, null: false, foreign_key: { to_table: :users }

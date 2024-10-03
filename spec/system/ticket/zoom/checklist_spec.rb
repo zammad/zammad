@@ -143,9 +143,11 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
       item_text = SecureRandom.uuid
       find(".checklistShow tr[data-id='#{item.id}'] .js-input").fill_in with: item_text, fill_options: { clear: :backspace }
 
-      # simulate other users change
       other_item_text = SecureRandom.uuid
-      checklist.items.create!(text: other_item_text, created_by: other_agent, updated_by: other_agent)
+      # simulate other users change
+      UserInfo.with_user_id(other_agent.id) do
+        checklist.items.create!(text: other_item_text)
+      end
 
       # not really another way to be absolutely sure that this works
       sleep 5

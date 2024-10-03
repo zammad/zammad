@@ -3,16 +3,17 @@
 class ChecklistTemplate::Item < ApplicationModel
   include ChecksClientNotification
   include HasDefaultModelUserRelations
-  include ChecklistTemplate::TriggersSubscriptions
-  include ChecklistTemplate::Item::Assets
 
   belongs_to :checklist_template
+
+  # MySQL does not support default value on non-null text columns
+  # Can be removed after dropping MySQL
+  before_validation :ensure_text_not_nil, if: -> { ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2' }
 
   after_create :update_checklist
   after_destroy :update_checklist
 
-  validates :text, presence: { allow_blank: true }
-  validate :validate_item_count, on: :create
+  validate :validate_item_count, on: :create, unless: -> { checklist_template.blank? }
 
   private
 
@@ -30,5 +31,11 @@ class ChecklistTemplate::Item < ApplicationModel
     return if checklist_template.items.count < 100
 
     errors.add(:base, __('Checklist Template items are limited to 100 items per checklist.'))
+  end
+
+  # MySQL does not support default value on non-null text columns
+  # Can be removed after dropping MySQL
+  def ensure_text_not_nil
+    self.text ||= ''
   end
 end

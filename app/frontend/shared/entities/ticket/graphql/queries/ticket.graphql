@@ -23,6 +23,7 @@ query ticket($ticketId: ID, $ticketInternalId: Int, $ticketNumber: String) {
     checklist {
       id
       completed
+      incomplete
       total
       complete
     }

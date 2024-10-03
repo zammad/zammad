@@ -114,7 +114,15 @@ module Gql::Types
       Gql::ZammadSchema.id_from_object(@object.shared_draft)
     end
 
+    def checklist
+      return nil if !Setting.get('checklist')
+
+      @object.checklist
+    end
+
     def referencing_checklist_tickets
+      return nil if !Setting.get('checklist')
+
       ::Checklist.tickets_referencing(@object, context.current_user)
     end
 

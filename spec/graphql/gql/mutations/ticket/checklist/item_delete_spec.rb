@@ -25,6 +25,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemDelete, current_user_id: 1
   let(:variables) { { checklistId: gql.id(checklist), checklistItemId: gql.id(checklist_item) } }
 
   before do
+    setup if defined?(setup)
     gql.execute(query, variables: variables)
   end
 
@@ -42,6 +43,14 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemDelete, current_user_id: 1
 
   context 'with authenticated session', authenticated_as: :agent do
     it_behaves_like 'deleting the ticket checklist item'
+
+    context 'with disabled checklist feature' do
+      let(:setup) do
+        Setting.set('checklist', false)
+      end
+
+      it_behaves_like 'raising an error', Exceptions::Forbidden
+    end
 
     context 'without access to the ticket' do
       let(:agent) { create(:agent) }

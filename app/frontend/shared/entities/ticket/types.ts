@@ -37,6 +37,7 @@ export interface TicketLiveAppUser {
 }
 
 export type TicketById = TicketQuery['ticket']
+
 export type TicketArticle = ConfidentTake<
   TicketArticlesQuery,
   'articles.edges.node'

@@ -64,9 +64,10 @@ class SidebarChecklist extends App.Controller
     # ticket subscriptions
     sid = App.Ticket.subscribeItem(
       @ticket.id,
-      =>
+      (ticket) =>
         @delay =>
           @badgeRenderLocal()
+          return if ticket.updated_by_id is App.Session.get().id
 
           @shown() if !@widget?.actionController
     )
@@ -75,6 +76,10 @@ class SidebarChecklist extends App.Controller
       id: @ticket.id,
       sid: sid,
     )
+
+    # Exit early and subscribe only to the ticket when sidebar is not opened
+    return if !(@widget instanceof App.SidebarChecklistShow)
+    # Keep going and subscribe to checklist items and tickets in there when sidebar is opened
 
     # checklist subscriptions
     checklist = App.Checklist.findByAttribute('ticket_id', @ticket.id)
@@ -126,9 +131,9 @@ class SidebarChecklist extends App.Controller
     @startLoading()
 
     @ajax(
-      id:   'checklist_ticket'
+      id:   "checklist_ticket#{@ticket.id}"
       type: 'GET'
-      url:  "#{@apiPath}/tickets/#{@ticket.id}/checklist"
+      url:  "#{@apiPath}/checklists/by_ticket/#{@ticket.id}"
       processData: true
       success: (data, status, xhr) =>
         @clearWidget()
@@ -140,10 +145,10 @@ class SidebarChecklist extends App.Controller
           @checklist = App.Checklist.find(data.id)
 
           @widget = new App.SidebarChecklistShow(el: @elSidebar, parentVC: @, checklist: @checklist, readOnly: !@changeable, enterEditMode: enterEditMode)
-
-          @subscribe()
         else
           @widget = new App.SidebarChecklistStart(el: @elSidebar, parentVC: @, readOnly: !@changeable)
+
+        @subscribe()
 
         @renderActions()
         @badgeRenderLocal()
@@ -161,7 +166,7 @@ class SidebarChecklist extends App.Controller
       name: 'checklist'
       icon: 'checklist'
       counterPossible: true
-      counter: App.Checklist.findByAttribute('ticket_id', @ticket.id)?.open_items().length
+      counter: @ticket.checklist_incomplete
     }
 
   badgeRender: (el) =>

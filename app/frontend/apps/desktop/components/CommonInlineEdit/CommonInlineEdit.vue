@@ -120,7 +120,7 @@ const submitEdit = () => {
 
   const submitEditResult = props.onSubmitEdit(inputValue.value)
 
-  if (submitEditResult instanceof Promise) {
+  if (submitEditResult instanceof Promise)
     return submitEditResult
       .then((result) => {
         result?.()
@@ -128,7 +128,6 @@ const submitEdit = () => {
         stopEditing(false)
       })
       .catch(() => {})
-  }
 
   submitEditResult?.()
 
@@ -150,7 +149,10 @@ const handleMouseLeave = () => {
   isHoverTargetLink.value = false
 }
 
-onClickOutside(target, () => stopEditing())
+onClickOutside(target, () => {
+  if (isEditing.value) return submitEdit()
+  stopEditing()
+})
 
 const { setupLinksHandlers } = useHtmlLinks('/desktop')
 

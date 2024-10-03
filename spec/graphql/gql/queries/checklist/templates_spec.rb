@@ -32,6 +32,7 @@ RSpec.describe Gql::Queries::Checklist::Templates, current_user_id: 1, type: :gr
   end
 
   before do
+    setup if defined?(setup)
     checklist_template
     gql.execute(query, variables: variables)
   end
@@ -50,6 +51,14 @@ RSpec.describe Gql::Queries::Checklist::Templates, current_user_id: 1, type: :gr
 
   context 'with authenticated session', authenticated_as: :agent do
     it_behaves_like 'returning template data'
+
+    context 'with disabled checklist feature' do
+      let(:setup) do
+        Setting.set('checklist', false)
+      end
+
+      it_behaves_like 'raising an error', Exceptions::Forbidden
+    end
 
     context 'without agent permissions', authenticated_as: :customer do
       let(:customer) { create(:customer) }

@@ -33,7 +33,8 @@ class App.SidebarChecklistStart extends App.Controller
     @ajax(
       id:   'checklist_ticket_add_empty'
       type: 'POST'
-      url:  "#{@apiPath}/tickets/#{@parentVC.ticket.id}/checklist"
+      url:  "#{@apiPath}/checklists"
+      data: JSON.stringify({ ticket_id: @parentVC.ticket.id })
       processData: true
       success: (data, status, xhr) =>
         @parentVC.shown(true)
@@ -52,7 +53,7 @@ class App.SidebarChecklistStart extends App.Controller
     @ajax(
       id:   'checklist_ticket_add_from_template'
       type: 'POST'
-      url:  "#{@apiPath}/tickets/#{@parentVC.ticket.id}/checklist"
+      url:  "#{@apiPath}/checklists"
       data: JSON.stringify({ ticket_id: @parentVC.ticket.id, template_id: params.checklist_template_id })
       success: (data, status, xhr) =>
         @parentVC.shown()

@@ -3,23 +3,29 @@
 class ChecklistItemsController < ApplicationController
   prepend_before_action :authenticate_and_authorize!
 
-  def index
-    model_index_render(Checklist::Item.for_user(current_user), params)
-  end
-
   def show
-    model_show_render(Checklist::Item.for_user(current_user), params)
+    model_show_render(Checklist::Item, existing_item_params)
   end
 
   def create
-    model_create_render(Checklist::Item.for_user(current_user), params)
+    model_create_render(Checklist::Item, new_item_params)
   end
 
   def update
-    model_update_render(Checklist::Item.for_user(current_user), params)
+    model_update_render(Checklist::Item, existing_item_params)
   end
 
   def destroy
-    model_destroy_render(Checklist::Item.for_user(current_user), params)
+    model_destroy_render(Checklist::Item, existing_item_params)
+  end
+
+  private
+
+  def new_item_params
+    params.permit(:text, :checklist_id)
+  end
+
+  def existing_item_params
+    params.permit(:text, :id, :checked)
   end
 end

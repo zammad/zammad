@@ -5,7 +5,7 @@ class TicketReferences extends App.PopoverProvider
   @includeData = false
 
   buildTitleFor: (elem) ->
-    App.i18n.translateInline('Tracked by checklist item by')
+    App.i18n.translateInline('Tracked as checklist item in')
 
   buildContentFor: (elem) ->
     @buildHtmlContent(

@@ -6,6 +6,6 @@ class Checklist::ItemPolicy < ApplicationPolicy
   private
 
   def checklist_policy
-    ChecklistPolicy.new(user, record.checklist)
+    ChecklistPolicy.new(user, record&.checklist)
   end
 end

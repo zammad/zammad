@@ -2,22 +2,26 @@
 
 class ChecklistPolicy < ApplicationPolicy
   def show?
-    ticket_policy.agent_read_access?
+    check_prerequisites? && ticket_policy.agent_read_access?
   end
 
   def create?
-    ticket_policy.agent_update_access?
+    check_prerequisites? && ticket_policy.agent_update_access?
   end
 
   def update?
-    ticket_policy.agent_update_access?
+    check_prerequisites? && ticket_policy.agent_update_access?
   end
 
   def destroy?
-    ticket_policy.agent_update_access?
+    check_prerequisites? && ticket_policy.agent_update_access?
   end
 
   private
+
+  def check_prerequisites?
+    Setting.get('checklist') && record&.ticket
+  end
 
   def ticket_policy
     TicketPolicy.new(user, record.ticket)

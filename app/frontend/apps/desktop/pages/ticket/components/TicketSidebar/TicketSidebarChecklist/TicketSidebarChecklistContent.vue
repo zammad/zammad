@@ -2,14 +2,13 @@
 
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash-es'
-import { computed, watch, nextTick, useTemplateRef } from 'vue'
+import { computed, nextTick, useTemplateRef } from 'vue'
 
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { handleUserErrors } from '#shared/errors/utils.ts'
 import type {
   ChecklistItem,
   TicketChecklistItemInput,
-  Checklist,
 } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n/index.ts'
 import { getApolloClient } from '#shared/server/apollo/client.ts'
@@ -23,6 +22,7 @@ import ChecklistItems from '#desktop/pages/ticket/components/TicketSidebar/Ticke
 import ChecklistTemplates from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue'
 import type { AddNewChecklistInput } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/types.ts'
 import { useChecklistTemplates } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/useChecklistTemplates.ts'
+import { useTicketChecklist } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/useTicketChecklist.ts'
 import TicketSidebarContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarContent.vue'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import { useTicketNumber } from '#desktop/pages/ticket/composables/useTicketNumber.ts'
@@ -34,23 +34,19 @@ import { useTicketChecklistItemUpsertMutation } from '#desktop/pages/ticket/grap
 import { useTicketChecklistTitleUpdateMutation } from '#desktop/pages/ticket/graphql/mutations/ticketChecklistTitleUpdate.api.ts'
 import type { TicketSidebarContentProps } from '#desktop/pages/ticket/types/sidebar.ts'
 
-interface Props extends TicketSidebarContentProps {
-  checklist?: Checklist
-  loading: boolean
-  readonly: boolean
-}
-
-const props = defineProps<Props>()
+defineProps<TicketSidebarContentProps>()
 
 const checklistItemsInstance = useTemplateRef('checklist-items')
 
 const { cache: apolloCache } = getApolloClient()
-
-const { ticket } = useTicketInformation()
+const { ticket, ticketId, isTicketEditable } = useTicketInformation()
 const { ticketNumberWithTicketHook } = useTicketNumber(ticket)
+
+const { checklist, isLoadingChecklist } = useTicketChecklist(ticketId, ticket)
+
 const checklistTitle = computed(
   () =>
-    props.checklist?.name ||
+    checklist.value?.name ||
     i18n.t('%s Checklist', ticketNumberWithTicketHook.value),
 )
 
@@ -62,20 +58,15 @@ const createNewChecklist = async (
   input?: Omit<AddNewChecklistInput, 'ticketId'>,
   options = { focusLastItem: true },
 ) => {
-  if (options.focusLastItem)
-    watch(
-      checklistItemsInstance,
-      (component) => {
-        nextTick(() => component?.focusNewItem())
-      },
-      { once: true },
-    )
-
   if (ticket.value?.id) {
     return addNewChecklistMutation
       .send({
         ...input,
         ticketId: ticket.value.id,
+      })
+      .then(() => {
+        if (options.focusLastItem)
+          nextTick(() => checklistItemsInstance.value?.focusNewItem())
       })
       .catch(handleUserErrors)
   }
@@ -97,7 +88,7 @@ const removeChecklist = async () => {
   if (confirmed)
     await checklistDeleteMutation
       .send({
-        checklistId: props.checklist?.id as string,
+        checklistId: checklist.value?.id as string,
       })
       .catch(handleUserErrors)
 }
@@ -106,7 +97,7 @@ const updateTitle = async (title: string) => {
   return checklistTitleUpdateMutation
     .send({
       title,
-      checklistId: props.checklist?.id as string,
+      checklistId: checklist.value?.id as string,
     })
     .then(() => {})
     .catch(handleUserErrors)
@@ -115,18 +106,19 @@ const updateTitle = async (title: string) => {
 const itemAddMutation = new MutationHandler(
   useTicketChecklistItemUpsertMutation({
     update: (cache, { data }) => {
-      if (!data || !props.checklist) return
+      if (!data || !checklist.value) return
 
       const { ticketChecklistItemUpsert } = data
       if (!ticketChecklistItemUpsert?.checklistItem) return
 
-      const newIdPresent = props.checklist?.items.find((item) => {
+      const newIdPresent = checklist.value?.items.find((item) => {
         return item.id === ticketChecklistItemUpsert.checklistItem?.id
       })
+
       if (newIdPresent) return
 
       cache.modify({
-        id: cache.identify(props.checklist),
+        id: cache.identify(checklist.value),
         fields: {
           items(currentItems, { toReference }) {
             return [
@@ -134,8 +126,14 @@ const itemAddMutation = new MutationHandler(
               toReference(ticketChecklistItemUpsert.checklistItem!),
             ]
           },
-          incomplete() {
-            return (props.checklist?.incomplete || 0) + 1
+          complete(currentComplete) {
+            return currentComplete + 1
+          },
+          total(totalCount) {
+            return totalCount + 1
+          },
+          incomplete(incompleteCount) {
+            return incompleteCount + 1
           },
         },
       })
@@ -168,7 +166,7 @@ const itemDeleteMutation = new MutationHandler(
 )
 
 const modifyIncompleteItemCountCache = (increase: boolean) => {
-  const currentCheckList = props.checklist!
+  const currentCheckList = checklist.value!
   const previousIncompleteItemCount = currentCheckList.incomplete
   const previousCompleted = currentCheckList.completed
 
@@ -259,7 +257,7 @@ const modifyCheckedCache = (item: ChecklistItem) => {
 }
 
 const modifyItemsCache = (items: ChecklistItem[]) => {
-  const currentCheckList = props.checklist!
+  const currentCheckList = checklist.value
 
   const checklistId = apolloCache.identify(currentCheckList)
 
@@ -277,7 +275,7 @@ const modifyItemsCache = (items: ChecklistItem[]) => {
 
 const updateItem = async (itemId: string, input: TicketChecklistItemInput) => {
   return itemUpsertMutation.send({
-    checklistId: props.checklist?.id as string,
+    checklistId: checklist.value?.id as string,
     checklistItemId: itemId,
     input,
   })
@@ -291,25 +289,19 @@ const setItemCheckedState = async (item: ChecklistItem) => {
   })
 }
 
-const addNewItem = async () => {
-  watch(
-    () => props.checklist,
-    () => {
-      nextTick(() => checklistItemsInstance.value?.focusNewItem())
-    },
-    { once: true },
-  )
-
-  return itemAddMutation
+const addNewItem = async () =>
+  itemAddMutation
     .send({
-      checklistId: props.checklist?.id as string,
+      checklistId: checklist.value?.id as string,
       input: {
         text: '',
         checked: false,
       },
     })
+    .then(() => {
+      checklistItemsInstance.value?.focusNewItem()
+    })
     .catch(handleUserErrors)
-}
 
 const editItem = async (item: ChecklistItem) => {
   return updateItem(item.id, { text: item.text })
@@ -320,7 +312,7 @@ const editItem = async (item: ChecklistItem) => {
 const saveItemsOrder = (items: ChecklistItem[], stopReordering: () => void) => {
   itemOrderMutation
     .send({
-      checklistId: props.checklist?.id as string,
+      checklistId: checklist.value?.id as string,
       order: items.map((item) => item.id),
     })
     .then(() => {
@@ -342,7 +334,7 @@ const removeItem = async (item: ChecklistItem) => {
     if (!confirmed) return
   }
 
-  const previousChecklistItems = cloneDeep(props.checklist?.items || [])
+  const previousChecklistItems = cloneDeep(checklist.value?.items || [])
   apolloCache.evict({ id: apolloCache.identify(item) })
   apolloCache.gc()
 
@@ -350,7 +342,7 @@ const removeItem = async (item: ChecklistItem) => {
 
   return itemDeleteMutation
     .send({
-      checklistId: props.checklist?.id as string,
+      checklistId: checklist.value?.id as string,
       checklistItemId: item.id,
     })
     .catch((error) => {
@@ -366,7 +358,7 @@ const checklistActions: MenuItem[] = [
     label: __('Rename checklist'),
     icon: 'input-cursor-text',
     onClick: () => checklistItemsInstance.value?.focusTitle(),
-    show: () => !!props.checklist,
+    show: () => !!checklist.value,
   },
   {
     key: 'remove',
@@ -374,7 +366,7 @@ const checklistActions: MenuItem[] = [
     variant: 'danger',
     icon: 'trash3',
     onClick: () => removeChecklist(),
-    show: () => !!props.checklist,
+    show: () => !!checklist.value,
   },
 ]
 
@@ -384,11 +376,11 @@ const { isLoadingTemplates, checklistTemplatesMenuItems } =
 
 <template>
   <TicketSidebarContent
-    :actions="readonly ? undefined : checklistActions"
+    :actions="!isTicketEditable ? undefined : checklistActions"
     :title="sidebarPlugin.title"
     :icon="sidebarPlugin.icon"
   >
-    <CommonLoader :loading="loading">
+    <CommonLoader :loading="isLoadingChecklist">
       <div class="flex flex-col gap-3">
         <ChecklistItems
           v-if="checklist"
@@ -396,7 +388,7 @@ const { isLoadingTemplates, checklistTemplatesMenuItems } =
           :no-default-title="!!checklist.name"
           :title="checklistTitle"
           :items="checklist?.items"
-          :read-only="readonly"
+          :read-only="!isTicketEditable"
           @add-item="addNewItem"
           @remove-item="removeItem"
           @set-item-checked="setItemCheckedState"
@@ -404,7 +396,7 @@ const { isLoadingTemplates, checklistTemplatesMenuItems } =
           @save-order="saveItemsOrder"
           @update-title="updateTitle"
         />
-        <template v-else-if="!readonly">
+        <template v-else-if="isTicketEditable">
           <CommonButton
             variant="primary"
             size="medium"

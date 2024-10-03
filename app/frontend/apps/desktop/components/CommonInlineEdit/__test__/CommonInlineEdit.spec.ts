@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { waitFor } from '@testing-library/vue'
+import { fireEvent, waitFor } from '@testing-library/vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -84,6 +84,28 @@ describe('CommonInlineEdit', async () => {
     )
 
     await wrapper.events.keyboard('{enter}')
+
+    expect(submitEditCallbackSpy).toHaveBeenCalledWith('test value update 2')
+  })
+
+  it('submits on background click', async () => {
+    const submitEditCallbackSpy = vi.fn()
+
+    const wrapper = renderInlineEdit({
+      onSubmitEdit: (value: string) => submitEditCallbackSpy(value),
+    })
+
+    await wrapper.events.click(wrapper.getByRole('button'))
+
+    await wrapper.events.type(wrapper.getByRole('textbox'), ' update 2')
+
+    await waitFor(() =>
+      expect(
+        wrapper.getByRole('textbox', { name: 'Inline Edit Label' }),
+      ).toBeInTheDocument(),
+    )
+
+    await fireEvent.click(document.body)
 
     expect(submitEditCallbackSpy).toHaveBeenCalledWith('test value update 2')
   })

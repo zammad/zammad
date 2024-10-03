@@ -14,7 +14,13 @@ class Checklist
       return data if data[ app_model ][ id ]
 
       data[ app_model ][ id ] = attributes_with_association_ids
-      items.map { |item| data = item.assets(data) }
+
+      if ticket && !ticket.authorized_asset?
+        data[self.class.to_app_model][id]['ticket_inaccessible'] = true
+      end
+
+      items.each { |elem| elem.assets(data) }
+
       data
     end
   end

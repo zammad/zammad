@@ -61,6 +61,7 @@ describe('TicketChecklistBadges', () => {
       checklist: {
         id: convertToGraphQLId('Checklist', 1),
         completed: false,
+        incomplete: 3,
         total: 5,
         complete: 2,
       },
@@ -83,6 +84,7 @@ describe('TicketChecklistBadges', () => {
       checklist: {
         id: convertToGraphQLId('Checklist', 1),
         completed: false,
+        incomplete: 3,
         total: 5,
         complete: 2,
       },
@@ -109,6 +111,7 @@ describe('TicketChecklistBadges', () => {
       checklist: {
         id: convertToGraphQLId('Checklist', 1),
         completed: false,
+        incomplete: 2,
         total: 3,
         complete: 1,
       },
@@ -146,6 +149,7 @@ describe('TicketChecklistBadges', () => {
         id: convertToGraphQLId('Checklist', 1),
         completed: false,
         total: 3,
+        incomplete: 2,
         complete: 1,
       },
       referencingChecklistTickets: [
@@ -180,7 +184,7 @@ describe('TicketChecklistBadges', () => {
     })
 
     await wrapper.events.click(
-      wrapper.getByRole('button', { name: 'Show tracked tickets' }),
+      wrapper.getByRole('button', { name: 'Show tracking tickets' }),
     )
 
     expect(
@@ -212,6 +216,7 @@ describe('TicketChecklistBadges', () => {
         id: convertToGraphQLId('Checklist', 1),
         completed: false,
         total: 3,
+        incomplete: 0,
         complete: 3,
       },
     })

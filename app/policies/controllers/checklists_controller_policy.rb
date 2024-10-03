@@ -2,27 +2,40 @@
 
 class Controllers::ChecklistsControllerPolicy < Controllers::ApplicationControllerPolicy
   def create?
-    update_access_via_ticket?
+    ChecklistPolicy
+      .new(user, ticket&.build_checklist)
+      .create?
   end
 
   def update?
-    update_access_via_ticket?
+    ChecklistPolicy
+      .new(user, checklist)
+      .update?
   end
 
   def destroy?
-    update_access_via_ticket?
+    ChecklistPolicy
+      .new(user, checklist)
+      .destroy?
+  end
+
+  def show?
+    ChecklistPolicy
+      .new(user, checklist)
+      .show?
+  end
+
+  def show_by_ticket?
+    user.permissions?('ticket.agent')
   end
 
   private
 
-  def ticket_policy
-    ticket = Checklist.lookup(id: record.params[:id])&.ticket || Ticket.lookup(id: record.params[:ticket_id])
-    @ticket_policy ||= TicketPolicy.new(user, ticket)
+  def checklist
+    Checklist.lookup(id: record.params[:id])
   end
 
-  def update_access_via_ticket?
-    user.permissions?(['ticket.agent']) && ticket_policy.agent_update_access?
+  def ticket
+    Ticket.lookup(id: record.params[:ticket_id])
   end
-
-  default_permit!(['ticket.agent'])
 end

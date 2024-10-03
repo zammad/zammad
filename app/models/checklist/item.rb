@@ -10,19 +10,26 @@ class Checklist::Item < ApplicationModel
   attr_accessor :initial_clone
 
   belongs_to :checklist
-  belongs_to :ticket, optional: true
+  belongs_to :ticket, optional: true, inverse_of: :referencing_checklist_items
 
-  scope :for_user, ->(user) { joins(checklist: :ticket).where(tickets: { group: user.group_ids_access('read') }) }
+  scope :incomplete, -> { where(checked: false) }
 
   before_validation :detect_ticket_reference, unless: :initial_clone
-  before_validation :ensure_text_not_nil
+  before_validation :detect_ticket_reference_state
 
-  validate :detect_ticket_loop_reference, on: %i[create update], unless: -> { ticket.blank? || checklist.blank? }
-  validate :validate_item_count, on: :create
+  validate :detect_ticket_loop_reference, unless: -> { ticket.blank? || checklist.blank? }
+  validate :validate_item_count, on: :create, unless: -> { checklist.blank? }
+
+  # MySQL does not support default value on non-null text columns
+  # Can be removed after dropping MySQL
+  before_validation :ensure_text_not_nil, if: -> { ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2' }
 
   after_update :history_update_checked, if: -> { saved_change_to_checked? }
   after_destroy :update_checklist_on_destroy
+  after_destroy :update_referenced_ticket
   after_save :update_checklist_on_save
+
+  after_save :update_referenced_ticket
 
   history_attributes_ignored :checked
 
@@ -56,12 +63,6 @@ class Checklist::Item < ApplicationModel
     }
   end
 
-  def incomplete?
-    return ticket_incomplete? if ticket.present?
-
-    !checked
-  end
-
   private
 
   def update_checklist_on_save
@@ -81,12 +82,19 @@ class Checklist::Item < ApplicationModel
   end
 
   def detect_ticket_reference
-    return if changes.key?(:ticket_id)
+    return if ticket_id_changed?
 
     ticket = Ticket::Number.check(text)
     return if ticket.blank?
 
     self.ticket = ticket
+  end
+
+  def detect_ticket_reference_state
+    return if !ticket
+    return if !ticket_id_changed?
+
+    self.checked = Checklist.ticket_closed?(ticket)
   end
 
   def detect_ticket_loop_reference
@@ -101,13 +109,20 @@ class Checklist::Item < ApplicationModel
     errors.add(:base, __('Checklist items are limited to 100 items per checklist.'))
   end
 
-  def ticket_incomplete?
-    # Consider the following ticket state types as incomplete:
-    #   - closed
-    #   - merged
-    !ticket.state.state_type.name.match?(%r{^(closed|merged)$}i)
+  def update_referenced_ticket
+    return if !saved_change_to_ticket_id? && !destroyed?
+
+    [ticket_id, ticket_id_before_last_save]
+      .compact
+      .map { |elem| Ticket.find_by(id: elem) }
+      .each do |elem|
+        elem.updated_at = Time.current
+        elem.save!
+      end
   end
 
+  # MySQL does not support default value on non-null text columns
+  # Can be removed after dropping MySQL
   def ensure_text_not_nil
     self.text ||= ''
   end

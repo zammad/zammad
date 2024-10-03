@@ -30,6 +30,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemOrderUpdate, current_user_
   let(:variables) { { checklistId: gql.id(checklist), order: order } }
 
   before do
+    setup if defined?(setup)
     gql.execute(query, variables: variables)
   end
 
@@ -47,6 +48,14 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemOrderUpdate, current_user_
 
   context 'with authenticated session', authenticated_as: :agent do
     it_behaves_like 'updating the ticket checklist item order'
+
+    context 'with disabled checklist feature' do
+      let(:setup) do
+        Setting.set('checklist', false)
+      end
+
+      it_behaves_like 'raising an error', Exceptions::Forbidden
+    end
 
     context 'without access to the ticket' do
       let(:agent) { create(:agent) }

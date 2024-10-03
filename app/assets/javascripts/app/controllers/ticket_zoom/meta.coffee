@@ -9,42 +9,16 @@ class App.TicketZoomMeta extends App.ControllerObserver
   observe:
     number: true
     created_at: true
+    updated_at: true
     escalation_at: true
-
-  constructor: ->
-    super
-    App.ChecklistItem.subscribe(@checklistItemsChanged)
-    @subscribeToChecklistTickets()
-
-  checklistItemsChanged: =>
-    @subscribeToChecklistTickets()
-    @forceRerender()
-
-  checklistTicketChanged: =>
-    @forceRerender()
-
-  forceRerender: =>
-    @render(App[@model].fullLocal(@object_id))
-
-  subscribeToChecklistTickets: =>
-    if @checklistTicketsSubscriptions
-      for id, key in @checklistTicketsSubscriptions
-        App.Ticket.unsubscribeItem(id, key)
-
-    @checklistTicketsSubscriptions = undefined
-
-    checklist = App.Checklist.findByAttribute('ticket_id', @object_id)
-
-    return if !checklist
-
-    @checklistTicketsSubscriptions = checklist
-      .sorted_items()
-      .filter (elem) -> elem.ticket_id
-      .map (elem) => [elem.ticket_id, App.Ticket.subscribeItem(elem.ticket_id, @checklistTicketChanged)]
+    checklist_total: true
+    checklist_incomplete: true
 
   render: (ticket) =>
-    checklistState      = App.Checklist.calculateState(ticket)
-    checklistReferences = App.Checklist.calculateReferences(ticket)
+    if App.Config.get('checklist')
+      checklistState      = App.Checklist.calculateState(ticket)
+      checklistReferences = App.Checklist.calculateReferences(ticket)
+
 
     @html App.view('ticket_zoom/meta')(
       ticket:              ticket

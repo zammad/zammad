@@ -1,7 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { computed } from 'vue'
+import { computed, type ComputedRef } from 'vue'
 
+import type { TicketById } from '#shared/entities/ticket/types.ts'
 import type {
   Checklist,
   TicketChecklistQuery,
@@ -10,13 +11,16 @@ import type {
 } from '#shared/graphql/types.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
-import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import { useTicketChecklistQuery } from '#desktop/pages/ticket/graphql/queries/ticketChecklist.api.ts'
 import { TicketChecklistUpdatesDocument } from '#desktop/pages/ticket/graphql/subscriptions/ticketChecklistUpdates.api.ts'
 
-export const useTicketChecklist = () => {
-  const { ticket, ticketId, isTicketEditable } = useTicketInformation()
-
+export const useTicketChecklist = (
+  /**
+   * TicketId is always available since we use it from the route not `ticket` directly
+   */
+  ticketId: ComputedRef<string>,
+  ticket: ComputedRef<TicketById | undefined>,
+) => {
   const checklistQuery = new QueryHandler(
     useTicketChecklistQuery(() => ({
       ticketId: ticketId.value,
@@ -76,7 +80,6 @@ export const useTicketChecklist = () => {
   return {
     checklist,
     incompleteItemCount,
-    isTicketEditable,
     isLoadingChecklist,
   }
 }
