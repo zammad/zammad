@@ -126,14 +126,6 @@ export type AutocompleteSearchGenericInput = {
   query: Scalars['String']['input'];
 };
 
-/** The default fields for autocomplete searches. */
-export type AutocompleteSearchInput = {
-  /** Limit for the amount of entries */
-  limit?: InputMaybe<Scalars['Int']['input']>;
-  /** Query from the autocomplete field */
-  query: Scalars['String']['input'];
-};
-
 /** Type that represents an autocomplete merge ticket entry. */
 export type AutocompleteSearchMergeTicketEntry = {
   __typename?: 'AutocompleteSearchMergeTicketEntry';
@@ -213,6 +205,16 @@ export type AutocompleteSearchRecipientInput = {
   contact?: InputMaybe<EnumUserContact>;
   /** Optional user ID to be filtered out from results */
   exceptInternalId?: InputMaybe<Scalars['Int']['input']>;
+  /** Limit for the amount of entries */
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  /** Query from the autocomplete field */
+  query: Scalars['String']['input'];
+};
+
+/** Input fields for tag autocomplete searches. */
+export type AutocompleteSearchTagInput = {
+  /** Optional tags to be filtered out from results */
+  exceptTags?: InputMaybe<Array<Scalars['String']['input']>>;
   /** Limit for the amount of entries */
   limit?: InputMaybe<Scalars['Int']['input']>;
   /** Query from the autocomplete field */
@@ -2563,7 +2565,7 @@ export type QueriesAutocompleteSearchRecipientArgs = {
 
 /** All available queries */
 export type QueriesAutocompleteSearchTagArgs = {
-  input: AutocompleteSearchInput;
+  input: AutocompleteSearchTagInput;
 };
 
 
@@ -5721,7 +5723,7 @@ export type TagAssignmentUpdateMutationVariables = Exact<{
 export type TagAssignmentUpdateMutation = { __typename?: 'Mutations', tagAssignmentUpdate?: { __typename?: 'TagAssignmentUpdatePayload', success?: boolean | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null, exception?: EnumUserErrorException | null }> | null } | null };
 
 export type AutocompleteSearchTagQueryVariables = Exact<{
-  input: AutocompleteSearchInput;
+  input: AutocompleteSearchTagInput;
 }>;
 
 

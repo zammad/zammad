@@ -3,7 +3,10 @@
 import { within } from '@testing-library/vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
+import { NotificationTypes } from '#shared/components/CommonNotifications/types.ts'
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import {
   mockTagAssignmentAddMutation,
   waitForTagAssignmentAddMutationCalls,
@@ -22,6 +25,15 @@ import { type AutocompleteSearchEntry } from '#shared/graphql/types.ts'
 import TicketTags, {
   type Props,
 } from '../TicketSidebarInformationContent/TicketTags.vue'
+
+vi.mock('vue-router', async () => {
+  const mod = await vi.importActual<typeof import('vue-router')>('vue-router')
+
+  return {
+    ...mod,
+    onBeforeRouteUpdate: vi.fn(),
+  }
+})
 
 const testTags = ['tag 1', 'tag 2', 'tag 3']
 
@@ -146,6 +158,71 @@ describe('TicketTags', () => {
 
     expect(autocomplete).not.toBeInTheDocument()
     expect(view.getByRole('button', { name: 'Add tag' })).toBeInTheDocument()
+
+    const { notify } = useNotifications()
+
+    expect(notify).toHaveBeenCalledWith({
+      id: 'ticket-tag-added-successfully',
+      message: 'Ticket tag added successfully.',
+      type: NotificationTypes.Success,
+    })
+  })
+
+  it('supports creating new tags when adding', async () => {
+    mockApplicationConfig({
+      tag_new: true,
+    })
+
+    const view = renderTicketTags()
+
+    mockAutocompleteSearchTagQuery({
+      autocompleteSearchTag: [],
+    })
+
+    await view.events.click(view.getByRole('button', { name: 'Add tag' }))
+
+    await waitForAutocompleteSearchTagQueryCalls()
+
+    vi.useFakeTimers()
+
+    await view.events.type(view.getByRole('searchbox'), 'tag new')
+
+    await vi.runAllTimersAsync()
+    vi.useRealTimers()
+
+    mockTagAssignmentAddMutation({
+      tagAssignmentAdd: {
+        success: true,
+        errors: null,
+      },
+    })
+
+    await view.events.click(view.getByRole('button', { name: 'add new tag' }))
+
+    const calls = await waitForTagAssignmentAddMutationCalls()
+
+    expect(calls.at(-1)?.variables).toEqual({
+      objectId: testTicket.id,
+      tag: 'tag new',
+    })
+  })
+
+  it('supports excluding existing tags', async () => {
+    const view = renderTicketTags()
+
+    mockAutocompleteSearchTagQuery({
+      autocompleteSearchTag: [],
+    })
+
+    await view.events.click(view.getByRole('button', { name: 'Add tag' }))
+
+    const calls = await waitForAutocompleteSearchTagQueryCalls()
+
+    expect(calls.at(-1)?.variables).toEqual({
+      input: expect.objectContaining({
+        exceptTags: testTags,
+      }),
+    })
   })
 
   it('supports removing existing tags', async () => {
@@ -169,6 +246,14 @@ describe('TicketTags', () => {
     expect(calls.at(-1)?.variables).toEqual({
       objectId: testTicket.id,
       tag: 'tag 3',
+    })
+
+    const { notify } = useNotifications()
+
+    expect(notify).toHaveBeenCalledWith({
+      id: 'ticket-tag-removed-successfully',
+      message: 'Ticket tag removed successfully.',
+      type: NotificationTypes.Success,
     })
   })
 

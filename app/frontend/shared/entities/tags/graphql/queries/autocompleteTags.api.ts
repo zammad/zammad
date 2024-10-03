@@ -6,7 +6,7 @@ import * as VueCompositionApi from 'vue';
 export type ReactiveFunction<TParam> = () => TParam;
 
 export const AutocompleteSearchTagDocument = gql`
-    query autocompleteSearchTag($input: AutocompleteSearchInput!) {
+    query autocompleteSearchTag($input: AutocompleteSearchTagInput!) {
   autocompleteSearchTag(input: $input) {
     value
     label

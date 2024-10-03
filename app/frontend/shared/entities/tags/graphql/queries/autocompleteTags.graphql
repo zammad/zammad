@@ -1,4 +1,4 @@
-query autocompleteSearchTag($input: AutocompleteSearchInput!) {
+query autocompleteSearchTag($input: AutocompleteSearchTagInput!) {
   autocompleteSearchTag(input: $input) {
     value
     label

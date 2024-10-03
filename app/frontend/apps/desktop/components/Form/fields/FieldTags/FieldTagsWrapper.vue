@@ -91,6 +91,9 @@ Object.assign(props.context, {
   emptyInitialLabelText,
   multiple: props.context.multiple ?? true,
   gqlQuery: AutocompleteSearchTagDocument,
+  additionalQueryParams: {
+    exceptTags: props.context.exclude,
+  },
   activate,
 })
 </script>

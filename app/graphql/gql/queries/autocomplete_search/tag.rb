@@ -5,13 +5,14 @@ module Gql::Queries
 
     description 'Search for tags'
 
-    argument :input, Gql::Types::Input::AutocompleteSearch::InputType, required: true, description: 'The input object for the autocomplete search'
+    argument :input, Gql::Types::Input::AutocompleteSearch::TagInputType, required: true, description: 'The input object for the autocomplete search'
 
     type [Gql::Types::AutocompleteSearch::EntryType], null: false
 
     def resolve(input:)
       Tag::Item
         .filter_or_recommended(normalize_query(input.query))
+        .where.not(name: input.except_tags)
         .limit(input.limit || 10)
         .pluck(:name)
         .map do |elem|

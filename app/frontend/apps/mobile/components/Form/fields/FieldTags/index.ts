@@ -24,7 +24,14 @@ declare module '@formkit/inputs' {
 
 const fieldDefinition = createInput(
   FieldTagsInput,
-  ['noOptionsLabelTranslation', 'options', 'sorting', 'canCreate'],
+  [
+    'noOptionsLabelTranslation',
+    'options',
+    'sorting',
+    'canCreate',
+    'exclude',
+    'onDeactivate',
+  ],
   { features: [addLink, formUpdaterTrigger()] },
   { addArrow: true },
 )

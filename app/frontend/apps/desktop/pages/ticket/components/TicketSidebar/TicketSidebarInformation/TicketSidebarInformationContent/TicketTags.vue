@@ -3,7 +3,12 @@
 <script setup lang="ts">
 import { getNode } from '@formkit/core'
 import { computed, nextTick, ref } from 'vue'
+import { onBeforeRouteUpdate } from 'vue-router'
 
+import {
+  NotificationTypes,
+  useNotifications,
+} from '#shared/components/CommonNotifications/index.ts'
 import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
 import { useTagAssignmentAddMutation } from '#shared/entities/tags/graphql/mutations/assignment/add.api.ts'
 import { useTagAssignmentRemoveMutation } from '#shared/entities/tags/graphql/mutations/assignment/remove.api.ts'
@@ -43,6 +48,10 @@ const showMore = () => {
   areAllTagsVisible.value = true
 }
 
+onBeforeRouteUpdate(() => {
+  areAllTagsVisible.value = false
+})
+
 const isNewTagVisible = ref(false)
 
 const showNewTag = () => {
@@ -79,6 +88,8 @@ const modifyTagsCache = (ticketTags: string[]) => {
   })
 }
 
+const { notify } = useNotifications()
+
 const addNewTag = (value: unknown) => {
   const tag = value as string // needed due to `onInput` signature
 
@@ -92,10 +103,18 @@ const addNewTag = (value: unknown) => {
   //   It will make sure the newly added tag is always visible in the list.
   if (ticketTags.length > MAX_TAGS_VISIBLE) areAllTagsVisible.value = true
 
-  tagAssignmentAddHandler.send({
-    objectId: props.ticket.id,
-    tag,
-  })
+  tagAssignmentAddHandler
+    .send({
+      objectId: props.ticket.id,
+      tag,
+    })
+    .then(() => {
+      notify({
+        type: NotificationTypes.Success,
+        id: 'ticket-tag-added-successfully',
+        message: __('Ticket tag added successfully.'),
+      })
+    })
 }
 
 const tagAssignmentRemoveHandler = new MutationHandler(
@@ -114,10 +133,18 @@ const removeTag = (tag: string) => {
 
   modifyTagsCache(ticketTags)
 
-  tagAssignmentRemoveHandler.send({
-    objectId: props.ticket.id,
-    tag,
-  })
+  tagAssignmentRemoveHandler
+    .send({
+      objectId: props.ticket.id,
+      tag,
+    })
+    .then(() => {
+      notify({
+        type: NotificationTypes.Success,
+        id: 'ticket-tag-removed-successfully',
+        message: __('Ticket tag removed successfully.'),
+      })
+    })
 }
 
 const { isTouchDevice } = useTouchDevice()
@@ -175,6 +202,7 @@ const { config } = useApplicationStore()
       :label-sr-only="true"
       :multiple="false"
       :can-create="config.tag_new"
+      :exclude="ticket?.tags"
       :on-deactivate="hideNewTag"
       @input="addNewTag"
     />
