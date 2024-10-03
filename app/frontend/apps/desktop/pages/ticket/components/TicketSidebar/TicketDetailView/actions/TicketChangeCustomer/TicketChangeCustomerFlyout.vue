@@ -6,7 +6,6 @@ import { toRef } from 'vue'
 import Form from '#shared/components/Form/Form.vue'
 import type { FormSubmitData } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
-import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useTicketChangeCustomer } from '#shared/entities/ticket/composables/useTicketChangeCustomer.ts'
 import { useTicketFormOrganizationHandler } from '#shared/entities/ticket/composables/useTicketFormOrganizationHandler.ts'
 import type {
@@ -16,36 +15,17 @@ import type {
 import { defineFormSchema } from '#shared/form/defineFormSchema.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 
-import CommonButton from '#mobile/components/CommonButton/CommonButton.vue'
-import CommonDialog from '#mobile/components/CommonDialog/CommonDialog.vue'
-import { closeDialog } from '#mobile/composables/useDialog.ts'
+import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
+import { closeFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 
-export interface Props {
-  name: string
+interface Props {
   ticket: TicketById
+  name: string
 }
 
 const props = defineProps<Props>()
 
-const { form, isDirty, canSubmit } = useForm()
-
-const { waitForConfirmation } = useConfirmation()
-
-const cancelDialog = async () => {
-  if (isDirty.value) {
-    const confirmed = await waitForConfirmation(
-      __('Are you sure? You have unsaved changes that will get lost.'),
-      {
-        buttonLabel: __('Discard changes'),
-        buttonVariant: 'danger',
-      },
-    )
-
-    if (!confirmed) return
-  }
-
-  closeDialog(props.name)
-}
+const { form } = useForm()
 
 const formSchema = defineFormSchema([
   {
@@ -62,45 +42,34 @@ const formSchema = defineFormSchema([
 ])
 
 const { changeCustomer } = useTicketChangeCustomer(toRef(props, 'ticket'), {
-  onSuccess: () => closeDialog(props.name),
+  onSuccess: () => closeFlyout(props.name),
 })
 </script>
 
 <template>
-  <CommonDialog
-    class="w-full"
-    no-autofocus
-    :name="name"
-    :label="__('Change customer')"
+  <CommonFlyout
+    :header-title="__('Change Customer')"
+    header-icon="person"
+    name="change-customer"
+    no-close-on-action
+    :footer-action-options="{
+      form,
+      actionButton: {
+        type: 'submit',
+      },
+    }"
   >
-    <template #before-label>
-      <CommonButton transparent-background @click="cancelDialog">
-        {{ $t('Cancel') }}
-      </CommonButton>
-    </template>
-    <template #after-label>
-      <CommonButton
-        :form="name"
-        :disabled="!canSubmit"
-        variant="primary"
-        type="submit"
-        transparent-background
-      >
-        {{ $t('Save') }}
-      </CommonButton>
-    </template>
     <Form
-      :id="name"
+      id="form-change-customer"
       ref="form"
-      class="w-full p-4"
       should-autofocus
-      :schema="formSchema"
       :handlers="[useTicketFormOrganizationHandler()]"
       :initial-entity-object="ticket"
       use-object-attributes
+      :schema="formSchema"
       @submit="
         changeCustomer($event as FormSubmitData<TicketCustomerUpdateFormData>)
       "
     />
-  </CommonDialog>
+  </CommonFlyout>
 </template>

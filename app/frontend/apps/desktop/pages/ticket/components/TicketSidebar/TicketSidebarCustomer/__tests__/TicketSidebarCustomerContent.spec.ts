@@ -1,9 +1,16 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { cleanup } from '@testing-library/vue'
+import { computed, ref } from 'vue'
+
 import { renderComponent } from '#tests/support/components/index.ts'
+import { mockPermissions } from '#tests/support/mock-permissions.ts'
 import { waitForNextTick } from '#tests/support/utils.ts'
 
+import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+
+import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 
 import { TicketSidebarScreenType } from '../../../../types/sidebar.ts'
 import customerSidebarPlugin from '../../plugins/customer.ts'
@@ -61,9 +68,14 @@ const mockedUser = {
     update: true,
   },
 }
+const defaultTicket = createDummyTicket()
 
-const renderTicketSidebarCustomerContent = async (options: any = {}) => {
-  const result = renderComponent(TicketSidebarCustomerContent, {
+const renderTicketSidebarCustomerContent = async (
+  screen: TicketSidebarScreenType = TicketSidebarScreenType.TicketCreate,
+  ticket = defaultTicket,
+  options: any = {},
+) =>
+  renderComponent(TicketSidebarCustomerContent, {
     props: {
       sidebarPlugin: customerSidebarPlugin,
       customer: mockedUser,
@@ -84,72 +96,139 @@ const renderTicketSidebarCustomerContent = async (options: any = {}) => {
         },
       ],
       context: {
-        screenType: TicketSidebarScreenType.TicketCreate,
+        screenType: screen,
       },
     },
+    plugins: [
+      (app) => {
+        app.provide(TICKET_KEY, {
+          ticketId: computed(() => ticket.id),
+          ticket: computed(() => ticket),
+          form: ref(),
+          showTicketArticleReplyForm: () => {},
+          isTicketEditable: computed(() => true),
+          newTicketArticlePresent: ref(false),
+          ticketInternalId: computed(() => ticket.internalId),
+        })
+      },
+    ],
     router: true,
     ...options,
   })
 
-  return result
-}
-
 describe('TicketSidebarCustomerContent.vue', () => {
-  it('renders customer info', async () => {
-    const wrapper = await renderTicketSidebarCustomerContent()
+  afterEach(() => {
+    // :TODO write a cleanup inside of the renderComponent to avoid
+    // :ERROR App already provides property with key "Symbol(ticket)". It will be overwritten with the new value
+    // Missing cleanup in test env
+    // It is still getting logged as warnings
+    cleanup()
+    vi.clearAllMocks()
+  })
 
-    await waitForNextTick()
+  beforeEach(() => {
+    mockPermissions(['ticket.agent'])
+  })
 
-    expect(wrapper.getByRole('heading', { level: 2 })).toHaveTextContent(
-      'Customer',
+  describe('ticket-create-screen', () => {
+    it('renders customer info', async () => {
+      const wrapper = await renderTicketSidebarCustomerContent()
+
+      await waitForNextTick()
+
+      expect(wrapper.getByRole('heading', { level: 2 })).toHaveTextContent(
+        'Customer',
+      )
+
+      // :TODO currently we don't have an available actions
+      // For example customer change is logically not available in ticket create
+      expect(
+        wrapper.queryByRole('button', { name: 'Action menu button' }),
+      ).not.toBeInTheDocument()
+
+      expect(
+        wrapper.getByRole('img', { name: 'Avatar (Nicole Braun)' }),
+      ).toHaveTextContent('NB')
+
+      expect(wrapper.getByText('Nicole Braun')).toBeInTheDocument()
+
+      expect(
+        wrapper.getByRole('link', { name: 'Zammad Foundation' }),
+      ).toHaveAttribute('href', '/organizations/1')
+
+      expect(wrapper.getByText('Email')).toBeInTheDocument()
+
+      expect(
+        wrapper.getByRole('link', { name: 'nicole.braun@zammad.org' }),
+      ).toBeInTheDocument()
+
+      expect(wrapper.getByText('Secondary organizations')).toBeInTheDocument()
+
+      expect(
+        wrapper.getByRole('link', { name: 'Avatar (Zammad Org) Zammad Org' }),
+      ).toHaveAttribute('href', '/organizations/2')
+
+      expect(
+        wrapper.getByRole('link', { name: 'Avatar (Zammad Inc) Zammad Inc' }),
+      ).toHaveAttribute('href', '/organizations/3')
+
+      expect(
+        wrapper.getByRole('link', { name: 'Avatar (Zammad Ltd) Zammad Ltd' }),
+      ).toHaveAttribute('href', '/organizations/4')
+
+      expect(
+        wrapper.getByRole('button', { name: 'Show 2 more' }),
+      ).toBeInTheDocument()
+
+      expect(wrapper.getByText('Tickets')).toBeInTheDocument()
+
+      expect(
+        wrapper.getByRole('link', { name: 'open tickets 42' }),
+      ).toBeInTheDocument()
+
+      expect(
+        wrapper.getByRole('link', { name: 'closed tickets 10' }),
+      ).toBeInTheDocument()
+    })
+  })
+
+  describe('ticket-detail-screen', () => {
+    it.each(['Change customer'])(
+      'shows button for `%s` action',
+      async (buttonLabel) => {
+        const wrapper = await renderTicketSidebarCustomerContent(
+          TicketSidebarScreenType.TicketDetailView,
+        )
+
+        await wrapper.events.click(
+          wrapper.getByRole('button', {
+            name: 'Action menu button',
+          }),
+        )
+
+        expect(
+          await wrapper.findByRole('button', { name: buttonLabel }),
+        ).toBeInTheDocument()
+      },
     )
 
-    expect(
-      wrapper.getByRole('button', { name: 'Action menu button' }),
-    ).toBeInTheDocument()
+    it('does not show `Change customer` action if user is agent and has no update permission', async () => {
+      mockPermissions(['ticket.agent'])
 
-    expect(
-      wrapper.getByRole('img', { name: 'Avatar (Nicole Braun)' }),
-    ).toHaveTextContent('NB')
+      const wrapper = await renderTicketSidebarCustomerContent(
+        TicketSidebarScreenType.TicketDetailView,
+        {
+          ...defaultTicket,
+          policy: {
+            update: false,
+            agentReadAccess: true,
+          },
+        },
+      )
 
-    expect(wrapper.getByText('Nicole Braun')).toBeInTheDocument()
-
-    expect(
-      wrapper.getByRole('link', { name: 'Zammad Foundation' }),
-    ).toHaveAttribute('href', '/organizations/1')
-
-    expect(wrapper.getByText('Email')).toBeInTheDocument()
-
-    expect(
-      wrapper.getByRole('link', { name: 'nicole.braun@zammad.org' }),
-    ).toBeInTheDocument()
-
-    expect(wrapper.getByText('Secondary organizations')).toBeInTheDocument()
-
-    expect(
-      wrapper.getByRole('link', { name: 'Avatar (Zammad Org) Zammad Org' }),
-    ).toHaveAttribute('href', '/organizations/2')
-
-    expect(
-      wrapper.getByRole('link', { name: 'Avatar (Zammad Inc) Zammad Inc' }),
-    ).toHaveAttribute('href', '/organizations/3')
-
-    expect(
-      wrapper.getByRole('link', { name: 'Avatar (Zammad Ltd) Zammad Ltd' }),
-    ).toHaveAttribute('href', '/organizations/4')
-
-    expect(
-      wrapper.getByRole('button', { name: 'Show 2 more' }),
-    ).toBeInTheDocument()
-
-    expect(wrapper.getByText('Tickets')).toBeInTheDocument()
-
-    expect(
-      wrapper.getByRole('link', { name: 'open tickets 42' }),
-    ).toBeInTheDocument()
-
-    expect(
-      wrapper.getByRole('link', { name: 'closed tickets 10' }),
-    ).toBeInTheDocument()
+      expect(
+        wrapper.queryByRole('button', { name: 'Action menu button' }),
+      ).not.toBeInTheDocument()
+    })
   })
 })

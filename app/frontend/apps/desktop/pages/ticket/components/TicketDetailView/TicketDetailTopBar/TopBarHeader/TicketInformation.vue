@@ -36,10 +36,10 @@ const { updateTitle } = useTicketEditTitle(ticketId)
         :entity="ticket.customer"
       />
       <CommonOrganizationAvatar
-        v-if="ticket.customer?.organization"
+        v-if="ticket.organization"
         class="ltr:-translate-x- -z-10 ltr:-translate-x-1.5 rtl:translate-x-1.5"
         :size="hideDetails ? 'medium' : 'normal'"
-        :entity="ticket.customer.organization"
+        :entity="ticket.organization"
       />
     </div>
 
@@ -56,13 +56,13 @@ const { updateTitle } = useTicketEditTitle(ticketId)
             class="flex items-center gap-1"
             :class="{
               'after:inline-block after:h-[.12rem] after:w-[.12rem] after:shrink-0 after:rounded-full after:bg-current':
-                ticket.customer?.organization,
+                ticket.organization,
             }"
           >
             {{ ticket.customer.fullname }}
           </CommonLabel>
-          <CommonLabel v-if="ticket.customer.organization?.name">
-            {{ ticket.customer.organization?.name }}
+          <CommonLabel v-if="ticket.organization?.name">
+            {{ ticket.organization?.name }}
           </CommonLabel>
         </div>
 

@@ -1,6 +1,8 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
 import type {
@@ -16,7 +18,11 @@ import CommonSimpleEntityList from '#desktop/components/CommonSimpleEntityList/C
 import { EntityType } from '#desktop/components/CommonSimpleEntityList/types.ts'
 import NavigationMenuList from '#desktop/components/NavigationMenu/NavigationMenuList.vue'
 import { NavigationMenuDensity } from '#desktop/components/NavigationMenu/types.ts'
-import type { TicketSidebarContentProps } from '#desktop/pages/ticket/types/sidebar.ts'
+import { useChangeCustomerMenuItem } from '#desktop/pages/ticket/components/TicketSidebar/TicketDetailView/actions/TicketChangeCustomer/useChangeCustomerMenuItem.ts'
+import {
+  type TicketSidebarContentProps,
+  TicketSidebarScreenType,
+} from '#desktop/pages/ticket/types/sidebar.ts'
 
 import TicketSidebarContent from '../TicketSidebarContent.vue'
 
@@ -28,23 +34,24 @@ interface Props extends TicketSidebarContentProps {
   objectAttributes: ObjectManagerFrontendAttribute[]
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
 
 defineEmits<{
   'load-more-secondary-organizations': []
 }>()
 
-const actions: MenuItem[] = [
-  {
-    key: 'change-customer',
-    label: __('Edit Customer'),
-    icon: 'person-gear',
-    show: (entity) => entity?.policy.update,
-    onClick: (id) => {
-      console.log(id, 'Edit customer')
-    },
-  },
-]
+const actions = computed<MenuItem[]>(() => {
+  const availableActions: MenuItem[] = []
+
+  // :TODO find a better way to split this up maybe on plugin level
+  // :TODO find a way to provide the ticket via prop
+  if (props.context.screenType === TicketSidebarScreenType.TicketDetailView) {
+    const { customerChangeMenuItem } = useChangeCustomerMenuItem()
+    availableActions.push(customerChangeMenuItem)
+  }
+
+  return availableActions // ADD the rest available menu actions
+})
 </script>
 
 <template>

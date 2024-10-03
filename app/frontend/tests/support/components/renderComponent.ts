@@ -344,13 +344,14 @@ let flyoutMounted = false
 const mountFlyout = () => {
   if (flyoutMounted) return
 
-  const Dialog = {
+  const Flyout = {
     components: { DynamicInitializer },
     template: '<DynamicInitializer name="flyout" />',
   } as any
 
-  const { element } = mount(Dialog, defaultWrapperOptions)
+  const { element } = mount(Flyout, defaultWrapperOptions)
   document.body.appendChild(element)
+  document.body.id = 'app' // used to teleport the flyout
 
   flyoutMounted = true
 }

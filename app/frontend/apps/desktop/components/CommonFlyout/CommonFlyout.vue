@@ -34,13 +34,11 @@ import type { ActionFooterOptions, FlyoutSizes } from './types.ts'
 
 export interface Props {
   /**
-   * @property name
    * Unique name which gets used to identify the flyout
    * @example 'crop-avatar'
    */
   name: string
   /**
-   * @property persistResizeWidth
    * If true, the given flyout resizable width will be stored in local storage
    * Stored under the key `flyout-${name}-width`
    * @example 'crop-avatar' => 'flyout-crop-avatar-width'
@@ -57,9 +55,8 @@ export interface Props {
   footerActionOptions?: ActionFooterOptions
   noCloseOnAction?: boolean
   /**
-   * @property noAutofocus
    * Don't focus the first element inside a Flyout after being mounted
-   * if nothing is focusable, will focus "Close" button when dismissable is active.
+   * if nothing is focusable, will focus "Close" button when dismissible is active.
    */
   noAutofocus?: boolean
 }
@@ -80,6 +77,7 @@ const emit = defineEmits<{
 
 const close = async (isCancel?: boolean) => {
   emit('close', isCancel)
+
   await closeFlyout(props.name)
 }
 
