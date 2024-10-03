@@ -131,7 +131,7 @@ class App.GenericHistory extends App.ControllerModal
         truncated_article_body = App.Utils.truncate(article_body) or '-'
         content = if item.type is 'created' or item.type is 'updated'
           if item.value_to
-            item.id + '/' + App.i18n.translatePlain("reacted with a %s to message from %s '%s'", item.value_to, item.value_from, truncated_article_body)
+            App.i18n.translatePlain("reacted with a %s to message from %s '%s'", item.value_to, item.value_from, truncated_article_body)
 
           # NB: On MySQL backends, the reaction emoji may get stripped due to column type UTF-8 limitation (`string`).
           #   Rather than migrating this column on very heavy tables, we are opting to simply change the message here.
