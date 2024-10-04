@@ -370,7 +370,7 @@ msgid "%s (option)"
 msgstr "%s (pasirinkimas)"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:302
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:569
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:573
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:251
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:373
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
@@ -393,7 +393,7 @@ msgstr "%s atributas"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:54
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:50
 msgid "%s Checklist"
 msgstr "%s kontrolinis sąrašas"
 
@@ -949,7 +949,7 @@ msgid ""
 "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr "Sukurta bandomoji triktis. J1 galite rasto „%s“ apžvalgoje %l."
 
-#: app/models/ticket.rb:277
+#: app/models/ticket.rb:276
 msgid "A ticket cannot be merged into itself."
 msgstr "Triktis negali būti prijungta prie savęs."
 
@@ -1310,7 +1310,7 @@ msgstr "Pridėti botą"
 msgid "Add Certificate"
 msgstr "Pridėti sertifikatą"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:414
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:417
 msgid "Add Empty Checklist"
 msgstr "Pridėti tuščią kontrolinį sąrašą"
 
@@ -1481,6 +1481,12 @@ msgstr "Pridėti SMS žinutę"
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco:21
 msgid "Add subclause"
 msgstr "Pridėtį subsąlygą"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:201
+#, fuzzy
+#| msgid "Add Tag"
+msgid "Add tag"
+msgstr "Pridėti žymą"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:214
 msgid "Add third level heading"
@@ -1758,10 +1764,6 @@ msgstr "Pasirinkimas ar leisti datas praeityje yra privalomas."
 #: db/seeds/object_manager_attributes.rb:1967
 msgid "Allow reopening of tickets within a certain time."
 msgstr "Leisti per tam tikrą laiką iš naujo atidaryti triktis."
-
-#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:18
-msgid "Allow users to add new checklists."
-msgstr "Leisti naudotojas kurti naujus kontrolinius sąrašus."
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:16
 msgid "Allow users to add new tags."
@@ -2112,15 +2114,15 @@ msgstr "Ar tikrai? Turite pakeitimų, kurie bus prarasti."
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:46
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:79
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:45
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:37
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:417
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:259
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:268
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:50
 msgid "Are you sure? You have unsaved changes that will get lost."
 msgstr "Ar tikrai? Turite neišsaugotų pakeitimų, kurie bus prarasti."
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:150
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:160
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:162
 msgid "Are you sure? Your notifications settings will be reset to default."
 msgstr "Ar tikrai? Jūsų pranešimų nustatymai bus atstatyti į numatytuosius."
 
@@ -2328,6 +2330,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:31
 #: app/assets/javascripts/app/models/overview.coffee:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:47
 msgid "Attributes"
 msgstr "Atributai"
 
@@ -2484,11 +2487,11 @@ msgstr ""
 "Automatiškai įkelia chat.css failą. Jei norite naudoti individualų CSS "
 "stilių, išjunkite šį nustatymą."
 
-#: app/frontend/shared/components/Form/Form.vue:1239
+#: app/frontend/shared/components/Form/Form.vue:1288
 msgid "Autosave in progress…"
 msgstr "Vyksta automatinis išsaugojimas…"
 
-#: app/frontend/shared/components/Form/Form.vue:1248
+#: app/frontend/shared/components/Form/Form.vue:1297
 msgid "Autosaving is taking longer than expected…"
 msgstr "Automatinis išsaugojimas trunka ilgiau nei tikėtasi…"
 
@@ -2934,7 +2937,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:284
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:227
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:120
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:127
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:78
 msgid "Cancel"
 msgstr "Atšaukti"
 
@@ -3045,6 +3048,7 @@ msgstr "Pakeisti"
 #: app/assets/javascripts/app/controllers/ticket_customer.coffee:5
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:14
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:125
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketDetailView/actions/TicketChangeCustomer/TicketChangeCustomerFlyout.vue:51
 msgid "Change Customer"
 msgstr "Pakeisti klientą"
 
@@ -3060,7 +3064,8 @@ msgstr "Keisti slaptažodį"
 msgid "Change Your Password"
 msgstr "Pasikeisti slaptažodį"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:123
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketDetailView/actions/TicketChangeCustomer/useChangeCustomerMenuItem.ts:22
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:74
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:137
 msgid "Change customer"
 msgstr "Pakeisti klientą"
@@ -3213,12 +3218,12 @@ msgstr "Kontrolinio sąrašo šablonas"
 msgid "Checklist Template items are limited to 100 items per checklist."
 msgstr "Kontrolinio sąrašo šablonas gali turėti ne daugiau nei 100 punktų."
 
-#: app/models/checklist/item.rb:101
+#: app/models/checklist/item.rb:109
 msgid "Checklist items are limited to 100 items per checklist."
 msgstr "Kontroliniame sąraše gali būti ne daugiau nei 100 punktų."
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
-#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:3
+#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
 #: db/seeds/permissions.rb:299 db/seeds/settings.rb:5790
 msgid "Checklists"
 msgstr "Kontroliniai sąrašai"
@@ -3358,7 +3363,7 @@ msgid "Clear Search"
 msgstr "Išvalyti paiešką"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:56
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:652
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:656
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:314
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:364
@@ -3461,7 +3466,7 @@ msgstr "Uždaryti dabartinį skirtuką"
 msgid "Close dialog"
 msgstr "Uždaryti dialogą"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:271
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:269
 msgid "Close side panel"
 msgstr "Uždaryti šonjuostę"
 
@@ -3878,7 +3883,7 @@ msgstr "Kopijuoti nuorodą į įrašą"
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Kopijuoti atidaryto objekto numerį (pvz. trikties numerį) į iškarpinę"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader.vue:63
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader.vue:66
 msgid "Copy ticket number"
 msgstr "Kopijuoti trikties numerį"
 
@@ -4220,7 +4225,7 @@ msgstr "Sukūrė vidinį įrašą"
 #: app/assets/javascripts/app/models/checklist.coffee:9
 #: app/assets/javascripts/app/models/checklist_item.coffee:8
 #: app/assets/javascripts/app/models/checklist_template.coffee:10
-#: app/assets/javascripts/app/models/checklist_template_item.coffee:8
+#: app/assets/javascripts/app/models/checklist_template_item.coffee:6
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:7
 #: app/assets/javascripts/app/models/organization.coffee:9
 #: app/assets/javascripts/app/models/ticket.coffee:28
@@ -5873,9 +5878,9 @@ msgstr "Atmesti įrašą"
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:81
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:66
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:47
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:39
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:419
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:261
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:270
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:52
 msgid "Discard changes"
 msgstr "Atmesti pakeitimus"
@@ -5888,7 +5893,7 @@ msgstr "Atmesti neišsaugotus pakeitimus"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:136
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:161
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:165
 msgid "Discard your unsaved changes"
 msgstr "Atmesti neišsaugotus pakeitimus"
 
@@ -6080,7 +6085,7 @@ msgstr "Juodraščiai"
 msgid "Drag and drop to reorder ticket overview list items."
 msgstr "Norėdami pakeisti apžvalgų eiliškumą, pervilkite."
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:236
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:234
 msgid "Drag and drop to reorder your tabs."
 msgstr "Norėdami pakeisti skirtukų eiliškumą, pervilkite."
 
@@ -6170,7 +6175,6 @@ msgstr "Redaguoti kategoriją"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:16
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:26
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:39
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:90
 msgid "Edit Customer"
 msgstr "Redaguoti klientą"
@@ -6441,10 +6445,6 @@ msgstr "Įjungti"
 #: db/seeds/settings.rb:3456
 msgid "Enable Chat"
 msgstr "Įjungti pokalbius"
-
-#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:16
-msgid "Enable Checklists"
-msgstr "Įjungti kontrolinius sąrašus"
 
 #: app/assets/javascripts/app/views/api.jst.eco:33 db/seeds/settings.rb:3411
 msgid ""
@@ -6963,7 +6963,7 @@ msgstr "Eskaluota"
 
 #: app/assets/javascripts/app/lib/app_post/popover_provider/escalation_popover_provider.coffee:8
 #: app/assets/javascripts/app/views/sla/index.jst.eco:35
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:181
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:185
 msgid "Escalation Times"
 msgstr "Eskalacijos terminai"
 
@@ -7222,11 +7222,11 @@ msgstr "Facebook srauto įrašas"
 msgid "Failed Tasks"
 msgstr "Nepavykusios užduotys"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:145
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:148
 msgid "Failed to add new checklist item."
 msgstr "Nepavyko pridėti naujo kontrolinio sąrašo punkto."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:166
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:169
 msgid "Failed to delete checklist item."
 msgstr "Nepavyko ištrinti kontrolinio sąrao punkto."
 
@@ -7246,11 +7246,11 @@ msgstr "Nepavyko įkelti."
 msgid "Failed to roll back the migration of the channel!"
 msgstr "Nepavyko atšaukti kanalo migracijos!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:152
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:155
 msgid "Failed to save checklist order."
 msgstr "Nepavyko išsaugoti kontrolinio sąrašo rikiavimo."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:117
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:114
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr "Nepavyko išsaugoti kontrolio sąrašo punktų eiliškumo. Bandykite vėl."
 
@@ -7262,7 +7262,7 @@ msgstr "Nepavyko išsiųsti laiško „%s“. Susisiekite su savo administratori
 msgid "Failed to set up QR code. Please try again."
 msgstr "Nepavyko sukonfigūruoti QR kodo. Bandykite vėl."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:159
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:162
 msgid "Failed to update checklist item."
 msgstr "Nepavyko atnaujinti kontrolinio sąrašo punkto."
 
@@ -7395,7 +7395,7 @@ msgstr "Pirmas atsakymas per (min)"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:17
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:5
 #: app/assets/javascripts/app/views/sla/index.jst.eco:37
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:185
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:189
 msgid "First Response Time"
 msgstr "Pirmo atsakymo laikas"
 
@@ -7708,7 +7708,7 @@ msgstr "Geolokacijos paslauga"
 msgid "Get Started"
 msgstr "Pradėkite"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:217
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:221
 msgid "Get notified"
 msgstr "Gauti pranešimus"
 
@@ -8765,11 +8765,11 @@ msgid "Including private key."
 msgstr "Įskaitant privatų raktą."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:344
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:347
 msgid "Incomplete Ticket Checklist"
 msgstr "Neužbaigtas trikties kontrolinis sąrašas"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklist.vue:26
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklist.vue:29
 msgid "Incomplete checklist items"
 msgstr "Nebaigti kontrolinio sąrašo punktai"
 
@@ -9173,7 +9173,7 @@ msgstr "Sisteminio naudotojo ištrinti neįmanoma."
 msgid "It is not possible to delete your current account."
 msgstr "Dabartinės paskyros ištrinti neįmanoma."
 
-#: app/models/ticket.rb:275
+#: app/models/ticket.rb:274
 msgid "It is not possible to merge into an already merged ticket."
 msgstr "Negalima prijungti prie trikties, kuri pati jau prijungta."
 
@@ -9578,7 +9578,7 @@ msgstr "„LinkedIn“ kūrėjų svetainė"
 msgid "Links"
 msgstr "Sąsajos"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:218
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:219
 msgid "List of all user taskbar tabs"
 msgstr "Visų naudotojo skirtukų sąrašas"
 
@@ -10224,7 +10224,7 @@ msgstr "Medija sėkmingai parsisiųsta."
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco:20
 #: app/assets/javascripts/app/views/popover/organization.jst.eco:6
 #: app/assets/javascripts/app/views/widget/organization.jst.eco:29
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:75
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:76
 #: app/frontend/apps/mobile/components/Organization/OrganizationMembersList.vue:29
 msgid "Members"
 msgstr "Nariai"
@@ -10577,7 +10577,7 @@ msgstr "Nagios integracija"
 #: app/assets/javascripts/app/models/checklist.coffee:7
 #: app/assets/javascripts/app/models/checklist_item.coffee:7
 #: app/assets/javascripts/app/models/checklist_template.coffee:7
-#: app/assets/javascripts/app/models/checklist_template_item.coffee:7
+#: app/assets/javascripts/app/models/checklist_template_item.coffee:5
 #: app/assets/javascripts/app/models/core_workflow.coffee:6
 #: app/assets/javascripts/app/models/core_workflow_custom_module.coffee:4
 #: app/assets/javascripts/app/models/group.coffee:7
@@ -10655,7 +10655,7 @@ msgid "Navigate to %s"
 msgstr "Keliaukite į %s"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:137
-#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:29
+#: app/frontend/apps/desktop/components/PageNavigation/PageNavigation.vue:27
 msgid "Navigation"
 msgstr "Navigacija"
 
@@ -11075,7 +11075,7 @@ msgid "No certificate found."
 msgstr "Sertifikatas nerastas."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:427
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:430
 msgid "No checklist added to this ticket yet."
 msgstr "Ši triktis dar neturi kontrolinio sąrašo."
 
@@ -11182,7 +11182,7 @@ msgstr "Nerasta susijusio įrašo, kuriame būtų galima apdoroti statuso žinut
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:337
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:520
-#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:101
+#: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:402
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:348
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue:98
@@ -11219,6 +11219,12 @@ msgstr "Bendrintų juodraščių kol kas nėra"
 msgid "No source data submitted!"
 msgstr "Nepateikta duomenų!"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:194
+#, fuzzy
+#| msgid "No template created yet."
+msgid "No tags added yet."
+msgstr "Dar nėra šablonų."
+
 #: app/assets/javascripts/app/views/widget/template.jst.eco:14
 msgid "No template created yet."
 msgstr "Dar nėra šablonų."
@@ -11231,7 +11237,7 @@ msgstr "Žetono nėra!"
 msgid "No translation for this locale available"
 msgstr "Vertimo į šią kalbą nėra"
 
-#: app/models/ticket.rb:397
+#: app/models/ticket.rb:396
 msgid "No triggers active"
 msgstr "Aktyvių paleistukų nėra"
 
@@ -11255,7 +11261,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Nėra x-zammad-session-user-id, siuntėjas nenustatytas!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:347
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:350
 msgid "No, just close the ticket"
 msgstr "Ne, tiesiog uždarysiu triktį"
 
@@ -11428,7 +11434,7 @@ msgstr "Pranešimų matrica"
 msgid "Notification read"
 msgstr "Pranešimas perskaitytas"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:170
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:172
 msgid "Notification settings could not be reset."
 msgstr "Nepavyko atstatyti pranešimų nustatymų."
 
@@ -11436,7 +11442,7 @@ msgstr "Nepavyko atstatyti pranešimų nustatymų."
 msgid "Notification settings could not be saved."
 msgstr "Nepavyko išsaugoti pranešimų nustatymų."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:188
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:190
 msgid "Notification settings have been reset to default."
 msgstr "Pranešimų nustatymai buvo atstatyti į numatytuosius."
 
@@ -12333,7 +12339,7 @@ msgstr "Leisti vartotojo sąsajos garso efektus"
 msgid "Please accept the %s."
 msgstr "Turite sutikti su %s."
 
-#: app/assets/javascripts/app/controllers/checklist_template.coffee:48
+#: app/assets/javascripts/app/controllers/checklist_template.coffee:55
 msgid "Please add at least one item to the checklist."
 msgstr "Pridėkite bent vieną punktą."
 
@@ -13021,7 +13027,7 @@ msgid "Remove authenticator app"
 msgstr "Pašalinti autentifikatoriaus programėlę"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:373
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:376
 msgid "Remove checklist"
 msgstr "Pašalinti kontrolinį sąrašą"
 
@@ -13050,6 +13056,12 @@ msgstr "Pašalinti saugumo raktus"
 msgid "Remove selected values"
 msgstr "Pašalinti pasirinktas vertes"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:176
+#, fuzzy
+#| msgid "Remove image"
+msgid "Remove this tag"
+msgstr "Pašalinti paveikslėlį"
+
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:176
 msgid "Remove two-factor authentication"
 msgstr "Pašalinti dviejų veiksnių autentifikavimąsi"
@@ -13067,7 +13079,7 @@ msgid "Removes the shadows for a flat look."
 msgstr "Pašalina šešėlius, kad atrodytų plokščiai."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:366
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:369
 msgid "Rename checklist"
 msgstr "Pervadinti kontrolinį sąrašą"
 
@@ -13230,7 +13242,7 @@ msgstr "Atstatyti apžvalgų eiliškumą"
 msgid "Reset successful."
 msgstr "Sėkmingai atstatyta."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:217
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:219
 msgid "Reset to Default Settings"
 msgstr "Atstatyti į numatytuosius nustatymus"
 
@@ -13342,7 +13354,7 @@ msgstr "Keisti šonjuostės dydį"
 msgid "Resize frame"
 msgstr "Keisti dydį"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:303
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:301
 msgid "Resize side panel"
 msgstr "Keisti šonjuostės dydį"
 
@@ -13646,7 +13658,7 @@ msgstr "Šeštadienis"
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:136
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:292
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:69
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:138
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:89
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:100
 msgid "Save"
 msgstr "Išsaugoti"
@@ -13661,7 +13673,7 @@ msgstr "Išsaugoti kodus"
 msgid "Save Draft"
 msgstr "Išsaugoti juodraštį"
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:225
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:227
 msgid "Save Notifications"
 msgstr "Išsaugoti pranešimų nustatymus"
 
@@ -13879,7 +13891,7 @@ msgstr "Paieškos rezultato reikšmės raktas „%s“ nerastas."
 msgid "Search…"
 msgstr "Ieškoti…"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:82
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:91
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:98
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
 #: db/seeds/object_manager_attributes.rb:962
@@ -14547,13 +14559,13 @@ msgstr "Rodyti naudotojams turintiems roles"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:54
 #, fuzzy
 #| msgid "Show ticket actions"
-msgid "Show tracked ticket"
+msgid "Show tracking ticket"
 msgstr "Rodyti trikties veiksmus"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:55
 #, fuzzy
 #| msgid "Show ticket actions"
-msgid "Show tracked tickets"
+msgid "Show tracking tickets"
 msgstr "Rodyti trikties veiksmus"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:95
@@ -14566,11 +14578,11 @@ msgstr "Įrašų kiekis rodomas skambintojų žurnale."
 msgid "Shown when the chat is closed."
 msgstr "Rodoma kai pokalbių langas uždarytas."
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:242
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:240
 msgid "Side panel"
 msgstr "Šonjuostė"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:284
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:282
 msgid "Side panel footer"
 msgstr "Šonjuostės apačia"
 
@@ -14790,7 +14802,7 @@ msgstr "SMS"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:71
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:17
 #: app/assets/javascripts/app/views/sla/index.jst.eco:49
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:193
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:197
 msgid "Solution Time"
 msgstr "Sprendimo laikas"
 
@@ -15134,7 +15146,7 @@ msgstr "Prenumeruojamos triktys"
 msgid "Subscribed tickets"
 msgstr "Prenumeruojamos triktys"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:211
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:215
 msgid "Subscribers"
 msgstr "Prenumeratoriai"
 
@@ -15248,7 +15260,7 @@ msgstr "Skirtuko elgsena po trikties veiksmo"
 msgid "Tab has changed, do you really want to close it?"
 msgstr "Skirtukas pasikeitė, ar tikrai norite jį uždaryti?"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:232
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:230
 msgid "Tabs"
 msgstr "Skirtukai"
 
@@ -15263,9 +15275,10 @@ msgstr "Žyma „%s“ jau egzistuoja."
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:41
 #: app/assets/javascripts/app/views/tag/index.jst.eco:3
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:57
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:145
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:78
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:203
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:207
 #: app/views/knowledge_base/public/answers/show.html.erb:30
 #: db/seeds/object_manager_attributes.rb:392 db/seeds/permissions.rb:59
 #: lib/excel_sheet/ticket.rb:33
@@ -17496,7 +17509,7 @@ msgstr "Nepavyko sukurti trikties."
 msgid "Ticket creation"
 msgstr "Trikties sukūrimas"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:103
+#: app/frontend/shared/entities/ticket/composables/useTicketChangeCustomer.ts:56
 msgid "Ticket customer updated successfully."
 msgstr "Trikties klientas atnaujintas."
 
@@ -17591,6 +17604,30 @@ msgstr ""
 "Trikčių parinkiklyje yra ekspertinių sąlygų. Jeigu išjungsite eksperto "
 "režimą, dalis sąlygų gali būti prarasta."
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:115
+#, fuzzy
+#| msgid "Ticket tags updated successfully."
+msgid "Ticket tag added successfully."
+msgstr "Trikties žymos atnaujintos."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:74
+#, fuzzy
+#| msgid "Ticket tags could not be updated."
+msgid "Ticket tag could not be added."
+msgstr "Nepavyko atnaujinti trikties žymų."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:123
+#, fuzzy
+#| msgid "Ticket could not be created."
+msgid "Ticket tag could not be removed."
+msgstr "Nepavyko sukurti trikties."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:145
+#, fuzzy
+#| msgid "Ticket tags updated successfully."
+msgid "Ticket tag removed successfully."
+msgstr "Trikties žymos atnaujintos."
+
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:37
 msgid "Ticket tags could not be updated."
 msgstr "Nepavyko atnaujinti trikties žymų."
@@ -17610,13 +17647,13 @@ msgstr "Trikties pavadinimas"
 msgid "Ticket update"
 msgstr "Trikties atnaujinimas"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:489
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:499
 msgid "Ticket update failed."
 msgstr "Nepavyko atnaujinti trikties."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:441
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:171
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:444
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:174
 msgid "Ticket updated successfully."
 msgstr "Triktis atnaujinta."
 
@@ -17671,7 +17708,7 @@ msgstr ""
 "</div>\n"
 
 #: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:38
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:71
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:74
 #: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:22
 msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
@@ -17715,7 +17752,7 @@ msgstr "Trikties ID"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:93
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:96
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts:9
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:51
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue:173
@@ -17844,7 +17881,7 @@ msgstr "Laikas pirmam atsakymui."
 
 #: app/assets/javascripts/app/models/job.coffee:14
 #: app/assets/javascripts/app/models/trigger.coffee:13 db/seeds/settings.rb:183
-#: lib/excel_sheet.rb:113
+#: lib/excel_sheet.rb:116
 msgid "Timezone"
 msgstr "Laiko juosta"
 
@@ -18092,16 +18129,11 @@ msgstr "Iš viso: %s"
 msgid "Track retweets"
 msgstr "Sekti retweetus"
 
+#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_references_popover_provider.coffee:8
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:85
 #, fuzzy
 #| msgid "checked checklist item '%s'"
 msgid "Tracked as checklist item in"
-msgstr "Kontrolinio sąrašo punktas „%s“ pažymėtas kaip baigtas"
-
-#: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_references_popover_provider.coffee:8
-#, fuzzy
-#| msgid "checked checklist item '%s'"
-msgid "Tracked by checklist item by"
 msgstr "Kontrolinio sąrašo punktas „%s“ pažymėtas kaip baigtas"
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:27
@@ -18446,7 +18478,7 @@ msgstr "Neperskaityti pranešimai"
 msgid "Unsaved Changes"
 msgstr "Neišsaugoti pakeitimai"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:579
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:583
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:260
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:316
 msgid "Unselect Option"
@@ -18520,7 +18552,7 @@ msgstr "Atnaujinti bendrintą juodraštį"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:32
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:11
 #: app/assets/javascripts/app/views/sla/index.jst.eco:41
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:189
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:193
 msgid "Update Time"
 msgstr "Atsakinėjimo laikas"
 
@@ -18595,7 +18627,7 @@ msgstr "Atnaujinta"
 #: app/assets/javascripts/app/models/checklist.coffee:10
 #: app/assets/javascripts/app/models/checklist_item.coffee:9
 #: app/assets/javascripts/app/models/checklist_template.coffee:11
-#: app/assets/javascripts/app/models/checklist_template_item.coffee:9
+#: app/assets/javascripts/app/models/checklist_template_item.coffee:7
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:8
 #: app/assets/javascripts/app/models/organization.coffee:11
 #: app/assets/javascripts/app/models/ticket.coffee:30
@@ -19494,7 +19526,7 @@ msgid "With checklist templates you can pre-fill your checklists."
 msgstr ""
 "Su kontrolinių sąrašų šablonais galite turėti išankstinius paruoštukus."
 
-#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:8
+#: app/assets/javascripts/app/views/checklist_template/index.jst.eco:12
 msgid ""
 "With checklists you can keep track of the progress of your ticket related "
 "tasks."
@@ -19584,7 +19616,7 @@ msgid "Yes, add attachments now"
 msgstr "Taip, pridėti prisegtukus dabar"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:346
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:349
 msgid "Yes, open the checklist"
 msgstr "Taip, atidaryti kontrolinį sąrašą"
 
@@ -19833,7 +19865,7 @@ msgid "You have insufficient rights to view this organization."
 msgstr "Neturite prieigos prie šios organizacijos."
 
 #: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:40
-#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:73
+#: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:76
 #: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:24
 msgid "You have insufficient rights to view this ticket."
 msgstr "Neturite prieigos peržiūrėti šią triktį."
@@ -19874,7 +19906,7 @@ msgstr "Turite leisti prieigą prie kameros."
 msgid "You have unchecked items in the checklist."
 msgstr "Pažymėjote punktus kaip nebaigtus."
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:341
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:344
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -21094,7 +21126,7 @@ msgstr "naujos ir atidarytos"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:52
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:84
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:88
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:16
 #: db/seeds/settings.rb:590
@@ -21255,7 +21287,7 @@ msgstr "gavo prijungimą"
 msgid "recovery codes"
 msgstr "atsarginiai prisijungimo kodai"
 
-#: app/models/checklist/item.rb:95
+#: app/models/checklist/item.rb:103
 msgid "reference must not be the checklist ticket."
 msgstr "triktis negali turėti nuorodos į save."
 
@@ -21623,7 +21655,7 @@ msgstr "per sekantį (santykinai)"
 #: app/assets/javascripts/app/models/public_link.coffee:10
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:15
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:83
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:87
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:15
 #: db/seeds/object_manager_attributes.rb:1301 db/seeds/settings.rb:589
@@ -21671,6 +21703,17 @@ msgstr "...viso teksto laukelio"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Laukimo laikas šiandien"
+
+#~ msgid "Allow users to add new checklists."
+#~ msgstr "Leisti naudotojas kurti naujus kontrolinius sąrašus."
+
+#~ msgid "Enable Checklists"
+#~ msgstr "Įjungti kontrolinius sąrašus"
+
+#, fuzzy
+#~| msgid "checked checklist item '%s'"
+#~ msgid "Tracked by checklist item by"
+#~ msgstr "Kontrolinio sąrašo punktas „%s“ pažymėtas kaip baigtas"
 
 #~ msgid "Checklist is already created for this ticket"
 #~ msgstr "Kontrolinis sąrašas šiai trikčiai jau sukurtas"
