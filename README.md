@@ -11,10 +11,10 @@ You're going to love Zammad!
 
 ## Status
 
-- Toolchain: ![docker-release workflow](https://github.com/zammad/zammad/workflows/docker-release/badge.svg) ![build-docker-image workflow](https://github.com/zammad/zammad/workflows/build-docker-image/badge.svg) [![documentation status](https://readthedocs.org/projects/zammad/badge/)](https://docs.zammad.org)
+- Toolchain: [![CI](https://github.com/zammad/zammad/workflows/CI/badge.svg)](https://github.com/zammad/zammad/actions/workflows/ci.yaml) [![docker-release workflow](https://github.com/zammad/zammad/workflows/docker-release/badge.svg)](https://github.com/zammad/zammad/actions/workflows/docker-release.yaml) [![documentation status](https://readthedocs.org/projects/zammad/badge/)](https://docs.zammad.org)
+- Docker container images: [![Docker images for Zammad](https://img.shields.io/badge/version-stable-blue.svg)](https://hub.docker.com/r/zammad/zammad-docker-compose) [![Dockerhub Pulls](https://badgen.net/docker/pulls/zammad/zammad-docker-compose?icon=docker&label=pulls)](https://hub.docker.com/r/zammad/zammad-docker-compose/)
+- Helm chart for Kubernetes: [![Artifact Hub](https://img.shields.io/endpoint?url=https://artifacthub.io/badge/repository/zammad)](https://artifacthub.io/packages/helm/zammad/zammad) [![Release downloads](https://img.shields.io/github/downloads/zammad/zammad-helm/total.svg)](https://github.com/zammad/zammad-helm/releases)
 - Download DEB/RPM: [![binary packages for Zammad stable](https://img.shields.io/badge/Branch-stable-blue.svg)](https://packager.io/gh/zammad/zammad/refs/stable) [![binary packages for Zammad develop](https://img.shields.io/badge/Branch-develop-lightgrey.svg)](https://packager.io/gh/zammad/zammad/refs/develop)
-- Docker container images: [![Docker images for Zammad](https://img.shields.io/badge/version-stable-blue.svg)](https://hub.docker.com/r/zammad/zammad-docker-compose)
-- Helm chart for Kubernetes: [![Zammad Helm chart for Kubernetes](https://img.shields.io/badge/version-stable-blue.svg)](https://artifacthub.io/packages/helm/zammad/zammad)
 - License: [![AGPL license](https://img.shields.io/badge/License-AGPL%203.0-brightgreen.svg)](https://github.com/zammad/zammad/blob/develop/LICENSE)
 
 ## Installing & Getting Started
