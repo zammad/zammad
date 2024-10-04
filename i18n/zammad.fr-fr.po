@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-23 05:23+0000\n"
-"Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
+"PO-Revision-Date: 2024-10-04 05:37+0000\n"
+"Last-Translator: Elodie Massa <elodie@association-enoria.org>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -26,6 +26,7 @@ msgstr ""
 #. - 'HH' - 2-digit hour (24h)
 #. - 'l' - hour (12h)
 #. - 'P' - Meridian indicator ('am' or 'pm')
+#, fuzzy
 msgid "FORMAT_DATE"
 msgstr "dd/mm/yyyy"
 
@@ -560,7 +561,7 @@ msgstr "%s de %s"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco:11
 msgid "%s of my tickets are currently in process."
-msgstr "%s de mes tickets sont en cours."
+msgstr "%s de mes tickets sont actuellement en cours de traitement."
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:11
 msgid "%s of my tickets escalated"
@@ -1380,6 +1381,7 @@ msgid "Additional information and links"
 msgstr "Informations complémentaires et liens"
 
 #: db/seeds/settings.rb:848
+#, fuzzy
 msgid "Additional notes for ticket create types."
 msgstr "Notes supplémentaires pour les types de création de ticket."
 
@@ -1413,8 +1415,8 @@ msgstr "Mot de passe administrateur"
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:56
 msgid "Admin password login instructions were sent to your email address."
 msgstr ""
-"Les instructions de connexion au compte administrateur ont été envoyées à "
-"votre adresse email."
+"Les instructions de connexion et le mot de passe du compte administrateur "
+"ont été envoyées à votre adresse email."
 
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -1438,7 +1440,7 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
-"Connexion administrateur à #{config.product_name}\n"
+"Connexion à l'administration de #{config.product_name}\n"
 "\n"
 "<div>Bonjour #{user.firstname},</div>\n"
 "<br>\n"
@@ -1452,8 +1454,8 @@ msgstr ""
 "<br>\n"
 "<div>Ce lien vous permet d'accéder à la page de connexion.</div>\n"
 "<br>\n"
-"<div>Si vous ne souhaitez pas vous connecter, merci d'ignorer ce message.</"
-"div>\n"
+"<div>Si vous ne souhaitez pas vous connecter, merci d'ignorer ce "
+"message.</div>\n"
 "<br>\n"
 "<div>L'équipe #{config.product_name}</div>\n"
 
@@ -1489,7 +1491,7 @@ msgid ""
 "will become your username, and the token itself will be your password."
 msgstr ""
 "Une fois l'import terminé, le compte associé au jeton d'API deviendra votre "
-"nom d'utilisateur et le jeton sera votre mot de passe."
+"nom d'utilisateur et le jeton lui-même sera votre mot de passe."
 
 #: app/assets/javascripts/app/views/session.jst.eco:11
 msgid "Age"
@@ -1788,7 +1790,7 @@ msgstr "Informations d'authentification pour Twitter."
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:28
 msgid "App secret"
-msgstr "Clé secrète"
+msgstr "Clé secrète de l'application"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:349
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee:3
@@ -2269,7 +2271,7 @@ msgstr "Clôturé automatiquement"
 
 #: lib/auto_wizard.rb:127
 msgid "AutoWizard is disabled"
-msgstr "AutoWizard est désactivé"
+msgstr "L'assistant de configuration automatique est désactivé"
 
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:31
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue:8
@@ -2441,7 +2443,7 @@ msgstr "Début du message transféré"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSelection.vue:53
 msgid "Beta"
-msgstr "Béta"
+msgstr "Bêta"
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:41
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:97
@@ -2717,7 +2719,7 @@ msgstr "Utilisateur du Jeton introuvable"
 msgid ""
 "Can't update password, your entered passwords do not match. Please try again."
 msgstr ""
-"Impossible de mettre à jour le mot de passe, les mots de passe ne sont pas "
+"Impossible de mettre à jour le mot de passe : les mots de passe ne sont pas "
 "identiques. Merci d'essayer à nouveau."
 
 #: app/assets/javascripts/app/controllers/_application_controller/after_auth_modal.coffee:9
@@ -2801,7 +2803,7 @@ msgstr "Impossible de définir les notifications \"en ligne\" comme lues"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:808
 msgid "Cannot upload file"
-msgstr "Impossible de téléverser le fichier"
+msgstr "Impossible de charger le fichier"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee:3
 msgid "Categories"
@@ -2951,7 +2953,7 @@ msgstr "Canal - WhatsApp"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco:3
 msgid "Channel Distribution"
-msgstr "Canal de distribution"
+msgstr "Provenance des tickets"
 
 #: app/assets/javascripts/app/controllers/manage.coffee:35
 msgid "Channels"
@@ -3399,8 +3401,8 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
-"Confirmation de votre compte #{config.product_name}, #{user.firstname} "
-"#{user.lastname}\n"
+"#{user.firstname} #{user.lastname}, confirmez votre compte #{config."
+"product_name}\n"
 "\n"
 "<div>Bonjour #{user.firstname},</div>\n"
 "<br>\n"
@@ -3592,7 +3594,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco:14
 msgid "Copy to clipboard"
-msgstr "Copier dans le presse-papiers"
+msgstr "Copier dans le presse-papier"
 
 #: db/seeds/permissions.rb:306
 msgid "Core Workflow"
@@ -4079,16 +4081,16 @@ msgstr "Confidentialité des données"
 #: lib/validations/data_privacy_task_validator.rb:23
 msgid "Data privacy task allows to delete a user or a ticket only."
 msgstr ""
-"Les tâches de confidentialité des données permettent uniquement la "
-"suppression d'un utilisateur ou d'un ticket."
+"Une tache de gestion des données personnelles ne peut supprimer qu'un "
+"utilisateur ou un ticket."
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:96
 msgid "DataPrivacyTask"
-msgstr "DataPrivacyTask"
+msgstr "Tâche de gestion des données personnelles"
 
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:97
 msgid "DataPrivacyTasks"
-msgstr "DataPrivacyTasks"
+msgstr "Tâches de gestion des données personnelles"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:7
 #: db/seeds/settings.rb:353
@@ -4422,8 +4424,8 @@ msgid ""
 "arrow."
 msgstr ""
 "Définit une icône facultative de cette priorité dans les listes des tickets. "
-"La priorité importante sera rendue par un point d'exclamation, tandis que la "
-"priorité faible sera rendue par une flèche vers le bas."
+"La priorité importante sera indiquée par un point d'exclamation, tandis que "
+"la priorité faible sera indiquée par une flèche vers le bas."
 
 #: db/seeds/settings.rb:3536
 msgid "Defines attachment extensions which will be ignored by Elasticsearch."
@@ -5435,9 +5437,9 @@ msgid ""
 "community on our public platform %l? It sports a very convenient user "
 "interface based on Weblate, give it a try!"
 msgstr ""
-"Saviez-vous que les traductions du système peuvent être effectuées et "
-"partagées avec la communauté sur notre plateforme publique %l ? Elle utilise "
-"une interface utilisateur très pratique basée sur Weblate, essayez-la !"
+"Saviez-vous que vous pouviez contribuer à la traduction du système et la "
+"partager avec la communauté sur notre plateforme publique %l ? Elle utilise "
+"l'interface conviviale de Weblate, essayez-la !"
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco:12
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:199
@@ -5677,7 +5679,7 @@ msgstr "Déposer les fichiers ici"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldImageUpload/FieldImageUploadInput.vue:104
 msgid "Drop image file here"
-msgstr "Déposer l'image ici"
+msgstr "Déposez l'image ici"
 
 #: app/assets/javascripts/app/controllers/login.coffee:26
 msgid "Due to inactivity, you have been automatically logged out."
@@ -5888,7 +5890,7 @@ msgstr "Adresse email"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannels.vue:37
 msgid "Email Channel"
-msgstr "Canal email"
+msgstr "Canal e-mail"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:83
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:67
@@ -5917,7 +5919,7 @@ msgstr "Email sortant"
 #: app/frontend/apps/desktop/pages/authentication/routes.ts:119
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:114
 msgid "Email Verification"
-msgstr "Vérification de l'email"
+msgstr "Vérification de l'e-mail"
 
 #: app/models/user.rb:725
 msgid "Email address '%{email}' is already used for another user."
@@ -5933,7 +5935,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundMessagesForm.ts:88
 msgid "Email import mode"
-msgstr "Mode d'import des emails"
+msgstr "Mode d'import des e-mails"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:811
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:383
@@ -6385,13 +6387,14 @@ msgstr "Saisir vos clés d'applications %s"
 msgid ""
 "Enter your Freshdesk API token gained from your account profile settings."
 msgstr ""
-"Saisir votre jeton API Freshdesk récupéré depuis le paramètres de votre "
+"Saisir votre clé d'API Freshdesk récupérée depuis les paramètres de votre "
 "compte."
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:66
 msgid "Enter your Zendesk API token gained from your admin interface."
 msgstr ""
-"Saisir votre jeton Zendesk récupéré depuis le paramètres de votre compte."
+"Saisir votre clé d'API Zendesk récupérée depuis les paramètres de votre "
+"compte."
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:9
 msgid "Enter your current password, insert a new one and confirm it."
@@ -6420,7 +6423,7 @@ msgid ""
 "Enter your email address from your Kayako account which should be used for "
 "the import."
 msgstr ""
-"Saisissez l'adresse email de votre compte Kayako à utiliser pour l'import."
+"Saisissez l'adresse e-mail de votre compte Kayako à utiliser pour l'import."
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:51
 msgid ""
@@ -6942,8 +6945,7 @@ msgstr "Note de bas de page"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStart.vue:78
 msgid "For additional support, consult our migration guide."
-msgstr ""
-"Pour une assistance supplémentaire, consultez notre guide de migration."
+msgstr "Pour une aide supplémentaire, consultez notre guide de migration."
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco:13
 msgid "For example, recently changed tickets, users, or organizations."
@@ -7254,7 +7256,7 @@ msgstr "L'objet donné ne supporte pas de sélecteur"
 
 #: app/models/setting/validation/time_zone.rb:10
 msgid "Given time zone is not valid."
-msgstr "Le fuseau horaire indiqué n'est pas valide."
+msgstr "Le fuseau horaire indiqué est invalide."
 
 #: app/assets/javascripts/app/views/google/index.jst.eco:3
 #: app/assets/javascripts/app/views/google/list.jst.eco:3
@@ -7293,7 +7295,7 @@ msgstr "Retour"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:258
 msgid "Go to Login"
-msgstr "Aller à la page de connexion"
+msgstr "Vers la page de connexion"
 
 #: lib/secure_mailing/pgp/incoming.rb:55
 msgid "Good signature"
@@ -7563,8 +7565,8 @@ msgid ""
 "Hello, the customer service window for this conversation is about to expire, "
 "please reply to keep it open."
 msgstr ""
-"Bonjour, la fenêtre du service client pour cette conversation est sur le "
-"point d'expirer, veuillez répondre pour la garder ouverte."
+"Bonjour, la session de discussion est sur le point de se terminer. Veuillez "
+"répondre pour la garder active et que nous puissions continuer à échanger."
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee:39
 msgid "Help to improve Zammad!"
@@ -7671,7 +7673,7 @@ msgstr "Couleur de mise en avant"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:8
 msgid "Highlight icon"
-msgstr "Icône de mise en avant"
+msgstr "Icône de mise en valeur"
 
 #: db/seeds/settings.rb:5450
 msgid "Highlights if the note a user is writing is public or private"
@@ -7748,7 +7750,7 @@ msgstr "Comment pouvons nous vous aider ? Recherchez une réponse ou un sujet�
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:28
 msgid "How can we help?"
-msgstr "Comment pouvons nous vous aider ?"
+msgstr "Comment pouvons-nous vous aider ?"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_waiting_time.coffee:10
 msgid ""
@@ -7763,7 +7765,7 @@ msgid ""
 "How many escalated tickets do you have open? (Mr. Bubbles gets grumpy if you "
 "have too many…)"
 msgstr ""
-"Combien de billets escaladés avez-vous d'ouverts ? (M. Bubbles devient "
+"Combien de tickets escaladés avez-vous d'ouverts ? (M. Bubbles devient "
 "grincheux si vous en avez trop...)"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_channel_distribution.coffee:27
@@ -7962,7 +7964,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_state.coffee:9
 msgid "Ignore Escalation"
-msgstr "Ignorer l'escalage"
+msgstr "Ignorer l'escalade"
 
 #: db/seeds/settings.rb:3610
 msgid "Ignore Escalation/SLA Information"
@@ -8155,7 +8157,7 @@ msgid ""
 "can influence the order of the LDAP sources via drag & drop."
 msgstr ""
 "Afin d'obtenir le comportement souhaité à cet égard, vous pouvez modifier "
-"l'ordre des sources LDAP par glisser-déposer."
+"l'ordre des annuaires LDAP par glisser-déposer."
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:60
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:13
@@ -8236,7 +8238,7 @@ msgid ""
 msgstr ""
 "Lancez le processus d'importation pour transférer vos données dans Zammad. "
 "Suivez la progression de la migration sur cette page pour être averti dès "
-"que l'importation est terminée avec succès."
+"que l'importation est complète."
 
 #: app/models/store.rb:94
 msgid "Inline content could not be generated."
@@ -8423,15 +8425,15 @@ msgid ""
 "parent category is not visible for it."
 msgstr ""
 "Autorisations invalides. Ce rôle n'a pas accès à cette catégorie car la "
-"catégorie parent n'est pas visible pour celui-ci."
+"catégorie parente n'est pas visible pour celui-ci."
 
 #: lib/knowledge_base/permissions_update.rb:113
 msgid ""
 "Invalid permissions. This role has editor access to parent category. "
 "Limiting access is not effective."
 msgstr ""
-"Autorisations invalides. Ce rôle dispose d'un accès éditeur à la catégorie "
-"parent. Limiter l’accès n’est pas efficace."
+"Autorisations invalides. Ce rôle dispose d'un accès en modification à la "
+"catégorie parente. Limiter l’accès n'aura pas d'effet."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:93
 msgid "Invalid security code! Please try again with a new code."
@@ -8529,9 +8531,7 @@ msgstr "Ionicons"
 
 #: lib/validations/data_privacy_task_validator.rb:50
 msgid "It is not possible to delete the last account with admin permissions."
-msgstr ""
-"Il n'est pas possible de supprimer le dernier compte avec les autorisations "
-"d'administrateur."
+msgstr "Il n'est pas possible de supprimer le dernier compte administrateur."
 
 #: lib/validations/data_privacy_task_validator.rb:38
 msgid "It is not possible to delete the system user."
@@ -8539,7 +8539,7 @@ msgstr "Il n'est pas possible de supprimer l'utilisateur système."
 
 #: lib/validations/data_privacy_task_validator.rb:44
 msgid "It is not possible to delete your current account."
-msgstr "Il n'est pas possible de supprimer votre compte actuel."
+msgstr "Il n'est pas possible de supprimer votre propre compte."
 
 #: app/models/ticket.rb:277
 msgid "It is not possible to merge into an already merged ticket."
@@ -9236,7 +9236,7 @@ msgstr "Taille maximale d'email"
 
 #: db/seeds/settings.rb:2778
 msgid "Maximum Recursive Ticket Triggers Depth"
-msgstr "Profondeur maximale pour les déclencheurs récursifs de tickets"
+msgstr "Nombre d'itérations maximum pour les déclencheurs récursifs de tickets"
 
 #: db/seeds/settings.rb:2100
 msgid "Maximum failed logins"
@@ -9271,7 +9271,7 @@ msgstr "Erreur de téléchargement du média"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue:50
 msgid "Media download failed. Please try again later."
-msgstr "Erreur de téléchargement du média."
+msgstr "Erreur de téléchargement du média. Réessayez plus tard."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue:43
 msgid "Media download was successful."
@@ -9439,7 +9439,7 @@ msgstr "Minutes"
 
 #: lib/whatsapp/webhook/payload.rb:17
 msgid "Mismatching phone number id."
-msgstr "Numéro de téléphone ne correspondant pas."
+msgstr "Numéro de téléphone non concordant."
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:23
 #: db/seeds/object_manager_attributes.rb:837
@@ -9820,7 +9820,7 @@ msgstr "Nouveau ticket"
 
 #: app/assets/javascripts/app/controllers/ticket_state.coffee:21
 msgid "New Ticket State"
-msgstr "Nouvel état de ticket"
+msgstr "Nouvel état du ticket"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco:11
 msgid "New Translation"
@@ -10400,7 +10400,7 @@ msgid ""
 "support this kind of workflows."
 msgstr ""
 "Les processus OTRS BPM ne peuvent pas être importés dans Zammad car nous ne "
-"prenons actuellement pas en charge ce type de flux de travail."
+"prenons actuellement pas en charge ce type de processus."
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:96
 msgid ""
@@ -10408,8 +10408,8 @@ msgid ""
 "kind of workflows are currently not supported."
 msgstr ""
 "Des processus OTRS BPM ont été trouvés. Ils ne peuvent pas être importés "
-"dans Zammad car ces types de flux de travail ne sont actuellement pas pris "
-"en charge."
+"dans Zammad car ces types de processus ne sont actuellement pas pris en "
+"charge."
 
 #: app/assets/javascripts/app/models/core_workflow.coffee:7
 #: app/assets/javascripts/app/models/job.coffee:8
@@ -10454,7 +10454,7 @@ msgstr "Sur %s, %s a écrit :"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:9
 msgid "On-screen Translation"
-msgstr "Traduction à l'écran"
+msgstr "Traduction à la volée"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 msgid "Once completed…"
@@ -10479,11 +10479,11 @@ msgstr "Service en ligne"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:18
 msgid "Only %s attachment allowed"
-msgstr "Uniquement %s pièces-jointes sont autorisées"
+msgstr "Vous ne pouvez joindre que %s document"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:834
 msgid "Only %s attachment allowed."
-msgstr "Seule les pièces jointes %s sont autorisées."
+msgstr "Vous ne pouvez joindre que %s document."
 
 #: app/assets/javascripts/app/views/translation/support.jst.eco:3
 msgid ""
@@ -12978,7 +12978,7 @@ msgstr "Afficher le brouillon"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:212
 msgid "Show Feed Icon"
-msgstr "Afficher l’icône Feed"
+msgstr "Afficher l’icône de flux"
 
 #: app/assets/javascripts/app/views/navigation.jst.eco:21
 msgid "Show Search Details"
@@ -14274,7 +14274,7 @@ msgstr "La taille par défaut de la police est de 12px."
 #: db/seeds/settings.rb:2169
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
-"Le séparateur entre TicketHook et le numéro de ticket. Par exemple. ' : '."
+"Le séparateur entre TicketHook et le numéro de ticket. Par exemple ' : '."
 
 #: app/services/service/auth/send_admin_token.rb:39
 #: app/services/service/user/password_reset/send.rb:37
@@ -16118,12 +16118,12 @@ msgstr "Le décompte de temps n'est pas activé"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:14
 #: app/controllers/time_accountings_controller.rb:113
 msgid "Time Units"
-msgstr "Unité de temps"
+msgstr "Temps passé"
 
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:15
 #: lib/excel_sheet/ticket.rb:34
 msgid "Time Units Total"
-msgstr "Total des unités de temps"
+msgstr "Temps passé total"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:16
 msgid "Time accounting unit"
@@ -19460,11 +19460,11 @@ msgstr "escalade de ticket"
 
 #: db/seeds/settings.rb:1131
 msgid "ticket.agent"
-msgstr "ticket.agent"
+msgstr "Opérateur"
 
 #: db/seeds/settings.rb:1139
 msgid "ticket.customer"
-msgstr "ticket.customer"
+msgstr "Client"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:436
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
