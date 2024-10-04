@@ -1086,12 +1086,12 @@ var extend = function(child, parent) { for (var key in parent) { if (hasProp.cal
         'Offline': 'Odsutan',
         'Online': 'Dostupan(a)',
         'Scroll down to see new messages': 'Pomaknite se prema dolje da biste vidjeli nove poruke',
-        'Send': 'Šalji',
+        'Send': 'Pošalji',
         'Since you didn\'t respond in the last %s minutes your conversation was closed.': 'Budući da niste odgovorili u posljednjih %s minuta, Vaš je razgovor zatvoren.',
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': 'Budući da niste odgovorili u posljednjih %s minuta, Vaš je razgovor s <strong>%</strong>s zatvoren.',
         'Start new conversation': 'Započni novi razgovor',
         'Today': 'Danas',
-        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Oprostite, proces traje duže nego što se očekivalo da biste dobili slobodan termin. Molimo, pokušajte ponovno kasnije ili nam pošaljite e-mail. Hvala!',
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': 'Oprostite, traje duže nego inače za dobiti slobodan termin. Molimo, pokušajte ponovno kasnije ili nam pošaljite e-mail. Hvala!',
         'You are on waiting list position <strong>%s</strong>.': 'Nalazite se u redu čekanja na poziciji <strong>%s</strong>.'
       },
       'hu': {

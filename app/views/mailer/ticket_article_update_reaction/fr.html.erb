@@ -1,0 +1,19 @@
+Un autre ticket a été fusionné dans le ticket (#{ticket.title})
+
+<div>Bonjour #{recipient.firstname},</div>
+<br>
+<div>
+<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> a réagi avec <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> au message de #{article.created_by.fullname}:
+</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+    <blockquote type="cite">
+    #{article.body_as_html}
+    </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">Voir dans #{config.product_name}</a>
+</div>
