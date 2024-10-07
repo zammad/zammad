@@ -1,0 +1,19 @@
+Статья заявки обновлена (#{ticket.title}) 
+ 
+<div>Здравствуйте, #{recipient.firstname}.</div> 
+<br> 
+<div> 
+<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> отреагировал(а) с <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> на сообщение от #{article.created_by.fullname}:
+</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+    <blockquote type="cite">
+    #{article.body_as_html}
+    </blockquote>
+  </div>
+<% end %>
+<br> 
+<div> 
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}" target="zammad_app">Посмотреть заявку в #{config.product_name}</a> 
+</div>
