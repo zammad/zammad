@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-04 05:37+0000\n"
+"PO-Revision-Date: 2024-10-07 08:51+0000\n"
 "Last-Translator: Misha <misha@association-enoria.org>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
-"zammad-development/fr/>\n"
+"zammad-stable/fr/>\n"
 "Language: fr-fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.7\n"
+"X-Generator: Weblate 5.7.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -26,7 +26,6 @@ msgstr ""
 #. - 'HH' - 2-digit hour (24h)
 #. - 'l' - hour (12h)
 #. - 'P' - Meridian indicator ('am' or 'pm')
-#, fuzzy
 msgid "FORMAT_DATE"
 msgstr "dd/mm/yyyy"
 
@@ -395,9 +394,8 @@ msgstr "Attribut %s"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:50
-#, fuzzy
 msgid "%s Checklist"
-msgstr "%s Liste de contrôle"
+msgstr "%s checklist"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:203
 msgid "%s Group"
@@ -1053,23 +1051,23 @@ msgstr "Accès refusé"
 
 #: db/seeds/permissions.rb:315
 msgid "Access the agent chat features."
-msgstr "Accédez aux fonctionnalités de chat des agents."
+msgstr "Accès au chat des agents."
 
 #: db/seeds/permissions.rb:330
 msgid "Access the agent phone features."
-msgstr "Accédez aux fonctionnalités de téléphonie de l'agent."
+msgstr "Accès aux fonctionnalités de téléphonie de l'agent."
 
 #: db/seeds/permissions.rb:345
 msgid "Access the knowledge base editor features."
-msgstr "Accédez aux fonctionnalités de l'éditeur de base de connaissances."
+msgstr "Accès aux fonctions d'édition de la base de connaissances."
 
 #: db/seeds/permissions.rb:351
 msgid "Access the knowledge base reader features."
-msgstr "Accédez aux fonctionnalités de lecture de la base de connaissances."
+msgstr "Accès à la base de connaissances en lecture."
 
 #: db/seeds/permissions.rb:373
 msgid "Access the tickets as agent based on group access."
-msgstr "Accès aux tickets en tant qu'agent basé sur les accès des groupes."
+msgstr "Accès aux tickets en tant qu'agent basé sur les groupes."
 
 #: db/seeds/permissions.rb:382
 msgid "Access tickets as customer."
@@ -1538,7 +1536,6 @@ msgid "Additional information and links"
 msgstr "Informations complémentaires et liens"
 
 #: db/seeds/settings.rb:848
-#, fuzzy
 msgid "Additional notes for ticket create types."
 msgstr "Notes supplémentaires pour les types de création de ticket."
 
@@ -7429,10 +7426,8 @@ msgid "Failed to find backup on channel!"
 msgstr "Impossible de trouver la sauvegarde sur le canal !"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleMediaError.vue:35
-#, fuzzy
-#| msgid "Failed to upload."
 msgid "Failed to load content."
-msgstr "Échec du téléchargement."
+msgstr "Échec du chargement du contenu."
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:223
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:235
@@ -8439,7 +8434,7 @@ msgstr "Couleur de mise en avant"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:8
 msgid "Highlight icon"
-msgstr "Icône de mise en valeur"
+msgstr "Icône de mise en avant"
 
 #: db/seeds/settings.rb:5477
 msgid "Highlights if the note a user is writing is public or private"
@@ -10425,7 +10420,7 @@ msgstr "Taille maximale d'email"
 
 #: db/seeds/settings.rb:2804
 msgid "Maximum Recursive Ticket Triggers Depth"
-msgstr "Nombre d'itérations maximum pour les déclencheurs récursifs de tickets"
+msgstr "Profondeur maximale pour les déclencheurs récursifs de tickets"
 
 #: db/seeds/settings.rb:2126
 msgid "Maximum failed logins"
@@ -11323,7 +11318,7 @@ msgstr "Aucun certificat trouvé."
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:430
 msgid "No checklist added to this ticket yet."
-msgstr "Aucune liste de tâches n'a encore été ajoutée à ce ticket."
+msgstr "Aucune checklist n'a encore été ajoutée à ce ticket."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:169
 msgid "No checklist items yet"
@@ -11417,7 +11412,8 @@ msgstr "Aucun proxy pour les hôtes suivants."
 
 #: lib/whatsapp/webhook/message/reaction.rb:13
 msgid "No related article found to process the reaction message on."
-msgstr "L'article associé n'a été trouvé pour lui appliquer la réaction."
+msgstr ""
+"Aucun article associé n'a été trouvé pour traiter le message de réaction."
 
 #: lib/whatsapp/webhook/message/status.rb:15
 msgid "No related article found to process the status message on."
@@ -11938,7 +11934,7 @@ msgstr "Ouvrir %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadgeList.vue:35
 msgid "Open Checklist"
-msgstr "Ouvrir les tâches de vérification"
+msgstr "Ouvrir les checklist"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:3
 msgid "Open Ticket# %s"
@@ -14848,16 +14844,12 @@ msgid "Show to user roles"
 msgstr "Afficher aux rôles d'utilisateurs"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:54
-#, fuzzy
-#| msgid "Show tracked ticket"
 msgid "Show tracking ticket"
-msgstr "Voir le ticket suivi"
+msgstr "Afficher le ticket de suivi"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:55
-#, fuzzy
-#| msgid "Show tracked tickets"
 msgid "Show tracking tickets"
-msgstr "Voir les tickets suivis"
+msgstr "Afficher les tickets de suivi"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:95
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:114
@@ -16190,7 +16182,7 @@ msgstr "L'appareil n'a pas pu être supprimé."
 #: db/seeds/settings.rb:2195
 msgid "The divider between TicketHook and ticket number. E. g. ': '."
 msgstr ""
-"Le séparateur entre TicketHook et le numéro de ticket. Par exemple ' : '."
+"Le séparateur entre TicketHook et le numéro de ticket. Par exemple. ' : '."
 
 #: lib/email_address_validation.rb:34
 msgid "The email address is invalid."
@@ -17995,10 +17987,8 @@ msgstr ""
 "attributs de condition."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:115
-#, fuzzy
-#| msgid "Ticket tags updated successfully."
 msgid "Ticket tag added successfully."
-msgstr "Les étiquettes du tickets ont été mises à jour."
+msgstr "L'étiquette du ticket a été ajoutée avec succès."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:74
 msgid "Ticket tag could not be added."
@@ -18009,10 +17999,8 @@ msgid "Ticket tag could not be removed."
 msgstr "L'étiquette du ticket n'a pas pu être retirée."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:145
-#, fuzzy
-#| msgid "Ticket tags updated successfully."
 msgid "Ticket tag removed successfully."
-msgstr "Les étiquettes du tickets ont été mises à jour."
+msgstr "L'étiquette du ticket a été supprimée avec succès."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:37
 msgid "Ticket tags could not be updated."
@@ -18532,7 +18520,7 @@ msgstr "Suivre les retweets"
 #: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_references_popover_provider.coffee:8
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:85
 msgid "Tracked as checklist item in"
-msgstr "Suivi par une tâche de vérification dans"
+msgstr "Suivi comme élément de la checklist dans"
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:27
 msgid "Transfer conversation to another chat:"

@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-04 05:37+0000\n"
-"Last-Translator: chrand818 <can@telenabler.com>\n"
+"PO-Revision-Date: 2024-10-04 10:13+0000\n"
+"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
-"zammad-development/sv/>\n"
+"zammad-stable/sv/>\n"
 "Language: sv-se\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.7\n"
+"X-Generator: Weblate 5.7.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -14624,14 +14624,10 @@ msgid "Show to user roles"
 msgstr "Visa för användarroller"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:54
-#, fuzzy
-#| msgid "Show tracked ticket"
 msgid "Show tracking ticket"
 msgstr "Visa spårat ärende"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:55
-#, fuzzy
-#| msgid "Show tracked tickets"
 msgid "Show tracking tickets"
 msgstr "Visa spårade ärenden"
 
@@ -17703,8 +17699,6 @@ msgstr ""
 "det leda till dataförlust i dina villkorsattribut."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:115
-#, fuzzy
-#| msgid "Ticket tags updated successfully."
 msgid "Ticket tag added successfully."
 msgstr "Ärendeetiketter uppdaterades."
 
@@ -17717,8 +17711,6 @@ msgid "Ticket tag could not be removed."
 msgstr "Tagg kunde inte tas bort."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:145
-#, fuzzy
-#| msgid "Ticket tags updated successfully."
 msgid "Ticket tag removed successfully."
 msgstr "Ärendeetiketter uppdaterades."
 

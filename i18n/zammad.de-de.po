@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-02 05:08+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2024-10-07 08:51+0000\n"
+"Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
-"zammad-development/de/>\n"
+"zammad-stable/de/>\n"
 "Language: de-de\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.7\n"
+"X-Generator: Weblate 5.7.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -127,8 +127,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Zuletzt geändert um #{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: Zuletzt geändert um #{ticket.updated_at}_\n"
 "* Gruppe: #{ticket.group.name}\n"
 "* Besitzer: #{ticket.owner.fullname}\n"
 "* Status: #{t(ticket.state.name)}\n"
@@ -1502,8 +1502,6 @@ msgid "Add subclause"
 msgstr "Unterklausel hinzufügen"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:201
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Add tag"
 msgstr "Tag hinzufügen"
 
@@ -1626,8 +1624,7 @@ msgstr "Zum nächsten Ticket der Übersicht springen"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:62
 msgid "Affects only notifications for not assigned and all tickets."
-msgstr ""
-"Betrifft nur Benachrichtigungen für nicht zugewiesene und alle Tickets."
+msgstr "Betrifft nur Benachrichtigungen für nicht zugewiesene und alle Tickets."
 
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco:4
 msgid "After approval, please re-connect your Exchange account."
@@ -4019,8 +4016,7 @@ msgstr "Methode für Zwei-Faktor-Authentifizierung konnte nicht entfernt werden"
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:124
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:107
 msgid "Could not remove two-factor authentication method."
-msgstr ""
-"Methode für Zwei-Faktor-Authentifizierung konnte nicht entfernt werden."
+msgstr "Methode für Zwei-Faktor-Authentifizierung konnte nicht entfernt werden."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:227
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:77
@@ -9351,9 +9347,9 @@ msgstr ""
 "<div>ich (#{current_user.firstname} #{current_user.lastname}) möchte Sie zu "
 "#{config.product_name} einladen - unserer Kundensupport-Plattform.</div>\n"
 "<br>\n"
-"<div>Um sich anzumelden kann <a href=\"#{config.http_type}://#{config.fqdn}/"
-"#password_reset_verify/#{token.token}\">hier</a> das Password gesetzt werden."
-"</div>\n"
+"<div>Um sich anzumelden kann <a href=\"#{config.http_type}://#{config.fqdn}/#"
+"password_reset_verify/#{token.token}\">hier</a> das Password gesetzt "
+"werden.</div>\n"
 "<br>\n"
 "<div>Enjoy,</div>\n"
 "<br>\n"
@@ -10264,8 +10260,7 @@ msgstr "Verwalten Sie die Ticket-Vorlagen Ihres Systems."
 
 #: db/seeds/permissions.rb:108
 msgid "Manage time accounting settings of your system."
-msgstr ""
-"Verwalten Sie die Einstellungen für die Zeitabrechnung in Ihrem System."
+msgstr "Verwalten Sie die Einstellungen für die Zeitabrechnung in Ihrem System."
 
 #: db/seeds/permissions.rb:258
 msgid "Manage translations of your system."
@@ -11460,10 +11455,8 @@ msgid "No source data submitted!"
 msgstr "Keine Quelldaten übermittelt!"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:194
-#, fuzzy
-#| msgid "No template created yet."
 msgid "No tags added yet."
-msgstr "Bisher wurde keine Vorlage angelegt."
+msgstr "Bisher wurden keine Tags angelegt."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:14
 msgid "No template created yet."
@@ -13333,10 +13326,8 @@ msgid "Remove selected values"
 msgstr "Ausgewählte Werte entfernen"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:176
-#, fuzzy
-#| msgid "Remove image"
 msgid "Remove this tag"
-msgstr "Bild entfernen"
+msgstr "Tag entfernen"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:176
 msgid "Remove two-factor authentication"
@@ -14850,14 +14841,10 @@ msgid "Show to user roles"
 msgstr "Diesen Benutzerrollen anzeigen"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:54
-#, fuzzy
-#| msgid "Show tracked ticket"
 msgid "Show tracking ticket"
 msgstr "Nachverfolgendes Ticket anzeigen"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:55
-#, fuzzy
-#| msgid "Show tracked tickets"
 msgid "Show tracking tickets"
 msgstr "Nachverfolgende Tickets anzeigen"
 
@@ -16061,8 +16048,8 @@ msgid ""
 "The certificate is not valid for SSL usage. Please check e.g. the validity "
 "period or the extensions."
 msgstr ""
-"Das Zertifikat ist nicht für SSL-Verwendung zugelassen. Bitte prüfen Sie z."
-"B. die Gültigkeitsdauer oder die Erweiterungen."
+"Das Zertifikat ist nicht für SSL-Verwendung zugelassen. Bitte prüfen Sie "
+"z.B. die Gültigkeitsdauer oder die Erweiterungen."
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco:10
 msgid ""
@@ -18000,28 +17987,20 @@ msgstr ""
 "deaktivieren, kann Datenverlust in Ihren Bedingungs-Einstellungen auftreten."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:115
-#, fuzzy
-#| msgid "Ticket tags updated successfully."
 msgid "Ticket tag added successfully."
-msgstr "Ticket-Tags erfolgreich aktualisiert."
+msgstr "Ticket-Tag erfolgreich hinzugefügt."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:74
-#, fuzzy
-#| msgid "Ticket tags could not be updated."
 msgid "Ticket tag could not be added."
-msgstr "Ticket-Tags konnten nicht aktualisiert werden."
+msgstr "Ticket-Tag konnte nicht hinzugefügt werden."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:123
-#, fuzzy
-#| msgid "Ticket could not be created."
 msgid "Ticket tag could not be removed."
-msgstr "Ticket konnte nicht erzeugt werden."
+msgstr "Ticket-Tag konnte nicht entfernt werden."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:145
-#, fuzzy
-#| msgid "Ticket tags updated successfully."
 msgid "Ticket tag removed successfully."
-msgstr "Ticket-Tags erfolgreich aktualisiert."
+msgstr "Ticket-Tag erfolgreich entfernt."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:37
 msgid "Ticket tags could not be updated."
@@ -19196,9 +19175,9 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
-"#{article.id}\" target=\"zammad_app\">In #{config.product_name} anzeigen</"
-"a>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}/#{article.id}\" target=\"zammad_app\">In #{config.product_name} "
+"anzeigen</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
@@ -21438,8 +21417,7 @@ msgstr "links"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts:27
 msgid "linked accounts,facebook,github,gitlab,google,linkedin,microsoft,saml"
-msgstr ""
-"verknüpfte Konten,facebook,github,gitlab,google,linkedin,microsoft,saml"
+msgstr "verknüpfte Konten,facebook,github,gitlab,google,linkedin,microsoft,saml"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorMore.vue:18
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:140
@@ -22031,8 +22009,8 @@ msgstr "Twitter-Statusmeldung"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:26
 msgid "twofactor,2fa,security key,passkey,authenticator app"
 msgstr ""
-"Zweifaktor,2fa,2FA,Sicherheitsschlüssel,Sicherheits-Schlüssel,Passkey,"
-"Authentifizierungs-app"
+"Zweifaktor,2fa,2FA,Sicherheitsschlüssel,Sicherheits-Schlüssel,Passkey"
+",Authentifizierungs-app"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:423
 msgid "unassign user"
@@ -22040,7 +22018,7 @@ msgstr "Benutzerzuweisung entfernen"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 msgid "unchecked checklist item '%s'"
-msgstr "öffnete Checklisten-Element '%s'"
+msgstr "setzte Checklisten-Element '%s' auf nicht abgehakt"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "unset readonly"
