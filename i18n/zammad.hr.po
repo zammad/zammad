@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-04 05:37+0000\n"
+"PO-Revision-Date: 2024-10-05 09:16+0000\n"
 "Last-Translator: Ivan Perovic <ip@zammad.com>\n"
 "Language-Team: Croatian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/hr/>\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n%10==1 && n%100!=11 ? 0 : n%10>=2 && "
 "n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2;\n"
-"X-Generator: Weblate 5.7\n"
+"X-Generator: Weblate 5.7.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -393,10 +393,8 @@ msgstr "%s atribut"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:50
-#, fuzzy
-#| msgid "Checksum"
 msgid "%s Checklist"
-msgstr "Checksum"
+msgstr "%s lista zadataka"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:203
 msgid "%s Group"
@@ -584,10 +582,8 @@ msgstr "%s osoba"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:53
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:31
-#, fuzzy
-#| msgid "%s ended switch to |%s|!"
 msgid "%s reacted with a %s to message from %s |%s|"
-msgstr "%s završeno preuzimanje |%s|!"
+msgstr "%s reagirao sa %s na poruku od|%s|"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:49
 msgid ""
@@ -707,10 +703,8 @@ msgid "(state: %s)"
 msgstr "(state: %s)"
 
 #: app/frontend/apps/desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue:58
-#, fuzzy
-#| msgid "(state: %s)"
 msgid "(ticket status: %s)"
-msgstr "(status: %s)"
+msgstr "(status ticketa: %s)"
 
 #: app/assets/javascripts/app/models/ticket_time_accounting_type.coffee
 msgid ""
@@ -904,11 +898,11 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:47
 msgid "A color scheme that uses dark-colored elements on a light background."
-msgstr ""
+msgstr "Shema boja koja koristi elemente tamne boje na svijetloj pozadini."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:40
 msgid "A color scheme that uses light-colored elements on a dark background."
-msgstr ""
+msgstr "Shema boja koja koristi svijetle elemente na tamnoj pozadini."
 
 #: db/seeds/settings.rb:3886
 msgid "A list of active import backends that gets scheduled automatically."
@@ -1030,79 +1024,60 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:37
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:18
-#, fuzzy
-#| msgid "Access token"
 msgid "Access denied"
-msgstr "Pristupni token"
+msgstr "Pristup je odbijen"
 
 #: db/seeds/permissions.rb:315
 msgid "Access the agent chat features."
-msgstr ""
+msgstr "Pristupi postavkama chata za agente."
 
 #: db/seeds/permissions.rb:330
 msgid "Access the agent phone features."
-msgstr ""
+msgstr "Pristupi postavkama telefona za agente."
 
 #: db/seeds/permissions.rb:345
 msgid "Access the knowledge base editor features."
-msgstr ""
+msgstr "Pristupi postavkama urednika baze podataka."
 
 #: db/seeds/permissions.rb:351
 msgid "Access the knowledge base reader features."
-msgstr ""
+msgstr "Pristupi postavkama čitatelja baze podataka."
 
 #: db/seeds/permissions.rb:373
-#, fuzzy
-#| msgid "Access to Agent Tickets based on Group Access"
 msgid "Access the tickets as agent based on group access."
-msgstr "Pristup ticketima agenata na temelju grupnog pristupa"
+msgstr "Pristupi ticketima kao agent na temelju grupnih ovlasti."
 
 #: db/seeds/permissions.rb:382
-#, fuzzy
-#| msgid "ticket.customer"
 msgid "Access tickets as customer."
-msgstr "ticket.customer"
+msgstr "Pristupi ticketima kao klijent."
 
 #: db/seeds/permissions.rb:306
-#, fuzzy
-#| msgid "Access to customer tickets"
 msgid "Access to the chat interface."
-msgstr "Pristup ticketima klijenata"
+msgstr "Pristup chat sučelju."
 
 #: db/seeds/permissions.rb:336
-#, fuzzy
-#| msgid "Inserts knowledge base answer"
 msgid "Access to the knowledge base interface."
-msgstr "Dodaje odgovor iz Knowledge Basea"
+msgstr "Pristup sučelju baze podataka."
 
 #: db/seeds/permissions.rb:321
-#, fuzzy
-#| msgid "Access to customer tickets"
 msgid "Access to the phone interface."
-msgstr "Pristup ticketima klijenata"
+msgstr "Pristup sučelju telefonske integracije."
 
 #: db/seeds/permissions.rb:358
 msgid "Access to the report interface."
-msgstr ""
+msgstr "Pristupi sučelju izvještaja."
 
 #: db/seeds/permissions.rb:364
-#, fuzzy
-#| msgid "Access to customer tickets"
 msgid "Access to the ticket interface."
-msgstr "Pristup ticketima klijenata"
+msgstr "Pristup sučelju ticketa."
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:19
 msgid "Access token"
 msgstr "Pristupni token"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:157
-#, fuzzy
-#| msgid ""
-#| "Email sending and receiving could not be verified. Please check your "
-#| "settings."
 msgid "Accessing your camera is forbidden. Please check your settings."
-msgstr ""
-"Slanje i primanje mailova nije moguće potvrditi. Provjerite svoje postavke."
+msgstr "Pristup kameri nije moguć. Molimo, provjerite svoje postavke."
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:45
 #: app/frontend/apps/mobile/pages/account/routes.ts:8
@@ -1190,16 +1165,12 @@ msgid "Action execution"
 msgstr "Obavljanje zadatka"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts:12
-#, fuzzy
-#| msgid "Action execution"
 msgid "Action menu button for authenticator app"
-msgstr "Obavljanje zadatka"
+msgstr "Akcijski gumb izbornika za autentifikacijsku aplikaciju"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts:14
-#, fuzzy
-#| msgid "Action execution"
 msgid "Action menu button for security keys"
-msgstr "Obavljanje zadatka"
+msgstr "Akcijski gumb izbornika za sigurnosne ključeve"
 
 #: app/assets/javascripts/app/models/macro.coffee:7
 #: app/assets/javascripts/app/models/template.coffee:7
@@ -1342,15 +1313,13 @@ msgstr "Dodaj bota"
 msgid "Add Certificate"
 msgstr "Dodaj certifikat"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:417
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:406
 msgid "Add Empty Checklist"
-msgstr ""
+msgstr "Dodaj praznu listu zadataka"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue:42
-#, fuzzy
-#| msgid "Template"
 msgid "Add From a Template"
-msgstr "Predložak"
+msgstr "Dodaj iz predloška"
 
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco:5
 msgid "Add Key"
@@ -1370,8 +1339,6 @@ msgid "Add Public or Private Key"
 msgstr "Dodaj javni ili privatni ključ"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts:13
-#, fuzzy
-#| msgid "Add reply"
 msgid "Add Reply"
 msgstr "Dodaj odgovor"
 
@@ -1413,10 +1380,8 @@ msgid "Add agreement text before submit."
 msgstr "Dodajte sporazumni tekst prije slanja."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:315
-#, fuzzy
-#| msgid "Add alarm to pending reminder and escalated tickets."
 msgid "Add alarm to pending reminder and escalated tickets"
-msgstr "Dodaj alarm kod podsjetnika i eskaliranih ticketa."
+msgstr "Dodaj alarm kod podsjetnika na čekanju i eskaliranih ticketa."
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:34
 msgid "Add alarm to pending reminder and escalated tickets."
@@ -1435,10 +1400,8 @@ msgid "Add bullet list"
 msgstr "Dodaj listu za popis"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:49
-#, fuzzy
-#| msgid "Add Account"
 msgid "Add comment"
-msgstr "Dodaj račun"
+msgstr "Dodaj komentar"
 
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco:32
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco:18
@@ -1446,42 +1409,32 @@ msgid "Add condition"
 msgstr "Dodaj uvjet"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:168
-#, fuzzy
-#| msgid "email"
 msgid "Add email"
-msgstr "E-mail"
+msgstr "Dodaj e-mail"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:5
-#, fuzzy
-#| msgid "Add bullet list"
 msgid "Add empty checklist"
-msgstr "Dodaj listu za popis"
+msgstr "Dodaj praznu listu zadataka"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
 msgid "Add first level heading"
 msgstr "Dodaj naslov prve razine"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:11
-#, fuzzy
-#| msgid "Save as template"
 msgid "Add from a template"
-msgstr "Spremi kao predložak"
+msgstr "Dodaj iz predloška"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Add heading"
-msgstr "Dodaj oznaku"
+msgstr "Dodaj naslov"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:130
 msgid "Add image"
 msgstr "Dodaj sliku"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:15
-#, fuzzy
-#| msgid "Add a Note"
 msgid "Add internal note"
-msgstr "Dodaj bilješku"
+msgstr "Dodaj internu bilješku"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
 msgid "Add link"
@@ -1490,16 +1443,12 @@ msgstr "Dodaj poveznicu"
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:53
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts:125
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:202
-#, fuzzy
-#| msgid "Add a message"
 msgid "Add message"
 msgstr "Dodaj poruku"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/note.ts:15
-#, fuzzy
-#| msgid "Add Bot"
 msgid "Add note"
-msgstr "Dodaj Bota"
+msgstr "Dodaj bilješku"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:257
 msgid "Add ordered list"
@@ -1507,7 +1456,7 @@ msgstr "Dodavanje sortiranog popisa"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/phone.ts:13
 msgid "Add phone call"
-msgstr ""
+msgstr "Dodaj telefonski poziv"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:64
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:37
@@ -1528,10 +1477,8 @@ msgid "Add sender initials to end of a tweet."
 msgstr "Dodaj inicijale pošiljaoca na kraj tweeta."
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:49
-#, fuzzy
-#| msgid "Add image"
 msgid "Add sms"
-msgstr "Dodaj sliku"
+msgstr "Dodaj sms"
 
 #: app/assets/javascripts/app/views/generic/application_selector_row.jst.eco:35
 #: app/assets/javascripts/app/views/generic/application_selector_subclause.jst.eco:21
@@ -1539,8 +1486,6 @@ msgid "Add subclause"
 msgstr "Dodaj podstavku"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:201
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Add tag"
 msgstr "Dodaj oznaku"
 
@@ -1595,8 +1540,6 @@ msgid "Admin Password Login"
 msgstr "Prijava administratora putem lozinke"
 
 #: db/seeds/permissions.rb:5
-#, fuzzy
-#| msgid "Admin Interface"
 msgid "Admin interface"
 msgstr "Administracijsko sučelje"
 
@@ -1607,10 +1550,8 @@ msgstr ""
 "Upute za prijavu administratorskom lozinkom su poslane na Vašu e-mail adresu."
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AdminMenu/plugins/setting.ts:8
-#, fuzzy
-#| msgid "Administrator Account"
 msgid "Administration"
-msgstr "Administratorski račun"
+msgstr "Administracija"
 
 #. This is the template file app/views/mailer/admin_password_auth/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -1661,14 +1602,8 @@ msgid "Advance to next ticket from overview"
 msgstr "Prijeđite na sljedeći ticket u pregledu"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:62
-#, fuzzy
-#| msgid ""
-#| "Here you find your ticket overviews for open, assigned, and escalated "
-#| "tickets."
 msgid "Affects only notifications for not assigned and all tickets."
-msgstr ""
-"Ovdje ćete pronaći preglede ticketa za otvorene, dodijeljene i eskalirane "
-"tickete."
+msgstr "Utječe samo na obavijesti za nedodijeljene i sve tickete."
 
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco:4
 msgid "After approval, please re-connect your Exchange account."
@@ -1715,10 +1650,8 @@ msgid "Agent Name + FromSeparator + System Address Display Name"
 msgstr "Ime agenta + od + ime adrese sustava"
 
 #: db/seeds/permissions.rb:314
-#, fuzzy
-#| msgid "Agent Name"
 msgid "Agent chat"
-msgstr "Ime agenta"
+msgstr "Chat agenta"
 
 #: db/seeds/settings.rb:3483
 msgid "Agent idle timeout"
@@ -1729,16 +1662,12 @@ msgid "Agent limit exceeded, please check your account settings."
 msgstr "Limit broja agenata prekoračen, provjerite postavke računa."
 
 #: db/seeds/permissions.rb:329
-#, fuzzy
-#| msgid "Agent Name"
 msgid "Agent phone"
-msgstr "Ime agenta"
+msgstr "Telefon agenta"
 
 #: db/seeds/permissions.rb:372
-#, fuzzy
-#| msgid "Open tickets"
 msgid "Agent tickets"
-msgstr "Otvoreni ticketi"
+msgstr "Agentovi ticketi"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:109
 msgid "Agents"
@@ -1792,13 +1721,11 @@ msgid "All colleagues are busy."
 msgstr "Svi agenti su zauzeti."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:144
-#, fuzzy
-#| msgid ""
-#| "All computers and browsers that have access to your Zammad appear here."
 msgid ""
 "All computers and browsers from which you logged in to Zammad appear here."
 msgstr ""
-"Sva računala i preglednici koji imaju pristup Zammad-u pojavljuju se ovdje."
+"Sva računala i preglednici sa kojih ste pristupali Zammad-u pojavljuju se "
+"ovdje."
 
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:7
 msgid "All computers and browsers that have access to your Zammad appear here."
@@ -1821,17 +1748,15 @@ msgstr "Dozvoli buduće vrijednosti"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:65
 msgid "Allow future dates toggle value is required."
-msgstr ""
+msgstr "Gumb \"Dopusti budući datum\" postavljen kao obavezan."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:334
 msgid "Allow past"
 msgstr "Dozvoljene prošle vrijednosti"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:71
-#, fuzzy
-#| msgid "at least one letter is required"
 msgid "Allow past dates toggle value is required."
-msgstr "Potrebno je barem jedno slovo"
+msgstr "Gumb \"Dopusti prošli datum\" je obavezan."
 
 #: db/seeds/object_manager_attributes.rb:1967
 msgid "Allow reopening of tickets within a certain time."
@@ -1842,10 +1767,8 @@ msgid "Allow users to add new tags."
 msgstr "Dopusti dodavanje novih tagova."
 
 #: db/seeds/settings.rb:5793
-#, fuzzy
-#| msgid "Allow users to create new tags."
 msgid "Allow users to create new checklists."
-msgstr "Dopusti korisnicima stvaranje novih tagova."
+msgstr "Dopusti korisnicima stvaranje novih lista zadataka."
 
 #: db/seeds/settings.rb:4051
 msgid "Allow users to create new tags."
@@ -2070,20 +1993,16 @@ msgid "Apply Shared Draft"
 msgstr "Preuzmi zajedničku skicu"
 
 #: app/frontend/apps/desktop/pages/ticket/components/ApplyTemplate.vue:40
-#, fuzzy
-#| msgid "Template"
 msgid "Apply Template"
-msgstr "Predložak"
+msgstr "Primjeni predložak"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:10
 msgid "Apply current defaults to all agents"
 msgstr "Postavi trenutne postavke kao standard za sve agente"
 
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:76
-#, fuzzy
-#| msgid "Apply Draft"
 msgid "Apply filter…"
-msgstr "Preuzmi skicu"
+msgstr "Primjeni filter…"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 #: app/assets/javascripts/app/controllers/report.coffee:204
@@ -2116,10 +2035,8 @@ msgid "Are you sure you want to delete \"%s\"?"
 msgstr "Želite li zaista obrisati \"%s\"?"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:33
-#, fuzzy
-#| msgid "Do you really want to delete this object?"
 msgid "Are you sure you want to delete this object?"
-msgstr "Želite li zaista izbrisati ovaj objekt?"
+msgstr "Jeste li sigurni, da želite obrisati ovaj objekt?"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts:67
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
@@ -2240,10 +2157,8 @@ msgstr "Članak nije mogao biti obrisan."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:127
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:27
-#, fuzzy
-#| msgid "Ticket information"
 msgid "Article meta information"
-msgstr "Informacije ticketa"
+msgstr "Metainformacije o članku"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:77
 #: app/frontend/shared/composables/useArticleSecurity.ts:93
@@ -2303,16 +2218,12 @@ msgstr ""
 "radi na tome. Ticket će biti prikazan kao nedodijeljen."
 
 #: app/models/user.rb:599
-#, fuzzy
-#| msgid ""
-#| "At least one identifier (firstname, lastname, phone or email) for user is "
-#| "required."
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
 msgstr ""
-"Potreban je najmanje jedan identifikator (ime, prezime, telefon ili e-mail) "
-"za korisnika."
+"Potreban je najmanje jedan identifikator (ime, prezime, telefon, mobitel ili "
+"e-mail) za korisnika."
 
 #: app/models/postmaster_filter.rb:29
 msgid "At least one match rule is required, but none was provided."
@@ -2489,10 +2400,8 @@ msgid "Authenticator App"
 msgstr "Autentifikacijska aplikacija"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:234
-#, fuzzy
-#| msgid "Authenticator app secret"
 msgid "Authenticator app QR code"
-msgstr "Autentifikacija putem tajne (app secret)"
+msgstr "QR kod autentifikacijske aplikacije"
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:24
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:245
@@ -2583,11 +2492,11 @@ msgstr ""
 
 #: app/frontend/shared/components/Form/Form.vue:1288
 msgid "Autosave in progress…"
-msgstr ""
+msgstr "Automatsko spremanje u tijeku…"
 
 #: app/frontend/shared/components/Form/Form.vue:1297
 msgid "Autosaving is taking longer than expected…"
-msgstr ""
+msgstr "Automatsko spremanje traje dulje nego inače…"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:35
 #: app/assets/javascripts/app/models/overview.coffee:8
@@ -2595,10 +2504,8 @@ msgid "Available for the following roles"
 msgstr "Dostupno za sljedeće uloge"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:191
-#, fuzzy
-#| msgid "Remove all methods"
 msgid "Available methods"
-msgstr "Ukloni sve metode"
+msgstr "Dostupne metode"
 
 #: db/seeds/settings.rb:891
 msgid "Available types for a new ticket"
@@ -2620,10 +2527,8 @@ msgid "Avatar"
 msgstr "Avatar"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCropImageFlyout.vue:55
-#, fuzzy
-#| msgid "Preview"
 msgid "Avatar Preview"
-msgstr "Pregled"
+msgstr "Pretpregled avatara"
 
 #: app/graphql/gql/mutations/user/current/avatar/delete.rb:18
 #: app/graphql/gql/mutations/user/current/avatar/select.rb:18
@@ -2808,10 +2713,8 @@ msgid "Branding"
 msgstr "Brendiranje"
 
 #: app/frontend/apps/desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue:33
-#, fuzzy
-#| msgid "Send Invitation"
 msgid "Breadcrumb navigation"
-msgstr "Pošalji pozivnicu"
+msgstr "Navigacija krušnim mrvicama"
 
 #: app/assets/javascripts/app/views/session.jst.eco:9
 msgid "Browser"
@@ -3029,7 +2932,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -3065,8 +2968,6 @@ msgid "Cancel & Go Back"
 msgstr "Odustani i povratak natrag"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue:28
-#, fuzzy
-#| msgid "Cancel & Sign out"
 msgid "Cancel & Sign Out"
 msgstr "Odustani & odjavi se"
 
@@ -3113,7 +3014,7 @@ msgstr "Nije moguće prenijeti datoteku"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:168
 msgid "Capture From Camera"
-msgstr ""
+msgstr "Snimanje kamerom"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/categories.coffee:3
 msgid "Categories"
@@ -3160,10 +3061,8 @@ msgid "Change Objects"
 msgstr "Promijeni objekte"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:135
-#, fuzzy
-#| msgid "Change Your Password"
 msgid "Change Password"
-msgstr "Promijenite Vašu lozinku"
+msgstr "Promijenite lozinku"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:8
 msgid "Change Your Password"
@@ -3185,16 +3084,12 @@ msgid "Change order"
 msgstr "Promijeni poredak"
 
 #: db/seeds/permissions.rb:427
-#, fuzzy
-#| msgid "Change Your Password"
 msgid "Change personal account password."
-msgstr "Promijenite Vašu lozinku"
+msgstr "Promijenite osobnu lozinku profila."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:227
-#, fuzzy
-#| msgid "Change date"
 msgid "Change text color"
-msgstr "Promijeni datum"
+msgstr "Promijeni boju teksta"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -3291,10 +3186,8 @@ msgstr "Provjeri kanale."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:65
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:53
-#, fuzzy
-#| msgid "Checkmk"
 msgid "Check item"
-msgstr "Checkmk"
+msgstr "Označi element"
 
 #: lib/search_index_backend.rb:410
 msgid "Check the response and payload for detailed information:"
@@ -3312,44 +3205,34 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:54
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
-#, fuzzy
-#| msgid "Checksum"
 msgid "Checklist"
-msgstr "Checksum"
+msgstr "Lista zadataka"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:60
-#, fuzzy
-#| msgid "Checksum"
 msgid "Checklist Item"
-msgstr "Checksum"
+msgstr "Element liste zadataka"
 
 #: app/assets/javascripts/app/views/generic/checklist_item.jst.eco:10
 msgid "Checklist Item Label"
-msgstr ""
+msgstr "Opis elementa liste zadataka"
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:29
-#, fuzzy
-#| msgid "Select Template"
 msgid "Checklist Template"
-msgstr "Odaberi predložak"
+msgstr "Predložak liste zadataka"
 
 #: app/models/checklist_template/item.rb:32
 msgid "Checklist Template items are limited to 100 items per checklist."
-msgstr ""
+msgstr "Predlošci liste zadataka su limitirani na 100 elementa po listi."
 
-#: app/models/checklist/item.rb:109
-#, fuzzy
-#| msgid "The article does not belong to the specified ticket."
+#: app/models/checklist/item.rb:108
 msgid "Checklist items are limited to 100 items per checklist."
-msgstr "Članak ne pripada navedenom ticketu."
+msgstr "Stavke liste zadataka su limitirane na 100 stavki po listi."
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
 #: db/seeds/permissions.rb:299 db/seeds/settings.rb:5790
-#, fuzzy
-#| msgid "Checksum"
 msgid "Checklists"
-msgstr "Checksum"
+msgstr "Liste zadataka"
 
 #: app/assets/javascripts/app/controllers/_integration/check_mk.coffee:3
 msgid "Checkmk"
@@ -3496,16 +3379,12 @@ msgid "Clear Selection"
 msgstr "Poništi odabir"
 
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:89
-#, fuzzy
-#| msgid "User filter"
 msgid "Clear filter"
-msgstr "Korisnički filtar"
+msgstr "Obriši filter"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:92
-#, fuzzy
-#| msgid "Clear Selection"
 msgid "Clear the value"
-msgstr "Poništi odabir"
+msgstr "Obriši vrijednost"
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:3
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:24
@@ -3588,16 +3467,12 @@ msgid "Close current tab"
 msgstr "Zatvori trenutnu karticu"
 
 #: app/frontend/apps/desktop/components/CommonDialog/CommonDialog.vue:115
-#, fuzzy
-#| msgid "Confirm dialog"
 msgid "Close dialog"
-msgstr "Potvrdite dijaloški okvir"
+msgstr "Zatvori dijaloški okvir"
 
 #: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:269
-#, fuzzy
-#| msgid "Close tab"
 msgid "Close side panel"
-msgstr "Zatvori karticu"
+msgstr "Zatvori bočnu ploču"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:32
@@ -3614,16 +3489,12 @@ msgid "Close tab on ticket close"
 msgstr "Zatvori karticu prilikom zatvaranja ticketa"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:51
-#, fuzzy
-#| msgid "Closed Tickets"
 msgid "Close the time picker"
-msgstr "Zatvoreni ticketi"
+msgstr "Zatvori odabir vremena"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabRemove.vue:46
-#, fuzzy
-#| msgid "Close tab"
 msgid "Close this tab"
-msgstr "Zatvori karticu"
+msgstr "Zatvori ovu karticu"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:16
 #: app/models/report.rb:30
@@ -3646,24 +3517,20 @@ msgid "Closing time"
 msgstr "Vrijeme zatvaranja"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:162
-#, fuzzy
-#| msgid "Content"
 msgid "Collapse sidebar"
-msgstr "Sadržaj"
+msgstr "Sažmi bočnu traku"
 
 #: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:61
 msgid "Collapse this element"
-msgstr ""
+msgstr "Sažmi ovaj element"
 
 #: db/seeds/settings.rb:922
 msgid "Color representation of the open ticket indicator in the sidebar."
 msgstr "Prikaz boje otvorenog ticketa u bočnoj traci."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:306
-#, fuzzy
-#| msgid "Ticket Subscriptions"
 msgid "Combined subscription URL"
-msgstr "Pretplate ticketa"
+msgstr "Zajednički pretplatnički URL"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:62
 msgid "Comment"
@@ -3730,7 +3597,7 @@ msgstr "Konfiguracija za %s"
 
 #: app/models/system_report/plugin/environment.rb:4
 msgid "Configuration of performance settings via environment variables."
-msgstr ""
+msgstr "Konfiguracija postavki performansi putem varijabli okruženja."
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:22
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:6
@@ -3750,8 +3617,6 @@ msgid "Configure Basic Settings"
 msgstr "Konfiguriranje osnovnih postavki"
 
 #: db/seeds/permissions.rb:6
-#, fuzzy
-#| msgid "To configure your system."
 msgid "Configure your system."
 msgstr "Konfigurirajte Vaš sustav."
 
@@ -3773,10 +3638,8 @@ msgid "Confirm merge"
 msgstr "Potvrdite spajanje"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:69
-#, fuzzy
-#| msgid "Confirm password"
 msgid "Confirm new password"
-msgstr "Potvrdite lozinku"
+msgstr "Potvrdite novu lozinku"
 
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:53
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:61
@@ -3920,20 +3783,16 @@ msgid "Content preview could not be generated."
 msgstr "Pretpregled sadržaja nije moguće stvoriti."
 
 #: app/frontend/apps/desktop/components/layout/LayoutContent.vue:136
-#, fuzzy
-#| msgid "Content"
 msgid "Content sidebar"
-msgstr "Sadržaj"
+msgstr "Sadržaj bočne trake"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:110
 msgid "Content was changed since loading"
 msgstr "Sadržaj je promijenjen nakon učitavanja"
 
 #: app/assets/javascripts/app/views/system_report.jst.eco:11
-#, fuzzy
-#| msgid "Content"
 msgid "Contents"
-msgstr "Sadržaj"
+msgstr "Sadržaji"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee:8
 #: app/assets/javascripts/app/models/public_link.coffee:9
@@ -3992,10 +3851,8 @@ msgid "Copied!"
 msgstr "Kopirano!"
 
 #: app/frontend/shared/composables/useCopyToClipboard.ts:21
-#, fuzzy
-#| msgid "Copied!"
 msgid "Copied."
-msgstr "Kopirano!"
+msgstr "Kopirano."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee:30
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/recovery_codes.coffee:11
@@ -4003,50 +3860,36 @@ msgid "Copy"
 msgstr "Kopiraj"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue:115
-#, fuzzy
-#| msgid "Recovery Codes"
 msgid "Copy Codes"
-msgstr "Kodovi za oporavak"
+msgstr "Kopiraj kodove"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:254
-#, fuzzy
-#| msgid "App Secret"
 msgid "Copy Secret"
-msgstr "App tajna"
+msgstr "Kopiraj tajnu"
 
 #: app/frontend/apps/desktop/components/CommonInputCopyToClipboard/CommonInputCopyToClipboard.vue:17
-#, fuzzy
-#| msgid "App Secret"
 msgid "Copy Text"
-msgstr "App tajna"
+msgstr "Kopiraj tekst"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:148
-#, fuzzy
-#| msgid "CTI Token"
 msgid "Copy Token"
-msgstr "CTI token"
+msgstr "Kopiraj token"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:307
-#, fuzzy
-#| msgid "Copy"
 msgid "Copy URL"
-msgstr "Kopiraj"
+msgstr "Kopiraj URL"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articlePermalink.ts:14
-#, fuzzy
-#| msgid "Article Type"
 msgid "Copy article permalink"
-msgstr "Vrsta članka"
+msgstr "Kopiraj poveznicu članka"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:356
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
 msgstr "Kopiraj trenutni broj objekta (npr. Ticket#) u međuspremnik"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader.vue:66
-#, fuzzy
-#| msgid "Ticket Customer"
 msgid "Copy ticket number"
-msgstr "ticket.klijent"
+msgstr "Kopiraj broj ticketa"
 
 #: app/assets/javascripts/app/views/whatsapp/account_webhook.jst.eco:14
 msgid "Copy to clipboard"
@@ -4076,17 +3919,13 @@ msgid "Could not fetch WhatsApp phone number details."
 msgstr "Nije moguće dohvatiti pojedinosti telefonskog broja za WhatsApp."
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:83
-#, fuzzy
-#| msgid "Name for this security key"
 msgid "Could not fetch security keys"
-msgstr "Ime za ovaj sigurnosni ključ"
+msgstr "Nije moguće dohvatiti sigurnosne ključeve"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue:37
 #: app/graphql/gql/mutations/user/current/two_factor/recovery_codes_generate.rb:19
-#, fuzzy
-#| msgid "Regenerate recovery codes"
 msgid "Could not generate recovery codes"
-msgstr "Ponovno izradi kodove za oporavak"
+msgstr "Nije moguće generirati kodove za oporavak"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:37
 msgid ""
@@ -4098,10 +3937,12 @@ msgstr ""
 #: app/models/channel/email_parser.rb:32
 msgid "Could not parse any sender attribute from the email. Checked fields:"
 msgstr ""
+"Nije moguće raščlaniti nijedan atribut pošiljatelja iz e-mail-a. Provjerena "
+"polja:"
 
 #: app/assets/javascripts/app/controllers/signup.coffee:139
 msgid "Could not process your request"
-msgstr ""
+msgstr "Nije moguće obraditi Vaš zahtjev"
 
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:135
 msgid "Could not remove all two-factor authentication methods for this user."
@@ -4120,10 +3961,8 @@ msgstr "Nije moguće ukloniti dvofaktorsku autentifikacijsku metodu"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:124
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:107
-#, fuzzy
-#| msgid "Could not remove two-factor authentication method"
 msgid "Could not remove two-factor authentication method."
-msgstr "Nije moguće ukloniti dvofaktorsku autentifikacijsku metodu"
+msgstr "Nije moguće ukloniti dvofaktorsku autentifikacijsku metodu."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:227
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:77
@@ -4134,10 +3973,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/link.coffee:69
 #: app/assets/javascripts/app/controllers/widget/link/kb_answer.coffee:106
-#, fuzzy
-#| msgid "Discard your unsaved changes."
 msgid "Couldn't save changes"
-msgstr "Odbaci svoje nespremljene promjene."
+msgstr "Nije moguće spremiti promjene"
 
 #: app/assets/javascripts/app/views/tag/table.jst.eco:5
 msgid "Count"
@@ -4145,7 +3982,7 @@ msgstr "Broj"
 
 #: app/models/system_report/plugin/failed_emails.rb:4
 msgid "Count of failed emails"
-msgstr ""
+msgstr "Broj neuspjelih e-mailova"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:24
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:182
@@ -4197,8 +4034,6 @@ msgid "Create Macros"
 msgstr "Kreiraj makro"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:152
-#, fuzzy
-#| msgid "Create a shared draft"
 msgid "Create Shared Draft"
 msgstr "Kreirajte dijeljenu skicu"
 
@@ -4263,17 +4098,13 @@ msgid "Create a Test Ticket"
 msgstr "Kreiraj testni ticket"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:193
-#, fuzzy
-#| msgid "Create new customer"
 msgid "Create a new checklist item"
-msgstr "Stvori novog klijenta"
+msgstr "Kreirajte novu stavku liste zadataka"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:18
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:21
-#, fuzzy
-#| msgid "Create a new template in the admin interface."
 msgid "Create a new checklist template in the admin interface."
-msgstr "Stvorite novi predložak u administracijskom sučelju."
+msgstr "Stvorite novi predložak liste zadataka u administracijskom sučelju."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:17
 msgid "Create a new template in the admin interface."
@@ -4293,10 +4124,8 @@ msgid "Create account"
 msgstr "Postavi račun"
 
 #: db/seeds/permissions.rb:114
-#, fuzzy
-#| msgid "Create Knowledge Base"
 msgid "Create and set up Knowledge Base."
-msgstr "Stvori Knowledge Base"
+msgstr "Stvori i uredi bazu podataka."
 
 #: app/assets/javascripts/app/views/signup.jst.eco:8
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:151
@@ -4485,6 +4314,7 @@ msgstr "Trenutna lozinka"
 #: app/models/system_report/plugin/setting.rb:6
 msgid "Current state of configured settings (excluding passwords and tokens)"
 msgstr ""
+"Trenutačno stanje konfiguriranih postavki (isključujući lozinke i tokene)"
 
 #: app/controllers/application_controller/has_user.rb:42
 msgid "Current user has no permission to use 'From'/'X-On-Behalf-Of'!"
@@ -4555,17 +4385,15 @@ msgstr "Chat s kupcima"
 
 #: app/models/system_report/plugin/entities/user.rb:4
 msgid "Customer and agent ratio (role based user counts)"
-msgstr ""
+msgstr "Omjer klijenata i agenata (broj korisnika na temelju uloge)"
 
 #: db/seeds/settings.rb:3273
 msgid "Customer selection based on sender and receiver list"
 msgstr "Odabir kupaca na temelju popisa pošiljatelja i primatelja"
 
 #: db/seeds/permissions.rb:381
-#, fuzzy
-#| msgid "Recent Customer Tickets"
 msgid "Customer tickets"
-msgstr "Nedavni ticketi klijenta"
+msgstr "Ticketi klijenta"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:7
 msgid ""
@@ -4658,14 +4486,12 @@ msgid "Date field"
 msgstr "Polje za datum"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:49
-#, fuzzy
-#| msgid "Date field"
 msgid "Datepicker input field"
-msgstr "Polje za datum"
+msgstr "Polje za unos i odabir datuma"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:48
 msgid "Datepicker menu"
-msgstr ""
+msgstr "Izbornik za odabir datuma"
 
 #: app/assets/javascripts/app/views/generic/timer.jst.eco:7
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:5
@@ -4691,22 +4517,16 @@ msgid "December"
 msgstr "Prosinac"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:66
-#, fuzzy
-#| msgid "Recent Logs"
 msgid "Decrement hours value"
-msgstr "Nedavni evidentirani unosi"
+msgstr "Smanji broj sati"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:68
-#, fuzzy
-#| msgid "Average: %s minutes"
 msgid "Decrement minutes value"
-msgstr "Prosjek: %s minuta"
+msgstr "Vrijednost minuta smanjenja"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:71
-#, fuzzy
-#| msgid "Increment (SystemID.Counter)"
 msgid "Decrement seconds value"
-msgstr "Povećanje (SystemID.brojač)"
+msgstr "Vrijednost sekundi smanjenja"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:293
 msgid "Decryption failed!"
@@ -4790,10 +4610,8 @@ msgid "Default type for a new ticket"
 msgstr "Zadana vrsta novog ticketa"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:47
-#, fuzzy
-#| msgid "Time zone is required."
 msgid "Default value is required."
-msgstr "Vremenska zona je obavezna."
+msgstr "Zadana vrijednost je obavezna."
 
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:15
 #: db/seeds/settings.rb:2486
@@ -5796,10 +5614,8 @@ msgid "Delete Knowledge Base"
 msgstr "Obriši bazu podataka"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:31
-#, fuzzy
-#| msgid "Delete Ticket"
 msgid "Delete Object"
-msgstr "Obriši ticket"
+msgstr "Obriši objekt"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:9
 msgid "Delete Ticket"
@@ -5822,16 +5638,12 @@ msgid "Delete avatar"
 msgstr "Obriši avatar"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:150
-#, fuzzy
-#| msgid "Delete Article"
 msgid "Delete column"
-msgstr "Obriši članak"
+msgstr "Obriši stupac"
 
 #: db/seeds/permissions.rb:264
-#, fuzzy
-#| msgid "Delete all existing records first."
 msgid "Delete existing data of your system."
-msgstr "Najprije obrišite sve postojeće zapise."
+msgstr "Obriši postojeće podatke svog sustava."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:102
 msgid "Delete immediately"
@@ -5874,34 +5686,24 @@ msgid "Delete records"
 msgstr "Brisanje zapisa"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:122
-#, fuzzy
-#| msgid "Delete User"
 msgid "Delete row"
-msgstr "Obriši korisnika"
+msgstr "Obriši red"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:207
-#, fuzzy
-#| msgid "Delete File"
 msgid "Delete table"
-msgstr "Obriši datoteku"
+msgstr "Obriši tablicu"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:154
-#, fuzzy
-#| msgid "Getting an Access Token"
 msgid "Delete this access token"
-msgstr "Kreiranje pristupnog tokena"
+msgstr "Obriši ovaj pristupni token"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:352
-#, fuzzy
-#| msgid "Delete avatar"
 msgid "Delete this avatar"
-msgstr "Obriši avatar"
+msgstr "Obriši ovaj avatar"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:121
-#, fuzzy
-#| msgid "Delete avatar"
 msgid "Delete this device"
-msgstr "Obriši avatar"
+msgstr "Obriši ovaj uređaj"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:29
 msgid "Delete:"
@@ -5937,10 +5739,8 @@ msgstr "Isporuka nije uspjela:"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/DeliveryMessage.vue:13
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleDeliveryMessage.vue:33
-#, fuzzy
-#| msgid "Delivery failed:"
 msgid "Delivery failed: \"%s\""
-msgstr "Isporuka nije uspjela:"
+msgstr "Isporuka nije uspjela: \"%s\""
 
 #: db/seeds/object_manager_attributes.rb:1009
 msgid "Department"
@@ -6014,10 +5814,8 @@ msgid "Device"
 msgstr "Uređaj"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:89
-#, fuzzy
-#| msgid "The PGP key has been revoked."
 msgid "Device has been revoked."
-msgstr "PGP ključ je opozvan."
+msgstr "Uređaj je opozvan."
 
 #: app/assets/javascripts/app/controllers/_profile/devices.coffee:3
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:2
@@ -6044,7 +5842,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:36
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:165
 msgid "Did you know?"
-msgstr ""
+msgstr "Jeste li znali?"
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco:12
 msgid "Did you know? You can help translating %s at:"
@@ -6052,7 +5850,7 @@ msgstr "Jeste li znali? Možete pomoći u prevođenju %s na:"
 
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:49
 msgid "Did you plan to include attachments with this message?"
-msgstr ""
+msgstr "Namjeravate li dodati privitke ovoj poruci?"
 
 #: db/seeds/settings.rb:2074
 msgid "Digit required"
@@ -6071,10 +5869,8 @@ msgid "Direct URL"
 msgstr "Direktni URL"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:332
-#, fuzzy
-#| msgid "Ticket Subscriptions"
 msgid "Direct subscription URL"
-msgstr "Pretplate ticketa"
+msgstr "Izravni pretplatnički URL"
 
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:17
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:5
@@ -6098,14 +5894,9 @@ msgid "Disable Notifications"
 msgstr "Deaktiviraj obavijesti"
 
 #: db/seeds/settings.rb:1303
-#, fuzzy
-#| msgid ""
-#| "Enables sending of an email notification to a user when they link their "
-#| "account with a third-party application."
 msgid "Disables user creation on logon with a third-party application."
 msgstr ""
-"Aktivira slanje e-mail obavijesti korisnicima kad spoje svoj račun sa "
-"aplikacijom treće strane."
+"Onemogućuje stvaranje korisnika prilikom prijave s aplikacijom treće strane."
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:23
 msgid ""
@@ -6127,10 +5918,8 @@ msgid "Discard Changes"
 msgstr "Odbaci promjene"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:176
-#, fuzzy
-#| msgid "Discard Changes"
 msgid "Discard Snapshot"
-msgstr "Odbaci promjene"
+msgstr "Odbaci snimku"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:88
 msgid "Discard article"
@@ -6146,10 +5935,8 @@ msgid "Discard changes"
 msgstr "Odbaci promjene"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:239
-#, fuzzy
-#| msgid "Discard your unsaved changes"
 msgid "Discard unsaved reply"
-msgstr "Odbacite svoje nespremljene promjene."
+msgstr "Odbaci nespremljeni odgovor"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:136
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
@@ -6214,16 +6001,12 @@ msgid "Do you really want to set the visibility of this article to \"public\"?"
 msgstr "Želite li zaista postaviti vidljivost ovog članka na \"javno\"?"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:58
-#, fuzzy
-#| msgid "Do you really want to delete \"%s\"?"
 msgid "Do you want to continue?"
-msgstr "Želite li zaista izbrisati \"%s\"?"
+msgstr "Želite li nastaviti?"
 
 #: app/assets/javascripts/app/views/ticket_zoom/checklist_modal.jst.eco:4
-#, fuzzy
-#| msgid "Do you really want to delete this object?"
 msgid "Do you want to handle them before closing this ticket?"
-msgstr "Želite li zaista izbrisati ovaj objekt?"
+msgstr "Želite li ih obraditi prije zatvaranja ovog ticketa?"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:64
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:46
@@ -6304,16 +6087,12 @@ msgid "Download and install the %s Migration Plugin on your %s instance."
 msgstr "Preuzmite i instalirajte dodatak za migraciju %s u instanci %s."
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:123
-#, fuzzy
-#| msgid "Do not sign email"
 msgid "Download original email"
-msgstr "Ne potpisuj e-poštu"
+msgstr "Preuzmi izvorni e-mail"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:137
-#, fuzzy
-#| msgid "Download Private Key"
 msgid "Download raw email"
-msgstr "Preuzimanje privatnog ključa"
+msgstr "Preuzmi neobrađeni e-mail"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:319
 msgid "Downloading attachments…"
@@ -6325,42 +6104,32 @@ msgid "Draft"
 msgstr "Skica"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketSharedDraftZoom.vue:24
-#, fuzzy
-#| msgid "Draft available"
 msgid "Draft Available"
-msgstr "Nacrt dostupan"
+msgstr "Skica dostupna"
 
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:9
 msgid "Draft available"
 msgstr "Skica dostupna"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:95
-#, fuzzy
-#| msgid "Changes could not be saved."
 msgid "Draft could not be saved."
-msgstr "Promjene nije moguće spremiti."
+msgstr "Skicu nije moguće spremiti."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:33
-#, fuzzy
-#| msgid "User could not be updated."
 msgid "Draft could not be updated."
-msgstr "Nije moguće ažurirati korisnika."
+msgstr "Skicu nije moguće ažurirati."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:53
-#, fuzzy
-#| msgid "Draft"
 msgid "Drafts"
-msgstr "Nacrt"
+msgstr "Skice"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:51
 msgid "Drag and drop to reorder ticket overview list items."
-msgstr ""
+msgstr "Povucite i ispustite da biste promijenili redoslijed pregleda ticketa."
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:234
-#, fuzzy
-#| msgid "Drag to reorder"
 msgid "Drag and drop to reorder your tabs."
-msgstr "Vucite za promjenu redoslijeda"
+msgstr "Povucite i ispustite da biste promijenili redoslijed kartica."
 
 #: app/assets/javascripts/app/controllers/_application_controller/reorder_modal.coffee:2
 msgid "Drag to reorder"
@@ -6396,13 +6165,6 @@ msgid "Duration"
 msgstr "Trajanje"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts:25
-#, fuzzy
-#| msgid ""
-#| "Dynamic fields are not that common in Zammad, as we take a different "
-#| "approach to ticket attributes. Zammad also uses tags in addition to "
-#| "custom fields to classify tickets. This difference can create a new "
-#| "philosophy of your ticket attributes/tags compared to your current use of "
-#| "dynamic fields in OTRS."
 msgid ""
 "Dynamic fields are not that common in Zammad, as it takes a different "
 "approach to ticket attributes. Zammad also uses tags in addition to custom "
@@ -6410,7 +6172,7 @@ msgid ""
 "your ticket attributes/tags compared to your current use of dynamic fields "
 "in OTRS."
 msgstr ""
-"Dinamička polja nisu baš uobičajena u Zammadu, budući da imamo drugačiji "
+"Dinamička polja nisu baš uobičajena u Zammadu, budući da je drugačiji "
 "pristup atributima ticketa. Zammad također koristi oznake uz prilagođena "
 "polja za klasificiranje ticketa. Ova razlika može stvoriti novu filozofiju "
 "Vaših atributa ticketa/oznaka u usporedbi s Vašom trenutnom upotrebom "
@@ -6451,10 +6213,8 @@ msgid "Edit Answer"
 msgstr "Uredi odgovor"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:175
-#, fuzzy
-#| msgid "Category"
 msgid "Edit Category"
-msgstr "Kategorija"
+msgstr "Uredi kategoriju"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_customer.coffee:16
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:26
@@ -6463,10 +6223,8 @@ msgid "Edit Customer"
 msgstr "Uredi klijenta"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:171
-#, fuzzy
-#| msgid "Knowledge Base"
 msgid "Edit Knowledge Base"
-msgstr "Baza znanja"
+msgstr "Uredi bazu podataka"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee:21
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee:11
@@ -6476,23 +6234,17 @@ msgid "Edit Organization"
 msgstr "Uređivanje organizacije"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts:20
-#, fuzzy
-#| msgid "Authenticator App"
 msgid "Edit authenticator app"
-msgstr "Autentifikacijska aplikacija"
+msgstr "Uredi autentifikacijsku aplikaciju"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:111
-#, fuzzy
-#| msgid "Ticket title"
 msgid "Edit checklist title"
-msgstr "Naslov ticketa"
+msgstr "Uredi naslov liste zadataka"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:81
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:68
-#, fuzzy
-#| msgid "Edit mask"
 msgid "Edit item"
-msgstr "Prozor za uređivanje"
+msgstr "Uredi element"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:55
 msgid "Edit mask"
@@ -6504,16 +6256,12 @@ msgid "Edit reply"
 msgstr "Dodaj odgovor"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts:22
-#, fuzzy
-#| msgid "Security Keys"
 msgid "Edit security keys"
-msgstr "Sigurnosni ključevi"
+msgstr "Uredi sigurnosne ključeve"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:87
-#, fuzzy
-#| msgid "Ticket title"
 msgid "Edit ticket title"
-msgstr "Naslov ticketa"
+msgstr "Uredi naslov ticketa"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:38
 msgid "Editing"
@@ -6524,16 +6272,12 @@ msgid "Editing on Desktop"
 msgstr "Obrada ticketa na radnoj površini"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketLiveUsers.vue:57
-#, fuzzy
-#| msgid "Editing on Desktop"
 msgid "Editing on Mobile"
-msgstr "Obrada ticketa na desktopu"
+msgstr "Obrada ticketa u mobilnom načinu rada"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
-#, fuzzy
-#| msgid "Edit"
 msgid "Editor"
-msgstr "Mijenjati"
+msgstr "Urednik"
 
 #: db/seeds/settings.rb:3560
 msgid "Elasticsearch Attachment Extensions"
@@ -6588,10 +6332,8 @@ msgid "Elasticsearch needs to be configured!"
 msgstr "Elasticsearch treba konfigurirati!"
 
 #: app/models/system_report/plugin/search_index.rb:4
-#, fuzzy
-#| msgid "Elasticsearch SSL verification"
 msgid "Elasticsearch version"
-msgstr "Elasticsearch SSL provjera"
+msgstr "Elasticsearch verzija"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:67
@@ -6689,10 +6431,8 @@ msgid "Email Verification"
 msgstr "Provjera e-poštom"
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:33
-#, fuzzy
-#| msgid "Email Address"
 msgid "Email address"
-msgstr "Adresa e-pošte"
+msgstr "E-mail adresa"
 
 #: app/models/user.rb:609
 msgid "Email address '%{email}' is already used for another user."
@@ -6886,10 +6626,8 @@ msgid "Enables console logging."
 msgstr "Omogućava zapisivanje konzole."
 
 #: db/seeds/settings.rb:976
-#, fuzzy
-#| msgid "Enables priority icons in ticket overviews."
 msgid "Enables display of ticket priority icons in UI."
-msgstr "Omogućava prioritetne ikone u pregledima ticketa."
+msgstr "Omogućava prikaz prioritetnih ikona u pregledima ticketa."
 
 #: db/seeds/settings.rb:796
 msgid "Enables preview of attachments."
@@ -7193,6 +6931,7 @@ msgstr "Unesite svoje korisničko ime ili e-mail adresu"
 #: app/models/system_report/plugin/entities/counts.rb:4
 msgid "Entity counts of database objects (e.g. ticket count, user count, etc.)"
 msgstr ""
+"Broj entiteta objekata baze podataka (npr. broj ticketa, broj korisnika itd.)"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:6
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:165
@@ -7290,26 +7029,20 @@ msgid "Escalation at (Update Time)"
 msgstr "Eskalacija u (vrijeme ažuriranja)"
 
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:51
-#, fuzzy
-#| msgid "pending"
 msgid "Event Ending"
-msgstr "na čekanju"
+msgstr "Završetak događaja"
 
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:42
-#, fuzzy
-#| msgid "Location"
 msgid "Event Location"
-msgstr "Lokacija"
+msgstr "Lokacija događaja"
 
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:46
-#, fuzzy
-#| msgid "Expert Settings"
 msgid "Event Starting"
-msgstr "Napredne postavke"
+msgstr "Početak događaja"
 
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:38
 msgid "Event Summary"
-msgstr ""
+msgstr "Opis događaja"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:271
 msgid ""
@@ -7433,14 +7166,12 @@ msgid "Existing tickets (open)"
 msgstr "Postojećih ticketa (otvoreni)"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar.vue:163
-#, fuzzy
-#| msgid "Sidebar"
 msgid "Expand sidebar"
-msgstr "Bočna traka"
+msgstr "Proširi bočnu traku"
 
 #: app/frontend/apps/desktop/components/CollapseButton/CollapseButton.vue:60
 msgid "Expand this element"
-msgstr ""
+msgstr "Proširi ovaj element"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:217
 msgid "Expert"
@@ -7459,10 +7190,8 @@ msgid "Experts"
 msgstr "Napredni"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:37
-#, fuzzy
-#| msgid "Escalation at"
 msgid "Expiration date"
-msgstr "Eskalacija u"
+msgstr "Datum isteka"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:15
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:19
@@ -7520,20 +7249,14 @@ msgid "Facebook Developer Site"
 msgstr "Facebook programerska stranica"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/facebookDirectMessage.ts:7
-#, fuzzy
-#| msgid "facebook direct-message"
 msgid "Facebook Direct Message"
-msgstr "direktna Facebook poruka"
+msgstr "Direktna Facebook poruka"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/facebookFeedComment.ts:6
-#, fuzzy
-#| msgid "facebook feed comment"
 msgid "Facebook Feed Comment"
 msgstr "Facebook komentar aktivnosti"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/facebookFeedPost.ts:7
-#, fuzzy
-#| msgid "facebook feed post"
 msgid "Facebook Feed Post"
 msgstr "Facebook poruka aktivnosti"
 
@@ -7541,17 +7264,13 @@ msgstr "Facebook poruka aktivnosti"
 msgid "Failed Tasks"
 msgstr "Neuspjeli zadaci"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:148
-#, fuzzy
-#| msgid "Create new customer"
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:143
 msgid "Failed to add new checklist item."
-msgstr "Stvori novog klijenta"
+msgstr "Dodavanje nove stavke liste zadataka nije uspjelo."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:169
-#, fuzzy
-#| msgid "Create new customer"
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:164
 msgid "Failed to delete checklist item."
-msgstr "Stvori novog klijenta"
+msgstr "Brisanje stavke liste zadataka nije uspjelo."
 
 #: app/controllers/channels_google_controller.rb:96
 #: app/controllers/channels_microsoft365_controller.rb:96
@@ -7559,47 +7278,39 @@ msgid "Failed to find backup on channel!"
 msgstr "Sigurnosnu kopiju kanala nije moguće pronaći!"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleMediaError.vue:35
-#, fuzzy
-#| msgid "File '%s' is uploading"
 msgid "Failed to load content."
-msgstr "Datoteka '%s' se učitava"
+msgstr "Nije moguće učitati sadržaj."
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:223
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:235
 msgid "Failed to roll back the migration of the channel!"
 msgstr "Poništavanje migracije kanala nije uspjelo!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:155
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:150
 msgid "Failed to save checklist order."
-msgstr ""
+msgstr "Nije moguće spremiti poredak liste zadataka."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:114
-#, fuzzy
-#| msgid "Invalid security code! Please try again with a new code."
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:118
 msgid "Failed to save the order of the checklist items. Please try again."
-msgstr "Netočan sigurnosni kod! Molimo pokušajte ponovno, sa novim kodom."
+msgstr ""
+"Nije moguće spremiti poredak stavki liste zadataka. Molimo, pokušajte "
+"ponovno."
 
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:52
 msgid "Failed to send email to \"%s\". Please contact an administrator."
 msgstr "Slanje maila na \"%s\" nije uspjelo. Obratite se administratoru."
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:169
-#, fuzzy
-#| msgid "Invalid security code! Please try again with a new code."
 msgid "Failed to set up QR code. Please try again."
-msgstr "Netočan sigurnosni kod! Molimo pokušajte ponovno, sa novim kodom."
+msgstr "Postavljanje QR koda nije uspjelo. Molimo, pokušajte ponovno."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:162
-#, fuzzy
-#| msgid "Create new customer"
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:157
 msgid "Failed to update checklist item."
-msgstr "Stvori novog klijenta"
+msgstr "Ažuriranje stavke liste zadataka nije uspjelo."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageFailedUploadOverlay.vue:23
-#, fuzzy
-#| msgid "File '%s' is uploading"
 msgid "Failed to upload."
-msgstr "Datoteka '%s' se učitava"
+msgstr "Prijenos nije uspio."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/fax.ts:7
 #: db/seeds/object_manager_attributes.rb:877
@@ -7663,7 +7374,7 @@ msgstr "Datoteka je prevelika, dopušteno je najviše %s MB."
 
 #: app/models/system_report/plugin/rails_root.rb:4
 msgid "Filepath to Zammad directory"
-msgstr ""
+msgstr "Putanja datoteke do Zammad mape"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:5
 #: db/seeds/settings.rb:354
@@ -7961,8 +7672,6 @@ msgid "Full Name"
 msgstr "Puno ime"
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailAccountForm.ts:24
-#, fuzzy
-#| msgid "Full Name"
 msgid "Full name"
 msgstr "Puno ime"
 
@@ -7996,16 +7705,12 @@ msgid "Generate Access Token for |%s|"
 msgstr "Generirajte pristupni token za |%s|"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:260
-#, fuzzy
-#| msgid "Generate recovery codes"
 msgid "Generate Recovery Codes"
 msgstr "Generiraj kodove oporavka"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:32
-#, fuzzy
-#| msgid "Generate recovery codes"
 msgid "Generate Recovery Codes: %s"
-msgstr "Generiraj kodove oporavka"
+msgstr "Generiraj kodove oporavka: %s"
 
 #: app/assets/javascripts/app/controllers/api.coffee:167
 msgid "Generate Token"
@@ -8021,10 +7726,8 @@ msgid "Generate user-based stats."
 msgstr "Generirajte korisničku statistiku."
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationRecoveryCodes.vue:121
-#, fuzzy
-#| msgid "Generate recovery codes"
 msgid "Generating recovery codes…"
-msgstr "Generiraj kodove oporavka"
+msgstr "Generiram kodove oporavka…"
 
 #: app/assets/javascripts/app/controllers/_integration/cti.coffee:264
 msgid "Generic API to integrate VoIP service provider with real-time push."
@@ -8210,7 +7913,7 @@ msgstr "Google Client Secret (tajna)"
 
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
 msgid "Got it!"
-msgstr ""
+msgstr "Razumijem!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:16
 msgid "Green"
@@ -8380,7 +8083,7 @@ msgstr "Rukovanje zadacima zaštite podataka."
 
 #: app/models/system_report/plugin/hardware.rb:4
 msgid "Hardware (e.g. CPU cores, memory, disk space)"
-msgstr ""
+msgstr "Hardver (npr. CPU jezgre, memorija, prostor na disku)"
 
 #: app/assets/javascripts/app/models/job.coffee:18
 msgid "Has processed"
@@ -8397,10 +8100,8 @@ msgid "Has ticket open in tabs, but is not actively looking at the ticket."
 msgstr "Ima ticket otvoren u karticama, ali nije aktivan u njemu."
 
 #: app/frontend/apps/desktop/components/CommonUpdateIndicator/CommonUpdateIndicator.vue:8
-#, fuzzy
-#| msgid "updated"
 msgid "Has update"
-msgstr "ažurirano"
+msgstr "ima ažuriranje"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:12
 msgid "Hash"
@@ -8461,7 +8162,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelp.vue:18
 #: app/frontend/apps/desktop/components/CommonPageHelp/CommonPageHelpDialog.vue:20
 msgid "Help"
-msgstr ""
+msgstr "Pomoć"
 
 #: app/assets/javascripts/app/controllers/_plugin/translation_support.coffee:39
 msgid "Help to improve Zammad!"
@@ -8559,10 +8260,8 @@ msgid "High priority"
 msgstr "Visoki prioritet"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/HighlightMenu.vue:70
-#, fuzzy
-#| msgid "Highlight icon"
 msgid "Highlight"
-msgstr "Simbol oznake"
+msgstr "Istakni"
 
 #: app/assets/javascripts/app/models/ticket_priority.coffee:7
 msgid "Highlight color"
@@ -9022,22 +8721,16 @@ msgstr "Uvezeno"
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:286
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:117
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:93
-#, fuzzy
-#| msgid ""
-#| "In addition, we have found emails in your mailbox that are older than %s "
-#| "weeks. You can import such emails as an \"archive\", which means that no "
-#| "notifications are sent and the tickets have the status \"closed\". "
-#| "However, you can find them in Zammad anytime using the search function."
 msgid ""
 "In addition, emails were found in your mailbox that are older than %s weeks. "
 "You can import such emails as an \"archive\", which means that no "
 "notifications are sent and the tickets have the status \"closed\". However, "
 "you can find them in Zammad anytime using the search function."
 msgstr ""
-"Osim toga, u poštanskom sandučiću pronašli smo e-poruke starije od %s "
-"tjedana. Ove e-poruke možete uvesti kao \"arhivu\", odnosno ne šalju se "
-"obavijesti, a ticketi imaju status \"zatvoreno\". Međutim, uvijek ih možete "
-"pronaći pomoću funkcije pretraživanja u Zammadu."
+"Osim toga, pronašli smo e-mailove starije od %s tjedana. Ove e-mailove "
+"možete uvesti kao \"arhivu\", odnosno ne šalju se obavijesti, a ticketi "
+"imaju status \"zatvoreno\". Međutim, uvijek ih možete pronaći pomoću "
+"funkcije pretraživanja u Zammadu."
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:22
 msgid "In order for Zammad to access %s, the %s API token must be stored here:"
@@ -9052,10 +8745,8 @@ msgstr ""
 "redoslijed LDAP izvora putem povlačenja i spuštanja."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:75
-#, fuzzy
-#| msgid "inactive"
 msgid "Inactive"
-msgstr "nije aktivno"
+msgstr "neaktivan"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:60
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:13
@@ -9088,27 +8779,27 @@ msgstr "Priložiti privitke članku?"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:81
 msgid "Include unassigned tickets in subscription for escalated tickets."
-msgstr ""
+msgstr "Dodajte nedodijeljene tickete u pretplatu za eskalirane tickete."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:112
 msgid "Include unassigned tickets in subscription for new & open tickets."
-msgstr ""
+msgstr "Dodaj nedodijeljene tickete u pretplatu za nove i otvorene tickete."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:140
 msgid "Include unassigned tickets in subscription for pending tickets."
-msgstr ""
+msgstr "Uključi nedodijeljene tickete u pretplatu za tickete na čekanju."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:68
 msgid "Include your own tickets in subscription for escalated tickets."
-msgstr ""
+msgstr "Uključi vlastite tickete u pretplatu za eskalirane tickete."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:98
 msgid "Include your own tickets in subscription for new & open tickets."
-msgstr ""
+msgstr "Uključi vlastite tickete u pretplatu za nove i otvorene tickete."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:128
 msgid "Include your own tickets in subscription for pending tickets."
-msgstr ""
+msgstr "Uključi vlastite tickete u pretplatu za tickete na čekanju."
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:117
 msgid "Included ticket overviews"
@@ -9116,7 +8807,7 @@ msgstr "Uključeni pregledi ticketa"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:309
 msgid "Includes escalated, new & open and pending tickets."
-msgstr ""
+msgstr "Sadrži eskalirane, nove, otvorene i tickete na čekanju."
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:26
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:22
@@ -9125,16 +8816,12 @@ msgstr "Sadrži privatni ključ."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
 #: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:347
-#, fuzzy
-#| msgid "Incomplete credentials"
 msgid "Incomplete Ticket Checklist"
-msgstr "Nepotpuni pristupni podaci"
+msgstr "Nepotpuna lista zadataka"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklist.vue:29
-#, fuzzy
-#| msgid "Incomplete credentials"
 msgid "Incomplete checklist items"
-msgstr "Nepotpuni pristupni podaci"
+msgstr "Nepotpune stavke liste zadataka"
 
 #: app/controllers/import_freshdesk_controller.rb:45
 #: app/controllers/import_kayako_controller.rb:35
@@ -9147,34 +8834,24 @@ msgid "Increment (SystemID.Counter)"
 msgstr "Povećanje (SystemID.brojač)"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:55
-#, fuzzy
-#| msgid "in hours"
 msgid "Increment hours value"
-msgstr "u satima"
+msgstr "Povećaj vrijednost sati"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:57
-#, fuzzy
-#| msgid "Increment (SystemID.Counter)"
 msgid "Increment minutes value"
-msgstr "Povećanje (SystemID.brojač)"
+msgstr "Povećaj vrijednost minuta"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:60
-#, fuzzy
-#| msgid "Increment (SystemID.Counter)"
 msgid "Increment seconds value"
-msgstr "Povećanje (SystemID.brojač)"
+msgstr "Povećaj vrijednost sekundi"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:235
-#, fuzzy
-#| msgid "Incident"
 msgid "Indent text"
-msgstr "Incident"
+msgstr "Uvuci tekst"
 
 #: app/frontend/apps/desktop/components/CommonProgressBar/CommonProgressBar.vue:16
-#, fuzzy
-#| msgid "No import in progress."
 msgid "Indicating progress"
-msgstr "Nema uvoza u tijeku."
+msgstr "Pokazivanje napretka"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:7
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:7
@@ -9215,39 +8892,35 @@ msgstr "Neposredni sadržaj nije moguće generirati."
 
 #: app/models/object_manager/attribute/data_option_validator.rb:41
 msgid "Input field must be text, password, tel, fax, email or url type."
-msgstr ""
+msgstr "Polje za unos mora biti tekst, lozinka, telefon, faks, e-mail ili url."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:319
 msgid "Insert code block"
-msgstr ""
+msgstr "Umetanje blok koda"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:141
 msgid "Insert column after"
-msgstr ""
+msgstr "Umetni stupac iza"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:132
 msgid "Insert column before"
-msgstr ""
+msgstr "Umetni stupac ispred"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:308
-#, fuzzy
-#| msgid "Inserts text module"
 msgid "Insert inline code"
-msgstr "Dodaje tekstni modul"
+msgstr "Umetni neposredni kod"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:104
 msgid "Insert row above"
-msgstr ""
+msgstr "Umetni red iznad"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:113
 msgid "Insert row below"
-msgstr ""
+msgstr "Umetni red ispod"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:291
-#, fuzzy
-#| msgid "Inserts text module"
 msgid "Insert table"
-msgstr "Dodaje tekstni modul"
+msgstr "Umetni tablicu"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
 msgid "Insert text from Knowledge Base article"
@@ -9459,10 +9132,8 @@ msgid "Invalid video URL"
 msgstr "Neispravna video poveznica"
 
 #: app/assets/javascripts/app/controllers/layout_ref.coffee:650
-#, fuzzy
-#| msgid "Invitation sent!"
 msgid "Invitation sent to %s"
-msgstr "Poziv poslan!"
+msgstr "Poziv je poslan %s"
 
 #: app/assets/javascripts/app/controllers/getting_started/agent.coffee:78
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualInviteColleagues.vue:100
@@ -9558,7 +9229,7 @@ msgstr "Nije moguće spajanje u već spojeni ticket."
 #: app/assets/javascripts/app/models/checklist.coffee:8
 #: app/assets/javascripts/app/models/checklist_template.coffee:8
 msgid "Items"
-msgstr ""
+msgstr "Stavke"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:15
 msgid "Items per page"
@@ -9643,14 +9314,10 @@ msgid "Keyboard Shortcuts"
 msgstr "Prečice na tipkovnici"
 
 #: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:4
-#, fuzzy
-#| msgid "Keyboard Shortcuts"
 msgid "Keyboard Shortcuts Enabled"
-msgstr "Prečice na tipkovnici"
+msgstr "Prečice na tipkovnici aktivirane"
 
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/plugins/keyboard-shortcuts.ts:7
-#, fuzzy
-#| msgid "Keyboard Shortcuts"
 msgid "Keyboard shortcuts"
 msgstr "Prečice na tipkovnici"
 
@@ -9745,10 +9412,8 @@ msgid "Last Article"
 msgstr "Zadnji članak"
 
 #: lib/excel_sheet/ticket.rb:59
-#, fuzzy
-#| msgid "Closed At"
 msgid "Last Closed At"
-msgstr "Zatvoreno u"
+msgstr "Zadnji put zatvoreno u"
 
 #: lib/excel_sheet/ticket.rb:71
 msgid "Last Contact Agent At"
@@ -9771,10 +9436,8 @@ msgid "Last Internal Article"
 msgstr "Zadnji interni članak"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:109
-#, fuzzy
-#| msgid "Last used"
 msgid "Last Used"
-msgstr "Zadnji put korišten"
+msgstr "Zadnji put korišteno"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/attribute_bar.coffee:123
 msgid "Last change %s %s by %s"
@@ -9811,6 +9474,8 @@ msgstr "Zadnji kontakt (klijent)"
 msgid ""
 "Last created at of database objects (e.g. when was the last trigger created)"
 msgstr ""
+"Posljednji datum stvaranja objekata baze podataka (npr. kada je zadnji "
+"okidač stvoren)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:224
 msgid "Last login"
@@ -9866,7 +9531,7 @@ msgstr "Ograniči na grupe"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:61
 msgid "Limit notifications to specific groups"
-msgstr ""
+msgstr "Ograničavanje obavijesti na određene grupe"
 
 #: db/seeds/settings.rb:3008
 msgid "Limit tickets by IP per day"
@@ -9920,10 +9585,8 @@ msgid "Link Related Answer"
 msgstr "Poveži sličan odgovor"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:176
-#, fuzzy
-#| msgid "Link Accounts"
 msgid "Link account on %s"
-msgstr "Povezani računi"
+msgstr "Poveži račun sa %s"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:26
 msgid "Link issue"
@@ -9967,11 +9630,11 @@ msgstr "Poveznice"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:219
 msgid "List of all user taskbar tabs"
-msgstr ""
+msgstr "Popis svih korisničkih kartica programske trake"
 
 #: app/models/system_report/plugin/addons.rb:4
 msgid "List of installed addons"
-msgstr ""
+msgstr "Popis instaliranih dodataka"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:212
 msgid "List of shortcuts"
@@ -9981,7 +9644,7 @@ msgstr "Lista prečaca"
 msgid ""
 "Lists active channels (e.g. 1 Telegram channel, 2 Microsoft channels and 1 "
 "Google channel)"
-msgstr ""
+msgstr "Popis aktivnih kanala (npr. 1 Telegram, 2 Microsoft i 1 Google kanal)"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:38
 msgid "Load"
@@ -10108,7 +9771,7 @@ msgstr "Nizak prioritet"
 
 #: app/models/system_report/plugin/mac_address.rb:4
 msgid "MAC address (unique identifier of the report)"
-msgstr ""
+msgstr "MAC adresa (jedinstveni identifikator prijave)"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:3
 msgid "Macro"
@@ -10141,10 +9804,8 @@ msgstr ""
 "radnji u ticketu izvrši samo jednim klikom."
 
 #: app/frontend/apps/desktop/components/layout/LayoutPage.vue:38
-#, fuzzy
-#| msgid "Sidebar"
 msgid "Main sidebar"
-msgstr "Bočna traka"
+msgstr "Glavna bočna traka"
 
 #: app/assets/javascripts/app/controllers/maintenance.coffee:3
 #: app/assets/javascripts/app/views/maintenance.jst.eco:3
@@ -10170,64 +9831,48 @@ msgid "Manage"
 msgstr "Upravljaj"
 
 #: db/seeds/permissions.rb:228
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage API of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte API-om Vašeg %s sustava."
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:30
-#, fuzzy
-#| msgid "Select Template"
 msgid "Manage Checklist Template"
-msgstr "Odaberi predložak"
+msgstr "Upravljajte predloškom liste zadataka"
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:31
-#, fuzzy
-#| msgid "Select Template"
 msgid "Manage Checklist Templates"
-msgstr "Odaberi predložak"
+msgstr "Upravljajte predlošcima listi zadataka"
 
 #: db/seeds/permissions.rb:168
-#, fuzzy
-#| msgid "Enter the Subdomain of your %s system"
 msgid "Manage Facebook channel of your system."
-msgstr "Unesite poddomenu Vaše %s instance"
+msgstr "Upravljajte Facebook kanalom Vašeg sustava."
 
 #: db/seeds/permissions.rb:150
-#, fuzzy
-#| msgid "Enter the Subdomain of your %s system"
 msgid "Manage Google mail channel of your system."
-msgstr "Unesite poddomenu Vaše %s instance"
+msgstr "Upravljajte Google kanalom Vašeg sustava."
 
 #: db/seeds/permissions.rb:156
 msgid "Manage Microsoft 365 mail channel of your system."
-msgstr ""
+msgstr "Upravljajte Microsoft 365 kanalom Vašeg sustava."
 
 #: db/seeds/permissions.rb:138
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage SMS channel of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte SMS kanalom Vašeg sustava."
 
 #: db/seeds/permissions.rb:72
 msgid "Manage Service Level Agreements of your system."
-msgstr ""
+msgstr "Upravljajte SLA-ovima Vašeg sustava."
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:20
 msgid "Manage Tags"
 msgstr "Upravljanje oznakama"
 
 #: db/seeds/permissions.rb:174
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage Telegram channel of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte Telegram kanalom Vašeg sustava."
 
 #: db/seeds/permissions.rb:162
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage Twitter channel of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte Twitter kanalom Vašeg sustava."
 
 #: app/assets/javascripts/app/controllers/user.coffee:162
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:4
@@ -10235,28 +9880,20 @@ msgid "Manage Two-Factor Authentication"
 msgstr "Postavi dvofaktorsku autentifikaciju"
 
 #: db/seeds/permissions.rb:180
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage WhatsApp channel of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte WhatsApp kanalom Vašeg sustava."
 
 #: db/seeds/permissions.rb:288
-#, fuzzy
-#| msgid "Enter the Subdomain of your %s system"
 msgid "Manage active user sessions of your system."
-msgstr "Unesite poddomenu Vaše %s instance"
+msgstr "Upravljajte aktivnim korisničkim sesijama Vašeg sustava."
 
 #: db/seeds/permissions.rb:30
-#, fuzzy
-#| msgid "New organizations are shared."
 msgid "Manage all organizations of your system."
-msgstr "Nove organizacije kreiraju se sa dijeljenim sadržajem."
+msgstr "Upravljajte svim organizacijama Vašeg sustava."
 
 #: db/seeds/permissions.rb:12
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage all users of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte svim korisnicima Vašeg sustava."
 
 #: app/assets/javascripts/app/views/api.jst.eco:48
 msgid ""
@@ -10268,273 +9905,191 @@ msgstr ""
 
 #: db/seeds/permissions.rb:186
 msgid "Manage branding settings of your system."
-msgstr ""
+msgstr "Upravljajte postavkama brendiranja Vašeg sustava."
 
 #: db/seeds/permissions.rb:66
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage calendars of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte kalendarima Vašeg sustava."
 
 #: db/seeds/permissions.rb:144
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage chat channel of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte chat kanalom Vašeg sustava."
 
 #: db/seeds/permissions.rb:192
-#, fuzzy
-#| msgid "Manage %s Settings"
 msgid "Manage core system settings."
-msgstr "Upravljaj postavkama %s"
+msgstr "Upravljajte osnovnim postavkama sustava."
 
 #: db/seeds/permissions.rb:252
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage core workflows of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte temeljnim tijekovima rada Vašeg sustava."
 
 #: db/seeds/permissions.rb:132
-#, fuzzy
-#| msgid "Enter the Subdomain of your %s system"
 msgid "Manage email channel of your system."
-msgstr "Unesite poddomenu Vaše %s instance"
+msgstr "Upravljajte e-mail kanalom Vašeg sustava."
 
 #: db/seeds/permissions.rb:126
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage form channel of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte kanalom obrasca Vašeg sustava."
 
 #: db/seeds/permissions.rb:18
-#, fuzzy
-#| msgid "To configure your system."
 msgid "Manage groups of your system."
-msgstr "Konfigurirajte Vaš sustav."
+msgstr "Upravljajte grupama Vašeg sustava."
 
 #: db/seeds/permissions.rb:222
-#, fuzzy
-#| msgid "Enter the Subdomain of your %s system"
 msgid "Manage integrations of your system."
-msgstr "Unesite poddomenu Vaše %s instance"
+msgstr "Upravljajte integracijama Vašeg sustava."
 
 #: db/seeds/permissions.rb:270
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage maintenance mode of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte načinom održavanja Vašeg sustava."
 
 #: db/seeds/permissions.rb:276
-#, fuzzy
-#| msgid "Enter the Subdomain of your %s system"
 msgid "Manage monitoring of your system."
-msgstr "Unesite poddomenu Vaše %s instance"
+msgstr "Upravljajte nadzorom Vašeg sustava."
 
 #: db/seeds/permissions.rb:234
 msgid "Manage object attributes of your system."
-msgstr ""
+msgstr "Upravljajte atributima objekata Vašeg sustava."
 
 #: db/seeds/permissions.rb:282
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage packages of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte paketima Vašeg sustava."
 
 #: db/seeds/permissions.rb:448
-#, fuzzy
-#| msgid "Personal Access Tokens"
 msgid "Manage personal API tokens."
-msgstr "Tokeni za osobni pristup"
+msgstr "Upravljajte osobnim API tokenima."
 
 #: db/seeds/permissions.rb:396
 msgid "Manage personal appearance settings."
-msgstr ""
+msgstr "Upravljajte privatnim postavkama izgleda."
 
 #: db/seeds/permissions.rb:410
-#, fuzzy
-#| msgid "Manage %s Settings"
 msgid "Manage personal avatar settings."
-msgstr "Upravljaj postavkama %s"
+msgstr "Upravljanje postavkama osobnog avatara."
 
 #: db/seeds/permissions.rb:482
 msgid "Manage personal calendar."
-msgstr ""
+msgstr "Upravljajte osobnim kalendarom."
 
 #: db/seeds/permissions.rb:441
-#, fuzzy
-#| msgid "Clean up dead sessions."
 msgid "Manage personal devices and sessions."
-msgstr "Uredite neresponzivne sesije."
+msgstr "Upravljajte osobnim uređajima i sesijama."
 
 #: db/seeds/permissions.rb:403
-#, fuzzy
-#| msgid "Manage %s Settings"
 msgid "Manage personal language settings."
-msgstr "Upravljaj postavkama %s"
+msgstr "Upravljanje osobnim jezičnim postavkama."
 
 #: db/seeds/permissions.rb:455
 msgid "Manage personal linked accounts."
-msgstr ""
+msgstr "Upravljajte osobnim povezanim računima."
 
 #: db/seeds/permissions.rb:462
-#, fuzzy
-#| msgid "Manage your notification settings"
 msgid "Manage personal notifications settings."
-msgstr "Podesite svoje postavke obavijesti"
+msgstr "Upravljanje postavkama osobnih obavijesti."
 
 #: db/seeds/permissions.rb:417
-#, fuzzy
-#| msgid "Manage your notification settings"
 msgid "Manage personal out of office settings."
-msgstr "Podesite svoje postavke obavijesti"
+msgstr "Upravljajte osobnim postavkama za odsustvo."
 
 #: db/seeds/permissions.rb:472
-#, fuzzy
-#| msgid "Personal overview order was reset."
 msgid "Manage personal overviews."
-msgstr "Resetiran redoslijed vlastitih pregleda."
+msgstr "Upravljajte osobnim pregledima."
 
 #: db/seeds/permissions.rb:389
-#, fuzzy
-#| msgid "Manage %s Settings"
 msgid "Manage personal settings."
-msgstr "Upravljaj postavkama %s"
+msgstr "Upravljajte osobnim postavkama."
 
 #: db/seeds/permissions.rb:434
-#, fuzzy
-#| msgid "Could not remove two-factor authentication method"
 msgid "Manage personal two-factor authentication methods."
-msgstr "Nije moguće ukloniti dvofaktorsku autentifikacijsku metodu"
+msgstr "Upravljajte osobnim dvofaktorskim autentifikacijskim metodama."
 
 #: db/seeds/permissions.rb:84
-#, fuzzy
-#| msgid "Enter the Subdomain of your %s system"
 msgid "Manage public links of your system."
-msgstr "Unesite poddomenu Vaše %s instance"
+msgstr "Upravljajte javnim poveznicama Vašeg sustava."
 
 #: db/seeds/permissions.rb:102
-#, fuzzy
-#| msgid "To configure your system."
 msgid "Manage report profiles of your system."
-msgstr "Konfigurirajte Vaš sustav."
+msgstr "Upravljajte profilima izvještaja Vašeg sustava."
 
 #: db/seeds/permissions.rb:24
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage roles of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte ulogama Vašeg sustava."
 
 #: db/seeds/permissions.rb:96
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage schedulers of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte automatizacijama Vašeg sustava."
 
 #: db/seeds/permissions.rb:198
 msgid "Manage security settings of your system."
-msgstr ""
+msgstr "Upravljajte sigurnosnim postavkama Vašeg sustava."
 
 #: db/seeds/permissions.rb:294
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage system report of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte sustavskim izvještajem Vašeg sustava."
 
 #: db/seeds/permissions.rb:42
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage text modules of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte tekstnim modulima Vašeg sustava."
 
 #: db/seeds/permissions.rb:210
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage ticket auto assignment settings of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte postavkama automatske dodjele ticketa Vašeg sustava."
 
 #: db/seeds/permissions.rb:300
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage ticket checklists of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte listama zadataka Vašeg sustava."
 
 #: db/seeds/permissions.rb:216
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage ticket duplicate detection settings of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte postavkama otkrivanja duplikata ticketa Vašeg sustava."
 
 #: db/seeds/permissions.rb:48
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage ticket macros of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte makronaredbama Vašeg sustava."
 
 #: db/seeds/permissions.rb:36
-#, fuzzy
-#| msgid "More ticket overviews"
 msgid "Manage ticket overviews of your system."
-msgstr "Više pregleda ticketa"
+msgstr "Upravljajte pregledima Vašeg sustava."
 
 #: db/seeds/permissions.rb:246
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage ticket priorities of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte prioritetima ticketa Vašeg sustava."
 
 #: db/seeds/permissions.rb:204
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage ticket settings of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte ticket postavkama Vašeg sustava."
 
 #: db/seeds/permissions.rb:240
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage ticket states of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte statusima ticketa Vašeg sustava."
 
 #: db/seeds/permissions.rb:60
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage ticket tags of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte oznakama Vašeg sustava."
 
 #: db/seeds/permissions.rb:54
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage ticket templates of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte predlošcima Vašeg sustava."
 
 #: db/seeds/permissions.rb:108
-#, fuzzy
-#| msgid "Enable time accounting for these tickets."
 msgid "Manage time accounting settings of your system."
-msgstr "Omogući računanje vremena za ove tickete."
+msgstr "Upravljajte zabilježbom vremena Vašeg sustava."
 
 #: db/seeds/permissions.rb:258
-#, fuzzy
-#| msgid "Enter the Subdomain of your %s system"
 msgid "Manage translations of your system."
-msgstr "Unesite poddomenu Vaše %s instance"
+msgstr "Upravljajte prijevodima Vašeg sustava."
 
 #: db/seeds/permissions.rb:78
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage triggers of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte okidačima Vašeg sustava."
 
 #: db/seeds/permissions.rb:120
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage web channel of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte mrežnim kanalom Vašeg sustava."
 
 #: db/seeds/permissions.rb:90
-#, fuzzy
-#| msgid "Enter the URL of your %s system."
 msgid "Manage webhooks of your system."
-msgstr "Unesite URL Vašeg %s sustava."
+msgstr "Upravljajte webhook-ovima Vašeg sustava."
 
 #: app/views/mailer/application.html.erb:47
 msgid "Manage your notification settings"
@@ -10625,10 +10180,8 @@ msgid "Mattermost, RocketChat"
 msgstr "Mattermost, RocketChat"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:35
-#, fuzzy
-#| msgid "must be an integer"
 msgid "Max length must be an integer."
-msgstr "mora biti broj"
+msgstr "Maksimalna duljina mora biti cijeli broj."
 
 #: app/assets/javascripts/app/models/chat.coffee:253
 #: app/assets/javascripts/app/views/channel/topics.jst.eco:7
@@ -10652,24 +10205,21 @@ msgid "Maximal"
 msgstr "Maksimalan"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:109
-#, fuzzy
-#| msgid "must be an integer"
 msgid "Maximal value must be an integer"
-msgstr "mora biti broj"
+msgstr "Maksimalna vrijednost mora biti cijeli broj"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:114
 msgid "Maximal value must be higher than -2147483648"
-msgstr ""
+msgstr "Maksimalna vrijednost mora biti veća od -2147483648"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:132
-#, fuzzy
-#| msgid "must be greater than or equal to %{count}"
 msgid "Maximal value must be higher than or equal to minimal value"
-msgstr "mora biti jednak ili veći od %{count}"
+msgstr ""
+"Maksimalna vrijednost mora biti veća od ili jednaka minimalnoj vrijednosti"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:119
 msgid "Maximal value must be lower than 2147483648"
-msgstr ""
+msgstr "Maksimalna vrijednost mora biti niža od 2147483648"
 
 #: db/seeds/settings.rb:3166
 msgid "Maximum Email Size"
@@ -10744,10 +10294,8 @@ msgid "Merge"
 msgstr "Spoji"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:169
-#, fuzzy
-#| msgid "Merge tickets"
 msgid "Merge cells"
-msgstr "Spoji tickete"
+msgstr "Spoji ćelije"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:51
 msgid "Merge tickets"
@@ -10873,10 +10421,8 @@ msgid "Minimal"
 msgstr "Minimum"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:87
-#, fuzzy
-#| msgid "must be an integer"
 msgid "Minimal value must be an integer"
-msgstr "mora biti broj"
+msgstr "Minimalna vrijednost mora biti cijeli broj"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:93
 msgid "Minimal value must be higher than -2147483648"
@@ -11605,7 +11151,7 @@ msgid "No certificate found."
 msgstr "Certifikat nije pronađen."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:430
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:419
 #, fuzzy
 #| msgid "You have not created a ticket yet."
 msgid "No checklist added to this ticket yet."
@@ -13069,7 +12615,7 @@ msgstr ""
 "Spremite dolje navedene kodove za oporavak negdje na sigurno. Možete ih "
 "koristiti za prijavu, ukoliko izgubite pristup drugoj dvofaktorskoj metodi:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:72
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
 #, fuzzy
 #| msgid "Please select at least one folder."
 msgid "Please select a checklist template."
@@ -13678,7 +13224,7 @@ msgid "Remove authenticator app"
 msgstr "Autentifikacijska aplikacija"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:376
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:365
 #, fuzzy
 #| msgid "Remove %s"
 msgid "Remove checklist"
@@ -13736,7 +13282,7 @@ msgid "Removes the shadows for a flat look."
 msgstr "Uklanja sjene za ravan dizajn."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:369
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:358
 msgid "Rename checklist"
 msgstr ""
 
@@ -14373,7 +13919,7 @@ msgstr "Spremi kao"
 msgid "Save as draft"
 msgstr "Spremi skicu"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:340
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
 #, fuzzy
 #| msgid "Discard Changes"
 msgid "Save changes"
@@ -14391,7 +13937,7 @@ msgstr "Spremljeni uvjeti"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1121
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1120
 msgid "Saving failed."
 msgstr "Spremanje nije uspjelo."
 
@@ -20622,10 +20168,8 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLocale.vue:38
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:167
-#, fuzzy
-#| msgid "Did you know? You can help translating %s at:"
 msgid "You can help translating Zammad."
-msgstr "Jeste li znali? Možete pomoći u prevođenju %s na:"
+msgstr "Možete pomoći u prevođenju Zammad-a."
 
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:19
 msgid "You can no longer see the data privacy task."
@@ -22212,7 +21756,7 @@ msgstr "spajano u"
 msgid "recovery codes"
 msgstr "kodovi za oporavak"
 
-#: app/models/checklist/item.rb:103
+#: app/models/checklist/item.rb:102
 #, fuzzy
 #| msgid "The article does not belong to the specified ticket."
 msgid "reference must not be the checklist ticket."

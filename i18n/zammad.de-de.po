@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-02 05:08+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2024-10-07 08:51+0000\n"
+"Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
 "Language: de-de\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.7\n"
+"X-Generator: Weblate 5.7.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -1329,7 +1329,7 @@ msgstr "Bot hinzufügen"
 msgid "Add Certificate"
 msgstr "Zertifikat hinzufügen"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:417
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:406
 msgid "Add Empty Checklist"
 msgstr "Leere Checkliste hinzufügen"
 
@@ -1502,8 +1502,6 @@ msgid "Add subclause"
 msgstr "Unterklausel hinzufügen"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:201
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Add tag"
 msgstr "Tag hinzufügen"
 
@@ -2977,7 +2975,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -3268,7 +3266,7 @@ msgstr "Checklisten-Vorlage"
 msgid "Checklist Template items are limited to 100 items per checklist."
 msgstr "Checklisten-Vorlagen sind auf 100 Elemente pro Checkliste begrenzt."
 
-#: app/models/checklist/item.rb:109
+#: app/models/checklist/item.rb:108
 msgid "Checklist items are limited to 100 items per checklist."
 msgstr ""
 "Die Anzahl der Elemente in einer Checkliste ist auf 100 pro Liste begrenzt."
@@ -7406,11 +7404,11 @@ msgstr "Facebook Feed-Beitrag"
 msgid "Failed Tasks"
 msgstr "Fehlgeschlagene Aufträge"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:148
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:143
 msgid "Failed to add new checklist item."
 msgstr "Das Hinzufügen eines neuen Checklisten-Elements ist fehlgeschlagen."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:169
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:164
 msgid "Failed to delete checklist item."
 msgstr "Checklisten-Element konnte nicht gelöscht werden."
 
@@ -7428,11 +7426,11 @@ msgstr "Der Inhalt konnte nicht geladen werden."
 msgid "Failed to roll back the migration of the channel!"
 msgstr "Die Rücknahme der Kanal-Migration ist fehlgeschlagen!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:155
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:150
 msgid "Failed to save checklist order."
 msgstr "Die Reihenfolge der Checkliste konnte nicht gespeichert werden."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:114
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:118
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 "Die Reihenfolge der Checklisten-Elemente konnte nicht gespeichert werden. "
@@ -7449,7 +7447,7 @@ msgid "Failed to set up QR code. Please try again."
 msgstr ""
 "QR-Code konnte nicht eingerichtet werden. Bitte versuchen Sie es erneut."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:162
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:157
 msgid "Failed to update checklist item."
 msgstr "Aktualisierung des Checklisten-Elements ist fehlgeschlagen."
 
@@ -11314,7 +11312,7 @@ msgid "No certificate found."
 msgstr "Kein Zertifikat gefunden."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:430
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:419
 msgid "No checklist added to this ticket yet."
 msgstr "Diesem Ticket wurde noch keine Checkliste hinzugefügt."
 
@@ -11411,7 +11409,7 @@ msgstr "Kein Proxy für die folgenden Hosts."
 
 #: lib/whatsapp/webhook/message/reaction.rb:13
 msgid "No related article found to process the reaction message on."
-msgstr "Es wurde kein Artikel gefunden, um die Statusmeldung zu verarbeiten."
+msgstr "Es wurde kein Artikel zur Verarbeitung der Reaktionsmeldung gefunden."
 
 #: lib/whatsapp/webhook/message/status.rb:15
 msgid "No related article found to process the status message on."
@@ -11460,10 +11458,8 @@ msgid "No source data submitted!"
 msgstr "Keine Quelldaten übermittelt!"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:194
-#, fuzzy
-#| msgid "No template created yet."
 msgid "No tags added yet."
-msgstr "Bisher wurde keine Vorlage angelegt."
+msgstr "Bisher wurden keine Tags angelegt."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:14
 msgid "No template created yet."
@@ -12722,7 +12718,7 @@ msgstr ""
 "sicheren Ort auf. Sie können sich damit anmelden, falls Sie den Zugang zu "
 "anderen Methoden für Zwei-Faktor-Authentifizierung verlieren:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:72
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
 msgid "Please select a checklist template."
 msgstr "Bitte wählen Sie eine Checklisten-Vorlage aus."
 
@@ -13303,7 +13299,7 @@ msgid "Remove authenticator app"
 msgstr "Authentifizierungs-App entfernen"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:376
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:365
 msgid "Remove checklist"
 msgstr "Checkliste entfernen"
 
@@ -13333,10 +13329,8 @@ msgid "Remove selected values"
 msgstr "Ausgewählte Werte entfernen"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:176
-#, fuzzy
-#| msgid "Remove image"
 msgid "Remove this tag"
-msgstr "Bild entfernen"
+msgstr "Tag entfernen"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:176
 msgid "Remove two-factor authentication"
@@ -13355,7 +13349,7 @@ msgid "Removes the shadows for a flat look."
 msgstr "Entfernt die Schatten für ein flaches Design."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:369
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:358
 msgid "Rename checklist"
 msgstr "Checkliste umbenennen"
 
@@ -13976,7 +13970,7 @@ msgstr "Speichern als"
 msgid "Save as draft"
 msgstr "Als Entwurf speichern"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:340
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
 msgid "Save changes"
 msgstr "Änderungen speichern"
 
@@ -13992,7 +13986,7 @@ msgstr "Gespeicherte Bedingungen"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1121
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1120
 msgid "Saving failed."
 msgstr "Das Speichern ist fehlgeschlagen."
 
@@ -14850,14 +14844,10 @@ msgid "Show to user roles"
 msgstr "Diesen Benutzerrollen anzeigen"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:54
-#, fuzzy
-#| msgid "Show tracked ticket"
 msgid "Show tracking ticket"
 msgstr "Nachverfolgendes Ticket anzeigen"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:55
-#, fuzzy
-#| msgid "Show tracked tickets"
 msgid "Show tracking tickets"
 msgstr "Nachverfolgende Tickets anzeigen"
 
@@ -18000,28 +17990,20 @@ msgstr ""
 "deaktivieren, kann Datenverlust in Ihren Bedingungs-Einstellungen auftreten."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:115
-#, fuzzy
-#| msgid "Ticket tags updated successfully."
 msgid "Ticket tag added successfully."
-msgstr "Ticket-Tags erfolgreich aktualisiert."
+msgstr "Ticket-Tag erfolgreich hinzugefügt."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:74
-#, fuzzy
-#| msgid "Ticket tags could not be updated."
 msgid "Ticket tag could not be added."
-msgstr "Ticket-Tags konnten nicht aktualisiert werden."
+msgstr "Ticket-Tag konnte nicht hinzugefügt werden."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:123
-#, fuzzy
-#| msgid "Ticket could not be created."
 msgid "Ticket tag could not be removed."
-msgstr "Ticket konnte nicht erzeugt werden."
+msgstr "Ticket-Tag konnte nicht entfernt werden."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:145
-#, fuzzy
-#| msgid "Ticket tags updated successfully."
 msgid "Ticket tag removed successfully."
-msgstr "Ticket-Tags erfolgreich aktualisiert."
+msgstr "Ticket-Tag erfolgreich entfernt."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:37
 msgid "Ticket tags could not be updated."
@@ -19196,9 +19178,9 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
-"#{article.id}\" target=\"zammad_app\">In #{config.product_name} anzeigen</"
-"a>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}/#{article.id}\" target=\"zammad_app\">In #{config.product_name} "
+"anzeigen</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
@@ -21740,7 +21722,7 @@ msgstr "hierauf zusammengefasst"
 msgid "recovery codes"
 msgstr "Wiederherstellungs-Codes"
 
-#: app/models/checklist/item.rb:103
+#: app/models/checklist/item.rb:102
 msgid "reference must not be the checklist ticket."
 msgstr "Referenz darf nicht das Ticket der Checkliste selbst sein."
 
@@ -22040,7 +22022,7 @@ msgstr "Benutzerzuweisung entfernen"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 msgid "unchecked checklist item '%s'"
-msgstr "öffnete Checklisten-Element '%s'"
+msgstr "setzte Checklisten-Element '%s' auf nicht abgehakt"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:168
 msgid "unset readonly"
