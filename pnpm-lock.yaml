@@ -273,8 +273,8 @@ importers:
         specifier: ^4.1.1
         version: 4.1.1(graphql-tag@2.12.6(graphql@16.9.0))(graphql@16.9.0)
       '@pinia/testing':
-        specifier: ^0.1.5
-        version: 0.1.5(pinia@2.2.4(typescript@5.6.2)(vue@3.5.10(typescript@5.6.2)))(vue@3.5.10(typescript@5.6.2))
+        specifier: ^0.1.6
+        version: 0.1.6(pinia@2.2.4(typescript@5.6.2)(vue@3.5.10(typescript@5.6.2)))(vue@3.5.10(typescript@5.6.2))
       '@tailwindcss/container-queries':
         specifier: ^0.1.1
         version: 0.1.1(tailwindcss@3.4.13)
@@ -1695,10 +1695,10 @@ packages:
     resolution: {integrity: sha512-U58N44b2m3OuTgpmKgf0LPDOmP3bhwNz01vAnj1mBwxBASRhptWYK+M3zG+HBkDqGQM+bFsoIihTW8MdmPXEqg==}
     engines: {node: '>=10.12.0'}
 
-  '@pinia/testing@0.1.5':
-    resolution: {integrity: sha512-AcGzuotkzhRoF00htuxLfIPBBHVE6HjjB3YC5Y3os8vRgKu6ipknK5GBQq9+pduwYQhZ+BcCZDC9TyLAUlUpoQ==}
+  '@pinia/testing@0.1.6':
+    resolution: {integrity: sha512-Q40s3kpjXpjmcnc61l84wyG83yVmkBi5rRdSoPpwQoRfSnNKKr52XjFFt6hP8iBxehYS9NR+D57T1uzgnEVPHg==}
     peerDependencies:
-      pinia: '>=2.2.1'
+      pinia: '>=2.2.3'
 
   '@pkgjs/parseargs@0.11.0':
     resolution: {integrity: sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==}
@@ -8229,7 +8229,7 @@ snapshots:
       tslib: 2.7.0
       webcrypto-core: 1.7.5
 
-  '@pinia/testing@0.1.5(pinia@2.2.4(typescript@5.6.2)(vue@3.5.10(typescript@5.6.2)))(vue@3.5.10(typescript@5.6.2))':
+  '@pinia/testing@0.1.6(pinia@2.2.4(typescript@5.6.2)(vue@3.5.10(typescript@5.6.2)))(vue@3.5.10(typescript@5.6.2))':
     dependencies:
       pinia: 2.2.4(typescript@5.6.2)(vue@3.5.10(typescript@5.6.2))
       vue-demi: 0.14.10(vue@3.5.10(typescript@5.6.2))
