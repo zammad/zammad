@@ -14,6 +14,9 @@ module Ticket::SearchIndex
     # mentions
     attributes['mention_user_ids'] = mentions.pluck(:user_id)
 
+    # checklists
+    add_checklist(attributes)
+
     # current payload size
     total_size_current = 0
 
@@ -109,4 +112,18 @@ module Ticket::SearchIndex
     false
   end
 
+  def add_checklist(attributes)
+    return if !checklist
+
+    attrs = {}
+
+    attrs['name'] = checklist.name if checklist.name.present?
+
+    items = checklist.items.pluck(:text).compact_blank
+    attrs['items'] = items if items.present?
+
+    return if attrs.blank?
+
+    attributes['checklist'] = attrs
+  end
 end
