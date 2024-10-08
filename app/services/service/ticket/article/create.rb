@@ -13,6 +13,7 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
 
     ticket.articles.new(article_data).tap do |article|
       article.check_mentions_raises_error = true
+      article.check_email_recipient_raises_error = true
 
       transform_article(article, attachments_raw, subtype)
 

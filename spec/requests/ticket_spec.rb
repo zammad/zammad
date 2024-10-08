@@ -912,6 +912,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(response).to have_http_status(:ok)
 
       params = {
+        to:        Faker::Internet.unique.email,
         from:      'something which should not be changed on server side',
         ticket_id: ticket.id,
         subject:   'some subject',
@@ -949,6 +950,7 @@ RSpec.describe 'Ticket', type: :request do
       expect(json_response['type_id']).to eq(Ticket::Article::Type.lookup(name: 'email').id)
 
       params = {
+        to:        Faker::Internet.unique.email,
         from:      'something which should not be changed on server side',
         ticket_id: ticket.id,
         subject:   'some subject',
@@ -1045,6 +1047,7 @@ RSpec.describe 'Ticket', type: :request do
         subject:   'some subject',
         body:      'some body',
         type:      'email',
+        to:        Faker::Internet.unique.email,
       }
       post '/api/v1/ticket_articles', params: params, as: :json
       expect(response).to have_http_status(:created)

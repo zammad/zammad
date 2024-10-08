@@ -22,6 +22,10 @@ module Gql::Mutations
           .new(current_user: context.current_user)
           .execute(ticket_data: input)
       }
+    rescue Exceptions::InvalidAttribute => e
+      field = e.attribute == 'email_recipient' ? 'customer_id' : e.attribute
+
+      error_response({ field:, message: e.message })
     end
   end
 end

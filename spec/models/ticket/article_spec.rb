@@ -662,6 +662,70 @@ RSpec.describe Ticket::Article, type: :model do
         end
       end
     end
+
+    describe '#check_email_recipient_validity' do
+      subject(:article) do
+        create(:ticket_article, type_name: type, to: to, check_email_recipient_raises_error: validate)
+      end
+
+      let(:type)     { 'email' }
+      let(:to)       { nil }
+      let(:validate) { false }
+
+      shared_examples 'not raising an error' do
+        it 'does not raise an error' do
+          expect { article }.not_to raise_error
+        end
+      end
+
+      shared_examples 'raising an error' do
+        it 'raises an error' do
+          expect { article }.to raise_error(Exceptions::InvalidAttribute, 'Sending an email without a valid recipient is not possible.')
+        end
+      end
+
+      context 'when the validation is not explicitly turned on' do
+        it_behaves_like 'not raising an error'
+      end
+
+      context 'when the validation is explicitly turned on' do
+        let(:validate) { true }
+
+        it_behaves_like 'raising an error'
+
+        context 'when the system is in the import mode' do
+          before do
+            Setting.set('import_mode', true)
+          end
+
+          it_behaves_like 'not raising an error'
+        end
+
+        context 'when the type is not an email' do
+          let(:type) { 'phone' }
+
+          it_behaves_like 'not raising an error'
+        end
+
+        context 'when the recipient is empty' do
+          let(:to) { '' }
+
+          it_behaves_like 'raising an error'
+        end
+
+        context 'when the recipient is unparseable' do
+          let(:to) { '@unparseable_address' }
+
+          it_behaves_like 'raising an error'
+        end
+
+        context 'when the recipient is not a valid email address' do
+          let(:to) { 'not_a_mail' }
+
+          it_behaves_like 'raising an error'
+        end
+      end
+    end
   end
 
   describe 'clone attachments' do
