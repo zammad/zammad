@@ -103,7 +103,7 @@ class App.KnowledgeBaseContentController extends App.Controller
     additional_action = $(e.currentTarget).data('id')
 
     if @remoteDidntChangeSinceStart()
-      @parentController.coordinator.saveChanges(@object, paramsForSaving, @, additional_action)
+      @parentController.coordinator.saveChanges(@object, paramsForSaving, @, e, additional_action)
       return
 
     new App.ControllerConfirm(
@@ -111,7 +111,7 @@ class App.KnowledgeBaseContentController extends App.Controller
       message:     __('Your changes may override someone else\'s changes. Do you really want to save?')
       buttonClass: 'btn--danger'
       callback: =>
-        @parentController.coordinator.saveChanges(@object, paramsForSaving, @)
+        @parentController.coordinator.saveChanges(@object, paramsForSaving, @, e)
     )
 
   missingTranslation: ->

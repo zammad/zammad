@@ -22,6 +22,36 @@ RSpec.describe 'Knowledge Base Locale Answer Edit', type: :system do
     end
   end
 
+  context 'when image is added via button' do
+    before do
+      image = Rszr::Image.load('spec/fixtures/files/image/large.png')
+      image.resize!(:auto, 30_000)
+      image.save('tmp/really-large.png')
+    end
+
+    def open_editor_and_add_image
+      visit "#knowledge_base/#{knowledge_base.id}/locale/#{primary_locale.system_locale.locale}/answer/#{draft_answer.id}/edit"
+
+      find('a[data-action="insert_image"]').click
+
+      within('.popover-content') do
+        find('input[name="link"]', visible: :all).set(Rails.root.join('tmp/really-large.png'))
+        find('[type=submit]').click
+      end
+    end
+
+    it 'can use big inline image' do
+      open_editor_and_add_image
+
+      click '.js-submit'
+      await_empty_ajax_queue
+
+      click_on 'Edit'
+
+      expect(page).to have_css("img[src='/api/v1/attachments/#{draft_answer.reload.translations.first.content.attachments.first.id}']")
+    end
+  end
+
   context 'add weblink' do
     def open_editor_and_add_link(input)
       visit "#knowledge_base/#{knowledge_base.id}/locale/#{primary_locale.system_locale.locale}/answer/#{draft_answer.id}/edit"

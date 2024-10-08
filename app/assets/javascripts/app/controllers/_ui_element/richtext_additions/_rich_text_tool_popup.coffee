@@ -54,8 +54,8 @@ class App.UiElement.richtext.additions.RichTextToolPopup extends App.ControllerF
     @delegate?.getAjaxAttributes?(field, attributes)
 
   onClear: (e) =>
-    e.preventDefault()
-    e.stopPropagation()
+    e?.preventDefault()
+    e?.stopPropagation()
 
     @clear()
 

@@ -82,13 +82,26 @@ class App.ImageService
         else
           quality = 0.6
 
+      newType = @validateType(type)
+      newDataUrl = canvas.toDataURL(newType, quality)
+      newSizeInMb = (newDataUrl.length * 0.75)/1024/1024 # approx. file size
+
+      # Nokogiri parser has a single text node limit of 10 million characters, which may be exceeded for certain file
+      #   types very easily (e.g. image/png), even for resized images. Here we check if the new size exceeds this limit
+      #   and prevent execution of the callback (#5359).
+      if newDataUrl.length > 10000000
+        console.error('ImageService', 'image file size too large', newType, newSizeInMb, 'in mb')
+        new App.ControllerErrorModal(
+          message: __('Image file size is too large, please try inserting a smaller file.')
+        )
+        return
+
       # execute callback with resized image
-      newDataUrl = canvas.toDataURL(@validateType(type), quality)
       if resize
-        console.log('ImageService', 'resize', x/sizeFactor, y/sizeFactor, quality, (newDataUrl.length * 0.75)/1024/1024, 'in mb')
+        console.log('ImageService', 'resize', x/sizeFactor, y/sizeFactor, quality, newSizeInMb, 'in mb')
         callback(newDataUrl, x/sizeFactor, y/sizeFactor, true)
         return
-      console.log('ImageService', 'no resize', x, y, quality, (newDataUrl.length * 0.75)/1024/1024, 'in mb')
+      console.log('ImageService', 'no resize', x, y, quality, newSizeInMb, 'in mb')
       callback(newDataUrl, x, y, false)
 
     # load image from data url

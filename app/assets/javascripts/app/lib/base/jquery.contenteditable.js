@@ -350,6 +350,18 @@
         this.log('paste image', clipboardImage)
 
         var imageFile = clipboardImage.getAsFile()
+        var fileSizeInMb = imageFile.size / 1024 / 1024
+
+        // The browser may fail while reading too large files as data URL.
+        //   Here we introduce a safe limit check in order to prevent silent errors.
+        if (fileSizeInMb > 25) {
+          console.error('Image file size too large', fileSizeInMb, 'in mb')
+          new App.ControllerErrorModal({
+            message: __('Image file size is too large, please try inserting a smaller file.'),
+          })
+          return
+        }
+
         var reader = new FileReader()
 
         reader.onload = $.proxy(function (e) {
