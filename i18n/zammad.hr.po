@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-04 22:16+0000\n"
+"PO-Revision-Date: 2024-10-08 07:43+0000\n"
 "Last-Translator: Ivan Perovic <ip@zammad.com>\n"
 "Language-Team: Croatian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hr/>\n"
@@ -1313,7 +1313,7 @@ msgstr "Dodaj bota"
 msgid "Add Certificate"
 msgstr "Dodaj certifikat"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:417
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:406
 msgid "Add Empty Checklist"
 msgstr "Dodaj praznu listu zadataka"
 
@@ -2932,7 +2932,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -3224,7 +3224,7 @@ msgstr "Predložak liste zadataka"
 msgid "Checklist Template items are limited to 100 items per checklist."
 msgstr "Predlošci liste zadataka su limitirani na 100 elementa po listi."
 
-#: app/models/checklist/item.rb:109
+#: app/models/checklist/item.rb:108
 msgid "Checklist items are limited to 100 items per checklist."
 msgstr "Stavke liste zadataka su limitirane na 100 stavki po listi."
 
@@ -7264,11 +7264,11 @@ msgstr "Facebook poruka aktivnosti"
 msgid "Failed Tasks"
 msgstr "Neuspjeli zadaci"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:148
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:143
 msgid "Failed to add new checklist item."
 msgstr "Dodavanje nove stavke liste zadataka nije uspjelo."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:169
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:164
 msgid "Failed to delete checklist item."
 msgstr "Brisanje stavke liste zadataka nije uspjelo."
 
@@ -7286,11 +7286,11 @@ msgstr "Nije moguće učitati sadržaj."
 msgid "Failed to roll back the migration of the channel!"
 msgstr "Poništavanje migracije kanala nije uspjelo!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:155
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:150
 msgid "Failed to save checklist order."
 msgstr "Nije moguće spremiti poredak liste zadataka."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:114
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:118
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 "Nije moguće spremiti poredak stavki liste zadataka. Molimo, pokušajte "
@@ -7304,7 +7304,7 @@ msgstr "Slanje maila na \"%s\" nije uspjelo. Obratite se administratoru."
 msgid "Failed to set up QR code. Please try again."
 msgstr "Postavljanje QR koda nije uspjelo. Molimo, pokušajte ponovno."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:162
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:157
 msgid "Failed to update checklist item."
 msgstr "Ažuriranje stavke liste zadataka nije uspjelo."
 
@@ -8583,6 +8583,11 @@ msgstr "Slikovna usluga"
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:9
 msgid "Image file"
 msgstr "Slikovna datoteka"
+
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/lib/app_post/image_service.coffee:95
+msgid "Image file size is too large, please try inserting a smaller file."
+msgstr ""
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
@@ -10426,11 +10431,11 @@ msgstr "Minimalna vrijednost mora biti cijeli broj"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:93
 msgid "Minimal value must be higher than -2147483648"
-msgstr ""
+msgstr "Minimalna vrijednost mora biti veća od -2147483648"
 
 #: app/models/object_manager/attribute/data_option_validator.rb:98
 msgid "Minimal value must be lower than 2147483648"
-msgstr ""
+msgstr "Minimalna vrijednost mora biti manja od 2147483648"
 
 #: db/seeds/settings.rb:2008
 msgid "Minimum length"
@@ -10597,10 +10602,8 @@ msgstr "Moje vrijeme obrade: %s minuta"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:35
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:67
-#, fuzzy
-#| msgid "My Tickets"
 msgid "My tickets"
-msgstr "Moji kartice"
+msgstr "Moji ticketi"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_in_process.jst.eco:3
 msgid "My tickets in process"
@@ -10709,10 +10712,8 @@ msgid "Navigation"
 msgstr "Navigacija"
 
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenuFilter.vue:77
-#, fuzzy
-#| msgid "Navigation"
 msgid "Navigation filter"
-msgstr "Navigacija"
+msgstr "Navigacijski filter"
 
 #: app/controllers/concerns/clones_ticket_article_attachments.rb:9
 msgid "Need 'form_id' to add attachments to new form."
@@ -10766,10 +10767,8 @@ msgid "New"
 msgstr "Novi"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:284
-#, fuzzy
-#| msgid "Open Tickets"
 msgid "New & Open Tickets"
-msgstr "Otvori tickete"
+msgstr "Novi & otvoreni ticketi"
 
 #: app/assets/javascripts/app/controllers/api.coffee:190
 msgid "New Access Token is"
@@ -10780,10 +10779,8 @@ msgid "New Activity Type"
 msgstr "Nova vrsta aktivnosti"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:8
-#, fuzzy
-#| msgid "New User"
 msgid "New Answer"
-msgstr "Novi korisnik"
+msgstr "Novi odgovor"
 
 #: app/assets/javascripts/app/views/api.jst.eco:52
 msgid "New Application"
@@ -10798,16 +10795,12 @@ msgid "New Calendar"
 msgstr "Novi kalendar"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:10
-#, fuzzy
-#| msgid "Category"
 msgid "New Category"
-msgstr "Kategorija"
+msgstr "Nova kategorija"
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:38
-#, fuzzy
-#| msgid "New Template"
 msgid "New Checklist Template"
-msgstr "Novi predložak"
+msgstr "Novi predložak liste zadataka"
 
 #: app/assets/javascripts/app/views/data_privacy/index.jst.eco:8
 msgid "New Deletion Task"
@@ -10818,10 +10811,8 @@ msgid "New Group"
 msgstr "Nova grupa"
 
 #: app/assets/javascripts/app/controllers/clues/keyboard_shortcuts_clues.coffee:5
-#, fuzzy
-#| msgid "Keyboard Shortcuts"
 msgid "New Keyboard Shortcuts"
-msgstr "Prečice na tipkovnici"
+msgstr "Nove prečice na tipkovnici"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:22
 msgid "New Macro"
@@ -10837,10 +10828,8 @@ msgstr "Novi pregled"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:132
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:201
-#, fuzzy
-#| msgid "Your New Personal Access Token"
 msgid "New Personal Access Token"
-msgstr "Vaš novi osobni pristupni token"
+msgstr "Novi osobni pristupni token"
 
 #: app/assets/javascripts/app/controllers/ticket_priority.coffee:19
 msgid "New Priority"
@@ -10898,10 +10887,8 @@ msgid "New Ticket State"
 msgstr "Novi status ticketa"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:41
-#, fuzzy
-#| msgid "New Ticket"
 msgid "New Ticket: %s"
-msgstr "Nova kartica"
+msgstr "Novi ticket: %s"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco:11
 msgid "New Translation"
@@ -10952,10 +10939,8 @@ msgstr "Novi tekstni modul"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
-#, fuzzy
-#| msgid "New Ticket"
 msgid "New ticket"
-msgstr "Nova kartica"
+msgstr "Novi ticket"
 
 #. This is the template file app/views/mailer/ticket_create/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -11045,16 +11030,12 @@ msgid "Next in overview"
 msgstr "Sljedeći pregled"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:88
-#, fuzzy
-#| msgid "in 1 month"
 msgid "Next month"
-msgstr "za mjesec dana"
+msgstr "Idući mjesec"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:90
-#, fuzzy
-#| msgid "Next State"
 msgid "Next year"
-msgstr "Idući status"
+msgstr "Iduće godine"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:59
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:6
@@ -11089,8 +11070,6 @@ msgid "No Entries"
 msgstr "Nema unosa"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_no_items.jst.eco:3
-#, fuzzy
-#| msgid "No Entries"
 msgid "No Entry"
 msgstr "Nema unosa"
 
@@ -11133,10 +11112,8 @@ msgid "No answers"
 msgstr "Nema članaka"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarAttachment/TicketSidebarAttachmentContent.vue:51
-#, fuzzy
-#| msgid "%s attached files"
 msgid "No attached files"
-msgstr "%s privitak(a)"
+msgstr "Bez privitaka"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:325
 msgid "No camera found."
@@ -11151,22 +11128,18 @@ msgid "No certificate found."
 msgstr "Certifikat nije pronađen."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:430
-#, fuzzy
-#| msgid "You have not created a ticket yet."
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:419
 msgid "No checklist added to this ticket yet."
-msgstr "Još niste kreirali ticket."
+msgstr "Ticketu još nije dodana nijedna lista zadataka."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:169
 msgid "No checklist items yet"
-msgstr ""
+msgstr "Još nema stavki liste zadataka"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:15
-#, fuzzy
-#| msgid "No template created yet."
 msgid "No checklist templates have been created yet."
-msgstr "Nema dodanih predložaka."
+msgstr "Još nema dodanih predložaka liste zadataka."
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:5
 msgid "No configuration set."
@@ -11230,16 +11203,12 @@ msgid "No macros available."
 msgstr "Nema dostupnih makronaredbi."
 
 #: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/user.ts:9
-#, fuzzy
-#| msgid "No camera found."
 msgid "No members found"
-msgstr "Kamera nije pronađena."
+msgstr "Nema pronađenih članova"
 
 #: app/frontend/apps/desktop/components/CommonSimpleEntityList/plugins/organization.ts:9
-#, fuzzy
-#| msgid "Organizations"
 msgid "No organizations found"
-msgstr "Organizacije"
+msgstr "Nema pronađenih organizacija"
 
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:297
 msgid "No previous searches"
@@ -11254,10 +11223,8 @@ msgid "No proxy for the following hosts."
 msgstr "Bez proxy-a za sljedeće servere."
 
 #: lib/whatsapp/webhook/message/reaction.rb:13
-#, fuzzy
-#| msgid "No related article found to process the status message on."
 msgid "No related article found to process the reaction message on."
-msgstr "Nije pronađen nijedan povezani članak za obradu statusne poruke."
+msgstr "Nije pronađen nijedan povezani članak za obradu reakcijske poruke."
 
 #: lib/whatsapp/webhook/message/status.rb:15
 msgid "No related article found to process the status message on."
@@ -11292,10 +11259,8 @@ msgid "No settings with area 'Dashboard::Stats' defined"
 msgstr "Nema spremljenih postavki za polje ’Dashboard::Stats’"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:203
-#, fuzzy
-#| msgid "Shared Drafts"
 msgid "No shared drafts yet"
-msgstr "Zajedničke skice"
+msgstr "Još nema zajedničkih skica"
 
 #: app/controllers/organizations_controller.rb:160
 #: app/controllers/text_modules_controller.rb:71
@@ -11306,10 +11271,8 @@ msgid "No source data submitted!"
 msgstr "Nisu dostavljeni izvorišni podaci!"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:194
-#, fuzzy
-#| msgid "No template created yet."
 msgid "No tags added yet."
-msgstr "Nema dodanih predložaka."
+msgstr "Još nema dodanih oznaka."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:14
 msgid "No template created yet."
@@ -11333,7 +11296,7 @@ msgstr "Trenutno nemate nepročitanih obavijesti. :)"
 
 #: db/seeds/settings.rb:1300
 msgid "No user creation on logon"
-msgstr ""
+msgstr "Nema stvaranja korisnika prilikom prijave"
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco:1
 msgid ""
@@ -11349,16 +11312,12 @@ msgstr "Bez x-zammad-session-user-id, pošiljatelj nije postavljen!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
 #: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:350
-#, fuzzy
-#| msgid "You can no longer see the ticket."
 msgid "No, just close the ticket"
-msgstr "Više ne možete vidjeti ticket."
+msgstr "Ne, samo zatvorite ticket"
 
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:52
-#, fuzzy
-#| msgid "No Thanks!"
 msgid "No, thanks"
-msgstr "Ne, hvala!"
+msgstr "Ne, hvala"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
@@ -11403,8 +11362,6 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:42
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:79
-#, fuzzy
-#| msgid "Not Assigned"
 msgid "Not assigned"
 msgstr "Nije dodijeljen"
 
@@ -11477,6 +11434,10 @@ msgid ""
 "after downloading the file to avoid leaking personal data which could be "
 "included in comments or notes."
 msgstr ""
+"Napomena: Zammad nikad ne šalje ove podatke automatski i ovi podatci ne "
+"uključuju osobna imena računa ili lozinke. Doduše, provjerite nakon "
+"preuzimanja datoteke kako biste izbjegli curenje osobnih podataka, koji mogu "
+"biti uključeni u komentarima ili bilješke."
 
 #: app/assets/javascripts/app/models/email_address.coffee:35
 #: app/assets/javascripts/app/models/group.coffee:14
@@ -11517,44 +11478,30 @@ msgid "Notification Sound"
 msgstr "Zvuk obavijesti"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:55
-#, fuzzy
-#| msgid "Notification read"
 msgid "Notification matrix"
-msgstr "Pročitana obavijest"
+msgstr "Obavijesna tablica"
 
 #: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:77
 msgid "Notification read"
 msgstr "Pročitana obavijest"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:172
-#, fuzzy
-#| msgid "The setting could not be reset."
 msgid "Notification settings could not be reset."
-msgstr "Postavku nije moguće vratiti na izvorno."
+msgstr "Obavijesne postavke nije moguće vratiti na izvorno."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:122
-#, fuzzy
-#| msgid "The setting could not be updated."
 msgid "Notification settings could not be saved."
-msgstr "Postavku nije moguće ažurirati."
+msgstr "Postavke obavijesti nije moguće ažurirati."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:190
-#, fuzzy
-#| msgid "Are you sure? Your notifications settings will be reset to default."
 msgid "Notification settings have been reset to default."
-msgstr ""
-"Jeste li sigurni? Vaše postavke obavijesti će biti vraćene na početne "
-"postavke sustava."
+msgstr "Postavke obavijesti su vraćene na izvorno."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:141
-#, fuzzy
-#| msgid "Ticket has been created successfully."
 msgid "Notification settings have been saved successfully."
-msgstr "Ticket je uspješno stvoren."
+msgstr "Postavke obavijesti su uspješno spremljene."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:72
-#, fuzzy
-#| msgid "Notification Sound"
 msgid "Notification sound"
 msgstr "Zvuk obavijesti"
 
@@ -11610,8 +11557,6 @@ msgid "OK"
 msgstr "OK"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:112
-#, fuzzy
-#| msgid "OK, I've copied my token"
 msgid "OK, I have copied my token"
 msgstr "Ok, kopirao sam svoj token"
 
@@ -11630,16 +11575,12 @@ msgid "OTRS"
 msgstr "OTRS"
 
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/plugins/otrs.ts:22
-#, fuzzy
-#| msgid ""
-#| "OTRS BPM processes can't get imported into Zammad since we currently "
-#| "don't support this kind of workflows."
 msgid ""
 "OTRS BPM processes can't get imported into Zammad since it currently doesn't "
 "support this kind of workflows."
 msgstr ""
-"OTRS BPM procesi se ne mogu uvesti u Zammad jer trenutno ne podržavamo takve "
-"tijekove rada."
+"OTRS BPM procesi se ne mogu uvesti u Zammad jer trenutno takvi tijekovi rada "
+"nisu podržani."
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:96
 msgid ""
@@ -11794,10 +11735,8 @@ msgid "Open %s"
 msgstr "Otvori %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadgeList.vue:35
-#, fuzzy
-#| msgid "Checksum"
 msgid "Open Checklist"
-msgstr "Checksum"
+msgstr "Otvori listu zadataka"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:3
 msgid "Open Ticket# %s"
@@ -11811,7 +11750,7 @@ msgstr "Otvori tickete"
 
 #: app/models/system_report/plugin/entities/ticket.rb:4
 msgid "Open and closed tickets ratio (ticket counts based on state)"
-msgstr ""
+msgstr "Omjer otvorenih i zatvorenih ticketa (broj ticketa na osnovu statusa)"
 
 #: app/assets/javascripts/app/models/public_link.coffee:10
 msgid "Open in new tab"
@@ -12615,7 +12554,7 @@ msgstr ""
 "Spremite dolje navedene kodove za oporavak negdje na sigurno. Možete ih "
 "koristiti za prijavu, ukoliko izgubite pristup drugoj dvofaktorskoj metodi:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:72
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
 #, fuzzy
 #| msgid "Please select at least one folder."
 msgid "Please select a checklist template."
@@ -13224,7 +13163,7 @@ msgid "Remove authenticator app"
 msgstr "Autentifikacijska aplikacija"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:376
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:365
 #, fuzzy
 #| msgid "Remove %s"
 msgid "Remove checklist"
@@ -13282,7 +13221,7 @@ msgid "Removes the shadows for a flat look."
 msgstr "Uklanja sjene za ravan dizajn."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:369
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:358
 msgid "Rename checklist"
 msgstr ""
 
@@ -13919,7 +13858,7 @@ msgstr "Spremi kao"
 msgid "Save as draft"
 msgstr "Spremi skicu"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:340
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
 #, fuzzy
 #| msgid "Discard Changes"
 msgid "Save changes"
@@ -13937,7 +13876,7 @@ msgstr "Spremljeni uvjeti"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1121
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1120
 msgid "Saving failed."
 msgstr "Spremanje nije uspjelo."
 
@@ -16065,7 +16004,7 @@ msgstr "Certifikati za %s nisu pronađeni."
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:211
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee:300
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:36
-#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:49
+#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:61
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee:68
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee:135
 msgid "The changes could not be saved."
@@ -21756,7 +21695,7 @@ msgstr "spajano u"
 msgid "recovery codes"
 msgstr "kodovi za oporavak"
 
-#: app/models/checklist/item.rb:103
+#: app/models/checklist/item.rb:102
 #, fuzzy
 #| msgid "The article does not belong to the specified ticket."
 msgid "reference must not be the checklist ticket."

@@ -1336,7 +1336,7 @@ msgstr "Добавить бота"
 msgid "Add Certificate"
 msgstr "Добавить сертификат"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:417
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:406
 msgid "Add Empty Checklist"
 msgstr "Добавить пустой чек-лист"
 
@@ -2974,7 +2974,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -3267,7 +3267,7 @@ msgstr ""
 "Количество элементов шаблона чек-листа не должно превышать 100 элементов для "
 "одного чек-листа."
 
-#: app/models/checklist/item.rb:109
+#: app/models/checklist/item.rb:108
 msgid "Checklist items are limited to 100 items per checklist."
 msgstr ""
 "Количество элементов чек-листа ограничено 100 элементами в каждом чек-листе."
@@ -7381,11 +7381,11 @@ msgstr "Facebook пост"
 msgid "Failed Tasks"
 msgstr "Неудачные задачи"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:148
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:143
 msgid "Failed to add new checklist item."
 msgstr "Не удалось добавить новый элемент чек-листа."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:169
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:164
 msgid "Failed to delete checklist item."
 msgstr "Не удалось удалить элемент чек-листа."
 
@@ -7403,11 +7403,11 @@ msgstr "Не удалось загрузить содержимое."
 msgid "Failed to roll back the migration of the channel!"
 msgstr "Не удалось откатить перенос канала!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:155
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:150
 msgid "Failed to save checklist order."
 msgstr "Не удалось сохранить сортировку чек-листа."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:114
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:118
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 "Не удалось сохранить сортировку элементов чек-листа. Попробуйте еще раз."
@@ -7422,7 +7422,7 @@ msgstr ""
 msgid "Failed to set up QR code. Please try again."
 msgstr "Не удалось установить QR-код. Пожалуйста, попробуйте еще раз."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:162
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:157
 msgid "Failed to update checklist item."
 msgstr "Не удалось обновить элемент чек-листа."
 
@@ -8724,6 +8724,11 @@ msgstr "Служба изображений"
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:9
 msgid "Image file"
 msgstr "Файл изображения"
+
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/lib/app_post/image_service.coffee:95
+msgid "Image file size is too large, please try inserting a smaller file."
+msgstr ""
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
@@ -11284,7 +11289,7 @@ msgid "No certificate found."
 msgstr "Сертификат не найден."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:430
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:419
 msgid "No checklist added to this ticket yet."
 msgstr "К этой заявке еще не добавлено ни одного чек-листа."
 
@@ -12679,7 +12684,7 @@ msgstr ""
 "месте. Вы сможете использовать их для авторизации, если потеряете доступ к "
 "другому двухфакторному методу:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:72
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
 msgid "Please select a checklist template."
 msgstr "Пожалуйста, выберите шаблон чек-листа."
 
@@ -13259,7 +13264,7 @@ msgid "Remove authenticator app"
 msgstr "Удалить приложение аутентификатор"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:376
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:365
 msgid "Remove checklist"
 msgstr "Удалить чек-лист"
 
@@ -13309,7 +13314,7 @@ msgid "Removes the shadows for a flat look."
 msgstr "Удаление теней для плоского вида."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:369
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:358
 msgid "Rename checklist"
 msgstr "Переименовать чек-лист"
 
@@ -13929,7 +13934,7 @@ msgstr "Сохранить как"
 msgid "Save as draft"
 msgstr "Сохранить как черновик"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:340
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
 msgid "Save changes"
 msgstr "Сохранить изменения"
 
@@ -13945,7 +13950,7 @@ msgstr "Сохраненные условия"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1121
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1120
 msgid "Saving failed."
 msgstr "Не удалось сохранить."
 
@@ -16029,7 +16034,7 @@ msgstr "Cертификаты для %s не найдены."
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:211
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee:300
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:36
-#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:49
+#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:61
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee:68
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee:135
 msgid "The changes could not be saved."
@@ -21646,7 +21651,7 @@ msgstr "получено слиянием"
 msgid "recovery codes"
 msgstr "коды восстановления"
 
-#: app/models/checklist/item.rb:103
+#: app/models/checklist/item.rb:102
 msgid "reference must not be the checklist ticket."
 msgstr "ссылка не должна быть чек-листом заявки."
 

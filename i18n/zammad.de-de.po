@@ -127,8 +127,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Zuletzt geändert um #{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Zuletzt geändert um #{ticket.updated_at}_\n"
 "* Gruppe: #{ticket.group.name}\n"
 "* Besitzer: #{ticket.owner.fullname}\n"
 "* Status: #{t(ticket.state.name)}\n"
@@ -1329,7 +1329,7 @@ msgstr "Bot hinzufügen"
 msgid "Add Certificate"
 msgstr "Zertifikat hinzufügen"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:417
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:406
 msgid "Add Empty Checklist"
 msgstr "Leere Checkliste hinzufügen"
 
@@ -1624,7 +1624,8 @@ msgstr "Zum nächsten Ticket der Übersicht springen"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:62
 msgid "Affects only notifications for not assigned and all tickets."
-msgstr "Betrifft nur Benachrichtigungen für nicht zugewiesene und alle Tickets."
+msgstr ""
+"Betrifft nur Benachrichtigungen für nicht zugewiesene und alle Tickets."
 
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco:4
 msgid "After approval, please re-connect your Exchange account."
@@ -2974,7 +2975,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -3265,7 +3266,7 @@ msgstr "Checklisten-Vorlage"
 msgid "Checklist Template items are limited to 100 items per checklist."
 msgstr "Checklisten-Vorlagen sind auf 100 Elemente pro Checkliste begrenzt."
 
-#: app/models/checklist/item.rb:109
+#: app/models/checklist/item.rb:108
 msgid "Checklist items are limited to 100 items per checklist."
 msgstr ""
 "Die Anzahl der Elemente in einer Checkliste ist auf 100 pro Liste begrenzt."
@@ -4016,7 +4017,8 @@ msgstr "Methode für Zwei-Faktor-Authentifizierung konnte nicht entfernt werden"
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:124
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:107
 msgid "Could not remove two-factor authentication method."
-msgstr "Methode für Zwei-Faktor-Authentifizierung konnte nicht entfernt werden."
+msgstr ""
+"Methode für Zwei-Faktor-Authentifizierung konnte nicht entfernt werden."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:227
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:77
@@ -7402,11 +7404,11 @@ msgstr "Facebook Feed-Beitrag"
 msgid "Failed Tasks"
 msgstr "Fehlgeschlagene Aufträge"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:148
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:143
 msgid "Failed to add new checklist item."
 msgstr "Das Hinzufügen eines neuen Checklisten-Elements ist fehlgeschlagen."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:169
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:164
 msgid "Failed to delete checklist item."
 msgstr "Checklisten-Element konnte nicht gelöscht werden."
 
@@ -7424,11 +7426,11 @@ msgstr "Der Inhalt konnte nicht geladen werden."
 msgid "Failed to roll back the migration of the channel!"
 msgstr "Die Rücknahme der Kanal-Migration ist fehlgeschlagen!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:155
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:150
 msgid "Failed to save checklist order."
 msgstr "Die Reihenfolge der Checkliste konnte nicht gespeichert werden."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:114
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:118
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 "Die Reihenfolge der Checklisten-Elemente konnte nicht gespeichert werden. "
@@ -7445,7 +7447,7 @@ msgid "Failed to set up QR code. Please try again."
 msgstr ""
 "QR-Code konnte nicht eingerichtet werden. Bitte versuchen Sie es erneut."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:162
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:157
 msgid "Failed to update checklist item."
 msgstr "Aktualisierung des Checklisten-Elements ist fehlgeschlagen."
 
@@ -8742,6 +8744,11 @@ msgstr "Bilder-Service"
 msgid "Image file"
 msgstr "Bilddatei"
 
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/lib/app_post/image_service.coffee:95
+msgid "Image file size is too large, please try inserting a smaller file."
+msgstr ""
+
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
 msgstr "Bild von %s"
@@ -9347,9 +9354,9 @@ msgstr ""
 "<div>ich (#{current_user.firstname} #{current_user.lastname}) möchte Sie zu "
 "#{config.product_name} einladen - unserer Kundensupport-Plattform.</div>\n"
 "<br>\n"
-"<div>Um sich anzumelden kann <a href=\"#{config.http_type}://#{config.fqdn}/#"
-"password_reset_verify/#{token.token}\">hier</a> das Password gesetzt "
-"werden.</div>\n"
+"<div>Um sich anzumelden kann <a href=\"#{config.http_type}://#{config.fqdn}/"
+"#password_reset_verify/#{token.token}\">hier</a> das Password gesetzt werden."
+"</div>\n"
 "<br>\n"
 "<div>Enjoy,</div>\n"
 "<br>\n"
@@ -10260,7 +10267,8 @@ msgstr "Verwalten Sie die Ticket-Vorlagen Ihres Systems."
 
 #: db/seeds/permissions.rb:108
 msgid "Manage time accounting settings of your system."
-msgstr "Verwalten Sie die Einstellungen für die Zeitabrechnung in Ihrem System."
+msgstr ""
+"Verwalten Sie die Einstellungen für die Zeitabrechnung in Ihrem System."
 
 #: db/seeds/permissions.rb:258
 msgid "Manage translations of your system."
@@ -11309,7 +11317,7 @@ msgid "No certificate found."
 msgstr "Kein Zertifikat gefunden."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:430
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:419
 msgid "No checklist added to this ticket yet."
 msgstr "Diesem Ticket wurde noch keine Checkliste hinzugefügt."
 
@@ -12715,7 +12723,7 @@ msgstr ""
 "sicheren Ort auf. Sie können sich damit anmelden, falls Sie den Zugang zu "
 "anderen Methoden für Zwei-Faktor-Authentifizierung verlieren:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:72
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
 msgid "Please select a checklist template."
 msgstr "Bitte wählen Sie eine Checklisten-Vorlage aus."
 
@@ -13296,7 +13304,7 @@ msgid "Remove authenticator app"
 msgstr "Authentifizierungs-App entfernen"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:376
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:365
 msgid "Remove checklist"
 msgstr "Checkliste entfernen"
 
@@ -13346,7 +13354,7 @@ msgid "Removes the shadows for a flat look."
 msgstr "Entfernt die Schatten für ein flaches Design."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:369
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:358
 msgid "Rename checklist"
 msgstr "Checkliste umbenennen"
 
@@ -13967,7 +13975,7 @@ msgstr "Speichern als"
 msgid "Save as draft"
 msgstr "Als Entwurf speichern"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:340
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
 msgid "Save changes"
 msgstr "Änderungen speichern"
 
@@ -13983,7 +13991,7 @@ msgstr "Gespeicherte Bedingungen"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1121
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1120
 msgid "Saving failed."
 msgstr "Das Speichern ist fehlgeschlagen."
 
@@ -16048,8 +16056,8 @@ msgid ""
 "The certificate is not valid for SSL usage. Please check e.g. the validity "
 "period or the extensions."
 msgstr ""
-"Das Zertifikat ist nicht für SSL-Verwendung zugelassen. Bitte prüfen Sie "
-"z.B. die Gültigkeitsdauer oder die Erweiterungen."
+"Das Zertifikat ist nicht für SSL-Verwendung zugelassen. Bitte prüfen Sie z."
+"B. die Gültigkeitsdauer oder die Erweiterungen."
 
 #: app/assets/javascripts/app/views/integration/exchange_certificate_issue.jst.eco:10
 msgid ""
@@ -16077,7 +16085,7 @@ msgstr "Die Zertifikate für %s wurden nicht gefunden."
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:211
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee:300
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:36
-#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:49
+#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:61
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee:68
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee:135
 msgid "The changes could not be saved."
@@ -19175,9 +19183,9 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}/#{article.id}\" target=\"zammad_app\">In #{config.product_name} "
-"anzeigen</a>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
+"#{article.id}\" target=\"zammad_app\">In #{config.product_name} anzeigen</"
+"a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
@@ -21417,7 +21425,8 @@ msgstr "links"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts:27
 msgid "linked accounts,facebook,github,gitlab,google,linkedin,microsoft,saml"
-msgstr "verknüpfte Konten,facebook,github,gitlab,google,linkedin,microsoft,saml"
+msgstr ""
+"verknüpfte Konten,facebook,github,gitlab,google,linkedin,microsoft,saml"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorMore.vue:18
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:140
@@ -21718,7 +21727,7 @@ msgstr "hierauf zusammengefasst"
 msgid "recovery codes"
 msgstr "Wiederherstellungs-Codes"
 
-#: app/models/checklist/item.rb:103
+#: app/models/checklist/item.rb:102
 msgid "reference must not be the checklist ticket."
 msgstr "Referenz darf nicht das Ticket der Checkliste selbst sein."
 
@@ -22009,8 +22018,8 @@ msgstr "Twitter-Statusmeldung"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:26
 msgid "twofactor,2fa,security key,passkey,authenticator app"
 msgstr ""
-"Zweifaktor,2fa,2FA,Sicherheitsschlüssel,Sicherheits-Schlüssel,Passkey"
-",Authentifizierungs-app"
+"Zweifaktor,2fa,2FA,Sicherheitsschlüssel,Sicherheits-Schlüssel,Passkey,"
+"Authentifizierungs-app"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:423
 msgid "unassign user"

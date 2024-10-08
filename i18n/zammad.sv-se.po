@@ -1310,7 +1310,7 @@ msgstr "Lägg till bot"
 msgid "Add Certificate"
 msgstr "Lägg till certifikat"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:417
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:406
 msgid "Add Empty Checklist"
 msgstr "Lägg till tom checklista"
 
@@ -2930,7 +2930,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -3218,7 +3218,7 @@ msgstr "Mall för checklista"
 msgid "Checklist Template items are limited to 100 items per checklist."
 msgstr "Checklistmallen är begränsade till 100 poster per checklista."
 
-#: app/models/checklist/item.rb:109
+#: app/models/checklist/item.rb:108
 msgid "Checklist items are limited to 100 items per checklist."
 msgstr "Checklistan är begränsade till 100 poster per checklista."
 
@@ -7278,11 +7278,11 @@ msgstr "Facebook feed inlägg"
 msgid "Failed Tasks"
 msgstr "Misslyckade uppgifter"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:148
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:143
 msgid "Failed to add new checklist item."
 msgstr "Det gick inte att lägga till poster till checklistan."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:169
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:164
 msgid "Failed to delete checklist item."
 msgstr "Det gick inte att radera post från checklistan."
 
@@ -7300,11 +7300,11 @@ msgstr "Misslyckades med att ladda innehåll."
 msgid "Failed to roll back the migration of the channel!"
 msgstr "Misslyckades med att rulla tillbaka kanalens migrering!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:155
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:150
 msgid "Failed to save checklist order."
 msgstr "Checklistordningen sparades inte."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:114
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:118
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr "Det gick inte att spara checklistordningen. Vänligen försök igen."
 
@@ -7316,7 +7316,7 @@ msgstr "Det gick inte att skicka mejl till \"%s\". Kontakta en administratör."
 msgid "Failed to set up QR code. Please try again."
 msgstr "Misslyckades med att ställa in QR-kod. Vänligen försök igen."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:162
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:157
 msgid "Failed to update checklist item."
 msgstr "Checklistposten kunde inte uppdateras."
 
@@ -8593,6 +8593,11 @@ msgstr "Bildtjänst"
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:9
 msgid "Image file"
 msgstr "Image fil"
+
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/lib/app_post/image_service.coffee:95
+msgid "Image file size is too large, please try inserting a smaller file."
+msgstr ""
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
@@ -11140,7 +11145,7 @@ msgid "No certificate found."
 msgstr "Inget certifikat hittat."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:430
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:419
 msgid "No checklist added to this ticket yet."
 msgstr "Ingen checklista har ännu lagts till i detta ärende."
 
@@ -12527,7 +12532,7 @@ msgstr ""
 "använda dem för att logga in om du förlorar åtkomst till en annan "
 "tvåfaktorsmetod:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:72
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
 msgid "Please select a checklist template."
 msgstr "Välj en mall för checklista."
 
@@ -13103,7 +13108,7 @@ msgid "Remove authenticator app"
 msgstr "Ta bort Authenticator App"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:376
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:365
 msgid "Remove checklist"
 msgstr "Ta bort checklista"
 
@@ -13153,7 +13158,7 @@ msgid "Removes the shadows for a flat look."
 msgstr "Tar bort skuggorna för ett plant utseende."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:369
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:358
 msgid "Rename checklist"
 msgstr "Byt namn på checklista"
 
@@ -13766,7 +13771,7 @@ msgstr "Spara som"
 msgid "Save as draft"
 msgstr "Spara som utkast"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:340
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
 msgid "Save changes"
 msgstr "Spara ändringar"
 
@@ -13782,7 +13787,7 @@ msgstr "Sparade villkor"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1121
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1120
 msgid "Saving failed."
 msgstr "Bulkåtgärd utförd."
 
@@ -15840,7 +15845,7 @@ msgstr "Certifikaten för %s hittades inte."
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:211
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee:300
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:36
-#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:49
+#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:61
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee:68
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee:135
 msgid "The changes could not be saved."
@@ -21373,7 +21378,7 @@ msgstr "mottagen sammanslagning"
 msgid "recovery codes"
 msgstr "återställningskoder"
 
-#: app/models/checklist/item.rb:103
+#: app/models/checklist/item.rb:102
 msgid "reference must not be the checklist ticket."
 msgstr "referens får inte vara checklist ärende."
 

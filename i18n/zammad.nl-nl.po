@@ -2,16 +2,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-11 05:19+0000\n"
-"Last-Translator: JPB <JPB@users.noreply.translations.zammad.org>\n"
+"PO-Revision-Date: 2024-10-08 07:43+0000\n"
+"Last-Translator: Jeroen Baten <jbaten@i2rs.nl>\n"
 "Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
-"development/nl/>\n"
+"stable/nl/>\n"
 "Language: nl-nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 5.7\n"
+"X-Generator: Weblate 5.7.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -581,10 +581,8 @@ msgstr "%s personen"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:53
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:31
-#, fuzzy
-#| msgid "%s ended switch to |%s|!"
 msgid "%s reacted with a %s to message from %s |%s|"
-msgstr "%s beëindigde de overschakeling naar |%s|!"
+msgstr "%s reageerde met een %s op het bericht van %s |%s|"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:49
 msgid ""
@@ -1325,7 +1323,7 @@ msgstr "Bot toevoegen"
 msgid "Add Certificate"
 msgstr "Certificaat toevoegen"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:417
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:406
 msgid "Add Empty Checklist"
 msgstr "Lege checklist toevoegen"
 
@@ -2954,7 +2952,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:333
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -3249,7 +3247,7 @@ msgid "Checklist Template items are limited to 100 items per checklist."
 msgstr ""
 "Items in een checklist-sjabloon zijn beperkt tot 100 items per checklist."
 
-#: app/models/checklist/item.rb:109
+#: app/models/checklist/item.rb:108
 msgid "Checklist items are limited to 100 items per checklist."
 msgstr "Items op de checklist zijn beperkt tot 100 items per checklist."
 
@@ -6161,22 +6159,16 @@ msgid "Draft available"
 msgstr "Concept beschikbaar"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:95
-#, fuzzy
-#| msgid "Changes could not be saved."
 msgid "Draft could not be saved."
-msgstr "Aanpassingen kunnen niet worden opgeslagen."
+msgstr "Concept kon niet worden opgeslagen."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:33
-#, fuzzy
-#| msgid "User could not be updated."
 msgid "Draft could not be updated."
-msgstr "Gebruiker kon niet geüpdatet worden."
+msgstr "Concept kon niet geüpdatet worden."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:53
-#, fuzzy
-#| msgid "Draft"
 msgid "Drafts"
-msgstr "Concept"
+msgstr "Concepten"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingOverviewOrder.vue:51
 msgid "Drag and drop to reorder ticket overview list items."
@@ -6329,10 +6321,8 @@ msgid "Editing on Desktop"
 msgstr "In bewerking op Desktop"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketLiveUsers.vue:57
-#, fuzzy
-#| msgid "Editing on Desktop"
 msgid "Editing on Mobile"
-msgstr "In bewerking op Desktop"
+msgstr "Bewerken op mobiel"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 msgid "Editor"
@@ -7342,11 +7332,11 @@ msgstr "Facebook Feed Bericht"
 msgid "Failed Tasks"
 msgstr "Mislukte taken"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:148
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:143
 msgid "Failed to add new checklist item."
 msgstr "Het is niet gelukt om een nieuw checklistitem toe te voegen."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:169
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:164
 msgid "Failed to delete checklist item."
 msgstr "Het is niet gelukt om het checklistitem te verwijderen."
 
@@ -7356,21 +7346,19 @@ msgid "Failed to find backup on channel!"
 msgstr "Kan geen back-up vinden op het kanaal!"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleMediaError.vue:35
-#, fuzzy
-#| msgid "Failed to upload."
 msgid "Failed to load content."
-msgstr "Kan niet worden geüpload."
+msgstr "Content laden niet gelukt."
 
 #: app/assets/javascripts/app/controllers/_channel/google.coffee:223
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:235
 msgid "Failed to roll back the migration of the channel!"
 msgstr "Kan de migratie van het kanaal niet terugdraaien!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:155
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:150
 msgid "Failed to save checklist order."
 msgstr "De volgorde van de items op de checklist is niet opgeslagen."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:114
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:118
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 "De volgorde van de items op de checklist is niet opgeslagen. Probeer het "
@@ -7385,7 +7373,7 @@ msgstr ""
 msgid "Failed to set up QR code. Please try again."
 msgstr "Het instellen van de QR-code is mislukt. Probeer het opnieuw."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:162
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:157
 msgid "Failed to update checklist item."
 msgstr "Het is niet gelukt om het item in de checklist bij te werken."
 
@@ -7990,7 +7978,7 @@ msgstr "Google Client Secret"
 
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
 msgid "Got it!"
-msgstr ""
+msgstr "Ik snap het!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:16
 msgid "Green"
@@ -8671,6 +8659,11 @@ msgstr "Beelddienst"
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:9
 msgid "Image file"
 msgstr "Afbeeldingsbestand"
+
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/lib/app_post/image_service.coffee:95
+msgid "Image file size is too large, please try inserting a smaller file."
+msgstr ""
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
@@ -10135,20 +10128,16 @@ msgid "Manage text modules of your system."
 msgstr "Tekstmodules van systeem beheren."
 
 #: db/seeds/permissions.rb:210
-#, fuzzy
-#| msgid "Manage ticket settings of your system."
 msgid "Manage ticket auto assignment settings of your system."
-msgstr "Beheer ticketinstellingen van systeem."
+msgstr "Beheer automatische tickettoewijzingsinstellingen van uw systeem."
 
 #: db/seeds/permissions.rb:300
 msgid "Manage ticket checklists of your system."
 msgstr "Beheer ticket checklists van het systeem."
 
 #: db/seeds/permissions.rb:216
-#, fuzzy
-#| msgid "Manage ticket settings of your system."
 msgid "Manage ticket duplicate detection settings of your system."
-msgstr "Beheer ticketinstellingen van systeem."
+msgstr "Beheer dubbele ticketsdetectie-instellingen van uw systeem."
 
 #: db/seeds/permissions.rb:48
 msgid "Manage ticket macros of your system."
@@ -10911,10 +10900,8 @@ msgid "New Group"
 msgstr "Nieuwe Groep"
 
 #: app/assets/javascripts/app/controllers/clues/keyboard_shortcuts_clues.coffee:5
-#, fuzzy
-#| msgid "Keyboard Shortcuts"
 msgid "New Keyboard Shortcuts"
-msgstr "Sneltoetsen"
+msgstr "Nieuwe Sneltoetsen"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:22
 msgid "New Macro"
@@ -11230,7 +11217,7 @@ msgid "No certificate found."
 msgstr "Geen certificaat gevonden."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:430
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:419
 msgid "No checklist added to this ticket yet."
 msgstr "Er is nog geen checklist toegevoegd aan dit ticket."
 
@@ -11325,10 +11312,8 @@ msgid "No proxy for the following hosts."
 msgstr "Geen Proxy voor de volgende hosts."
 
 #: lib/whatsapp/webhook/message/reaction.rb:13
-#, fuzzy
-#| msgid "No related article found to process the status message on."
 msgid "No related article found to process the reaction message on."
-msgstr "Geen gerelateerd artikel gevonden om de statusmelding op te verwerken."
+msgstr "Geen gerelateerd artikel gevonden om de reactie op te baseren."
 
 #: lib/whatsapp/webhook/message/status.rb:15
 msgid "No related article found to process the status message on."
@@ -11375,10 +11360,8 @@ msgid "No source data submitted!"
 msgstr "Geen brongegevens verstuurd!"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:194
-#, fuzzy
-#| msgid "No template created yet."
 msgid "No tags added yet."
-msgstr "Er is nog geen sjabloon gemaakt."
+msgstr "Nog geen tags toegevoegd."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:14
 msgid "No template created yet."
@@ -11845,10 +11828,8 @@ msgid "Open %s"
 msgstr "Open %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadgeList.vue:35
-#, fuzzy
-#| msgid "Checklist"
 msgid "Open Checklist"
-msgstr "Checklist"
+msgstr "Open checklist"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:3
 msgid "Open Ticket# %s"
@@ -12477,7 +12458,7 @@ msgstr "Kies een naam voor de applicatie, dan geven we je een unieke token."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
 msgid "Pin this panel"
-msgstr ""
+msgstr "Zet dit paneel vast"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:24
 msgid "Pink"
@@ -12626,7 +12607,7 @@ msgstr ""
 "gebruiken om in te loggen als je geen toegang meer heeft tot een andere "
 "tweefactormethode:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:72
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
 msgid "Please select a checklist template."
 msgstr "Selecteer een checklist-sjabloon."
 
@@ -13133,10 +13114,8 @@ msgid "Remember me"
 msgstr "Onthoud mij"
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:47
-#, fuzzy
-#| msgid "Welcome message"
 msgid "Reminder message"
-msgstr "Welkomst bericht"
+msgstr "Herinneringsbericht"
 
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco:18
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco:17
@@ -13206,7 +13185,7 @@ msgid "Remove authenticator app"
 msgstr "authenticator-app verwijderen"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:376
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:365
 msgid "Remove checklist"
 msgstr "Checklist verwijderen"
 
@@ -13236,10 +13215,8 @@ msgid "Remove selected values"
 msgstr "Verwijder geselecteerde waardes"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:176
-#, fuzzy
-#| msgid "Remove image"
 msgid "Remove this tag"
-msgstr "Afbeelding verwijderen"
+msgstr "Tag verwijderen"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:176
 msgid "Remove two-factor authentication"
@@ -13258,7 +13235,7 @@ msgid "Removes the shadows for a flat look."
 msgstr "Verwijder alle schaduwen voor een platte uitstraling."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:369
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:358
 msgid "Rename checklist"
 msgstr "Checklist hernoemen"
 
@@ -13528,10 +13505,8 @@ msgid "Resetting the order of your ticket overviews failed."
 msgstr "Het resetten van de volgorde van de ticketoverzichten is mislukt."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:202
-#, fuzzy
-#| msgid "Resize side panel"
 msgid "Resize article panel"
-msgstr "Formaat zijpaneel wijzigen"
+msgstr "Formaat artikelpaneel wijzigen"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageHandler.vue:170
 msgid "Resize frame"
@@ -13882,7 +13857,7 @@ msgstr "Opslaan als"
 msgid "Save as draft"
 msgstr "Concept opslaan"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:340
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
 msgid "Save changes"
 msgstr "Wijzigingen opslaan"
 
@@ -13898,7 +13873,7 @@ msgstr "Opgeslagen voorwaarden"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1121
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1120
 msgid "Saving failed."
 msgstr "Opslaan mislukt."
 
@@ -14748,10 +14723,8 @@ msgid "Show to user roles"
 msgstr "Weergeven aan gebruikersrollen"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:54
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Show tracking ticket"
-msgstr "Creëer een test- ticket"
+msgstr "Toon tracking ticket"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:55
 #, fuzzy
@@ -15979,7 +15952,7 @@ msgstr "De certificaten voor %s zijn niet gevonden."
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:211
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee:300
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:36
-#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:49
+#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:61
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee:68
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee:135
 msgid "The changes could not be saved."
@@ -21557,16 +21530,12 @@ msgid "reached"
 msgstr "bereikt"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:140
-#, fuzzy
-#| msgid "%s ended switch to |%s|!"
 msgid "reacted to message from %s '%s'"
-msgstr "%s beëindigde de overschakeling naar |%s|!"
+msgstr "reageerde op bericht van %s '%s'"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:134
-#, fuzzy
-#| msgid "%s ended switch to |%s|!"
 msgid "reacted with a %s to message from %s '%s'"
-msgstr "%s beëindigde de overschakeling naar |%s|!"
+msgstr "reageerde met een %s op bericht van %s '%s'"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
@@ -21582,7 +21551,7 @@ msgstr "Ontvangen samenvoeging"
 msgid "recovery codes"
 msgstr "herstelcodes"
 
-#: app/models/checklist/item.rb:103
+#: app/models/checklist/item.rb:102
 msgid "reference must not be the checklist ticket."
 msgstr "referentie mag niet het checklist ticket zijn."
 
@@ -21605,10 +21574,8 @@ msgid "remove option"
 msgstr "optie verwijderen"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:143
-#, fuzzy
-#| msgid "%s ended switch to |%s|!"
 msgid "removed reaction to message from %s '%s'"
-msgstr "%s beëindigde de overschakeling naar |%s|!"
+msgstr "verwijderde reactie op bericht van %s '%s'"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:10
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/facebook_reply.coffee:8
@@ -21842,7 +21809,7 @@ msgstr "token toegang, token, api, toegang token, applicatie"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadge.vue:8
 msgid "tracked in"
-msgstr ""
+msgstr "gevolgd in"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:24
 msgid "translation,locale,localization"
