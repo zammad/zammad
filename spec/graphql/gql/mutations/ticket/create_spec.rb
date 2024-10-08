@@ -394,6 +394,7 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
             {
               body: 'dummy',
               type: Ticket::Article::Type.first.name,
+              to:   'dummy@example.org',
             }
           end
 

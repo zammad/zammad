@@ -65,6 +65,48 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
         )
     end
 
+    context 'when email article should be created, but to is not present' do
+      let(:customer) { create(:customer, email: '') }
+
+      let(:ticket_data) do
+        {
+          title:    sample_title,
+          group:    group,
+          customer: customer,
+          article:  {
+            body: Faker::Lorem.sentence,
+            type: 'email',
+            to:   nil,
+          }
+        }
+      end
+
+      it 'raises an error' do
+        expect { service.execute(ticket_data:) }.to raise_error(Exceptions::InvalidAttribute, 'Sending an email without a valid recipient is not possible.')
+      end
+    end
+
+    context 'when email article should be created, but to is not a valid email' do
+      let(:customer) { create(:customer) }
+
+      let(:ticket_data) do
+        {
+          title:    sample_title,
+          group:    group,
+          customer: customer,
+          article:  {
+            body: Faker::Lorem.sentence,
+            type: 'email',
+            to:   'invalid-email',
+          }
+        }
+      end
+
+      it 'raises an error' do
+        expect { service.execute(ticket_data:) }.to raise_error(Exceptions::InvalidAttribute, 'Sending an email without a valid recipient is not possible.')
+      end
+    end
+
     it 'adds tags when present' do
       sample_tags = [Faker::Lorem.word]
 

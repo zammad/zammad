@@ -24,6 +24,10 @@ module Gql::Mutations
           .new(current_user: context.current_user)
           .execute(ticket: ticket, ticket_data: input, skip_validators: meta&.dig(:skip_validators), macro: meta&.dig(:macro))
       }
+    rescue Exceptions::InvalidAttribute => e
+      field = e.attribute == 'email_recipient' ? 'article.to' : e.attribute
+
+      error_response({ field:, message: e.message })
     rescue => e
       raise e if !e.class.name.starts_with?('Service::Ticket::Update::Validator')
 

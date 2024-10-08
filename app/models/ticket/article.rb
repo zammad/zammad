@@ -38,6 +38,7 @@ class Ticket::Article < ApplicationModel
   belongs_to :origin_by,  class_name: 'User', optional: true
 
   before_validation :check_mentions, on: :create
+  before_validation :check_email_recipient_validity, if: :check_email_recipient_raises_error
   before_create :check_subject, :check_body, :check_message_id_md5
   before_update :check_subject, :check_body, :check_message_id_md5
   after_destroy :store_delete, :update_time_units
@@ -67,7 +68,7 @@ class Ticket::Article < ApplicationModel
                              :to,
                              :cc
 
-  attr_accessor :should_clone_inline_attachments, :check_mentions_raises_error
+  attr_accessor :should_clone_inline_attachments, :check_mentions_raises_error, :check_email_recipient_raises_error
 
   alias should_clone_inline_attachments? should_clone_inline_attachments
 
@@ -382,6 +383,24 @@ returns
         raise e
       end
     end
+  end
+
+  def check_email_recipient_validity
+    return if Setting.get('import_mode')
+
+    # Check if article type is email
+    email_article_type = Ticket::Article::Type.lookup(name: 'email')
+    return if type_id != email_article_type.id
+
+    # ... and if recipient is valid.
+    recipient = begin
+      Mail::Address.new(to).address
+    rescue Mail::Field::FieldError
+      # no-op
+    end
+    return if EmailAddressValidation.new(recipient).valid?
+
+    raise Exceptions::InvalidAttribute.new('email_recipient', __('Sending an email without a valid recipient is not possible.'))
   end
 
   def history_log_attributes

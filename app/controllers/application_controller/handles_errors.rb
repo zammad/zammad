@@ -16,6 +16,7 @@ module ApplicationController::HandlesErrors
     rescue_from Exceptions::Forbidden, with: :forbidden
     rescue_from Pundit::NotAuthorizedError, with: :pundit_not_authorized_error
     rescue_from Store::Provider::S3::Error, with: :unprocessable_entity
+    rescue_from Exceptions::MissingAttribute, Exceptions::InvalidAttribute, with: :unprocessable_entity
   end
 
   def not_found(e)
@@ -104,7 +105,7 @@ module ApplicationController::HandlesErrors
     elsif e.message == 'Exceptions::NotAuthorized'
       data[:error]       = __('Authorization failed')
       data[:error_human] = data[:error]
-    elsif [ActionController::RoutingError, ActiveRecord::RecordNotFound, Exceptions::UnprocessableEntity, Exceptions::NotAuthorized, Exceptions::Forbidden, Store::Provider::S3::Error, Authorization::Provider::AccountError].include?(e.class)
+    elsif [ActionController::RoutingError, ActiveRecord::RecordNotFound, Exceptions::UnprocessableEntity, Exceptions::NotAuthorized, Exceptions::Forbidden, Store::Provider::S3::Error, Authorization::Provider::AccountError, Exceptions::MissingAttribute, Exceptions::InvalidAttribute].include?(e.class)
       data[:error_human] = data[:error]
     end
 
