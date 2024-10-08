@@ -1,8 +1,8 @@
 #{config.product_name}-acceso desde otro país
 
-<div>Buenos días #{user.firstname},</div>
+<div>Hola #{user.firstname},</div>
 <br>
-<div>parece haber accedido a las "#{user_device.created_at}" desde un <b>dispositivo conocido desde otro país</b>:</div>
+<div>parece haber accedido a las "#{user_device.created_at}" desde un <b>dispositivo conocido, pero desde otro país</b>:</div>
 <br>
 <div>
 Su dispositivo: #{user_device.name}<br>
@@ -14,6 +14,6 @@ Su dirección IP: #{user_device.ip}<br>
 <br>
 <div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
 <br>
-<div>Si no fue usted, por favor elimine el dispositivo, cambie la contraseña de su cuenta y contacte a su administrador. Alguien puede tener acceso no autorizado a su cuenta.</div>
+<div>Si no fue usted, por favor elimine el dispositivo de la lista, cambie la contraseña de su cuenta y contacte a su administrador. Alguien puede tener acceso no autorizado a su cuenta.</div>
 <br>
 <div>El equipo #{config.product_name} </div>
