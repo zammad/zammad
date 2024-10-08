@@ -28,8 +28,20 @@ class App.KnowledgeBaseEditorCoordinator
     else
       object.url()
 
-  saveChanges: (object, data, formController, action) ->
-    App.ControllerForm.disable(formController.form)
+  submitDisable: (e) =>
+    if e
+      App.ControllerForm.disable(e)
+      return
+    App.ControllerForm.disable(@$('.js-submitContainer'), 'button')
+
+  submitEnable: (e) =>
+    if e
+      App.ControllerForm.enable(e)
+      return
+    App.ControllerForm.enable(@$('.js-submitContainer'), 'button')
+
+  saveChanges: (object, data, formController, e, action) ->
+    @submitDisable(e)
 
     url = @urlFor(object) + '?full=true'
 
@@ -40,11 +52,12 @@ class App.KnowledgeBaseEditorCoordinator
       type: object.writeMethod()
       data: JSON.stringify(data)
       url: url
-      success: (data) ->
+      success: (data) =>
         App.Collection.loadAssets(data.assets)
         formController.didSaveCallback(data)
-      error: (xhr) ->
+        @submitEnable(e)
+      error: (xhr) =>
         data = JSON.parse(xhr.responseText)
-        App.ControllerForm.enable(formController.form)
         formController.showAlert(data.error || __('The changes could not be saved.'))
+        @submitEnable(e)
     )

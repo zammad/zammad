@@ -1206,6 +1206,10 @@ pre code {
       }
     }
   }
+
+  button[disabled] ~ .dropdown-menu-accessories button {
+    opacity: 0.33;
+  }
 }
 
 .dropdown-menu-right {

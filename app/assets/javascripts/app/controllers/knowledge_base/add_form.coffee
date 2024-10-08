@@ -28,7 +28,7 @@ class App.KnowledgeBaseAddForm extends App.ControllerModal
     params = @formController.paramsForSaving()
     params.translations_attributes[0].content_attributes = { body: '' }
 
-    @parentController.coordinator.saveChanges(@object, params, @)
+    @parentController.coordinator.saveChanges(@object, params, @, e)
 
   showAlert: (text) ->
     @formController?.showAlert(text)
