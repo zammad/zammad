@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-04 10:13+0000\n"
-"Last-Translator: Alfredo Sola <alfredo@sola.es>\n"
+"PO-Revision-Date: 2024-10-08 07:43+0000\n"
+"Last-Translator: Arturo <r2r0@posteo.de>\n"
 "Language-Team: Spanish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/es/>\n"
 "Language: es-es\n"
@@ -154,8 +154,8 @@ msgid ""
 msgstr ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Tiquete##{ticket.number}>: Recordatorio alcanzado!_\n"
-"Un tiquete necesita atencion: limite de recordatorio alcanzado (#{ticket."
+"Ticket##{ticket.number}>: Recordatorio alcanzado!_\n"
+"Un ticket necesita atención: limite de recordatorio alcanzado (#{ticket."
 "title}) con cliente \"*#{ticket.customer.longname}*\".\n"
 "\n"
 "<% if @objects[:article] %>\n"
@@ -182,7 +182,7 @@ msgid ""
 msgstr ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Tiquete##{ticket.number}>: Actualizado por #{current_user.longname} el "
+"Ticket##{ticket.number}>: Actualizado por #{current_user.longname} el "
 "#{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
@@ -210,8 +210,8 @@ msgid ""
 msgstr ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Tiquete##{ticket.number}>: Escalara el #{ticket.escalation_at}_\n"
-"El tiquete (#{ticket.title}) de \"#{ticket.customer.longname}\" escalara el "
+"Ticket##{ticket.number}>: Escalará el #{ticket.escalation_at}_\n"
+"El ticket (#{ticket.title}) de \"#{ticket.customer.longname}\" escalará el "
 "\"#{ticket.escalation_at}\"!\n"
 "\n"
 "<% if @objects[:article] %>\n"
@@ -242,9 +242,9 @@ msgstr ""
 "<div>Parece que ha conectado su cuenta <b>con una aplicación de terceros</"
 "b>: \"#{t(provider)}\".</div>\n"
 "<br>\n"
-"<div>Si no lo ha hecho usted, elimine la cuenta conectada de su perfil y "
-"cambie la contraseña de su aplicación de terceros. Es posible que alguien "
-"haya conseguido acceder a su aplicación de terceros sin su permiso.</div>\n"
+"<div>Si no fue usted, elimine la cuenta conectada de su perfil y cambie la "
+"contraseña de su aplicación de terceros. Es posible que alguien haya "
+"conseguido acceder a su aplicación de terceros sin su permiso.</div>\n"
 "<br>\n"
 "<div>El equipo de #{config.product_name}</div>\n"
 
@@ -279,10 +279,10 @@ msgid ""
 msgstr ""
 "#{config.product_name}-acceso desde otro país\n"
 "\n"
-"<div>Buenos días #{user.firstname},</div>\n"
+"<div>Hola #{user.firstname},</div>\n"
 "<br>\n"
 "<div>parece haber accedido a las \"#{user_device.created_at}\" desde un "
-"<b>dispositivo conocido desde otro país</b>:</div>\n"
+"<b>dispositivo conocido, pero desde otro país</b>:</div>\n"
 "<br>\n"
 "<div>\n"
 "Su dispositivo: #{user_device.name}<br>\n"
@@ -296,9 +296,9 @@ msgstr ""
 "<div><a href=\"#{config.http_type}://#{config.fqdn}/#profile/"
 "devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
-"<div>Si no fue usted, por favor elimine el dispositivo, cambie la contraseña "
-"de su cuenta y contacte a su administrador. Alguien puede tener acceso no "
-"autorizado a su cuenta.</div>\n"
+"<div>Si no fue usted, por favor elimine el dispositivo de la lista, cambie "
+"la contraseña de su cuenta y contacte a su administrador. Alguien puede "
+"tener acceso no autorizado a su cuenta.</div>\n"
 "<br>\n"
 "<div>El equipo #{config.product_name} </div>\n"
 
@@ -333,7 +333,7 @@ msgid ""
 msgstr ""
 "#{config.product_name}- inicio de sesión desde nuevo dispositivo\n"
 "\n"
-"<div>Buenos días, #{user.firstname}:</div>\n"
+"<div>Hola, #{user.firstname}:</div>\n"
 "<br>\n"
 "<div>Parece haber accedido a su cuenta desde <b>un nuevo dispositivo</b> en "
 "la fecha \"#{user_device.created_at}\":</div>\n"
@@ -351,8 +351,8 @@ msgstr ""
 "devices\">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>\n"
 "<br>\n"
 "<div>Si no ha sido usted, elimine el dispositivo de la lista, cambie la "
-"contraseña de la cuenta y contacte con su administrador. Alguien podría "
-"haber obtenido un acceso no autorizado a su cuenta.</div>\n"
+"contraseña de su cuenta y contacte con su administrador. Alguien puede haber "
+"obtenido un acceso no autorizado a su cuenta.</div>\n"
 "<br>\n"
 "<div>El equipo de #{config.product_name}</div>\n"
 
@@ -383,7 +383,7 @@ msgstr "%s (desconocido)"
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:9
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:6
 msgid "%s API Token"
-msgstr "%s API Token"
+msgstr "%s Identificador API"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:144
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:179
@@ -394,7 +394,7 @@ msgstr "%s Atributo"
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:50
 msgid "%s Checklist"
-msgstr "%s Lista de comprobación"
+msgstr "%s Lista de verificación"
 
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:203
 msgid "%s Group"
@@ -402,7 +402,7 @@ msgstr "%s Grupo"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:51
 msgid "%s Import Status"
-msgstr "%s Estado de Importación"
+msgstr "%s Importación"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:61
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:65
@@ -2441,7 +2441,7 @@ msgstr "Clave de la aplicación de autenticación"
 msgid "Author"
 msgstr "Autor"
 
-#: app/controllers/application_controller/handles_errors.rb:105
+#: app/controllers/application_controller/handles_errors.rb:106
 msgid "Authorization failed"
 msgstr "Autorización fallida"
 
@@ -8736,6 +8736,11 @@ msgstr "Servicio de imágenes"
 msgid "Image file"
 msgstr "Archivo de imagen"
 
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/lib/app_post/image_service.coffee:95
+msgid "Image file size is too large, please try inserting a smaller file."
+msgstr ""
+
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
 msgstr "Imagen de %s"
@@ -11546,8 +11551,8 @@ msgstr "No asignado"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:158
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:115
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:25
-#: app/controllers/application_controller/handles_errors.rb:60
-#: app/services/service/ticket/article/create.rb:121
+#: app/controllers/application_controller/handles_errors.rb:61
+#: app/services/service/ticket/article/create.rb:122
 msgid "Not authorized"
 msgstr "No autorizado"
 
@@ -14433,6 +14438,10 @@ msgstr "Remitente basado en el encabezado Reply-To"
 msgid "Sender of last article"
 msgstr "Remitente del último artículo"
 
+#: app/models/ticket/article.rb:305
+msgid "Sending an email without a valid recipient is not possible."
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:35
 msgid "Sending…"
 msgstr "Enviando…"
@@ -16060,7 +16069,7 @@ msgstr "No se han encontrado los certificados para %s."
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:211
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee:300
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:36
-#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:49
+#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:61
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee:68
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee:135
 msgid "The changes could not be saved."
@@ -17507,7 +17516,7 @@ msgstr ""
 "Esto puede llevar algún tiempo, durante el cual el sistema no estará "
 "disponible."
 
-#: app/controllers/application_controller/handles_errors.rb:98
+#: app/controllers/application_controller/handles_errors.rb:99
 #: app/graphql/gql/zammad_schema.rb:83
 msgid "This object already exists."
 msgstr "Este objeto ya existe."

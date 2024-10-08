@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-03 01:03+0000\n"
+"PO-Revision-Date: 2024-10-08 07:43+0000\n"
 "Last-Translator: Sajjad Jazini <s.jazini@vatanmail.ir>\n"
 "Language-Team: Persian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fa/>\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 5.7\n"
+"X-Generator: Weblate 5.7.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -2189,7 +2189,7 @@ msgstr "رمز برنامه احراز کننده هویت"
 msgid "Author"
 msgstr "نویسنده"
 
-#: app/controllers/application_controller/handles_errors.rb:105
+#: app/controllers/application_controller/handles_errors.rb:106
 msgid "Authorization failed"
 msgstr "دادن مجوز موفقیت‌آمیز نبود"
 
@@ -2367,7 +2367,7 @@ msgstr ""
 
 #: app/models/report.rb:38
 msgid "Backlog"
-msgstr "بک‌لاگ"
+msgstr "عقب افتاده"
 
 #: app/assets/javascripts/app/controllers/_manage/branding.coffee:9
 #: app/assets/javascripts/app/controllers/_manage/security.coffee:9
@@ -8139,6 +8139,11 @@ msgstr "سرویس تصاویر"
 msgid "Image file"
 msgstr "پرونده تصویر"
 
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/lib/app_post/image_service.coffee:95
+msgid "Image file size is too large, please try inserting a smaller file."
+msgstr ""
+
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
 msgstr "تصویر %s"
@@ -10184,11 +10189,11 @@ msgstr "حرکت به بالا و پائین"
 
 #: app/models/report.rb:59
 msgid "Moved in"
-msgstr ""
+msgstr "وارد شده"
 
 #: app/models/report.rb:67
 msgid "Moved out"
-msgstr ""
+msgstr "خارج شده"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:61
 msgid "Multiple selection field"
@@ -11038,8 +11043,8 @@ msgstr "تخصیص داده نشده"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:158
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:115
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:25
-#: app/controllers/application_controller/handles_errors.rb:60
-#: app/services/service/ticket/article/create.rb:121
+#: app/controllers/application_controller/handles_errors.rb:61
+#: app/services/service/ticket/article/create.rb:122
 msgid "Not authorized"
 msgstr ""
 
@@ -13932,6 +13937,10 @@ msgstr ""
 msgid "Sender of last article"
 msgstr "فرستنده آخرین بند"
 
+#: app/models/ticket/article.rb:305
+msgid "Sending an email without a valid recipient is not possible."
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:35
 msgid "Sending…"
 msgstr "درحال ارسال…"
@@ -15523,7 +15532,7 @@ msgstr "گواهینامه‌ها برای %s یافت نشدند."
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:211
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee:300
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:36
-#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:49
+#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:61
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee:68
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee:135
 msgid "The changes could not be saved."
@@ -16898,7 +16907,7 @@ msgstr ""
 msgid "This might take some time during which the system can't be used."
 msgstr ""
 
-#: app/controllers/application_controller/handles_errors.rb:98
+#: app/controllers/application_controller/handles_errors.rb:99
 #: app/graphql/gql/zammad_schema.rb:83
 msgid "This object already exists."
 msgstr "این مورد قبلا ایجاد شده است."

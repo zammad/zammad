@@ -2446,7 +2446,7 @@ msgstr "Ключ из приложения-аутентификатора"
 msgid "Author"
 msgstr "Автор"
 
-#: app/controllers/application_controller/handles_errors.rb:105
+#: app/controllers/application_controller/handles_errors.rb:106
 msgid "Authorization failed"
 msgstr "Авторизация не удалась"
 
@@ -8725,6 +8725,11 @@ msgstr "Служба изображений"
 msgid "Image file"
 msgstr "Файл изображения"
 
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/lib/app_post/image_service.coffee:95
+msgid "Image file size is too large, please try inserting a smaller file."
+msgstr ""
+
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
 msgstr "Изображение %s"
@@ -11525,8 +11530,8 @@ msgstr "Не назначено"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:158
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:115
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:25
-#: app/controllers/application_controller/handles_errors.rb:60
-#: app/services/service/ticket/article/create.rb:121
+#: app/controllers/application_controller/handles_errors.rb:61
+#: app/services/service/ticket/article/create.rb:122
 msgid "Not authorized"
 msgstr "Не пройдена авторизация"
 
@@ -14410,6 +14415,10 @@ msgstr "Отправитель определяется по заголовку 
 msgid "Sender of last article"
 msgstr "Отправитель последней статьи"
 
+#: app/models/ticket/article.rb:305
+msgid "Sending an email without a valid recipient is not possible."
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:35
 msgid "Sending…"
 msgstr "Отправка…"
@@ -16029,7 +16038,7 @@ msgstr "Cертификаты для %s не найдены."
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:211
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee:300
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:36
-#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:49
+#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:61
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee:68
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee:135
 msgid "The changes could not be saved."
@@ -17493,7 +17502,7 @@ msgstr ""
 "Это может занять некоторое время, в течение которого система будет "
 "недоступна."
 
-#: app/controllers/application_controller/handles_errors.rb:98
+#: app/controllers/application_controller/handles_errors.rb:99
 #: app/graphql/gql/zammad_schema.rb:83
 msgid "This object already exists."
 msgstr "Этот объект уже существует."

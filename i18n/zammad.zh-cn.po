@@ -2373,7 +2373,7 @@ msgstr "身份验证器应用程序密码"
 msgid "Author"
 msgstr "作者"
 
-#: app/controllers/application_controller/handles_errors.rb:105
+#: app/controllers/application_controller/handles_errors.rb:106
 msgid "Authorization failed"
 msgstr "认证失败"
 
@@ -8365,6 +8365,11 @@ msgstr "圖像服務"
 msgid "Image file"
 msgstr "图像文件"
 
+#: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
+#: app/assets/javascripts/app/lib/app_post/image_service.coffee:95
+msgid "Image file size is too large, please try inserting a smaller file."
+msgstr ""
+
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
 msgstr "%s 的图像"
@@ -11361,8 +11366,8 @@ msgstr "未分配"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:158
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:115
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:25
-#: app/controllers/application_controller/handles_errors.rb:60
-#: app/services/service/ticket/article/create.rb:121
+#: app/controllers/application_controller/handles_errors.rb:61
+#: app/services/service/ticket/article/create.rb:122
 msgid "Not authorized"
 msgstr "未经授权"
 
@@ -14325,6 +14330,10 @@ msgstr "基於Reply-To標頭的寄件人"
 msgid "Sender of last article"
 msgstr "上一篇文章的发件人"
 
+#: app/models/ticket/article.rb:305
+msgid "Sending an email without a valid recipient is not possible."
+msgstr ""
+
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:35
 msgid "Sending…"
 msgstr "发送中…"
@@ -15943,7 +15952,7 @@ msgstr "未找到 %s 的证书。"
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:211
 #: app/assets/javascripts/app/controllers/_channel/twitter.coffee:300
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_dialog.coffee:36
-#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:49
+#: app/assets/javascripts/app/controllers/knowledge_base/editor_coordinator.coffee:61
 #: app/assets/javascripts/app/controllers/knowledge_base/public_menu_form.coffee:68
 #: app/assets/javascripts/app/controllers/knowledge_base/sidebar/attachments.coffee:135
 msgid "The changes could not be saved."
@@ -17431,7 +17440,7 @@ msgstr "此消息没有由发件人签署。"
 msgid "This might take some time during which the system can't be used."
 msgstr "無法使用該系統可能需要一些時間"
 
-#: app/controllers/application_controller/handles_errors.rb:98
+#: app/controllers/application_controller/handles_errors.rb:99
 #: app/graphql/gql/zammad_schema.rb:83
 #, fuzzy
 #| msgid "Account already exists!"
