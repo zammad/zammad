@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-07 08:51+0000\n"
+"PO-Revision-Date: 2024-10-09 07:33+0000\n"
 "Last-Translator: Lorenzo Milesi <lorenzo@mile.si>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/it/>\n"
@@ -2448,7 +2448,7 @@ msgstr "Secret app di autenticazione"
 msgid "Author"
 msgstr "Autore"
 
-#: app/controllers/application_controller/handles_errors.rb:105
+#: app/controllers/application_controller/handles_errors.rb:106
 msgid "Authorization failed"
 msgstr "Autorizzazione fallita"
 
@@ -8707,6 +8707,7 @@ msgstr "File immagine"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
 #: app/assets/javascripts/app/lib/app_post/image_service.coffee:95
+#: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:360
 msgid "Image file size is too large, please try inserting a smaller file."
 msgstr ""
 
@@ -11516,8 +11517,8 @@ msgstr "Non assegnato"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:158
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:115
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:25
-#: app/controllers/application_controller/handles_errors.rb:60
-#: app/services/service/ticket/article/create.rb:121
+#: app/controllers/application_controller/handles_errors.rb:61
+#: app/services/service/ticket/article/create.rb:122
 msgid "Not authorized"
 msgstr "Autorizzazione negata"
 
@@ -11889,10 +11890,8 @@ msgid "Open %s"
 msgstr "Apri %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadgeList.vue:35
-#, fuzzy
-#| msgid "Checklist"
 msgid "Open Checklist"
-msgstr "Checklist"
+msgstr "Apri lista di controllo"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:3
 msgid "Open Ticket# %s"
@@ -11915,10 +11914,8 @@ msgid "Open in new tab"
 msgstr "Apri in una nuova scheda"
 
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:76
-#, fuzzy
-#| msgid "Open Tickets"
 msgid "Open link"
-msgstr "Ticket aperti"
+msgstr "Visita collegamento"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:502
 msgid "Open macro selection"
@@ -11989,15 +11986,13 @@ msgid "Options are required."
 msgstr "Le opzioni sono necessarie."
 
 #: app/models/object_manager/attribute/data_option_validator.rb:53
-#, fuzzy
-#| msgid "This field is required."
 msgid "Options or relation is required."
-msgstr "Questo campo è obbligatorio."
+msgstr "Opzioni o relazioni sono obbligatorie."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:8
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue:22
 msgid "Or choose a checklist template."
-msgstr ""
+msgstr "Oppure scegli un modello di liste di controllo."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupStart.vue:76
 msgid "Or migrate from another system"
@@ -12084,10 +12079,8 @@ msgid "Organization logo"
 msgstr "Logo dell'organizzazione"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:41
-#, fuzzy
-#| msgid "Organization Name"
 msgid "Organization name"
-msgstr "Nome Organizzazione"
+msgstr "Nome organizzazione"
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:78
 msgid "Organization tickets"
@@ -12530,7 +12523,7 @@ msgstr "Scegli un nome per l'applicazione e ti forniremo un token univoco."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
 msgid "Pin this panel"
-msgstr ""
+msgstr "Fissa questo pannello"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:24
 msgid "Pink"
@@ -12652,7 +12645,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/error/views/Error.vue:54
 msgid "Please proceed to login"
-msgstr ""
+msgstr "Procedi al login"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:383
 msgid "Please provide a recipient in \"TO\" or \"CC\"."
@@ -12679,10 +12672,8 @@ msgstr ""
 "metodo di autenticazione a due fattori:"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
-#, fuzzy
-#| msgid "Please select at least one folder."
 msgid "Please select a checklist template."
-msgstr "Per favore seleziona almeno una cartella."
+msgstr "Per favore seleziona un modello di liste di controllo."
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts:60
 msgid "Please select a ticket to merge into."
@@ -12824,10 +12815,8 @@ msgid "Preview %s"
 msgstr "Anteprima %s"
 
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:87
-#, fuzzy
-#| msgid "New Calendar"
 msgid "Preview Calendar"
-msgstr "Nuovo Calendario"
+msgstr "Anteprima calendario"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:165
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:172
@@ -13191,10 +13180,8 @@ msgid "Remember me"
 msgstr "Ricordami"
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:47
-#, fuzzy
-#| msgid "Welcome message"
 msgid "Reminder message"
-msgstr "Messaggio di Benvenuto"
+msgstr "Messaggio di promemoria"
 
 #: app/assets/javascripts/app/views/generic/postmaster_match.jst.eco:18
 #: app/assets/javascripts/app/views/generic/postmaster_set_row.jst.eco:17
@@ -13265,10 +13252,8 @@ msgstr "Rimuovi l'app di autenticazione"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:365
-#, fuzzy
-#| msgid "Remove %s"
 msgid "Remove checklist"
-msgstr "Rimuovi %s"
+msgstr "Rimuovi lista di controllo"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:283
 msgid "Remove formatting"
@@ -13280,10 +13265,8 @@ msgstr "Rimuovi immagine"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:89
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:74
-#, fuzzy
-#| msgid "Remove image"
 msgid "Remove item"
-msgstr "Rimuovi immagine"
+msgstr "Rimuovi elemento"
 
 #: app/assets/javascripts/app/views/user/manage_two_factor.jst.eco:5
 msgid "Remove method"
@@ -13298,10 +13281,8 @@ msgid "Remove selected values"
 msgstr "Rimuovi i valori selezionati"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:176
-#, fuzzy
-#| msgid "Remove image"
 msgid "Remove this tag"
-msgstr "Rimuovi immagine"
+msgstr "Rimuovi questa etichetta"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:176
 msgid "Remove two-factor authentication"
@@ -13322,7 +13303,7 @@ msgstr "Rimuove le ombre per un aspetto piatto."
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:358
 msgid "Rename checklist"
-msgstr ""
+msgstr "Rinomina lista di controllo"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/feed_dialog.coffee:9
 msgid "Renew Access Token"
@@ -13343,10 +13324,8 @@ msgstr "Tempo di riapertura in giorni"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:178
-#, fuzzy
-#| msgid "Order"
 msgid "Reorder"
-msgstr "Ordine"
+msgstr "Riordina"
 
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:26
 msgid "Replacement"
@@ -13592,10 +13571,8 @@ msgid "Resetting the order of your ticket overviews failed."
 msgstr "La reimpostazione dell'ordine delle panoramiche dei ticket è fallita."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:202
-#, fuzzy
-#| msgid "Resize side panel"
 msgid "Resize article panel"
-msgstr "Ridimensiona pannello laterale"
+msgstr "Ridimensiona pannello articolo"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageHandler.vue:170
 msgid "Resize frame"
@@ -13947,10 +13924,8 @@ msgid "Save as draft"
 msgstr "Salva bozza"
 
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
-#, fuzzy
-#| msgid "Discard Changes"
 msgid "Save changes"
-msgstr "Annulla Modifiche"
+msgstr "Salva modifiche"
 
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:217
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:267
@@ -14374,10 +14349,8 @@ msgid "Send a message to all logged in users."
 msgstr "Invia un messaggio a tutti gli utenti connessi."
 
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailOutboundForm.ts:52
-#, fuzzy
-#| msgid "Send Mails via"
 msgid "Send mails via"
-msgstr "Spedisci Mails via"
+msgstr "Spedisci email via"
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:40
 msgid ""
@@ -14430,6 +14403,10 @@ msgstr "Mittente basato sull'header Reply-To"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:503
 msgid "Sender of last article"
 msgstr "Mittente dell'ultima nota"
+
+#: app/models/ticket/article.rb:305
+msgid "Sending an email without a valid recipient is not possible."
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:35
 msgid "Sending…"
@@ -14818,16 +14795,12 @@ msgid "Show to user roles"
 msgstr "Mostrato ai ruoli utente"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:54
-#, fuzzy
-#| msgid "Save ticket"
 msgid "Show tracking ticket"
-msgstr "Salva ticket"
+msgstr "Mostra ticket di riferimento"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:55
-#, fuzzy
-#| msgid "Show ticket actions"
 msgid "Show tracking tickets"
-msgstr "Mostra le azioni sui ticket"
+msgstr "Mostra ticket di riferimento"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:95
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:114
@@ -14989,12 +14962,6 @@ msgstr "Sina Weibo Open Portal"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:685
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:284
-#, fuzzy
-#| msgid ""
-#| "In addition, emails were found in your mailbox that are older than %s "
-#| "weeks. You can import such emails as an \"archive\", which means that no "
-#| "notifications are sent and the tickets have the status \"closed\". "
-#| "However, you can find them in Zammad anytime using the search function."
 msgid ""
 "Since the mail server does not support sorting messages by date, it was not "
 "possible to detect if there is any mail older than %s weeks in the connected "
@@ -15002,11 +14969,12 @@ msgid ""
 "notifications are sent and the tickets have the status \"closed\". However, "
 "you can find them in Zammad anytime using the search function."
 msgstr ""
-"In aggiunta, sono state trovate email nella tua casella postale che sono più "
-"vecchie di %s settimane. Puoi importare queste email come \"archivio\", il "
-"che significa che non verranno inviate notifiche e i ticket avranno lo stato "
-"\"chiuso\". Comunque, le potrai trovare in Zammad quando vuoi usando la "
-"funzione di ricerca."
+"Siccome il server di posta non supporta l'ordinamento dei messaggi per data, "
+"non è stato possibile rilevare se ci sono mail più vecchie di %s settimane "
+"nella casella collegata. Puoi importare queste email come un \"archivio\", "
+"che significa ch enon verranno inviate notifiche e i ticket saranno in stato "
+"\"chiuso\". Possono comunque essere ricercati in Zammad usando la funzione "
+"di ricerca."
 
 #: public/assets/chat/views/customer_timeout.eco:5
 msgid ""
@@ -15361,6 +15329,9 @@ msgid ""
 "message ID in references header if no follow-up was recognized using default "
 "settings."
 msgstr ""
+"Oggetto & riferimenti - Ricerca aggiuntiva per oggetto o Message-ID se non "
+"viene rilevata nessuna intestazione di risposta usando le impostazioni "
+"predefinite."
 
 #: app/assets/javascripts/app/controllers/_application_controller/form.coffee:2
 #: app/assets/javascripts/app/controllers/tag.coffee:103
@@ -15448,11 +15419,11 @@ msgstr "Supporto per base di conoscenza multilingua."
 
 #: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:16
 msgid "Switch back to old layout"
-msgstr ""
+msgstr "Torna alla vecchia vista"
 
 #: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:14
 msgid "Switch to new layout"
-msgstr ""
+msgstr "Passa alla nuova vista"
 
 #: db/seeds/schedulers.rb:142
 msgid "Sync calendars with iCal feeds."
@@ -15714,10 +15685,8 @@ msgstr "È richiesto un testo o un allegato"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_item_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:145
-#, fuzzy
-#| msgid "Text or attachment is required"
 msgid "Text or ticket identifier"
-msgstr "È richiesto un testo o un allegato"
+msgstr "Identificatore testo o ticket"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:12
 msgid "Text with disabled inline translations looks like"
@@ -15960,10 +15929,8 @@ msgstr ""
 "usiamo per la chat."
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:93
-#, fuzzy
-#| msgid "Geo Calendar Service"
 msgid "The calendar icon"
-msgstr "Servizio Geo Calendario"
+msgstr "Icona calendario"
 
 #: app/models/setting/validation/saml/security.rb:16
 msgid "The certificate could not be parsed."
@@ -16253,16 +16220,15 @@ msgid "The given article is not a media article."
 msgstr "L'articolo fornito non è di tipo media."
 
 #: app/graphql/gql/mutations/ticket/checklist/item_delete.rb:17
-#, fuzzy
-#| msgid "The article does not belong to the specified ticket."
 msgid "The given checklist item does not belong to the given checklist."
-msgstr "La nota non appartiene al ticket specificato."
+msgstr ""
+"L'elemento di lista di controllo fornito non appartiene alla lista di "
+"controllo indicata."
 
 #: app/services/service/user/two_factor/set_default_method.rb:18
-#, fuzzy
-#| msgid "The two-factor authentication is not configured yet."
 msgid "The given two-factor authentication method is not configured."
-msgstr "L'autenticazione a due fattori non è ancora configurata."
+msgstr ""
+"L'autenticazione a due fattori con il metodo fornito non è configurata."
 
 #: app/services/service/user/two_factor/set_default_method.rb:14
 #, fuzzy
@@ -17559,7 +17525,7 @@ msgstr ""
 "Questo potrebbe richiedere del tempo durante il quale il sistema non può "
 "essere utilizzato."
 
-#: app/controllers/application_controller/handles_errors.rb:98
+#: app/controllers/application_controller/handles_errors.rb:99
 #: app/graphql/gql/zammad_schema.rb:83
 msgid "This object already exists."
 msgstr "Questo oggetto esiste già."
@@ -17673,10 +17639,8 @@ msgstr ""
 "WhatsApp in arrivo."
 
 #: app/policies/ticket/shared_draft_start_policy.rb:26
-#, fuzzy
-#| msgid "A mentioned user has no agent access to this ticket"
 msgid "This user does not have access to the given group"
-msgstr "Un utente citato non ha accesso come agente a questo ticket"
+msgstr "Questo utente non ha accesso al gruppo indicato"
 
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:12
 msgid "This user has no access and will not receive notifications."
@@ -17763,10 +17727,8 @@ msgid "Ticket (censored):"
 msgstr "Ticket (censurato):"
 
 #: db/seeds/permissions.rb:209
-#, fuzzy
-#| msgid "Auto Assignment"
 msgid "Ticket Auto Assignment"
-msgstr "Assegnazione automatica"
+msgstr "Assegnazione automatica ticket"
 
 #: db/seeds/settings.rb:2272
 msgid "Ticket Conditions Expert Mode"
@@ -17785,10 +17747,8 @@ msgid "Ticket Customer"
 msgstr "Cliente del ticket"
 
 #: db/seeds/permissions.rb:215
-#, fuzzy
-#| msgid "Duplicate Detection"
 msgid "Ticket Duplicate Detection"
-msgstr "Rilevamento duplicati"
+msgstr "Rilevamento duplicati ticket"
 
 #: db/seeds/settings.rb:2167
 msgid "Ticket Hook"
@@ -17854,10 +17814,8 @@ msgid "Ticket Priority"
 msgstr "Priorità ticket"
 
 #: db/seeds/settings.rb:973
-#, fuzzy
-#| msgid "Ticket Priority"
 msgid "Ticket Priority Icons"
-msgstr "Priorità ticket"
+msgstr "Icone priorità ticket"
 
 #: app/assets/javascripts/app/models/sla.coffee:7
 msgid "Ticket Selector"
@@ -17996,10 +17954,8 @@ msgstr ""
 "</div>\n"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/TicketScreenBehavior.vue:56
-#, fuzzy
-#| msgid "Ticket customer updated successfully."
 msgid "Ticket screen behavior updated successfully"
-msgstr "Cliente associato al ticket aggiornato correttamente."
+msgstr "Comportamento a schermo del ticket aggiornato correttamente"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:131
 msgid ""
@@ -18010,28 +17966,20 @@ msgstr ""
 "modalità esperto, potresti perdere alcuni di questi attributi."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:115
-#, fuzzy
-#| msgid "Ticket tags updated successfully."
 msgid "Ticket tag added successfully."
-msgstr "Elenco etichette del ticket aggiornato correttamente."
+msgstr "Etichetta assegnata con successo al ticket."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:74
-#, fuzzy
-#| msgid "Ticket tags could not be updated."
 msgid "Ticket tag could not be added."
-msgstr "Impossibile aggiornare le etichette del ticket."
+msgstr "Impossibile aggiungere l'etichetta al ticket."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:123
-#, fuzzy
-#| msgid "Ticket could not be created."
 msgid "Ticket tag could not be removed."
-msgstr "Impossibile creare il ticket."
+msgstr "Impossibile rimuovere l'etichetta al ticket."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:145
-#, fuzzy
-#| msgid "Ticket tags updated successfully."
 msgid "Ticket tag removed successfully."
-msgstr "Elenco etichette del ticket aggiornato correttamente."
+msgstr "Etichetta rimossa correttamente dal ticket."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:37
 msgid "Ticket tags could not be updated."
@@ -18442,44 +18390,32 @@ msgid "Today"
 msgstr "Oggi"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:85
-#, fuzzy
-#| msgid "Toggle dark mode"
 msgid "Toggle AM/PM mode"
-msgstr "Imposta la modalità scura"
+msgstr "Passa tra modalità AM/PM"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldPermissions/FieldPermissionsInput.vue:164
-#, fuzzy
-#| msgid "Parent"
 msgid "Toggle Group"
-msgstr "Genitore"
+msgstr "Attiva gruppo"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:443
 msgid "Toggle dark mode"
 msgstr "Imposta la modalità scura"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:197
-#, fuzzy
-#| msgid "Toggle dark mode"
 msgid "Toggle header cell"
-msgstr "Imposta la modalità scura"
+msgstr "Attiva blocco intestazione"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:188
-#, fuzzy
-#| msgid "Toggle dark mode"
 msgid "Toggle header column"
-msgstr "Imposta la modalità scura"
+msgstr "Attiva colonna intestazione"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:179
-#, fuzzy
-#| msgid "Toggle dark mode"
 msgid "Toggle header row"
-msgstr "Imposta la modalità scura"
+msgstr "Attiva riga intestazione"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:47
-#, fuzzy
-#| msgid "Toggle dark mode"
 msgid "Toggle the overlay"
-msgstr "Imposta la modalità scura"
+msgstr "Attiva overlay"
 
 #: app/assets/javascripts/app/controllers/api.coffee:11
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:48

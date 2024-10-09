@@ -2441,7 +2441,7 @@ msgstr "Clave de la aplicación de autenticación"
 msgid "Author"
 msgstr "Autor"
 
-#: app/controllers/application_controller/handles_errors.rb:105
+#: app/controllers/application_controller/handles_errors.rb:106
 msgid "Authorization failed"
 msgstr "Autorización fallida"
 
@@ -8738,6 +8738,7 @@ msgstr "Archivo de imagen"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
 #: app/assets/javascripts/app/lib/app_post/image_service.coffee:95
+#: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:360
 msgid "Image file size is too large, please try inserting a smaller file."
 msgstr ""
 
@@ -11551,8 +11552,8 @@ msgstr "No asignado"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:158
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:115
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:25
-#: app/controllers/application_controller/handles_errors.rb:60
-#: app/services/service/ticket/article/create.rb:121
+#: app/controllers/application_controller/handles_errors.rb:61
+#: app/services/service/ticket/article/create.rb:122
 msgid "Not authorized"
 msgstr "No autorizado"
 
@@ -14437,6 +14438,10 @@ msgstr "Remitente basado en el encabezado Reply-To"
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:503
 msgid "Sender of last article"
 msgstr "Remitente del último artículo"
+
+#: app/models/ticket/article.rb:305
+msgid "Sending an email without a valid recipient is not possible."
+msgstr ""
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:35
 msgid "Sending…"
@@ -17512,7 +17517,7 @@ msgstr ""
 "Esto puede llevar algún tiempo, durante el cual el sistema no estará "
 "disponible."
 
-#: app/controllers/application_controller/handles_errors.rb:98
+#: app/controllers/application_controller/handles_errors.rb:99
 #: app/graphql/gql/zammad_schema.rb:83
 msgid "This object already exists."
 msgstr "Este objeto ya existe."
