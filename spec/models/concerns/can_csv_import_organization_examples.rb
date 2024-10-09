@@ -138,7 +138,7 @@ RSpec.shared_examples 'CanCsvImport - Organization specific tests', :aggregate_f
     context 'with valid import data including members' do
       let(:customer1) { create(:customer) }
       let(:customer2)  { create(:customer) }
-      let(:csv_string) { "id;name;members;\n;organization-member-import1;\n;organization-member-import2;#{customer1.email}\n;;#{customer2.email}" }
+      let(:csv_string) { "id;name;members;\n;organization-member-import1;\n;organization-member-import2;#{customer1.email}~~~#{customer2.email}" }
 
       context 'with :try' do
         it 'returns success' do
