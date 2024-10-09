@@ -109,6 +109,7 @@ targets:
       - libImlib2-1
       - imlib2
       - shared-mime-info
+      - redis7
       # We need the fuser binary from the psmisc package to detect the running redis systemd service.
       # Because on SUSE systems, this service is arbitrarily named (e.g.) redis@foobar.service
       # So we cannot hardcode the service name as we do for other supported distros.
