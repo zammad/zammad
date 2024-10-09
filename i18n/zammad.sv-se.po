@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-04 10:13+0000\n"
-"Last-Translator: Leif-Jöran Olsson <info@friprogramvarusyndikatet.se>\n"
+"PO-Revision-Date: 2024-10-08 09:44+0000\n"
+"Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
 "Language: sv-se\n"
@@ -8596,8 +8596,9 @@ msgstr "Image fil"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
 #: app/assets/javascripts/app/lib/app_post/image_service.coffee:95
+#: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:360
 msgid "Image file size is too large, please try inserting a smaller file."
-msgstr ""
+msgstr "Bildfilens storlek är för stor, försök att infoga en mindre fil."
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
@@ -14248,7 +14249,7 @@ msgstr "Avsändare för senaste artikeln"
 
 #: app/models/ticket/article.rb:305
 msgid "Sending an email without a valid recipient is not possible."
-msgstr ""
+msgstr "Det går inte att skicka ett e-postmeddelande utan en giltig mottagare."
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:35
 msgid "Sending…"

@@ -2,10 +2,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-08 07:43+0000\n"
-"Last-Translator: Jeroen Baten <jbaten@i2rs.nl>\n"
-"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/zammad-"
-"development/nl/>\n"
+"PO-Revision-Date: 2024-10-09 14:00+0000\n"
+"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"Language-Team: Dutch <https://translations.zammad.org/projects/zammad/"
+"zammad-development/nl/>\n"
 "Language: nl-nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -1496,8 +1496,6 @@ msgid "Add subclause"
 msgstr "Onderdeel toevoegen"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:201
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Add tag"
 msgstr "Tag toevoegen"
 
@@ -5977,10 +5975,8 @@ msgid "Discard changes"
 msgstr "Wijzigingen annuleren"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:239
-#, fuzzy
-#| msgid "Discard your unsaved changes"
 msgid "Discard unsaved reply"
-msgstr "Annuleer niet opgeslagen wijzigingen"
+msgstr "Annuleer niet opgeslagen reactie"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:136
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
@@ -6149,8 +6145,6 @@ msgid "Draft"
 msgstr "Concept"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketSharedDraftZoom.vue:24
-#, fuzzy
-#| msgid "Draft available"
 msgid "Draft Available"
 msgstr "Concept beschikbaar"
 
@@ -8662,8 +8656,11 @@ msgstr "Afbeeldingsbestand"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
 #: app/assets/javascripts/app/lib/app_post/image_service.coffee:95
+#: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:360
 msgid "Image file size is too large, please try inserting a smaller file."
 msgstr ""
+"De bestandsgrootte van de afbeelding is te groot. Probeer een kleiner "
+"bestand in te voegen."
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
@@ -13551,8 +13548,6 @@ msgid "Retry"
 msgstr "Opnieuw proberen"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleMediaError.vue:43
-#, fuzzy
-#| msgid "Retry attachment download"
 msgid "Retry Attachment Download"
 msgstr "Bijlage opnieuw downloaden"
 
@@ -13852,8 +13847,6 @@ msgid "Save as"
 msgstr "Opslaan als"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:69
-#, fuzzy
-#| msgid "Save Draft"
 msgid "Save as draft"
 msgstr "Concept opslaan"
 
@@ -14338,7 +14331,7 @@ msgstr "Afzender van laatste notitie"
 
 #: app/models/ticket/article.rb:305
 msgid "Sending an email without a valid recipient is not possible."
-msgstr ""
+msgstr "Een e-mail versturen zonder geldige ontvanger is niet mogelijk."
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:35
 msgid "Sending…"
@@ -14731,10 +14724,8 @@ msgid "Show tracking ticket"
 msgstr "Toon tracking ticket"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:55
-#, fuzzy
-#| msgid "Show ticket actions"
 msgid "Show tracking tickets"
-msgstr "Ticketacties tonen"
+msgstr "Toon trackingtickets"
 
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:95
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:114
@@ -14896,12 +14887,6 @@ msgstr "Sina Weibo Open Portal"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:685
 #: app/assets/javascripts/app/controllers/getting_started/channel_email.coffee:284
-#, fuzzy
-#| msgid ""
-#| "In addition, emails were found in your mailbox that are older than %s "
-#| "weeks. You can import such emails as an \"archive\", which means that no "
-#| "notifications are sent and the tickets have the status \"closed\". "
-#| "However, you can find them in Zammad anytime using the search function."
 msgid ""
 "Since the mail server does not support sorting messages by date, it was not "
 "possible to detect if there is any mail older than %s weeks in the connected "
@@ -14909,9 +14894,12 @@ msgid ""
 "notifications are sent and the tickets have the status \"closed\". However, "
 "you can find them in Zammad anytime using the search function."
 msgstr ""
-"We hebben berichten in je mailbox gevonden van ouder dan %s weken. Je kunt "
-"die importeren als archief, zodat ze worden opgenomen met de staus "
-"\"gesloten\". Daarmee zijn ze wel in het systeem doorzoekbaar."
+"Omdat de mailserver het sorteren van berichten op datum niet ondersteunt, "
+"was het niet mogelijk om te detecteren of er mail ouder dan %s weken in de "
+"verbonden mailbox zit. Je kunt zulke e-mails importeren als een \"archief\", "
+"wat betekent dat er geen meldingen worden verzonden en dat de tickets de "
+"status \"gesloten\" hebben. Jij kunt ze echter altijd terugvinden in Zammad "
+"met behulp van de zoekfunctie."
 
 #: public/assets/chat/views/customer_timeout.eco:5
 msgid ""
@@ -16803,14 +16791,12 @@ msgstr ""
 "of AS."
 
 #: app/services/service/ticket/update/validator/checklist_completed.rb:16
-#, fuzzy
-#| msgid "Manage ticket checklists of your system."
 msgid "The ticket checklist is incomplete."
-msgstr "Beheer ticket checklists van het systeem."
+msgstr "De checklist voor tickets is onvolledig."
 
 #: app/services/service/ticket/update/validator/time_accounting.rb:19
 msgid "The ticket time accounting condition is met."
-msgstr ""
+msgstr "Er is voldaan aan de voorwaarde voor tijdregistratie van het ticket."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:111
 msgid "The tickets could not be merged."
@@ -17593,10 +17579,8 @@ msgid "Ticket (censored):"
 msgstr "Ticket (gecensureerd):"
 
 #: db/seeds/permissions.rb:209
-#, fuzzy
-#| msgid "Auto Assignment"
 msgid "Ticket Auto Assignment"
-msgstr "Automatische toewijzing"
+msgstr "Automatische ticket toewijzing"
 
 #: db/seeds/settings.rb:2272
 msgid "Ticket Conditions Expert Mode"
@@ -17615,10 +17599,8 @@ msgid "Ticket Customer"
 msgstr "Ticket Klant"
 
 #: db/seeds/permissions.rb:215
-#, fuzzy
-#| msgid "Duplicate Detection"
 msgid "Ticket Duplicate Detection"
-msgstr "Duplicaatdetectie"
+msgstr "Tickets duplicaatdetectie"
 
 #: db/seeds/settings.rb:2167
 msgid "Ticket Hook"
@@ -17824,10 +17806,8 @@ msgstr ""
 "</div>\n"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/TicketScreenBehavior.vue:56
-#, fuzzy
-#| msgid "Ticket customer updated successfully."
 msgid "Ticket screen behavior updated successfully"
-msgstr "Ticketklant succesvol geüpdatet."
+msgstr "Ticketscherm gedrag succesvol geüpdatet"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:131
 msgid ""
@@ -17838,28 +17818,20 @@ msgstr ""
 "dit leiden tot gegevensverlies in de conditiekenmerken."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:115
-#, fuzzy
-#| msgid "Ticket tags updated successfully."
 msgid "Ticket tag added successfully."
-msgstr "Tickettags zijn bijgewerkt."
+msgstr "Tickettags zijn toegevoegd."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:74
-#, fuzzy
-#| msgid "Ticket tags could not be updated."
 msgid "Ticket tag could not be added."
-msgstr "Tickettags kunnen niet worden bijgewerkt."
+msgstr "Tickettags kunnen niet worden toegevoegd."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:123
-#, fuzzy
-#| msgid "Ticket could not be created."
 msgid "Ticket tag could not be removed."
-msgstr "Ticket kon niet worden gemaakt."
+msgstr "Tickettag kon niet worden verwijderd."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:145
-#, fuzzy
-#| msgid "Ticket tags updated successfully."
 msgid "Ticket tag removed successfully."
-msgstr "Tickettags zijn bijgewerkt."
+msgstr "Tickettag verwijderd."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:37
 msgid "Ticket tags could not be updated."
@@ -17881,10 +17853,8 @@ msgid "Ticket update"
 msgstr "Ticket bijwerken"
 
 #: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:499
-#, fuzzy
-#| msgid "Ticket update"
 msgid "Ticket update failed."
-msgstr "Ticket bijwerken"
+msgstr "Ticket update mislukt."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
 #: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:444
@@ -18377,10 +18347,8 @@ msgstr "Retweets tracken"
 
 #: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_references_popover_provider.coffee:8
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:85
-#, fuzzy
-#| msgid "checked checklist item '%s'"
 msgid "Tracked as checklist item in"
-msgstr "Checklist item '%s' afgevinkt"
+msgstr "Bijgehouden als checklistitem in"
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:27
 msgid "Transfer conversation to another chat:"
@@ -18712,7 +18680,7 @@ msgstr "Ontgrendelen"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
 msgid "Unpin this panel"
-msgstr ""
+msgstr "Paneel losmaken"
 
 #: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:77
 msgid "Unread notification"
@@ -18978,21 +18946,6 @@ msgstr ""
 #. This is the template file app/views/mailer/ticket_article_update_reaction/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_article_update_reaction/en.html.erb
-#, fuzzy
-#| msgid ""
-#| "Another ticket was merged into ticket (#{ticket.title})\n"
-#| "\n"
-#| "<div>Hi #{recipient.firstname},</div>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "Another ticket was merged into ticket (#{ticket.title}) by "
-#| "\"<b>#{current_user.longname}</b>\".\n"
-#| "</div>\n"
-#| "<br>\n"
-#| "<div>\n"
-#| "  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-#| "id}\" target=\"zammad_app\">View this in #{config.product_name}</a>\n"
-#| "</div>\n"
 msgid ""
 "Updated ticket article (#{ticket.title})\n"
 "\n"
@@ -19018,18 +18971,29 @@ msgid ""
 "a>\n"
 "</div>\n"
 msgstr ""
-"Een ander ticket is samengevoegd tot ticket (#{ticket.title})\n"
+"Update ticket artikel (#{ticket.title})\n"
 "\n"
-"<div>Hallo #{recipient.firstname},</div>\n"
+"<div>Hoi #{recipient.firstname},</div>\n"
 "<br>\n"
 "<div>\n"
-"Een ander ticket is samengevoegd tot ticket (#{ticket.title}) door "
-"\"<b>#{current_user.longname}</b>\".\n"
+"<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> "
+"gereageerd met een <%= @objects[:article].preferences.dig('whatsapp', "
+"'reaction', 'emoji') %> gereageerd op bericht van #{article.created_by."
+"fullname}:\n"
 "</div>\n"
 "<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"    <blockquote type=\"cite\">\n"
+"    #{article.body_as_html}\n"
+"    </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
 "<div>\n"
-"   <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}\" target=\"zammad_app\">Bekijk dit in #{config.product_name}</a>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}/#{article.id}\" target=\"zammad_app\">Bekijk dit in #{config."
+"product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
@@ -20047,6 +20011,8 @@ msgid ""
 "You can open the Keyboard Shortcuts dialog here and view the new and "
 "improved layout, or revert to the old one if you prefer it."
 msgstr ""
+"Open het Sneltoetsenoverzicht om de nieuwe en verbeterde lay-out te "
+"bekijken, of de oude layout weer te gebruiken als je die fijner vind."
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:282
 msgid ""
@@ -20172,12 +20138,12 @@ msgid "You have unchecked items in the checklist."
 msgstr "Er zijn niet-afgevinkte items in de checklist."
 
 #: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:344
-#, fuzzy
-#| msgid "Do you want to handle them before closing this ticket?"
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
-msgstr "Wil je de checklist afhandelen voordat je dit ticket sluit?"
+msgstr ""
+"Jij hebt niet-afgevinkte items in de checklist. Wil jij deze afhandelen "
+"voordat je dit ticket sluit?"
 
 #: app/assets/javascripts/app/views/after_auth/two_factor_configuration.jst.eco:4
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue:42
@@ -20571,7 +20537,7 @@ msgstr "minimaal één letter is vereist"
 #: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
 msgid "attachment,attached,enclosed,enclosure"
-msgstr ""
+msgstr "bijlage, bijgesloten, ingesloten"
 
 #: app/models/object_manager/attribute.rb:580
 msgid "attribute is not editable"
@@ -20638,10 +20604,8 @@ msgid "chat"
 msgstr "chat"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadgeList.vue:44
-#, fuzzy
-#| msgid "Uncheck item"
 msgid "checked"
-msgstr "Item uitvinken"
+msgstr "afgevinkt"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
 msgid "checked checklist item '%s'"

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-05 09:16+0000\n"
+"PO-Revision-Date: 2024-10-09 07:33+0000\n"
 "Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ru/>\n"
@@ -8727,8 +8727,11 @@ msgstr "Файл изображения"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
 #: app/assets/javascripts/app/lib/app_post/image_service.coffee:95
+#: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:360
 msgid "Image file size is too large, please try inserting a smaller file."
 msgstr ""
+"Размер файла изображения слишком большой, пожалуйста, попробуйте вставить "
+"файл меньшего размера."
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
@@ -14418,6 +14421,7 @@ msgstr "Отправитель последней статьи"
 #: app/models/ticket/article.rb:305
 msgid "Sending an email without a valid recipient is not possible."
 msgstr ""
+"Отправка письма электронной почты без действительного получателя невозможна."
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:35
 msgid "Sending…"

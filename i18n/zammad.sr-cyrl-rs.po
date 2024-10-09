@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-04 09:16+0000\n"
+"PO-Revision-Date: 2024-10-09 07:33+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (Cyrillic script) <https://translations.zammad.org/"
 "projects/zammad/zammad-development/sr_Cyrl/>\n"
@@ -8572,8 +8572,9 @@ msgstr "Датотека слике"
 
 #: app/assets/javascripts/app/controllers/_ui_element/richtext_additions/popup_image.coffee:18
 #: app/assets/javascripts/app/lib/app_post/image_service.coffee:95
+#: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:360
 msgid "Image file size is too large, please try inserting a smaller file."
-msgstr ""
+msgstr "Слика је превелика, молимо покушајте убацивањем датотеке мање величине."
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
@@ -14212,7 +14213,7 @@ msgstr "Пошиљалац последњег чланка"
 
 #: app/models/ticket/article.rb:305
 msgid "Sending an email without a valid recipient is not possible."
-msgstr ""
+msgstr "Слање имејл поруке без исправног примаоца није могуће."
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:35
 msgid "Sending…"
