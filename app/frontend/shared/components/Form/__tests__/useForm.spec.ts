@@ -94,9 +94,9 @@ describe('useForm', () => {
     expect(isDisabled.value).toBe(false)
   })
 
-  it('disabled when form updater is processing', async () => {
+  it('form updater flag is true when form updater is processing', async () => {
     renderForm()
-    const { form, isDisabled } = useForm()
+    const { form, isFormUpdaterRunning } = useForm()
 
     const formNode = getNode('test-form') as FormKitNode
 
@@ -111,7 +111,7 @@ describe('useForm', () => {
       }),
     )
 
-    expect(isDisabled.value).toBe(true)
+    expect(isFormUpdaterRunning.value).toBe(true)
   })
 
   it('use values', () => {

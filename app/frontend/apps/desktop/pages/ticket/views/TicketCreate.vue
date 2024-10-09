@@ -338,7 +338,7 @@ const formAdditionalRouteQueryParams = computed(() => ({
 }))
 
 const submitCreateTicket = async (event: FormSubmitData<TicketFormData>) => {
-  createTicket(event).then((result) => {
+  return createTicket(event).then((result) => {
     if (!result || result === null || result === undefined) return
     if (typeof result === 'function') result()
 

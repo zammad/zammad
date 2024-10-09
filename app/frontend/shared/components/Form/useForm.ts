@@ -42,7 +42,11 @@ export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
   const isSubmitted = computed(() => !!state.value?.submitted)
 
   const isDisabled = computed(() => {
-    return !!context.value?.disabled || !!state.value?.formUpdaterProcessing
+    return !!context.value?.disabled
+  })
+
+  const isFormUpdaterRunning = computed(() => {
+    return !!state.value?.formUpdaterProcessing
   })
 
   const formNodeId = computed(() => {
@@ -158,6 +162,7 @@ export const useForm = <T = FormValues>(formRef?: Ref<FormRef | undefined>) => {
     isComplete,
     isSubmitted,
     isDisabled,
+    isFormUpdaterRunning,
     formNodeId,
     canSubmit,
     formSetErrors,
