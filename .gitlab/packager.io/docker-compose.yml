@@ -1,0 +1,16 @@
+---
+name: zammad-packagerio-ci-${CI_JOB_ID}
+services:
+  zammad:
+    image: zammad-packagerio-ci-${CI_JOB_ID}:${DISTRIBUTION}-${DISTRIBUTION_VERSION}
+    build:
+      context: "."
+      platforms: ["linux/amd64"]
+      dockerfile: dockerfiles/Dockerfile.${DISTRIBUTION}
+      args:
+        DISTRIBUTION: ${DISTRIBUTION}
+        DISTRIBUTION_VERSION: ${DISTRIBUTION_VERSION}
+        CI_COMMIT_REF_NAME: ${CI_COMMIT_REF_NAME}
+    privileged: true
+    restart: unless-stopped
+    expose: ["80"]

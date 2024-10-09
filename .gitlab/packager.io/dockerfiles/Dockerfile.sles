@@ -1,0 +1,9 @@
+ARG DISTRIBUTION_VERSION
+FROM docker.io/opensuse/leap:${DISTRIBUTION_VERSION}
+ARG DISTRIBUTION
+ARG DISTRIBUTION_VERSION
+ARG CI_COMMIT_REF_NAME
+ADD dockerfiles dockerfiles
+ADD scenarios scenarios
+RUN bash /dockerfiles/bootstrap.sles.sh
+ENTRYPOINT [ "/sbin/init" ]
