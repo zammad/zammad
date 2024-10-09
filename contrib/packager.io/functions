@@ -256,13 +256,11 @@ function enforce_redis () {
   elif [ "${OS}" == "SUSE" ]; then
       REDIS_PID=$(fuser 6379/tcp 2> /dev/null)
       if [ -z "${REDIS_PID}" ]; then
-        echo -e "ERROR - SUSE Linux detected but no running redis-instance listening on port 6379 or REDIS_URL set.\n"
-        echo "SUSE Linux uses a systemd template for its redis package."
-        echo "If redis was installed via zypper, please make sure an instance of its template-service is running (e.g. redis@zammad.service) and it is listening on port 6379."
-        echo "Alternatively, you can set the REDIS_URL environment variable with the following command."
-        echo -e "zammad config:set REDIS_URL=redis://your.redis.server:6379\n"
-        echo "Please fix these issues, then run the package installation again."
-        exit 1
+        echo -e "# No running instance of Redis detected.\n# Creating systemd-service: redis@zammad.service."
+        [[ -f '/etc/redis/zammad.conf' ]] || cp /etc/redis/default.conf.example /etc/redis/zammad.conf
+        echo "# Ensuring correct file permissions for /etc/redis/zammad.conf."
+        [[ $(stat -c "%U %G" /etc/redis/zammad.conf) == "root redis" ]] || chown root:redis /etc/redis/zammad.conf
+        REDIS_SERVICE_NAME=redis@zammad.service
       else
         REDIS_SERVICE_NAME=$(ps -p $REDIS_PID -o unit=)
         echo "# Redis service ${REDIS_SERVICE_NAME} detected."
