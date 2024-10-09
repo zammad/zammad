@@ -59,7 +59,7 @@ describe('TicketDetailTopBar', () => {
     expect(wrapper.getByText('Welcome to Zammad!')).toBeInTheDocument()
     expect(wrapper.queryByText('Nicole Braun')).not.toBeInTheDocument()
     expect(wrapper.queryByText('Zammad Foundation')).not.toBeInTheDocument()
-    expect(wrapper.getByText('Highlight')).toBeInTheDocument()
+    expect(wrapper.queryByText('Highlight')).not.toBeInTheDocument()
   })
 
   it('shows infos about the ticket', () => {

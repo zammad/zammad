@@ -126,7 +126,13 @@ describe('Ticket detail view', () => {
         view.getByRole('heading', { name: 'Test Ticket', level: 2 }),
       ).toBeInTheDocument()
 
-      expect(view.getByLabelText('Breadcrumb navigation')).toBeInTheDocument()
+      const ticketDetailHeader = view.getByTestId(
+        'visible-ticket-detail-top-bar',
+      )
+
+      expect(
+        within(ticketDetailHeader).getByLabelText('Breadcrumb navigation'),
+      ).toBeInTheDocument()
 
       expect(view.getByTestId('article-content')).toHaveTextContent('foobar')
 
@@ -142,5 +148,36 @@ describe('Ticket detail view', () => {
         view.queryByLabelText('Article meta information'),
       ).not.toBeInTheDocument()
     })
+  })
+
+  it('has invisible top bar and hides it from screen reader', async () => {
+    mockTicketQuery({
+      ticket: createDummyTicket(),
+    })
+
+    const testArticle = createDummyArticle({
+      bodyWithUrls: 'foobar',
+    })
+
+    mockTicketArticlesQuery({
+      articles: {
+        totalCount: 1,
+        edges: [{ node: testArticle }],
+      },
+      firstArticles: {
+        edges: [{ node: testArticle }],
+      },
+    })
+
+    const view = await visitView('/tickets/1')
+
+    expect(view.getByTestId('invisible-ticket-detail-top-bar')).toHaveAttribute(
+      'aria-hidden',
+      'true',
+    )
+
+    expect(view.getByTestId('invisible-ticket-detail-top-bar')).toHaveClass(
+      'invisible',
+    )
   })
 })

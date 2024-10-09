@@ -66,6 +66,7 @@ export const useTicketChecklist = (
 
   const isLoadingChecklist = computed(() => {
     // Return true when the ticket is not loaded yet, because some output is related to the ticket data (e.g. readonly).
+
     if (!ticket.value) return true
 
     // Return already true when a checklist result already exists from the cache, also

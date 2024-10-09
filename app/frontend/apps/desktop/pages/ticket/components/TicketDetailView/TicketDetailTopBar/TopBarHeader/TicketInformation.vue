@@ -67,12 +67,11 @@ const { updateTitle } = useTicketEditTitle(ticketId)
         </div>
 
         <CommonInlineEdit
-          :id="`ticketTitle-${ticket.id}`"
           v-model:editing="isUpdatingTitle"
           size="xl"
           required
           block
-          :disabled="!ticket.policy.update"
+          :disabled="!ticket.policy.update || hideDetails"
           :value="ticket.title"
           :classes="{
             label: hideDetails

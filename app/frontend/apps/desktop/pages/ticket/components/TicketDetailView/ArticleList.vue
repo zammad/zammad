@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { unionBy } from 'lodash-es'
-import { computed, watch, ref, nextTick } from 'vue'
+import { computed, ref } from 'vue'
 import { useRoute } from 'vue-router'
 
 import { edgesToArray, waitForElement } from '#shared/utils/helpers.ts'
@@ -14,8 +14,6 @@ import SystemMessage from '#desktop/pages/ticket/components/TicketDetailView/Sys
 import { useArticleContext } from '#desktop/pages/ticket/composables/useArticleContext.ts'
 import { useTicketArticleRows } from '#desktop/pages/ticket/composables/useTicketArticlesRows.ts'
 
-import { useTicketInformation } from '../../composables/useTicketInformation.ts'
-
 const route = useRoute()
 const { context } = useArticleContext()
 
@@ -26,8 +24,6 @@ const totalCount = computed(
 const leadingNodesCount = computed(
   () => edgesToArray(context.articles.value?.firstArticles).length,
 )
-
-const { ticket } = useTicketInformation()
 
 const articles = computed(() => {
   if (!context.articles.value) {
@@ -79,7 +75,7 @@ const getPreviousArticleElement = async (
   return getPreviousArticleElement(key)
 }
 
-const initialScroll = async () => {
+const scrollToArticle = async () => {
   let targetElement
   if (route.hash) {
     const articleInternalId = route.hash?.replace('#article-', '')
@@ -100,24 +96,16 @@ const initialScroll = async () => {
 
 const didScrollInitially = ref(false)
 
-watch(
-  () => ticket.value?.id,
-  () => {
-    didScrollInitially.value = false
-  },
-  { immediate: true },
-)
+const setDidInitialScroll = (value: boolean) => {
+  didScrollInitially.value = value
+}
 
-watch(
+defineExpose({
+  scrollToArticle,
   rows,
-  async () => {
-    if (didScrollInitially.value) return
-    await nextTick()
-    await initialScroll()
-    didScrollInitially.value = true
-  },
-  { flush: 'post', immediate: true },
-)
+  didScrollInitially,
+  setDidInitialScroll,
+})
 </script>
 
 <template>

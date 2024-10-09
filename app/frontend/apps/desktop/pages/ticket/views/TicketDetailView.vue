@@ -15,7 +15,6 @@ import {
   watch,
   useTemplateRef,
   ref,
-  type Ref,
 } from 'vue'
 
 import {
@@ -61,11 +60,11 @@ import { useSessionStore } from '#shared/stores/session.ts'
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import LayoutContent from '#desktop/components/layout/LayoutContent.vue'
-import { useElementScroll } from '#desktop/composables/useElementScroll.ts'
 import { useTaskbarTab } from '#desktop/entities/user/current/composables/useTaskbarTab.ts'
 import { useTaskbarTabStateUpdates } from '#desktop/entities/user/current/composables/useTaskbarTabStateUpdates.ts'
 import TicketDetailBottomBar from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue'
 import { useTicketScreenBehavior } from '#desktop/pages/ticket/components/TicketDetailView/TicketScreenBehavior/useTicketScreenBehavior.ts'
+import { useArticleContainerScroll } from '#desktop/pages/ticket/components/TicketDetailView/useArticleContainerScroll.ts'
 
 import ArticleList from '../components/TicketDetailView/ArticleList.vue'
 import ArticleReply from '../components/TicketDetailView/ArticleReply.vue'
@@ -126,6 +125,18 @@ const {
   formSubmit,
   triggerFormUpdater,
 } = useForm()
+
+const contentContainerElement = useTemplateRef('content-container')
+
+const scrollToArticlesEnd = () => {
+  nextTick(() => {
+    const scrollHeight = contentContainerElement.value?.scrollHeight
+    if (scrollHeight)
+      contentContainerElement.value?.scrollTo({
+        top: scrollHeight,
+      })
+  })
+}
 
 const groupId = computed(() =>
   isInitialSettled.value && values.value.group_id
@@ -294,32 +305,6 @@ const articleReplyPinned = useLocalStorage(
   `${userId}-article-reply-pinned`,
   false,
 )
-
-const contentContainerElement = useTemplateRef('content-container')
-const topBarInstance = useTemplateRef('top-bar')
-
-const { isScrollingDown: hideDetails } = useElementScroll(
-  contentContainerElement as Ref<HTMLElement>,
-  {
-    scrollStartThreshold: computed(
-      () => topBarInstance.value?.$el.clientHeight,
-    ),
-  },
-)
-
-const { reachedBottom } = useElementScroll(
-  contentContainerElement as Ref<HTMLElement>,
-)
-
-const scrollToArticlesEnd = () => {
-  nextTick(() => {
-    const scrollHeight = contentContainerElement.value?.scrollHeight
-    if (scrollHeight)
-      contentContainerElement.value?.scrollTo({
-        top: scrollHeight,
-      })
-  })
-}
 
 const checkSubmitEditTicket = () => {
   if (!isFormValid.value) {
@@ -541,6 +526,21 @@ watch(ticketId, () => {
   initialTicketValue.value = undefined
   newTicketArticlePresent.value = undefined
 })
+
+const articleListInstance = useTemplateRef('article-list')
+const topBarInstance = useTemplateRef('top-bar')
+
+const {
+  handleScroll,
+  isHoveringOnTopBar,
+  isHidingTicketDetails,
+  isReachingBottom,
+} = useArticleContainerScroll(
+  ticket,
+  contentContainerElement,
+  articleListInstance,
+  topBarInstance,
+)
 </script>
 
 <template>
@@ -562,14 +562,29 @@ watch(ticketId, () => {
           'grid-rows-[max-content_1fr_max-content]':
             newTicketArticlePresent && articleReplyPinned,
         }"
+        @scroll.passive="handleScroll"
       >
-        <TicketDetailTopBar
-          ref="top-bar"
-          :hide-details="hideDetails"
-          class="sticky left-0 right-0 top-0 w-full"
-        />
+        <div class="sticky top-0 z-10">
+          <TicketDetailTopBar
+            :key="`${isHidingTicketDetails}-ticket-detail-top-bar`"
+            ref="top-bar"
+            class="invisible"
+            aria-hidden="true"
+            data-test-id="invisible-ticket-detail-top-bar"
+            :hide-details="false"
+          />
+          <Transition name="slide-down">
+            <TicketDetailTopBar
+              :key="`${isHidingTicketDetails}-top-bar`"
+              v-model:hover="isHoveringOnTopBar"
+              data-test-id="visible-ticket-detail-top-bar"
+              class="absolute left-0 right-0 top-0 w-full"
+              :hide-details="isHidingTicketDetails"
+            />
+          </Transition>
+        </div>
 
-        <ArticleList :aria-busy="isLoadingArticles" />
+        <ArticleList ref="article-list" :aria-busy="isLoadingArticles" />
 
         <ArticleReply
           v-if="ticket?.id && isTicketEditable"
@@ -579,7 +594,7 @@ watch(ticketId, () => {
           :ticket-article-types="ticketArticleTypes"
           :is-ticket-customer="isTicketCustomer"
           :has-internal-article="hasInternalArticle"
-          :parent-reached-bottom-scroll="reachedBottom"
+          :parent-reached-bottom-scroll="isReachingBottom"
           @show-article-form="handleShowArticleForm"
           @discard-form="discardReplyForm"
         />

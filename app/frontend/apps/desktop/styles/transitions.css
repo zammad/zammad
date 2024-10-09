@@ -82,3 +82,15 @@
     transform: translateY(0);
   }
 }
+
+.slide-down {
+  &-enter-active,
+  &-leave-active {
+    transition: transform 0.2s ease;
+  }
+
+  &-enter-from,
+  &-leave-to {
+    transform: translateY(-100%);
+  }
+}

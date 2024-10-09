@@ -47,7 +47,9 @@ export const mountApp = async () => {
   initializeDesktopVisuals()
   initializeTwoFactorPlugins(twoFactorConfigurationPluginLookup)
   initializeAbstracts({
-    durations: { normal: { enter: 300, leave: 200 } },
+    durations: {
+      normal: { enter: 300, leave: 200 },
+    },
   }) // :TODO move this argument to own config?
 
   const session = useSessionStore()

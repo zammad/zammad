@@ -26,7 +26,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const emit = defineEmits<{
+defineEmits<{
   'show-article-form': [
     articleType: string,
     performReply: AppSpecificTicketArticleType['performReply'],
@@ -184,6 +184,7 @@ defineExpose({
     aria-labelledby="article-reply-form-title"
     role="complementary"
     :aria-expanded="!pinned"
+    v-bind="$attrs"
   >
     <div
       :class="{
@@ -267,7 +268,7 @@ defineExpose({
     class="-:border-t-transparent sticky bottom-0 z-20 flex w-full justify-center gap-2.5 border-t py-1.5"
     :class="{
       'border-t-neutral-100 bg-neutral-50 dark:border-t-gray-900 dark:bg-gray-500':
-        !parentReachedBottomScroll,
+        parentReachedBottomScroll,
     }"
   >
     <CommonButton
@@ -277,7 +278,7 @@ defineExpose({
       :variant="button.variant as ButtonVariant"
       size="large"
       @click="
-        emit('show-article-form', button.articleType, button.performReply)
+        $emit('show-article-form', button.articleType, button.performReply)
       "
     >
       {{ $t(button.label) }}
