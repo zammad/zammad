@@ -6,7 +6,7 @@ class SystemReport::Plugin::PostgreSql < SystemReport::Plugin
   def fetch
     return if ActiveRecord::Base.connection.adapter_name != 'PostgreSQL'
 
-    database_name = Rails.configuration.database_configuration[Rails.env]['database']
+    database_name = ActiveRecord::Base.connection.current_database
     ActiveRecord::Base.connection.execute("
       SELECT version() as version,
       pg_database_size('#{ActiveRecord::Base.connection.quote_string(database_name)}') as database_size,
