@@ -1,0 +1,61 @@
+.packager.io:
+  image: docker
+  stage: test
+  interruptible: false
+  rules:
+  - if: $CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web"
+  services: []
+  cache: []
+  before_script: []
+  script:
+    - .gitlab/packager.io/run-scenarios.sh
+  after_script:
+    - .gitlab/packager.io/cleanup.sh
+
+packager.io:debian-11:
+  extends: [.packager.io]
+  variables:
+    DISTRIBUTION: debian
+    DISTRIBUTION_VERSION: '11'
+
+packager.io:debian-12:
+  extends: [.packager.io]
+  variables:
+    DISTRIBUTION: debian
+    DISTRIBUTION_VERSION: '12'
+
+packager.io:ubuntu-20.04:
+  extends: [.packager.io]
+  variables:
+    DISTRIBUTION: ubuntu
+    DISTRIBUTION_VERSION: '20.04'
+
+packager.io:ubuntu-22.04:
+  extends: [.packager.io]
+  variables:
+    DISTRIBUTION: ubuntu
+    DISTRIBUTION_VERSION: '22.04'
+
+packager.io:ubuntu-24.04:
+  extends: [.packager.io]
+  variables:
+    DISTRIBUTION: ubuntu
+    DISTRIBUTION_VERSION: '24.04'
+
+packager.io:rhel-8:
+  extends: [.packager.io]
+  variables:
+    DISTRIBUTION: rhel
+    DISTRIBUTION_VERSION: '8'
+
+packager.io:rhel-9:
+  extends: [.packager.io]
+  variables:
+    DISTRIBUTION: rhel
+    DISTRIBUTION_VERSION: '9'
+
+packager.io:sles-15:
+  extends: [.packager.io]
+  variables:
+    DISTRIBUTION: sles
+    DISTRIBUTION_VERSION: '15'
