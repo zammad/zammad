@@ -80,26 +80,13 @@ returns
       end
 
       # get payload based on csv
-      payload = []
-      rows.each do |row|
-        if row.first(2).any?(&:present?)
-          payload.push(
-            header.zip(row).to_h
-                  .compact.transform_values(&:strip)
-                  .except(nil).transform_keys(&:to_sym)
-                  .except(*csv_attributes_ignored)
-                  .merge(data[:fixed_params] || {})
-          )
-        else
-          header.zip(row).to_h
+      payload = rows.map do |row|
+        header.zip(row).to_h
                 .compact.transform_values(&:strip)
-                .except(nil).except('').transform_keys(&:to_sym)
-                .each do |col, val|
-                  next if val.blank?
-
-                  payload.last[col] = [*payload.last[col], val]
-                end
-        end
+                .transform_values { |value| (value.include?('~~~') ? value.split('~~~') : value) }
+                .except(nil).transform_keys(&:to_sym)
+                .except(*csv_attributes_ignored)
+                .merge(data[:fixed_params] || {})
       end
 
       stats = {
@@ -268,36 +255,17 @@ returns
       rows = []
       records_attributes_with_association_names.each do |record|
         row = []
-        rows_to_add = []
-        position = -1
         header.each do |key|
-          position += 1
           if record[key].instance_of?(ActiveSupport::TimeWithZone)
             row.push record[key].iso8601
             next
+          elsif record[key].instance_of?(Array)
+            row.push record[key].join('~~~')
+          else
+            row.push record[key]
           end
-          if record[key].instance_of?(Array)
-            entry_count = -2
-            record[key].each do |entry|
-              entry_count += 1
-              next if entry_count == -1
-
-              if !rows_to_add[entry_count]
-                rows_to_add[entry_count] = Array.new(header.count + 1) { '' }
-              end
-              rows_to_add[entry_count][position] = entry
-            end
-            record[key] = record[key][0]
-          end
-          row.push record[key]
         end
-        rows.push row
-        next if rows_to_add.count.zero?
-
-        rows_to_add.each do |item|
-          rows.push item
-        end
-        rows_to_add = []
+        rows << row
       end
 
       require 'csv' # Only load it when it's really needed to save memory.

@@ -197,7 +197,9 @@ RSpec.shared_examples 'CanCsvImport - User specific tests', :aggregate_failures 
 
     context 'with roles and fixed params' do
       let(:result) { User.csv_import(**params, fixed_params: { note: 'some note' }) }
-      let(:csv_string) { "login;firstname;lastname;email;roles;\nuser-role-import1;firstname-role-import1;lastname-role-import1;user-role-import1@example.com;Customer;\nuser-role-import2;firstname-role-import2;lastname-role-import2;user-role-import2@example.com;Agent\n;;;;Admin" }
+      let(:csv_string) do
+        "login;firstname;lastname;email;roles;\nuser-role-import1;firstname-role-import1;lastname-role-import1;user-role-import1@example.com;Customer;\nuser-role-import2;firstname-role-import2;lastname-role-import2;user-role-import2@example.com;Agent~~~Admin"
+      end
 
       context 'with :try' do
         it 'returns success' do
