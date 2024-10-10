@@ -1,0 +1,19 @@
+Update ticket artikel (#{ticket.title})
+
+<div>Hoi #{recipient.firstname},</div>
+<br>
+<div>
+<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> gereageerd met een <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> gereageerd op bericht van #{article.created_by.fullname}:
+</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+    <blockquote type="cite">
+    #{article.body_as_html}
+    </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">Bekijk dit in #{config.product_name}</a>
+</div>
