@@ -55,6 +55,7 @@ export interface Props {
   flatOptions: FlatSelectOption[]
   currentOptions: FlatSelectOption[]
   optionValueLookup: { [index: string | number]: FlatSelectOption }
+  isTargetVisible?: boolean
 }
 
 const props = defineProps<Props>()
@@ -417,7 +418,7 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
   />
   <Teleport to="body">
     <Transition
-      name="collapse"
+      :name="isTargetVisible ? 'collapse' : 'none'"
       :duration="collapseDuration"
       @enter="collapseEnter"
       @after-enter="collapseAfterEnter"
@@ -425,6 +426,7 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
     >
       <div
         v-if="showDropdown"
+        v-show="isTargetVisible"
         id="field-tree-select-input-dropdown"
         ref="dropdown"
         class="fixed z-10 flex min-h-9 antialiased"

@@ -6,6 +6,7 @@ import {
   refDebounced,
   useDebounceFn,
   useElementBounding,
+  useElementVisibility,
   useWindowSize,
   watchOnce,
 } from '@vueuse/core'
@@ -394,6 +395,7 @@ const suggestedOptionLabel = computed(() => {
 })
 
 const inputElementBounds = useElementBounding(input)
+const isInputVisible = !!VITE_TEST_MODE || useElementVisibility(input)
 const windowSize = useWindowSize()
 
 const isBelowHalfScreen = computed(() => {
@@ -507,6 +509,7 @@ useFormBlock(
       :is-child-page="childOptions.length > 0"
       no-options-label-translation
       :is-loading="isLoading || isUserTyping"
+      :is-target-visible="isInputVisible"
       no-close
       passive
       initially-empty

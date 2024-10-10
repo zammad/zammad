@@ -1,7 +1,11 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useElementBounding, useWindowSize } from '@vueuse/core'
+import {
+  useElementBounding,
+  useElementVisibility,
+  useWindowSize,
+} from '@vueuse/core'
 import { escapeRegExp } from 'lodash-es'
 import { computed, nextTick, ref, toRef, watch, useTemplateRef } from 'vue'
 
@@ -153,6 +157,7 @@ const clearValue = () => {
 }
 
 const inputElementBounds = useElementBounding(inputElement)
+const isInputVisible = !!VITE_TEST_MODE || useElementVisibility(inputElement)
 const windowSize = useWindowSize()
 
 const isBelowHalfScreen = computed(() => {
@@ -245,6 +250,7 @@ setupMissingOrDisabledOptionHandling()
       :flat-options="flatOptions"
       :current-options="currentOptions"
       :option-value-lookup="optionValueLookup"
+      :is-target-visible="isInputVisible"
       no-options-label-translation
       no-close
       passive

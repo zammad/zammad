@@ -29,7 +29,10 @@ const html = String.raw
 
 const renderSelect = (props: Props, modelValue?: Ref) => {
   return renderComponent(CommonSelect, {
-    props,
+    props: {
+      isTargetVisible: true,
+      ...props,
+    },
     slots: {
       default: html` <template #default="{ open, focus }">
         <button @click="open()">Open Select</button>

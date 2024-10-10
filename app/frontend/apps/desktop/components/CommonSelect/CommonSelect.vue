@@ -66,6 +66,7 @@ export interface Props {
   actions?: DropdownOptionsAction[]
   isChildPage?: boolean
   isLoading?: boolean
+  isTargetVisible?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -405,7 +406,7 @@ const goToChildPage = ({
   />
   <Teleport to="body">
     <Transition
-      name="collapse"
+      :name="isTargetVisible ? 'collapse' : 'none'"
       :duration="collapseDuration"
       @enter="collapseEnter"
       @after-enter="collapseAfterEnter"
@@ -413,6 +414,7 @@ const goToChildPage = ({
     >
       <div
         v-if="showDropdown"
+        v-show="isTargetVisible"
         id="common-select"
         ref="dropdown"
         class="fixed z-50 flex min-h-9 antialiased"

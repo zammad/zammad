@@ -1,7 +1,12 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useDebounceFn, useElementBounding, useWindowSize } from '@vueuse/core'
+import {
+  useDebounceFn,
+  useElementBounding,
+  useElementVisibility,
+  useWindowSize,
+} from '@vueuse/core'
 import { escapeRegExp } from 'lodash-es'
 import { useTemplateRef, computed, nextTick, ref, toRef, watch } from 'vue'
 
@@ -98,6 +103,7 @@ const suggestedOptionLabel = computed(() => {
 })
 
 const inputElementBounds = useElementBounding(inputElement)
+const isInputVisible = !!VITE_TEST_MODE || useElementVisibility(inputElement)
 const windowSize = useWindowSize()
 
 const isBelowHalfScreen = computed(() => {
@@ -187,6 +193,7 @@ setupMissingOrDisabledOptionHandling()
       :multiple="context.multiple"
       :owner="context.id"
       :filter="filter"
+      :is-target-visible="isInputVisible"
       no-options-label-translation
       no-close
       passive

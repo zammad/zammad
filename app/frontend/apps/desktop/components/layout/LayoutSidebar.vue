@@ -101,7 +101,7 @@ const collapseButtonClass = computed(() => {
 <template>
   <aside
     :id="props.id"
-    class="-:bg-neutral-950 -:max-h-screen relative flex flex-col border-neutral-100 dark:border-gray-900"
+    class="-:bg-neutral-950 -:max-h-screen relative flex flex-col overflow-y-clip border-neutral-100 dark:border-gray-900"
     :class="{
       'py-3': isCollapsed && !noPadding,
       'border-e': position === SidebarPosition.Start,
