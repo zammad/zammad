@@ -964,7 +964,7 @@ class App.UiElement.object_manager_attribute extends App.UiElement.ApplicationUi
 
                 link = App.Utils.replaceTags(params.data_option?.linktemplate, objects)
 
-                resultLinkIcon = $('<svg class="icon icon-external"><use xlink:href="assets/images/icons.svg#icon-external" /></svg>')
+                resultLinkIcon = $(App.Utils.icon('external'))
                 resultLinkAnchor = $('<a />')
                   .addClass('settings-list-control')
                   .attr('href', link)

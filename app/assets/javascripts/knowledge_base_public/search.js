@@ -19,8 +19,8 @@
 
   KnowledgeBaseSearch.lookupAction = function(query) {
     var params = {
-      knowledge_base_id: document.querySelector('html').dataset.id,
-      locale: document.querySelector('html').lang,
+      knowledge_base_id: document.documentElement.dataset.id,
+      locale: document.documentElement.lang,
       query: query,
       flavor: 'public'
     }
@@ -106,7 +106,7 @@
     this.generateIcon = function(iconName, type) {
       switch(type) {
         case 'KnowledgeBase::Category::Translation':
-          iconset = document.querySelector('html').dataset.iconset
+          iconset = document.documentElement.dataset.iconset
           return Zammad.Util.generateIcon(iconName, iconset)
         default:
           return Zammad.Util.generateIcon(iconName)

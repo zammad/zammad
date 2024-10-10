@@ -326,6 +326,7 @@ class SessionsController < ApplicationController
     end
 
     config['core_workflow_config'] = CoreWorkflow.config
+    config['icons_url']            = icons_url
 
     config
   end

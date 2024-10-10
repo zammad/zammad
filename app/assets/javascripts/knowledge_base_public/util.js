@@ -3,7 +3,7 @@
 
   Util.generateIcon = function(iconName, iconset) {
     if(!iconset) {
-      return '<svg class="icon icon-' + iconName + '"><use xlink:href="/assets/images/icons.svg#icon-' + iconName + '"></use></svg>'
+      return '<svg class="icon icon-' + iconName + '"><use xlink:href="/' + document.documentElement.dataset.iconsUrl + '#icon-' + iconName + '"></use></svg>'
     }
 
     return '<i data-font="' + iconset + '">&#x' + iconName + '</i>'
