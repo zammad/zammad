@@ -1,6 +1,8 @@
 class App.WidgetLink.Ticket extends App.WidgetLink
   @registerPopovers 'Ticket'
 
+  @linkTypes = [['normal', __('Normal')], ['child', __('Child')], ['parent', __('Parent')]]
+
   subscribeTicket: (ticket) =>
     @ticketSubscriberIDs ||= {}
     return if @ticketSubscriberIDs[ticket.id]
@@ -53,6 +55,7 @@ class App.WidgetLink.Ticket extends App.WidgetLink
     # insert data
     @html App.view('link/ticket/list')(
       links: list
+      link_types: @constructor.linkTypes
       editable: @editable
     )
 
@@ -63,7 +66,7 @@ class App.WidgetLink.Ticket extends App.WidgetLink
     new App.TicketLinkAdd(
       link_object:    @object_type
       link_object_id: @object.id
-      link_types:     [['normal', __('Normal')], ['child', __('Child')], ['parent', __('Parent')]]
+      link_types:     @constructor.linkTypes
       object:         @object
       parent:         @
       container:      @el.closest('.content')

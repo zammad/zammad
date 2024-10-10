@@ -1,7 +1,8 @@
 <label><%- @T('Links') %></label>
 <% for type of @links: %>
+<% type_definition = _.find(@link_types, (elem) => elem[0] == type) || [] %>
 <div class="ticketLinks">
-  <div class="list-title"><%- @T(type) %></div>
+  <div class="list-title"><%- @T(type_definition[1] || type) %></div>
   <%- @links[type].ticketList %>
 </div>
 <% end %>
