@@ -1,5 +1,4 @@
 {
-  repository: 'zammad/zammad',
   enabledManagers: ['bundler', 'npm', 'github-actions'],
   lockFileMaintenance: { enabled: false },
   packageRules: [
