@@ -415,7 +415,7 @@ QUnit.test("htmlRemoveTags", assert => {
 // htmlRemoveRichtext
 QUnit.test("htmlRemoveRichtext", assert => {
 
-  source = "<div><form class=\"xxx\">test 123</form><svg><use xlink:href=\"assets/images/icons.svg#icon-status\"></svg></div>"
+  source = "<div><form class=\"xxx\">test 123</form><svg><use xlink:href=\"" + App.Config.get('icons_url')  + "#icon-status\"></svg></div>"
   //should = "<div>test 123</div>"
   should = "test 123"
   result = App.Utils.htmlRemoveRichtext($(source))
@@ -520,13 +520,13 @@ QUnit.test("htmlRemoveRichtext", assert => {
   result = App.Utils.htmlRemoveRichtext($(source))
   assert.equal(result.html(), should, source)
 
-  source = "<div><div><label for=\"Ticket_888344_group_id\">Gruppe <span>*</span></label></div><div><div></div></div><div><div><span></span><span></span></div></div><div><div><label for=\"Ticket_888344_owner_id\">Besitzer <span></span></label></div><div><div></div></div></div><div><div><div><svg><use xlink:href=\"http://localhost:3000/assets/images/icons.svg#icon-arrow-down\"></use></svg></div><span></span><span></span></div></div><div><div>    <label for=\"Ticket_888344_state_id\">Status <span>*</span></label></div></div></div>\n"
+  source = "<div><div><label for=\"Ticket_888344_group_id\">Gruppe <span>*</span></label></div><div><div></div></div><div><div><span></span><span></span></div></div><div><div><label for=\"Ticket_888344_owner_id\">Besitzer <span></span></label></div><div><div></div></div></div><div><div><div><svg><use xlink:href=\"http://localhost:3000/" + App.Config.get('icons_url') + "#icon-arrow-down\"></use></svg></div><span></span><span></span></div></div><div><div>    <label for=\"Ticket_888344_state_id\">Status <span>*</span></label></div></div></div>\n"
   //should = "<div>test 123</div>"
   should = '<div>Gruppe <span>*</span></div><div><div></div></div><div><div><span></span><span></span></div></div><div><div>Besitzer <span></span></div><div><div></div></div></div><div><div><div></div><span></span><span></span></div></div><div><div>    Status <span>*</span></div></div>'
   result = App.Utils.htmlRemoveRichtext(source)
   assert.equal(result.html(), should, source)
 
-  source = "<div><font size=\"3\" color=\"red\">This is some text!</font><svg><use xlink:href=\"assets/images/icons.svg#icon-status\"></svg></div>"
+  source = "<div><font size=\"3\" color=\"red\">This is some text!</font><svg><use xlink:href=\"" + App.Config.get('icons_url') + "#icon-status\"></svg></div>"
   should = "This is some text!"
   result = App.Utils.htmlRemoveRichtext($(source))
   assert.equal(result.html(), should, source)
@@ -647,7 +647,7 @@ QUnit.test("htmlCleanup", assert => {
   result = App.Utils.htmlCleanup($(source))
   assert.equal(result.html(), should, source)
 
-  source = "<div><font size=\"3\" color=\"red\">This is some text!</font><svg><use xlink:href=\"assets/images/icons.svg#icon-status\"></svg></div>"
+  source = "<div><font size=\"3\" color=\"red\">This is some text!</font><svg><use xlink:href=\"" + App.Config.get('icons_url') + "#icon-status\"></svg></div>"
   //should = "<div>This is some text!</div>"
   should = "<font color=\"red\">This is some text!</font>"
   result = App.Utils.htmlCleanup($(source))
@@ -659,7 +659,7 @@ QUnit.test("htmlCleanup", assert => {
   result = App.Utils.htmlCleanup($(source))
   assert.equal(result.html(), should, source)
 
-  source = "<div><div><label for=\"Ticket_888344_group_id\">Gruppe <span>*</span></label></div><div><div></div></div><div><div><span></span><span></span></div></div><div><div><label for=\"Ticket_888344_owner_id\">Besitzer <span></span></label></div><div><div></div></div></div><div><div><div><svg><use xlink:href=\"http://localhost:3000/assets/images/icons.svg#icon-arrow-down\"></use></svg></div><span></span><span></span></div></div><div><div>    <label for=\"Ticket_888344_state_id\">Status <span>*</span></label></div></div></div>\n"
+  source = "<div><div><label for=\"Ticket_888344_group_id\">Gruppe <span>*</span></label></div><div><div></div></div><div><div><span></span><span></span></div></div><div><div><label for=\"Ticket_888344_owner_id\">Besitzer <span></span></label></div><div><div></div></div></div><div><div><div><svg><use xlink:href=\"http://localhost:3000/" + App.Config.get('icons_url') + "#icon-arrow-down\"></use></svg></div><span></span><span></span></div></div><div><div>    <label for=\"Ticket_888344_state_id\">Status <span>*</span></label></div></div></div>\n"
   //should = "<div>test 123</div>"
   should = '<div>Gruppe <span>*</span></div><div><div></div></div><div><div><span></span><span></span></div></div><div><div>Besitzer <span></span></div><div><div></div></div></div><div><div><div></div><span></span><span></span></div></div><div><div>    Status <span>*</span></div></div>'
   result = App.Utils.htmlCleanup(source)
@@ -3476,14 +3476,14 @@ QUnit.test('App.Utils.icon()', assert => {
   // On a modern browser and when given a single argument,
   //   expect @icon(name) to return an <svg> tag
   window.svgPolyfill = false
-  svgTag = '<svg class="icon icon-foo "><use xlink:href="assets/images/icons.svg#icon-foo" /></svg>'
+  svgTag = '<svg class="icon icon-foo "><use xlink:href="' + App.Config.get('icons_url') + '#icon-foo" /></svg>'
   assert.equal(App.Utils.icon('foo'), svgTag, 'with one arg / no SVG polyfill')
 
   // On a modern browser and when given two arguments,
   //   expect @icon(name) to return an <svg> tag
   //   with second arg as add'l class name
   window.svgPolyfill = false
-  svgTag = '<svg class="icon icon-foo bar"><use xlink:href="assets/images/icons.svg#icon-foo" /></svg>'
+  svgTag = '<svg class="icon icon-foo bar"><use xlink:href="' + App.Config.get('icons_url') + '#icon-foo" /></svg>'
   assert.equal(App.Utils.icon('foo', 'bar'), svgTag, 'with two args / no SVG polyfill')
 
   // On a browser requiring SVG polyfill and when given a single argument,
@@ -3505,9 +3505,9 @@ QUnit.test('App.Utils.icon()', assert => {
   //   replacing '{start}' with 'left' and '{end}' with 'right'
   window.svgPolyfill = false
   App.i18n.dir = function() { return 'ltr' }
-  svgTag = '<svg class="icon icon-arrow-left "><use xlink:href="assets/images/icons.svg#icon-arrow-left" /></svg>'
+  svgTag = '<svg class="icon icon-arrow-left "><use xlink:href="' + App.Config.get('icons_url') + '#icon-arrow-left" /></svg>'
   assert.equal(App.Utils.icon('arrow-{start}'), svgTag, 'for ltr locale / name includes "{start}"')
-  svgTag = '<svg class="icon icon-arrow-right "><use xlink:href="assets/images/icons.svg#icon-arrow-right" /></svg>'
+  svgTag = '<svg class="icon icon-arrow-right "><use xlink:href="' + App.Config.get('icons_url') + '#icon-arrow-right" /></svg>'
   assert.equal(App.Utils.icon('arrow-{end}'), svgTag, 'for ltr locale / name includes "{end}"')
 
   // For a right-to-left browser language and when given an argument containing '{start}' or '{end}',
@@ -3515,9 +3515,9 @@ QUnit.test('App.Utils.icon()', assert => {
   //   replacing '{start}' with 'left' and '{end}' with 'right'
   window.svgPolyFill = false
   App.i18n.dir = function() { return 'rtl' }
-  svgTag = '<svg class="icon icon-arrow-right "><use xlink:href="assets/images/icons.svg#icon-arrow-right" /></svg>'
+  svgTag = '<svg class="icon icon-arrow-right "><use xlink:href="' + App.Config.get('icons_url') + '#icon-arrow-right" /></svg>'
   assert.equal(App.Utils.icon('arrow-{start}'), svgTag, 'for rtl locale / name includes "{start}"')
-  svgTag = '<svg class="icon icon-arrow-left "><use xlink:href="assets/images/icons.svg#icon-arrow-left" /></svg>'
+  svgTag = '<svg class="icon icon-arrow-left "><use xlink:href="' + App.Config.get('icons_url') + '#icon-arrow-left" /></svg>'
   assert.equal(App.Utils.icon('arrow-{end}'), svgTag, 'for rtl locale / name includes "{end}"')
 });
 

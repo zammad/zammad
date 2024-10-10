@@ -9,7 +9,7 @@
     }
 
     this.kbPath = function() {
-      var html = document.querySelector('html')
+      var html = document.documentElement
       return html.dataset.basePath.replace(encodeURIComponent('{locale}'), targetLanguage)
     }
 
@@ -49,7 +49,7 @@
 
   function LanguageDetector() { }
 
-  LanguageDetector.html = function() { return document.querySelector('html') }
+  LanguageDetector.html = function() { return document.documentElement }
 
   LanguageDetector.document_languages = function() {
     return this.html().dataset.availableLocales.split(',')

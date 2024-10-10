@@ -2,9 +2,7 @@
   <div class="scrollPageHeader tabsSidebar-sidebarSpacer" style="<%- if @dir is 'rtl' then 'left' else 'right' %>: <%- @scrollbarWidth %>px">
     <small class="ticket-number-copy-header">
       <%- @C('ticket_hook') %><span class="ticket-number"><%- @ticket.number %></span>
-      <svg class="icon icon-clipboard ticketNumberCopy-icon u-clickable">
-        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="assets/images/icons.svg#icon-clipboard"></use>
-      </svg>
+      <%- @Icon('clipboard', 'ticketNumberCopy-icon u-clickable') %>
     </small>
     <div class="js-ticketTitleContainer ticket-title"></div>
     <div class="js-highlighterContainer highlighter"></div>

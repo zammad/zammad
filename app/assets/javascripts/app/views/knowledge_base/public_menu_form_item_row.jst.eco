@@ -7,8 +7,8 @@
   <td class="settings-list-control-cell settings-list-checkbox-cell">
     <label class="inline-label checkbox-replacement js-new-tab">
       <input type="checkbox" value="1" data-name="new_tab" <% if @item?.new_tab: %>checked<% end %>>
-      <svg class="icon icon-checkbox icon-unchecked"><use xlink:href="assets/images/icons.svg#icon-checkbox"></use></svg>
-      <svg class="icon icon-checkbox-checked icon-checked"><use xlink:href="assets/images/icons.svg#icon-checkbox-checked"></use></svg>
+      <%- @Icon('checkbox', 'icon-unchecked') %>
+      <%- @Icon('checkbox-checked', 'icon-checked') %>
       <span class="label-text"><%- @T('New tab') %></span>
     </label>
 

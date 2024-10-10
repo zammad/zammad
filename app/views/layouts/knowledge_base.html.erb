@@ -6,7 +6,9 @@
       data-iconset='<%= @knowledge_base.iconset %>'
       data-available-locales='<%= all_locales.map(&:locale).join(',') %>'
       data-base-path='<%= custom_path_if_needed help_root_path(locale: '{locale}'), @knowledge_base %>'
-      data-primary-locale="<%= (filter_primary_kb_locale || all_locales.first)&.locale %>">
+      data-primary-locale="<%= (filter_primary_kb_locale || all_locales.first)&.locale %>"
+      data-icons-url="<%= icons_url %>"
+>
 
 <meta charset="utf-8">
 <title><%= kb_public_page_title(@knowledge_base, @object, @page_title_error) %></title>

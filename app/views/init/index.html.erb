@@ -24,12 +24,12 @@
       div.style.cssText = 'position: absolute; clip: rect(0, 0, 0, 0); z-index: -1;'
       script.parentNode.insertBefore(div, script)
     }
-    xhr.open('get', 'assets/images/icons.svg', true)
+    xhr.open('get', '<%= icons_url %>', true)
     xhr.send()
   })(document)
 <% end -%>
 <div id="app"></div>
 <div class="splash">
-  <svg class="icon icon-logo"><use xlink:href="assets/images/icons.svg#icon-logo" /></svg>
+  <svg class="icon icon-logo"><use xlink:href="<%= icons_url %>#icon-logo" /></svg>
   <div class="splash-title">Loading…</div>
 </div>
