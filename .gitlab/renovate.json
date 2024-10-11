@@ -1,10 +1,4 @@
 {
-  "extends": [
-    "config:recommended",
-    "schedule:daily",
-    ":prHourlyLimitNone",
-    ":prConcurrentLimit20"
-  ],
   "enabledManagers": ["bundler", "npm", "github-actions"],
   "lockFileMaintenance": {"enabled": false},
   "packageRules": [
