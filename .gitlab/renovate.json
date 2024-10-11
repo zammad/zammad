@@ -1,0 +1,126 @@
+{
+  "extends": [
+    "config:recommended",
+    "schedule:daily",
+    ":prHourlyLimitNone",
+    ":prConcurrentLimit20"
+  ],
+  "enabledManagers": ["bundler", "npm", "github-actions"],
+  "lockFileMaintenance": {"enabled": false},
+  "packageRules": [
+    {"matchCategories": ["ci"], "assignees": ["mg"]},
+    {
+      "matchCategories": ["ruby"],
+      "assignees": ["mg"],
+      "addLabels": ["ruby"],
+      "rangeStrategy": "in-range-only",
+      "extends": [":maintainLockFilesWeekly"]
+    },
+    {
+      "matchCategories": ["js"],
+      "assignees": ["dk"],
+      "addLabels": ["javascript"],
+      "rangeStrategy": "bump",
+      "extends": ["schedule:weekly", ":maintainLockFilesWeekly"]
+    },
+    {
+      "matchCategories": ["js"],
+      "matchFileNames": ["public/**"],
+      "enabled": false
+    },
+    {
+      "matchCategories": ["js"],
+      "matchDepTypes": ["engines", "peerDependencies"],
+      "enabled": false
+    },
+    {
+      "matchCategories": ["js"],
+      "assignees": ["fl"],
+      "matchFileNames": [".cypress/package.json"],
+      "labels": ["cypress"]
+    },
+    {
+      "matchCategories": ["js"],
+      "groupName": "Eslint packages",
+      "groupSlug": "eslint",
+      "matchPackageNames": ["/eslint/"]
+    },
+    {
+      "matchCategories": ["js"],
+      "groupName": "Stylelint packages",
+      "groupSlug": "stylelint",
+      "matchPackageNames": ["/stylelint/"]
+    },
+    {
+      "matchCategories": ["js"],
+      "matchPackageNames": ["typescript", "type-fest", "/^@types/"],
+      "groupName": "Typescript/Types packages",
+      "groupSlug": "typescript"
+    },
+    {
+      "matchCategories": ["js"],
+      "assignees": ["fl"],
+      "matchPackageNames": [
+        "vitest",
+        "jsdom",
+        "@vue/test-utils",
+        "@pinia/testing",
+        "/^@testing-library/",
+        "/mock/"
+      ],
+      "groupName": "Test related packages",
+      "groupSlug": "test-related"
+    },
+    {
+      "matchCategories": ["js"],
+      "assignees": ["fl"],
+      "groupName": "Vite packages",
+      "groupSlug": "vite-related",
+      "matchPackageNames": ["/^vite/", "/^@vitejs/", "!vitest"]
+    },
+    {
+      "matchCategories": ["js"],
+      "assignees": ["fl"],
+      "matchPackageNames": ["@histoire/plugin-vue", "/^histoire/"],
+      "groupName": "Histoire packages",
+      "groupSlug": "histoire-related"
+    },
+    {
+      "matchCategories": ["js"],
+      "groupName": "Formkit packages",
+      "groupSlug": "formkit-related",
+      "matchPackageNames": ["/^@formkit/"]
+    },
+    {
+      "matchCategories": ["js"],
+      "matchPackageNames": ["pinia", "/^@vue/", "/^vue/"],
+      "groupName": "Vue packages",
+      "groupSlug": "vue"
+    },
+    {
+      "matchCategories": ["js"],
+      "assignees": ["fl"],
+      "matchPackageNames": [
+        "prosemirror-model",
+        "prosemirror-state",
+        "/^@tiptap/",
+        "/^prosemirror/"
+      ],
+      "groupName": "Tiptap packages",
+      "groupSlug": "tiptap-related"
+    },
+    {
+      "matchCategories": ["js"],
+      "matchPackageNames": [
+        "postcss",
+        "postcss-html",
+        "sass",
+        "autoprefixer",
+        "/tailwind/",
+        "!@formkit/tailwindcss"
+      ],
+      "groupName": "Tailwind/Styling packages",
+      "groupSlug": "tailwind-styling-related"
+    }
+  ]
+}
