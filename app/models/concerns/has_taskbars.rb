@@ -7,6 +7,13 @@ module HasTaskbars
     before_destroy :destroy_taskbars
   end
 
+  class_methods do
+    # Defines the entities which are available for the taskbar.
+    def taskbar_entities(*entities)
+      @taskbar_entities ||= entities
+    end
+  end
+
 =begin
 
 destroy all taskbars for the class object id

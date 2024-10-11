@@ -38,6 +38,8 @@ class Organization < ApplicationModel
   core_workflow_screens 'create', 'edit'
   core_workflow_admin_screens 'create', 'edit'
 
+  taskbar_entities 'OrganizationProfile'
+
   validates :name,   presence: true, uniqueness: { case_sensitive: false }
   validates :domain, presence: { message: 'required when Domain Based Assignment is enabled' }, if: :domain_assignment
 

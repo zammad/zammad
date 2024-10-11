@@ -9,12 +9,8 @@ class Taskbar < ApplicationModel
   include Taskbar::Validator
 
   TASKBAR_APPS = %w[desktop mobile].freeze
-  TASKBAR_ENTITIES = %w[
-    OrganizationProfile
+  TASKBAR_STATIC_ENTITIES = %w[
     Search
-    TicketCreate
-    TicketZoom
-    UserProfile
   ].freeze
 
   store           :state
@@ -45,6 +41,14 @@ class Taskbar < ApplicationModel
     where(key: taskbar.key)
       .where.not(id: taskbar.id)
   }
+
+  def self.taskbar_entities
+    ApplicationModel.descendants.select { |model| model.included_modules.include?(HasTaskbars) }.each_with_object([]) do |model, result|
+      model.taskbar_entities&.each do |entity|
+        result << entity
+      end
+    end | TASKBAR_STATIC_ENTITIES
+  end
 
   def state_changed?
     return false if state.blank?

@@ -53,6 +53,8 @@ class Ticket < ApplicationModel
   core_workflow_screens 'create_middle', 'edit', 'overview_bulk'
   core_workflow_admin_screens 'create_middle', 'edit'
 
+  taskbar_entities 'TicketZoom', 'TicketCreate'
+
   activity_stream_attributes_ignored :organization_id, # organization_id will change automatically on user update
                                      :create_article_type_id,
                                      :create_article_sender_id,

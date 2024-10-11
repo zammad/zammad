@@ -8,9 +8,10 @@ module Taskbar::List
 
     class << self
 
-      def list(user, app: nil)
+      def list(user, app: nil, restrict_entities: false)
         clause = { user: user }
         clause[:app] = app if app
+        clause[:callback] = taskbar_entities if restrict_entities
 
         Taskbar.where(clause).reorder(:prio)
       end

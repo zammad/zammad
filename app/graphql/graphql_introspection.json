@@ -5122,13 +5122,7 @@
           "interfaces": null,
           "enumValues": [
             {
-              "name": "OrganizationProfile",
-              "description": null,
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "Search",
+              "name": "TicketZoom",
               "description": null,
               "isDeprecated": false,
               "deprecationReason": null
@@ -5140,13 +5134,19 @@
               "deprecationReason": null
             },
             {
-              "name": "TicketZoom",
+              "name": "OrganizationProfile",
               "description": null,
               "isDeprecated": false,
               "deprecationReason": null
             },
             {
               "name": "UserProfile",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "Search",
               "description": null,
               "isDeprecated": false,
               "deprecationReason": null

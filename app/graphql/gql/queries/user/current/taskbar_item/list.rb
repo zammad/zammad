@@ -10,7 +10,7 @@ module Gql::Queries
     type [Gql::Types::User::TaskbarItemType], null: true
 
     def resolve(app: nil)
-      Taskbar.list(context[:current_user], app: app)
+      Taskbar.list(context[:current_user], app: app, restrict_entities: true)
     end
   end
 end

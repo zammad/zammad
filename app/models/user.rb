@@ -66,6 +66,8 @@ class User < ApplicationModel
   core_workflow_screens 'create', 'edit', 'invite_agent'
   core_workflow_admin_screens 'create', 'edit'
 
+  taskbar_entities 'UserProfile'
+
   store :preferences
 
   association_attributes_ignored :online_notifications,

@@ -2,9 +2,11 @@
 
 require 'rails_helper'
 require 'models/taskbar/has_attachments_examples'
+require 'models/taskbar/list_examples'
 
 RSpec.describe Taskbar, type: :model do
   it_behaves_like 'Taskbar::HasAttachments'
+  it_behaves_like 'Taskbar::List'
 
   context 'item' do
     subject(:taskbar) { create(:taskbar) }
