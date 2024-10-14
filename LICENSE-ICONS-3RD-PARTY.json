@@ -764,6 +764,11 @@
         "url": "",
         "license": "MIT"
     },
+    "status-report.svg": {
+        "author": "Zammad",
+        "url": "",
+        "license": "MIT"
+    },
     "stopwatch.svg": {
         "author": "Zammad",
         "url": "",
