@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-08 07:43+0000\n"
-"Last-Translator: Misha <misha@association-enoria.org>\n"
+"PO-Revision-Date: 2024-10-14 22:16+0000\n"
+"Last-Translator: Elodie Massa <elodie@association-enoria.org>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -1083,7 +1083,7 @@ msgstr "Accès à l'interface de la base de connaissances."
 
 #: db/seeds/permissions.rb:321
 msgid "Access to the phone interface."
-msgstr "Accès à l'interface du téléphone."
+msgstr "Accéder à l'interface sur mobile."
 
 #: db/seeds/permissions.rb:358
 msgid "Access to the report interface."
@@ -1337,7 +1337,7 @@ msgstr "Ajouter un certificat"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:406
 msgid "Add Empty Checklist"
-msgstr "Ajouter une checklist vide"
+msgstr "Ajouter une liste de contrôle"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue:42
 msgid "Add From a Template"
@@ -1436,7 +1436,7 @@ msgstr "Ajouter un e-mail"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:5
 msgid "Add empty checklist"
-msgstr "Ajouter une checklist vide"
+msgstr "Ajouter une liste de contrôle"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
 msgid "Add first level heading"
@@ -2257,8 +2257,8 @@ msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
 msgstr ""
-"Au moins un identifiant (firstname, lastname, phone, mobile ou email) est "
-"requis pour l'utilisateur."
+"Au moins un identifiant (prénom, nom, numéro de téléphone ou adresse e-mail) "
+"est requis pour l'utilisateur."
 
 #: app/models/postmaster_filter.rb:29
 msgid "At least one match rule is required, but none was provided."
@@ -3259,19 +3259,19 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:54
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
 msgid "Checklist"
-msgstr "Checklist"
+msgstr "Liste de contrôle"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:60
 msgid "Checklist Item"
-msgstr "Élément de la checklist"
+msgstr "Élément de la liste de contrôle"
 
 #: app/assets/javascripts/app/views/generic/checklist_item.jst.eco:10
 msgid "Checklist Item Label"
-msgstr "Étiquette d'un élément de la checklist"
+msgstr "Intitulé d'un élément de la liste de contrôle"
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:29
 msgid "Checklist Template"
-msgstr "Modèle de checklist"
+msgstr "Modèle de liste de contrôle"
 
 #: app/models/checklist_template/item.rb:32
 msgid "Checklist Template items are limited to 100 items per checklist."
@@ -8762,6 +8762,8 @@ msgstr "Fichier image"
 #: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:360
 msgid "Image file size is too large, please try inserting a smaller file."
 msgstr ""
+"Le fichier d'image est trop grand, merci d'essayer d'en insérer un plus "
+"petit."
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
@@ -14461,7 +14463,7 @@ msgstr "Expéditeur du dernier article"
 
 #: app/models/ticket/article.rb:305
 msgid "Sending an email without a valid recipient is not possible."
-msgstr ""
+msgstr "Il est impossible d'envoyer un email sans un destinataire valide."
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:35
 msgid "Sending…"

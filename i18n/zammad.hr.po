@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-09 14:00+0000\n"
+"PO-Revision-Date: 2024-10-13 09:00+0000\n"
 "Last-Translator: Ivan Perovic <ip@zammad.com>\n"
 "Language-Team: Croatian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/hr/>\n"
@@ -1381,7 +1381,7 @@ msgstr "Dodajte sporazumni tekst prije slanja."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:315
 msgid "Add alarm to pending reminder and escalated tickets"
-msgstr "Dodaj alarm kod podsjetnika na čekanju i eskaliranih ticketa."
+msgstr "Dodaj alarm kod eskaliranih i ticketa na čekanju"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:34
 msgid "Add alarm to pending reminder and escalated tickets."
@@ -2317,7 +2317,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:154
 msgid "Attribute"
-msgstr "Atribut"
+msgstr "Atributi"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:618
 msgid "Attribute '%s' is required in the mapping"
@@ -4376,7 +4376,7 @@ msgstr "Prilagođena adresa nije postavljena"
 #: db/seeds/object_manager_attributes.rb:60 db/seeds/roles.rb:23
 #: db/seeds/ticket_article_senders.rb:4 lib/excel_sheet/ticket.rb:29
 msgid "Customer"
-msgstr "Kupac"
+msgstr "Klijent"
 
 #: app/assets/javascripts/app/controllers/chat.coffee:125
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco:4
@@ -6354,7 +6354,7 @@ msgstr "Elasticsearch verzija"
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
 #: public/assets/form/form.js:32
 msgid "Email"
-msgstr "E-pošta"
+msgstr "E-Mail"
 
 #: app/models/report.rb:131
 msgid "Email (in)"
@@ -6724,7 +6724,7 @@ msgstr "Šifrirano"
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco:6
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:6
 msgid "Encryption"
-msgstr "Šifriranje"
+msgstr "Sifriranje"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:65
 #: app/frontend/shared/composables/useArticleSecurity.ts:157
@@ -9338,7 +9338,7 @@ msgstr "Ključne riječi"
 #: app/assets/javascripts/app/models/knowledge_base.coffee:75
 #: app/models/knowledge_base.rb:199 db/seeds/permissions.rb:113
 msgid "Knowledge Base"
-msgstr "Baza podataka"
+msgstr "Baza znanja"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:71
 msgid "Knowledge Base Answer"
@@ -13598,7 +13598,7 @@ msgstr "SLA rokovi"
 #: app/assets/javascripts/app/controllers/sla.coffee:3
 #: db/seeds/permissions.rb:71
 msgid "SLAs"
-msgstr "SLA-ovi"
+msgstr "SLA"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:68
@@ -13794,7 +13794,7 @@ msgstr "Automatizacije"
 
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:6
 msgid "Screen"
-msgstr "Pogled"
+msgstr "Zaslon"
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:38
 msgid "Script can be located under: ||%s|| and needs to be executable."
@@ -17386,7 +17386,7 @@ msgstr "Četvrtak"
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/ticket.ts:6
 #: db/seeds/permissions.rb:203
 msgid "Ticket"
-msgstr "Kartica"
+msgstr "Ticket"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:774
 msgid "Ticket %s created!"
@@ -18480,7 +18480,7 @@ msgstr "UID ime atributa"
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:8
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:51
 msgid "URL"
-msgstr "Poveznica"
+msgstr "URL"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:677
 msgid "URL (AJAX endpoint)"
@@ -21300,11 +21300,11 @@ msgstr "radnja na čekanju"
 
 #: db/seeds/ticket_states.rb:35
 msgid "pending close"
-msgstr "zatvaranje na čekanju"
+msgstr "čekanje na zatvaranje"
 
 #: db/seeds/ticket_state_types.rb:5 db/seeds/ticket_states.rb:17
 msgid "pending reminder"
-msgstr "podsjetnik na čekanju"
+msgstr "čekanje za podsjetnik"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/phone_reply.coffee:12
 #: db/seeds/ticket_article_types.rb:7
