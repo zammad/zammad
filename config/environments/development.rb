@@ -73,8 +73,8 @@ Rails.application.configure do
   # See https://www.fngtps.com/2019/rails6-blocked-host/
   config.hosts.clear
 
-  # Set log level via environment variable, default to :debug
-  config.log_level = ENV['RAILS_DEVELOPMENT_LOG_LEVEL'].presence || :debug
+  # Set log level via environment variable, defaults to debug
+  config.log_level = ENV.fetch('RAILS_DEVELOPMENT_LOG_LEVEL', 'debug')
 
   # Enable server timing headers
   config.server_timing = true
