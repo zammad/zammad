@@ -152,6 +152,18 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
         EMAIL
       end
 
+      context 'without sort capability' do
+        before do
+          allow_any_instance_of(Net::IMAP).to receive(:capabilities).and_return(%w[ID IDLE IMAP4REV1 MOVE STARTTLS UIDPLUS UNSELECT])
+        end
+
+        it 'fetches mails without problems' do
+          imap.append(folder, email1, [], Time.zone.now)
+
+          expect { channel.fetch(true) }.to change(Ticket::Article, :count)
+        end
+      end
+
       context 'with keep_on_server flag' do
         let(:inbound_options) do
           {

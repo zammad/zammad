@@ -375,6 +375,8 @@ example
   end
 
   def fetch_message_ids(filter)
+    raise if @imap.capabilities.exclude?('SORT')
+
     @imap.sort(['DATE'], filter, 'US-ASCII')
   rescue
     @imap.search(filter)
