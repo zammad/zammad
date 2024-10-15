@@ -1368,7 +1368,7 @@ msgstr "Skabelon"
 msgid "Add Key"
 msgstr "Besvar"
 
-#: app/assets/javascripts/app/views/link/ticket/list.jst.eco:9
+#: app/assets/javascripts/app/views/link/ticket/list.jst.eco:10
 msgid "Add Link"
 msgstr "Tilføj Link"
 
@@ -3368,7 +3368,7 @@ msgstr "Checkmk token"
 msgid "Checksum"
 msgstr "Checksum"
 
-#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:66
+#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:4
 msgid "Child"
 msgstr "Barn"
 
@@ -5981,7 +5981,7 @@ msgstr "Kassér artikel"
 msgid "Discard changes"
 msgstr "Kassér ændringer"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:239
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:240
 #, fuzzy
 #| msgid "Discard your unsaved changes"
 msgid "Discard unsaved reply"
@@ -6350,7 +6350,7 @@ msgstr "Rediger svar"
 msgid "Edit security keys"
 msgstr "Sikkerhed"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:86
 #, fuzzy
 #| msgid "Ticket title"
 msgid "Edit ticket title"
@@ -8900,7 +8900,7 @@ msgid "Including private key."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:347
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:332
 msgid "Incomplete Ticket Checklist"
 msgstr ""
 
@@ -11489,7 +11489,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:350
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:335
 #, fuzzy
 #| msgid "You have closed a ticket"
 msgid "No, just close the ticket"
@@ -11508,7 +11508,7 @@ msgstr "Nej Tak!"
 msgid "None"
 msgstr "Ingen"
 
-#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:66
+#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:4
 msgid "Normal"
 msgstr "Normal"
 
@@ -12381,7 +12381,7 @@ msgstr "Sider"
 msgid "Parameter 'data' or 'file' required."
 msgstr "Parameter 'data' eller 'fil' påkrævet."
 
-#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:66
+#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:4
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee:87
 msgid "Parent"
 msgstr "Forælder"
@@ -12621,7 +12621,7 @@ msgstr ""
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:247
 msgid "Pin this panel"
 msgstr ""
 
@@ -13492,7 +13492,7 @@ msgstr "Udskiftning"
 msgid "Replacement agent"
 msgstr "Udskiftning"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:236
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:237
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
@@ -13707,7 +13707,7 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:202
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:203
 #, fuzzy
 #| msgid "Close tab"
 msgid "Resize article panel"
@@ -18319,14 +18319,14 @@ msgstr "Sagstitel"
 msgid "Ticket update"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:499
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:484
 #, fuzzy
 #| msgid "2. Ticket Update"
 msgid "Ticket update failed."
 msgstr "2. Opdater Ticket"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:444
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:429
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:174
 #, fuzzy
 #| msgid "The test run was successful."
@@ -19156,7 +19156,7 @@ msgstr ""
 msgid "Unlock"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:247
 msgid "Unpin this panel"
 msgstr ""
 
@@ -20302,7 +20302,7 @@ msgid "Yes, add attachments now"
 msgstr "Tilføj vedhæftningsmulighed til upload."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:349
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:334
 #, fuzzy
 #| msgid "Remove"
 msgid "Yes, open the checklist"
@@ -20571,7 +20571,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:344
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:329
 #, fuzzy
 #| msgid "Do you really want to delete this object?"
 msgid ""

@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-09 14:00+0000\n"
+"PO-Revision-Date: 2024-10-11 09:16+0000\n"
 "Last-Translator: Ivan Perovic <ip@zammad.com>\n"
 "Language-Team: Croatian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/hr/>\n"
@@ -1325,7 +1325,7 @@ msgstr "Dodaj iz predloška"
 msgid "Add Key"
 msgstr "Dodaj ključ"
 
-#: app/assets/javascripts/app/views/link/ticket/list.jst.eco:9
+#: app/assets/javascripts/app/views/link/ticket/list.jst.eco:10
 msgid "Add Link"
 msgstr "Dodaj poveznicu"
 
@@ -1381,7 +1381,7 @@ msgstr "Dodajte sporazumni tekst prije slanja."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:315
 msgid "Add alarm to pending reminder and escalated tickets"
-msgstr "Dodaj alarm kod podsjetnika na čekanju i eskaliranih ticketa."
+msgstr "Dodaj alarm kod eskaliranih i ticketa na čekanju"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:34
 msgid "Add alarm to pending reminder and escalated tickets."
@@ -2317,7 +2317,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/object_manager.coffee:154
 msgid "Attribute"
-msgstr "Atribut"
+msgstr "Atributi"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:618
 msgid "Attribute '%s' is required in the mapping"
@@ -3250,7 +3250,7 @@ msgstr "Checkmk token"
 msgid "Checksum"
 msgstr "Checksum"
 
-#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:66
+#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:4
 msgid "Child"
 msgstr "Podređeno"
 
@@ -4376,7 +4376,7 @@ msgstr "Prilagođena adresa nije postavljena"
 #: db/seeds/object_manager_attributes.rb:60 db/seeds/roles.rb:23
 #: db/seeds/ticket_article_senders.rb:4 lib/excel_sheet/ticket.rb:29
 msgid "Customer"
-msgstr "Kupac"
+msgstr "Klijent"
 
 #: app/assets/javascripts/app/controllers/chat.coffee:125
 #: app/assets/javascripts/app/views/customer_chat/index.jst.eco:4
@@ -5934,7 +5934,7 @@ msgstr "Odbaci članak"
 msgid "Discard changes"
 msgstr "Odbaci promjene"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:239
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:240
 msgid "Discard unsaved reply"
 msgstr "Odbaci nespremljeni odgovor"
 
@@ -6259,7 +6259,7 @@ msgstr "Dodaj odgovor"
 msgid "Edit security keys"
 msgstr "Uredi sigurnosne ključeve"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:86
 msgid "Edit ticket title"
 msgstr "Uredi naslov ticketa"
 
@@ -6354,7 +6354,7 @@ msgstr "Elasticsearch verzija"
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
 #: public/assets/form/form.js:32
 msgid "Email"
-msgstr "E-pošta"
+msgstr "E-Mail"
 
 #: app/models/report.rb:131
 msgid "Email (in)"
@@ -6724,7 +6724,7 @@ msgstr "Šifrirano"
 #: app/assets/javascripts/app/views/integration/pgp_group.jst.eco:6
 #: app/assets/javascripts/app/views/integration/smime_group.jst.eco:6
 msgid "Encryption"
-msgstr "Šifriranje"
+msgstr "Sifriranje"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:65
 #: app/frontend/shared/composables/useArticleSecurity.ts:157
@@ -8823,7 +8823,7 @@ msgid "Including private key."
 msgstr "Sadrži privatni ključ."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:347
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:332
 msgid "Incomplete Ticket Checklist"
 msgstr "Nepotpuna lista zadataka"
 
@@ -9338,7 +9338,7 @@ msgstr "Ključne riječi"
 #: app/assets/javascripts/app/models/knowledge_base.coffee:75
 #: app/models/knowledge_base.rb:199 db/seeds/permissions.rb:113
 msgid "Knowledge Base"
-msgstr "Baza podataka"
+msgstr "Baza znanja"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:71
 msgid "Knowledge Base Answer"
@@ -11314,7 +11314,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Bez x-zammad-session-user-id, pošiljatelj nije postavljen!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:350
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:335
 msgid "No, just close the ticket"
 msgstr "Ne, samo zatvorite ticket"
 
@@ -11329,7 +11329,7 @@ msgstr "Ne, hvala"
 msgid "None"
 msgstr "Prazno"
 
-#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:66
+#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:4
 msgid "Normal"
 msgstr "Normalno"
 
@@ -12145,7 +12145,7 @@ msgstr "Stranice"
 msgid "Parameter 'data' or 'file' required."
 msgstr "Potreban je parametar ’data’ ili ’file’."
 
-#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:66
+#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:4
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee:87
 msgid "Parent"
 msgstr "Nadređeno"
@@ -12364,7 +12364,7 @@ msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr ""
 "Odaberite naziv aplikacije, a zatim će se generirati jedinstveni token."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:247
 msgid "Pin this panel"
 msgstr "Prikvači ovo polje"
 
@@ -13172,7 +13172,7 @@ msgstr "Zamjena"
 msgid "Replacement agent"
 msgstr "Zamjenski agent"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:236
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:237
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
@@ -13407,7 +13407,7 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr "Vraćanje izvornog poretka Vaših pregleda ticketa nije uspjelo."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:202
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:203
 msgid "Resize article panel"
 msgstr "Promijeni veličinu polja artikla"
 
@@ -13598,7 +13598,7 @@ msgstr "SLA rokovi"
 #: app/assets/javascripts/app/controllers/sla.coffee:3
 #: db/seeds/permissions.rb:71
 msgid "SLAs"
-msgstr "SLA-ovi"
+msgstr "SLA"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:3
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:68
@@ -13794,7 +13794,7 @@ msgstr "Automatizacije"
 
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:6
 msgid "Screen"
-msgstr "Pogled"
+msgstr "Zaslon"
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:38
 msgid "Script can be located under: ||%s|| and needs to be executable."
@@ -17386,7 +17386,7 @@ msgstr "Četvrtak"
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/ticket.ts:6
 #: db/seeds/permissions.rb:203
 msgid "Ticket"
-msgstr "Kartica"
+msgstr "Ticket"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:774
 msgid "Ticket %s created!"
@@ -17707,12 +17707,12 @@ msgstr "Naslov ticketa"
 msgid "Ticket update"
 msgstr "Ažuriranje ticketa"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:499
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:484
 msgid "Ticket update failed."
 msgstr "Ažuriranje ticketa nije uspjelo."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:444
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:429
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:174
 msgid "Ticket updated successfully."
 msgstr "Ticket je uspješno ažuriran."
@@ -18480,7 +18480,7 @@ msgstr "UID ime atributa"
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:8
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:51
 msgid "URL"
-msgstr "Poveznica"
+msgstr "URL"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:677
 msgid "URL (AJAX endpoint)"
@@ -18526,7 +18526,7 @@ msgstr ""
 msgid "Unlock"
 msgstr "Otključaj"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:247
 msgid "Unpin this panel"
 msgstr "Otkvači ovo polje"
 
@@ -18836,9 +18836,9 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}/#{article.id}\" target=\"zammad_app\">Pogledaj ovo u #{config."
-"product_name}</a>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
+"#{article.id}\" target=\"zammad_app\">Pogledaj ovo u #{config.product_name}</"
+"a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
@@ -19680,7 +19680,7 @@ msgid "Yes, add attachments now"
 msgstr "Da, dodaj privitke sad"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:349
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:334
 msgid "Yes, open the checklist"
 msgstr "Da, otvori popis zadataka"
 
@@ -19972,7 +19972,7 @@ msgstr "Morate odobriti pristup svojoj web-kameri."
 msgid "You have unchecked items in the checklist."
 msgstr "U popisu zadataka postoje neoznačene stavke."
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:344
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:329
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
@@ -21300,11 +21300,11 @@ msgstr "radnja na čekanju"
 
 #: db/seeds/ticket_states.rb:35
 msgid "pending close"
-msgstr "zatvaranje na čekanju"
+msgstr "čekanje na zatvaranje"
 
 #: db/seeds/ticket_state_types.rb:5 db/seeds/ticket_states.rb:17
 msgid "pending reminder"
-msgstr "podsjetnik na čekanju"
+msgstr "čekanje za podsjetnik"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/phone_reply.coffee:12
 #: db/seeds/ticket_article_types.rb:7

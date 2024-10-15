@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-07 08:51+0000\n"
-"Last-Translator: Misha <misha@association-enoria.org>\n"
+"PO-Revision-Date: 2024-10-14 09:16+0000\n"
+"Last-Translator: Elodie Massa <elodie@association-enoria.org>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fr/>\n"
 "Language: fr-fr\n"
@@ -1083,7 +1083,7 @@ msgstr "Accès à l'interface de la base de connaissances."
 
 #: db/seeds/permissions.rb:321
 msgid "Access to the phone interface."
-msgstr "Accès à l'interface du téléphone."
+msgstr "Accéder à l'interface sur mobile."
 
 #: db/seeds/permissions.rb:358
 msgid "Access to the report interface."
@@ -1347,7 +1347,7 @@ msgstr "Ajouter à partir d'un modèle"
 msgid "Add Key"
 msgstr "Ajouter une clé"
 
-#: app/assets/javascripts/app/views/link/ticket/list.jst.eco:9
+#: app/assets/javascripts/app/views/link/ticket/list.jst.eco:10
 msgid "Add Link"
 msgstr "Ajouter un lien"
 
@@ -3306,7 +3306,7 @@ msgstr "Jeton Checkmk"
 msgid "Checksum"
 msgstr "Somme de contrôle"
 
-#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:66
+#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:4
 msgid "Child"
 msgstr "Enfant"
 
@@ -6046,7 +6046,7 @@ msgstr "Annuler l'article"
 msgid "Discard changes"
 msgstr "Annuler les modifications"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:239
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:240
 msgid "Discard unsaved reply"
 msgstr "Annuler les réponses non sauvegardées"
 
@@ -6379,7 +6379,7 @@ msgstr "Modifier la réponse"
 msgid "Edit security keys"
 msgstr "Modifier les clés de sécurité"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:86
 msgid "Edit ticket title"
 msgstr "Modifier le titre du ticket"
 
@@ -8762,6 +8762,8 @@ msgstr "Fichier image"
 #: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:360
 msgid "Image file size is too large, please try inserting a smaller file."
 msgstr ""
+"Le fichier d'image est trop grand, merci d'essayer d'en insérer un plus "
+"petit."
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
@@ -9003,7 +9005,7 @@ msgid "Including private key."
 msgstr "Y compris la clé privée."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:347
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:332
 msgid "Incomplete Ticket Checklist"
 msgstr "Checklist des tickets incomplets"
 
@@ -11506,7 +11508,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "\"x-zammad-session-user-id\" absent, aucun expéditeur défini !"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:350
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:335
 msgid "No, just close the ticket"
 msgstr "Non, fermer simplement le ticket"
 
@@ -11521,7 +11523,7 @@ msgstr "Non merci"
 msgid "None"
 msgstr "Aucun"
 
-#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:66
+#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:4
 msgid "Normal"
 msgstr "Normal"
 
@@ -12349,7 +12351,7 @@ msgstr "Pages"
 msgid "Parameter 'data' or 'file' required."
 msgstr "Le paramètre 'data' ou 'file' est requis."
 
-#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:66
+#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:4
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee:87
 msgid "Parent"
 msgstr "Parent"
@@ -12571,7 +12573,7 @@ msgstr ""
 "Choisissez un nom pour l'application, et nous vous fournirons un jeton "
 "d'accès unique."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:247
 msgid "Pin this panel"
 msgstr "Épingler ce panneau"
 
@@ -13391,7 +13393,7 @@ msgstr "Remplacement"
 msgid "Replacement agent"
 msgstr "Agent remplaçant"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:236
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:237
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
@@ -13628,7 +13630,7 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr "La réinitialisation de l’ordre des aperçus de vos tickets a échoué."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:202
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:203
 msgid "Resize article panel"
 msgstr "Redimensionner le panneau d'article"
 
@@ -14461,7 +14463,7 @@ msgstr "Expéditeur du dernier article"
 
 #: app/models/ticket/article.rb:305
 msgid "Sending an email without a valid recipient is not possible."
-msgstr ""
+msgstr "Il est impossible d'envoyer un email sans un destinataire valide."
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:35
 msgid "Sending…"
@@ -18031,12 +18033,12 @@ msgstr "Titre du ticket"
 msgid "Ticket update"
 msgstr "Mettre à jour le ticket"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:499
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:484
 msgid "Ticket update failed."
 msgstr "La mise à jour du ticket a échoué."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:444
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:429
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:174
 msgid "Ticket updated successfully."
 msgstr "Ticket mis à jour."
@@ -18868,7 +18870,7 @@ msgstr ""
 msgid "Unlock"
 msgstr "Déverrouiller"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:247
 msgid "Unpin this panel"
 msgstr "Détacher ce panneau"
 
@@ -20030,7 +20032,7 @@ msgid "Yes, add attachments now"
 msgstr "Oui, ajouter des pièces jointes maintenant"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:349
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:334
 msgid "Yes, open the checklist"
 msgstr "Oui, ouvrir la checklist"
 
@@ -20334,7 +20336,7 @@ msgstr "Vous devez autoriser l'accès à votre webcam."
 msgid "You have unchecked items in the checklist."
 msgstr "Vous avez des éléments décochés dans la checklist."
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:344
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:329
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"

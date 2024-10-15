@@ -1322,7 +1322,7 @@ msgstr "Pritaikyti šabloną"
 msgid "Add Key"
 msgstr "Pridėti raktą"
 
-#: app/assets/javascripts/app/views/link/ticket/list.jst.eco:9
+#: app/assets/javascripts/app/views/link/ticket/list.jst.eco:10
 msgid "Add Link"
 msgstr "Susieti"
 
@@ -3244,7 +3244,7 @@ msgstr "Checkmk žetonas"
 msgid "Checksum"
 msgstr "Kontrolinė suma"
 
-#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:66
+#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:4
 msgid "Child"
 msgstr "Vaikas"
 
@@ -5885,7 +5885,7 @@ msgstr "Atmesti įrašą"
 msgid "Discard changes"
 msgstr "Atmesti pakeitimus"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:239
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:240
 #, fuzzy
 #| msgid "Discard your unsaved changes"
 msgid "Discard unsaved reply"
@@ -6216,7 +6216,7 @@ msgstr "Redaguoti atsakymą"
 msgid "Edit security keys"
 msgstr "Redaguoti saugumo raktus"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:86
 msgid "Edit ticket title"
 msgstr "Redaguoti trikties pavadinimą"
 
@@ -8771,7 +8771,7 @@ msgid "Including private key."
 msgstr "Įskaitant privatų raktą."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:347
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:332
 msgid "Incomplete Ticket Checklist"
 msgstr "Neužbaigtas trikties kontrolinis sąrašas"
 
@@ -11267,7 +11267,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Nėra x-zammad-session-user-id, siuntėjas nenustatytas!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:350
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:335
 msgid "No, just close the ticket"
 msgstr "Ne, tiesiog uždarysiu triktį"
 
@@ -11282,7 +11282,7 @@ msgstr "Ne, ačiū"
 msgid "None"
 msgstr "Jokio"
 
-#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:66
+#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:4
 msgid "Normal"
 msgstr "Normalus"
 
@@ -12092,7 +12092,7 @@ msgstr "Lapai"
 msgid "Parameter 'data' or 'file' required."
 msgstr "Būtinas „data“ arba „file“ parametras."
 
-#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:66
+#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:4
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee:87
 msgid "Parent"
 msgstr "Tėvas"
@@ -12310,7 +12310,7 @@ msgstr "Telefono numeris jau naudojamas kitos WhatsApp paskyros."
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "Parinkite pavadinimą ir gausite unikalų prisijungimo žetoną."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:247
 msgid "Pin this panel"
 msgstr "Prisegti šį skydelį"
 
@@ -13119,7 +13119,7 @@ msgstr "Pavaduotojantysis"
 msgid "Replacement agent"
 msgstr "Pakaitinis agentas"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:236
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:237
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
@@ -13352,7 +13352,7 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr "Nepavyko nunulinti trikčių apžvalgos eiliškumo."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:202
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:203
 msgid "Resize article panel"
 msgstr "Keisti šonjuostės dydį"
 
@@ -17657,12 +17657,12 @@ msgstr "Trikties pavadinimas"
 msgid "Ticket update"
 msgstr "Trikties atnaujinimas"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:499
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:484
 msgid "Ticket update failed."
 msgstr "Nepavyko atnaujinti trikties."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:444
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:429
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:174
 msgid "Ticket updated successfully."
 msgstr "Triktis atnaujinta."
@@ -18472,7 +18472,7 @@ msgstr ""
 msgid "Unlock"
 msgstr "Atrakinti"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:247
 msgid "Unpin this panel"
 msgstr "Atsegti šį skydelį"
 
@@ -19626,7 +19626,7 @@ msgid "Yes, add attachments now"
 msgstr "Taip, pridėti prisegtukus dabar"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:349
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:334
 msgid "Yes, open the checklist"
 msgstr "Taip, atidaryti kontrolinį sąrašą"
 
@@ -19916,7 +19916,7 @@ msgstr "Turite leisti prieigą prie kameros."
 msgid "You have unchecked items in the checklist."
 msgstr "Pažymėjote punktus kaip nebaigtus."
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:344
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:329
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"

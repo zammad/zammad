@@ -1348,7 +1348,7 @@ msgstr "Добавить из шаблона"
 msgid "Add Key"
 msgstr "Добавить ключ"
 
-#: app/assets/javascripts/app/views/link/ticket/list.jst.eco:9
+#: app/assets/javascripts/app/views/link/ticket/list.jst.eco:10
 msgid "Add Link"
 msgstr "Добавить ссылку"
 
@@ -3294,7 +3294,7 @@ msgstr "Ключ Checkmk"
 msgid "Checksum"
 msgstr "Контрольная сумма"
 
-#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:66
+#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:4
 msgid "Child"
 msgstr "Потомок"
 
@@ -6018,7 +6018,7 @@ msgstr "Удалить статью"
 msgid "Discard changes"
 msgstr "Отменить изменения"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:239
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:240
 msgid "Discard unsaved reply"
 msgstr "Отменить несохраненный ответ"
 
@@ -6348,7 +6348,7 @@ msgstr "Редактировать ответ"
 msgid "Edit security keys"
 msgstr "Изменить ключи безопасности"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:86
 msgid "Edit ticket title"
 msgstr "Изменить название заявки"
 
@@ -8970,7 +8970,7 @@ msgid "Including private key."
 msgstr "В том числе закрытый ключ."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:347
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:332
 msgid "Incomplete Ticket Checklist"
 msgstr "Незавершенный чек-лист заявки"
 
@@ -11476,7 +11476,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Ни x-zammad-session-user-id, ни отправителя не задано!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:350
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:335
 msgid "No, just close the ticket"
 msgstr "Нет, только закрыть заявку"
 
@@ -11491,7 +11491,7 @@ msgstr "Спасибо, не надо"
 msgid "None"
 msgstr "Отсутствует"
 
-#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:66
+#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:4
 msgid "Normal"
 msgstr "Обычная"
 
@@ -12314,7 +12314,7 @@ msgstr "Страницы"
 msgid "Parameter 'data' or 'file' required."
 msgstr "Параметр «данные» (data) или «файл» (file) обязателен."
 
-#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:66
+#: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:4
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee:87
 msgid "Parent"
 msgstr "Родитель"
@@ -12533,7 +12533,7 @@ msgstr "Номер телефона уже используется другим
 msgid "Pick a name for the application, and we'll give you a unique token."
 msgstr "Выберите имя для приложения, и мы дадим Вам уникальный ключ."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:247
 msgid "Pin this panel"
 msgstr "Закрепить эту панель"
 
@@ -13351,7 +13351,7 @@ msgstr "Замена"
 msgid "Replacement agent"
 msgstr "Замена агента"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:236
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:237
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:87
 #: app/frontend/shared/entities/ticket-article/action/plugins/facebook.ts:20
 #: app/frontend/shared/entities/ticket-article/action/plugins/sms.ts:22
@@ -13587,7 +13587,7 @@ msgstr ""
 msgid "Resetting the order of your ticket overviews failed."
 msgstr "Сброс Вашего порядка представлений заявок не удался."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:202
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:203
 msgid "Resize article panel"
 msgstr "Изменить размер панели статьи"
 
@@ -17981,12 +17981,12 @@ msgstr "Название заявки"
 msgid "Ticket update"
 msgstr "Заявка обновлена"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:499
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:484
 msgid "Ticket update failed."
 msgstr "Не удалось обновить заявку."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:444
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:429
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:174
 msgid "Ticket updated successfully."
 msgstr "Заявка успешно обновлена."
@@ -18807,7 +18807,7 @@ msgstr ""
 msgid "Unlock"
 msgstr "Разблокировать"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:247
 msgid "Unpin this panel"
 msgstr "Открепить эту панель"
 
@@ -19970,7 +19970,7 @@ msgid "Yes, add attachments now"
 msgstr "Да, добавить вложения сейчас"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:349
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:334
 msgid "Yes, open the checklist"
 msgstr "Да, открыть чек-лист"
 
@@ -20267,7 +20267,7 @@ msgstr "Вы должны разрешить доступ к Вашей веб-�
 msgid "You have unchecked items in the checklist."
 msgstr "Вы не отметили все пункты в чек-листе."
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:344
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:329
 msgid ""
 "You have unchecked items in the checklist. Do you want to handle them before "
 "closing this ticket?"
