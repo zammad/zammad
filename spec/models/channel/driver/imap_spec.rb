@@ -222,6 +222,27 @@ RSpec.describe Channel::Driver::Imap, integration: true, required_envs: %w[MAIL_
           expect_imap_fetch_check_results({ archive_possible: true, archive_possible_is_fallback: false })
         end
       end
+
+      context 'without sort capability' do
+        before do
+          allow_any_instance_of(Net::IMAP).to receive(:capabilities).and_return(%w[ID IDLE IMAP4REV1 MOVE STARTTLS UIDPLUS UNSELECT])
+        end
+
+        it 'with dateless mail' do
+          imap.append(folder, email_without_date, [], Time.zone.now)
+          expect_imap_fetch_check_results({ archive_possible: true, archive_possible_is_fallback: true })
+        end
+
+        it 'with now dated mail' do
+          imap.append(folder, email_now_date, [], Time.zone.now)
+          expect_imap_fetch_check_results({ archive_possible: true, archive_possible_is_fallback: true })
+        end
+
+        it 'with old dated mail' do
+          imap.append(folder, email_old_date, [], Time.zone.now)
+          expect_imap_fetch_check_results({ archive_possible: true, archive_possible_is_fallback: false })
+        end
+      end
     end
 
     context 'when fetching regular emails' do
