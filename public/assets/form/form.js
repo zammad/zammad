@@ -162,7 +162,7 @@ $(function() {
       },
       'hr': {
         'Attachments': 'Privici',
-        'Email': 'E-pošta',
+        'Email': 'E-Mail',
         'Message': 'Poruka',
         'Name': 'Ime',
         'Your Email': 'Vaš e-mail',
