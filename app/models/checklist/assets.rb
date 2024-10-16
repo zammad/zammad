@@ -10,7 +10,6 @@ class Checklist
       if !data[ app_model ]
         data[ app_model ] = {}
       end
-      Rails.logger.debug [app_model, id, data[app_model]]
       return data if data[ app_model ][ id ]
 
       data[ app_model ][ id ] = attributes_with_association_ids
@@ -20,6 +19,7 @@ class Checklist
       end
 
       items.each { |elem| elem.assets(data) }
+      ticket.assets(data)
 
       data
     end

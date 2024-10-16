@@ -57,11 +57,10 @@ class SidebarChecklist extends App.Controller
     }
 
   subscribe: =>
-    @subscriptions ||= []
-
     @unsubscribe()
 
-    # ticket subscriptions
+    # This is reusing ticket subscription which is used in ZoomTitle and ZoomMeta
+    # Double network call happens because TicketZoom has a duplicate request with all=true
     sid = App.Ticket.subscribeItem(
       @ticket.id,
       (ticket) =>
@@ -69,7 +68,7 @@ class SidebarChecklist extends App.Controller
           @badgeRenderLocal()
           return if ticket.updated_by_id is App.Session.get().id
 
-          @shown() if !@widget?.actionController
+          @renderWidget() if !@widget?.actionController
     )
     @subscriptions.push(
       object: 'Ticket',
@@ -90,7 +89,7 @@ class SidebarChecklist extends App.Controller
       (item) =>
         return if item.updated_by_id is App.Session.get().id
         return if @widget?.actionController
-        @shown()
+        @renderWidget()
     )
     @subscriptions.push(
       object: 'Checklist',
@@ -107,7 +106,7 @@ class SidebarChecklist extends App.Controller
         item.ticket_id,
         (item) =>
           return if @widget?.actionController
-          @shown()
+          @renderWidget()
       )
       @subscriptions.push(
         object: 'Ticket',
@@ -136,23 +135,27 @@ class SidebarChecklist extends App.Controller
       url:  "#{@apiPath}/checklists/by_ticket/#{@ticket.id}"
       processData: true
       success: (data, status, xhr) =>
-        @clearWidget()
         @stopLoading()
 
-        if data.id
-          App.Collection.loadAssets(data.assets)
+        App.Collection.loadAssets(data.assets)
 
-          @checklist = App.Checklist.find(data.id)
-
-          @widget = new App.SidebarChecklistShow(el: @elSidebar, parentVC: @, checklist: @checklist, readOnly: !@changeable, enterEditMode: enterEditMode)
-        else
-          @widget = new App.SidebarChecklistStart(el: @elSidebar, parentVC: @, readOnly: !@changeable)
-
-        @subscribe()
-
-        @renderActions()
-        @badgeRenderLocal()
+        @delay => @renderWidget(enterEditMode)
     )
+
+  renderWidget: (enterEditMode = false) =>
+    @clearWidget()
+
+    @checklist = App.Checklist.find(@ticket.checklist_id)
+
+    if @checklist
+      @widget = new App.SidebarChecklistShow(el: @elSidebar, parentVC: @, checklist: @checklist, readOnly: !@changeable, enterEditMode: enterEditMode)
+    else
+      @widget = new App.SidebarChecklistStart(el: @elSidebar, parentVC: @, readOnly: !@changeable)
+
+    @subscribe()
+
+    @renderActions()
+    @badgeRenderLocal()
 
   clearWidget: =>
     @widget?.el.empty()

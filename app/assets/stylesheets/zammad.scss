@@ -386,6 +386,10 @@ ul {
   pointer-events: none;
 }
 
+.u-low-opacity {
+  opacity: 60%;
+}
+
 .u-clickable {
   @extend %clickable;
 }

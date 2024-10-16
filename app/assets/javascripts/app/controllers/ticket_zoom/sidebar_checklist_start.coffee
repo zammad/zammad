@@ -37,7 +37,8 @@ class App.SidebarChecklistStart extends App.Controller
       data: JSON.stringify({ ticket_id: @parentVC.ticket.id })
       processData: true
       success: (data, status, xhr) =>
-        @parentVC.shown(true)
+        App.Collection.loadAssets(data.assets)
+        @parentVC.renderWidget(true)
     )
 
   onAddFromTemplate: (e) =>
@@ -56,7 +57,8 @@ class App.SidebarChecklistStart extends App.Controller
       url:  "#{@apiPath}/checklists"
       data: JSON.stringify({ ticket_id: @parentVC.ticket.id, template_id: params.checklist_template_id })
       success: (data, status, xhr) =>
-        @parentVC.shown()
+        App.Collection.loadAssets(data.assets)
+        @parentVC.renderWidget()
     )
 
   onTemplateChange: (e) =>

@@ -25,7 +25,7 @@ class AddChecklists < ActiveRecord::Migration[5.0]
       title:       'Checklists',
       name:        'checklist',
       area:        'Web::Base',
-      description: 'Allow users to create new checklists.',
+      description: 'Enable checklists.',
       options:     {
         form: [
           {
