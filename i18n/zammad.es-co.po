@@ -256,10 +256,10 @@ msgstr ""
 msgid "%s (option)"
 msgstr "establecer opcional"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:302
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:573
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:251
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:373
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:303
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:576
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:258
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:374
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:108
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:135
@@ -928,7 +928,7 @@ msgstr ""
 "Se ha creado un ticket de prueba, puede verlo en su Información General "
 "\"%s\" %l."
 
-#: app/models/ticket.rb:276
+#: app/models/ticket.rb:278
 #, fuzzy
 #| msgid "Another ticket was merged into ticket |%s|"
 msgid "A ticket cannot be merged into itself."
@@ -1715,7 +1715,7 @@ msgstr "Nombre de Agente"
 msgid "Agent idle timeout"
 msgstr "Tiempo de espera inactivo del agente"
 
-#: app/models/role.rb:153 app/models/user.rb:696
+#: app/models/role.rb:153 app/models/user.rb:698
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 "Se excedió el límite de agentes, verifique la configuración de su cuenta."
@@ -2327,7 +2327,7 @@ msgstr ""
 "Tiempo de espera de la asignación en minutos si el agente asignado no está "
 "trabajando en ella. El Ticket se mostrará como no asignado."
 
-#: app/models/user.rb:599
+#: app/models/user.rb:601
 #, fuzzy
 #| msgid ""
 #| "At least one identifier (firstname, lastname, phone or email) for user is "
@@ -2349,7 +2349,7 @@ msgstr "Se requiere al menos una letra"
 msgid "At least one object must be selected."
 msgstr "Se debe seleccionar al menos un objeto."
 
-#: app/models/role.rb:125 app/models/user.rb:670
+#: app/models/role.rb:125 app/models/user.rb:672
 msgid "At least one user needs to have admin permissions."
 msgstr "Al menos un usuario necesita tener permisos de administrador."
 
@@ -2711,8 +2711,8 @@ msgid "BCC address for all outgoing emails"
 msgstr "Dirección BCC para todos los correos electrónicos salientes"
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:436
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:455
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:438
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:457
 msgid "Back"
 msgstr "Atrás"
 
@@ -2726,8 +2726,8 @@ msgstr "Regresar a mi vista"
 msgid "Back to overview"
 msgstr "Regresar a mi vista"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:436
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:455
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:438
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:457
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:197
 #, fuzzy
 #| msgid "Back to my view"
@@ -3590,10 +3590,10 @@ msgid "Clear Search"
 msgstr "Buscar"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:56
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:656
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:659
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:314
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:364
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:321
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:370
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:155
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:159
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:137
@@ -7006,7 +7006,7 @@ msgstr "Notificaciones de Correo"
 msgid "Email address"
 msgstr "Direcciones de Correo"
 
-#: app/models/user.rb:609
+#: app/models/user.rb:611
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
 
@@ -9078,7 +9078,7 @@ msgstr "Hora(s)"
 msgid "Hours"
 msgstr "Horas"
 
-#: app/views/layouts/knowledge_base.html.erb:39
+#: app/views/layouts/knowledge_base.html.erb:41
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr "como podemos ayudarte? Buscar una respuesta o un tema…"
 
@@ -9868,7 +9868,7 @@ msgstr "client_id no válido en bucle de recepción!"
 msgid "Invalid client_id received!"
 msgstr "¡Se ha recibido un ID de cliente no válido!"
 
-#: app/models/user.rb:554
+#: app/models/user.rb:556
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -10037,7 +10037,7 @@ msgstr ""
 msgid "It is not possible to delete your current account."
 msgstr "¿Realmente quieres eliminar este borrador?"
 
-#: app/models/ticket.rb:274
+#: app/models/ticket.rb:276
 msgid "It is not possible to merge into an already merged ticket."
 msgstr ""
 
@@ -10528,7 +10528,7 @@ msgstr "Carga fallida."
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:647
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco:3
 #: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:40
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:510
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:512
 #: app/frontend/shared/form/i18n/locales.ts:58
 #: app/views/init/spinner-loading.html.erb:260
 msgid "Loading…"
@@ -11531,7 +11531,7 @@ msgstr "Mood"
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:622
+#: app/models/user.rb:624
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -12308,8 +12308,8 @@ msgid "No related article found to process the status message on."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:337
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:520
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:338
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:522
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:402
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:348
@@ -12317,7 +12317,7 @@ msgstr ""
 msgid "No results found"
 msgstr "No se han encontrado resultados"
 
-#: app/views/layouts/knowledge_base.html.erb:41
+#: app/views/layouts/knowledge_base.html.erb:43
 msgid "No results were found."
 msgstr "No se encontraron resultados."
 
@@ -12369,7 +12369,7 @@ msgstr "¡Sin ficha!"
 msgid "No translation for this locale available"
 msgstr "No hay traducción disponible para esta configuración regional"
 
-#: app/models/ticket.rb:396
+#: app/models/ticket.rb:398
 msgid "No triggers active"
 msgstr "No hay desencadenantes activos"
 
@@ -15333,7 +15333,7 @@ msgstr "Buscar…"
 msgid "Secondary organizations"
 msgstr "Organización compartida"
 
-#: app/models/user.rb:616
+#: app/models/user.rb:618
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -15540,8 +15540,8 @@ msgstr "Seleccionador"
 msgid "Selects the ticket number generator module."
 msgstr "Selecciona el módulo generador de números de ticket."
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:472
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:484
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:474
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:486
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue:201
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:302
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:173
@@ -16538,7 +16538,7 @@ msgstr "Ingrese su nombre de usuario o dirección de correo electrónico"
 msgid "Start typing to search or enter an email address…"
 msgstr "Ingrese su nombre de usuario o dirección de correo electrónico"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:72
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:73
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:41
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:409
 #, fuzzy
@@ -20576,9 +20576,9 @@ msgstr "Notificación de servicio"
 msgid "Unsaved Changes"
 msgstr "Deshacer Cambios"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:583
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:260
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:316
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:586
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:267
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:322
 #, fuzzy
 #| msgid "set optional"
 msgid "Unselect Option"
@@ -23217,7 +23217,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:820
+#: app/models/user.rb:822
 msgid "is too long"
 msgstr ""
 
@@ -23663,8 +23663,8 @@ msgstr "correr macro"
 msgid "select"
 msgstr "Seleccione"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:351
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:479
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:352
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:481
 #, fuzzy
 #| msgid "set optional"
 msgid "select all options"
@@ -23675,7 +23675,7 @@ msgstr "establecer opcional"
 msgid "select attachment…"
 msgstr "seleccionar archivo adjunto…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:478
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:480
 #, fuzzy
 #| msgid "Select All"
 msgid "select visible options"

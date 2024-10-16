@@ -252,10 +252,10 @@ msgstr ""
 msgid "%s (option)"
 msgstr "märgi valikuliseks"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:302
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:573
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:251
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:373
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:303
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:576
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:258
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:374
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:108
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:135
@@ -799,7 +799,7 @@ msgid ""
 "A test ticket has been created, you can find it in your overview \"%s\" %l."
 msgstr ""
 
-#: app/models/ticket.rb:276
+#: app/models/ticket.rb:278
 msgid "A ticket cannot be merged into itself."
 msgstr "Piletit ei saa ühendada iseendaga."
 
@@ -1530,7 +1530,7 @@ msgstr "Töötaja Nimi"
 msgid "Agent idle timeout"
 msgstr ""
 
-#: app/models/role.rb:153 app/models/user.rb:696
+#: app/models/role.rb:153 app/models/user.rb:698
 msgid "Agent limit exceeded, please check your account settings."
 msgstr ""
 
@@ -2074,7 +2074,7 @@ msgid ""
 "will be shown as unassigend."
 msgstr ""
 
-#: app/models/user.rb:599
+#: app/models/user.rb:601
 msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
@@ -2088,7 +2088,7 @@ msgstr ""
 msgid "At least one object must be selected."
 msgstr ""
 
-#: app/models/role.rb:125 app/models/user.rb:670
+#: app/models/role.rb:125 app/models/user.rb:672
 msgid "At least one user needs to have admin permissions."
 msgstr ""
 
@@ -2416,8 +2416,8 @@ msgid "BCC address for all outgoing emails"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/object_search/item_organization_members.jst.eco:5
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:436
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:455
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:438
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:457
 msgid "Back"
 msgstr "Tagasi"
 
@@ -2429,8 +2429,8 @@ msgstr "Tagasi minu vaatesse"
 msgid "Back to overview"
 msgstr "Tagasi ülevaatesse"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:436
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:455
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:438
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:457
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:197
 msgid "Back to previous page"
 msgstr "Tagasi eelmise lehele"
@@ -3234,10 +3234,10 @@ msgid "Clear Search"
 msgstr "Puhasta Otsing"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:56
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:656
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:659
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:314
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:364
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:321
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:370
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:155
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:159
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:137
@@ -6251,7 +6251,7 @@ msgstr "E-posti Teavitus"
 msgid "Email address"
 msgstr "E-posti Aadress"
 
-#: app/models/user.rb:609
+#: app/models/user.rb:611
 msgid "Email address '%{email}' is already used for another user."
 msgstr "E-posti aadress '%{email}' on juba kasutusel kellegi teise poolt."
 
@@ -8135,7 +8135,7 @@ msgstr "Tund(i)"
 msgid "Hours"
 msgstr "Tundi"
 
-#: app/views/layouts/knowledge_base.html.erb:39
+#: app/views/layouts/knowledge_base.html.erb:41
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr ""
 
@@ -8840,7 +8840,7 @@ msgstr ""
 msgid "Invalid client_id received!"
 msgstr ""
 
-#: app/models/user.rb:554
+#: app/models/user.rb:556
 msgid "Invalid email '%{email}'"
 msgstr ""
 
@@ -9000,7 +9000,7 @@ msgstr ""
 msgid "It is not possible to delete your current account."
 msgstr ""
 
-#: app/models/ticket.rb:274
+#: app/models/ticket.rb:276
 msgid "It is not possible to merge into an already merged ticket."
 msgstr ""
 
@@ -9477,7 +9477,7 @@ msgstr "Laadimine ebaõnnestus."
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:647
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco:3
 #: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:40
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:510
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:512
 #: app/frontend/shared/form/i18n/locales.ts:58
 #: app/views/init/spinner-loading.html.erb:260
 msgid "Loading…"
@@ -10342,7 +10342,7 @@ msgstr "olek"
 msgid "More information can be found here."
 msgstr ""
 
-#: app/models/user.rb:622
+#: app/models/user.rb:624
 msgid "More than 250 secondary organizations are not allowed."
 msgstr ""
 
@@ -11088,8 +11088,8 @@ msgid "No related article found to process the status message on."
 msgstr ""
 
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:698
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:337
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:520
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:338
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:522
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:402
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:348
@@ -11097,7 +11097,7 @@ msgstr ""
 msgid "No results found"
 msgstr ""
 
-#: app/views/layouts/knowledge_base.html.erb:41
+#: app/views/layouts/knowledge_base.html.erb:43
 msgid "No results were found."
 msgstr ""
 
@@ -11145,7 +11145,7 @@ msgstr ""
 msgid "No translation for this locale available"
 msgstr ""
 
-#: app/models/ticket.rb:396
+#: app/models/ticket.rb:398
 msgid "No triggers active"
 msgstr ""
 
@@ -13941,7 +13941,7 @@ msgstr "Otsi…"
 msgid "Secondary organizations"
 msgstr "Asutused"
 
-#: app/models/user.rb:616
+#: app/models/user.rb:618
 msgid ""
 "Secondary organizations are only allowed when the primary organization is "
 "given."
@@ -14132,8 +14132,8 @@ msgstr ""
 msgid "Selects the ticket number generator module."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:472
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:484
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:474
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:486
 #: app/frontend/apps/mobile/components/CommonSelect/CommonSelect.vue:201
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:302
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:173
@@ -15068,7 +15068,7 @@ msgstr "Otsi või sisesta oma e-posti aadress…"
 msgid "Start typing to search or enter an email address…"
 msgstr "Otsi või sisesta oma e-posti aadress…"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:72
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:73
 #: app/frontend/apps/desktop/components/Form/fields/FieldTags/FieldTagsWrapper.vue:41
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:409
 msgid "Start typing to search…"
@@ -18709,9 +18709,9 @@ msgstr "Teavitus"
 msgid "Unsaved Changes"
 msgstr "Loobu Muudatustest"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:583
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:260
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:316
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:586
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:267
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:322
 #, fuzzy
 #| msgid "set optional"
 msgid "Unselect Option"
@@ -21099,7 +21099,7 @@ msgstr ""
 msgid "is the wrong length (should be 1 character)"
 msgstr ""
 
-#: app/models/user.rb:820
+#: app/models/user.rb:822
 msgid "is too long"
 msgstr ""
 
@@ -21522,8 +21522,8 @@ msgstr ""
 msgid "select"
 msgstr "vali"
 
-#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:351
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:479
+#: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:352
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:481
 #, fuzzy
 #| msgid "set optional"
 msgid "select all options"
@@ -21534,7 +21534,7 @@ msgstr "märgi valikuliseks"
 msgid "select attachment…"
 msgstr "vali manus…"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:478
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:480
 #, fuzzy
 #| msgid "Select All"
 msgid "select visible options"
