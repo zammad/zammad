@@ -112,6 +112,8 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
   number?: TicketQuery['ticket']['number']
   checklist?: TicketQuery['ticket']['checklist']
   referencingChecklistTickets?: TicketQuery['ticket']['referencingChecklistTickets']
+  timeUnit?: TicketQuery['ticket']['timeUnit']
+  timeUnitsPerType?: TicketQuery['ticket']['timeUnitsPerType']
   tags?: string[]
   // eslint-disable-next-line sonarjs/cognitive-complexity
 }): R => {
@@ -149,8 +151,8 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
         ? defaultPolicy
         : options?.defaultPolicy,
     tags: options?.tags || [],
-    timeUnit: null,
-    timeUnitsPerType: [],
+    timeUnit: options?.timeUnit || null,
+    timeUnitsPerType: options?.timeUnitsPerType || [],
     subscribed: false,
     preferences: {},
     stateColorCode: options?.colorCode || EnumTicketStateColorCode.Open,

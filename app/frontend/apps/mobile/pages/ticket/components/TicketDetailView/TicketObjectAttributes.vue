@@ -3,8 +3,8 @@
 <script setup lang="ts">
 import { computed, toRef, ref } from 'vue'
 
+import { useTicketAccountedTime } from '#shared/entities/ticket/composables/useTicketAccountedTime.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
 import { capitalize } from '#shared/utils/formatter.ts'
 
 import CommonSectionMenu from '#mobile/components/CommonSectionMenu/CommonSectionMenu.vue'
@@ -18,22 +18,8 @@ interface Props {
 const props = defineProps<Props>()
 const ticketData = toRef(props, 'ticket')
 
-const application = useApplicationStore()
-
-const timeAccountingDisplayUnit = computed(() => {
-  switch (application.config.time_accounting_unit) {
-    case 'hour':
-      return __('hour(s)')
-    case 'quarter':
-      return __('quarter-hour(s)')
-    case 'minute':
-      return __('minute(s)')
-    case 'custom':
-      return application.config.time_accounting_unit_custom
-    default:
-      return ''
-  }
-})
+const { timeAccountingDisplayUnit, timeAccountingConfig } =
+  useTicketAccountedTime()
 
 const isShown = toRef(() => Boolean(ticketData.value.timeUnit))
 
@@ -41,7 +27,7 @@ const showAll = ref(false)
 const MIN_SHOWN = 3
 
 const allUnits = computed(() => {
-  if (!application.config.time_accounting_types) return []
+  if (!timeAccountingConfig.value.time_accounting_types) return []
 
   if (
     props.ticket.timeUnitsPerType &&

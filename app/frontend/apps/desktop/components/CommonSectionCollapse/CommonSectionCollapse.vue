@@ -45,7 +45,7 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
     <header
       v-if="!noHeader"
       :id="headerId"
-      class="group flex cursor-default items-center justify-between text-stone-200"
+      class="group flex cursor-default items-center justify-between text-stone-200 dark:text-neutral-500"
       :class="{
         'cursor-pointer rounded-md focus-within:outline focus-within:outline-1 focus-within:outline-offset-1 focus-within:outline-blue-800 hover:bg-blue-600 dark:hover:bg-blue-900 hover:dark:text-white':
           !noCollapse,

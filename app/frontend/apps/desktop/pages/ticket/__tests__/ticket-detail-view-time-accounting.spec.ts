@@ -24,6 +24,61 @@ describe('Ticket detail view', () => {
   })
 
   describe('Time accounting', () => {
+    it('shows accounted time information in sidebar', async () => {
+      await mockApplicationConfig({
+        time_accounting_types: true,
+      })
+
+      const ticket = createDummyTicket({
+        state: {
+          id: convertToGraphQLId('Ticket::State', 2),
+          name: 'open',
+          stateType: {
+            id: convertToGraphQLId('TicketStateType', 2),
+            name: 'open',
+          },
+        },
+        articleType: 'email',
+        defaultPolicy: {
+          update: true,
+          agentReadAccess: true,
+        },
+        timeUnit: 15,
+        timeUnitsPerType: [
+          {
+            name: 'None',
+            timeUnit: 6,
+          },
+          {
+            name: 'Finance',
+            timeUnit: 5,
+          },
+          {
+            name: 'Business',
+            timeUnit: 4,
+          },
+        ],
+      })
+
+      mockTicketQuery({
+        ticket,
+      })
+
+      const view = await visitView('/tickets/1')
+
+      const sidebar = view.getByLabelText('Content sidebar')
+
+      expect(
+        within(sidebar).getByRole('heading', {
+          level: 3,
+          name: 'Accounted Time',
+        }),
+      ).toBeInTheDocument()
+
+      expect(within(sidebar).getByText('Total')).toBeInTheDocument()
+      expect(within(sidebar).getByText('15')).toBeInTheDocument()
+    })
+
     it('opens time accounting flyout when the condition is met', async () => {
       mockApplicationConfig({
         ui_ticket_zoom_article_note_new_internal: true,

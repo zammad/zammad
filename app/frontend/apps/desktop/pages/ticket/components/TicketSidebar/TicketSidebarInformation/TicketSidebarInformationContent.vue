@@ -8,6 +8,7 @@ import { useTicketView } from '#shared/entities/ticket/composables/useTicketView
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/CommonSectionCollapse.vue'
 import { useChangeCustomerMenuItem } from '#desktop/pages/ticket/components/TicketSidebar/TicketDetailView/actions/TicketChangeCustomer/useChangeCustomerMenuItem.ts'
+import TicketAccountedTime from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import {
   type TicketSidebarContentProps,
@@ -57,6 +58,14 @@ const actions = computed<MenuItem[]>(() => {
       :title="__('Tags')"
     >
       <TicketTags :ticket="ticket" :is-ticket-editable="isTicketEditable" />
+    </CommonSectionCollapse>
+
+    <CommonSectionCollapse
+      v-if="ticket?.timeUnit && isTicketAgent"
+      id="ticket-time-accounting"
+      :title="__('Accounted Time')"
+    >
+      <TicketAccountedTime :ticket="ticket!" />
     </CommonSectionCollapse>
   </TicketSidebarContent>
 </template>

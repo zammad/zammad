@@ -13,7 +13,7 @@ class Service::Ticket::Update < Service::BaseWithCurrentUser
 
     save_ticket!(ticket, ticket_data, article_data, macro)
 
-    ticket
+    ticket.reload
   end
 
   private

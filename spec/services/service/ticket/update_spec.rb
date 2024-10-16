@@ -10,7 +10,7 @@ RSpec.describe Service::Ticket::Update, current_user_id: -> { user.id } do
   let(:group)       { ticket.group }
   let(:new_title)   { Faker::Lorem.word }
   let(:new_body)    { Faker::Lorem.sentence }
-  let(:ticket_data) { { title: new_title } }
+  let(:ticket_data) { { title: new_title, time_unit: 2 } }
 
   let(:ticket_data_with_article) do
     ticket_data.merge(article: { body: new_body })
@@ -39,8 +39,12 @@ RSpec.describe Service::Ticket::Update, current_user_id: -> { user.id } do
 
       expect(Ticket.last.articles.last)
         .to have_attributes(
-          body: new_body
+          body: new_body,
         )
+    end
+
+    it 'adds article accounted time to ticket' do
+      expect(service.execute(ticket: ticket, ticket_data: ticket_data_with_article).time_unit).to eq(2)
     end
 
     it 'updates ticket with given macro' do

@@ -152,5 +152,49 @@ describe('TicketSidebarInformationContent', () => {
         wrapper.queryByRole('button', { name: 'Action menu button' }),
       ).not.toBeInTheDocument()
     })
+
+    it('does not display accounted time if user is customer', () => {
+      mockPermissions(['ticket.customer'])
+
+      const wrapper = renderInformationSidebar()
+
+      expect(
+        wrapper.queryByRole('heading', { name: 'Accounted time', level: 3 }),
+      ).not.toBeInTheDocument()
+    })
+
+    it('does not display accounted time if there are no records', () => {
+      mockPermissions(['ticket.agent'])
+
+      const wrapper = renderInformationSidebar({
+        ...defaultTicket,
+        timeUnit: null,
+        timeUnitsPerType: [],
+      })
+
+      expect(
+        wrapper.queryByRole('heading', { name: 'Accounted Time', level: 3 }),
+      ).not.toBeInTheDocument()
+    })
+
+    it('displays accounted time.', () => {
+      mockPermissions(['ticket.agent'])
+
+      const wrapper = renderInformationSidebar({
+        ...defaultTicket,
+        timeUnit: 1,
+        timeUnitsPerType: [
+          {
+            __typename: 'TicketTimeAccountingTypeSum',
+            name: 'None',
+            timeUnit: 1,
+          },
+        ],
+      })
+
+      expect(
+        wrapper.getByRole('heading', { name: 'Accounted Time', level: 3 }),
+      ).toBeInTheDocument()
+    })
   })
 })
