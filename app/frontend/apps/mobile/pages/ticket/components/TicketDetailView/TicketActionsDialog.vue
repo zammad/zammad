@@ -112,7 +112,7 @@ const showChangeCustomer = () => {
         :label="__('Find a ticket')"
         :gql-query="gqlQuery"
         :action-label="__('Confirm merge')"
-        :additional-query-params="{ sourceTicketId: ticket.id }"
+        :additional-query-params="{ exceptTicketInternalId: ticket.internalId }"
         :label-empty="__('Start typing to find the ticket to merge into.')"
         action-icon="merge"
       />

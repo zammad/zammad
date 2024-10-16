@@ -2,9 +2,9 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Queries::AutocompleteSearch::MergeTicket, authenticated_as: :agent, type: :graphql do
+RSpec.describe Gql::Queries::AutocompleteSearch::Ticket, authenticated_as: :agent, type: :graphql do
 
-  context 'when searching for merge tickets', searchindex: true do
+  context 'when searching for tickets', searchindex: true do
     let(:group)         { create(:group) }
     let(:agent)         { create(:agent, groups: [group]) }
     let(:state)         { Ticket::State.find_by(name: 'open') }
@@ -18,8 +18,8 @@ RSpec.describe Gql::Queries::AutocompleteSearch::MergeTicket, authenticated_as: 
     end
     let(:query) do
       <<~QUERY
-        query autocompleteSearchMergeTicket($input: AutocompleteSearchMergeTicketInput!)  {
-          autocompleteSearchMergeTicket(input: $input) {
+        query autocompleteSearchTicket($input: AutocompleteSearchTicketInput!)  {
+          autocompleteSearchTicket(input: $input) {
             value
             label
             heading
@@ -30,7 +30,7 @@ RSpec.describe Gql::Queries::AutocompleteSearch::MergeTicket, authenticated_as: 
         }
       QUERY
     end
-    let(:variables)    { { input: { query: query_string, limit: limit, sourceTicketId: gql.id(source_ticket) } } }
+    let(:variables)    { { input: { query: query_string, limit: limit, exceptTicketInternalId: source_ticket.id } } }
     let(:query_string) { 'TicketAutoComplete' }
     let(:limit)        { nil }
 
@@ -75,8 +75,8 @@ RSpec.describe Gql::Queries::AutocompleteSearch::MergeTicket, authenticated_as: 
         let(:second_ticket_payload) do
           {
             'value'   => gql.id(tickets.second),
-            'label'   => tickets.second.title,
-            'heading' => "##{tickets.second.number} · #{tickets.second.customer.fullname}",
+            'label'   => "#{Setting.get('ticket_hook')}#{Setting.get('ticket_hook_divider')}#{tickets.second.number} - #{tickets.second.title}",
+            'heading' => tickets.second.customer.fullname,
             'ticket'  => { 'number' => tickets.second.number },
           }
         end

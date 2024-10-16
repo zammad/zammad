@@ -667,6 +667,14 @@ const formSchema = defineFormSchema([
     },
   },
   {
+    type: 'ticket',
+    name: 'ticket',
+    label: 'Ticket',
+    props: {
+      clearable: true,
+    },
+  },
+  {
     type: 'recipient',
     name: 'recipient',
     label: 'Recipient',

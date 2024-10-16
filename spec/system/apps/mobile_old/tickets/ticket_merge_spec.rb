@@ -21,9 +21,9 @@ RSpec.describe 'Mobile > Ticket > Merge tickets', app: :mobile, authenticated_as
       search_input = find('[role="searchbox"]')
       search_input.fill_in(with: target_ticket.title)
 
-      find('[role="option"]', text: 'Target').click
+      find('[role="option"]', text: "#{Setting.get('ticket_hook')}#{Setting.get('ticket_hook_divider')}#{target_ticket.number} - #{target_ticket.title}").click
 
-      wait_for_gql 'apps/mobile/pages/ticket/graphql/queries/autocompleteSearchMergeTicket.graphql'
+      wait_for_gql 'shared/entities/ticket/graphql/queries/autocompleteSearchTicket.graphql'
 
       find('[aria-label="Confirm merge"]').click
       find_button('OK').click

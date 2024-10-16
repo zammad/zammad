@@ -13,12 +13,12 @@ import {
   useNotifications,
 } from '#shared/components/CommonNotifications/index.ts'
 import { TicketMergeDocument } from '#shared/entities/ticket/graphql/mutations/merge.api.ts'
+import { AutocompleteSearchTicketDocument } from '#shared/entities/ticket/graphql/queries/autocompleteSearchTicket.api.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { useDialog } from '#mobile/composables/useDialog.ts'
 import { defaultTicket } from '#mobile/pages/ticket/__tests__/mocks/detail-view.ts'
 
-import { AutocompleteSearchMergeTicketDocument } from '../../../graphql/queries/autocompleteSearchMergeTicket.api.ts'
 import TicketActionsDialog from '../TicketActionsDialog.vue'
 
 const { notify } = useNotifications()
@@ -116,9 +116,9 @@ describe('actions that you can do with a ticket, when clicked on 3 dots', () => 
     }
 
     const searchMock = mockGraphQLApi(
-      AutocompleteSearchMergeTicketDocument,
+      AutocompleteSearchTicketDocument,
     ).willResolve({
-      autocompleteSearchMergeTicket: [
+      autocompleteSearchTicket: [
         nullableMock({
           value: targetTicketId,
           ticket: targetTicket,

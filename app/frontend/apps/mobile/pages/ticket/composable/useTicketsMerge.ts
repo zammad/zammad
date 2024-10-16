@@ -10,15 +10,15 @@ import {
 } from '#shared/components/CommonNotifications/index.ts'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useTicketMergeMutation } from '#shared/entities/ticket/graphql/mutations/merge.api.ts'
+import { AutocompleteSearchTicketDocument } from '#shared/entities/ticket/graphql/queries/autocompleteSearchTicket.api.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import UserError from '#shared/errors/UserError.ts'
-import type { AutocompleteSearchMergeTicketEntry } from '#shared/graphql/types.ts'
+import type { AutocompleteSearchTicketEntry } from '#shared/graphql/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
 
 import { useDialog } from '#mobile/composables/useDialog.ts'
 
 import TicketMergeStatus from '../components/TicketDetailView/TicketMergeStatus.vue'
-import { AutocompleteSearchMergeTicketDocument } from '../graphql/queries/autocompleteSearchMergeTicket.api.ts'
 
 import type { FormKitNode } from '@formkit/core'
 import type { Ref } from 'vue'
@@ -42,7 +42,7 @@ export const useTicketsMerge = (
   const { notify } = useNotifications()
   const router = useRouter()
 
-  let localOptions: Record<string, AutocompleteSearchMergeTicketEntry> = {}
+  let localOptions: Record<string, AutocompleteSearchTicketEntry> = {}
 
   const { waitForConfirmation } = useConfirmation()
 
@@ -118,7 +118,7 @@ export const useTicketsMerge = (
       options: [],
       optionIconComponent: markRaw(TicketMergeStatus),
       noCloseOnSelect: true,
-      onUpdateOptions(options: AutocompleteSearchMergeTicketEntry[]) {
+      onUpdateOptions(options: AutocompleteSearchTicketEntry[]) {
         localOptions = keyBy(options, 'value')
       },
       onAction() {
@@ -128,7 +128,7 @@ export const useTicketsMerge = (
   }
 
   return {
-    gqlQuery: AutocompleteSearchMergeTicketDocument,
+    gqlQuery: AutocompleteSearchTicketDocument,
     autocompleteRef,
     openMergeTicketsDialog,
   }

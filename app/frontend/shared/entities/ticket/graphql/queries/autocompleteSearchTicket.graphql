@@ -1,7 +1,5 @@
-query autocompleteSearchMergeTicket(
-  $input: AutocompleteSearchMergeTicketInput!
-) {
-  autocompleteSearchMergeTicket(input: $input) {
+query autocompleteSearchTicket($input: AutocompleteSearchTicketInput!) {
+  autocompleteSearchTicket(input: $input) {
     value
     label
     labelPlaceholder
