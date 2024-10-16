@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-14 22:16+0000\n"
+"PO-Revision-Date: 2024-10-16 05:59+0000\n"
 "Last-Translator: Random <random_r@users.noreply.translations.zammad.org>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/it/>\n"
@@ -6018,10 +6018,8 @@ msgid "Discard changes"
 msgstr "Scarta modifiche"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:239
-#, fuzzy
-#| msgid "Discard your unsaved changes"
 msgid "Discard unsaved reply"
-msgstr "Annulla le modifiche non salvate"
+msgstr "Annulla la risposta non salvata"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:136
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
@@ -6190,8 +6188,6 @@ msgid "Draft"
 msgstr "Bozza"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketSharedDraftZoom.vue:24
-#, fuzzy
-#| msgid "Draft available"
 msgid "Draft Available"
 msgstr "Bozza disponibile"
 
@@ -8454,7 +8450,7 @@ msgstr "Ore"
 msgid "Hours"
 msgstr "Ore"
 
-#: app/views/layouts/knowledge_base.html.erb:39
+#: app/views/layouts/knowledge_base.html.erb:41
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr "Come possiamo aiutarti? Cerca una risposta o un argomento…"
 
@@ -8708,6 +8704,7 @@ msgstr "File immagine"
 #: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:360
 msgid "Image file size is too large, please try inserting a smaller file."
 msgstr ""
+"Dimensione dell'immagine troppo grande, prova a inserire un file più piccolo."
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
@@ -11275,10 +11272,8 @@ msgstr "Ancora nessuna voce nella lista di controllo"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:15
-#, fuzzy
-#| msgid "No template created yet."
 msgid "No checklist templates have been created yet."
-msgstr "Nessun template ancora creato."
+msgstr "Non sono ancora stati creati modelli di liste di controllo."
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:5
 msgid "No configuration set."
@@ -11362,12 +11357,9 @@ msgid "No proxy for the following hosts."
 msgstr "Nessun proxy per gli host seguenti."
 
 #: lib/whatsapp/webhook/message/reaction.rb:13
-#, fuzzy
-#| msgid "No related article found to process the status message on."
 msgid "No related article found to process the reaction message on."
 msgstr ""
-"Non è stato trovato alcun articolo correlato su cui elaborare il messaggio "
-"di stato."
+"Nessun articolo correlato trovato su cui elaborare il messaggio di reazione."
 
 #: lib/whatsapp/webhook/message/status.rb:15
 msgid "No related article found to process the status message on."
@@ -11385,7 +11377,7 @@ msgstr ""
 msgid "No results found"
 msgstr "Nessun risultato"
 
-#: app/views/layouts/knowledge_base.html.erb:41
+#: app/views/layouts/knowledge_base.html.erb:43
 msgid "No results were found."
 msgstr "Non è stato trovato alcun risultato."
 
@@ -11416,10 +11408,8 @@ msgid "No source data submitted!"
 msgstr "Dati sorgente non forniti!"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:194
-#, fuzzy
-#| msgid "No template created yet."
 msgid "No tags added yet."
-msgstr "Nessun template ancora creato."
+msgstr "Non sono ancora stati aggiunti tag."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:14
 msgid "No template created yet."
@@ -11443,7 +11433,7 @@ msgstr "Non hai notifiche da leggere. :-)"
 
 #: db/seeds/settings.rb:1300
 msgid "No user creation on logon"
-msgstr ""
+msgstr "Nessuna creazione di utenti all'accesso"
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/webhook_not_available.jst.eco:1
 msgid ""
@@ -12071,8 +12061,6 @@ msgid "Organization could not be updated."
 msgstr "Impossibile modificare l'organizzazione."
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualSystemInformation.vue:48
-#, fuzzy
-#| msgid "Organization Logo"
 msgid "Organization logo"
 msgstr "Logo dell'organizzazione"
 
@@ -13615,16 +13603,12 @@ msgid "Retry"
 msgstr "Riprova"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleMediaError.vue:43
-#, fuzzy
-#| msgid "Retry attachment download"
 msgid "Retry Attachment Download"
 msgstr "Riprova a scaricare l'allegato"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue:37
-#, fuzzy
-#| msgid "Retry security process"
 msgid "Retry Security Process"
-msgstr "Ritenta il processo di sicurezza"
+msgstr "Riprova il processo di sicurezza"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:112
 msgid "Retry attachment download"
@@ -13916,10 +13900,8 @@ msgid "Save as"
 msgstr "Salva come"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:69
-#, fuzzy
-#| msgid "Save Draft"
 msgid "Save as draft"
-msgstr "Salva bozza"
+msgstr "Salva come bozza"
 
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
 msgid "Save changes"
@@ -14404,7 +14386,7 @@ msgstr "Mittente dell'ultima nota"
 
 #: app/models/ticket/article.rb:305
 msgid "Sending an email without a valid recipient is not possible."
-msgstr ""
+msgstr "Non è possibile inviare un'email senza un destinatario valido."
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:35
 msgid "Sending…"
@@ -16229,22 +16211,16 @@ msgstr ""
 "L'autenticazione a due fattori con il metodo fornito non è configurata."
 
 #: app/services/service/user/two_factor/set_default_method.rb:14
-#, fuzzy
-#| msgid "The two-factor authentication method is not enabled."
 msgid "The given two-factor authentication method is not enabled."
-msgstr "Il metodo di autenticazione a due fattori non è abilitato."
+msgstr "Il metodo di autenticazione a due fattori indicato non è attivato."
 
 #: app/services/service/user/two_factor/base.rb:14
-#, fuzzy
-#| msgid "The page you were looking for does not exist."
 msgid "The given two-factor method does not exist."
-msgstr "La pagina che stavi cercando non esiste."
+msgstr "Il metodo a due fattori indicato non esiste."
 
 #: app/services/service/user/two_factor/remove_method_credentials.rb:32
-#, fuzzy
-#| msgid "The two-factor authentication is not configured yet."
 msgid "The given two-factor method is not configured yet."
-msgstr "L'autenticazione a due fattori non è ancora configurata."
+msgstr "Il metodo a due fattori indicato non è ancora configurato."
 
 #: app/controllers/import_freshdesk_controller.rb:131
 #: app/controllers/import_kayako_controller.rb:108
@@ -16259,10 +16235,8 @@ msgid "The hostname could not be found."
 msgstr "Impossibile trovare il nome host."
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:102
-#, fuzzy
-#| msgid "Open the hours overlay"
 msgid "The hours overlay"
-msgstr "Apri la finestra degli orari"
+msgstr "La finestra degli orari"
 
 #: db/seeds/settings.rb:2170
 msgid ""
@@ -16331,10 +16305,8 @@ msgstr ""
 "ricerca."
 
 #: app/services/service/user/remove_linked_account.rb:21
-#, fuzzy
-#| msgid "The object could not be found."
 msgid "The linked account could not be found."
-msgstr "Impossibile trovare l'oggetto."
+msgstr "Impossibile trovare l'account collegato."
 
 #: app/services/service/auth/verify_admin_token.rb:17
 msgid "The login is not possible."
@@ -16347,16 +16319,12 @@ msgid "The minutes overlay"
 msgstr "Apri la finestra dei minuti"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:96
-#, fuzzy
-#| msgid "Their tickets"
 msgid "The month picker"
-msgstr "I loro ticket"
+msgstr "Selettore mese"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:96
-#, fuzzy
-#| msgid "Open the months overlay"
 msgid "The month picker overlay"
-msgstr "Apri la finestra dei mesi"
+msgstr "Overlay selettore mese"
 
 #: app/models/ticket/number.rb:14
 msgid "The new ticket number could not be generated."
@@ -16399,12 +16367,8 @@ msgid "The order of your ticket overviews was reset."
 msgstr "L'ordine delle panoramiche dei ticket è stato ripristinato."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:89
-#, fuzzy
-#| msgid ""
-#| "Here you find your ticket overviews for open, assigned, and escalated "
-#| "tickets."
 msgid "The order of your ticket overviews was updated."
-msgstr "Qui trovi la panoramica dei ticket aperti, assegnati ed in escalation."
+msgstr "È stato aggiornato l'ordine della tua panoramica ticket."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:248
 msgid "The page is not available anymore"
@@ -16521,10 +16485,8 @@ msgid "The provided match operator is missing or invalid."
 msgstr "L'operatore di riscontro fornito è non valido o mancante."
 
 #: app/graphql/gql/mutations/user/current/password_check.rb:27
-#, fuzzy
-#| msgid "The username or password is incorrect."
 msgid "The provided password is incorrect."
-msgstr "Utente o password non corretti."
+msgstr "La password fornita non è corretta."
 
 #: app/models/webhook.rb:45
 msgid "The provided payload is invalid. Please check your syntax."
@@ -16770,10 +16732,8 @@ msgid "The retried security process failed!"
 msgstr "Il processo di sicurezza ritentato non è andato a buon fine!"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:107
-#, fuzzy
-#| msgid "Open the seconds overlay"
 msgid "The seconds overlay"
-msgstr "Apri la finestra dei secondi"
+msgstr "Overlay secondi"
 
 #: app/frontend/shared/form/i18n/locales.ts:567
 msgid "The selected date is invalid."
@@ -16848,7 +16808,7 @@ msgstr "Impossibile trovare il ticket di origine."
 
 #: app/frontend/shared/form/validation/rules/date-range.ts:18
 msgid "The start date must precede or match end date."
-msgstr ""
+msgstr "La data di inizio deve essere antecedente o uguale alla data di fine."
 
 #: app/assets/javascripts/app/views/system_report.jst.eco:6
 msgid ""
@@ -16858,6 +16818,11 @@ msgid ""
 "you can see in the preview below. If you get in touch with the Zammad "
 "support, this JSON file is helpful identifying your issue."
 msgstr ""
+"Il rapporto di sistema fornisce un riepilogo dello stato del sistema e della "
+"configurazione a scopo di supporto e analisi. Puoi scaricare il rapporto "
+"cliccando sul pulsante di Download. Zammad fornisce un file JSON come quello "
+"visibile nell'anteprima sotto. Se sei in contatto con il team di supporto di "
+"Zammad, questo file JSON verrà utile per identificare la tua problematica."
 
 #: app/services/service/system/check_setup.rb:18
 msgid ""
@@ -16903,24 +16868,20 @@ msgstr ""
 "AS."
 
 #: app/services/service/ticket/update/validator/checklist_completed.rb:16
-#, fuzzy
-#| msgid "Manage ticket states of your system."
 msgid "The ticket checklist is incomplete."
-msgstr "Gestire gli stati dei ticket del tuo sistema."
+msgstr "La lista di controllo del ticket non è completa."
 
 #: app/services/service/ticket/update/validator/time_accounting.rb:19
 msgid "The ticket time accounting condition is met."
-msgstr ""
+msgstr "Il ticket rientra nelle condizioni per la fatturazione."
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:111
 msgid "The tickets could not be merged."
 msgstr "Impossibile unire i ticket."
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:94
-#, fuzzy
-#| msgid "Open the time picker"
 msgid "The time picker"
-msgstr "Apri il selettore dell'orario"
+msgstr "Selettore dell'ora"
 
 #: app/services/service/user/signup.rb:49
 msgid "The token could not be generated."
@@ -16960,6 +16921,8 @@ msgstr "Il metodo di autenticazione a due fattori non è abilitato."
 #: app/services/service/user/two_factor/remove_method_credentials.rb:37
 msgid "The two-factor credentials you're trying to delete do not exist"
 msgstr ""
+"Le credenziali di autenticazione a due fattori che stai cercando di "
+"eliminare non esistono"
 
 #: app/models/setting/validation/saml/security.rb:43
 msgid "The type of the private key is wrong."
@@ -16974,12 +16937,8 @@ msgstr ""
 "parametro logo_resize."
 
 #: app/models/authorization/provider.rb:47
-#, fuzzy
-#| msgid "The password could not be set. Please contact your administrator."
 msgid "The user account does not exist. Please contact your administrator."
-msgstr ""
-"Impossibile impostare la password. Per favore, contatta il tuo "
-"amministratore."
+msgstr "L'utente non esiste. Per favore contatta il tuo amministratore."
 
 #: app/services/service/auth/send_admin_token.rb:33
 msgid "The user token could not be generated."
@@ -17017,15 +16976,12 @@ msgstr ""
 "connessione all'IdP SAML."
 
 #: app/services/service/user/two_factor/verify_method_configuration.rb:21
-#, fuzzy
-#| msgid ""
-#| "Could not load the two-factor authentication configuration for this user."
 msgid ""
 "The verification of the two-factor authentication method configuration "
 "failed."
 msgstr ""
-"Impossibile caricare la configurazione dell'autenticazione a due fattori per "
-"l'utente."
+"La verifica della configurazione dell'autenticazione a due fattori non è "
+"andata a buon fine."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee:29
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:11
@@ -17039,16 +16995,12 @@ msgstr ""
 "non valido."
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:98
-#, fuzzy
-#| msgid "Their tickets"
 msgid "The year picker"
-msgstr "I loro ticket"
+msgstr "Selettore anno"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:98
-#, fuzzy
-#| msgid "Open the years overlay"
 msgid "The year picker overlay"
-msgstr "Apri la finestra degli anni"
+msgstr "Overlay selettore anno"
 
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:73
 msgid "Their tickets"
@@ -17061,13 +17013,6 @@ msgid "Theme"
 msgstr "Tema"
 
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:64
-#, fuzzy
-#| msgid ""
-#| "There are more than 1000 tickets in the Zendesk system. Due to API rate "
-#| "limit restrictions we can't get the exact number of tickets yet and have "
-#| "to fetch them in batches of 1000. This might take some time, better grab "
-#| "a cup of coffee. The total number of tickets gets updated as soon as the "
-#| "currently known number is surpassed."
 msgid ""
 "There are more than 1000 tickets in the Zendesk system. Due to API rate "
 "limit restrictions, Zammad can't get the exact number of tickets yet and has "
@@ -17076,7 +17021,7 @@ msgid ""
 "currently known number is surpassed."
 msgstr ""
 "Ci sono più di 1000 ticket in Zendesk. A causa di restrizioni sull'uso delle "
-"API non possiamo ancora ottenere il numero esatto di ticket da prelevare e "
+"API Zammad non può ancora ottenere il numero esatto di ticket da prelevare e "
 "vanno recuperati a blocchi di 1000 per volta. Questo potrebbe richiedere un "
 "po' di tempo, meglio prendere una tazza di caffè. Il numero totale di ticket "
 "viene aggiornato non appena il numero attualmente noto è superato."
@@ -17257,7 +17202,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:170
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:221
 msgid "This device"
-msgstr ""
+msgstr "Questo dispositivo"
 
 #: app/assets/javascripts/app/controllers/_ui_element/holiday_selector.coffee:63
 msgid "This entry already exists!"
@@ -17424,6 +17369,8 @@ msgstr ""
 #: app/graphql/gql/mutations/ticket/concerns/handles_group.rb:23
 msgid "This group has no email address configured for outgoing communication."
 msgstr ""
+"Questo gruppo non ha un indirizzo email configurato per le comunicazioni in "
+"uscita."
 
 #: app/models/group.rb:81
 msgid "This group or its children exceed the allowed nesting depth."
@@ -17488,16 +17435,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:140
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleRemoteContentBadge.vue:56
-#, fuzzy
-#| msgid ""
-#| "This message contains images or other content hosted by an external "
-#| "source. We blocked it, but you can download the original formatting here."
 msgid ""
 "This message contains images or other content hosted by an external source. "
 "It was blocked, but you can download the original formatting here."
 msgstr ""
 "Questo messaggio contiene immagini o altri contenuti ospitati da una fonte "
-"esterna. Li abbiamo bloccati, ma puoi scaricare la formattazione originale "
+"esterna. Sono stati bloccati, ma puoi scaricare la formattazione originale "
 "qui."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleBlockedContentWarning.vue:34
@@ -17623,10 +17566,8 @@ msgid "This system is configured for automated setup."
 msgstr "Questo sistema è configurato per l'impostazione automatica."
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:15
-#, fuzzy
-#| msgid "The hostname could not be found."
 msgid "This tab could not be found."
-msgstr "Impossibile trovare il nome host."
+msgstr "Impossibile trovare questa scheda."
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:31
 msgid ""
@@ -18662,10 +18603,8 @@ msgid "Twitter Developer Site"
 msgstr "Sito di sviluppo Twitter"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/twitterDirectMessage.ts:7
-#, fuzzy
-#| msgid "twitter direct-message"
 msgid "Twitter Direct Message"
-msgstr "messaggi diretti twitter"
+msgstr "Messaggi diretti Twitter"
 
 #: db/seeds/settings.rb:1362
 msgid "Twitter Key"
@@ -18676,10 +18615,8 @@ msgid "Twitter Secret"
 msgstr "Twitter Secret"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/twitterStatus.ts:7
-#, fuzzy
-#| msgid "twitter status"
 msgid "Twitter Status"
-msgstr "stato di twitter"
+msgstr "Stato di Twitter"
 
 #: app/frontend/apps/mobile/pages/authentication/after-auth/plugins/twoFactorSetup.ts:12
 msgid "Two-Factor Authentication Configuration Is Required"
@@ -18707,6 +18644,8 @@ msgid ""
 "Two-factor authentication is required, but you don't have sufficient "
 "permissions to set it up. Please contact your administrator."
 msgstr ""
+"È richiesta l'autenticazione a due fattori, ma non hai permessi sufficienti "
+"per configurarla. Per favore contatta un amministratore."
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:189
 #: app/frontend/apps/desktop/pages/authentication/components/LoginTwoFactor.vue:106

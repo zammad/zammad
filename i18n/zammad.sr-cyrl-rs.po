@@ -8324,7 +8324,7 @@ msgstr "Сат(и)"
 msgid "Hours"
 msgstr "Сатима"
 
-#: app/views/layouts/knowledge_base.html.erb:39
+#: app/views/layouts/knowledge_base.html.erb:41
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr "Како вам можемо помоћи? Потражите одговор или тему…"
 
@@ -8574,7 +8574,8 @@ msgstr "Датотека слике"
 #: app/assets/javascripts/app/lib/app_post/image_service.coffee:95
 #: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:360
 msgid "Image file size is too large, please try inserting a smaller file."
-msgstr "Слика је превелика, молимо покушајте убацивањем датотеке мање величине."
+msgstr ""
+"Слика је превелика, молимо покушајте убацивањем датотеке мање величине."
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
@@ -11228,7 +11229,7 @@ msgstr "Нису пронађен повезани чланак за обрад�
 msgid "No results found"
 msgstr "Нема резултата"
 
-#: app/views/layouts/knowledge_base.html.erb:41
+#: app/views/layouts/knowledge_base.html.erb:43
 msgid "No results were found."
 msgstr "Нису пронађени резултати."
 

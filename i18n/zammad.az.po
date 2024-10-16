@@ -8633,7 +8633,7 @@ msgstr "Saat"
 msgid "Hours"
 msgstr "Saat"
 
-#: app/views/layouts/knowledge_base.html.erb:39
+#: app/views/layouts/knowledge_base.html.erb:41
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr "Sizə necə kömək edə bilərik? Cavabı və ya mövzunu axtar…"
 
@@ -11785,7 +11785,7 @@ msgstr "Status mesajını emal etmək üçün heç bir əlaqəli məqalə tapıl
 msgid "No results found"
 msgstr "Heç bir nəticə tapılmadı"
 
-#: app/views/layouts/knowledge_base.html.erb:41
+#: app/views/layouts/knowledge_base.html.erb:43
 msgid "No results were found."
 msgstr "Heç bir nəticə tapılmadı."
 

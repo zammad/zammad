@@ -8793,7 +8793,7 @@ msgstr "isaha/amasaha"
 msgid "Hours"
 msgstr "amasaha"
 
-#: app/views/layouts/knowledge_base.html.erb:39
+#: app/views/layouts/knowledge_base.html.erb:41
 #, fuzzy
 #| msgid "How can we help you? Search for an answer or a topic..."
 msgid "How can we help you? Search for an answer or a topic…"
@@ -12001,7 +12001,7 @@ msgstr ""
 msgid "No results found"
 msgstr ""
 
-#: app/views/layouts/knowledge_base.html.erb:41
+#: app/views/layouts/knowledge_base.html.erb:43
 msgid "No results were found."
 msgstr "nta gisubizo cyabonetse"
 

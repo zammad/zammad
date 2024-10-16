@@ -8489,7 +8489,7 @@ msgstr "Stunde(n)"
 msgid "Hours"
 msgstr "Stunden"
 
-#: app/views/layouts/knowledge_base.html.erb:39
+#: app/views/layouts/knowledge_base.html.erb:41
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr ""
 "Wie können wir Ihnen helfen? Suchen Sie nach einer Antwort oder einem Thema…"
@@ -11433,7 +11433,7 @@ msgstr ""
 msgid "No results found"
 msgstr "Keine Ergebnisse gefunden"
 
-#: app/views/layouts/knowledge_base.html.erb:41
+#: app/views/layouts/knowledge_base.html.erb:43
 msgid "No results were found."
 msgstr "Es wurden keine Ergebnisse gefunden."
 

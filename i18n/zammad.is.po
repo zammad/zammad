@@ -8466,7 +8466,7 @@ msgstr "Klukkustund(ir)"
 msgid "Hours"
 msgstr "Klukkustundir"
 
-#: app/views/layouts/knowledge_base.html.erb:39
+#: app/views/layouts/knowledge_base.html.erb:41
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr "Hvernig getum við aðstoðað? Leitaðu að svörum eða efni…"
 
@@ -11497,7 +11497,7 @@ msgstr ""
 msgid "No results found"
 msgstr ""
 
-#: app/views/layouts/knowledge_base.html.erb:41
+#: app/views/layouts/knowledge_base.html.erb:43
 msgid "No results were found."
 msgstr "Engar niðurstöður fundust."
 

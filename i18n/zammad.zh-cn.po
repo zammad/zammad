@@ -8138,7 +8138,7 @@ msgstr "小时"
 msgid "Hours"
 msgstr "小时"
 
-#: app/views/layouts/knowledge_base.html.erb:39
+#: app/views/layouts/knowledge_base.html.erb:41
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr "请问需要什么帮助？搜索回答或者主题…"
 
@@ -11229,7 +11229,7 @@ msgstr "没有发现可以处理状态消息的相关文章。"
 msgid "No results found"
 msgstr "未找到结果"
 
-#: app/views/layouts/knowledge_base.html.erb:41
+#: app/views/layouts/knowledge_base.html.erb:43
 msgid "No results were found."
 msgstr "沒有找到任何結果"
 

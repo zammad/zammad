@@ -8583,7 +8583,7 @@ msgstr "Oră(e)"
 msgid "Hours"
 msgstr "Ore"
 
-#: app/views/layouts/knowledge_base.html.erb:39
+#: app/views/layouts/knowledge_base.html.erb:41
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr "Cum vă putem ajuta? Căutați un răspuns sau un subiect…"
 
@@ -11650,7 +11650,7 @@ msgstr "Niciun articol corelat găsit pentru a procesa mesajul de status."
 msgid "No results found"
 msgstr "Nu au fost găsite rezultate"
 
-#: app/views/layouts/knowledge_base.html.erb:41
+#: app/views/layouts/knowledge_base.html.erb:43
 msgid "No results were found."
 msgstr "Nu au fost găsite rezultate."
 

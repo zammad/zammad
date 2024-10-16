@@ -8848,7 +8848,7 @@ msgstr "Hodin"
 msgid "Hours"
 msgstr "Hodin(y)"
 
-#: app/views/layouts/knowledge_base.html.erb:39
+#: app/views/layouts/knowledge_base.html.erb:41
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr "Jak Vám můžeme pomoci? Vyhledávejte odpovědi nebo témata…"
 
@@ -12020,7 +12020,7 @@ msgstr ""
 msgid "No results found"
 msgstr "Nenalezeny žádné výsledky"
 
-#: app/views/layouts/knowledge_base.html.erb:41
+#: app/views/layouts/knowledge_base.html.erb:43
 msgid "No results were found."
 msgstr "Nebyly nalezeny žádné výsledky."
 

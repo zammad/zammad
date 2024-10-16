@@ -8504,7 +8504,7 @@ msgstr "Heure(s)"
 msgid "Hours"
 msgstr "Heures"
 
-#: app/views/layouts/knowledge_base.html.erb:39
+#: app/views/layouts/knowledge_base.html.erb:41
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr "Comment pouvons nous vous aider ? Recherchez une réponse ou un sujet…"
 
@@ -11437,7 +11437,7 @@ msgstr "Aucun article associé n'a été trouvé pour traiter le message d'état
 msgid "No results found"
 msgstr "Aucun résultat trouvé"
 
-#: app/views/layouts/knowledge_base.html.erb:41
+#: app/views/layouts/knowledge_base.html.erb:43
 msgid "No results were found."
 msgstr "Aucun résultat trouvé."
 

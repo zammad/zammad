@@ -9187,7 +9187,7 @@ msgstr "小時"
 msgid "Hours"
 msgstr "小時"
 
-#: app/views/layouts/knowledge_base.html.erb:39
+#: app/views/layouts/knowledge_base.html.erb:41
 #, fuzzy
 #| msgid "How can we help you? Search for an answer or a topic..."
 msgid "How can we help you? Search for an answer or a topic…"
@@ -12497,7 +12497,7 @@ msgstr ""
 msgid "No results found"
 msgstr "未找到结果"
 
-#: app/views/layouts/knowledge_base.html.erb:41
+#: app/views/layouts/knowledge_base.html.erb:43
 msgid "No results were found."
 msgstr "沒有找到任何結果。"
 

@@ -8337,7 +8337,7 @@ msgstr "Sat(i)"
 msgid "Hours"
 msgstr "Sati"
 
-#: app/views/layouts/knowledge_base.html.erb:39
+#: app/views/layouts/knowledge_base.html.erb:41
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr "Kako Vam možemo pomoći? Potražite odgovor ili temu…"
 
@@ -11243,7 +11243,7 @@ msgstr "Nije pronađen nijedan povezani članak za obradu statusne poruke."
 msgid "No results found"
 msgstr "Nema pronađenih rezultata"
 
-#: app/views/layouts/knowledge_base.html.erb:41
+#: app/views/layouts/knowledge_base.html.erb:43
 msgid "No results were found."
 msgstr "Nema pronađenih rezultata."
 
@@ -18836,9 +18836,9 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}/#{article.id}\" target=\"zammad_app\">Pogledaj ovo u #{config."
-"product_name}</a>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
+"#{article.id}\" target=\"zammad_app\">Pogledaj ovo u #{config.product_name}</"
+"a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45

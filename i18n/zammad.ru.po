@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-09 14:00+0000\n"
+"PO-Revision-Date: 2024-10-16 05:59+0000\n"
 "Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
@@ -8466,7 +8466,7 @@ msgstr "Час(ы)"
 msgid "Hours"
 msgstr "Часы"
 
-#: app/views/layouts/knowledge_base.html.erb:39
+#: app/views/layouts/knowledge_base.html.erb:41
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr "Как мы можем Вам помочь? Поиск ответа или темы…"
 
@@ -11405,7 +11405,7 @@ msgstr ""
 msgid "No results found"
 msgstr "Результатов не найдено"
 
-#: app/views/layouts/knowledge_base.html.erb:41
+#: app/views/layouts/knowledge_base.html.erb:43
 msgid "No results were found."
 msgstr "Результаты не найдены."
 
@@ -14723,7 +14723,7 @@ msgstr "Показать иконку канала"
 
 #: app/assets/javascripts/app/views/navigation.jst.eco:21
 msgid "Show Search Details"
-msgstr "Отобразить Детали Поиска"
+msgstr "Отобразить детали поиска"
 
 #: db/seeds/settings.rb:851
 msgid ""

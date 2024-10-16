@@ -7922,7 +7922,7 @@ msgstr "ساعت"
 msgid "Hours"
 msgstr "ساعت"
 
-#: app/views/layouts/knowledge_base.html.erb:39
+#: app/views/layouts/knowledge_base.html.erb:41
 msgid "How can we help you? Search for an answer or a topic…"
 msgstr "چگونه می‌توانیم به شما کمک کنیم؟ جستجو برای یک پاسخ یا موضوع …"
 
@@ -10910,7 +10910,7 @@ msgstr ""
 msgid "No results found"
 msgstr "نتایجی یافت نشد"
 
-#: app/views/layouts/knowledge_base.html.erb:41
+#: app/views/layouts/knowledge_base.html.erb:43
 msgid "No results were found."
 msgstr "نتایجی یافت نشد."
 

@@ -8876,7 +8876,7 @@ msgstr "Hour(s)"
 msgid "Hours"
 msgstr "Saat"
 
-#: app/views/layouts/knowledge_base.html.erb:39
+#: app/views/layouts/knowledge_base.html.erb:41
 #, fuzzy
 #| msgid "How can we help you? Search for an answer or a topic..."
 msgid "How can we help you? Search for an answer or a topic…"
@@ -12238,7 +12238,7 @@ msgstr "Durum mesajını işlemek için ilgili bir madde bulunamadı."
 msgid "No results found"
 msgstr "Sonuç bulunamadı"
 
-#: app/views/layouts/knowledge_base.html.erb:41
+#: app/views/layouts/knowledge_base.html.erb:43
 msgid "No results were found."
 msgstr "No results were found."
 
