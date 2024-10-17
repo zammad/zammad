@@ -3,7 +3,7 @@
 module Sequencer::Unit::Import::Kayako::Requester
   mattr_accessor :session_id
 
-  def request(api_path:, params: nil)
+  def request(api_path:, params: nil, attachment: false)
     10.times do |iteration|
       response = perform_request(
         api_path: api_path,
@@ -11,7 +11,7 @@ module Sequencer::Unit::Import::Kayako::Requester
       )
 
       if response.is_a? Net::HTTPOK
-        refresh_session_id(response)
+        refresh_session_id(response) if !attachment
         return response
       end
 

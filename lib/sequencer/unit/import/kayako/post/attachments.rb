@@ -52,8 +52,9 @@ class Sequencer::Unit::Import::Kayako::Post::Attachments < Sequencer::Unit::Base
   def sync(attachment)
     logger.debug { "Downloading attachment #{attachment}" }
 
-    response =  request(
-      api_path: attachment['url_download'].gsub("#{Setting.get('import_kayako_endpoint')}/", ''),
+    response = request(
+      api_path:   attachment['url_download'].gsub("#{Setting.get('import_kayako_endpoint')}/", ''),
+      attachment: true,
     )
 
     return if dry_run
