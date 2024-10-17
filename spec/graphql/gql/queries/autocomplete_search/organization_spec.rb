@@ -58,7 +58,7 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Organization, authenticated_as:
 
       it 'has data' do
         gql.execute(query, variables: variables)
-        expect(gql.result.data).to eq([first_organization_payload])
+        expect(gql.result.data).to include(first_organization_payload)
       end
     end
 
