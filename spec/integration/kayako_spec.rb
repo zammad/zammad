@@ -53,13 +53,13 @@ RSpec.describe 'Kayako import', db_strategy: :reset, integration: true, required
         },
         'Tickets'       => {
           'skipped'     => 0,
-          'created'     => 5,
+          'created'     => 6,
           'updated'     => 1,
           'unchanged'   => 0,
           'failed'      => 0,
           'deactivated' => 0,
-          'sum'         => 6,
-          'total'       => 6,
+          'sum'         => 7,
+          'total'       => 7,
         },
       }
     end
