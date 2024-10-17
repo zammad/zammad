@@ -1,9 +1,9 @@
 GIT
-  remote: https://github.com/tschaefer/ruby-keycloak-admin/
-  revision: 7ea4e62d77fad93fc2da840c3f8bd5c45588d131
-  branch: main
+  remote: https://github.com/tschaefer/ruby-keycloak-admin.git
+  revision: c07dc051f6d21ed59509a82cd17ff386f36f8931
+  tag: v26.0.0
   specs:
-    keycloak-admin (23.0.7)
+    keycloak-admin (26.0.0)
       hashie (~> 5.0.0)
       httparty (~> 0.21.0)
 
