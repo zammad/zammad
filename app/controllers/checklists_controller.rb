@@ -44,10 +44,6 @@ class ChecklistsController < ApplicationController
 
   private
 
-  def new_checklist_params
-    params.permit(:ticket_id, :name)
-  end
-
   def existing_checklist_params
     params.permit(:id, :name, sorted_item_ids: [])
   end

@@ -107,7 +107,7 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
 
     it 'does uncheck item' do
       item.update(checked: true)
-      perform_item_action(item.id, 'uncheck')
+      perform_item_action(item.id, 'check')
       wait.until { item.reload.checked == false }
     end
 

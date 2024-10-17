@@ -56,38 +56,26 @@
             </button>
             <ul class="dropdown-menu dropdown-menu-right js-table-action-menu" role="menu">
             <% if !@object.ticket_id: %>
-              <% if !@object.checked: %>
-              <li role="presentation" class="" data-table-action="check">
-                <a role="menuitem" tabindex="-1">
-                  <span class="dropdown-iconSpacer">
-                    <%- @Icon('checkmark') %>
-                  </span>
+              <li role="menuitem" data-table-action="check">
+                <span class="dropdown-iconSpacer">
+                  <%- @Icon('checkmark') %>
+                </span>
+                <% if !@object.checked: %>
                   <%- @T('Check item') %>
-                </a>
-              <% else: %>
-              <li role="presentation" class="" data-table-action="uncheck">
-                <a role="menuitem" tabindex="-1">
-                  <span class="dropdown-iconSpacer">
-                    <%- @Icon('checkmark') %>
-                  </span>
+                <% else: %>
                   <%- @T('Uncheck item') %>
-                </a>
-              <% end %>
-              <li role="presentation" class="" data-table-action="edit">
-                <a role="menuitem" tabindex="-1">
-                  <span class="dropdown-iconSpacer">
-                    <%- @Icon('pen') %>
-                  </span>
-                  <%- @T('Edit item') %>
-                </a>
+                <% end %>
+              <li role="menuitem" data-table-action="edit">
+                <span class="dropdown-iconSpacer">
+                  <%- @Icon('pen') %>
+                </span>
+                <%- @T('Edit item') %>
             <% end %>
-              <li role="presentation" class="danger" data-table-action="delete">
-                <a role="menuitem" tabindex="-1">
-                  <span class="dropdown-iconSpacer">
-                    <%- @Icon('trash') %>
-                  </span>
-                  <%- @T('Remove item') %>
-                </a>
+              <li role="menuitem" class="danger" data-table-action="delete">
+                <span class="dropdown-iconSpacer">
+                  <%- @Icon('trash') %>
+                </span>
+                <%- @T('Remove item') %>
             </ul>
           <div>
         <div>

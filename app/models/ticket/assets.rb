@@ -28,7 +28,6 @@ returns
     if !data[ app_model ]
       data[ app_model ] = {}
     end
-    Rails.logger.debug [app_model, id, data[app_model]]
     return data if data[ app_model ][ id ]
 
     data[ app_model ][ id ] = attributes_with_association_ids

@@ -47,6 +47,8 @@ class App.Checklist extends App.Model
     }
 
   @calculateReferences: (ticket) ->
+    return [] if !ticket.referencing_checklist_ids
+
     checklists = App.Checklist
       .findAll(ticket.referencing_checklist_ids)
       .filter (elem) -> !elem.ticket_inaccessible

@@ -5796,7 +5796,7 @@ Setting.create_if_not_exists(
   title:       __('Checklists'),
   name:        'checklist',
   area:        'Web::Base',
-  description: __('Allow users to create new checklists.'),
+  description: __('Enable checklists.'),
   options:     {
     form: [
       {

@@ -116,6 +116,12 @@ const submitEdit = () => {
   // Needs to be checked, because the 'onSubmit' function is not required.
   if (!props.onSubmitEdit) return undefined
 
+  // Don't trigger a mutation if there is no change
+  if (props.value === newEditValue.value) {
+    stopEditing(false)
+    return
+  }
+
   if (!checkValidity(inputValue.value)) return
 
   const submitEditResult = props.onSubmitEdit(inputValue.value)
