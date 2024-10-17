@@ -391,7 +391,7 @@ msgstr "%s Token Api"
 msgid "%s Attribute"
 msgstr "%s Atributo"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:34
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:50
 msgid "%s Checklist"
@@ -1129,8 +1129,15 @@ msgstr "Conta não verificada"
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:2
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:2
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:68
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:67
 #: app/graphql/gql/types/overview_type.rb:69
 msgid "Accounted Time"
+msgstr "Tempo contado"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue:81
+#, fuzzy
+#| msgid "Accounted Time"
+msgid "Accounted time unit"
 msgstr "Tempo contado"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:11
@@ -1807,10 +1814,6 @@ msgstr "Permitir a reabertura de tickets dentro de um tempo determinado."
 msgid "Allow users to add new tags."
 msgstr "Permitir que usuários adicionem novas Tags."
 
-#: db/seeds/settings.rb:5793
-msgid "Allow users to create new checklists."
-msgstr "Permitir que os usuários criem novas listas de verificação."
-
 #: db/seeds/settings.rb:4051
 msgid "Allow users to create new tags."
 msgstr "Permitir usuários criarem novas tags."
@@ -2374,7 +2377,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:31
 #: app/assets/javascripts/app/models/overview.coffee:16
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:47
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:49
 msgid "Attributes"
 msgstr "Atributos"
 
@@ -2975,7 +2978,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:341
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -3227,7 +3230,7 @@ msgstr "Checar os fluxos do 'Canal'."
 msgid "Check channels."
 msgstr "Checar Canais."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:65
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:64
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:53
 msgid "Check item"
 msgstr "Verificar item"
@@ -6019,7 +6022,7 @@ msgstr "Descarte suas alterações não salvas"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:136
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:165
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:147
 msgid "Discard your unsaved changes"
 msgstr "Descarte suas alterações não salvas"
 
@@ -6328,7 +6331,7 @@ msgstr "Editar aplicativo autenticador"
 msgid "Edit checklist title"
 msgstr "Editar título da lista de verificação"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:81
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:72
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:68
 msgid "Edit item"
 msgstr "Editar item"
@@ -6633,6 +6636,12 @@ msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr ""
 "Ative a atribuição automática na primeira vez em que um agente abre um "
 "ticket."
+
+#: db/seeds/settings.rb:5793
+#, fuzzy
+#| msgid "Enable Checklists"
+msgid "Enable checklists."
+msgstr "Ativar Listas de Verificação"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:72
 msgid "Enable debugging for implementation."
@@ -7112,7 +7121,7 @@ msgstr "Escalação em"
 
 #: app/assets/javascripts/app/lib/app_post/popover_provider/escalation_popover_provider.coffee:8
 #: app/assets/javascripts/app/views/sla/index.jst.eco:35
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:185
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:167
 msgid "Escalation Times"
 msgstr "Tempos de escalonamento"
 
@@ -7410,7 +7419,7 @@ msgstr "Falha ao reverter a migração do canal!"
 msgid "Failed to save checklist order."
 msgstr "Falha ao salvar a ordem da lista de verificação."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:118
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:124
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 "Falha ao salvar a ordem dos itens da lista de verificação. Por favor, tente "
@@ -7559,7 +7568,7 @@ msgstr "Primeira Resposta Em Min"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:17
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:5
 #: app/assets/javascripts/app/views/sla/index.jst.eco:37
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:189
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:171
 msgid "First Response Time"
 msgstr "Tempo de Resposta"
 
@@ -7876,7 +7885,7 @@ msgstr "Serviço Geo Location"
 msgid "Get Started"
 msgstr "Iniciar"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:221
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:203
 msgid "Get notified"
 msgstr "Seja notificado"
 
@@ -12693,7 +12702,7 @@ msgstr ""
 "seguro. Você pode usá-los para entrar se perder o acesso a outro método de "
 "autenticação de dois fatores:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:75
 msgid "Please select a checklist template."
 msgstr "Por favor, selecione um modelo de lista de verificação."
 
@@ -13288,7 +13297,7 @@ msgstr "Remover formatação"
 msgid "Remove image"
 msgstr "Remover imagem"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:89
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:78
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:74
 msgid "Remove item"
 msgstr "Remover item"
@@ -13950,7 +13959,7 @@ msgstr "Salvar como"
 msgid "Save as draft"
 msgstr "Salvar Rascunho"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:348
 msgid "Save changes"
 msgstr "Salvar alterações"
 
@@ -14718,6 +14727,7 @@ msgid "Show"
 msgstr "Mostrar"
 
 #: app/frontend/apps/desktop/components/CommonShowMoreButton/CommonShowMoreButton.vue:21
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue:92
 #: app/frontend/apps/mobile/components/CommonShowMoreButton/CommonShowMoreButton.vue:24
 msgid "Show %s more"
 msgstr "Mostrar mais %s"
@@ -15074,7 +15084,7 @@ msgstr "SMS"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:71
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:17
 #: app/assets/javascripts/app/views/sla/index.jst.eco:49
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:197
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:179
 msgid "Solution Time"
 msgstr "Tempo de Solução"
 
@@ -15397,6 +15407,7 @@ msgstr "Enviar"
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:148
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:206
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:4
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:59
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:57
 msgid "Subscribe"
 msgstr "Inscrever"
@@ -15417,7 +15428,8 @@ msgstr "Tickets inscritos"
 msgid "Subscribed tickets"
 msgstr "Tíquetes assinados"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:215
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:75
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:197
 msgid "Subscribers"
 msgstr "Assinantes"
 
@@ -15547,10 +15559,10 @@ msgstr "A etiqueta \"%s\" já existe."
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:41
 #: app/assets/javascripts/app/views/tag/index.jst.eco:3
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:57
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:59
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:145
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:78
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:207
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:189
 #: app/views/knowledge_base/public/answers/show.html.erb:30
 #: db/seeds/object_manager_attributes.rb:392 db/seeds/permissions.rb:59
 #: lib/excel_sheet/ticket.rb:33
@@ -18471,10 +18483,11 @@ msgid "Topics"
 msgstr "Topicos"
 
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:5
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue:26
 msgid "Total"
 msgstr "Total"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:67
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:53
 msgid "Total Accounted Time"
 msgstr "Tempo Total Contabilizado"
 
@@ -18797,7 +18810,7 @@ msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr ""
 "Endereço de email não atribuído, atribua um endereço a um canal ou delete-o."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:73
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:66
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:60
 msgid "Uncheck item"
 msgstr "Desmarcar item"
@@ -18918,7 +18931,7 @@ msgstr "Atualizar Rascunho Compartilhado"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:32
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:11
 #: app/assets/javascripts/app/views/sla/index.jst.eco:41
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:193
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:175
 msgid "Update Time"
 msgstr "Tempo de Encaminhamento"
 
@@ -21134,7 +21147,7 @@ msgstr "hora"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:9
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:42
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:26
+#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:21
 msgid "hour(s)"
 msgstr "hora(s)"
 
@@ -21435,7 +21448,7 @@ msgstr "minuto"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:17
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:46
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:30
+#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:25
 msgid "minute(s)"
 msgstr "minuto(s)"
 
@@ -21520,7 +21533,8 @@ msgstr "novo & abrir"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:52
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:88
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:62
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:90
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:16
 #: db/seeds/settings.rb:590
@@ -21647,7 +21661,7 @@ msgstr "Publicados"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:44
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:28
+#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:23
 msgid "quarter-hour(s)"
 msgstr "quarto de hora(s)"
 
@@ -22052,7 +22066,8 @@ msgstr "dentro da próxima (relativo)"
 #: app/assets/javascripts/app/models/public_link.coffee:10
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:15
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:61
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:89
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:15
 #: db/seeds/object_manager_attributes.rb:1301 db/seeds/settings.rb:589
@@ -22099,11 +22114,11 @@ msgstr "...da area de texto"
 msgid "∅ Waiting time today"
 msgstr "∅ tempo de espera hoje"
 
+#~ msgid "Allow users to create new checklists."
+#~ msgstr "Permitir que os usuários criem novas listas de verificação."
+
 #~ msgid "Allow users to add new checklists."
 #~ msgstr "Permitir que os usuários adicionem novas listas de verificação."
-
-#~ msgid "Enable Checklists"
-#~ msgstr "Ativar Listas de Verificação"
 
 #, fuzzy
 #~| msgid "Checklist Item"
@@ -22932,11 +22947,6 @@ msgstr "∅ tempo de espera hoje"
 
 #~ msgid "Tag"
 #~ msgstr "Tag"
-
-#, fuzzy
-#~| msgid "Accounted Time"
-#~ msgid "Accounted time"
-#~ msgstr "Tempo contado"
 
 #~ msgid "This service enables Zammad to connect with your LDAP server."
 #~ msgstr "Este serviço habilita o Zammad para conectar a serviços LDAP."

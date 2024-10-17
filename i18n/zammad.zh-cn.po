@@ -382,7 +382,7 @@ msgstr "%s API 令牌"
 msgid "%s Attribute"
 msgstr "%s 属性"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:34
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:50
 #, fuzzy
@@ -1083,8 +1083,15 @@ msgstr "账号尚未通过验证"
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:2
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:2
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:68
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:67
 #: app/graphql/gql/types/overview_type.rb:69
 msgid "Accounted Time"
+msgstr "佔用時間"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue:81
+#, fuzzy
+#| msgid "Accounted Time"
+msgid "Accounted time unit"
 msgstr "佔用時間"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:11
@@ -1749,12 +1756,6 @@ msgstr "允许在一定时间内重新开启工单。"
 msgid "Allow users to add new tags."
 msgstr "允许用户增加新标签."
 
-#: db/seeds/settings.rb:5793
-#, fuzzy
-#| msgid "Allow users to create new tags."
-msgid "Allow users to create new checklists."
-msgstr "允许用户创建新的标签。"
-
 #: db/seeds/settings.rb:4051
 msgid "Allow users to create new tags."
 msgstr "允许用户创建新的标签。"
@@ -2293,7 +2294,7 @@ msgstr "唯一标识用户的属性。如果未设置，将使用IDP返回的名
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:31
 #: app/assets/javascripts/app/models/overview.coffee:16
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:47
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:49
 msgid "Attributes"
 msgstr "属性"
 
@@ -2879,7 +2880,7 @@ msgstr "无法更新密码，您输入的密码错误。请再试一次。"
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:341
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -3128,7 +3129,7 @@ msgstr "检查 ”渠道“源。"
 msgid "Check channels."
 msgstr "检查渠道。"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:65
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:64
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:53
 #, fuzzy
 #| msgid "Checkmk"
@@ -5767,7 +5768,7 @@ msgstr "放弃未保存的改动"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:136
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:165
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:147
 msgid "Discard your unsaved changes"
 msgstr "放弃未保存的改动"
 
@@ -6077,7 +6078,7 @@ msgstr "编辑验证器应用程序"
 msgid "Edit checklist title"
 msgstr "工單更新"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:81
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:72
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:68
 #, fuzzy
 #| msgid "Edit mask"
@@ -6371,6 +6372,12 @@ msgstr "启用自动分配以进行以下匹配票。"
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:12
 msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr "客服人员第一次打开工单时启用自动分配。"
+
+#: db/seeds/settings.rb:5793
+#, fuzzy
+#| msgid "Enable Chat"
+msgid "Enable checklists."
+msgstr "启动对话"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:72
 msgid "Enable debugging for implementation."
@@ -6813,7 +6820,7 @@ msgstr "升级在"
 
 #: app/assets/javascripts/app/lib/app_post/popover_provider/escalation_popover_provider.coffee:8
 #: app/assets/javascripts/app/views/sla/index.jst.eco:35
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:185
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:167
 msgid "Escalation Times"
 msgstr "SLA層級提升時間"
 
@@ -7110,7 +7117,7 @@ msgstr "未能退缩频道的迁移！"
 msgid "Failed to save checklist order."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:118
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:124
 #, fuzzy
 #| msgid "Failed to set up QR code. Please try again."
 msgid "Failed to save the order of the checklist items. Please try again."
@@ -7259,7 +7266,7 @@ msgstr "最小的第一回应"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:17
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:5
 #: app/assets/javascripts/app/views/sla/index.jst.eco:37
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:189
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:171
 msgid "First Response Time"
 msgstr "第一响应时间"
 
@@ -7572,7 +7579,7 @@ msgstr "Geo 地理位置 服務"
 msgid "Get Started"
 msgstr "开始"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:221
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:203
 msgid "Get notified"
 msgstr "收到通知"
 
@@ -12582,7 +12589,7 @@ msgstr ""
 "请保存下面列出的恢复代码。如果您失去对其他两因素方法的访问，则可以使用它们登"
 "录："
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:75
 #, fuzzy
 #| msgid "Please select at least one folder."
 msgid "Please select a checklist template."
@@ -13193,7 +13200,7 @@ msgstr "删除格式"
 msgid "Remove image"
 msgstr "删除图像"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:89
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:78
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:74
 #, fuzzy
 #| msgid "Remove image"
@@ -13866,7 +13873,7 @@ msgstr "另存为"
 msgid "Save as draft"
 msgstr "保存草稿"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:348
 #, fuzzy
 #| msgid "Discard Changes"
 msgid "Save changes"
@@ -14633,6 +14640,7 @@ msgid "Show"
 msgstr "显示"
 
 #: app/frontend/apps/desktop/components/CommonShowMoreButton/CommonShowMoreButton.vue:21
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue:92
 #: app/frontend/apps/mobile/components/CommonShowMoreButton/CommonShowMoreButton.vue:24
 msgid "Show %s more"
 msgstr "显示更多%s"
@@ -14975,7 +14983,7 @@ msgstr "短信"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:71
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:17
 #: app/assets/javascripts/app/views/sla/index.jst.eco:49
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:197
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:179
 msgid "Solution Time"
 msgstr "解决时间"
 
@@ -15303,6 +15311,7 @@ msgstr "提交"
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:148
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:206
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:4
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:59
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:57
 msgid "Subscribe"
 msgstr "关注"
@@ -15325,7 +15334,8 @@ msgstr "关注工单"
 msgid "Subscribed tickets"
 msgstr "关注工单"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:215
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:75
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:197
 msgid "Subscribers"
 msgstr "订阅者"
 
@@ -15456,10 +15466,10 @@ msgstr "标签“%s”已存在。"
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:41
 #: app/assets/javascripts/app/views/tag/index.jst.eco:3
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:57
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:59
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:145
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:78
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:207
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:189
 #: app/views/knowledge_base/public/answers/show.html.erb:30
 #: db/seeds/object_manager_attributes.rb:392 db/seeds/permissions.rb:59
 #: lib/excel_sheet/ticket.rb:33
@@ -18550,10 +18560,11 @@ msgid "Topics"
 msgstr "主题"
 
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:5
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue:26
 msgid "Total"
 msgstr "总共"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:67
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:53
 #, fuzzy
 #| msgid "Accounted Time"
 msgid "Total Accounted Time"
@@ -18910,7 +18921,7 @@ msgstr "处理中未分配的工单"
 msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr "未分配的電子郵件地址，將其分配給管道或將其刪除"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:73
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:66
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:60
 #, fuzzy
 #| msgid "Select item"
@@ -19040,7 +19051,7 @@ msgstr "应用共享草稿"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:32
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:11
 #: app/assets/javascripts/app/views/sla/index.jst.eco:41
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:193
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:175
 msgid "Update Time"
 msgstr "更新时间"
 
@@ -21415,7 +21426,7 @@ msgstr "小时"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:9
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:42
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:26
+#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:21
 #, fuzzy
 #| msgid "Hour(s)"
 msgid "hour(s)"
@@ -21765,7 +21776,7 @@ msgstr "分钟"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:17
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:46
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:30
+#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:25
 #, fuzzy
 #| msgid "Minute(s)"
 msgid "minute(s)"
@@ -21853,7 +21864,8 @@ msgstr "新建并打开"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:52
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:88
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:62
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:90
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:16
 #: db/seeds/settings.rb:590
@@ -21990,7 +22002,7 @@ msgstr "發布"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:44
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:28
+#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:23
 msgid "quarter-hour(s)"
 msgstr "四分之一小时"
 
@@ -22424,7 +22436,8 @@ msgstr "在下一個 (相對)"
 #: app/assets/javascripts/app/models/public_link.coffee:10
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:15
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:61
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:89
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:15
 #: db/seeds/object_manager_attributes.rb:1301 db/seeds/settings.rb:589
@@ -22488,14 +22501,14 @@ msgid "∅ Waiting time today"
 msgstr "∅轮候时间"
 
 #, fuzzy
+#~| msgid "Allow users to create new tags."
+#~ msgid "Allow users to create new checklists."
+#~ msgstr "允许用户创建新的标签。"
+
+#, fuzzy
 #~| msgid "Allow users to add new tags."
 #~ msgid "Allow users to add new checklists."
 #~ msgstr "允许用户增加新标签."
-
-#, fuzzy
-#~| msgid "Enable Chat"
-#~ msgid "Enable Checklists"
-#~ msgstr "启动对话"
 
 #, fuzzy
 #~| msgid "Checksum"
@@ -23172,11 +23185,6 @@ msgstr "∅轮候时间"
 
 #~ msgid "Tag"
 #~ msgstr "标签"
-
-#, fuzzy
-#~| msgid "Accounted Time"
-#~ msgid "Accounted time"
-#~ msgstr "佔用時間"
 
 #~ msgid "This service enables Zammad to connect with your LDAP server."
 #~ msgstr "此服務使 Zammad 與您的 LDAP 服務器連接"

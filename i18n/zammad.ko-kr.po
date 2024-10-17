@@ -390,7 +390,7 @@ msgstr "%s API Token"
 msgid "%s Attribute"
 msgstr "%s 속성"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:34
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:50
 #, fuzzy
@@ -1152,8 +1152,15 @@ msgstr "계정 확인되지"
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:2
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:2
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:68
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:67
 #: app/graphql/gql/types/overview_type.rb:69
 msgid "Accounted Time"
+msgstr "차지 시간"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue:81
+#, fuzzy
+#| msgid "Accounted Time"
+msgid "Accounted time unit"
 msgstr "차지 시간"
 
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:11
@@ -1854,12 +1861,6 @@ msgstr ""
 msgid "Allow users to add new tags."
 msgstr "사용자가 새 태그를 추가 할 수 있습니다."
 
-#: db/seeds/settings.rb:5793
-#, fuzzy
-#| msgid "Allow users to add new tags."
-msgid "Allow users to create new checklists."
-msgstr "사용자가 새 태그를 추가 할 수 있습니다."
-
 #: db/seeds/settings.rb:4051
 msgid "Allow users to create new tags."
 msgstr ""
@@ -2446,7 +2447,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:31
 #: app/assets/javascripts/app/models/overview.coffee:16
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:47
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:49
 msgid "Attributes"
 msgstr "속성"
 
@@ -3100,7 +3101,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:341
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -3375,7 +3376,7 @@ msgstr "채널 연결"
 msgid "Check channels."
 msgstr "채널 연결"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:65
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:64
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:53
 #, fuzzy
 #| msgid "Checksum"
@@ -6224,7 +6225,7 @@ msgstr "저장되지 않은 변경 사항을 무시."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:136
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:165
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:147
 #, fuzzy
 #| msgid "Discard your unsaved changes."
 msgid "Discard your unsaved changes"
@@ -6573,7 +6574,7 @@ msgstr "인증"
 msgid "Edit checklist title"
 msgstr "Ticket 업데이트"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:81
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:72
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:68
 #, fuzzy
 #| msgid "Category"
@@ -6893,6 +6894,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:12
 msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr "자동 할당에게 에이전트가 Ticket을 여는 첫 번째 시간을 설정합니다."
+
+#: db/seeds/settings.rb:5793
+#, fuzzy
+#| msgid "Enable Chat"
+msgid "Enable checklists."
+msgstr "채팅 사용"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:72
 msgid "Enable debugging for implementation."
@@ -7359,7 +7366,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/popover_provider/escalation_popover_provider.coffee:8
 #: app/assets/javascripts/app/views/sla/index.jst.eco:35
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:185
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:167
 msgid "Escalation Times"
 msgstr "에스컬레이션 시간"
 
@@ -7685,7 +7692,7 @@ msgstr ""
 msgid "Failed to save checklist order."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:118
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:124
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 
@@ -7844,7 +7851,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:17
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:5
 #: app/assets/javascripts/app/views/sla/index.jst.eco:37
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:189
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:171
 msgid "First Response Time"
 msgstr "첫 번째 응답 시간"
 
@@ -8194,7 +8201,7 @@ msgstr "지리적 위치 서비스"
 msgid "Get Started"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:221
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:203
 #, fuzzy
 #| msgid "Account not verified"
 msgid "Get notified"
@@ -13397,7 +13404,7 @@ msgid ""
 "them to sign in if you lose access to another two-factor method:"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:75
 msgid "Please select a checklist template."
 msgstr ""
 
@@ -14050,7 +14057,7 @@ msgstr "서식을 제거합니다"
 msgid "Remove image"
 msgstr "풀다"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:89
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:78
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:74
 #, fuzzy
 #| msgid "Remove"
@@ -14732,7 +14739,7 @@ msgstr ""
 msgid "Save as draft"
 msgstr "초안"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:348
 #, fuzzy
 #| msgid "Discard Changes"
 msgid "Save changes"
@@ -15592,6 +15599,7 @@ msgid "Show"
 msgstr "보여 주다"
 
 #: app/frontend/apps/desktop/components/CommonShowMoreButton/CommonShowMoreButton.vue:21
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue:92
 #: app/frontend/apps/mobile/components/CommonShowMoreButton/CommonShowMoreButton.vue:24
 #, fuzzy
 #| msgid "See more"
@@ -15973,7 +15981,7 @@ msgstr "SMS"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:71
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:17
 #: app/assets/javascripts/app/views/sla/index.jst.eco:49
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:197
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:179
 msgid "Solution Time"
 msgstr "해결 시간"
 
@@ -16333,6 +16341,7 @@ msgstr "제출"
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:148
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:206
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:4
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:59
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:57
 msgid "Subscribe"
 msgstr ""
@@ -16355,7 +16364,8 @@ msgstr ""
 msgid "Subscribed tickets"
 msgstr "내 할당 된 Ticket"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:215
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:75
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:197
 #, fuzzy
 #| msgid "My assigned Tickets"
 msgid "Subscribers"
@@ -16492,10 +16502,10 @@ msgstr "%s 객체 (들) 삭제됩니다."
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:41
 #: app/assets/javascripts/app/views/tag/index.jst.eco:3
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:57
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:59
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:145
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:78
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:207
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:189
 #: app/views/knowledge_base/public/answers/show.html.erb:30
 #: db/seeds/object_manager_attributes.rb:392 db/seeds/permissions.rb:59
 #: lib/excel_sheet/ticket.rb:33
@@ -19589,12 +19599,13 @@ msgid "Topics"
 msgstr "주제"
 
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:5
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue:26
 #, fuzzy
 #| msgid "Total: %s"
 msgid "Total"
 msgstr "총 : %s"
 
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:67
+#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:53
 #, fuzzy
 #| msgid "Accounted Time"
 msgid "Total Accounted Time"
@@ -19947,7 +19958,7 @@ msgstr "할당되지 않은 및 열기"
 msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr "할당되지 않은 이메일 주소는 채널에 할당하거나 삭제할 수 있습니다."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:73
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:66
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:60
 #, fuzzy
 #| msgid "Select item"
@@ -20075,7 +20086,7 @@ msgstr "공유"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:32
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:11
 #: app/assets/javascripts/app/views/sla/index.jst.eco:41
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:193
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:175
 msgid "Update Time"
 msgstr "업데이트 시간"
 
@@ -22288,7 +22299,7 @@ msgstr "시간"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:9
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:42
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:26
+#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:21
 #, fuzzy
 #| msgid "Hour(s)"
 msgid "hour(s)"
@@ -22631,7 +22642,7 @@ msgstr "분"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:17
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:46
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:30
+#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:25
 #, fuzzy
 #| msgid "Minute(s)"
 msgid "minute(s)"
@@ -22719,7 +22730,8 @@ msgstr "신 공개"
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:52
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:88
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:62
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:90
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:16
 #: db/seeds/settings.rb:590
@@ -22856,7 +22868,7 @@ msgstr "게시된"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:13
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:44
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:28
+#: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:23
 msgid "quarter-hour(s)"
 msgstr ""
 
@@ -23282,7 +23294,8 @@ msgstr "다음 (상대적으로) 내"
 #: app/assets/javascripts/app/models/public_link.coffee:10
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:15
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:61
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:89
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:15
 #: db/seeds/object_manager_attributes.rb:1301 db/seeds/settings.rb:589
@@ -23347,13 +23360,13 @@ msgstr "∅ 오늘 대기 시간"
 
 #, fuzzy
 #~| msgid "Allow users to add new tags."
-#~ msgid "Allow users to add new checklists."
+#~ msgid "Allow users to create new checklists."
 #~ msgstr "사용자가 새 태그를 추가 할 수 있습니다."
 
 #, fuzzy
-#~| msgid "Enable Chat"
-#~ msgid "Enable Checklists"
-#~ msgstr "채팅 사용"
+#~| msgid "Allow users to add new tags."
+#~ msgid "Allow users to add new checklists."
+#~ msgstr "사용자가 새 태그를 추가 할 수 있습니다."
 
 #, fuzzy
 #~| msgid "Checksum"
@@ -23901,11 +23914,6 @@ msgstr "∅ 오늘 대기 시간"
 
 #~ msgid "Tag"
 #~ msgstr "꼬리표"
-
-#, fuzzy
-#~| msgid "Accounted Time"
-#~ msgid "Accounted time"
-#~ msgstr "차지 시간"
 
 #~ msgid "This service enables Zammad to connect with your LDAP server."
 #~ msgstr "이 서비스는 LDAP 서버와 연결 Zammad 수 있습니다."
