@@ -390,7 +390,7 @@ msgstr "%s API Token"
 msgid "%s Attribute"
 msgstr "%s صفة"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:34
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:50
 #, fuzzy
@@ -3430,7 +3430,7 @@ msgstr "ربط القنوات"
 msgid "Check channels."
 msgstr "ربط القنوات"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:65
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:64
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:53
 #, fuzzy
 #| msgid "Checksum"
@@ -6661,7 +6661,7 @@ msgstr "المصادقة"
 msgid "Edit checklist title"
 msgstr "تحديث التذكرة"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:81
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:72
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:68
 #, fuzzy
 #| msgid "Category"
@@ -7785,7 +7785,7 @@ msgstr ""
 msgid "Failed to save checklist order."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:118
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:124
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 
@@ -14238,7 +14238,7 @@ msgstr "يزيل التنسيق"
 msgid "Remove image"
 msgstr "إزالة"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:89
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:78
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:74
 #, fuzzy
 #| msgid "Remove"
@@ -20181,7 +20181,7 @@ msgstr "مفتوح وغير مفتوح"
 msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr "عناوين البريد الإلكتروني غير المعينة ، أو تعيينها إلى قناة أو حذفها."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:73
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:66
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:60
 #, fuzzy
 #| msgid "Select item"

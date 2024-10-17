@@ -390,7 +390,7 @@ msgstr "%s API-Token"
 msgid "%s Attribute"
 msgstr "%s-Attribut"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:34
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:50
 msgid "%s Checklist"
@@ -3222,7 +3222,7 @@ msgstr "'Channel'-Streams prüfen."
 msgid "Check channels."
 msgstr "Kanäle prüfen."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:65
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:64
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:53
 msgid "Check item"
 msgstr "Element abhaken"
@@ -6345,7 +6345,7 @@ msgstr "Authentifizierungs-App bearbeiten"
 msgid "Edit checklist title"
 msgstr "Titel der Checkliste bearbeiten"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:81
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:72
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:68
 msgid "Edit item"
 msgstr "Element bearbeiten"
@@ -7432,7 +7432,7 @@ msgstr "Die Rücknahme der Kanal-Migration ist fehlgeschlagen!"
 msgid "Failed to save checklist order."
 msgstr "Die Reihenfolge der Checkliste konnte nicht gespeichert werden."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:118
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:124
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 "Die Reihenfolge der Checklisten-Elemente konnte nicht gespeichert werden. "
@@ -13319,7 +13319,7 @@ msgstr "Formatierung entfernen"
 msgid "Remove image"
 msgstr "Bild entfernen"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:89
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:78
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:74
 msgid "Remove item"
 msgstr "Element entfernen"
@@ -18847,7 +18847,7 @@ msgstr ""
 "Nicht verknüpfte E-Mail-Adressen, bitte diese einen Kanal zuordnen oder "
 "entfernen."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:73
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:66
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:60
 msgid "Uncheck item"
 msgstr "Element abwählen"

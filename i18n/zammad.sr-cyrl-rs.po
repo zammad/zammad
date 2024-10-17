@@ -391,7 +391,7 @@ msgstr "%s API кључ"
 msgid "%s Attribute"
 msgstr "%s атрибут"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:34
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:50
 msgid "%s Checklist"
@@ -3175,7 +3175,7 @@ msgstr "Проверава изворе ’Канала’."
 msgid "Check channels."
 msgstr "Проверава канале."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:65
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:64
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:53
 msgid "Check item"
 msgstr "Означи задатак"
@@ -6219,7 +6219,7 @@ msgstr "Уреди апликацију за аутентификацију"
 msgid "Edit checklist title"
 msgstr "Уреди наслов списка"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:81
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:72
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:68
 msgid "Edit item"
 msgstr "Уреди задатак"
@@ -7283,7 +7283,7 @@ msgstr "Неуспешно поништавање миграције канал�
 msgid "Failed to save checklist order."
 msgstr "Грешка при снимању редоследа списка."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:118
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:124
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr "Грешка при снимању редоследа списка. Молимо покушајте поново."
 
@@ -13086,7 +13086,7 @@ msgstr "Уклони форматирање"
 msgid "Remove image"
 msgstr "Уклони слику"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:89
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:78
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:74
 msgid "Remove item"
 msgstr "Уклони задатак"
@@ -18483,7 +18483,7 @@ msgstr "Недодељени и отворени тикети"
 msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr "Недодељена имејл адреса, доделите је каналу или избришите."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:73
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:66
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:60
 msgid "Uncheck item"
 msgstr "Одзначи задатак"

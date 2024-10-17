@@ -278,7 +278,7 @@ msgstr "%s API Token"
 msgid "%s Attribute"
 msgstr "Atributo %s"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:34
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:50
 #, fuzzy
@@ -3372,7 +3372,7 @@ msgstr "Compruebe las transmisiones de 'Canal'."
 msgid "Check channels."
 msgstr "Consultar canales."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:65
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:64
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:53
 #, fuzzy
 #| msgid "Checksum"
@@ -6560,7 +6560,7 @@ msgstr "Autenticación"
 msgid "Edit checklist title"
 msgstr "Actualización de Ticket"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:81
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:72
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:68
 #, fuzzy
 #| msgid "Category"
@@ -7678,7 +7678,7 @@ msgstr ""
 msgid "Failed to save checklist order."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:118
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:124
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 
@@ -14047,7 +14047,7 @@ msgstr "Remover el formato"
 msgid "Remove image"
 msgstr "Quitar"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:89
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:78
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:74
 #, fuzzy
 #| msgid "Remove"
@@ -19943,7 +19943,7 @@ msgstr ""
 "Direcciones de correo electrónico no asignadas, asígnelas a un canal o "
 "elimínelas."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:73
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:66
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:60
 #, fuzzy
 #| msgid "Select item"

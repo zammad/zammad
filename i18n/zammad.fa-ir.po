@@ -263,7 +263,7 @@ msgstr "توکن API %s"
 msgid "%s Attribute"
 msgstr "مقدار %s"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:34
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:50
 msgid "%s Checklist"
@@ -2934,7 +2934,7 @@ msgstr "بررسی جریان‌های کانال‌."
 msgid "Check channels."
 msgstr "بررسی کانال‌ها."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:65
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:64
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:53
 msgid "Check item"
 msgstr "بررسی مورد"
@@ -5876,7 +5876,7 @@ msgstr "احراز هویت"
 msgid "Edit checklist title"
 msgstr "بروز شدن تیکت"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:81
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:72
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:68
 #, fuzzy
 #| msgid "Edit mask"
@@ -6886,7 +6886,7 @@ msgstr ""
 msgid "Failed to save checklist order."
 msgstr "امکان ذخیره سازی تغییرات وجود ندارد."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:118
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:124
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 
@@ -12829,7 +12829,7 @@ msgstr "حذف کردن قالب‌بندی"
 msgid "Remove image"
 msgstr "حذف کردن تصویر"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:89
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:78
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:74
 #, fuzzy
 #| msgid "Remove"
@@ -18115,7 +18115,7 @@ msgstr "تیکت‌های تخصیص نیافته و باز"
 msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:73
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:66
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:60
 #, fuzzy
 #| msgid "Select item"

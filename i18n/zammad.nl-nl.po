@@ -390,7 +390,7 @@ msgstr "%s API Token"
 msgid "%s Attribute"
 msgstr "%s Kenmerk"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:34
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:50
 msgid "%s Checklist"
@@ -3201,7 +3201,7 @@ msgstr "Controleer 'Kanaal'-streams."
 msgid "Check channels."
 msgstr "Controleer kanalen."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:65
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:64
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:53
 msgid "Check item"
 msgstr "Item afvinken"
@@ -6280,7 +6280,7 @@ msgstr "Verificatie-app bewerken"
 msgid "Edit checklist title"
 msgstr "Checklisttitel bewerken"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:81
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:72
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:68
 msgid "Edit item"
 msgstr "Item bewerken"
@@ -7354,7 +7354,7 @@ msgstr "Kan de migratie van het kanaal niet terugdraaien!"
 msgid "Failed to save checklist order."
 msgstr "De volgorde van de items op de checklist is niet opgeslagen."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:118
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:124
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 "De volgorde van de items op de checklist is niet opgeslagen. Probeer het "
@@ -13196,7 +13196,7 @@ msgstr "Verwijderd de formattering"
 msgid "Remove image"
 msgstr "Afbeelding verwijderen"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:89
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:78
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:74
 msgid "Remove item"
 msgstr "Item verwijderen"
@@ -18650,7 +18650,7 @@ msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr ""
 "Niet-toegewezen e-mailadressen, wijs ze toe aan een kanaal of verwijder ze."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:73
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:66
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:60
 msgid "Uncheck item"
 msgstr "Item uitvinken"

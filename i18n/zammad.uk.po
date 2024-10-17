@@ -283,7 +283,7 @@ msgstr "%s API-ключ"
 msgid "%s Attribute"
 msgstr "%s Атрибут"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:42
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:34
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:50
 #, fuzzy
@@ -3277,7 +3277,7 @@ msgstr "Підключити канали"
 msgid "Check channels."
 msgstr "Підключити канали"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:65
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:64
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:53
 #, fuzzy
 #| msgid "Checksum"
@@ -6482,7 +6482,7 @@ msgstr "Автентифікація"
 msgid "Edit checklist title"
 msgstr "Оновлення заявки\t"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:81
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:72
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:68
 #, fuzzy
 #| msgid "Category"
@@ -7611,7 +7611,7 @@ msgstr ""
 msgid "Failed to save checklist order."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:118
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:124
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 
@@ -14007,7 +14007,7 @@ msgstr "Видаляє форматування"
 msgid "Remove image"
 msgstr "Вилучити"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:89
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:78
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:74
 #, fuzzy
 #| msgid "Remove"
@@ -19939,7 +19939,7 @@ msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr ""
 "Неприсвоєні адреси електронної пошти, присвойте їх каналам або видаліть їх.\t"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:73
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:66
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:60
 #, fuzzy
 #| msgid "Select item"
