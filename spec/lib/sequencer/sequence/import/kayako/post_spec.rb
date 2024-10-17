@@ -38,7 +38,22 @@ RSpec.describe Sequencer::Sequence::Import::Kayako::Post, sequencer: :sequence d
         },
         'attachments'    => [
           {
-            'id'            => 1,
+            'id'            => 3,
+            'name'          => 'example.json',
+            'size'          => 100,
+            'width'         => 0,
+            'height'        => 0,
+            'type'          => 'application/json',
+            'content_id'    => nil,
+            'alt'           => nil,
+            'url'           => 'https://yours.kayako.com/api/v1/cases/9999/notes/99999/attachments/3/url',
+            'url_download'  => 'https://yours.kayako.com/api/v1/cases/9999/notes/99999/attachments/3/download',
+            'thumbnails'    => [],
+            'created_at'    => '2021-08-16T08:43:46+00:00',
+            'resource_type' => 'attachment',
+          },
+          {
+            'id'            => 2,
             'name'          => 'example.log',
             'size'          => 1909,
             'width'         => 0,
@@ -51,7 +66,7 @@ RSpec.describe Sequencer::Sequence::Import::Kayako::Post, sequencer: :sequence d
             'thumbnails'    => [],
             'created_at'    => '2021-08-16T08:43:46+00:00',
             'resource_type' => 'attachment',
-          }
+          },
         ],
         'original'       => {
           'id'            => 4,
@@ -131,11 +146,24 @@ RSpec.describe Sequencer::Sequence::Import::Kayako::Post, sequencer: :sequence d
       }
     end
 
+    let(:imported_ticket_article_attachment_json) do
+      {
+        filename:    'example.json',
+        size:        '12',
+        preferences: {
+          'Content-Type': 'application/json'
+        }
+      }
+    end
+
     before do
       # Mock the attachment and inline image download requests.
       used_urls.each do |used_url|
         stub_request(:get, used_url).to_return(status: 200, body: '123', headers: {})
       end
+
+      # Special handling for json situation
+      stub_request(:get, 'https://yours.kayako.com/api/v1/cases/9999/notes/99999/attachments/3/download').to_return(status: 200, body: '{test: 123,}', headers: { 'content-type': 'application/json' })
     end
 
     it 'adds article with inline image' do
@@ -165,12 +193,14 @@ RSpec.describe Sequencer::Sequence::Import::Kayako::Post, sequencer: :sequence d
 
     it 'adds correct number of attachments' do
       process(process_payload)
-      expect(Ticket::Article.last.attachments.size).to eq 2
+      expect(Ticket::Article.last.attachments.size).to eq 3
     end
 
     it 'adds attachment content' do
       process(process_payload)
-      expect(Ticket::Article.last.attachments.last).to have_attributes(imported_ticket_article_attachment)
+
+      expect(Ticket::Article.last.attachments).to include(have_attributes(imported_ticket_article_attachment))
+        .and include(have_attributes(imported_ticket_article_attachment_json))
     end
   end
 end
