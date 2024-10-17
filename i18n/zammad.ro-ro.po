@@ -1803,10 +1803,6 @@ msgstr "Permite redeschiderea tichetelor într-un anumit interval de timp."
 msgid "Allow users to add new tags."
 msgstr "Permite utilizatorilor să adauge etichete noi."
 
-#: db/seeds/settings.rb:5793
-msgid "Allow users to create new checklists."
-msgstr "Permite utilizatorilor să creeze liste de verificare noi."
-
 #: db/seeds/settings.rb:4051
 msgid "Allow users to create new tags."
 msgstr "Permite utilizatorilor să creeze etichete noi."
@@ -2981,7 +2977,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:341
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -6725,6 +6721,12 @@ msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr ""
 "Activează alocarea automată la prima deschidere a unui tichet de către un "
 "agent."
+
+#: db/seeds/settings.rb:5793
+#, fuzzy
+#| msgid "Enable Chat"
+msgid "Enable checklists."
+msgstr "Activează chat"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:72
 msgid "Enable debugging for implementation."
@@ -12991,7 +12993,7 @@ msgstr ""
 "jos. Le puteți folosi pentru a vă autentifica dacă pierdeți accesul la o "
 "altă metodă de autentificare în doi factori:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:75
 msgid "Please select a checklist template."
 msgstr ""
 
@@ -14289,7 +14291,7 @@ msgstr "Salvare ca"
 msgid "Save as draft"
 msgstr "Salvează ciornele"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:348
 #, fuzzy
 #| msgid "Discard Changes"
 msgid "Save changes"
@@ -22603,13 +22605,11 @@ msgstr "...zonei întregi a textului"
 msgid "∅ Waiting time today"
 msgstr "∅ Timp de așteptare azi"
 
+#~ msgid "Allow users to create new checklists."
+#~ msgstr "Permite utilizatorilor să creeze liste de verificare noi."
+
 #~ msgid "Allow users to add new checklists."
 #~ msgstr "Permite utilizatorilor să adauge liste de verificare noi."
-
-#, fuzzy
-#~| msgid "Enable Chat"
-#~ msgid "Enable Checklists"
-#~ msgstr "Activează chat"
 
 #, fuzzy
 #~| msgid "Select Template"

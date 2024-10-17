@@ -1764,10 +1764,6 @@ msgstr "Tillåt återöppnande av ärende inom en viss tidsgräns."
 msgid "Allow users to add new tags."
 msgstr "Tillåt användare att skapa nya taggar."
 
-#: db/seeds/settings.rb:5793
-msgid "Allow users to create new checklists."
-msgstr "Tillåt användare att skapa nya checklistor."
-
 #: db/seeds/settings.rb:4051
 msgid "Allow users to create new tags."
 msgstr "Tillåt användare att skapa nya taggar."
@@ -2930,7 +2926,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:341
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -6539,6 +6535,12 @@ msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr ""
 "Aktivera automatisk tilldelning första gången en handläggare öppnar ett "
 "ärende."
+
+#: db/seeds/settings.rb:5793
+#, fuzzy
+#| msgid "Enable Checklists"
+msgid "Enable checklists."
+msgstr "Aktivera checklistor"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:72
 msgid "Enable debugging for implementation."
@@ -12533,7 +12535,7 @@ msgstr ""
 "använda dem för att logga in om du förlorar åtkomst till en annan "
 "tvåfaktorsmetod:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:75
 msgid "Please select a checklist template."
 msgstr "Välj en mall för checklista."
 
@@ -13772,7 +13774,7 @@ msgstr "Spara som"
 msgid "Save as draft"
 msgstr "Spara som utkast"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:348
 msgid "Save changes"
 msgstr "Spara ändringar"
 
@@ -21796,11 +21798,11 @@ msgstr "...av hela textfältet"
 msgid "∅ Waiting time today"
 msgstr "∅ Väntetid idag"
 
-#~ msgid "Allow users to add new checklists."
+#~ msgid "Allow users to create new checklists."
 #~ msgstr "Tillåt användare att skapa nya checklistor."
 
-#~ msgid "Enable Checklists"
-#~ msgstr "Aktivera checklistor"
+#~ msgid "Allow users to add new checklists."
+#~ msgstr "Tillåt användare att skapa nya checklistor."
 
 #~ msgid "Tracked by checklist item by"
 #~ msgstr "Spårad checklistpost av"

@@ -1783,10 +1783,6 @@ msgstr "Heropening van tickets binnen een bepaalde tijd toestaan."
 msgid "Allow users to add new tags."
 msgstr "Sta gebruikers toe nieuwe tags toe te voegen."
 
-#: db/seeds/settings.rb:5793
-msgid "Allow users to create new checklists."
-msgstr "Gebruikers toestaan om nieuwe checklists te maken."
-
 #: db/seeds/settings.rb:4051
 msgid "Allow users to create new tags."
 msgstr "Laat gebruikers nieuwe tags aanmaken."
@@ -2950,7 +2946,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:341
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -6584,6 +6580,12 @@ msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr ""
 "Schakel automatisch toewijzen in zodra een behandelaar een ticket de eerste "
 "keer opent."
+
+#: db/seeds/settings.rb:5793
+#, fuzzy
+#| msgid "Enable Checklists"
+msgid "Enable checklists."
+msgstr "Checklists inschakelen"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:72
 msgid "Enable debugging for implementation."
@@ -12604,7 +12606,7 @@ msgstr ""
 "gebruiken om in te loggen als je geen toegang meer heeft tot een andere "
 "tweefactormethode:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:75
 msgid "Please select a checklist template."
 msgstr "Selecteer een checklist-sjabloon."
 
@@ -13850,7 +13852,7 @@ msgstr "Opslaan als"
 msgid "Save as draft"
 msgstr "Concept opslaan"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:348
 msgid "Save changes"
 msgstr "Wijzigingen opslaan"
 
@@ -21935,11 +21937,11 @@ msgstr "…van geheel tekstvak"
 msgid "∅ Waiting time today"
 msgstr "∅ Wachttijd vandaag"
 
+#~ msgid "Allow users to create new checklists."
+#~ msgstr "Gebruikers toestaan om nieuwe checklists te maken."
+
 #~ msgid "Allow users to add new checklists."
 #~ msgstr "Gebruikers toestaan om nieuwe checklists toe te voegen."
-
-#~ msgid "Enable Checklists"
-#~ msgstr "Checklists inschakelen"
 
 #, fuzzy
 #~| msgid "checked checklist item '%s'"

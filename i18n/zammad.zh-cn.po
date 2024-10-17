@@ -1749,12 +1749,6 @@ msgstr "允许在一定时间内重新开启工单。"
 msgid "Allow users to add new tags."
 msgstr "允许用户增加新标签."
 
-#: db/seeds/settings.rb:5793
-#, fuzzy
-#| msgid "Allow users to create new tags."
-msgid "Allow users to create new checklists."
-msgstr "允许用户创建新的标签。"
-
 #: db/seeds/settings.rb:4051
 msgid "Allow users to create new tags."
 msgstr "允许用户创建新的标签。"
@@ -2879,7 +2873,7 @@ msgstr "无法更新密码，您输入的密码错误。请再试一次。"
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:341
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -6371,6 +6365,12 @@ msgstr "启用自动分配以进行以下匹配票。"
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:12
 msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr "客服人员第一次打开工单时启用自动分配。"
+
+#: db/seeds/settings.rb:5793
+#, fuzzy
+#| msgid "Enable Chat"
+msgid "Enable checklists."
+msgstr "启动对话"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:72
 msgid "Enable debugging for implementation."
@@ -12582,7 +12582,7 @@ msgstr ""
 "请保存下面列出的恢复代码。如果您失去对其他两因素方法的访问，则可以使用它们登"
 "录："
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:75
 #, fuzzy
 #| msgid "Please select at least one folder."
 msgid "Please select a checklist template."
@@ -13866,7 +13866,7 @@ msgstr "另存为"
 msgid "Save as draft"
 msgstr "保存草稿"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:348
 #, fuzzy
 #| msgid "Discard Changes"
 msgid "Save changes"
@@ -22488,14 +22488,14 @@ msgid "∅ Waiting time today"
 msgstr "∅轮候时间"
 
 #, fuzzy
+#~| msgid "Allow users to create new tags."
+#~ msgid "Allow users to create new checklists."
+#~ msgstr "允许用户创建新的标签。"
+
+#, fuzzy
 #~| msgid "Allow users to add new tags."
 #~ msgid "Allow users to add new checklists."
 #~ msgstr "允许用户增加新标签."
-
-#, fuzzy
-#~| msgid "Enable Chat"
-#~ msgid "Enable Checklists"
-#~ msgstr "启动对话"
 
 #, fuzzy
 #~| msgid "Checksum"

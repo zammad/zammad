@@ -1764,10 +1764,6 @@ msgstr "Дозволи поновно отварање тикета унутар
 msgid "Allow users to add new tags."
 msgstr "Дозволи корисницима да додају нове ознаке."
 
-#: db/seeds/settings.rb:5793
-msgid "Allow users to create new checklists."
-msgstr "Дозволи корисницима да додају нове спискове задатака."
-
 #: db/seeds/settings.rb:4051
 msgid "Allow users to create new tags."
 msgstr "Дозволи корисницима да креирају нове ознаке."
@@ -2930,7 +2926,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:341
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -6522,6 +6518,12 @@ msgstr "Укључи аутоматску доделу тикета који с�
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:12
 msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr "Укључи аутоматску доделу први пут када оператер отвори тикет."
+
+#: db/seeds/settings.rb:5793
+#, fuzzy
+#| msgid "Enable Checklists"
+msgid "Enable checklists."
+msgstr "Укључи спискове задатака"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:72
 msgid "Enable debugging for implementation."
@@ -12498,7 +12500,7 @@ msgstr ""
 "искористити за пријављивање уколико изгубите приступ другом методу "
 "двофакторске аутентификације:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:75
 msgid "Please select a checklist template."
 msgstr "Молимо одаберите шаблон списка."
 
@@ -13734,7 +13736,7 @@ msgstr "Сачувај као"
 msgid "Save as draft"
 msgstr "Сачувај као нацрт"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:348
 msgid "Save changes"
 msgstr "Сачувај измене"
 
@@ -21746,11 +21748,11 @@ msgstr "…целог текстуалног поља"
 msgid "∅ Waiting time today"
 msgstr "∅ Време чекања данас"
 
-#~ msgid "Allow users to add new checklists."
+#~ msgid "Allow users to create new checklists."
 #~ msgstr "Дозволи корисницима да додају нове спискове задатака."
 
-#~ msgid "Enable Checklists"
-#~ msgstr "Укључи спискове задатака"
+#~ msgid "Allow users to add new checklists."
+#~ msgstr "Дозволи корисницима да додају нове спискове задатака."
 
 #~ msgid "Tracked by checklist item by"
 #~ msgstr "Праћено као задатак у"

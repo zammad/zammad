@@ -1559,10 +1559,6 @@ msgstr ""
 msgid "Allow users to add new tags."
 msgstr "اجازه افزودن برچسب‌های جدید به کاربران."
 
-#: db/seeds/settings.rb:5793
-msgid "Allow users to create new checklists."
-msgstr "مجوز ایجاد فهرست‌بررسی جدید به کاربران."
-
 #: db/seeds/settings.rb:4051
 msgid "Allow users to create new tags."
 msgstr "مجوز ایجاد برچسب‌های جدید به کاربران."
@@ -2689,7 +2685,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:341
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -6176,6 +6172,12 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:12
 msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr "اختصاص خودکار تیکت به کارشناس پس از اولین بازکردن."
+
+#: db/seeds/settings.rb:5793
+#, fuzzy
+#| msgid "Enable Chat"
+msgid "Enable checklists."
+msgstr "فعال کردن چت"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:72
 msgid "Enable debugging for implementation."
@@ -12216,7 +12218,7 @@ msgid ""
 "them to sign in if you lose access to another two-factor method:"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:75
 #, fuzzy
 #| msgid "Please select at least one folder."
 msgid "Please select a checklist template."
@@ -13463,7 +13465,7 @@ msgstr "ذخیره بعنوان"
 msgid "Save as draft"
 msgstr "ذخیره پیش‌نویس"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:348
 #, fuzzy
 #| msgid "Discard Changes"
 msgid "Save changes"
@@ -21333,13 +21335,11 @@ msgstr "...از تمام محدوده متن"
 msgid "∅ Waiting time today"
 msgstr "میانگین زمان پاسخگویی (امروز)"
 
+#~ msgid "Allow users to create new checklists."
+#~ msgstr "مجوز ایجاد فهرست‌بررسی جدید به کاربران."
+
 #~ msgid "Allow users to add new checklists."
 #~ msgstr "اجازه افزودن فهرست‌بررسی جدید به کاربران."
-
-#, fuzzy
-#~| msgid "Enable Chat"
-#~ msgid "Enable Checklists"
-#~ msgstr "فعال کردن چت"
 
 #, fuzzy
 #~| msgid "Checksum"

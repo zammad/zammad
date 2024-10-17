@@ -1793,10 +1793,6 @@ msgstr "Permitir la reapertura de tickets dentro de un cierto margen temporal."
 msgid "Allow users to add new tags."
 msgstr "Permitir a los usuarios añadir nuevos tags."
 
-#: db/seeds/settings.rb:5793
-msgid "Allow users to create new checklists."
-msgstr "Permitir a los usuarios crear nuevas listas de comprobación."
-
 #: db/seeds/settings.rb:4051
 msgid "Allow users to create new tags."
 msgstr "Permitir a los usuarios crear nuevas etiquetas."
@@ -2964,7 +2960,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:341
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -6648,6 +6644,12 @@ msgstr "Habilitar asignación automática para futuros tickets coincidentes."
 msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr ""
 "Habilitar asignación automática la primera vez que un agente abra un ticket."
+
+#: db/seeds/settings.rb:5793
+#, fuzzy
+#| msgid "Enable Checklists"
+msgid "Enable checklists."
+msgstr "Activar listas de comprobación"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:72
 msgid "Enable debugging for implementation."
@@ -12710,7 +12712,7 @@ msgstr ""
 "seguro. Puede utilizarlos para iniciar sesión si pierde el acceso a otro "
 "método de doble factor:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:75
 msgid "Please select a checklist template."
 msgstr "Seleccione una plantilla de lista de comprobación."
 
@@ -13958,7 +13960,7 @@ msgstr "Guardar como"
 msgid "Save as draft"
 msgstr "Guardar como borrador"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:348
 msgid "Save changes"
 msgstr "Guardar cambios"
 
@@ -22111,11 +22113,11 @@ msgstr "...de toda la zona de texto"
 msgid "∅ Waiting time today"
 msgstr "∅ tiempo de espera de hoy"
 
+#~ msgid "Allow users to create new checklists."
+#~ msgstr "Permitir a los usuarios crear nuevas listas de comprobación."
+
 #~ msgid "Allow users to add new checklists."
 #~ msgstr "Permitir a los usuarios añadir nuevas listas de comprobación."
-
-#~ msgid "Enable Checklists"
-#~ msgstr "Activar listas de comprobación"
 
 #, fuzzy
 #~| msgid "checked checklist item '%s'"

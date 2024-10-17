@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-16 05:59+0000\n"
+"PO-Revision-Date: 2024-10-17 11:14+0000\n"
 "Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
@@ -1795,10 +1795,6 @@ msgstr "Разрешить повторное открытие заявок в �
 msgid "Allow users to add new tags."
 msgstr "Разрешить пользователям добавлять новые теги."
 
-#: db/seeds/settings.rb:5793
-msgid "Allow users to create new checklists."
-msgstr "Разрешить пользователям создавать новые чек-листы."
-
 #: db/seeds/settings.rb:4051
 msgid "Allow users to create new tags."
 msgstr "Разрешить пользователям создавать новые теги."
@@ -2974,7 +2970,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:341
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -3097,7 +3093,7 @@ msgstr "Изменить"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:125
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketDetailView/actions/TicketChangeCustomer/TicketChangeCustomerFlyout.vue:51
 msgid "Change Customer"
-msgstr "Измененить клиента"
+msgstr "Изменить клиента"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:17
 msgid "Change Objects"
@@ -6634,6 +6630,12 @@ msgstr "Включите автоматическое назначение дл�
 msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr ""
 "Включает автоматическое назначение сотруднику при первом открытии заявки."
+
+#: db/seeds/settings.rb:5793
+#, fuzzy
+#| msgid "Enable Checklists"
+msgid "Enable checklists."
+msgstr "Включить чек-листы"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:72
 msgid "Enable debugging for implementation."
@@ -12687,7 +12689,7 @@ msgstr ""
 "месте. Вы сможете использовать их для авторизации, если потеряете доступ к "
 "другому двухфакторному методу:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:75
 msgid "Please select a checklist template."
 msgstr "Пожалуйста, выберите шаблон чек-листа."
 
@@ -13937,7 +13939,7 @@ msgstr "Сохранить как"
 msgid "Save as draft"
 msgstr "Сохранить как черновик"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:348
 msgid "Save changes"
 msgstr "Сохранить изменения"
 
@@ -22072,11 +22074,11 @@ msgstr "…всей текстовой области"
 msgid "∅ Waiting time today"
 msgstr "∅ Время ожидания сегодня"
 
+#~ msgid "Allow users to create new checklists."
+#~ msgstr "Разрешить пользователям создавать новые чек-листы."
+
 #~ msgid "Allow users to add new checklists."
 #~ msgstr "Разрешить пользователям добавлять новые чек-листы."
-
-#~ msgid "Enable Checklists"
-#~ msgstr "Включить чек-листы"
 
 #~ msgid "Tracked by checklist item by"
 #~ msgstr "Отслеживается по пунктам чек-листа"

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-14 22:16+0000\n"
-"Last-Translator: Elodie Massa <elodie@association-enoria.org>\n"
+"PO-Revision-Date: 2024-10-17 11:14+0000\n"
+"Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -1083,7 +1083,7 @@ msgstr "Accès à l'interface de la base de connaissances."
 
 #: db/seeds/permissions.rb:321
 msgid "Access to the phone interface."
-msgstr "Accéder à l'interface sur mobile."
+msgstr "Accès à l'interface du téléphone."
 
 #: db/seeds/permissions.rb:358
 msgid "Access to the report interface."
@@ -1337,7 +1337,7 @@ msgstr "Ajouter un certificat"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:406
 msgid "Add Empty Checklist"
-msgstr "Ajouter une liste de contrôle"
+msgstr "Ajouter une checklist vide"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue:42
 msgid "Add From a Template"
@@ -1436,7 +1436,7 @@ msgstr "Ajouter un e-mail"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:5
 msgid "Add empty checklist"
-msgstr "Ajouter une liste de contrôle"
+msgstr "Ajouter une checklist vide"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
 msgid "Add first level heading"
@@ -1800,10 +1800,6 @@ msgstr "Autoriser la réouverture des tickets pendant une période donnée."
 msgid "Allow users to add new tags."
 msgstr "Autoriser les utilisateurs à ajouter de nouvelles étiquettes."
 
-#: db/seeds/settings.rb:5793
-msgid "Allow users to create new checklists."
-msgstr "Autoriser les utilisateurs à créer de nouvelles checklists."
-
 #: db/seeds/settings.rb:4051
 msgid "Allow users to create new tags."
 msgstr "Autoriser les utilisateurs à créer de nouvelles étiquettes."
@@ -1987,7 +1983,7 @@ msgstr "Informations d'authentification pour Twitter."
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:28
 msgid "App secret"
-msgstr "Clé secrète de l'application"
+msgstr "App secret"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:433
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee:3
@@ -2257,8 +2253,8 @@ msgid ""
 "At least one identifier (firstname, lastname, phone, mobile or email) for "
 "user is required."
 msgstr ""
-"Au moins un identifiant (prénom, nom, numéro de téléphone ou adresse e-mail) "
-"est requis pour l'utilisateur."
+"Au moins un identifiant (prénom, nom, téléphone, mobile ou e-mail) est "
+"requis pour l'utilisateur."
 
 #: app/models/postmaster_filter.rb:29
 msgid "At least one match rule is required, but none was provided."
@@ -2979,7 +2975,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:341
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -3062,7 +3058,7 @@ msgstr "Impossible de définir les notifications \"en ligne\" comme lues"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:797
 msgid "Cannot upload file"
-msgstr "Impossible de charger le fichier"
+msgstr "Impossible d'envoyer le fichier"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:168
 msgid "Capture From Camera"
@@ -3259,19 +3255,19 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:54
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
 msgid "Checklist"
-msgstr "Liste de contrôle"
+msgstr "Checklist"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:60
 msgid "Checklist Item"
-msgstr "Élément de la liste de contrôle"
+msgstr "Élément de la checklist"
 
 #: app/assets/javascripts/app/views/generic/checklist_item.jst.eco:10
 msgid "Checklist Item Label"
-msgstr "Intitulé d'un élément de la liste de contrôle"
+msgstr "Étiquette d'un élément de la checklist"
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:29
 msgid "Checklist Template"
-msgstr "Modèle de liste de contrôle"
+msgstr "Modèle de checklist"
 
 #: app/models/checklist_template/item.rb:32
 msgid "Checklist Template items are limited to 100 items per checklist."
@@ -3801,7 +3797,7 @@ msgstr "Connecter l'App Twitter"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualChannelEmail.vue:134
 msgid "Connect and Continue"
-msgstr "Se connecter et poursuivre"
+msgstr "Connecter et poursuivre"
 
 #: public/assets/chat/views/loader.eco:6
 msgid "Connecting"
@@ -6664,6 +6660,12 @@ msgstr ""
 "Activer l'affectation automatique lorsqu'un agent ouvre un ticket pour la "
 "première fois."
 
+#: db/seeds/settings.rb:5793
+#, fuzzy
+#| msgid "Enable Checklists"
+msgid "Enable checklists."
+msgstr "Activer les checklists"
+
 #: app/assets/javascripts/app/views/channel/form.jst.eco:72
 msgid "Enable debugging for implementation."
 msgstr "Activer le debug pour l'implémentation."
@@ -8762,8 +8764,8 @@ msgstr "Fichier image"
 #: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:360
 msgid "Image file size is too large, please try inserting a smaller file."
 msgstr ""
-"Le fichier d'image est trop grand, merci d'essayer d'en insérer un plus "
-"petit."
+"La taille de l'image est trop grande, veuillez essayer d'insérer un fichier "
+"plus petit."
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
@@ -11826,7 +11828,7 @@ msgstr "Ok"
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:413
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/selection.ts:32
 msgid "On %s, %s wrote:"
-msgstr "Sur %s, %s a écrit :"
+msgstr "Le %s, %s a écrit :"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:10
 msgid "On-screen Translation"
@@ -12728,7 +12730,7 @@ msgstr ""
 "emplacement sûr. Vous pourrez les utiliser pour vous connecter si vous "
 "perdez l'accès à une autre méthode à deux facteurs :"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:75
 msgid "Please select a checklist template."
 msgstr "Veuillez sélectionner un modèle de checklist."
 
@@ -13978,7 +13980,7 @@ msgstr "Enregistrer sous"
 msgid "Save as draft"
 msgstr "Enregistrer comme brouillon"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:348
 msgid "Save changes"
 msgstr "Enregistrer les modifications"
 
@@ -14463,7 +14465,7 @@ msgstr "Expéditeur du dernier article"
 
 #: app/models/ticket/article.rb:305
 msgid "Sending an email without a valid recipient is not possible."
-msgstr "Il est impossible d'envoyer un email sans un destinataire valide."
+msgstr "L'envoi d'un e-mail sans destinataire valide n'est pas possible."
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:35
 msgid "Sending…"
@@ -22047,7 +22049,7 @@ msgstr "mis à jour"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts:25
 msgid "vacation,holiday,replacement,time off"
-msgstr "vacances,remplacement,pause,récupération"
+msgstr "vacances,remplacement,récupération"
 
 #: db/seeds/ticket_article_types.rb:13
 msgid "web"
@@ -22137,11 +22139,11 @@ msgstr "... de toute la zone de texte"
 msgid "∅ Waiting time today"
 msgstr "∅ Temps d'attente aujourd'hui"
 
+#~ msgid "Allow users to create new checklists."
+#~ msgstr "Autoriser les utilisateurs à créer de nouvelles checklists."
+
 #~ msgid "Allow users to add new checklists."
 #~ msgstr "Autoriser les utilisateurs à ajouter de nouvelles checklists."
-
-#~ msgid "Enable Checklists"
-#~ msgstr "Activer les checklists"
 
 #~ msgid "Tracked by checklist item by"
 #~ msgstr "Suivi par une tâche de vérification par"

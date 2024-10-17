@@ -1766,10 +1766,6 @@ msgstr "Dozvoli ponovno otvaranje ticketa unutar određenog vremena."
 msgid "Allow users to add new tags."
 msgstr "Dopusti dodavanje novih tagova."
 
-#: db/seeds/settings.rb:5793
-msgid "Allow users to create new checklists."
-msgstr "Dopusti korisnicima stvaranje novih lista zadataka."
-
 #: db/seeds/settings.rb:4051
 msgid "Allow users to create new tags."
 msgstr "Dopusti stvaranje novih tagova."
@@ -2932,7 +2928,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:341
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -6536,6 +6532,12 @@ msgstr "Omogući automatsku dodjelu za sljedeće odgovarajuće tickete."
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:12
 msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr "Omogući automatsku dodjelu kada agent prvi put otvori ticket."
+
+#: db/seeds/settings.rb:5793
+#, fuzzy
+#| msgid "Enable Chat"
+msgid "Enable checklists."
+msgstr "Omogući chat"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:72
 msgid "Enable debugging for implementation."
@@ -12513,7 +12515,7 @@ msgstr ""
 "Spremite dolje navedene kodove za oporavak negdje na sigurno. Možete ih "
 "koristiti za prijavu, ukoliko izgubite pristup drugoj dvofaktorskoj metodi:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:75
 msgid "Please select a checklist template."
 msgstr "Molimo, odaberite barem jedan predložak liste zadataka."
 
@@ -13753,7 +13755,7 @@ msgstr "Spremi kao"
 msgid "Save as draft"
 msgstr "Spremi kao skicu"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:348
 msgid "Save changes"
 msgstr "Spremi promjene"
 
@@ -21763,15 +21765,13 @@ msgstr "... cijelog tekstnog polja"
 msgid "∅ Waiting time today"
 msgstr "∅ vrijeme čekanja danas"
 
+#~ msgid "Allow users to create new checklists."
+#~ msgstr "Dopusti korisnicima stvaranje novih lista zadataka."
+
 #, fuzzy
 #~| msgid "Allow users to add new tags."
 #~ msgid "Allow users to add new checklists."
 #~ msgstr "Dopusti korisnicima dodavanje novih tagova."
-
-#, fuzzy
-#~| msgid "Enable Chat"
-#~ msgid "Enable Checklists"
-#~ msgstr "Omogući chat"
 
 #, fuzzy
 #~| msgid "Checksum"

@@ -1831,12 +1831,6 @@ msgstr "Engedélyezze a jegyek bizonyos időn belüli újranyitását."
 msgid "Allow users to add new tags."
 msgstr "Engedélyezze a felhasználók számára új címkék hozzáadását."
 
-#: db/seeds/settings.rb:5793
-#, fuzzy
-#| msgid "Allow users to create new tags."
-msgid "Allow users to create new checklists."
-msgstr "Engedélyezze a felhasználók számára új címkék létrehozását."
-
 #: db/seeds/settings.rb:4051
 msgid "Allow users to create new tags."
 msgstr "Engedélyezze a felhasználók számára új címkék létrehozását."
@@ -3023,7 +3017,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:335
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:341
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:184
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:125
 #: app/frontend/apps/mobile/components/CommonSectionPopup/CommonSectionPopup.vue:29
@@ -6823,6 +6817,12 @@ msgid "Enable automatic assignment the first time an agent opens a ticket."
 msgstr ""
 "Engedélyezze az automatikus hozzárendelést, amikor egy ügynök először nyit "
 "meg egy jegyet."
+
+#: db/seeds/settings.rb:5793
+#, fuzzy
+#| msgid "Enable Chat"
+msgid "Enable checklists."
+msgstr "Csevegés engedélyezése"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:72
 msgid "Enable debugging for implementation."
@@ -13053,7 +13053,7 @@ msgstr ""
 "Ezeket használhatja a bejelentkezéshez, ha elveszíti a hozzáférést egy másik "
 "kétfaktoros módszerhez:"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:73
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:75
 #, fuzzy
 #| msgid "Please select at least one folder."
 msgid "Please select a checklist template."
@@ -14336,7 +14336,7 @@ msgstr "Mentés másként"
 msgid "Save as draft"
 msgstr "Piszkozat mentése"
 
-#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:342
+#: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:348
 #, fuzzy
 #| msgid "Discard Changes"
 msgid "Save changes"
@@ -22746,14 +22746,14 @@ msgid "∅ Waiting time today"
 msgstr "Várakozási idő ma"
 
 #, fuzzy
+#~| msgid "Allow users to create new tags."
+#~ msgid "Allow users to create new checklists."
+#~ msgstr "Engedélyezze a felhasználók számára új címkék létrehozását."
+
+#, fuzzy
 #~| msgid "Allow users to add new tags."
 #~ msgid "Allow users to add new checklists."
 #~ msgstr "Engedélyezze a felhasználók számára új címkék hozzáadását."
-
-#, fuzzy
-#~| msgid "Enable Chat"
-#~ msgid "Enable Checklists"
-#~ msgstr "Csevegés engedélyezése"
 
 #, fuzzy
 #~| msgid "Checksum"
