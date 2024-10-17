@@ -41,7 +41,7 @@ RSpec.describe Gql::Queries::Ticket, current_user_id: 1, type: :graphql do
             }
             tags
             subscribed
-            mentions {
+            mentions(first: 20) {
               edges {
                 node {
                   user {

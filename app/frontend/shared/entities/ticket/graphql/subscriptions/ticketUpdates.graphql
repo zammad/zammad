@@ -6,7 +6,7 @@ subscription ticketUpdates($ticketId: ID!, $initial: Boolean = false) {
         id
         name
       }
-      mentions {
+      mentions(first: 20) {
         totalCount
         edges {
           node {

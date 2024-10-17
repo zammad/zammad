@@ -9,6 +9,7 @@ import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvat
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
+import { useTicketSubscribe } from '#shared/entities/ticket/composables/useTicketSubscribe.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
@@ -23,7 +24,6 @@ import TicketEscalationTimeMenuItem from '../../components/TicketDetailView/Tick
 import TicketObjectAttributes from '../../components/TicketDetailView/TicketObjectAttributes.vue'
 import TicketTags from '../../components/TicketDetailView/TicketTags.vue'
 import { useTicketInformation } from '../../composable/useTicketInformation.ts'
-import { useTicketSubscribe } from '../../composable/useTicketSubscribe.ts'
 
 const { attributes: objectAttributes } = useObjectAttributes(
   EnumObjectManagerObjects.Ticket,
@@ -80,6 +80,8 @@ const {
   canManageSubscription,
   isSubscribed,
   isSubscriptionLoading,
+  subscribersWithoutMe,
+  totalSubscribersWithoutMe,
   toggleSubscribe,
 } = useTicketSubscribe(ticket)
 
@@ -107,26 +109,6 @@ const handleToggleInput = async () => {
 }
 
 const session = useSessionStore()
-
-const subscribers = computed(() => {
-  if (!ticket.value?.mentions) return []
-  const subscribers = []
-  for (const { node } of ticket.value.mentions.edges) {
-    if (node.user.id !== session.userId) {
-      subscribers.push(node.user)
-    }
-  }
-  return subscribers
-})
-
-const totalSubscribers = computed(() => {
-  if (!ticket.value?.mentions) return 0
-  const hasMe = ticket.value.mentions.edges.some(
-    ({ node }) => node.user.id === session.userId,
-  )
-  // -1 for current user, who is shown as toggler
-  return ticket.value.mentions.totalCount - (hasMe ? 1 : 0)
-})
 
 const loadingTicket = ticketQuery.loading()
 const loadMoreMentions = () => {
@@ -223,7 +205,7 @@ const hasEscalation = computed(() => {
       :disabled="isSubscriptionLoading"
       :outer-class="{
         '!px-3': true,
-        'border-b border-white/10': subscribers.length,
+        'border-b border-white/10': subscribersWithoutMe.length,
       }"
       wrapper-class="!px-0"
       @input-raw="handleToggleInput"
@@ -241,10 +223,10 @@ const hasEscalation = computed(() => {
         </label>
       </template>
     </FormKit>
-    <CommonUsersList :users="subscribers" />
+    <CommonUsersList :users="subscribersWithoutMe" />
     <CommonShowMoreButton
-      :entities="subscribers"
-      :total-count="totalSubscribers"
+      :entities="subscribersWithoutMe"
+      :total-count="totalSubscribersWithoutMe"
       :disabled="loadingTicket"
       @click="loadMoreMentions"
     />

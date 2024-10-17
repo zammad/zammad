@@ -5,6 +5,7 @@ import { computed, toRef } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
+import { useTicketSubscribe } from '#shared/entities/ticket/composables/useTicketSubscribe.ts'
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { truthy } from '#shared/utils/helpers.ts'
@@ -16,7 +17,6 @@ import CommonSectionMenuLink from '#mobile/components/CommonSectionMenu/CommonSe
 import { useDialog, closeDialog } from '#mobile/composables/useDialog.ts'
 
 import { useTicketsMerge } from '../../composable/useTicketsMerge.ts'
-import { useTicketSubscribe } from '../../composable/useTicketSubscribe.ts'
 
 // TODO I think the complete dialog should not be available for none agent user (and maybe also for agents without write permission?)
 

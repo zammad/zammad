@@ -8,12 +8,15 @@ import { useMentionUnsubscribeMutation } from '#shared/entities/ticket/graphql/m
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import type { TicketQuery } from '#shared/graphql/types.ts'
 import { MutationHandler } from '#shared/server/apollo/handler/index.ts'
+import { useSessionStore } from '#shared/stores/session.ts'
 
 import type { Ref } from 'vue'
 
 export const useTicketSubscribe = (ticket: Ref<TicketById | undefined>) => {
   const { isTicketAgent } = useTicketView(ticket)
   const canManageSubscription = computed(() => isTicketAgent.value)
+
+  const session = useSessionStore()
 
   const createTicketCacheUpdater = (subscribed: boolean) => {
     return (previousQuery: Record<string, unknown>) => {
@@ -30,7 +33,7 @@ export const useTicketSubscribe = (ticket: Ref<TicketById | undefined>) => {
     }
   }
 
-  const subscribeHanler = new MutationHandler(
+  const subscribeHandler = new MutationHandler(
     useMentionSubscribeMutation({
       updateQueries: {
         ticket: createTicketCacheUpdater(true),
@@ -47,12 +50,12 @@ export const useTicketSubscribe = (ticket: Ref<TicketById | undefined>) => {
 
   const isSubscriptionLoading = computed(() => {
     return (
-      subscribeHanler.loading().value || unsubscribeMutation.loading().value
+      subscribeHandler.loading().value || unsubscribeMutation.loading().value
     )
   })
 
   const subscribe = async (ticketId: string) => {
-    const result = await subscribeHanler.send({ ticketId })
+    const result = await subscribeHandler.send({ ticketId })
     return !!result?.mentionSubscribe?.success
   }
   const unsubscribe = async (ticketId: string) => {
@@ -72,10 +75,50 @@ export const useTicketSubscribe = (ticket: Ref<TicketById | undefined>) => {
 
   const isSubscribed = computed(() => !!ticket.value?.subscribed)
 
+  const subscribers = computed(
+    () =>
+      ticket.value?.mentions?.edges
+        ?.filter(({ node }) => node.user.active)
+        .map(({ node }) => node.user) || [],
+  )
+
+  const subscribersWithoutMe = computed(
+    () =>
+      ticket.value?.mentions?.edges
+        ?.filter(({ node }) => node.user.id !== session.userId)
+        .map(({ node }) => node.user) || [],
+  )
+
+  const hasMe = computed(() => {
+    if (!ticket.value?.mentions) return false
+
+    return ticket.value.mentions.edges.some(
+      ({ node }) => node.user.id === session.userId,
+    )
+  })
+
+  const totalSubscribers = computed(() => {
+    if (!ticket.value?.mentions) return 0
+
+    return ticket.value.mentions.totalCount
+  })
+
+  const totalSubscribersWithoutMe = computed(() => {
+    if (!ticket.value?.mentions) return 0
+
+    // -1 for current user, who is shown as toggler
+    return ticket.value.mentions.totalCount - (hasMe.value ? 1 : 0)
+  })
+
   return {
     isSubscriptionLoading,
     isSubscribed,
     toggleSubscribe,
     canManageSubscription,
+    subscribers,
+    totalSubscribers,
+    subscribersWithoutMe,
+    totalSubscribersWithoutMe,
+    hasMe,
   }
 }

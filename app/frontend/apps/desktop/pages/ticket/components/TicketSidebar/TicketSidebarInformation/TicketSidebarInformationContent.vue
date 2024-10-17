@@ -17,6 +17,7 @@ import {
 
 import TicketSidebarContent from '../TicketSidebarContent.vue'
 
+import TicketSubscribers from './TicketSidebarInformationContent/TicketSubscribers.vue'
 import TicketTags from './TicketSidebarInformationContent/TicketTags.vue'
 
 const props = defineProps<TicketSidebarContentProps>()
@@ -66,6 +67,14 @@ const actions = computed<MenuItem[]>(() => {
       :title="__('Accounted Time')"
     >
       <TicketAccountedTime :ticket="ticket!" />
+    </CommonSectionCollapse>
+
+    <CommonSectionCollapse
+      v-if="isTicketAgent"
+      id="ticket-subscribers"
+      :title="__('Subscribers')"
+    >
+      <TicketSubscribers :ticket="ticket" />
     </CommonSectionCollapse>
   </TicketSidebarContent>
 </template>

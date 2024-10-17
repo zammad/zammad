@@ -107,6 +107,7 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
   defaultPriority?: TicketQuery['ticket']['priority']
   defaultPolicy?: TicketQuery['ticket']['policy']
   mentions?: TicketQuery['ticket']['mentions']
+  subscribed?: TicketQuery['ticket']['subscribed']
   colorCode?: EnumTicketStateColorCode
   title?: TicketQuery['ticket']['title']
   number?: TicketQuery['ticket']['number']
@@ -153,7 +154,7 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
     tags: options?.tags || [],
     timeUnit: options?.timeUnit || null,
     timeUnitsPerType: options?.timeUnitsPerType || [],
-    subscribed: false,
+    subscribed: options?.subscribed || false,
     preferences: {},
     stateColorCode: options?.colorCode || EnumTicketStateColorCode.Open,
     firstResponseEscalationAt: null,
