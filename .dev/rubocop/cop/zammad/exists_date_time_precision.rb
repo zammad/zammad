@@ -3,7 +3,7 @@
 module RuboCop
   module Cop
     module Zammad
-      class ExistsDateTimePrecision < Cop
+      class ExistsDateTimePrecision < Base
         def_node_matcher :column?, <<-PATTERN
           $(send _ {:add_column :change_column} (sym _) (sym _) (sym :datetime) ... )
         PATTERN

@@ -23,7 +23,7 @@ class Service::User::TwoFactor::Base < Service::Base
   end
 
   def method_available?
-    method&.enabled? && method&.available?
+    method&.enabled? && method.available?
   end
 
   def user_preference

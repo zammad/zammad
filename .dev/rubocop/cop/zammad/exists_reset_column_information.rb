@@ -3,7 +3,7 @@
 module RuboCop
   module Cop
     module Zammad
-      class ExistsResetColumnInformation < Cop
+      class ExistsResetColumnInformation < Base
         def_node_matcher :table?, <<-PATTERN
           $(send _ :change_table ... )
         PATTERN
