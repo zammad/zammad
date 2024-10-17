@@ -8,24 +8,25 @@ import {
   EnumTicketStateColorCode,
   type Ticket,
 } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import ChecklistItems from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue'
 
 const items: Partial<ChecklistItem>[] = [
   {
-    id: '1',
+    id: convertToGraphQLId('ChecklistItem', 1),
     text: 'Foo',
     ticketReference: null,
     checked: false,
   },
   {
-    id: '2',
+    id: convertToGraphQLId('ChecklistItem', 2),
     text: 'Foo 2',
     ticketReference: null,
     checked: true,
   },
   {
-    id: '3',
+    id: convertToGraphQLId('ChecklistItem', 3),
     text: 'Foo 3',
     ticketReference: null,
     checked: false,
@@ -36,15 +37,23 @@ const renderChecklistItems = (
   items: Partial<ChecklistItem>[],
   title = 'Ticket demo title',
   readOnly = false,
+  updatingItemIds = new Set(),
+  isEditingNewItem = false,
+  isUpdatingOrder = false,
+  isUpdatingChecklistTitle = false,
 ) =>
   renderComponent(ChecklistItems, {
     props: {
       items,
       title,
       readOnly,
+      updatingItemIds,
       noDefaultTitle: true,
       onEditItem: vi.fn(),
       onUpdateTitle: vi.fn(),
+      isEditingNewItem,
+      isUpdatingOrder,
+      isUpdatingChecklistTitle,
     },
     form: true,
     router: true,
@@ -249,5 +258,71 @@ describe('ChecklistItems', () => {
         wrapper.queryByRole('button', { name: 'Action menu button' }),
       ).not.toBeInTheDocument()
     })
+  })
+
+  it('disables checklist item if waiting for server response', () => {
+    const itemId = convertToGraphQLId('ChecklistItem', 1)
+
+    const wrapper = renderChecklistItems(
+      items,
+      'Ticket demo title',
+      false,
+      new Set([itemId]),
+    )
+
+    expect(wrapper.getByTestId(itemId)).toBeDisabled()
+    expect(wrapper.getByTestId(itemId)).toHaveClass('pointer-events-none')
+    expect(wrapper.getByTestId(itemId)).toHaveClass('opacity-60')
+  })
+
+  it('disables add new item button if waiting for server response', () => {
+    const wrapper = renderChecklistItems(
+      items,
+      'Ticket demo title',
+      false,
+      new Set(),
+      true,
+      false,
+    )
+
+    expect(
+      wrapper.getByRole('button', { name: 'Create a new checklist item' }),
+    ).toBeDisabled()
+
+    expect(wrapper.getByRole('button', { name: 'Reorder' })).toBeDisabled()
+  })
+
+  it('disabled save button if waiting for server response on reorder', async () => {
+    const wrapper = renderChecklistItems(
+      items,
+      'Ticket demo title',
+      false,
+      new Set(),
+      false,
+      true,
+    )
+
+    await wrapper.events.click(wrapper.getByRole('button', { name: 'Reorder' }))
+
+    expect(wrapper.getByRole('button', { name: 'Save' })).toBeDisabled()
+    expect(wrapper.getByRole('button', { name: 'Cancel' })).toBeDisabled()
+  })
+
+  it('disabled checklist title if waiting for server response', () => {
+    const wrapper = renderChecklistItems(
+      items,
+      'Ticket demo title',
+      false,
+      new Set(),
+      false,
+      false,
+      true,
+    )
+
+    expect(wrapper.getByTestId('checklistTitle')).toBeDisabled()
+    expect(wrapper.getByTestId('checklistTitle')).toHaveClass(
+      'pointer-events-none',
+    )
+    expect(wrapper.getByTestId('checklistTitle')).toHaveClass('opacity-60')
   })
 })

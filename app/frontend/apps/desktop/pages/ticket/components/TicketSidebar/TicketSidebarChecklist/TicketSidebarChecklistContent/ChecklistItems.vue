@@ -17,7 +17,11 @@ interface Props {
   title: string
   items: ChecklistItemType[]
   readOnly: boolean
+  isUpdatingOrder: boolean
+  isEditingNewItem: boolean
+  isUpdatingChecklistTitle: boolean
   noDefaultTitle: boolean
+  updatingItemIds: Set<ID>
   onEditItem: (item: ChecklistItemType) => Promise<void>
   onUpdateTitle: (title: string) => Promise<void>
 }
@@ -53,7 +57,9 @@ dragAndDrop({
     // Library bug: The draggable attribute is not set always
     // Workaround to set the attribute manually
     // https://github.com/formkit/drag-and-drop/issues/96
+
     el.setAttribute('draggable', isReordering.value.toString())
+
     return isReordering.value
   },
   dropZoneClass: 'opacity-0',
@@ -100,10 +106,16 @@ defineExpose({
     <CommonInlineEdit
       id="checklistTitle"
       ref="title"
+      data-test-id="checklistTitle"
+      :class="{
+        'pointer-events-none opacity-60': isUpdatingChecklistTitle,
+      }"
       :value="title"
       :initial-edit-value="noDefaultTitle ? title : ''"
       block
       :disabled="readOnly"
+      :loading="isUpdatingChecklistTitle"
+      :aria-disabled="isUpdatingChecklistTitle"
       :label-attrs="{
         role: 'heading',
         'aria-level': '3',
@@ -118,6 +130,7 @@ defineExpose({
       tag="ul"
       name="none"
       class="col-span-2 mb-2 space-y-2"
+      :class="{ 'pointer-events-none opacity-60': isUpdatingOrder }"
     >
       <template v-for="item in checklistItems" :key="item.id">
         <li v-if="readOnly" class="flex gap-2 py-2">
@@ -156,7 +169,11 @@ defineExpose({
           :item="item"
           :class="{
             'cursor-grab active:cursor-grabbing': isReordering,
+            'pointer-events-none opacity-60': updatingItemIds.has(item.id),
           }"
+          :is-updating="updatingItemIds.has(item.id)"
+          :data-test-id="item.id"
+          :aria-disabled="updatingItemIds.has(item.id)"
           :is-reordering="isReordering"
           @remove-item="$emit('remove-item', $event)"
           @set-item-checked="$emit('set-item-checked', $event)"
@@ -174,12 +191,14 @@ defineExpose({
         <CommonButton
           v-if="!isReordering"
           prefix-icon="list"
+          :disabled="isEditingNewItem"
           @click="startReordering"
           >{{ $t('Reorder') }}
         </CommonButton>
         <CommonButton
           v-else
           :prefix-icon="isReordering ? 'check2' : 'list'"
+          :disabled="isUpdatingOrder"
           @click="resetOrder"
           >{{ $t('Cancel') }}
         </CommonButton>
@@ -192,6 +211,7 @@ defineExpose({
           v-if="!isReordering"
           v-tooltip="$t('Create a new checklist item')"
           size="medium"
+          :disabled="isEditingNewItem"
           class="col-end-3 justify-self-end ltr:mr-2 rtl:ml-2"
           icon="plus-square-fill"
           @click="addNewItem"
@@ -201,6 +221,7 @@ defineExpose({
           size="small"
           variant="submit"
           class="col-end-3 justify-self-end"
+          :disabled="isUpdatingOrder"
           @click="saveOrder"
         >
           {{ $t('Save') }}

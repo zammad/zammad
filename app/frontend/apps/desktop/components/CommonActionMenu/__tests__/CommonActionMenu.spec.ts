@@ -185,5 +185,44 @@ describe('CommonActionMenu', () => {
       })
       expect(view.getByLabelText('label foo-test-action')).toBeInTheDocument()
     })
+
+    it('supports disabling action menu', async () => {
+      const actions = [
+        {
+          key: 'delete-foo',
+          label: 'Delete Foo',
+          icon: 'trash3',
+          show: () => true,
+          onClick: (entity?: ObjectLike) => {
+            fn(entity?.id)
+          },
+        },
+        {
+          key: 'change-foo',
+          label: 'Change Foo',
+          icon: 'person-gear',
+          show: () => true,
+          onClick: (entity?: ObjectLike) => {
+            fn(entity?.id)
+          },
+        },
+      ]
+
+      // Testing if single action is presented
+      const wrapper = await renderActionMenu(actions, {
+        disabled: true,
+      })
+
+      expect(
+        wrapper.getByRole('button', { name: 'Action menu button' }),
+      ).toBeDisabled()
+
+      await wrapper.rerender({
+        actions: [actions[0]],
+        disabled: true,
+      })
+
+      expect(wrapper.getByRole('button', { name: 'Delete Foo' })).toBeDisabled()
+    })
   })
 })

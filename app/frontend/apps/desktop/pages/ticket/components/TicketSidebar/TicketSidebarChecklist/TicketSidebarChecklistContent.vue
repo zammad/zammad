@@ -2,7 +2,7 @@
 
 <script lang="ts" setup>
 import { cloneDeep } from 'lodash-es'
-import { computed, nextTick, useTemplateRef } from 'vue'
+import { computed, nextTick, ref, useTemplateRef } from 'vue'
 
 import { useConfirmation } from '#shared/composables/useConfirmation.ts'
 import { handleUserErrors } from '#shared/errors/utils.ts'
@@ -165,6 +165,20 @@ const itemDeleteMutation = new MutationHandler(
   },
 )
 
+const isUpdatingOrder = itemOrderMutation.loading()
+const isAddingNewItem = itemAddMutation.loading()
+const isAddingNewChecklist = addNewChecklistMutation.loading()
+const isUpdatingChecklistTitle = checklistTitleUpdateMutation.loading()
+const updatingItemIds = ref<Set<ID>>(new Set())
+
+const deleteUpdatingItemId = (id: ID) => {
+  updatingItemIds.value.delete(id)
+}
+
+const addUpdatingItemId = (id: ID) => {
+  updatingItemIds.value.add(id)
+}
+
 const modifyIncompleteItemCountCache = (increase: boolean) => {
   const currentCheckList = checklist.value!
   const previousIncompleteItemCount = currentCheckList.incomplete
@@ -274,19 +288,32 @@ const modifyItemsCache = (items: ChecklistItem[]) => {
 }
 
 const updateItem = async (itemId: string, input: TicketChecklistItemInput) => {
-  return itemUpsertMutation.send({
-    checklistId: checklist.value?.id as string,
-    checklistItemId: itemId,
-    input,
-  })
+  addUpdatingItemId(itemId)
+
+  return itemUpsertMutation
+    .send({
+      checklistId: checklist.value?.id as string,
+      checklistItemId: itemId,
+      input,
+    })
+    .finally(() => {
+      deleteUpdatingItemId(itemId)
+    })
 }
 
 const setItemCheckedState = async (item: ChecklistItem) => {
   const restoreCache = modifyCheckedCache(item)
-  await updateItem(item.id, { checked: item.checked }).catch((error) => {
-    restoreCache()
-    handleUserErrors(error)
-  })
+
+  addUpdatingItemId(item.id)
+
+  await updateItem(item.id, { checked: item.checked })
+    .catch((error) => {
+      restoreCache()
+      handleUserErrors(error)
+    })
+    .finally(() => {
+      deleteUpdatingItemId(item.id)
+    })
 }
 
 const addNewItem = async () =>
@@ -304,9 +331,14 @@ const addNewItem = async () =>
     .catch(handleUserErrors)
 
 const editItem = async (item: ChecklistItem) => {
+  addUpdatingItemId(item.id)
+
   return updateItem(item.id, { text: item.text })
     .then(() => {})
     .catch(handleUserErrors)
+    .finally(() => {
+      deleteUpdatingItemId(item.id)
+    })
 }
 
 const saveItemsOrder = (items: ChecklistItem[], stopReordering: () => void) => {
@@ -340,6 +372,8 @@ const removeItem = async (item: ChecklistItem) => {
 
   const restoreCache = modifyIncompleteItemCountCache(false)
 
+  addUpdatingItemId(item.id)
+
   return itemDeleteMutation
     .send({
       checklistId: checklist.value?.id as string,
@@ -349,6 +383,9 @@ const removeItem = async (item: ChecklistItem) => {
       modifyItemsCache(previousChecklistItems as ChecklistItem[])
       restoreCache()
       return handleUserErrors(error)
+    })
+    .finally(() => {
+      deleteUpdatingItemId(item.id)
     })
 }
 
@@ -386,9 +423,13 @@ const { isLoadingTemplates, checklistTemplatesMenuItems } =
           v-if="checklist"
           ref="checklist-items"
           :no-default-title="!!checklist.name"
+          :updating-item-ids="updatingItemIds"
           :title="checklistTitle"
-          :items="checklist?.items"
+          :items="checklist.items"
           :read-only="!isTicketEditable"
+          :is-updating-order="isUpdatingOrder"
+          :is-editing-new-item="isAddingNewItem"
+          :is-updating-checklist-title="isUpdatingChecklistTitle"
           @add-item="addNewItem"
           @remove-item="removeItem"
           @set-item-checked="setItemCheckedState"
@@ -401,6 +442,7 @@ const { isLoadingTemplates, checklistTemplatesMenuItems } =
             variant="primary"
             size="medium"
             block
+            :disabled="isAddingNewChecklist"
             @click="createNewChecklist()"
           >
             {{ $t('Add Empty Checklist') }}

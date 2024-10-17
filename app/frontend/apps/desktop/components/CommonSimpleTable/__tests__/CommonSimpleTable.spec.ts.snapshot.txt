@@ -77,6 +77,7 @@
           class="flex items-center justify-center"
           defaultbuttonvariant="neutral"
           defaulticon="three-dots-vertical"
+          disabled="false"
           entity="[object Object]"
           hidearrow="false"
           nopaddeddefaultbutton="true"

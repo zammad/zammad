@@ -14,6 +14,7 @@ import CommonTicketLabel from '#desktop/components/CommonTicketLabel/CommonTicke
 interface Props {
   item: ChecklistItemType
   isReordering: boolean
+  isUpdating?: boolean
   onEditItem: (item: ChecklistItemType) => Promise<void>
 }
 
@@ -141,6 +142,7 @@ defineExpose({
       detect-links
       alternative-background
       block
+      :loading="isUpdating"
       :value="item.text"
       :placeholder="$t('Text or ticket identifier')"
       :class="{ 'pointer-events-none': isReordering }"

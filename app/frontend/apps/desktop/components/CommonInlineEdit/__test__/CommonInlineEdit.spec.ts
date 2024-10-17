@@ -23,7 +23,7 @@ const renderInlineEdit = (props: Partial<Props> = {}) => {
   })
 }
 
-describe('CommonInlineEdit', async () => {
+describe('CommonInlineEdit', () => {
   it('shows by default non editable node', () => {
     const wrapper = renderInlineEdit()
 
@@ -52,18 +52,14 @@ describe('CommonInlineEdit', async () => {
     await wrapper.events.type(wrapper.getByRole('textbox'), ' update')
 
     await waitFor(() =>
-      expect(
-        wrapper.getByRole('textbox', { name: 'Inline Edit Label' }),
-      ).toBeInTheDocument(),
+      expect(wrapper.getByRole('textbox')).toBeInTheDocument(),
     )
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Submit' }))
 
     expect(submitEditCallbackSpy).toHaveBeenCalledWith('test value update')
 
-    expect(
-      wrapper.queryByRole('textbox', { name: 'Inline Edit Label' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('textbox')).not.toBeInTheDocument()
   })
 
   it('submits edit on enter key', async () => {
@@ -78,9 +74,7 @@ describe('CommonInlineEdit', async () => {
     await wrapper.events.type(wrapper.getByRole('textbox'), ' update 2')
 
     await waitFor(() =>
-      expect(
-        wrapper.getByRole('textbox', { name: 'Inline Edit Label' }),
-      ).toBeInTheDocument(),
+      expect(wrapper.getByRole('textbox')).toBeInTheDocument(),
     )
 
     await wrapper.events.keyboard('{enter}')
@@ -100,9 +94,7 @@ describe('CommonInlineEdit', async () => {
     await wrapper.events.type(wrapper.getByRole('textbox'), ' update 2')
 
     await waitFor(() =>
-      expect(
-        wrapper.getByRole('textbox', { name: 'Inline Edit Label' }),
-      ).toBeInTheDocument(),
+      expect(wrapper.getByRole('textbox')).toBeInTheDocument(),
     )
 
     await fireEvent.click(document.body)
@@ -124,16 +116,12 @@ describe('CommonInlineEdit', async () => {
     await wrapper.events.type(wrapper.getByRole('textbox'), ' update')
 
     await waitFor(() =>
-      expect(
-        wrapper.getByRole('textbox', { name: 'Inline Edit Label' }),
-      ).toBeInTheDocument(),
+      expect(wrapper.getByRole('textbox')).toBeInTheDocument(),
     )
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Submit' }))
 
-    expect(
-      wrapper.getByRole('textbox', { name: 'Inline Edit Label' }),
-    ).toBeInTheDocument()
+    expect(wrapper.getByRole('textbox')).toBeInTheDocument()
   })
 
   it('focuses field on edit', async () => {
@@ -142,14 +130,10 @@ describe('CommonInlineEdit', async () => {
     await wrapper.events.click(wrapper.getByRole('button'))
 
     await waitFor(() =>
-      expect(
-        wrapper.getByRole('textbox', { name: 'Inline Edit Label' }),
-      ).toBeInTheDocument(),
+      expect(wrapper.getByRole('textbox')).toBeInTheDocument(),
     )
 
-    expect(
-      wrapper.getByRole('textbox', { name: 'Inline Edit Label' }),
-    ).toHaveFocus()
+    expect(wrapper.getByRole('textbox')).toHaveFocus()
   })
 
   it('cancels on button click', async () => {
@@ -159,9 +143,7 @@ describe('CommonInlineEdit', async () => {
 
     await wrapper.events.click(wrapper.getByRole('button', { name: 'Cancel' }))
 
-    expect(
-      wrapper.queryByRole('textbox', { name: 'Inline Edit Label' }),
-    ).not.toBeInTheDocument()
+    expect(wrapper.queryByRole('textbox')).not.toBeInTheDocument()
 
     expect(wrapper.emitted()['cancel-edit']).toBeTruthy()
   })
@@ -172,9 +154,7 @@ describe('CommonInlineEdit', async () => {
     await wrapper.events.click(wrapper.getByRole('button'))
 
     await waitFor(() =>
-      expect(
-        wrapper.getByRole('textbox', { name: 'Inline Edit Label' }),
-      ).toBeInTheDocument(),
+      expect(wrapper.getByRole('textbox')).toBeInTheDocument(),
     )
 
     await wrapper.events.keyboard('{esc}')
@@ -188,9 +168,7 @@ describe('CommonInlineEdit', async () => {
     await wrapper.events.click(wrapper.getByRole('button'))
 
     await waitFor(() =>
-      expect(
-        wrapper.getByRole('textbox', { name: 'Inline Edit Label' }),
-      ).toBeInTheDocument(),
+      expect(wrapper.getByRole('textbox')).toBeInTheDocument(),
     )
 
     await wrapper.events.clear(wrapper.getByRole('textbox'))
@@ -199,9 +177,7 @@ describe('CommonInlineEdit', async () => {
 
     expect(wrapper.getByRole('button', { name: 'Submit' })).toBeDisabled()
 
-    expect(
-      wrapper.getByRole('textbox', { name: 'Inline Edit Label' }),
-    ).toBeInTheDocument()
+    expect(wrapper.getByRole('textbox')).toBeInTheDocument()
   })
 
   it('supports adding attributes on label', () => {
@@ -252,6 +228,18 @@ describe('CommonInlineEdit', async () => {
     await wrapper.events.click(wrapper.getByText('default Value'))
 
     expect(wrapper.getByRole('textbox')).toHaveValue('initial Value')
+  })
+
+  it('support loading', async () => {
+    const wrapper = renderInlineEdit({
+      initialEditValue: 'initial Value',
+      value: 'default Value',
+      loading: true,
+    })
+
+    await wrapper.events.click(wrapper.getByText('default Value'))
+
+    expect(wrapper.getByRole('textbox')).toBeDisabled()
   })
 
   it('supports adding alternative background color', async () => {

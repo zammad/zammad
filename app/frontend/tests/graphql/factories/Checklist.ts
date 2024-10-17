@@ -13,14 +13,14 @@ export default (): DeepPartial<Checklist> => {
     completed: false,
     incomplete: 1,
     total: 1,
-    items: [
-      {
-        __typename: 'ChecklistItem',
-        id: convertToGraphQLId('Checklist::Item', 999),
-        text: 'Test checklist item',
-        checked: false,
-        ticketReference: null,
-      },
-    ],
+    // items: [
+    //   {
+    //     __typename: 'ChecklistItem',
+    //     id: convertToGraphQLId('Checklist::Item', 999),
+    //     text: 'Test checklist item',
+    //     checked: false,
+    //     ticketReference: null,
+    //   },
+    // ],
   }
 }

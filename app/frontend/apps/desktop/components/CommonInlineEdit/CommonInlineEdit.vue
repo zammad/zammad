@@ -34,6 +34,7 @@ export interface Props {
   submitLabel?: string
   cancelLabel?: string
   detectLinks?: boolean
+  loading?: boolean
   labelAttrs?: Record<string, string>
   label?: string
   block?: boolean
@@ -117,23 +118,21 @@ const submitEdit = () => {
   if (!props.onSubmitEdit) return undefined
 
   // Don't trigger a mutation if there is no change
-  if (props.value === newEditValue.value) {
-    stopEditing(false)
-    return
-  }
+  if (props.value === newEditValue.value) return stopEditing(false)
 
   if (!checkValidity(inputValue.value)) return
 
   const submitEditResult = props.onSubmitEdit(inputValue.value)
 
-  if (submitEditResult instanceof Promise)
+  if (submitEditResult instanceof Promise) {
     return submitEditResult
       .then((result) => {
         result?.()
 
         stopEditing(false)
       })
-      .catch(() => {})
+      .catch(() => {}) // :TODO if promise rejects should we not show something to the user?
+  }
 
   submitEditResult?.()
 
@@ -197,9 +196,14 @@ watch(isEditing, () => {
 })
 
 const vFocus = (el: HTMLElement) => {
-  nextTick(() => el.focus())
-
   checkValidity(inputValue.value)
+
+  nextTick(() => {
+    // Add this to the event loop to ensure when clicking fast between inputs does not loose focus
+    setTimeout(() => {
+      el.focus()
+    }, 0)
+  })
 }
 
 // Styling
@@ -326,11 +330,9 @@ defineExpose({
           key="editable-content-key"
           v-model.trim="inputValue"
           v-focus
-          :aria-label="label"
-          tabindex="0"
           class="-:text-gray-100 -:dark:text-neutral-400 block w-full flex-shrink-0 bg-transparent outline-none"
           :class="[{ grow: block }, classes?.input || '']"
-          :disabled="disabled"
+          :disabled="disabled || loading"
           :placeholder="placeholder"
           @keydown.stop.enter="handleEnterKey"
         />

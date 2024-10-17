@@ -30,6 +30,7 @@ export interface Props {
   placement?: Placement
   orientation?: Orientation
   hideArrow?: boolean
+  disabled?: boolean
   noSingleActionMode?: boolean
   customMenuButtonLabel?: string
   defaultIcon?: string
@@ -99,6 +100,7 @@ const variantClasses = computed(() => {
         v-tooltip="$t(singleActionAriaLabel)"
         class="flex focus:outline-none focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800"
         :aria-label="$t(singleActionAriaLabel)"
+        :disabled="disabled"
         :link="singleMenuItem.link"
       >
         <CommonIcon
@@ -114,6 +116,7 @@ const variantClasses = computed(() => {
         class="rounded-sm p-0"
         :class="[variantClasses]"
         :size="buttonSize"
+        :disabled="disabled"
         :aria-label="$t(singleActionAriaLabel)"
         :icon="singleMenuItem?.icon"
         @click="singleMenuItem?.onClick?.(props.entity as ObjectLike)"
@@ -127,6 +130,7 @@ const variantClasses = computed(() => {
         :aria-label="$t(customMenuButtonLabel || 'Action menu button')"
         aria-haspopup="true"
         :aria-controls="popoverIsOpen ? menuId : undefined"
+        :disabled="disabled"
         :class="[
           {
             'outline outline-1 outline-offset-1 outline-blue-800':
