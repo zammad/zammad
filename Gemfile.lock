@@ -116,7 +116,7 @@ GEM
       minitest (>= 5.1)
       mutex_m
       tzinfo (~> 2.0)
-    acts_as_list (1.2.2)
+    acts_as_list (1.2.3)
       activerecord (>= 6.1)
       activesupport (>= 6.1)
     addressable (2.8.7)
