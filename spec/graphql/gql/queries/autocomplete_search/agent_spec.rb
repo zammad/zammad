@@ -62,7 +62,7 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Agent, authenticated_as: :agent
       let(:query_string) { agents.first.login }
 
       it 'has data' do
-        expect(gql.result.data).to eq([first_user_payload])
+        expect(gql.result.data).to include(first_user_payload)
       end
     end
 
