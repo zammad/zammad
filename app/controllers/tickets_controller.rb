@@ -609,7 +609,7 @@ class TicketsController < ApplicationController
   #
   # @summary          Download of example CSV file.
   # @notes            The requester have 'admin' permissions to be able to download it.
-  # @example          curl -u 'me@example.com:test' http://localhost:3000/api/v1/tickets/import_example
+  # @example          curl -u #{login}:#{password} http://localhost:3000/api/v1/tickets/import_example
   #
   # @response_message 200 File download.
   # @response_message 403 Forbidden / Invalid session.
@@ -630,8 +630,8 @@ class TicketsController < ApplicationController
   #
   # @summary          Starts import.
   # @notes            The requester have 'admin' permissions to be create a new import.
-  # @example          curl -u 'me@example.com:test' -F 'file=@/path/to/file/tickets.csv' 'https://your.zammad/api/v1/tickets/import?try=true'
-  # @example          curl -u 'me@example.com:test' -F 'file=@/path/to/file/tickets.csv' 'https://your.zammad/api/v1/tickets/import'
+  # @example          curl -u #{login}:#{password} -F 'file=@/path/to/file/tickets.csv' 'https://your.zammad/api/v1/tickets/import?try=true'
+  # @example          curl -u #{login}:#{password} -F 'file=@/path/to/file/tickets.csv' 'https://your.zammad/api/v1/tickets/import'
   #
   # @response_message 201 Import started.
   # @response_message 403 Forbidden / Invalid session.
