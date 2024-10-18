@@ -845,17 +845,14 @@ export const mockOperation = (
       throw new Error(
         `unsupported operation named ${operationName} or ${selection.name.value}`,
       )
-  } else if (!operationType) {
-    throw new Error(`unsupported operation named ${operationName}`)
   }
 
   const query: any = { __typename: queriesTypes[operation] }
-  const rootName = operationType.name
+  const rootName = operationType?.name || operationName
   logger.log(`[MOCKER] mocking "${rootName}" ${operation}`)
 
-  const information = getFieldInformation(operationType.type)
-
   if (selectionSet.selections.length === 1) {
+    const information = getFieldInformation(operationType.type)
     const selection = selectionSet.selections[0]
     if (selection.kind !== Kind.FIELD) {
       throw new Error(
@@ -883,7 +880,15 @@ export const mockOperation = (
       if (selection.kind !== Kind.FIELD) {
         throw new Error(`unsupported selection kind ${selection.kind}`)
       }
-      const operationType = getOperationDefinition(operation, operationName)
+      const operationType = getOperationDefinition(
+        operation,
+        selection.name.value,
+      )
+
+      if (!operationType) {
+        throw new Error(`unsupported operation named ${operationName}`)
+      }
+
       const fieldName = selection.alias?.value || selection.name.value
       query[fieldName] = buildObjectFromInformation(
         query,

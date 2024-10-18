@@ -5,6 +5,7 @@ import { waitFor } from '@testing-library/vue'
 
 import { getByIconName } from '#tests/support/components/iconQueries.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { nullableMock } from '#tests/support/utils.ts'
 
 import {
@@ -252,6 +253,38 @@ describe('Form - Field - Ticket - Query', () => {
     expect(calls.at(-1)?.variables).toEqual({
       input: expect.objectContaining({
         exceptTicketInternalId: 999,
+      }),
+    })
+  })
+
+  it('supports removing ticket hook from filter', async () => {
+    mockApplicationConfig({
+      ticket_hook: 'Ticket#',
+    })
+
+    const wrapper = renderComponent(FormKit, {
+      ...wrapperParameters,
+      props: {
+        ...testProps,
+        debounceInterval: 0,
+      },
+    })
+
+    await wrapper.events.click(await wrapper.findByLabelText('Select…'))
+
+    const filterElement = wrapper.getByRole('searchbox')
+
+    mockAutocompleteSearchTicketQuery({
+      autocompleteSearchTicket: [...testOptions.slice(0, 1)],
+    })
+
+    await wrapper.events.type(filterElement, 'Ticket#123456')
+
+    const calls = await waitForAutocompleteSearchTicketQueryCalls()
+
+    expect(calls.at(-1)?.variables).toEqual({
+      input: expect.objectContaining({
+        query: '123456',
       }),
     })
   })

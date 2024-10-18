@@ -2500,6 +2500,10 @@ export type Queries = {
   ticketSignature?: Maybe<Signature>;
   /** Fetch tickets of a given ticket overview */
   ticketsByOverview: TicketConnection;
+  /** Fetch recent customer tickets */
+  ticketsRecentByCustomer: Array<Ticket>;
+  /** Fetch tickets recently viewed by the current user */
+  ticketsRecentlyViewed: Array<Ticket>;
   /** Translations for a given locale */
   translations?: Maybe<TranslationsPayload>;
   /** Fetch a user information by ID */
@@ -2747,6 +2751,21 @@ export type QueriesTicketsByOverviewArgs = {
   orderBy?: InputMaybe<Scalars['String']['input']>;
   orderDirection?: InputMaybe<EnumOrderDirection>;
   overviewId: Scalars['ID']['input'];
+};
+
+
+/** All available queries */
+export type QueriesTicketsRecentByCustomerArgs = {
+  customerId: Scalars['ID']['input'];
+  exceptTicketInternalId?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+};
+
+
+/** All available queries */
+export type QueriesTicketsRecentlyViewedArgs = {
+  exceptTicketInternalId?: InputMaybe<Scalars['Int']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
 };
 
 
@@ -5409,6 +5428,15 @@ export type TicketChecklistQueryVariables = Exact<{
 
 export type TicketChecklistQuery = { __typename?: 'Queries', ticketChecklist?: { __typename?: 'Checklist', id: string, name?: string | null, completed: boolean, incomplete: number, items: Array<{ __typename?: 'ChecklistItem', id: string, text: string, checked: boolean, ticketReference?: { __typename?: 'TicketReference', ticket?: { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', id: string, name: string } } | null } | null }> } | null };
 
+export type TicketRelationAndRecentTicketListsQueryVariables = Exact<{
+  ticketId: Scalars['Int']['input'];
+  customerId: Scalars['ID']['input'];
+  limit?: InputMaybe<Scalars['Int']['input']>;
+}>;
+
+
+export type TicketRelationAndRecentTicketListsQuery = { __typename?: 'Queries', ticketsRecentByCustomer: Array<{ __typename?: 'Ticket', number: string, internalId: number, id: string, title: string, createdAt: string, stateColorCode: EnumTicketStateColorCode, customer: { __typename?: 'User', id: string, fullname?: string | null }, organization?: { __typename?: 'Organization', id: string, name?: string | null } | null, group: { __typename?: 'Group', id: string, name?: string | null }, state: { __typename?: 'TicketState', id: string, name: string } }>, ticketsRecentlyViewed: Array<{ __typename?: 'Ticket', number: string, internalId: number, id: string, title: string, createdAt: string, stateColorCode: EnumTicketStateColorCode, customer: { __typename?: 'User', id: string, fullname?: string | null }, organization?: { __typename?: 'Organization', id: string, name?: string | null } | null, group: { __typename?: 'Group', id: string, name?: string | null }, state: { __typename?: 'TicketState', id: string, name: string } }> };
+
 export type ChecklistTemplateUpdatesSubscriptionVariables = Exact<{
   onlyActive?: InputMaybe<Scalars['Boolean']['input']>;
 }>;
@@ -6082,6 +6110,8 @@ export type ObjectAttributeValuesFragment = { __typename?: 'ObjectAttributeValue
 export type PublicLinkAttributesFragment = { __typename?: 'PublicLink', id: string, link: string, title: string, description?: string | null, newTab: boolean };
 
 export type SessionFragment = { __typename?: 'Session', id: string, afterAuth?: { __typename?: 'SessionAfterAuth', type: EnumAfterAuthType, data?: any | null } | null };
+
+export type SimpleTicketAttributeFragment = { __typename?: 'Ticket', number: string, internalId: number, id: string, title: string, createdAt: string, stateColorCode: EnumTicketStateColorCode, customer: { __typename?: 'User', id: string, fullname?: string | null }, organization?: { __typename?: 'Organization', id: string, name?: string | null } | null, group: { __typename?: 'Group', id: string, name?: string | null }, state: { __typename?: 'TicketState', id: string, name: string } };
 
 export type UserAttributesFragment = { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, image?: string | null, outOfOffice?: boolean | null, outOfOfficeStartAt?: string | null, outOfOfficeEndAt?: string | null, preferences?: any | null, hasSecondaryOrganizations?: boolean | null, outOfOfficeReplacement?: { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, login?: string | null, phone?: string | null, email?: string | null } | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null, organization?: { __typename?: 'Organization', id: string, internalId: number, name?: string | null, active?: boolean | null, objectAttributeValues?: Array<{ __typename?: 'ObjectAttributeValue', value?: any | null, renderedLink?: string | null, attribute: { __typename?: 'ObjectManagerFrontendAttribute', name: string, display: string } }> | null } | null, personalSettings?: { __typename?: 'UserPersonalSettings', notificationConfig?: { __typename?: 'UserPersonalSettingsNotificationConfig', groupIds?: Array<number> | null, matrix?: { __typename?: 'UserPersonalSettingsNotificationMatrix', create?: { __typename?: 'UserPersonalSettingsNotificationMatrixRow', channel?: { __typename?: 'UserPersonalSettingsNotificationMatrixChannel', email?: boolean | null, online?: boolean | null } | null, criteria?: { __typename?: 'UserPersonalSettingsNotificationMatrixCriteria', no?: boolean | null, ownedByMe?: boolean | null, ownedByNobody?: boolean | null, subscribed?: boolean | null } | null } | null, escalation?: { __typename?: 'UserPersonalSettingsNotificationMatrixRow', channel?: { __typename?: 'UserPersonalSettingsNotificationMatrixChannel', email?: boolean | null, online?: boolean | null } | null, criteria?: { __typename?: 'UserPersonalSettingsNotificationMatrixCriteria', no?: boolean | null, ownedByMe?: boolean | null, ownedByNobody?: boolean | null, subscribed?: boolean | null } | null } | null, reminderReached?: { __typename?: 'UserPersonalSettingsNotificationMatrixRow', channel?: { __typename?: 'UserPersonalSettingsNotificationMatrixChannel', email?: boolean | null, online?: boolean | null } | null, criteria?: { __typename?: 'UserPersonalSettingsNotificationMatrixCriteria', no?: boolean | null, ownedByMe?: boolean | null, ownedByNobody?: boolean | null, subscribed?: boolean | null } | null } | null, update?: { __typename?: 'UserPersonalSettingsNotificationMatrixRow', channel?: { __typename?: 'UserPersonalSettingsNotificationMatrixChannel', email?: boolean | null, online?: boolean | null } | null, criteria?: { __typename?: 'UserPersonalSettingsNotificationMatrixCriteria', no?: boolean | null, ownedByMe?: boolean | null, ownedByNobody?: boolean | null, subscribed?: boolean | null } | null } | null } | null } | null, notificationSound?: { __typename?: 'UserPersonalSettingsNotificationSound', enabled?: boolean | null, file?: EnumNotificationSoundFile | null } | null } | null };
 

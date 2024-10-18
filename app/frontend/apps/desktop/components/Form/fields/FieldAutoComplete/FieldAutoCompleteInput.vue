@@ -93,6 +93,8 @@ const {
 watch(
   () => props.context.options,
   (options) => {
+    if (!options) return
+
     localOptions.value = options || []
   },
 )
@@ -156,7 +158,11 @@ const clearFilter = () => {
   filter.value = ''
 }
 
-const trimmedFilter = computed(() => filter.value.trim())
+const trimmedFilter = computed(() => {
+  if (!props.context.stripFilter) return filter.value.trim()
+
+  return props.context.stripFilter(filter.value.trim())
+})
 
 const debouncedFilter = refDebounced(
   trimmedFilter,
@@ -291,6 +297,7 @@ const availableOptions = computed<AutoCompleteOption[]>((oldValue) => {
 
   // :TODO check why bug occurs when selecting by keyboard
   // Remove duplicates. Sometimes option appears twice in the list.
+  // ... The problem is that it sometimes it can not be unique related to same id from different objects in one field.
   return uniqBy(currentOptions, 'value')
   // return currentOptions
 })

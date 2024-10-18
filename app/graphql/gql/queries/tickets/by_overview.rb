@@ -1,7 +1,7 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 module Gql::Queries
-  class TicketsByOverview < BaseQuery
+  class Tickets::ByOverview < BaseQuery
 
     description 'Fetch tickets of a given ticket overview'
 

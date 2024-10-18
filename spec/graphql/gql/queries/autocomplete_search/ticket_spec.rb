@@ -75,7 +75,7 @@ RSpec.describe Gql::Queries::AutocompleteSearch::Ticket, authenticated_as: :agen
         let(:second_ticket_payload) do
           {
             'value'   => gql.id(tickets.second),
-            'label'   => "#{Setting.get('ticket_hook')}#{Setting.get('ticket_hook_divider')}#{tickets.second.number} - #{tickets.second.title}",
+            'label'   => "#{Setting.get('ticket_hook')}#{tickets.second.number} - #{tickets.second.title}",
             'heading' => tickets.second.customer.fullname,
             'ticket'  => { 'number' => tickets.second.number },
           }

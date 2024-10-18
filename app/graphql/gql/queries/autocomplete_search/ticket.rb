@@ -49,7 +49,7 @@ module Gql::Queries
     def coerce_to_result(ticket)
       {
         value:   Gql::ZammadSchema.id_from_object(ticket),
-        label:   "#{ticket_hook}#{ticket_hook_divider}#{ticket.number} - #{ticket.title}",
+        label:   "#{ticket_hook}#{ticket.number} - #{ticket.title}",
         heading: ticket.customer.fullname,
         ticket:  ticket,
       }
@@ -64,10 +64,6 @@ module Gql::Queries
 
     def ticket_hook
       @ticket_hook ||= Setting.get('ticket_hook')
-    end
-
-    def ticket_hook_divider
-      @ticket_hook_divider ||= Setting.get('ticket_hook_divider')
     end
   end
 end

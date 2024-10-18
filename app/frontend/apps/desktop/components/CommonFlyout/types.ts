@@ -4,7 +4,7 @@ import type { FormRef } from '#shared/components/Form/types.ts'
 
 import { type Props as ButtonProps } from '#desktop/components/CommonButton/CommonButton.vue'
 
-export type FlyoutSizes = 'medium'
+export type FlyoutSizes = 'medium' | 'large'
 
 export interface ActionFooterOptions {
   hideActionButton?: boolean

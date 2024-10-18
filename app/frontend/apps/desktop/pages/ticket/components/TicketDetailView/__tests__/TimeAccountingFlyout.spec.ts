@@ -183,4 +183,16 @@ describe('TimeAccountingFlyout.vue', () => {
       },
     ])
   })
+
+  it.todo('should autofocus accounted time on mounted', async () => {
+    const wrapper = await renderTimeAccountingFlyout()
+
+    await waitForNextTick()
+
+    // :TODO in test env it does not focus the input but the button? Investigate.
+    expect(
+      // await wrapper.findByPlaceholderText('Enter the time you want to record'),
+      wrapper.getByPlaceholderText('Enter the time you want to record'),
+    ).toHaveFocus()
+  })
 })

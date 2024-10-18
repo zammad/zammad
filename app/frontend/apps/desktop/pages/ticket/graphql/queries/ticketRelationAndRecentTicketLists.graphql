@@ -1,0 +1,16 @@
+query ticketRelationAndRecentTicketLists(
+  $ticketId: Int!
+  $customerId: ID!
+  $limit: Int
+) {
+  ticketsRecentByCustomer(
+    customerId: $customerId
+    limit: $limit
+    exceptTicketInternalId: $ticketId
+  ) {
+    ...simpleTicketAttribute
+  }
+  ticketsRecentlyViewed(exceptTicketInternalId: $ticketId, limit: $limit) {
+    ...simpleTicketAttribute
+  }
+}

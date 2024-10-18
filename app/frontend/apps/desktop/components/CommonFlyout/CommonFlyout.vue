@@ -92,7 +92,7 @@ const action = async () => {
 
 const flyoutId = `flyout-${props.name}`
 
-const flyoutSize = { medium: 500 }
+const flyoutSize = { medium: 500, large: 800 }
 
 // Width control over flyout
 let flyoutContainerWidth: Ref<number>
@@ -254,7 +254,7 @@ onMounted(() => {
           v-if="headerTitle"
           :id="`${flyoutId}-title`"
           tag="h2"
-          class="min-h-7 grow"
+          class="min-h-7 grow gap-1.5"
           size="large"
           :prefix-icon="headerIcon"
           icon-color="text-stone-200 dark:text-neutral-500"

@@ -30,6 +30,7 @@ export const autoCompleteProps = [
   'clearable',
   'debounceInterval',
   'defaultFilter',
+  'stripFilter',
   'limit',
   'multiple',
   'noOptionsLabelTranslation',

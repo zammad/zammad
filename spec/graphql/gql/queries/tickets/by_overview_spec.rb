@@ -2,7 +2,7 @@
 
 require 'rails_helper'
 
-RSpec.describe Gql::Queries::TicketsByOverview, type: :graphql do
+RSpec.describe Gql::Queries::Tickets::ByOverview, type: :graphql do
 
   context 'when fetching ticket overviews' do
     let(:agent)     { create(:agent) }

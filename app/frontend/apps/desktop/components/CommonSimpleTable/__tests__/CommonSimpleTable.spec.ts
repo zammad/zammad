@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { waitFor } from '@testing-library/vue'
+import { vi } from 'vitest'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 
@@ -53,7 +54,7 @@ beforeEach(() => {
   i18n.setTranslationMap(new Map([['Role', 'Rolle']]))
 })
 
-describe('CommonSimpleTable.vue', () => {
+describe('CommonSimpleTable', () => {
   it('displays the table without actions', async () => {
     const view = renderTable({
       headers: tableHeaders,
@@ -174,5 +175,53 @@ describe('CommonSimpleTable.vue', () => {
         view.getByLabelText('Some text to be truncated'),
       ).toBeInTheDocument()
     })
+  })
+
+  it('supports header slot', () => {
+    const view = renderTable(
+      {
+        headers: tableHeaders,
+        items: tableItems,
+        actions: tableActions,
+      },
+      {
+        slots: {
+          'column-header-name': '<div>Custom header</div>',
+        },
+      },
+    )
+
+    expect(view.getByText('Custom header')).toBeInTheDocument()
+  })
+
+  it('supports listening for row click events', async () => {
+    const mockedCallback = vi.fn()
+
+    const item = tableItems[0]
+    const wrapper = renderComponent({
+      components: { CommonSimpleTable },
+      setup() {
+        return {
+          mockedCallback,
+          tableHeaders,
+          items: [item],
+        }
+      },
+      template: `<CommonSimpleTable @click-row="mockedCallback" :headers="tableHeaders" :items="items"/>`,
+    })
+
+    expect(
+      wrapper.getByRole('button', { name: 'Select table row' }),
+    ).toBeInTheDocument()
+
+    await wrapper.events.click(wrapper.getByText('Lindsay Walton'))
+
+    expect(mockedCallback).toHaveBeenCalledWith(item, expect.any(MouseEvent))
+
+    wrapper.getByRole('button', { name: 'Select table row' }).focus()
+
+    await wrapper.events.keyboard('{enter}')
+
+    expect(mockedCallback).toHaveBeenCalledWith(item, expect.any(MouseEvent))
   })
 })

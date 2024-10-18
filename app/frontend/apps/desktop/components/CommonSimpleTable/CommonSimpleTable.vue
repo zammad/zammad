@@ -1,6 +1,8 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { computed } from 'vue'
+
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 
@@ -10,9 +12,14 @@ export interface Props {
   headers: TableHeader[]
   items: TableItem[]
   actions?: MenuItem[]
+  onClickRow?: (tableItem: TableItem, event: MouseEvent | KeyboardEvent) => void
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
+
+const emit = defineEmits<{
+  'click-row': [TableItem, MouseEvent | KeyboardEvent]
+}>()
 
 // :INFO - This would only would work on runtime, when keys are computed
 // :TODO - Find a way to infer the types on compile time or remove it completely
@@ -32,14 +39,34 @@ const cellAlignmentClasses = {
   left: 'text-left',
 }
 
-const rowBackgroundClasses = 'bg-blue-200 dark:bg-gray-700'
-
 const columnSeparatorClasses =
   'border-r border-neutral-100 dark:border-gray-900'
 
 const getTooltipText = (item: TableItem, header: TableHeader) => {
   return header.truncate ? item[header.key] : undefined
 }
+
+const rowEventHandler = computed(() => {
+  if (!props.onClickRow) return { attrs: {}, getEvents: () => ({}) }
+
+  // We bind this only if component instance receives event handler
+  return {
+    attrs: {
+      role: 'button',
+      tabindex: 0,
+      ariaLabel: __('Select table row'),
+      class:
+        'focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800',
+    },
+    getEvents: (item: TableItem) => ({
+      click: (event: MouseEvent) => emit('click-row', item, event),
+      keydown: (event: KeyboardEvent) => {
+        if (event.key !== 'Enter') return
+        emit('click-row', item, event)
+      },
+    }),
+  }
+})
 </script>
 
 <template>
@@ -54,14 +81,15 @@ const getTooltipText = (item: TableItem, header: TableHeader) => {
           header.columnSeparator && columnSeparatorClasses,
         ]"
       >
-        <CommonLabel
-          class="font-normal text-stone-200 dark:text-neutral-500"
-          :class="[cellAlignmentClasses[header.alignContent || 'left']]"
-          size="small"
-          >{{
-            $t(header.label, ...(header.labelPlaceholder || []))
-          }}</CommonLabel
-        >
+        <slot :name="`column-header-${header.key}`" :header="header">
+          <CommonLabel
+            class="font-normal text-stone-200 dark:text-neutral-500"
+            :class="[cellAlignmentClasses[header.alignContent || 'left']]"
+            size="small"
+          >
+            {{ $t(header.label, ...(header.labelPlaceholder || [])) }}
+          </CommonLabel>
+        </slot>
 
         <slot :name="`header-suffix-${header.key}`" :item="header" />
       </th>
@@ -74,13 +102,18 @@ const getTooltipText = (item: TableItem, header: TableHeader) => {
       </th>
     </thead>
     <tbody>
-      <tr v-for="(item, index) in items" :key="item.id">
+      <tr
+        v-for="item in items"
+        :key="item.id"
+        class="odd:bg-blue-200 odd:dark:bg-gray-700"
+        v-bind="rowEventHandler.attrs"
+        v-on="rowEventHandler.getEvents(item)"
+      >
         <td
           v-for="header in headers"
           :key="`${item.id}-${header.key}`"
           class="h-10 p-2.5 text-sm first:rounded-s-md last:rounded-e-md"
           :class="[
-            (index + 1) % 2 && rowBackgroundClasses,
             header.columnSeparator && columnSeparatorClasses,
             cellAlignmentClasses[header.alignContent || 'left'],
             {
@@ -118,7 +151,6 @@ const getTooltipText = (item: TableItem, header: TableHeader) => {
         <td
           v-if="actions"
           class="h-10 p-2.5 text-center first:rounded-s-md last:rounded-e-md"
-          :class="{ 'bg-blue-200 dark:bg-gray-700': (index + 1) % 2 }"
         >
           <slot name="actions" v-bind="{ actions, item }">
             <CommonActionMenu

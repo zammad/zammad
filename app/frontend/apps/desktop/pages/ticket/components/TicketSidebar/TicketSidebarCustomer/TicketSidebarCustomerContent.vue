@@ -18,7 +18,7 @@ import CommonSimpleEntityList from '#desktop/components/CommonSimpleEntityList/C
 import { EntityType } from '#desktop/components/CommonSimpleEntityList/types.ts'
 import NavigationMenuList from '#desktop/components/NavigationMenu/NavigationMenuList.vue'
 import { NavigationMenuDensity } from '#desktop/components/NavigationMenu/types.ts'
-import { useChangeCustomerMenuItem } from '#desktop/pages/ticket/components/TicketSidebar/TicketDetailView/actions/TicketChangeCustomer/useChangeCustomerMenuItem.ts'
+import { useChangeCustomerMenuItem } from '#desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/useChangeCustomerMenuItem.ts'
 import {
   type TicketSidebarContentProps,
   TicketSidebarScreenType,
@@ -43,7 +43,6 @@ defineEmits<{
 const actions = computed<MenuItem[]>(() => {
   const availableActions: MenuItem[] = []
 
-  // :TODO find a better way to split this up maybe on plugin level
   // :TODO find a way to provide the ticket via prop
   if (props.context.screenType === TicketSidebarScreenType.TicketDetailView) {
     const { customerChangeMenuItem } = useChangeCustomerMenuItem()

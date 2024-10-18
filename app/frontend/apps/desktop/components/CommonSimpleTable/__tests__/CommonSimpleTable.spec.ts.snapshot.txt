@@ -6,22 +6,26 @@
     <th
       class="h-10 p-2.5 text-xs font-normal text-stone-200 ltr:text-left rtl:text-right dark:text-neutral-500"
     >
+      
       <common-label-stub
         class="font-normal text-stone-200 dark:text-neutral-500 text-left"
         size="small"
         tag="span"
       />
+      
       
       
     </th>
     <th
       class="h-10 p-2.5 text-xs font-normal text-stone-200 ltr:text-left rtl:text-right dark:text-neutral-500"
     >
+      
       <common-label-stub
         class="font-normal text-stone-200 dark:text-neutral-500 text-left"
         size="small"
         tag="span"
       />
+      
       
       
     </th>
@@ -38,10 +42,12 @@
   </thead>
   <tbody>
     
-    <tr>
+    <tr
+      class="odd:bg-blue-200 odd:dark:bg-gray-700"
+    >
       
       <td
-        class="h-10 p-2.5 text-sm first:rounded-s-md last:rounded-e-md bg-blue-200 dark:bg-gray-700 text-left"
+        class="h-10 p-2.5 text-sm first:rounded-s-md last:rounded-e-md text-left"
       >
         
         <common-label-stub
@@ -54,7 +60,7 @@
         
       </td>
       <td
-        class="h-10 p-2.5 text-sm first:rounded-s-md last:rounded-e-md bg-blue-200 dark:bg-gray-700 text-left"
+        class="h-10 p-2.5 text-sm first:rounded-s-md last:rounded-e-md text-left"
       >
         
         <common-label-stub
@@ -68,7 +74,7 @@
       </td>
       
       <td
-        class="h-10 p-2.5 text-center first:rounded-s-md last:rounded-e-md bg-blue-200 dark:bg-gray-700"
+        class="h-10 p-2.5 text-center first:rounded-s-md last:rounded-e-md"
       >
         
         <common-action-menu-stub

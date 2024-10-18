@@ -132,6 +132,7 @@ const footerActionOptions = computed<ActionFooterOptions>(() => ({
         ref="form"
         :schema="formSchema"
         :schema-data="schemaData"
+        should-autofocus
         :form-updater-id="
           EnumFormUpdaterId.FormUpdaterUpdaterTicketTimeAccounting
         "

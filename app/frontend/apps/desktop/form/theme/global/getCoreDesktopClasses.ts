@@ -84,6 +84,7 @@ export const getCoreDesktopClasses: FormThemeExtension = (
     agent: selectInputClasses(classes.agent),
     customer: selectInputClasses(classes.customer),
     recipient: selectInputClasses(classes.recipient),
+    ticket: selectInputClasses(classes.ticket),
     toggle: extendClasses(classes.toggle, {
       wrapper: 'flex h-10 flex-row-reverse items-center gap-1.5',
       label: '!mb-0 grow',

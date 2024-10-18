@@ -11,6 +11,7 @@ import type { Dictionary } from 'ts-essentials'
 
 export interface AutoCompleteProps extends DefaultAutoCompleteProps {
   actions?: DropdownOptionsAction[]
+  stripFilter?: (filter: string) => string
 }
 
 export type AutoCompleteOptionValueDictionary = Dictionary<AutoCompleteOption>

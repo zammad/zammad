@@ -4,6 +4,7 @@ import { markRaw } from 'vue'
 
 import type { FormFieldContext } from '#shared/components/Form/types/field.ts'
 import { AutocompleteSearchTicketDocument } from '#shared/entities/ticket/graphql/queries/autocompleteSearchTicket.api.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 
 import FieldAutoCompleteInput from '../FieldAutoComplete/FieldAutoCompleteInput.vue'
 
@@ -23,12 +24,16 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const { config } = useApplicationStore()
+
 Object.assign(props.context, {
   optionIconComponent: markRaw(FieldTicketOptionIcon),
   gqlQuery: AutocompleteSearchTicketDocument,
   additionalQueryParams: {
     exceptTicketInternalId: props.context.exceptTicketInternalId,
   },
+  // Currently it seems to be the search finds not the ticket with the complete ticket hook and number (e.g. Ticket#123456).
+  stripFilter: (filter: string) => filter.replace(config.ticket_hook, ''),
 })
 </script>
 

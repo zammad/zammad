@@ -5,9 +5,10 @@ import { computed } from 'vue'
 
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
 
+import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/CommonSectionCollapse.vue'
-import { useChangeCustomerMenuItem } from '#desktop/pages/ticket/components/TicketSidebar/TicketDetailView/actions/TicketChangeCustomer/useChangeCustomerMenuItem.ts'
+import { useChangeCustomerMenuItem } from '#desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/useChangeCustomerMenuItem.ts'
 import TicketAccountedTime from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import {
@@ -26,17 +27,39 @@ const { ticket } = useTicketInformation()
 
 const { isTicketAgent, isTicketEditable } = useTicketView(ticket)
 
-const actions = computed<MenuItem[]>(() => {
-  const availableActions: MenuItem[] = []
+const MERGE_FLYOUT_KEY = 'merge-ticket'
 
-  // :TODO find a better way to split this up maybe on plugin level
+const { open: openTicketMergeFlyout } = useFlyout({
+  name: MERGE_FLYOUT_KEY,
+  component: () =>
+    import(
+      '#desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue'
+    ),
+})
+
+const actions = computed(() => {
   // :TODO find a way to provide the ticket via prop
+  const availableActions: MenuItem[] = [
+    {
+      key: MERGE_FLYOUT_KEY,
+      label: __('Merge'),
+      icon: 'merge',
+      show: () => isTicketAgent.value && isTicketEditable.value,
+      onClick: () =>
+        openTicketMergeFlyout({
+          ticket,
+          name: MERGE_FLYOUT_KEY,
+        }),
+    },
+  ]
+
+  // shared actions
   if (props.context.screenType === TicketSidebarScreenType.TicketDetailView) {
     const { customerChangeMenuItem } = useChangeCustomerMenuItem()
     availableActions.push(customerChangeMenuItem)
   }
 
-  return availableActions // ADD the rest available menu actions
+  return availableActions
 })
 </script>
 

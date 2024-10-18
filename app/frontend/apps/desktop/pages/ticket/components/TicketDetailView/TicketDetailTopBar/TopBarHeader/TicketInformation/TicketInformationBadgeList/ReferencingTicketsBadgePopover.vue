@@ -16,15 +16,12 @@ import type {
   ReferencingTicket,
   TicketReferenceMenuItem,
 } from '#desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/types.ts'
+import { getTicketNumberWithHook } from '#desktop/pages/ticket/composables/getTicketNumber.ts'
 
 // Trigger close manually since the popover does not close sometimes on click
 const { popover, popoverTarget, isOpen, toggle, close } = usePopover()
 
 const { config } = storeToRefs(useApplicationStore())
-
-// Will be not reactive reruns on every update
-const getTicketNumberWithHook = (ticketNumber: string) =>
-  `${config.value.ticket_hook}${ticketNumber}`
 
 interface Props {
   referencingTickets: ReferencingTicket[]
@@ -67,7 +64,10 @@ const menuItemKeys = computed(() =>
     <CommonLabel size="small" class="text-black dark:text-white">
       {{
         referencingTicketsCount === 1
-          ? getTicketNumberWithHook(referencingTickets[0].number as string)
+          ? getTicketNumberWithHook(
+              config.ticket_hook,
+              referencingTickets[0].number as string,
+            )
           : $t('%s tickets', referencingTicketsCount)
       }}
     </CommonLabel>
@@ -90,6 +90,7 @@ const menuItemKeys = computed(() =>
         <CommonTicketLabel
           v-tooltip="
             getTicketNumberWithHook(
+              config.ticket_hook,
               (item as unknown as TicketReferenceMenuItem).ticket.number,
             )
           "
