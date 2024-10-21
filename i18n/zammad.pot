@@ -113,7 +113,7 @@ msgid "%s (option)"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:303
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:579
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:583
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:258
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:374
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
@@ -2806,7 +2806,7 @@ msgid "Clear Search"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:56
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:662
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:666
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:321
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:370
@@ -8939,12 +8939,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:7
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:110
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:116
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:45
 msgid "Merge"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:117
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:123
 msgid "Merge Tickets"
 msgstr ""
 
@@ -11419,7 +11419,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco:5
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco:30
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTableWrapper.vue:69
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue:69
 msgid "Recent Customer Tickets"
 msgstr ""
 
@@ -11429,7 +11429,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco:8
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco:36
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTableWrapper.vue:76
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue:76
 msgid "Recently Viewed Tickets"
 msgstr ""
 
@@ -13515,9 +13515,12 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:148
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:206
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:4
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:59
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:57
 msgid "Subscribe"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:60
+msgid "Subscribe me"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/ical_feed.jst.eco:29
@@ -13685,7 +13688,7 @@ msgstr ""
 msgid "Target Language"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:56
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:61
 msgid "Target Ticket"
 msgstr ""
 
@@ -15646,7 +15649,7 @@ msgstr ""
 msgid "Ticket information"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:100
 msgid "Ticket merged successfully"
 msgstr ""
 
@@ -16446,7 +16449,7 @@ msgstr ""
 msgid "Unsaved Changes"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:589
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:593
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:267
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:322
 msgid "Unselect Option"
@@ -18710,7 +18713,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:52
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:63
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:90
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:16
@@ -19234,7 +19237,7 @@ msgstr ""
 #: app/assets/javascripts/app/models/public_link.coffee:10
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:61
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:62
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:89
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:15

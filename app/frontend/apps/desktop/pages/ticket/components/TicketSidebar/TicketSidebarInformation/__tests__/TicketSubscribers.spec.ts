@@ -80,7 +80,7 @@ describe('TicketSubscribers', () => {
   it('renders a toggle to subscribe/unsubscribe', () => {
     const view = renderTicketSubscribers()
 
-    const toggle = view.getByLabelText('Subscribe')
+    const toggle = view.getByLabelText('Subscribe me')
 
     expect(toggle).toBeInTheDocument()
     expect(toggle).not.toBeChecked()
@@ -91,7 +91,7 @@ describe('TicketSubscribers', () => {
       ticket: provideTestTicket(true),
     })
 
-    const toggle = view.getByLabelText('Subscribe')
+    const toggle = view.getByLabelText('Subscribe me')
 
     expect(toggle).toBeChecked()
   })

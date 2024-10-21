@@ -165,7 +165,7 @@ describe('Ticket detail view', () => {
         ticketMetaSidebar.queryByLabelText('Avatar (Adam Doe)'),
       ).not.toBeInTheDocument()
 
-      const toggle = view.getByLabelText('Subscribe')
+      const toggle = view.getByLabelText('Subscribe me')
       expect(toggle).toBeInTheDocument()
 
       await view.events.click(toggle)

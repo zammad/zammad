@@ -45,29 +45,30 @@ const handleToggleInput = async () => {
 <template>
   <div class="flex flex-col gap-2">
     <div
-      class="flex w-full flex-col rounded-lg bg-blue-200 p-2.5 dark:bg-gray-700"
+      class="flex w-full flex-col rounded-lg bg-blue-200 px-3 py-3.5 dark:bg-gray-700"
     >
       <div
         class="flex gap-2"
         :class="{
-          'border-b border-white/10 pb-2': subscribers.length,
+          'border-b border-neutral-100 pb-2 dark:border-gray-900':
+            subscribers.length,
         }"
       >
         <FormKit
           type="toggle"
           :model-value="isSubscribed"
-          :label="__('Subscribe')"
+          :label="__('Subscribe me')"
           :variants="{
             true: __('yes'),
             false: __('no'),
           }"
           :disabled="isSubscriptionLoading"
           outer-class="grow"
-          wrapper-class="!px-0"
+          wrapper-class="!px-0 $remove:h-10"
           @input-raw="handleToggleInput"
         />
       </div>
-      <div v-if="totalSubscribers > 0" class="flex flex-wrap gap-1.5 pt-2.5">
+      <div v-if="totalSubscribers > 0" class="flex flex-wrap gap-2 pt-2.5">
         <CommonUserAvatar
           v-for="subscriber in subscribers"
           :key="subscriber.id"
