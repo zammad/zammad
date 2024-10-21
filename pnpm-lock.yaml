@@ -53,8 +53,8 @@ importers:
         specifier: ^2.1.1
         version: 2.1.1
       '@rails/actioncable':
-        specifier: ^7.2.100
-        version: 7.2.100
+        specifier: ^7.2.101
+        version: 7.2.101
       '@sinonjs/fake-timers':
         specifier: ^13.0.2
         version: 13.0.2
@@ -1791,8 +1791,8 @@ packages:
   '@popperjs/core@2.11.6':
     resolution: {integrity: sha512-50/17A98tWUfQ176raKiOGXuYpLyyVMkxxG6oylzL3BPOlA6ADGdK7EYunSa4I064xerltq9TGXs8HmOk5E+vw==}
 
-  '@rails/actioncable@7.2.100':
-    resolution: {integrity: sha512-7xtIENf0Yw59AFDM3+xqxPCZxev3QVAqjPmUzmgsB9eL8S/zTpB0IU9srNc7XknzJI4e09XKNnCaJRx3gfYzXA==}
+  '@rails/actioncable@7.2.101':
+    resolution: {integrity: sha512-YgFCyD+9mBhpJdfgf4QtJwk+vZbByVMXsEGREM6GrPk9A1pYXkkIpzYd3+843E+33e3S81yywhqZc3DyrZGPSg==}
 
   '@remirror/core-constants@3.0.0':
     resolution: {integrity: sha512-42aWfPrimMfDKDi4YegyS7x+/0tlzaqwPQCULLanv3DMIlu96KTJR0fM5isWX2UViOqlGnX6YFgqWepcX+XMNg==}
@@ -8389,7 +8389,7 @@ snapshots:
 
   '@popperjs/core@2.11.6': {}
 
-  '@rails/actioncable@7.2.100': {}
+  '@rails/actioncable@7.2.101': {}
 
   '@remirror/core-constants@3.0.0': {}
 
