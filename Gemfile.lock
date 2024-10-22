@@ -673,7 +673,7 @@ GEM
       faraday (~> 2.0)
       faraday-multipart (~> 1.0)
       zeitwerk (~> 2.6)
-    telephone_number (1.4.21)
+    telephone_number (1.4.22)
     terser (1.2.4)
       execjs (>= 0.3.0, < 3)
     test-unit (3.6.2)
