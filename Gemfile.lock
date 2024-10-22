@@ -209,7 +209,7 @@ GEM
     deprecation_toolkit (2.2.1)
       activesupport (>= 6.1)
     diff-lcs (1.5.1)
-    diffy (3.4.2)
+    diffy (3.4.3)
     domain_name (0.6.20240107)
     doorkeeper (5.7.1)
       railties (>= 5)
