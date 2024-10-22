@@ -63,7 +63,6 @@ dragAndDrop({
     return isReordering.value
   },
   dropZoneClass: 'opacity-0',
-  touchDropZoneClass: 'opacity-0',
 })
 
 const focusNewItem = () => {

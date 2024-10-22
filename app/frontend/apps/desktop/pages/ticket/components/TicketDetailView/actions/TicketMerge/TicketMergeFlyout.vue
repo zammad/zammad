@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { computed, shallowRef } from 'vue'
+import { computed, ref, shallowRef } from 'vue'
 import { useRouter } from 'vue-router'
 
 import {
@@ -23,6 +23,7 @@ import type { ActionFooterOptions } from '#desktop/components/CommonFlyout/types
 import { closeFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
 import TicketRelationAndRecentLists from '#desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue'
+import type { TicketRelationAndRecentListItem } from '#desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/types.ts'
 import { getTicketNumberWithHook } from '#desktop/pages/ticket/composables/getTicketNumber.ts'
 
 interface Props {
@@ -40,7 +41,7 @@ const { name, ticket: sourceTicket } = defineProps<Props>()
 
 const { form, updateFieldValues, onChangedField } = useForm()
 
-const fromListTargetTicket = shallowRef<TicketById>()
+const fromListTargetTicket = shallowRef<TicketRelationAndRecentListItem>()
 const formListTargetTicketOptions = computed(() => {
   if (!fromListTargetTicket.value) return
 
@@ -73,9 +74,11 @@ const isWaitingForMerge = mergeMutation.loading()
 
 const router = useRouter()
 
+const targetTicketId = ref<string>()
+
 const { notify } = useNotifications()
 
-const handleTicketClick = (ticket: TicketById) => {
+const handleTicketClick = (ticket: TicketRelationAndRecentListItem) => {
   updateFieldValues({
     targetTicketId: ticket.id,
   })
@@ -83,6 +86,8 @@ const handleTicketClick = (ticket: TicketById) => {
 }
 
 onChangedField('targetTicketId', (value) => {
+  targetTicketId.value = (value as string) ?? undefined
+
   if (fromListTargetTicket.value?.id === value) return
   fromListTargetTicket.value = undefined
 })
@@ -142,6 +147,7 @@ const footerActionOptions = computed<ActionFooterOptions>(() => ({
       <TicketRelationAndRecentLists
         :customer-id="sourceTicket.customer.id"
         :internal-ticket-id="sourceTicket.internalId"
+        :selected-ticket-id="targetTicketId"
         @click-ticket="handleTicketClick"
       />
     </div>

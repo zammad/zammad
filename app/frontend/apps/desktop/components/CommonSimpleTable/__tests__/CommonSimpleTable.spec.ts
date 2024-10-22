@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { waitFor } from '@testing-library/vue'
+import { waitFor, within } from '@testing-library/vue'
 import { vi } from 'vitest'
 
 import { renderComponent } from '#tests/support/components/index.ts'
@@ -56,20 +56,20 @@ beforeEach(() => {
 
 describe('CommonSimpleTable', () => {
   it('displays the table without actions', async () => {
-    const view = renderTable({
+    const wrapper = renderTable({
       headers: tableHeaders,
       items: tableItems,
     })
 
-    expect(view.getByText('User name')).toBeInTheDocument()
-    expect(view.getByText('Rolle')).toBeInTheDocument()
-    expect(view.getByText('Lindsay Walton')).toBeInTheDocument()
-    expect(view.getByText('Member')).toBeInTheDocument()
-    expect(view.queryByText('Actions')).toBeNull()
+    expect(wrapper.getByText('User name')).toBeInTheDocument()
+    expect(wrapper.getByText('Rolle')).toBeInTheDocument()
+    expect(wrapper.getByText('Lindsay Walton')).toBeInTheDocument()
+    expect(wrapper.getByText('Member')).toBeInTheDocument()
+    expect(wrapper.queryByText('Actions')).toBeNull()
   })
 
   it('displays the table with actions', async () => {
-    const view = renderTable(
+    const wrapper = renderTable(
       {
         headers: tableHeaders,
         items: tableItems,
@@ -78,12 +78,12 @@ describe('CommonSimpleTable', () => {
       { router: true },
     )
 
-    expect(view.getByText('Actions')).toBeInTheDocument()
-    expect(view.getByLabelText('Action menu button')).toBeInTheDocument()
+    expect(wrapper.getByText('Actions')).toBeInTheDocument()
+    expect(wrapper.getByLabelText('Action menu button')).toBeInTheDocument()
   })
 
   it('displays the additional data with the item suffix slot', async () => {
-    const view = renderTable(
+    const wrapper = renderTable(
       {
         headers: tableHeaders,
         items: tableItems,
@@ -97,7 +97,7 @@ describe('CommonSimpleTable', () => {
       },
     )
 
-    expect(view.getByText('Additional Example')).toBeInTheDocument()
+    expect(wrapper.getByText('Additional Example')).toBeInTheDocument()
   })
 
   it('generates expected DOM', async () => {
@@ -121,7 +121,7 @@ describe('CommonSimpleTable', () => {
   })
 
   it('supports text truncation in cell content', async () => {
-    const view = renderTable({
+    const wrapper = renderTable({
       headers: [
         ...tableHeaders,
         {
@@ -141,13 +141,13 @@ describe('CommonSimpleTable', () => {
       ],
     })
 
-    const truncatedText = view.getByText('Some text to be truncated')
+    const truncatedText = wrapper.getByText('Some text to be truncated')
 
     expect(truncatedText.parentElement).toHaveClass('truncate')
   })
 
   it('supports tooltip on truncated cell content', async () => {
-    const view = renderTable({
+    const wrapper = renderTable({
       headers: [
         ...tableHeaders,
         {
@@ -167,18 +167,18 @@ describe('CommonSimpleTable', () => {
       ],
     })
 
-    await view.events.hover(view.getByText('Max Mustermann'))
+    await wrapper.events.hover(wrapper.getByText('Max Mustermann'))
 
     await waitFor(() => {
-      expect(view.getByText('Some text to be truncated')).toBeInTheDocument()
+      expect(wrapper.getByText('Some text to be truncated')).toBeInTheDocument()
       expect(
-        view.getByLabelText('Some text to be truncated'),
+        wrapper.getByLabelText('Some text to be truncated'),
       ).toBeInTheDocument()
     })
   })
 
   it('supports header slot', () => {
-    const view = renderTable(
+    const wrapper = renderTable(
       {
         headers: tableHeaders,
         items: tableItems,
@@ -191,7 +191,7 @@ describe('CommonSimpleTable', () => {
       },
     )
 
-    expect(view.getByText('Custom header')).toBeInTheDocument()
+    expect(wrapper.getByText('Custom header')).toBeInTheDocument()
   })
 
   it('supports listening for row click events', async () => {
@@ -216,12 +216,82 @@ describe('CommonSimpleTable', () => {
 
     await wrapper.events.click(wrapper.getByText('Lindsay Walton'))
 
-    expect(mockedCallback).toHaveBeenCalledWith(item, expect.any(MouseEvent))
+    expect(mockedCallback).toHaveBeenCalledWith(item)
 
     wrapper.getByRole('button', { name: 'Select table row' }).focus()
 
     await wrapper.events.keyboard('{enter}')
 
-    expect(mockedCallback).toHaveBeenCalledWith(item, expect.any(MouseEvent))
+    expect(mockedCallback).toHaveBeenCalledWith(item)
+  })
+
+  it('supports marking row in active color', () => {
+    const wrapper = renderTable({
+      headers: [
+        ...tableHeaders,
+        {
+          key: 'name',
+          label: 'name',
+        },
+      ],
+      selectedRowId: '2',
+      items: [
+        {
+          id: '2',
+          name: 'foo',
+        },
+      ],
+    })
+
+    const row = wrapper.getByTestId('simple-table-row')
+
+    expect(row).toHaveClass('!bg-blue-800')
+  })
+
+  it('supports marking row in active color', () => {
+    const wrapper = renderTable({
+      headers: [
+        {
+          key: 'name',
+          label: 'name',
+        },
+      ],
+      selectedRowId: '2',
+      items: [
+        {
+          id: '2',
+          name: 'foo cell',
+        },
+      ],
+    })
+
+    const row = wrapper.getByTestId('simple-table-row')
+
+    expect(row).toHaveClass('!bg-blue-800')
+    expect(within(row).getByText('foo cell')).toHaveClass(
+      'text-black dark:text-white',
+    )
+  })
+
+  it('supports adding class to table header', () => {
+    const wrapper = renderTable({
+      headers: [
+        {
+          key: 'name',
+          label: 'Awesome Cell Header',
+          labelClass: 'text-red-500 font-bold',
+        },
+      ],
+      items: [
+        {
+          id: '2',
+          name: 'foo cell',
+        },
+      ],
+    })
+
+    expect(wrapper.getByText('Awesome Cell Header')).toHaveClass(
+      'text-red-500 font-bold',
+    )
   })
 })

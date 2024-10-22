@@ -9,13 +9,13 @@ import TicketSimpleTable from '#desktop/pages/ticket/components/TicketDetailView
 describe('TicketSimpleData', () => {
   it('displays a table with ticket data', () => {
     beforeEach(() => {
-      // tell vitest we use mocked time
       vi.useFakeTimers()
     })
 
     mockApplicationConfig({
       ticket_hook: 'hook#',
     })
+
     const wrapper = renderComponent(TicketSimpleTable, {
       props: {
         tickets: [
@@ -51,21 +51,69 @@ describe('TicketSimpleData', () => {
   })
 
   it('emits table data on row click', async () => {
-    const testTicket = createDummyTicket({
+    const fullTicket = createDummyTicket({
       ticketId: '2',
       number: '1111',
       title: 'Dummy',
     })
+
+    const ticket = {
+      id: fullTicket.id,
+      internalId: fullTicket.internalId,
+      createdAt: fullTicket.createdAt,
+      organization: {
+        name: fullTicket.organization?.name,
+        id: fullTicket.organization?.id,
+      },
+      customer: {
+        fullname: fullTicket.customer.fullname,
+        id: fullTicket.customer.id,
+      },
+      group: {
+        name: fullTicket.group?.name,
+        id: fullTicket.group.id,
+      },
+      state: fullTicket.state,
+      number: fullTicket.number,
+      stateColorCode: fullTicket.stateColorCode,
+      title: fullTicket.title,
+    }
+
     const wrapper = renderComponent(TicketSimpleTable, {
       props: {
-        tickets: [testTicket, createDummyTicket()],
+        tickets: [ticket],
         label: 'ROCK YOUR TICKET TABLE',
       },
       router: true,
     })
 
-    await wrapper.events.click(wrapper.getByText('1111'))
+    await wrapper.events.click(
+      wrapper.getByRole('button', { name: 'Select table row' }),
+    )
 
-    expect(wrapper.emitted('click-ticket')).toBeTruthy()
+    expect(wrapper.emitted('click-ticket')).toStrictEqual([[ticket]])
+  })
+
+  it('marks ticket row as active if ticket got selected', () => {
+    const testTicket = createDummyTicket({
+      ticketId: '2',
+      number: '1111',
+      title: 'Dummy',
+    })
+
+    const wrapper = renderComponent(TicketSimpleTable, {
+      props: {
+        tickets: [testTicket],
+        selectedTicketId: testTicket.id,
+        label: 'ROCK YOUR TICKET TABLE',
+      },
+      router: true,
+    })
+
+    expect(
+      wrapper.getByRole('button', { name: 'Select table row' }),
+    ).toHaveClass(
+      '!bg-blue-800 active:bg-blue-800 active:dark:bg-blue-800 focus-visible:outline-blue-800 hover:bg-blue-600 dark:hover:bg-blue-900',
+    )
   })
 })

@@ -11,6 +11,7 @@ export interface TableHeader<K = string> {
   alignContent?: 'center' | 'right'
   type?: TableColumnType
   truncate?: boolean
+  labelClass?: string
   [key: string]: unknown
 }
 export interface TableItem {

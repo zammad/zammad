@@ -3,23 +3,23 @@
 <script setup lang="ts">
 import { computed } from 'vue'
 
-import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
 import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import TicketSimpleTable from '#desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue'
-import type { TicketTableData } from '#desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/types.ts'
+import type { TicketRelationAndRecentListItem } from '#desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/types.ts'
 import { useTicketRelationAndRecentTicketListsQuery } from '#desktop/pages/ticket/graphql/queries/ticketRelationAndRecentTicketLists.api.ts'
 
 interface Props {
   customerId: string
   internalTicketId: number
+  selectedTicketId?: string
 }
 
 const props = defineProps<Props>()
 
 defineEmits<{
-  'click-ticket': [TicketById]
+  'click-ticket': [TicketRelationAndRecentListItem]
 }>()
 
 const ticketMergeRelevantQuery = new QueryHandler(
@@ -40,24 +40,16 @@ const isLoading = ticketMergeRelevantQuery.loading()
 
 const tableData = ticketMergeRelevantQuery.result()
 
-const ticketsByCustomer = computed(() =>
-  tableData.value?.ticketsRecentByCustomer?.map(
-    (ticket) =>
-      ({
-        ...ticket,
-        truncate: true,
-      }) as unknown as TicketTableData, // :TODO - This type💥
-  ),
+const ticketsByCustomer = computed(
+  () =>
+    tableData.value
+      ?.ticketsRecentByCustomer as unknown as TicketRelationAndRecentListItem[],
 )
 
-const ticketsRecentlyViewed = computed(() =>
-  tableData.value?.ticketsRecentlyViewed?.map(
-    (ticket) =>
-      ({
-        ...ticket,
-        truncate: true,
-      }) as unknown as TicketTableData, // :TODO - This type💥
-  ),
+const ticketsRecentlyViewed = computed(
+  () =>
+    tableData.value
+      ?.ticketsRecentlyViewed as unknown as TicketRelationAndRecentListItem[],
 )
 </script>
 
@@ -68,12 +60,14 @@ const ticketsRecentlyViewed = computed(() =>
         v-if="ticketsByCustomer && ticketsByCustomer.length > 0"
         :label="$t('Recent Customer Tickets')"
         :tickets="ticketsByCustomer"
+        :selected-ticket-id="selectedTicketId"
         @click-ticket="$emit('click-ticket', $event)"
       />
 
       <TicketSimpleTable
         v-if="ticketsRecentlyViewed && ticketsRecentlyViewed.length > 0"
         :label="$t('Recently Viewed Tickets')"
+        :selected-ticket-id="selectedTicketId"
         :tickets="ticketsRecentlyViewed"
         @click-ticket="$emit('click-ticket', $event)"
       />

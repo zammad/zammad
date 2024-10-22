@@ -3,19 +3,22 @@
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import type { Organization, User } from '#shared/graphql/types.ts'
 
-import type { TableItem } from '#desktop/components/CommonSimpleTable/types.ts'
+type OrganizationType = Record<
+  'organization',
+  Pick<Organization, 'name' | 'id'>
+>
 
-type OrganizationType = Pick<Organization, 'name'>
+type CustomerType = Record<'customer', Pick<User, 'fullname' | 'id'>>
 
-type CustomerType = Pick<User, 'fullname'>
+type State = Record<'state', Pick<TicketById['state'], 'name' | 'id'>>
 
-type State = Pick<TicketById['state'], 'name'>
+type Group = Record<'group', Pick<TicketById['group'], 'name' | 'id'>>
 
-export type TicketTableData = Pick<
+export type TicketRelationAndRecentListItem = Pick<
   TicketById,
   'number' | 'internalId' | 'id' | 'title' | 'createdAt' | 'stateColorCode'
 > &
-  TableItem &
   OrganizationType &
   CustomerType &
-  State
+  State &
+  Group

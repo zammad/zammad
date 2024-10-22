@@ -1,10 +1,9 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
-
 import CommonActionMenu from '#desktop/components/CommonActionMenu/CommonActionMenu.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
+import SimpleTableRow from '#desktop/components/CommonSimpleTable/SimpleTableRow.vue'
 
 import type { TableHeader, TableItem } from './types.ts'
 
@@ -12,13 +11,14 @@ export interface Props {
   headers: TableHeader[]
   items: TableItem[]
   actions?: MenuItem[]
-  onClickRow?: (tableItem: TableItem, event: MouseEvent | KeyboardEvent) => void
+  onClickRow?: (tableItem: TableItem) => void
+  selectedRowId?: string
 }
 
 const props = defineProps<Props>()
 
-const emit = defineEmits<{
-  'click-row': [TableItem, MouseEvent | KeyboardEvent]
+defineEmits<{
+  'click-row': [TableItem]
 }>()
 
 // :INFO - This would only would work on runtime, when keys are computed
@@ -46,26 +46,8 @@ const getTooltipText = (item: TableItem, header: TableHeader) => {
   return header.truncate ? item[header.key] : undefined
 }
 
-const rowEventHandler = computed(() => {
-  if (!props.onClickRow) return { attrs: {}, getEvents: () => ({}) }
-
-  // We bind this only if component instance receives event handler
-  return {
-    attrs: {
-      role: 'button',
-      tabindex: 0,
-      ariaLabel: __('Select table row'),
-      class:
-        'focus-visible:outline-1 focus-visible:outline-offset-1 focus-visible:outline-blue-800',
-    },
-    getEvents: (item: TableItem) => ({
-      click: (event: MouseEvent) => emit('click-row', item, event),
-      keydown: (event: KeyboardEvent) => {
-        if (event.key !== 'Enter') return
-        emit('click-row', item, event)
-      },
-    }),
-  }
+defineExpose({
+  getTooltipText,
 })
 </script>
 
@@ -75,7 +57,7 @@ const rowEventHandler = computed(() => {
       <th
         v-for="header in headers"
         :key="header.key"
-        class="h-10 p-2.5 text-xs font-normal text-stone-200 ltr:text-left rtl:text-right dark:text-neutral-500"
+        class="h-10 p-2.5 text-xs ltr:text-left rtl:text-right"
         :class="[
           header.columnClass,
           header.columnSeparator && columnSeparatorClasses,
@@ -83,8 +65,11 @@ const rowEventHandler = computed(() => {
       >
         <slot :name="`column-header-${header.key}`" :header="header">
           <CommonLabel
-            class="font-normal text-stone-200 dark:text-neutral-500"
-            :class="[cellAlignmentClasses[header.alignContent || 'left']]"
+            class="-:font-normal -:text-stone-200 -:dark:text-neutral-500"
+            :class="[
+              cellAlignmentClasses[header.alignContent || 'left'],
+              header.labelClass || '',
+            ]"
             size="small"
           >
             {{ $t(header.label, ...(header.labelPlaceholder || [])) }}
@@ -102,66 +87,82 @@ const rowEventHandler = computed(() => {
       </th>
     </thead>
     <tbody>
-      <tr
+      <SimpleTableRow
         v-for="item in items"
         :key="item.id"
-        class="odd:bg-blue-200 odd:dark:bg-gray-700"
-        v-bind="rowEventHandler.attrs"
-        v-on="rowEventHandler.getEvents(item)"
+        :item="item"
+        :is-row-selected="item.id === props.selectedRowId"
+        @click-row="onClickRow"
       >
-        <td
-          v-for="header in headers"
-          :key="`${item.id}-${header.key}`"
-          class="h-10 p-2.5 text-sm first:rounded-s-md last:rounded-e-md"
-          :class="[
-            header.columnSeparator && columnSeparatorClasses,
-            cellAlignmentClasses[header.alignContent || 'left'],
-            {
-              'max-w-32 truncate text-black dark:text-white': header.truncate,
-            },
-          ]"
-        >
-          <slot
-            :name="`column-cell-${header.key}`"
-            :item="item"
-            :header="header"
+        <template #default="{ isRowSelected }">
+          <td
+            v-for="header in headers"
+            :key="`${item.id}-${header.key}`"
+            class="h-10 p-2.5 text-sm first:rounded-s-md last:rounded-e-md"
+            :class="[
+              header.columnSeparator && columnSeparatorClasses,
+              cellAlignmentClasses[header.alignContent || 'left'],
+              {
+                'max-w-32 truncate text-black dark:text-white': header.truncate,
+              },
+            ]"
           >
-            <CommonLabel
-              v-tooltip.truncate="getTooltipText(item, header)"
-              class="inline text-black dark:text-white"
+            <slot
+              :name="`column-cell-${header.key}`"
+              :item="item"
+              :is-row-selected="isRowSelected"
+              :header="header"
             >
-              <template v-if="!item[header.key]">-</template>
-              <template v-else-if="header.type === 'timestamp_absolute'">
-                <CommonDateTime
-                  :date-time="item[header.key] as string"
-                  type="absolute"
-                />
-              </template>
-              <template v-else-if="header.type === 'timestamp'">
-                <CommonDateTime :date-time="item[header.key] as string" />
-              </template>
-              <template v-else>
-                {{ item[header.key] }}
-              </template>
-            </CommonLabel>
-          </slot>
+              <CommonLabel
+                v-tooltip.truncate="getTooltipText(item, header)"
+                class="-:text-gray-100 -:dark:text-neutral-400 inline group-hover:text-black group-active:text-black group-hover:dark:text-white group-active:dark:text-white"
+                :class="[
+                  {
+                    'text-black dark:text-white': isRowSelected,
+                  },
+                ]"
+              >
+                <template v-if="!item[header.key]">-</template>
+                <template v-else-if="header.type === 'timestamp_absolute'">
+                  <CommonDateTime
+                    :class="{
+                      'text-black dark:text-white': isRowSelected,
+                    }"
+                    :date-time="item[header.key] as string"
+                    type="absolute"
+                  />
+                </template>
+                <template v-else-if="header.type === 'timestamp'">
+                  <CommonDateTime
+                    :class="{
+                      'text-black dark:text-white': isRowSelected,
+                    }"
+                    :date-time="item[header.key] as string"
+                  />
+                </template>
+                <template v-else>
+                  {{ item[header.key] }}
+                </template>
+              </CommonLabel>
+            </slot>
 
-          <slot :name="`item-suffix-${header.key}`" :item="item" />
-        </td>
-        <td
-          v-if="actions"
-          class="h-10 p-2.5 text-center first:rounded-s-md last:rounded-e-md"
-        >
-          <slot name="actions" v-bind="{ actions, item }">
-            <CommonActionMenu
-              class="flex items-center justify-center"
-              :actions="actions"
-              :entity="item"
-              button-size="medium"
-            />
-          </slot>
-        </td>
-      </tr>
+            <slot :name="`item-suffix-${header.key}`" :item="item" />
+          </td>
+          <td
+            v-if="actions"
+            class="h-10 p-2.5 text-center first:rounded-s-md last:rounded-e-md"
+          >
+            <slot name="actions" v-bind="{ actions, item }">
+              <CommonActionMenu
+                class="flex items-center justify-center"
+                :actions="actions"
+                :entity="item"
+                button-size="medium"
+              />
+            </slot>
+          </td>
+        </template>
+      </SimpleTableRow>
     </tbody>
   </table>
 </template>

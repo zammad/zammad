@@ -2,37 +2,68 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { computed } from 'vue'
+import { computed, useTemplateRef } from 'vue'
 
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
 
 import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
-import type { TableHeader } from '#desktop/components/CommonSimpleTable/types.ts'
+import type {
+  TableHeader,
+  TableItem,
+} from '#desktop/components/CommonSimpleTable/types.ts'
 import CommonTicketStateIndicatorIcon from '#desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue'
-import type { TicketTableData } from '#desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/types.ts'
+import type { TicketRelationAndRecentListItem } from '#desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/types.ts'
 
 interface Props {
-  tickets: TicketTableData[]
+  tickets: TicketRelationAndRecentListItem[]
   label: string
+  selectedTicketId?: string
 }
 
-defineEmits<{
-  'click-ticket': [TicketById, MouseEvent | KeyboardEvent]
+const emit = defineEmits<{
+  'click-ticket': [TicketRelationAndRecentListItem]
 }>()
 
 const { config } = storeToRefs(useApplicationStore())
 
+const simpleTableInstance = useTemplateRef('simple-table')
+
 const headers = computed<TableHeader[]>(() => [
-  { key: 'state', label: '' },
-  { key: 'number', label: config.value.ticket_hook },
-  { key: 'title', label: __('Title') },
-  { key: 'customer', label: __('Customer') },
-  { key: 'group', label: __('Group') },
-  { key: 'createdAt', label: __('Created at') },
+  { key: 'state', label: '', truncate: true },
+  {
+    key: 'number',
+    label: config.value.ticket_hook,
+    labelClass: 'font-normal text-gray-100 dark:text-neutral-400',
+    truncate: true,
+  },
+  { key: 'title', label: __('Title'), truncate: true },
+  { key: 'customer', label: __('Customer'), truncate: true },
+  { key: 'group', label: __('Group'), truncate: true },
+  { key: 'createdAt', label: __('Created at'), truncate: true },
 ])
 
-const { tickets } = defineProps<Props>()
+const props = defineProps<Props>()
+
+const items = computed<Array<TableItem>>(() =>
+  props.tickets.map((ticket) => ({
+    createdAt: ticket.createdAt,
+    customer: ticket.organization?.name || ticket.customer?.fullname,
+    group: ticket.group?.name,
+    id: ticket.id,
+    key: ticket.id,
+    number: ticket.number,
+    organization: ticket.organization,
+    title: ticket.title,
+    stateColorCode: ticket.stateColorCode,
+    state: ticket.state,
+  })),
+)
+
+const handleRowClick = (row: TableItem) => {
+  const ticket = props.tickets.find((ticket) => ticket.id === row.id)
+  emit('click-ticket', ticket!)
+}
 </script>
 
 <template>
@@ -40,60 +71,45 @@ const { tickets } = defineProps<Props>()
     <CommonLabel class="mb-2" tag="h3">{{ label }}</CommonLabel>
 
     <CommonSimpleTable
+      ref="simple-table"
       class="w-full"
       :headers="headers"
-      :items="tickets"
-      @click-row="
-        (ticket, event) => {
-          $emit('click-ticket', ticket as TicketById, event)
-        }
-      "
+      :items="items"
+      :selected-row-id="selectedTicketId"
+      @click-row="handleRowClick"
     >
-      <template #column-header-number="{ header }">
-        <CommonLabel
-          class="font-normal text-gray-100 dark:text-neutral-400"
-          size="small"
-        >
-          {{ $t(header.label) }}
-        </CommonLabel>
-      </template>
-
-      <template #column-cell-number="{ item }">
+      <template #column-cell-number="{ item, header, isRowSelected }">
         <CommonLink
+          v-tooltip.truncate="simpleTableInstance?.getTooltipText(item, header)"
           :link="`/tickets/${(item as TicketById).internalId}`"
+          :class="{
+            'ltr:text-black rtl:text-black dark:text-white': isRowSelected,
+          }"
+          class="truncate hover:no-underline group-hover:text-black group-active:text-black group-hover:dark:text-white group-active:dark:text-white"
           internal
           target="_blank"
+          @click.stop
+          @keydown.stop
           >{{ item.number }}
         </CommonLink>
       </template>
 
-      <template #column-cell-group="{ item }">
-        <CommonLabel class="text-gray-100 dark:text-neutral-400">
-          {{ (item as TicketById)?.group.name }}
-        </CommonLabel>
-      </template>
-
-      <template #column-cell-customer="{ item }">
-        <CommonLabel class="text-gray-100 dark:text-neutral-400"
-          >{{
-            (item as TicketById)?.organization?.name ||
-            (item as TicketById)?.customer.fullname
-          }}
-        </CommonLabel>
-      </template>
-
-      <template #column-cell-createdAt="{ item }">
+      <template #column-cell-createdAt="{ item, isRowSelected }">
         <CommonDateTime
-          class="text-gray-100 dark:text-neutral-400"
+          class="-:text-gray-100 -:dark:text-neutral-400 group-hover:text-black group-active:text-black group-hover:dark:text-white group-active:dark:text-white"
+          :class="{ 'text-black dark:text-white': isRowSelected }"
           :date-time="item['createdAt'] as string"
           type="absolute"
           absolute-format="date"
         />
       </template>
 
-      <template #column-cell-state="{ item }">
+      <template #column-cell-state="{ item, isRowSelected }">
         <CommonTicketStateIndicatorIcon
-          class="shrink-0"
+          class="shrink-0 group-hover:text-black group-active:text-black group-hover:dark:text-white group-active:dark:text-white"
+          :class="{
+            'ltr:text-black rtl:text-black dark:text-white': isRowSelected,
+          }"
           :color-code="(item as TicketById).stateColorCode"
           :label="(item as TicketById).state.name"
           :aria-labelledby="(item as TicketById).id"
