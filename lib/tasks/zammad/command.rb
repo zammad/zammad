@@ -28,6 +28,11 @@ module Tasks
         raise "The required method 'description' is not implemented by #{name}"
       end
 
+      # Needs to be implemented by child classes.
+      def self.task_handler
+        raise "The required method 'task_handler' is not implemented by #{name}"
+      end
+
       def self.register_rake_task
         Rake::Task.define_task task_name => :environment do
           run_task
