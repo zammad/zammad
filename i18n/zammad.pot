@@ -7301,7 +7301,7 @@ msgid "If you lose your recovery codes it's possible to generate new ones. This 
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:12
-msgid "If you want to move already stored attachments from one backend to another, you need to execute the following via console."
+msgid "If you want to move already stored attachments from one backend to another, you need to execute the following rails/rake task."
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:162

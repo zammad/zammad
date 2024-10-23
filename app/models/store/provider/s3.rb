@@ -10,7 +10,7 @@ module Store::Provider::S3
 
     def add(data, sha)
       if data.bytesize > Store::Provider::S3::Config.max_chunk_size
-        return upload(data, sha, content_type:, filename:)
+        return upload(data, sha)
       end
 
       request(:put_object, key: sha, body: data)

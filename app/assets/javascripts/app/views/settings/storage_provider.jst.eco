@@ -9,20 +9,20 @@
     <dt><%- @T('Simple Storage Service (S3)') %><code>S3</code></dt>
     <dd><%- @T('Attachments are stored in a Simple Storage Service.') %><br /><%- @T('For more details, please check out our online documentation %l.', 'https://admin-docs.zammad.org/en/latest/settings/system/storage.html') %></dd>
   </dl>
-  <p class="help-text"><%- @T('If you want to move already stored attachments from one backend to another, you need to execute the following via console.') %></p>
+  <p class="help-text"><%- @T('If you want to move already stored attachments from one backend to another, you need to execute the following rails/rake task.') %></p>
   <code>
-  rails&gt; Store::File.move(SOURCE_STORAGE, TARGET_STORAGE)
+  rake zammad:store:move_files SOURCE_STORAGE TARGET_STORAGE
   </code>
   <p class="help-text"><%- @T('Examples:') %></p>
   <p class="help-text"><%- @T('Move all from "%s" to "%s":', 'filesystem', 'database') %></p>
   </p>
   <code>
-  rails&gt; Store::File.move('File', 'DB')
+  rake zammad:store:move_files File DB
   </code>
   <p class="help-text"><%- @T('Move all from "%s" to "%s":', 'database', 'simple storage') %></p>
   </p>
   <code>
-  rails&gt; Store::File.move('DB', 'S3')
+  rake zammad:store:move_files DB S3
   </code>
   <br>
   <br>

@@ -76,19 +76,26 @@ in case of fixing sha hash use:
 
 =end
 
-    def self.verify(fix_it = nil)
+    def self.verify(fix_it = false)
       success = true
       Store::File.find_each(batch_size: 10) do |item|
-        sha = checksum(item.content)
-        logger.info "CHECK: Store::File.find(#{item.id})"
-        next if sha == item.sha
+        begin
+          logger.info "CHECK: Store::File.find(#{item.id})"
+          sha = checksum(item.content)
+          next if sha == item.sha
 
-        success = false
-        logger.error "DIFF: sha diff of Store::File.find(#{item.id}) current:#{sha}/db:#{item.sha}/provider:#{item.provider}"
-        store = Store.find_by(store_file_id: item.id)
-        logger.error "STORE: #{store.inspect}"
-        item.update_attribute(:sha, sha) if fix_it # rubocop:disable Rails/SkipsModelValidations
+          success = false
+          logger.error "DIFF: sha diff of Store::File.find(#{item.id}) current:#{sha}/db:#{item.sha}/provider:#{item.provider}"
+          store = Store.find_by(store_file_id: item.id)
+          logger.error "STORE: #{store.inspect}"
+          item.update_attribute(:sha, sha) if fix_it # rubocop:disable Rails/SkipsModelValidations
+        rescue => e
+          success = false
+          logger.error { e.message }
+          next
+        end
       end
+
       success
     end
 
@@ -114,17 +121,25 @@ nice move to keep system responsive
       adapter_source = "Store::Provider::#{source}".constantize
       adapter_target = "Store::Provider::#{target}".constantize
 
+      succeeded = true
+
       Store::File.where(provider: source).find_each(batch_size: 10) do |item|
-        adapter_target.add(item.content, item.sha)
-        item.update_attribute(:provider, target) # rubocop:disable Rails/SkipsModelValidations
-        adapter_source.delete(item.sha)
+        begin
+          adapter_target.add(item.content, item.sha)
+          item.update_attribute(:provider, target) # rubocop:disable Rails/SkipsModelValidations
+          adapter_source.delete(item.sha)
+        rescue => e
+          succeeded = false
+          logger.error "File #{item.sha} could not be moved from #{source} to #{target}: #{e.message}"
+          next
+        end
 
         logger.info "Moved file #{item.sha} from #{source} to #{target}"
 
         sleep delay if delay
       end
 
-      true
+      succeeded
     end
 
 =begin
