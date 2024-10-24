@@ -248,7 +248,7 @@ GEM
     equalizer (0.0.11)
     erubi (1.13.0)
     eventmachine (1.2.7)
-    execjs (2.9.1)
+    execjs (2.10.0)
     factory_bot (6.5.0)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.4.3)
