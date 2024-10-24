@@ -1,6 +1,5 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { cleanup } from '@testing-library/vue'
 import { computed, ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
@@ -36,19 +35,23 @@ const renderTicketSidebarCustomer = async (
       },
     },
     router: true,
-    plugins: [
-      (app) => {
-        const ticket = createDummyTicket()
-        app.provide(TICKET_KEY, {
-          ticketId: computed(() => ticket.id),
-          ticket: computed(() => ticket),
-          form: ref(),
-          showTicketArticleReplyForm: () => {},
-          isTicketEditable: computed(() => true),
-          newTicketArticlePresent: ref(false),
-          ticketInternalId: computed(() => ticket.internalId),
-        })
-      },
+    provide: [
+      [
+        TICKET_KEY,
+        () => {
+          const ticket = createDummyTicket()
+
+          return {
+            ticketId: computed(() => ticket.id),
+            ticket: computed(() => ticket),
+            form: ref(),
+            showTicketArticleReplyForm: () => {},
+            isTicketEditable: computed(() => true),
+            newTicketArticlePresent: ref(false),
+            ticketInternalId: computed(() => ticket.internalId),
+          }
+        },
+      ],
     ],
     global: {
       stubs: {
@@ -66,15 +69,6 @@ const renderTicketSidebarCustomer = async (
 }
 
 describe('TicketSidebarCustomer.vue', () => {
-  afterEach(() => {
-    // :TODO write a cleanup inside of the renderComponent to avoid
-    // :ERROR App already provides property with key "Symbol(ticket)". It will be overwritten with the new value
-    // Missing cleanup in test env
-    // It is still getting logged as warnings
-    cleanup()
-    vi.clearAllMocks()
-  })
-
   it('shows sidebar when customer ID is present', async () => {
     const wrapper = await renderTicketSidebarCustomer({
       formValues: {

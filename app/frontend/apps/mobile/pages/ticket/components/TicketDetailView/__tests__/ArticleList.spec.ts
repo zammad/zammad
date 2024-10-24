@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { renderComponent } from '#tests/support/components/index.ts'
-import { getTestPlugins } from '#tests/support/components/renderComponent.ts'
 
 import type { TicketArticle } from '#shared/entities/ticket/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
@@ -40,14 +39,7 @@ it('renders delivery messages', () => {
       articles,
       totalCount: 1,
     },
-    global: {
-      plugins: [
-        ...getTestPlugins(),
-        (app) => {
-          app.provide(TICKET_INFORMATION_SYMBOL, {})
-        },
-      ],
-    },
+    provide: [[TICKET_INFORMATION_SYMBOL, {}]],
   })
 
   expect(view.container).toHaveTextContent('Delivery failed')

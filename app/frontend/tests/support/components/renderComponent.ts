@@ -8,8 +8,20 @@ import userEvent from '@testing-library/user-event'
 import { render } from '@testing-library/vue'
 import { mount } from '@vue/test-utils'
 import { merge, cloneDeep } from 'lodash-es'
-import { isRef, nextTick, ref, watchEffect, unref } from 'vue'
+import { afterEach, vi } from 'vitest'
+import {
+  isRef,
+  nextTick,
+  ref,
+  watchEffect,
+  unref,
+  type App,
+  type Plugin,
+  type Ref,
+} from 'vue'
 import { createRouter, createWebHistory } from 'vue-router'
+
+import type { DependencyProvideApi } from '#tests/support/components/types.ts'
 
 import CommonAlert from '#shared/components/CommonAlert/CommonAlert.vue'
 import CommonBadge from '#shared/components/CommonBadge/CommonBadge.vue'
@@ -48,7 +60,6 @@ import buildLinksQueries from './linkQueries.ts'
 
 import type { Matcher, RenderResult } from '@testing-library/vue'
 import type { ComponentMountingOptions } from '@vue/test-utils'
-import type { Plugin, Ref } from 'vue'
 import type { Router, RouteRecordRaw, NavigationGuard } from 'vue-router'
 
 const appName = getTestAppName()
@@ -109,6 +120,7 @@ export interface ExtendedMountingOptions<Props>
   store?: boolean
   confirmation?: boolean
   form?: boolean
+  provide?: DependencyProvideApi
   formField?: boolean
   unmount?: boolean
   dialog?: boolean
@@ -428,6 +440,18 @@ const setupVModel = <Props>(wrapperOptions: ExtendedMountingOptions<Props>) => {
   }
 }
 
+const mockProvide = (app: App, provideApi: DependencyProvideApi) => {
+  provideApi.forEach((dependency) => {
+    const [key, data] = dependency
+    // App globals get reused in each test run we have to clear the provides in each test
+    if (app._context.provides[key]) {
+      app._context.provides[key] = data
+    } else {
+      app.provide(key, data)
+    }
+  })
+}
+
 const renderComponent = <Props>(
   component: any,
   wrapperOptions: ExtendedMountingOptions<Props> = {},
@@ -476,6 +500,10 @@ const renderComponent = <Props>(
     plugins.push(...wrapperOptions.plugins)
 
     delete wrapperOptions.plugins
+  }
+
+  if (wrapperOptions.provide) {
+    plugins.push((app: App) => mockProvide(app, wrapperOptions.provide!))
   }
 
   const { startWatchingModel } = setupVModel(wrapperOptions)

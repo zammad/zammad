@@ -1,7 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { cleanup } from '@testing-library/vue'
-import { type App, computed, ref } from 'vue'
+import { computed, ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
 import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
@@ -22,8 +21,8 @@ vi.mock('#desktop/pages/ticket/composables/useTicketSidebar.ts', () => ({
   }),
 }))
 
-const mockTicket = (app: App, ticket: TicketById) => {
-  app.provide(TICKET_KEY, {
+const mockTicket = (ticket: TicketById) => {
+  return {
     ticketId: computed(() => ticket.id),
     ticket: computed(() => ticket),
     form: ref(),
@@ -31,27 +30,16 @@ const mockTicket = (app: App, ticket: TicketById) => {
     isTicketEditable: computed(() => true),
     newTicketArticlePresent: ref(false),
     ticketInternalId: computed(() => ticket.internalId),
-  })
+  }
 }
 
 describe('TicketChecklistBadges', () => {
-  afterEach(() => {
-    // :TODO write a cleanup inside of the renderComponent to avoid
-    // :ERROR App already provides property with key "Symbol(ticket)". It will be overwritten with the new value
-    // Missing cleanup in test env
-    // It is still getting logged as warnings
-    cleanup()
-    vi.clearAllMocks()
-  })
-
   it('hides badges if no checklist is present', () => {
     const data = createDummyTicket()
 
     const wrapper = renderComponent(ChecklistBadgeList, {
       router: true,
-      global: {
-        plugins: [(app) => mockTicket(app, data)],
-      },
+      provide: [[TICKET_KEY, mockTicket(data)]],
     })
     expect(wrapper.queryByTestId('common-badge')).not.toBeInTheDocument()
   })
@@ -69,7 +57,7 @@ describe('TicketChecklistBadges', () => {
 
     const wrapper = renderComponent(ChecklistBadgeList, {
       router: true,
-      plugins: [(app) => mockTicket(app, data)],
+      provide: [[TICKET_KEY, mockTicket(data)]],
     })
 
     expect(wrapper.getByIconName('checklist')).toBeInTheDocument()
@@ -92,7 +80,7 @@ describe('TicketChecklistBadges', () => {
 
     const wrapper = renderComponent(ChecklistBadgeList, {
       router: true,
-      plugins: [(app) => mockTicket(app, data)],
+      provide: [[TICKET_KEY, mockTicket(data)]],
     })
 
     await wrapper.events.click(
@@ -131,7 +119,7 @@ describe('TicketChecklistBadges', () => {
     })
 
     const wrapper = renderComponent(ChecklistBadgeList, {
-      plugins: [(app) => mockTicket(app, data)],
+      provide: [[TICKET_KEY, mockTicket(data)]],
     })
 
     const badges = wrapper.getAllByTestId('common-badge')
@@ -180,7 +168,7 @@ describe('TicketChecklistBadges', () => {
 
     const wrapper = renderComponent(ChecklistBadgeList, {
       router: true,
-      plugins: [(app) => mockTicket(app, data)],
+      provide: [[TICKET_KEY, mockTicket(data)]],
     })
 
     await wrapper.events.click(
@@ -223,7 +211,7 @@ describe('TicketChecklistBadges', () => {
 
     const wrapper = renderComponent(ChecklistBadgeList, {
       router: true,
-      plugins: [(app) => mockTicket(app, data)],
+      provide: [[TICKET_KEY, mockTicket(data)]],
     })
 
     expect(

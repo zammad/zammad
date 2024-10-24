@@ -1,7 +1,5 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { cleanup } from '@testing-library/vue'
-import { afterEach } from 'vitest'
 import { computed, ref } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
@@ -16,6 +14,15 @@ import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
 
 const defaultTicket = createDummyTicket()
 
+vi.mock('vue-router', async () => {
+  const mod = await vi.importActual<typeof import('vue-router')>('vue-router')
+
+  return {
+    ...mod,
+    onBeforeRouteUpdate: vi.fn(),
+  }
+})
+
 const renderInformationSidebar = (ticket = defaultTicket) =>
   renderComponent(TicketSidebarInformationContent, {
     props: {
@@ -26,9 +33,10 @@ const renderInformationSidebar = (ticket = defaultTicket) =>
     },
     form: true,
     router: true,
-    plugins: [
-      (app) => {
-        app.provide(TICKET_KEY, {
+    provide: [
+      [
+        TICKET_KEY,
+        {
           ticketId: computed(() => ticket.id),
           ticket: computed(() => ticket),
           form: ref(),
@@ -36,22 +44,13 @@ const renderInformationSidebar = (ticket = defaultTicket) =>
           isTicketEditable: computed(() => true),
           newTicketArticlePresent: ref(false),
           ticketInternalId: computed(() => ticket.internalId),
-        })
-      },
+        },
+      ],
     ],
   })
 
 describe('TicketSidebarInformationContent', () => {
   describe('actions', () => {
-    afterEach(() => {
-      // :TODO write a cleanup inside of the renderComponent to avoid
-      // :ERROR App already provides property with key "Symbol(ticket)". It will be overwritten with the new value
-      // Missing cleanup in test env
-      // It is still getting logged as warnings
-      cleanup()
-      vi.clearAllMocks()
-    })
-
     it('displays basic sidebar content', () => {
       mockPermissions(['ticket.agent'])
 

@@ -1,6 +1,5 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { cleanup } from '@testing-library/vue'
 import { computed, ref } from 'vue'
 
 import { renderComponent } from '#tests/support/components/index.ts'
@@ -99,9 +98,10 @@ const renderTicketSidebarCustomerContent = async (
         screenType: screen,
       },
     },
-    plugins: [
-      (app) => {
-        app.provide(TICKET_KEY, {
+    provide: [
+      [
+        TICKET_KEY,
+        {
           ticketId: computed(() => ticket.id),
           ticket: computed(() => ticket),
           form: ref(),
@@ -109,23 +109,14 @@ const renderTicketSidebarCustomerContent = async (
           isTicketEditable: computed(() => true),
           newTicketArticlePresent: ref(false),
           ticketInternalId: computed(() => ticket.internalId),
-        })
-      },
+        },
+      ],
     ],
     router: true,
     ...options,
   })
 
 describe('TicketSidebarCustomerContent.vue', () => {
-  afterEach(() => {
-    // :TODO write a cleanup inside of the renderComponent to avoid
-    // :ERROR App already provides property with key "Symbol(ticket)". It will be overwritten with the new value
-    // Missing cleanup in test env
-    // It is still getting logged as warnings
-    cleanup()
-    vi.clearAllMocks()
-  })
-
   beforeEach(() => {
     mockPermissions(['ticket.agent'])
   })
