@@ -1,0 +1,40 @@
+performance:
+  stage: test
+  rules:
+  - if: $CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web"
+  - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    changes:
+      - .gitlab/performance/**/*
+  # Make sure this gets executed exclusively on a runner.
+  tags: ['no_concurrency']
+  services:
+    - !reference [.services, postgresql]
+    - !reference [.services, redis]
+  cache: []
+  before_script:
+    # Copy performance checking code to tmp/ so that it survives branch switching
+    - cp -rv .gitlab/performance tmp/
+
+    # First, checkout stable and set it up.
+    - git fetch --unshallow >/dev/null 2>&1
+    - git checkout stable-6.0
+    - !reference [.scripts, source_rvm]
+    - rvm use 3.1.3
+    - !reference [.scripts, bundle_install]
+    - !reference [.scripts, configure_environment]
+    - !reference [.scripts, zammad_db_init]
+    - yarn install --silent # Required for assets:precompile test
+  script:
+    # Run performance tests for stable.
+    - bundle exec rails r tmp/performance/run_tests.rb
+    # Then, switch to the current commit, migrate to it and run a few selected tests.
+    - git checkout $CI_COMMIT_SHA
+    - rvm use 3.2.4
+    - !reference [.scripts, bundle_install]
+    # Force redis usage, even if it was disabled by the initial configure_environment script of stable.
+    - export REDIS_URL=redis://redis
+    - bundle exec rails db:migrate > /dev/null
+    - rm -rf node_modules && pnpm install > /dev/null # Required for assets:precompile test
+    # Run performance tests for current branch.
+    - bundle exec rails r .gitlab/performance/run_tests.rb
+  after_script: []
