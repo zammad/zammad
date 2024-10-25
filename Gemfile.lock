@@ -319,7 +319,7 @@ GEM
       rdoc (>= 4.0.0)
       reline (>= 0.4.2)
     jmespath (1.6.2)
-    json (2.7.2)
+    json (2.7.3)
     jwt (2.3.0)
     koala (3.6.0)
       addressable
@@ -688,7 +688,7 @@ GEM
       bindata (~> 2.4)
       openssl (> 2.0)
       openssl-signature_algorithm (~> 1.0)
-    twilio-ruby (7.3.4)
+    twilio-ruby (7.3.5)
       faraday (>= 0.9, < 3.0)
       jwt (>= 1.5, < 3.0)
       nokogiri (>= 1.6, < 2.0)
