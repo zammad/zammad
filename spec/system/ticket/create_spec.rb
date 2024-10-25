@@ -1119,6 +1119,12 @@ RSpec.describe 'Ticket Create', type: :system do
             frontend_relative_month(Time.current, value)
           when 'year'
             frontend_relative_month(Time.current, 0, year: value)
+          when 'minute', 'hour'
+            # Javascript disregards DST switch and simply adds hours.
+            # Rails Time does respect DST switch and this causes off-by-one errors around DST.
+            # Time looses time zone and DST details when converted to DateTime.
+            # Then DateTime#advance matches Javascript DST ignorance.
+            DateTime.current.advance range.pluralize.to_sym => value
           else
             value.send(range).from_now
           end
