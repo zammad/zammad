@@ -4,38 +4,27 @@ require 'rails_helper'
 
 RSpec.describe AddChecklists, db_strategy: :reset, type: :db_migration do
   before do
+    remove_reference :tickets, :checklist
+
     %i[checklist_template_items checklist_templates checklist_items checklists].each do |table|
-      ActiveRecord::Migration[5.0].drop_table table
+      drop_table table
     end
 
     Setting.find_by(name: 'checklist')&.destroy
-
     Permission.find_by(name: 'admin.checklist')&.destroy
 
     migrate
   end
 
   it 'adds setting' do
-    expect(Setting.find_by(name: 'checklist')).to be_present
+    expect(Setting).to exist(name: 'checklist')
   end
 
   it 'adds permission' do
-    expect(Permission.find_by(name: 'admin.checklist')).to be_present
+    expect(Permission).to exist(name: 'admin.checklist')
   end
 
-  it 'creates checklist_templates table' do
-    expect(table_exists?(:checklist_templates)).to be(true)
-  end
-
-  it 'creates checklist_template_items table' do
-    expect(table_exists?(:checklist_template_items)).to be(true)
-  end
-
-  it 'creates checklists table' do
-    expect(table_exists?(:checklists)).to be(true)
-  end
-
-  it 'creates checklist_items table' do
-    expect(table_exists?(:checklist_items)).to be(true)
+  it 'creates tables' do
+    expect(tables).to include('checklist_templates', 'checklist_template_items', 'checklists', 'checklist_items')
   end
 end

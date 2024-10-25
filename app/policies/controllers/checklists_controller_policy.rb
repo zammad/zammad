@@ -2,9 +2,7 @@
 
 class Controllers::ChecklistsControllerPolicy < Controllers::ApplicationControllerPolicy
   def create?
-    ChecklistPolicy
-      .new(user, ticket&.build_checklist)
-      .create?
+    Setting.get('checklist') && Pundit.authorize(user, ticket, :agent_update_access?)
   end
 
   def update?
@@ -23,10 +21,6 @@ class Controllers::ChecklistsControllerPolicy < Controllers::ApplicationControll
     ChecklistPolicy
       .new(user, checklist)
       .show?
-  end
-
-  def show_by_ticket?
-    user.permissions?('ticket.agent')
   end
 
   private

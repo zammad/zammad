@@ -13,7 +13,7 @@ FactoryBot.define do
     after(:create) do |checklist, context|
       next if context.item_count.blank?
 
-      create_list(:checklist_template_item, context.item_count, checklist_template: checklist)
+      checklist.replace_items! Array.new(context.item_count) { Faker::Lorem.unique.sentence }
     end
   end
 end

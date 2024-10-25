@@ -10,19 +10,17 @@ module Gql::Mutations
     field :checklist, Gql::Types::ChecklistType, null: true, description: 'Created checklist'
 
     def authorized?(ticket:, template_id: nil)
-      Pundit.authorize(context.current_user, Checklist.new(ticket:), :create?)
+      Setting.get('checklist') && Pundit.authorize(context.current_user, ticket, :agent_update_access?)
     end
 
     def resolve(ticket:, template_id: nil)
       checklist = if template_id
-                    Gql::ZammadSchema.verified_object_from_id(template_id, type: ::ChecklistTemplate).create_from_template!(ticket_id: ticket.id)
-                  else
-                    ::Checklist.create!(name: '', ticket:).tap do |checklist|
-                      Checklist::Item.create!(checklist_id: checklist.id, text: '')
-                    end
-                  end
+                    template = Gql::ZammadSchema.verified_object_from_id(template_id, type: ::ChecklistTemplate)
 
-      checklist.reload
+                    Checklist.create_from_template!(ticket, template)
+                  else
+                    Checklist.create_fresh!(ticket)
+                  end
 
       { checklist: }
     end

@@ -557,8 +557,11 @@ class CreateTicket < ActiveRecord::Migration[4.2]
       end
       t.references :created_by, null: false, foreign_key: { to_table: :users }
       t.references :updated_by, null: false, foreign_key: { to_table: :users }
-      t.references :ticket, null: false, foreign_key: true, index: { unique: true }
       t.timestamps limit: 3, null: false
+    end
+
+    change_table :tickets do |t|
+      t.references :checklist, null: true, foreign_key: true, index: { unique: true }
     end
 
     create_table :checklist_items do |t|

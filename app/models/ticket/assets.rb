@@ -36,16 +36,6 @@ returns
     organization&.assets(data)
     assets_user(data)
 
-    if Setting.get('checklist')
-      checklist&.assets(data)
-      referencing_checklists
-        .includes(:ticket)
-        .each do |elem|
-          elem.assets(data)
-          elem.ticket.assets(data) if elem.ticket.authorized_asset?
-        end
-    end
-
     data
   end
 

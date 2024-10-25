@@ -13,27 +13,13 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
   end
 
   def perform_item_action(id, action)
-    page.find(".checklistShow tr[data-id='#{id}'] .js-action", wait: 0).click
-    page.find(".checklistShow tr[data-id='#{id}'] li[data-table-action='#{action}']", wait: 0).click
-  rescue => e
-    retry_click ||= 5
-    retry_click -= 1
-    sleep 1
-    raise e if retry_click < 1
-
-    retry
+    page.find(".checklistShow tr[data-id='#{id}'] .js-action").click
+    page.find(".checklistShow tr[data-id='#{id}'] li[data-table-action='#{action}']").click
   end
 
   def perform_checklist_action(text)
     click '.sidebar[data-tab=checklist] .js-actions'
     click_on text
-  rescue => e
-    retry_click ||= 5
-    retry_click -= 1
-    sleep 1
-    raise e if retry_click < 1
-
-    retry
   end
 
   before do
@@ -51,7 +37,7 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
     expect(page).to have_button('Add empty checklist')
     click_on('Add empty checklist')
     expect(page).to have_no_button('Add empty checklist')
-    wait.until { Checklist.where(ticket: ticket).present? }
+    wait.until { ticket.reload.checklist.present? }
   end
 
   it 'does show handle subscriptions for badge when sidebar is not opened' do
@@ -60,13 +46,13 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
   end
 
   context 'when checklist exists' do
-    let(:checklist) { create(:checklist, ticket: ticket) }
+    let(:checklist) { create(:checklist, ticket: ticket, name: 'Capybara checklist') }
     let(:item) { checklist.items.last }
 
     before do
       checklist
       click '.tabsSidebar-tab[data-tab=checklist]'
-      wait.until { page.text.include?(checklist.name) }
+      wait.until { page.text.include?(checklist.name.upcase) } # checklist name is shown in all-caps
       await_empty_ajax_queue
     end
 
@@ -107,6 +93,7 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
 
     it 'does uncheck item' do
       item.update(checked: true)
+      expect(page).to have_css(".checklistShow tr[data-id='#{item.id}'] .js-checkbox:checked", visible: :all)
       perform_item_action(item.id, 'check')
       wait.until { item.reload.checked == false }
     end
@@ -238,8 +225,8 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
       wait.until { page.has_no_content?('Please select a checklist template.') }
       click_on('Add from a template')
 
-      wait.until { Checklist.where(ticket: ticket).present? }
-      expect(Checklist.where(ticket: ticket).last.items.count).to eq(checklist_template.items.count)
+      wait.until { ticket.reload.checklist.present? }
+      expect(ticket.checklist.items.count).to eq(checklist_template.items.count)
 
       checklist_template.items.each do |item|
         expect(page).to have_text(item.text)

@@ -8,10 +8,9 @@ class Checklist < ApplicationModel
   include Checklist::Assets
   include CanChecklistSortedItems
 
-  belongs_to :ticket
+  has_one :ticket, dependent: :nullify
   has_many :items, inverse_of: :checklist, dependent: :destroy
 
-  validates :ticket_id, uniqueness: true
   validates :name, length: { maximum: 250 }
 
   history_attributes_ignored :sorted_item_ids
@@ -25,7 +24,7 @@ class Checklist < ApplicationModel
 
   def history_log_attributes
     {
-      related_o_id:           ticket_id,
+      related_o_id:           ticket.id,
       related_history_object: 'Ticket',
     }
   end
@@ -41,7 +40,7 @@ class Checklist < ApplicationModel
   def notify_clients_data_attributes
     {
       id:            id,
-      ticket_id:     ticket_id,
+      ticket_id:     ticket.id,
       updated_at:    updated_at,
       updated_by_id: updated_by_id,
     }
@@ -69,12 +68,11 @@ class Checklist < ApplicationModel
   # @param target_ticket [Ticket, Integer] target ticket or it's id
   # @param user [User] to optionally filter accessible tickets
   def self.tickets_referencing(target_ticket, user = nil)
-    source_ticket_ids = joins(:items)
+    source_checklist_ids = joins(:items)
       .where(items: { ticket: target_ticket })
-      .group(:id)
-      .pluck(:ticket_id)
+      .pluck(:id)
 
-    scope = Ticket.where(id: source_ticket_ids)
+    scope = Ticket.where(checklist_id: source_checklist_ids)
 
     return scope if !user
 
@@ -90,9 +88,37 @@ class Checklist < ApplicationModel
     %w[closed merged].include? state_type.name
   end
 
+  def self.create_fresh!(ticket)
+    ActiveRecord::Base.transaction do
+      Checklist
+        .create!(ticket:)
+        .tap { |checklist| checklist.items.create! }
+    end
+  end
+
+  def self.create_from_template!(ticket, template)
+    if !template.active
+      raise Exceptions::UnprocessableEntity, __('Checklist template must be active to use as a checklist starting point.')
+    end
+
+    ActiveRecord::Base.transaction do
+      Checklist.create!(name: template.name, ticket:)
+        .tap do |checklist|
+          sorted_item_ids = template
+            .items
+            .map { |elem| checklist.items.create!(text: elem.text, initial_clone: true) }
+            .pluck(:id)
+
+          checklist.update! sorted_item_ids:
+        end
+    end
+  end
+
   private
 
   def update_ticket
+    return if ticket.destroyed?
+
     ticket.updated_at = Time.current
     ticket.save!
   end

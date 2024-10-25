@@ -28,29 +28,21 @@ class App.Checklist extends App.Model
       else
         !item.checked
 
-  @completedForTicketId: (ticket_id, callback) =>
-    App.Ajax.request(
-      id: 'checklist_completed'
-      type: 'GET'
-      url:  "#{@apiPath}/tickets/#{ticket_id}/checklist/completed"
-      success: (data, status, xhr) ->
-        callback(data)
-    )
-
   @calculateState: (ticket) ->
-    return if !ticket.checklist_incomplete
+    checklist = App.Checklist.find ticket.checklist_id
+
+    return if !checklist
 
     {
-      all: ticket.checklist_total
-      open: ticket.checklist_incomplete
-
+      all: checklist.sorted_item_ids.length
+      open: checklist.open_items().length
     }
 
   @calculateReferences: (ticket) ->
     return [] if !ticket.referencing_checklist_ids
 
-    checklists = App.Checklist
+    App.Checklist
       .findAll(ticket.referencing_checklist_ids)
       .filter (elem) -> !elem.ticket_inaccessible
-
-    App.Ticket.findAll checklists.map (elem) -> elem.ticket_id
+      .map (elem) -> App.Ticket.findByAttribute 'checklist_id', elem.id
+      .filter (elem) -> !!elem
