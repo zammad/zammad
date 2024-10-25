@@ -11,18 +11,20 @@ class ChecklistTemplate < ApplicationModel
 
   validates :name, length: { maximum: 250 }
 
-  def create_from_template!(ticket_id:)
-    raise ActiveRecord::RecordInvalid if !active
-
-    new_checklist = Checklist.new(name:, ticket_id:)
-
-    # Inherit only the text property from related checklist items.
-    items.each do |item|
-      new_checklist.items.build(text: item.text, initial_clone: true)
+  def replace_items!(new_items)
+    if new_items.count > 100
+      raise Exceptions::UnprocessableEntity, __('Checklist Template items are limited to 100 items per checklist.')
     end
 
-    new_checklist.save!
+    ActiveRecord::Base.transaction do
+      items.destroy_all
 
-    new_checklist
+      self.sorted_item_ids = new_items
+        .compact_blank
+        .map { |elem| items.create! text: elem.strip }
+        .map(&:id)
+
+      save!
+    end
   end
 end

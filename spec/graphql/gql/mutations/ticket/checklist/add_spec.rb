@@ -64,7 +64,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::Add, current_user_id: 1, type:
 
   shared_examples 'returning an error message' do |error_message|
     it 'returns an error message' do
-      expect(gql.result.data['errors']).to include(include('message' => error_message))
+      expect(gql.result.data['errors']).to include('message' => error_message)
     end
   end
 
@@ -88,7 +88,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::Add, current_user_id: 1, type:
     context 'when ticket checklist already exists' do
       let(:checklist) { create(:checklist, ticket: ticket) }
 
-      it_behaves_like 'returning an error message', 'This field has already been taken'
+      it_behaves_like 'returning an error message', 'This ticket already has a checklist.'
     end
 
     context 'when creating from a checklist template' do

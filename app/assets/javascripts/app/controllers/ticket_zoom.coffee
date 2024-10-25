@@ -199,6 +199,8 @@ class App.TicketZoom extends App.Controller
     if beforeRenderDone
       App.Event.trigger('ui::ticket::load', data)
 
+    App.Event.trigger('ui::ticket::all::loaded', data)
+
   meta: =>
 
     # default attributes
@@ -974,7 +976,8 @@ class App.TicketZoom extends App.Controller
     isPendingClose = ticketState.state_type.name is 'pending action' && App.TicketState.find(ticketState.next_state_id).state_type.name is 'closed'
     return @submitTimeAccounting(e, ticket, macro, editContollerForm) if !isClosed && !isPendingClose
 
-    if !ticket.checklist_incomplete
+    checklist = App.Checklist.find ticket.checklist_id
+    if !checklist || checklist.open_items().length is 0
       return @submitTimeAccounting(e, ticket, macro, editContollerForm)
 
     new App.TicketZoomChecklistModal(

@@ -3,97 +3,174 @@
 require 'rails_helper'
 
 RSpec.describe Checklist, :aggregate_failures, current_user_id: 1, type: :model do
-  describe 'validations' do
-    context 'when referenced ticket does not exist' do
-      it 'fails validation with an error' do
-        expect { create(:checklist, ticket_id: Ticket.maximum(:id).next) }
-          .to raise_error(ActiveRecord::RecordInvalid)
-      end
-    end
+  let(:ticket)    { create(:ticket) }
+  let(:checklist) { create(:checklist, item_count: 0, ticket:) }
 
+  describe 'validations' do
     context 'with valid attributes' do
       it 'succeeds creation' do
         expect(create(:checklist)).to be_persisted
       end
     end
+  end
 
-    context 'when limits are reached' do
-      it 'does not allow more than 100 items' do
-        checklist = create(:checklist, item_count: 100)
-        expect { checklist.items.create!(text: 'new') }
-          .to raise_error(ActiveRecord::RecordInvalid, 'Validation failed: Checklist items are limited to 100 items per checklist.')
-      end
+  describe '#complete' do
+    it 'returns zero if list is empty' do
+      expect(checklist.complete).to be_zero
+    end
+
+    it 'returns count of completed items' do
+      3.times { create(:checklist_item, checklist:, checked: true) }
+      2.times { create(:checklist_item, checklist:, checked: false) }
+
+      expect(checklist.complete).to be 3
     end
   end
 
-  describe 'complete status' do
-    let(:checklist) do
-      list = create(:checklist, item_count: 3)
-      list.items.first.update!(checked: true)
-
-      list
+  describe '#completed?' do
+    it 'returns true if list is empty' do
+      expect(checklist).to be_completed
     end
 
-    context 'when any item is incomplete' do
-      it '#completed? returns false' do
-        expect(checklist.completed?).to be false
-      end
+    it 'returns true if all completed' do
+      create(:checklist_item, checklist:, checked: true)
+      create(:checklist_item, checklist:, checked: true)
 
-      it '#incomplete returns the count of incomplete items' do
-        expect(checklist.incomplete).to eq 2
-      end
-
-      it '#complete returns the count of complete items' do
-        expect(checklist.complete).to eq 1
-      end
-
-      it '#total returns the count of all items' do
-        expect(checklist.total).to eq 3
-      end
+      expect(checklist).to be_completed
     end
 
-    context 'when all items are complete' do
-      before do
-        checklist.items.each { |item| item.update!(checked: true) }
-      end
+    it 'returns false if some incomplete' do
+      create(:checklist_item, checklist:, checked: true)
+      create(:checklist_item, checklist:, checked: false)
 
-      it '#completed? returns true' do
-        expect(checklist.completed?).to be true
-      end
+      expect(checklist).not_to be_completed
+    end
+  end
 
-      it '#incomplete returns the count of incomplete items' do
-        expect(checklist.incomplete).to eq 0
-      end
+  describe '#incomplete' do
+    it 'returns count of completed items' do
+      3.times { create(:checklist_item, checklist:, checked: true) }
+      2.times { create(:checklist_item, checklist:, checked: false) }
 
-      it '#complete returns the count of complete items' do
-        expect(checklist.complete).to eq 3
-      end
+      expect(checklist.incomplete).to be 2
+    end
+  end
 
-      it '#total returns the count of all items' do
-        expect(checklist.total).to eq 3
-      end
+  describe '#total' do
+    it 'returns count of completed items' do
+      3.times { create(:checklist_item, checklist:, checked: true) }
+      2.times { create(:checklist_item, checklist:, checked: false) }
+
+      expect(checklist.total).to be 5
+    end
+  end
+
+  describe '#update_ticket' do
+    it 'touches ticket when updating the checklist' do
+      checklist
+
+      travel 10.minutes
+
+      expect { checklist.update!(name: 'abc') }
+        .to change { checklist.ticket.updated_at }
     end
 
-    context 'when no items are present' do
-      before do
-        checklist.items.destroy_all
-      end
+    it 'touches ticket when destroying the checklist' do
+      checklist
 
-      it '#completed? returns true' do
-        expect(checklist.completed?).to be true
-      end
+      travel 10.minutes
 
-      it '#incomplete returns the count of incomplete items' do
-        expect(checklist.incomplete).to eq 0
-      end
+      expect { checklist.destroy! }
+        .to change { checklist.ticket.updated_at }
+    end
 
-      it '#complete returns the count of complete items' do
-        expect(checklist.complete).to eq 0
-      end
+    it 'does not raise erorrs when ticket is destroyed' do
+      checklist
 
-      it '#total returns the count of all items' do
-        expect(checklist.total).to eq 0
-      end
+      expect { checklist.ticket.destroy! }
+        .not_to raise_error
+    end
+  end
+
+  describe '.ticket_closed?' do
+    it 'open ticket is not closed' do
+      ticket = create(:ticket, state_name: 'open')
+      expect(described_class).not_to be_ticket_closed(ticket)
+    end
+
+    it 'new ticket is not closed' do
+      ticket = create(:ticket, state_name: 'new')
+      expect(described_class).not_to be_ticket_closed(ticket)
+    end
+
+    it 'closed ticket is closed' do
+      ticket = create(:ticket, state_name: 'closed')
+      expect(described_class).to be_ticket_closed(ticket)
+    end
+
+    it 'merged ticket is closed' do
+      ticket = create(:ticket, state_name: 'merged')
+      expect(described_class).to be_ticket_closed(ticket)
+    end
+  end
+
+  describe '.create_fresh!' do
+    it 'creates a fresh checklist' do
+      checklist = described_class.create_fresh!(ticket)
+
+      expect(checklist.items).to contain_exactly(have_attributes(id: be_present, text: be_blank))
+    end
+
+    it 'does not create a checklist if the ticket already has one' do
+      checklist
+
+      expect { described_class.create_fresh!(ticket) }
+        .to raise_error(
+          ActiveRecord::RecordInvalid,
+          'Validation failed: This ticket already has a checklist.'
+        )
+    end
+  end
+
+  describe '.create_from_template!' do
+    let(:template) { create(:checklist_template) }
+
+    it 'creates a checklist' do
+      checklist_from_template = described_class.create_from_template!(ticket, template)
+
+      expect(checklist_from_template).to be_persisted
+    end
+
+    it 'copies entries in order' do
+      checklist_from_template = described_class.create_from_template!(ticket, template)
+
+      expect(checklist_from_template.sorted_items.map(&:text)).to eq(template.items.map(&:text))
+    end
+
+    it 'copies entries with initial_clone flag' do
+      checklist_from_template = described_class.create_from_template!(ticket, template)
+
+      expect(checklist_from_template.items).to all(have_attributes(initial_clone: true))
+    end
+
+    it 'raises an error if template is inactive' do
+      template.update! active: false
+
+      expect { described_class.create_from_template!(ticket, template) }
+        .to raise_error(
+          Exceptions::UnprocessableEntity,
+          'Checklist template must be active to use as a checklist starting point.'
+        )
+    end
+
+    it 'does not create a checklist if the ticket already has one' do
+      checklist
+
+      expect { described_class.create_from_template!(ticket, template) }
+        .to raise_error(
+          ActiveRecord::RecordInvalid,
+          'Validation failed: This ticket already has a checklist.'
+        )
     end
   end
 

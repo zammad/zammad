@@ -6,5 +6,7 @@ class AddChecklistItemTicketAssociation < ActiveRecord::Migration[5.0]
     return if !Setting.exists?(name: 'system_init_done')
 
     add_reference :checklist_items, :ticket, foreign_key: true
+
+    Checklist::Item.reset_column_information
   end
 end

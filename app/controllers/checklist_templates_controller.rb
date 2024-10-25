@@ -12,29 +12,17 @@ class ChecklistTemplatesController < ApplicationController
   end
 
   def create
-    items = params[:items].presence || []
+    checklist_template = ChecklistTemplate.create!(checklist_template_params)
+    checklist_template.replace_items!(checklist_template_items_params) if checklist_template_items_params.present?
 
-    ChecklistTemplate.create!(
-      name:   params[:name],
-      active: params[:active],
-    ).tap do |cl|
-      create_and_sort_checklist_template_items(cl, items)
-
-      render json: cl.attributes_with_association_ids, status: :created
-    end
+    render json: checklist_template.attributes_with_association_ids, status: :created
   end
 
   def update
     checklist_template = ChecklistTemplate.find(params[:id])
 
-    items = params[:items].presence || []
-
-    checklist_template.update!(
-      name:   params[:name],
-      active: params[:active],
-    )
-
-    create_and_sort_checklist_template_items(checklist_template, items)
+    checklist_template.update!(checklist_template_params)
+    checklist_template.replace_items!(checklist_template_items_params) if checklist_template_items_params.present?
 
     render json: checklist_template.attributes_with_association_ids, status: :ok
   end
@@ -45,12 +33,13 @@ class ChecklistTemplatesController < ApplicationController
 
   private
 
-  def create_and_sort_checklist_template_items(checklist_template, items)
-    return if items.blank?
+  def checklist_template_params
+    params.permit(:name, :active)
+  end
 
-    checklist_template.items.destroy_all if checklist_template.items.present?
-    checklist_template.sorted_item_ids = []
-
-    items.compact_blank.each { |text| ChecklistTemplate::Item.create!(text: text.strip, checklist_template:) }
+  def checklist_template_items_params
+    @checklist_template_items_params ||= params[:items]
+      .presence
+      &.compact_blank
   end
 end

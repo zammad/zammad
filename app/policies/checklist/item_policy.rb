@@ -1,7 +1,15 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class Checklist::ItemPolicy < ApplicationPolicy
-  delegate :show?, :create?, :update?, :destroy?, to: :checklist_policy
+  delegate :show?, :update?, to: :checklist_policy
+
+  def create?
+    checklist_policy.update?
+  end
+
+  def destroy?
+    checklist_policy.update?
+  end
 
   private
 

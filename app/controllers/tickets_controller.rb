@@ -96,6 +96,10 @@ class TicketsController < ApplicationController
         shared_draft&.destroy
       end
 
+      # Prevent direct access to checklist via API
+      # Otherwise users may get unauthorized access to checklists of other tickets
+      params.delete(:checklist_id)
+
       clean_params = Ticket.association_name_to_id_convert(params)
 
       # overwrite params
@@ -242,6 +246,10 @@ class TicketsController < ApplicationController
   def update
     ticket = Ticket.find(params[:id])
     authorize!(ticket, :follow_up?)
+
+    # Prevent direct access to checklist via API
+    # Otherwise users may get unauthorized access to checklists of other tickets
+    params.delete(:checklist_id)
 
     clean_params = Ticket.association_name_to_id_convert(params)
     clean_params = Ticket.param_cleanup(clean_params, true)
@@ -703,6 +711,17 @@ class TicketsController < ApplicationController
 
     if (draft = ticket.shared_draft) && authorized?(draft, :show?)
       assets = draft.assets(assets)
+    end
+
+    if Setting.get('checklist') && current_user.permissions?('ticket.agent')
+      ticket.checklist&.assets(assets)
+
+      ticket.referencing_checklists
+        .includes(:ticket)
+        .each do |elem|
+          elem.assets(assets)
+          elem.ticket.assets(assets) if elem.ticket.authorized_asset?
+        end
     end
 
     # return result

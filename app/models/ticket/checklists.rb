@@ -6,23 +6,16 @@ module Ticket::Checklists
   included do
     has_many :referencing_checklist_items, class_name: 'Checklist::Item', dependent: :nullify
     has_many :referencing_checklists, class_name: 'Checklist', through: :referencing_checklist_items, source: :checklist
-    has_one  :checklist, dependent: :destroy
+
+    belongs_to :checklist, dependent: :destroy, optional: true
 
     after_save :update_referenced_checklist_items
 
     association_attributes_ignored :referencing_checklist_items
-  end
 
-  def attributes_with_association_ids
-    attributes = super
+    validates :checklist_id, uniqueness: { allow_nil: true }
 
-    return attributes if !Setting.get('checklist')
-
-    attributes['checklist_id']              = checklist&.id
-    attributes['checklist_incomplete']      = checklist&.incomplete
-    attributes['checklist_total']           = checklist&.total
-
-    attributes
+    validate :ensure_checklist_did_not_exist
   end
 
   private
@@ -35,5 +28,13 @@ module Ticket::Checklists
     referencing_checklist_items
       .where(checked: !is_closed)
       .each { |elem| elem.update! checked: is_closed }
+  end
+
+  def ensure_checklist_did_not_exist
+    return if !checklist_id_changed?
+    # All is good if checklist did not exist before or will not exist afterwards
+    return if !checklist_id || !checklist_id_was
+
+    errors.add :base, __('This ticket already has a checklist.')
   end
 end

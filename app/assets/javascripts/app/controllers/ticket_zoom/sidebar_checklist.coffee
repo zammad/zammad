@@ -59,43 +59,15 @@ class SidebarChecklist extends App.Controller
   subscribe: =>
     @unsubscribe()
 
-    # This is reusing ticket subscription which is used in ZoomTitle and ZoomMeta
-    # Double network call happens because TicketZoom has a duplicate request with all=true
-    sid = App.Ticket.subscribeItem(
-      @ticket.id,
-      (ticket) =>
-        @delay =>
-          @badgeRenderLocal()
-          return if ticket.updated_by_id is App.Session.get().id
-
-          @renderWidget() if !@widget?.actionController
-    )
-    @subscriptions.push(
-      object: 'Ticket',
-      id: @ticket.id,
-      sid: sid,
-    )
+    @controllerBind('ui::ticket::all::loaded', @updateOnTicketAllLoaded)
 
     # Exit early and subscribe only to the ticket when sidebar is not opened
     return if !(@widget instanceof App.SidebarChecklistShow)
     # Keep going and subscribe to checklist items and tickets in there when sidebar is opened
 
     # checklist subscriptions
-    checklist = App.Checklist.findByAttribute('ticket_id', @ticket.id)
+    checklist = App.Checklist.find @ticket.checklist_id
     return if !checklist
-
-    sid = App.Checklist.subscribeItem(
-      checklist.id,
-      (item) =>
-        return if item.updated_by_id is App.Session.get().id
-        return if @widget?.actionController
-        @renderWidget()
-    )
-    @subscriptions.push(
-      object: 'Checklist',
-      id: checklist.id,
-      sid: sid,
-    )
 
     for id in checklist.item_ids
       item = App.ChecklistItem.find(id)
@@ -122,6 +94,16 @@ class SidebarChecklist extends App.Controller
 
     @subscriptions = []
 
+    @controllerUnbind('ui::ticket::all::loaded', @updateOnTicketAllLoaded)
+
+  updateOnTicketAllLoaded: (data) =>
+    return if data.ticket_id.toString() isnt @ticket.id.toString()
+
+    @badgeRenderLocal()
+    return if @ticket.updated_by_id is App.Session.get().id
+
+    @renderWidget() if !@widget?.actionController
+
   showChecklist: (el) =>
     @elSidebar = el
     @startLoading()
@@ -129,10 +111,14 @@ class SidebarChecklist extends App.Controller
   shown: (enterEditMode = false) =>
     @startLoading()
 
+    if !@ticket.checklist_id
+      @renderWidget()
+      return
+
     @ajax(
       id:   "checklist_ticket#{@ticket.id}"
       type: 'GET'
-      url:  "#{@apiPath}/checklists/by_ticket/#{@ticket.id}"
+      url:  "#{@apiPath}/checklists/#{@ticket.checklist_id}"
       processData: true
       success: (data, status, xhr) =>
         @stopLoading()
@@ -165,11 +151,13 @@ class SidebarChecklist extends App.Controller
     @renderActions()
 
   metaBadge: =>
+    checklist = App.Checklist.find @ticket.checklist_id
+
     {
       name: 'checklist'
       icon: 'checklist'
       counterPossible: true
-      counter: @ticket.checklist_incomplete
+      counter: checklist?.open_items().length
     }
 
   badgeRender: (el) =>

@@ -5,10 +5,6 @@ class ChecklistPolicy < ApplicationPolicy
     check_prerequisites? && ticket_policy.agent_read_access?
   end
 
-  def create?
-    check_prerequisites? && ticket_policy.agent_update_access?
-  end
-
   def update?
     check_prerequisites? && ticket_policy.agent_update_access?
   end

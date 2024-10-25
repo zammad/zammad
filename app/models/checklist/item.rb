@@ -17,8 +17,8 @@ class Checklist::Item < ApplicationModel
   before_validation :detect_ticket_reference, unless: :initial_clone
   before_validation :detect_ticket_reference_state
 
-  validate :detect_ticket_loop_reference, unless: -> { ticket.blank? || checklist.blank? }
-  validate :validate_item_count, on: :create, unless: -> { checklist.blank? }
+  validate :detect_ticket_loop_reference, unless: -> { ticket.blank? }
+  validate :validate_item_count, on: :create, unless: :initial_clone
 
   # MySQL does not support default value on non-null text columns
   # Can be removed after dropping MySQL
@@ -27,7 +27,7 @@ class Checklist::Item < ApplicationModel
   after_update :history_update_checked, if: -> { saved_change_to_checked? }
   after_destroy :update_checklist_on_destroy
   after_destroy :update_referenced_ticket
-  after_save :update_checklist_on_save
+  after_save :update_checklist_on_save, unless: :initial_clone
 
   after_save :update_referenced_ticket
 
@@ -35,7 +35,7 @@ class Checklist::Item < ApplicationModel
 
   def history_log_attributes
     {
-      related_o_id:           checklist.ticket_id,
+      related_o_id:           checklist.ticket.id,
       related_history_object: 'Ticket',
     }
   end
@@ -98,7 +98,7 @@ class Checklist::Item < ApplicationModel
   end
 
   def detect_ticket_loop_reference
-    return if ticket.id != checklist.ticket.id
+    return if checklist_id != ticket.checklist_id
 
     errors.add(:ticket, __('reference must not be the checklist ticket.'))
   end

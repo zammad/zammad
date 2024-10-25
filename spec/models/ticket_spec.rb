@@ -1360,7 +1360,6 @@ RSpec.describe Ticket, type: :model do
           'Ticket::Article'         => { 'ticket_id' => 1 },
           'Ticket::TimeAccounting'  => { 'ticket_id' => 1 },
           'Ticket::SharedDraftZoom' => { 'ticket_id' => 0 },
-          'Checklist'               => { 'ticket_id' => 1 },
           'Checklist::Item'         => { 'ticket_id' => 1 },
         }
 
