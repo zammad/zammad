@@ -84,7 +84,7 @@
     alias: selenium-firefox
 
   redis:
-    name: $CI_REGISTRY/docker/zammad-redis:stable
+    name: $CI_REGISTRY/docker/zammad-redis:$REDIS_TAG
     alias: redis
 
   memcached:
