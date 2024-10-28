@@ -8,7 +8,7 @@
   cache: []
   before_script: []
   script:
-    - .gitlab/packager.io/run-scenarios.sh
+    - .gitlab/packager.io/run_scenarios.sh
   after_script:
     - .gitlab/packager.io/cleanup.sh
 

@@ -2,10 +2,8 @@
   source_rvm:
     - source /etc/profile.d/rvm.sh # ensure RVM is loaded
   bundle_install:
-    - echo -e "\\e[0Ksection_start:`date +%s`:bundle_install[collapsed=true]\\r\\e[0Kbundle install"
     - bundle config set --local deployment 'true'
-    - bundle install -j $(nproc)
-    - echo -e "\\e[0Ksection_end:`date +%s`:bundle_install\\r\\e[0K"
+    - bundle install -j $(nproc) > /dev/null
   pnpm_init: &pnpm_init
     - pnpm config set store-dir ${CI_PROJECT_DIR}/tmp/cache/pnpm-store
   pnpm_install: &pnpm_install
