@@ -211,7 +211,7 @@ describe('calling mutation with mocked return data correctly returns data', () =
 
     const data = await handler.send({
       input: {
-        email: faker.internet.userName(),
+        email: faker.internet.username(),
         password: faker.internet.password(),
       },
     })

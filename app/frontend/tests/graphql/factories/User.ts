@@ -22,7 +22,7 @@ export default (
     imageSource: null,
     email: faker.internet.email(),
     fax: null,
-    login: faker.internet.userName(),
+    login: faker.internet.username(),
     phone: '+49 #### ######'.replace(/#+/g, (m) =>
       faker.string.numeric(m.length),
     ),
