@@ -10,16 +10,16 @@ importers:
     devDependencies:
       '@frsource/cypress-plugin-visual-regression-diff':
         specifier: ^3.3.10
-        version: 3.3.10(cypress@13.15.0)
+        version: 3.3.10(cypress@13.15.1)
       '@testing-library/cypress':
         specifier: ^10.0.2
-        version: 10.0.2(cypress@13.15.0)
+        version: 10.0.2(cypress@13.15.1)
       cypress:
-        specifier: ^13.15.0
-        version: 13.15.0
+        specifier: ^13.15.1
+        version: 13.15.1
       cypress-real-events:
         specifier: ^1.13.0
-        version: 1.13.0(cypress@13.15.0)
+        version: 1.13.0(cypress@13.15.1)
 
 packages:
 
@@ -264,8 +264,8 @@ packages:
     peerDependencies:
       cypress: ^4.x || ^5.x || ^6.x || ^7.x || ^8.x || ^9.x || ^10.x || ^11.x || ^12.x || ^13.x
 
-  cypress@13.15.0:
-    resolution: {integrity: sha512-53aO7PwOfi604qzOkCSzNlWquCynLlKE/rmmpSPcziRH6LNfaDUAklQT6WJIsD8ywxlIy+uVZsnTMCCQVd2kTw==}
+  cypress@13.15.1:
+    resolution: {integrity: sha512-DwUFiKXo4lef9kA0M4iEhixFqoqp2hw8igr0lTqafRb9qtU3X0XGxKbkSYsUFdkrAkphc7MPDxoNPhk5pj9PVg==}
     engines: {node: ^16.0.0 || ^18.0.0 || >=20.0.0}
     hasBin: true
 
@@ -856,6 +856,10 @@ packages:
     resolution: {integrity: sha512-aX/y5pVRkfRnfmuX+OdbSdXvPe6ieKX/G2s7e98f4poJHnqH3281gDPm/metm6E/WRamfx7WC4HUqkWHfQHprw==}
     engines: {node: '>=6'}
 
+  tree-kill@1.2.2:
+    resolution: {integrity: sha512-L0Orpi8qGpRG//Nd+H90vFB+3iHnue1zSSGmNOOCh1GLJ7rUKVwV2HvijphGQS2UmhUZewS9VgvxYIdgr+fG1A==}
+    hasBin: true
+
   tslib@2.4.0:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
 
@@ -968,10 +972,10 @@ snapshots:
 
   '@frsource/base64@1.0.17': {}
 
-  '@frsource/cypress-plugin-visual-regression-diff@3.3.10(cypress@13.15.0)':
+  '@frsource/cypress-plugin-visual-regression-diff@3.3.10(cypress@13.15.1)':
     dependencies:
       '@frsource/base64': 1.0.17
-      cypress: 13.15.0
+      cypress: 13.15.1
       glob: 8.1.0
       meta-png: 1.0.6
       move-file: 2.1.0
@@ -979,11 +983,11 @@ snapshots:
       pngjs: 7.0.0
       sharp: 0.32.1
 
-  '@testing-library/cypress@10.0.2(cypress@13.15.0)':
+  '@testing-library/cypress@10.0.2(cypress@13.15.1)':
     dependencies:
       '@babel/runtime': 7.17.9
       '@testing-library/dom': 10.1.0
-      cypress: 13.15.0
+      cypress: 13.15.1
 
   '@testing-library/dom@10.1.0':
     dependencies:
@@ -1172,11 +1176,11 @@ snapshots:
       shebang-command: 2.0.0
       which: 2.0.2
 
-  cypress-real-events@1.13.0(cypress@13.15.0):
+  cypress-real-events@1.13.0(cypress@13.15.1):
     dependencies:
-      cypress: 13.15.0
+      cypress: 13.15.1
 
-  cypress@13.15.0:
+  cypress@13.15.1:
     dependencies:
       '@cypress/request': 3.0.5
       '@cypress/xvfb': 1.2.4(supports-color@8.1.1)
@@ -1218,6 +1222,7 @@ snapshots:
       semver: 7.5.4
       supports-color: 8.1.1
       tmp: 0.2.3
+      tree-kill: 1.2.2
       untildify: 4.0.0
       yauzl: 2.10.0
 
@@ -1797,6 +1802,8 @@ snapshots:
       punycode: 2.1.1
       universalify: 0.2.0
       url-parse: 1.5.10
+
+  tree-kill@1.2.2: {}
 
   tslib@2.4.0: {}
 
