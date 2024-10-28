@@ -3316,7 +3316,7 @@ msgstr ""
 msgid "Checklist Template"
 msgstr "Sablon kiválasztása"
 
-#: app/models/checklist_template/item.rb:32
+#: app/models/checklist_template.rb:16
 msgid "Checklist Template items are limited to 100 items per checklist."
 msgstr ""
 
@@ -3325,6 +3325,10 @@ msgstr ""
 #| msgid "The article does not belong to the specified ticket."
 msgid "Checklist items are limited to 100 items per checklist."
 msgstr "A cikk nem tartozik a megadott jegyhez."
+
+#: app/models/checklist.rb:99
+msgid "Checklist template must be active to use as a checklist starting point."
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
@@ -14354,7 +14358,7 @@ msgstr "Mentett feltételek"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1120
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1123
 msgid "Saving failed."
 msgstr "A mentés nem sikerült."
 
@@ -18152,6 +18156,12 @@ msgid ""
 msgstr ""
 "Ez a szöveg azonnali válaszként fog elküldésre kerülni az új bejövő WhatsApp "
 "üzenetekre."
+
+#: app/models/ticket/checklists.rb:38
+#, fuzzy
+#| msgid "This bot already exists."
+msgid "This ticket already has a checklist."
+msgstr "Ez a bot már létezik."
 
 #: app/policies/ticket/shared_draft_start_policy.rb:26
 #, fuzzy

@@ -3210,13 +3210,19 @@ msgstr "Kontrolinio sąrašo punkto pavadinimas"
 msgid "Checklist Template"
 msgstr "Kontrolinio sąrašo šablonas"
 
-#: app/models/checklist_template/item.rb:32
+#: app/models/checklist_template.rb:16
 msgid "Checklist Template items are limited to 100 items per checklist."
 msgstr "Kontrolinio sąrašo šablonas gali turėti ne daugiau nei 100 punktų."
 
 #: app/models/checklist/item.rb:108
 msgid "Checklist items are limited to 100 items per checklist."
 msgstr "Kontroliniame sąraše gali būti ne daugiau nei 100 punktų."
+
+#: app/models/checklist.rb:99
+#, fuzzy
+#| msgid "Checklist Template items are limited to 100 items per checklist."
+msgid "Checklist template must be active to use as a checklist starting point."
+msgstr "Kontrolinio sąrašo šablonas gali turėti ne daugiau nei 100 punktų."
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
@@ -13720,7 +13726,7 @@ msgstr "Išsaugotos sąlygos"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1120
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1123
 msgid "Saving failed."
 msgstr "Išsaugoti nepavyko."
 
@@ -17287,6 +17293,12 @@ msgid ""
 msgstr ""
 "Šis tekstas bus siunčiamas kaip momentinis atsakymas naujoms įeinančioms "
 "WhatsApp žinutėms."
+
+#: app/models/ticket/checklists.rb:38
+#, fuzzy
+#| msgid "This bot already exists."
+msgid "This ticket already has a checklist."
+msgstr "Šis botas jau egzistuoja."
 
 #: app/policies/ticket/shared_draft_start_policy.rb:26
 msgid "This user does not have access to the given group"

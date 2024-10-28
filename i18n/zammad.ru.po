@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-17 11:14+0000\n"
+"PO-Revision-Date: 2024-10-21 13:00+0000\n"
 "Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
@@ -910,13 +910,13 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:47
 msgid "A color scheme that uses dark-colored elements on a light background."
 msgstr ""
-"Цветовая схема, в которой используются элементы темного цвета на светлом "
+"Цветовая схема, в которой используются элементы тёмного цвета на светлом "
 "фоне."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:40
 msgid "A color scheme that uses light-colored elements on a dark background."
 msgstr ""
-"Цветовая схема, в которой используются элементы светлых тонов на темном фоне."
+"Цветовая схема, в которой используются элементы светлых тонов на тёмном фоне."
 
 #: db/seeds/settings.rb:3886
 msgid "A list of active import backends that gets scheduled automatically."
@@ -1048,7 +1048,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:37
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:18
 msgid "Access denied"
-msgstr "Доступ запрещен"
+msgstr "Доступ запрещён"
 
 #: db/seeds/permissions.rb:315
 msgid "Access the agent chat features."
@@ -1084,11 +1084,11 @@ msgstr "Доступ к интерфейсу базы знаний."
 
 #: db/seeds/permissions.rb:321
 msgid "Access to the phone interface."
-msgstr "Доступ к интерфейсу телефона."
+msgstr "Доступ к интерфейсу телефонии."
 
 #: db/seeds/permissions.rb:358
 msgid "Access to the report interface."
-msgstr "Доступ к интерфейсу отчетов."
+msgstr "Доступ к интерфейсу отчётов."
 
 #: db/seeds/permissions.rb:364
 msgid "Access to the ticket interface."
@@ -1400,7 +1400,7 @@ msgstr "Добавить сообщение"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:123
 msgid "Add agreement text before submit."
-msgstr "Добавьте текст соглашения перед отправкой."
+msgstr "Добавить текст соглашения перед отправкой."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:315
 msgid "Add alarm to pending reminder and escalated tickets"
@@ -1416,7 +1416,7 @@ msgstr "Добавить все значения"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:112
 msgid "Add attachment option to upload."
-msgstr "Добавить вложение для загрузки."
+msgstr "Добавить возможность загрузки вложений."
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:270
 msgid "Add bullet list"
@@ -2285,7 +2285,7 @@ msgstr "Прикрепить файлы"
 #: app/assets/javascripts/app/views/generic/attachments.jst.eco:4
 #: app/views/knowledge_base/public/answers/show.html.erb:17
 msgid "Attached Files"
-msgstr "Прикрепленные файлы"
+msgstr "Прикреплённые файлы"
 
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:199
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
@@ -2648,7 +2648,7 @@ msgstr "Базовые объекты"
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:736
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:10
 msgid "Basic Authentication"
-msgstr "Простая аутентификация"
+msgstr "Простая аутентификация (Basic)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_match.coffee:6
 msgid "Basic Settings"
@@ -3049,7 +3049,7 @@ msgstr "Онлайн-уведомления не могут быть помеч�
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:797
 msgid "Cannot upload file"
-msgstr "Не удается загрузить файл"
+msgstr "Не удаётся загрузить файл"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:168
 msgid "Capture From Camera"
@@ -3097,7 +3097,7 @@ msgstr "Изменить клиента"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:17
 msgid "Change Objects"
-msgstr "Изменить Объекты"
+msgstr "Изменить объекты"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:135
 msgid "Change Password"
@@ -3257,7 +3257,7 @@ msgstr "Заголовок элемента чек-листа"
 msgid "Checklist Template"
 msgstr "Шаблон чек-листа"
 
-#: app/models/checklist_template/item.rb:32
+#: app/models/checklist_template.rb:16
 msgid "Checklist Template items are limited to 100 items per checklist."
 msgstr ""
 "Количество элементов шаблона чек-листа не должно превышать 100 элементов для "
@@ -3267,6 +3267,14 @@ msgstr ""
 msgid "Checklist items are limited to 100 items per checklist."
 msgstr ""
 "Количество элементов чек-листа ограничено 100 элементами в каждом чек-листе."
+
+#: app/models/checklist.rb:99
+#, fuzzy
+#| msgid "Checklist Template items are limited to 100 items per checklist."
+msgid "Checklist template must be active to use as a checklist starting point."
+msgstr ""
+"Количество элементов шаблона чек-листа не должно превышать 100 элементов для "
+"одного чек-листа."
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
@@ -3496,7 +3504,7 @@ msgstr "Закрыть эскалацию в"
 
 #: lib/excel_sheet/ticket.rb:61
 msgid "Close In Min"
-msgstr "Закрыть через несколько минут"
+msgstr "Закрыта в минутах"
 
 #: db/seeds/schedulers.rb:106
 msgid "Close chat sessions where participants are offline."
@@ -3996,7 +4004,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/user/manage_two_factor.coffee:100
 msgid "Could not remove the two-factor authentication method for this user."
 msgstr ""
-"Не удалось убрать метод двухфакторной аутентификации данного пользователя."
+"Не удалось убрать метод двухфакторной аутентификации для данного "
+"пользователя."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:197
 msgid "Could not remove two-factor authentication method"
@@ -4005,7 +4014,7 @@ msgstr "Не удалось удалить метод двухфакторной
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:124
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:107
 msgid "Could not remove two-factor authentication method."
-msgstr "Не удалось удалить метод двухфакторной аутентификации."
+msgstr "Не удалось убрать метод двухфакторной аутентификации."
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:227
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:77
@@ -4060,7 +4069,7 @@ msgstr "Создать администратора"
 #: app/frontend/apps/desktop/pages/guided-setup/routes.ts:62
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupManual/GuidedSetupManualAdmin.vue:28
 msgid "Create Administrator Account"
-msgstr "Создание учетной записи администратора"
+msgstr "Создание учётной записи администратора"
 
 #: lib/excel_sheet/ticket.rb:31
 msgid "Create Channel"
@@ -4068,7 +4077,7 @@ msgstr "Создать канал"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/new_controller.coffee:17
 msgid "Create Knowledge Base"
-msgstr "Создать Базу Знаний"
+msgstr "Создать базу знаний"
 
 #: app/controllers/first_steps_controller.rb:97
 msgid "Create Macros"
@@ -6632,10 +6641,8 @@ msgstr ""
 "Включает автоматическое назначение сотруднику при первом открытии заявки."
 
 #: db/seeds/settings.rb:5793
-#, fuzzy
-#| msgid "Enable Checklists"
 msgid "Enable checklists."
-msgstr "Включить чек-листы"
+msgstr "Включить чек-листы."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:72
 msgid "Enable debugging for implementation."
@@ -7306,7 +7313,7 @@ msgstr "Экспертный режим"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:18
 msgid "Experts"
-msgstr "Эксперты"
+msgstr "Расширенные настройки"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:37
 msgid "Expiration date"
@@ -8309,7 +8316,7 @@ msgid ""
 "your configured permissions)."
 msgstr ""
 "Здесь Вы можете создавать новые заявки, клиентов и организации (в "
-"зависимости от настроенных Вами разрешений)."
+"зависимости от предоставленных Вам разрешений)."
 
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee:29
 msgid "Here you can create one."
@@ -8351,7 +8358,7 @@ msgid ""
 "Here you can sign out, change the frontend language, and see your last "
 "viewed items."
 msgstr ""
-"Здесь Вы можете выйти из системы, изменить язык интерфейса и просмотреть "
+"Здесь Вы можете выйти из системы, изменить язык интерфейса и увидеть "
 "последние просмотренные Вами элементы."
 
 #: app/assets/javascripts/app/views/object_manager/attribute.jst.eco:4
@@ -8369,8 +8376,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:6
 msgid "Here you see a quick overview of your and other agents' performance."
 msgstr ""
-"Здесь Вы видите краткий обзор эффективности Вашей работы и работы других "
-"агентов."
+"Здесь Вы сможете увидеть краткий обзор эффективности Вашей работы и работы "
+"других агентов."
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco:12
 msgid "Here you will find the latest activities of your system."
@@ -12492,7 +12499,7 @@ msgstr "Персональный ключ доступа"
 
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:28
 msgid "Personal Settings"
-msgstr "Персональные Настройки"
+msgstr "Персональные настройки"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:140
 msgid "Personal access token has been deleted."
@@ -13955,7 +13962,7 @@ msgstr "Сохраненные условия"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1120
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1123
 msgid "Saving failed."
 msgstr "Не удалось сохранить."
 
@@ -17619,6 +17626,12 @@ msgid ""
 msgstr ""
 "Этот текст будет отправляться в качестве немедленного ответа на новые "
 "входящие сообщения WhatsApp."
+
+#: app/models/ticket/checklists.rb:38
+#, fuzzy
+#| msgid "This bot already exists."
+msgid "This ticket already has a checklist."
+msgstr "Эта бот уже существует."
 
 #: app/policies/ticket/shared_draft_start_policy.rb:26
 msgid "This user does not have access to the given group"

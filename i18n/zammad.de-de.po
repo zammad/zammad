@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-13 09:00+0000\n"
-"Last-Translator: Martin Gruner <mg@zammad.com>\n"
+"PO-Revision-Date: 2024-10-24 14:00+0000\n"
+"Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/de/>\n"
 "Language: de-de\n"
@@ -3258,7 +3258,7 @@ msgstr "Beschriftung für das Checklisten-Element"
 msgid "Checklist Template"
 msgstr "Checklisten-Vorlage"
 
-#: app/models/checklist_template/item.rb:32
+#: app/models/checklist_template.rb:16
 msgid "Checklist Template items are limited to 100 items per checklist."
 msgstr "Checklisten-Vorlagen sind auf 100 Elemente pro Checkliste begrenzt."
 
@@ -3266,6 +3266,12 @@ msgstr "Checklisten-Vorlagen sind auf 100 Elemente pro Checkliste begrenzt."
 msgid "Checklist items are limited to 100 items per checklist."
 msgstr ""
 "Die Anzahl der Elemente in einer Checkliste ist auf 100 pro Liste begrenzt."
+
+#: app/models/checklist.rb:99
+#, fuzzy
+#| msgid "Checklist Template items are limited to 100 items per checklist."
+msgid "Checklist template must be active to use as a checklist starting point."
+msgstr "Checklisten-Vorlagen sind auf 100 Elemente pro Checkliste begrenzt."
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
@@ -6653,10 +6659,8 @@ msgstr ""
 "den Agenten."
 
 #: db/seeds/settings.rb:5793
-#, fuzzy
-#| msgid "Enable Checklists"
 msgid "Enable checklists."
-msgstr "Aktivieren von Checklisten"
+msgstr "Checklisten aktivieren."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:72
 msgid "Enable debugging for implementation."
@@ -13994,7 +13998,7 @@ msgstr "Gespeicherte Bedingungen"
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1120
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1123
 msgid "Saving failed."
 msgstr "Das Speichern ist fehlgeschlagen."
 
@@ -17670,6 +17674,12 @@ msgid ""
 msgstr ""
 "Dieser Text wird als sofortige Antwort auf neu eingehende WhatsApp-"
 "Nachrichten gesendet."
+
+#: app/models/ticket/checklists.rb:38
+#, fuzzy
+#| msgid "This bot already exists."
+msgid "This ticket already has a checklist."
+msgstr "Dieser Bot existiert bereits."
 
 #: app/policies/ticket/shared_draft_start_policy.rb:26
 msgid "This user does not have access to the given group"

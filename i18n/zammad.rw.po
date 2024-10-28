@@ -3341,12 +3341,16 @@ msgstr ""
 msgid "Checklist Template"
 msgstr "hitamo inyandikorugero"
 
-#: app/models/checklist_template/item.rb:32
+#: app/models/checklist_template.rb:16
 msgid "Checklist Template items are limited to 100 items per checklist."
 msgstr ""
 
 #: app/models/checklist/item.rb:108
 msgid "Checklist items are limited to 100 items per checklist."
+msgstr ""
+
+#: app/models/checklist.rb:99
+msgid "Checklist template must be active to use as a checklist starting point."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
@@ -14775,7 +14779,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:63
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:80
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:93
-#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1120
+#: app/assets/javascripts/app/controllers/ticket_zoom.coffee:1123
 #, fuzzy
 #| msgid "Bulk action executed!"
 msgid "Saving failed."
@@ -18750,6 +18754,12 @@ msgid ""
 "This text will be sent as an immediate reply to new incoming WhatsApp "
 "messages."
 msgstr ""
+
+#: app/models/ticket/checklists.rb:38
+#, fuzzy
+#| msgid "%s Object(s) are deleted."
+msgid "This ticket already has a checklist."
+msgstr " ikintu%s cyasibwe(ibintu %s byasibwe)"
 
 #: app/policies/ticket/shared_draft_start_policy.rb:26
 msgid "This user does not have access to the given group"
