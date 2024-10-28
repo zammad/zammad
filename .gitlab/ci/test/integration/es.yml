@@ -13,21 +13,15 @@
     - bundle exec rspec --tag searchindex --tag ~type:system --profile 10
 
 # Lowest supported version
-rspec:es:7.8:
+rspec:es:stable:
   extends:
     - .template_integration_es
   variables:
-    ELASTICSEARCH_TAG: '7.8.1'
+    ELASTICSEARCH_TAG: 'stable'
 
 # Highest supported version (except for newer releases that are not yet in CI)
-rspec:es:7.16:
+rspec:es:latest:
   extends:
     - .template_integration_es
   variables:
-    ELASTICSEARCH_TAG: '7.16'
-
-rspec:es:8.1:
-  extends:
-    - .template_integration_es
-  variables:
-    ELASTICSEARCH_TAG: '8.1'
+    ELASTICSEARCH_TAG: 'latest'
