@@ -33,7 +33,7 @@ create new persistent token
     }
   )
 
-in case if you use it via an controller, e. g. you can verify via "curl -H "Authorization: Token token=my_token" http://...
+in case if you use it via an controller, e. g. you can verify via "curl -H "Authorization: Token token=…" http://…
 
 returns
 

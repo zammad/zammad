@@ -17,7 +17,7 @@
 <p><%- @T('Example:') %></p>
 
 <code>
-curl -H "Authorization: Token token=YOUR_TOKEN" <%= @C('http_type') %>://<%= @C('fqdn') %>/api/v1/groups
+curl -H "Authorization: Token token=…" <%= @C('http_type') %>://<%= @C('fqdn') %>/api/v1/groups
 </code>
 
 <hr>
