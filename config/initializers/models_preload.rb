@@ -7,5 +7,8 @@ Rails.application.reloader.to_prepare do
     Models.all
   rescue ActiveRecord::StatementInvalid
     nil
+  rescue ActiveRecord::ConnectionNotEstablished, ActiveRecord::NoDatabaseError => e
+    warn e
+    Zammad::SafeMode.continue_or_exit!
   end
 end

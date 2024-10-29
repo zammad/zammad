@@ -31,7 +31,7 @@ Rails.application.reloader.to_prepare do
     Rails.application.config.action_cable.allowed_request_origins = request_origins
     Rails.application.config.action_cable.disable_request_forgery_protection = true if !Rails.env.production?
     Rails.logger.info { "ActionCable is configured to accept requests from #{request_origins.join(', ')}." }
-  rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid
+  rescue ActiveRecord::ConnectionNotEstablished, ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid
     Rails.logger.warn { "Database doesn't exist. Skipping allowed_request_origins configuration." }
   end
 end

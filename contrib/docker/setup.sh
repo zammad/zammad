@@ -4,14 +4,14 @@ set -e
 apt-get update
 apt-get upgrade -y
 
-# Add official PostgreSQL apt repository to not depend on Debian's version.
-#   https://www.postgresql.org/download/linux/debian/
-apt-get install -y postgresql-common
-/usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
-
 if [ "$1" = 'builder' ]; then
-  PACKAGES="build-essential curl git libimlib2-dev libpq-dev shared-mime-info postgresql-17"
+  PACKAGES="build-essential curl git libimlib2-dev libpq-dev"
 elif [ "$1" = 'runner' ]; then
+  # Add official PostgreSQL apt repository to not depend on Debian's version.
+  #   https://www.postgresql.org/download/linux/debian/
+  apt-get install -y postgresql-common
+  /usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+
   PACKAGES="curl libimlib2 libpq5 nginx gnupg postgresql-client-17"
 fi
 
@@ -20,11 +20,6 @@ apt-get install -y --no-install-recommends ${PACKAGES}
 rm -rf /var/lib/apt/lists/*
 
 if [ "$1" = 'builder' ]; then
-  # Create an empty DB just so that the Rails stack can run.
-  /etc/init.d/postgresql start
-  su - postgres bash -c "createuser zammad -R -S"
-  su - postgres bash -c "createdb --encoding=utf8 --owner=zammad zammad"
-
   cd "${ZAMMAD_DIR}"
   bundle config set --local without 'test development mysql'
   # Don't use the 'deployment' switch here as it would require always using 'bundle exec'
@@ -33,7 +28,7 @@ if [ "$1" = 'builder' ]; then
   bundle install
 
   touch db/schema.rb
-  ZAMMAD_SAFE_MODE=1 DATABASE_URL=postgresql://zammad:/zammad bundle exec rake assets:precompile # Don't require Redis.
+  ZAMMAD_SAFE_MODE=1 DATABASE_URL=postgresql://zammad:/zammad bundle exec rake assets:precompile # Don't require Redis or Postgres.
 
   script/build/cleanup.sh
 fi
