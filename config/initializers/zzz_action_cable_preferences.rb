@@ -33,5 +33,7 @@ Rails.application.reloader.to_prepare do
     Rails.logger.info { "ActionCable is configured to accept requests from #{request_origins.join(', ')}." }
   rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid
     Rails.logger.warn { "Database doesn't exist. Skipping allowed_request_origins configuration." }
+  rescue ActiveRecord::ConnectionNotEstablished
+    Zammad::SafeMode.continue_or_exit!
   end
 end

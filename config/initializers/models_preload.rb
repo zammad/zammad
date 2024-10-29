@@ -7,5 +7,7 @@ Rails.application.reloader.to_prepare do
     Models.all
   rescue ActiveRecord::StatementInvalid
     nil
+  rescue ActiveRecord::ConnectionNotEstablished
+    Zammad::SafeMode.continue_or_exit!
   end
 end
