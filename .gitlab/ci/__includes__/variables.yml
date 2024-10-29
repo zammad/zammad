@@ -17,7 +17,7 @@ variables:
 
   # Settings for elasticsearch, if active
   ES_INDEX: 'estest.ci'
-  ELASTICSEARCH_TAG: '7.16'
+  ELASTICSEARCH_TAG: 'stable'
 
   # Define image versions. Regular commits test against 'stable' (lowest supported version),
   #   scheduled pipelines against 'latest' (newest stable release of the services).
