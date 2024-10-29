@@ -9229,15 +9229,15 @@ msgstr "¡Recibido client_id no válido!"
 msgid "Invalid email '%{email}'"
 msgstr "Correo inválido '%{email}'"
 
-#: app/controllers/tickets_controller.rb:188
+#: app/controllers/tickets_controller.rb:191
 msgid "Invalid link structure"
 msgstr "Estructura de enlace no válida"
 
-#: app/controllers/tickets_controller.rb:194
+#: app/controllers/tickets_controller.rb:197
 msgid "Invalid link structure (Object → LinkType)"
 msgstr "Estructura de enlace no válida (Object → LinkType)"
 
-#: app/controllers/tickets_controller.rb:191
+#: app/controllers/tickets_controller.rb:194
 msgid "Invalid link structure (Object)"
 msgstr "Estructura de enlace no válida (Object)"
 
@@ -10924,7 +10924,7 @@ msgstr "Se debe añadir un destinatario en \"Para\"."
 msgid "Need session_id."
 msgstr "Se requiere session_id."
 
-#: app/controllers/tickets_controller.rb:469
+#: app/controllers/tickets_controller.rb:475
 msgid "Need user_id or organization_id as param"
 msgstr "Se requiere el parámetro user_id u organization_id"
 
@@ -11457,7 +11457,7 @@ msgstr "Aún no hay borradores compartidos"
 #: app/controllers/organizations_controller.rb:160
 #: app/controllers/text_modules_controller.rb:71
 #: app/controllers/ticket_articles_controller.rb:232
-#: app/controllers/tickets_controller.rb:601
+#: app/controllers/tickets_controller.rb:607
 #: app/controllers/users_controller.rb:650
 msgid "No source data submitted!"
 msgstr "¡No se han remitido datos de origen!"
@@ -16870,7 +16870,7 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr "La firma se ha verificado con éxito."
 
-#: app/controllers/tickets_controller.rb:384
+#: app/controllers/tickets_controller.rb:390
 msgid "The source ticket could not be found."
 msgstr "No se pudo localizar el ticket de origen."
 
@@ -16913,7 +16913,7 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr "El sistema se ha configurado correctamente. Está siendo redirigido."
 
-#: app/controllers/tickets_controller.rb:375
+#: app/controllers/tickets_controller.rb:381
 msgid "The target ticket number could not be found."
 msgstr "No se pudo encontrar el ticket de destino."
 
@@ -18142,7 +18142,7 @@ msgid "Tickets assigned to me: %s of %s"
 msgstr "Tickets asignados a mi: %s of %s"
 
 #: app/controllers/ticket_articles_controller.rb:225
-#: app/controllers/tickets_controller.rb:594
+#: app/controllers/tickets_controller.rb:600
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
 "Solamente se pueden importar tickets si el sistema está en modo de "

@@ -8835,15 +8835,15 @@ msgstr "接收到无效的client_id！"
 msgid "Invalid email '%{email}'"
 msgstr "无效的电子邮件'％{email}'"
 
-#: app/controllers/tickets_controller.rb:188
+#: app/controllers/tickets_controller.rb:191
 msgid "Invalid link structure"
 msgstr "无效的链接结构"
 
-#: app/controllers/tickets_controller.rb:194
+#: app/controllers/tickets_controller.rb:197
 msgid "Invalid link structure (Object → LinkType)"
 msgstr "无效的链接结构（对象→链接类型）"
 
-#: app/controllers/tickets_controller.rb:191
+#: app/controllers/tickets_controller.rb:194
 msgid "Invalid link structure (Object)"
 msgstr "无效的链接结构（对象）"
 
@@ -10629,7 +10629,7 @@ msgstr "需要“收件人”字段中的收件人。"
 msgid "Need session_id."
 msgstr "需要session_id。"
 
-#: app/controllers/tickets_controller.rb:469
+#: app/controllers/tickets_controller.rb:475
 msgid "Need user_id or organization_id as param"
 msgstr "需要user_id或agrishital_id作为param"
 
@@ -11262,7 +11262,7 @@ msgstr "已分享"
 #: app/controllers/organizations_controller.rb:160
 #: app/controllers/text_modules_controller.rb:71
 #: app/controllers/ticket_articles_controller.rb:232
-#: app/controllers/tickets_controller.rb:601
+#: app/controllers/tickets_controller.rb:607
 #: app/controllers/users_controller.rb:650
 msgid "No source data submitted!"
 msgstr "没有提交的源数据！"
@@ -16724,7 +16724,7 @@ msgstr "此PGP电子邮件的签名部分缺少或根据RFC 3156的内容类型�
 msgid "The signature was successfully verified."
 msgstr "签名已成功验证。"
 
-#: app/controllers/tickets_controller.rb:384
+#: app/controllers/tickets_controller.rb:390
 msgid "The source ticket could not be found."
 msgstr "找不到源工单。"
 
@@ -16760,7 +16760,7 @@ msgstr "系统设置标记为已完成，但不存在管理员用户。请再次
 msgid "The system was configured successfully. You are being redirected."
 msgstr "该系统已成功配置。您正在重定向。"
 
-#: app/controllers/tickets_controller.rb:375
+#: app/controllers/tickets_controller.rb:381
 msgid "The target ticket number could not be found."
 msgstr "找不到目标工单编号。"
 
@@ -18196,7 +18196,7 @@ msgid "Tickets assigned to me: %s of %s"
 msgstr "指派给你有 %s 笔, 共 %s 笔"
 
 #: app/controllers/ticket_articles_controller.rb:225
-#: app/controllers/tickets_controller.rb:594
+#: app/controllers/tickets_controller.rb:600
 msgid "Tickets can only be imported if system is in import mode."
 msgstr "仅当系统处于导入模式时，才能导入门票。"
 

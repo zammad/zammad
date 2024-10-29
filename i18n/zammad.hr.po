@@ -9066,15 +9066,15 @@ msgstr "Zaprimljen neispravan client_id!"
 msgid "Invalid email '%{email}'"
 msgstr "neispravan e-mail '%{email}'"
 
-#: app/controllers/tickets_controller.rb:188
+#: app/controllers/tickets_controller.rb:191
 msgid "Invalid link structure"
 msgstr "Neispravna struktura poveznice"
 
-#: app/controllers/tickets_controller.rb:194
+#: app/controllers/tickets_controller.rb:197
 msgid "Invalid link structure (Object → LinkType)"
 msgstr "Neispravna struktura poveznice (Object → LinkType)"
 
-#: app/controllers/tickets_controller.rb:191
+#: app/controllers/tickets_controller.rb:194
 msgid "Invalid link structure (Object)"
 msgstr "Neispravna struktura poveznice (objekt)"
 
@@ -10747,7 +10747,7 @@ msgstr "Obavezan primatelj u „Za”."
 msgid "Need session_id."
 msgstr "Session_id je potreban."
 
-#: app/controllers/tickets_controller.rb:469
+#: app/controllers/tickets_controller.rb:475
 msgid "Need user_id or organization_id as param"
 msgstr "Potreban user_id ili organization_id kao parametar"
 
@@ -11276,7 +11276,7 @@ msgstr "Još nema zajedničkih skica"
 #: app/controllers/organizations_controller.rb:160
 #: app/controllers/text_modules_controller.rb:71
 #: app/controllers/ticket_articles_controller.rb:232
-#: app/controllers/tickets_controller.rb:601
+#: app/controllers/tickets_controller.rb:607
 #: app/controllers/users_controller.rb:650
 msgid "No source data submitted!"
 msgstr "Nisu dostavljeni izvorišni podaci!"
@@ -16613,7 +16613,7 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr "Potpis je uspješno potvrđen."
 
-#: app/controllers/tickets_controller.rb:384
+#: app/controllers/tickets_controller.rb:390
 msgid "The source ticket could not be found."
 msgstr "Izvorni ticket nije moguće pronaći."
 
@@ -16655,7 +16655,7 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr "Sustav je uspješno konfiguriran. Biti ćete preusmjereni."
 
-#: app/controllers/tickets_controller.rb:375
+#: app/controllers/tickets_controller.rb:381
 msgid "The target ticket number could not be found."
 msgstr "Traženi broj ticketa nije moguće pronaći."
 
@@ -17848,7 +17848,7 @@ msgid "Tickets assigned to me: %s of %s"
 msgstr "Moji dodijeljeni ticketi: %s od %s"
 
 #: app/controllers/ticket_articles_controller.rb:225
-#: app/controllers/tickets_controller.rb:594
+#: app/controllers/tickets_controller.rb:600
 msgid "Tickets can only be imported if system is in import mode."
 msgstr "Ticketi se mogu uvesti samo ako je sustav u načinu uvoza."
 

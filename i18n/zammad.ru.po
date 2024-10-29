@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-21 13:00+0000\n"
+"PO-Revision-Date: 2024-10-29 22:30+0000\n"
 "Last-Translator: Nikita <nyakovlev@iko.tech>\n"
 "Language-Team: Russian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/ru/>\n"
@@ -3269,12 +3269,10 @@ msgstr ""
 "Количество элементов чек-листа ограничено 100 элементами в каждом чек-листе."
 
 #: app/models/checklist.rb:99
-#, fuzzy
-#| msgid "Checklist Template items are limited to 100 items per checklist."
 msgid "Checklist template must be active to use as a checklist starting point."
 msgstr ""
-"Количество элементов шаблона чек-листа не должно превышать 100 элементов для "
-"одного чек-листа."
+"Шаблон чек-листа должен быть активным, чтобы использовать его в качестве "
+"отправной точки."
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
@@ -4682,7 +4680,8 @@ msgstr "Определите максимальный размер вложен�
 
 #: db/seeds/settings.rb:3581
 msgid "Define max. payload size for Elasticsearch."
-msgstr "Определите максимальный размер полезной нагрузки для Elasticsearch."
+msgstr ""
+"Определите максимальный размер полезной нагрузки (payload) для Elasticsearch."
 
 #: db/seeds/settings.rb:3599
 msgid "Define model configuration for Elasticsearch."
@@ -4702,8 +4701,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:4158
 msgid "Define postmaster filter to import archive mailboxes."
-msgstr ""
-"Определите фильтр почтового мастера для импорта архива почтовых ящиков."
+msgstr "Определите фильтр почтового мастера для импорта архива почтовых ящиков."
 
 #: db/seeds/settings.rb:4155
 msgid "Define postmaster filter."
@@ -9215,15 +9213,15 @@ msgstr "Получен неверный идентификатор клиент�
 msgid "Invalid email '%{email}'"
 msgstr "Неверно указан email '%{email}'"
 
-#: app/controllers/tickets_controller.rb:188
+#: app/controllers/tickets_controller.rb:191
 msgid "Invalid link structure"
 msgstr "Неверная структура ссылки"
 
-#: app/controllers/tickets_controller.rb:194
+#: app/controllers/tickets_controller.rb:197
 msgid "Invalid link structure (Object → LinkType)"
 msgstr "Неверная структура ссылки (Объект → Тип ссылки)"
 
-#: app/controllers/tickets_controller.rb:191
+#: app/controllers/tickets_controller.rb:194
 msgid "Invalid link structure (Object)"
 msgstr "Неверная структура ссылки (Объект)"
 
@@ -10907,7 +10905,7 @@ msgstr "Необходим получатель в поле \"Кому\" (\"TO\"
 msgid "Need session_id."
 msgstr "Необходим идентификатор сеанса (session_id)."
 
-#: app/controllers/tickets_controller.rb:469
+#: app/controllers/tickets_controller.rb:475
 msgid "Need user_id or organization_id as param"
 msgstr ""
 "Необходим идентификатор пользователя (user_id) или идентификатор организации "
@@ -11439,7 +11437,7 @@ msgstr "Пока нет общих черновиков"
 #: app/controllers/organizations_controller.rb:160
 #: app/controllers/text_modules_controller.rb:71
 #: app/controllers/ticket_articles_controller.rb:232
-#: app/controllers/tickets_controller.rb:601
+#: app/controllers/tickets_controller.rb:607
 #: app/controllers/users_controller.rb:650
 msgid "No source data submitted!"
 msgstr "Исходные данные не представлены!"
@@ -16861,7 +16859,7 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr "Подпись успешно проверена."
 
-#: app/controllers/tickets_controller.rb:384
+#: app/controllers/tickets_controller.rb:390
 msgid "The source ticket could not be found."
 msgstr "Не удалось найти исходную заявку."
 
@@ -16903,7 +16901,7 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr "Система была успешно настроена. Вы будете перенаправлены."
 
-#: app/controllers/tickets_controller.rb:375
+#: app/controllers/tickets_controller.rb:381
 msgid "The target ticket number could not be found."
 msgstr "Не удалось найти номер целевой заявки."
 
@@ -17628,10 +17626,8 @@ msgstr ""
 "входящие сообщения WhatsApp."
 
 #: app/models/ticket/checklists.rb:38
-#, fuzzy
-#| msgid "This bot already exists."
 msgid "This ticket already has a checklist."
-msgstr "Эта бот уже существует."
+msgstr "В этой заявке уже есть чек-лист."
 
 #: app/policies/ticket/shared_draft_start_policy.rb:26
 msgid "This user does not have access to the given group"
@@ -18124,7 +18120,7 @@ msgid "Tickets assigned to me: %s of %s"
 msgstr "Заявки, назначенные мне: %s из %s"
 
 #: app/controllers/ticket_articles_controller.rb:225
-#: app/controllers/tickets_controller.rb:594
+#: app/controllers/tickets_controller.rb:600
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
 "Заявки могут быть импортированы только в том случае, если система находится "
