@@ -5,8 +5,8 @@ import {
   useWindowSize,
   useLocalStorage,
   useScroll,
-  onKeyUp,
   useActiveElement,
+  onKeyDown,
 } from '@vueuse/core'
 import {
   computed,
@@ -179,7 +179,7 @@ onMounted(async () => {
 })
 
 // Keyboard
-onKeyUp('Escape', (e) => {
+onKeyDown('Escape', (e) => {
   if (props.noCloseOnEscape) return
   stopEvent(e)
   close()

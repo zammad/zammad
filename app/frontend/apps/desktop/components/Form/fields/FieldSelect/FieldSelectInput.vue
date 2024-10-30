@@ -18,6 +18,7 @@ import useSelectPreselect from '#shared/composables/useSelectPreselect.ts'
 import { useTrapTab } from '#shared/composables/useTrapTab.ts'
 import { useFormBlock } from '#shared/form/useFormBlock.ts'
 import { i18n } from '#shared/i18n.ts'
+import stopEvent from '#shared/utils/events.ts'
 
 import CommonInputSearch from '#desktop/components/CommonInputSearch/CommonInputSearch.vue'
 import CommonSelect from '#desktop/components/CommonSelect/CommonSelect.vue'
@@ -157,6 +158,17 @@ const handleToggleDropdown = (event: MouseEvent) => {
   openSelectDropdown()
 }
 
+const handleCloseDropdown = (
+  event: KeyboardEvent,
+  expanded: boolean,
+  closeDropdown: () => void,
+) => {
+  if (expanded) {
+    stopEvent(event)
+    closeDropdown()
+  }
+}
+
 useFormBlock(
   contextReactive,
   useDebounceFn((event) => {
@@ -217,7 +229,7 @@ setupMissingOrDisabledOptionHandling()
         :aria-describedby="context.describedBy"
         :tabindex="expanded && !context.noFiltering ? '-1' : '0'"
         v-bind="context.attrs"
-        @keydown.escape.prevent="closeDropdown()"
+        @keydown.escape="handleCloseDropdown($event, expanded, closeDropdown)"
         @keypress.enter.prevent="openSelectDropdown()"
         @keydown.down.prevent="openOrMoveFocusToDropdown()"
         @keydown.up.prevent="openOrMoveFocusToDropdown(true)"
