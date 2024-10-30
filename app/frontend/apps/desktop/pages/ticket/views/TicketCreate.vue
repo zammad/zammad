@@ -218,6 +218,10 @@ const formSchema = defineFormSchema([
             name: 'shared_draft_id',
             type: 'hidden',
           },
+          {
+            name: 'externalReferences',
+            type: 'hidden',
+          },
         ],
       },
     ],

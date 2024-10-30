@@ -115,7 +115,7 @@ describe('CommonFlyout', () => {
     })
 
     it('has a default container width of 500px', async () => {
-      expect(flyout.getByLabelText('Side panel')).toHaveStyle({
+      expect(flyout.getByRole('complementary')).toHaveStyle({
         width: '500px',
       })
     })

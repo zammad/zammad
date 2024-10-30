@@ -100,5 +100,9 @@ export const TicketAttributesFragmentDoc = gql`
   closeEscalationAt
   updateEscalationAt
   initialChannel
+  externalReferences {
+    github
+    gitlab
+  }
 }
     ${ObjectAttributeValuesFragmentDoc}`;

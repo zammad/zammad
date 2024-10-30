@@ -28,5 +28,10 @@ module Gql::Types::Input::Ticket
              description: 'Links to create for the newly created ticket',
              prepare:     only_for_ticket_agents
 
+    argument :external_references,
+             Gql::Types::Input::Ticket::ExternalReferencesInputType,
+             required:    false,
+             description: 'External references to create for the newly created ticket',
+             prepare:     only_for_ticket_agents
   end
 end

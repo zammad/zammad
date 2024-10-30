@@ -80,7 +80,7 @@ class Gql::ZammadSchema < GraphQL::Schema
     raise Exceptions::Forbidden, error.message # Add a top-level error to the response instead of returning nil.
   end
 
-  RETHROWABLE_ERRORS = [GraphQL::ExecutionError, ArgumentError, IndexError, NameError, RangeError, RegexpError, SystemCallError, ThreadError, TypeError, ZeroDivisionError].freeze
+  RETHROWABLE_ERRORS = [GraphQL::ExecutionError, ArgumentError, IndexError, NameError, NoMethodError, RangeError, RegexpError, SystemCallError, ThreadError, TypeError, ZeroDivisionError].freeze
 
   # Post-process errors and enrich them with meta information for processing on the client side.
   rescue_from(StandardError) do |err, _obj, _args, ctx, field|

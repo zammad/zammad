@@ -1,7 +1,9 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class GitHub < GitIntegrationBase
-  def initialize(endpoint, api_token) # rubocop:disable Lint/MissingSuper
+  def initialize(endpoint:, api_token:)
+    super()
+
     @client     = GitHub::HttpClient.new(endpoint, api_token)
     @issue_type = :github
   end

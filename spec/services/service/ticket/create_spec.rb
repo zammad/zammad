@@ -180,5 +180,65 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
           .to raise_error(Exceptions::UnprocessableEntity)
       end
     end
+
+    describe 'issue trackers handling' do
+      let(:gitlab_link) { 'https://git.example.com/issue/123' }
+      let(:github_link) { 'https://github.com/issue/123' }
+
+      before do
+        ticket_data[:external_references] = {
+          gitlab: [gitlab_link],
+          github: [github_link]
+        }
+      end
+
+      context 'when neither enabled' do
+        it 'adds no links' do
+          ticket = service.execute(ticket_data:)
+
+          expect(ticket.preferences).to be_blank
+        end
+      end
+
+      context 'when gitlab is enabled' do
+        before do
+          Setting.set('gitlab_integration', true)
+        end
+
+        it 'adds gitlab links' do
+          ticket = service.execute(ticket_data:)
+
+          expect(ticket.preferences).to eq({ 'gitlab' => { 'issue_links' => [gitlab_link] } })
+        end
+      end
+
+      context 'when github is enabled' do
+        before do
+          Setting.set('github_integration', true)
+        end
+
+        it 'adds github links' do
+          ticket = service.execute(ticket_data:)
+
+          expect(ticket.preferences).to eq({ 'github' => { 'issue_links' => [github_link] } })
+        end
+      end
+
+      context 'when both enabled' do
+        before do
+          Setting.set('gitlab_integration', true)
+          Setting.set('github_integration', true)
+        end
+
+        it 'adds both links' do
+          ticket = service.execute(ticket_data:)
+
+          expect(ticket.preferences).to eq({
+                                             'gitlab' => { 'issue_links' => [gitlab_link] },
+                                             'github' => { 'issue_links' => [github_link] }
+                                           })
+        end
+      end
+    end
   end
 end

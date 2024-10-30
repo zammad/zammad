@@ -237,7 +237,6 @@ onMounted(() => {
     :show-backdrop="showBackdrop"
     :style="{ width: `${flyoutContainerWidth}px` }"
     :class="{ 'transition-all': !isResizing }"
-    :aria-label="$t('Side panel')"
     :aria-labelledby="`${flyoutId}-title`"
     @click-background="close()"
   >

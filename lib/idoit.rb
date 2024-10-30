@@ -15,8 +15,7 @@ returns
 =end
 
   def self.verify(api_token, endpoint, _client_id = nil, verify_ssl: false)
-    raise 'api_token required' if api_token.blank?
-    raise 'endpoint required' if endpoint.blank?
+    raise __('Invalid i-doit configuration (missing endpoint or api_token).') if api_token.blank? || endpoint.blank?
 
     params = {
       apikey: api_token,

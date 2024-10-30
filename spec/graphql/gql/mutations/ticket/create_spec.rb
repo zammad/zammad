@@ -157,6 +157,20 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
         end
       end
 
+      context 'with issue tracker links' do
+        let(:github_link)   { 'https://github.com/issue/123' }
+        let(:input_payload) { input_base_payload.merge(externalReferences: { github: [github_link] }) }
+
+        before { Setting.set('github_integration', true) }
+
+        it 'creates the ticket and adds issue trackeer links' do
+          it_creates_ticket
+
+          expect(Ticket.last.preferences)
+            .to include('github' => include('issue_links' => contain_exactly(github_link)))
+        end
+      end
+
       context 'when customer is provided as an email address' do
         let(:email_address) { Faker::Internet.email }
         let(:input_payload) { input_base_payload.merge(customer: { email: email_address }) }
@@ -574,6 +588,19 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
         it 'creates the ticket without links' do
           it_creates_ticket
           expect(Link.list(link_object: 'Ticket', link_object_value: Ticket.last.id)).to eq([])
+        end
+      end
+
+      context 'with issue tracker links' do
+        let(:github_link)   { 'https://github.com/issue/123' }
+        let(:input_payload) { input_base_payload.merge(externalReferences: { github: [github_link] }) }
+
+        before { Setting.set('github_integration', true) }
+
+        it 'creates the ticket and adds issue tracker links' do
+          it_creates_ticket
+
+          expect(Ticket.last.preferences).not_to include('github')
         end
       end
 

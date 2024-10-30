@@ -5272,6 +5272,52 @@
         },
         {
           "kind": "ENUM",
+          "name": "EnumTicketExternalReferencesIssueTrackerItemState",
+          "description": "Possible values for issue tracker item states",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "open",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "closed",
+              "description": null,
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "kind": "ENUM",
+          "name": "EnumTicketExternalReferencesIssueTrackerType",
+          "description": "Possible values for issue tracker type",
+          "fields": null,
+          "inputFields": null,
+          "interfaces": null,
+          "enumValues": [
+            {
+              "name": "github",
+              "description": "GitHub",
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "gitlab",
+              "description": "GitLab",
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "possibleTypes": null
+        },
+        {
+          "kind": "ENUM",
           "name": "EnumTicketScreenBehavior",
           "description": "Option to choose the ticket screen behavior",
           "fields": null,
@@ -10421,6 +10467,112 @@
               "type": {
                 "kind": "OBJECT",
                 "name": "TicketCustomerUpdatePayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ticketExternalReferencesIssueTrackerItemAdd",
+              "description": "Add an issue tracker link to an ticket or temporary for ticket creation.",
+              "args": [
+                {
+                  "name": "ticketId",
+                  "description": "The related ticket for the issue tracker items",
+                  "type": {
+                    "kind": "SCALAR",
+                    "name": "ID",
+                    "ofType": null
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "issueTrackerLink",
+                  "description": "The issue tracker link to add",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "UriHttpString",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "issueTrackerType",
+                  "description": "The issue tracker type",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "EnumTicketExternalReferencesIssueTrackerType",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "TicketExternalReferencesIssueTrackerItemAddPayload",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "ticketExternalReferencesIssueTrackerItemRemove",
+              "description": "Removes an issue tracker link from an ticket.",
+              "args": [
+                {
+                  "name": "ticketId",
+                  "description": "The related ticket for the issue tracker items",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "ID",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "issueTrackerLink",
+                  "description": "The issue tracker link to remove",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "SCALAR",
+                      "name": "UriHttpString",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "issueTrackerType",
+                  "description": "The issue tracker type",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "EnumTicketExternalReferencesIssueTrackerType",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "TicketExternalReferencesIssueTrackerItemRemovePayload",
                 "ofType": null
               },
               "isDeprecated": false,
@@ -15863,6 +16015,59 @@
               "deprecationReason": null
             },
             {
+              "name": "ticketExternalReferencesIssueTrackerItemList",
+              "description": "Detailed issue tracker items for the given issue tracker links or the given ticket",
+              "args": [
+                {
+                  "name": "input",
+                  "description": "The input to fetch detailed issue tracker items for the given issue tracker links or the given ticket",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "INPUT_OBJECT",
+                      "name": "TicketExternalReferencesIssueTrackerListInput",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                },
+                {
+                  "name": "issueTrackerType",
+                  "description": "The issue tracker type",
+                  "type": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "ENUM",
+                      "name": "EnumTicketExternalReferencesIssueTrackerType",
+                      "ofType": null
+                    }
+                  },
+                  "defaultValue": null
+                }
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "LIST",
+                  "name": null,
+                  "ofType": {
+                    "kind": "NON_NULL",
+                    "name": null,
+                    "ofType": {
+                      "kind": "OBJECT",
+                      "name": "TicketExternalReferencesIssueTrackerItem",
+                      "ofType": null
+                    }
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "ticketOverviews",
               "description": "Ticket overviews available in the system",
               "args": [
@@ -19243,6 +19448,20 @@
               "deprecationReason": null
             },
             {
+              "name": "externalReferences",
+              "description": "Returns links to external services",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "TicketExternalReferences",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
               "name": "firstResponseAt",
               "description": null,
               "args": [
@@ -22029,6 +22248,16 @@
                 }
               },
               "defaultValue": null
+            },
+            {
+              "name": "externalReferences",
+              "description": "External references to create for the newly created ticket",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TicketExternalReferencesInput",
+                "ofType": null
+              },
+              "defaultValue": null
             }
           ],
           "interfaces": null,
@@ -22245,6 +22474,545 @@
           "interfaces": [
 
           ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketExternalReferences",
+          "description": "Links attached to a ticket and pointing to external services",
+          "fields": [
+            {
+              "name": "github",
+              "description": "Returns exising links for the github integration",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "UriHttpString",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "gitlab",
+              "description": "Returns exising links for the gitlab integration",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "UriHttpString",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "TicketExternalReferencesInput",
+          "description": "Represents the ticket external links to be added",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "objectAttributeValues",
+              "description": "Additional custom attributes (names + values)",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "INPUT_OBJECT",
+                    "name": "ObjectAttributeValueInput",
+                    "ofType": null
+                  }
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "ownerId",
+              "description": "The owner of the ticket.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "customer",
+              "description": "The customer of the ticket.",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TicketCustomerInput",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "organizationId",
+              "description": "The organization of the ticket.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "priorityId",
+              "description": "The priority of the ticket.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "stateId",
+              "description": "The state of the ticket.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "pendingTime",
+              "description": "The pending time of the ticket.",
+              "type": {
+                "kind": "SCALAR",
+                "name": "ISO8601DateTime",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "article",
+              "description": "The article data.",
+              "type": {
+                "kind": "INPUT_OBJECT",
+                "name": "TicketArticleInput",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "github",
+              "description": "Links for the github integration",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "UriHttpString",
+                    "ofType": null
+                  }
+                }
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "gitlab",
+              "description": "Links for the gitlab integration",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "UriHttpString",
+                    "ofType": null
+                  }
+                }
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketExternalReferencesIssueTrackerItem",
+          "description": "Issue tracker item for an external reference for a ticket",
+          "fields": [
+            {
+              "name": "assignees",
+              "description": "The assignees of the issue",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "String",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "issueId",
+              "description": "The issue ID from the external issue tracker",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "Int",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "labels",
+              "description": "The labels of the issue",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "TicketExternalReferencesIssueTrackerItemLabel",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "milestone",
+              "description": "The milestone of the issue",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "SCALAR",
+                "name": "String",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "state",
+              "description": "The state of the issue",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "ENUM",
+                  "name": "EnumTicketExternalReferencesIssueTrackerItemState",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "title",
+              "description": "The title of the issue",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "url",
+              "description": "The URL of the issue",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "UriHttpString",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketExternalReferencesIssueTrackerItemAddPayload",
+          "description": "Autogenerated return type of TicketExternalReferencesIssueTrackerItemAdd.",
+          "fields": [
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "issueTrackerItem",
+              "description": "The added issue tracker item",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "OBJECT",
+                "name": "TicketExternalReferencesIssueTrackerItem",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketExternalReferencesIssueTrackerItemLabel",
+          "description": "The labels of the Issue tracker item",
+          "fields": [
+            {
+              "name": "color",
+              "description": "The color of the label",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "textColor",
+              "description": "The text color of the label",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "title",
+              "description": "The title of the label",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "NON_NULL",
+                "name": null,
+                "ofType": {
+                  "kind": "SCALAR",
+                  "name": "String",
+                  "ofType": null
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "OBJECT",
+          "name": "TicketExternalReferencesIssueTrackerItemRemovePayload",
+          "description": "Autogenerated return type of TicketExternalReferencesIssueTrackerItemRemove.",
+          "fields": [
+            {
+              "name": "errors",
+              "description": "Errors encountered during execution of the mutation.",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "OBJECT",
+                    "name": "UserError",
+                    "ofType": null
+                  }
+                }
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            },
+            {
+              "name": "success",
+              "description": "Was the mutation successful?",
+              "args": [
+
+              ],
+              "type": {
+                "kind": "SCALAR",
+                "name": "Boolean",
+                "ofType": null
+              },
+              "isDeprecated": false,
+              "deprecationReason": null
+            }
+          ],
+          "inputFields": null,
+          "interfaces": [
+
+          ],
+          "enumValues": null,
+          "possibleTypes": null
+        },
+        {
+          "kind": "INPUT_OBJECT",
+          "name": "TicketExternalReferencesIssueTrackerListInput",
+          "description": "Represents information to fetch detailed issue tracker items for the given issue tracker links or the given ticket",
+          "fields": null,
+          "inputFields": [
+            {
+              "name": "ticketId",
+              "description": "The related ticket for the issue tracker items",
+              "type": {
+                "kind": "SCALAR",
+                "name": "ID",
+                "ofType": null
+              },
+              "defaultValue": null
+            },
+            {
+              "name": "issueTrackerLinks",
+              "description": "The issue tracker links for the detailed list",
+              "type": {
+                "kind": "LIST",
+                "name": null,
+                "ofType": {
+                  "kind": "NON_NULL",
+                  "name": null,
+                  "ofType": {
+                    "kind": "SCALAR",
+                    "name": "UriHttpString",
+                    "ofType": null
+                  }
+                }
+              },
+              "defaultValue": null
+            }
+          ],
+          "interfaces": null,
           "enumValues": null,
           "possibleTypes": null
         },

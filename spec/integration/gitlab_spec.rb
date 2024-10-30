@@ -33,7 +33,7 @@ RSpec.describe GitLab, integration: true, required_envs: %w[GITLAB_ENDPOINT GITL
       ],
     }
   end
-  let(:instance) { described_class.new(ENV['GITLAB_ENDPOINT'], ENV['GITLAB_APITOKEN']) }
+  let(:instance) { described_class.new(endpoint: ENV['GITLAB_ENDPOINT'], api_token: ENV['GITLAB_APITOKEN']) }
 
   it_behaves_like 'Git Integration Base', issue_type: :gitlab
 
@@ -93,7 +93,7 @@ RSpec.describe GitLab, integration: true, required_envs: %w[GITLAB_ENDPOINT GITL
   describe '#variables' do
     describe 'Zammad ignores relative GitLab URLs #3830' do
       let(:endpoint)     { ENV['GITLAB_ENDPOINT'].sub('api/graphql', 'subfolder/api/graphql') }
-      let(:instance)     { described_class.new(endpoint, ENV['GITLAB_APITOKEN']) }
+      let(:instance)     { described_class.new(endpoint:, api_token: ENV['GITLAB_APITOKEN']) }
       let(:issue_url)    { "https://#{URI.parse(ENV['GITLAB_ISSUE_LINK']).host}/subfolder/group/project/-/issues/1" }
       let(:linked_issue) { GitLab::LinkedIssue.new(instance.client) }
 

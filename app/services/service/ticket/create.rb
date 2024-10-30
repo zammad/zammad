@@ -88,9 +88,12 @@ class Service::Ticket::Create < Service::BaseWithCurrentUser
   # Desktop UI supplies this data from frontend
   # Mobile UI leaves this processing for GraphQL
   def preprocess_ticket_data!(ticket_data)
-    return if !customer?(ticket_data[:group]&.id)
+    if customer?(ticket_data[:group]&.id)
+      ticket_data[:customer_id] = current_user.id
+      ticket_data.delete(:external_references)
+    end
 
-    ticket_data[:customer_id] = current_user.id
+    move_issue_trackers_links_to_preferences(ticket_data)
   end
 
   # Desktop UI supplies this data from frontend
@@ -106,6 +109,21 @@ class Service::Ticket::Create < Service::BaseWithCurrentUser
       preprocess_article_data_customer! ticket, article_input
     when 'Agent'
       preprocess_article_data_agent! ticket, article_input
+    end
+  end
+
+  def move_issue_trackers_links_to_preferences(ticket_data)
+    external_references = ticket_data.delete(:external_references)
+
+    return if external_references.blank?
+
+    %i[github gitlab].each do |key|
+      input = external_references[key]
+
+      next if input.blank? || !Setting.get("#{key}_integration")
+
+      ticket_data[:preferences] ||= {}
+      ticket_data[:preferences][key] = { issue_links: input.map(&:to_s) }
     end
   end
 

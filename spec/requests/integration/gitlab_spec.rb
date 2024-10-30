@@ -4,7 +4,7 @@ require 'rails_helper'
 
 # rubocop:disable RSpec/StubbedMock,RSpec/MessageSpies
 
-RSpec.describe 'GitLab', type: :request do
+RSpec.describe 'GitLab', required_envs: %w[GITLAB_ENDPOINT GITLAB_APITOKEN], type: :request do
   let(:token)      { 't0k3N' }
   let(:endpoint)   { 'https://git.example.com/api/graphql' }
   let(:verify_ssl) { true }
@@ -62,7 +62,7 @@ RSpec.describe 'GitLab', type: :request do
 
       authenticated_as(admin)
       instance = instance_double(GitLab)
-      expect(GitLab).to receive(:new).with(endpoint, token, verify_ssl: verify_ssl).and_return instance
+      expect(GitLab).to receive(:new).with(endpoint: endpoint, api_token: token, verify_ssl: verify_ssl).and_return instance
       expect(instance).to receive(:verify!).and_return(true)
 
       post '/api/v1/integration/gitlab/verify', params: params, as: :json
@@ -72,28 +72,34 @@ RSpec.describe 'GitLab', type: :request do
       expect(json_response['result']).to eq('ok')
     end
 
-    it 'does query objects' do
-      params = {
-        links: [ issue_link ],
-      }
-      authenticated_as(agent)
-      instance = instance_double(GitLab)
-      expect(GitLab).to receive(:new).and_return instance
-      expect(instance).to receive(:issues_by_urls).and_return(
-        {
-          issues:           [issue_data],
-          url_replacements: []
+    context 'with activated gitlab integration' do
+      before do
+        Setting.set('gitlab_integration', true)
+        Setting.set('gitlab_config', { 'endpoint' => ENV['GITLAB_ENDPOINT'], 'api_token' => ENV['GITLAB_APITOKEN'] })
+      end
+
+      it 'does query objects without ticket id' do
+        params = {
+          links: [ issue_link ],
         }
-      )
-      expect(instance).to receive(:fix_urls_for_ticket)
+        authenticated_as(agent)
+        instance = instance_double(GitLab)
+        expect(GitLab).to receive(:new).and_return instance
+        expect(instance).to receive(:issues_by_urls).and_return(
+          {
+            issues:           [issue_data],
+            url_replacements: []
+          }
+        )
 
-      post '/api/v1/integration/gitlab', params: params, as: :json
-      expect(response).to have_http_status(:ok)
+        post '/api/v1/integration/gitlab', params: params, as: :json
+        expect(response).to have_http_status(:ok)
 
-      expect(json_response).to be_a(Hash)
-      expect(json_response).not_to be_blank
-      expect(json_response['result']).to eq('ok')
-      expect(json_response['response']).to eq([issue_data.deep_stringify_keys])
+        expect(json_response).to be_a(Hash)
+        expect(json_response).not_to be_blank
+        expect(json_response['result']).to eq('ok')
+        expect(json_response['response']).to eq([issue_data.deep_stringify_keys])
+      end
     end
 
     it 'does save ticket issues' do

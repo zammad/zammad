@@ -4,7 +4,7 @@ require 'rails_helper'
 
 require 'integration/git_integration_base_examples'
 
-RSpec.describe GitHub, integration: true, required_envs: %w[GITHUB_ENDPOINT GITHUB_APITOKEN] do
+RSpec.describe GitHub, integration: true, required_envs: %w[GITHUB_ENDPOINT GITHUB_ISSUE_LINK GITHUB_APITOKEN] do
   let(:invalid_issue_url) { 'https://github.com/organization/repository/issues/42' }
   let(:issue_data) do
     {
@@ -28,7 +28,7 @@ RSpec.describe GitHub, integration: true, required_envs: %w[GITHUB_ENDPOINT GITH
       ],
     }
   end
-  let(:instance) { described_class.new(ENV['GITHUB_ENDPOINT'], ENV['GITHUB_APITOKEN']) }
+  let(:instance) { described_class.new(endpoint: ENV['GITHUB_ENDPOINT'], api_token: ENV['GITHUB_APITOKEN']) }
 
   it_behaves_like 'Git Integration Base', issue_type: :github
 

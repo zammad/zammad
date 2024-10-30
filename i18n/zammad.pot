@@ -1716,7 +1716,12 @@ msgid "Assigned"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:24
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:75
 msgid "Assignee"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:75
+msgid "Assignees"
 msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:1890
@@ -1981,11 +1986,11 @@ msgstr ""
 msgid "Automatically loads the chat.css file. If you want to use your own css, just set it to false."
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1288
+#: app/frontend/shared/components/Form/Form.vue:1290
 msgid "Autosave in progress…"
 msgstr ""
 
-#: app/frontend/shared/components/Form/Form.vue:1297
+#: app/frontend/shared/components/Form/Form.vue:1299
 msgid "Autosaving is taking longer than expected…"
 msgstr ""
 
@@ -2422,7 +2427,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:71
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:226
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:400
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:404
 msgid "Cancel & Go Back"
 msgstr ""
 
@@ -2914,7 +2919,7 @@ msgstr ""
 msgid "Close dialog"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:269
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:268
 msgid "Close side panel"
 msgstr ""
 
@@ -3413,7 +3418,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:412
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:416
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr ""
@@ -4976,7 +4981,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:49
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:397
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:401
 msgid "Discard Changes"
 msgstr ""
 
@@ -6648,6 +6653,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:81
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/github.ts:11
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:40
 #: db/seeds/settings.rb:1603
 msgid "GitHub"
@@ -6669,12 +6675,17 @@ msgstr ""
 msgid "GitHub integration"
 msgstr ""
 
-#: lib/github/http_client.rb:35
-msgid "GitHub request failed! Please have a look at the log file for details"
+#: lib/github/http_client.rb:34
+msgid "GitHub request failed. Please have a look at the log file for details."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:35
+msgid "GitHub: Link issue"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/gitlab.ts:11
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:47
 #: db/seeds/settings.rb:1667
 msgid "GitLab"
@@ -6696,8 +6707,12 @@ msgstr ""
 msgid "GitLab integration"
 msgstr ""
 
-#: lib/gitlab/http_client.rb:48
-msgid "GitLab request failed! Please have a look at the log file for details"
+#: lib/gitlab/http_client.rb:47
+msgid "GitLab request failed. Please have a look at the log file for details."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:35
+msgid "GitLab: Link issue"
 msgstr ""
 
 #: app/controllers/selectors_controller.rb:43
@@ -7571,7 +7586,7 @@ msgid "Including private key."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:332
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:334
 msgid "Incomplete Ticket Checklist"
 msgstr ""
 
@@ -7761,12 +7776,20 @@ msgstr ""
 msgid "Invalid GitHub GraphQL API token"
 msgstr ""
 
+#: lib/github/http_client.rb:10
+msgid "Invalid GitHub configuration (missing endpoint or api_token)."
+msgstr ""
+
 #: lib/github/linked_issue.rb:104
 msgid "Invalid GitHub issue link format"
 msgstr ""
 
 #: lib/gitlab/credentials.rb:26
 msgid "Invalid GitLab GraphQL API token"
+msgstr ""
+
+#: lib/gitlab/http_client.rb:10
+msgid "Invalid GitLab configuration (missing endpoint or api_token)."
 msgstr ""
 
 #: lib/gitlab/linked_issue.rb:122
@@ -7787,6 +7810,10 @@ msgstr ""
 
 #: app/models/user.rb:556
 msgid "Invalid email '%{email}'"
+msgstr ""
+
+#: lib/idoit.rb:8
+msgid "Invalid i-doit configuration (missing endpoint or api_token)."
 msgstr ""
 
 #: app/controllers/tickets_controller.rb:191
@@ -7905,6 +7932,14 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee:17
 msgid "Ionicons"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:37
+msgid "Issue URL"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:54
+msgid "Issue status"
 msgstr ""
 
 #: lib/validations/data_privacy_task_validator.rb:50
@@ -8080,6 +8115,7 @@ msgid "Label"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:30
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
 msgid "Labels"
 msgstr ""
 
@@ -8274,6 +8310,13 @@ msgstr ""
 msgid "Link GitLab issues to your tickets."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:70
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList.vue:274
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:62
+msgid "Link Issue"
+msgstr ""
+
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:19
 msgid "Link Related Answer"
 msgstr ""
@@ -8349,6 +8392,10 @@ msgstr ""
 
 #: app/models/system_report/plugin/addons.rb:4
 msgid "List of installed addons"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem/IssueTrackerBadgeList.vue:15
+msgid "List of issue labels"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:212
@@ -9095,6 +9142,7 @@ msgid "Migrator can't read OTRS output!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:69
 msgid "Milestone"
 msgstr ""
 
@@ -9817,7 +9865,7 @@ msgstr ""
 msgid "No import in progress."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:192
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:193
 msgid "No linked issues"
 msgstr ""
 
@@ -9934,7 +9982,7 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:335
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:337
 msgid "No, just close the ticket"
 msgstr ""
 
@@ -9945,7 +9993,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
-#: app/graphql/gql/types/ticket_type.rb:101
+#: app/graphql/gql/types/ticket_type.rb:102
 #: db/seeds/settings.rb:1957
 msgid "None"
 msgstr ""
@@ -10329,6 +10377,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadgeList.vue:35
 msgid "Open Checklist"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/useIssueTracker.ts:39
+msgid "Open Issues"
 msgstr ""
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:3
@@ -11871,7 +11923,7 @@ msgstr ""
 msgid "Resize frame"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:301
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:300
 msgid "Resize side panel"
 msgstr ""
 
@@ -12878,7 +12930,7 @@ msgid "Shared Drafts"
 msgstr ""
 
 #: app/controllers/tickets_controller.rb:90
-#: app/services/service/ticket/create.rb:155
+#: app/services/service/ticket/create.rb:173
 msgid "Shared draft cannot be selected for this ticket."
 msgstr ""
 
@@ -13035,11 +13087,7 @@ msgstr ""
 msgid "Shown when the chat is closed."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:240
-msgid "Side panel"
-msgstr ""
-
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:282
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:281
 msgid "Side panel footer"
 msgstr ""
 
@@ -14356,6 +14404,15 @@ msgstr ""
 msgid "The issue could not be saved."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:43
+#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:28
+msgid "The issue reference already exists."
+msgstr ""
+
+#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:44
+msgid "The issue reference could not be found."
+msgstr ""
+
 #: app/frontend/shared/composables/useLocaleUpdate.ts:21
 msgid "The language could not be updated."
 msgstr ""
@@ -14595,11 +14652,11 @@ msgstr ""
 msgid "The required event field 'execution' is unknown or missing."
 msgstr ""
 
-#: lib/idoit.rb:22
+#: lib/idoit.rb:21
 msgid "The required field 'api_token' is missing from the config."
 msgstr ""
 
-#: lib/idoit.rb:23
+#: lib/idoit.rb:22
 msgid "The required field 'endpoint' is missing from the config."
 msgstr ""
 
@@ -15753,12 +15810,12 @@ msgstr ""
 msgid "Ticket update"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:484
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:486
 msgid "Ticket update failed."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:429
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:431
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:174
 msgid "Ticket updated successfully."
 msgstr ""
@@ -16472,6 +16529,10 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:5
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:203
 msgid "Unless you already have it, install one of the following authenticator apps on your mobile device:"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem/IssueTrackerLink.vue:36
+msgid "Unlink issue"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/user.coffee:185
@@ -17428,7 +17489,7 @@ msgid "Yes, add attachments now"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:334
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:336
 msgid "Yes, open the checklist"
 msgstr ""
 
@@ -17646,7 +17707,7 @@ msgstr ""
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:329
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:331
 msgid "You have unchecked items in the checklist. Do you want to handle them before closing this ticket?"
 msgstr ""
 
@@ -18592,6 +18653,10 @@ msgid "is too short (minimum is %{count} characters)"
 msgstr ""
 
 msgid "is too short (minimum is 1 character)"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:55
+msgid "issue status: %s"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:105

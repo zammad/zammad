@@ -146,19 +146,6 @@ const groupId = computed(() =>
 
 const { setSkipNextStateUpdate } = useTaskbarTabStateUpdates(triggerFormUpdater)
 
-const sidebarContext = computed<TicketSidebarContext>(() => ({
-  screenType: TicketSidebarScreenType.TicketDetailView,
-  form: form.value,
-  formValues: {
-    // TODO: Workaround, to make the sidebars working for now.
-    customer_id: ticket.value?.customer.internalId,
-    organization_id: ticket.value?.organization?.internalId,
-  },
-}))
-
-useProvideTicketSidebar(sidebarContext)
-const { hasSidebar, activeSidebar, switchSidebar } = useTicketSidebar()
-
 const {
   ticketSchema,
   articleSchema,
@@ -171,6 +158,21 @@ const {
   articleTypeHandler,
   articleTypeSelectHandler,
 } = useTicketEditForm(ticket, form)
+
+const sidebarContext = computed<TicketSidebarContext>(() => ({
+  ticket,
+  isTicketEditable,
+  screenType: TicketSidebarScreenType.TicketDetailView,
+  form: form.value,
+  formValues: {
+    // TODO: Workaround, to make the sidebars working for now.
+    customer_id: ticket.value?.customer.internalId,
+    organization_id: ticket.value?.organization?.internalId,
+  },
+}))
+
+useProvideTicketSidebar(sidebarContext)
+const { hasSidebar, activeSidebar, switchSidebar } = useTicketSidebar()
 
 const hasInternalArticle = computed(
   () => (values.value as TicketUpdateFormData).article?.internal,

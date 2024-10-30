@@ -1097,6 +1097,8 @@ const buildStaticSchema = () => {
         id: fieldId,
         formId,
         plugins,
+        validationMessages: field.validationMessages,
+        validationRules: field.validationRules,
         triggerFormUpdater: field.triggerFormUpdater ?? !!props.formUpdaterId,
       },
     }

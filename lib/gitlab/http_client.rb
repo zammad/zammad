@@ -7,8 +7,7 @@ class GitLab
     attr_reader :api_token, :endpoint, :verify_ssl
 
     def initialize(endpoint, api_token, verify_ssl: true)
-      raise 'api_token required' if api_token.blank?
-      raise 'endpoint required' if endpoint.blank? || endpoint.exclude?('/graphql') || endpoint.scan(URI::DEFAULT_PARSER.make_regexp).blank?
+      raise __('Invalid GitLab configuration (missing endpoint or api_token).') if api_token.blank? || endpoint.blank? || endpoint.exclude?('/graphql') || endpoint.scan(URI::DEFAULT_PARSER.make_regexp).blank?
 
       @api_token = api_token
       @endpoint = endpoint
@@ -46,7 +45,7 @@ class GitLab
 
       if !response.success?
         Rails.logger.error response.error
-        raise __('GitLab request failed! Please have a look at the log file for details')
+        raise __('GitLab request failed. Please have a look at the log file for details.')
       end
 
       response.data

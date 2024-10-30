@@ -13,7 +13,7 @@ RSpec.shared_examples 'Git Integration Base' do |issue_type:|
                       })
       expect(ticket.reload.preferences[issue_type][:issue_links]).to eq([bad_issue_url])
 
-      instance.fix_urls_for_ticket(ticket.id, url_replacements)
+      instance.fix_urls_for_ticket(ticket, url_replacements)
       expect(ticket.reload.preferences[issue_type][:issue_links]).to eq([url_replacements[bad_issue_url]])
     end
   end

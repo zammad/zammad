@@ -447,7 +447,6 @@ describe('ticket create view - shared drafts sidebar', async () => {
       })
       mockPermissions(['ticket.customer'])
       // Mock frontend attributes for customer context.
-      // TODO: check if we can mock the query twice based on the variable?
       mockObjectManagerFrontendAttributesQuery({
         objectManagerFrontendAttributes: ticketCustomerObjectAttributes(),
       })

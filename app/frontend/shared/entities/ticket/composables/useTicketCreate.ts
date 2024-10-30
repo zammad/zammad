@@ -158,6 +158,10 @@ export const useTicketCreate = (
       ]
     }
 
+    if (formData.externalReferences) {
+      input.externalReferences = formData.externalReferences
+    }
+
     return ticketCreateMutation
       .send({ input })
       .then((result) => {

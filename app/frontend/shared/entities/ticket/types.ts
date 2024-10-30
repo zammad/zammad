@@ -3,12 +3,12 @@
 import type { FileUploaded } from '#shared/components/Form/fields/FieldFile/types.ts'
 import type { SecurityValue } from '#shared/components/Form/fields/FieldSecurity/types.ts'
 import type { FormFieldValue } from '#shared/components/Form/types.ts'
-import type {
-  TicketQuery,
-  TicketArticlesQuery,
-  TicketLiveUser,
-  EnumTaskbarApp,
-  EnumSecurityOption,
+import {
+  type TicketQuery,
+  type TicketArticlesQuery,
+  type TicketLiveUser,
+  type EnumTaskbarApp,
+  type EnumSecurityOption,
 } from '#shared/graphql/types.ts'
 import type { ConfidentTake } from '#shared/types/utils.ts'
 
@@ -62,6 +62,10 @@ export interface TicketFormData {
   articleSenderType: TicketCreateArticleType
   tags: string[]
   security?: EnumSecurityOption[]
+  externalReferences: {
+    github: string[]
+    gitlab: string[]
+  }
   [index: string]: FormFieldValue
 }
 

@@ -95,4 +95,8 @@ fragment ticketAttributes on Ticket {
   closeEscalationAt
   updateEscalationAt
   initialChannel
+  externalReferences {
+    github
+    gitlab
+  }
 }

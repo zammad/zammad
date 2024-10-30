@@ -20,6 +20,6 @@ export const setErrors = (node: FormKitNode, errors: MutationSendError) => {
   if (errors instanceof UserError) {
     node.setErrors(errors.generalErrors as string[], errors.getFieldErrorList())
   } else {
-    node.setErrors(__('An unexpected error has occurred.'))
+    node.setErrors(errors?.message || __('An unexpected error has occurred.'))
   }
 }

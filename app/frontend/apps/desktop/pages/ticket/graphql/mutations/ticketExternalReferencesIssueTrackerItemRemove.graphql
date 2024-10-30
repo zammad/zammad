@@ -1,0 +1,16 @@
+mutation ticketExternalReferencesIssueTrackerItemRemove(
+  $issueTrackerLink: UriHttpString!
+  $issueTrackerType: EnumTicketExternalReferencesIssueTrackerType!
+  $ticketId: ID!
+) {
+  ticketExternalReferencesIssueTrackerItemRemove(
+    issueTrackerLink: $issueTrackerLink
+    issueTrackerType: $issueTrackerType
+    ticketId: $ticketId
+  ) {
+    success
+    errors {
+      ...errors
+    }
+  }
+}

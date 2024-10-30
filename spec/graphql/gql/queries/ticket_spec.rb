@@ -70,10 +70,12 @@ RSpec.describe Gql::Queries::Ticket, current_user_id: 1, type: :graphql do
             referencingChecklistTickets {
               id
             }
+            #{additional_query_fields}
           }
         }
       QUERY
     end
+    let(:additional_query_fields) { '' }
     let(:variables) { { ticketId: gql.id(ticket) } }
     let(:ticket) do
       create(:ticket).tap do |t|
@@ -224,6 +226,32 @@ RSpec.describe Gql::Queries::Ticket, current_user_id: 1, type: :graphql do
               .to include(include('node' => include('user' => include('id' => gql.id(agent)))))
           end
         end
+
+        context 'with usage of issue tracker references' do
+          let(:ticket) do
+            Setting.set('github_integration', true)
+
+            create(:ticket, preferences: { 'github' => { 'issue_links' => ['https://github.com/example/example/issues/1234'] } })
+          end
+
+          let(:additional_query_fields) do
+            <<~ADDITIONALFIELDS
+              externalReferences {
+                github
+                gitlab
+              }
+            ADDITIONALFIELDS
+          end
+
+          it 'contains issue tracker references' do
+            expect(gql.result.data).to include(
+              'externalReferences' => include({
+                                                'github' => ['https://github.com/example/example/issues/1234'],
+                                                'gitlab' => nil
+                                              })
+            )
+          end
+        end
       end
 
       context 'without permission' do
@@ -233,7 +261,7 @@ RSpec.describe Gql::Queries::Ticket, current_user_id: 1, type: :graphql do
       end
 
       context 'without ticket' do
-        let(:ticket) { create(:ticket).tap(&:destroy) }
+        let(:ticket)         { create(:ticket).tap(&:destroy) }
         let(:checklist)      { nil }
         let(:another_ticket) { nil }
 

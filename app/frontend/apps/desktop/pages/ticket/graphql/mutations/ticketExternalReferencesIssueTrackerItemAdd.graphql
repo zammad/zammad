@@ -1,0 +1,28 @@
+mutation ticketExternalReferencesIssueTrackerItemAdd(
+  $issueTrackerLink: UriHttpString!
+  $issueTrackerType: EnumTicketExternalReferencesIssueTrackerType!
+  $ticketId: ID
+) {
+  ticketExternalReferencesIssueTrackerItemAdd(
+    issueTrackerLink: $issueTrackerLink
+    issueTrackerType: $issueTrackerType
+    ticketId: $ticketId
+  ) {
+    issueTrackerItem {
+      assignees
+      issueId
+      labels {
+        color
+        textColor
+        title
+      }
+      milestone
+      state
+      title
+      url
+    }
+    errors {
+      ...errors
+    }
+  }
+}

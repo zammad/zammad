@@ -1,9 +1,10 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormRef, FormValues } from '#shared/components/Form/types.ts'
+import type { TicketById } from '#shared/entities/ticket/types.ts'
 
 import type { TicketSidebarPlugin } from '../components/TicketSidebar/plugins/types.ts'
-import type { Ref } from 'vue'
+import type { ComputedRef, Ref } from 'vue'
 
 export enum TicketSidebarScreenType {
   TicketCreate = 'ticket-create',
@@ -11,6 +12,8 @@ export enum TicketSidebarScreenType {
 }
 
 export interface TicketSidebarContext {
+  ticket?: Maybe<ComputedRef<TicketById>>
+  isTicketEditable?: ComputedRef<boolean>
   screenType: TicketSidebarScreenType
   form?: FormRef
   formValues: FormValues

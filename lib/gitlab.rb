@@ -1,7 +1,9 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class GitLab < GitIntegrationBase
-  def initialize(endpoint, api_token, verify_ssl: true) # rubocop:disable Lint/MissingSuper
+  def initialize(endpoint:, api_token:, verify_ssl: true)
+    super()
+
     @client     = GitLab::HttpClient.new(endpoint, api_token, verify_ssl: verify_ssl)
     @issue_type = :gitlab
   end

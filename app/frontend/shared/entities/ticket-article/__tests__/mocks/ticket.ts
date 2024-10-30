@@ -116,6 +116,7 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
   timeUnit?: TicketQuery['ticket']['timeUnit']
   timeUnitsPerType?: TicketQuery['ticket']['timeUnitsPerType']
   tags?: string[]
+  externalReferences?: TicketQuery['ticket']['externalReferences']
   // eslint-disable-next-line sonarjs/cognitive-complexity
 }): R => {
   return nullableMock({
@@ -160,6 +161,7 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
     firstResponseEscalationAt: null,
     closeEscalationAt: null,
     updateEscalationAt: null,
+    externalReferences: options?.externalReferences,
     initialChannel: null,
     mentions: options?.mentions || defaultMentions,
     checklist: options?.checklist || null,
