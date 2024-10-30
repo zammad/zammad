@@ -8627,15 +8627,15 @@ msgstr ""
 msgid "Invalid email '%{email}'"
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:188
+#: app/controllers/tickets_controller.rb:191
 msgid "Invalid link structure"
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:194
+#: app/controllers/tickets_controller.rb:197
 msgid "Invalid link structure (Object → LinkType)"
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:191
+#: app/controllers/tickets_controller.rb:194
 msgid "Invalid link structure (Object)"
 msgstr ""
 
@@ -10402,7 +10402,7 @@ msgstr "در قسمت \"To\" ایمیل دریافت‌کننده لازم اس�
 msgid "Need session_id."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:469
+#: app/controllers/tickets_controller.rb:475
 msgid "Need user_id or organization_id as param"
 msgstr ""
 
@@ -10961,7 +10961,7 @@ msgstr "پیش‌نویس‌های اشتراکی"
 #: app/controllers/organizations_controller.rb:160
 #: app/controllers/text_modules_controller.rb:71
 #: app/controllers/ticket_articles_controller.rb:232
-#: app/controllers/tickets_controller.rb:601
+#: app/controllers/tickets_controller.rb:607
 #: app/controllers/users_controller.rb:650
 msgid "No source data submitted!"
 msgstr ""
@@ -16347,7 +16347,7 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:384
+#: app/controllers/tickets_controller.rb:390
 msgid "The source ticket could not be found."
 msgstr "تیکت منبع یافت نشد."
 
@@ -16380,7 +16380,7 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:375
+#: app/controllers/tickets_controller.rb:381
 msgid "The target ticket number could not be found."
 msgstr "شماره تیکت مقصد یافت نشد."
 
@@ -17516,7 +17516,7 @@ msgid "Tickets assigned to me: %s of %s"
 msgstr "تیکت‌های تخصیص داده شده به من: %s از %s"
 
 #: app/controllers/ticket_articles_controller.rb:225
-#: app/controllers/tickets_controller.rb:594
+#: app/controllers/tickets_controller.rb:600
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
 

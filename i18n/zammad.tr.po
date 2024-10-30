@@ -9706,16 +9706,16 @@ msgstr "Geçersiz client_id alındı!"
 msgid "Invalid email '%{email}'"
 msgstr "Geçersiz e-posta '%{email}'"
 
-#: app/controllers/tickets_controller.rb:188
+#: app/controllers/tickets_controller.rb:191
 msgid "Invalid link structure"
 msgstr "Geçersiz bağlantı yapısı"
 
-#: app/controllers/tickets_controller.rb:194
+#: app/controllers/tickets_controller.rb:197
 #, fuzzy
 msgid "Invalid link structure (Object → LinkType)"
 msgstr "True"
 
-#: app/controllers/tickets_controller.rb:191
+#: app/controllers/tickets_controller.rb:194
 #, fuzzy
 msgid "Invalid link structure (Object)"
 msgstr "True"
@@ -11688,7 +11688,7 @@ msgstr "True"
 msgid "Need session_id."
 msgstr "True"
 
-#: app/controllers/tickets_controller.rb:469
+#: app/controllers/tickets_controller.rb:475
 #, fuzzy
 msgid "Need user_id or organization_id as param"
 msgstr "True"
@@ -12293,7 +12293,7 @@ msgstr "Shared"
 #: app/controllers/organizations_controller.rb:160
 #: app/controllers/text_modules_controller.rb:71
 #: app/controllers/ticket_articles_controller.rb:232
-#: app/controllers/tickets_controller.rb:601
+#: app/controllers/tickets_controller.rb:607
 #: app/controllers/users_controller.rb:650
 #, fuzzy
 msgid "No source data submitted!"
@@ -18586,7 +18586,7 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr "The test run was successful."
 
-#: app/controllers/tickets_controller.rb:384
+#: app/controllers/tickets_controller.rb:390
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "The source ticket could not be found."
@@ -18625,7 +18625,7 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr "Sistem başarıyla yapılandırıldı. Yönlendiriliyorsunuz."
 
-#: app/controllers/tickets_controller.rb:375
+#: app/controllers/tickets_controller.rb:381
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "The target ticket number could not be found."
@@ -20002,7 +20002,7 @@ msgid "Tickets assigned to me: %s of %s"
 msgstr "Bana atanan biletler: %s / %s"
 
 #: app/controllers/ticket_articles_controller.rb:225
-#: app/controllers/tickets_controller.rb:594
+#: app/controllers/tickets_controller.rb:600
 #, fuzzy
 msgid "Tickets can only be imported if system is in import mode."
 msgstr "True"

@@ -9633,15 +9633,15 @@ msgstr "Obdrženo neplatné ID klienta!"
 msgid "Invalid email '%{email}'"
 msgstr "E-mail '%{email}' není správný"
 
-#: app/controllers/tickets_controller.rb:188
+#: app/controllers/tickets_controller.rb:191
 msgid "Invalid link structure"
 msgstr "Neplatná struktura odkazu"
 
-#: app/controllers/tickets_controller.rb:194
+#: app/controllers/tickets_controller.rb:197
 msgid "Invalid link structure (Object → LinkType)"
 msgstr "Neplatná struktura odkazu (Object → LinkType)"
 
-#: app/controllers/tickets_controller.rb:191
+#: app/controllers/tickets_controller.rb:194
 msgid "Invalid link structure (Object)"
 msgstr "Neplatná struktura odkazu (Object)"
 
@@ -11496,7 +11496,7 @@ msgstr "V poli \"Komu\" je vyžadován příjemce."
 msgid "Need session_id."
 msgstr "Je vyžadováno ID sezení."
 
-#: app/controllers/tickets_controller.rb:469
+#: app/controllers/tickets_controller.rb:475
 msgid "Need user_id or organization_id as param"
 msgstr "Je vyžadováno user_id nebo organization_id jako parametr"
 
@@ -12073,7 +12073,7 @@ msgstr "Sdílené koncepty"
 #: app/controllers/organizations_controller.rb:160
 #: app/controllers/text_modules_controller.rb:71
 #: app/controllers/ticket_articles_controller.rb:232
-#: app/controllers/tickets_controller.rb:601
+#: app/controllers/tickets_controller.rb:607
 #: app/controllers/users_controller.rb:650
 msgid "No source data submitted!"
 msgstr "Nebyla odeslána žádná zdrojová data!"
@@ -17968,7 +17968,7 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr "Podpis byl úspěšně ověřen."
 
-#: app/controllers/tickets_controller.rb:384
+#: app/controllers/tickets_controller.rb:390
 msgid "The source ticket could not be found."
 msgstr "Zdrojový ticket nebyl nalezen."
 
@@ -18001,7 +18001,7 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:375
+#: app/controllers/tickets_controller.rb:381
 msgid "The target ticket number could not be found."
 msgstr "Číslo cílového ticketu nebylo nalezeno."
 
@@ -19310,7 +19310,7 @@ msgid "Tickets assigned to me: %s of %s"
 msgstr "Přiřazených ticketů mé osobě: %s ze %s"
 
 #: app/controllers/ticket_articles_controller.rb:225
-#: app/controllers/tickets_controller.rb:594
+#: app/controllers/tickets_controller.rb:600
 msgid "Tickets can only be imported if system is in import mode."
 msgstr "Tickety mohou být importovány pouze pokud je systém v režimu importu."
 

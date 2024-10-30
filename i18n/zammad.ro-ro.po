@@ -9345,15 +9345,15 @@ msgstr "client_id invalid primit!"
 msgid "Invalid email '%{email}'"
 msgstr "E-mail invalid '%{email}'"
 
-#: app/controllers/tickets_controller.rb:188
+#: app/controllers/tickets_controller.rb:191
 msgid "Invalid link structure"
 msgstr "Structură link invalidă"
 
-#: app/controllers/tickets_controller.rb:194
+#: app/controllers/tickets_controller.rb:197
 msgid "Invalid link structure (Object → LinkType)"
 msgstr "Structură link invalidă (Obiect → Tip link)"
 
-#: app/controllers/tickets_controller.rb:191
+#: app/controllers/tickets_controller.rb:194
 msgid "Invalid link structure (Object)"
 msgstr "Structură link invalidă (Obiect)"
 
@@ -11144,7 +11144,7 @@ msgstr "Este necesar un destinatar în „Către”."
 msgid "Need session_id."
 msgstr "Este necesar session_id."
 
-#: app/controllers/tickets_controller.rb:469
+#: app/controllers/tickets_controller.rb:475
 msgid "Need user_id or organization_id as param"
 msgstr "Este necesar ca parametru user_id sau organization_id"
 
@@ -11709,7 +11709,7 @@ msgstr "Distribuit"
 #: app/controllers/organizations_controller.rb:160
 #: app/controllers/text_modules_controller.rb:71
 #: app/controllers/ticket_articles_controller.rb:232
-#: app/controllers/tickets_controller.rb:601
+#: app/controllers/tickets_controller.rb:607
 #: app/controllers/users_controller.rb:650
 msgid "No source data submitted!"
 msgstr "Nici o dată sursă trimisă!"
@@ -17322,7 +17322,7 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr "Semnătura a fost verificată cu succes."
 
-#: app/controllers/tickets_controller.rb:384
+#: app/controllers/tickets_controller.rb:390
 msgid "The source ticket could not be found."
 msgstr "Tichetul sursă nu a fost găsit."
 
@@ -17360,7 +17360,7 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr "Sistemul a fost configurat cu succes. Ești redirecționat."
 
-#: app/controllers/tickets_controller.rb:375
+#: app/controllers/tickets_controller.rb:381
 msgid "The target ticket number could not be found."
 msgstr "Numărul de tichet țintă nu a fost găsit."
 
@@ -18620,7 +18620,7 @@ msgid "Tickets assigned to me: %s of %s"
 msgstr "Tichetele mele: %s din %s"
 
 #: app/controllers/ticket_articles_controller.rb:225
-#: app/controllers/tickets_controller.rb:594
+#: app/controllers/tickets_controller.rb:600
 msgid "Tickets can only be imported if system is in import mode."
 msgstr "Tichetele pot fi importate doar dacă sistemul este în modul de import."
 
