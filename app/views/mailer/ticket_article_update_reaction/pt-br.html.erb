@@ -1,0 +1,19 @@
+Artigo do chamado atualizado (#{ticket.title})
+
+<div>Olá #{recipient.firstname},</div>
+<br>
+<div>
+<%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'author') %> reagiu com um <%= @objects[:article].preferences.dig('whatsapp', 'reaction', 'emoji') %> à mensagem de #{article.created_by.fullname}:
+</div>
+<br>
+<% if @objects[:article] %>
+  <div>
+    <blockquote type="cite">
+    #{article.body_as_html}
+    </blockquote>
+  </div>
+<% end %>
+<br>
+<div>
+  <a href="#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/#{article.id}" target="zammad_app">Ver isto no #{config.product_name}</a>
+</div>
