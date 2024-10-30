@@ -47,7 +47,7 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
       :id="headerId"
       class="group flex cursor-default items-center justify-between text-stone-200 dark:text-neutral-500"
       :class="{
-        'cursor-pointer rounded-md focus-within:outline focus-within:outline-1 focus-within:outline-offset-1 focus-within:outline-blue-800 hover:bg-blue-600 dark:hover:bg-blue-900 hover:dark:text-white':
+        'cursor-pointer rounded-md focus-within:outline focus-within:outline-1 focus-within:outline-offset-1 focus-within:outline-blue-800 hover:bg-blue-600 hover:text-black dark:hover:bg-blue-900 hover:dark:text-white':
           !noCollapse,
         'px-1 py-0.5': size === 'small',
         '-mx-1': size === 'small' && !noNegativeMargin,

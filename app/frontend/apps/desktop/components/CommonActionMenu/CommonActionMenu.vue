@@ -133,7 +133,7 @@ const variantClasses = computed(() => {
         :disabled="disabled"
         :class="[
           {
-            'outline outline-1 outline-offset-1 outline-blue-800':
+            'outline outline-1 outline-offset-1 outline-blue-800 hover:outline-blue-800 hover:dark:outline-blue-800':
               popoverIsOpen,
             'p-0': noPaddedDefaultButton,
             'rounded-sm': !noSmallRoundingDefaultButton,
