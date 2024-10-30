@@ -11,6 +11,8 @@ import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/moc
 
 import { mockTicketRelationAndRecentTicketListsQuery } from '#desktop/pages/ticket/graphql/queries/ticketRelationAndRecentTicketLists.mocks.ts'
 
+import { mockLinkListQuery } from '../graphql/queries/linkList.mocks.ts'
+
 describe('Ticket detail view ticket merge', () => {
   it('allows to merge source ticket with a target ticket', async () => {
     mockPermissions(['ticket.agent'])
@@ -33,6 +35,10 @@ describe('Ticket detail view ticket merge', () => {
 
     mockTicketQuery({
       ticket,
+    })
+
+    mockLinkListQuery({
+      linkList: [],
     })
 
     const view = await visitView('/tickets/1')

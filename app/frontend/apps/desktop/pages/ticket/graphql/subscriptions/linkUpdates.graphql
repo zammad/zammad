@@ -1,0 +1,22 @@
+subscription linkUpdates($objectId: ID!, $targetType: String!) {
+  linkUpdates(objectId: $objectId, targetType: $targetType) {
+    links {
+      target {
+        ... on Ticket {
+          id
+          internalId
+          title
+          state {
+            id
+            name
+          }
+          stateColorCode
+        }
+        ... on KnowledgeBaseAnswerTranslation {
+          id
+        }
+      }
+      type
+    }
+  }
+}

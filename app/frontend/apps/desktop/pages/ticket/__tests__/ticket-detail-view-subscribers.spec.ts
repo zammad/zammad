@@ -14,6 +14,8 @@ import { getTicketUpdatesSubscriptionHandler } from '#shared/entities/ticket/gra
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
+import { mockLinkListQuery } from '../graphql/queries/linkList.mocks.ts'
+
 describe('Ticket detail view', () => {
   beforeEach(() => {
     mockUserCurrent({
@@ -82,6 +84,10 @@ describe('Ticket detail view', () => {
 
       mockTicketQuery({
         ticket,
+      })
+
+      mockLinkListQuery({
+        linkList: [],
       })
 
       mockFormUpdaterQuery({

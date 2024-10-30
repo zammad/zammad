@@ -22,7 +22,7 @@ defineEmits<{
   'click-ticket': [TicketRelationAndRecentListItem]
 }>()
 
-const ticketMergeRelevantQuery = new QueryHandler(
+const ticketRelationAndRecentListsQuery = new QueryHandler(
   useTicketRelationAndRecentTicketListsQuery(
     {
       customerId: props.customerId,
@@ -36,9 +36,9 @@ const ticketMergeRelevantQuery = new QueryHandler(
 )
 
 // :TODO introduce debounced loading
-const isLoading = ticketMergeRelevantQuery.loading()
+const isLoading = ticketRelationAndRecentListsQuery.loading()
 
-const tableData = ticketMergeRelevantQuery.result()
+const tableData = ticketRelationAndRecentListsQuery.result()
 
 const ticketsByCustomer = computed(
   () =>

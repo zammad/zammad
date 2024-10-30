@@ -32,6 +32,7 @@ Object.assign(props.context, {
   additionalQueryParams: {
     exceptTicketInternalId: props.context.exceptTicketInternalId,
   },
+  filterInputPlaceholder: __('Ticket number or title'),
   // Currently it seems to be the search finds not the ticket with the complete ticket hook and number (e.g. Ticket#123456).
   stripFilter: (filter: string) => filter.replace(config.ticket_hook, ''),
 })

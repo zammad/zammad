@@ -1,0 +1,9 @@
+mutation linkRemove($input: LinkInput!) {
+  linkRemove(input: $input) {
+    success
+    errors {
+      message
+      field
+    }
+  }
+}

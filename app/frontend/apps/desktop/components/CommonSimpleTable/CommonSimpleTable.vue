@@ -98,7 +98,7 @@ defineExpose({
           <td
             v-for="header in headers"
             :key="`${item.id}-${header.key}`"
-            class="h-10 p-2.5 text-sm first:rounded-s-md last:rounded-e-md"
+            class="h-10 p-2.5 text-sm"
             :class="[
               header.columnSeparator && columnSeparatorClasses,
               cellAlignmentClasses[header.alignContent || 'left'],
@@ -148,10 +148,7 @@ defineExpose({
 
             <slot :name="`item-suffix-${header.key}`" :item="item" />
           </td>
-          <td
-            v-if="actions"
-            class="h-10 p-2.5 text-center first:rounded-s-md last:rounded-e-md"
-          >
+          <td v-if="actions" class="h-10 p-2.5 text-center">
             <slot name="actions" v-bind="{ actions, item }">
               <CommonActionMenu
                 class="flex items-center justify-center"

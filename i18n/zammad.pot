@@ -745,7 +745,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:2
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:2
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:68
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:99
 #: app/graphql/gql/types/overview_type.rb:69
 msgid "Accounted Time"
 msgstr ""
@@ -1072,6 +1072,7 @@ msgstr ""
 msgid "Add internal note"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:160
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
 msgid "Add link"
 msgstr ""
@@ -1829,7 +1830,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:31
 #: app/assets/javascripts/app/models/overview.coffee:16
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:72
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:73
 msgid "Attributes"
 msgstr ""
 
@@ -2810,7 +2811,7 @@ msgid "Clear Search"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:56
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:666
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:667
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:321
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:370
@@ -3607,7 +3608,7 @@ msgstr ""
 #: app/controllers/time_accountings_controller.rb:122
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:105
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:43
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:39
 #: app/graphql/gql/types/overview_type.rb:80
 msgid "Created at"
 msgstr ""
@@ -3726,7 +3727,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:9
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:11
 #: app/controllers/time_accountings_controller.rb:95
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:41
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:37
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/customer.ts:13
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts:6
 #: app/graphql/gql/types/overview_type.rb:61
@@ -4776,6 +4777,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:121
 msgid "Delete this device"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:140
+msgid "Delete this link"
 msgstr ""
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:29
@@ -6809,7 +6814,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:38
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:56
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:40
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:42
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:38
 #: app/graphql/gql/types/overview_type.rb:63
 #: app/views/mailer/ticket_create/fr.html.erb:8
 #: app/views/mailer/ticket_create/zh-cn.html.erb:8
@@ -8239,6 +8244,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee:7
 #: app/assets/javascripts/app/models/overview.coffee:7
 #: app/assets/javascripts/app/models/public_link.coffee:6
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:61
 #: app/frontend/shared/components/Form/FormFieldLink.vue:18
 msgid "Link"
 msgstr ""
@@ -8272,16 +8278,36 @@ msgstr ""
 msgid "Link Related Answer"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:157
+msgid "Link Tickets"
+msgstr ""
+
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:176
 msgid "Link account on %s"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:145
+msgid "Link added successfully"
+msgstr ""
+
+#: app/graphql/gql/mutations/link/add.rb:29
+msgid "Link already exists"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:26
 msgid "Link issue"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:89
+msgid "Link removed successfully"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:267
 msgid "Link template"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:61
+msgid "Link type"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:3
@@ -8313,6 +8339,7 @@ msgid "LinkedIn Developer Site"
 msgstr ""
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:1
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:91
 msgid "Links"
 msgstr ""
 
@@ -8943,12 +8970,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:7
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:121
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:45
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:46
 msgid "Merge"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:128
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:94
 msgid "Merge Tickets"
 msgstr ""
 
@@ -9794,6 +9821,10 @@ msgstr ""
 msgid "No linked issues"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:155
+msgid "No links added yet."
+msgstr ""
+
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_macro.jst.eco:4
 msgid "No macros available."
 msgstr ""
@@ -10112,6 +10143,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:10
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:20
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:32
 #: app/graphql/gql/types/overview_type.rb:59
 msgid "Number"
 msgstr ""
@@ -13543,7 +13575,7 @@ msgstr ""
 msgid "Subscribed tickets"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:98
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:107
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:197
 msgid "Subscribers"
 msgstr ""
@@ -13665,7 +13697,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:41
 #: app/assets/javascripts/app/views/tag/index.jst.eco:3
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:82
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:83
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:145
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:78
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:189
@@ -13692,8 +13724,9 @@ msgstr ""
 msgid "Target Language"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:62
-msgid "Target Ticket"
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:47
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
+msgid "Target ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:163
@@ -15657,8 +15690,12 @@ msgstr ""
 msgid "Ticket information"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:72
 msgid "Ticket merged successfully"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldTicket/FieldTicketWrapper.vue:35
+msgid "Ticket number or title"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:69
@@ -15931,7 +15968,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:10
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:10
 #: app/controllers/time_accountings_controller.rb:91
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:40
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:36
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:144
 #: app/graphql/gql/types/overview_type.rb:60
 #: db/seeds/object_manager_attributes.rb:32

@@ -208,6 +208,17 @@ export interface ChangedField {
   oldValue: FormFieldValue
 }
 
+export type ChangedFieldFunction = {
+  (
+    name: string,
+    callback: (
+      newValue: FormFieldValue,
+      oldValue: FormFieldValue,
+      node: FormKitNode,
+    ) => void,
+  ): void
+}
+
 export enum FormHandlerExecution {
   Initial = 'initial',
   InitialSettled = 'initialSettled',

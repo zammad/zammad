@@ -1,11 +1,9 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { storeToRefs } from 'pinia'
 import { computed, useTemplateRef } from 'vue'
 
 import type { TicketById } from '#shared/entities/ticket/types.ts'
-import { useApplicationStore } from '#shared/stores/application.ts'
 
 import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
 import type {
@@ -25,15 +23,13 @@ const emit = defineEmits<{
   'click-ticket': [TicketRelationAndRecentListItem]
 }>()
 
-const { config } = storeToRefs(useApplicationStore())
-
 const simpleTableInstance = useTemplateRef('simple-table')
 
-const headers = computed<TableHeader[]>(() => [
+const headers: TableHeader[] = [
   { key: 'state', label: '', truncate: true },
   {
     key: 'number',
-    label: config.value.ticket_hook,
+    label: __('Number'),
     labelClass: 'font-normal text-gray-100 dark:text-neutral-400',
     truncate: true,
   },
@@ -41,7 +37,7 @@ const headers = computed<TableHeader[]>(() => [
   { key: 'customer', label: __('Customer'), truncate: true },
   { key: 'group', label: __('Group'), truncate: true },
   { key: 'createdAt', label: __('Created at'), truncate: true },
-])
+]
 
 const props = defineProps<Props>()
 
@@ -85,7 +81,7 @@ const handleRowClick = (row: TableItem) => {
           :class="{
             'ltr:text-black rtl:text-black dark:text-white': isRowSelected,
           }"
-          class="truncate hover:no-underline group-hover:text-black group-active:text-black group-hover:dark:text-white group-active:dark:text-white"
+          class="truncate text-sm hover:no-underline group-hover:text-black group-active:text-black group-hover:dark:text-white group-active:dark:text-white"
           internal
           target="_blank"
           @click.stop

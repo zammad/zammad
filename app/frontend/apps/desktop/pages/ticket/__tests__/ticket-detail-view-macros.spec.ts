@@ -15,6 +15,8 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { getUserCurrentTaskbarItemUpdatesSubscriptionHandler } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemUpdates.mocks.ts'
 
+import { mockLinkListQuery } from '../graphql/queries/linkList.mocks.ts'
+
 describe('Ticket detail view macros', () => {
   it('executes example macro which closes current tab', async () => {
     mockPermissions(['ticket.agent'])
@@ -22,6 +24,10 @@ describe('Ticket detail view macros', () => {
     const ticket = createDummyTicket()
 
     mockTicketQuery({ ticket })
+
+    mockLinkListQuery({
+      linkList: [],
+    })
 
     mockFormUpdaterQuery({
       formUpdater: {

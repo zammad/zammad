@@ -14,9 +14,15 @@ import { createDummyArticle } from '#shared/entities/ticket-article/__tests__/mo
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { type TicketArticleEdge } from '#shared/graphql/types.ts'
 
+import { mockLinkListQuery } from '../graphql/queries/linkList.mocks.ts'
+
 describe('Ticket detail view', () => {
   beforeEach(() => {
     mockPermissions(['ticket.agent'])
+
+    mockLinkListQuery({
+      linkList: [],
+    })
   })
 
   describe('Error handling', () => {

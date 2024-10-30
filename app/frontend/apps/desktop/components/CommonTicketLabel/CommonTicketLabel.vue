@@ -45,7 +45,7 @@ const ticketColorCode = computed(() => {
     internal
   >
     <CommonTicketStateIndicatorIcon
-      class="ms-0.5 mt-1 shrink-0"
+      class="-:mt-1 ms-0.5 shrink-0"
       :class="classes?.indicator || ''"
       :color-code="ticketColorCode"
       :label="ticketState"
@@ -54,7 +54,7 @@ const ticketColorCode = computed(() => {
     />
     <CommonLabel
       :id="ticketId"
-      class="mt-0.5 text-blue-800"
+      class="-:mt-0.5 text-blue-800"
       :class="classes?.label"
     >
       {{ ticket?.title }}

@@ -78,7 +78,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/avatar.rb",
-      "line": 427,
+      "line": 432,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "ObjectLookup.by_id(object_id).constantize",
       "render_path": null,
@@ -509,6 +509,29 @@
       "note": "Admin configured RegExp"
     },
     {
+      "warning_type": "Remote Code Execution",
+      "warning_code": 24,
+      "fingerprint": "99ea0a566c684509f05b93d53f68bef433b0c6ff357e84f516f8f08c7a1e5faf",
+      "check_name": "UnsafeReflection",
+      "message": "Unsafe reflection method `constantize` called on model attribute",
+      "file": "app/models/link/triggers_subscriptions.rb",
+      "line": 19,
+      "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
+      "code": "Link::Object.find(link_object_id).name.constantize",
+      "render_path": null,
+      "location": {
+        "type": "method",
+        "class": "Link::TriggersSubscriptions",
+        "method": "trigger_subscriptions"
+      },
+      "user_input": "Link::Object.find(link_object_id).name",
+      "confidence": "Medium",
+      "cwe_id": [
+        470
+      ],
+      "note": ""
+    },
+    {
       "warning_type": "SQL Injection",
       "warning_code": 0,
       "fingerprint": "9ec74dbe0ca90264aab31f05df4f0565f53e28477c93ced418e0249913c519fc",
@@ -572,7 +595,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/object_manager/attribute.rb",
-      "line": 924,
+      "line": 919,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "ObjectLookup.by_id(object_lookup_id).constantize",
       "render_path": null,
@@ -733,7 +756,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/channel/email_parser.rb",
-      "line": 162,
+      "line": 172,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "Setting.get(setting.name).constantize",
       "render_path": null,
@@ -756,7 +779,7 @@
       "check_name": "UnsafeReflection",
       "message": "Unsafe reflection method `constantize` called on model attribute",
       "file": "app/models/channel/email_parser.rb",
-      "line": 333,
+      "line": 347,
       "link": "https://brakemanscanner.org/docs/warning_types/remote_code_execution/",
       "code": "Setting.get(setting.name).constantize",
       "render_path": null,
@@ -818,25 +841,6 @@
         185
       ],
       "note": "Admin configured RegExp"
-    },
-    {
-      "warning_type": "Session Setting",
-      "warning_code": 29,
-      "fingerprint": "f0ee1cc1980474c82a013645508f002dcc801e00db5592f7dd8cd6bdb93c73fe",
-      "check_name": "SessionSettings",
-      "message": "Session secret should not be included in version control",
-      "file": "config/secrets.yml",
-      "line": 2,
-      "link": "https://brakemanscanner.org/docs/warning_types/session_setting/",
-      "code": null,
-      "render_path": null,
-      "location": null,
-      "user_input": null,
-      "confidence": "High",
-      "cwe_id": [
-        798
-      ],
-      "note": "Since Sessions are stored in the database and not in cookies, the session secret is not used / not relevant.\""
     },
     {
       "warning_type": "Remote Code Execution",
@@ -931,6 +935,6 @@
       "note": "Mysql arguments are internal / from config."
     }
   ],
-  "updated": "2024-04-09 13:31:02 +0200",
-  "brakeman_version": "6.1.2"
+  "updated": "2024-10-28 11:40:22 +0100",
+  "brakeman_version": "6.2.2"
 }

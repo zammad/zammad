@@ -19,8 +19,8 @@ const states: (() => DeepPartial<TicketState>)[] = [
 export default (): DeepPartial<TicketState> => {
   const state: DeepPartial<TicketState> = faker.helpers.arrayElement(states)()
   state.stateType = {
-    id: state.id,
-    name: state.name,
+    id: convertToGraphQLId('TicketStateType', 1),
+    name: 'open',
   }
   updateGeneratedIds('TicketState', getIdFromGraphQLId(state.id!))
   return state

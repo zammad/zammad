@@ -45,6 +45,7 @@ const rowEventHandler = computed(() =>
     :class="{
       '!bg-blue-800': isRowSelected,
     }"
+    style="clip-path: xywh(0 0 100% 100% round 0.375rem)"
     data-test-id="simple-table-row"
     v-bind="rowEventHandler.attrs"
     v-on="rowEventHandler.events"

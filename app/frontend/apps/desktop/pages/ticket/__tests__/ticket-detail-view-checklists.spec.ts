@@ -25,9 +25,15 @@ import { mockChecklistTemplatesQuery } from '#desktop/pages/ticket/graphql/queri
 import { mockTicketChecklistQuery } from '#desktop/pages/ticket/graphql/queries/ticketChecklist.mocks.ts'
 import { getTicketChecklistUpdatesSubscriptionHandler } from '#desktop/pages/ticket/graphql/subscriptions/ticketChecklistUpdates.mocks.ts'
 
+import { mockLinkListQuery } from '../graphql/queries/linkList.mocks.ts'
+
 describe('Ticket detail view', () => {
   beforeEach(() => {
     mockPermissions(['ticket.agent'])
+
+    mockLinkListQuery({
+      linkList: [],
+    })
   })
 
   describe('Checklist', () => {

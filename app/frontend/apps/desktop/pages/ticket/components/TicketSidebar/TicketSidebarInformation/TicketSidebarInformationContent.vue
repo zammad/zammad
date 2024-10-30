@@ -9,7 +9,6 @@ import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import CommonSectionCollapse from '#desktop/components/CommonSectionCollapse/CommonSectionCollapse.vue'
 import { useChangeCustomerMenuItem } from '#desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/useChangeCustomerMenuItem.ts'
-import TicketAccountedTime from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue'
 import { useTicketInformation } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
 import {
   type TicketSidebarContentProps,
@@ -18,6 +17,8 @@ import {
 
 import TicketSidebarContent from '../TicketSidebarContent.vue'
 
+import TicketAccountedTime from './TicketSidebarInformationContent/TicketAccountedTime.vue'
+import TicketLinks from './TicketSidebarInformationContent/TicketLinks.vue'
 import TicketSubscribers from './TicketSidebarInformationContent/TicketSubscribers.vue'
 import TicketTags from './TicketSidebarInformationContent/TicketTags.vue'
 
@@ -82,6 +83,14 @@ const actions = computed(() => {
       :title="__('Tags')"
     >
       <TicketTags :ticket="ticket" :is-ticket-editable="isTicketEditable" />
+    </CommonSectionCollapse>
+
+    <CommonSectionCollapse
+      v-if="isTicketAgent"
+      id="ticket-links"
+      :title="__('Links')"
+    >
+      <TicketLinks :ticket="ticket" :is-ticket-editable="isTicketEditable" />
     </CommonSectionCollapse>
 
     <CommonSectionCollapse

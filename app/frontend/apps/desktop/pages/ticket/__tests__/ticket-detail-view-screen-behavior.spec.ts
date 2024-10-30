@@ -21,6 +21,8 @@ import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import { getUserCurrentTaskbarItemUpdatesSubscriptionHandler } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemUpdates.mocks.ts'
 
+import { mockLinkListQuery } from '../graphql/queries/linkList.mocks.ts'
+
 describe('Ticket detail view screen behavior', () => {
   beforeEach(() => {
     mockPermissions(['ticket.agent'])
@@ -128,6 +130,10 @@ describe('Ticket detail view screen behavior', () => {
 
   it('closes tab on ticket close after ticket update', async () => {
     mockPermissions(['ticket.agent'])
+
+    mockLinkListQuery({
+      linkList: [],
+    })
 
     const ticket = createDummyTicket({
       state: {
@@ -280,6 +286,10 @@ describe('Ticket detail view screen behavior', () => {
 
   it('stays on tab after ticket update', async () => {
     mockPermissions(['ticket.agent'])
+
+    mockLinkListQuery({
+      linkList: [],
+    })
 
     const ticket = createDummyTicket({
       defaultPolicy: {

@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
+
 import renderComponent from '#tests/support/components/renderComponent.ts'
-import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 
@@ -10,10 +10,6 @@ describe('TicketSimpleData', () => {
   it('displays a table with ticket data', () => {
     beforeEach(() => {
       vi.useFakeTimers()
-    })
-
-    mockApplicationConfig({
-      ticket_hook: 'hook#',
     })
 
     const wrapper = renderComponent(TicketSimpleTable, {
@@ -32,7 +28,7 @@ describe('TicketSimpleData', () => {
     })
 
     // Labels
-    expect(wrapper.getByText('hook#')).toBeInTheDocument()
+    expect(wrapper.getByText('Number')).toBeInTheDocument()
     expect(wrapper.getByText('Title')).toBeInTheDocument()
     expect(wrapper.getByText('Customer')).toBeInTheDocument()
     expect(wrapper.getByText('Group')).toBeInTheDocument()

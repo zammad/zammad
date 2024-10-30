@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 class Link < ApplicationModel
+  include Link::TriggersSubscriptions
 
   belongs_to :link_type,   class_name: 'Link::Type', optional: true
   belongs_to :link_object, class_name: 'Link::Object', optional: true

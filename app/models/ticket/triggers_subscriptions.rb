@@ -7,6 +7,7 @@ module Ticket::TriggersSubscriptions
   included do
     after_update_commit :trigger_subscriptions
     after_update_commit :trigger_checklist_subscriptions
+    after_update_commit :trigger_link_subscriptions
   end
 
   private
@@ -31,5 +32,36 @@ module Ticket::TriggersSubscriptions
           }
         )
       end
+  end
+
+  TRIGGER_LINK_UPDATE_ON = %w[title state_id].freeze
+
+  def trigger_link_subscriptions
+    return if !saved_changes.keys.intersect? TRIGGER_LINK_UPDATE_ON
+
+    Gql::Subscriptions::LinkUpdates.trigger(
+      nil,
+      arguments: {
+        object_id:   Gql::ZammadSchema.id_from_object(self),
+        target_type: self.class.name
+      }
+    )
+
+    links = Link.list(
+      link_object:       self.class.name,
+      link_object_value: id
+    ).uniq
+
+    links.each do |link|
+      target = link['link_object'].constantize.find(link['link_object_value'])
+
+      Gql::Subscriptions::LinkUpdates.trigger(
+        nil,
+        arguments: {
+          object_id:   Gql::ZammadSchema.id_from_object(target),
+          target_type: link['link_object']
+        }
+      )
+    end
   end
 end

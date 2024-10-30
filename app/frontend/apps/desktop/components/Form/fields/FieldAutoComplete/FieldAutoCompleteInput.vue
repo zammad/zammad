@@ -626,6 +626,7 @@ useFormBlock(
           :tabindex="!expanded ? '-1' : undefined"
           :suggestion="suggestedOptionLabel"
           :alternative-background="context.alternativeBackground"
+          :placeholder="context.filterInputPlaceholder"
           @keypress.space.stop
           @keydown="onKeydownFilterInput"
         />

@@ -18,9 +18,15 @@ import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/moc
 import { EnumUserErrorException } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
+import { mockLinkListQuery } from '../graphql/queries/linkList.mocks.ts'
+
 describe('Ticket detail view', () => {
   beforeEach(() => {
     mockPermissions(['ticket.agent'])
+
+    mockLinkListQuery({
+      linkList: [],
+    })
   })
 
   describe('Time accounting', () => {

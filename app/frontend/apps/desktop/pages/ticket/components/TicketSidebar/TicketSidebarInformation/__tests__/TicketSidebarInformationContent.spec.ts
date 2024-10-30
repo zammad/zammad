@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { beforeEach } from 'vitest'
 import { computed, ref } from 'vue'
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
@@ -10,6 +11,7 @@ import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/moc
 import plugin from '#desktop/pages/ticket/components/TicketSidebar/plugins/information.ts'
 import TicketSidebarInformationContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue'
 import { TICKET_KEY } from '#desktop/pages/ticket/composables/useTicketInformation.ts'
+import { mockLinkListQuery } from '#desktop/pages/ticket/graphql/queries/linkList.mocks.ts'
 import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
 
 const defaultTicket = createDummyTicket()
@@ -50,6 +52,12 @@ const renderInformationSidebar = (ticket = defaultTicket) =>
   })
 
 describe('TicketSidebarInformationContent', () => {
+  beforeEach(() => {
+    mockLinkListQuery({
+      linkList: [],
+    })
+  })
+
   describe('actions', () => {
     it('displays basic sidebar content', () => {
       mockPermissions(['ticket.agent'])

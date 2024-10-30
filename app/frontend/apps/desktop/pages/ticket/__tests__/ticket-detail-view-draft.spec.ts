@@ -9,10 +9,16 @@ import { mockFormUpdaterQuery } from '#shared/components/Form/graphql/queries/fo
 import { mockTicketQuery } from '#shared/entities/ticket/graphql/queries/ticket.mocks.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 
+import { mockLinkListQuery } from '../graphql/queries/linkList.mocks.ts'
+
 describe('Ticket detail view - draft handling', () => {
   describe('when user is an agent', () => {
     beforeEach(() => {
       mockPermissions(['ticket.agent'])
+
+      mockLinkListQuery({
+        linkList: [],
+      })
     })
 
     it('shows save as draft if it is enabled for group and user is agent', async () => {
