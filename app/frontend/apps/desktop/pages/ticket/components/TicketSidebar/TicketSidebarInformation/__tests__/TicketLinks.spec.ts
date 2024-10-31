@@ -54,7 +54,7 @@ describe('TicketLinks', () => {
     mockLinkListQuery({
       linkList: [
         {
-          target: {
+          item: {
             __typename: 'Ticket',
             id: 'gid://zammad/Ticket/2',
             title: 'Ticket 2',
@@ -67,7 +67,7 @@ describe('TicketLinks', () => {
           type: EnumLinkType.Child,
         },
         {
-          target: {
+          item: {
             __typename: 'Ticket',
             id: 'gid://zammad/Ticket/3',
             title: 'Ticket 3',
@@ -80,7 +80,7 @@ describe('TicketLinks', () => {
           type: EnumLinkType.Child,
         },
         {
-          target: {
+          item: {
             __typename: 'Ticket',
             id: 'gid://zammad/Ticket/4',
             title: 'Ticket 4',
@@ -121,7 +121,7 @@ describe('TicketLinks', () => {
       linkUpdates: {
         links: [
           {
-            target: {
+            item: {
               __typename: 'Ticket',
               id: 'gid://zammad/Ticket/5',
               title: 'Ticket 5',

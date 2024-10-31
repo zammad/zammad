@@ -9,7 +9,7 @@ export const LinkListDocument = gql`
     query linkList($objectId: ID!, $targetType: String!) {
   linkList(objectId: $objectId, targetType: $targetType) {
     type
-    target {
+    item {
       ... on Ticket {
         id
         internalId

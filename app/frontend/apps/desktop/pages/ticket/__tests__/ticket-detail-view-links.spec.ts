@@ -71,7 +71,7 @@ describe('Ticket detail view links', () => {
         __typename: 'LinkAddPayload',
         link: {
           __typename: 'Link',
-          target: {
+          item: {
             __typename: 'Ticket',
             id: convertToGraphQLId('Ticket', '1111'),
             title: 'Foo Car',
@@ -90,7 +90,7 @@ describe('Ticket detail view links', () => {
       linkList: [
         {
           __typename: 'Link',
-          target: {
+          item: {
             __typename: 'Ticket',
             id: convertToGraphQLId('Ticket', '1111'),
             title: 'Foo Car',

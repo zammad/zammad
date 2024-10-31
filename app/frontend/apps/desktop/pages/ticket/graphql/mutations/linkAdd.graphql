@@ -2,7 +2,7 @@ mutation linkAdd($input: LinkInput!) {
   linkAdd(input: $input) {
     link {
       type
-      target {
+      item {
         ... on Ticket {
           id
           internalId

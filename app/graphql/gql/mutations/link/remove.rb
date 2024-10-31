@@ -13,8 +13,8 @@ module Gql::Mutations
     possible_objects ::Ticket, ::KnowledgeBase::Answer::Translation
 
     def resolve(input:)
-      source = fetch_object(input.source_id, permission: :update?)
-      target = fetch_object(input.target_id)
+      source = fetch_object(input.source_id)
+      target = fetch_object(input.target_id, permission: :update?)
       type = input.type
 
       ::Link.remove(

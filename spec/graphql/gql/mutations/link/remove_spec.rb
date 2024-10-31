@@ -21,19 +21,25 @@ RSpec.describe Gql::Mutations::Link::Remove, :aggregate_failures, type: :graphql
   let(:from)       { create(:ticket, group: from_group) }
   let(:to_group)   { create(:group) }
   let(:to)         { create(:ticket, group: to_group) }
+  let(:type)       { ENV.fetch('LINK_TYPE') { %w[child parent normal].sample } }
 
   let(:input) do
     {
       sourceId: gql.id(from),
       targetId: gql.id(to),
-      type:     'normal'
+      type:     type
     }
   end
 
   let(:variables) { { input: input } }
 
   before do
-    create(:link, from: from, to: to)
+    create(:link, from: from, to: to, link_type: type)
+
+    next if RSpec.configuration.formatters.first
+      .class.name.exclude?('DocumentationFormatter')
+
+    puts "with link type: #{type}" # rubocop:disable Rails/Output
   end
 
   context 'with unauthenticated session' do
@@ -53,12 +59,13 @@ RSpec.describe Gql::Mutations::Link::Remove, :aggregate_failures, type: :graphql
 
     context 'when reverse link exists' do
       before do
-        create(:link, from: to, to: from)
+        create(:link, from: to, to: from, link_type: type)
       end
 
-      it 'removes both links' do
+      it 'removes both links if existing' do
+        decremet = type == 'normal' ? -2 : -1
         expect { gql.execute(mutation, variables: variables) }
-          .to change(Link, :count).by(-2)
+          .to change(Link, :count).by(decremet)
       end
     end
 

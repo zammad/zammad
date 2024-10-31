@@ -9,13 +9,7 @@ RSpec.describe Gql::Mutations::Link::Add, :aggregate_failures, type: :graphql do
         linkAdd(input: $input) {
           link {
             type
-            source {
-              ... on Ticket {
-                id
-                title
-              }
-            }
-            target {
+            item {
               ... on Ticket {
                 id
                 title
@@ -35,16 +29,24 @@ RSpec.describe Gql::Mutations::Link::Add, :aggregate_failures, type: :graphql do
   let(:from)       { create(:ticket, group: from_group) }
   let(:to_group)   { create(:group) }
   let(:to)         { create(:ticket, group: to_group) }
+  let(:type)       { ENV.fetch('LINK_TYPE') { %w[child parent normal].sample } }
 
   let(:input) do
     {
-      sourceId: gql.id(from),
-      targetId: gql.id(to),
-      type:     'normal'
+      sourceId: gql.id(to),
+      targetId: gql.id(from),
+      type:     type
     }
   end
 
   let(:variables) { { input: input } }
+
+  before do
+    next if RSpec.configuration.formatters.first
+      .class.name.exclude?('DocumentationFormatter')
+
+    puts "with link type: #{type}" # rubocop:disable Rails/Output
+  end
 
   context 'with unauthenticated session' do
     it 'raises an error' do
@@ -61,15 +63,14 @@ RSpec.describe Gql::Mutations::Link::Add, :aggregate_failures, type: :graphql do
         .to change(Link, :count).by(1)
       expect(gql.result.data['link']).to eq(
         {
-          'type'   => 'normal',
-          'source' => { 'id' => gql.id(from), 'title' => from.title },
-          'target' => { 'id' => gql.id(to), 'title' => to.title }
+          'type' => type,
+          'item' => { 'id' => gql.id(to), 'title' => to.title }
         }
       )
     end
 
     context 'when link already exists' do
-      before { create(:link, from: from, to: to, link_type: 'normal') }
+      before { create(:link, from: to, to: from, link_type: type) }
 
       it 'returns error' do
         expect { gql.execute(mutation, variables: variables) }

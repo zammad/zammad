@@ -7748,25 +7748,7 @@
           "description": "Links between objects",
           "fields": [
             {
-              "name": "source",
-              "description": null,
-              "args": [
-
-              ],
-              "type": {
-                "kind": "NON_NULL",
-                "name": null,
-                "ofType": {
-                  "kind": "UNION",
-                  "name": "LinkObject",
-                  "ofType": null
-                }
-              },
-              "isDeprecated": false,
-              "deprecationReason": null
-            },
-            {
-              "name": "target",
+              "name": "item",
               "description": null,
               "args": [
 

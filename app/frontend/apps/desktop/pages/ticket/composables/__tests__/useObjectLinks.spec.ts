@@ -18,7 +18,7 @@ describe('useObjectLinks', () => {
       mockLinkListQuery({
         linkList: [
           {
-            target: {
+            item: {
               __typename: 'Ticket',
               id: 'gid://zammad/Ticket/2',
               title: 'Ticket 2',
@@ -26,7 +26,7 @@ describe('useObjectLinks', () => {
             type: EnumLinkType.Child,
           },
           {
-            target: {
+            item: {
               __typename: 'Ticket',
               id: 'gid://zammad/Ticket/3',
               title: 'Ticket 3',
@@ -34,7 +34,7 @@ describe('useObjectLinks', () => {
             type: EnumLinkType.Child,
           },
           {
-            target: {
+            item: {
               __typename: 'Ticket',
               id: 'gid://zammad/Ticket/4',
               title: 'Ticket 4',
@@ -59,7 +59,7 @@ describe('useObjectLinks', () => {
           links: [
             {
               __typename: 'Link',
-              target: expect.objectContaining({
+              item: expect.objectContaining({
                 id: 'gid://zammad/Ticket/4',
                 title: 'Ticket 4',
               }),
@@ -74,7 +74,7 @@ describe('useObjectLinks', () => {
           links: [
             {
               __typename: 'Link',
-              target: expect.objectContaining({
+              item: expect.objectContaining({
                 id: 'gid://zammad/Ticket/2',
                 title: 'Ticket 2',
               }),
@@ -82,7 +82,7 @@ describe('useObjectLinks', () => {
             },
             {
               __typename: 'Link',
-              target: expect.objectContaining({
+              item: expect.objectContaining({
                 id: 'gid://zammad/Ticket/3',
                 title: 'Ticket 3',
               }),

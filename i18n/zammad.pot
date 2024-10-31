@@ -1072,7 +1072,7 @@ msgstr ""
 msgid "Add internal note"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:160
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:161
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
 msgid "Add link"
 msgstr ""
@@ -4784,7 +4784,7 @@ msgstr ""
 msgid "Delete this device"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:140
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:141
 msgid "Delete this link"
 msgstr ""
 
@@ -8267,7 +8267,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee:7
 #: app/assets/javascripts/app/models/overview.coffee:7
 #: app/assets/javascripts/app/models/public_link.coffee:6
-#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:61
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
 #: app/frontend/shared/components/Form/FormFieldLink.vue:18
 msgid "Link"
 msgstr ""
@@ -8308,7 +8308,7 @@ msgstr ""
 msgid "Link Related Answer"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:157
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:158
 msgid "Link Tickets"
 msgstr ""
 
@@ -8316,7 +8316,7 @@ msgstr ""
 msgid "Link account on %s"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:145
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:146
 msgid "Link added successfully"
 msgstr ""
 
@@ -8328,12 +8328,16 @@ msgstr ""
 msgid "Link issue"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:89
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:90
 msgid "Link removed successfully"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:267
 msgid "Link template"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
+msgid "Link ticket"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:61
@@ -9856,7 +9860,7 @@ msgstr ""
 msgid "No linked issues"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:155
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:156
 msgid "No links added yet."
 msgstr ""
 
@@ -13764,7 +13768,6 @@ msgid "Target Language"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:47
-#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
 msgid "Target ticket"
 msgstr ""
 

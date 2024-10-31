@@ -10,7 +10,7 @@ export const LinkAddDocument = gql`
   linkAdd(input: $input) {
     link {
       type
-      target {
+      item {
         ... on Ticket {
           id
           internalId

@@ -8,12 +8,7 @@ RSpec.describe Gql::Subscriptions::LinkUpdates, type: :graphql do
       subscription linkUpdates($objectId: ID!, $targetType: String!) {
         linkUpdates(objectId: $objectId, targetType: $targetType) {
           links {
-            source {
-              ... on Ticket {
-                id
-              }
-            }
-            target {
+            item {
               ... on Ticket {
                 id
               }
@@ -30,12 +25,18 @@ RSpec.describe Gql::Subscriptions::LinkUpdates, type: :graphql do
   let(:from)          { create(:ticket, group: from_group) }
   let(:to_group)      { create(:group) }
   let(:to)            { create(:ticket, group: to_group) }
+  let(:type)          { ENV.fetch('LINK_TYPE') { %w[child parent normal].sample } }
   let(:link)          { create(:link, from:, to:) }
   let(:variables)     { { objectId: gql.id(from), targetType: 'Ticket' } }
 
   before do
     link
     gql.execute(subscription, variables: variables, context: { channel: mock_channel })
+
+    next if RSpec.configuration.formatters.first
+      .class.name.exclude?('DocumentationFormatter')
+
+    puts "with link type: #{type}" # rubocop:disable Rails/Output
   end
 
   context 'with authenticated user', authenticated_as: :agent do

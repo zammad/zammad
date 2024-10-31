@@ -9,7 +9,7 @@ export const LinkUpdatesDocument = gql`
     subscription linkUpdates($objectId: ID!, $targetType: String!) {
   linkUpdates(objectId: $objectId, targetType: $targetType) {
     links {
-      target {
+      item {
         ... on Ticket {
           id
           internalId

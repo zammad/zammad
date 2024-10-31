@@ -8,7 +8,8 @@ RSpec.describe Gql::Queries::Link::List, type: :graphql do
     let(:from)          { create(:ticket, group: from_group) }
     let(:to_group)      { create(:group) }
     let(:to)            { create(:ticket, group: to_group) }
-    let(:link)          { create(:link, from:, to:) }
+    let(:type)          { ENV.fetch('LINK_TYPE') { %w[child parent normal].sample } }
+    let(:link)          { create(:link, from:, to:, link_type: type) }
 
     let(:variables) { { objectId: gql.id(from), targetType: 'Ticket' } }
 
@@ -17,13 +18,7 @@ RSpec.describe Gql::Queries::Link::List, type: :graphql do
         query linkList($objectId: ID!, $targetType: String!) {
           linkList(objectId: $objectId, targetType: $targetType) {
             type
-            source {
-              ... on Ticket {
-                id
-                title
-              }
-            }
-            target {
+            item {
               ... on Ticket {
                 id
                 title
@@ -37,17 +32,27 @@ RSpec.describe Gql::Queries::Link::List, type: :graphql do
     before do
       link
       gql.execute(query, variables: variables)
+
+      next if RSpec.configuration.formatters.first
+        .class.name.exclude?('DocumentationFormatter')
+
+      puts "with link type: #{type}" # rubocop:disable Rails/Output
     end
 
     context 'with authenticated session', authenticated_as: :authenticated do
       let(:authenticated) { create(:agent, groups: [from_group, to_group]) }
 
       it 'returns link list' do
+        link_type = if type == 'normal'
+                      type
+                    else
+                      type == 'parent' ? 'child' : 'parent'
+                    end
+
         expect(gql.result.data.first).to eq(
           {
-            'source' => { 'id' => gql.id(from), 'title' => from.title },
-            'target' => { 'id' => gql.id(to), 'title' => to.title },
-            'type'   => 'normal'
+            'item' => { 'id' => gql.id(to), 'title' => to.title },
+            'type' => link_type
           }
         )
       end
@@ -62,7 +67,7 @@ RSpec.describe Gql::Queries::Link::List, type: :graphql do
 
       context 'when target is not accessible' do
         before do
-          create(:link, from: from, to: create(:ticket))
+          create(:link, from: from, to: create(:ticket), link_type: type)
         end
 
         it 'returns link list without the related link', :aggregate_failures do

@@ -50,7 +50,7 @@ const linkFormSchema = [
       {
         name: 'targetTicketId',
         type: 'ticket',
-        label: __('Target ticket'),
+        label: __('Link ticket'),
         exceptTicketInternalId: sourceTicket.value.internalId,
         options: formListTargetTicketOptions,
         required: true,
@@ -90,8 +90,9 @@ const addLink = async (
     useLinkAddMutation({
       variables: {
         input: {
-          sourceId: sourceTicket.value.id,
-          targetId: formData.targetTicketId,
+          // Don't ask me why, but the sourceId and targetId are swapped to be consistent with the old UI.
+          sourceId: formData.targetTicketId,
+          targetId: sourceTicket.value.id,
           type: formData.linkType,
         },
       },
@@ -114,9 +115,7 @@ const addLink = async (
         })
 
         const newIdPresent = existingLinks?.linkList?.find((link) => {
-          return (
-            link.target.id === newLink.target.id && link.type === newLink.type
-          )
+          return link.item.id === newLink.item.id && link.type === newLink.type
         })
         if (newIdPresent) return
 

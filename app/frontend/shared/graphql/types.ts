@@ -1182,8 +1182,7 @@ export type KnowledgeBaseLocale = {
 /** Links between objects */
 export type Link = {
   __typename?: 'Link';
-  source: LinkObject;
-  target: LinkObject;
+  item: LinkObject;
   type: EnumLinkType;
 };
 
@@ -5599,7 +5598,7 @@ export type LinkAddMutationVariables = Exact<{
 }>;
 
 
-export type LinkAddMutation = { __typename?: 'Mutations', linkAdd?: { __typename?: 'LinkAddPayload', link?: { __typename?: 'Link', type: EnumLinkType, target: { __typename?: 'KnowledgeBaseAnswerTranslation', id: string } | { __typename?: 'Ticket', id: string, internalId: number, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', id: string, name: string } } } | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
+export type LinkAddMutation = { __typename?: 'Mutations', linkAdd?: { __typename?: 'LinkAddPayload', link?: { __typename?: 'Link', type: EnumLinkType, item: { __typename?: 'KnowledgeBaseAnswerTranslation', id: string } | { __typename?: 'Ticket', id: string, internalId: number, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', id: string, name: string } } } | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null }> | null } | null };
 
 export type LinkRemoveMutationVariables = Exact<{
   input: LinkInput;
@@ -5687,7 +5686,7 @@ export type LinkListQueryVariables = Exact<{
 }>;
 
 
-export type LinkListQuery = { __typename?: 'Queries', linkList?: Array<{ __typename?: 'Link', type: EnumLinkType, target: { __typename?: 'KnowledgeBaseAnswerTranslation', id: string } | { __typename?: 'Ticket', id: string, internalId: number, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', id: string, name: string } } }> | null };
+export type LinkListQuery = { __typename?: 'Queries', linkList?: Array<{ __typename?: 'Link', type: EnumLinkType, item: { __typename?: 'KnowledgeBaseAnswerTranslation', id: string } | { __typename?: 'Ticket', id: string, internalId: number, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', id: string, name: string } } }> | null };
 
 export type TemplatesQueryVariables = Exact<{
   onlyActive?: InputMaybe<Scalars['Boolean']['input']>;
@@ -5743,7 +5742,7 @@ export type LinkUpdatesSubscriptionVariables = Exact<{
 }>;
 
 
-export type LinkUpdatesSubscription = { __typename?: 'Subscriptions', linkUpdates: { __typename?: 'LinkUpdatesPayload', links?: Array<{ __typename?: 'Link', type: EnumLinkType, target: { __typename?: 'KnowledgeBaseAnswerTranslation', id: string } | { __typename?: 'Ticket', id: string, internalId: number, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', id: string, name: string } } }> | null } };
+export type LinkUpdatesSubscription = { __typename?: 'Subscriptions', linkUpdates: { __typename?: 'LinkUpdatesPayload', links?: Array<{ __typename?: 'Link', type: EnumLinkType, item: { __typename?: 'KnowledgeBaseAnswerTranslation', id: string } | { __typename?: 'Ticket', id: string, internalId: number, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', id: string, name: string } } }> | null } };
 
 export type TemplateUpdatesSubscriptionVariables = Exact<{
   onlyActive: Scalars['Boolean']['input'];

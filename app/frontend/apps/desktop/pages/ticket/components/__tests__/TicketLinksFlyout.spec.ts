@@ -40,7 +40,7 @@ describe('TicketLinksFlyout', () => {
       wrapper.getByRole('heading', { name: 'Link Tickets', level: 2 }),
     ).toBeInTheDocument()
 
-    expect(wrapper.getByLabelText('Target ticket')).toBeInTheDocument()
+    expect(wrapper.getByLabelText('Link ticket')).toBeInTheDocument()
     expect(wrapper.getByLabelText('Link type')).toBeInTheDocument()
 
     expect(

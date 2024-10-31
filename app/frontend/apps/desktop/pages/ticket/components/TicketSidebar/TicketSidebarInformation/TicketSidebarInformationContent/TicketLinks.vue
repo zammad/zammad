@@ -49,8 +49,9 @@ const deleteLink = async (targetId: string, type: string) => {
     useLinkRemoveMutation({
       variables: {
         input: {
-          sourceId: ticketReactive.value.id,
-          targetId,
+          // Don't ask me why, but the sourceId and targetId are swapped to be consistent with the old UI.
+          sourceId: targetId,
+          targetId: ticketReactive.value.id,
           type: type as EnumLinkType,
         },
       },
@@ -70,7 +71,7 @@ const deleteLink = async (targetId: string, type: string) => {
           query: LinkListDocument,
           data: {
             linkList: existingLinks?.linkList?.filter(
-              (link) => !(link.target.id === targetId && link.type === type),
+              (link) => !(link.item.id === targetId && link.type === type),
             ),
           },
           variables,
@@ -127,12 +128,12 @@ const openLinkFlyout = () => {
 
           <div
             v-for="link in type.links"
-            :key="link.target.id"
+            :key="link.item.id"
             class="group/link relative flex items-center"
           >
             <CommonTicketLabel
               class="h-12 items-center"
-              :ticket="link.target as TicketById"
+              :ticket="link.item as TicketById"
               :classes="{ indicator: 'mt-0', label: 'mt-0 line-clamp-1' }"
             />
             <CommonButton
@@ -143,7 +144,7 @@ const openLinkFlyout = () => {
               icon="x-lg"
               size="small"
               variant="remove"
-              @click.stop="confirmDeleteLink(link.target.id, link.type)"
+              @click.stop="confirmDeleteLink(link.item.id, link.type)"
             />
           </div>
 

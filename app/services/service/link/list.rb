@@ -22,9 +22,8 @@ class Service::Link::List < Service::BaseWithCurrentUser
       next if !Pundit.policy(current_user, target).show?
 
       {
-        source: object,
-        target: target,
-        type:   type
+        item: target,
+        type: type
       }
     end.uniq
   end

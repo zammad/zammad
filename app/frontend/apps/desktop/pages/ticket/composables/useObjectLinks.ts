@@ -24,9 +24,11 @@ export const useObjectLinks = (
 ) => {
   const { linkTypes } = useObjectLinkTypes()
 
+  const objectId = computed(() => object.value?.id)
+
   const linkListQuery = new QueryHandler(
     useLinkListQuery(() => ({
-      objectId: object.value?.id,
+      objectId: objectId.value,
       targetType,
     })),
   )
@@ -40,7 +42,7 @@ export const useObjectLinks = (
   >(() => ({
     document: LinkUpdatesDocument,
     variables: {
-      objectId: object.value?.id,
+      objectId: objectId.value,
       targetType,
     },
     updateQuery: (prev, { subscriptionData }) => {
