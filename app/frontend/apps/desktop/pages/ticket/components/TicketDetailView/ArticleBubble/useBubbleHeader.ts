@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { useTimeout } from '@vueuse/core'
 import { ref } from 'vue'
 
 export const useBubbleHeader = () => {
@@ -27,14 +28,25 @@ export const useBubbleHeader = () => {
     return true
   }
 
-  const toggleHeader = (event: MouseEvent) => {
+  const { start, stop } = useTimeout(200, {
+    controls: true,
+    callback: () => {
+      showMetaInformation.value = !showMetaInformation.value
+    },
+    immediate: false,
+  })
+
+  const toggleHeader = async (event: MouseEvent) => {
+    stop()
+
     if (
+      event.detail === 2 || // Double-click
       isInteractiveTarget(event.target as HTMLElement) ||
       hasSelectionRange(event.target as HTMLElement)
     )
       return
 
-    showMetaInformation.value = !showMetaInformation.value
+    start()
   }
 
   return {

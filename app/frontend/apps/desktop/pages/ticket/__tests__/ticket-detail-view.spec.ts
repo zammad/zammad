@@ -1,7 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { within } from '@testing-library/vue'
-import { expect } from 'vitest'
+import { beforeEach, expect } from 'vitest'
 
 import createArticle from '#tests/graphql/factories/TicketArticle.ts'
 import { getTestRouter } from '#tests/support/components/renderComponent.ts'
@@ -111,7 +111,6 @@ describe('Ticket detail view', () => {
       mockTicketQuery({
         ticket: createDummyTicket(),
       })
-
       const testArticle = createDummyArticle({
         bodyWithUrls: 'foobar',
       })
@@ -148,7 +147,14 @@ describe('Ticket detail view', () => {
         await view.findByLabelText('Article meta information'),
       ).toBeInTheDocument()
 
+      vi.useFakeTimers()
+
       await view.events.click(view.getByTestId('article-bubble-body-1'))
+
+      // NB: Click handler has a built-in timeout (200ms) in order to catch double click behavior.
+      //   Advance the timer manually so we speed up the test a bit.
+      await vi.runAllTimersAsync()
+      vi.useRealTimers()
 
       expect(
         view.queryByLabelText('Article meta information'),

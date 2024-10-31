@@ -1,9 +1,11 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { waitFor } from '@testing-library/vue'
+
 import { useBubbleHeader } from '#desktop/pages/ticket/components/TicketDetailView/ArticleBubble/useBubbleHeader.ts'
 
 describe('useBubbleHeader', () => {
-  it('should toggle showMetaInformation', () => {
+  it('should toggle showMetaInformation', async () => {
     const { showMetaInformation, toggleHeader } = useBubbleHeader()
 
     expect(showMetaInformation.value).toBe(false)
@@ -17,11 +19,11 @@ describe('useBubbleHeader', () => {
 
     toggleHeader(event)
 
-    expect(showMetaInformation.value).toBe(true)
+    await waitFor(() => expect(showMetaInformation.value).toBe(true))
 
     toggleHeader(event)
 
-    expect(showMetaInformation.value).toBe(false)
+    await waitFor(() => expect(showMetaInformation.value).toBe(false))
   })
 
   it.each(['a', 'button', 'button>span'])(
