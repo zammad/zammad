@@ -31,7 +31,7 @@ export type TicketView = 'agent' | 'customer'
 export interface TicketLiveAppUser {
   user: TicketLiveUser['user']
   editing: boolean
-  lastInteraction: string
+  lastInteraction?: string
   app: EnumTaskbarApp
   isIdle?: boolean
 }

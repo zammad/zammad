@@ -25,16 +25,21 @@ export const useTicketLiveUsersDisplay = (
 
       liveUserList.value?.forEach((liveUser) => {
         if (
+          liveUser.lastInteraction &&
           new Date(liveUser.lastInteraction).getTime() + IDLE_TIME_MS <
-          reactiveNow.value.getTime()
+            reactiveNow.value.getTime()
         ) {
           localLiveUsers.push({
-            ...liveUser,
+            user: liveUser.user,
+            editing: liveUser.editing,
+            app: liveUser.app,
             isIdle: true,
           })
         } else {
           localLiveUsers.push({
-            ...liveUser,
+            user: liveUser.user,
+            editing: liveUser.editing,
+            app: liveUser.app,
             isIdle: false,
           })
         }

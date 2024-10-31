@@ -15,6 +15,7 @@ defineProps<{
     v-if="option.object?.__typename === 'User'"
     :entity="option.object"
     size="xs"
+    no-indicator
   />
   <CommonOrganizationAvatar
     v-else-if="option.object?.__typename === 'Organization'"

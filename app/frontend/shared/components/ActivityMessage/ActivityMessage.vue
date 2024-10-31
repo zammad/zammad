@@ -62,7 +62,7 @@ defineEmits<{
     @click="!link ? $emit('seen') : undefined"
   >
     <div class="flex items-center ltr:mr-4 rtl:ml-4">
-      <CommonUserAvatar v-if="createdBy" :entity="createdBy" />
+      <CommonUserAvatar v-if="createdBy" :entity="createdBy" no-indicator />
       <CommonAvatar v-else class="bg-red-bright text-white" icon="lock" />
     </div>
 

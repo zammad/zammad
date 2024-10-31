@@ -36,6 +36,7 @@ describe('Ticket detail view live users handling', () => {
               lastname: 'Braun',
               fullname: 'Nicole Braun',
               vip: true,
+              active: true,
             },
             apps: [
               {
@@ -53,10 +54,11 @@ describe('Ticket detail view live users handling', () => {
       name: 'Avatar (Nicole Braun) (VIP)',
     })
 
-    expect(customerAvatar.parentElement!).toHaveClasses([
-      'opacity-50',
-      'grayscale',
-    ])
+    expect(customerAvatar).toHaveClass('opacity-60')
+
+    expect(
+      getByIconName(customerAvatar.parentElement!, 'user-idle'),
+    ).toHaveClasses(['fill-stone-200', 'dark:fill-neutral-500'])
 
     await getTicketLiveUserUpdatesSubscriptionHandler().trigger({
       ticketLiveUserUpdates: {
@@ -68,6 +70,7 @@ describe('Ticket detail view live users handling', () => {
               lastname: 'Braun',
               fullname: 'Nicole Braun',
               vip: true,
+              active: true,
             },
             apps: [
               {
@@ -81,10 +84,11 @@ describe('Ticket detail view live users handling', () => {
       },
     })
 
-    expect(customerAvatar.parentElement!).not.toHaveClasses([
-      'opacity-50',
-      'grayscale',
-    ])
+    expect(customerAvatar).not.toHaveClass('opacity-60')
+
+    expect(
+      queryByIconName(customerAvatar.parentElement!, 'user-idle'),
+    ).not.toBeInTheDocument()
   })
 
   it('displays icon on user avatar if they are editing', async () => {
@@ -100,6 +104,7 @@ describe('Ticket detail view live users handling', () => {
               lastname: 'Braun',
               fullname: 'Nicole Braun',
               vip: true,
+              active: true,
             },
             apps: [
               {
@@ -131,6 +136,7 @@ describe('Ticket detail view live users handling', () => {
               lastname: 'Braun',
               fullname: 'Nicole Braun',
               vip: true,
+              active: true,
             },
             apps: [
               {
@@ -146,7 +152,7 @@ describe('Ticket detail view live users handling', () => {
 
     expect(
       getByIconName(customerAvatar.parentElement!, 'pencil'),
-    ).toBeInTheDocument()
+    ).toHaveClasses(['text-black', 'dark:text-white'])
   })
 
   it('displays icon on user avatar if they are on mobile', async () => {
@@ -162,6 +168,7 @@ describe('Ticket detail view live users handling', () => {
               lastname: 'Braun',
               fullname: 'Nicole Braun',
               vip: true,
+              active: true,
             },
             apps: [
               {
@@ -193,6 +200,7 @@ describe('Ticket detail view live users handling', () => {
               lastname: 'Braun',
               fullname: 'Nicole Braun',
               vip: true,
+              active: true,
             },
             apps: [
               {
@@ -206,9 +214,9 @@ describe('Ticket detail view live users handling', () => {
       },
     })
 
-    expect(
-      getByIconName(customerAvatar.parentElement!, 'phone'),
-    ).toBeInTheDocument()
+    expect(getByIconName(customerAvatar.parentElement!, 'phone')).toHaveClasses(
+      ['text-black', 'dark:text-white'],
+    )
   })
 
   it('hides the user avatar if they leave the ticket', async () => {
@@ -224,6 +232,7 @@ describe('Ticket detail view live users handling', () => {
               lastname: 'Braun',
               fullname: 'Nicole Braun',
               vip: true,
+              active: true,
             },
             apps: [
               {

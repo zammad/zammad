@@ -4,23 +4,29 @@ import { renderComponent } from '#tests/support/components/index.ts'
 
 import { EnumTaskbarApp } from '#shared/graphql/types.ts'
 
-import TicketViewerItem from '../TicketViewerItem.vue'
+import TicketViewerItem, { type Props } from '../TicketViewerItem.vue'
+
+const user = {
+  id: '1234',
+  firstname: 'John',
+  lastname: 'Doe',
+  fullname: 'John Doe',
+}
+
+const renderTicketViewerItem = (props: Partial<Props>) =>
+  renderComponent(TicketViewerItem, {
+    props: {
+      user,
+      ...props,
+    },
+    router: true,
+  })
 
 describe('displaying single ticket viewer items', () => {
-  const user = {
-    id: '1234',
-    firstname: 'John',
-    lastname: 'Doe',
-    fullname: 'John Doe',
-  }
-
   it('displays the avatar and user name with desktop icon', () => {
-    const view = renderComponent(TicketViewerItem, {
-      props: {
-        user,
-        app: EnumTaskbarApp.Desktop,
-        editing: false,
-      },
+    const view = renderTicketViewerItem({
+      app: EnumTaskbarApp.Desktop,
+      editing: false,
     })
 
     expect(view.getByText('JD')).toBeInTheDocument()
@@ -29,12 +35,9 @@ describe('displaying single ticket viewer items', () => {
   })
 
   it('with desktop editing icon', () => {
-    const view = renderComponent(TicketViewerItem, {
-      props: {
-        user,
-        app: EnumTaskbarApp.Desktop,
-        editing: true,
-      },
+    const view = renderTicketViewerItem({
+      app: EnumTaskbarApp.Desktop,
+      editing: true,
     })
 
     expect(view.getByText('JD')).toBeInTheDocument()
@@ -43,12 +46,9 @@ describe('displaying single ticket viewer items', () => {
   })
 
   it('with only editing icon', () => {
-    const view = renderComponent(TicketViewerItem, {
-      props: {
-        user,
-        app: EnumTaskbarApp.Mobile,
-        editing: true,
-      },
+    const view = renderTicketViewerItem({
+      app: EnumTaskbarApp.Mobile,
+      editing: true,
     })
 
     expect(view.getByText('JD')).toBeInTheDocument()
@@ -57,12 +57,9 @@ describe('displaying single ticket viewer items', () => {
   })
 
   it('without any icon and idle state', () => {
-    const view = renderComponent(TicketViewerItem, {
-      props: {
-        user,
-        app: EnumTaskbarApp.Mobile,
-        editing: false,
-      },
+    const view = renderTicketViewerItem({
+      app: EnumTaskbarApp.Mobile,
+      editing: false,
     })
 
     expect(view.getByText('JD')).toBeInTheDocument()
@@ -72,20 +69,19 @@ describe('displaying single ticket viewer items', () => {
     expect(view.queryByIconName('edit')).not.toBeInTheDocument()
 
     const avatar = view.getByTestId('common-avatar')
-    expect(avatar).not.toHaveClass('grayscale')
+
+    expect(avatar).not.toHaveClass('opacity-60')
   })
 
   it('with idle state', () => {
-    const view = renderComponent(TicketViewerItem, {
-      props: {
-        user,
-        app: EnumTaskbarApp.Mobile,
-        editing: false,
-        idle: true,
-      },
+    const view = renderTicketViewerItem({
+      app: EnumTaskbarApp.Mobile,
+      editing: false,
+      idle: true,
     })
 
     const avatar = view.getByTestId('common-avatar')
-    expect(avatar).toHaveClass('grayscale')
+
+    expect(avatar).toHaveClass('opacity-60')
   })
 })

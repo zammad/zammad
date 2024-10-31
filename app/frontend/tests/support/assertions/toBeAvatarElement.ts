@@ -65,9 +65,7 @@ export default function toBeAvatar(
     const endDate = options.outOfOfficeEndAt
 
     if (startDate <= today.value && endDate >= today.value) {
-      const isOutOfOffice =
-        received.classList.contains('opacity-100') &&
-        received.classList.contains('grayscale-[70%]')
+      const isOutOfOffice = received.classList.contains('opacity-60')
       const localPass = options.outOfOffice ? isOutOfOffice : !isOutOfOffice
       if (!localPass) {
         errors.push(

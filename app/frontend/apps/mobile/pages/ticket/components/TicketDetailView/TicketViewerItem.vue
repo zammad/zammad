@@ -1,13 +1,18 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
 
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import type { AvatarUser } from '#shared/components/CommonUserAvatar/types.ts'
+import {
+  type AvatarUser,
+  type AvatarUserLive,
+} from '#shared/components/CommonUserAvatar/types.ts'
+import { useAvatarIndicator } from '#shared/composables/useAvatarIndicator.ts'
 import { EnumTaskbarApp } from '#shared/graphql/types.ts'
+import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 
-interface Props {
+export interface Props {
   user: AvatarUser
   editing: boolean
   idle?: boolean
@@ -16,34 +21,31 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const showDesktopIcon = computed(() => {
-  return props.app === EnumTaskbarApp.Desktop
-})
+const liveUser = computed<AvatarUserLive>(() => ({
+  editing: props.editing,
+  app: props.app,
+}))
 
-const idleClasses = computed(() => {
-  return props.idle !== undefined && props.idle ? 'opacity-20 grayscale' : ''
-})
+const { indicatorIcon, indicatorLabel } = useAvatarIndicator(
+  toRef(props.user),
+  false,
+  liveUser,
+)
 </script>
 
 <template>
-  <div class="flex items-center justify-between px-3 first:pt-1 last:pb-1">
+  <CommonLink
+    :key="user.id"
+    :link="`/users/${getIdFromGraphQLId(user.id)}`"
+    class="flex items-center justify-between px-3 first:pt-1 last:pb-1"
+  >
     <div class="flex items-center">
-      <CommonUserAvatar :entity="user" :class="idleClasses" />
+      <CommonUserAvatar :entity="user" :live="{ isIdle: idle }" />
       <div class="ltr:ml-3 rtl:mr-3">{{ user.fullname }}</div>
     </div>
 
-    <div v-if="editing || showDesktopIcon" class="flex items-center">
-      <CommonIcon
-        v-if="editing && showDesktopIcon"
-        :label="__('Editing on Desktop')"
-        name="desktop-edit"
-      />
-      <CommonIcon
-        v-else-if="showDesktopIcon"
-        :label="__('Desktop')"
-        name="desktop"
-      />
-      <CommonIcon v-else-if="editing" :label="__('Editing')" name="edit" />
+    <div v-if="indicatorIcon" class="flex items-center">
+      <CommonIcon :label="indicatorLabel" :name="indicatorIcon" />
     </div>
-  </div>
+  </CommonLink>
 </template>

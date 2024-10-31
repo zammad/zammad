@@ -120,8 +120,7 @@ describe('CommonUserAvatar', () => {
 
     const avatar = view.getByTestId('common-avatar')
 
-    expect(avatar).not.toHaveClass('grayscale')
-    expect(avatar).not.toHaveClass('grayscale-[70%]')
+    expect(avatar).not.toHaveClass('opacity-60')
 
     await view.rerender(<Props>{
       entity: {
@@ -130,7 +129,7 @@ describe('CommonUserAvatar', () => {
       },
     })
 
-    expect(avatar).toHaveClass('grayscale')
+    expect(avatar).toHaveClass('opacity-60')
   })
 
   it('renders crown for vip', async () => {
@@ -185,7 +184,7 @@ describe('CommonUserAvatar', () => {
       today = useDateFormat(new Date(), 'YYYY-MM-DD').value
     })
 
-    it('out of office date is in presentence', async () => {
+    it('out of office date is in present', async () => {
       const view = renderComponent(CommonUserAvatar, {
         props: <Props>{
           entity: {
@@ -206,7 +205,7 @@ describe('CommonUserAvatar', () => {
 
       const avatar = view.getByTestId('common-avatar')
 
-      expect(avatar).toHaveClass('grayscale-[70%]')
+      expect(avatar).toHaveClass('opacity-60')
     })
 
     it('out of office date is in past', async () => {

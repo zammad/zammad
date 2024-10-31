@@ -106,6 +106,7 @@ const { showPreview } = useFilePreviewViewer(
       }"
       :entity="article.author"
       size="small"
+      no-indicator
     />
 
     <div

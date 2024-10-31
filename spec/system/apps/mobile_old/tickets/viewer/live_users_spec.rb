@@ -43,12 +43,12 @@ RSpec.describe 'Mobile > Ticket > Viewers > Live Users', app: :mobile, authentic
         .to have_text('Viewing ticket')
         .and have_no_text(agent.fullname)
         .and have_text(another_agent.fullname)
-        .and have_no_css('.icon.icon-edit')
+        .and have_no_css('.icon.icon-avatar-indicator-editing-mobile')
 
       # Checking pencil icon.
       update_taskbar_item(taskbar_item, { editing: true }, another_agent.id, 2)
 
-      expect(page).to have_css('.icon.icon-edit')
+      expect(page).to have_css('.icon.icon-avatar-indicator-editing-mobile')
 
       # Checking idle.
       travel_to 10.minutes.ago
@@ -60,7 +60,7 @@ RSpec.describe 'Mobile > Ticket > Viewers > Live Users', app: :mobile, authentic
         .and have_no_text(agent.fullname)
         .and have_no_text('Viewing ticket')
         .and have_text(another_agent.fullname)
-        .and have_no_css('.icon.icon-edit')
+        .and have_no_css('.icon.icon-avatar-indicator-editing-mobile')
     end
 
     it 'shows the users that start looking at the ticket' do
@@ -75,7 +75,7 @@ RSpec.describe 'Mobile > Ticket > Viewers > Live Users', app: :mobile, authentic
       expect(page)
         .to have_text('Viewing ticket')
         .and have_text(third_agent.fullname)
-        .and have_css('.icon.icon-edit')
+        .and have_css('.icon.icon-avatar-indicator-editing-mobile')
     end
 
     context 'when editing is started on mobile' do
@@ -95,7 +95,7 @@ RSpec.describe 'Mobile > Ticket > Viewers > Live Users', app: :mobile, authentic
 
         expect(page)
           .to have_text(another_agent.fullname)
-          .and have_no_css('.icon.icon-edit')
+          .and have_no_css('.icon.icon-avatar-indicator-editing-mobile')
 
         using_session(:customer) do
           visit "/tickets/#{ticket.id}/information"
@@ -112,7 +112,7 @@ RSpec.describe 'Mobile > Ticket > Viewers > Live Users', app: :mobile, authentic
         expect(page)
           .to have_text('Viewing ticket')
           .and have_text(another_agent.fullname)
-          .and have_css('.icon.icon-edit')
+          .and have_css('.icon.icon-avatar-indicator-editing-mobile')
       end
     end
 
@@ -135,7 +135,7 @@ RSpec.describe 'Mobile > Ticket > Viewers > Live Users', app: :mobile, authentic
 
         expect(page)
           .to have_text(another_agent.fullname)
-          .and have_no_css('.icon.icon-desktop-edit')
+          .and have_no_css('.icon.icon-avatar-indicator-editing-desktop')
 
         using_session(:customer) do
           within :active_content, '.tabsSidebar' do
@@ -148,7 +148,7 @@ RSpec.describe 'Mobile > Ticket > Viewers > Live Users', app: :mobile, authentic
         expect(page)
           .to have_text('Viewing ticket')
           .and have_text(another_agent.fullname)
-          .and have_css('.icon.icon-desktop-edit')
+          .and have_css('.icon.icon-avatar-indicator-editing-desktop')
       end
     end
 
@@ -176,7 +176,7 @@ RSpec.describe 'Mobile > Ticket > Viewers > Live Users', app: :mobile, authentic
         expect(page)
           .to have_text('Viewing ticket')
           .and have_text(agent.fullname)
-          .and have_css('.icon.icon-desktop-edit')
+          .and have_css('.icon.icon-avatar-indicator-editing-desktop')
       end
     end
   end

@@ -325,6 +325,8 @@ const activeAvatarButtonClass = (active: boolean) => {
                   size="large"
                   initials-only
                   personal
+                  no-indicator
+                  no-muted
                 />
               </button>
               <div

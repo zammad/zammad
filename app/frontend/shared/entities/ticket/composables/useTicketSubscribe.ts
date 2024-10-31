@@ -1,5 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { keyBy } from 'lodash-es'
 import { computed } from 'vue'
 
 import { useTicketView } from '#shared/entities/ticket/composables/useTicketView.ts'
@@ -79,7 +80,10 @@ export const useTicketSubscribe = (ticket: Ref<TicketById | undefined>) => {
     () =>
       ticket.value?.mentions?.edges
         ?.filter(({ node }) => node.user.active)
-        .map(({ node }) => node.user) || [],
+        .map(({ node }) => ({
+          user: node.user,
+          access: node.userTicketAccess,
+        })) || [],
   )
 
   const subscribersWithoutMe = computed(
@@ -87,6 +91,18 @@ export const useTicketSubscribe = (ticket: Ref<TicketById | undefined>) => {
       ticket.value?.mentions?.edges
         ?.filter(({ node }) => node.user.id !== session.userId)
         .map(({ node }) => node.user) || [],
+  )
+
+  const subscribersAccessLookup = computed(() =>
+    keyBy(
+      ticket.value?.mentions?.edges
+        ?.filter(({ node }) => node.user.id !== session.userId)
+        .map(({ node }) => ({
+          userId: node.user.id,
+          access: node.userTicketAccess,
+        })) || [],
+      'userId',
+    ),
   )
 
   const hasMe = computed(() => {
@@ -118,6 +134,7 @@ export const useTicketSubscribe = (ticket: Ref<TicketById | undefined>) => {
     subscribers,
     totalSubscribers,
     subscribersWithoutMe,
+    subscribersAccessLookup,
     totalSubscribersWithoutMe,
     hasMe,
   }

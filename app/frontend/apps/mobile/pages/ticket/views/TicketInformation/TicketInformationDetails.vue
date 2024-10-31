@@ -81,6 +81,7 @@ const {
   isSubscribed,
   isSubscriptionLoading,
   subscribersWithoutMe,
+  subscribersAccessLookup,
   totalSubscribersWithoutMe,
   toggleSubscribe,
 } = useTicketSubscribe(ticket)
@@ -223,7 +224,10 @@ const hasEscalation = computed(() => {
         </label>
       </template>
     </FormKit>
-    <CommonUsersList :users="subscribersWithoutMe" />
+    <CommonUsersList
+      :users="subscribersWithoutMe"
+      :access-lookup="subscribersAccessLookup"
+    />
     <CommonShowMoreButton
       :entities="subscribersWithoutMe"
       :total-count="totalSubscribersWithoutMe"

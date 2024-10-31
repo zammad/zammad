@@ -106,7 +106,7 @@ describe('avatar personal settings', () => {
     const mainContent = within(view.getByRole('main'))
     let avatars = await mainContent.findAllByTestId('common-avatar')
 
-    expect(avatars[0]).toHaveClass('avatar-selected')
+    expect(avatars[0].parentElement).toHaveClass('avatar-selected')
 
     mockUserCurrentAvatarSelectMutation({
       userCurrentAvatarSelect: {
@@ -195,7 +195,7 @@ describe('avatar personal settings', () => {
     let avatars = await mainContent.findAllByTestId('common-avatar')
 
     expect(avatars).toHaveLength(1)
-    expect(avatars[0]).toHaveClass('avatar-selected')
+    expect(avatars[0].parentElement).toHaveClass('avatar-selected')
 
     const fileUploadButton = view.getByRole('button', {
       name: 'Upload',
@@ -233,7 +233,7 @@ describe('avatar personal settings', () => {
 
     expect(avatars).toHaveLength(2)
     expect(avatars[0]).not.toHaveClass('avatar-selected')
-    expect(avatars[1]).toHaveClass('avatar-selected')
+    expect(avatars[1].parentElement).toHaveClass('avatar-selected')
   })
 
   describe('with camera flyout', () => {
@@ -294,7 +294,7 @@ describe('avatar personal settings', () => {
       let avatars = await mainContent.findAllByTestId('common-avatar')
 
       expect(avatars).toHaveLength(1)
-      expect(avatars[0]).toHaveClass('avatar-selected')
+      expect(avatars[0].parentElement).toHaveClass('avatar-selected')
 
       const cameraButton = view.getByRole('button', {
         name: 'Camera',

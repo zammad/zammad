@@ -113,4 +113,14 @@ export default {
 
   // Conflicting names
   mobile: 'phone',
+
+  // Avatar indicator
+  'avatar-indicator-inactive': 'user-inactive',
+  'avatar-indicator-without-access': 'no-notifications',
+  'avatar-indicator-out-of-office': 'vacation2',
+  'avatar-indicator-editing-desktop': 'pencil',
+  'avatar-indicator-editing-mobile': 'phone-pencil',
+  'avatar-indicator-desktop': 'avatar-indicator-desktop',
+  'avatar-indicator-mobile': 'phone',
+  'avatar-indicator-idle': 'user-idle',
 }

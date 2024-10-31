@@ -36,6 +36,8 @@ const {
       id="main-sidebar"
       :name="storageKeyId"
       :aria-label="$t('Main sidebar')"
+      data-theme="dark"
+      :style="{ colorScheme: 'dark' }"
       :current-width="currentSidebarWidth"
       :max-width="maxSidebarWidth"
       :min-width="minSidebarWidth"

@@ -19,9 +19,17 @@ module Gql::Types
     private
 
     def pundit(query)
-      Pundit.authorize(context.current_user, @object, query)
+      Pundit.authorize(user, record, query)
     rescue Pundit::NotAuthorizedError
       false
+    end
+
+    def record
+      @object
+    end
+
+    def user
+      context.current_user
     end
   end
 end

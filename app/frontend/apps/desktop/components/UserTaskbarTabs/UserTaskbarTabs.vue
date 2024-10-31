@@ -237,8 +237,6 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
           <ul
             ref="dnd-parent"
             class="flex flex-col gap-1.5 overflow-y-auto p-1"
-            data-theme="dark"
-            :style="{ colorScheme: 'dark' }"
           >
             <li
               v-for="tabEntityKey in dndTaskbarTabListOrder"

@@ -29,6 +29,9 @@ const provideTestTicket = (subscribed: boolean = false) => {
               fullname: 'John Doe',
               active: true,
             },
+            userTicketAccess: {
+              agentReadAccess: true,
+            },
           },
         },
         {
@@ -44,6 +47,9 @@ const provideTestTicket = (subscribed: boolean = false) => {
               fullname: 'Jane Doe',
               active: true,
             },
+            userTicketAccess: {
+              agentReadAccess: true,
+            },
           },
         },
         {
@@ -58,6 +64,9 @@ const provideTestTicket = (subscribed: boolean = false) => {
               lastname: 'Doe',
               fullname: 'Jim Doe',
               active: false,
+            },
+            userTicketAccess: {
+              agentReadAccess: true,
             },
           },
         },

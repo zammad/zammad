@@ -46,6 +46,9 @@ describe('Ticket detail view', () => {
                   fullname: 'John Doe',
                   active: true,
                 },
+                userTicketAccess: {
+                  agentReadAccess: true,
+                },
               },
             },
             {
@@ -61,6 +64,9 @@ describe('Ticket detail view', () => {
                   fullname: 'Jane Doe',
                   active: true,
                 },
+                userTicketAccess: {
+                  agentReadAccess: true,
+                },
               },
             },
             {
@@ -75,6 +81,9 @@ describe('Ticket detail view', () => {
                   lastname: 'Doe',
                   fullname: 'Jim Doe',
                   active: false,
+                },
+                userTicketAccess: {
+                  agentReadAccess: true,
                 },
               },
             },
@@ -198,6 +207,9 @@ describe('Ticket detail view', () => {
                       lastname: 'Doe',
                       fullname: 'Adam Doe',
                       active: true,
+                    },
+                    userTicketAccess: {
+                      agentReadAccess: true,
                     },
                   },
                 },

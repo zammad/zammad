@@ -13,9 +13,7 @@ defineProps<{
   <CommonUserAvatar
     v-if="option.user"
     :entity="option.user"
-    :class="{
-      'opacity-30': option.disabled,
-    }"
     size="xs"
+    no-indicator
   />
 </template>

@@ -47,6 +47,9 @@ RSpec.describe Gql::Queries::Ticket, current_user_id: 1, type: :graphql do
                   user {
                     id
                   }
+                  userTicketAccess {
+                    agentReadAccess
+                  }
                 }
                 cursor
               }
@@ -212,8 +215,12 @@ RSpec.describe Gql::Queries::Ticket, current_user_id: 1, type: :graphql do
         end
 
         context 'when subscribed' do
+          let(:other_user) { create(:agent, groups: [ticket.group]) }
+
           before do
             Mention.subscribe! ticket, agent
+            Mention.subscribe! ticket, other_user
+            other_user.update(active: false)
             gql.execute(query, variables: variables)
           end
 
@@ -221,9 +228,13 @@ RSpec.describe Gql::Queries::Ticket, current_user_id: 1, type: :graphql do
             expect(gql.result.data).to include('subscribed' => true)
           end
 
-          it 'returns user in subscribers list' do
+          it 'returns user and access information in subscribers list' do
             expect(gql.result.data.dig('mentions', 'edges'))
-              .to include(include('node' => include('user' => include('id' => gql.id(agent)))))
+              .to include(include('node' => include('user' => include('id' => gql.id(agent)), 'userTicketAccess' => { 'agentReadAccess' => true })))
+          end
+
+          it 'does not return inactive users' do
+            expect(gql.result.data.dig('mentions', 'edges').count).to be(1)
           end
         end
 

@@ -71,8 +71,9 @@ const handleToggleInput = async () => {
       <div v-if="totalSubscribers > 0" class="flex flex-wrap gap-2 pt-2.5">
         <CommonUserAvatar
           v-for="subscriber in subscribers"
-          :key="subscriber.id"
-          :entity="subscriber"
+          :key="subscriber.user.id"
+          :entity="subscriber.user"
+          :access="subscriber.access"
           size="small"
         />
       </div>

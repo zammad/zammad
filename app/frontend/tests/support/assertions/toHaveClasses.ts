@@ -6,9 +6,12 @@ export default function toHaveClasses(
   received: unknown,
   classes: string[],
 ) {
-  if (!received || !(received instanceof HTMLElement)) {
+  if (
+    !received ||
+    (!(received instanceof HTMLElement) && !(received instanceof SVGElement))
+  ) {
     return {
-      message: () => 'received is not an HTMLElement',
+      message: () => 'received is not an HTMLElement or an SVGElement',
       pass: false,
     }
   }

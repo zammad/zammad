@@ -2,13 +2,27 @@
 
 <script setup lang="ts">
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
-import type { AvatarUser } from '#shared/components/CommonUserAvatar/types.ts'
+import type {
+  AvatarUser,
+  AvatarUserAccess,
+} from '#shared/components/CommonUserAvatar/types.ts'
+import { useAvatarIndicator } from '#shared/composables/useAvatarIndicator.ts'
 
 interface Props {
   users: (AvatarUser & { internalId: number })[]
+  accessLookup?: Record<string, { access: AvatarUserAccess }>
 }
 
-defineProps<Props>()
+const props = defineProps<Props>()
+
+const getAvatarIndicator = (user: AvatarUser) => {
+  return useAvatarIndicator(
+    user,
+    false,
+    undefined,
+    props.accessLookup?.[user.id].access,
+  )
+}
 </script>
 
 <template>
@@ -18,9 +32,25 @@ defineProps<Props>()
     :link="`/users/${user.internalId}`"
     class="flex h-14 items-center px-3"
   >
-    <CommonUserAvatar decorative :entity="user" class="ltr:mr-3 rtl:ml-3" />
-    <span class="truncate">
-      {{ user.fullname }}
-    </span>
+    <div class="flex grow items-center">
+      <CommonUserAvatar
+        class="ltr:mr-3 rtl:ml-3"
+        :entity="user"
+        :access="accessLookup?.[user.id].access"
+        decorative
+      />
+      <span class="truncate">
+        {{ user.fullname }}
+      </span>
+    </div>
+    <div
+      v-if="getAvatarIndicator(user).indicatorIcon"
+      class="flex items-center"
+    >
+      <CommonIcon
+        :label="getAvatarIndicator(user).indicatorLabel.value"
+        :name="getAvatarIndicator(user).indicatorIcon.value || ''"
+      />
+    </div>
   </CommonLink>
 </template>

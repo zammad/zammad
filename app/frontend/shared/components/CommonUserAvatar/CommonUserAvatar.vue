@@ -1,10 +1,11 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useDateFormat } from '@vueuse/shared'
-import { computed } from 'vue'
+import { computed, toRef } from 'vue'
 
-import { useReactiveNow } from '#shared/composables/useReactiveNow.ts'
+import { useAppName } from '#shared/composables/useAppName.ts'
+import { useAvatarIndicator } from '#shared/composables/useAvatarIndicator.ts'
+import { EnumTaskbarApp } from '#shared/graphql/types.ts'
 import { getIdFromGraphQLId } from '#shared/graphql/utils.ts'
 import { i18n } from '#shared/i18n.ts'
 import { getUserAvatarClasses } from '#shared/initializer/initializeUserAvatarClasses.ts'
@@ -19,7 +20,7 @@ import CommonAvatar from '../CommonAvatar/CommonAvatar.vue'
 
 import logo from './assets/logo.svg'
 
-import type { AvatarUser } from './types.ts'
+import type { AvatarUserAccess, AvatarUserLive, AvatarUser } from './types.ts'
 import type { AvatarSize } from '../CommonAvatar/index.ts'
 
 export interface Props {
@@ -28,9 +29,15 @@ export interface Props {
   personal?: boolean
   decorative?: boolean
   initialsOnly?: boolean
+  live?: AvatarUserLive
+  access?: AvatarUserAccess
+  noMuted?: boolean
+  noIndicator?: boolean
 }
 
-const props = defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  size: 'medium',
+})
 
 const initials = computed(() => {
   const { lastname, firstname, email, phone, mobile } = props.entity
@@ -68,6 +75,7 @@ const icon = computed(() => {
   return null
 })
 
+const appName = useAppName()
 const application = useApplicationStore()
 
 const image = computed(() => {
@@ -88,30 +96,34 @@ const isVip = computed(() => {
   return !props.personal && props.entity.vip
 })
 
-const currentDate = useReactiveNow()
+const {
+  isInactive,
+  isLiveUserIdle,
+  isOutOfOffice,
+  isWithoutAccess,
+  indicatorIcon,
+  indicatorLabel,
+} = useAvatarIndicator(
+  toRef(props, 'entity'),
+  toRef(props, 'personal'),
+  toRef(props, 'live'),
+  toRef(props, 'access'),
+)
 
-const isOutOfOffice = computed(() => {
-  if (
-    props.entity.outOfOffice &&
-    props.entity.outOfOfficeStartAt &&
-    props.entity.outOfOfficeEndAt
-  ) {
-    const today = useDateFormat(currentDate.value, 'YYYY-MM-DD')
-    const startDate = props.entity?.outOfOfficeStartAt
-    const endDate = props.entity?.outOfOfficeEndAt
-
-    return startDate <= today.value && endDate >= today.value // Today is between start and end date
-  }
-  return false
-})
+const isMuted = computed(
+  () =>
+    !props.noMuted &&
+    (isInactive.value ||
+      isOutOfOffice.value ||
+      isWithoutAccess.value ||
+      isLiveUserIdle.value),
+)
 
 const className = computed(() => {
   const classes = [colorClass.value]
 
-  if (isOutOfOffice.value) {
-    classes.push('opacity-100 grayscale-[70%]')
-  } else if (props.entity.active === false) {
-    classes.push('opacity-20 grayscale')
+  if (isMuted.value) {
+    classes.push('opacity-60')
   }
 
   return classes
@@ -124,17 +136,52 @@ const label = computed(() => {
   if (isVip.value) label += ` (${i18n.t('VIP')})`
   return label
 })
+
+const indicator = computed(() => {
+  if (appName === EnumTaskbarApp.Mobile || props.noIndicator) return null
+  return indicatorIcon.value
+})
+
+const indicatorClass = computed(() => {
+  if (isMuted.value) return 'fill-stone-200 dark:fill-neutral-500'
+  return 'text-black dark:text-white'
+})
+
+const indicatorSizes = {
+  xs: 'xs',
+  small: 'xs',
+  medium: 'xs',
+  normal: 'tiny',
+  large: 'small',
+  xl: 'medium',
+} as const
+
+const indicatorSize = computed(() => indicatorSizes[props.size])
 </script>
 
 <template>
-  <CommonAvatar
-    :initials="initials"
-    :size="size"
-    :icon="icon"
-    :class="className"
-    :image="image"
-    :vip-icon="isVip ? 'vip-user' : undefined"
-    :decorative="decorative"
-    :aria-label="label"
-  />
+  <div class="relative">
+    <CommonAvatar
+      :initials="initials"
+      :size="size"
+      :icon="icon"
+      :class="className"
+      :image="image"
+      :vip-icon="isVip ? 'vip-user' : undefined"
+      :decorative="decorative"
+      :aria-label="label"
+    />
+    <div
+      v-if="indicator"
+      v-tooltip="indicatorLabel"
+      class="absolute bottom-0 end-0 flex translate-y-1 items-center justify-center rounded-full bg-blue-200 p-[3px] outline outline-1 -outline-offset-1 outline-neutral-100 ltr:translate-x-2 rtl:-translate-x-2 dark:bg-gray-700 dark:outline-gray-900"
+    >
+      <CommonIcon
+        :class="indicatorClass"
+        :label="indicatorLabel"
+        :size="indicatorSize"
+        :name="indicator"
+      />
+    </div>
+  </div>
 </template>

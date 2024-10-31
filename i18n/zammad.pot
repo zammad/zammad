@@ -1675,7 +1675,7 @@ msgstr ""
 msgid "Article could not be deleted."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:127
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:128
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:27
 msgid "Article meta information"
 msgstr ""
@@ -2017,7 +2017,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/routes.ts:28
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:128
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:175
-#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:121
+#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:133
 #: db/seeds/permissions.rb:409
 msgid "Avatar"
 msgstr ""
@@ -2360,7 +2360,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:238
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:7
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:119
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:392
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:394
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:215
 msgid "Camera"
 msgstr ""
@@ -4776,7 +4776,7 @@ msgstr ""
 msgid "Delete this access token"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:352
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:354
 msgid "Delete this avatar"
 msgstr ""
 
@@ -4854,7 +4854,6 @@ msgid "Designer"
 msgstr ""
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:25
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:43
 msgid "Desktop"
 msgstr ""
 
@@ -5315,18 +5314,6 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation.vue:86
 msgid "Edit ticket title"
-msgstr ""
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:38
-msgid "Editing"
-msgstr ""
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:38
-msgid "Editing on Desktop"
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketLiveUsers.vue:57
-msgid "Editing on Mobile"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
@@ -10644,6 +10631,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_load_measure.coffee:11
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
+msgstr ""
+
+#: app/frontend/shared/composables/useAvatarIndicator.ts:82
+msgid "Out of office active"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:165
@@ -16753,7 +16744,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:18
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:9
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:383
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:385
 msgid "Upload"
 msgstr ""
 
@@ -16935,8 +16926,44 @@ msgstr ""
 msgid "User filter"
 msgstr ""
 
+#: app/frontend/shared/composables/useAvatarIndicator.ts:79
+msgid "User has no access"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:530
 msgid "User information could not be retrieved, please check your bind user permissions."
+msgstr ""
+
+#: app/frontend/shared/composables/useAvatarIndicator.ts:87
+msgid "User is editing"
+msgstr ""
+
+#: app/frontend/shared/composables/useAvatarIndicator.ts:87
+msgid "User is editing on desktop"
+msgstr ""
+
+#: app/frontend/shared/composables/useAvatarIndicator.ts:90
+msgid "User is editing on mobile"
+msgstr ""
+
+#: app/frontend/shared/composables/useAvatarIndicator.ts:100
+msgid "User is idle"
+msgstr ""
+
+#: app/frontend/shared/composables/useAvatarIndicator.ts:78
+msgid "User is inactive"
+msgstr ""
+
+#: app/frontend/shared/composables/useAvatarIndicator.ts:95
+msgid "User is on desktop"
+msgstr ""
+
+#: app/frontend/shared/composables/useAvatarIndicator.ts:98
+msgid "User is on mobile"
+msgstr ""
+
+#: app/frontend/shared/composables/useAvatarIndicator.ts:84
+msgid "User is out of office"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:201
@@ -17020,7 +17047,7 @@ msgstr ""
 msgid "Using **organizations** you can **group** customers. This has two main benefits:\n\n1. As an **agent** you don't just have an overview of the open tickets for one person but an **overview over their whole organization**.\n2. As a **customer** you can also check the **tickets which your colleagues created** and modify their tickets (if your organization is set to \"shared\", which can be defined per organization)."
 msgstr ""
 
-#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:124
+#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:136
 #: db/seeds/object_manager_attributes.rb:1293
 msgid "VIP"
 msgstr ""

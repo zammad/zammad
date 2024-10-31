@@ -16,5 +16,8 @@ export const TicketMentionFragmentDoc = gql`
     active
     image
   }
+  userTicketAccess {
+    agentReadAccess
+  }
 }
     `;

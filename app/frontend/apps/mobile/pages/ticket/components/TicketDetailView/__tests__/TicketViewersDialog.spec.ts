@@ -47,6 +47,7 @@ describe('displaying ticket viewer dialog', () => {
           },
         ],
       },
+      router: true,
     })
 
     expect(view.getByText('Viewing ticket')).toBeInTheDocument()

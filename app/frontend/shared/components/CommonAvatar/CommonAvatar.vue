@@ -49,7 +49,7 @@ const classMap = getAvatarClasses()
 
 <template>
   <span
-    class="relative inline-flex shrink-0 select-none items-center justify-center rounded-full bg-cover bg-center"
+    class="relative flex shrink-0 select-none items-center justify-center rounded-full bg-cover bg-center"
     :class="[`size-${size}`, classMap.base]"
     :style="{
       backgroundImage: image ? `url(${image})` : undefined,
