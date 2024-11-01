@@ -16,6 +16,7 @@ export interface Props {
   noCollapse?: boolean
   noNegativeMargin?: boolean
   noHeader?: boolean
+  scrollable?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -41,7 +42,7 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
 
 <template>
   <!--  eslint-disable vuejs-accessibility/no-static-element-interactions-->
-  <div class="flex flex-col gap-1">
+  <div class="flex flex-col gap-1" :class="{ 'overflow-y-auto': scrollable }">
     <header
       v-if="!noHeader"
       :id="headerId"
@@ -85,7 +86,11 @@ const { collapseDuration, collapseEnter, collapseAfterEnter, collapseLeave } =
       @after-enter="collapseAfterEnter"
       @leave="collapseLeave"
     >
-      <div v-show="!isCollapsed || noHeader" :id="id">
+      <div
+        v-show="!isCollapsed || noHeader"
+        :id="id"
+        :class="{ 'overflow-y-auto': scrollable }"
+      >
         <slot :header-id="headerId" />
       </div>
     </Transition>

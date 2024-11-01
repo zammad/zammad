@@ -229,6 +229,7 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
           id="user-taskbar-tabs"
           :title="__('Tabs')"
           no-negative-margin
+          scrollable
         >
           <span id="drag-and-drop-taskbar-tabs" class="sr-only">
             {{ $t('Drag and drop to reorder your tabs.') }}

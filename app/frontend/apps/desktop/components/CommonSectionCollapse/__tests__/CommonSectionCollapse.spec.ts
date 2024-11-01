@@ -106,4 +106,25 @@ describe('CommonSectionCollapse', () => {
     expect(view.getByRole('navigation')).toBeInTheDocument()
     expect(view.queryByRole('banner')).not.toBeInTheDocument()
   })
+
+  it('supports scrollable content mode', async () => {
+    const view = renderCommonSectionCollapse({
+      scrollable: true,
+    })
+
+    const header = view.getByRole('banner')
+
+    expect(header.parentElement).toHaveClass('overflow-y-auto')
+
+    const nav = view.getByRole('navigation')
+
+    expect(nav.parentElement).toHaveClass('overflow-y-auto')
+
+    await view.rerender({
+      scrollable: false,
+    })
+
+    expect(header.parentElement).not.toHaveClass('overflow-y-auto')
+    expect(nav.parentElement).not.toHaveClass('overflow-y-auto')
+  })
 })
