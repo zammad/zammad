@@ -36,7 +36,7 @@ const { isTouchDevice } = useTouchDevice()
       v-tooltip="$t('Unlink issue')"
       icon="x-lg"
       size="small"
-      variant="danger"
+      variant="remove"
       :class="{ 'invisible group-hover:visible': !isTouchDevice }"
       @click="$emit('unlink', issue)"
     />
