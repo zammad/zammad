@@ -24,9 +24,10 @@ const props = defineProps<Props>()
 const liveUser = computed<AvatarUserLive>(() => ({
   editing: props.editing,
   app: props.app,
+  isIdle: props.idle,
 }))
 
-const { indicatorIcon, indicatorLabel } = useAvatarIndicator(
+const { indicatorIcon, indicatorLabel, indicatorIsIdle } = useAvatarIndicator(
   toRef(props.user),
   false,
   liveUser,
@@ -45,7 +46,11 @@ const { indicatorIcon, indicatorLabel } = useAvatarIndicator(
     </div>
 
     <div v-if="indicatorIcon" class="flex items-center">
-      <CommonIcon :label="indicatorLabel" :name="indicatorIcon" />
+      <CommonIcon
+        :class="{ 'fill-gray': indicatorIsIdle }"
+        :label="indicatorLabel"
+        :name="indicatorIcon"
+      />
     </div>
   </CommonLink>
 </template>

@@ -48,6 +48,7 @@ const getAvatarIndicator = (user: AvatarUser) => {
       class="flex items-center"
     >
       <CommonIcon
+        :class="{ 'fill-gray': getAvatarIndicator(user).indicatorIsIdle.value }"
         :label="getAvatarIndicator(user).indicatorLabel.value"
         :name="getAvatarIndicator(user).indicatorIcon.value || ''"
       />

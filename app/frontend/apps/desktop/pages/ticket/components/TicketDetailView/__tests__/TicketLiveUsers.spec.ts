@@ -89,7 +89,7 @@ describe('TicketLiveUsers', () => {
     expect(customerAvatar).toHaveClass('opacity-60')
 
     expect(
-      getByIconName(customerAvatar.parentElement!, 'user-idle'),
+      getByIconName(customerAvatar.parentElement!, 'user-idle-2'),
     ).toHaveClasses(['fill-stone-200', 'dark:fill-neutral-500'])
 
     const adminAvatar = wrapper.getByRole('img', {

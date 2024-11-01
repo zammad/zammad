@@ -60,7 +60,7 @@ const notificationCount = computed(() => {
         <CommonUserAvatar
           v-if="user"
           :entity="user"
-          class="group-[.user-active]:ring-blue group-[.user-active]:ring-2"
+          class="group-[.user-active]:ring-blue inline-flex group-[.user-active]:ring-2"
           size="small"
           personal
         />

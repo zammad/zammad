@@ -102,6 +102,14 @@ export const useAvatarIndicator = (
     return undefined
   })
 
+  const indicatorIsIdle = computed(
+    () =>
+      isInactive.value ||
+      isOutOfOffice.value ||
+      isWithoutAccess.value ||
+      isLiveUserIdle.value,
+  )
+
   return {
     isInactive,
     isLiveUserDesktop,
@@ -112,5 +120,6 @@ export const useAvatarIndicator = (
     isWithoutAccess,
     indicatorIcon,
     indicatorLabel,
+    indicatorIsIdle,
   }
 }

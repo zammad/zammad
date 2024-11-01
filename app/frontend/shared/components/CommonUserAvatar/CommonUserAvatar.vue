@@ -96,28 +96,14 @@ const isVip = computed(() => {
   return !props.personal && props.entity.vip
 })
 
-const {
-  isInactive,
-  isLiveUserIdle,
-  isOutOfOffice,
-  isWithoutAccess,
-  indicatorIcon,
-  indicatorLabel,
-} = useAvatarIndicator(
+const { indicatorIcon, indicatorLabel, indicatorIsIdle } = useAvatarIndicator(
   toRef(props, 'entity'),
   toRef(props, 'personal'),
   toRef(props, 'live'),
   toRef(props, 'access'),
 )
 
-const isMuted = computed(
-  () =>
-    !props.noMuted &&
-    (isInactive.value ||
-      isOutOfOffice.value ||
-      isWithoutAccess.value ||
-      isLiveUserIdle.value),
-)
+const isMuted = computed(() => !props.noMuted && indicatorIsIdle.value)
 
 const className = computed(() => {
   const classes = [colorClass.value]

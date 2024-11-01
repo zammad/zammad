@@ -122,5 +122,5 @@ export default {
   'avatar-indicator-editing-mobile': 'phone-pencil',
   'avatar-indicator-desktop': 'avatar-indicator-desktop',
   'avatar-indicator-mobile': 'phone',
-  'avatar-indicator-idle': 'user-idle',
+  'avatar-indicator-idle': 'user-idle-2',
 }
