@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-07 08:51+0000\n"
-"Last-Translator: MBekspert <michal.bosak@ekspert.biz>\n"
+"PO-Revision-Date: 2024-11-02 08:00+0000\n"
+"Last-Translator: Michal <m.plawsiuk@razit.pl>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/pl/>\n"
 "Language: pl\n"
@@ -6013,7 +6013,7 @@ msgstr "Identyfikator dzwoniącego docelowego lub kolejka"
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:7
 #: db/seeds/settings.rb:2568
 msgid "Detect Duplicate Ticket Creation"
-msgstr "Wykryj duplikat tworzenia biletu"
+msgstr "Wykryj tworzenie duplikatu zgłoszenia"
 
 #: db/seeds/settings.rb:73
 msgid "Developer System"
@@ -6898,8 +6898,8 @@ msgid ""
 "Enables a warning to users during ticket creation if there is an existing "
 "ticket with the same attributes."
 msgstr ""
-"Włącza ostrzeżenie dla użytkowników podczas tworzenia zlecenia, jeśli "
-"istnieje już bilet z tymi samymi atrybutami."
+"Włącza ostrzeżenie dla użytkowników, które informuje użytkownika o "
+"możliwości tworzenia zgłoszenia, z tymi samymi atrybutami."
 
 #: db/seeds/settings.rb:5591
 msgid ""
@@ -10132,8 +10132,8 @@ msgid ""
 "Login failed. Have you double-checked your credentials and completed the "
 "email verification step?"
 msgstr ""
-"Logowanie nie powiodło się. Czy sprawdziłeś swoje dane uwierzytelniające i "
-"zakończyłeś etap weryfikacji adresu e-mail?"
+"Logowanie nie powiodło się. Sprawdź wprowadzone dane oraz upewnij się, że "
+"ukończyłeś weryfikację adresu e-mail."
 
 #: lib/auth/error/two_factor_failed.rb:4
 msgid ""
@@ -22284,7 +22284,7 @@ msgstr "lub"
 
 #: app/assets/javascripts/app/views/login.jst.eco:69
 msgid "or sign in using"
-msgstr "lub podpisać się używając"
+msgstr "lub zaloguj się przy użyciu"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:24
 msgid "order,sort,overview,ticket,sorting"
