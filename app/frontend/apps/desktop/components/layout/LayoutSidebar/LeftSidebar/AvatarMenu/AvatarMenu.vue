@@ -42,7 +42,7 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
     id="user-menu"
     ref="popoverTarget"
     v-tooltip="user?.fullname || user?.email || $t('User menu')"
-    class="-:outline-transparent hover:-:outline-blue-900 rounded-full outline outline-2 focus:outline-blue-800 hover:focus:outline-blue-800"
+    class="-:outline-transparent hover:-:outline-blue-900 rounded-full outline outline-2 focus-visible:outline-blue-800 hover:focus-visible:outline-blue-800"
     :class="{
       'outline-blue-800 hover:outline-blue-800': popoverIsOpen,
     }"
