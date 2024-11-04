@@ -59,7 +59,7 @@ const badgeColor = computed(() => {
         'text-black outline outline-1 outline-offset-1 outline-blue-800 focus:outline focus:outline-1 focus:outline-offset-1 focus:outline-blue-800 dark:text-white':
           selected,
       }"
-      size="medium"
+      size="large"
       variant="neutral"
       :icon="icon"
       :aria-label="$t(label)"

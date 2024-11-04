@@ -145,6 +145,7 @@ const actions = computed(() => {
         class="!py-0.5 px-1 !text-xs"
         :class="[buttonVariantClassExtension]"
         :prefix-icon="action.icon"
+        size="large"
         @click="action.onClick"
         >{{ $t(action.label) }}
       </CommonButton>
@@ -155,7 +156,7 @@ const actions = computed(() => {
       :no-padded-default-button="false"
       no-small-rounding-default-button
       :entity="{ ticket, article }"
-      button-size="small"
+      button-size="medium"
       :placement="position === 'left' ? 'arrowStart' : 'arrowEnd'"
       :default-button-variant="
         position === 'left' ? 'neutral-dark' : 'neutral-light'

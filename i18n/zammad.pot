@@ -4920,7 +4920,7 @@ msgstr ""
 msgid "Did you know? You can help translating %s at:"
 msgstr ""
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:49
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
 msgid "Did you plan to include attachments with this message?"
 msgstr ""
 
@@ -9977,7 +9977,7 @@ msgstr ""
 msgid "No, just close the ticket"
 msgstr ""
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:52
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:54
 msgid "No, thanks"
 msgstr ""
 
@@ -17514,7 +17514,7 @@ msgstr ""
 msgid "Yes"
 msgstr ""
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:53
 msgid "Yes, add attachments now"
 msgstr ""
 
@@ -18032,7 +18032,7 @@ msgstr ""
 msgid "at least one letter is required"
 msgstr ""
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1054
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
 msgid "attachment,attached,enclosed,enclosure"
 msgstr ""
@@ -18558,7 +18558,7 @@ msgid "in process"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1428
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1429
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4

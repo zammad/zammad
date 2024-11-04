@@ -23,7 +23,7 @@ const defaultItem = computed(() =>
     :default-button-variant="defaultItem?.variant"
     :hide-arrow="collapsedState"
     :placement="collapsedState ? 'start' : 'arrowStart'"
-    :link-size="collapsedState ? 'tiny' : 'small'"
-    :button-size="collapsedState ? 'medium' : 'large'"
+    link-size="small"
+    button-size="large"
   />
 </template>

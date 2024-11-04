@@ -209,7 +209,7 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
           ref="popoverTarget"
           class="text-neutral-400 hover:outline-blue-900"
           icon="card-list"
-          size="medium"
+          size="large"
           variant="neutral"
           :aria-controls="
             popoverIsOpen ? 'user-taskbar-tabs-popover' : undefined

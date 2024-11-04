@@ -92,6 +92,8 @@ const sizeClasses = computed(() => {
 })
 
 const paddingClasses = computed(() => {
+  if (props.size === 'large' && props.icon) return ['p-2']
+
   if (props.icon) return ['p-1']
 
   switch (props.size) {
@@ -166,7 +168,7 @@ const iconSizeClass = computed(() => {
 
       <CommonIcon
         v-if="icon"
-        class="pointer-events-none shrink-0"
+        class="pointer-events-none block shrink-0"
         decorative
         :size="iconSizeClass"
         :name="icon"

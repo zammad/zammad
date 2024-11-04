@@ -37,12 +37,12 @@ const router = useRouter()
             >
               <CommonButton
                 v-if="collapsed"
-                class="text-neutral-400 hover:outline-blue-900"
+                class="flex-shrink-0 text-neutral-400 hover:outline-blue-900"
                 :class="{
                   '!bg-blue-800 !text-white':
                     router.currentRoute.value.path === route.path,
                 }"
-                size="medium"
+                size="large"
                 variant="neutral"
                 :icon="route.meta.icon"
                 @click="router.push(route.path)"
@@ -55,7 +55,8 @@ const router = useRouter()
                 internal
               >
                 <CommonLabel
-                  class="gap-2 text-current"
+                  class="gap-2 !text-sm text-current"
+                  size="large"
                   :prefix-icon="route.meta.icon"
                 >
                   {{ $t(route.meta.title) }}

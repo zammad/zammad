@@ -111,7 +111,7 @@ const collapseButtonClass = computed(() => {
     <CommonButton
       v-if="iconCollapsed && isCollapsed"
       class="mx-auto"
-      size="medium"
+      size="large"
       data-test-id="action-button"
       variant="neutral"
       :icon="iconCollapsed"

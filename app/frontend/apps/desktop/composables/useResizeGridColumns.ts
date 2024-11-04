@@ -9,7 +9,7 @@ export const DEFAULT_START_SIDEBAR_WIDTH = 260
 export const DEFAULT_END_SIDEBAR_WIDTH = 360
 export const MINIMUM_START_SIDEBAR_WIDTH = 200
 export const MINIMUM_END_SIDEBAR_WIDTH = 300
-export const SIDEBAR_COLLAPSED_WIDTH = 48
+export const SIDEBAR_COLLAPSED_WIDTH = 56
 
 export const useResizeGridColumns = (
   storageKey?: string,

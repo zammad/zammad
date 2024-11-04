@@ -22,8 +22,8 @@ const defaultItem = computed(() =>
     :default-icon="defaultItem?.icon"
     :default-button-variant="defaultItem?.variant"
     :placement="collapsedState ? 'start' : 'arrowStart'"
-    :link-size="collapsedState ? 'tiny' : 'small'"
-    :button-size="collapsedState ? 'medium' : 'large'"
+    link-size="small"
+    button-size="large"
     :actions="menuItems"
   />
 </template>

@@ -62,7 +62,7 @@ describe('Left sidebar', () => {
       await view.events.click(collapseButton)
 
       expect(aside.parentElement).toHaveStyle({
-        gridTemplateColumns: '48px 1fr',
+        gridTemplateColumns: '56px 1fr',
       })
 
       const expandButton = getByRole(aside, 'button', {
@@ -87,7 +87,7 @@ describe('Left sidebar', () => {
       const aside = view.getByRole('complementary')
 
       expect(aside.parentElement).toHaveStyle({
-        gridTemplateColumns: '48px 1fr',
+        gridTemplateColumns: '56px 1fr',
       })
     })
 
