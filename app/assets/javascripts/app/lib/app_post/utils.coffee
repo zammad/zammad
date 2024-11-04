@@ -1045,21 +1045,22 @@ class App.Utils
   @checkAttachmentReference: (message) ->
     return false if !message
 
-    # remove blockquote from message, check only the unquoted content
+    # remove blockquote, signatures and images from message, check only the unquoted content
     tmp = $('<div>' + message + '</div>')
-    tmp.find('blockquote').remove()
+    tmp.find('blockquote, img, div[data-signature="true"]').remove()
+
     text = tmp.text()
 
     matchwords = __('attachment,attached,enclosed,enclosure')
 
     #en
     for word in matchwords.split(',')
-      regexp = new RegExp("\\W#{word}\\W", 'i')
+      regexp = new RegExp("\\b#{word}\\b", 'i')
       return word if text.match(regexp)
 
     # user locale
     for word in App.i18n.translateContent(matchwords).split(',')
-      regexp = new RegExp("\\W#{word}\\W", 'i')
+      regexp = new RegExp("\\b#{word}\\b", 'i')
       return word if text.match(regexp)
 
     false

@@ -11,9 +11,11 @@ const referenceMatchwords = __('attachment,attached,enclosed,enclosure')
 const removeQuotingFromBody = (body: string) => {
   const dom = domFrom(body)
 
-  // Remove blockquotes and images
+  // Remove blockquotes, signatures and images
   // To not detect matchwords which are not part of the user-written article
-  dom.querySelectorAll('blockquote, img').forEach((elem) => elem.remove())
+  dom
+    .querySelectorAll('blockquote, img, div[data-signature="true"]')
+    .forEach((elem) => elem.remove())
 
   // Return the modified HTML content as a string.
   return dom.innerHTML
@@ -26,7 +28,7 @@ const bodyAttachmentReferenceMatchwordExists = (body: string) => {
   const translatedMatchwords = i18n.t(referenceMatchwords).split(',')
 
   return matchwords.concat(translatedMatchwords).some((word) => {
-    const findWord = new RegExp(word, 'i')
+    const findWord = new RegExp(`\\b${word}\\b`, 'i')
     return findWord.test(cleanBody)
   })
 }
