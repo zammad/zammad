@@ -109,6 +109,8 @@ const openLinkFlyout = () => {
     sourceTicket: ticketReactive,
   })
 }
+
+defineExpose({ hasLinks })
 </script>
 
 <template>

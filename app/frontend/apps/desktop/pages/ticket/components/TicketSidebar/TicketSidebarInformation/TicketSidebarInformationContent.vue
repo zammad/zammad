@@ -78,7 +78,7 @@ const actions = computed(() => {
     </CommonSectionCollapse>
 
     <CommonSectionCollapse
-      v-if="isTicketAgent"
+      v-if="isTicketAgent && (isTicketEditable || ticket?.tags?.length)"
       id="ticket-tags"
       :title="__('Tags')"
     >
@@ -87,10 +87,15 @@ const actions = computed(() => {
 
     <CommonSectionCollapse
       v-if="isTicketAgent"
+      v-show="isTicketEditable || $refs.ticketLinksInstance?.hasLinks"
       id="ticket-links"
       :title="__('Links')"
     >
-      <TicketLinks :ticket="ticket" :is-ticket-editable="isTicketEditable" />
+      <TicketLinks
+        ref="ticketLinksInstance"
+        :ticket="ticket"
+        :is-ticket-editable="isTicketEditable"
+      />
     </CommonSectionCollapse>
 
     <CommonSectionCollapse

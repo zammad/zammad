@@ -745,7 +745,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:2
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:2
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:68
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:99
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:104
 #: app/graphql/gql/types/overview_type.rb:69
 msgid "Accounted Time"
 msgstr ""
@@ -1072,7 +1072,7 @@ msgstr ""
 msgid "Add internal note"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:161
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:163
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
 msgid "Add link"
 msgstr ""
@@ -2017,7 +2017,7 @@ msgstr ""
 #: app/frontend/apps/mobile/pages/account/routes.ts:28
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:128
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:175
-#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:133
+#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:119
 #: db/seeds/permissions.rb:409
 msgid "Avatar"
 msgstr ""
@@ -4784,7 +4784,7 @@ msgstr ""
 msgid "Delete this device"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:141
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:143
 msgid "Delete this link"
 msgstr ""
 
@@ -5192,7 +5192,7 @@ msgstr ""
 msgid "Drag and drop to reorder ticket overview list items."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:234
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:235
 msgid "Drag and drop to reorder your tabs."
 msgstr ""
 
@@ -8308,7 +8308,7 @@ msgstr ""
 msgid "Link Related Answer"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:158
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:156
 msgid "Link Tickets"
 msgstr ""
 
@@ -8316,7 +8316,7 @@ msgstr ""
 msgid "Link account on %s"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:146
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:144
 msgid "Link added successfully"
 msgstr ""
 
@@ -8373,7 +8373,7 @@ msgid "LinkedIn Developer Site"
 msgstr ""
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:91
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:92
 msgid "Links"
 msgstr ""
 
@@ -9860,7 +9860,7 @@ msgstr ""
 msgid "No linked issues"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:156
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:158
 msgid "No links added yet."
 msgstr ""
 
@@ -13618,7 +13618,7 @@ msgstr ""
 msgid "Subscribed tickets"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:107
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:112
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:198
 msgid "Subscribers"
 msgstr ""
@@ -17050,7 +17050,7 @@ msgstr ""
 msgid "Using **organizations** you can **group** customers. This has two main benefits:\n\n1. As an **agent** you don't just have an overview of the open tickets for one person but an **overview over their whole organization**.\n2. As a **customer** you can also check the **tickets which your colleagues created** and modify their tickets (if your organization is set to \"shared\", which can be defined per organization)."
 msgstr ""
 
-#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:136
+#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:122
 #: db/seeds/object_manager_attributes.rb:1293
 msgid "VIP"
 msgstr ""

@@ -203,5 +203,36 @@ describe('TicketSidebarInformationContent', () => {
         wrapper.getByRole('heading', { name: 'Accounted Time', level: 3 }),
       ).toBeInTheDocument()
     })
+
+    it('hides tags, links, accounted time if user has readonly permission and no entries are present', () => {
+      mockPermissions(['ticket.agent'])
+
+      mockLinkListQuery({
+        linkList: [],
+      })
+
+      const ticket = createDummyTicket({
+        tags: [],
+        timeUnit: null,
+        defaultPolicy: {
+          update: false,
+          agentReadAccess: true,
+        },
+      })
+
+      const wrapper = renderInformationSidebar(ticket)
+
+      expect(
+        wrapper.queryByRole('heading', { name: 'Tags', level: 3 }),
+      ).not.toBeInTheDocument()
+
+      expect(
+        wrapper.queryByRole('heading', { name: 'Links', level: 3 }),
+      ).not.toBeInTheDocument()
+
+      expect(
+        wrapper.queryByRole('heading', { name: 'Accounted Time', level: 3 }),
+      ).not.toBeInTheDocument()
+    })
   })
 })
