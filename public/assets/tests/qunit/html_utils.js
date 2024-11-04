@@ -1392,6 +1392,11 @@ QUnit.test("check check attachment reference", assert => {
   result = false
   verify = App.Utils.checkAttachmentReference(message)
   assert.equal(verify, result)
+
+  message = '<div>Hi Test,</div><div data-signature="true">ecxgmail_quote attachment</div>'
+  result = false
+  verify = App.Utils.checkAttachmentReference(message)
+  assert.equal(verify, result)
 });
 
 // replace tags

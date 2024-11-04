@@ -286,7 +286,7 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
         end
 
         it 'does show both modals' do
-          find('.articleNewEdit-body').send_keys('Forwarding with the attachment')
+          find('.articleNewEdit-body').send_keys('New article')
           select 'closed', from: 'State'
           click '.js-submit'
           expect(page.find('.modal-body')).to have_text('You have unchecked items in the checklist')
