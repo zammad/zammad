@@ -97,7 +97,7 @@
     "vite-plugin-ruby": "^5.1.0",
     "vitest": "^2.1.4",
     "vitest-axe": "^0.1.0",
-    "vue-tsc": "^2.1.8"
+    "vue-tsc": "^2.1.10"
   },
   "dependencies": {
     "@apollo/client": "^3.11.8",
@@ -149,9 +149,9 @@
     "@vue/apollo-composable": "^4.2.1",
     "@vue/runtime-core": "^3.5.12",
     "@vuepic/vue-datepicker": "^9.0.3",
-    "@vueuse/core": "^11.1.0",
-    "@vueuse/router": "^11.1.0",
-    "@vueuse/shared": "^11.1.0",
+    "@vueuse/core": "^11.2.0",
+    "@vueuse/router": "^11.2.0",
+    "@vueuse/shared": "^11.2.0",
     "async-mutex": "^0.5.0",
     "graphql": "^16.9.0",
     "graphql-ruby-client": "^1.14.1",
@@ -162,7 +162,7 @@
     "loglevel": "^1.9.2",
     "lowlight": "^3.1.0",
     "mitt": "^3.0.1",
-    "pinia": "^2.2.4",
+    "pinia": "^2.2.6",
     "qrcode": "^1.5.4",
     "tippy.js": "^6.3.7",
     "tiptap-text-direction": "^0.3.1",
