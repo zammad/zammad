@@ -1,0 +1,44 @@
+<tr data-id="<%= @object.id %>">
+  <td class="noTruncate checklistShowRowContentCell">
+    <div class="checklistShowRowContent">
+      <% if !@readOnly: %>
+        <div class="hide draggable">
+          <%- @Icon('draggable') %>
+        </div>
+      <% end %>
+
+      <div class="checklistShowRowDisplayValue"></div>
+
+      <% if !@readOnly: %>
+        <div class="dropdown-container">
+          <div class="dropdown dropdown--actions">
+            <button class="btn btn--table btn--text btn--secondary js-action" data-toggle="dropdown">
+              <%- @Icon('overflow-button') %>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right js-table-action-menu" role="menu">
+              <li role="menuitem" data-table-action="check" class="<% if @object.ticket_id: %>hide<% end %>">
+                <span class="dropdown-iconSpacer">
+                  <%- @Icon('checkmark') %>
+                </span>
+                <% if !@object.checked: %>
+                  <%- @T('Check item') %>
+                <% else: %>
+                  <%- @T('Uncheck item') %>
+                <% end %>
+              <li role="menuitem" data-table-action="edit" class="<% if @object.ticket_id: %>hide<% end %>">
+                <span class="dropdown-iconSpacer">
+                  <%- @Icon('pen') %>
+                </span>
+                <%- @T('Edit item') %>
+              <li role="menuitem" class="danger" data-table-action="delete">
+                <span class="dropdown-iconSpacer">
+                  <%- @Icon('trash') %>
+                </span>
+                <%- @T('Remove item') %>
+            </ul>
+          <div>
+        <div>
+      <% end %>
+    </div>
+  </td>
+</tr>

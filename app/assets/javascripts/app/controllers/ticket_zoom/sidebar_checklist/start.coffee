@@ -16,7 +16,7 @@ class App.SidebarChecklistStart extends App.Controller
       { name: 'checklist_template_id', display: __('Select Template'), tag: 'select', multiple: false, null: true, nulloption: true, relation: 'ChecklistTemplate', default: '' },
     ]
 
-    @html App.view('ticket_zoom/sidebar_checklist_start')(
+    @html App.view('ticket_zoom/sidebar_checklist/start')(
       showManageLink: App.User.current()?.permission('admin.checklist')
       readOnly: @readOnly
       activeTemplateCount: App.ChecklistTemplate.search(filter: { active: true })?.length

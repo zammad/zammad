@@ -7,7 +7,6 @@ class SidebarChecklist extends App.Controller
   release: =>
     super
     @unsubscribe()
-    @clearWidget()
 
   sidebarActions: =>
     result = []
@@ -35,8 +34,6 @@ class SidebarChecklist extends App.Controller
       callback:  =>
         @checklist.destroy(
           done: =>
-            @clearWidget()
-
             @widget = new App.SidebarChecklistStart(el: @elSidebar, parentVC: @)
         )
     )
@@ -77,7 +74,6 @@ class SidebarChecklist extends App.Controller
       sid = App.Ticket.subscribeItem(
         item.ticket_id,
         (item) =>
-          return if @widget?.actionController
           @renderWidget()
       )
       @subscriptions.push(
@@ -100,9 +96,7 @@ class SidebarChecklist extends App.Controller
     return if data.ticket_id.toString() isnt @ticket.id.toString()
 
     @badgeRenderLocal()
-    return if @ticket.updated_by_id is App.Session.get().id
-
-    @renderWidget() if !@widget?.actionController
+    @renderWidget()
 
   showChecklist: (el) =>
     @elSidebar = el
@@ -129,26 +123,23 @@ class SidebarChecklist extends App.Controller
     )
 
   renderWidget: (enterEditMode = false) =>
-    @clearWidget()
-
     @checklist = App.Checklist.find(@ticket.checklist_id)
 
     if @checklist
-      @widget = new App.SidebarChecklistShow(el: @elSidebar, parentVC: @, checklist: @checklist, readOnly: !@changeable, enterEditMode: enterEditMode)
-    else
+      if @widget instanceof App.SidebarChecklistShow and @checklist?.id is @widget.checklist?.id
+        @widget.checklist = @checklist
+        @widget.renderTable()
+      else
+        @widget?.releaseController()
+        @widget = new App.SidebarChecklistShow(el: @elSidebar, parentVC: @, checklist: @checklist, readOnly: !@changeable, enterEditMode: enterEditMode)
+    else if !(@widget instanceof App.SidebarChecklistStart)
+      @widget?.releaseController()
       @widget = new App.SidebarChecklistStart(el: @elSidebar, parentVC: @, readOnly: !@changeable)
 
     @subscribe()
 
     @renderActions()
     @badgeRenderLocal()
-
-  clearWidget: =>
-    @widget?.el.empty()
-    @widget?.releaseController()
-
-    @checklist = undefined
-    @renderActions()
 
   metaBadge: =>
     checklist = App.Checklist.find @ticket.checklist_id

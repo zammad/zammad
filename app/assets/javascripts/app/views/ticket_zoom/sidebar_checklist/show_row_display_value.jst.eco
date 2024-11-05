@@ -1,0 +1,35 @@
+<% if @object.ticket_id: %>
+  <% if @ticketAccess: %>
+    <div class="checklistItemTicketStateIndicator" title="<%- @ticket.iconTitle() %>">
+      <%- @Icon('task-state', @ticket.iconClass()) %>
+    </div>
+    <div class="checklistItemTicketTitle">
+      <a class="name ticket-popover" data-id="<%- @ticket.id %>" href="<%- @ticket.uiUrl() %>">
+        <%= @ticket.title || '-' %>
+      </a>
+    </div>
+  <% else: %>
+    <div class="checklistItemTicketStateIndicator">
+      <%- @Icon('diagonal-cross', 'icon-error') %>
+    </div>
+    <div class="checklistItemTicketTitle">
+      » <%- @T('Not authorized') %> «
+    </div>
+  <% end %>
+<% else: %>
+    <div class="checkbox-replacement-readonly<% if !@readOnly: %> hide<% end %>">
+      <% if @object.checked: %>
+        <%- @Icon('checkbox-checked-readonly') %>
+      <% else: %>
+        <%- @Icon('checkbox-readonly') %>
+      <% end %>
+    </div>
+    <label class="checkbox-replacement<% if @readOnly: %> hide<% end %>">
+      <input type="checkbox" class="js-checkbox" value="<%= @object.id %>" <% if @object.checked: %>checked<% end %>>
+      <%- @Icon('checkbox', 'icon-unchecked') %>
+      <%- @Icon('checkbox-checked', 'icon-checked') %>
+    </label>
+
+  <div class="checklistItemValue <% if !@readOnly: %>js-checklist-item-edit u-clickable<% end %>" <% if !@readOnly: %>data-table-action="edit"<% end %>>
+  </div>
+<% end %>
