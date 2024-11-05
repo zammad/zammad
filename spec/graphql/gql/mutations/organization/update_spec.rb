@@ -49,7 +49,7 @@ RSpec.describe Gql::Mutations::Organization::Update, type: :graphql do
       let(:input_payload) { { name: 'NewName', objectAttributeValues: [] } }
 
       it 'returns updated organization name' do
-        expect(gql.result.data['organization']).to include('name' => 'NewName')
+        expect(gql.result.data[:organization]).to include('name' => 'NewName')
       end
     end
 
@@ -57,7 +57,7 @@ RSpec.describe Gql::Mutations::Organization::Update, type: :graphql do
       let(:input_payload) { { name: '' } }
 
       it 'returns a user error' do
-        expect(gql.result.data['errors'].first).to include('field' => 'name', 'message' => 'Dieses Feld darf nicht leer sein')
+        expect(gql.result.data[:errors].first).to include('field' => 'name', 'message' => 'Dieses Feld darf nicht leer sein')
       end
     end
 
@@ -66,7 +66,7 @@ RSpec.describe Gql::Mutations::Organization::Update, type: :graphql do
       let(:other_org)     { create(:organization) }
 
       it 'returns a user error' do
-        expect(gql.result.data['errors'].first).to include('field' => 'name', 'message' => 'Dieses Feld wird bereits verwendet.')
+        expect(gql.result.data[:errors].first).to include('field' => 'name', 'message' => 'Dieses Feld wird bereits verwendet.')
       end
     end
 
@@ -74,7 +74,7 @@ RSpec.describe Gql::Mutations::Organization::Update, type: :graphql do
       let(:input_payload) { { name: 'NewName' } }
 
       it 'returns updated organization name' do
-        expect(gql.result.data['organization']).to include('name' => 'NewName')
+        expect(gql.result.data[:organization]).to include('name' => 'NewName')
       end
     end
 
@@ -124,7 +124,7 @@ RSpec.describe Gql::Mutations::Organization::Update, type: :graphql do
       end
 
       it 'returns updated organization object attributes' do
-        oas = gql.result.data['organization']['objectAttributeValues']
+        oas = gql.result.data[:organization][:objectAttributeValues]
 
         expect(oas.map { |oa| { oa['attribute']['name'] => oa['value'] } }).to eq(
           [

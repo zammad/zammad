@@ -98,7 +98,7 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
 
       it 'creates Ticket record' do
         it_creates_ticket
-        expect(gql.result.data['ticket']).to eq(expected_response)
+        expect(gql.result.data[:ticket]).to eq(expected_response)
       end
 
       context 'without title' do
@@ -134,7 +134,7 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
 
         it 'creates the ticket' do
           it_creates_ticket
-          expect(gql.result.data['ticket']).to eq(expected_response)
+          expect(gql.result.data[:ticket]).to eq(expected_response)
         end
       end
 
@@ -165,7 +165,7 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
           it 'creates the ticket and a new customer' do
             it_creates_ticket
             expect(User.find_by(email: email_address)).to be_present
-            expect(gql.result.data['ticket']['customer']['fullname']).to eq(User.find_by(email: email_address).fullname)
+            expect(gql.result.data[:ticket][:customer][:fullname]).to eq(User.find_by(email: email_address).fullname)
           end
         end
 
@@ -183,7 +183,7 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
 
           it 'creates the ticket' do
             it_creates_ticket
-            expect(gql.result.data['ticket']['customer']['fullname']).to eq(customer.fullname)
+            expect(gql.result.data[:ticket][:customer][:fullname]).to eq(customer.fullname)
           end
         end
       end
@@ -548,7 +548,7 @@ RSpec.describe Gql::Mutations::Ticket::Create, :aggregate_failures, type: :graph
 
       it 'creates the ticket with filtered values' do
         it_creates_ticket
-        expect(gql.result.data['ticket']).to eq(expected_response)
+        expect(gql.result.data[:ticket]).to eq(expected_response)
       end
 
       context 'when sending a different customerId' do

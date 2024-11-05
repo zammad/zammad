@@ -55,7 +55,7 @@ RSpec.describe Gql::Mutations::User::Update, type: :graphql do
 
       it 'updates User record' do
         gql.execute(query, variables: variables)
-        expect(gql.result.data['user']).to eq(expected_response)
+        expect(gql.result.data[:user]).to eq(expected_response)
       end
 
       context 'with not unique email', :aggregate_failures do
@@ -63,7 +63,7 @@ RSpec.describe Gql::Mutations::User::Update, type: :graphql do
           create(:user, email: 'dummy@zammad.com')
 
           gql.execute(query, variables: variables)
-          expect(gql.result.data['errors'].first).to include({ 'message' => "Email address 'dummy@zammad.com' is already used for another user." })
+          expect(gql.result.data[:errors].first).to include({ 'message' => "Email address 'dummy@zammad.com' is already used for another user." })
         end
       end
     end

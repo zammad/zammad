@@ -68,7 +68,7 @@ RSpec.describe Gql::Mutations::AdminPasswordAuthVerify, type: :graphql do
           let(:token) { Token.last.token }
 
           it 'returns the login' do
-            expect(gql.result.data['login']).to eq User.last.login
+            expect(gql.result.data[:login]).to eq User.last.login
           end
         end
       end

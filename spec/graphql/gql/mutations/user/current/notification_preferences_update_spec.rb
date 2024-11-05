@@ -134,7 +134,7 @@ RSpec.describe Gql::Mutations::User::Current::NotificationPreferencesUpdate, :ag
 
         it 'updates user profile notification settings' do
           execute_graphql_query
-          expect(gql.result.data['user']['personalSettings']).to include(expected_preferences)
+          expect(gql.result.data[:user][:personalSettings]).to include(expected_preferences)
         end
       end
 
@@ -152,7 +152,7 @@ RSpec.describe Gql::Mutations::User::Current::NotificationPreferencesUpdate, :ag
 
         it 'updates user profile notification settings' do
           execute_graphql_query
-          expect(gql.result.data['user']['personalSettings']).to include(expected_preferences)
+          expect(gql.result.data[:user][:personalSettings]).to include(expected_preferences)
         end
       end
 
@@ -177,7 +177,7 @@ RSpec.describe Gql::Mutations::User::Current::NotificationPreferencesUpdate, :ag
 
         it 'updates user profile notification settings' do
           execute_graphql_query
-          expect(gql.result.data['user']['personalSettings']).to include(expected_preferences)
+          expect(gql.result.data[:user][:personalSettings]).to include(expected_preferences)
         end
       end
     end

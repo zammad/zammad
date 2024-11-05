@@ -36,13 +36,13 @@ RSpec.describe Gql::Mutations::Tag::Assignment::Add, :aggregate_failures, type: 
 
     context 'with ticket write permission' do
       it 'adds the tag' do
-        expect(gql.result.data['success']).to be(true)
+        expect(gql.result.data[:success]).to be(true)
         expect(object.reload.tag_list).to eq([tag])
       end
 
       it 'adds an already assigned tag' do
         gql.execute(query, variables: variables)
-        expect(gql.result.data['success']).to be(true)
+        expect(gql.result.data[:success]).to be(true)
         expect(object.reload.tag_list).to eq([tag])
       end
     end
@@ -74,7 +74,7 @@ RSpec.describe Gql::Mutations::Tag::Assignment::Add, :aggregate_failures, type: 
         let(:user)   { create(:admin) }
 
         it 'adds the tag' do
-          expect(gql.result.data['success']).to be(true)
+          expect(gql.result.data[:success]).to be(true)
           expect(object.reload.tag_list).to eq([tag])
         end
       end

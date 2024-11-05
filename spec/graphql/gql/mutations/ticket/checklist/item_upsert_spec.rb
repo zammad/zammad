@@ -35,7 +35,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemUpsert, current_user_id: 1
 
   shared_examples 'creating the ticket checklist item' do
     it 'creates the ticket checklist item' do
-      expect(gql.result.data['checklistItem']).to include(
+      expect(gql.result.data[:checklistItem]).to include(
         'text'    => variables[:input]['text'],
         'checked' => variables[:input]['checked'] || false,
       )
@@ -44,7 +44,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemUpsert, current_user_id: 1
 
   shared_examples 'updating the ticket checklist item' do
     it 'updates the ticket checklist item' do
-      expect(gql.result.data['checklistItem']).to include(
+      expect(gql.result.data[:checklistItem]).to include(
         'id'      => variables[:checklistItemId],
         'text'    => variables[:input]['text'] || checklist.items.last.text,
         'checked' => variables[:input]['checked'] || false,

@@ -35,7 +35,7 @@ RSpec.describe Gql::Mutations::User::Current::TaskbarItem::TouchLastContact, typ
 
     context 'with existing taskbar item', :aggregate_failures do
       it 'returns the updated taskbar item' do
-        expect(gql.result.data['taskbarItem']).to eq(
+        expect(gql.result.data[:taskbarItem]).to eq(
           { 'id' => id }
         )
         expect(taskbar_item.reload.last_contact).to eq(Time.zone.now)

@@ -69,7 +69,7 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
       end
 
       it 'has objectAttributeValue data for User' do
-        oas = gql.result.data['objectAttributeValues']
+        oas = gql.result.data[:objectAttributeValues]
         expect(oas.find { |oa| oa['attribute']['name'].eql?('department') }).to include('value' => 'TestDepartment', 'renderedLink' => nil)
       end
 
@@ -91,22 +91,22 @@ RSpec.describe Gql::Queries::CurrentUser, type: :graphql do
         let(:rendered_link)    { "http://test?user=#{encoded_fullname};missing=-" }
 
         it 'has rendered and URL encoded objectAttributeValue data for User' do
-          oas = gql.result.data['objectAttributeValues']
+          oas = gql.result.data[:objectAttributeValues]
           expect(oas.find { |oa| oa['attribute']['name'].eql?('UserLink') }).to include('value' => '', 'renderedLink' => rendered_link)
         end
       end
 
       it 'has data for primary and secondary organizations', :aggregate_failures do
-        expect(gql.result.data['organization']).to include('name' => organization.name)
+        expect(gql.result.data[:organization]).to include('name' => organization.name)
         expect(gql.result.nodes('secondaryOrganizations')).to eq(secondary_orgs.map { |o| { 'name' => o.name } })
       end
 
       it 'has permission data' do
-        expect(gql.result.data['permissions']['names']).to eq(agent.permissions_with_child_names)
+        expect(gql.result.data[:permissions][:names]).to eq(agent.permissions_with_child_names)
       end
 
       it 'has updatedBy data' do
-        expect(gql.result.data['updatedBy']['firstname']).to eq(User.first.firstname)
+        expect(gql.result.data[:updatedBy][:firstname]).to eq(User.first.firstname)
       end
     end
 

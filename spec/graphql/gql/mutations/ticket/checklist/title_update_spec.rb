@@ -34,7 +34,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::TitleUpdate, current_user_id: 
 
   shared_examples 'updating the ticket checklist title' do
     it 'updates the ticket checklist title' do
-      expect(gql.result.data['checklist']['name']).to eq(title)
+      expect(gql.result.data[:checklist][:name]).to eq(title)
     end
   end
 

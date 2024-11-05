@@ -51,7 +51,7 @@ RSpec.describe Gql::Mutations::Form::UploadCache::Add, type: :graphql do
     end
 
     it 'creates Store entry' do
-      expect(gql.result.data['uploadedFiles']).to eq(expected_response)
+      expect(gql.result.data[:uploadedFiles]).to eq(expected_response)
     end
 
     it 'does not mark uploaded file as inline' do
@@ -65,7 +65,7 @@ RSpec.describe Gql::Mutations::Form::UploadCache::Add, type: :graphql do
         let(:inline) { true }
 
         it 'creates Store entry' do
-          expect(gql.result.data['uploadedFiles']).to eq(expected_response)
+          expect(gql.result.data[:uploadedFiles]).to eq(expected_response)
         end
 
         it 'marks uploaded file as inline' do
@@ -79,7 +79,7 @@ RSpec.describe Gql::Mutations::Form::UploadCache::Add, type: :graphql do
         let(:inline) { false }
 
         it 'creates Store entry' do
-          expect(gql.result.data['uploadedFiles']).to eq(expected_response)
+          expect(gql.result.data[:uploadedFiles]).to eq(expected_response)
         end
 
         it 'does not mark uploaded file as inline' do

@@ -73,7 +73,7 @@ RSpec.describe Gql::Mutations::User::Signup, type: :graphql do
         it 'raises an error', :aggregate_failures do
           gql.execute(query, variables: variables)
 
-          errors = gql.result.data['errors'].first
+          errors = gql.result.data[:errors].first
           expect(errors.keys).to include('message', 'field')
           expect(errors['message']).to include('Invalid password')
           expect(errors['field']).to eq('password')

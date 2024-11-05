@@ -31,7 +31,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemDelete, current_user_id: 1
 
   shared_examples 'deleting the ticket checklist item' do
     it 'deletes the ticket checklist item' do
-      expect(gql.result.data['success']).to be(true)
+      expect(gql.result.data[:success]).to be(true)
     end
   end
 

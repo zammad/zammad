@@ -33,7 +33,7 @@ RSpec.describe Gql::Mutations::User::Current::ChangePassword, type: :graphql do
       end
 
       it 'fails with error message', :aggregate_failures do
-        errors = gql.result.data['errors'].first
+        errors = gql.result.data[:errors].first
         expect(errors['message']).to eq('The current password you provided is incorrect.')
         expect(errors['field']).to eq('current_password')
       end
@@ -48,7 +48,7 @@ RSpec.describe Gql::Mutations::User::Current::ChangePassword, type: :graphql do
       end
 
       it 'fails with error message', :aggregate_failures do
-        errors = gql.result.data['errors'].first
+        errors = gql.result.data[:errors].first
         expect(errors['message']).to eq('Invalid password, it must contain at least 1 digit!')
         expect(errors['field']).to eq('new_password')
       end
@@ -63,7 +63,7 @@ RSpec.describe Gql::Mutations::User::Current::ChangePassword, type: :graphql do
       end
 
       it 'succeeds' do
-        expect(gql.result.data['success']).to be_truthy
+        expect(gql.result.data[:success]).to be_truthy
       end
     end
   end

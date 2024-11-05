@@ -19,8 +19,8 @@ RSpec.describe Gql::Queries::System::Setup::Info, :aggregate_failures, type: :gr
       it 'returns a string' do
         gql.execute(query)
 
-        expect(gql.result.data['status']).to be_a(String)
-        expect(gql.result.data['type']).to be_nil
+        expect(gql.result.data[:status]).to be_a(String)
+        expect(gql.result.data[:type]).to be_nil
       end
     end
 

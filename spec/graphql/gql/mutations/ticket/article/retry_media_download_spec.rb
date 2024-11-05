@@ -38,7 +38,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::RetryMediaDownload, :aggregate_f
         it 'creates the attachment' do
           expect_any_instance_of(Whatsapp::Retry::Media).to receive(:process).and_return(true) # rubocop:disable RSpec/StubbedMock
           gql.execute(query, variables: variables)
-          expect(gql.result.data['success']).to be true
+          expect(gql.result.data[:success]).to be true
         end
       end
 
@@ -47,8 +47,8 @@ RSpec.describe Gql::Mutations::Ticket::Article::RetryMediaDownload, :aggregate_f
           article.preferences.delete(:whatsapp)
           article.save!
           gql.execute(query, variables: variables)
-          expect(gql.result.data['success']).not_to be true
-          expect(gql.result.data['errors'].first).to include(
+          expect(gql.result.data[:success]).not_to be true
+          expect(gql.result.data[:errors].first).to include(
             { 'message' => 'Retrying to download the sent media via WhatsApp failed. The given article is not a media article.' }
           )
         end

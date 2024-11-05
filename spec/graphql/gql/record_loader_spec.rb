@@ -210,7 +210,7 @@ RSpec.describe Gql::RecordLoader, :aggregate_failures, authenticated_as: :agent,
         gql.execute(query, variables: variables)
       end
 
-      expect(gql.result.data['id']).to eq(organization_id)
+      expect(gql.result.data[:id]).to eq(organization_id)
 
       expect(total_queries).to include(
         {

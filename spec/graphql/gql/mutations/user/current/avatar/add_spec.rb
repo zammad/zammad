@@ -36,11 +36,11 @@ RSpec.describe Gql::Mutations::User::Current::Avatar::Add, type: :graphql do
 
     context 'with valid image' do
       it 'returns the newly created avatar' do
-        expect(gql.result.data['avatar']).not_to be_nil
+        expect(gql.result.data[:avatar]).not_to be_nil
       end
 
       it 'updates the image for the user' do
-        avatar = Gql::ZammadSchema.verified_object_from_id(gql.result.data['avatar']['id'], type: Avatar)
+        avatar = Gql::ZammadSchema.verified_object_from_id(gql.result.data[:avatar][:id], type: Avatar)
         expect(agent.reload.image).to eq(avatar.store_hash)
       end
 
@@ -65,7 +65,7 @@ RSpec.describe Gql::Mutations::User::Current::Avatar::Add, type: :graphql do
       let(:type) { 'image/tiff' }
 
       it 'fails with error message' do
-        expect(gql.result.data['errors'][0]).to include('message' => 'The MIME type of the image is invalid.')
+        expect(gql.result.data[:errors][0]).to include('message' => 'The MIME type of the image is invalid.')
       end
     end
 

@@ -53,7 +53,7 @@ RSpec.describe Gql::Mutations::Ticket::Merge, :aggregate_failures, type: :graphq
 
       it 'creates Ticket record' do
         gql.execute(query, variables: variables)
-        expect(gql.result.data['targetTicket']).to eq(expected_response)
+        expect(gql.result.data[:targetTicket]).to eq(expected_response)
         expect(source_article.reload.ticket_id).to eq(target_ticket.id)
       end
 
@@ -72,7 +72,7 @@ RSpec.describe Gql::Mutations::Ticket::Merge, :aggregate_failures, type: :graphq
 
         it 'raises a user error' do
           gql.execute(query, variables: variables)
-          expect(gql.result.data['errors']).to eq([{ 'field' => nil, 'message' => 'A ticket cannot be merged into itself.' }])
+          expect(gql.result.data[:errors]).to eq([{ 'field' => nil, 'message' => 'A ticket cannot be merged into itself.' }])
         end
       end
 
@@ -81,7 +81,7 @@ RSpec.describe Gql::Mutations::Ticket::Merge, :aggregate_failures, type: :graphq
 
         it 'raises a user error' do
           gql.execute(query, variables: variables)
-          expect(gql.result.data['errors']).to eq([{ 'field' => nil, 'message' => 'It is not possible to merge into an already merged ticket.' }])
+          expect(gql.result.data[:errors]).to eq([{ 'field' => nil, 'message' => 'It is not possible to merge into an already merged ticket.' }])
         end
       end
 

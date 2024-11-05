@@ -36,7 +36,7 @@ RSpec.describe Gql::Mutations::Ticket::LiveUser::Delete, :aggregate_failures, ty
       end
 
       it 'returns success' do
-        expect(gql.result.data['success']).to be true
+        expect(gql.result.data[:success]).to be true
       end
     end
 

@@ -35,7 +35,7 @@ RSpec.describe Gql::Subscriptions::TicketUpdates, type: :graphql do
         let(:variables) { { ticketId: gql.id(ticket), initial: true } }
 
         it 'subscribes with initial data' do
-          expect(gql.result.data['ticket']['title']).to eq(ticket.title)
+          expect(gql.result.data[:ticket][:title]).to eq(ticket.title)
         end
       end
 

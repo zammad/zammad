@@ -24,7 +24,7 @@ RSpec.describe Gql::Mutations::User::Current::TwoFactor::RecoveryCodesGenerate, 
       it 'returns new recovery codes' do
         gql.execute(mutation)
 
-        expect(gql.result.data['recoveryCodes']).to include(be_a(String))
+        expect(gql.result.data[:recoveryCodes]).to include(be_a(String))
       end
 
       it 'generates recovery codes of current user', aggregate_failures: true do
