@@ -30,6 +30,14 @@ RSpec.describe Taskbar, type: :model do
 
         expect { taskbar.update!(app: 'desktop') }.to raise_error(ActiveRecord::RecordInvalid)
       end
+
+      it 'does not validate when no relevant field changes' do
+        taskbar = create(:taskbar, user: user, key: 'Ticket-1234', app: 'desktop')
+
+        allow(taskbar).to receive(:taskbar_exist?).and_call_original
+        taskbar.update!(state: { example: '1234' })
+        expect(taskbar).not_to have_received(:taskbar_exist?)
+      end
     end
   end
 

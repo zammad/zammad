@@ -132,7 +132,7 @@ class Service::Ticket::Article::Create < Service::BaseWithCurrentUser
     # clear in-progress state from taskbar
     Taskbar
       .where(user_id: current_user.id)
-      .first { |taskbar| taskbar.persisted_form_id == form_id }&.update!(state: {})
+      .find { |taskbar| taskbar.persisted_form_id == form_id }&.update!(state: {})
 
     # remove temporary attachment cache
     UploadCache

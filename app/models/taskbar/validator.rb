@@ -9,6 +9,7 @@ module Taskbar::Validator
 
   def validate_uniqueness
     return if local_update
+    return if %i[user_id app key].none? { |column| will_save_change_to_attribute?(column) }
 
     errors.add(:key, :taken) if taskbar_exist?
   end
@@ -23,6 +24,6 @@ module Taskbar::Validator
     clause = { user_id: effective_user_id, app:, key: }
     record = Taskbar.where(clause)
 
-    id.present? ? record.where.not(id:).present? : record.present?
+    id.present? ? record.where.not(id:).exists? : record.exists?
   end
 end
