@@ -3,18 +3,18 @@
 module.exports = [
   {
     type: 'select',
-    name: 'libraryName',
+    name: 'directoryScope',
     // eslint-disable-next-line zammad/zammad-detect-translatable-string
     message: 'Where should the component be created?',
     choices: [
-      { libraryName: 'desktop', message: 'Desktop' },
-      { libraryName: 'mobile', message: 'Mobile' },
-      { libraryName: 'shared', message: 'Shared' },
+      { directoryScope: 'desktop', message: 'Desktop' },
+      { directoryScope: 'mobile', message: 'Mobile' },
+      { directoryScope: 'shared', message: 'Shared' },
     ],
   },
   {
     type: 'input',
-    name: 'name',
+    name: 'componentName',
     // eslint-disable-next-line zammad/zammad-detect-translatable-string
     message: 'Component name?',
   },

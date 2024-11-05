@@ -5,4 +5,9 @@ module.exports = {
     name: 'Zammad Generic Component',
     prefix: 'Common',
   },
+  convention: {
+    vue: {
+      use: 'use',
+    },
+  },
 }

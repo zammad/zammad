@@ -19,9 +19,12 @@
     "test:ct": "cd .dev/cypress; CY_OPEN=true pnpm cypress open --component --project ../../ --config-file .dev/cypress/cypress.config.mjs",
     "test:ci:ct": "cd .dev/cypress; CI=true pnpm cypress run --component --project ../../ --config-file .dev/cypress/cypress.config.mjs --browser electron",
     "cypress:snapshots": "sh .dev/cypress/visual-regression/snapshots.sh",
-    "cypress:install": "pnpm --dir ./.dev/cypress install",
+    "cypress:install": "pnpm --dir ./.dev/cypress install --frozen-lockfile",
     "analyse:vite-bundle": "pnpm exec vite-bundle-visualizer",
-    "generate:component": "cd .dev/hygen; pnpm exec hygen component new"
+    "generate:install": "pnpm --dir ./.dev/hygen install --frozen-lockfile",
+    "generate:generic-component": "pnpm --dir ./.dev/hygen exec hygen new generic-component",
+    "generate:composable": "pnpm --dir ./.dev/hygen exec hygen new composable ",
+    "generate:store": "pnpm --dir ./.dev/hygen exec hygen new store"
   },
   "engines": {
     "node": ">=18.12.0",
