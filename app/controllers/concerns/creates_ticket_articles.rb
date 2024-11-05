@@ -146,7 +146,7 @@ module CreatesTicketArticles # rubocop:disable Metrics/ModuleLength
     # clear in-progress state from taskbar
     Taskbar
       .where(user_id: current_user.id)
-      .first { |taskbar| taskbar.persisted_form_id == form_id }
+      .find { |taskbar| taskbar.persisted_form_id == form_id }
       &.update!(state: {})
 
     # remove temporary attachment cache

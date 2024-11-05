@@ -168,8 +168,11 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
       end
 
       context 'when attachment is uploaded' do
+        let(:form_id) { SecureRandom.uuid }
+        let(:taskbar) { create(:taskbar, user_id: user.id, state: { form_id: }) }
+
         before do
-          form_id = SecureRandom.uuid
+          taskbar
 
           file_name    = 'file1.png'
           file_type    = 'image/png'
@@ -185,11 +188,17 @@ RSpec.describe Service::Ticket::Article::Create, current_user_id: -> { user.id }
           end
         end
 
-        it 'adds attachments with inlines' do
+        it 'adds attachments with inlines and updates taskbar state', aggregate_failures: true do
           payload[:content_type] = 'text/html'
+          payload[:attachments] = {
+            files:   [],
+            form_id:,
+          }
           payload[:body] = "some body <img src='/api/v1/attachments/#{Store.last.id}'> alt='Red dot' />"
 
           expect(article.attachments).to be_one
+
+          expect(taskbar.reload.state).to eq({})
         end
       end
     end
