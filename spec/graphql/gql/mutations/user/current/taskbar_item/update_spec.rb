@@ -46,7 +46,7 @@ RSpec.describe Gql::Mutations::User::Current::TaskbarItem::Update, type: :graphq
     context 'with existing taskbar item', :aggregate_failures do
       it 'returns the updated taskbar item' do
         expect(taskbar_item.reload.key).to eq('key')
-        expect(gql.result.data['taskbarItem']).to eq(
+        expect(gql.result.data[:taskbarItem]).to eq(
           { 'app' => 'desktop', 'key' => 'key' }
         )
       end

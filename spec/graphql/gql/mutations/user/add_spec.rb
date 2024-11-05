@@ -46,7 +46,7 @@ RSpec.describe Gql::Mutations::User::Add, :aggregate_failures, type: :graphql do
 
     it 'creates User record' do
       gql.execute(query, variables: variables)
-      expect(gql.result.data['user']).to eq(expected_response)
+      expect(gql.result.data[:user]).to eq(expected_response)
     end
 
     context 'with not unique email', :aggregate_failures do
@@ -54,7 +54,7 @@ RSpec.describe Gql::Mutations::User::Add, :aggregate_failures, type: :graphql do
         create(:user, email: dummy_email)
 
         gql.execute(query, variables: variables)
-        expect(gql.result.data['errors'].first)
+        expect(gql.result.data[:errors].first)
           .to include({ 'message' => "Email address '#{dummy_email}' is already used for another user." })
       end
     end

@@ -35,7 +35,7 @@ RSpec.describe Gql::Mutations::Tag::Assignment::Remove, :aggregate_failures, typ
 
     context 'with ticket write permission' do
       it 'removes the tag' do
-        expect(gql.result.data['success']).to be(true)
+        expect(gql.result.data[:success]).to be(true)
         expect(object.reload.tag_list).to eq([])
       end
 
@@ -43,7 +43,7 @@ RSpec.describe Gql::Mutations::Tag::Assignment::Remove, :aggregate_failures, typ
         let(:object) { create(:ticket) }
 
         it 'returns success nevertheless' do
-          expect(gql.result.data['success']).to be(true)
+          expect(gql.result.data[:success]).to be(true)
         end
       end
     end

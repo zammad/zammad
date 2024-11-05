@@ -51,7 +51,7 @@ RSpec.describe Gql::Queries::Tickets::ByOverview, type: :graphql do
         end
 
         it 'has total_count' do
-          expect(gql.result.data['totalCount']).to eq(1)
+          expect(gql.result.data[:totalCount]).to eq(1)
         end
       end
 
@@ -61,7 +61,7 @@ RSpec.describe Gql::Queries::Tickets::ByOverview, type: :graphql do
         end
 
         it 'has total_count' do
-          expect(gql.result.data['totalCount']).to be_zero
+          expect(gql.result.data[:totalCount]).to be_zero
         end
       end
     end

@@ -197,20 +197,20 @@ RSpec.describe Gql::Queries::Ticket, current_user_id: 1, type: :graphql do
           end
 
           it 'contains time unit entries grouped by type with a sum' do
-            expect(gql.result.data['timeUnitsPerType']).to eq([
-                                                                {
-                                                                  'name'     => ticket_time_accounting_types[1].name,
-                                                                  'timeUnit' => 250.0,
-                                                                },
-                                                                {
-                                                                  'name'     => 'None',
-                                                                  'timeUnit' => 50.0,
-                                                                },
-                                                                {
-                                                                  'name'     => ticket_time_accounting_types[0].name,
-                                                                  'timeUnit' => 25.0,
-                                                                },
-                                                              ])
+            expect(gql.result.data[:timeUnitsPerType]).to eq([
+                                                               {
+                                                                 'name'     => ticket_time_accounting_types[1].name,
+                                                                 'timeUnit' => 250.0,
+                                                               },
+                                                               {
+                                                                 'name'     => 'None',
+                                                                 'timeUnit' => 50.0,
+                                                               },
+                                                               {
+                                                                 'name'     => ticket_time_accounting_types[0].name,
+                                                                 'timeUnit' => 25.0,
+                                                               },
+                                                             ])
           end
         end
 

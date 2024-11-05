@@ -52,7 +52,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::Add, current_user_id: 1, type:
 
   shared_examples 'creating the ticket checklist' do
     it 'creates the ticket checklist' do
-      expect(gql.result.data['checklist']).to include(response)
+      expect(gql.result.data[:checklist]).to include(response)
     end
   end
 
@@ -64,7 +64,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::Add, current_user_id: 1, type:
 
   shared_examples 'returning an error message' do |error_message|
     it 'returns an error message' do
-      expect(gql.result.data['errors']).to include('message' => error_message)
+      expect(gql.result.data[:errors]).to include('message' => error_message)
     end
   end
 

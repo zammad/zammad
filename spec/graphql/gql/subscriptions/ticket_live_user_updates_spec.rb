@@ -47,18 +47,18 @@ RSpec.describe Gql::Subscriptions::TicketLiveUserUpdates, :aggregate_failures, a
 
   context 'when subscribed' do
     it 'subscribes and delivers initial data' do
-      expect(gql.result.data['liveUsers'].size).to eq(2)
-      expect(gql.result.data['liveUsers'].first).to include('user' => {
-                                                              'firstname' => agent.firstname,
-                                                              'lastname'  => agent.lastname,
-                                                            })
-
-      expect(gql.result.data['liveUsers'].last).to include('user' => {
-                                                             'firstname' => customer.firstname,
-                                                             'lastname'  => customer.lastname,
+      expect(gql.result.data[:liveUsers].size).to eq(2)
+      expect(gql.result.data[:liveUsers].first).to include('user' => {
+                                                             'firstname' => agent.firstname,
+                                                             'lastname'  => agent.lastname,
                                                            })
 
-      expect(gql.result.data['liveUsers'].last['apps'].first).to include('editing' => false)
+      expect(gql.result.data[:liveUsers].last).to include('user' => {
+                                                            'firstname' => customer.firstname,
+                                                            'lastname'  => customer.lastname,
+                                                          })
+
+      expect(gql.result.data[:liveUsers].last['apps'].first).to include('editing' => false)
     end
 
     it 'receives taskbar updates' do

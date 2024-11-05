@@ -28,7 +28,7 @@ RSpec.describe Gql::Mutations::User::Current::Locale, type: :graphql do
 
     context 'with valid locale' do
       it 'returns success' do
-        expect(gql.result.data['success']).to be true
+        expect(gql.result.data[:success]).to be true
       end
 
       it 'updates the locale' do

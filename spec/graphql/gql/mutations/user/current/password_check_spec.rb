@@ -41,7 +41,7 @@ RSpec.describe Gql::Mutations::User::Current::PasswordCheck, type: :graphql do
       let(:password) { '' }
 
       it 'returns an error' do
-        expect(gql.result.data['errors'])
+        expect(gql.result.data[:errors])
           .to include(
             include('field' => 'password', 'message' => 'The provided password is incorrect.')
           )

@@ -61,7 +61,7 @@ RSpec.describe Gql::Mutations::Link::Add, :aggregate_failures, type: :graphql do
     it 'adds link' do
       expect { gql.execute(mutation, variables: variables) }
         .to change(Link, :count).by(1)
-      expect(gql.result.data['link']).to eq(
+      expect(gql.result.data[:link]).to eq(
         {
           'type' => type,
           'item' => { 'id' => gql.id(to), 'title' => to.title }
@@ -75,8 +75,8 @@ RSpec.describe Gql::Mutations::Link::Add, :aggregate_failures, type: :graphql do
       it 'returns error' do
         expect { gql.execute(mutation, variables: variables) }
           .not_to change(Link, :count)
-        expect(gql.result.data['link']).to be_nil
-        expect(gql.result.data['errors']).to contain_exactly(
+        expect(gql.result.data[:link]).to be_nil
+        expect(gql.result.data[:errors]).to contain_exactly(
           hash_including('message' => 'Link already exists', 'field' => nil)
         )
       end

@@ -63,8 +63,8 @@ RSpec.describe Gql::Mutations::Ticket::Article::RetrySecurityProcess, :aggregate
         # Import missing certificate.
         create(:smime_certificate, :with_private, fixture: 'smime1@example.com')
         gql.execute(query, variables: variables)
-        expect(gql.result.data['retryResult']).to eq(expected_security_state)
-        expect(gql.result.data['article']['securityState']).to eq(expected_security_state)
+        expect(gql.result.data[:retryResult]).to eq(expected_security_state)
+        expect(gql.result.data[:article][:securityState]).to eq(expected_security_state)
       end
     end
 

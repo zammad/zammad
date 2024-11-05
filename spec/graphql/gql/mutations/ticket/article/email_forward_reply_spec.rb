@@ -109,7 +109,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::EmailForwardReply, :aggregate_fa
 
       it 'works as expected' do
         gql.execute(query, variables: variables)
-        expect(gql.result.data['quotableFrom']).to eq(expected_response)
+        expect(gql.result.data[:quotableFrom]).to eq(expected_response)
       end
     end
 
@@ -123,7 +123,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::EmailForwardReply, :aggregate_fa
 
       it 'works as expected' do
         gql.execute(query, variables: variables)
-        expect(gql.result.data['quotableFrom']).to eq(expected_response)
+        expect(gql.result.data[:quotableFrom]).to eq(expected_response)
       end
     end
   end
@@ -143,7 +143,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::EmailForwardReply, :aggregate_fa
 
       it 'works as expected' do
         gql.execute(query, variables: variables)
-        expect(gql.result.data['quotableTo']).to eq(expected_response)
+        expect(gql.result.data[:quotableTo]).to eq(expected_response)
       end
     end
 
@@ -157,7 +157,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::EmailForwardReply, :aggregate_fa
 
       it 'works as expected' do
         gql.execute(query, variables: variables)
-        expect(gql.result.data['quotableTo']).to eq(expected_response)
+        expect(gql.result.data[:quotableTo]).to eq(expected_response)
       end
     end
 
@@ -171,7 +171,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::EmailForwardReply, :aggregate_fa
 
       it 'works as expected' do
         gql.execute(query, variables: variables)
-        expect(gql.result.data['quotableTo']).to eq(expected_response)
+        expect(gql.result.data[:quotableTo]).to eq(expected_response)
       end
     end
 
@@ -185,7 +185,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::EmailForwardReply, :aggregate_fa
 
       it 'works as expected' do
         gql.execute(query, variables: variables)
-        expect(gql.result.data['quotableTo']).to eq(expected_response)
+        expect(gql.result.data[:quotableTo]).to eq(expected_response)
       end
     end
   end
@@ -200,7 +200,7 @@ RSpec.describe Gql::Mutations::Ticket::Article::EmailForwardReply, :aggregate_fa
 
     it 'works as expected' do
       gql.execute(query, variables: variables)
-      expect(gql.result.data['quotableCc']).to eq(expected_response)
+      expect(gql.result.data[:quotableCc]).to eq(expected_response)
     end
   end
 end

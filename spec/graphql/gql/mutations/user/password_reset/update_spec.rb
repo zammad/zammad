@@ -75,7 +75,7 @@ RSpec.describe Gql::Mutations::User::PasswordReset::Update, type: :graphql do
       it 'returns an error', :aggregate_failures do
         execute_graphql_query
 
-        errors = gql.result.data['errors'].first
+        errors = gql.result.data[:errors].first
         expect(errors.keys).to include('message', 'field')
         expect(errors['message']).to include(message)
         expect(errors['field']).to eq(field)

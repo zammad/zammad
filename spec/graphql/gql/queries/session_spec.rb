@@ -27,11 +27,11 @@ RSpec.describe Gql::Queries::Session, type: :graphql do
 
     context 'with authenticated session', authenticated_as: :agent do
       it 'returns session id' do
-        expect(gql.result.data['id']).to be_present
+        expect(gql.result.data[:id]).to be_present
       end
 
       it 'returns after_auth data' do
-        expect(gql.result.data['afterAuth']).to eq({ 'type' => 'TwoFactorConfiguration', 'data' => {} })
+        expect(gql.result.data[:afterAuth]).to eq({ 'type' => 'TwoFactorConfiguration', 'data' => {} })
       end
     end
 

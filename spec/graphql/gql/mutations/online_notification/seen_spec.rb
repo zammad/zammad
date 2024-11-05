@@ -40,7 +40,7 @@ RSpec.describe Gql::Mutations::OnlineNotification::Seen, :aggregate_failures, ty
         end
 
         it 'marks the existing notification as seen' do
-          expect(gql.result.data['success']).to be true
+          expect(gql.result.data[:success]).to be true
           expect(notification.reload).to have_attributes(seen: true)
         end
 

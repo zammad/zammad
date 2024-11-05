@@ -52,7 +52,7 @@ RSpec.describe Gql::Queries::User::Current::Avatar::Active, type: :graphql do
         end
 
         it 'returns data' do
-          expect(gql.result.data['id']).to eq(gql.id(avatar))
+          expect(gql.result.data[:id]).to eq(gql.id(avatar))
         end
       end
     end

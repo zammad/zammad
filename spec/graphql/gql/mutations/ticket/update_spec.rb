@@ -84,7 +84,7 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
 
       it 'updates the attributes' do
         gql.execute(query, variables: variables)
-        expect(gql.result.data['ticket']).to eq(expected_response)
+        expect(gql.result.data[:ticket]).to eq(expected_response)
       end
 
       context 'without title' do
@@ -225,7 +225,7 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
 
         it 'updates the attributes' do
           gql.execute(query, variables: variables)
-          expect(gql.result.data['ticket']).to eq(expected_response)
+          expect(gql.result.data[:ticket]).to eq(expected_response)
         end
       end
 
@@ -301,7 +301,7 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
           end
 
           it 'updates the ticket' do
-            expect(gql.result.data['ticket']).to eq(expected_response)
+            expect(gql.result.data[:ticket]).to eq(expected_response)
           end
         end
       end
@@ -321,7 +321,7 @@ RSpec.describe Gql::Mutations::Ticket::Update, :aggregate_failures, type: :graph
 
       it 'updates the ticket with filtered values' do
         gql.execute(query, variables: variables)
-        expect(gql.result.data['ticket']).to eq(expected_response)
+        expect(gql.result.data[:ticket]).to eq(expected_response)
       end
 
       context 'when sending a different customerId' do

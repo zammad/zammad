@@ -35,17 +35,17 @@ RSpec.describe Gql::Mutations::Channel::Email::Add, type: :graphql do
   end
   let(:inbound_configuration) do
     {
-      'adapter'       => 'imap',
-      'host'          => 'nonexisting.host.local',
-      'port'          => 993,
-      'ssl'           => 'ssl',
-      'user'          => 'some@example.com',
-      'password'      => 'password',
-      'folder'        => 'some_folder',
-      'keepOnServer'  => true,
-      'sslVerify'     => false,
-      'archive'       => true,
-      'archiveBefore' => '2012-03-04T00:00:00',
+      adapter:       'imap',
+      host:          'nonexisting.host.local',
+      port:          993,
+      ssl:           'ssl',
+      user:          'some@example.com',
+      password:      'password',
+      folder:        'some_folder',
+      keepOnServer:  true,
+      sslVerify:     false,
+      archive:       true,
+      archiveBefore: '2012-03-04T00:00:00',
     }
   end
   let(:group) { create(:group) }
@@ -53,11 +53,11 @@ RSpec.describe Gql::Mutations::Channel::Email::Add, type: :graphql do
   let(:variables) do
     {
       input: {
-        'inboundConfiguration' => inbound_configuration,
-        'outboundConfiguration' => outbound_configuration,
-        groupId: gql.id(group),
-        emailAddress: 'some.sender@example.com',
-        emailRealname: 'John Doe'
+        inboundConfiguration:  inbound_configuration,
+        outboundConfiguration: outbound_configuration,
+        groupId:               gql.id(group),
+        emailAddress:          'some.sender@example.com',
+        emailRealname:         'John Doe'
       }
     }
   end
@@ -70,8 +70,8 @@ RSpec.describe Gql::Mutations::Channel::Email::Add, type: :graphql do
     let(:admin) { create(:admin) }
     let(:options_outbound) do
       {
-        'adapter' => 'smtp',
-        'options' => {
+        adapter: 'smtp',
+        options: {
           host:       'nonexisting.host.local',
           port:       25,
           user:       'some@example.com',
@@ -82,24 +82,26 @@ RSpec.describe Gql::Mutations::Channel::Email::Add, type: :graphql do
     end
     let(:options_inbound) do
       {
-        'adapter' => 'imap',
-        'options' => {
-          'host'           => 'nonexisting.host.local',
-          'port'           => 993,
-          'ssl'            => 'ssl',
-          'user'           => 'some@example.com',
-          'password'       => 'password',
-          'folder'         => 'some_folder',
-          'keep_on_server' => true,
-          'ssl_verify'     => false,
-          'archive'        => true,
-          'archive_before' => '2012-03-04T00:00:00'.to_time, # rubocop:disable Rails/TimeZone
+        adapter: 'imap',
+        options: {
+          host:           'nonexisting.host.local',
+          port:           993,
+          ssl:            'ssl',
+          user:           'some@example.com',
+          password:       'password',
+          folder:         'some_folder',
+          keep_on_server: true,
+          ssl_verify:     false,
+          archive:        true,
+          archive_before: '2012-03-04T00:00:00'.to_time, # rubocop:disable Rails/TimeZone
         }
       }
     end
 
     it 'creates the channel' do
-      expect(gql.result.data['channel']).to include({ 'options' => include({ 'inbound' => options_inbound, 'outbound' => options_outbound }) })
+      expect(gql.result.data[:channel]).to include(options: include(
+        inbound: options_inbound, outbound: options_outbound
+      ))
     end
   end
 

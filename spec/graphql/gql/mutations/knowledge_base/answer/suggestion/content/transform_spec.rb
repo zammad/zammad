@@ -47,19 +47,17 @@ RSpec.describe Gql::Mutations::KnowledgeBase::Answer::Suggestion::Content::Trans
       let(:copied_attachments) { Store.list(object: 'UploadCache', o_id: '5570fac8-8868-40b7-89e7-1cdabbd954ba') }
 
       it 'converts inline images to base64 data' do
-        expect(gql.result.data['body']).to include('src="data:image/jpeg;base64,')
+        expect(gql.result.data[:body]).to include('src="data:image/jpeg;base64,')
       end
 
       it 'contains attachments' do
-        expect(gql.result.data['attachments']).to eq([
-                                                       {
-                                                         'id'          => Gql::ZammadSchema.id_from_object(copied_attachments.first),
-                                                         'name'        => copied_attachments.first.filename,
-                                                         'size'        => copied_attachments.first.size.to_i,
-                                                         'type'        => copied_attachments.first.preferences['Content-Type'],
-                                                         'preferences' => copied_attachments.first.preferences,
-                                                       },
-                                                     ])
+        expect(gql.result.data[:attachments]).to match_array(include(
+                                                               id:          Gql::ZammadSchema.id_from_object(copied_attachments.first),
+                                                               name:        copied_attachments.first.filename,
+                                                               size:        copied_attachments.first.size.to_i,
+                                                               type:        copied_attachments.first.preferences['Content-Type'],
+                                                               preferences: copied_attachments.first.preferences,
+                                                             ))
       end
 
       context 'with not existing translation' do

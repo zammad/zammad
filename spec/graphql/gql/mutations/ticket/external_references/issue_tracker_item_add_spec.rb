@@ -83,7 +83,7 @@ RSpec.describe Gql::Mutations::Ticket::ExternalReferences::IssueTrackerItemAdd, 
           it 'returns a user error' do
             gql.execute(mutation, variables: variables)
 
-            expect(gql.result.data['errors'].first).to include('field' => 'link', 'message' => 'The issue reference already exists.')
+            expect(gql.result.data[:errors].first).to include('field' => 'link', 'message' => 'The issue reference already exists.')
           end
         end
 
@@ -99,7 +99,7 @@ RSpec.describe Gql::Mutations::Ticket::ExternalReferences::IssueTrackerItemAdd, 
           it 'returns issue item', aggregate_failures: true do
             gql.execute(mutation, variables: variables)
 
-            expect(gql.result.data['issueTrackerItem']).to eq(
+            expect(gql.result.data[:issueTrackerItem]).to eq(
               {
                 'issueId' => issue_item[:id],
                 'title'   => issue_item[:title],
@@ -118,7 +118,7 @@ RSpec.describe Gql::Mutations::Ticket::ExternalReferences::IssueTrackerItemAdd, 
           it 'returns a user error' do
             gql.execute(mutation, variables: variables)
 
-            expect(gql.result.data['errors'].first).to include('field' => 'link', 'message' => 'Invalid GitHub issue link format')
+            expect(gql.result.data[:errors].first).to include('field' => 'link', 'message' => 'Invalid GitHub issue link format')
           end
         end
       end
@@ -145,7 +145,7 @@ RSpec.describe Gql::Mutations::Ticket::ExternalReferences::IssueTrackerItemAdd, 
         it 'returns issue item', aggregate_failures: true do
           gql.execute(mutation, variables: variables)
 
-          expect(gql.result.data['issueTrackerItem']).to eq(
+          expect(gql.result.data[:issueTrackerItem]).to eq(
             {
               'issueId' => issue_item[:id],
               'title'   => issue_item[:title],

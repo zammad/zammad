@@ -52,7 +52,7 @@ RSpec.describe Gql::Mutations::User::Current::NotificationPreferencesReset, :agg
 
       it 'resets user preferences' do
         execute_graphql_query
-        expect(gql.result.data['notificationSound']).to be_nil
+        expect(gql.result.data[:notificationSound]).to be_nil
         expect(User).to have_received(:reset_notifications_preferences!).with(user)
       end
     end

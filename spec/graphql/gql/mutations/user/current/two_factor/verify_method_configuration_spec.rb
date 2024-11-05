@@ -37,7 +37,7 @@ RSpec.describe Gql::Mutations::User::Current::TwoFactor::VerifyMethodConfigurati
       it 'verify failed' do
         gql.execute(mutation, variables: variables)
 
-        expect(gql.result.data['errors'][0]).to eq('message' => 'The verification of the two-factor authentication method configuration failed.', 'field' => nil)
+        expect(gql.result.data[:errors][0]).to eq('message' => 'The verification of the two-factor authentication method configuration failed.', 'field' => nil)
       end
     end
 
@@ -45,7 +45,7 @@ RSpec.describe Gql::Mutations::User::Current::TwoFactor::VerifyMethodConfigurati
       it 'verify succeeded' do
         gql.execute(mutation, variables: variables)
 
-        expect(gql.result.data['recoveryCodes'].length).to eq(10)
+        expect(gql.result.data[:recoveryCodes].length).to eq(10)
       end
 
       context 'with disabled recovery codes' do
@@ -54,7 +54,7 @@ RSpec.describe Gql::Mutations::User::Current::TwoFactor::VerifyMethodConfigurati
         it 'verify succeeded (but without recovery codes)' do
           gql.execute(mutation, variables: variables)
 
-          expect(gql.result.data['recoveryCodes']).to be_nil
+          expect(gql.result.data[:recoveryCodes]).to be_nil
         end
       end
     end

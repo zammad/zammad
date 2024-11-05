@@ -31,7 +31,7 @@ RSpec.describe Gql::Mutations::User::Current::Avatar::Delete, type: :graphql do
 
     context 'with existing avatar' do
       it 'returns success' do
-        expect(gql.result.data['success']).to be true
+        expect(gql.result.data[:success]).to be true
       end
 
       it 'does not find the avatar anymore' do

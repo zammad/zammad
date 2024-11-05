@@ -36,7 +36,7 @@ RSpec.describe Gql::Mutations::Ticket::Checklist::ItemOrderUpdate, current_user_
 
   shared_examples 'updating the ticket checklist item order' do
     it 'updates the ticket checklist item order' do
-      expect(gql.result.data['success']).to be(true)
+      expect(gql.result.data[:success]).to be(true)
     end
   end
 

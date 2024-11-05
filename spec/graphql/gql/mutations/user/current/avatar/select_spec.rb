@@ -30,7 +30,7 @@ RSpec.describe Gql::Mutations::User::Current::Avatar::Select, type: :graphql do
     end
 
     it 'returns success' do
-      expect(gql.result.data['success']).to be true
+      expect(gql.result.data[:success]).to be true
     end
 
     context 'when trying to use an avatar of another user' do

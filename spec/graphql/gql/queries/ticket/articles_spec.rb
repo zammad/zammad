@@ -147,7 +147,7 @@ RSpec.describe Gql::Queries::Ticket::Articles, type: :graphql do
     end
     let!(:internal_article)    { create(:ticket_article, :outbound_email, ticket: ticket, internal: true) }
     let(:response_articles)    { gql.result.nodes }
-    let(:response_total_count) { gql.result.data['totalCount'] }
+    let(:response_total_count) { gql.result.data[:totalCount] }
 
     before do
       gql.execute(query, variables: variables)
