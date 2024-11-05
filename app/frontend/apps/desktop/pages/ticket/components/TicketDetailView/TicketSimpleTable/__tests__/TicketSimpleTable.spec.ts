@@ -1,16 +1,19 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import renderComponent from '#tests/support/components/renderComponent.ts'
+import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 
 import TicketSimpleTable from '#desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue'
 
 describe('TicketSimpleData', () => {
+  beforeEach(() => {
+    vi.useFakeTimers()
+  })
+
   it('displays a table with ticket data', () => {
-    beforeEach(() => {
-      vi.useFakeTimers()
-    })
+    mockApplicationConfig({ ticket_hook: 'Ticket#' })
 
     const wrapper = renderComponent(TicketSimpleTable, {
       props: {
@@ -28,7 +31,7 @@ describe('TicketSimpleData', () => {
     })
 
     // Labels
-    expect(wrapper.getByText('Number')).toBeInTheDocument()
+    expect(wrapper.getByText('Ticket#')).toBeInTheDocument()
     expect(wrapper.getByText('Title')).toBeInTheDocument()
     expect(wrapper.getByText('Customer')).toBeInTheDocument()
     expect(wrapper.getByText('Group')).toBeInTheDocument()
@@ -38,6 +41,10 @@ describe('TicketSimpleData', () => {
     expect(wrapper.getByText('ROCK YOUR TICKET TABLE')).toBeInTheDocument()
     expect(wrapper.getByText('89002')).toBeInTheDocument()
     expect(wrapper.getByText('1111')).toBeInTheDocument()
+    expect(wrapper.getByText('1111')).toHaveAttribute(
+      'href',
+      '/desktop/tickets/2',
+    )
     expect(wrapper.getByText('Dummy')).toBeInTheDocument()
     expect(
       wrapper.getAllByRole('status', { name: 'check-circle-no' }),

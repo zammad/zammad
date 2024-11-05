@@ -1,9 +1,11 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
+import { storeToRefs } from 'pinia'
 import { computed, useTemplateRef } from 'vue'
 
 import type { TicketById } from '#shared/entities/ticket/types.ts'
+import { useApplicationStore } from '#shared/stores/application.ts'
 
 import CommonSimpleTable from '#desktop/components/CommonSimpleTable/CommonSimpleTable.vue'
 import type {
@@ -25,12 +27,13 @@ const emit = defineEmits<{
 
 const simpleTableInstance = useTemplateRef('simple-table')
 
+const { config } = storeToRefs(useApplicationStore())
+
 const headers: TableHeader[] = [
   { key: 'state', label: '', truncate: true },
   {
     key: 'number',
-    label: __('Number'),
-    labelClass: 'font-normal text-gray-100 dark:text-neutral-400',
+    label: config.value.ticket_hook,
     truncate: true,
   },
   { key: 'title', label: __('Title'), truncate: true },
@@ -47,6 +50,7 @@ const items = computed<Array<TableItem>>(() =>
     customer: ticket.organization?.name || ticket.customer?.fullname,
     group: ticket.group?.name,
     id: ticket.id,
+    internalId: ticket.internalId,
     key: ticket.id,
     number: ticket.number,
     organization: ticket.organization,
