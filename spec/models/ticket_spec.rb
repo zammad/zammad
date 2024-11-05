@@ -1841,6 +1841,54 @@ RSpec.describe Ticket, type: :model do
     end
   end
 
+  describe '.search_index_article_attachment_attributes' do
+    context 'payload for article' do
+      subject!(:store_item) do
+        create(:store,
+               object:   'SomeObject',
+               o_id:     1,
+               data:     'some content',
+               filename: 'test.TXT')
+      end
+
+      it 'verify count of attributes' do
+        expect(ticket.send(:search_index_article_attachment_attributes, store_item).count).to be 3
+      end
+
+      it 'verify size' do
+        expect(ticket.send(:search_index_article_attachment_attributes, store_item)['size']).to eq '12'
+      end
+
+      it 'verify _name' do
+        expect(ticket.send(:search_index_article_attachment_attributes, store_item)['_name']).to eq 'test.TXT'
+      end
+
+      it 'verify _content' do
+        expect(ticket.send(:search_index_article_attachment_attributes, store_item)['_content']).to eq 'c29tZSBjb250ZW50'
+      end
+    end
+  end
+
+  describe '.search_index_article_attributes' do
+    context 'payload for attachment' do
+      subject!(:ticket_article) do
+        create(:ticket_article, ticket: create(:ticket))
+      end
+
+      it 'verify count of attributes' do
+        expect(ticket.send(:search_index_article_attributes, ticket_article).count).to eq 20
+      end
+
+      it 'verify from' do
+        expect(ticket.send(:search_index_article_attributes, ticket_article)['from']).to eq ticket_article.from
+      end
+
+      it 'verify body' do
+        expect(ticket.send(:search_index_article_attributes, ticket_article)['body']).to eq ticket_article.body
+      end
+    end
+  end
+
   describe '.search_index_attribute_lookup' do
     subject!(:ticket) { create(:ticket) }
 

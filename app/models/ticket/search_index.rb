@@ -15,7 +15,9 @@ module Ticket::SearchIndex
     attributes['mention_user_ids'] = mentions.pluck(:user_id)
 
     # checklists
-    add_checklist(attributes)
+    if checklist
+      attributes['checklist'] = checklist.search_index_attribute_lookup(include_references: false)
+    end
 
     # current payload size
     total_size_current = 0
@@ -25,18 +27,7 @@ module Ticket::SearchIndex
     Ticket::Article.where(ticket_id: id).limit(1000).find_each(batch_size: 50).each do |article|
 
       # lookup attributes of ref. objects (normally name and note)
-      article_attributes = article.search_index_attribute_lookup(include_references: false)
-
-      # remove note needed attributes
-      ignore = %w[message_id_md5 ticket]
-      ignore.each do |attribute|
-        article_attributes.delete(attribute)
-      end
-
-      # index raw text body
-      if article_attributes['content_type'] && article_attributes['content_type'] == 'text/html' && article_attributes['body']
-        article_attributes['body'] = article_attributes['body'].html2text
-      end
+      article_attributes = search_index_article_attributes(article)
 
       article_attributes_payload_size = article_attributes.to_json.bytes.size
 
@@ -59,13 +50,7 @@ module Ticket::SearchIndex
         # add attachment size to totel payload size
         total_size_current += attachment.content.bytes.size
 
-        data = {
-          'size'     => attachment.size,
-          '_name'    => attachment.filename,
-          '_content' => Base64.encode64(attachment.content).delete("\n"),
-        }
-
-        article_attributes['attachment'].push data
+        article_attributes['attachment'].push search_index_article_attachment_attributes(attachment)
       end
 
       attributes['article'].push article_attributes
@@ -112,18 +97,31 @@ module Ticket::SearchIndex
     false
   end
 
-  def add_checklist(attributes)
-    return if !checklist
+  def search_index_article_attributes(article)
 
-    attrs = {}
+    # lookup attributes of ref. objects (normally name and note)
+    article_attributes = article.search_index_attribute_lookup(include_references: false)
 
-    attrs['name'] = checklist.name if checklist.name.present?
+    # remove note needed attributes
+    ignore = %w[message_id_md5 ticket]
+    ignore.each do |attribute|
+      article_attributes.delete(attribute)
+    end
 
-    items = checklist.items.pluck(:text).compact_blank
-    attrs['items'] = items if items.present?
+    # index raw text body
+    if article_attributes['content_type'] && article_attributes['content_type'] == 'text/html' && article_attributes['body']
+      article_attributes['body'] = article_attributes['body'].html2text
+    end
 
-    return if attrs.blank?
-
-    attributes['checklist'] = attrs
+    article_attributes
   end
+
+  def search_index_article_attachment_attributes(attachment)
+    {
+      'size'     => attachment.size,
+      '_name'    => attachment.filename,
+      '_content' => Base64.encode64(attachment.content).delete("\n"),
+    }
+  end
+
 end

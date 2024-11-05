@@ -254,4 +254,25 @@ RSpec.describe Checklist, :aggregate_failures, current_user_id: 1, type: :model 
       end
     end
   end
+
+  describe '.search_index_attribute_lookup' do
+    subject(:checklist) { create(:checklist, name: 'some name') }
+
+    it 'verify name attribute' do
+      expect(checklist.search_index_attribute_lookup['name']).to eq checklist.name
+    end
+
+    it 'verify items attribute' do
+      expect(checklist.search_index_attribute_lookup['items']).not_to eq []
+    end
+
+    it 'verify items[0].count' do
+      expect(checklist.search_index_attribute_lookup['items'].count).to eq checklist.items.count
+    end
+
+    it 'verify items[0].text attribute' do
+      expect(checklist.search_index_attribute_lookup['items'][0]['text']).to eq checklist.items[0].text
+    end
+  end
+
 end

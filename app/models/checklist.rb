@@ -4,6 +4,7 @@ class Checklist < ApplicationModel
   include HasDefaultModelUserRelations
   include ChecksClientNotification
   include HasHistory
+  include Checklist::SearchIndex
   include Checklist::TriggersSubscriptions
   include Checklist::Assets
   include CanChecklistSortedItems
