@@ -136,16 +136,13 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
         checklist.items.create!(text: other_item_text)
       end
 
-      # not really another way to be absolutely sure that this works
-      sleep 5
-
-      # the new item will be synced after saving
-      expect(page).to have_no_text(other_item_text)
+      # the new item will be shown right away
+      expect(page).to have_text(other_item_text)
 
       # it's important that the old edit mode does not abort
       page.find('.js-confirm').click
 
-      # then both items arrive in the UI
+      # then both items are shown in the UI
       expect(page).to have_text(item_text)
       expect(page).to have_text(other_item_text)
     end

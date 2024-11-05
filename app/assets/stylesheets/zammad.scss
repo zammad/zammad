@@ -14979,6 +14979,11 @@ div.accounted-time-value {
     justify-content: center;
   }
 
+  .checklistShowRowDisplayValue {
+    display: flex;
+    flex-grow: 1;
+  }
+
   .draggable {
     width: 40px;
     height: 28px;
