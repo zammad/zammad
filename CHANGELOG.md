@@ -25,3 +25,4 @@
 - Reporting: No button and output when no tickets found in a time range [5137](https://github.com/zammad/zammad/issues/5137) [[bug](https://github.com/zammad/zammad/labels/bug)] [[UX/UI](https://github.com/zammad/zammad/labels/UX%2FUI)] [[reporting](https://github.com/zammad/zammad/labels/reporting)]
 - Once applied kb editor permissions cannot be revoked [5123](https://github.com/zammad/zammad/issues/5123) [[bug](https://github.com/zammad/zammad/labels/bug)] [[knowledge base](https://github.com/zammad/zammad/labels/knowledge%20base)]
 - Duplicates in calendar [5076](https://github.com/zammad/zammad/issues/5076) [[bug](https://github.com/zammad/zammad/labels/bug)] [[calendar](https://github.com/zammad/zammad/labels/calendar)]
+
