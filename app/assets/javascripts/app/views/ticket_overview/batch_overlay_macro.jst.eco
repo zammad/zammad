@@ -11,7 +11,7 @@
   <% isSmall = @macros.length > 20 %>
   <% for macro in @macros: %>
     <div class="batch-overlay-macro-entry js-batch-overlay-entry js-batch-hover-target <%- 'small' if isSmall %>" data-action="macro" data-id="<%= macro.id %>">
-      <div class="batch-overlay-macro-entry-name"><%= macro.name %></div>
+      <div class="batch-overlay-macro-entry-name"><%- @T macro.name %></div>
     </div>
   <% end %>
 <% end %>
