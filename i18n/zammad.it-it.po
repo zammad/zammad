@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-02 08:00+0000\n"
+"PO-Revision-Date: 2024-11-06 22:00+0000\n"
 "Last-Translator: Random <random_r@users.noreply.translations.zammad.org>\n"
 "Language-Team: Italian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/it/>\n"
@@ -3301,7 +3301,7 @@ msgstr "Scegli data"
 
 #: app/assets/javascripts/app/views/twitter/account_edit.jst.eco:35
 msgid "Choose if retweets should also be converted to tickets."
-msgstr "Scegli se convertire anche i retweet in tickets."
+msgstr "Scegli se convertire anche i retweet in ticket."
 
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco:10
 msgid ""
@@ -9716,11 +9716,11 @@ msgstr "Risposta al link"
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:76
 msgid "Link GitHub issues to your tickets."
-msgstr "Collega GitLab issue ai tuoi tickets."
+msgstr "Collega le segnalazioni su GitHub ai tuoi ticket."
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:99
 msgid "Link GitLab issues to your tickets."
-msgstr "Collega GitLab issue ai tuoi tickets."
+msgstr "Collega le segnalzioni su GitLab ai tuoi ticket."
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:19
 msgid "Link Related Answer"
@@ -9924,7 +9924,7 @@ msgstr "Macro"
 
 #: app/controllers/tickets_mass_controller.rb:16
 msgid "Macro group restrictions do not cover all tickets"
-msgstr "Le restrizioni per i macro gruppi non riguardano tutti i tickets"
+msgstr "Le restrizioni per i macro gruppi non riguardano tutti i ticket"
 
 #: app/assets/javascripts/app/controllers/macro.coffee:3
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:69
@@ -10720,7 +10720,7 @@ msgstr "I Miei ticket in sospeso con promemoria raggiunto"
 
 #: db/seeds/overviews.rb:184
 msgid "My Replacement Tickets"
-msgstr "I miei Tickets come supplente"
+msgstr "I miei ticket come sostituto"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco:3
 msgid "My Stats"
@@ -12439,7 +12439,7 @@ msgstr "In sospeso fino a"
 
 #: db/seeds/roles.rb:24
 msgid "People who create Tickets ask for help."
-msgstr "Persone che creano i Tickets per chiedere aiuto."
+msgstr "Persone che creano i ticket per chiedere aiuto."
 
 #: app/assets/javascripts/app/models/postmaster_filter.coffee:10
 msgid "Perform actions"
@@ -13068,7 +13068,7 @@ msgstr "Chiamata ricevuta: %s"
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco:5
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco:30
 msgid "Recent Customer Tickets"
-msgstr "Tickets più recenti"
+msgstr "Ticket più recenti"
 
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:2
 msgid "Recent Logs"
@@ -18083,7 +18083,7 @@ msgstr "Ticket dell'Azienda"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats.jst.eco:3
 msgid "Tickets of User"
-msgstr "Tickets dell'utente"
+msgstr "Ticket dell'utente"
 
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts:10
 msgid "Tickets with \"%s\""
@@ -18322,7 +18322,7 @@ msgstr ""
 
 #: db/seeds/roles.rb:15
 msgid "To work on Tickets."
-msgstr "Per lavorare sui Tickets."
+msgstr "Per lavorare sui ticket."
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:49
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:109
@@ -19713,8 +19713,7 @@ msgid ""
 "What percentage of your tickets have you responded to, updated, or modified "
 "in some way today?"
 msgstr ""
-"Quale percentuale dei tuoi tickets hai risposto, aggiornato o modificato "
-"oggi?"
+"Quale percentuale dei tuoi ticket hai risposto, aggiornato o modificato oggi?"
 
 #: app/assets/javascripts/app/views/integration/clearbit.jst.eco:49
 msgid "What values of %s should be synced to organization."

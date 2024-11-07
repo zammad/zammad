@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-28 22:30+0000\n"
+"PO-Revision-Date: 2024-11-07 12:25+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (Cyrillic script) <https://translations.zammad.org/"
 "projects/zammad/zammad-stable/sr_Cyrl/>\n"
@@ -18831,8 +18831,9 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
-"#{article.id}\" target=\"zammad_app\">Погледај у #{config.product_name}</a>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}/#{article.id}\" target=\"zammad_app\">Погледај у #{config."
+"product_name}</a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
@@ -19572,8 +19573,7 @@ msgstr ""
 msgid ""
 "With checklist templates it is possible to pre-fill new checklists with "
 "initial items."
-msgstr ""
-"Са шаблонима је могуће аутоматски попунити списак за почетник задацима."
+msgstr "Са шаблонима је могуће аутоматски попунити списак за почетник задацима."
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:15
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:18
@@ -20532,8 +20532,8 @@ msgid ""
 "current,new,confirm,change,current password,new password,confirm password,"
 "change password"
 msgstr ""
-"тренутна,нова,потврди,промени,тренутна лозинка,нова лозинка,потврди лозинку,"
-"промени лозинку"
+"тренутна,нова,потврди,промени,тренутна лозинка,нова лозинка,потврди "
+"лозинку,промени лозинку"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:281
 msgid "custom"
@@ -21633,8 +21633,7 @@ msgstr "twitter статус"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:26
 msgid "twofactor,2fa,security key,passkey,authenticator app"
-msgstr ""
-"други фактор,2fa,безбедносни кључ,passkey,апликација за аутентификацију"
+msgstr "други фактор,2fa,безбедносни кључ,passkey,апликација за аутентификацију"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:423
 msgid "unassign user"

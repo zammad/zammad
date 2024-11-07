@@ -4701,7 +4701,8 @@ msgstr ""
 
 #: db/seeds/settings.rb:4158
 msgid "Define postmaster filter to import archive mailboxes."
-msgstr "Определите фильтр почтового мастера для импорта архива почтовых ящиков."
+msgstr ""
+"Определите фильтр почтового мастера для импорта архива почтовых ящиков."
 
 #: db/seeds/settings.rb:4155
 msgid "Define postmaster filter."

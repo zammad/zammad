@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-02 08:00+0000\n"
-"Last-Translator: Michal <m.plawsiuk@razit.pl>\n"
+"PO-Revision-Date: 2024-11-06 22:00+0000\n"
+"Last-Translator: Szkolarz <lukasz.szkolarz@gmail.com>\n"
 "Language-Team: Polish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/pl/>\n"
 "Language: pl\n"
@@ -7607,7 +7607,7 @@ msgstr "Nie udało się wycofać migracji kanału!"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:150
 msgid "Failed to save checklist order."
-msgstr ""
+msgstr "Nie udało się zapisać kolejności listy kontrolnej."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:124
 #, fuzzy
@@ -8250,7 +8250,7 @@ msgstr "Sekret klienta Google"
 
 #: app/assets/javascripts/app/views/clues/clues_content.jst.eco:17
 msgid "Got it!"
-msgstr ""
+msgstr "Zrozumiano!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:16
 msgid "Green"
@@ -8931,7 +8931,7 @@ msgstr "Plik obrazu"
 #: app/assets/javascripts/app/lib/app_post/image_service.coffee:95
 #: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:360
 msgid "Image file size is too large, please try inserting a smaller file."
-msgstr ""
+msgstr "Rozmiar pliku graficznego jest za duży. Spróbuj wstawić mniejszy plik."
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
@@ -12989,7 +12989,7 @@ msgstr "Wybierz nazwę dla aplikacji, my przygotujemy Ci unikalny token."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
 msgid "Pin this panel"
-msgstr ""
+msgstr "Przypnij ten panel"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/highlighter.coffee:24
 msgid "Pink"
@@ -14083,7 +14083,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:101
 msgid "Resetting the order of your ticket overviews failed."
-msgstr ""
+msgstr "Nie udało się zresetować kolejności widoku zgłoszeń."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:202
 #, fuzzy
@@ -14945,6 +14945,8 @@ msgstr "Nadawca ostatniego wpisu"
 #: app/models/ticket/article.rb:305
 msgid "Sending an email without a valid recipient is not possible."
 msgstr ""
+"Wysłanie wiadomości e-mail bez podania prawidłowego adresata nie jest "
+"możliwe."
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:35
 msgid "Sending…"
@@ -16002,11 +16004,11 @@ msgstr "Wsparcie wielojęzycznej bazy wiedzy."
 
 #: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:16
 msgid "Switch back to old layout"
-msgstr ""
+msgstr "Wróć do starej wersji układu"
 
 #: app/assets/javascripts/app/views/keyboard_shortcuts.jst.eco:14
 msgid "Switch to new layout"
-msgstr ""
+msgstr "Przełącz na nową wersję układu"
 
 #: db/seeds/schedulers.rb:142
 msgid "Sync calendars with iCal feeds."
@@ -17553,6 +17555,7 @@ msgstr "Metoda uwierzytelniania dwuskładnikowego nie jest włączona."
 #: app/services/service/user/two_factor/remove_method_credentials.rb:37
 msgid "The two-factor credentials you're trying to delete do not exist"
 msgstr ""
+"Dwuskładnikowe dane uwierzytelniające, które próbujesz usunąć, nie istnieją"
 
 #: app/models/setting/validation/saml/security.rb:43
 msgid "The type of the private key is wrong."
@@ -19448,7 +19451,7 @@ msgstr "Odblokuj"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
 msgid "Unpin this panel"
-msgstr ""
+msgstr "Odepnij ten panel"
 
 #: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:77
 msgid "Unread notification"
@@ -19777,7 +19780,7 @@ msgstr "Aktualizowanie bazy danych"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOverviews.vue:76
 msgid "Updating the order of your ticket overviews failed."
-msgstr ""
+msgstr "Aktualizacja kolejności przeglądów zgłoszeń nie powiodła się."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:264
 #, fuzzy
@@ -19860,7 +19863,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:149
 msgid "Use the camera to take a photo for the avatar."
-msgstr ""
+msgstr "Użyj aparatu, aby zrobić zdjęcie swojego awatara."
 
 #: db/seeds/settings.rb:2259
 msgid ""
@@ -20802,6 +20805,8 @@ msgid ""
 "You can open the Keyboard Shortcuts dialog here and view the new and "
 "improved layout, or revert to the old one if you prefer it."
 msgstr ""
+"Możesz tutaj otworzyć okno dialogowe Skróty klawiszowe i zobaczyć nowy, "
+"ulepszony układ, lub wrócić do starego, jeśli wolisz."
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:282
 msgid ""
@@ -21525,6 +21530,8 @@ msgid ""
 "current,new,confirm,change,current password,new password,confirm password,"
 "change password"
 msgstr ""
+"bieżące,nowe,potwierdź,zmień,bieżące hasło,nowe hasło,potwierdź hasło,zmień "
+"hasło"
 
 #: app/assets/javascripts/app/controllers/translation.coffee:281
 msgid "custom"
@@ -22046,7 +22053,7 @@ msgstr "lewo"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts:27
 msgid "linked accounts,facebook,github,gitlab,google,linkedin,microsoft,saml"
-msgstr ""
+msgstr "połączone konta,facebook,github,gitlab,google,linkedin,microsoft,saml"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSeparatorMore.vue:18
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:140
@@ -22288,7 +22295,7 @@ msgstr "lub zaloguj się przy użyciu"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:24
 msgid "order,sort,overview,ticket,sorting"
-msgstr ""
+msgstr "kolejność,sortuj,przegląd,zgłoszenie,sortowanie"
 
 #: app/assets/javascripts/app/controllers/_profile/calendar_subscriptions.coffee:18
 msgid "pending"

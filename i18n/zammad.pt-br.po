@@ -5949,7 +5949,8 @@ msgstr "desabilitar notificações"
 
 #: db/seeds/settings.rb:1303
 msgid "Disables user creation on logon with a third-party application."
-msgstr "Desativa a criação de usuários no logon com um aplicativo de terceiros."
+msgstr ""
+"Desativa a criação de usuários no logon com um aplicativo de terceiros."
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:23
 msgid ""
@@ -19064,9 +19065,9 @@ msgstr ""
 "<% end %>\n"
 "<br>\n"
 "<div>\n"
-"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}/#{article.id}\" target=\"zammad_app\">Ver isto no #{config."
-"product_name}</a>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}/"
+"#{article.id}\" target=\"zammad_app\">Ver isto no #{config.product_name}</"
+"a>\n"
 "</div>\n"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:45
