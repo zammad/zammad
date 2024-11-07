@@ -6,7 +6,7 @@ import { ErrorStatusCodes } from '#shared/types/error.ts'
 
 import type { NavigationHookAfter, Router } from 'vue-router'
 
-interface ErrorOptions {
+export interface ErrorOptions {
   title: string
   message: string
   statusCode: ErrorStatusCodes

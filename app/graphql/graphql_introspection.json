@@ -4772,12 +4772,6 @@
               "description": "The entity could not be found",
               "isDeprecated": false,
               "deprecationReason": null
-            },
-            {
-              "name": "Unknown",
-              "description": "Unknown entity access",
-              "isDeprecated": false,
-              "deprecationReason": null
             }
           ],
           "possibleTypes": null

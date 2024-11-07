@@ -44,6 +44,7 @@ export interface UserTaskbarTabPlugin {
   ) => T
   buildTaskbarTabLink?: (
     entity?: ObjectWithId | ObjectWithUid | null,
+    entityKey?: string,
   ) => string | undefined
   confirmTabRemove?: (dirty?: boolean) => Promise<boolean>
 }

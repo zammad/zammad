@@ -1,15 +1,17 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, useTemplateRef, toRef, watch } from 'vue'
+import { computed, toRef } from 'vue'
 
 import { useTicketUpdatesSubscription } from '#shared/entities/ticket/graphql/subscriptions/ticketUpdates.api.ts'
 import { EnumTicketStateColorCode, type Ticket } from '#shared/graphql/types.ts'
 import SubscriptionHandler from '#shared/server/apollo/handler/SubscriptionHandler.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
+import { GraphQLErrorTypes } from '#shared/types/error.ts'
 
 import CommonTicketStateIndicatorIcon from '#desktop/components/CommonTicketStateIndicatorIcon/CommonTicketStateIndicatorIcon.vue'
 import CommonUpdateIndicator from '#desktop/components/CommonUpdateIndicator/CommonUpdateIndicator.vue'
+import { useUserTaskbarTabLink } from '#desktop/composables/useUserTaskbarTabLink.ts'
 import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
 import { useTicketNumber } from '#desktop/pages/ticket/composables/useTicketNumber.ts'
 
@@ -26,14 +28,13 @@ const ticketUpdatesSubscription = new SubscriptionHandler(
     ticketId: props.taskbarTab.entity!.id,
     initial: true,
   }),
+  {
+    // NB: Silence toast notifications for particular errors, these will be handled by the layout page component.
+    errorCallback: (errorHandler) =>
+      errorHandler.type !== GraphQLErrorTypes.Forbidden &&
+      errorHandler.type !== GraphQLErrorTypes.RecordNotFound,
+  },
 )
-
-const ticketLink = useTemplateRef('ticket-link')
-
-const isTicketUpdated = computed(() => {
-  if (ticketLink.value?.isExactActive) return false
-  return props.taskbarTab.notify
-})
 
 const { updateTaskbarTab } = useUserCurrentTaskbarTabsStore()
 
@@ -45,6 +46,16 @@ const updateNotifyFlag = (notify: boolean) => {
     notify,
   })
 }
+
+const { tabLinkInstance } = useUserTaskbarTabLink(() => {
+  // Reset the notify flag when the tab becomes active.
+  if (props.taskbarTab.notify) updateNotifyFlag(false)
+})
+
+const isTicketUpdated = computed(() => {
+  if (tabLinkInstance.value?.isExactActive) return false
+  return props.taskbarTab.notify
+})
 
 const { user } = useSessionStore()
 
@@ -72,19 +83,6 @@ ticketUpdatesSubscription.onSubscribed().then(() => {
     updateNotifyFlag(true)
   })
 })
-
-watch(
-  () => ticketLink.value?.isExactActive,
-  (isExactActive) => {
-    if (!isExactActive) return
-
-    // Reset the notify flag when the tab becomes active.
-    if (props.taskbarTab.notify) updateNotifyFlag(false)
-
-    // Scroll the tab into view when it becomes active.
-    ticketLink.value?.$el?.scrollIntoView?.()
-  },
-)
 
 const currentState = computed(() => {
   return props.taskbarTab.entity?.state?.name || ''
@@ -122,7 +120,7 @@ const currentViewTitle = computed(
 <template>
   <CommonLink
     v-if="taskbarTabLink"
-    ref="ticket-link"
+    ref="tabLinkInstance"
     v-tooltip="currentViewTitle"
     class="flex grow gap-2 rounded-md px-2 py-3 hover:no-underline focus-visible:rounded-md focus-visible:outline-none group-hover/tab:bg-blue-600 group-hover/tab:dark:bg-blue-900"
     :link="taskbarTabLink"

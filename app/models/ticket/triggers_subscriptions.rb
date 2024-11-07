@@ -14,6 +14,10 @@ module Ticket::TriggersSubscriptions
 
   def trigger_subscriptions
     Gql::Subscriptions::TicketUpdates.trigger(self, arguments: { ticket_id: Gql::ZammadSchema.id_from_object(self) })
+
+    return true if !saved_change_to_attribute?('group_id')
+
+    TaskbarUpdateTriggerSubscriptionsJob.perform_later("#{self.class}-#{id}")
   end
 
   TRIGGER_CHECKLIST_UPDATE_ON = %w[title group_id].freeze

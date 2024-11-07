@@ -22,7 +22,7 @@ const route: RouteRecordRaw[] = [
   {
     path: '/tickets/:internalId(\\d+)',
     alias: ['/ticket/:internalId(\\d+)', '/ticket/zoom/:internalId(\\d+)'],
-    name: 'TicketDetail',
+    name: 'TicketDetailView',
     props: true,
     component: () => import('./views/TicketDetailView.vue'),
     meta: {
@@ -30,6 +30,10 @@ const route: RouteRecordRaw[] = [
       requiresAuth: true,
       requiredPermission: ['ticket.agent', 'ticket.customer'],
       taskbarTabEntity: EnumTaskbarEntity.TicketZoom,
+      messageForbidden: __('You have insufficient rights to view this ticket.'),
+      messageNotFound: __(
+        'Ticket with specified ID was not found. Try checking the URL for errors.',
+      ),
       level: 2,
     },
   },

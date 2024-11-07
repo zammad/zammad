@@ -813,9 +813,7 @@ export enum EnumTaskbarEntityAccess {
   /** Access to this entity is granted */
   Granted = 'Granted',
   /** The entity could not be found */
-  NotFound = 'NotFound',
-  /** Unknown entity access */
-  Unknown = 'Unknown'
+  NotFound = 'NotFound'
 }
 
 /** Option to choose SQL sorting direction */

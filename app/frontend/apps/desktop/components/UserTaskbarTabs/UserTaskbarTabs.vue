@@ -137,16 +137,13 @@ const getTaskbarTabLink = (tabEntityKey: string) => {
   const taskbarTab = taskbarTabListByTabEntityKey.value[tabEntityKey]
   if (!taskbarTab) return
 
-  if (
-    taskbarTab.entityAccess === EnumTaskbarEntityAccess.Forbidden ||
-    taskbarTab.entityAccess === EnumTaskbarEntityAccess.NotFound
-  )
-    return
-
   const plugin = getTaskbarTabTypePlugin(taskbarTab.type)
   if (typeof plugin.buildTaskbarTabLink !== 'function') return
 
-  return plugin.buildTaskbarTabLink(taskbarTab.entity) ?? '#'
+  return (
+    plugin.buildTaskbarTabLink(taskbarTab.entity, taskbarTab.tabEntityKey) ??
+    '#'
+  )
 }
 
 const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()

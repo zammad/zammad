@@ -9,7 +9,6 @@ import { useRouter } from 'vue-router'
 import {
   EnumTaskbarApp,
   EnumTaskbarEntity,
-  // EnumTicketStateColorCode,
   type UserCurrentTaskbarItemListQuery,
   type UserCurrentTaskbarItemListUpdatesSubscription,
   type UserCurrentTaskbarItemListUpdatesSubscriptionVariables,
@@ -226,6 +225,10 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
       () => activeTaskbarTab.value?.taskbarTabId,
     )
 
+    const activeTaskbarTabEntityAccess = computed(
+      () => activeTaskbarTab.value?.entityAccess,
+    )
+
     const hasTaskbarTabs = computed(() => taskbarTabList.value?.length > 0)
 
     const taskbarTabListByTabEntityKey = computed(() =>
@@ -293,7 +296,7 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
       }),
     )
 
-    const addTaskbarTab = (
+    const addTaskbarTab = async (
       taskbarTabEntity: EnumTaskbarEntity,
       tabEntityKey: string,
       tabEntityInternalId: string,
@@ -327,7 +330,7 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
         }
       }
 
-      taskbarAddMutation
+      await taskbarAddMutation
         .send({
           input: {
             app: EnumTaskbarApp.Desktop,
@@ -399,13 +402,13 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
       useUserCurrentTaskbarItemTouchLastContactMutation(),
     )
 
-    const touchTaskbarTab = (taskbarTabId: ID) => {
-      taskbarTouchMutation.send({
+    const touchTaskbarTab = async (taskbarTabId: ID) => {
+      await taskbarTouchMutation.send({
         id: taskbarTabId,
       })
     }
 
-    const upsertTaskbarTab = (
+    const upsertTaskbarTab = async (
       taskbarTabEntity: EnumTaskbarEntity,
       tabEntityKey: string,
       tabEntityInternalId: string,
@@ -413,13 +416,13 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
       activeTaskbarTabEntityKey.value = tabEntityKey
 
       if (!taskbarTabExists(taskbarTabEntity, tabEntityKey)) {
-        addTaskbarTab(taskbarTabEntity, tabEntityKey, tabEntityInternalId)
+        await addTaskbarTab(taskbarTabEntity, tabEntityKey, tabEntityInternalId)
       }
 
       const taskbarTab = taskbarTabListByTabEntityKey.value[tabEntityKey]
       if (!taskbarTab || !taskbarTab.taskbarTabId) return
 
-      touchTaskbarTab(taskbarTab.taskbarTabId)
+      await touchTaskbarTab(taskbarTab.taskbarTabId)
     }
 
     const resetActiveTaskbarTab = () => {
@@ -510,6 +513,7 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
       activeTaskbarTabId,
       activeTaskbarTab,
       activeTaskbarTabEntityKey,
+      activeTaskbarTabEntityAccess,
       activeTaskbarTabContext,
       taskbarTabsInCreation,
       taskbarTabsRaw,

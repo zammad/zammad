@@ -12,6 +12,12 @@ import {
   waitForTicketSharedDraftStartListQueryCalls,
 } from '#shared/entities/ticket-shared-draft-start/graphql/queries/ticketSharedDraftStartList.mocks.ts'
 import { waitForUserQueryCalls } from '#shared/entities/user/graphql/queries/user.mocks.ts'
+import {
+  EnumTaskbarEntity,
+  EnumTaskbarEntityAccess,
+} from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
+import getUuid from '#shared/utils/getUuid.ts'
 
 import { mockUserCurrentTaskbarItemListQuery } from '#desktop/entities/user/current/graphql/queries/userCurrentTaskbarItemList.mocks.ts'
 import {
@@ -37,9 +43,24 @@ describe('testing tickets create a11y view', async () => {
   })
 
   it('has no accessibility violations in main content', async () => {
+    const uid = getUuid()
+
+    mockUserCurrentTaskbarItemListQuery({
+      userCurrentTaskbarItemList: [
+        {
+          __typename: 'UserTaskbarItem',
+          id: convertToGraphQLId('Taskbar', 1),
+          key: `TicketCreateScreen-${uid}`,
+          callback: EnumTaskbarEntity.TicketCreate,
+          entityAccess: EnumTaskbarEntityAccess.Granted,
+          entity: null,
+        },
+      ],
+    })
+
     handleMockFormUpdaterQuery()
 
-    const view = await visitView('/tickets/create')
+    const view = await visitView(`/tickets/create/${uid}`)
 
     const results = await axe(view.html())
 
@@ -47,6 +68,20 @@ describe('testing tickets create a11y view', async () => {
   })
 
   it('has no accessibility violations in customer sidebar', async () => {
+    const uid = getUuid()
+
+    mockUserCurrentTaskbarItemListQuery({
+      userCurrentTaskbarItemList: [
+        {
+          __typename: 'UserTaskbarItem',
+          id: convertToGraphQLId('Taskbar', 1),
+          key: `TicketCreateScreen-${uid}`,
+          callback: EnumTaskbarEntity.TicketCreate,
+          entityAccess: EnumTaskbarEntityAccess.Granted,
+          entity: null,
+        },
+      ],
+    })
     handleMockFormUpdaterQuery({
       customer_id: {
         value: 2,
@@ -55,7 +90,7 @@ describe('testing tickets create a11y view', async () => {
 
     handleMockUserQuery()
 
-    const view = await visitView('/tickets/create')
+    const view = await visitView(`/tickets/create/${uid}`)
 
     await waitForUserQueryCalls()
 
@@ -73,6 +108,21 @@ describe('testing tickets create a11y view', async () => {
   })
 
   it('has no accessibility violations in organization sidebar', async () => {
+    const uid = getUuid()
+
+    mockUserCurrentTaskbarItemListQuery({
+      userCurrentTaskbarItemList: [
+        {
+          __typename: 'UserTaskbarItem',
+          id: convertToGraphQLId('Taskbar', 1),
+          key: `TicketCreateScreen-${uid}`,
+          callback: EnumTaskbarEntity.TicketCreate,
+          entityAccess: EnumTaskbarEntityAccess.Granted,
+          entity: null,
+        },
+      ],
+    })
+
     handleMockFormUpdaterQuery({
       customer_id: {
         value: 2,
@@ -88,7 +138,7 @@ describe('testing tickets create a11y view', async () => {
 
     handleMockUserQuery()
 
-    const view = await visitView('/tickets/create', {
+    const view = await visitView(`/tickets/create/${uid}`, {
       global: {
         stubs: {
           'transition-group': false,
@@ -116,6 +166,21 @@ describe('testing tickets create a11y view', async () => {
   })
 
   it('has no accessibility violations in shared drafts sidebar', async () => {
+    const uid = getUuid()
+
+    mockUserCurrentTaskbarItemListQuery({
+      userCurrentTaskbarItemList: [
+        {
+          __typename: 'UserTaskbarItem',
+          id: convertToGraphQLId('Taskbar', 1),
+          key: `TicketCreateScreen-${uid}`,
+          callback: EnumTaskbarEntity.TicketCreate,
+          entityAccess: EnumTaskbarEntityAccess.Granted,
+          entity: null,
+        },
+      ],
+    })
+
     handleMockFormUpdaterQuery({
       group_id: {
         value: 1,
@@ -132,7 +197,7 @@ describe('testing tickets create a11y view', async () => {
       ticketSharedDraftStartList: [],
     })
 
-    const view = await visitView('/tickets/create')
+    const view = await visitView(`/tickets/create/${uid}`)
 
     await waitForTicketSharedDraftStartListQueryCalls()
 

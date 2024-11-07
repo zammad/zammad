@@ -7,21 +7,20 @@ import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { mockTicketQuery } from '#shared/entities/ticket/graphql/queries/ticket.mocks.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
-import getUuid from '#shared/utils/getUuid.ts'
 
 import { mockTicketExternalReferencesIssueTrackerItemListQuery } from '#desktop/pages/ticket/graphql/queries/ticketExternalReferencesIssueTrackerList.mocks.ts'
 
-describe('Ticket detail view GitLab integration', () => {
-  it('displays GitLab integration on ticket detail page', async () => {
+describe('Ticket detail view - GitLab integration', () => {
+  it('displays sidebar', async () => {
     mockPermissions(['ticket.agent'])
 
     await mockApplicationConfig({
       gitlab_integration: true,
     })
 
-    const ticket = createDummyTicket()
-
-    mockTicketQuery({ ticket })
+    mockTicketQuery({
+      ticket: createDummyTicket(),
+    })
 
     const view = await visitView('/tickets/1')
 
@@ -32,41 +31,7 @@ describe('Ticket detail view GitLab integration', () => {
     ).toBeInTheDocument()
   })
 
-  it('displays GitLab integration on ticket create page', async () => {
-    mockPermissions(['ticket.agent'])
-
-    await mockApplicationConfig({
-      gitlab_integration: true,
-    })
-
-    const uid = getUuid()
-    const view = await visitView(`/ticket/create/${uid}`)
-
-    const sidebar = view.getByLabelText('Content sidebar')
-
-    expect(
-      within(sidebar).getByRole('button', { name: 'GitLab' }),
-    ).toBeInTheDocument()
-  })
-
-  it('hides GitLab integration when not available on ticket create screen', async () => {
-    mockPermissions(['ticket.agent'])
-
-    await mockApplicationConfig({
-      gitlab_integration: false,
-    })
-
-    const uid = getUuid()
-    const view = await visitView(`/ticket/create/${uid}`)
-
-    const sidebar = view.getByLabelText('Content sidebar')
-
-    expect(
-      within(sidebar).queryByRole('button', { name: 'GitLab' }),
-    ).not.toBeInTheDocument()
-  })
-
-  it('hides GitLab integration when not available on ticket detail screen', async () => {
+  it('hides sidebar when not available', async () => {
     mockPermissions(['ticket.agent'])
 
     mockTicketExternalReferencesIssueTrackerItemListQuery({
@@ -77,9 +42,9 @@ describe('Ticket detail view GitLab integration', () => {
       gitlab_integration: false,
     })
 
-    const ticket = createDummyTicket()
-
-    mockTicketQuery({ ticket })
+    mockTicketQuery({
+      ticket: createDummyTicket(),
+    })
 
     const view = await visitView('/tickets/1')
 

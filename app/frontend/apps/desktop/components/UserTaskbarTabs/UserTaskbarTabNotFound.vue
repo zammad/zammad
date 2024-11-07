@@ -1,9 +1,25 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { useUserTaskbarTabLink } from '#desktop/composables/useUserTaskbarTabLink.ts'
+
+import type { UserTaskbarTabEntityProps } from './types.ts'
+
+defineProps<UserTaskbarTabEntityProps>()
+
+const { tabLinkInstance } = useUserTaskbarTabLink()
+</script>
 
 <template>
-  <div class="flex grow cursor-pointer gap-2 rounded-md px-2 py-3">
+  <CommonLink
+    v-if="taskbarTabLink"
+    ref="tabLinkInstance"
+    v-tooltip="$t('This object could not be found.')"
+    class="flex grow gap-2 rounded-md px-2 py-3 hover:no-underline focus-visible:rounded-md focus-visible:outline-none group-hover/tab:bg-blue-600 group-hover/tab:dark:bg-blue-900"
+    :link="taskbarTabLink"
+    exact-active-class="!bg-blue-800 text-white"
+    internal
+  >
     <CommonIcon
       name="x-lg"
       size="small"
@@ -12,16 +28,15 @@
     />
 
     <CommonLabel
-      v-tooltip="$t('This tab could not be found.')"
-      class="block truncate text-gray-300 dark:text-neutral-400"
+      class="-:text-gray-300 -:dark:text-neutral-400 block truncate group-hover/tab:text-white group-focus-visible/link:text-white"
     >
       {{ $t('Not found') }}
     </CommonLabel>
-  </div>
+  </CommonLink>
 </template>
 
 <style scoped>
-.draggable span {
-  @apply text-neutral-400;
+.router-link-active span {
+  @apply text-white;
 }
 </style>

@@ -23,6 +23,7 @@ export interface RouteRecordMeta {
   hasHeader?: boolean
   hasOwnLandmarks?: boolean
   taskbarTabEntity?: EnumTaskbarEntity
+  taskbarTabEntityKey?: string
   level?: number
 }
 

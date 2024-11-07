@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { getByRole, queryByRole } from '@testing-library/vue'
+import { getByRole } from '@testing-library/vue'
 import { type RouteRecordRaw } from 'vue-router'
 
 import {
@@ -187,6 +187,7 @@ describe('UserTaskbarTabs.vue', () => {
           key: 'Ticket-999',
           callback: EnumTaskbarEntity.TicketZoom,
           entityAccess: EnumTaskbarEntityAccess.Forbidden,
+          entity: null,
         },
       ],
     })
@@ -204,7 +205,13 @@ describe('UserTaskbarTabs.vue', () => {
       'Drag and drop to reorder your tabs.',
     )
 
-    expect(queryByRole(tab, 'link')).not.toBeInTheDocument()
+    const link = getByRole(tab, 'link')
+
+    expect(link).toHaveAttribute('href', '/desktop/tickets/999')
+
+    expect(link).toHaveAccessibleName(
+      'You have insufficient rights to view this object.',
+    )
 
     expect(
       getByRole(tab, 'button', { name: 'Close this tab' }),
@@ -220,6 +227,7 @@ describe('UserTaskbarTabs.vue', () => {
           key: 'Ticket-999',
           callback: EnumTaskbarEntity.TicketZoom,
           entityAccess: EnumTaskbarEntityAccess.NotFound,
+          entity: null,
         },
       ],
     })
@@ -237,7 +245,10 @@ describe('UserTaskbarTabs.vue', () => {
       'Drag and drop to reorder your tabs.',
     )
 
-    expect(queryByRole(tab, 'link')).not.toBeInTheDocument()
+    const link = getByRole(tab, 'link')
+
+    expect(link).toHaveAttribute('href', '/desktop/tickets/999')
+    expect(link).toHaveAccessibleName('This object could not be found.')
 
     expect(
       getByRole(tab, 'button', { name: 'Close this tab' }),

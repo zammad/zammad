@@ -7,9 +7,15 @@ import { mockApplicationConfig } from '#tests/support/mock-applicationConfig.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
 import { waitForTicketCreateMutationCalls } from '#shared/entities/ticket/graphql/mutations/create.mocks.ts'
-import { EnumTicketExternalReferencesIssueTrackerItemState } from '#shared/graphql/types.ts'
+import {
+  EnumTaskbarEntity,
+  EnumTaskbarEntityAccess,
+  EnumTicketExternalReferencesIssueTrackerItemState,
+} from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import getUuid from '#shared/utils/getUuid.ts'
 
+import { mockUserCurrentTaskbarItemListQuery } from '#desktop/entities/user/current/graphql/queries/userCurrentTaskbarItemList.mocks.ts'
 import {
   handleCustomerMock,
   handleMockFormUpdaterQuery,
@@ -19,17 +25,76 @@ import {
 import { mockTicketExternalReferencesIssueTrackerItemAddMutation } from '../graphql/mutations/ticketExternalReferencesIssueTrackerItemAdd.mocks.ts'
 import { mockTicketExternalReferencesIssueTrackerItemListQuery } from '../graphql/queries/ticketExternalReferencesIssueTrackerList.mocks.ts'
 
-describe('Ticket create GitLab links', () => {
-  beforeEach(() => {
+describe('Ticket create - GitLab links', () => {
+  it('displays sidebar', async () => {
+    mockPermissions(['ticket.agent'])
+
+    await mockApplicationConfig({
+      gitlab_integration: true,
+    })
+
+    const uid = getUuid()
+
+    mockUserCurrentTaskbarItemListQuery({
+      userCurrentTaskbarItemList: [
+        {
+          __typename: 'UserTaskbarItem',
+          id: convertToGraphQLId('Taskbar', 1),
+          key: `TicketCreateScreen-${uid}`,
+          callback: EnumTaskbarEntity.TicketCreate,
+          entityAccess: EnumTaskbarEntityAccess.Granted,
+          entity: null,
+        },
+      ],
+    })
+
+    const view = await visitView(`/ticket/create/${uid}`)
+
+    const sidebar = view.getByLabelText('Content sidebar')
+
+    expect(
+      within(sidebar).getByRole('button', { name: 'GitLab' }),
+    ).toBeInTheDocument()
+  })
+
+  it('hides sidebar when not available', async () => {
+    mockPermissions(['ticket.agent'])
+
+    await mockApplicationConfig({
+      gitlab_integration: false,
+    })
+
+    const uid = getUuid()
+
+    mockUserCurrentTaskbarItemListQuery({
+      userCurrentTaskbarItemList: [
+        {
+          __typename: 'UserTaskbarItem',
+          id: convertToGraphQLId('Taskbar', 2),
+          key: `TicketCreateScreen-${uid}`,
+          callback: EnumTaskbarEntity.TicketCreate,
+          entityAccess: EnumTaskbarEntityAccess.Granted,
+          entity: null,
+        },
+      ],
+    })
+
+    const view = await visitView(`/ticket/create/${uid}`)
+
+    const sidebar = view.getByLabelText('Content sidebar')
+
+    expect(
+      within(sidebar).queryByRole('button', { name: 'GitLab' }),
+    ).not.toBeInTheDocument()
+  })
+
+  it('submits a new ticket with gitlab links', async () => {
     mockApplicationConfig({
       gitlab_integration: true,
       ui_task_mananger_max_task_count: 30,
       ui_ticket_create_available_types: ['phone-in', 'phone-out', 'email-out'],
     })
-    mockPermissions(['ticket.agent'])
-  })
 
-  it('submits a new ticket with gitlab links', async () => {
     handleMockFormUpdaterQuery({
       pending_time: {
         show: false,
@@ -41,6 +106,19 @@ describe('Ticket create GitLab links', () => {
     })
 
     const uid = getUuid()
+
+    mockUserCurrentTaskbarItemListQuery({
+      userCurrentTaskbarItemList: [
+        {
+          __typename: 'UserTaskbarItem',
+          id: convertToGraphQLId('Taskbar', 3),
+          key: `TicketCreateScreen-${uid}`,
+          callback: EnumTaskbarEntity.TicketCreate,
+          entityAccess: EnumTaskbarEntityAccess.Granted,
+          entity: null,
+        },
+      ],
+    })
 
     const view = await visitView(`/ticket/create/${uid}`)
 

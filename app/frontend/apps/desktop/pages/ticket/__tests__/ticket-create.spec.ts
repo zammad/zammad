@@ -235,7 +235,7 @@ describe('ticket create view', async () => {
 
       // should not be in the document anymore
       await waitFor(() =>
-        expect(view.getByLabelText('Title')).not.toHaveValue('Test Ticket'),
+        expect(view.queryByLabelText('Title')).not.toBeInTheDocument(),
       )
     })
 

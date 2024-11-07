@@ -4,7 +4,6 @@ import { computed, inject, provide } from 'vue'
 
 import { useTicketQuery } from '#shared/entities/ticket/graphql/queries/ticket.api.ts'
 import type { TicketById } from '#shared/entities/ticket/types.ts'
-import { useErrorHandler } from '#shared/errors/useErrorHandler.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
@@ -21,9 +20,6 @@ export const initializeTicketInformation = (
     convertToGraphQLId('Ticket', internalId.value),
   )
 
-  // TODO: stay with his for now, but need to be re-implemented for the tab situation.
-  const { createQueryErrorHandler } = useErrorHandler()
-
   const ticketQuery = new QueryHandler(
     // Currently we need no subscribeToMore here, because the tab registration holds the ticket subscription.
     useTicketQuery(
@@ -32,14 +28,6 @@ export const initializeTicketInformation = (
       }),
       { fetchPolicy: 'cache-first' },
     ),
-    {
-      errorCallback: createQueryErrorHandler({
-        notFound: __(
-          'Ticket with specified ID was not found. Try checking the URL for errors.',
-        ),
-        forbidden: __('You have insufficient rights to view this ticket.'),
-      }),
-    },
   )
 
   const result = ticketQuery.result()

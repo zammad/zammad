@@ -25,8 +25,11 @@ export default <UserTaskbarTabPlugin>{
       ticket_id: entityInternalId,
     }
   },
-  buildTaskbarTabLink: (entity?: TicketType) => {
-    if (!entity?.internalId) return
+  buildTaskbarTabLink: (entity?: TicketType, entityKey?: string) => {
+    if (!entity?.internalId) {
+      if (!entityKey) return
+      return `/tickets/${entityKey.split('-')?.[1]}`
+    }
     return `/tickets/${entity.internalId}`
   },
   confirmTabRemove: async (dirty?: boolean) => {

@@ -7,6 +7,5 @@ module Gql::Types::Enum
     value 'Granted', 'Access to this entity is granted'
     value 'Forbidden', 'Access to this entity is forbidden'
     value 'NotFound', 'The entity could not be found'
-    value 'Unknown', 'Unknown entity access'
   end
 end

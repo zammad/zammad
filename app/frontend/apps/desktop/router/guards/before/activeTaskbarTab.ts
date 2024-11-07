@@ -49,11 +49,15 @@ const activeTaskbarTab: NavigationGuard = async (
     await taskbarTabStore.waitForTaskbarListLoaded()
   }
 
-  taskbarTabStore.upsertTaskbarTab(
+  await taskbarTabStore.upsertTaskbarTab(
     taskbarTabEntityType,
     taskbarTabEntityKey,
     tabEntityInternalId,
   )
+
+  // Remember the entity key for the current taskbar tab,
+  //   so it can be used for checking the entity access.
+  to.meta.taskbarTabEntityKey = taskbarTabEntityKey
 
   next()
 }

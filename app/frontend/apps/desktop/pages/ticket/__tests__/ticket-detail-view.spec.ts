@@ -4,7 +4,6 @@ import { within } from '@testing-library/vue'
 import { beforeEach, expect } from 'vitest'
 
 import createArticle from '#tests/graphql/factories/TicketArticle.ts'
-import { getTestRouter } from '#tests/support/components/renderComponent.ts'
 import { visitView } from '#tests/support/components/visitView.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
@@ -22,22 +21,6 @@ describe('Ticket detail view', () => {
 
     mockLinkListQuery({
       linkList: [],
-    })
-  })
-
-  describe('Error handling', () => {
-    it.todo('redirects if ticket id is not found', async () => {
-      // :TODO Test as soon as the bug for the Query has complexity of 19726, has been resolved,
-      //   and specific ticket error handling is in place.
-      mockTicketQuery({
-        ticket: null,
-      })
-
-      await visitView('/tickets/232')
-
-      const router = getTestRouter()
-
-      expect(router.currentRoute.value.name).toEqual('Error')
     })
   })
 
@@ -111,6 +94,7 @@ describe('Ticket detail view', () => {
       mockTicketQuery({
         ticket: createDummyTicket(),
       })
+
       const testArticle = createDummyArticle({
         bodyWithUrls: 'foobar',
       })
