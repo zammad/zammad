@@ -134,8 +134,8 @@ msgstr ""
 msgid "%s Attribute"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:34
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist/show.coffee:34
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/title_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:50
 msgid "%s Checklist"
 msgstr ""
@@ -924,7 +924,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:39
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco:15
 #: app/assets/javascripts/app/views/tag/index.jst.eco:25
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:19
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show.jst.eco:19
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:278
 #: app/frontend/shared/form/i18n/locales.ts:25
 msgid "Add"
@@ -1048,7 +1048,7 @@ msgstr ""
 msgid "Add email"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:5
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:5
 msgid "Add empty checklist"
 msgstr ""
 
@@ -1056,7 +1056,7 @@ msgstr ""
 msgid "Add first level heading"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:11
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:11
 msgid "Add from a template"
 msgstr ""
 
@@ -2394,7 +2394,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:236
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:286
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:343
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:202
@@ -2645,7 +2645,7 @@ msgstr ""
 msgid "Check channels."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:64
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row.jst.eco:24
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:54
 msgid "Check item"
 msgstr ""
@@ -2659,7 +2659,7 @@ msgstr ""
 msgid "Check this box if you want to customise how options are sorted. If the box is not checked, values are sorted in alphabetical order."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:54
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
 msgid "Checklist"
 msgstr ""
@@ -2684,7 +2684,7 @@ msgstr ""
 msgid "Checklist items are limited to 100 items per checklist."
 msgstr ""
 
-#: app/models/checklist.rb:99
+#: app/models/checklist.rb:100
 msgid "Checklist template must be active to use as a checklist starting point."
 msgstr ""
 
@@ -3469,7 +3469,7 @@ msgstr ""
 msgid "Create a new checklist item"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:18
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:18
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:21
 msgid "Create a new checklist template in the admin interface."
 msgstr ""
@@ -3613,7 +3613,7 @@ msgstr ""
 #: app/controllers/time_accountings_controller.rb:122
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:105
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:39
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:42
 #: app/graphql/gql/types/overview_type.rb:80
 msgid "Created at"
 msgstr ""
@@ -3732,7 +3732,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:9
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:11
 #: app/controllers/time_accountings_controller.rb:95
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:37
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:40
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/customer.ts:13
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts:6
 #: app/graphql/gql/types/overview_type.rb:61
@@ -5294,7 +5294,7 @@ msgstr ""
 msgid "Edit checklist title"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:72
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row.jst.eco:32
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:69
 msgid "Edit item"
 msgstr ""
@@ -6166,7 +6166,7 @@ msgstr ""
 msgid "Failed to save checklist order."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:124
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist/show.coffee:160
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 
@@ -6816,7 +6816,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:38
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:56
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:40
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:38
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:41
 #: app/graphql/gql/types/overview_type.rb:63
 #: app/views/mailer/ticket_create/fr.html.erb:8
 #: app/views/mailer/ticket_create/zh-cn.html.erb:8
@@ -9734,7 +9734,7 @@ msgstr ""
 msgid "No Entries"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_no_items.jst.eco:3
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_no_items.jst.eco:3
 msgid "No Entry"
 msgstr ""
 
@@ -9789,7 +9789,7 @@ msgstr ""
 msgid "No certificate found."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:3
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:461
 msgid "No checklist added to this ticket yet."
 msgstr ""
@@ -9798,7 +9798,7 @@ msgstr ""
 msgid "No checklist items yet"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:14
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:15
 msgid "No checklist templates have been created yet."
 msgstr ""
@@ -10027,7 +10027,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:158
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:115
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:25
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row_display_value.jst.eco:16
 #: app/controllers/application_controller/handles_errors.rb:61
 #: app/services/service/ticket/article/create.rb:122
 msgid "Not authorized"
@@ -10182,7 +10182,6 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:10
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:20
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:32
 #: app/graphql/gql/types/overview_type.rb:59
 msgid "Number"
 msgstr ""
@@ -10468,7 +10467,7 @@ msgstr ""
 msgid "Options or relation is required."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:8
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:8
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue:22
 msgid "Or choose a checklist template."
 msgstr ""
@@ -11125,7 +11124,7 @@ msgstr ""
 msgid "Please save your recovery codes listed below somewhere safe. You can use them to sign in if you lose access to another two-factor method:"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:75
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist/start.coffee:75
 msgid "Please select a checklist template."
 msgstr ""
 
@@ -11669,7 +11668,7 @@ msgstr ""
 msgid "Remove authenticator app"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:21
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:402
 msgid "Remove checklist"
 msgstr ""
@@ -11682,7 +11681,7 @@ msgstr ""
 msgid "Remove image"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:78
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row.jst.eco:37
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:75
 msgid "Remove item"
 msgstr ""
@@ -11719,7 +11718,7 @@ msgstr ""
 msgid "Removes the shadows for a flat look."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:16
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:395
 msgid "Rename checklist"
 msgstr ""
@@ -11741,7 +11740,7 @@ msgstr ""
 msgid "Reopening time in days"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:14
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:195
 msgid "Reorder"
 msgstr ""
@@ -12203,7 +12202,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:17
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:14
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:9
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:27
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show.jst.eco:27
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:38
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:9
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
@@ -12552,7 +12551,7 @@ msgstr ""
 msgid "Select Shared Draft"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:16
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist/start.coffee:16
 #: app/assets/javascripts/app/views/widget/template.jst.eco:4
 msgid "Select Template"
 msgstr ""
@@ -13888,7 +13887,7 @@ msgstr ""
 msgid "Text or attachment is required"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_item_edit.jst.eco:6
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/item_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:147
 msgid "Text or ticket identifier"
 msgstr ""
@@ -16019,7 +16018,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:10
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:10
 #: app/controllers/time_accountings_controller.rb:91
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:36
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:39
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:144
 #: app/graphql/gql/types/overview_type.rb:60
 #: db/seeds/object_manager_attributes.rb:32
@@ -16503,7 +16502,7 @@ msgstr ""
 msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:66
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row.jst.eco:26
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:61
 msgid "Uncheck item"
 msgstr ""
@@ -17440,7 +17439,7 @@ msgstr ""
 msgid "With checklist templates it is possible to pre-fill new checklists with initial items."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:15
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:15
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:18
 msgid "With checklist templates you can pre-fill your checklists."
 msgstr ""
