@@ -372,8 +372,8 @@ msgid "%s (option)"
 msgstr "%s (opțiune)"
 
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:303
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:583
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:258
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:595
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:270
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:374
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:149
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:108
@@ -1136,7 +1136,7 @@ msgstr "Cont neverificat"
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:2
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:2
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:68
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:104
 #: app/graphql/gql/types/overview_type.rb:69
 msgid "Accounted Time"
 msgstr "Timp contabilizat"
@@ -1469,6 +1469,7 @@ msgstr "Adaugă imagine"
 msgid "Add internal note"
 msgstr "Adaugă o notă internă"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:163
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:152
 msgid "Add link"
 msgstr "Adaugă link"
@@ -2195,7 +2196,7 @@ msgstr "Acțiuni articol"
 msgid "Article could not be deleted."
 msgstr "Articolul nu a putut fi șters."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:127
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubble.vue:128
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleHeader.vue:27
 msgid "Article meta information"
 msgstr "Informații meta ale articolului"
@@ -2236,7 +2237,14 @@ msgid "Assigned"
 msgstr "Atribuite"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:24
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:75
 msgid "Assignee"
+msgstr "Responsabil"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:75
+#, fuzzy
+#| msgid "Assignee"
+msgid "Assignees"
 msgstr "Responsabil"
 
 #: db/seeds/object_manager_attributes.rb:1890
@@ -2376,7 +2384,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:31
 #: app/assets/javascripts/app/models/overview.coffee:16
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:72
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:73
 msgid "Attributes"
 msgstr "Atribute"
 
@@ -2533,11 +2541,11 @@ msgstr ""
 "Încarcă automat fișierul chat.css. Dacă dorești să folosești propriul tău "
 "CSS, setează-l false."
 
-#: app/frontend/shared/components/Form/Form.vue:1288
+#: app/frontend/shared/components/Form/Form.vue:1290
 msgid "Autosave in progress…"
 msgstr "Salvare automată în desfășurare…"
 
-#: app/frontend/shared/components/Form/Form.vue:1297
+#: app/frontend/shared/components/Form/Form.vue:1299
 msgid "Autosaving is taking longer than expected…"
 msgstr "Salvarea automată durează mai mult decât ne-am așteptat…"
 
@@ -2564,7 +2572,7 @@ msgstr "Tipuri disponibile pentru crearea unui tichet nou"
 #: app/frontend/apps/mobile/pages/account/routes.ts:28
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:128
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:175
-#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:121
+#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:119
 #: db/seeds/permissions.rb:409
 msgid "Avatar"
 msgstr "Avatar"
@@ -2945,7 +2953,7 @@ msgstr "Jurnal apeluri"
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:238
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:7
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:119
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:392
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:394
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:215
 msgid "Camera"
 msgstr "Cameră"
@@ -3015,7 +3023,7 @@ msgstr "Anulează"
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:71
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:226
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:400
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:404
 msgid "Cancel & Go Back"
 msgstr "Anulează și întoarce-te"
 
@@ -3438,10 +3446,10 @@ msgid "Clear Search"
 msgstr "Șterge căutarea"
 
 #: app/assets/javascripts/app/views/generic/searchable_select.jst.eco:56
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:666
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:679
 #: app/frontend/apps/desktop/components/Form/fields/FieldDate/FieldDateTimeInput.vue:138
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:321
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:370
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:333
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:382
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:155
 #: app/frontend/apps/mobile/components/Form/fields/FieldDate/FieldDateTimeInput.vue:159
 #: app/frontend/apps/mobile/components/Form/fields/FieldSelect/FieldSelectInput.vue:137
@@ -3541,7 +3549,7 @@ msgstr "Închide tab-ul curent"
 msgid "Close dialog"
 msgstr "Închide dialogul"
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:269
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:268
 msgid "Close side panel"
 msgstr "Închide bara laterală"
 
@@ -4082,7 +4090,7 @@ msgstr "Țara"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:412
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:416
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Creează"
@@ -4321,7 +4329,7 @@ msgstr "Articol intern creat"
 #: app/controllers/time_accountings_controller.rb:122
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:105
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:43
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:39
 #: app/graphql/gql/types/overview_type.rb:80
 msgid "Created at"
 msgstr "Creat la"
@@ -4446,7 +4454,7 @@ msgstr "Adresa personalizată nu este setată"
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:9
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:11
 #: app/controllers/time_accountings_controller.rb:95
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:41
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:37
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/customer.ts:13
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts:6
 #: app/graphql/gql/types/overview_type.rb:61
@@ -5830,7 +5838,7 @@ msgstr "Șterge fișierul"
 msgid "Delete this access token"
 msgstr "Obținerea token-ului de acces."
 
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:352
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:354
 #, fuzzy
 #| msgid "Delete User"
 msgid "Delete this avatar"
@@ -5840,6 +5848,12 @@ msgstr "Șterge utilizator"
 #, fuzzy
 #| msgid "Delete User"
 msgid "Delete this device"
+msgstr "Șterge utilizator"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:143
+#, fuzzy
+#| msgid "Delete User"
+msgid "Delete this link"
 msgstr "Șterge utilizator"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:29
@@ -5915,7 +5929,6 @@ msgid "Designer"
 msgstr "Designer"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:25
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:43
 msgid "Desktop"
 msgstr "Desktop"
 
@@ -5990,7 +6003,7 @@ msgstr ""
 msgid "Did you know? You can help translating %s at:"
 msgstr "Știai? Poți ajuta la traducerea %s la:"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:49
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
 msgid "Did you plan to include attachments with this message?"
 msgstr ""
 
@@ -6056,7 +6069,7 @@ msgstr "Renunță"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:49
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:397
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:401
 msgid "Discard Changes"
 msgstr "Renunță la modificări"
 
@@ -6087,7 +6100,7 @@ msgstr "Renunță la modificările nesalvate"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketDetailBottomBar.vue:136
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:146
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:147
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:148
 msgid "Discard your unsaved changes"
 msgstr "Renunță la modificările nesalvate"
 
@@ -6288,7 +6301,7 @@ msgstr "Ciornă"
 msgid "Drag and drop to reorder ticket overview list items."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:234
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:235
 msgid "Drag and drop to reorder your tabs."
 msgstr ""
 
@@ -6447,20 +6460,6 @@ msgstr "Securitate"
 #| msgid "Ticket update"
 msgid "Edit ticket title"
 msgstr "Actualizare tichet"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:38
-msgid "Editing"
-msgstr "Editare"
-
-#: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketViewerItem.vue:38
-msgid "Editing on Desktop"
-msgstr "Editare pe Desktop"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketLiveUsers.vue:57
-#, fuzzy
-#| msgid "Editing on Desktop"
-msgid "Editing on Mobile"
-msgstr "Editare pe Desktop"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #, fuzzy
@@ -7225,7 +7224,7 @@ msgstr "Escaladat la"
 
 #: app/assets/javascripts/app/lib/app_post/popover_provider/escalation_popover_provider.coffee:8
 #: app/assets/javascripts/app/views/sla/index.jst.eco:35
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:167
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:168
 msgid "Escalation Times"
 msgstr "Timpii de escaladare"
 
@@ -7684,7 +7683,7 @@ msgstr "Primul răspuns în minute"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:17
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:5
 #: app/assets/javascripts/app/views/sla/index.jst.eco:37
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:171
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:172
 msgid "First Response Time"
 msgstr "Durata primului răspuns"
 
@@ -8007,7 +8006,7 @@ msgstr "Serviciu geolocalizare"
 msgid "Get Started"
 msgstr "Începe aici"
 
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:203
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:204
 msgid "Get notified"
 msgstr "Primește notificări"
 
@@ -8030,6 +8029,7 @@ msgstr "Se preiau informații esențiale din browser…"
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:81
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/github.ts:11
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:40
 #: db/seeds/settings.rb:1603
 msgid "GitHub"
@@ -8051,14 +8051,24 @@ msgstr "Configurare GitHub"
 msgid "GitHub integration"
 msgstr "Integrare GitHub"
 
-#: lib/github/http_client.rb:35
-msgid "GitHub request failed! Please have a look at the log file for details"
+#: lib/github/http_client.rb:34
+#, fuzzy
+#| msgid ""
+#| "GitHub request failed! Please have a look at the log file for details"
+msgid "GitHub request failed. Please have a look at the log file for details."
 msgstr ""
 "Solicitarea GitHub a eșuat! Vă rugăm să consultați fișierul jurnal pentru "
 "detalii"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:35
+#, fuzzy
+#| msgid "Link issue"
+msgid "GitHub: Link issue"
+msgstr "Asociază problemă"
+
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/gitlab.ts:11
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:47
 #: db/seeds/settings.rb:1667
 msgid "GitLab"
@@ -8080,11 +8090,20 @@ msgstr "Configurare GitLab"
 msgid "GitLab integration"
 msgstr "Integrare GitLab"
 
-#: lib/gitlab/http_client.rb:48
-msgid "GitLab request failed! Please have a look at the log file for details"
+#: lib/gitlab/http_client.rb:47
+#, fuzzy
+#| msgid ""
+#| "GitLab request failed! Please have a look at the log file for details"
+msgid "GitLab request failed. Please have a look at the log file for details."
 msgstr ""
 "Solicitarea GitLab a eșuat! Vă rugăm să consultați fișierul jurnal pentru "
 "detalii"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:35
+#, fuzzy
+#| msgid "Link issue"
+msgid "GitLab: Link issue"
+msgstr "Asociază problemă"
 
 #: app/controllers/selectors_controller.rb:43
 msgid "Given object does not support selector"
@@ -8199,7 +8218,7 @@ msgstr "Salutare"
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:38
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:56
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:40
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:42
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:38
 #: app/graphql/gql/types/overview_type.rb:63
 #: app/views/mailer/ticket_create/fr.html.erb:8
 #: app/views/mailer/ticket_create/zh-cn.html.erb:8
@@ -9095,7 +9114,7 @@ msgid "Including private key."
 msgstr "Includ cheia privată."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:10
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:332
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:334
 msgid "Incomplete Ticket Checklist"
 msgstr ""
 
@@ -9317,6 +9336,10 @@ msgstr "Date autentificare BasicAuth invalide"
 msgid "Invalid GitHub GraphQL API token"
 msgstr "Token API GitHub GraphQL invalid"
 
+#: lib/github/http_client.rb:10
+msgid "Invalid GitHub configuration (missing endpoint or api_token)."
+msgstr ""
+
 #: lib/github/linked_issue.rb:104
 msgid "Invalid GitHub issue link format"
 msgstr "Format link probleme GitHub invalid"
@@ -9324,6 +9347,10 @@ msgstr "Format link probleme GitHub invalid"
 #: lib/gitlab/credentials.rb:26
 msgid "Invalid GitLab GraphQL API token"
 msgstr "Token API GitLab GraphQL invalid"
+
+#: lib/gitlab/http_client.rb:10
+msgid "Invalid GitLab configuration (missing endpoint or api_token)."
+msgstr ""
 
 #: lib/gitlab/linked_issue.rb:122
 msgid "Invalid GitLab issue link format"
@@ -9344,6 +9371,10 @@ msgstr "client_id invalid primit!"
 #: app/models/user.rb:556
 msgid "Invalid email '%{email}'"
 msgstr "E-mail invalid '%{email}'"
+
+#: lib/idoit.rb:8
+msgid "Invalid i-doit configuration (missing endpoint or api_token)."
+msgstr ""
 
 #: app/controllers/tickets_controller.rb:191
 msgid "Invalid link structure"
@@ -9509,6 +9540,18 @@ msgstr "Invită clienții să deschidă tichete folosind Zammad"
 #: app/assets/javascripts/app/lib/app_post/iconset_picker.coffee:17
 msgid "Ionicons"
 msgstr "Ionicons"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:37
+#, fuzzy
+#| msgid "%s URL"
+msgid "Issue URL"
+msgstr "URL %s"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:54
+#, fuzzy
+#| msgid "Message Status"
+msgid "Issue status"
+msgstr "Stare mesaj"
 
 #: lib/validations/data_privacy_task_validator.rb:50
 msgid "It is not possible to delete the last account with admin permissions."
@@ -9690,6 +9733,7 @@ msgid "Label"
 msgstr "Etichetă"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:30
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
 msgid "Labels"
 msgstr "Etichete"
 
@@ -9859,6 +9903,7 @@ msgstr "Limita tichetelor pe zi"
 #: app/assets/javascripts/app/controllers/ticket_link_add.coffee:7
 #: app/assets/javascripts/app/models/overview.coffee:7
 #: app/assets/javascripts/app/models/public_link.coffee:6
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
 #: app/frontend/shared/components/Form/FormFieldLink.vue:18
 msgid "Link"
 msgstr "Link"
@@ -9888,9 +9933,24 @@ msgstr "Asociază problemele GitHub la tichetele tale."
 msgid "Link GitLab issues to your tickets."
 msgstr "Asociază problemele GitLab la tichetele tale."
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:70
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList.vue:274
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:62
+#, fuzzy
+#| msgid "Link issue"
+msgid "Link Issue"
+msgstr "Asociază problemă"
+
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:19
 msgid "Link Related Answer"
 msgstr "Asociază răspuns corelat"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:156
+#, fuzzy
+#| msgid "Linked Tickets"
+msgid "Link Tickets"
+msgstr "Tichete asociate"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:176
 #, fuzzy
@@ -9898,12 +9958,42 @@ msgstr "Asociază răspuns corelat"
 msgid "Link account on %s"
 msgstr "Leagă conturi"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:144
+#, fuzzy
+#| msgid "Ticket tags updated successfully."
+msgid "Link added successfully"
+msgstr "Etichetele tichetului au fost actualizate cu succes."
+
+#: app/graphql/gql/mutations/link/add.rb:29
+#, fuzzy
+#| msgid "%{name} already exists"
+msgid "Link already exists"
+msgstr "%{name} există deja"
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:26
 msgid "Link issue"
 msgstr "Asociază problemă"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:90
+#, fuzzy
+#| msgid "Ticket tags updated successfully."
+msgid "Link removed successfully"
+msgstr "Etichetele tichetului au fost actualizate cu succes."
+
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:267
 msgid "Link template"
+msgstr "Asociază șablon"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:53
+#, fuzzy
+#| msgid "Linked Tickets"
+msgid "Link ticket"
+msgstr "Tichete asociate"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:61
+#, fuzzy
+#| msgid "Link template"
+msgid "Link type"
 msgstr "Asociază șablon"
 
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:3
@@ -9935,6 +10025,7 @@ msgid "LinkedIn Developer Site"
 msgstr "Site dezvoltator LinkedIn"
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:1
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:92
 msgid "Links"
 msgstr "Link-uri"
 
@@ -9944,6 +10035,10 @@ msgstr ""
 
 #: app/models/system_report/plugin/addons.rb:4
 msgid "List of installed addons"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem/IssueTrackerBadgeList.vue:15
+msgid "List of issue labels"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:212
@@ -10689,12 +10784,12 @@ msgstr "Grup mențiuni"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:7
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:121
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:45
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:87
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:46
 msgid "Merge"
 msgstr "Fuzionare"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:128
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:94
 #, fuzzy
 #| msgid "Merge tickets"
 msgid "Merge Tickets"
@@ -10818,6 +10913,7 @@ msgid "Migrator can't read OTRS output!"
 msgstr "Migratorul nu poate citi ieșirea OTRS!"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:69
 msgid "Milestone"
 msgstr "Reper"
 
@@ -11630,9 +11726,15 @@ msgstr "Nu au fost găsite foldere pentru datele de conectare furnizate."
 msgid "No import in progress."
 msgstr "Nici un import în desfășurare."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:192
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:193
 msgid "No linked issues"
 msgstr "Fără probleme asociate"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:158
+#, fuzzy
+#| msgid "No template created yet."
+msgid "No links added yet."
+msgstr "Încă nu a fost creată nici o schiță."
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_macro.jst.eco:4
 msgid "No macros available."
@@ -11757,20 +11859,20 @@ msgid "No x-zammad-session-user-id, no sender set!"
 msgstr "Niciun x-zammad-session-user-id și niciun expeditor setat!"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:8
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:335
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:337
 #, fuzzy
 #| msgid "You have closed a ticket"
 msgid "No, just close the ticket"
 msgstr "Ați închis un tichet"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:52
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:54
 msgid "No, thanks"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/permissions_dialog.coffee:9
 #: app/assets/javascripts/app/controllers/ticket_zoom/time_unit.coffee:55
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:65
-#: app/graphql/gql/types/ticket_type.rb:101 db/seeds/settings.rb:1957
+#: app/graphql/gql/types/ticket_type.rb:102 db/seeds/settings.rb:1957
 msgid "None"
 msgstr "Niciunul"
 
@@ -11988,6 +12090,7 @@ msgstr "Noiembrie"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:10
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:20
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:32
 #: app/graphql/gql/types/overview_type.rb:59
 msgid "Number"
 msgstr "Număr"
@@ -12206,6 +12309,12 @@ msgstr "Deschide %s"
 #| msgid "Checklist"
 msgid "Open Checklist"
 msgstr "Listă de verificare"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/useIssueTracker.ts:39
+#, fuzzy
+#| msgid "no issues"
+msgid "Open Issues"
+msgstr "fără probleme"
 
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:3
 msgid "Open Ticket# %s"
@@ -12499,6 +12608,12 @@ msgstr ""
 msgid "Out of all open tickets (company-wide), how many are assigned to you?"
 msgstr ""
 "Din toate tichetele deschise (la nivel de companie), câte sunt atribuite ție?"
+
+#: app/frontend/shared/composables/useAvatarIndicator.ts:82
+#, fuzzy
+#| msgid "Out of office replacement"
+msgid "Out of office active"
+msgstr "Înlocuitor pentru \"În afara biroului\""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:165
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:192
@@ -13975,7 +14090,7 @@ msgstr "Închide tab"
 msgid "Resize frame"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:301
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:300
 msgid "Resize side panel"
 msgstr ""
 
@@ -15072,7 +15187,7 @@ msgid "Shared Drafts"
 msgstr "Ciorne partajate"
 
 #: app/controllers/tickets_controller.rb:90
-#: app/services/service/ticket/create.rb:155
+#: app/services/service/ticket/create.rb:173
 msgid "Shared draft cannot be selected for this ticket."
 msgstr "Ciorna partajată nu poate fi selectată pentru acest tichet."
 
@@ -15255,13 +15370,7 @@ msgstr "Număr înregistrări afișate în jurnalul apelurilor."
 msgid "Shown when the chat is closed."
 msgstr "Afișează când chat-ul este închis."
 
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:240
-#, fuzzy
-#| msgid "Close tab"
-msgid "Side panel"
-msgstr "Închide tab"
-
-#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:282
+#: app/frontend/apps/desktop/components/CommonFlyout/CommonFlyout.vue:281
 msgid "Side panel footer"
 msgstr ""
 
@@ -15478,7 +15587,7 @@ msgstr "SMS"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:71
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:17
 #: app/assets/javascripts/app/views/sla/index.jst.eco:49
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:179
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:180
 msgid "Solution Time"
 msgstr "Timp de soluționare"
 
@@ -15838,8 +15947,8 @@ msgstr "Tichete la care sunt abonat"
 msgid "Subscribed tickets"
 msgstr "Tichetele mele atribuite"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:98
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:197
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:112
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:198
 msgid "Subscribers"
 msgstr "Abonați"
 
@@ -15973,10 +16082,10 @@ msgstr "Eticheta \"%s\" există deja."
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:41
 #: app/assets/javascripts/app/views/tag/index.jst.eco:3
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:82
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:83
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:145
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:78
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:189
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:190
 #: app/views/knowledge_base/public/answers/show.html.erb:30
 #: db/seeds/object_manager_attributes.rb:392 db/seeds/permissions.rb:59
 #: lib/excel_sheet/ticket.rb:33
@@ -16003,10 +16112,10 @@ msgstr "Țintă"
 msgid "Target Language"
 msgstr "Limbă țintă"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:47
 #, fuzzy
 #| msgid "Test Ticket"
-msgid "Target Ticket"
+msgid "Target ticket"
 msgstr "Tichet de test"
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:163
@@ -16792,6 +16901,19 @@ msgstr ""
 msgid "The issue could not be saved."
 msgstr "Problema nu a putut fi salvată."
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:43
+#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:28
+#, fuzzy
+#| msgid "This object already exists."
+msgid "The issue reference already exists."
+msgstr "Acest obiect există deja."
+
+#: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:44
+#, fuzzy
+#| msgid "The source ticket could not be found."
+msgid "The issue reference could not be found."
+msgstr "Tichetul sursă nu a fost găsit."
+
 #: app/frontend/shared/composables/useLocaleUpdate.ts:21
 msgid "The language could not be updated."
 msgstr "Limba nu a putut fi actualizată."
@@ -17071,11 +17193,11 @@ msgstr "Lipsește câmpul eveniment pentru 'execution'."
 msgid "The required event field 'execution' is unknown or missing."
 msgstr "Câmpul eveniment pentru 'execution' este necunoscut sau lipsește."
 
-#: lib/idoit.rb:22
+#: lib/idoit.rb:21
 msgid "The required field 'api_token' is missing from the config."
 msgstr "Câmpul necesar 'api_token' lipsește din configurație."
 
-#: lib/idoit.rb:23
+#: lib/idoit.rb:22
 msgid "The required field 'endpoint' is missing from the config."
 msgstr "Câmpul necesar 'endpoint' lipsește din configurație."
 
@@ -18375,11 +18497,17 @@ msgstr "Informații tichet"
 msgid "Ticket information"
 msgstr "Informații tichet"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:72
 #, fuzzy
 #| msgid "Ticket tags updated successfully."
 msgid "Ticket merged successfully"
 msgstr "Etichetele tichetului au fost actualizate cu succes."
+
+#: app/frontend/apps/desktop/components/Form/fields/FieldTicket/FieldTicketWrapper.vue:35
+#, fuzzy
+#| msgid "Ticket Number Format"
+msgid "Ticket number or title"
+msgstr "Formatul numărului tichetului"
 
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:69
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:11
@@ -18491,14 +18619,14 @@ msgstr "Titlu tichet"
 msgid "Ticket update"
 msgstr "Actualizare tichet"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:484
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:486
 #, fuzzy
 #| msgid "Ticket update"
 msgid "Ticket update failed."
 msgstr "Actualizare tichet"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/useTicketEditTitle.ts:27
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:429
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:431
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:174
 msgid "Ticket updated successfully."
 msgstr "Tichet actualizat cu succes."
@@ -18751,7 +18879,7 @@ msgstr "Temporizare"
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:10
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:10
 #: app/controllers/time_accountings_controller.rb:91
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:40
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:36
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:144
 #: app/graphql/gql/types/overview_type.rb:60
 #: db/seeds/object_manager_attributes.rb:32 lib/excel_sheet/ticket.rb:24
@@ -19342,6 +19470,12 @@ msgstr ""
 "În cazul în care nu o ai deja, instalează una dintre următoarele aplicații "
 "de autentificare pe dispozitivul tău mobil:"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem/IssueTrackerLink.vue:36
+#, fuzzy
+#| msgid "Link issue"
+msgid "Unlink issue"
+msgstr "Asociază problemă"
+
 #: app/assets/javascripts/app/controllers/user.coffee:185
 msgid "Unlock"
 msgstr "Deblochează"
@@ -19364,9 +19498,9 @@ msgstr "Notificări necitite"
 msgid "Unsaved Changes"
 msgstr "Renunță la modificări"
 
-#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:593
-#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:267
-#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:322
+#: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:605
+#: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:279
+#: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInput.vue:334
 msgid "Unselect Option"
 msgstr "Deselectează opțiunea"
 
@@ -19440,7 +19574,7 @@ msgstr "Distribuit"
 #: app/assets/javascripts/app/views/generic/sla_times.jst.eco:32
 #: app/assets/javascripts/app/views/popover/escalation.jst.eco:11
 #: app/assets/javascripts/app/views/sla/index.jst.eco:41
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:175
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:176
 msgid "Update Time"
 msgstr "Ultima actualizare"
 
@@ -19686,7 +19820,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/getting_started/base.jst.eco:18
 #: app/assets/javascripts/app/views/profile/avatar.jst.eco:9
-#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:383
+#: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:385
 msgid "Upload"
 msgstr "Încarcă"
 
@@ -19883,6 +20017,10 @@ msgstr "Emailul utilizatorului pentru utilizatori multiplii"
 msgid "User filter"
 msgstr "Filtru utilizatori"
 
+#: app/frontend/shared/composables/useAvatarIndicator.ts:79
+msgid "User has no access"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:530
 msgid ""
 "User information could not be retrieved, please check your bind user "
@@ -19890,6 +20028,52 @@ msgid ""
 msgstr ""
 "Informațiile utilizatorului nu au putut fi preluate, te rugăm să verifici "
 "permisiunile utilizatorului."
+
+#: app/frontend/shared/composables/useAvatarIndicator.ts:87
+#, fuzzy
+#| msgid "Text editing"
+msgid "User is editing"
+msgstr "Editare text"
+
+#: app/frontend/shared/composables/useAvatarIndicator.ts:87
+#, fuzzy
+#| msgid "Editing on Desktop"
+msgid "User is editing on desktop"
+msgstr "Editare pe Desktop"
+
+#: app/frontend/shared/composables/useAvatarIndicator.ts:90
+#, fuzzy
+#| msgid "Editing on Desktop"
+msgid "User is editing on mobile"
+msgstr "Editare pe Desktop"
+
+#: app/frontend/shared/composables/useAvatarIndicator.ts:100
+#, fuzzy
+#| msgid "User Filter"
+msgid "User is idle"
+msgstr "Filtru utilizatori"
+
+#: app/frontend/shared/composables/useAvatarIndicator.ts:78
+#, fuzzy
+#| msgid "inactive"
+msgid "User is inactive"
+msgstr "inactiv"
+
+#: app/frontend/shared/composables/useAvatarIndicator.ts:95
+#, fuzzy
+#| msgid "Editing on Desktop"
+msgid "User is on desktop"
+msgstr "Editare pe Desktop"
+
+#: app/frontend/shared/composables/useAvatarIndicator.ts:98
+msgid "User is on mobile"
+msgstr ""
+
+#: app/frontend/shared/composables/useAvatarIndicator.ts:84
+#, fuzzy
+#| msgid "Out of Office"
+msgid "User is out of office"
+msgstr "În afara serviciului"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:201
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/AvatarMenu/AvatarMenu.vue:44
@@ -19994,7 +20178,7 @@ msgstr ""
 "tăi** și să le modifici (dacă organizația ta este setată ca „partajată”, "
 "ceea ce poate fi definit pentru fiecare organizație)."
 
-#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:124
+#: app/frontend/shared/components/CommonUserAvatar/CommonUserAvatar.vue:122
 #: db/seeds/object_manager_attributes.rb:1293
 msgid "VIP"
 msgstr "VIP"
@@ -20518,14 +20702,14 @@ msgstr "Galben"
 msgid "Yes"
 msgstr "Da"
 
-#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:51
+#: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:53
 #, fuzzy
 #| msgid "Add attachment option to upload."
 msgid "Yes, add attachments now"
 msgstr "Adăugați opțiunea de atașament pentru upload."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/checklist_modal.coffee:5
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:334
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:336
 #, fuzzy
 #| msgid "Remove"
 msgid "Yes, open the checklist"
@@ -20826,7 +21010,7 @@ msgstr "Trebuie să permiți accesul la camera ta web."
 msgid "You have unchecked items in the checklist."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:329
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:331
 #, fuzzy
 #| msgid "Sure to delete this object?"
 msgid ""
@@ -21252,7 +21436,7 @@ msgstr "la"
 msgid "at least one letter is required"
 msgstr "este necesară cel puțin o literă"
 
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1053
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1054
 #: app/frontend/shared/composables/form/useCheckBodyAttachmentReference.ts:9
 msgid "attachment,attached,enclosed,enclosure"
 msgstr ""
@@ -21795,7 +21979,7 @@ msgid "in process"
 msgstr "în procesare"
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:5
-#: app/assets/javascripts/app/lib/app_post/utils.coffee:1428
+#: app/assets/javascripts/app/lib/app_post/utils.coffee:1429
 #: app/assets/javascripts/app/models/webhook.coffee:34
 #: app/assets/javascripts/app/views/generic/object_search/item_object.jst.eco:16
 #: app/assets/javascripts/app/views/generic/object_search/item_organization.jst.eco:4
@@ -21923,6 +22107,12 @@ msgstr "este prea scurt (minimul este de %{count} caractere)"
 
 msgid "is too short (minimum is 1 character)"
 msgstr "este prea scurt (minimul este de 1 caracter)"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:55
+#, fuzzy
+#| msgid "(ticket status: %s)"
+msgid "issue status: %s"
+msgstr "(status tichet: %s)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:105
 #, fuzzy
@@ -22090,7 +22280,7 @@ msgstr "noi și deschise"
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:22
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:63
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:90
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:91
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:16
 #: db/seeds/settings.rb:590
@@ -22626,7 +22816,7 @@ msgstr "în următoarele (relativ)"
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:32
 #: app/assets/javascripts/app/views/object_manager/attribute/boolean.jst.eco:15
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:62
-#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:89
+#: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:90
 #: app/frontend/shared/components/ObjectAttributes/attributes/AttributeBoolean/AttributeBoolean.vue:15
 #: app/frontend/shared/entities/object-attributes/form/resolver/fields/active.ts:15
 #: db/seeds/object_manager_attributes.rb:1301 db/seeds/settings.rb:589
@@ -22672,6 +22862,14 @@ msgstr "...zonei întregi a textului"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Timp de așteptare azi"
+
+#~ msgid "Editing"
+#~ msgstr "Editare"
+
+#, fuzzy
+#~| msgid "Close tab"
+#~ msgid "Side panel"
+#~ msgstr "Închide tab"
 
 #~ msgid "Allow users to create new checklists."
 #~ msgstr "Permite utilizatorilor să creeze liste de verificare noi."
