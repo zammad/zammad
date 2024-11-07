@@ -98,6 +98,7 @@ class TicketsController < ApplicationController
 
       # Prevent direct access to checklist via API
       # Otherwise users may get unauthorized access to checklists of other tickets
+      params.delete(:checklist)
       params.delete(:checklist_id)
 
       clean_params = Ticket.association_name_to_id_convert(params)
@@ -249,6 +250,7 @@ class TicketsController < ApplicationController
 
     # Prevent direct access to checklist via API
     # Otherwise users may get unauthorized access to checklists of other tickets
+    params.delete(:checklist)
     params.delete(:checklist_id)
 
     clean_params = Ticket.association_name_to_id_convert(params)
