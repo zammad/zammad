@@ -1,11 +1,12 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { animations, parents } from '@formkit/drag-and-drop'
+import { animations, parents, updateConfig } from '@formkit/drag-and-drop'
 import { dragAndDrop } from '@formkit/drag-and-drop/vue'
+import { computedAsync } from '@vueuse/core'
 import { cloneDeep } from 'lodash-es'
 import { storeToRefs } from 'pinia'
-import { type Ref, ref, watch, useTemplateRef } from 'vue'
+import { type Ref, ref, watch, useTemplateRef, nextTick } from 'vue'
 
 import CommonPopover from '#shared/components/CommonPopover/CommonPopover.vue'
 import { usePopover } from '#shared/components/CommonPopover/usePopover.ts'
@@ -32,7 +33,6 @@ const props = defineProps<Props>()
 const taskbarTabStore = useUserCurrentTaskbarTabsStore()
 
 const {
-  taskbarTabList,
   taskbarTabListByTabEntityKey,
   taskbarTabListOrder,
   hasTaskbarTabs,
@@ -116,6 +116,15 @@ dragAndDrop({
   draggingClass: 'dragging-active',
 })
 
+watch(
+  () => props.collapsed,
+  (isCollapsed) => {
+    if (!dndParentElement.value) return
+
+    updateConfig(dndParentElement.value, { disabled: isCollapsed })
+  },
+)
+
 const getTaskbarTabComponent = (tabEntityKey: string) => {
   const taskbarTab = taskbarTabListByTabEntityKey.value[tabEntityKey]
   if (!taskbarTab) return
@@ -147,6 +156,39 @@ const getTaskbarTabLink = (tabEntityKey: string) => {
 }
 
 const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
+
+const taskbarTabListContainer = useTemplateRef('taskbar-tab-list')
+
+const taskbarTabListLocation = computedAsync(() => {
+  if (!taskbarTabListContainer.value) return '#taskbarTabListHidden'
+
+  // NB: Prevent teleport component from complaining that the target is not ready.
+  //   Defer the value update for after next tick.
+  return nextTick(() => {
+    if (props.collapsed) return '#taskbarTabListCollapsed'
+    return '#taskbarTabListExpanded'
+  })
+}, '#taskbarTabListHidden')
+
+const getTaskbarTabContext = (tabEntityKey: string) => {
+  if (!taskbarTabListContainer.value) return
+
+  return activeTaskbarTabEntityKey.value === tabEntityKey
+    ? activeTaskbarTabContext.value
+    : undefined
+}
+
+const getTaskbarTabDirtyFlag = (tabEntityKey: string) => {
+  if (!taskbarTabListContainer.value) return
+
+  if (activeTaskbarTabEntityKey.value === tabEntityKey)
+    return (
+      activeTaskbarTabContext.value.formIsDirty ??
+      taskbarTabListByTabEntityKey.value[tabEntityKey].dirty
+    )
+
+  return taskbarTabListByTabEntityKey.value[tabEntityKey].dirty
+}
 </script>
 
 <template>
@@ -166,39 +208,7 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
           hide-arrow
           persistent
         >
-          <ul>
-            <li
-              v-for="userTaskbarTab in taskbarTabList"
-              :key="userTaskbarTab.tabEntityKey"
-              class="group/tab relative"
-            >
-              <component
-                :is="getTaskbarTabComponent(userTaskbarTab.tabEntityKey)"
-                :entity="userTaskbarTab.entity"
-                :context="
-                  activeTaskbarTabEntityKey === userTaskbarTab.tabEntityKey
-                    ? activeTaskbarTabContext
-                    : undefined
-                "
-                :taskbar-tab="userTaskbarTab"
-                :taskbar-tab-link="
-                  getTaskbarTabLink(userTaskbarTab.tabEntityKey)
-                "
-                class="group/link rounded-none focus-visible:bg-blue-800 focus-visible:outline-0 group-first/tab:rounded-t-[10px] group-last/tab:rounded-b-[10px]"
-              />
-
-              <UserTaskbarTabRemove
-                :taskbar-tab-id="userTaskbarTab.taskbarTabId"
-                :dirty="
-                  activeTaskbarTabEntityKey === userTaskbarTab.tabEntityKey
-                    ? (activeTaskbarTabContext.formIsDirty ??
-                      userTaskbarTab.dirty)
-                    : userTaskbarTab.dirty
-                "
-                :plugin="getTaskbarTabTypePlugin(userTaskbarTab.type)"
-              />
-            </li>
-          </ul>
+          <div id="taskbarTabListCollapsed" ref="taskbar-tab-list" />
         </CommonPopover>
 
         <CommonButton
@@ -232,40 +242,44 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
             {{ $t('Drag and drop to reorder your tabs.') }}
           </span>
 
+          <div id="taskbarTabListExpanded" ref="taskbar-tab-list" />
+        </CommonSectionCollapse>
+      </template>
+
+      <div id="taskbarTabListHidden" class="hidden" aria-hidden="true">
+        <Teleport :to="taskbarTabListLocation" defer>
           <ul
             ref="dnd-parent"
-            class="flex flex-col gap-1.5 overflow-y-auto p-1"
+            :class="{ 'flex flex-col gap-1.5 overflow-y-auto p-1': !collapsed }"
           >
             <li
               v-for="tabEntityKey in dndTaskbarTabListOrder"
               :key="tabEntityKey"
-              class="draggable group/tab relative"
-              draggable="true"
-              aria-describedby="drag-and-drop-taskbar-tabs"
+              class="group/tab relative"
+              :class="{ draggable: !collapsed }"
+              :draggable="!collapsed ? 'true' : undefined"
+              :aria-describedby="
+                !collapsed ? 'drag-and-drop-taskbar-tabs' : undefined
+              "
             >
               <component
                 :is="getTaskbarTabComponent(tabEntityKey)"
                 :entity="taskbarTabListByTabEntityKey[tabEntityKey].entity"
-                :context="
-                  activeTaskbarTabEntityKey === tabEntityKey
-                    ? activeTaskbarTabContext
-                    : undefined
-                "
+                :context="getTaskbarTabContext(tabEntityKey)"
                 :taskbar-tab="taskbarTabListByTabEntityKey[tabEntityKey]"
                 :taskbar-tab-link="getTaskbarTabLink(tabEntityKey)"
-                class="active:cursor-grabbing"
+                :class="{
+                  'group/link rounded-none focus-visible:bg-blue-800 focus-visible:outline-0 group-first/tab:rounded-t-[10px] group-last/tab:rounded-b-[10px]':
+                    collapsed,
+                  'active:cursor-grabbing': !collapsed,
+                }"
               />
 
               <UserTaskbarTabRemove
                 :taskbar-tab-id="
                   taskbarTabListByTabEntityKey[tabEntityKey].taskbarTabId
                 "
-                :dirty="
-                  activeTaskbarTabEntityKey === tabEntityKey
-                    ? (activeTaskbarTabContext.formIsDirty ??
-                      taskbarTabListByTabEntityKey[tabEntityKey].dirty)
-                    : taskbarTabListByTabEntityKey[tabEntityKey].dirty
-                "
+                :dirty="getTaskbarTabDirtyFlag(tabEntityKey)"
                 :plugin="
                   getTaskbarTabTypePlugin(
                     taskbarTabListByTabEntityKey[tabEntityKey].type,
@@ -274,8 +288,8 @@ const { popover, popoverTarget, toggle, isOpen: popoverIsOpen } = usePopover()
               />
             </li>
           </ul>
-        </CommonSectionCollapse>
-      </template>
+        </Teleport>
+      </div>
     </div>
   </CommonLoader>
 </template>

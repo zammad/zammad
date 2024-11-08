@@ -55,7 +55,8 @@ const renderUserTaskbarTabs = async (
   })
 
   await waitForUserCurrentTaskbarItemListQueryCalls()
-  await waitForNextTick()
+  await waitForNextTick() // initial list render
+  await waitForNextTick() // computed async for teleport content
 
   return wrapper
 }
