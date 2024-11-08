@@ -279,7 +279,7 @@ GEM
     gli (2.21.5)
     globalid (1.2.1)
       activesupport (>= 6.1)
-    graphql (2.4.1)
+    graphql (2.4.2)
       base64
       fiber-storage
     graphql-batch (0.6.0)
