@@ -18,7 +18,9 @@ class GraphqlChannel < ApplicationCable::Channel
       channel:      self,
     }
 
-    result = Gql::ZammadSchema.execute(query:, context:, variables:, operation_name:)
+    result = UserInfo.with_user_id(current_user&.id) do
+      Gql::ZammadSchema.execute(query:, context:, variables:, operation_name:)
+    end
 
     payload = {
       result: result.to_h,

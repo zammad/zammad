@@ -11,24 +11,25 @@ module ApplicationCable
     # Therefore, on login/logout, a new web socket connection must be made to
     #   reflect the changes within GraphQL.
     def connect
-      find_verified_user
-      UserInfo.current_user_id = current_user&.id
+      return if session_id.blank?
+
+      self.current_user = find_verified_user
+      self.sid          = session_id
     end
 
     private
 
     def find_verified_user
-      session_id = cookies[Zammad::Application::Initializer::SessionStore::SESSION_KEY]
-      return if session_id.blank?
-
       private_id = Rack::Session::SessionId.new(session_id).private_id
-      return if private_id.blank?
 
       session = ActiveRecord::SessionStore::Session.find_by(session_id: private_id)
-      return if session.blank?
+      return if !session
 
-      self.current_user = User.find_by(id: session.data['user_id'])
-      self.sid          = session_id
+      User.find_by(id: session.data['user_id'])
+    end
+
+    def session_id
+      @session_id ||= cookies[Zammad::Application::Initializer::SessionStore::SESSION_KEY]
     end
   end
 end
