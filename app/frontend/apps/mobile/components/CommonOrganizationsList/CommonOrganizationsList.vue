@@ -19,7 +19,7 @@ withDefaults(defineProps<Props>(), {
 })
 
 const emit = defineEmits<{
-  showMore: []
+  'show-more': []
 }>()
 </script>
 
@@ -43,7 +43,7 @@ const emit = defineEmits<{
       :entities="organizations"
       :disabled="disableShowMore"
       :total-count="totalCount"
-      @click="emit('showMore')"
+      @click="emit('show-more')"
     />
   </CommonSectionMenu>
 </template>

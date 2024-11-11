@@ -30,7 +30,7 @@ interface Props {
 
 const props = defineProps<Props>()
 const emit = defineEmits<{
-  loadPrevious: []
+  'load-previous': []
 }>()
 
 const { contextOptions, articleContextShown, showArticleContext } =
@@ -121,7 +121,7 @@ const markSeen = (id: string) => {
       <ArticleSeparatorMore
         v-if="row.type === 'more'"
         :count="row.count"
-        @click="emit('loadPrevious')"
+        @click="emit('load-previous')"
       />
     </template>
   </section>
