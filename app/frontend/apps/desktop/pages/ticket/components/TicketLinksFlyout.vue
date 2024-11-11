@@ -53,6 +53,7 @@ const linkFormSchema = [
         label: __('Link ticket'),
         exceptTicketInternalId: sourceTicket.value.internalId,
         options: formListTargetTicketOptions,
+        clearable: true,
         required: true,
       },
       {

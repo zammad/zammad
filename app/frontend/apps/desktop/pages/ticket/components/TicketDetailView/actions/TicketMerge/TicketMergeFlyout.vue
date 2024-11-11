@@ -47,6 +47,7 @@ const mergeFormSchema = [
     label: __('Target ticket'),
     exceptTicketInternalId: sourceTicket.internalId,
     options: formListTargetTicketOptions,
+    clearable: true,
     required: true,
   },
 ]
