@@ -4,8 +4,8 @@ performance:
     - if: $CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web"
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
       changes:
-        - .gitlab/performance/**/*
         - .gitlab/ci/test/performance.yml
+        - .gitlab/performance/**/*
   # Make sure this gets executed exclusively on a runner.
   tags: ['no_concurrency']
   services:
@@ -36,7 +36,8 @@ performance:
     # Force redis usage, even if it was disabled by the initial configure_environment script of stable.
     - export REDIS_URL=redis://redis
     - bundle exec rails db:migrate > /dev/null
-    - rm -rf node_modules && pnpm install > /dev/null # Required for assets:precompile test
+    - rm -rf node_modules && pnpm install > /dev/null # Required for assets:precompile test.
+    - bundle exec rails assets:clobber && git checkout public/assets # Clear previously generated assets to have a full regeneration.
     # Run performance tests for current branch.
     - bundle exec rails r tmp/performance/run_tests.rb
   after_script: []
