@@ -12,8 +12,11 @@
     <%- @T('After installing, updating, or uninstalling packages the following commands need to be executed on the server:') %>
     <ul>
     <% if @package_installation: %>
-      <li><code>root> zammad run rake zammad:package:post_install</code></li>
-      <% else: %>
+      <li><code>root> /opt/zammad/contrib/packager.io/postinstall.sh</code></li>
+    <% else: %>
+      <% if @local_gemfiles: %>
+      <li><code>zammad> bundle install</code></li>
+      <% end %>
       <li><code>zammad> rake zammad:package:post_install</code></li>
     <% end %>
       <li><code>root> systemctl restart zammad</code></li>
