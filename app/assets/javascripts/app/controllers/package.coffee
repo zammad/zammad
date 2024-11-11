@@ -23,6 +23,7 @@ class Package extends App.ControllerSubContent
       success: (data) =>
         @packages             = data.packages
         @package_installation = data.package_installation
+        @local_gemfiles       = data.local_gemfiles
         @render()
       )
 
@@ -42,6 +43,7 @@ class Package extends App.ControllerSubContent
       head:     __('Dashboard')
       packages: @packages
       package_installation: @package_installation
+      local_gemfiles: @local_gemfiles
     )
 
   action: (e) ->

@@ -8,6 +8,7 @@ class PackagesController < ApplicationController
     render json: {
       packages:             Package.reorder('name'),
       package_installation: Package.app_package_installation?,
+      local_gemfiles:       Package.gem_files?,
     }
   end
 

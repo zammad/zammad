@@ -12,11 +12,9 @@ module Tasks
 
         def self.task_handler
           if ::Package.app_package_installation?
-            exec_command('zammad run rake zammad:package:bundle_install')
             exec_command('zammad run rake zammad:package:migrate')
             exec_command('zammad run rake zammad:package:precompile')
           else
-            exec_command('rake zammad:package:bundle_install')
             exec_command('rake zammad:package:migrate')
             exec_command('rake zammad:package:precompile')
           end
