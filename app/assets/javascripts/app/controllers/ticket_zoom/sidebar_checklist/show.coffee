@@ -195,6 +195,10 @@ class App.SidebarChecklistShow extends App.Controller
     @isRenamingChecklist = new App.SidebarChecklistRename(el: elem, parentVC: @, originalValue: @checklistTitle())
 
   onEntryTextClicked: (e) =>
+    @table
+      .find('.js-table-action-menu:visible')
+      .dropdown('toggle')
+
     return if $(e.target).closest('td').find('.js-input').length
 
     # skip on link openings
@@ -368,8 +372,8 @@ class App.SidebarChecklistShow extends App.Controller
       App.Utils.linkify(object.text)
     else if @readonly
       '-'
-
-    return if text == row.data('text-value')
+    else
+      ''
 
     row.data('text-value', text)
 
