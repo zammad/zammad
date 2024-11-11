@@ -103,7 +103,7 @@
     "vue-tsc": "^2.1.10"
   },
   "dependencies": {
-    "@apollo/client": "^3.11.8",
+    "@apollo/client": "^3.11.9",
     "@formkit/core": "^1.6.7",
     "@formkit/dev": "^1.6.7",
     "@formkit/drag-and-drop": "^0.1.6",
