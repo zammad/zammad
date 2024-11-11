@@ -172,7 +172,7 @@
     "ts-essentials": "^10.0.3",
     "tslib": "^2.8.1",
     "ua-parser-js": "^1.0.39",
-    "uuid": "^11.0.2",
+    "uuid": "^11.0.3",
     "vite-bundle-visualizer": "^1.2.1",
     "vue": "^3.5.12",
     "vue-advanced-cropper": "^2.8.9",
