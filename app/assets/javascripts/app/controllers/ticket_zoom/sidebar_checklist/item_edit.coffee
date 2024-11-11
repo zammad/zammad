@@ -62,20 +62,20 @@ class App.SidebarChecklistItemEdit extends App.Controller
     item = @object()
     item.text = newValue
 
-    @parentVC.setDisabled(e.target)
+    @parentVC.setDisabled(row)
 
     item.save(
       done: =>
         @releaseController()
         @parentVC.updateDisplayValue(item)
-        @parentVC.setEnabled(e.target)
+        @parentVC.setEnabled(row)
       fail: (settings, details) =>
         @notify(
           type: 'error'
           msg:  App.i18n.translateContent(details.error)
         )
         @releaseController()
-        @parentVC.setEnabled(e.target)
+        @parentVC.setEnabled(row)
         @parentVC.renderTable()
     )
 
