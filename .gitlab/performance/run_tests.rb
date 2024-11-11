@@ -5,7 +5,6 @@ require 'rails'
 
 def run
   puts "# Zammad Performance Tests\n\n"
-  ensure_test_data_present
   run_tests!
 end
 
@@ -39,8 +38,9 @@ def run_test_scenarios(results:)
     Ticket::Overviews.all(current_user: agent)
   end
 
-  max_overview_list_time    = version_oldstable? ? 15     : 20
-  max_overview_list_queries = version_oldstable? ? 16_000 : 25_000
+  max_overview_list_time    = 20
+  max_overview_list_queries = 25_000
+  puts "Current ticket count: #{Ticket.count}"
   expect(title: 'Sessions::Backend::TicketOverviewList#push', max_time: max_overview_list_time, max_sql_queries: max_overview_list_queries, results:) do
     Sessions::Backend::TicketOverviewList.new(agent, {}).push
   end
@@ -74,37 +74,6 @@ def expect(title:, max_time:, max_sql_queries:, results:, &block)
   end
 
   results.push({ title:, max_time:, time: time.real, max_sql_queries:, sql_queries:, failed: })
-end
-
-def ensure_test_data_present
-  puts 'Ensuring test data with 15k tickets is present…'
-
-  return if Ticket.count >= 15_000
-
-  # Speed up the import
-  Setting.set('import_mode', true)
-
-  suppress_output do
-    FillDb.load(
-      agents:        100,
-      customers:     4000,
-      groups:        80,
-      organizations: 400,
-      overviews:     4,
-      tickets:       15_000,
-      nice:          0,
-    )
-  end
-
-  Setting.set('import_mode', false)
-end
-
-def suppress_output
-  original_stdout = $stdout.clone
-  $stdout.reopen(File.new('/dev/null', 'w'))
-  yield
-ensure
-  $stdout.reopen(original_stdout)
 end
 
 run

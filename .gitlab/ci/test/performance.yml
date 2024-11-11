@@ -1,10 +1,11 @@
 performance:
   stage: test
   rules:
-  - if: $CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web"
-  - if: $CI_PIPELINE_SOURCE == "merge_request_event"
-    changes:
-      - .gitlab/performance/**/*
+    - if: $CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web"
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+      changes:
+        - .gitlab/performance/**/*
+        - .gitlab/ci/test/performance.yml
   # Make sure this gets executed exclusively on a runner.
   tags: ['no_concurrency']
   services:
@@ -25,6 +26,7 @@ performance:
     - !reference [.scripts, zammad_db_init]
     - yarn install --silent # Required for assets:precompile test
   script:
+    - bundle exec rails r tmp/performance/fill_db.rb
     # Run performance tests for stable.
     - bundle exec rails r tmp/performance/run_tests.rb
     # Then, switch to the current commit, migrate to it and run a few selected tests.
@@ -36,5 +38,5 @@ performance:
     - bundle exec rails db:migrate > /dev/null
     - rm -rf node_modules && pnpm install > /dev/null # Required for assets:precompile test
     # Run performance tests for current branch.
-    - bundle exec rails r .gitlab/performance/run_tests.rb
+    - bundle exec rails r tmp/performance/run_tests.rb
   after_script: []
