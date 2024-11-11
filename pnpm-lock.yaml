@@ -242,14 +242,14 @@ importers:
         specifier: ^1.6.5
         version: 1.6.5
       workbox-core:
-        specifier: ^7.1.0
-        version: 7.1.0
+        specifier: ^7.3.0
+        version: 7.3.0
       workbox-precaching:
-        specifier: ^7.1.0
-        version: 7.1.0
+        specifier: ^7.3.0
+        version: 7.3.0
       workbox-window:
-        specifier: ^7.1.0
-        version: 7.1.0
+        specifier: ^7.3.0
+        version: 7.3.0
     devDependencies:
       '@faker-js/faker':
         specifier: ^9.2.0
@@ -445,7 +445,7 @@ importers:
         version: 5.4.10(@types/node@18.11.4)(sass@1.80.6)(terser@5.31.0)
       vite-plugin-pwa:
         specifier: ^0.20.5
-        version: 0.20.5(vite@5.4.10(@types/node@18.11.4)(sass@1.80.6)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.1.0)
+        version: 0.20.5(vite@5.4.10(@types/node@18.11.4)(sass@1.80.6)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.3.0)
       vite-plugin-ruby:
         specifier: ^5.1.0
         version: 5.1.0(vite@5.4.10(@types/node@18.11.4)(sass@1.80.6)(terser@5.31.0))
@@ -6497,6 +6497,9 @@ packages:
   workbox-core@7.1.0:
     resolution: {integrity: sha512-5KB4KOY8rtL31nEF7BfvU7FMzKT4B5TkbYa2tzkS+Peqj0gayMT9SytSFtNzlrvMaWgv6y/yvP9C0IbpFjV30Q==}
 
+  workbox-core@7.3.0:
+    resolution: {integrity: sha512-Z+mYrErfh4t3zi7NVTvOuACB0A/jA3bgxUN3PwtAVHvfEsZxV9Iju580VEETug3zYJRc0Dmii/aixI/Uxj8fmw==}
+
   workbox-expiration@7.1.0:
     resolution: {integrity: sha512-m5DcMY+A63rJlPTbbBNtpJ20i3enkyOtSgYfv/l8h+D6YbbNiA0zKEkCUaMsdDlxggla1oOfRkyqTvl5Ni5KQQ==}
 
@@ -6509,6 +6512,9 @@ packages:
   workbox-precaching@7.1.0:
     resolution: {integrity: sha512-LyxzQts+UEpgtmfnolo0hHdNjoB7EoRWcF7EDslt+lQGd0lW4iTvvSe3v5JiIckQSB5KTW5xiCqjFviRKPj1zA==}
 
+  workbox-precaching@7.3.0:
+    resolution: {integrity: sha512-ckp/3t0msgXclVAYaNndAGeAoWQUv7Rwc4fdhWL69CCAb2UHo3Cef0KIUctqfQj1p8h6aGyz3w8Cy3Ihq9OmIw==}
+
   workbox-range-requests@7.1.0:
     resolution: {integrity: sha512-m7+O4EHolNs5yb/79CrnwPR/g/PRzMFYEdo01LqwixVnc/sbzNSvKz0d04OE3aMRel1CwAAZQheRsqGDwATgPQ==}
 
@@ -6518,8 +6524,14 @@ packages:
   workbox-routing@7.1.0:
     resolution: {integrity: sha512-oOYk+kLriUY2QyHkIilxUlVcFqwduLJB7oRZIENbqPGeBP/3TWHYNNdmGNhz1dvKuw7aqvJ7CQxn27/jprlTdg==}
 
+  workbox-routing@7.3.0:
+    resolution: {integrity: sha512-ZUlysUVn5ZUzMOmQN3bqu+gK98vNfgX/gSTZ127izJg/pMMy4LryAthnYtjuqcjkN4HEAx1mdgxNiKJMZQM76A==}
+
   workbox-strategies@7.1.0:
     resolution: {integrity: sha512-/UracPiGhUNehGjRm/tLUQ+9PtWmCbRufWtV0tNrALuf+HZ4F7cmObSEK+E4/Bx1p8Syx2tM+pkIrvtyetdlew==}
+
+  workbox-strategies@7.3.0:
+    resolution: {integrity: sha512-tmZydug+qzDFATwX7QiEL5Hdf7FrkhjaF9db1CbB39sDmEZJg3l9ayDvPxy8Y18C3Y66Nrr9kkN1f/RlkDgllg==}
 
   workbox-streams@7.1.0:
     resolution: {integrity: sha512-WyHAVxRXBMfysM8ORwiZnI98wvGWTVAq/lOyBjf00pXFvG0mNaVz4Ji+u+fKa/mf1i2SnTfikoYKto4ihHeS6w==}
@@ -6529,6 +6541,9 @@ packages:
 
   workbox-window@7.1.0:
     resolution: {integrity: sha512-ZHeROyqR+AS5UPzholQRDttLFqGMwP0Np8MKWAdyxsDETxq3qOAyXvqessc3GniohG6e0mAqSQyKOHmT8zPF7g==}
+
+  workbox-window@7.3.0:
+    resolution: {integrity: sha512-qW8PDy16OV1UBaUNGlTVcepzrlzyzNW/ZJvFQQs2j2TzGsg6IKjcpZC1RSquqQnTOafl5pCj5bGfAHlCjOOjdA==}
 
   wrap-ansi@6.2.0:
     resolution: {integrity: sha512-r6lPcBGxZXlIcymEu7InxDMhdW0KDxpLgoFLcguasxCaJ/SOIZwINatK9KY/tf+ZrlywOKU0UDj3ATXUBfxJXA==}
@@ -13263,14 +13278,14 @@ snapshots:
       - supports-color
       - terser
 
-  vite-plugin-pwa@0.20.5(vite@5.4.10(@types/node@18.11.4)(sass@1.80.6)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.1.0):
+  vite-plugin-pwa@0.20.5(vite@5.4.10(@types/node@18.11.4)(sass@1.80.6)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.3.0):
     dependencies:
       debug: 4.3.6
       pretty-bytes: 6.1.1
       tinyglobby: 0.2.0
       vite: 5.4.10(@types/node@18.11.4)(sass@1.80.6)(terser@5.31.0)
       workbox-build: 7.1.0
-      workbox-window: 7.1.0
+      workbox-window: 7.3.0
     transitivePeerDependencies:
       - supports-color
 
@@ -13550,6 +13565,8 @@ snapshots:
 
   workbox-core@7.1.0: {}
 
+  workbox-core@7.3.0: {}
+
   workbox-expiration@7.1.0:
     dependencies:
       idb: 7.1.0
@@ -13572,6 +13589,12 @@ snapshots:
       workbox-routing: 7.1.0
       workbox-strategies: 7.1.0
 
+  workbox-precaching@7.3.0:
+    dependencies:
+      workbox-core: 7.3.0
+      workbox-routing: 7.3.0
+      workbox-strategies: 7.3.0
+
   workbox-range-requests@7.1.0:
     dependencies:
       workbox-core: 7.1.0
@@ -13589,9 +13612,17 @@ snapshots:
     dependencies:
       workbox-core: 7.1.0
 
+  workbox-routing@7.3.0:
+    dependencies:
+      workbox-core: 7.3.0
+
   workbox-strategies@7.1.0:
     dependencies:
       workbox-core: 7.1.0
+
+  workbox-strategies@7.3.0:
+    dependencies:
+      workbox-core: 7.3.0
 
   workbox-streams@7.1.0:
     dependencies:
@@ -13604,6 +13635,11 @@ snapshots:
     dependencies:
       '@types/trusted-types': 2.0.2
       workbox-core: 7.1.0
+
+  workbox-window@7.3.0:
+    dependencies:
+      '@types/trusted-types': 2.0.2
+      workbox-core: 7.3.0
 
   wrap-ansi@6.2.0:
     dependencies:

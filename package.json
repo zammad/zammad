@@ -179,9 +179,9 @@
     "vue-easy-lightbox": "1.19.0",
     "vue-router": "^4.4.5",
     "vue3-draggable-resizable": "^1.6.5",
-    "workbox-core": "^7.1.0",
-    "workbox-precaching": "^7.1.0",
-    "workbox-window": "^7.1.0"
+    "workbox-core": "^7.3.0",
+    "workbox-precaching": "^7.3.0",
+    "workbox-window": "^7.3.0"
   },
   "resolutions": {
     "loader-utils": "^3.3.1",
