@@ -53,7 +53,7 @@ class Taskbar < ApplicationModel
   def state_changed?
     return false if state.blank?
 
-    state.each_value do |value|
+    state.each do |key, value|
       if value.is_a? Hash
         value.each do |key1, value1|
           next if value1.blank?
@@ -63,6 +63,7 @@ class Taskbar < ApplicationModel
         end
       else
         next if value.blank?
+        next if key == 'form_id'
 
         return true
       end

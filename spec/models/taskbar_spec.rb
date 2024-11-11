@@ -481,6 +481,24 @@ RSpec.describe Taskbar, type: :model do
                  user_id: 1, apps: { desktop: { last_contact: taskbar.last_contact, changed: false } }
                })
     end
+
+    it 'returns task info for an existing taskbar without changes (form_id only)' do
+      taskbar = create(:taskbar, state: { form_id: SecureRandom.uuid })
+
+      expect(taskbar.preferences_task_info)
+        .to eq({
+                 id: taskbar.id, user_id: 1, apps: { desktop: { last_contact: taskbar.last_contact, changed: false } }
+               })
+    end
+
+    it 'returns task info for an existing taskbar without changes (nested form_id only)' do
+      taskbar = create(:taskbar, state: { article: { form_id: SecureRandom.uuid } })
+
+      expect(taskbar.preferences_task_info)
+        .to eq({
+                 id: taskbar.id, user_id: 1, apps: { desktop: { last_contact: taskbar.last_contact, changed: false } }
+               })
+    end
   end
 
   describe '#update_preferences_infos' do
