@@ -447,8 +447,8 @@ importers:
         specifier: ^0.20.5
         version: 0.20.5(vite@5.4.10(@types/node@18.11.4)(sass@1.80.6)(terser@5.31.0))(workbox-build@7.1.0)(workbox-window@7.3.0)
       vite-plugin-ruby:
-        specifier: ^5.1.0
-        version: 5.1.0(vite@5.4.10(@types/node@18.11.4)(sass@1.80.6)(terser@5.31.0))
+        specifier: ^5.1.1
+        version: 5.1.1(vite@5.4.10(@types/node@18.11.4)(sass@1.80.6)(terser@5.31.0))
       vitest:
         specifier: ^2.1.4
         version: 2.1.4(@types/node@18.11.4)(jsdom@25.0.1)(sass@1.80.6)(terser@5.31.0)
@@ -6283,8 +6283,8 @@ packages:
       '@vite-pwa/assets-generator':
         optional: true
 
-  vite-plugin-ruby@5.1.0:
-    resolution: {integrity: sha512-Dgd/dCvb/8GYxZx2NEgxygEoUpHz9vfad7itlO4fXqYwdfAEwFwwOohC630yf/+kxIGBZXI5yk+Y3WkL9VkwcA==}
+  vite-plugin-ruby@5.1.1:
+    resolution: {integrity: sha512-I1dXJq2ywdvTD2Cz5LYNcYLujqQ3eUxPoCjruRdfm2QBtHBY15NEeb6x5HuPM3T5S+y8S3p9fwRsieQQCjk0gg==}
     peerDependencies:
       vite: '>=5.0.0'
 
@@ -13289,9 +13289,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  vite-plugin-ruby@5.1.0(vite@5.4.10(@types/node@18.11.4)(sass@1.80.6)(terser@5.31.0)):
+  vite-plugin-ruby@5.1.1(vite@5.4.10(@types/node@18.11.4)(sass@1.80.6)(terser@5.31.0)):
     dependencies:
-      debug: 4.3.6
+      debug: 4.3.7
       fast-glob: 3.3.2
       vite: 5.4.10(@types/node@18.11.4)(sass@1.80.6)(terser@5.31.0)
     transitivePeerDependencies:
