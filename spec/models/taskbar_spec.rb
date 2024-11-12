@@ -656,4 +656,43 @@ RSpec.describe Taskbar, type: :model do
       expect(described_class.related_taskbars(taskbar_1)).to contain_exactly(taskbar_2, taskbar_3)
     end
   end
+
+  describe '#saved_chanegs_to_dirty?' do
+    let(:taskbar) { create(:taskbar) }
+
+    it 'fresh taskbar has no changes to dirty' do
+      expect(taskbar).not_to be_saved_change_to_dirty
+    end
+
+    it 'no changes to dirty after saving without dirty lag' do
+      taskbar.active = !taskbar.active
+      taskbar.save!
+
+      expect(taskbar).not_to be_saved_change_to_dirty
+    end
+
+    it 'no changes to dirty after marking as not dirty' do
+      taskbar.preferences[:dirty] = false
+      taskbar.save!
+
+      expect(taskbar).not_to be_saved_change_to_dirty
+    end
+
+    it 'dirty was changed after marking as dirty' do
+      taskbar.preferences[:dirty] = true
+      taskbar.save!
+
+      expect(taskbar).to be_saved_change_to_dirty
+    end
+
+    it 'dirty was changed after marking previously dirty item as not dirty' do
+      taskbar.preferences[:dirty] = true
+      taskbar.save!
+
+      taskbar.preferences[:dirty] = false
+      taskbar.save!
+
+      expect(taskbar).to be_saved_change_to_dirty
+    end
+  end
 end

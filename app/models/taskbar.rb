@@ -103,6 +103,12 @@ class Taskbar < ApplicationModel
     save!
   end
 
+  def saved_change_to_dirty?
+    return false if !saved_change_to_preferences?
+
+    !!preferences[:dirty] != !!preferences_previously_was[:dirty]
+  end
+
   private
 
   def update_last_contact
@@ -188,5 +194,4 @@ class Taskbar < ApplicationModel
       data,
     )
   end
-
 end

@@ -40,6 +40,26 @@ RSpec.describe Taskbar::TriggersSubscriptions, :aggregate_failures do
     end
   end
 
+  context 'when updating active' do
+    it 'triggers correctly' do
+      taskbar.active = !taskbar.active
+      taskbar.save!
+      expect(gqs::TicketLiveUserUpdates).to have_received(:trigger).twice
+      expect(gqs_uc::TaskbarItemUpdates).not_to have_received(:trigger_after_update)
+      expect(gqs_uc::TaskbarItemStateUpdates).not_to have_received(:trigger)
+    end
+  end
+
+  context 'when updating dirty' do
+    it 'triggers correctly' do
+      taskbar.preferences[:dirty] = !taskbar.preferences[:dirty]
+      taskbar.save!
+      expect(gqs::TicketLiveUserUpdates).to have_received(:trigger).twice
+      expect(gqs_uc::TaskbarItemUpdates).to have_received(:trigger_after_update).once
+      expect(gqs_uc::TaskbarItemStateUpdates).not_to have_received(:trigger)
+    end
+  end
+
   context 'when updating last_contact_at' do
     it 'triggers correctly' do
       taskbar.touch_last_contact!
@@ -67,7 +87,7 @@ RSpec.describe Taskbar::TriggersSubscriptions, :aggregate_failures do
         taskbar.state = { 'body' => 'test' }
         taskbar.save!
         expect(gqs::TicketLiveUserUpdates).to have_received(:trigger).exactly(2)
-        expect(gqs_uc::TaskbarItemUpdates).to have_received(:trigger_after_update).once # only for taskbar
+        expect(gqs_uc::TaskbarItemUpdates).not_to have_received(:trigger_after_update)
         expect(gqs_uc::TaskbarItemStateUpdates).not_to have_received(:trigger)
       end
     end
