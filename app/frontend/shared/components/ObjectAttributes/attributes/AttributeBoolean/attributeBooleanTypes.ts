@@ -1,8 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ObjectManagerFrontendAttribute } from '#shared/graphql/types.ts'
+import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
 
-export interface ObjectAttributeBoolean extends ObjectManagerFrontendAttribute {
+export interface ObjectAttributeBoolean extends ObjectAttribute {
   dataType: 'boolean'
   dataOption: {
     default: boolean

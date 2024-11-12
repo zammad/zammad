@@ -1,9 +1,8 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import type { ObjectManagerFrontendAttribute } from '#shared/graphql/types.ts'
+import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
 
-export interface ObjectAttributeTextarea
-  extends ObjectManagerFrontendAttribute {
+export interface ObjectAttributeTextarea extends ObjectAttribute {
   dataType: 'textarea'
   dataOption: {
     item_class: string

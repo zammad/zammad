@@ -90,6 +90,15 @@ describe('Object Manager Frontend Attributes Store', () => {
         },
         screens: {},
       })
+
+      // Check if also the static attribute exists.
+      expect(meta.attributesLookup.value.get('created_at')).toEqual({
+        name: 'created_at',
+        display: __('Created at'),
+        dataType: 'datetime',
+        isStatic: true,
+        isInternal: true,
+      })
     })
   })
 })

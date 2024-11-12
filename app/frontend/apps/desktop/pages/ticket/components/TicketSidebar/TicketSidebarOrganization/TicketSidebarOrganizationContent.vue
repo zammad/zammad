@@ -4,11 +4,8 @@
 import type { AvatarOrganization } from '#shared/components/CommonOrganizationAvatar'
 import CommonOrganizationAvatar from '#shared/components/CommonOrganizationAvatar/CommonOrganizationAvatar.vue'
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
-import type {
-  ObjectManagerFrontendAttribute,
-  OrganizationQuery,
-  User,
-} from '#shared/graphql/types.ts'
+import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
+import type { OrganizationQuery, User } from '#shared/graphql/types.ts'
 import { normalizeEdges } from '#shared/utils/helpers.ts'
 
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
@@ -21,7 +18,7 @@ import TicketSidebarContent from '../TicketSidebarContent.vue'
 interface Props extends TicketSidebarContentProps {
   organization: OrganizationQuery['organization']
   organizationMembers: ReturnType<typeof normalizeEdges<Partial<User>>>
-  objectAttributes: ObjectManagerFrontendAttribute[]
+  objectAttributes: ObjectAttribute[]
 }
 
 defineProps<Props>()

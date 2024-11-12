@@ -4,11 +4,9 @@ import type {
   FormFieldValue,
   FormSchemaField,
 } from '#shared/components/Form/types.ts'
-import type {
-  EnumObjectManagerObjects,
-  ObjectManagerFrontendAttribute,
-} from '#shared/graphql/types.ts'
+import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 
+import type { ObjectAttribute } from '../../types/store.ts'
 import type { JsonValue } from 'type-fest'
 
 export default abstract class FieldResolver {
@@ -22,20 +20,20 @@ export default abstract class FieldResolver {
 
   protected attributeType: string
 
-  protected attributeConfig: Record<string, JsonValue>
+  protected attributeConfig: Record<string, JsonValue | undefined>
 
   abstract fieldType: string | (() => string)
 
   constructor(
     object: EnumObjectManagerObjects,
-    objectAttribute: ObjectManagerFrontendAttribute,
+    objectAttribute: ObjectAttribute,
   ) {
     this.object = object
     this.name = objectAttribute.name
     this.label = objectAttribute.display
     this.internal = objectAttribute.isInternal
     this.attributeType = objectAttribute.dataType
-    this.attributeConfig = objectAttribute.dataOption
+    this.attributeConfig = objectAttribute.dataOption || {}
   }
 
   private getFieldType(): string {

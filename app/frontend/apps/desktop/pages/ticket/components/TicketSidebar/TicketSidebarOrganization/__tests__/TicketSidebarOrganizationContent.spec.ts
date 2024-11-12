@@ -35,7 +35,6 @@ const renderTicketSidebarOrganizationContent = async (options: any = {}) => {
       },
       objectAttributes: [
         {
-          __typename: 'ObjectManagerFrontendAttribute',
           name: 'domain',
           display: 'Domain',
           dataType: 'input',
@@ -61,14 +60,6 @@ const renderTicketSidebarOrganizationContent = async (options: any = {}) => {
 
 describe('TicketSidebarOrganizationContent.vue', () => {
   it('renders organization info', async () => {
-    // mockOrganizationQuery({
-    //   organization: {
-    //     name: 'Zammad Foundation',
-    //     domain: 'zammad.org',
-    //     active: true,
-    //   },
-    // })
-
     const wrapper = await renderTicketSidebarOrganizationContent()
 
     expect(wrapper.getByRole('heading', { level: 2 })).toHaveTextContent(

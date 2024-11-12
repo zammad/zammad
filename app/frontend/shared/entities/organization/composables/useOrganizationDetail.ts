@@ -1,13 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { storeToRefs } from 'pinia'
 import { computed, ref, type Ref } from 'vue'
 
-import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
 import type {
   OrganizationUpdatesSubscriptionVariables,
   OrganizationUpdatesSubscription,
 } from '#shared/graphql/types.ts'
-import { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 import type { GraphQLHandlerError } from '#shared/types/error.ts'
@@ -15,6 +14,7 @@ import { normalizeEdges } from '#shared/utils/helpers.ts'
 
 import { useOrganizationQuery } from '../graphql/queries/organization.api.ts'
 import { OrganizationUpdatesDocument } from '../graphql/subscriptions/organizationUpdates.api.ts'
+import { useOrganizationObjectAttributesStore } from '../stores/objectAttributes.ts'
 
 import type { WatchQueryFetchPolicy } from '@apollo/client/core'
 
@@ -78,8 +78,8 @@ export const useOrganizationDetail = (
       })
   }
 
-  const { attributes: objectAttributes } = useObjectAttributes(
-    EnumObjectManagerObjects.Organization,
+  const { viewScreenAttributes } = storeToRefs(
+    useOrganizationObjectAttributesStore(),
   )
 
   const organizationMembers = computed(
@@ -90,7 +90,7 @@ export const useOrganizationDetail = (
     loading,
     organizationQuery,
     organization,
-    objectAttributes,
+    objectAttributes: viewScreenAttributes,
     organizationMembers,
     loadAllMembers,
   }

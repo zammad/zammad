@@ -1,13 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import type { FormSchemaField } from '#shared/components/Form/types.ts'
-import type {
-  EnumObjectManagerObjects,
-  ObjectManagerFrontendAttribute,
-} from '#shared/graphql/types.ts'
+import type { EnumObjectManagerObjects } from '#shared/graphql/types.ts'
 
 import { transformResolvedFieldForScreen } from '../form/getFieldFromAttribute.ts'
 import { useObjectAttributesStore } from '../stores/objectAttributes.ts'
+
+import type { ObjectAttribute } from '../types/store.ts'
 
 export const useObjectAttributeFormFields = (skippedFields: string[] = []) => {
   const { getObjectAttributesForObject } = useObjectAttributesStore()
@@ -32,7 +31,7 @@ export const useObjectAttributeFormFields = (skippedFields: string[] = []) => {
     const screenConfig = (
       objectAttributesObject.attributesLookup as unknown as Map<
         string,
-        ObjectManagerFrontendAttribute
+        ObjectAttribute
       >
     ).get(name)?.screens[screen]
 

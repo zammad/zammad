@@ -81,7 +81,6 @@ const renderTicketSidebarCustomerContent = async (
       secondaryOrganizations,
       objectAttributes: [
         {
-          __typename: 'ObjectManagerFrontendAttribute',
           name: 'email',
           display: 'Email',
           dataType: 'input',

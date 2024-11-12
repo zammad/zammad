@@ -5,11 +5,8 @@ import { computed } from 'vue'
 
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import ObjectAttributes from '#shared/components/ObjectAttributes/ObjectAttributes.vue'
-import type {
-  ObjectManagerFrontendAttribute,
-  Organization,
-  UserQuery,
-} from '#shared/graphql/types.ts'
+import type { ObjectAttribute } from '#shared/entities/object-attributes/types/store.ts'
+import type { Organization, UserQuery } from '#shared/graphql/types.ts'
 import { normalizeEdges } from '#shared/utils/helpers.ts'
 
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
@@ -31,7 +28,7 @@ interface Props extends TicketSidebarContentProps {
   secondaryOrganizations: ReturnType<
     typeof normalizeEdges<Partial<Organization>>
   >
-  objectAttributes: ObjectManagerFrontendAttribute[]
+  objectAttributes: ObjectAttribute[]
 }
 
 const props = defineProps<Props>()
