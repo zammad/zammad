@@ -334,6 +334,7 @@ class CreateBase < ActiveRecord::Migration[4.2]
       t.string :app,                                null: false, default: 'desktop'
       t.timestamps limit: 3, null: false
     end
+    add_index :taskbars, %i[user_id key app], unique: true
     add_index :taskbars, [:user_id]
     add_index :taskbars, [:key]
     add_foreign_key :taskbars, :users

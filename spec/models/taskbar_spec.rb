@@ -12,33 +12,12 @@ RSpec.describe Taskbar, type: :model do
     subject(:taskbar) { create(:taskbar) }
 
     it { is_expected.to validate_inclusion_of(:app).in_array(%w[desktop mobile]) }
-  end
 
-  context 'create and update' do
-    let(:user) { create(:user) }
-
-    context 'when creating' do
-      it 'validates uniqueness of key + app' do
-        create(:taskbar, user: user, key: 'Ticket-1234', app: 'desktop')
-
-        expect { create(:taskbar, user: user, key: 'Ticket-1234', app: 'desktop') }.to raise_error(ActiveRecord::RecordInvalid)
-      end
-    end
-
-    context 'when updating' do
-      it 'validates uniqueness of key + app' do
-        create(:taskbar, user: user, key: 'Ticket-1234', app: 'desktop')
-        taskbar = create(:taskbar, user: user, key: 'Ticket-1234', app: 'mobile')
-
-        expect { taskbar.update!(app: 'desktop') }.to raise_error(ActiveRecord::RecordInvalid)
-      end
-
-      it 'does not validate when no relevant field changes' do
-        taskbar = create(:taskbar, user: user, key: 'Ticket-1234', app: 'desktop')
-
-        allow(taskbar).to receive(:taskbar_exist?).and_call_original
-        taskbar.update!(state: { example: '1234' })
-        expect(taskbar).not_to have_received(:taskbar_exist?)
+    it do
+      if ActiveRecord::Base.connection_db_config.configuration_hash[:adapter] == 'mysql2'
+        expect(taskbar).to validate_uniqueness_of(:key).scoped_to(%w[user_id app]).with_message(%r{}).case_insensitive
+      else
+        expect(taskbar).to validate_uniqueness_of(:key).scoped_to(%w[user_id app]).with_message(%r{})
       end
     end
   end

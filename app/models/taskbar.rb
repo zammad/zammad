@@ -6,7 +6,6 @@ class Taskbar < ApplicationModel
   include Taskbar::Assets
   include Taskbar::TriggersSubscriptions
   include Taskbar::List
-  include Taskbar::Validator
 
   TASKBAR_APPS = %w[desktop mobile].freeze
   TASKBAR_STATIC_ENTITIES = %w[
@@ -20,9 +19,12 @@ class Taskbar < ApplicationModel
   belongs_to :user
 
   validates :app, inclusion: { in: TASKBAR_APPS }
+  validates :key, uniqueness: { scope: %i[user_id app] }
 
-  before_create   :update_last_contact, :set_user, :update_preferences_infos
-  before_update   :update_last_contact, :set_user, :update_preferences_infos
+  before_validation :set_user
+
+  before_create   :update_last_contact, :update_preferences_infos
+  before_update   :update_last_contact, :update_preferences_infos
 
   after_update    :notify_clients
   after_destroy   :update_preferences_infos, :notify_clients

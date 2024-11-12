@@ -2,8 +2,10 @@
 
 require 'rails_helper'
 
-RSpec.describe Issue5390TaskbarRemoveDuplicatedKeyByUser, type: :db_migration do
-  context 'when some user have duplicated taskbar key entries', db_strategy: :reset do
+RSpec.describe Issue5390TaskbarRemoveDuplicatedKeyByUser, db_strategy: :reset, type: :db_migration do
+  before { without_index(:taskbars, column: %i[user_id key app]) }
+
+  context 'when some user have duplicated taskbar key entries' do
     let(:user)        { create(:user) }
     let(:second_user) { create(:user) }
     let(:other_user)  { create(:user) }
