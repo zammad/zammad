@@ -136,7 +136,7 @@
   dir: ltr
 - locale: sl
   alias: ''
-  name: Slovenian (Slovenčina)
+  name: Slovenian (Slovenščina)
   active: true
   dir: ltr
 - locale: sv-se
