@@ -2,7 +2,7 @@
 
 import { useApplicationStore } from '#shared/stores/application.ts'
 
-import TicketSidebarGitHub from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue'
+import TicketSidebarGitHub from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue'
 import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
 
 import type { TicketSidebarPlugin } from './types.ts'

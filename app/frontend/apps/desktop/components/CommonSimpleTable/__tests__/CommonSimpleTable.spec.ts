@@ -2,8 +2,12 @@
 
 import { waitFor, within } from '@testing-library/vue'
 import { vi } from 'vitest'
+import { ref } from 'vue'
 
-import { renderComponent } from '#tests/support/components/index.ts'
+import {
+  type ExtendedMountingOptions,
+  renderComponent,
+} from '#tests/support/components/index.ts'
 
 import { i18n } from '#shared/i18n.ts'
 
@@ -43,7 +47,10 @@ const tableActions: MenuItem[] = [
   },
 ]
 
-const renderTable = (props: Props, options = {}) => {
+const renderTable = (
+  props: Props,
+  options: ExtendedMountingOptions<Props> = { form: true },
+) => {
   return renderComponent(CommonSimpleTable, {
     ...options,
     props,
@@ -293,5 +300,145 @@ describe('CommonSimpleTable', () => {
     expect(wrapper.getByText('Awesome Cell Header')).toHaveClass(
       'text-red-500 font-bold',
     )
+  })
+
+  it('supports adding a link to a cell', () => {
+    const wrapper = renderTable(
+      {
+        headers: [
+          {
+            key: 'urlTest',
+            label: 'Link Row',
+            type: 'link',
+          },
+        ],
+        items: [
+          {
+            id: 1,
+            urlTest: {
+              label: 'Example',
+              link: 'https://example.com',
+              openInNewTab: true,
+              external: true,
+            },
+          },
+        ],
+      },
+      { router: true },
+    )
+
+    const linkCell = wrapper.getByRole('link')
+
+    expect(linkCell).toHaveTextContent('Example')
+    expect(linkCell).toHaveAttribute('href', 'https://example.com')
+    expect(linkCell).toHaveAttribute('target', '_blank')
+  })
+
+  it('adds hover a')
+
+  it('supports row selection', async () => {
+    const checkedRows = ref([])
+
+    const items = [
+      {
+        id: 1,
+        label: 'selection data 1',
+      },
+      {
+        id: 2,
+        label: 'selection data 2',
+      },
+    ]
+
+    const wrapper = renderTable(
+      {
+        headers: [
+          {
+            key: 'urlTest',
+            label: 'Link Row',
+          },
+        ],
+        items,
+        hasCheckboxColumn: true,
+      },
+      { form: true, vModel: { checkedRows } },
+    )
+
+    expect(wrapper.getAllByRole('checkbox')).toHaveLength(3)
+
+    const selectAllCheckbox = wrapper.getByLabelText('Select all entries')
+
+    expect(selectAllCheckbox).not.toHaveAttribute('checked')
+
+    const rowCheckboxes = wrapper.getAllByRole('checkbox', {
+      name: 'Select this entry',
+    })
+
+    await wrapper.events.click(rowCheckboxes[0])
+    expect(rowCheckboxes[0]).toHaveAttribute('checked')
+
+    await wrapper.events.click(rowCheckboxes[1])
+
+    await waitFor(() => expect(checkedRows.value).toEqual(items))
+    await waitFor(() => expect(selectAllCheckbox).toHaveAttribute('checked'))
+
+    await wrapper.events.click(wrapper.getByLabelText('Deselect all entries'))
+
+    await waitFor(() => expect(rowCheckboxes[0]).not.toHaveAttribute('checked'))
+    expect(rowCheckboxes[1]).not.toHaveAttribute('checked')
+
+    await wrapper.events.click(rowCheckboxes[1])
+
+    expect(
+      await wrapper.findByLabelText('Deselect this entry'),
+    ).toBeInTheDocument()
+  })
+
+  it('supports disabling checkbox item for specific rows', async () => {
+    const checkedRows = ref([])
+
+    const items = [
+      {
+        id: 1,
+        checked: false,
+        disabled: true,
+        label: 'selection data 1',
+      },
+      {
+        id: 1,
+        checked: true,
+        disabled: true,
+        label: 'selection data 1',
+      },
+    ]
+
+    const wrapper = renderTable(
+      {
+        headers: [
+          {
+            key: 'urlTest',
+            label: 'Link Row',
+          },
+        ],
+        items,
+        hasCheckboxColumn: true,
+      },
+      { form: true, vModel: { checkedRows } },
+    )
+
+    const checkboxes = wrapper.getAllByRole('checkbox')
+    expect(checkboxes).toHaveLength(3)
+
+    expect(checkboxes[1]).toBeDisabled()
+    expect(checkboxes[1]).not.toBeChecked()
+    expect(checkboxes[2]).toHaveAttribute('value', 'true')
+
+    await wrapper.events.click(checkboxes[1])
+
+    expect(checkedRows.value).toEqual([])
+
+    await wrapper.events.click(checkboxes[0])
+
+    expect(checkedRows.value).toEqual([])
   })
 })

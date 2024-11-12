@@ -2,7 +2,7 @@
 
 module Gql::Mutations
   class Ticket::ExternalReferences::IssueTrackerItemAdd < BaseMutation
-    description 'Add an issue tracker link to an ticket or temporary for ticket creation.'
+    description 'Add an issue tracker link to a ticket or just resolve it for ticket creation.'
 
     argument :ticket_id,          GraphQL::Types::ID, required: false, loads: Gql::Types::TicketType, description: 'The related ticket for the issue tracker items'
     argument :issue_tracker_link, Gql::Types::UriHttpStringType, description: 'The issue tracker link to add'

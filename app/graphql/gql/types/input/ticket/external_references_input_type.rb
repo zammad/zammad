@@ -13,5 +13,10 @@ module Gql::Types::Input::Ticket
              [Gql::Types::UriHttpStringType],
              required:    false,
              description: 'Links for the gitlab integration'
+
+    argument :idoit,
+             [Integer],
+             required:    false,
+             description: 'Object ids for the Idoit integration'
   end
 end

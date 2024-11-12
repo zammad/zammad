@@ -117,6 +117,7 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
   timeUnitsPerType?: TicketQuery['ticket']['timeUnitsPerType']
   tags?: string[]
   externalReferences?: TicketQuery['ticket']['externalReferences']
+  preferences?: TicketQuery['ticket']['preferences']
   // eslint-disable-next-line sonarjs/cognitive-complexity
 }): R => {
   return nullableMock({
@@ -156,7 +157,7 @@ export const createDummyTicket = <R = TicketQuery['ticket']>(options?: {
     timeUnit: options?.timeUnit || null,
     timeUnitsPerType: options?.timeUnitsPerType || [],
     subscribed: options?.subscribed || false,
-    preferences: {},
+    preferences: options?.preferences || {},
     stateColorCode: options?.colorCode || EnumTicketStateColorCode.Open,
     firstResponseEscalationAt: null,
     closeEscalationAt: null,

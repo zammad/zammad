@@ -14,7 +14,7 @@ export default <TicketSidebarPlugin>{
   permissions: ['ticket.agent', 'ticket.customer'],
   screens: [TicketSidebarScreenType.TicketDetailView],
   icon: 'paperclip',
-  order: 6000,
+  order: 7000,
   available: () => {
     const { config } = useApplicationStore()
 

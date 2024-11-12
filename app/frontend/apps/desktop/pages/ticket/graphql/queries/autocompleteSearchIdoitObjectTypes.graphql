@@ -1,0 +1,6 @@
+query autocompleteSearchIdoitObjectTypes ($input : AutocompleteSearchInput!){
+  autocompleteSearchIdoitObjectTypes(input : $input) {
+    value
+    label
+  }
+}

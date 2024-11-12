@@ -138,6 +138,10 @@ module Gql::Types
         output[:gitlab] = @object.preferences.dig('gitlab', 'issue_links')
       end
 
+      if Setting.get('idoit_integration')
+        output[:idoit] = @object.preferences.dig('idoit', 'object_ids')&.map(&:to_i)
+      end
+
       output.compact_blank.presence
     end
 

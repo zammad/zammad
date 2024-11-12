@@ -188,12 +188,13 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
       before do
         ticket_data[:external_references] = {
           gitlab: [gitlab_link],
-          github: [github_link]
+          github: [github_link],
+          idoit:  [42],
         }
       end
 
-      context 'when neither enabled' do
-        it 'adds no links' do
+      context 'when none enabled' do
+        it 'adds no data' do
           ticket = service.execute(ticket_data:)
 
           expect(ticket.preferences).to be_blank
@@ -224,19 +225,15 @@ RSpec.describe Service::Ticket::Create, current_user_id: -> { user.id } do
         end
       end
 
-      context 'when both enabled' do
+      context 'when idoit is enabled' do
         before do
-          Setting.set('gitlab_integration', true)
-          Setting.set('github_integration', true)
+          Setting.set('idoit_integration', true)
         end
 
-        it 'adds both links' do
+        it 'adds github links' do
           ticket = service.execute(ticket_data:)
 
-          expect(ticket.preferences).to eq({
-                                             'gitlab' => { 'issue_links' => [gitlab_link] },
-                                             'github' => { 'issue_links' => [github_link] }
-                                           })
+          expect(ticket.preferences).to eq({ 'idoit' => { 'object_ids' => [42] } })
         end
       end
     end

@@ -1,0 +1,10 @@
+mutation ticketExternalReferencesIdoitObjectAdd ($idoitObjectIds: [Int!]!, $ticketId: ID) {
+    ticketExternalReferencesIdoitObjectAdd(idoitObjectIds: $idoitObjectIds, ticketId: $ticketId) {
+      idoitObjects {
+       ...IdoitObjectAttributes
+      }
+      errors {
+        ...errors
+      }
+    }
+}

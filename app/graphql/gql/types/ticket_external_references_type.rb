@@ -6,5 +6,6 @@ module Gql::Types
 
     field :github, [Gql::Types::UriHttpStringType], description: 'Returns exising links for the github integration'
     field :gitlab, [Gql::Types::UriHttpStringType], description: 'Returns exising links for the gitlab integration'
+    field :idoit,  [Integer], description: 'Returns exising object ids for the idoit integration'
   end
 end

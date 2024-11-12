@@ -13,7 +13,7 @@ export default <TicketSidebarPlugin>{
   permissions: ['ticket.agent'],
   screens: [TicketSidebarScreenType.TicketDetailView],
   icon: 'checklist',
-  order: 7000,
+  order: 8000,
   available: () => {
     const { config } = useApplicationStore()
 

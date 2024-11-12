@@ -80,4 +80,26 @@ RSpec.describe Gql::Types::TicketType do
       end
     end
   end
+
+  describe 'field :external_references :idoit' do
+    context 'when ticket has a shared draft' do
+      let(:ticket) { create(:ticket, preferences: { idoit: { object_ids: ['42'] } }) }
+
+      context 'when idoit integration is inactive' do
+        it 'returns the ids' do
+          expect(instance.external_references).to be_nil
+        end
+      end
+
+      context 'when idoit integration is active' do
+        before do
+          Setting.set('idoit_integration', true)
+        end
+
+        it 'returns the ids' do
+          expect(instance.external_references[:idoit]).to eq([42])
+        end
+      end
+    end
+  end
 end

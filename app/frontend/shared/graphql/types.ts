@@ -126,6 +126,14 @@ export type AutocompleteSearchGenericInput = {
   query: Scalars['String']['input'];
 };
 
+/** The default fields for autocomplete searches. */
+export type AutocompleteSearchInput = {
+  /** Limit for the amount of entries */
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  /** Query from the autocomplete field */
+  query: Scalars['String']['input'];
+};
+
 /** Input fields for object attribute external data source autocomplete searches. */
 export type AutocompleteSearchObjectAttributeExternalDataSourceInput = {
   /** Name of the object attribute */
@@ -1472,7 +1480,11 @@ export type Mutations = {
   ticketCreate?: Maybe<TicketCreatePayload>;
   /** Update a ticket. */
   ticketCustomerUpdate?: Maybe<TicketCustomerUpdatePayload>;
-  /** Add an issue tracker link to an ticket or temporary for ticket creation. */
+  /** Add idoit objects to a ticket or just resolve them for ticket creation. */
+  ticketExternalReferencesIdoitObjectAdd?: Maybe<TicketExternalReferencesIdoitObjectAddPayload>;
+  /** Remove an idoit object from a ticket. */
+  ticketExternalReferencesIdoitObjectRemove?: Maybe<TicketExternalReferencesIdoitObjectRemovePayload>;
+  /** Add an issue tracker link to a ticket or just resolve it for ticket creation. */
   ticketExternalReferencesIssueTrackerItemAdd?: Maybe<TicketExternalReferencesIssueTrackerItemAddPayload>;
   /** Removes an issue tracker link from an ticket. */
   ticketExternalReferencesIssueTrackerItemRemove?: Maybe<TicketExternalReferencesIssueTrackerItemRemovePayload>;
@@ -1837,6 +1849,20 @@ export type MutationsTicketCreateArgs = {
 /** All available mutations */
 export type MutationsTicketCustomerUpdateArgs = {
   input: TicketCustomerUpdateInput;
+  ticketId: Scalars['ID']['input'];
+};
+
+
+/** All available mutations */
+export type MutationsTicketExternalReferencesIdoitObjectAddArgs = {
+  idoitObjectIds: Array<Scalars['Int']['input']>;
+  ticketId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+
+/** All available mutations */
+export type MutationsTicketExternalReferencesIdoitObjectRemoveArgs = {
+  idoitObjectId: Scalars['Int']['input'];
   ticketId: Scalars['ID']['input'];
 };
 
@@ -2549,6 +2575,8 @@ export type Queries = {
   autocompleteSearchAgent: Array<AutocompleteSearchUserEntry>;
   /** Generic autocomplete search */
   autocompleteSearchGeneric: Array<AutocompleteSearchGenericEntry>;
+  /** Search for idoit object types */
+  autocompleteSearchIdoitObjectTypes: Array<AutocompleteSearchEntry>;
   /** Search for values in object attributes for external data sources */
   autocompleteSearchObjectAttributeExternalDataSource: Array<AutocompleteSearchExternalDataSourceEntry>;
   /** Search for organizations */
@@ -2611,6 +2639,10 @@ export type Queries = {
   ticketAttachments: Array<StoredFile>;
   /** Fetch ticket checklist */
   ticketChecklist?: Maybe<Checklist>;
+  /** Detailed idoit objects for the given idoit object ids or the given ticket */
+  ticketExternalReferencesIdoitObjectList: Array<TicketExternalReferencesIdoitObject>;
+  /** Search for idoit objects belonging to a selected type */
+  ticketExternalReferencesIdoitObjectSearch: Array<TicketExternalReferencesIdoitObject>;
   /** Detailed issue tracker items for the given issue tracker links or the given ticket */
   ticketExternalReferencesIssueTrackerItemList: Array<TicketExternalReferencesIssueTrackerItem>;
   /** Ticket overviews available in the system */
@@ -2665,6 +2697,12 @@ export type QueriesAutocompleteSearchAgentArgs = {
 /** All available queries */
 export type QueriesAutocompleteSearchGenericArgs = {
   input: AutocompleteSearchGenericInput;
+};
+
+
+/** All available queries */
+export type QueriesAutocompleteSearchIdoitObjectTypesArgs = {
+  input: AutocompleteSearchInput;
 };
 
 
@@ -2837,6 +2875,20 @@ export type QueriesTicketAttachmentsArgs = {
 /** All available queries */
 export type QueriesTicketChecklistArgs = {
   ticket: LocatorTicketInput;
+};
+
+
+/** All available queries */
+export type QueriesTicketExternalReferencesIdoitObjectListArgs = {
+  input: TicketExternalReferencesIdoitObjectListInput;
+};
+
+
+/** All available queries */
+export type QueriesTicketExternalReferencesIdoitObjectSearchArgs = {
+  idoitTypeId?: InputMaybe<Scalars['String']['input']>;
+  limit?: InputMaybe<Scalars['Int']['input']>;
+  query?: InputMaybe<Scalars['String']['input']>;
 };
 
 
@@ -3858,6 +3910,46 @@ export type TicketExternalReferences = {
   github?: Maybe<Array<Scalars['UriHttpString']['output']>>;
   /** Returns exising links for the gitlab integration */
   gitlab?: Maybe<Array<Scalars['UriHttpString']['output']>>;
+  /** Returns exising object ids for the idoit integration */
+  idoit?: Maybe<Array<Scalars['Int']['output']>>;
+};
+
+/** Idoit object item for an external reference for a ticket */
+export type TicketExternalReferencesIdoitObject = {
+  __typename?: 'TicketExternalReferencesIdoitObject';
+  /** Idoit object id */
+  idoitObjectId: Scalars['Int']['output'];
+  /** Link to the object in the idoit GUI */
+  link?: Maybe<Scalars['UriHttpString']['output']>;
+  status: Scalars['String']['output'];
+  title: Scalars['String']['output'];
+  type: Scalars['String']['output'];
+};
+
+/** Autogenerated return type of TicketExternalReferencesIdoitObjectAdd. */
+export type TicketExternalReferencesIdoitObjectAddPayload = {
+  __typename?: 'TicketExternalReferencesIdoitObjectAddPayload';
+  /** Errors encountered during execution of the mutation. */
+  errors?: Maybe<Array<UserError>>;
+  /** The added / resolved idoit objects */
+  idoitObjects?: Maybe<Array<TicketExternalReferencesIdoitObject>>;
+};
+
+/** Represents information to fetch detailed idoit objects for the given idoit object ids or the given ticket */
+export type TicketExternalReferencesIdoitObjectListInput = {
+  /** The idoit object ids for the detailed list */
+  idoitObjectIds?: InputMaybe<Array<Scalars['Int']['input']>>;
+  /** The related ticket for the idoit objects */
+  ticketId?: InputMaybe<Scalars['ID']['input']>;
+};
+
+/** Autogenerated return type of TicketExternalReferencesIdoitObjectRemove. */
+export type TicketExternalReferencesIdoitObjectRemovePayload = {
+  __typename?: 'TicketExternalReferencesIdoitObjectRemovePayload';
+  /** Errors encountered during execution of the mutation. */
+  errors?: Maybe<Array<UserError>>;
+  /** Was the mutation successful? */
+  success?: Maybe<Scalars['Boolean']['output']>;
 };
 
 /** Represents the ticket external links to be added */
@@ -3870,6 +3962,8 @@ export type TicketExternalReferencesInput = {
   github?: InputMaybe<Array<Scalars['UriHttpString']['input']>>;
   /** Links for the gitlab integration */
   gitlab?: InputMaybe<Array<Scalars['UriHttpString']['input']>>;
+  /** Object ids for the Idoit integration */
+  idoit?: InputMaybe<Array<Scalars['Int']['input']>>;
   /** Additional custom attributes (names + values) */
   objectAttributeValues?: InputMaybe<Array<ObjectAttributeValueInput>>;
   /** The organization of the ticket. */
@@ -5591,6 +5685,8 @@ export type UserCurrentOverviewOrderingUpdatesSubscriptionVariables = Exact<{
 
 export type UserCurrentOverviewOrderingUpdatesSubscription = { __typename?: 'Subscriptions', userCurrentOverviewOrderingUpdates: { __typename?: 'UserCurrentOverviewOrderingUpdatesPayload', overviews?: Array<{ __typename?: 'Overview', id: string, name: string }> | null } };
 
+export type IdoitObjectAttributesFragment = { __typename?: 'TicketExternalReferencesIdoitObject', idoitObjectId: number, link?: string | null, title: string, type: string, status: string };
+
 export type LinkAddMutationVariables = Exact<{
   input: LinkInput;
 }>;
@@ -5653,6 +5749,22 @@ export type TicketChecklistTitleUpdateMutationVariables = Exact<{
 
 export type TicketChecklistTitleUpdateMutation = { __typename?: 'Mutations', ticketChecklistTitleUpdate?: { __typename?: 'TicketChecklistTitleUpdatePayload', checklist?: { __typename?: 'Checklist', id: string, name?: string | null } | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null, exception?: EnumUserErrorException | null }> | null } | null };
 
+export type TicketExternalReferencesIdoitObjectAddMutationVariables = Exact<{
+  idoitObjectIds: Array<Scalars['Int']['input']> | Scalars['Int']['input'];
+  ticketId?: InputMaybe<Scalars['ID']['input']>;
+}>;
+
+
+export type TicketExternalReferencesIdoitObjectAddMutation = { __typename?: 'Mutations', ticketExternalReferencesIdoitObjectAdd?: { __typename?: 'TicketExternalReferencesIdoitObjectAddPayload', idoitObjects?: Array<{ __typename?: 'TicketExternalReferencesIdoitObject', idoitObjectId: number, link?: string | null, title: string, type: string, status: string }> | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null, exception?: EnumUserErrorException | null }> | null } | null };
+
+export type TicketExternalReferencesIdoitObjectRemoveMutationVariables = Exact<{
+  ticketId: Scalars['ID']['input'];
+  idoitObjectId: Scalars['Int']['input'];
+}>;
+
+
+export type TicketExternalReferencesIdoitObjectRemoveMutation = { __typename?: 'Mutations', ticketExternalReferencesIdoitObjectRemove?: { __typename?: 'TicketExternalReferencesIdoitObjectRemovePayload', success?: boolean | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null, exception?: EnumUserErrorException | null }> | null } | null };
+
 export type TicketExternalReferencesIssueTrackerItemAddMutationVariables = Exact<{
   issueTrackerLink: Scalars['UriHttpString']['input'];
   issueTrackerType: EnumTicketExternalReferencesIssueTrackerType;
@@ -5670,6 +5782,13 @@ export type TicketExternalReferencesIssueTrackerItemRemoveMutationVariables = Ex
 
 
 export type TicketExternalReferencesIssueTrackerItemRemoveMutation = { __typename?: 'Mutations', ticketExternalReferencesIssueTrackerItemRemove?: { __typename?: 'TicketExternalReferencesIssueTrackerItemRemovePayload', success?: boolean | null, errors?: Array<{ __typename?: 'UserError', message: string, field?: string | null, exception?: EnumUserErrorException | null }> | null } | null };
+
+export type AutocompleteSearchIdoitObjectTypesQueryVariables = Exact<{
+  input: AutocompleteSearchInput;
+}>;
+
+
+export type AutocompleteSearchIdoitObjectTypesQuery = { __typename?: 'Queries', autocompleteSearchIdoitObjectTypes: Array<{ __typename?: 'AutocompleteSearchEntry', value: string, label: string }> };
 
 export type ChecklistTemplatesQueryVariables = Exact<{
   onlyActive?: InputMaybe<Scalars['Boolean']['input']>;
@@ -5708,6 +5827,23 @@ export type TicketChecklistQueryVariables = Exact<{
 
 
 export type TicketChecklistQuery = { __typename?: 'Queries', ticketChecklist?: { __typename?: 'Checklist', id: string, name?: string | null, completed: boolean, incomplete: number, items: Array<{ __typename?: 'ChecklistItem', id: string, text: string, checked: boolean, ticketReference?: { __typename?: 'TicketReference', ticket?: { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string, stateColorCode: EnumTicketStateColorCode, state: { __typename?: 'TicketState', id: string, name: string } } | null } | null }> } | null };
+
+export type TicketExternalReferencesIdoitObjectListQueryVariables = Exact<{
+  ticketId?: InputMaybe<Scalars['ID']['input']>;
+  idoitObjectIds?: InputMaybe<Array<Scalars['Int']['input']> | Scalars['Int']['input']>;
+}>;
+
+
+export type TicketExternalReferencesIdoitObjectListQuery = { __typename?: 'Queries', ticketExternalReferencesIdoitObjectList: Array<{ __typename?: 'TicketExternalReferencesIdoitObject', idoitObjectId: number, link?: string | null, title: string, type: string, status: string }> };
+
+export type TicketExternalReferencesIdoitObjectSearchQueryVariables = Exact<{
+  idoitTypeId?: InputMaybe<Scalars['String']['input']>;
+  limit: Scalars['Int']['input'];
+  query?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type TicketExternalReferencesIdoitObjectSearchQuery = { __typename?: 'Queries', ticketExternalReferencesIdoitObjectSearch: Array<{ __typename?: 'TicketExternalReferencesIdoitObject', idoitObjectId: number, link?: string | null, title: string, type: string, status: string }> };
 
 export type TicketExternalReferencesIssueTrackerItemListQueryVariables = Exact<{
   issueTrackerType: EnumTicketExternalReferencesIssueTrackerType;

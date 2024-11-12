@@ -31,6 +31,7 @@ describe('TicketSimpleTableWrapper', () => {
         internalTicketId: 1,
       },
       router: true,
+      form: true,
     })
 
     expect(

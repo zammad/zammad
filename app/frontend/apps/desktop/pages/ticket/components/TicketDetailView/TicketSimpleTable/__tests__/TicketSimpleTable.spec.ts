@@ -27,6 +27,7 @@ describe('TicketSimpleData', () => {
         ],
         label: 'ROCK YOUR TICKET TABLE',
       },
+      form: true,
       router: true,
     })
 
@@ -87,6 +88,7 @@ describe('TicketSimpleData', () => {
         tickets: [ticket],
         label: 'ROCK YOUR TICKET TABLE',
       },
+      form: true,
       router: true,
     })
 
@@ -110,13 +112,14 @@ describe('TicketSimpleData', () => {
         selectedTicketId: testTicket.id,
         label: 'ROCK YOUR TICKET TABLE',
       },
+      form: true,
       router: true,
     })
 
     expect(
       wrapper.getByRole('button', { name: 'Select table row' }),
     ).toHaveClass(
-      '!bg-blue-800 active:bg-blue-800 active:dark:bg-blue-800 focus-visible:outline-blue-800 hover:bg-blue-600 dark:hover:bg-blue-900',
+      'odd:bg-blue-200 odd:dark:bg-gray-700 !bg-blue-800 group focus-visible:outline-transparent cursor-pointer active:bg-blue-800 active:dark:bg-blue-800 focus-visible:bg-blue-800 focus-visible:dark:bg-blue-900 focus-within:text-white hover:bg-blue-600 dark:hover:bg-blue-900',
     )
   })
 })

@@ -9,6 +9,7 @@ export interface Props {
   item: TableItem
   onClickRow?: (tableItem: TableItem) => void
   isRowSelected?: boolean
+  hasCheckbox?: boolean
 }
 
 const props = defineProps<Props>()
@@ -17,33 +18,36 @@ const emit = defineEmits<{
   'click-row': [TableItem]
 }>()
 
-const rowEventHandler = computed(() =>
-  props.onClickRow
+const rowEventHandler = computed(() => {
+  return (props.onClickRow || props.hasCheckbox) && !props.item.disabled
     ? {
         attrs: {
-          role: 'button',
-          tabindex: 0,
+          role: props.hasCheckbox ? undefined : 'button',
+          tabindex: props.hasCheckbox ? -1 : 0,
           ariaLabel: __('Select table row'),
           class:
-            'group focus-visible:outline-1 focus-visible:outline focus-visible:rounded-md active:bg-blue-800 active:dark:bg-blue-800 focus-visible:outline-blue-800 hover:bg-blue-600 dark:hover:bg-blue-900',
+            'group focus-visible:outline-transparent cursor-pointer active:bg-blue-800 active:dark:bg-blue-800 focus-visible:bg-blue-800 focus-visible:dark:bg-blue-900 focus-within:text-white hover:bg-blue-600 dark:hover:bg-blue-900',
         },
         events: {
-          click: () => emit('click-row', props.item),
+          click: () => {
+            ;(document.activeElement as HTMLElement)?.blur()
+            emit('click-row', props.item)
+          },
           keydown: (event: KeyboardEvent) => {
             if (event.key !== 'Enter') return
             emit('click-row', props.item)
           },
         },
       }
-    : { attrs: {}, events: {} },
-)
+    : { attrs: {}, events: {} }
+})
 </script>
 
 <template>
   <tr
     class="odd:bg-blue-200 odd:dark:bg-gray-700"
     :class="{
-      '!bg-blue-800': isRowSelected,
+      '!bg-blue-800': !hasCheckbox && isRowSelected,
     }"
     style="clip-path: xywh(0 0 100% 100% round 0.375rem)"
     data-test-id="simple-table-row"

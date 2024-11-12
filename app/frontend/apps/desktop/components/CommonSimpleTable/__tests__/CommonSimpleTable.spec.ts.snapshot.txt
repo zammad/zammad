@@ -43,6 +43,7 @@
   <tbody>
     
     <simple-table-row-stub
+      hascheckbox="false"
       isrowselected="false"
       item="[object Object]"
     />

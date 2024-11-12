@@ -125,6 +125,14 @@ class Service::Ticket::Create < Service::BaseWithCurrentUser
       ticket_data[:preferences] ||= {}
       ticket_data[:preferences][key] = { issue_links: input.map(&:to_s) }
     end
+
+    # idoit
+    idoit_object_ids = external_references[:idoit]
+
+    return if idoit_object_ids.blank? || !Setting.get('idoit_integration')
+
+    ticket_data[:preferences] ||= {}
+    ticket_data[:preferences][:idoit] = { object_ids: idoit_object_ids }
   end
 
   def customer?(group_id)

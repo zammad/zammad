@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { storeToRefs } from 'pinia'
-import { computed, useTemplateRef } from 'vue'
+import { computed } from 'vue'
 
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { useApplicationStore } from '#shared/stores/application.ts'
@@ -25,15 +25,14 @@ const emit = defineEmits<{
   'click-ticket': [TicketRelationAndRecentListItem]
 }>()
 
-const simpleTableInstance = useTemplateRef('simple-table')
-
 const { config } = storeToRefs(useApplicationStore())
 
 const headers: TableHeader[] = [
-  { key: 'state', label: '', truncate: true },
+  { key: 'state', label: '', truncate: true, type: 'link' },
   {
     key: 'number',
     label: config.value.ticket_hook,
+    type: 'link',
     truncate: true,
   },
   { key: 'title', label: __('Title'), truncate: true },
@@ -52,7 +51,12 @@ const items = computed<Array<TableItem>>(() =>
     id: ticket.id,
     internalId: ticket.internalId,
     key: ticket.id,
-    number: ticket.number,
+    number: {
+      link: `/tickets/${ticket.internalId}`,
+      text: ticket.number,
+      internal: true,
+      openInNewTab: true,
+    },
     organization: ticket.organization,
     title: ticket.title,
     stateColorCode: ticket.stateColorCode,
@@ -78,25 +82,9 @@ const handleRowClick = (row: TableItem) => {
       :selected-row-id="selectedTicketId"
       @click-row="handleRowClick"
     >
-      <template #column-cell-number="{ item, header, isRowSelected }">
-        <CommonLink
-          v-tooltip.truncate="simpleTableInstance?.getTooltipText(item, header)"
-          :link="`/tickets/${(item as TicketById).internalId}`"
-          :class="{
-            'ltr:text-black rtl:text-black dark:text-white': isRowSelected,
-          }"
-          class="truncate text-sm hover:no-underline group-hover:text-black group-active:text-black group-hover:dark:text-white group-active:dark:text-white"
-          internal
-          target="_blank"
-          @click.stop
-          @keydown.stop
-          >{{ item.number }}
-        </CommonLink>
-      </template>
-
       <template #column-cell-createdAt="{ item, isRowSelected }">
         <CommonDateTime
-          class="-:text-gray-100 -:dark:text-neutral-400 group-hover:text-black group-active:text-black group-hover:dark:text-white group-active:dark:text-white"
+          class="-:text-gray-100 -:dark:text-neutral-400 group-hover:text-black group-focus-visible:text-white group-active:text-white group-hover:dark:text-white group-active:dark:text-white"
           :class="{ 'text-black dark:text-white': isRowSelected }"
           :date-time="item['createdAt'] as string"
           type="absolute"
@@ -106,7 +94,7 @@ const handleRowClick = (row: TableItem) => {
 
       <template #column-cell-state="{ item, isRowSelected }">
         <CommonTicketStateIndicatorIcon
-          class="shrink-0 group-hover:text-black group-active:text-black group-hover:dark:text-white group-active:dark:text-white"
+          class="shrink-0 group-hover:text-black group-focus-visible:text-white group-active:text-white group-hover:dark:text-white group-active:dark:text-white"
           :class="{
             'ltr:text-black rtl:text-black dark:text-white': isRowSelected,
           }"

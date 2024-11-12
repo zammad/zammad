@@ -39,6 +39,7 @@ const renderCommonCalendarPreviewFlyout = async (
     },
     ...options,
     router: true,
+    form: true,
     global: {
       stubs: {
         teleport: true,
