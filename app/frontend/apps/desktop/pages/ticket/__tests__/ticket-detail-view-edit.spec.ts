@@ -957,4 +957,112 @@ describe('Ticket detail view', () => {
       ).not.toBeInTheDocument()
     })
   })
+
+  it('should reset form after ticket updates', async () => {
+    const ticket = createDummyTicket({
+      state: {
+        id: convertToGraphQLId('Ticket::State', 2),
+        name: 'open',
+        stateType: {
+          id: convertToGraphQLId('TicketStateType', 2),
+          name: 'open',
+        },
+      },
+      defaultPolicy: {
+        update: true,
+        agentReadAccess: true,
+      },
+    })
+
+    mockTicketQuery({
+      ticket,
+    })
+
+    mockFormUpdaterQuery({
+      formUpdater: {
+        fields: {
+          group_id: {
+            options: [
+              {
+                value: 1,
+                label: 'Users',
+              },
+              {
+                value: 2,
+                label: 'test group',
+              },
+            ],
+          },
+          owner_id: {
+            options: [
+              {
+                value: 3,
+                label: 'Test Admin Agent',
+              },
+            ],
+          },
+          state_id: {
+            options: [
+              {
+                value: 4,
+                label: 'closed',
+              },
+              {
+                value: 2,
+                label: 'open',
+              },
+            ],
+          },
+          pending_time: {
+            show: false,
+          },
+          priority_id: {
+            options: [
+              {
+                value: 2,
+                label: '2 normal',
+              },
+              {
+                value: 2,
+                label: '2 normal',
+              },
+            ],
+          },
+        },
+        flags: {
+          newArticlePresent: false,
+        },
+      },
+    })
+
+    const view = await visitView('/tickets/1')
+
+    const ticketMetaSidebar = within(view.getByLabelText('Content sidebar'))
+
+    expect(await view.findByLabelText('Group')).toHaveTextContent('test group')
+
+    await view.events.click(await ticketMetaSidebar.findByLabelText('State'))
+
+    expect(
+      await view.findByRole('listbox', { name: 'Select…' }),
+    ).toBeInTheDocument()
+
+    await view.events.click(view.getByRole('option', { name: 'closed' }))
+
+    await getTicketUpdatesSubscriptionHandler().trigger({
+      ticketUpdates: {
+        ticket: {
+          ...ticket,
+          group: {
+            __typename: 'Group',
+            id: convertToGraphQLId('Group', 1),
+            name: 'Users',
+            emailAddress: null,
+          },
+        },
+      },
+    })
+
+    expect(view.getByLabelText('Group')).toHaveTextContent('Users')
+  })
 })

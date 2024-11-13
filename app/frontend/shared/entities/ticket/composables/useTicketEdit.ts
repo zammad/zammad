@@ -1,6 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import { isEqualWith } from 'lodash-es'
+import { isEqual } from 'lodash-es'
 import { computed, ref, watch } from 'vue'
 
 import { populateEditorNewLines } from '#shared/components/Form/fields/FieldEditor/utils.ts'
@@ -32,6 +32,18 @@ type TicketArticleReceivedFormValues = PartialRequired<
   'articleType' | 'body' | 'internal'
 >
 
+const TICKET_FORM_RELEVANT_KEYS = [
+  'id',
+  'group',
+  'owner',
+  'state',
+  'pending_time',
+  'priority',
+  'customer',
+  'organization',
+  'objectAttributeValues',
+]
+
 export const useTicketEdit = (
   ticket: ComputedRef<TicketById | undefined>,
   form: ShallowRef<FormRef | undefined>,
@@ -39,39 +51,52 @@ export const useTicketEdit = (
   const initialTicketValue = ref<FormValues>()
   const mutationUpdate = new MutationHandler(useTicketUpdateMutation({}))
 
+  const ticketFormRelatedData = computed<Partial<TicketById>>(
+    (currentTicketFormRelatedData) => {
+      if (!ticket.value || !form.value) return {}
+
+      const newTicketFormRelatedData = (
+        TICKET_FORM_RELEVANT_KEYS as Array<keyof TicketById>
+      ).reduce<Partial<TicketById>>((relevantData, key) => {
+        if (!ticket.value || !(key in ticket.value)) return relevantData
+
+        relevantData[key] = ticket.value[key]
+
+        return relevantData
+      }, {})
+
+      if (
+        currentTicketFormRelatedData &&
+        isEqual(newTicketFormRelatedData, currentTicketFormRelatedData)
+      ) {
+        return currentTicketFormRelatedData
+      }
+
+      return newTicketFormRelatedData
+    },
+  )
+
   watch(
-    ticket,
-    (newTicket, oldTicket) => {
-      if (!newTicket) {
+    ticketFormRelatedData,
+    () => {
+      if (!ticket.value) {
         return
       }
 
-      const ticketId = initialTicketValue.value?.id || newTicket.id
-      const { internalId: ownerInternalId } = newTicket.owner
+      const { internalId: ownerInternalId } = ticket.value.owner
 
       initialTicketValue.value = {
-        id: newTicket.id,
+        id: ticket.value.id,
         owner_id: ownerInternalId === 1 ? null : ownerInternalId,
       }
 
-      // We need only to reset the form, when really something was changed (updatedAt is not relevant for the form).
-      if (
-        !oldTicket ||
-        isEqualWith(newTicket, oldTicket, (value1, value2, key) => {
-          if (key === 'updatedAt') return true
-        })
-      ) {
-        return
-      }
-
       form.value?.resetForm(
-        { values: initialTicketValue.value, object: newTicket },
         {
-          // don't reset to new values, if user changes something
-          // if ticket is different, it's probably navigation to another ticket,
-          // so we can safely reset the form
-          // TODO: navigation to another ticket is currently always a re-render of the form, because of the component key(=newTicket.id) or?
-          resetDirty: ticketId !== newTicket.id,
+          values: initialTicketValue.value,
+          object: ticket.value,
+        },
+        {
+          resetDirty: false,
         },
       )
     },

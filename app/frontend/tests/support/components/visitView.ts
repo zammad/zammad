@@ -6,6 +6,7 @@ import { random } from 'lodash-es'
 // import authenticationGuard from '#shared/router/guards/before/authentication.ts'
 // import permissionGuard from '#shared/router/guards/before/permission.ts'
 
+import { useNotifications } from '#shared/components/CommonNotifications/useNotifications.ts'
 import { useLocaleStore } from '#shared/stores/locale.ts'
 
 import mockApolloClient from '../mock-apollo-client.ts'
@@ -94,6 +95,8 @@ export const visitView = async (
   }
 
   const testKey = random()
+
+  useNotifications().clearAllNotifications()
 
   const view = renderComponent(
     {
