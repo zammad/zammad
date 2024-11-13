@@ -56,6 +56,8 @@ module CanPerformChanges
 
     execute(perform_changes_data, &)
 
+    performable.try(:performed_on, self, activator_type:)
+
     true
   end
 

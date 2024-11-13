@@ -763,4 +763,42 @@ RSpec.describe 'Ticket::PerformChanges', :aggregate_failures do
       end
     end
   end
+
+  context 'with a time-event based trigger' do
+    let(:trigger) do
+      condition = { 'ticket.pending_time' => { operator: 'has reached' } }
+      perform = { 'ticket.title' => { 'value' => 'triggered' } }
+
+      create(:trigger, condition:, perform:, activator: 'time', execution_condition_mode: 'always')
+    end
+
+    let(:ticket) { create(:ticket, title: 'Test Ticket', state_name: 'pending reminder', pending_time: 1.hour.ago) }
+
+    before do
+      trigger && ticket
+    end
+
+    it 'performs the trigger' do
+      expect { Ticket.process_pending }.to change { ticket.reload.title }.to('triggered')
+    end
+
+    it 'creates related history entries' do
+      Ticket.process_pending
+
+      expect(History.last).to have_attributes(
+        history_type_id: History::Type.find_by(name: 'time_trigger_performed').id,
+        value_from:      'reminder_reached',
+        sourceable_type: 'Trigger',
+        sourceable_id:   trigger.id,
+        sourceable_name: trigger.name,
+      )
+    end
+
+    it 'blocks the trigger from being performed again' do
+      expect { Ticket.process_pending }.to change { ticket.reload.title }.to('triggered')
+
+      Ticket.process_pending
+      expect(History.where(history_type_id: History::Type.find_by(name: 'time_trigger_performed').id).count).to eq(1)
+    end
+  end
 end
