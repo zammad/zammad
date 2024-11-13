@@ -351,4 +351,22 @@ RSpec.describe 'Ticket zoom > Checklist', authenticated_as: :authenticate, curre
       expect(page).to have_css(".tabsSidebar-tab[data-tab='checklist'] .js-tabCounter", text: ticket.checklist.incomplete)
     end
   end
+
+  # https://github.com/zammad/zammad/issues/5405
+  describe 'Checklist counter shows real state of inaccessible linked tickets' do
+    let(:ticket_link) { create(:ticket, group: create(:group)) }
+    let(:ticket)      { create(:ticket, group: Group.first) }
+    let(:checklist) do
+      create(:checklist, ticket: ticket)
+        .tap { |checklist| checklist.items.last.update(text: "Ticket##{ticket_link.number}") }
+    end
+
+    before { checklist }
+
+    it 'does update for badge when sidebar is not opened and same user updates related tickets' do
+      expect(page)
+        .to have_css(".tabsSidebar-tab[data-tab='checklist'] .js-tabCounter", text: ticket.checklist.incomplete)
+        .and(have_css('.js-checklist-state .ticket-meta-highlighted', text: "#{ticket.checklist.complete} of #{ticket.checklist.total}"))
+    end
+  end
 end

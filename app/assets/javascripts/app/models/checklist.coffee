@@ -14,19 +14,7 @@ class App.Checklist extends App.Model
     App.ChecklistItem.findAll(@sorted_item_ids)
 
   open_items: =>
-    @sorted_items().filter (item) ->
-      if item.ticket_id
-        ticket = App.Ticket.find(item.ticket_id)
-        if ticket
-          if ticket.userGroupAccess('read')
-            ticketState    = App.TicketState.fullLocal(ticket.state_id)
-            ticketState.state_type.name isnt 'closed' && ticketState.state_type.name isnt 'merged'
-          else
-            false # no access
-        else
-          false # no access
-      else
-        !item.checked
+    @sorted_items().filter (item) -> !item.checked
 
   @calculateState: (ticket) ->
     checklist = App.Checklist.find ticket.checklist_id
