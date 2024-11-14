@@ -276,9 +276,7 @@ const getTaskbarTabDirtyFlag = (tabEntityKey: string) => {
               />
 
               <UserTaskbarTabRemove
-                :taskbar-tab-id="
-                  taskbarTabListByTabEntityKey[tabEntityKey].taskbarTabId
-                "
+                :taskbar-tab="taskbarTabListByTabEntityKey[tabEntityKey]"
                 :dirty="getTaskbarTabDirtyFlag(tabEntityKey)"
                 :plugin="
                   getTaskbarTabTypePlugin(

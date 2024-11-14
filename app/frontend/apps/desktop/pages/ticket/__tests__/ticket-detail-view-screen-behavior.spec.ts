@@ -30,6 +30,7 @@ describe('Ticket detail view screen behavior', () => {
 
   it('closes ticket tab after ticket update', async () => {
     const ticket = createDummyTicket()
+
     mockTicketQuery({ ticket })
 
     mockUserCurrent({
@@ -107,24 +108,23 @@ describe('Ticket detail view screen behavior', () => {
       },
     })
 
-    const view = await visitView('/tickets/1')
+    // Simulate the history stack by visiting another (different) route before the current one.
+    const view = await visitView('/tickets/2')
+
+    const router = getTestRouter()
+    await router.push('/tickets/1')
+
+    expect(router.currentRoute.value.path).toEqual('/tickets/1')
 
     await getNode('form-ticket-edit')?.settled
 
     await view.events.click(view.getByRole('button', { name: 'Update' }))
 
-    await getUserCurrentTaskbarItemUpdatesSubscriptionHandler().trigger({
-      userCurrentTaskbarItemUpdates: {
-        updateItem: null,
-        addItem: null,
-        removeItem: convertToGraphQLId('Taskbar', 1),
-      },
-    })
-    const router = getTestRouter()
+    await waitForTicketUpdateMutationCalls()
 
-    // :TODO add this real redirect once the overview is implemented
+    // Make sure the user is redirected to the previous route after the tab was closed.
     await waitFor(() =>
-      expect(router.currentRoute.value.path).not.toEqual('/tickets/1'),
+      expect(router.currentRoute.value.path).toEqual('/tickets/2'),
     )
   })
 
@@ -278,7 +278,7 @@ describe('Ticket detail view screen behavior', () => {
 
     await waitForTicketUpdateMutationCalls()
 
-    // :TODO add this real redirect once the overview is implemented
+    // TODO: Test for a real redirect once the overview is implemented.
     await waitFor(() =>
       expect(router.currentRoute.value.path).not.toEqual('/tickets/1'),
     )

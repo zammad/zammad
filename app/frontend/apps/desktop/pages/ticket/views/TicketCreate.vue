@@ -86,13 +86,15 @@ const application = useApplicationStore()
 const redirectAfterCreate = (internalId?: number) => {
   if (internalId) {
     router.replace(`/tickets/${internalId}`)
-  } else {
-    router.replace({ name: 'Dashboard' }) // TODO: check...?
+    return
   }
+
+  // Fallback redirect, in case the user has no access to the ticket they just created.
+  router.replace({ name: 'Dashboard' })
 }
 
 const goBack = () => {
-  walker.back('/') // TODO: check what is the best fallback route path.
+  walker.back('/')
 }
 
 const { ticketArticleSenderTypeField } = useTicketCreateArticleType()
@@ -315,13 +317,13 @@ const { activeTaskbarTab, activeTaskbarTabFormId, activeTaskbarTabDelete } =
 const { setSkipNextStateUpdate } = useTaskbarTabStateUpdates(triggerFormUpdater)
 
 const { waitForVariantConfirmation } = useConfirmation()
+
 const discardChanges = async () => {
   const confirm = await waitForVariantConfirmation('unsaved')
+  if (!confirm) return
 
-  if (confirm) {
-    goBack()
-    activeTaskbarTabDelete()
-  }
+  goBack()
+  activeTaskbarTabDelete()
 }
 
 const applyTemplate = (templateId: string) => {

@@ -457,6 +457,7 @@ const submitEditTicket = async (
             formNodeValues: FormValues,
           ) => {
             nextTick(() => {
+              if (!formNodeValues) return
               formReset({ values: { ticket: formNodeValues.ticket } })
             })
           },

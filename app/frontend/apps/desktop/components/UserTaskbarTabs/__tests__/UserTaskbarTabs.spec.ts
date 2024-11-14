@@ -1,6 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { getByRole } from '@testing-library/vue'
+import { storeToRefs } from 'pinia'
 import { type RouteRecordRaw } from 'vue-router'
 
 import {
@@ -26,6 +27,7 @@ import {
 } from '#desktop/entities/user/current/graphql/queries/userCurrentTaskbarItemList.mocks.ts'
 import { getUserCurrentTaskbarItemListUpdatesSubscriptionHandler } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemListUpdates.mocks.ts'
 import { getUserCurrentTaskbarItemUpdatesSubscriptionHandler } from '#desktop/entities/user/current/graphql/subscriptions/userCurrentTaskbarItemUpdates.mocks.ts'
+import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
 
 import UserTaskbarTabs, { type Props } from '../UserTaskbarTabs.vue'
 
@@ -485,12 +487,91 @@ describe('UserTaskbarTabs.vue', () => {
       id: convertToGraphQLId('Taskbar', 1),
     })
 
-    // TODO: Check for correct redirect when implemented.
+    expect(tab).not.toBeInTheDocument()
+  })
+
+  it('supports redirecting to previous route when the current tab is closed', async () => {
+    mockUserCurrentTaskbarItemListQuery({
+      userCurrentTaskbarItemList: [
+        {
+          __typename: 'UserTaskbarItem',
+          id: convertToGraphQLId('Taskbar', 1),
+          key: 'TicketCreateScreen-999',
+          callback: EnumTaskbarEntity.TicketCreate,
+          entityAccess: EnumTaskbarEntityAccess.Granted,
+          entity: {
+            __typename: 'UserTaskbarItemEntityTicketCreate',
+            uid: '999',
+            title: 'First ticket',
+            createArticleTypeKey: 'phone-in',
+          },
+          prio: 1,
+          formId: 'foo',
+          changed: false,
+          dirty: false,
+          notify: false,
+          updatedAt: '2024-07-24T15:42:28.212Z',
+        },
+        {
+          __typename: 'UserTaskbarItem',
+          id: convertToGraphQLId('Taskbar', 2),
+          key: 'Ticket-42',
+          callback: EnumTaskbarEntity.TicketZoom,
+          entityAccess: EnumTaskbarEntityAccess.Granted,
+          entity: {
+            __typename: 'Ticket',
+            id: convertToGraphQLId('Ticket', 42),
+            internalId: 42,
+            number: '53042',
+            title: 'Second ticket',
+            stateColorCode: EnumTicketStateColorCode.Pending,
+            state: {
+              __typename: 'TicketState',
+              name: 'pending reminder',
+            },
+          },
+          prio: 2,
+          formId: 'bar',
+          changed: false,
+          dirty: false,
+          notify: false,
+          updatedAt: '2024-07-24T15:42:28.212Z',
+        },
+      ],
+    })
+
+    const wrapper = await renderUserTaskbarTabs()
+
+    // Simulate currently active tab by changing the store state directly.
+    //   Normally, this would be set by the route navigation guard (`activeTaskbarTab`).
+    const { activeTaskbarTabEntityKey } = storeToRefs(
+      useUserCurrentTaskbarTabsStore(),
+    )
+
+    activeTaskbarTabEntityKey.value = 'TicketCreateScreen-999'
+
+    // Simulate the history stack by visiting different routes before the current one.
+    const router = getTestRouter()
+    await router.push('/tickets/42')
+    await router.push('/tickets/create/999')
+
+    const tabs = wrapper.getAllByRole('listitem')
+
+    expect(tabs).toHaveLength(2)
+
+    await wrapper.events.click(
+      getByRole(tabs[0], 'button', { name: 'Close this tab' }),
+    )
+
+    await waitForUserCurrentTaskbarItemDeleteMutationCalls()
+
+    expect(tabs[0]).not.toBeInTheDocument()
+
     await vi.waitFor(() => {
       expect(
         wrapper,
-        'correctly redirects to dashboard screen',
-      ).toHaveCurrentUrl('/dashboard')
+        'correctly redirects to the previous route',
+      ).toHaveCurrentUrl('/tickets/42')
     })
   })
 })

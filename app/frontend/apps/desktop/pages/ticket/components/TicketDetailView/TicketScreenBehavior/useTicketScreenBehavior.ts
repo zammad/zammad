@@ -5,6 +5,7 @@ import { computed } from 'vue'
 
 import type { TicketById } from '#shared/entities/ticket/types.ts'
 import { EnumTicketScreenBehavior } from '#shared/graphql/types.ts'
+import { useWalker } from '#shared/router/walker.ts'
 import { useSessionStore } from '#shared/stores/session.ts'
 
 import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
@@ -14,8 +15,9 @@ export const useTicketScreenBehavior = () => {
   const { activeTaskbarTabId } = storeToRefs(taskbarTabsStore)
   const { deleteTaskbarTab } = taskbarTabsStore
 
-  const sessionStore = useSessionStore()
-  const { user } = storeToRefs(sessionStore)
+  const { user } = storeToRefs(useSessionStore())
+
+  const walker = useWalker()
 
   const secondaryAction = computed(
     () => user.value?.preferences?.secondaryAction,
@@ -24,16 +26,9 @@ export const useTicketScreenBehavior = () => {
   const closeCurrentTaskbarTab = () =>
     deleteTaskbarTab(activeTaskbarTabId.value as string)
 
-  const closeAndGoToNextTask = () => {
+  const closeAndGoBack = () => {
+    walker.back('/')
     closeCurrentTaskbarTab()
-    //
-    // if (nextFollowingOpenTask) {
-    //   console.log('next task')
-    //   // :TODO get next task or previous task
-    // } else {
-    //   console.log('to overview')
-    //   // :TODO go to overview if no open ticket is available
-    // }
   }
 
   const handleScreenBehavior = ({
@@ -48,11 +43,11 @@ export const useTicketScreenBehavior = () => {
     switch (currentScreenBehaviour) {
       case EnumTicketScreenBehavior.CloseTabOnTicketClose:
         if (ticket.state.stateType.name === 'closed') {
-          closeAndGoToNextTask()
+          closeAndGoBack()
         }
         break
       case EnumTicketScreenBehavior.CloseTab:
-        closeAndGoToNextTask()
+        closeAndGoBack()
         break
       case EnumTicketScreenBehavior.CloseNextInOverview:
         // :TODO handle situation if a Macro should advance to next ticket from overview

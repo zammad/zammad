@@ -1,31 +1,34 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router'
+import { storeToRefs } from 'pinia'
 
 import { useTouchDevice } from '#shared/composables/useTouchDevice.ts'
+import { useWalker } from '#shared/router/walker.ts'
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useUserCurrentTaskbarTabsStore } from '#desktop/entities/user/current/stores/taskbarTabs.ts'
 
-import type { UserTaskbarTabPlugin } from './types'
+import type { UserTaskbarTab, UserTaskbarTabPlugin } from './types.ts'
 
 interface Props {
-  taskbarTabId?: ID
+  taskbarTab: UserTaskbarTab
   dirty?: boolean
   plugin?: UserTaskbarTabPlugin
 }
 
 const props = defineProps<Props>()
 
-const router = useRouter()
-
 const taskbarTabStore = useUserCurrentTaskbarTabsStore()
+
+const { activeTaskbarTabEntityKey } = storeToRefs(taskbarTabStore)
 
 const { isTouchDevice } = useTouchDevice()
 
+const walker = useWalker()
+
 const confirmRemoveUserTaskbarTab = async () => {
-  if (!props.taskbarTabId) return
+  if (!props.taskbarTab.taskbarTabId) return
 
   if (
     typeof props.plugin?.confirmTabRemove === 'function' &&
@@ -33,16 +36,18 @@ const confirmRemoveUserTaskbarTab = async () => {
   )
     return
 
-  taskbarTabStore.deleteTaskbarTab(props.taskbarTabId)
+  // In case the tab is currently active, go back to previous route in the history stack.
+  if (props.taskbarTab.tabEntityKey === activeTaskbarTabEntityKey.value)
+    // TODO: Adjust the following redirect fallback to Overviews page instead, when ready.
+    walker.back('/')
 
-  // TODO: Check if the tab is the current active tab, if yes, redirect to ... ?!
-  router.push('/dashboard')
+  taskbarTabStore.deleteTaskbarTab(props.taskbarTab.taskbarTabId)
 }
 </script>
 
 <template>
   <CommonButton
-    v-if="props.taskbarTabId"
+    v-if="props.taskbarTab.taskbarTabId"
     v-tooltip="$t('Close this tab')"
     :class="{ 'opacity-0 transition-opacity': !isTouchDevice }"
     class="absolute end-2 top-3 focus:opacity-100 group-hover/tab:opacity-100"
