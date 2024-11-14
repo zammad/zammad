@@ -41,7 +41,7 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const { isLoadingIssues, issueList, skipNextLinkUpdate } =
+const { isLoadingIssues, issueList, skipNextLinkUpdate, error } =
   useTicketExternalIssueTracker(
     props.screenType,
     props.trackerType,
@@ -262,7 +262,7 @@ defineExpose({
 </script>
 
 <template>
-  <CommonLoader :loading="isLoadingIssues">
+  <CommonLoader :loading="isLoadingIssues" :error="error">
     <div class="space-y-6">
       <CommonButton
         v-if="showEmptyState"

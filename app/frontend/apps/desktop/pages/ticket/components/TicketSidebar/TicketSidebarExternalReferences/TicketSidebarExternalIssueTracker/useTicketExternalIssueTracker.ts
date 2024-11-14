@@ -35,11 +35,24 @@ export const useTicketExternalIssueTracker = (
             : 'cache-and-network',
       }),
     ),
+    {
+      errorShowNotification: false,
+    },
   )
 
   const isLoading = issueTrackerQuery.loading()
 
   const queryResult = issueTrackerQuery.result()
+
+  const queryError = issueTrackerQuery.operationError()
+
+  const error = computed(() =>
+    queryError.value
+      ? __(
+          'Error fetching github information. Please contact your administrator.',
+        )
+      : null,
+  )
 
   const issueList = computed(
     () => queryResult.value?.ticketExternalReferencesIssueTrackerItemList,
@@ -69,5 +82,5 @@ export const useTicketExternalIssueTracker = (
     })
   }
 
-  return { isLoadingIssues, issueList, skipNextLinkUpdate }
+  return { isLoadingIssues, issueList, skipNextLinkUpdate, error }
 }

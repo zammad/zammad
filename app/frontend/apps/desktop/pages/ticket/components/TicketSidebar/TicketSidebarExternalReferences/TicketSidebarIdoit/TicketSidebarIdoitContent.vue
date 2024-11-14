@@ -12,17 +12,14 @@ import {
 
 import CommonButton from '#desktop/components/CommonButton/CommonButton.vue'
 import { useFlyout } from '#desktop/components/CommonFlyout/useFlyout.ts'
-import CommonLoader from '#desktop/components/CommonLoader/CommonLoader.vue'
 import type { MenuItem } from '#desktop/components/CommonPopoverMenu/types.ts'
 import type { TicketSidebarPlugin } from '#desktop/pages/ticket/components/TicketSidebar/plugins/types.ts'
 import TicketSidebarContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarContent.vue'
-import ExternalReferenceContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/ExternalReferenceContent.vue'
-import ExternalReferenceLink from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/ExternalReferenceLink.vue'
+import IdoitList from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitList.vue'
 import type { FormDataRecords } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/types.ts'
 import { useIdoitCacheHandlers } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/useIdoitCacheHandlers.ts'
 import { useIdoitFormHelpers } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/useIdoitFormHelpers.ts'
 import { useTicketExternalReferencesIdoitObjectAddMutation } from '#desktop/pages/ticket/graphql/mutations/ticketExternalReferencesIdoitObjectAdd.api.ts'
-import { useTicketExternalReferencesIdoitObjectRemoveMutation } from '#desktop/pages/ticket/graphql/mutations/ticketExternalReferencesIdoitObjectRemove.api.ts'
 import { useTicketExternalReferencesIdoitObjectListQuery } from '#desktop/pages/ticket/graphql/queries/ticketExternalReferencesIdoitObjectList.api.ts'
 import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
 
@@ -50,50 +47,32 @@ const objectListQuery = new QueryHandler(
       idoitObjectIds: props.ticketId ? undefined : props.objectIds,
     }),
     () => ({
-      enabled:
-        props.screenType === TicketSidebarScreenType.TicketCreate
-          ? props.objectIds?.length > 0
-          : !!props.ticketId,
+      enabled: props.objectIds?.length > 0,
       fetchPolicy:
         props.screenType === TicketSidebarScreenType.TicketCreate
           ? 'cache-first'
           : 'cache-and-network',
     }),
   ),
+  {
+    errorShowNotification: false,
+  },
 )
 
 const result = objectListQuery.result()
 
-const isLoading = objectListQuery.loading()
+const error = objectListQuery.operationError()
 
 const objectList = computed(() => {
   return result.value?.ticketExternalReferencesIdoitObjectList || []
 })
 
-const { removeObjectListCacheUpdate, modifyObjectItemAddCache } =
-  useIdoitCacheHandlers(toRef(props, 'objectIds'), toRef(props, 'ticketId'))
-
-const { addObjectIdsToForm, removeObjectFromForm } = useIdoitFormHelpers(
-  toRef(props, 'form'),
+const { modifyObjectItemAddCache } = useIdoitCacheHandlers(
+  toRef(props, 'objectIds'),
+  toRef(props, 'ticketId'),
 )
 
-const removeObjectMutation = new MutationHandler(
-  useTicketExternalReferencesIdoitObjectRemoveMutation(),
-)
-
-const removeObject = async ({ id }: { id: number }) => {
-  const revertCacheUpdate = removeObjectListCacheUpdate(id)
-
-  if (props.screenType === TicketSidebarScreenType.TicketCreate)
-    return removeObjectFromForm(id)
-
-  return removeObjectMutation
-    .send({
-      idoitObjectId: id,
-      ticketId: props.ticketId!,
-    })
-    .catch(() => revertCacheUpdate)
-}
+const { addObjectIdsToForm } = useIdoitFormHelpers(toRef(props, 'form'))
 
 const addObjectMutation = new MutationHandler(
   useTicketExternalReferencesIdoitObjectAddMutation({
@@ -130,7 +109,7 @@ const openFlyout = () =>
   })
 
 const actions = computed((): MenuItem[] =>
-  props.objectIds?.length
+  props.objectIds?.length && !error.value
     ? [
         {
           key: 'link-idoit-object',
@@ -146,12 +125,13 @@ const actions = computed((): MenuItem[] =>
 if (props.ticketId) {
   watch(
     () => props.objectIds,
-    (newValue) => {
+    (newObjectListIds) => {
+      const fetchedObjectListIds = objectList.value.map(
+        (obj) => obj.idoitObjectId,
+      )
+
       if (
-        isEqual(
-          newValue,
-          objectList.value.map((obj) => obj.idoitObjectId),
-        ) ||
+        isEqual(newObjectListIds, fetchedObjectListIds) ||
         skipNextObjectUpdate.value
       ) {
         skipNextObjectUpdate.value = false
@@ -180,38 +160,6 @@ if (props.ticketId) {
       {{ $t('Link Objects') }}
     </CommonButton>
 
-    <CommonLoader v-if="objectIds?.length" :loading="isLoading">
-      <div class="space-y-6" tabindex="-1">
-        <div
-          v-for="object in objectList"
-          :key="object.idoitObjectId"
-          class="group space-y-2"
-          role="group"
-        >
-          <ExternalReferenceLink
-            :id="object.idoitObjectId"
-            :title="object.title"
-            :link="object.link!"
-            :is-editable="isTicketEditable"
-            :tooltip="$t('Unlink object')"
-            @remove="removeObject"
-          />
-
-          <ExternalReferenceContent
-            :label="$t('ID')"
-            :values="[object.idoitObjectId.toString()]"
-          />
-
-          <ExternalReferenceContent
-            :label="$t('Status')"
-            :values="[object.status]"
-          />
-          <ExternalReferenceContent
-            :label="$t('Type')"
-            :values="[object.type]"
-          />
-        </div>
-      </div>
-    </CommonLoader>
+    <IdoitList v-bind="$props" :object-ids="objectIds" />
   </TicketSidebarContent>
 </template>

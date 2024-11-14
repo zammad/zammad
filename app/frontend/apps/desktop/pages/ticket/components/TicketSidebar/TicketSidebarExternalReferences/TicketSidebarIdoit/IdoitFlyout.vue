@@ -8,6 +8,7 @@ import Form from '#shared/components/Form/Form.vue'
 import type { FormSchemaNode } from '#shared/components/Form/types.ts'
 import { useForm } from '#shared/components/Form/useForm.ts'
 import { useDebouncedLoading } from '#shared/composables/useDebouncedLoading.ts'
+import UserError from '#shared/errors/UserError.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
 import CommonFlyout from '#desktop/components/CommonFlyout/CommonFlyout.vue'
@@ -28,7 +29,8 @@ interface Props {
 
 const props = defineProps<Props>()
 
-const { form, values, updateFieldValues, onChangedField } = useForm()
+const { form, values, updateFieldValues, onChangedField, formSetErrors } =
+  useForm()
 
 const FETCH_LIMIT = 10
 const FETCH_DEBOUNCE = 300
@@ -44,11 +46,27 @@ const objectSearchQuery = new QueryHandler(
       fetchPolicy: 'no-cache',
     },
   ),
+  {
+    errorShowNotification: false,
+  },
 )
 
 const result = objectSearchQuery.result()
 
 const isLoading = objectSearchQuery.loading()
+
+objectSearchQuery.onError(() => {
+  formSetErrors(
+    new UserError([
+      {
+        field: 'type',
+        message: __(
+          'Error fetching i-doit information. Please contact your administrator.',
+        ),
+      },
+    ]),
+  )
+})
 
 const { debouncedLoading, loading } = useDebouncedLoading()
 

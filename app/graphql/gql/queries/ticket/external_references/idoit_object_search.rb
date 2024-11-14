@@ -16,7 +16,7 @@ module Gql::Queries
     end
 
     def resolve(query: '', limit: 10, idoit_type_id: nil)
-      Idoit.query('cmdb.objects', build_filter(idoit_type_id:, query:))['result'].first(limit)
+      Idoit.query('cmdb.objects', build_filter(idoit_type_id:, query:))['result']&.first(limit)
     end
 
     private
