@@ -97,8 +97,10 @@ module Tasks
           path
         end
 
+        # Use character varying type for the array columns, so it matches the initial type used on PSQL backends.
+        #   https://github.com/zammad/zammad/issues/5409
         def self.alter_table_command(table, column)
-          "  $$ alter table #{table} alter column #{column} type text[] using translate(#{column}::text, '[]', '{}')::text[] $$"
+          "  $$ alter table #{table} alter column #{column} type varchar[] using translate(#{column}::varchar, '[]', '{}')::varchar[] $$"
         end
 
         def self.object_manager_attributes
