@@ -125,7 +125,7 @@ defineExpose({ hasLinks })
             size="small"
             class="text-stone-200 dark:text-neutral-500"
           >
-            {{ type.label }}
+            {{ $t(type.label) }}
           </CommonLabel>
 
           <div
