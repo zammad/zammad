@@ -658,7 +658,7 @@ class Selector::Sql < Selector::Base
   end
 
   def valid?
-    object_count, _objects = target_class.selectors(selector, **options.merge(limit: 1, execution_time: true, ticket_id: 1, access: 'ignore'))
+    object_count, _objects = target_class.selectors(selector, **options, limit: 1, execution_time: true, ticket_id: 1, access: 'ignore')
     !object_count.nil?
   rescue
     false

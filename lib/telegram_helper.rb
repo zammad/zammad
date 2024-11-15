@@ -760,8 +760,6 @@ returns
   end
 
   def from_article(article)
-
-    message = nil
     Rails.logger.debug { "Create telegram personal message from article to '#{article[:to]}'..." }
 
     message = {}

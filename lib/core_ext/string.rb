@@ -92,7 +92,7 @@ class String
 
     removed = ''
     each_char.with_object('') do |c, result|
-      if c.bytes.count > 3
+      if c.bytesize > 3
         removed << c
         next
       end

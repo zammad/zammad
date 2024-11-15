@@ -117,7 +117,6 @@ class ReportsController < ApplicationController
   end
 
   def params_all
-    profile = nil
     if !params[:profiles] && !params[:profile_id]
       raise Exceptions::UnprocessableEntity, __("Required parameter 'profile' is missing.")
     end

@@ -300,6 +300,10 @@ Style/FetchEnvVar:
   Description: 'This cop suggests `ENV.fetch` for the replacement of `ENV[]`.'
   Enabled: false
 
+Style/SafeNavigationChainLength:
+  Description: 'This cops suggests to not use&.optional&.chaining&.too&.much'
+  Enabled: false
+
 GraphQL/OrderedArguments:
   Enabled: false
 

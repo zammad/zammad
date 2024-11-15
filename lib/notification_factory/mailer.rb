@@ -51,9 +51,6 @@ returns
     matrix = user_preferences['notification_config']['matrix']
     return if !matrix
 
-    owned_by_nobody = false
-    owned_by_me = false
-    subscribed = false
     case ticket.owner_id
     when 1
       owned_by_nobody = true
@@ -76,7 +73,7 @@ returns
     end
 
     # always trigger notifications for user if he is subscribed
-    if owned_by_me == false && ticket.mentions.exists?(user: user)
+    if !owned_by_me && ticket.mentions.exists?(user: user)
       subscribed = true
     end
 

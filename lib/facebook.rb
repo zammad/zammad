@@ -317,7 +317,6 @@ result
   end
 
   def from_article(article)
-    post = nil
     if article[:type] != 'facebook feed comment'
       raise "Can't handle unknown facebook article type '#{article[:type]}'."
     end

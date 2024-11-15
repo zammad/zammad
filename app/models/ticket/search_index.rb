@@ -29,7 +29,7 @@ module Ticket::SearchIndex
       # lookup attributes of ref. objects (normally name and note)
       article_attributes = search_index_article_attributes(article)
 
-      article_attributes_payload_size = article_attributes.to_json.bytes.size
+      article_attributes_payload_size = article_attributes.to_json.bytesize
 
       next if search_index_attribute_lookup_oversized?(total_size_current + article_attributes_payload_size)
 
@@ -45,10 +45,10 @@ module Ticket::SearchIndex
 
         next if search_index_attribute_lookup_file_oversized?(attachment, total_size_current)
 
-        next if search_index_attribute_lookup_oversized?(total_size_current + attachment.content.bytes.size)
+        next if search_index_attribute_lookup_oversized?(total_size_current + attachment.content.bytesize)
 
         # add attachment size to totel payload size
-        total_size_current += attachment.content.bytes.size
+        total_size_current += attachment.content.bytesize
 
         article_attributes['attachment'].push search_index_article_attachment_attributes(attachment)
       end
@@ -75,10 +75,10 @@ module Ticket::SearchIndex
 
     # if attachment size is bigger as configured
     attachment_max_size = (Setting.get('es_attachment_max_size_in_mb') || 10).megabyte
-    return true if attachment.content.bytes.size > attachment_max_size
+    return true if attachment.content.bytesize > attachment_max_size
 
     # if complete size is bigger as configured
-    return true if search_index_attribute_lookup_oversized?(total_size_current + attachment.content.bytes.size)
+    return true if search_index_attribute_lookup_oversized?(total_size_current + attachment.content.bytesize)
 
     false
   end

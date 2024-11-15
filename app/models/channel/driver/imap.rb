@@ -81,7 +81,6 @@ example
     ssl            = true
     ssl_verify     = options.fetch(:ssl_verify, true)
     starttls       = false
-    port           = 993
     keep_on_server = false
     folder         = 'INBOX'
     if options[:keep_on_server] == true || options[:keep_on_server] == 'true'
