@@ -5915,7 +5915,6 @@ msgid "Error fetching github information. Please contact your administrator."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:64
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitList.vue:61
 msgid "Error fetching i-doit information. Please contact your administrator."
 msgstr ""
 
@@ -7234,7 +7233,7 @@ msgid "How to use it"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitList.vue:115
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:201
 msgid "ID"
 msgstr ""
 
@@ -8346,7 +8345,7 @@ msgid "Link Issue"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:183
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:160
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:180
 msgid "Link Objects"
 msgstr ""
 
@@ -8374,7 +8373,7 @@ msgstr ""
 msgid "Link issue"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:116
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:137
 msgid "Link objects"
 msgstr ""
 
@@ -13527,7 +13526,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:10
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitList.vue:120
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:206
 msgid "Status"
 msgstr ""
 
@@ -16532,7 +16531,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:57
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:105
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitList.vue:123
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:210
 #: db/seeds/object_manager_attributes.rb:124
 msgid "Type"
 msgstr ""
@@ -16602,7 +16601,7 @@ msgstr ""
 msgid "Unlink issue"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitList.vue:110
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:196
 msgid "Unlink object"
 msgstr ""
 
