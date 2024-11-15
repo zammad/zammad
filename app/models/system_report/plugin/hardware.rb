@@ -12,7 +12,7 @@ class SystemReport::Plugin::Hardware < SystemReport::Plugin
   end
 
   def total_memory
-    open3_data&.dig('children')&.find { |entry| entry['description'] == 'Motherboard' }&.dig('children')&.find { |entry| entry['description'] == 'System memory' }&.dig('size')
+    open3_data&.dig('children')&.find { |entry| entry['description'].downcase == 'motherboard' }&.dig('children')&.find { |entry| entry['description'].downcase == 'system memory' }&.dig('size')
   end
 
   def df_zammad_root
@@ -26,6 +26,7 @@ class SystemReport::Plugin::Hardware < SystemReport::Plugin
 
     data = execute
     return {} if data.blank?
+    return data.first if data.is_a?(Array) # https://github.com/zammad/zammad/issues/5402
 
     data
   end
@@ -39,12 +40,11 @@ class SystemReport::Plugin::Hardware < SystemReport::Plugin
       return {}
     end
 
-    begin
-      JSON.parse(stdout)
-    rescue
-      Rails.logger.error("lshw failed: #{stdout}")
-      {}
-    end
+    JSON.parse(stdout)
+  rescue => e
+    Rails.logger.error "lshw failed: #{e.message}"
+    Rails.logger.error e
+    {}
   end
 
   def binary_path
