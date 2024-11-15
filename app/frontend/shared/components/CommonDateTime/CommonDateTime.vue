@@ -40,7 +40,7 @@ const outputAbsoluteDate = computed(() => {
 
 <template>
   <time v-if="outputFormat === 'absolute'" data-test-id="date-time-absolute">
-    <slot />
+    <slot name="prefix" />
     {{ outputAbsoluteDate }}
   </time>
   <time

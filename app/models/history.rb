@@ -146,7 +146,7 @@ returns
 
 =end
 
-  def self.list(requested_object, requested_object_id, related_history_object = [], assets = nil)
+  def self.list(requested_object, requested_object_id, related_history_object = [], assets = nil, raw: false)
     histories = History.where(
       history_object_id: object_lookup(requested_object).id,
       o_id:              requested_object_id
@@ -166,6 +166,8 @@ returns
     end
 
     histories = histories.reorder(:created_at, :id)
+
+    return histories if raw
 
     list = histories.map(&:attributes).each do |data|
       data['object'] = History::Object.lookup(id: data.delete('history_object_id'))&.name

@@ -312,6 +312,10 @@ msgstr ""
 msgid "%s of my tickets escalated"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:50
+msgid "%s on message"
+msgstr ""
+
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 #: app/graphql/gql/queries/autocomplete_search/generic.rb:64
 msgid "%s people"
@@ -354,6 +358,10 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:121
 msgid "%s tickets found"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:37
+msgid "%s to message"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
@@ -745,7 +753,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:2
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:2
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:68
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:104
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:119
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:18
 #: app/graphql/gql/types/overview_type.rb:69
 msgid "Accounted Time"
@@ -1133,6 +1141,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:85
 msgid "Add this class to a button on your page that should open the chat."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:9
+msgid "Added"
 msgstr ""
 
 #: app/controllers/first_steps_controller.rb:109
@@ -1653,6 +1665,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:16
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:10
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:10
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventEntityNames.ts:6
 msgid "Article"
 msgstr ""
 
@@ -1773,7 +1786,7 @@ msgstr ""
 msgid "Attached Files"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:199
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:201
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
@@ -1836,7 +1849,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:31
 #: app/assets/javascripts/app/models/overview.coffee:16
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:73
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:88
 msgid "Attributes"
 msgstr ""
 
@@ -2258,7 +2271,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:89
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:164
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:166
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:86
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:37
@@ -2428,7 +2441,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:71
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:226
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:404
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:406
 msgid "Cancel & Go Back"
 msgstr ""
 
@@ -2554,6 +2567,14 @@ msgstr ""
 msgid "Change text color"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+msgid "Changed reaction"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+msgid "Changed reaction to"
+msgstr ""
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
 msgstr ""
@@ -2660,12 +2681,18 @@ msgstr ""
 msgid "Check this box if you want to customise how options are sorted. If the box is not checked, values are sorted in alphabetical order."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
+msgid "Checked"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
 msgid "Checklist"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:60
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventEntityNames.ts:10
 msgid "Checklist Item"
 msgstr ""
 
@@ -2942,7 +2969,7 @@ msgstr ""
 msgid "Close the time picker"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabRemove.vue:46
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabRemove.vue:51
 msgid "Close this tab"
 msgstr ""
 
@@ -3420,7 +3447,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:416
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:418
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr ""
@@ -3577,6 +3604,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList.vue:43
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created-mention.ts:9
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -4996,7 +5024,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:49
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:401
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:403
 msgid "Discard Changes"
 msgstr ""
 
@@ -5402,6 +5430,7 @@ msgstr ""
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:7
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:167
 #: db/seeds/object_manager_attributes.rb:705
@@ -7150,6 +7179,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee:28
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:114
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:60
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:54
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:130
 msgid "History"
 msgstr ""
@@ -8243,6 +8273,10 @@ msgstr ""
 msgid "Last name"
 msgstr ""
 
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:129
+msgid "Last owner update"
+msgstr ""
+
 #: app/assets/javascripts/app/models/job.coffee:19
 msgid "Last run"
 msgstr ""
@@ -8422,7 +8456,7 @@ msgid "LinkedIn Developer Site"
 msgstr ""
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:92
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:107
 msgid "Links"
 msgstr ""
 
@@ -9043,6 +9077,11 @@ msgstr ""
 msgid "Members"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created-mention.ts:12
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:12
+msgid "Mention for"
+msgstr ""
+
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 msgid "Mention user"
 msgstr ""
@@ -9058,7 +9097,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:7
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:88
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:46
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:61
 msgid "Merge"
 msgstr ""
 
@@ -9080,6 +9119,14 @@ msgstr ""
 
 #: app/models/report.rb:75
 msgid "Merged"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/merged-into.ts:11
+msgid "Merged this ticket into"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:11
+msgid "Merged ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
@@ -9645,7 +9692,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:30
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:15
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:105
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:107
 msgid "New Ticket"
 msgstr ""
 
@@ -10168,6 +10215,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:59
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:24
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/notification.ts:7
 #: app/views/mailer/application.html.erb:36
 msgid "Notification"
 msgstr ""
@@ -10295,6 +10343,10 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/object_manager.coffee:114
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:3
 msgid "Object Manager"
+msgstr ""
+
+#: app/services/service/history/list.rb:52
+msgid "Object does not support history"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/layout/LayoutPage.vue:60
@@ -11237,6 +11289,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:40
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee:31
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventIssuerNames.ts:5
 msgid "Postmaster Filter"
 msgstr ""
 
@@ -11520,6 +11573,14 @@ msgstr ""
 msgid "Raw"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+msgid "Reacted"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+msgid "Reacted with"
+msgstr ""
+
 #: app/assets/javascripts/app/models/group.coffee:44
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:40
 msgid "Read"
@@ -11757,6 +11818,15 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:176
 msgid "Remove two-factor authentication"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:9
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
+msgid "Removed"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
+msgid "Removed reaction"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:649
@@ -12334,6 +12404,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:41
 #: app/assets/javascripts/app/controllers/job.coffee:3
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventIssuerNames.ts:4
 #: db/seeds/permissions.rb:95
 msgid "Scheduler"
 msgstr ""
@@ -12505,7 +12576,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:22
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:174
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:176
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:203
@@ -12976,6 +13047,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/clearbit.coffee:66
 msgid "Shared"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventEntityNames.ts:8
+msgid "Shared Draft"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee:12
@@ -13681,7 +13756,7 @@ msgstr ""
 msgid "Subscribed tickets"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:112
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:127
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:198
 msgid "Subscribers"
 msgstr ""
@@ -13734,6 +13809,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: app/assets/javascripts/app/controllers/manage.coffee:37
 #: app/assets/javascripts/app/views/generic/history.jst.eco:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:33
 #: db/seeds/permissions.rb:191
 #: db/seeds/ticket_article_senders.rb:5
 msgid "System"
@@ -13803,7 +13879,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:41
 #: app/assets/javascripts/app/views/tag/index.jst.eco:3
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:98
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:145
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:78
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:190
@@ -15661,6 +15737,10 @@ msgstr ""
 msgid "Ticket Duplicate Detection"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:62
+msgid "Ticket History"
+msgstr ""
+
 #: db/seeds/settings.rb:2167
 msgid "Ticket Hook"
 msgstr ""
@@ -15875,7 +15955,7 @@ msgstr ""
 msgid "Ticket update"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:486
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:487
 msgid "Ticket update failed."
 msgstr ""
 
@@ -16315,8 +16395,13 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:29
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventIssuerNames.ts:6
 #: db/seeds/permissions.rb:77
 msgid "Trigger"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:7
+msgid "Triggered"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
@@ -16580,8 +16665,20 @@ msgstr ""
 msgid "Uncheck item"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
+msgid "Unchecked"
+msgstr ""
+
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:12
 msgid "Unit"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:42
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:35
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:33
+msgid "Unknown"
 msgstr ""
 
 #: lib/password_policy/backend.rb:15
@@ -18127,6 +18224,22 @@ msgstr ""
 msgid "auto select"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:12
+msgid "because pending reminder was reached"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:16
+msgid "because ticket was escalated"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:20
+msgid "because ticket will escalate soon"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
+msgid "because time event was reached"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -18501,11 +18614,20 @@ msgstr ""
 msgid "from"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:40
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:53
+msgid "from %s"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:481
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "from (relative)"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:25
+msgid "from message"
 msgstr ""
 
 #: app/controllers/integration/pgp_controller.rb:48
@@ -18659,6 +18781,10 @@ msgstr ""
 
 #: db/seeds/settings.rb:1190
 msgid "internal database"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:19
+msgid "into this ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
@@ -19003,6 +19129,10 @@ msgstr ""
 msgid "now"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:51
+msgid "on message"
+msgstr ""
+
 #: app/models/object_manager/attribute.rb:548
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr ""
@@ -19177,6 +19307,10 @@ msgstr ""
 msgid "select visible options"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:10
+msgid "sent to"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 msgid "sent to the customer"
@@ -19340,6 +19474,10 @@ msgstr ""
 
 #: app/views/knowledge_base/public/not_found.html.erb:8
 msgid "to go to the homepage."
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:38
+msgid "to message"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25

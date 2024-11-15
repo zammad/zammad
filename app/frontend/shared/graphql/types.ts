@@ -1014,6 +1014,45 @@ export type GuidedSetupSetSystemInformationPayload = {
   success?: Maybe<Scalars['Boolean']['output']>;
 };
 
+/** History record */
+export type HistoryGroup = {
+  __typename?: 'HistoryGroup';
+  /** Date and time of the history record */
+  createdAt: Scalars['ISO8601DateTime']['output'];
+  /** Records of the history record */
+  records: Array<HistoryRecord>;
+};
+
+/** History record */
+export type HistoryRecord = {
+  __typename?: 'HistoryRecord';
+  /** Events of the history record */
+  events: Array<HistoryRecordEvent>;
+  /** User or system service who created the history record */
+  issuer: HistoryRecordIssuer;
+};
+
+/** History record event */
+export type HistoryRecordEvent = {
+  __typename?: 'HistoryRecordEvent';
+  /** Action of the event */
+  action: Scalars['String']['output'];
+  /** Attribute of the event */
+  attribute?: Maybe<Scalars['String']['output']>;
+  /** Changes of the event */
+  changes?: Maybe<Scalars['JSON']['output']>;
+  /** Date and time of the event */
+  createdAt: Scalars['ISO8601DateTime']['output'];
+  /** Object of the event */
+  object: HistoryRecordEventObject;
+};
+
+/** History record event object */
+export type HistoryRecordEventObject = Checklist | ChecklistItem | Group | Mention | ObjectClass | Organization | Ticket | TicketArticle | TicketSharedDraftZoom | User;
+
+/** History record issuer */
+export type HistoryRecordIssuer = Job | ObjectClass | PostmasterFilter | Trigger | User;
+
 /** Import job information */
 export type ImportJob = {
   __typename?: 'ImportJob';
@@ -1026,6 +1065,24 @@ export type ImportJob = {
   name: Scalars['String']['output'];
   result?: Maybe<Scalars['JSON']['output']>;
   startedAt?: Maybe<Scalars['ISO8601DateTime']['output']>;
+  /** Last update date/time of the record */
+  updatedAt: Scalars['ISO8601DateTime']['output'];
+  /** Last user that updated this record */
+  updatedBy?: Maybe<User>;
+};
+
+/** Jobs */
+export type Job = {
+  __typename?: 'Job';
+  /** Create date/time of the record */
+  createdAt: Scalars['ISO8601DateTime']['output'];
+  /** User that created this record */
+  createdBy?: Maybe<User>;
+  id: Scalars['ID']['output'];
+  /** Internal database ID */
+  internalId: Scalars['Int']['output'];
+  /** Name of the job */
+  name: Scalars['String']['output'];
   /** Last update date/time of the record */
   updatedAt: Scalars['ISO8601DateTime']['output'];
   /** Last user that updated this record */
@@ -2198,6 +2255,15 @@ export type ObjectAttributeValuesInterface = {
   objectAttributeValues?: Maybe<Array<ObjectAttributeValue>>;
 };
 
+/** Object class */
+export type ObjectClass = {
+  __typename?: 'ObjectClass';
+  /** Info about the object class */
+  info?: Maybe<Scalars['String']['output']>;
+  /** Name of the object class */
+  klass?: Maybe<Scalars['String']['output']>;
+};
+
 /** An object manager attribute record especially for the frontend */
 export type ObjectManagerFrontendAttribute = {
   __typename?: 'ObjectManagerFrontendAttribute';
@@ -2530,6 +2596,24 @@ export type PolicyTicket = {
   update: Scalars['Boolean']['output'];
 };
 
+/** PostmasterFilters */
+export type PostmasterFilter = {
+  __typename?: 'PostmasterFilter';
+  /** Create date/time of the record */
+  createdAt: Scalars['ISO8601DateTime']['output'];
+  /** User that created this record */
+  createdBy?: Maybe<User>;
+  id: Scalars['ID']['output'];
+  /** Internal database ID */
+  internalId: Scalars['Int']['output'];
+  /** Name of the postmaster filter */
+  name: Scalars['String']['output'];
+  /** Last update date/time of the record */
+  updatedAt: Scalars['ISO8601DateTime']['output'];
+  /** Last user that updated this record */
+  updatedBy?: Maybe<User>;
+};
+
 /** Public links available in the system */
 export type PublicLink = {
   __typename?: 'PublicLink';
@@ -2645,6 +2729,8 @@ export type Queries = {
   ticketExternalReferencesIdoitObjectSearch: Array<TicketExternalReferencesIdoitObject>;
   /** Detailed issue tracker items for the given issue tracker links or the given ticket */
   ticketExternalReferencesIssueTrackerItemList: Array<TicketExternalReferencesIssueTrackerItem>;
+  /** Fetch history of a ticket */
+  ticketHistory: Array<HistoryGroup>;
   /** Ticket overviews available in the system */
   ticketOverviews: OverviewConnection;
   /** Ticket shared drafts available to start new ticket in a given group */
@@ -2896,6 +2982,12 @@ export type QueriesTicketExternalReferencesIdoitObjectSearchArgs = {
 export type QueriesTicketExternalReferencesIssueTrackerItemListArgs = {
   input: TicketExternalReferencesIssueTrackerListInput;
   issueTrackerType: EnumTicketExternalReferencesIssueTrackerType;
+};
+
+
+/** All available queries */
+export type QueriesTicketHistoryArgs = {
+  ticket: LocatorTicketInput;
 };
 
 
@@ -4412,6 +4504,24 @@ export type TranslationsPayload = {
   translations?: Maybe<Scalars['JSON']['output']>;
 };
 
+/** Triggers */
+export type Trigger = {
+  __typename?: 'Trigger';
+  /** Create date/time of the record */
+  createdAt: Scalars['ISO8601DateTime']['output'];
+  /** User that created this record */
+  createdBy?: Maybe<User>;
+  id: Scalars['ID']['output'];
+  /** Internal database ID */
+  internalId: Scalars['Int']['output'];
+  /** Name of the trigger */
+  name: Scalars['String']['output'];
+  /** Last update date/time of the record */
+  updatedAt: Scalars['ISO8601DateTime']['output'];
+  /** Last user that updated this record */
+  updatedBy?: Maybe<User>;
+};
+
 /** Payload for the two factor authentication */
 export type TwoFactorAuthenticationInput = {
   /** Two factor authentication method */
@@ -5853,6 +5963,15 @@ export type TicketExternalReferencesIssueTrackerItemListQueryVariables = Exact<{
 
 
 export type TicketExternalReferencesIssueTrackerItemListQuery = { __typename?: 'Queries', ticketExternalReferencesIssueTrackerItemList: Array<{ __typename?: 'TicketExternalReferencesIssueTrackerItem', assignees?: Array<string> | null, issueId: number, milestone?: string | null, state: EnumTicketExternalReferencesIssueTrackerItemState, title: string, url: string, labels?: Array<{ __typename?: 'TicketExternalReferencesIssueTrackerItemLabel', color: string, textColor: string, title: string }> | null }> };
+
+export type TicketHistoryQueryVariables = Exact<{
+  ticketId?: InputMaybe<Scalars['ID']['input']>;
+  ticketInternalId?: InputMaybe<Scalars['Int']['input']>;
+  ticketNumber?: InputMaybe<Scalars['String']['input']>;
+}>;
+
+
+export type TicketHistoryQuery = { __typename?: 'Queries', ticketHistory: Array<{ __typename?: 'HistoryGroup', createdAt: string, records: Array<{ __typename?: 'HistoryRecord', issuer: { __typename?: 'Job', id: string, name: string } | { __typename?: 'ObjectClass', klass?: string | null, info?: string | null } | { __typename?: 'PostmasterFilter', id: string, name: string } | { __typename?: 'Trigger', id: string, name: string } | { __typename?: 'User', id: string, internalId: number, firstname?: string | null, lastname?: string | null, fullname?: string | null, phone?: string | null, email?: string | null, image?: string | null }, events: Array<{ __typename?: 'HistoryRecordEvent', createdAt: string, action: string, attribute?: string | null, changes?: any | null, object: { __typename?: 'Checklist', id: string, name?: string | null } | { __typename?: 'ChecklistItem', id: string, text: string, checked: boolean } | { __typename?: 'Group', id: string, name?: string | null } | { __typename?: 'Mention', id: string, user: { __typename?: 'User', id: string, fullname?: string | null } } | { __typename?: 'ObjectClass', klass?: string | null, info?: string | null } | { __typename?: 'Organization', id: string, name?: string | null } | { __typename?: 'Ticket', id: string, internalId: number, number: string, title: string } | { __typename?: 'TicketArticle', id: string, body: string } | { __typename?: 'TicketSharedDraftZoom', id: string } | { __typename?: 'User', id: string, fullname?: string | null } }> }> }> };
 
 export type TicketRelationAndRecentTicketListsQueryVariables = Exact<{
   ticketId: Scalars['Int']['input'];

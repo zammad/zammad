@@ -39,4 +39,22 @@ describe('CommonDivider.vue', () => {
     expect(container).not.toHaveClass('px-2.5')
     expect(container).toHaveClass('py-2.5')
   })
+
+  it('supports alternative background prop', async () => {
+    const view = renderComponent(CommonDivider, {
+      props: {
+        alternativeBackground: true,
+      },
+    })
+
+    const separator = view.getByRole('separator')
+
+    expect(separator).toHaveClasses(['bg-white', 'dark:bg-gray-200'])
+
+    await view.rerender({
+      alternativeBackground: false,
+    })
+
+    expect(separator).toHaveClasses(['bg-neutral-100', 'dark:bg-gray-900'])
+  })
 })

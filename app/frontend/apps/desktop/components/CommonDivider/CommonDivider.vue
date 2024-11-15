@@ -6,6 +6,7 @@ import type { DividerOrientation } from './types.ts'
 interface Props {
   orientation?: DividerOrientation
   padding?: boolean
+  alternativeBackground?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -23,10 +24,12 @@ const props = withDefaults(defineProps<Props>(), {
     }"
   >
     <hr
-      class="border-0 bg-neutral-100 dark:bg-gray-900"
+      class="border-0"
       :class="{
         'h-px w-full': props.orientation === 'horizontal',
         'h-full w-px': props.orientation === 'vertical',
+        'bg-neutral-100 dark:bg-gray-900': !props.alternativeBackground,
+        'bg-white dark:bg-gray-200': props.alternativeBackground,
       }"
     />
   </div>

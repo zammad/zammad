@@ -23,6 +23,7 @@ import type {
   Placement,
 } from '#shared/components/CommonPopover/types.ts'
 import { usePopover } from '#shared/components/CommonPopover/usePopover.ts'
+import CommonTranslateRenderer from '#shared/components/CommonTranslateRenderer/CommonTranslateRenderer.vue'
 import CommonUserAvatar from '#shared/components/CommonUserAvatar/CommonUserAvatar.vue'
 import Form from '#shared/components/Form/Form.vue'
 import type {
@@ -1164,6 +1165,25 @@ const inlineEditValue = ref('Edit me inline')
   <LayoutContent :breadcrumb-items="[]">
     <div>
       <div class="w-1/2">
+        <div class="flex space-x-3 py-2">
+          <CommonTranslateRenderer
+            source="A %s for advanced %s here. Inside a translation string: %s"
+            :placeholders="[
+              'test',
+              {
+                type: 'link',
+                props: { link: 'https://www.google.com' },
+                content: 'Link',
+              },
+
+              {
+                type: 'link',
+                props: { link: 'https://www.google.com' },
+                content: 'Example',
+              },
+            ]"
+          />
+        </div>
         <h1 id="test" v-tooltip="'Hello world'" class="w-fit">
           Tooltip example
         </h1>

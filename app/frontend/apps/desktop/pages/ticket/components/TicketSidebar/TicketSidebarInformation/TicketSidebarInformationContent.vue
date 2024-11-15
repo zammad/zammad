@@ -38,9 +38,24 @@ const { open: openTicketMergeFlyout } = useFlyout({
     ),
 })
 
+const { open: openTicketHistoryFlyout } = useFlyout({
+  name: 'ticket-history',
+  component: () =>
+    import(
+      '#desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue'
+    ),
+})
+
 const actions = computed(() => {
   // :TODO find a way to provide the ticket via prop
   const availableActions: MenuItem[] = [
+    {
+      key: 'ticket-history',
+      label: __('History'),
+      icon: 'clock-history',
+      show: () => isTicketAgent.value,
+      onClick: () => openTicketHistoryFlyout({ ticket }),
+    },
     {
       key: MERGE_FLYOUT_KEY,
       label: __('Merge'),

@@ -124,5 +124,12 @@ export const staticObjectAttributes: EntityStaticObjectAttributes = {
       isStatic: true,
       isInternal: true,
     },
+    {
+      name: 'last_owner_update_at',
+      display: __('Last owner update'),
+      dataType: 'datetime',
+      isStatic: true,
+      isInternal: true,
+    },
   ],
 }

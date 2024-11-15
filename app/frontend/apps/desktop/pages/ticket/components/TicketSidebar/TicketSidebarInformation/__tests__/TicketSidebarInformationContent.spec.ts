@@ -100,7 +100,7 @@ describe('TicketSidebarInformationContent', () => {
 
       expect(wrapper.getByRole('link', { name: 'tag1' })).toBeInTheDocument()
 
-      // :TODO adjust link as soon as we have correct value for search
+      // TODO: adjust link as soon as we have correct value for search
       expect(wrapper.getByRole('link', { name: 'tag2' })).toHaveAttribute(
         'href',
         '#',
@@ -126,7 +126,7 @@ describe('TicketSidebarInformationContent', () => {
       },
     )
 
-    it('does not show customer change action if agent has no update permission', () => {
+    it('does not show customer change action if agent has no update permission', async () => {
       mockPermissions(['ticket.agent'])
 
       const wrapper = renderInformationSidebar({
@@ -137,9 +137,14 @@ describe('TicketSidebarInformationContent', () => {
         },
       })
 
-      // :TODO adjust as soon as we have more actions
+      const actionMenuButton = wrapper.getByRole('button', {
+        name: 'Action menu button',
+      })
+
+      await wrapper.events.click(actionMenuButton)
+
       expect(
-        wrapper.queryByRole('button', { name: 'Action menu button' }),
+        wrapper.queryByRole('button', { name: 'Change customer' }),
       ).not.toBeInTheDocument()
     })
 
@@ -154,7 +159,6 @@ describe('TicketSidebarInformationContent', () => {
         },
       })
 
-      // :TODO adjust as soon as we have more actions
       expect(
         wrapper.queryByRole('button', { name: 'Action menu button' }),
       ).not.toBeInTheDocument()
