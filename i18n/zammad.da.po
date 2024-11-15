@@ -396,8 +396,8 @@ msgstr "%s API Token"
 msgid "%s Attribute"
 msgstr "%s Attribut"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:34
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist/show.coffee:34
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/title_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:50
 #, fuzzy
 #| msgid "Checksum"
@@ -586,6 +586,12 @@ msgstr "%s af mine tickets er under behandling."
 msgid "%s of my tickets escalated"
 msgstr "%s af mine tickets eskaleret."
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:50
+#, fuzzy
+#| msgid "Add a message"
+msgid "%s on message"
+msgstr "Tilføj besked"
+
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 #: app/graphql/gql/queries/autocomplete_search/generic.rb:64
 msgid "%s people"
@@ -635,6 +641,12 @@ msgstr "%s tickets"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:121
 msgid "%s tickets found"
 msgstr "%s tickets fundet"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:37
+#, fuzzy
+#| msgid "Add a message"
+msgid "%s to message"
+msgstr "Tilføj besked"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
@@ -1040,7 +1052,7 @@ msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr "Accepter Privatlivspolitik & Betingelser"
 
 #: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:37
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:18
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:33
 #, fuzzy
 #| msgid "Access to %s"
 msgid "Access denied"
@@ -1139,7 +1151,8 @@ msgstr "Kontoen er ikke bekræftet"
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:2
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:2
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:68
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:104
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:119
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:18
 #: app/graphql/gql/types/overview_type.rb:69
 msgid "Accounted Time"
 msgstr "Regnskabstid"
@@ -1188,7 +1201,7 @@ msgstr "Brugere"
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:10
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:8
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:59
-#: app/assets/javascripts/app/views/package.jst.eco:43
+#: app/assets/javascripts/app/views/package.jst.eco:51
 #: app/assets/javascripts/app/views/profile/password.jst.eco:32
 #: app/assets/javascripts/app/views/session.jst.eco:13
 #: app/assets/javascripts/app/views/tag/table.jst.eco:6
@@ -1219,7 +1232,7 @@ msgstr "Massehandling udført!"
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:19
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:16
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
-#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:85
+#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:142
 msgid "Actions"
 msgstr "Handlinger"
 
@@ -1334,7 +1347,7 @@ msgstr "Adapter"
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:39
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco:15
 #: app/assets/javascripts/app/views/tag/index.jst.eco:25
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:19
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show.jst.eco:19
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:278
 #: app/frontend/shared/form/i18n/locales.ts:25
 msgid "Add"
@@ -1474,7 +1487,7 @@ msgstr "Tilføj betingelse"
 msgid "Add email"
 msgstr "mail"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:5
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:5
 #, fuzzy
 #| msgid "Add bullet list"
 msgid "Add empty checklist"
@@ -1484,7 +1497,7 @@ msgstr "Tilføj punktliste"
 msgid "Add first level heading"
 msgstr "Tilføj overskrift på første niveau"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:11
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:11
 #, fuzzy
 #| msgid "Save as template"
 msgid "Add from a template"
@@ -1575,6 +1588,10 @@ msgstr "Tilføj overskrift på tredje niveau"
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:85
 msgid "Add this class to a button on your page that should open the chat."
 msgstr "Tilføj denne klasse til en knap på din side, der skal åbne chatten."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:9
+msgid "Added"
+msgstr ""
 
 #: app/controllers/first_steps_controller.rb:109
 msgid "Additional Channels"
@@ -2214,6 +2231,7 @@ msgstr "Er du sikker? Dine notifikationsindstillinger vil blive nulstillet."
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:16
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:10
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:10
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventEntityNames.ts:6
 msgid "Article"
 msgstr "Artikel"
 
@@ -2282,11 +2300,11 @@ msgid "Assigned"
 msgstr "Tildelt"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:75
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
 msgid "Assignee"
 msgstr "Tildelt"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:75
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
 #, fuzzy
 #| msgid "Assignee"
 msgid "Assignees"
@@ -2353,7 +2371,7 @@ msgstr "Vedhæft filer"
 msgid "Attached Files"
 msgstr "Vedhæftede Filer"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:199
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:201
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
@@ -2429,7 +2447,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:31
 #: app/assets/javascripts/app/models/overview.coffee:16
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:73
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:88
 msgid "Attributes"
 msgstr "Attributter"
 
@@ -2899,7 +2917,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:89
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:164
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:166
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:86
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:37
@@ -3041,7 +3059,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:236
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:286
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:343
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:202
@@ -3074,7 +3092,7 @@ msgstr "Annuller"
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:71
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:226
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:404
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:406
 msgid "Cancel & Go Back"
 msgstr "Annuller & gå tilbage"
 
@@ -3212,6 +3230,18 @@ msgstr "Skift Din Adgangskode"
 msgid "Change text color"
 msgstr "Ændr dato"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#, fuzzy
+#| msgid "Change Objects"
+msgid "Changed reaction"
+msgstr "Ændre objekter"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#, fuzzy
+#| msgid "Exchange integration"
+msgid "Changed reaction to"
+msgstr "Exchange integration"
+
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
 msgstr "Ændret:"
@@ -3304,7 +3334,7 @@ msgstr "Check 'Kanal' streams."
 msgid "Check channels."
 msgstr "Tjek kanaler."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:64
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row.jst.eco:24
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:54
 #, fuzzy
 #| msgid "Checkmk"
@@ -3322,7 +3352,13 @@ msgid ""
 "is not checked, values are sorted in alphabetical order."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:54
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
+#, fuzzy
+#| msgid "Checkmk"
+msgid "Checked"
+msgstr "Checkmk"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
 #, fuzzy
 #| msgid "Checksum"
@@ -3330,6 +3366,8 @@ msgid "Checklist"
 msgstr "Checksum"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:60
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventEntityNames.ts:10
 #, fuzzy
 #| msgid "Checksum"
 msgid "Checklist Item"
@@ -3353,7 +3391,7 @@ msgstr ""
 msgid "Checklist items are limited to 100 items per checklist."
 msgstr ""
 
-#: app/models/checklist.rb:99
+#: app/models/checklist.rb:100
 msgid "Checklist template must be active to use as a checklist starting point."
 msgstr ""
 
@@ -3629,7 +3667,7 @@ msgstr "Luk fane når sag lukkes"
 msgid "Close the time picker"
 msgstr "Lukkede sager"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabRemove.vue:46
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabRemove.vue:51
 #, fuzzy
 #| msgid "Close tab"
 msgid "Close this tab"
@@ -3651,6 +3689,7 @@ msgid "Closed Tickets"
 msgstr "Lukkede sager"
 
 #: app/assets/javascripts/app/models/ticket.coffee:25
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:81
 #: app/graphql/gql/types/overview_type.rb:78
 msgid "Closing time"
 msgstr "Lukketid"
@@ -4169,7 +4208,7 @@ msgstr "Land"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:416
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:418
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Opret"
@@ -4247,7 +4286,7 @@ msgstr "Opret en test sag"
 msgid "Create a new checklist item"
 msgstr "Opret ny kunde"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:18
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:18
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:21
 #, fuzzy
 #| msgid "Create a new template in the admin interface."
@@ -4362,6 +4401,7 @@ msgstr "Opret:"
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList.vue:43
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created-mention.ts:9
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -4400,7 +4440,10 @@ msgstr "Opret Intern Artikel"
 #: app/controllers/time_accountings_controller.rb:122
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:105
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:39
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:41
+#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:24
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:105
+#: app/frontend/shared/entities/user/stores/objectAttributes.ts:24
 #: app/graphql/gql/types/overview_type.rb:80
 msgid "Created at"
 msgstr "Oprettet"
@@ -4424,6 +4467,9 @@ msgstr "Oprettet:"
 #: app/assets/javascripts/app/models/ticket.coffee:27
 #: app/assets/javascripts/app/models/ticket_article.coffee:15
 #: app/assets/javascripts/app/models/user.coffee:14
+#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:14
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:95
+#: app/frontend/shared/entities/user/stores/objectAttributes.ts:14
 #: app/graphql/gql/types/overview_type.rb:79
 msgid "Created by"
 msgstr "Oprettet af"
@@ -4525,7 +4571,7 @@ msgstr "Tilpasset adresse ikke opsat"
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:9
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:11
 #: app/controllers/time_accountings_controller.rb:95
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:37
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:39
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/customer.ts:13
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts:6
 #: app/graphql/gql/types/overview_type.rb:61
@@ -4588,7 +4634,7 @@ msgstr "Mørk Tema"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:147
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:5
 #: app/assets/javascripts/app/controllers/dashboard.coffee:28
-#: app/assets/javascripts/app/controllers/package.coffee:42
+#: app/assets/javascripts/app/controllers/package.coffee:43
 #: app/frontend/apps/desktop/pages/dashboard/routes.ts:8
 msgid "Dashboard"
 msgstr "Oversigt"
@@ -5603,7 +5649,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:118
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:186
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
-#: app/assets/javascripts/app/controllers/package.coffee:52
+#: app/assets/javascripts/app/controllers/package.coffee:54
 #: app/assets/javascripts/app/controllers/user.coffee:177
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:88
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:80
@@ -5837,6 +5883,18 @@ msgstr "Beskrivelse"
 msgid "Description (shown as title tag for screen readers)"
 msgstr "Beskrivelse (vist som titel-tag til skærmlæsere)"
 
+#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:113
+#, fuzzy
+#| msgid "Select All"
+msgid "Deselect all entries"
+msgstr "Vælg Alle"
+
+#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:174
+#, fuzzy
+#| msgid "Delete avatar"
+msgid "Deselect this entry"
+msgstr "Slet avatar"
+
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:17
 #: app/assets/javascripts/app/views/channel/form.jst.eco:25
 msgid "Designer"
@@ -5978,7 +6036,7 @@ msgstr "Kassér"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:49
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:401
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:403
 msgid "Discard Changes"
 msgstr "Kassér ændringer"
 
@@ -6225,7 +6283,7 @@ msgstr "Kladde"
 msgid "Drag and drop to reorder ticket overview list items."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:235
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:242
 #, fuzzy
 #| msgid "Drag to reorder"
 msgid "Drag and drop to reorder your tabs."
@@ -6331,7 +6389,7 @@ msgstr "Vidensbase"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee:21
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee:11
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:36
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:33
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:80
 msgid "Edit Organization"
 msgstr "Rediger Organisation"
@@ -6348,7 +6406,7 @@ msgstr "Godkendelse"
 msgid "Edit checklist title"
 msgstr "Sagstitel"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:72
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row.jst.eco:32
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:69
 #, fuzzy
 #| msgid "Category"
@@ -6456,6 +6514,7 @@ msgstr "SSL verificering"
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:7
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:167
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
@@ -7020,7 +7079,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:51
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:124
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:6
-#: app/frontend/apps/desktop/pages/error/views/Error.vue:37
+#: app/frontend/apps/desktop/components/CommonError/CommonError.vue:30
 #: app/frontend/apps/mobile/pages/error/views/Error.vue:39
 msgid "Error"
 msgstr "Fejl"
@@ -7028,6 +7087,18 @@ msgstr "Fejl"
 #: app/services/service/system/run_auto_wizard.rb:18
 msgid "Error during execution of auto wizard."
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:52
+#, fuzzy
+#| msgid "Feature is disabled, please contact your administrator!"
+msgid "Error fetching github information. Please contact your administrator."
+msgstr "Funktion er deaktiveret, kontakt venligst en administrator!"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:64
+#, fuzzy
+#| msgid "Feature is disabled, please contact your administrator!"
+msgid "Error fetching i-doit information. Please contact your administrator."
+msgstr "Funktion er deaktiveret, kontakt venligst en administrator!"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:280
 #: db/seeds/overviews.rb:160
@@ -7071,21 +7142,25 @@ msgid "Escalation Times"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:17
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:25
 #: app/graphql/gql/types/overview_type.rb:70
 msgid "Escalation at"
 msgstr "Eskalerer"
 
 #: app/assets/javascripts/app/models/ticket.coffee:20
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:46
 #: app/graphql/gql/types/overview_type.rb:73
 msgid "Escalation at (Close Time)"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:18
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:32
 #: app/graphql/gql/types/overview_type.rb:71
 msgid "Escalation at (First Response Time)"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:19
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:39
 #: app/graphql/gql/types/overview_type.rb:72
 msgid "Escalation at (Update Time)"
 msgstr ""
@@ -7374,7 +7449,7 @@ msgstr ""
 msgid "Failed to save checklist order."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:124
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist/show.coffee:160
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 
@@ -7474,6 +7549,7 @@ msgstr "Filsystem"
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:16
 #: app/assets/javascripts/app/models/report_profile.js.coffee:7
 #: app/assets/javascripts/app/views/sla/index.jst.eco:28
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:132
 msgid "Filter"
 msgstr "Filter"
 
@@ -7546,6 +7622,7 @@ msgid "First name"
 msgstr "Fornavn"
 
 #: app/assets/javascripts/app/models/ticket.coffee:24
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:74
 #: app/graphql/gql/types/overview_type.rb:77
 msgid "First response"
 msgstr "Første respons"
@@ -7621,6 +7698,7 @@ msgid ""
 "it somewhere secure before continuing."
 msgstr ""
 
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:48
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:459
 #: app/frontend/shared/errors/useErrorHandler.ts:29
 #: app/frontend/shared/router/guards/before/permission.ts:37
@@ -7902,7 +7980,7 @@ msgstr "GitHub integration"
 msgid "GitHub request failed. Please have a look at the log file for details."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:35
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:35
 msgid "GitHub: Link issue"
 msgstr ""
 
@@ -7936,7 +8014,7 @@ msgstr ""
 msgid "GitLab request failed. Please have a look at the log file for details."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:35
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:35
 msgid "GitLab: Link issue"
 msgstr ""
 
@@ -8061,7 +8139,7 @@ msgstr "Velkommen"
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:38
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:56
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:40
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:38
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:40
 #: app/graphql/gql/types/overview_type.rb:63
 #: app/views/mailer/ticket_create/fr.html.erb:8
 #: app/views/mailer/ticket_create/zh-cn.html.erb:8
@@ -8404,6 +8482,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee:28
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:114
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:60
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:54
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:130
 msgid "History"
 msgstr "Historik"
@@ -8494,6 +8573,7 @@ msgid "How to use it"
 msgstr "Brugervejledning"
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:8
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:201
 msgid "ID"
 msgstr "ID"
 
@@ -9085,11 +9165,11 @@ msgstr "Indsætter tekst modul"
 msgid "Install App"
 msgstr "Installer App"
 
-#: app/assets/javascripts/app/views/package.jst.eco:32
+#: app/assets/javascripts/app/views/package.jst.eco:40
 msgid "Install Package"
 msgstr "Installer pakke"
 
-#: app/assets/javascripts/app/views/package.jst.eco:24
+#: app/assets/javascripts/app/views/package.jst.eco:32
 msgid "Installed"
 msgstr "Installeret"
 
@@ -9188,15 +9268,15 @@ msgstr "Ugyldig e-mail '%{email}'"
 msgid "Invalid i-doit configuration (missing endpoint or api_token)."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:191
+#: app/controllers/tickets_controller.rb:192
 msgid "Invalid link structure"
 msgstr "Ugyldig link struktur"
 
-#: app/controllers/tickets_controller.rb:197
+#: app/controllers/tickets_controller.rb:198
 msgid "Invalid link structure (Object → LinkType)"
 msgstr "Ugyldig link struktur (Objekt → LinkType)"
 
-#: app/controllers/tickets_controller.rb:194
+#: app/controllers/tickets_controller.rb:195
 msgid "Invalid link structure (Object)"
 msgstr "Ugyldig link struktur (Objekt)"
 
@@ -9332,17 +9412,23 @@ msgstr "Inviter kunder til at oprette sager i Zammad"
 msgid "Ionicons"
 msgstr "Ionicons"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:37
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:37
 #, fuzzy
 #| msgid "%s URL"
 msgid "Issue URL"
 msgstr "%s URL"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:54
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:54
 #, fuzzy
 #| msgid "Messages"
 msgid "Issue status"
 msgstr "Beskeder"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useIssueTracker.ts:39
+#, fuzzy
+#| msgid "no issues"
+msgid "Issues"
+msgstr "ingen problemer"
 
 #: lib/validations/data_privacy_task_validator.rb:50
 msgid "It is not possible to delete the last account with admin permissions."
@@ -9525,7 +9611,7 @@ msgid "Label"
 msgstr "Labels"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:30
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:85
 msgid "Labels"
 msgstr "Labels"
 
@@ -9597,6 +9683,7 @@ msgid "Last changed"
 msgstr "er ændret"
 
 #: app/assets/javascripts/app/models/ticket.coffee:26
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:88
 #, fuzzy
 #| msgid "Closing time"
 msgid "Last closing time"
@@ -9604,18 +9691,21 @@ msgstr "Lukketid"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:232
 #: app/assets/javascripts/app/models/ticket.coffee:21
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:53
 #: app/graphql/gql/types/overview_type.rb:74
 msgid "Last contact"
 msgstr "Sidste kontakt"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:236
 #: app/assets/javascripts/app/models/ticket.coffee:22
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:60
 #: app/graphql/gql/types/overview_type.rb:75
 msgid "Last contact (agent)"
 msgstr "Sidste kontakt (agent)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:240
 #: app/assets/javascripts/app/models/ticket.coffee:23
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:67
 #: app/graphql/gql/types/overview_type.rb:76
 msgid "Last contact (customer)"
 msgstr "Sidste kontakt (medarbejder)"
@@ -9636,6 +9726,12 @@ msgstr "Sidste kørsel"
 #: db/seeds/object_manager_attributes.rb:653
 msgid "Last name"
 msgstr "Efternavn"
+
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:129
+#, fuzzy
+#| msgid "Latest updates"
+msgid "Last owner update"
+msgstr "Sidste opdateringer"
 
 #: app/assets/javascripts/app/models/job.coffee:19
 msgid "Last run"
@@ -9731,20 +9827,27 @@ msgstr ""
 msgid "Link GitLab issues to your tickets."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:70
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList.vue:274
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:62
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:70
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList.vue:274
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:62
 #, fuzzy
 #| msgid "Link %s"
 msgid "Link Issue"
 msgstr "Link %s"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:183
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:180
+#, fuzzy
+#| msgid "Objects"
+msgid "Link Objects"
+msgstr "Objekter"
+
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:19
 msgid "Link Related Answer"
 msgstr "Link Relateret Svar"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:156
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:157
 #, fuzzy
 #| msgid "Open Tickets"
 msgid "Link Tickets"
@@ -9754,7 +9857,7 @@ msgstr "Åbne Sager"
 msgid "Link account on %s"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:144
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:145
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Link added successfully"
@@ -9769,6 +9872,12 @@ msgstr "%{name} eksisterer allerede"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:26
 msgid "Link issue"
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:137
+#, fuzzy
+#| msgid "Open Tickets"
+msgid "Link objects"
+msgstr "Åbne Sager"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:90
 #, fuzzy
@@ -9788,7 +9897,7 @@ msgstr "Link Skabelon"
 msgid "Link ticket"
 msgstr "Åbne Sager"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:61
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:62
 #, fuzzy
 #| msgid "Link Template"
 msgid "Link type"
@@ -9823,11 +9932,11 @@ msgid "LinkedIn Developer Site"
 msgstr ""
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:92
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:107
 msgid "Links"
 msgstr "Links"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:219
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:226
 msgid "List of all user taskbar tabs"
 msgstr ""
 
@@ -9835,7 +9944,7 @@ msgstr ""
 msgid "List of installed addons"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem/IssueTrackerBadgeList.vue:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem/IssueTrackerBadgeList.vue:15
 msgid "List of issue labels"
 msgstr ""
 
@@ -10002,7 +10111,7 @@ msgid ""
 "executed with just one click."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:38
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:96
 msgid "Main sidebar"
 msgstr ""
 
@@ -10503,10 +10612,17 @@ msgstr "Dektryptering succesfuld."
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco:20
 #: app/assets/javascripts/app/views/popover/organization.jst.eco:6
 #: app/assets/javascripts/app/views/widget/organization.jst.eco:29
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:76
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:73
 #: app/frontend/apps/mobile/components/Organization/OrganizationMembersList.vue:29
 msgid "Members"
 msgstr "Medlemmer"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created-mention.ts:12
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:12
+#, fuzzy
+#| msgid "current user"
+msgid "Mention for"
+msgstr "nuværende bruger"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 #, fuzzy
@@ -10524,12 +10640,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:7
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:87
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:46
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:88
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:61
 msgid "Merge"
 msgstr "Saml"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:94
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:95
 #, fuzzy
 #| msgid "Merge tickets"
 msgid "Merge Tickets"
@@ -10554,6 +10670,18 @@ msgstr "Flet med Sag#"
 #| msgid "Merge"
 msgid "Merged"
 msgstr "Saml"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/merged-into.ts:11
+#, fuzzy
+#| msgid "Merge tickets"
+msgid "Merged this ticket into"
+msgstr "Flet sager"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:11
+#, fuzzy
+#| msgid "Merge tickets"
+msgid "Merged ticket"
+msgstr "Flet sager"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
 #: app/assets/javascripts/app/views/maintenance.jst.eco:32
@@ -10663,7 +10791,7 @@ msgid "Migrator can't read OTRS output!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:69
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:73
 msgid "Milestone"
 msgstr "Milepæl"
 
@@ -10921,7 +11049,7 @@ msgstr "Nagios integration"
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:19
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:11
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:56
-#: app/assets/javascripts/app/views/package.jst.eco:39
+#: app/assets/javascripts/app/views/package.jst.eco:47
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:12
 #: app/assets/javascripts/app/views/profile/password.jst.eco:30
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:16
@@ -10936,6 +11064,7 @@ msgstr "Nagios integration"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:103
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:185
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:20
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:148
 #: db/seeds/object_manager_attributes.rb:1507 public/assets/form/form.js:24
 msgid "Name"
@@ -10996,7 +11125,7 @@ msgstr ""
 msgid "Need session_id."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:475
+#: app/controllers/tickets_controller.rb:477
 msgid "Need user_id or organization_id as param"
 msgstr ""
 
@@ -11150,9 +11279,9 @@ msgstr "Ny Skabelon"
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:68
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:38
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:30
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:15
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:105
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:107
 msgid "New Ticket"
 msgstr "Ny sag"
 
@@ -11162,7 +11291,7 @@ msgstr "Ny sag"
 msgid "New Ticket State"
 msgstr "Ny sag"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:41
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:33
 #, fuzzy
 #| msgid "New Ticket"
 msgid "New Ticket: %s"
@@ -11331,7 +11460,7 @@ msgstr "Ingen %s konfigureret."
 msgid "No Entries"
 msgstr "Ingen Poster"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_no_items.jst.eco:3
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_no_items.jst.eco:3
 #, fuzzy
 #| msgid "No Entries"
 msgid "No Entry"
@@ -11393,7 +11522,7 @@ msgstr "Ingen kategorier"
 msgid "No certificate found."
 msgstr "Side ikke fundet"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:3
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:461
 #, fuzzy
 #| msgid "You have not created a ticket yet."
@@ -11404,7 +11533,7 @@ msgstr "Du har ikke lavet en sag endnu."
 msgid "No checklist items yet"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:14
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:15
 #, fuzzy
 #| msgid "No template created yet."
@@ -11520,6 +11649,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:338
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:522
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:35
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:402
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:348
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue:98
@@ -11555,7 +11685,7 @@ msgstr "Delte Kladder"
 #: app/controllers/organizations_controller.rb:160
 #: app/controllers/text_modules_controller.rb:71
 #: app/controllers/ticket_articles_controller.rb:232
-#: app/controllers/tickets_controller.rb:607
+#: app/controllers/tickets_controller.rb:609
 #: app/controllers/users_controller.rb:650
 msgid "No source data submitted!"
 msgstr ""
@@ -11637,6 +11767,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:160
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:240
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:119
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:56
 #: app/frontend/shared/errors/useErrorHandler.ts:25
 #: app/frontend/shared/router/error.ts:18
 #: app/helpers/knowledge_base_public_page_title_helper.rb:25
@@ -11661,7 +11792,7 @@ msgstr "Ikke Tildelt"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:158
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:115
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:25
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row_display_value.jst.eco:16
 #: app/controllers/application_controller/handles_errors.rb:61
 #: app/services/service/ticket/article/create.rb:122
 msgid "Not authorized"
@@ -11683,7 +11814,7 @@ msgstr ""
 msgid "Not configured"
 msgstr "Ikke konfigureret"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:18
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:33
 #, fuzzy
 #| msgid "matches"
 msgid "Not found"
@@ -11756,6 +11887,7 @@ msgstr "Bemærk:"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:59
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:24
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/notification.ts:7
 #: app/views/mailer/application.html.erb:36
 msgid "Notification"
 msgstr "Notifikation"
@@ -11836,7 +11968,6 @@ msgstr "November"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:10
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:20
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:32
 #: app/graphql/gql/types/overview_type.rb:59
 msgid "Number"
 msgstr "Nummer"
@@ -11908,7 +12039,22 @@ msgstr "Objekt"
 msgid "Object Manager"
 msgstr "Objekt Administration"
 
+#: app/services/service/history/list.rb:52
+msgid "Object does not support history"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:60
+#, fuzzy
+#| msgid ""
+#| "Organization with specified ID was not found. Try checking the URL for "
+#| "errors."
+msgid ""
+"Object with specified ID was not found. Try checking the URL for errors."
+msgstr ""
+"Organisation med angivet ID blev ikke fundet. Prøv at tjekke URL'en for fejl."
+
 #: app/assets/javascripts/app/controllers/object_manager.coffee:330
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoit.vue:56
 #: db/seeds/permissions.rb:233
 msgid "Objects"
 msgstr "Objekter"
@@ -12055,12 +12201,6 @@ msgstr "Åbn %s"
 msgid "Open Checklist"
 msgstr "Checksum"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/useIssueTracker.ts:39
-#, fuzzy
-#| msgid "no issues"
-msgid "Open Issues"
-msgstr "ingen problemer"
-
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:3
 msgid "Open Ticket# %s"
 msgstr "Åben sag #%s"
@@ -12173,7 +12313,7 @@ msgstr "%s er påkrævet!"
 msgid "Options or relation is required."
 msgstr "En bruger er påkrævet!"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:8
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:8
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue:22
 msgid "Or choose a checklist template."
 msgstr ""
@@ -12862,7 +13002,7 @@ msgid ""
 "versions of Zammad. Use the IDP certificate instead."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/error/views/Error.vue:54
+#: app/frontend/apps/desktop/components/CommonError/CommonError.vue:45
 msgid "Please proceed to login"
 msgstr ""
 
@@ -12891,7 +13031,7 @@ msgid ""
 "them to sign in if you lose access to another two-factor method:"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:75
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist/start.coffee:75
 msgid "Please select a checklist template."
 msgstr ""
 
@@ -12956,6 +13096,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:40
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee:31
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventIssuerNames.ts:5
 msgid "Postmaster Filter"
 msgstr ""
 
@@ -13278,6 +13419,18 @@ msgstr ""
 msgid "Raw"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+#, fuzzy
+#| msgid "deactivated"
+msgid "Reacted"
+msgstr "deaktiveret"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+#, fuzzy
+#| msgid "Created at"
+msgid "Reacted with"
+msgstr "Oprettet"
+
 #: app/assets/javascripts/app/models/group.coffee:44
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:40
 msgid "Read"
@@ -13512,7 +13665,7 @@ msgstr "Fjern"
 msgid "Remove authenticator app"
 msgstr "Godkendelse"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:21
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:402
 #, fuzzy
 #| msgid "Remove"
@@ -13531,7 +13684,7 @@ msgstr "Rapportering"
 msgid "Remove image"
 msgstr "Fjern"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:78
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row.jst.eco:37
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:75
 #, fuzzy
 #| msgid "Remove"
@@ -13566,6 +13719,19 @@ msgstr "Fjern"
 msgid "Remove two-factor authentication"
 msgstr "Basis Godkendelse"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:9
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
+#, fuzzy
+#| msgid "Remove"
+msgid "Removed"
+msgstr "Fjern"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
+#, fuzzy
+#| msgid "Reporting"
+msgid "Removed reaction"
+msgstr "Rapportering"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:649
 msgid "Removes any hyperlink"
 msgstr ""
@@ -13578,7 +13744,7 @@ msgstr ""
 msgid "Removes the shadows for a flat look."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:16
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:395
 msgid "Rename checklist"
 msgstr ""
@@ -13602,7 +13768,7 @@ msgstr "Genåbningsprocent"
 msgid "Reopening time in days"
 msgstr "Genåbningstid i dage"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:14
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:195
 #, fuzzy
 #| msgid "Order"
@@ -14141,7 +14307,7 @@ msgstr "Lørdag"
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:17
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:14
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:9
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:27
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show.jst.eco:27
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:38
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:9
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
@@ -14232,6 +14398,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:41
 #: app/assets/javascripts/app/controllers/job.coffee:3
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventIssuerNames.ts:4
 #: db/seeds/permissions.rb:95
 msgid "Scheduler"
 msgstr "Opgavestyring"
@@ -14397,12 +14564,13 @@ msgstr "API token kunne ikke findes."
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco:9
 #: app/assets/javascripts/app/views/translation/form.jst.eco:7
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:20
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:133
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:63
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue:23
 msgid "Search…"
 msgstr "Søg…"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:87
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:98
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
 #: db/seeds/object_manager_attributes.rb:962
@@ -14426,7 +14594,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:22
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:174
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:176
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:203
@@ -14544,10 +14712,16 @@ msgstr "Vælg CSV fil"
 msgid "Select Shared Draft"
 msgstr "Vælg Delt Kladde"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:16
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist/start.coffee:16
 #: app/assets/javascripts/app/views/widget/template.jst.eco:4
 msgid "Select Template"
 msgstr "Vælg Skabelon"
+
+#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:57
+#, fuzzy
+#| msgid "Select All"
+msgid "Select all entries"
+msgstr "Vælg Alle"
 
 #: db/seeds/settings.rb:866
 msgid "Select default ticket type"
@@ -14561,7 +14735,7 @@ msgstr ""
 msgid "Select locale…"
 msgstr "Vælg lokalitet…"
 
-#: app/frontend/apps/desktop/components/CommonSimpleTable/SimpleTableRow.vue:26
+#: app/frontend/apps/desktop/components/CommonSimpleTable/SimpleTableRow.vue:27
 #, fuzzy
 #| msgid "Delete File"
 msgid "Select table row"
@@ -14579,6 +14753,12 @@ msgstr ""
 #, fuzzy
 #| msgid "Delete avatar"
 msgid "Select this avatar"
+msgstr "Slet avatar"
+
+#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:175
+#, fuzzy
+#| msgid "Delete avatar"
+msgid "Select this entry"
 msgstr "Slet avatar"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee:9
@@ -14957,6 +15137,12 @@ msgstr ""
 msgid "Shared"
 msgstr "Delt"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventEntityNames.ts:8
+#, fuzzy
+#| msgid "Shared Drafts"
+msgid "Shared Draft"
+msgstr "Delte Kladder"
+
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee:12
 #: app/assets/javascripts/app/models/group.coffee:17
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/shared-draft-start.ts:10
@@ -14965,7 +15151,7 @@ msgid "Shared Drafts"
 msgstr "Delte Kladder"
 
 #: app/controllers/tickets_controller.rb:90
-#: app/services/service/ticket/create.rb:173
+#: app/services/service/ticket/create.rb:180
 msgid "Shared draft cannot be selected for this ticket."
 msgstr ""
 
@@ -15578,7 +15764,7 @@ msgstr "Starter Zammad"
 #: app/assets/javascripts/app/models/ticket.coffee:12
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:23
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:31
-#: app/assets/javascripts/app/views/package.jst.eco:42
+#: app/assets/javascripts/app/views/package.jst.eco:50
 #: app/graphql/gql/types/overview_type.rb:65
 #: app/views/mailer/ticket_create/fr.html.erb:10
 #: app/views/mailer/ticket_create/zh-cn.html.erb:10
@@ -15597,6 +15783,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:24
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:10
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:14
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:24
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:206
 msgid "Status"
 msgstr "Status"
 
@@ -15664,7 +15852,7 @@ msgstr "Opbevaring"
 msgid "Storage Method"
 msgstr "Opbevaringsmekanisme"
 
-#: app/assets/javascripts/app/views/package.jst.eco:25
+#: app/assets/javascripts/app/views/package.jst.eco:33
 msgid "Store"
 msgstr "Butik"
 
@@ -15764,7 +15952,7 @@ msgstr "Fulgte Sager"
 msgid "Subscribed tickets"
 msgstr "Fulgte Sager"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:112
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:127
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:198
 msgid "Subscribers"
 msgstr "Følgere"
@@ -15819,6 +16007,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: app/assets/javascripts/app/controllers/manage.coffee:37
 #: app/assets/javascripts/app/views/generic/history.jst.eco:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:33
 #: db/seeds/permissions.rb:191 db/seeds/ticket_article_senders.rb:5
 msgid "System"
 msgstr "System"
@@ -15883,7 +16072,7 @@ msgstr ""
 msgid "Tab has changed, do you really want to close it?"
 msgstr "Fanen er ændret, Vil du lukke den?"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:230
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:237
 msgid "Tabs"
 msgstr ""
 
@@ -15900,7 +16089,7 @@ msgstr "%s Objekt(er) er slettet."
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:41
 #: app/assets/javascripts/app/views/tag/index.jst.eco:3
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:98
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:145
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:78
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:190
@@ -16065,7 +16254,7 @@ msgstr "Tekst nødvendig"
 msgid "Text or attachment is required"
 msgstr "En bruger er påkrævet!"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_item_edit.jst.eco:6
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/item_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:147
 #, fuzzy
 #| msgid "A user is required!"
@@ -16709,6 +16898,18 @@ msgid ""
 "Ticket#."
 msgstr ""
 
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:36
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "The idoit object could not be found."
+msgstr "%s Objekt(er) er opdateret/opdaterede."
+
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:30
+#, fuzzy
+#| msgid "There is no agent online."
+msgid "The idoit object is already present on the ticket."
+msgstr "Der er ingen agent online."
+
 #: app/services/service/avatar/image_validate.rb:10
 msgid "The image is invalid."
 msgstr ""
@@ -16743,7 +16944,7 @@ msgstr ""
 msgid "The issue could not be saved."
 msgstr "%s Objekt(er) er oprettet."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:43
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:43
 #: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:28
 #, fuzzy
 #| msgid "%s Object(s) are deleted."
@@ -17309,7 +17510,7 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr "Signaturen blev bekræftet med succes."
 
-#: app/controllers/tickets_controller.rb:390
+#: app/controllers/tickets_controller.rb:392
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "The source ticket could not be found."
@@ -17344,7 +17545,7 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:381
+#: app/controllers/tickets_controller.rb:383
 #, fuzzy
 #| msgid "%s Object(s) are created."
 msgid "The target ticket number could not be found."
@@ -17582,7 +17783,7 @@ msgid ""
 "wish to proceed, please type \"%s\" into the input."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/package.coffee:52
+#: app/assets/javascripts/app/controllers/package.coffee:54
 msgid ""
 "There is no rollback of this deletion. If you are sure that you wish to "
 "proceed, please type \"%s\" into the input. All related data to this package "
@@ -17988,6 +18189,12 @@ msgstr ""
 msgid "This object already exists."
 msgstr "%s Objekt(er) er slettet."
 
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:17
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "This object could not be found."
+msgstr "%s Objekt(er) er opdateret/opdaterede."
+
 #: app/services/service/system/check_setup.rb:29
 msgid ""
 "This operation cannot be continued, because the system set-up was not "
@@ -18076,12 +18283,6 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue:11
 msgid "This system is configured for automated setup."
 msgstr ""
-
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:15
-#, fuzzy
-#| msgid "%s Object(s) are updated."
-msgid "This tab could not be found."
-msgstr "%s Objekt(er) er opdateret/opdaterede."
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:31
 msgid ""
@@ -18200,6 +18401,12 @@ msgstr "Rediger kunde"
 #| msgid "Application"
 msgid "Ticket Duplicate Detection"
 msgstr "Applikation"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:62
+#, fuzzy
+#| msgid "Edit Customer"
+msgid "Ticket History"
+msgstr "Rediger kunde"
 
 #: db/seeds/settings.rb:2167
 msgid "Ticket Hook"
@@ -18388,7 +18595,7 @@ msgstr "Bloker Notifikationer"
 msgid "Ticket information"
 msgstr "Bloker Notifikationer"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:72
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:73
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Ticket merged successfully"
@@ -18491,7 +18698,7 @@ msgstr "Sagstitel"
 msgid "Ticket update"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:486
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:487
 #, fuzzy
 #| msgid "2. Ticket Update"
 msgid "Ticket update failed."
@@ -18537,9 +18744,8 @@ msgid ""
 "</div>\n"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:38
+#: app/frontend/apps/desktop/pages/ticket/routes.ts:35
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:74
-#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:22
 msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
 msgstr ""
@@ -18582,7 +18788,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:92
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts:9
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:51
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue:173
@@ -18603,7 +18809,7 @@ msgid "Tickets assigned to me: %s of %s"
 msgstr "Sager tildelt mig: %s af %s"
 
 #: app/controllers/ticket_articles_controller.rb:225
-#: app/controllers/tickets_controller.rb:600
+#: app/controllers/tickets_controller.rb:602
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
 
@@ -18750,7 +18956,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:10
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:10
 #: app/controllers/time_accountings_controller.rb:91
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:36
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:38
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:144
 #: app/graphql/gql/types/overview_type.rb:60
 #: db/seeds/object_manager_attributes.rb:32 lib/excel_sheet/ticket.rb:24
@@ -19015,8 +19221,15 @@ msgstr "Oversættelser"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:29
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventIssuerNames.ts:6
 #: db/seeds/permissions.rb:77
 msgid "Trigger"
+msgstr "Trigger"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:7
+#, fuzzy
+#| msgid "Trigger"
+msgid "Triggered"
 msgstr "Trigger"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
@@ -19258,6 +19471,8 @@ msgstr "Testafviklingen var succesfuld."
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:11
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:57
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:119
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:210
 #: db/seeds/object_manager_attributes.rb:124
 msgid "Type"
 msgstr "Type"
@@ -19302,14 +19517,28 @@ msgstr "Ikke tildelte og åbne sager"
 msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:66
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row.jst.eco:26
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:61
 msgid "Uncheck item"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
+msgid "Unchecked"
 msgstr ""
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:12
 msgid "Unit"
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:42
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:35
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:33
+#, fuzzy
+#| msgid "%s (unknown)"
+msgid "Unknown"
+msgstr "%s (ukendt)"
 
 #: lib/password_policy/backend.rb:15
 msgid "Unknown error"
@@ -19326,10 +19555,16 @@ msgid ""
 "on your mobile device:"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem/IssueTrackerLink.vue:36
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:67
 #, fuzzy
 #| msgid "no issues"
 msgid "Unlink issue"
+msgstr "ingen problemer"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:196
+#, fuzzy
+#| msgid "no issues"
+msgid "Unlink object"
 msgstr "ingen problemer"
 
 #: app/assets/javascripts/app/controllers/user.coffee:185
@@ -19516,6 +19751,9 @@ msgstr ""
 #: app/assets/javascripts/app/models/organization.coffee:11
 #: app/assets/javascripts/app/models/ticket.coffee:30
 #: app/assets/javascripts/app/models/user.coffee:17
+#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:41
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:122
+#: app/frontend/shared/entities/user/stores/objectAttributes.ts:41
 #: app/graphql/gql/types/overview_type.rb:82
 msgid "Updated at"
 msgstr "Opdateret"
@@ -19535,6 +19773,9 @@ msgstr "Opdateret"
 #: app/assets/javascripts/app/models/ticket.coffee:29
 #: app/assets/javascripts/app/models/ticket_article.coffee:17
 #: app/assets/javascripts/app/models/user.coffee:16
+#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:31
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:112
+#: app/frontend/shared/entities/user/stores/objectAttributes.ts:31
 #: app/graphql/gql/types/overview_type.rb:81
 msgid "Updated by"
 msgstr "Opdateret af"
@@ -20024,7 +20265,7 @@ msgstr "Værdi"
 msgid "Variables"
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:41
+#: app/assets/javascripts/app/views/package.jst.eco:49
 msgid "Vendor"
 msgstr "Leverandør"
 
@@ -20085,7 +20326,7 @@ msgid "Verifying…"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/version.coffee:3
-#: app/assets/javascripts/app/views/package.jst.eco:40
+#: app/assets/javascripts/app/views/package.jst.eco:48
 #: app/assets/javascripts/app/views/version.jst.eco:2
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:173
 msgid "Version"
@@ -20436,7 +20677,7 @@ msgid ""
 "initial items."
 msgstr "Med skabeloner kan du forududfylde sagsoplysninger."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:15
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:15
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:18
 #, fuzzy
 #| msgid "With templates you can pre-fill ticket attributes."
@@ -20747,10 +20988,11 @@ msgstr ""
 msgid "You have insufficient permissions to mention other users."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:15
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:17
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:51
 #, fuzzy
 #| msgid "Oops.. I'm sorry, but you have insufficient rights to open this %s."
-msgid "You have insufficient rights to open this tab."
+msgid "You have insufficient rights to view this object."
 msgstr "Ups.. Beklager, men du har ikke nok rettigheder til at åbne denne %s."
 
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:32
@@ -20758,9 +21000,8 @@ msgstr "Ups.. Beklager, men du har ikke nok rettigheder til at åbne denne %s."
 msgid "You have insufficient rights to view this organization."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:40
+#: app/frontend/apps/desktop/pages/ticket/routes.ts:33
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:76
-#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:24
 msgid "You have insufficient rights to view this ticket."
 msgstr ""
 
@@ -21202,6 +21443,28 @@ msgstr ""
 msgid "auto select"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:12
+#, fuzzy
+#| msgid "pending reminder"
+msgid "because pending reminder was reached"
+msgstr "afventer påmindelse"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:16
+#, fuzzy
+#| msgid "%s of my tickets escalated."
+msgid "because ticket was escalated"
+msgstr "%s af mine tickets eskaleret."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:20
+#, fuzzy
+#| msgid "%s of my tickets escalated."
+msgid "because ticket will escalate soon"
+msgstr "%s af mine tickets eskaleret"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
+msgid "because time event was reached"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -21286,7 +21549,7 @@ msgstr "luk"
 msgid "closed"
 msgstr "lukket"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:108
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:105
 #, fuzzy
 #| msgid "Closed Tickets"
 msgid "closed tickets"
@@ -21598,12 +21861,25 @@ msgstr ""
 msgid "from"
 msgstr "fra"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:40
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:53
+#, fuzzy
+#| msgid "Call from %s for %s"
+msgid "from %s"
+msgstr "Kald fra %s til %s"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:481
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "from (relative)"
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:25
+#, fuzzy
+#| msgid "Welcome message"
+msgid "from message"
+msgstr "Velkomst besked"
 
 #: app/controllers/integration/pgp_controller.rb:48
 msgid "gpg (GnuPG) 2.2.0 or newer is required"
@@ -21669,6 +21945,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee:5
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:13
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/idoit.ts:11
 msgid "i-doit"
 msgstr ""
 
@@ -21678,6 +21955,10 @@ msgstr ""
 
 #: db/seeds/settings.rb:4813
 msgid "i-doit integration"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:179
+msgid "i-doit: Link objects"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/ical_feed.jst.eco:19
@@ -21776,6 +22057,12 @@ msgstr "intern"
 #| msgid "internal"
 msgid "internal database"
 msgstr "intern"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:19
+#, fuzzy
+#| msgid "Find a ticket"
+msgid "into this ticket"
+msgstr "Find sag"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:96
@@ -21892,7 +22179,7 @@ msgstr ""
 msgid "is too short (minimum is 1 character)"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:55
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:55
 #, fuzzy
 #| msgid "(state: %s)"
 msgid "issue status: %s"
@@ -22137,6 +22424,12 @@ msgstr "Notifikationer"
 msgid "now"
 msgstr "nu"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:51
+#, fuzzy
+#| msgid "Add a message"
+msgid "on message"
+msgstr "Tilføj besked"
+
 #: app/models/object_manager/attribute.rb:548
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr ""
@@ -22146,7 +22439,7 @@ msgstr ""
 msgid "open"
 msgstr "åben"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:101
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:98
 #, fuzzy
 #| msgid "Open tickets"
 msgid "open tickets"
@@ -22323,6 +22616,12 @@ msgstr "Vælg vedhæftning…"
 msgid "select visible options"
 msgstr "Vælg Alle"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:10
+#, fuzzy
+#| msgid "set to public"
+msgid "sent to"
+msgstr "sæt til offentlig"
+
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 #, fuzzy
@@ -22496,6 +22795,12 @@ msgstr ""
 msgid "to go to the homepage."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:38
+#, fuzzy
+#| msgid "Add a message"
+msgid "to message"
+msgstr "Tilføj besked"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:65
@@ -22665,6 +22970,11 @@ msgstr "…af hele tekstfeltet"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "Ventetid i dag"
+
+#, fuzzy
+#~| msgid "%s Object(s) are updated."
+#~ msgid "This tab could not be found."
+#~ msgstr "%s Objekt(er) er opdateret/opdaterede."
 
 #~ msgid "Editing"
 #~ msgstr "Redigerer"

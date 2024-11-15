@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-30 06:37+0000\n"
+"PO-Revision-Date: 2024-11-14 09:00+0000\n"
 "Last-Translator: Rok Poje <rok.poje@mintpos.si>\n"
 "Language-Team: Slovenian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sl/>\n"
@@ -270,8 +270,8 @@ msgstr "%s API žeton"
 msgid "%s Attribute"
 msgstr "%s Atribut"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:34
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_title_edit.jst.eco:6
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist/show.coffee:34
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/title_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:50
 msgid "%s Checklist"
 msgstr "%s Kontrolni seznam"
@@ -318,7 +318,7 @@ msgstr "%s je zaključil izbris uporabnika |%s |"
 #: app/assets/javascripts/app/models/ticket_article.coffee:49
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:26
 msgid "%s created article for |%s|"
-msgstr "%s je ustvaril članek za |%s|"
+msgstr "%s je ustvaril zapis za |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:28
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:27
@@ -416,27 +416,27 @@ msgstr "%s mesecev nazaj"
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco:21
 msgid "%s object(s) have been created."
-msgstr "%s objektov ustvarjenih."
+msgstr "%s zapisov ustvarjenih."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco:24
 msgid "%s object(s) have been updated."
-msgstr "%s objektov je bilo posodobljenih."
+msgstr "%s zapisov je bilo posodobljenih."
 
 #: app/assets/javascripts/app/views/generic/object_import/imported.jst.eco:18
 msgid "%s object(s) were deleted."
-msgstr "%s objekt(ov) izbrisan(ih)."
+msgstr "Izbrisanih je bilo %s zapisov."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco:13
 msgid "%s object(s) will be created."
-msgstr "%s objekt(ov) bo ustvarjen(ih)."
+msgstr "Ustvarjenih bo %s zapisov."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco:10
 msgid "%s object(s) will be deleted."
-msgstr "%s objekt(ov) bo izbrisan(ih)."
+msgstr "Izbrisanih bo %s zapisov."
 
 #: app/assets/javascripts/app/views/generic/object_import/import_try.jst.eco:16
 msgid "%s object(s) will be updated."
-msgstr "%s objekt(ov) bo posodobljen(ih)."
+msgstr "Posodobljenihi bo %s zapisov."
 
 #: app/assets/javascripts/app/views/ticket_zoom/meta.jst.eco:19
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceStatus.vue:234
@@ -451,6 +451,12 @@ msgstr "%s mojih zahtevkov je trenutno v procesu."
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:11
 msgid "%s of my tickets escalated"
 msgstr "%s mojih zahtevkov je eskaliralo"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:50
+#, fuzzy
+#| msgid "Add a message"
+msgid "%s on message"
+msgstr "Dodaj sporočilo"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 #: app/graphql/gql/queries/autocomplete_search/generic.rb:64
@@ -497,15 +503,19 @@ msgid "%s tickets"
 msgstr "%s zahtevke"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:121
-#, fuzzy
-#| msgid "%s tickets"
 msgid "%s tickets found"
-msgstr "%s zahtevke"
+msgstr "%s najdenih zahtevkov"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:37
+#, fuzzy
+#| msgid "Add a message"
+msgid "%s to message"
+msgstr "Dodaj sporočilo"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
 msgid "%s updated article for |%s|"
-msgstr "%s je ustvaril članek za |%s|"
+msgstr "%s je posodobil zapis za |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:30
 #: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:33
@@ -712,10 +722,8 @@ msgid "2 weeks"
 msgstr "2 tedna"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:23
-#, fuzzy
-#| msgid "Ticket update"
 msgid "2. Ticket Update"
-msgstr "Posodobi zahtevek"
+msgstr "2. Posodobitev zahtevka"
 
 #: db/seeds/ticket_priorities.rb:5
 msgid "3 high"
@@ -734,16 +742,12 @@ msgid "4 weeks"
 msgstr "4 tedne"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:25
-#, fuzzy
-#| msgid "Ticket escalation"
 msgid "4. Ticket Escalation"
-msgstr "Stopnjevanje zahtevka"
+msgstr "4. Eskalacija zahtevka"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:26
-#, fuzzy
-#| msgid "Ticket escalation"
 msgid "5. Ticket Escalation Warning"
-msgstr "Stopnjevanje zahtevka"
+msgstr "5. Opozorilo o eskalaciji zahtevka"
 
 #: public/assets/chat/chat-no-jquery.coffee:167
 #: public/assets/chat/chat.coffee:165
@@ -893,7 +897,7 @@ msgid "Accept Data Privacy Policy & Acceptable Use Policy"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonTicketLabel/CommonTicketLabel.vue:37
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:18
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:33
 msgid "Access denied"
 msgstr "Dostop zavrnjen"
 
@@ -980,10 +984,11 @@ msgstr "Račun ni potrjen"
 #: app/assets/javascripts/app/views/ticket_zoom/time_unit.jst.eco:2
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:2
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:68
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:104
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:119
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:18
 #: app/graphql/gql/types/overview_type.rb:69
 msgid "Accounted Time"
-msgstr "Računovodski čas"
+msgstr "Porabljen čas"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketAccountedTime.vue:81
 #, fuzzy
@@ -1029,7 +1034,7 @@ msgstr "Profili"
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:10
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:8
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:59
-#: app/assets/javascripts/app/views/package.jst.eco:43
+#: app/assets/javascripts/app/views/package.jst.eco:51
 #: app/assets/javascripts/app/views/profile/password.jst.eco:32
 #: app/assets/javascripts/app/views/session.jst.eco:13
 #: app/assets/javascripts/app/views/tag/table.jst.eco:6
@@ -1054,7 +1059,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:19
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:16
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:16
-#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:85
+#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:142
 msgid "Actions"
 msgstr "Akcija"
 
@@ -1110,10 +1115,8 @@ msgid "Active Agents"
 msgstr "Aktivni svetovalci"
 
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:16
-#, fuzzy
-#| msgid "Active"
 msgid "Activity"
-msgstr "Aktivno"
+msgstr "Vrsta dela"
 
 #: app/assets/javascripts/app/views/dashboard.jst.eco:10
 msgid "Activity Stream"
@@ -1126,12 +1129,12 @@ msgstr "Zadnje aktivnosti"
 #: app/controllers/time_accountings_controller.rb:117
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:95
 msgid "Activity Type"
-msgstr "Vrsta dejavnosti"
+msgstr "Vrsta dela"
 
 #: app/assets/javascripts/app/controllers/time_accounting.coffee:23
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:51
 msgid "Activity Types"
-msgstr "Vrste dejavnosti"
+msgstr "Vrste dela"
 
 #: app/assets/javascripts/app/views/channel/sms_account_overview.jst.eco:39
 msgid "Adapter"
@@ -1165,7 +1168,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/object_manager/attribute/select.jst.eco:39
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco:15
 #: app/assets/javascripts/app/views/tag/index.jst.eco:25
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:19
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show.jst.eco:19
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:278
 #: app/frontend/shared/form/i18n/locales.ts:25
 msgid "Add"
@@ -1192,13 +1195,11 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:448
 msgid "Add Empty Checklist"
-msgstr ""
+msgstr "Dodaj prazen kontrolni seznam"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue:42
-#, fuzzy
-#| msgid "Templates"
 msgid "Add From a Template"
-msgstr "Predloge"
+msgstr "Dodaj iz predloge"
 
 #: app/assets/javascripts/app/views/integration/pgp.jst.eco:5
 msgid "Add Key"
@@ -1291,25 +1292,21 @@ msgstr "Dodaj pogoj"
 msgid "Add email"
 msgstr "Dodaj e-poštni naslov"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:5
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:5
 msgid "Add empty checklist"
-msgstr ""
+msgstr "Dodaj prazen kontrolni seznam"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:192
 msgid "Add first level heading"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:11
-#, fuzzy
-#| msgid "Save as template"
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:11
 msgid "Add from a template"
-msgstr "Shrani kot predlogo"
+msgstr "Dodaj iz predloge"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:185
-#, fuzzy
-#| msgid "Add Tag"
 msgid "Add heading"
-msgstr "Dodaj oznako"
+msgstr "Dodaj naslov"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:130
 msgid "Add image"
@@ -1381,6 +1378,10 @@ msgstr ""
 msgid "Add this class to a button on your page that should open the chat."
 msgstr "Dodajte ta razred na svoji strani gumbu, ki bi moral odpreti klepet."
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:9
+msgid "Added"
+msgstr ""
+
 #: app/controllers/first_steps_controller.rb:109
 msgid "Additional Channels"
 msgstr "Dodatni kanali"
@@ -1420,10 +1421,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/admin_password_auth.coffee:23
 #: app/frontend/apps/desktop/pages/authentication/routes.ts:25
-#, fuzzy
-#| msgid "Bind Password"
 msgid "Admin Password Login"
-msgstr "Geslo za povezavo"
+msgstr ""
 
 #: db/seeds/permissions.rb:5
 msgid "Admin interface"
@@ -1470,10 +1469,8 @@ msgid "Advance to next ticket from overview"
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:62
-#, fuzzy
-#| msgid "%s Object(s) are updated."
 msgid "Affects only notifications for not assigned and all tickets."
-msgstr "%s Objektov posodobljenih."
+msgstr "Vpliva samo na obvestila za nedodeljene in vse zahtevke."
 
 #: app/assets/javascripts/app/views/exchange/admin_consent.jst.eco:4
 msgid "After approval, please re-connect your Exchange account."
@@ -1549,7 +1546,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco:8
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:30
 msgid "All Tickets"
-msgstr "Vsa sporočila"
+msgstr "Vsi zahtevki"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:115
 msgid ""
@@ -1626,7 +1623,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/tag/index.jst.eco:16
 msgid "Allow users to add new tags."
-msgstr "Omogoči uporabnikom dodajanje novih tagov."
+msgstr "Omogoči uporabnikom dodajanje novih oznak."
 
 #: db/seeds/settings.rb:4051
 msgid "Allow users to create new tags."
@@ -1691,10 +1688,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/icinga.coffee:26
 #: app/assets/javascripts/app/controllers/_integration/monit.coffee:26
 #: app/assets/javascripts/app/controllers/_integration/nagios.coffee:26
-#, fuzzy
-#| msgid "An open source monitoring tool."
 msgid "An open-source monitoring tool."
-msgstr "Odprtokodno orodje za monitoring."
+msgstr "Odprtokodno orodje za spremljanje."
 
 #: app/frontend/shared/components/Form/utils.ts:23
 msgid "An unexpected error has occurred."
@@ -1813,7 +1808,7 @@ msgstr "Videz"
 #: app/assets/javascripts/app/controllers/api.coffee:127
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingLinkedAccounts.vue:74
 msgid "Application"
-msgstr ""
+msgstr "Aplikacija"
 
 #: db/seeds/settings.rb:4
 msgid "Application secret"
@@ -1882,7 +1877,7 @@ msgstr "Ste prepričani da želite izbrisati \"%s\"?"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:33
 msgid "Are you sure you want to delete this object?"
-msgstr "Ste prepričani da želite izbrisati ta zapis?"
+msgstr "Ali ste prepričani, da želite izbrisati ta zapis?"
 
 #: app/frontend/apps/mobile/pages/ticket/composable/useTicketsMerge.ts:67
 msgid "Are you sure you want to merge this ticket (#%s) into #%s?"
@@ -1975,28 +1970,25 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:16
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:10
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:10
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventEntityNames.ts:6
 msgid "Article"
-msgstr "Člen"
+msgstr "Zapis"
 
 #: db/seeds/settings.rb:658
 msgid "Article - visibility confirmation dialog"
 msgstr "Zapis - pogovorno okno za potrditev vidnosti"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:96
-#, fuzzy
-#| msgid "Article"
 msgid "Article > Text (HTML)"
-msgstr "Člen"
+msgstr "Zapis > Besedilo (HTML)"
 
 #: lib/excel_sheet/ticket.rb:73
 msgid "Article Count"
-msgstr "Število artiklov"
+msgstr "Število zapisov"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:289
-#, fuzzy
-#| msgid "Article Count"
 msgid "Article actions"
-msgstr "Število artiklov"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee:61
 msgid "Article could not be deleted."
@@ -2010,12 +2002,12 @@ msgstr "Metapodatki o zapisu"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleSecurityBadge.vue:77
 #: app/frontend/shared/composables/useArticleSecurity.ts:93
 msgid "Article uses different security mechanism."
-msgstr ""
+msgstr "Zapis uporablja različne varnostne mehanizme."
 
 #: app/assets/javascripts/app/models/ticket.coffee:15
 #: app/graphql/gql/types/overview_type.rb:68
 msgid "Article#"
-msgstr "Article#"
+msgstr "Zapis#"
 
 #: db/seeds/object_manager_attributes.rb:1989
 msgid "Assign Follow-Ups"
@@ -2043,11 +2035,11 @@ msgid "Assigned"
 msgstr "Dodeljeno"
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:75
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
 msgid "Assignee"
 msgstr "Naslovnik"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:75
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
 #, fuzzy
 #| msgid "Assignee"
 msgid "Assignees"
@@ -2086,7 +2078,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/ticket_bulk_form.coffee:155
 msgid "At least one object must be selected."
-msgstr ""
+msgstr "Izbran mora biti vsaj en zapis."
 
 #: app/models/role.rb:125 app/models/user.rb:672
 msgid "At least one user needs to have admin permissions."
@@ -2111,7 +2103,7 @@ msgstr "Pripete datoteke"
 msgid "Attached Files"
 msgstr "Pripete datoteke"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:199
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:201
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:316
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:224
 msgid "Attachment"
@@ -2132,7 +2124,7 @@ msgstr "Priloge"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:10
 msgid "Attachments are stored in a Simple Storage Service."
-msgstr ""
+msgstr "Priponke so shranjene v storitvi \"Simple Storage Service\"."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:8
 msgid "Attachments are stored in the database."
@@ -2185,7 +2177,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:31
 #: app/assets/javascripts/app/models/overview.coffee:16
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:73
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:88
 msgid "Attributes"
 msgstr "Atributi"
 
@@ -2346,7 +2338,7 @@ msgid ""
 "intel. Map data directly to object fields."
 msgstr ""
 "Samodejno obogatite svoje stranke in organizacije s svežimi, posodobljenimi "
-"informacijami. Podatke preslikajte neposredno v polja objektov."
+"podatki. Podatke preslikajte neposredno v polja zapisov."
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:97
 msgid ""
@@ -2472,7 +2464,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:10
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:9
 msgid "Base"
-msgstr "Baza"
+msgstr "Osnovno"
 
 #: app/assets/javascripts/app/controllers/_integration/ldap.coffee:493
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:35
@@ -2579,7 +2571,7 @@ msgstr "Boti"
 #: app/assets/javascripts/app/controllers/_manage/branding.coffee:3
 #: app/controllers/first_steps_controller.rb:54 db/seeds/permissions.rb:185
 msgid "Branding"
-msgstr "Splošno"
+msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonBreadcrumb/CommonBreadcrumb.vue:33
 msgid "Breadcrumb navigation"
@@ -2655,14 +2647,14 @@ msgstr ""
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:58
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:34
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:89
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:164
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:166
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:86
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:243
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:37
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:181
 #: db/seeds/object_manager_attributes.rb:508
 msgid "CC"
-msgstr ""
+msgstr "Kp"
 
 #: app/assets/javascripts/app/controllers/_integration/idoit.coffee:112
 msgid "CMDB to document complex relations of your network components."
@@ -2813,7 +2805,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/exchange_wizard.jst.eco:236
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:286
 #: app/assets/javascripts/app/views/knowledge_base/scheduled_widget.jst.eco:4
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:23
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show.jst.eco:23
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:17
 #: app/frontend/apps/desktop/components/CommonInlineEdit/CommonInlineEdit.vue:343
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:202
@@ -2846,9 +2838,9 @@ msgstr "Prekliči"
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:140
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:71
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:226
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:404
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:406
 msgid "Cancel & Go Back"
-msgstr "Prekliči"
+msgstr "Prekliči in se vrni nazaj"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue:28
 msgid "Cancel & Sign Out"
@@ -2946,18 +2938,14 @@ msgid "Change Password"
 msgstr "Sprememba gesla"
 
 #: app/assets/javascripts/app/views/profile/password.jst.eco:8
-#, fuzzy
-#| msgid "Change your password"
 msgid "Change Your Password"
-msgstr "Spremeni geslo"
+msgstr "Sprememba gesla"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketChangeCustomer/useChangeCustomerMenuItem.ts:22
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketAction/TicketActionChangeCustomerDialog.vue:74
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:137
-#, fuzzy
-#| msgid "Change Customer"
 msgid "Change customer"
-msgstr "Spremeni stranko"
+msgstr "Zamenjaj stranko"
 
 #: app/frontend/shared/form/i18n/locales.ts:94
 #, fuzzy
@@ -2978,6 +2966,18 @@ msgstr "Spremenite geslo osebnega računa."
 #, fuzzy
 #| msgid "Change order"
 msgid "Change text color"
+msgstr "Spremeni vrstni red"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#, fuzzy
+#| msgid "Change Objects"
+msgid "Changed reaction"
+msgstr "Spremeni predmete"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#, fuzzy
+#| msgid "Change order"
+msgid "Changed reaction to"
 msgstr "Spremeni vrstni red"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
@@ -3072,7 +3072,7 @@ msgstr ""
 msgid "Check channels."
 msgstr "Preverite kanale."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:64
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row.jst.eco:24
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:54
 #, fuzzy
 #| msgid "Checksum"
@@ -3090,12 +3090,20 @@ msgid ""
 "is not checked, values are sorted in alphabetical order."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:54
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
+#, fuzzy
+#| msgid "Select item"
+msgid "Checked"
+msgstr "Izberi predmet"
+
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
 msgid "Checklist"
 msgstr "Kontrolni seznam"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:60
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventEntityNames.ts:10
 msgid "Checklist Item"
 msgstr "Postavka na kontrolnem seznamu"
 
@@ -3115,7 +3123,7 @@ msgstr ""
 msgid "Checklist items are limited to 100 items per checklist."
 msgstr ""
 
-#: app/models/checklist.rb:99
+#: app/models/checklist.rb:100
 msgid "Checklist template must be active to use as a checklist starting point."
 msgstr ""
 
@@ -3195,7 +3203,7 @@ msgstr "Izberite skupino, v katero bodo dodane objave na straneh."
 
 #: app/assets/javascripts/app/views/profile/language.jst.eco:7
 msgid "Choose your language."
-msgstr "Izberite jezik."
+msgstr "Izberite svoj jezik."
 
 #: app/frontend/apps/desktop/pages/authentication/views/PasswordResetVerify.vue:140
 msgid "Choose your new password"
@@ -3320,7 +3328,7 @@ msgstr "Klienti"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:650
 msgid "Clone"
-msgstr "Kloniraj"
+msgstr "Kopiraj"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_error_modal.coffee:4
@@ -3387,26 +3395,27 @@ msgstr "Zapri zavihek ob zaprtju zahtevka"
 msgid "Close the time picker"
 msgstr "Zaprta sporočila"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabRemove.vue:46
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabRemove.vue:51
 msgid "Close this tab"
 msgstr "Zapri ta zavihek"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:16
 #: app/models/report.rb:30
 msgid "Closed"
-msgstr "Zaprt"
+msgstr "Zaključeno"
 
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:17
 #: lib/excel_sheet/ticket.rb:58
 msgid "Closed At"
-msgstr ""
+msgstr "Zaključeno"
 
 #: app/assets/javascripts/app/controllers/widget/ticket_stats.coffee:120
 #: app/assets/javascripts/app/controllers/widget/user.coffee:80
 msgid "Closed Tickets"
-msgstr "Zaprta sporočila"
+msgstr "Zaključeni zahtevki"
 
 #: app/assets/javascripts/app/models/ticket.coffee:25
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:81
 #: app/graphql/gql/types/overview_type.rb:78
 msgid "Closing time"
 msgstr "Zapiralni čas"
@@ -3707,7 +3716,7 @@ msgstr "Vsebina"
 #: app/assets/javascripts/app/models/core_workflow.coffee:8
 #: app/assets/javascripts/app/models/public_link.coffee:9
 msgid "Context"
-msgstr ""
+msgstr "Kontekst"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:99
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:56
@@ -3762,7 +3771,7 @@ msgstr "Pretvorba retweetov v zahtevke je izklopljena."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_base.coffee:123
 msgid "Copied!"
-msgstr ""
+msgstr "Kopirano!"
 
 #: app/frontend/shared/composables/useCopyToClipboard.ts:21
 msgid "Copied."
@@ -3804,14 +3813,12 @@ msgid "Copy URL"
 msgstr "URL po meri"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articlePermalink.ts:14
-#, fuzzy
-#| msgid "Article"
 msgid "Copy article permalink"
-msgstr "Člen"
+msgstr "Kopiraj trajno povezavo zapisa"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:356
 msgid "Copy current object number (e. g. Ticket#) to clipboard"
-msgstr "Kopirajte številko trenutnega predmeta (npr. Ticket#) v clipboard"
+msgstr "Kopiranje številke trenutnega zapisa (npr. Zahtevek#) v odložišče"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader.vue:66
 #, fuzzy
@@ -3930,7 +3937,7 @@ msgstr "Država"
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:44
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:416
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:418
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
 msgstr "Shrani"
@@ -3952,7 +3959,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/knowledge_base/new_controller.coffee:17
 msgid "Create Knowledge Base"
-msgstr ""
+msgstr "Ustvari bazo znanja"
 
 #: app/controllers/first_steps_controller.rb:97
 msgid "Create Macros"
@@ -3995,27 +4002,26 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:65
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Create Ticket"
-msgstr "Ustvari testno sporočilo"
+msgstr "Ustvari zahtevek"
 
 #: app/controllers/first_steps_controller.rb:86
 msgid "Create a Test Ticket"
-msgstr "Ustvari testno sporočilo"
+msgstr "Ustvari testni zahtevek"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:211
 msgid "Create a new checklist item"
 msgstr "Ustvarite novo postavko kontrolnega seznama"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:18
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:18
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:21
 msgid "Create a new checklist template in the admin interface."
 msgstr ""
+"V administratorskem vmesniku ustvarite novo predlogo kontrolnega seznama."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:17
 msgid "Create a new template in the admin interface."
-msgstr ""
+msgstr "Ustvarite novo predlogo v administratorskem vmesniku."
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:147
@@ -4060,10 +4066,8 @@ msgid "Create new records"
 msgstr "Ustvari nov zapis"
 
 #: app/frontend/apps/mobile/components/CommonTicketCreateLink/CommonTicketCreateLink.vue:14
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Create new ticket"
-msgstr "Ustvari testno sporočilo"
+msgstr "Ustvari nov zahtevek"
 
 #: app/frontend/apps/mobile/entities/organization/composables/useOrganizationTicketsCount.ts:17
 msgid "Create new ticket for this organization"
@@ -4092,14 +4096,12 @@ msgid "Create tag"
 msgstr "Ustvarjeno"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:540
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Create ticket"
-msgstr "Ustvari testno sporočilo"
+msgstr "Ustvari zahtevek"
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:14
 msgid "Create your first ticket"
-msgstr "Ustvari svojo prvo sporočilo"
+msgstr "Ustvari svoj prvi zahtevek"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:27
 msgid "Create:"
@@ -4128,34 +4130,29 @@ msgstr "Shrani:"
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList.vue:43
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created-mention.ts:9
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
 msgstr "Ustvarjeno"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Created Article"
-msgstr "Ustvari testno sporočilo"
+msgstr "Ustvarjen zapis"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:18
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:16
 #: lib/excel_sheet/ticket.rb:56
 msgid "Created At"
-msgstr ""
+msgstr "Ustvarjeno"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:110
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Created External Article"
-msgstr "Ustvari testno sporočilo"
+msgstr "Ustvarjen zunanji zapis"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:109
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Created Internal Article"
-msgstr "Ustvari testno sporočilo"
+msgstr "Ustvarjen interni zapis"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/security_keys.coffee:53
 #: app/assets/javascripts/app/models/checklist.coffee:9
@@ -4172,7 +4169,10 @@ msgstr "Ustvari testno sporočilo"
 #: app/controllers/time_accountings_controller.rb:122
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationSecurityKeys.vue:105
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleMeta/useArticleMeta.ts:56
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:39
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:41
+#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:24
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:105
+#: app/frontend/shared/entities/user/stores/objectAttributes.ts:24
 #: app/graphql/gql/types/overview_type.rb:80
 msgid "Created at"
 msgstr "Ustvarjeno"
@@ -4196,13 +4196,16 @@ msgstr "Ustvarjeno ob:"
 #: app/assets/javascripts/app/models/ticket.coffee:27
 #: app/assets/javascripts/app/models/ticket_article.coffee:15
 #: app/assets/javascripts/app/models/user.coffee:14
+#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:14
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:95
+#: app/frontend/shared/entities/user/stores/objectAttributes.ts:14
 #: app/graphql/gql/types/overview_type.rb:79
 msgid "Created by"
 msgstr "Ustvaril"
 
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:460
 msgid "Creating new tickets via web is disabled."
-msgstr "Ustvarjanje novih zahtevkov prek spleta je onemogočeno."
+msgstr "Ustvarjanje novih zahtevkov prek spleta ni omogočeno."
 
 #: app/models/report.rb:85
 #, fuzzy
@@ -4299,7 +4302,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:9
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:11
 #: app/controllers/time_accountings_controller.rb:95
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:37
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:39
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/customer.ts:13
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/plugins/customer.ts:6
 #: app/graphql/gql/types/overview_type.rb:61
@@ -4322,10 +4325,8 @@ msgid "Customer selection based on sender and receiver list"
 msgstr "Izbira strank na podlagi seznama pošiljateljev in prejemnikov"
 
 #: db/seeds/permissions.rb:381
-#, fuzzy
-#| msgid "%s tickets"
 msgid "Customer tickets"
-msgstr "%s zahtevke"
+msgstr "Zahtevki stranke"
 
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:7
 msgid ""
@@ -4353,7 +4354,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:19
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:38
 msgid "Dark"
-msgstr ""
+msgstr "Temna"
 
 #: app/assets/javascripts/app/controllers/dark_mode.coffee:33
 #: app/frontend/apps/desktop/components/ThemeSwitch/ThemeSwitch.vue:93
@@ -4363,7 +4364,7 @@ msgstr "Temni način"
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:147
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:5
 #: app/assets/javascripts/app/controllers/dashboard.coffee:28
-#: app/assets/javascripts/app/controllers/package.coffee:42
+#: app/assets/javascripts/app/controllers/package.coffee:43
 #: app/frontend/apps/desktop/pages/dashboard/routes.ts:8
 msgid "Dashboard"
 msgstr "Nadzorna plošča"
@@ -4432,7 +4433,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/timer.jst.eco:7
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:5
 msgid "Day"
-msgstr "dan"
+msgstr "Dan"
 
 #: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee:7
 msgid "Day(s)"
@@ -4512,7 +4513,7 @@ msgstr "Obvestila"
 
 #: db/seeds/settings.rb:3505
 msgid "Default Screen"
-msgstr ""
+msgstr "Privzeto zaslonsko okno"
 
 #: db/seeds/settings.rb:2501
 #, fuzzy
@@ -5155,7 +5156,7 @@ msgstr ""
 #: db/seeds/settings.rb:3997
 msgid ""
 "Defines the custom unit to be shown next to the time accounting input field."
-msgstr ""
+msgstr "Določa enoto mere, ki se prikaže poleg vnosnega polja za porabo časa."
 
 #: db/seeds/settings.rb:4078
 msgid "Defines the default calendar tickets subscription settings."
@@ -5167,11 +5168,11 @@ msgstr ""
 
 #: db/seeds/settings.rb:166
 msgid "Defines the default system language."
-msgstr ""
+msgstr "Določa privzeti sistemski jezik."
 
 #: db/seeds/settings.rb:186
 msgid "Defines the default system timezone."
-msgstr ""
+msgstr "Določa privzeti sistemski časovni pas."
 
 #: db/seeds/settings.rb:4033
 #, fuzzy
@@ -5216,7 +5217,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:120
 msgid "Defines the logo of the application, shown in the web interface."
-msgstr ""
+msgstr "Določa logotip aplikacije, kateri bo prikazan v spletnem vmesniku."
 
 #: db/seeds/settings.rb:3169
 msgid "Defines the maximum accepted email size in MB."
@@ -5233,6 +5234,8 @@ msgid ""
 "Defines the name of the application, shown in the web interface, tabs, and "
 "title bar of the web browser."
 msgstr ""
+"Določa ime aplikacije, ki je prikazano v spletnem vmesniku, zavihkih in "
+"naslovni vrstici spletnega brskalnika."
 
 #: db/seeds/settings.rb:2682
 msgid "Defines the permission level used for lookups."
@@ -5345,7 +5348,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:14
 #: db/seeds/settings.rb:3979
 msgid "Defines the unit to be shown next to the time accounting input field."
-msgstr ""
+msgstr "Določa enoto mere, ki se prikaže poleg vnosnega polja za porabo časa."
 
 #: db/seeds/settings.rb:2631
 msgid ""
@@ -5381,7 +5384,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:118
 #: app/assets/javascripts/app/controllers/data_privacy.coffee:186
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
-#: app/assets/javascripts/app/controllers/package.coffee:52
+#: app/assets/javascripts/app/controllers/package.coffee:54
 #: app/assets/javascripts/app/controllers/user.coffee:177
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:88
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:80
@@ -5414,10 +5417,8 @@ msgid "Delete"
 msgstr "Izbriši"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts:84
-#, fuzzy
-#| msgid "Delete File"
 msgid "Delete Article"
-msgstr "Odstrani datoteko"
+msgstr "Izbriši zapis"
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:47
 msgid "Delete Avatar?"
@@ -5425,7 +5426,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:33
 msgid "Delete Customer"
-msgstr ""
+msgstr "Izbriši stranko"
 
 #: app/assets/javascripts/app/views/generic/attachment_item.jst.eco:5
 msgid "Delete File"
@@ -5436,10 +5437,8 @@ msgid "Delete Knowledge Base"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:31
-#, fuzzy
-#| msgid "Create a Test Ticket"
 msgid "Delete Object"
-msgstr "Ustvari testno sporočilo"
+msgstr "Izbris zapisa"
 
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:9
 #, fuzzy
@@ -5588,7 +5587,7 @@ msgstr ""
 
 #: db/seeds/object_manager_attributes.rb:1009
 msgid "Department"
-msgstr ""
+msgstr "Oddelek"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_description.coffee:5
 #: app/assets/javascripts/app/controllers/translation.coffee:183
@@ -5611,7 +5610,19 @@ msgstr "Opis"
 
 #: app/assets/javascripts/app/models/public_link.coffee:8
 msgid "Description (shown as title tag for screen readers)"
-msgstr "Opis (prikazan kot značka naslova za bralnike zaslonov)"
+msgstr "Opis (prikazan kot naslovna oznaka za bralnike zaslona)"
+
+#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:113
+#, fuzzy
+#| msgid "Select All"
+msgid "Deselect all entries"
+msgstr "Izberi vse"
+
+#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:174
+#, fuzzy
+#| msgid "Delete"
+msgid "Deselect this entry"
+msgstr "Izbriši"
 
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:17
 #: app/assets/javascripts/app/views/channel/form.jst.eco:25
@@ -5756,7 +5767,7 @@ msgstr "Zavrži"
 #: app/assets/javascripts/app/controllers/taskbar_widget.coffee:128
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:37
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:49
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:401
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:403
 msgid "Discard Changes"
 msgstr "Zavrži spremembe"
 
@@ -5767,10 +5778,8 @@ msgid "Discard Snapshot"
 msgstr "Zavrži spremembe"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:88
-#, fuzzy
-#| msgid "Discard Changes"
 msgid "Discard article"
-msgstr "Zavrži spremembe"
+msgstr "Zavrzi zapis"
 
 #: app/frontend/apps/mobile/components/CommonDialogObjectForm/CommonDialogObjectForm.vue:81
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:66
@@ -5820,10 +5829,8 @@ msgid "Do not sign email"
 msgstr ""
 
 #: db/seeds/settings.rb:5775
-#, fuzzy
-#| msgid "You have not created a ticket yet."
 msgid "Do not update any tickets."
-msgstr "Tiketa še niste ustvarili."
+msgstr ""
 
 #: app/assets/javascripts/app/views/settings/proxy.jst.eco:21
 msgid "Do not use the proxy for the following hosts."
@@ -5846,11 +5853,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:10
 #: app/assets/javascripts/app/controllers/tag.coffee:139
-#, fuzzy
-#| msgid "Tab has changed, do you really want to close it?"
 msgid "Do you really want to delete this object?"
-msgstr ""
-"Zavihek je bil spremenjen, ste prepričani da ne želite shraniti sprememb?"
+msgstr "Ali res želite izbrisati ta zapis?"
 
 #: app/frontend/apps/mobile/pages/account/views/PersonalSettingAvatar.vue:160
 #, fuzzy
@@ -5860,11 +5864,8 @@ msgstr ""
 "Zavihek je bil spremenjen, ste prepričani da ne želite shraniti sprememb?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee:3
-#, fuzzy
-#| msgid "Tab has changed, do you really want to close it?"
 msgid "Do you really want to set the visibility of this article to \"public\"?"
-msgstr ""
-"Zavihek je bil spremenjen, ste prepričani da ne želite shraniti sprememb?"
+msgstr "Ali res želite nastaviti vidnost tega zapisa na \"javno\"?"
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:58
 #, fuzzy
@@ -5892,14 +5893,12 @@ msgstr "Domena"
 
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:122
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:14
-#, fuzzy
-#| msgid "Domain"
 msgid "Domain Alias"
-msgstr "Domena"
+msgstr "Psevdonim domene"
 
 #: db/seeds/object_manager_attributes.rb:1593
 msgid "Domain based assignment"
-msgstr ""
+msgstr "Dodelitev na podlagi domene"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:102
 msgid ""
@@ -5921,38 +5920,38 @@ msgstr ""
 #: app/assets/javascripts/app/views/system_report.jst.eco:20
 #: app/frontend/apps/desktop/components/CommonCalendarPreviewFlyout/CommonCalendarPreviewFlyout.vue:89
 msgid "Download"
-msgstr ""
+msgstr "Prenesi"
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:69
 msgid "Download %s"
-msgstr ""
+msgstr "Prenesi %s"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:5
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:28
 msgid "Download %s Migration Plugin"
-msgstr ""
+msgstr "Prenesi %s migracijski vtičnik"
 
 #: app/assets/javascripts/app/views/report/download_button.jst.eco:1
 msgid "Download %s record(s)"
-msgstr ""
+msgstr "Prenesi %s zapisov"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:48
 #: app/assets/javascripts/app/views/ssl_certificates_list.jst.eco:37
 msgid "Download Certificate"
-msgstr ""
+msgstr "Prenesi digitalno potrdilo"
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:59
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:39
 msgid "Download Private Key"
-msgstr ""
+msgstr "Prenesi privatni ključ"
 
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:68
 msgid "Download Public Key"
-msgstr ""
+msgstr "Prenesi javni ključ"
 
 #: app/assets/javascripts/app/views/time_accounting/accounted_time.jst.eco:16
 msgid "Download all records"
-msgstr ""
+msgstr "Prenesi vse zapise"
 
 #: app/assets/javascripts/app/views/import/otrs.jst.eco:8
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceOTRS.vue:104
@@ -5968,10 +5967,8 @@ msgid "Download raw email"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:319
-#, fuzzy
-#| msgid "select attachment…"
 msgid "Downloading attachments…"
-msgstr "Dodaj priponko…"
+msgstr "Prenašam priponke…"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:101
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:9
@@ -6004,7 +6001,7 @@ msgstr "Shrani osnutek"
 msgid "Drag and drop to reorder ticket overview list items."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:235
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:242
 msgid "Drag and drop to reorder your tabs."
 msgstr "Če želite spremeniti vrstni red zavihkov, jih povlecite in spustite."
 
@@ -6081,10 +6078,8 @@ msgid "Edit"
 msgstr "Uredi"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:173
-#, fuzzy
-#| msgid "Answers"
 msgid "Edit Answer"
-msgstr "Odgovori"
+msgstr "Uredi odgovor"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:175
 #, fuzzy
@@ -6096,7 +6091,7 @@ msgstr "Kategorija"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_customer.coffee:26
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:90
 msgid "Edit Customer"
-msgstr ""
+msgstr "Uredi stranko"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:171
 #, fuzzy
@@ -6106,7 +6101,7 @@ msgstr "%s Objektov ustvarjenih"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_organization.coffee:21
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_organization.coffee:11
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:36
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:33
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:80
 msgid "Edit Organization"
 msgstr "Uredi organizacijo"
@@ -6123,7 +6118,7 @@ msgstr "Avtentikacija"
 msgid "Edit checklist title"
 msgstr "Posodobi zahtevek"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:72
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row.jst.eco:32
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:69
 #, fuzzy
 #| msgid "Category"
@@ -6136,10 +6131,8 @@ msgstr ""
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleReplyDialog.vue:37
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketDetailViewActions.vue:88
-#, fuzzy
-#| msgid "reply"
 msgid "Edit reply"
-msgstr "odgovori"
+msgstr "Uredi odgovor"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts:22
 #, fuzzy
@@ -6231,6 +6224,7 @@ msgstr "SSL preverjanje"
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:7
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:167
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
@@ -6240,11 +6234,11 @@ msgstr "E-pošta"
 
 #: app/models/report.rb:131
 msgid "Email (in)"
-msgstr ""
+msgstr "E-pošta (prejeto)"
 
 #: app/models/report.rb:151
 msgid "Email (out)"
-msgstr ""
+msgstr "E-pošta (poslano)"
 
 #: db/seeds/settings.rb:712
 msgid "Email - full quote"
@@ -6289,7 +6283,7 @@ msgstr "Kanal"
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:67
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:68
 msgid "Email Inbound"
-msgstr ""
+msgstr "Vhodna e-pošta"
 
 #: app/assets/javascripts/app/views/channel/email_account_overview.jst.eco:162
 #: app/assets/javascripts/app/views/channel/email_notification_wizard.jst.eco:8
@@ -6307,7 +6301,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:117
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailChannelConfiguration.ts:70
 msgid "Email Outbound"
-msgstr ""
+msgstr "Odhodna e-pošta"
 
 #: app/frontend/apps/desktop/pages/authentication/routes.ts:113
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:116
@@ -6405,6 +6399,8 @@ msgid ""
 "Enable activity type selection. This would allow agents to select one of the "
 "types below when adding accounted time."
 msgstr ""
+"Omogoči izbiro vrste dela. To bo omogočilo svetovalcem izbiro vrste dela pri "
+"dodajanju porabe čase."
 
 #: db/seeds/settings.rb:2469
 msgid "Enable auto assignment for following matching tickets."
@@ -6630,7 +6626,7 @@ msgstr "Kako uporabiti"
 
 #: db/seeds.rb:37
 msgid "English (United States)"
-msgstr ""
+msgstr "Angleščina (Združene države Amerike)"
 
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:96
 msgid "Enter Note or"
@@ -6753,7 +6749,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/password.jst.eco:9
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingPassword.vue:116
 msgid "Enter your current password, insert a new one and confirm it."
-msgstr ""
+msgstr "Vnesite trenutno geslo, novo geslo in potrditev novega gesla."
 
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:36
 msgid ""
@@ -6793,7 +6789,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_settings/area_proxy.coffee:51
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:124
 #: app/assets/javascripts/app/controllers/widget/error_modal.coffee:6
-#: app/frontend/apps/desktop/pages/error/views/Error.vue:37
+#: app/frontend/apps/desktop/components/CommonError/CommonError.vue:30
 #: app/frontend/apps/mobile/pages/error/views/Error.vue:39
 msgid "Error"
 msgstr ""
@@ -6801,6 +6797,26 @@ msgstr ""
 #: app/services/service/system/run_auto_wizard.rb:18
 msgid "Error during execution of auto wizard."
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:52
+#, fuzzy
+#| msgid ""
+#| "Currently no overview is assigned to your roles. Please contact your "
+#| "administrator."
+msgid "Error fetching github information. Please contact your administrator."
+msgstr ""
+"Vašim vlogam trenutno ni dodeljen noben pregled. Prosimo, da se obrnete na "
+"svojega skrbnika."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:64
+#, fuzzy
+#| msgid ""
+#| "Currently no overview is assigned to your roles. Please contact your "
+#| "administrator."
+msgid "Error fetching i-doit information. Please contact your administrator."
+msgstr ""
+"Vašim vlogam trenutno ni dodeljen noben pregled. Prosimo, da se obrnete na "
+"svojega skrbnika."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:280
 #: db/seeds/overviews.rb:160
@@ -6844,21 +6860,25 @@ msgid "Escalation Times"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:17
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:25
 #: app/graphql/gql/types/overview_type.rb:70
 msgid "Escalation at"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:20
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:46
 #: app/graphql/gql/types/overview_type.rb:73
 msgid "Escalation at (Close Time)"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:18
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:32
 #: app/graphql/gql/types/overview_type.rb:71
 msgid "Escalation at (First Response Time)"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:19
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:39
 #: app/graphql/gql/types/overview_type.rb:72
 msgid "Escalation at (Update Time)"
 msgstr ""
@@ -7020,10 +7040,8 @@ msgid "Expert Settings"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco:6
-#, fuzzy
-#| msgid "Expert"
 msgid "Expert mode"
-msgstr "Strokovnjak"
+msgstr "Napreden način"
 
 #: app/assets/javascripts/app/views/channel/email_account_wizard.jst.eco:18
 msgid "Experts"
@@ -7146,7 +7164,7 @@ msgstr ""
 msgid "Failed to save checklist order."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_show.coffee:124
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist/show.coffee:160
 msgid "Failed to save the order of the checklist items. Please try again."
 msgstr ""
 
@@ -7240,6 +7258,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:16
 #: app/assets/javascripts/app/models/report_profile.js.coffee:7
 #: app/assets/javascripts/app/views/sla/index.jst.eco:28
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:132
 msgid "Filter"
 msgstr "Filter"
 
@@ -7314,6 +7333,7 @@ msgid "First name"
 msgstr "Ime"
 
 #: app/assets/javascripts/app/models/ticket.coffee:24
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:74
 #: app/graphql/gql/types/overview_type.rb:77
 msgid "First response"
 msgstr "Prvi odgovor"
@@ -7389,6 +7409,7 @@ msgid ""
 "it somewhere secure before continuing."
 msgstr ""
 
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:48
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:459
 #: app/frontend/shared/errors/useErrorHandler.ts:29
 #: app/frontend/shared/router/guards/before/permission.ts:37
@@ -7480,7 +7501,7 @@ msgstr ""
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:96
 msgid "Forward"
-msgstr ""
+msgstr "Posreduj"
 
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:1
 msgid "Frequency"
@@ -7517,7 +7538,7 @@ msgstr "Od"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:16
 msgid "Frontend"
-msgstr ""
+msgstr "Spletni vmesnik"
 
 #: app/assets/javascripts/app/models/group.coffee:48
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:56
@@ -7666,7 +7687,7 @@ msgstr ""
 msgid "GitHub request failed. Please have a look at the log file for details."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:35
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:35
 msgid "GitHub: Link issue"
 msgstr ""
 
@@ -7700,7 +7721,7 @@ msgstr ""
 msgid "GitLab request failed. Please have a look at the log file for details."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:35
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:35
 msgid "GitLab: Link issue"
 msgstr ""
 
@@ -7825,7 +7846,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/twitter/list.jst.eco:38
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:56
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:40
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:38
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:40
 #: app/graphql/gql/types/overview_type.rb:63
 #: app/views/mailer/ticket_create/fr.html.erb:8
 #: app/views/mailer/ticket_create/zh-cn.html.erb:8
@@ -8168,12 +8189,13 @@ msgstr ""
 
 #: db/seeds/settings.rb:5474
 msgid "Hint for adding an article to an existing ticket."
-msgstr ""
+msgstr "Namig za dodajanje zapisa na obstoječ zahtevek."
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:8
 #: app/assets/javascripts/app/controllers/organization_profile/action_row.coffee:28
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:114
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:60
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:54
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:130
 msgid "History"
 msgstr "Zgodovina"
@@ -8222,7 +8244,7 @@ msgstr "ur"
 
 #: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee:6
 msgid "Hour(s)"
-msgstr "Ur"
+msgstr "Ura(e)"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:5
 msgid "Hours"
@@ -8241,8 +8263,8 @@ msgid ""
 "How long did each customer have to wait, on average, to get a response from "
 "you today?"
 msgstr ""
-"Kako dolgo je morala vsaka stranka v povprečju čakati, da je danes dobila "
-"vaš odgovor?"
+"Kako dolgo je vsaka stranka v povprečju čakala, da je danes dobila vaš "
+"odgovor?"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_escalation.coffee:9
 msgid ""
@@ -8258,7 +8280,7 @@ msgid ""
 "(Shows percentages for both inbound and outbound tickets.)"
 msgstr ""
 "Koliko vaših zahtevkom prihaja iz e-pošte, telefona, Twitterja ali "
-"Facebooka? (Prikazani so odstotki za vhodne in izhodne zahtevke.)"
+"Facebooka? (Prikazani so odstotki za dohodne in odhodne zahtevke.)"
 
 #: app/assets/javascripts/app/controllers/_dashboard/stats/ticket_reopen.coffee:9
 msgid ""
@@ -8272,6 +8294,7 @@ msgid "How to use it"
 msgstr "Kako uporabiti"
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:8
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:201
 msgid "ID"
 msgstr ""
 
@@ -8640,18 +8663,18 @@ msgstr "neaktivno"
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:16
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:45
 msgid "Inbound"
-msgstr ""
+msgstr "Dohodni"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:131
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:140
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:34
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:6
 msgid "Inbound Call"
-msgstr ""
+msgstr "Dohodni klic"
 
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_channel_distribution.jst.eco:15
 msgid "Inbound:"
-msgstr "Vhodni:"
+msgstr "Dohodni:"
 
 #: db/seeds/object_manager_attributes.rb:129
 msgid "Incident"
@@ -8659,7 +8682,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/generic/ticket_perform_action/notification.jst.eco:24
 msgid "Include attachments of the article?"
-msgstr ""
+msgstr "Vključi priponke zapisa?"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:81
 msgid "Include unassigned tickets in subscription for escalated tickets."
@@ -8823,7 +8846,7 @@ msgstr "Tekstovni moduli"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:342
 msgid "Insert text from Knowledge Base article"
-msgstr ""
+msgstr "Vstavljanje besedila iz članka v bazi znanja"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:350
 #, fuzzy
@@ -8862,11 +8885,11 @@ msgstr "Tekstovni moduli"
 msgid "Install App"
 msgstr "Nameščeno"
 
-#: app/assets/javascripts/app/views/package.jst.eco:32
+#: app/assets/javascripts/app/views/package.jst.eco:40
 msgid "Install Package"
 msgstr "Namesti paket"
 
-#: app/assets/javascripts/app/views/package.jst.eco:24
+#: app/assets/javascripts/app/views/package.jst.eco:32
 msgid "Installed"
 msgstr "Nameščeno"
 
@@ -8963,15 +8986,15 @@ msgstr ""
 msgid "Invalid i-doit configuration (missing endpoint or api_token)."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:191
+#: app/controllers/tickets_controller.rb:192
 msgid "Invalid link structure"
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:197
+#: app/controllers/tickets_controller.rb:198
 msgid "Invalid link structure (Object → LinkType)"
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:194
+#: app/controllers/tickets_controller.rb:195
 msgid "Invalid link structure (Object)"
 msgstr ""
 
@@ -9103,17 +9126,23 @@ msgstr "Povabi stranke k kreiranju zahtevkov v Zammad-u"
 msgid "Ionicons"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:37
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:37
 #, fuzzy
 #| msgid "%s URL"
 msgid "Issue URL"
 msgstr "%s URL"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:54
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:54
 #, fuzzy
 #| msgid "Messages"
 msgid "Issue status"
 msgstr "Sporočila"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useIssueTracker.ts:39
+#, fuzzy
+#| msgid "no issues"
+msgid "Issues"
+msgstr "ni težav"
 
 #: lib/validations/data_privacy_task_validator.rb:50
 msgid "It is not possible to delete the last account with admin permissions."
@@ -9292,7 +9321,7 @@ msgid "Label"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:30
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:79
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:85
 msgid "Labels"
 msgstr ""
 
@@ -9317,16 +9346,12 @@ msgid "Languages"
 msgstr "Jeziki"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:105
-#, fuzzy
-#| msgid "Article"
 msgid "Last Article"
-msgstr "Člen"
+msgstr "Zadnji zapis"
 
 #: lib/excel_sheet/ticket.rb:59
-#, fuzzy
-#| msgid "Last used"
 msgid "Last Closed At"
-msgstr "Zadnjič uporabljeno"
+msgstr "Nazadnje zaključeno"
 
 #: lib/excel_sheet/ticket.rb:71
 msgid "Last Contact Agent At"
@@ -9342,11 +9367,11 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:107
 msgid "Last External Article"
-msgstr ""
+msgstr "Zadnji zunanji zapis"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:106
 msgid "Last Internal Article"
-msgstr ""
+msgstr "Zadnji interni zapis"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:109
 #, fuzzy
@@ -9366,6 +9391,7 @@ msgid "Last changed"
 msgstr "Zavrži spremembe"
 
 #: app/assets/javascripts/app/models/ticket.coffee:26
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:88
 #, fuzzy
 #| msgid "Closing time"
 msgid "Last closing time"
@@ -9373,18 +9399,21 @@ msgstr "Zapiralni čas"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:232
 #: app/assets/javascripts/app/models/ticket.coffee:21
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:53
 #: app/graphql/gql/types/overview_type.rb:74
 msgid "Last contact"
 msgstr "Zadnji kontakt"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:236
 #: app/assets/javascripts/app/models/ticket.coffee:22
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:60
 #: app/graphql/gql/types/overview_type.rb:75
 msgid "Last contact (agent)"
 msgstr "Zadnji kontakt (svetovalec)"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:240
 #: app/assets/javascripts/app/models/ticket.coffee:23
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:67
 #: app/graphql/gql/types/overview_type.rb:76
 msgid "Last contact (customer)"
 msgstr "Zadnji kontakt (stranka)"
@@ -9405,6 +9434,12 @@ msgstr "Zadnji zagon"
 #: db/seeds/object_manager_attributes.rb:653
 msgid "Last name"
 msgstr "Priimek"
+
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:129
+#, fuzzy
+#| msgid "Has update"
+msgid "Last owner update"
+msgstr "Ima posodobitev"
 
 #: app/assets/javascripts/app/models/job.coffee:19
 msgid "Last run"
@@ -9444,7 +9479,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:25
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:45
 msgid "Light"
-msgstr ""
+msgstr "Svetla"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:17
 msgid "Limit Groups"
@@ -9502,20 +9537,27 @@ msgstr ""
 msgid "Link GitLab issues to your tickets."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:70
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList.vue:274
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:62
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:70
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList.vue:274
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:62
 #, fuzzy
 #| msgid "Link %s"
 msgid "Link Issue"
 msgstr "Povezava %s"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:183
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:180
+#, fuzzy
+#| msgid "Change Objects"
+msgid "Link Objects"
+msgstr "Spremeni predmete"
+
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:19
 msgid "Link Related Answer"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:156
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:157
 #, fuzzy
 #| msgid "Linked Tickets"
 msgid "Link Tickets"
@@ -9527,7 +9569,7 @@ msgstr "Povezani zahtevki"
 msgid "Link account on %s"
 msgstr "Poveži račun"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:144
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:145
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Link added successfully"
@@ -9542,6 +9584,12 @@ msgstr "%{name} že obstaja"
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_git_issue.coffee:26
 msgid "Link issue"
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:137
+#, fuzzy
+#| msgid "Linked Tickets"
+msgid "Link objects"
+msgstr "Povezani zahtevki"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketLinks.vue:90
 #, fuzzy
@@ -9561,7 +9609,7 @@ msgstr "Predloge"
 msgid "Link ticket"
 msgstr "Povezani zahtevki"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:61
+#: app/frontend/apps/desktop/pages/ticket/components/TicketLinksFlyout.vue:62
 #, fuzzy
 #| msgid "Templates"
 msgid "Link type"
@@ -9596,11 +9644,11 @@ msgid "LinkedIn Developer Site"
 msgstr ""
 
 #: app/assets/javascripts/app/views/link/ticket/list.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:92
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:107
 msgid "Links"
 msgstr "Povezave"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:219
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:226
 msgid "List of all user taskbar tabs"
 msgstr ""
 
@@ -9608,7 +9656,7 @@ msgstr ""
 msgid "List of installed addons"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem/IssueTrackerBadgeList.vue:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem/IssueTrackerBadgeList.vue:15
 msgid "List of issue labels"
 msgstr ""
 
@@ -9671,17 +9719,15 @@ msgstr ""
 #: app/assets/javascripts/app/models/job.coffee:13
 #: app/assets/javascripts/app/models/trigger.coffee:12 db/seeds/settings.rb:163
 msgid "Locale"
-msgstr ""
+msgstr "Jezik"
 
 #: app/graphql/gql/mutations/user/current/locale.rb:17
-#, fuzzy
-#| msgid "%s Object(s) are updated."
 msgid "Locale could not be found."
-msgstr "%s Objektov posodobljenih."
+msgstr "Jezika ni bilo mogoče najti."
 
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:257
 msgid "Locale not found"
-msgstr ""
+msgstr "Jezik ni najden"
 
 #: app/assets/javascripts/app/models/job.coffee:12
 #: app/assets/javascripts/app/models/trigger.coffee:11
@@ -9712,7 +9758,7 @@ msgstr "Uporabniško ime"
 
 #: app/assets/javascripts/app/models/public_link.coffee:9
 msgid "Login Screen"
-msgstr ""
+msgstr "Zaslon za prijavo"
 
 #: lib/auth/error/authentication_failed.rb:4
 msgid ""
@@ -9778,7 +9824,7 @@ msgid ""
 "executed with just one click."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:38
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:96
 msgid "Main sidebar"
 msgstr ""
 
@@ -10269,10 +10315,17 @@ msgstr ""
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco:20
 #: app/assets/javascripts/app/views/popover/organization.jst.eco:6
 #: app/assets/javascripts/app/views/widget/organization.jst.eco:29
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:76
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:73
 #: app/frontend/apps/mobile/components/Organization/OrganizationMembersList.vue:29
 msgid "Members"
 msgstr "Člani"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created-mention.ts:12
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:12
+#, fuzzy
+#| msgid "current user"
+msgid "Mention for"
+msgstr "trenutni uporabnik"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 #, fuzzy
@@ -10290,12 +10343,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/agent_ticket_merge.coffee:7
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_ticket.coffee:120
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:87
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:46
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:88
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:61
 msgid "Merge"
-msgstr "Spoji"
+msgstr "Združi"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:94
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:95
 #, fuzzy
 #| msgid "Merge to Ticket#"
 msgid "Merge Tickets"
@@ -10315,13 +10368,23 @@ msgstr "Združi v zahtevek#"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco:2
 msgid "Merge to Ticket#"
-msgstr "Združi v zahtevek#"
+msgstr "Združi v Zahtevek#"
 
 #: app/models/report.rb:75
-#, fuzzy
-#| msgid "Merge"
 msgid "Merged"
-msgstr "Spoji"
+msgstr "Združeno"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/merged-into.ts:11
+#, fuzzy
+#| msgid "Merge to Ticket#"
+msgid "Merged this ticket into"
+msgstr "Združi v zahtevek#"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:11
+#, fuzzy
+#| msgid "Merge to Ticket#"
+msgid "Merged ticket"
+msgstr "Združi v zahtevek#"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
 #: app/assets/javascripts/app/views/maintenance.jst.eco:32
@@ -10435,7 +10498,7 @@ msgid "Migrator can't read OTRS output!"
 msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_git_issue.jst.eco:18
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:69
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:73
 msgid "Milestone"
 msgstr ""
 
@@ -10469,7 +10532,7 @@ msgstr "Minuta"
 
 #: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee:5
 msgid "Minute(s)"
-msgstr "Minut"
+msgstr "Minuta(e)"
 
 #: app/assets/javascripts/app/views/generic/timeplan.jst.eco:8
 msgid "Minutes"
@@ -10482,7 +10545,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:23
 #: db/seeds/object_manager_attributes.rb:837
 msgid "Mobile"
-msgstr "Mobilno"
+msgstr "Mobilni"
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco:14
 msgid "Mode"
@@ -10516,7 +10579,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/monitoring.jst.eco:3
 #: db/seeds/permissions.rb:275
 msgid "Monitoring"
-msgstr ""
+msgstr "Nadzor nad delovanjem"
 
 #: db/seeds/settings.rb:3434
 msgid "Monitoring Token"
@@ -10524,7 +10587,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:3
 msgid "Month"
-msgstr "mesec"
+msgstr "Mesec"
 
 #: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee:9
 msgid "Month(s)"
@@ -10602,7 +10665,7 @@ msgstr "Zahtevki moje organizacije"
 
 #: db/seeds/overviews.rb:59
 msgid "My Pending Reached Tickets"
-msgstr "Moji čakajoji dodeljeni zahtevki"
+msgstr "Moji čakajoči dodeljeni zahtevki"
 
 #: db/seeds/overviews.rb:184
 #, fuzzy
@@ -10615,10 +10678,8 @@ msgid "My Stats"
 msgstr "Moja statistika"
 
 #: db/seeds/overviews.rb:91
-#, fuzzy
-#| msgid "My assigned Tickets"
 msgid "My Subscribed Tickets"
-msgstr "Moji dodeljeni zahtevki"
+msgstr "Moji naročeni zahtevki"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco:5
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:57
@@ -10697,7 +10758,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/ldap_wizard.jst.eco:19
 #: app/assets/javascripts/app/views/integration/pgp_list.jst.eco:11
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:56
-#: app/assets/javascripts/app/views/package.jst.eco:39
+#: app/assets/javascripts/app/views/package.jst.eco:47
 #: app/assets/javascripts/app/views/profile/devices.jst.eco:12
 #: app/assets/javascripts/app/views/profile/password.jst.eco:30
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:16
@@ -10712,6 +10773,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:103
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:89
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSharedDraftFlyout.vue:185
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:20
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:148
 #: db/seeds/object_manager_attributes.rb:1507 public/assets/form/form.js:24
 msgid "Name"
@@ -10732,7 +10794,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:524
 msgid "Navigate through article"
-msgstr ""
+msgstr "Navigacija po zapisu"
 
 #: app/assets/javascripts/app/views/generic/searchable_select_option.jst.eco:7
 msgid "Navigate to %s"
@@ -10768,7 +10830,7 @@ msgstr ""
 msgid "Need session_id."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:475
+#: app/controllers/tickets_controller.rb:477
 msgid "Need user_id or organization_id as param"
 msgstr ""
 
@@ -10807,10 +10869,8 @@ msgid "New Access Token is"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/time_accounting_types.coffee:54
-#, fuzzy
-#| msgid "Active"
 msgid "New Activity Type"
-msgstr "Aktivno"
+msgstr "Nova vrsta dela"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/add_form.coffee:8
 msgid "New Answer"
@@ -10877,7 +10937,7 @@ msgstr "Prioriteta"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee:22
 msgid "New Profile"
-msgstr "Novi profil"
+msgstr "Nov profil"
 
 #: app/assets/javascripts/app/controllers/public_link.coffee:18
 msgid "New Public Link"
@@ -10907,10 +10967,8 @@ msgid "New Tags"
 msgstr "Nova oznaka"
 
 #: app/assets/javascripts/app/controllers/template.coffee:22
-#, fuzzy
-#| msgid "Templates"
 msgid "New Template"
-msgstr "Predloge"
+msgstr "Nova predloga"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:190
 #: app/assets/javascripts/app/controllers/_profile/notification.coffee:65
@@ -10920,9 +10978,9 @@ msgstr "Predloge"
 #: app/assets/javascripts/app/controllers/user_profile/action_row.coffee:68
 #: app/assets/javascripts/app/views/customer_ticket_create.jst.eco:6
 #: app/assets/javascripts/app/views/navigation/menu_cti_ringing.jst.eco:25
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:38
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:30
 #: app/frontend/apps/desktop/pages/ticket/routes.ts:15
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:105
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:107
 msgid "New Ticket"
 msgstr "Nov zahtevek"
 
@@ -10932,7 +10990,7 @@ msgstr "Nov zahtevek"
 msgid "New Ticket State"
 msgstr "Nov zahtevek"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:41
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:33
 #, fuzzy
 #| msgid "New Ticket"
 msgid "New Ticket: %s"
@@ -10946,7 +11004,7 @@ msgstr "Prevodi"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:25
 msgid "New Trigger"
-msgstr "Novi sprožilec"
+msgstr "Nov sprožilec"
 
 #: app/assets/javascripts/app/controllers/user.coffee:33
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:89
@@ -11101,7 +11159,7 @@ msgstr ""
 msgid "No Entries"
 msgstr "Ni vnosov"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_no_items.jst.eco:3
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_no_items.jst.eco:3
 #, fuzzy
 #| msgid "No Entries"
 msgid "No Entry"
@@ -11161,23 +11219,19 @@ msgstr "Ni kategorij"
 msgid "No certificate found."
 msgstr "Ni bilo najdeno nobeno potrdilo."
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:3
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:3
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:461
-#, fuzzy
-#| msgid "You have not created a ticket yet."
 msgid "No checklist added to this ticket yet."
-msgstr "Tiketa še niste ustvarili."
+msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:185
 msgid "No checklist items yet"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:14
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:15
-#, fuzzy
-#| msgid "No template created yet."
 msgid "No checklist templates have been created yet."
-msgstr "Ni shranjenih predlog."
+msgstr "Predloge kontrolnih seznamov še niso bile ustvarjene."
 
 #: app/assets/javascripts/app/views/integration/ldap.jst.eco:5
 msgid "No configuration set."
@@ -11284,6 +11338,7 @@ msgstr ""
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:338
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:522
 #: app/frontend/apps/desktop/components/NavigationMenu/NavigationMenu.vue:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:35
 #: app/frontend/apps/mobile/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInputDialog.vue:402
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:348
 #: app/frontend/shared/components/Form/fields/FieldEditor/SuggestionsList.vue:98
@@ -11317,7 +11372,7 @@ msgstr "Ustvarjeno"
 #: app/controllers/organizations_controller.rb:160
 #: app/controllers/text_modules_controller.rb:71
 #: app/controllers/ticket_articles_controller.rb:232
-#: app/controllers/tickets_controller.rb:607
+#: app/controllers/tickets_controller.rb:609
 #: app/controllers/users_controller.rb:650
 msgid "No source data submitted!"
 msgstr ""
@@ -11338,7 +11393,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/knowledge_base/content.jst.eco:2
 msgid "No translation for this locale available"
-msgstr ""
+msgstr "Prevodi za ta jezik niso na voljo"
 
 #: app/models/ticket.rb:398
 msgid "No triggers active"
@@ -11395,6 +11450,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:160
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:240
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:119
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:56
 #: app/frontend/shared/errors/useErrorHandler.ts:25
 #: app/frontend/shared/router/error.ts:18
 #: app/helpers/knowledge_base_public_page_title_helper.rb:25
@@ -11417,7 +11473,7 @@ msgstr "Ni dodeljeno"
 
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:158
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:115
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:25
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row_display_value.jst.eco:16
 #: app/controllers/application_controller/handles_errors.rb:61
 #: app/services/service/ticket/article/create.rb:122
 msgid "Not authorized"
@@ -11439,7 +11495,7 @@ msgstr ""
 msgid "Not configured"
 msgstr "Ni nastavljeno"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:18
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:33
 #, fuzzy
 #| msgid "matches"
 msgid "Not found"
@@ -11512,6 +11568,7 @@ msgstr "Obvestilo:"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:59
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:24
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/notification.ts:7
 #: app/views/mailer/application.html.erb:36
 msgid "Notification"
 msgstr "Obvestilo"
@@ -11592,7 +11649,6 @@ msgstr "november"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:10
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:20
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:32
 #: app/graphql/gql/types/overview_type.rb:59
 msgid "Number"
 msgstr "Število"
@@ -11662,7 +11718,21 @@ msgstr ""
 msgid "Object Manager"
 msgstr ""
 
+#: app/services/service/history/list.rb:52
+msgid "Object does not support history"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:60
+#, fuzzy
+#| msgid ""
+#| "Organization with specified ID was not found. Try checking the URL for "
+#| "errors."
+msgid ""
+"Object with specified ID was not found. Try checking the URL for errors."
+msgstr "Organizacija za naveden ID ni bila najdena. Preveriti URL za napake."
+
 #: app/assets/javascripts/app/controllers/object_manager.coffee:330
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoit.vue:56
 #: db/seeds/permissions.rb:233
 msgid "Objects"
 msgstr ""
@@ -11691,10 +11761,8 @@ msgid "On %s, %s wrote:"
 msgstr "V %s, je oseba %s napisala:"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:10
-#, fuzzy
-#| msgid "Create a translation"
 msgid "On-screen Translation"
-msgstr "Ustvari prevod"
+msgstr "Prevajanje na zaslonu"
 
 #: app/assets/javascripts/app/models/macro.coffee:8
 msgid "Once completed…"
@@ -11808,12 +11876,6 @@ msgstr "Odprti"
 msgid "Open Checklist"
 msgstr "Kontrolna vsota"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/useIssueTracker.ts:39
-#, fuzzy
-#| msgid "no issues"
-msgid "Open Issues"
-msgstr "ni težav"
-
 #: app/assets/javascripts/app/views/dashboard/first_steps_test_ticket_finish.jst.eco:3
 msgid "Open Ticket# %s"
 msgstr ""
@@ -11914,7 +11976,7 @@ msgstr ""
 msgid "Options or relation is required."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:8
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:8
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistTemplates.vue:22
 msgid "Or choose a checklist template."
 msgstr ""
@@ -12279,20 +12341,16 @@ msgstr "Geslo"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:3
 #: app/assets/javascripts/app/views/profile/password.jst.eco:3
-#, fuzzy
-#| msgid "Authentication"
 msgid "Password & Authentication"
-msgstr "Avtentikacija"
+msgstr "Geslo in preverjanje pristnosti"
 
 #: app/assets/javascripts/app/views/api.jst.eco:30
 msgid "Password Access"
 msgstr ""
 
 #: db/seeds/settings.rb:1027
-#, fuzzy
-#| msgid "Password"
 msgid "Password Login"
-msgstr "Geslo"
+msgstr "Prijava z geslom"
 
 #: app/assets/javascripts/app/controllers/_profile/password.coffee:125
 msgid "Password changed successfully!"
@@ -12446,11 +12504,11 @@ msgstr "Telefon"
 
 #: app/models/report.rb:91
 msgid "Phone (in)"
-msgstr ""
+msgstr "Telefon (dohodni)"
 
 #: app/models/report.rb:111
 msgid "Phone (out)"
-msgstr ""
+msgstr "Telefon (odhodni)"
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:119
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:103
@@ -12516,10 +12574,8 @@ msgid "Please add categories and/or answers"
 msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:12
-#, fuzzy
-#| msgid "Please click the button below to create your first one."
 msgid "Please click on the button below to create your first one."
-msgstr "Če želite ustvariti svoj prvi tiket, kliknite spodnji gumb."
+msgstr "Kliknite spodnji gumb, da ustvarite svoj prvi zahtevek."
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco:6
 #, fuzzy
@@ -12595,7 +12651,7 @@ msgid ""
 "versions of Zammad. Use the IDP certificate instead."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/error/views/Error.vue:54
+#: app/frontend/apps/desktop/components/CommonError/CommonError.vue:45
 msgid "Please proceed to login"
 msgstr ""
 
@@ -12624,7 +12680,7 @@ msgid ""
 "them to sign in if you lose access to another two-factor method:"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:75
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist/start.coffee:75
 msgid "Please select a checklist template."
 msgstr ""
 
@@ -12687,6 +12743,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:40
 #: app/assets/javascripts/app/controllers/_channel/_email_filter.coffee:31
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventIssuerNames.ts:5
 msgid "Postmaster Filter"
 msgstr ""
 
@@ -12719,10 +12776,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:34
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:285
-#, fuzzy
-#| msgid "Please click the button below to create your first one."
 msgid "Press the button below to finish the setup."
-msgstr "Če želite ustvariti svoj prvi tiket, kliknite spodnji gumb."
+msgstr "Za dokončanje nastavitve pritisnite spodnji gumb."
 
 #: db/seeds/settings.rb:204
 msgid "Pretty Date"
@@ -12863,7 +12918,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:93
 msgid "Product Name"
-msgstr ""
+msgstr "Naziv produkta"
 
 #: app/assets/javascripts/app/controllers/profile.coffee:24
 #: app/frontend/apps/desktop/pages/personal-setting/composables/useBreadcrumb.ts:7
@@ -12937,7 +12992,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/public_link.coffee:3
 #: db/seeds/permissions.rb:83
 msgid "Public Links"
-msgstr ""
+msgstr "Javne povezave"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:113
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco:2
@@ -12949,10 +13004,8 @@ msgid "Publish"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/article_public_confirm.coffee:2
-#, fuzzy
-#| msgid "Article"
 msgid "Publish Article"
-msgstr "Člen"
+msgstr "Objavi zapis"
 
 #: app/views/knowledge_base/public/answers/show.html.erb:41
 msgid "Published %s"
@@ -12996,6 +13049,18 @@ msgstr ""
 msgid "Raw"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+#, fuzzy
+#| msgid "deactivated"
+msgid "Reacted"
+msgstr "deaktivirano"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+#, fuzzy
+#| msgid "Created At"
+msgid "Reacted with"
+msgstr "Ustvarjeno"
+
 #: app/assets/javascripts/app/models/group.coffee:44
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:40
 msgid "Read"
@@ -13024,17 +13089,17 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:18
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:14
 msgid "Received Call"
-msgstr "Prejeti klic"
+msgstr "Dohodni klic"
 
 #: app/frontend/shared/entities/ticket/composables/useTicketCreateArticleType.ts:15
 msgid "Received Call: %s"
-msgstr "Prejeti klic: %s"
+msgstr "Dohodni klic: %s"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco:5
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco:30
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue:61
 msgid "Recent Customer Tickets"
-msgstr ""
+msgstr "Nedavni zahtevki stranke"
 
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:2
 #, fuzzy
@@ -13045,10 +13110,8 @@ msgstr "Zadnje beležke"
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco:8
 #: app/assets/javascripts/app/views/link/ticket/add.jst.eco:36
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketRelationAndRecentLists/TicketRelationAndRecentLists.vue:69
-#, fuzzy
-#| msgid "Recently viewed"
 msgid "Recently Viewed Tickets"
-msgstr "Nazadnje ogledano"
+msgstr "Nedavno ogledani zahtevki"
 
 #: app/assets/javascripts/app/controllers/_plugin/navigation.coffee:486
 msgid "Recently viewed"
@@ -13119,7 +13182,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/login.jst.eco:115
 msgid "Register as a new customer"
-msgstr ""
+msgstr "Registracija kot nova stranka"
 
 #: app/assets/javascripts/app/views/signup/verify.jst.eco:4
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:48
@@ -13232,7 +13295,7 @@ msgstr "Odstrani"
 msgid "Remove authenticator app"
 msgstr "Avtentikacija"
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:22
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:21
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:402
 #, fuzzy
 #| msgid "Remove"
@@ -13251,7 +13314,7 @@ msgstr "Odstrani postavitev"
 msgid "Remove image"
 msgstr "Odstrani"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:78
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row.jst.eco:37
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:75
 #, fuzzy
 #| msgid "Remove"
@@ -13286,6 +13349,19 @@ msgstr "Odstrani"
 msgid "Remove two-factor authentication"
 msgstr "Avtentikacija"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:9
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
+#, fuzzy
+#| msgid "Remove"
+msgid "Removed"
+msgstr "Odstrani"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
+#, fuzzy
+#| msgid "Removes the formatting"
+msgid "Removed reaction"
+msgstr "Odstrani postavitev"
+
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:649
 msgid "Removes any hyperlink"
 msgstr "Odstrani povezave"
@@ -13298,7 +13374,7 @@ msgstr "Odstrani postavitev"
 msgid "Removes the shadows for a flat look."
 msgstr "Odstrani sence za raven pogled."
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:17
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:16
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent.vue:395
 msgid "Rename checklist"
 msgstr ""
@@ -13320,7 +13396,7 @@ msgstr "Stopnja ponovnega odprtja"
 msgid "Reopening time in days"
 msgstr "Čas ponovnega odprtja v dnevih"
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:14
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItems.vue:195
 #, fuzzy
 #| msgid "Change order"
@@ -13342,16 +13418,12 @@ msgstr "Nadomestni svetovalec"
 #: app/frontend/shared/entities/ticket-article/action/plugins/telegram.ts:26
 #: app/frontend/shared/entities/ticket-article/action/plugins/twitter.ts:97
 #: app/frontend/shared/entities/ticket-article/action/plugins/whatsapp.ts:85
-#, fuzzy
-#| msgid "reply"
 msgid "Reply"
-msgstr "odgovori"
+msgstr "Odgovor"
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:108
-#, fuzzy
-#| msgid "reply"
 msgid "Reply All"
-msgstr "odgovori"
+msgstr "Odgovori vsem"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:62
 #, fuzzy
@@ -13369,24 +13441,22 @@ msgid "Reply-To"
 msgstr ""
 
 #: db/seeds/permissions.rb:101
-#, fuzzy
-#| msgid "Reporting"
 msgid "Report"
-msgstr "Pošiljam prijave"
+msgstr "Poročilo"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee:3
 msgid "Report Profile"
-msgstr "Prijavi profil"
+msgstr "Vrsta poročila"
 
 #: app/assets/javascripts/app/controllers/report_profile.coffee:15
 #: db/seeds/permissions.rb:101
 msgid "Report Profiles"
-msgstr "Prijavi profile"
+msgstr "Vrste poročil"
 
 #: app/assets/javascripts/app/controllers/report.coffee:6
 #: app/assets/javascripts/app/views/report/main.jst.eco:5
 msgid "Reporting"
-msgstr "Pošiljam prijave"
+msgstr "Poročila"
 
 #: app/assets/javascripts/app/views/widget/http_log.jst.eco:18
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:17
@@ -13477,22 +13547,16 @@ msgid "Reset successful."
 msgstr "Ponastavitev je bila uspešna."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:219
-#, fuzzy
-#| msgid "Restore Defaults"
 msgid "Reset to Default Settings"
-msgstr "Obnovi privzeto"
+msgstr "Ponastavi na privzete nastavitve"
 
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:11
-#, fuzzy
-#| msgid "Restore Defaults"
 msgid "Reset to default"
-msgstr "Obnovi privzeto"
+msgstr "Ponastavi na privzeto"
 
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:75
-#, fuzzy
-#| msgid "Restore Defaults"
 msgid "Reset to default settings"
-msgstr "Obnovi privzeto"
+msgstr "Ponastavi na privzete nastavitve"
 
 #. This is the template file app/views/mailer/password_reset/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -13549,10 +13613,8 @@ msgid "Resetting the order of your ticket overviews failed."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:203
-#, fuzzy
-#| msgid "Close tab"
 msgid "Resize article panel"
-msgstr "Zapri zavihek"
+msgstr ""
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/ImageHandler/ImageHandler.vue:170
 msgid "Resize frame"
@@ -13851,7 +13913,7 @@ msgstr "sobota"
 #: app/assets/javascripts/app/views/settings/ticket_auto_assignment.jst.eco:17
 #: app/assets/javascripts/app/views/settings/ticket_duplicate_detection.jst.eco:14
 #: app/assets/javascripts/app/views/settings/ticket_notifications.jst.eco:9
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show.jst.eco:27
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show.jst.eco:27
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:38
 #: app/assets/javascripts/app/views/time_accounting/types.jst.eco:9
 #: app/assets/javascripts/app/views/widget/text_module.jst.eco:22
@@ -13940,6 +14002,7 @@ msgstr "Načrtovano"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:41
 #: app/assets/javascripts/app/controllers/job.coffee:3
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventIssuerNames.ts:4
 #: db/seeds/permissions.rb:95
 msgid "Scheduler"
 msgstr "Opravilnik"
@@ -13950,7 +14013,7 @@ msgstr "Opravilniki"
 
 #: app/assets/javascripts/app/views/object_manager/screens.jst.eco:6
 msgid "Screen"
-msgstr ""
+msgstr "Zaslon"
 
 #: app/assets/javascripts/app/views/integration/check_mk.jst.eco:38
 msgid "Script can be located under: ||%s|| and needs to be executable."
@@ -14064,10 +14127,8 @@ msgid "Search result list key \"%s\" was not found."
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:899
-#, fuzzy
-#| msgid "First response"
 msgid "Search result response"
-msgstr "Prvi odgovor"
+msgstr ""
 
 #: lib/external_data_source/errors.rb:92
 msgid ""
@@ -14095,12 +14156,13 @@ msgstr ""
 #: app/assets/javascripts/app/views/generic/icon_picker.jst.eco:9
 #: app/assets/javascripts/app/views/translation/form.jst.eco:7
 #: app/frontend/apps/desktop/components/CommonInputSearch/CommonInputSearch.vue:20
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:133
 #: app/frontend/apps/mobile/pages/home/views/Home.vue:63
 #: app/frontend/shared/components/CommonInputSearch/CommonInputSearch.vue:23
 msgid "Search…"
 msgstr "Išči…"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:90
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:87
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationCustomer.vue:98
 #: app/frontend/apps/mobile/pages/user/views/UserDetailView.vue:133
 #: db/seeds/object_manager_attributes.rb:962
@@ -14125,7 +14187,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/tokenAccess.ts:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/twoFactorAuth.ts:10
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:22
-#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:174
+#: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:176
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:129
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:285
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:203
@@ -14241,10 +14303,16 @@ msgstr "Izberi CSV datoteko"
 msgid "Select Shared Draft"
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist_start.coffee:16
+#: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist/start.coffee:16
 #: app/assets/javascripts/app/views/widget/template.jst.eco:4
 msgid "Select Template"
 msgstr "Izberi predlogo"
+
+#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:57
+#, fuzzy
+#| msgid "Select All"
+msgid "Select all entries"
+msgstr "Izberi vse"
 
 #: db/seeds/settings.rb:866
 msgid "Select default ticket type"
@@ -14258,7 +14326,7 @@ msgstr "Izberi predmet"
 msgid "Select locale…"
 msgstr "Izberi jezik…"
 
-#: app/frontend/apps/desktop/components/CommonSimpleTable/SimpleTableRow.vue:26
+#: app/frontend/apps/desktop/components/CommonSimpleTable/SimpleTableRow.vue:27
 #, fuzzy
 #| msgid "Delete File"
 msgid "Select table row"
@@ -14276,6 +14344,12 @@ msgstr ""
 #, fuzzy
 #| msgid "Delete"
 msgid "Select this avatar"
+msgstr "Izbriši"
+
+#: app/frontend/apps/desktop/components/CommonSimpleTable/CommonSimpleTable.vue:175
+#, fuzzy
+#| msgid "Delete"
+msgid "Select this entry"
 msgstr "Izbriši"
 
 #: app/assets/javascripts/app/models/core_workflow.coffee:9
@@ -14396,7 +14470,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:503
 msgid "Sender of last article"
-msgstr ""
+msgstr "Pošiljatelj zadnjega zapisa"
 
 #: app/models/ticket/article.rb:305
 msgid "Sending an email without a valid recipient is not possible."
@@ -14414,7 +14488,7 @@ msgstr "Uspešno poslano!"
 #: app/assets/javascripts/app/controllers/report.coffee:204
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Sep"
-msgstr "sep"
+msgstr "Sep"
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco:36
 msgid "Separate multiple values by ;"
@@ -14446,7 +14520,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:11
 msgid "Services"
-msgstr "Reference"
+msgstr "Storitve"
 
 #: app/assets/javascripts/app/controllers/_plugin/session_taken_over.coffee:25
 #: app/assets/javascripts/app/controllers/_plugin/session_timeout.coffee:98
@@ -14497,7 +14571,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:492
 msgid "Set article to internal/public"
-msgstr ""
+msgstr "Nastavi zapis na interno/javno"
 
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:81
 msgid "Set as Default"
@@ -14506,10 +14580,8 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:687
 #: app/assets/javascripts/app/views/profile/password.jst.eco:62
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTwoFactorAuth.vue:169
-#, fuzzy
-#| msgid "Restore Defaults"
 msgid "Set as default"
-msgstr "Obnovi privzeto"
+msgstr "Nastavi kot privzeto"
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/authenticator-app.ts:18
 #, fuzzy
@@ -14547,16 +14619,12 @@ msgstr "Ustvari svojo prvo sporočilo"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:59
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:75
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:62
-#, fuzzy
-#| msgid "Outbound Call"
 msgid "Set outbound caller ID"
-msgstr "Odhodni klic"
+msgstr ""
 
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts:20
-#, fuzzy
-#| msgid "Restore Defaults"
 msgid "Set security keys as default"
-msgstr "Obnovi privzeto"
+msgstr ""
 
 #: db/seeds/settings.rb:5464
 msgid ""
@@ -14652,6 +14720,12 @@ msgstr ""
 msgid "Shared"
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventEntityNames.ts:8
+#, fuzzy
+#| msgid "Save Draft"
+msgid "Shared Draft"
+msgstr "Shrani osnutek"
+
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee:12
 #: app/assets/javascripts/app/models/group.coffee:17
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/shared-draft-start.ts:10
@@ -14660,7 +14734,7 @@ msgid "Shared Drafts"
 msgstr ""
 
 #: app/controllers/tickets_controller.rb:90
-#: app/services/service/ticket/create.rb:173
+#: app/services/service/ticket/create.rb:180
 msgid "Shared draft cannot be selected for this ticket."
 msgstr ""
 
@@ -14783,6 +14857,8 @@ msgid ""
 "Show password login for users on login page. Disabling only takes effect if "
 "third-party authentication is enabled."
 msgstr ""
+"Prikaži prijavo z geslom za uporabnike na prijavni strani. Onemogočanje "
+"učinkuje le, če je omogočeno preverjanje pristnosti tretje osebe."
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:278
 msgid "Show previous tab"
@@ -14948,10 +15024,8 @@ msgid "Signing & Encrypting"
 msgstr "Prijava"
 
 #: app/assets/javascripts/app/models/public_link.coffee:9
-#, fuzzy
-#| msgid "Signature"
 msgid "Signup Screen"
-msgstr "Podpis"
+msgstr "Zaslon za registracijo"
 
 #: db/seeds/settings.rb:2624
 #, fuzzy
@@ -14965,24 +15039,28 @@ msgstr ""
 
 #: db/seeds/settings.rb:355
 msgid "Simple Storage (S3)"
-msgstr ""
+msgstr "Simple Storage (S3)"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:9
 msgid "Simple Storage Service (S3)"
-msgstr ""
+msgstr "Simple Storage Service (S3)"
 
 #: app/models/store/provider/s3/config.rb:33
 msgid "Simple Storage Service configuration not found or invalid."
 msgstr ""
+"Konfiguracija storitve \"Simple Storage Service\" ni bila najdena ali pa je "
+"neveljavna."
 
 #: app/models/store/provider/s3.rb:88
 msgid ""
 "Simple Storage Service malfunction. Please contact your Zammad administrator."
 msgstr ""
+"Nepravilno delovanje storitve \"Simple Storage Service\". Obrnite se na "
+"svojega skrbnika."
 
 #: app/models/store/provider/s3.rb:70
 msgid "Simple Storage Service not reachable."
-msgstr ""
+msgstr "Storitev \"Simple Storage Service\" ni dosegljiva."
 
 #: db/seeds/settings.rb:1809
 msgid "Sina Weibo"
@@ -15134,16 +15212,12 @@ msgid "Special character required"
 msgstr ""
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/split.ts:11
-#, fuzzy
-#| msgid "split"
 msgid "Split"
-msgstr "razdruži"
+msgstr "Razdruži"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:160
-#, fuzzy
-#| msgid "split"
 msgid "Split cells"
-msgstr "razdruži"
+msgstr "Razdruži celice"
 
 #: db/seeds/groups.rb:7
 msgid "Standard Group/Pool for Tickets."
@@ -15248,7 +15322,7 @@ msgstr "Poišči uporabnika…"
 #: app/assets/javascripts/app/models/ticket.coffee:12
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:23
 #: app/assets/javascripts/app/views/data_privacy/tasks.jst.eco:31
-#: app/assets/javascripts/app/views/package.jst.eco:42
+#: app/assets/javascripts/app/views/package.jst.eco:50
 #: app/graphql/gql/types/overview_type.rb:65
 #: app/views/mailer/ticket_create/fr.html.erb:10
 #: app/views/mailer/ticket_create/zh-cn.html.erb:10
@@ -15267,6 +15341,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:24
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:10
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:14
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:24
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:206
 msgid "Status"
 msgstr "Status"
 
@@ -15326,13 +15402,13 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:13
 msgid "Storage"
-msgstr ""
+msgstr "Shramba"
 
 #: db/seeds/settings.rb:341
 msgid "Storage Method"
-msgstr ""
+msgstr "Način shranjevanja"
 
-#: app/assets/javascripts/app/views/package.jst.eco:25
+#: app/assets/javascripts/app/views/package.jst.eco:33
 msgid "Store"
 msgstr ""
 
@@ -15362,7 +15438,7 @@ msgstr "Ulica"
 #: app/frontend/shared/entities/ticket-article/action/plugins/email/forward.ts:33
 #: app/frontend/shared/entities/ticket/composables/useTicketEditForm.ts:192
 msgid "Subject"
-msgstr "Predmet"
+msgstr "Zadeva"
 
 #: db/seeds/settings.rb:3231
 msgid ""
@@ -15406,7 +15482,7 @@ msgstr "Potrdi"
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:4
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:57
 msgid "Subscribe"
-msgstr ""
+msgstr "Prijava"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketSubscribers.vue:60
 #, fuzzy
@@ -15424,20 +15500,16 @@ msgstr "Naročite se na praznike v"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco:7
 msgid "Subscribed Tickets"
-msgstr ""
+msgstr "Naročeni zahtevki"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:49
-#, fuzzy
-#| msgid "My assigned Tickets"
 msgid "Subscribed tickets"
-msgstr "Moji dodeljeni zahtevki"
+msgstr "Naročeni zahtevki"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:112
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:127
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:198
-#, fuzzy
-#| msgid "My assigned Tickets"
 msgid "Subscribers"
-msgstr "Moji dodeljeni zahtevki"
+msgstr "Naročniki"
 
 #: app/assets/javascripts/app/views/profile/calendar_subscriptions.jst.eco:24
 msgid "Subscription Settings"
@@ -15483,12 +15555,13 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/appearance.jst.eco:31
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAppearance.vue:52
 msgid "Sync with computer"
-msgstr ""
+msgstr "Sinhronizacija z računalnikom"
 
 #: app/assets/javascripts/app/controllers/_manage/system.coffee:3
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: app/assets/javascripts/app/controllers/manage.coffee:37
 #: app/assets/javascripts/app/views/generic/history.jst.eco:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:33
 #: db/seeds/permissions.rb:191 db/seeds/ticket_article_senders.rb:5
 msgid "System"
 msgstr "Sistem"
@@ -15523,16 +15596,16 @@ msgstr "Sistemski URL"
 
 #: app/assets/javascripts/app/controllers/_ui_element/language.coffee:13
 #: app/assets/javascripts/app/controllers/_ui_element/timezone.coffee:20
-#, fuzzy
-#| msgid "Restore Defaults"
 msgid "System default - %s"
-msgstr "Obnovi privzeto"
+msgstr "Sistemsko privzeto - %s"
 
 #: app/models/knowledge_base.rb:19
 msgid ""
 "System supports only one locale for knowledge base. Upgrade your plan to use "
 "more locales."
 msgstr ""
+"Sistem podpira le en jezik za bazo znanja. Nadgradite svojo naročnino za "
+"uporabo več jezikov."
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:5
 msgid ""
@@ -15554,7 +15627,7 @@ msgid "Tab has changed, do you really want to close it?"
 msgstr ""
 "Zavihek je bil spremenjen, ste prepričani da ne želite shraniti sprememb?"
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:230
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue:237
 msgid "Tabs"
 msgstr ""
 
@@ -15571,7 +15644,7 @@ msgstr "Ta bot že obstaja."
 #: app/assets/javascripts/app/views/popover/kb_generic.jst.eco:41
 #: app/assets/javascripts/app/views/tag/index.jst.eco:3
 #: app/assets/javascripts/app/views/widget/tag.jst.eco:1
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:83
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent.vue:98
 #: app/frontend/apps/mobile/components/Form/fields/FieldTags/FieldTagsDialog.vue:145
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:78
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationDetails.vue:190
@@ -15738,7 +15811,7 @@ msgstr ""
 msgid "Text or attachment is required"
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_item_edit.jst.eco:6
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/item_edit.jst.eco:6
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:147
 msgid "Text or ticket identifier"
 msgstr ""
@@ -15853,7 +15926,7 @@ msgstr ""
 
 #: lib/monitoring_helper/health_checker/s3_storage_availability.rb:12
 msgid "The Simple Storage Service is not available."
-msgstr ""
+msgstr "Storitev \"Simple Storage Service\" ni na voljo."
 
 #: app/assets/javascripts/app/controllers/_channel/telegram.coffee:158
 msgid "The Telegram bot could not be saved."
@@ -15931,23 +16004,23 @@ msgstr "Videza ni bilo mogoče posodobiti."
 #: app/frontend/apps/desktop/entities/two-factor-configuration/plugins/security-keys.ts:36
 #: app/frontend/shared/entities/two-factor/plugins/security-keys.ts:25
 msgid "The application is not running in a secure context."
-msgstr ""
+msgstr "Aplikacija se ne izvaja v varnem kontekstu."
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/articleDelete.ts:24
 msgid "The article could not be deleted."
-msgstr ""
+msgstr "Tega zapisa ni bilo mogoče izbrisati."
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts:13
 msgid "The article could not be set to internal."
-msgstr ""
+msgstr "Ta zapisa ni bilo mogoče nastaviti kot \"interno\"."
 
 #: app/frontend/shared/entities/ticket-article/action/plugins/changeVisibility.ts:14
 msgid "The article could not be set to public."
-msgstr ""
+msgstr "Ta zapisa ni bilo mogoče nastaviti kot \"javno\"."
 
 #: app/controllers/ticket_articles_controller.rb:152
 msgid "The article does not belong to the specified ticket."
-msgstr ""
+msgstr "Zapisa ne pripada navedenemu zahtevku."
 
 #: app/assets/javascripts/app/views/getting_started/auto_wizard_enabled.jst.eco:6
 msgid "The auto wizard is enabled. Please use the provided auto wizard url."
@@ -16087,6 +16160,8 @@ msgid ""
 "The chosen unit will be used for display only and will not affect stored "
 "values."
 msgstr ""
+"Izbrana enota se uporablja samo za prikaz in ne vpliva na shranjene "
+"vrednosti."
 
 #: app/assets/javascripts/app/controllers/_plugin/maintenance.coffee:93
 msgid "The configuration of Zammad has changed, please reload your browser."
@@ -16209,7 +16284,7 @@ msgstr "Datoteke ni bilo mogoče naložiti."
 
 #: app/controllers/ticket_articles_controller.rb:166
 msgid "The file does not belong to the specified article."
-msgstr ""
+msgstr "Datoteka ne pripada navedenemu zapisu."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:852
 #: app/frontend/shared/components/Form/fields/FieldFile/features/filesTypeError.ts:22
@@ -16287,6 +16362,20 @@ msgid ""
 "The identifier for a ticket, e.g. Ticket#, Call#, MyTicket#. The default is "
 "Ticket#."
 msgstr ""
+"Identifikator zahtevka, npr. Zahtevek#, Klic#, MojZahtevek#. Privzeto je "
+"Zahtevek#."
+
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:36
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "The idoit object could not be found."
+msgstr "%s Objektov posodobljenih."
+
+#: app/graphql/gql/mutations/ticket/external_references/idoit_object_add.rb:30
+#, fuzzy
+#| msgid "ticket %s was merged into this ticket"
+msgid "The idoit object is already present on the ticket."
+msgstr "zahtevek %s je bil združen v ta zahtevek"
 
 #: app/services/service/avatar/image_validate.rb:10
 msgid "The image is invalid."
@@ -16320,7 +16409,7 @@ msgstr ""
 msgid "The issue could not be saved."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:43
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:43
 #: app/graphql/gql/mutations/ticket/external_references/issue_tracker_item_add.rb:28
 #, fuzzy
 #| msgid "This bot already exists."
@@ -16699,7 +16788,7 @@ msgstr ""
 
 #: app/models/text_module.rb:28
 msgid "The required parameter 'locale' is missing."
-msgstr ""
+msgstr "Manjka zahtevani parameter 'locale'."
 
 #: app/controllers/user_access_token_controller.rb:25
 msgid "The required parameter 'name' is missing."
@@ -16808,7 +16897,7 @@ msgstr ""
 
 #: app/models/store/file.rb:18
 msgid "The setting 'storage_provider' was not configured."
-msgstr ""
+msgstr "Nastavitev \"storage_provider\" ni nastavljena."
 
 #: app/models/ticket/number.rb:25
 msgid "The setting 'ticket_number' was not configured."
@@ -16850,7 +16939,7 @@ msgstr ""
 msgid "The signature was successfully verified."
 msgstr "Podpis je uspešno preverjen."
 
-#: app/controllers/tickets_controller.rb:390
+#: app/controllers/tickets_controller.rb:392
 msgid "The source ticket could not be found."
 msgstr ""
 
@@ -16883,7 +16972,7 @@ msgstr ""
 msgid "The system was configured successfully. You are being redirected."
 msgstr ""
 
-#: app/controllers/tickets_controller.rb:381
+#: app/controllers/tickets_controller.rb:383
 msgid "The target ticket number could not be found."
 msgstr ""
 
@@ -17009,9 +17098,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/customer_ticket_create/sidebar_customer_default.coffee:29
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:11
 msgid "The way to communicate with us is this thing called \"ticket\"."
-msgstr ""
-"Način komuniciranja z nami je stvar, imenovana \"tiket\". Tukaj ga lahko "
-"ustvarite."
+msgstr "Način komuniciranja z nami poteka preko zahtevkov."
 
 #: lib/telegram_helper.rb:35
 msgid "The webhook could not be saved by Telegram, seems to be an invalid URL."
@@ -17097,7 +17184,7 @@ msgid ""
 "wish to proceed, please type \"%s\" into the input."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/package.coffee:52
+#: app/assets/javascripts/app/controllers/package.coffee:54
 msgid ""
 "There is no rollback of this deletion. If you are sure that you wish to "
 "proceed, please type \"%s\" into the input. All related data to this package "
@@ -17202,7 +17289,7 @@ msgstr ""
 
 #: app/models/ticket/time_accounting.rb:44
 msgid "This article is not part of the ticket."
-msgstr ""
+msgstr "Ta zapis ni del zahtevka."
 
 #: lib/telegram_helper.rb:47
 msgid "This bot already exists."
@@ -17465,6 +17552,12 @@ msgstr ""
 msgid "This object already exists."
 msgstr "Ta bot že obstaja."
 
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:17
+#, fuzzy
+#| msgid "%s Object(s) are updated."
+msgid "This object could not be found."
+msgstr "%s Objektov posodobljenih."
+
 #: app/services/service/system/check_setup.rb:29
 msgid ""
 "This operation cannot be continued, because the system set-up was not "
@@ -17547,10 +17640,6 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedInfo.vue:11
 msgid "This system is configured for automated setup."
 msgstr ""
-
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabNotFound.vue:15
-msgid "This tab could not be found."
-msgstr "Tega zavihka ni bilo mogoče najti."
 
 #: app/assets/javascripts/app/views/whatsapp/account_phone_number.jst.eco:31
 msgid ""
@@ -17657,10 +17746,8 @@ msgid "Ticket Count"
 msgstr "Število zahtevkov"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:22
-#, fuzzy
-#| msgid "Ticket Count"
 msgid "Ticket Customer"
-msgstr "Število zahtevkov"
+msgstr "Zahtevek - stranka"
 
 #: db/seeds/permissions.rb:215
 #, fuzzy
@@ -17668,9 +17755,15 @@ msgstr "Število zahtevkov"
 msgid "Ticket Duplicate Detection"
 msgstr "Omogoči kreiranje zahtevkov"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:62
+#, fuzzy
+#| msgid "Ticket Customer"
+msgid "Ticket History"
+msgstr "Zahtevek - stranka"
+
 #: db/seeds/settings.rb:2167
 msgid "Ticket Hook"
-msgstr ""
+msgstr "Predpona št. zahtevka"
 
 #: db/seeds/settings.rb:2192
 msgid "Ticket Hook Divider"
@@ -17820,7 +17913,7 @@ msgstr "Testiranje je bilo uspešno."
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:13
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:89
 msgid "Ticket escalation"
-msgstr "Stopnjevanje zahtevka"
+msgstr "Eskalacija zahtevka"
 
 #: app/assets/javascripts/app/lib/mixins/ticket_mass_updatable.coffee:33
 #, fuzzy
@@ -17853,7 +17946,7 @@ msgstr "Blokiraj obvestila"
 msgid "Ticket information"
 msgstr "Blokiraj obvestila"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:72
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketMerge/TicketMergeFlyout.vue:73
 #, fuzzy
 #| msgid "The test run was successful."
 msgid "Ticket merged successfully"
@@ -17869,7 +17962,7 @@ msgstr "Posodobi zahtevek"
 #: app/assets/javascripts/app/controllers/_ui_element/notification_matrix.coffee:11
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:84
 msgid "Ticket reminder reached"
-msgstr ""
+msgstr "Opomnik zahtevka"
 
 #. This is the template file app/views/mailer/ticket_reminder_reached/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -17948,9 +18041,9 @@ msgstr "Posodobi zahtevek"
 #: app/assets/javascripts/app/controllers/_ui_element/postmaster_set.coffee:11
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:79
 msgid "Ticket update"
-msgstr "Posodobi zahtevek"
+msgstr "Posodobitev zahtevka"
 
-#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:486
+#: app/frontend/apps/desktop/pages/ticket/views/TicketDetailView.vue:487
 msgid "Ticket update failed."
 msgstr ""
 
@@ -17994,9 +18087,8 @@ msgid ""
 "</div>\n"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:38
+#: app/frontend/apps/desktop/pages/ticket/routes.ts:35
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:74
-#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:22
 msgid ""
 "Ticket with specified ID was not found. Try checking the URL for errors."
 msgstr ""
@@ -18020,7 +18112,7 @@ msgstr "Zahtevek |%s| bo kmalu zrasel!"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:9
 #: app/controllers/time_accountings_controller.rb:87
 msgid "Ticket#"
-msgstr ""
+msgstr "Zahtevek#"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:6
 msgid "TicketID"
@@ -18039,7 +18131,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:8
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/ticketOverviews.ts:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:95
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:92
 #: app/frontend/apps/mobile/pages/search/plugins/ticket.ts:9
 #: app/frontend/apps/mobile/pages/ticket/routes.ts:51
 #: app/frontend/apps/mobile/pages/ticket/views/TicketOverview.vue:173
@@ -18060,7 +18152,7 @@ msgid "Tickets assigned to me: %s of %s"
 msgstr "Moji zahtevki: %s od %s"
 
 #: app/controllers/ticket_articles_controller.rb:225
-#: app/controllers/tickets_controller.rb:600
+#: app/controllers/tickets_controller.rb:602
 msgid "Tickets can only be imported if system is in import mode."
 msgstr ""
 
@@ -18100,41 +18192,31 @@ msgstr "Čas"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:122
 #: db/seeds/permissions.rb:107 db/seeds/settings.rb:3931
 msgid "Time Accounting"
-msgstr "Časovno računovodstvo"
+msgstr "Evidenca porabe časa"
 
 #: db/seeds/settings.rb:3994
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time Accounting Custom Unit"
-msgstr "Časovno računovodstvo"
+msgstr ""
 
 #: db/seeds/settings.rb:4030
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time Accounting Default Type"
-msgstr "Časovno računovodstvo"
+msgstr ""
 
 #: db/seeds/settings.rb:3958
 msgid "Time Accounting Selector"
 msgstr ""
 
 #: db/seeds/settings.rb:4012
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time Accounting Types"
-msgstr "Časovno računovodstvo"
+msgstr ""
 
 #: db/seeds/settings.rb:3976
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time Accounting Unit"
-msgstr "Časovno računovodstvo"
+msgstr "Enota mere za porabljen čas"
 
 #: app/policies/ticket/time_accounting_policy.rb:6
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time Accounting is not enabled"
-msgstr "Časovno računovodstvo"
+msgstr "Evidenca porabe časa ni omogočena"
 
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:14
 #: app/assets/javascripts/app/views/time_accounting/by_customer.jst.eco:11
@@ -18147,13 +18229,11 @@ msgstr "Časovne enote"
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:15
 #: lib/excel_sheet/ticket.rb:34
 msgid "Time Units Total"
-msgstr "Skupne časovne enote"
+msgstr "Skupaj časovne enote"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:16
-#, fuzzy
-#| msgid "Time Accounting"
 msgid "Time accounting unit"
-msgstr "Časovno računovodstvo"
+msgstr "Enota mere za porabljen čas"
 
 #: app/assets/javascripts/app/models/trigger.coffee:7
 msgid "Time event"
@@ -18184,7 +18264,7 @@ msgstr "Časovni okvir za prvi odziv."
 #: app/assets/javascripts/app/models/trigger.coffee:13 db/seeds/settings.rb:183
 #: lib/excel_sheet.rb:116
 msgid "Timezone"
-msgstr ""
+msgstr "Časovni pas"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:117
 msgid "Timing"
@@ -18203,7 +18283,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/time_accounting/by_activity.jst.eco:10
 #: app/assets/javascripts/app/views/time_accounting/by_ticket.jst.eco:10
 #: app/controllers/time_accountings_controller.rb:91
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:36
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSimpleTable/TicketSimpleTable.vue:38
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:144
 #: app/graphql/gql/types/overview_type.rb:60
 #: db/seeds/object_manager_attributes.rb:32 lib/excel_sheet/ticket.rb:24
@@ -18405,10 +18485,8 @@ msgid "Total"
 msgstr "Skupaj"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketObjectAttributes.vue:53
-#, fuzzy
-#| msgid "Accounted Time"
 msgid "Total Accounted Time"
-msgstr "Računovodski čas"
+msgstr "Skupaj porabljen čas"
 
 #: db/seeds/settings.rb:949
 msgid "Total display of the number of objects in a grouping."
@@ -18460,8 +18538,15 @@ msgstr "Prevodi"
 
 #: app/assets/javascripts/app/controllers/_integration/slack.coffee:29
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventIssuerNames.ts:6
 #: db/seeds/permissions.rb:77
 msgid "Trigger"
+msgstr "Sprožilec"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:7
+#, fuzzy
+#| msgid "Trigger"
+msgid "Triggered"
 msgstr "Sprožilec"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
@@ -18694,6 +18779,8 @@ msgstr "Testiranje je bilo uspešno."
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:11
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:57
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:105
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:119
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:210
 #: db/seeds/object_manager_attributes.rb:124
 msgid "Type"
 msgstr "Tip"
@@ -18738,16 +18825,32 @@ msgstr "Nerazporejeni in odprti zahtevki"
 msgid "Unassigned email addresses, assign them to a channel or delete them."
 msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_show_row.jst.eco:66
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/show_row.jst.eco:26
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistItem.vue:61
 #, fuzzy
 #| msgid "Select item"
 msgid "Uncheck item"
 msgstr "Izberi predmet"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
+#, fuzzy
+#| msgid "Select item"
+msgid "Unchecked"
+msgstr "Izberi predmet"
+
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:12
 msgid "Unit"
-msgstr ""
+msgstr "Enota mere"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:42
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:15
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:35
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:33
+#, fuzzy
+#| msgid "Unknown error"
+msgid "Unknown"
+msgstr "Neznana napaka"
 
 #: lib/password_policy/backend.rb:15
 msgid "Unknown error"
@@ -18764,10 +18867,16 @@ msgid ""
 "on your mobile device:"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem/IssueTrackerLink.vue:36
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:67
 #, fuzzy
 #| msgid "no issues"
 msgid "Unlink issue"
+msgstr "ni težav"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:196
+#, fuzzy
+#| msgid "no issues"
+msgid "Unlink object"
 msgstr "ni težav"
 
 #: app/assets/javascripts/app/controllers/user.coffee:185
@@ -18803,17 +18912,15 @@ msgid "Unselect Option"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:703
-#, fuzzy
-#| msgid "Restore Defaults"
 msgid "Unset default"
-msgstr "Obnovi privzeto"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:149
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:158
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:7
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:57
 msgid "Unsubscribe"
-msgstr ""
+msgstr "Odjava"
 
 #: lib/whatsapp/webhook/payload.rb:46
 msgid "Unsupported message type."
@@ -18956,6 +19063,9 @@ msgstr ""
 #: app/assets/javascripts/app/models/organization.coffee:11
 #: app/assets/javascripts/app/models/ticket.coffee:30
 #: app/assets/javascripts/app/models/user.coffee:17
+#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:41
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:122
+#: app/frontend/shared/entities/user/stores/objectAttributes.ts:41
 #: app/graphql/gql/types/overview_type.rb:82
 msgid "Updated at"
 msgstr "Posodobljeno"
@@ -18975,6 +19085,9 @@ msgstr "Posodobljeno"
 #: app/assets/javascripts/app/models/ticket.coffee:29
 #: app/assets/javascripts/app/models/ticket_article.coffee:17
 #: app/assets/javascripts/app/models/user.coffee:16
+#: app/frontend/shared/entities/organization/stores/objectAttributes.ts:31
+#: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:112
+#: app/frontend/shared/entities/user/stores/objectAttributes.ts:31
 #: app/graphql/gql/types/overview_type.rb:81
 msgid "Updated by"
 msgstr "Posodobil"
@@ -19426,7 +19539,7 @@ msgstr ""
 msgid "Variables"
 msgstr ""
 
-#: app/assets/javascripts/app/views/package.jst.eco:41
+#: app/assets/javascripts/app/views/package.jst.eco:49
 msgid "Vendor"
 msgstr "Prodajalec"
 
@@ -19477,7 +19590,7 @@ msgid "Verifying…"
 msgstr "Potrjevanje…"
 
 #: app/assets/javascripts/app/controllers/version.coffee:3
-#: app/assets/javascripts/app/views/package.jst.eco:40
+#: app/assets/javascripts/app/views/package.jst.eco:48
 #: app/assets/javascripts/app/views/version.jst.eco:2
 #: app/frontend/apps/mobile/pages/account/views/AccountOverview.vue:173
 msgid "Version"
@@ -19813,19 +19926,16 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:35
 #: app/assets/javascripts/app/models/checklist_template.coffee:23
-#, fuzzy
-#| msgid "With templates you can pre-fill ticket attributes."
 msgid ""
 "With checklist templates it is possible to pre-fill new checklists with "
 "initial items."
-msgstr "S predlogami lahko predhodno izpolnite zahtevke."
+msgstr ""
 
-#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist_start.jst.eco:15
+#: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:15
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:18
-#, fuzzy
-#| msgid "With templates you can pre-fill ticket attributes."
 msgid "With checklist templates you can pre-fill your checklists."
-msgstr "S predlogami lahko predhodno izpolnite zahtevke."
+msgstr ""
+"S predlogami kontrolnih seznamov lahko vnaprej pripravite kontrolne sezname."
 
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:12
 msgid ""
@@ -19887,7 +19997,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/report/time_range_picker.jst.eco:2
 msgid "Year"
-msgstr "leto"
+msgstr "Leto"
 
 #: app/assets/javascripts/app/controllers/_ui_element/time_range.coffee:10
 msgid "Year(s)"
@@ -19997,6 +20107,9 @@ msgid ""
 "screen. These have many purposes, such as displaying a data privacy page for "
 "all people using your Zammad instance."
 msgstr ""
+"Tukaj lahko določite povezave ki se prikažejo npr. v nogi prijavnega "
+"zaslona. Te povezave imajo več namenov, npr. prikaz strani o zasebnosti "
+"podatkov."
 
 #: app/assets/javascripts/app/views/facebook/app_config.jst.eco:3
 #: app/assets/javascripts/app/views/google/app_config.jst.eco:3
@@ -20048,10 +20161,8 @@ msgstr ""
 
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:19
 #: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:18
-#, fuzzy
-#| msgid "You have not created a ticket yet."
 msgid "You can no longer see the ticket."
-msgstr "Tiketa še niste ustvarili."
+msgstr ""
 
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts:18
 msgid "You can no longer see the user."
@@ -20123,18 +20234,20 @@ msgstr ""
 msgid "You have insufficient permissions to mention other users."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:15
-msgid "You have insufficient rights to open this tab."
-msgstr "Za odprtje tega zavihka nimate zadostnih pravic."
+#: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:17
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:51
+#, fuzzy
+#| msgid "You have insufficient rights to view this organization."
+msgid "You have insufficient rights to view this object."
+msgstr "Za ogled te organizacije nimate zadostnih pravic."
 
 #: app/frontend/apps/mobile/pages/organization/views/OrganizationDetailView.vue:32
 #: app/frontend/apps/mobile/pages/ticket/views/TicketInformation/TicketInformationOrganization.vue:28
 msgid "You have insufficient rights to view this organization."
 msgstr "Za ogled te organizacije nimate zadostnih pravic."
 
-#: app/frontend/apps/desktop/pages/ticket/composables/useTicketInformation.ts:40
+#: app/frontend/apps/desktop/pages/ticket/routes.ts:33
 #: app/frontend/apps/mobile/pages/ticket/views/TicketDetailView.vue:76
-#: app/frontend/shared/entities/ticket-article/composables/useTicketDataHandler.ts:24
 msgid "You have insufficient rights to view this ticket."
 msgstr ""
 
@@ -20163,7 +20276,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:10
 msgid "You have not created a ticket yet."
-msgstr "Tiketa še niste ustvarili."
+msgstr "Nimate ustvarjenih zahtevkov."
 
 #: app/assets/javascripts/app/controllers/_profile/avatar.coffee:324
 msgid "You have to allow access to your webcam."
@@ -20521,10 +20634,8 @@ msgid "again"
 msgstr "ponovno"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:421
-#, fuzzy
-#| msgid "My assigned Tickets"
 msgid "all subscribers"
-msgstr "Moji dodeljeni zahtevki"
+msgstr "vsi naročniki"
 
 #: app/assets/javascripts/app/controllers/_ui_element/timer.coffee:139
 msgid "and"
@@ -20570,6 +20681,28 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:173
 msgid "auto select"
 msgstr "samodejna izbira"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:12
+#, fuzzy
+#| msgid "trigger '%s' was performed because pending reminder was reached"
+msgid "because pending reminder was reached"
+msgstr "sprožilec '%s' je bil izveden, ker je bil dosežen čakajoči opomnik"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:16
+#, fuzzy
+#| msgid "%s of my tickets escalated"
+msgid "because ticket was escalated"
+msgstr "%s mojih zahtevkov je eskaliralo"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:20
+#, fuzzy
+#| msgid "Ticket |%s| will escalate soon!"
+msgid "because ticket will escalate soon"
+msgstr "Zahtevek |%s| bo kmalu zrasel!"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
+msgid "because time event was reached"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:66
@@ -20654,13 +20787,11 @@ msgstr "zapri"
 #: app/frontend/apps/mobile/components/CommonTicketStateList/CommonTicketStateList.vue:56
 #: db/seeds/ticket_state_types.rb:7 db/seeds/ticket_states.rb:23
 msgid "closed"
-msgstr "zaprt"
+msgstr "zaključeno"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:108
-#, fuzzy
-#| msgid "Closed Tickets"
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:105
 msgid "closed tickets"
-msgstr "Zaprta sporočila"
+msgstr "zaključeni zahtevki"
 
 #: app/assets/javascripts/app/controllers/cti.coffee:157
 msgid "connected"
@@ -20743,10 +20874,8 @@ msgid "custom"
 msgstr "stranka"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:21
-#, fuzzy
-#| msgid "customer"
 msgid "custom unit"
-msgstr "stranka"
+msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:76
 msgid "d"
@@ -20787,10 +20916,8 @@ msgstr "izbriši"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:156
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:18
-#, fuzzy
-#| msgid "Create new Customer"
 msgid "delivered to the customer"
-msgstr "Ustvari novo stranko"
+msgstr "dostavljeno stranki"
 
 #: app/assets/javascripts/app/controllers/ticket_overview/settings.coffee:56
 #: app/assets/javascripts/app/models/overview.coffee:39
@@ -20859,7 +20986,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay.jst.eco:3
 msgid "drag here to cancel"
-msgstr ""
+msgstr "povlecite tukaj za preklic"
 
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:140
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:124
@@ -20972,12 +21099,25 @@ msgstr ""
 msgid "from"
 msgstr "od"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:40
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:53
+#, fuzzy
+#| msgid "Import"
+msgid "from %s"
+msgstr "Uvoz"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:481
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "from (relative)"
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:25
+#, fuzzy
+#| msgid "Add message"
+msgid "from message"
+msgstr "Dodaj sporočilo"
 
 #: app/controllers/integration/pgp_controller.rb:48
 msgid "gpg (GnuPG) 2.2.0 or newer is required"
@@ -21023,10 +21163,8 @@ msgstr "ura"
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:9
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:42
 #: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:21
-#, fuzzy
-#| msgid "Hour(s)"
 msgid "hour(s)"
-msgstr "Ur"
+msgstr "ura(e)"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:98
 #: app/assets/javascripts/app/views/sla/index.jst.eco:37
@@ -21041,6 +21179,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/idoit_object_selector.coffee:5
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:13
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/idoit.ts:11
 msgid "i-doit"
 msgstr ""
 
@@ -21050,6 +21189,10 @@ msgstr ""
 
 #: db/seeds/settings.rb:4813
 msgid "i-doit integration"
+msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:179
+msgid "i-doit: Link objects"
 msgstr ""
 
 #: app/assets/javascripts/app/views/generic/ical_feed.jst.eco:19
@@ -21152,6 +21295,12 @@ msgstr "interno"
 #| msgid "internal"
 msgid "internal database"
 msgstr "interno"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:19
+#, fuzzy
+#| msgid "assign tickets"
+msgid "into this ticket"
+msgstr "Dodeli sporočilo"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:96
@@ -21268,7 +21417,7 @@ msgstr ""
 msgid "is too short (minimum is 1 character)"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:55
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList/IssueTrackerItem.vue:55
 #, fuzzy
 #| msgid "(ticket status: %s)"
 msgid "issue status: %s"
@@ -21291,7 +21440,7 @@ msgstr "pravkar"
 
 #: db/seeds/settings.rb:2229
 msgid "left"
-msgstr ""
+msgstr "levo"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/linkedAccounts.ts:27
 msgid "linked accounts,facebook,github,gitlab,google,linkedin,microsoft,saml"
@@ -21323,10 +21472,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:6
 #: app/assets/javascripts/app/views/generic/application_selector.jst.eco:15
 #: app/assets/javascripts/app/views/translation/form.jst.eco:5
-#, fuzzy
-#| msgid "matches"
 msgid "matches found"
-msgstr "ustreza"
+msgstr "najdenih zadetkov"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:60
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:187
@@ -21362,10 +21509,8 @@ msgstr "minuta"
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:17
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:46
 #: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:25
-#, fuzzy
-#| msgid "Minute(s)"
 msgid "minute(s)"
-msgstr "Minut"
+msgstr "minuta(e)"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:120
 msgid "minutes"
@@ -21463,7 +21608,7 @@ msgstr "ni težav"
 
 #: app/assets/javascripts/app/lib/mixins/time_accounting_unit.coffee:5
 msgid "no unit"
-msgstr ""
+msgstr "brez enote"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_article_attachments.coffee:25
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_idoit.coffee:63
@@ -21518,6 +21663,12 @@ msgstr "Obvestila"
 msgid "now"
 msgstr "ne"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:51
+#, fuzzy
+#| msgid "Add message"
+msgid "on message"
+msgstr "Dodaj sporočilo"
+
 #: app/models/object_manager/attribute.rb:548
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr ""
@@ -21527,7 +21678,7 @@ msgstr ""
 msgid "open"
 msgstr "odprto"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:101
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarCustomer/TicketSidebarCustomerContent.vue:98
 #, fuzzy
 #| msgid "Open Tickets"
 msgid "open tickets"
@@ -21589,7 +21740,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TimeAccountingFlyout.vue:44
 #: app/frontend/shared/entities/ticket/composables/useTicketAccountedTime.ts:23
 msgid "quarter-hour(s)"
-msgstr ""
+msgstr "četrt ure"
 
 #: app/assets/javascripts/app/models/ticket.coffee:82
 msgid "reached"
@@ -21605,10 +21756,8 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
-#, fuzzy
-#| msgid "Create new Customer"
 msgid "read by the customer"
-msgstr "Ustvari novo stranko"
+msgstr "stranka prebrala"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:90
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:117
@@ -21653,13 +21802,11 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/twitter_reply.coffee:8
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:9
 msgid "reply"
-msgstr "odgovori"
+msgstr "odgovor"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:53
-#, fuzzy
-#| msgid "reply"
 msgid "reply all"
-msgstr "odgovori"
+msgstr "odgovori vsem"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:111
 msgid "required"
@@ -21667,7 +21814,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:2230
 msgid "right"
-msgstr ""
+msgstr "desno"
 
 #: app/assets/javascripts/app/controllers/cti.coffee:154
 msgid "ringing"
@@ -21704,12 +21851,16 @@ msgstr "izberite priponko…"
 msgid "select visible options"
 msgstr "Izberi vse"
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:10
+#, fuzzy
+#| msgid "set to public"
+msgid "sent to"
+msgstr "nastavi kot javno"
+
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
-#, fuzzy
-#| msgid "Create new Customer"
 msgid "sent to the customer"
-msgstr "Ustvari novo stranko"
+msgstr "poslano stranki"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/devices.ts:24
 msgid "session,sessions,computer,computers,browser,browsers,access"
@@ -21877,6 +22028,12 @@ msgstr ""
 msgid "to go to the homepage."
 msgstr ""
 
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:38
+#, fuzzy
+#| msgid "Add message"
+msgid "to message"
+msgstr "Dodaj sporočilo"
+
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:65
@@ -22019,7 +22176,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco:6
 msgid "|Left| means |[Ticket#12345] Some Subject|"
-msgstr ""
+msgstr "|Levo| pomeni |[Zahtevek#12345] Zadeva sporočila|"
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco:7
 msgid ""
@@ -22029,7 +22186,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/settings/ticket_hook_position.jst.eco:5
 msgid "|Right| means |Some Subject [Ticket#12345]|"
-msgstr ""
+msgstr "|Desno| pomeni |Zadeva sporočila [Zahtevek#12345]|"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:407
 #, fuzzy
@@ -22053,6 +22210,12 @@ msgstr "...celotnega tekstovnega polja"
 msgid "∅ Waiting time today"
 msgstr "∅ Čakalna doba - danes"
 
+#~ msgid "This tab could not be found."
+#~ msgstr "Tega zavihka ni bilo mogoče najti."
+
+#~ msgid "You have insufficient rights to open this tab."
+#~ msgstr "Za odprtje tega zavihka nimate zadostnih pravic."
+
 #~ msgid "Editing"
 #~ msgstr "Urejanje"
 
@@ -22075,11 +22238,6 @@ msgstr "∅ Čakalna doba - danes"
 #~| msgid "Checksum"
 #~ msgid "Tracked by checklist item by"
 #~ msgstr "Kontrolna vsota"
-
-#, fuzzy
-#~| msgid "ticket %s was merged into this ticket"
-#~ msgid "Checklist is already created for this ticket"
-#~ msgstr "zahtevek %s je bil združen v ta zahtevek"
 
 #, fuzzy
 #~| msgid "Attachments"
