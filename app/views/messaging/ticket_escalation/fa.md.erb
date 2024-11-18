@@ -1,0 +1,7 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: تشدید شد در #{ticket.escalation_at}_
+بلیط (#{ticket.title}) از "#{ticket.customer.longname}" آن زمان تشدید شده است "#{ticket.escalation_at}"!
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>

@@ -1,0 +1,9 @@
+# #{ticket.title}
+_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: ایجاد شده توسط #{current_user.longname} at #{ticket.updated_at}_
+* گروه: #{ticket.group.name}
+* مالک: #{ticket.owner.fullname}
+* ایالت: #{t(ticket.state.name)}
+
+<% if @objects[:article] %>
+#{article.body_as_text}
+<% end %>
