@@ -37,5 +37,6 @@ if [ "$1" = 'runner' ]; then
   useradd -M -d "${ZAMMAD_DIR}" -s /bin/bash -u 1000 -g 1000 "${ZAMMAD_USER}"
   sed -i -e "s#user www-data;##g" -e 's#/var/log/nginx/\(access\|error\).log#/dev/stdout#g' -e 's#pid /run/nginx.pid;#pid /tmp/nginx.pid;#g' /etc/nginx/nginx.conf
   mkdir -p "${ZAMMAD_DIR}" /var/log/nginx
+  mkdir -p "${ZAMMAD_DIR}/storage"  # Pre-create the storage folder to avoid mount permission issues (see https://github.com/zammad/zammad/issues/5412).
   chown -R "${ZAMMAD_USER}":"${ZAMMAD_USER}" /etc/nginx /var/lib/nginx /var/log/nginx "${ZAMMAD_DIR}"
 fi
