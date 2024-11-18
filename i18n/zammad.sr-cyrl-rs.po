@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-14 09:00+0000\n"
+"PO-Revision-Date: 2024-11-18 09:00+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (Cyrillic script) <https://translations.zammad.org/"
 "projects/zammad/zammad-development/sr_Cyrl/>\n"
@@ -574,10 +574,8 @@ msgid "%s of my tickets escalated"
 msgstr "%s мојих тикета је ескалирано"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:50
-#, fuzzy
-#| msgid "message"
 msgid "%s on message"
-msgstr "порука"
+msgstr "%s на поруку"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 #: app/graphql/gql/queries/autocomplete_search/generic.rb:64
@@ -628,10 +626,8 @@ msgid "%s tickets found"
 msgstr "%s тикет(а) пронађен(о)"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:37
-#, fuzzy
-#| msgid "message"
 msgid "%s to message"
-msgstr "порука"
+msgstr "%s на поруку"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
@@ -1515,7 +1511,7 @@ msgstr "Додај ову класу за дугме на вашој стран�
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:9
 msgid "Added"
-msgstr ""
+msgstr "Додата"
 
 #: app/controllers/first_steps_controller.rb:109
 msgid "Additional Channels"
@@ -3113,16 +3109,12 @@ msgid "Change text color"
 msgstr "Измени боју текста"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
-#, fuzzy
-#| msgid "Change Objects"
 msgid "Changed reaction"
-msgstr "Измени објекте"
+msgstr "Измењена реакција"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
-#, fuzzy
-#| msgid "Exchange integration"
 msgid "Changed reaction to"
-msgstr "Exchange интеграција"
+msgstr "Измењена реакција на"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -3235,10 +3227,8 @@ msgstr ""
 "није укључено, вредности ће бити сортиране азбучним редоследом."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
-#, fuzzy
-#| msgid "checked"
 msgid "Checked"
-msgstr "означено"
+msgstr "Oзначен"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
@@ -7003,16 +6993,14 @@ msgid "Error during execution of auto wizard."
 msgstr "Грешка приликом извршавања аутоматског асистента."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:52
-#, fuzzy
-#| msgid "Something went wrong. Please contact your administrator."
 msgid "Error fetching github information. Please contact your administrator."
-msgstr "Нешто је кренуло наопако. Молимо контактирајте администратора."
+msgstr ""
+"Грешка при учитавању GitHub података. Молимо контактирајте администратора."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:64
-#, fuzzy
-#| msgid "Something went wrong. Please contact your administrator."
 msgid "Error fetching i-doit information. Please contact your administrator."
-msgstr "Нешто је кренуло наопако. Молимо контактирајте администратора."
+msgstr ""
+"Грешка при учитавању i-doit података. Молимо контактирајте администратора."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:280
 #: db/seeds/overviews.rb:160
@@ -9607,10 +9595,8 @@ msgid "Last name"
 msgstr "Презиме"
 
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:129
-#, fuzzy
-#| msgid "Has update"
 msgid "Last owner update"
-msgstr "Освежено"
+msgstr "Последње освежавање власника"
 
 #: app/assets/javascripts/app/models/job.coffee:19
 msgid "Last run"
@@ -10450,10 +10436,8 @@ msgstr "Чланови"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created-mention.ts:12
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:12
-#, fuzzy
-#| msgid "Mention user"
 msgid "Mention for"
-msgstr "Помени корисника"
+msgstr "Поменути корисник"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 msgid "Mention user"
@@ -10495,16 +10479,12 @@ msgid "Merged"
 msgstr "Спојено"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/merged-into.ts:11
-#, fuzzy
-#| msgid "Merge tickets"
 msgid "Merged this ticket into"
-msgstr "Споји тикете"
+msgstr "Спојен тикета са"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:11
-#, fuzzy
-#| msgid "Merge tickets"
 msgid "Merged ticket"
-msgstr "Споји тикете"
+msgstr "Спојен тикет"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
 #: app/assets/javascripts/app/views/maintenance.jst.eco:32
@@ -11803,10 +11783,8 @@ msgid "Object Manager"
 msgstr "Управљање објектима"
 
 #: app/services/service/history/list.rb:52
-#, fuzzy
-#| msgid "Given object does not support selector"
 msgid "Object does not support history"
-msgstr "Дат објекат не подржава услов"
+msgstr "Објекат не подржава историјат"
 
 #: app/frontend/apps/desktop/components/layout/LayoutPage.vue:60
 msgid ""
@@ -13093,16 +13071,12 @@ msgid "Raw"
 msgstr "Сирово"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
-#, fuzzy
-#| msgid "deactivated"
 msgid "Reacted"
-msgstr "искључено"
+msgstr "Реаговао(ла)"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
-#, fuzzy
-#| msgid "ends with"
 msgid "Reacted with"
-msgstr "завршава са"
+msgstr "Реаговао(ла) са"
 
 #: app/assets/javascripts/app/models/group.coffee:44
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:40
@@ -13354,16 +13328,12 @@ msgstr "Уклони двофакторску аутентификацију"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:9
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
-#, fuzzy
-#| msgid "Remove"
 msgid "Removed"
-msgstr "Обриши"
+msgstr "Уклоњена"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
-#, fuzzy
-#| msgid "Remove formatting"
 msgid "Removed reaction"
-msgstr "Уклони форматирање"
+msgstr "Уклоњена реакција"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:649
 msgid "Removes any hyperlink"
@@ -14712,10 +14682,8 @@ msgid "Shared"
 msgstr "Заједнички"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventEntityNames.ts:8
-#, fuzzy
-#| msgid "Shared Drafts"
 msgid "Shared Draft"
-msgstr "Заједнички нацрти"
+msgstr "Заједнички нацрт"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee:12
 #: app/assets/javascripts/app/models/group.coffee:17
@@ -17753,10 +17721,8 @@ msgid "Ticket Duplicate Detection"
 msgstr "Откривање дупликата тикета"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:62
-#, fuzzy
-#| msgid "Ticket Customer"
 msgid "Ticket History"
-msgstr "Клијент тикета"
+msgstr "Историјат тикета"
 
 #: db/seeds/settings.rb:2167
 msgid "Ticket Hook"
@@ -18537,10 +18503,8 @@ msgid "Trigger"
 msgstr "Окидач"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:7
-#, fuzzy
-#| msgid "Trigger"
 msgid "Triggered"
-msgstr "Окидач"
+msgstr "Извршен окидач"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
 msgid "Triggers"
@@ -18817,10 +18781,8 @@ msgid "Uncheck item"
 msgstr "Одзначи задатак"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
-#, fuzzy
-#| msgid "checked"
 msgid "Unchecked"
-msgstr "означено"
+msgstr "Одзначен"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:12
 msgid "Unit"
@@ -18831,10 +18793,8 @@ msgstr "Јединица"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:25
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:35
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:33
-#, fuzzy
-#| msgid "Unknown error"
 msgid "Unknown"
-msgstr "Непозната грешка"
+msgstr "Непознато"
 
 #: lib/password_policy/backend.rb:15
 msgid "Unknown error"
@@ -20761,26 +20721,20 @@ msgid "auto select"
 msgstr "аутоматски избор"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:12
-#, fuzzy
-#| msgid "trigger '%s' was performed because pending reminder was reached"
 msgid "because pending reminder was reached"
-msgstr "окидач ’%s’ је извршен због достизања времена чекања"
+msgstr "због достизања времена чекања"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:16
-#, fuzzy
-#| msgid "%s of my tickets escalated"
 msgid "because ticket was escalated"
-msgstr "%s мојих тикета је ескалирано"
+msgstr "због ескалације тикета"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:20
-#, fuzzy
-#| msgid "Ticket |%s| will escalate soon!"
 msgid "because ticket will escalate soon"
-msgstr "Тикет |%s| ће ускоро ескалирати!"
+msgstr "због скоре ескалације тикета"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
 msgid "because time event was reached"
-msgstr ""
+msgstr "због достизања временског догађаја"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:66
@@ -21165,10 +21119,8 @@ msgstr "од"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:40
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:53
-#, fuzzy
-#| msgid "Call from %s"
 msgid "from %s"
-msgstr "Позив од %s"
+msgstr "од %s"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:481
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
@@ -21178,10 +21130,8 @@ msgid "from (relative)"
 msgstr "од (релативно)"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:25
-#, fuzzy
-#| msgid "Welcome message"
 msgid "from message"
-msgstr "Порука добродошлице"
+msgstr "од поруке"
 
 #: app/controllers/integration/pgp_controller.rb:48
 msgid "gpg (GnuPG) 2.2.0 or newer is required"
@@ -21341,10 +21291,8 @@ msgid "internal database"
 msgstr "интерна база података"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:19
-#, fuzzy
-#| msgid "Find a ticket"
 msgid "into this ticket"
-msgstr "Пронађи тикет"
+msgstr "са овим тикетом"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:96
@@ -21687,10 +21635,8 @@ msgid "now"
 msgstr "сад"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:51
-#, fuzzy
-#| msgid "message"
 msgid "on message"
-msgstr "порука"
+msgstr "на поруку"
 
 #: app/models/object_manager/attribute.rb:548
 msgid "only lowercase letters, numbers, and '_' are allowed"
@@ -21865,10 +21811,8 @@ msgid "select visible options"
 msgstr "изабери видљиве опције"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:10
-#, fuzzy
-#| msgid "set to public"
 msgid "sent to"
-msgstr "постави на јавно"
+msgstr "послато на"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
@@ -22036,10 +21980,8 @@ msgid "to go to the homepage."
 msgstr "за повратак на почетну страну."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:38
-#, fuzzy
-#| msgid "message"
 msgid "to message"
-msgstr "порука"
+msgstr "на поруку"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163

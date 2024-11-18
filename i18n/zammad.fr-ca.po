@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2022-08-20 03:30+0000\n"
-"Last-Translator: Vincent Handfield <vincent@accestech.com>\n"
+"PO-Revision-Date: 2024-11-15 17:28+0000\n"
+"Last-Translator: Richard <richard.savoie@hotmail.ca>\n"
 "Language-Team: French (Canada) <https://translations.zammad.org/projects/"
 "zammad/zammad-development/fr_CA/>\n"
 "Language: fr-ca\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.13\n"
+"X-Generator: Weblate 5.7.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -3854,10 +3854,8 @@ msgid "Configure your system."
 msgstr "Pour configurer votre système."
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_notification.coffee:45
-#, fuzzy
-#| msgid "Config"
 msgid "Confirm"
-msgstr "Config"
+msgstr "Confirmer"
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/password_check.coffee:4
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationPasswordCheck.vue:41

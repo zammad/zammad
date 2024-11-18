@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-14 09:00+0000\n"
+"PO-Revision-Date: 2024-11-18 09:00+0000\n"
 "Last-Translator: Rok Poje <rok.poje@mintpos.si>\n"
 "Language-Team: Slovenian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sl/>\n"
@@ -10859,10 +10859,8 @@ msgid "New"
 msgstr "Novo"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:284
-#, fuzzy
-#| msgid "Open Tickets"
 msgid "New & Open Tickets"
-msgstr "Odprti zahtevki"
+msgstr "Novi in odprti zahtevki"
 
 #: app/assets/javascripts/app/controllers/api.coffee:190
 msgid "New Access Token is"
@@ -10991,10 +10989,8 @@ msgid "New Ticket State"
 msgstr "Nov zahtevek"
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/Ticket/TicketCreate.vue:33
-#, fuzzy
-#| msgid "New Ticket"
 msgid "New Ticket: %s"
-msgstr "Nov zahtevek"
+msgstr "Nov zahtevek: %s"
 
 #: app/assets/javascripts/app/views/translation/index.jst.eco:11
 #, fuzzy
@@ -11047,8 +11043,6 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldNotifications/FieldNotificationsInput.vue:74
 #: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/MenuContainer/AddMenu/plugins/ticket-create.ts:12
-#, fuzzy
-#| msgid "New Ticket"
 msgid "New ticket"
 msgstr "Nov zahtevek"
 

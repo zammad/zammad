@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-11 09:00+0000\n"
-"Last-Translator: Sajjad Jazini <s.jazini@vatanmail.ir>\n"
+"PO-Revision-Date: 2024-11-18 09:00+0000\n"
+"Last-Translator: sesoltani <se.soltani@hotmail.com>\n"
 "Language-Team: Persian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fa/>\n"
 "Language: fa-ir\n"
@@ -53,6 +53,11 @@ msgid ""
 "compatible object filesystem. You can switch between the modules even on a "
 "system that is already in production without any loss of data."
 msgstr ""
+"\"پایگاه داده\" همه پیوست ها را در پایگاه داده ذخیره می کند (برای ذخیره "
+"مقادیر زیاد داده توصیه نمی شود).\"Filesystem\" داده ها را در سیستم فایل "
+"ذخیره می کند. \"Simple Storage (S3)\" داده ها را در یک سیستم فایل شی سازگار "
+"از راه دور S3 ذخیره می کند. می‌توانید بین ماژول‌ها جابجا شوید، حتی در سیستمی "
+"که از قبل در حال تولید است، بدون از دست دادن داده‌ها."
 
 #. This is the template file app/views/messaging/ticket_create/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -70,6 +75,17 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: ایجاد شده توسط #{current_user.longname} at "
+"#{ticket.updated_at}_\n"
+"* گروه: #{ticket.group.name}\n"
+"* مالک: #{ticket.owner.fullname}\n"
+"* ایالت: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_escalation/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -85,6 +101,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: تشدید شد در #{ticket.escalation_at}_\n"
+"بلیط (#{ticket.title}) از \"#{ticket.customer.longname}\" آن زمان تشدید شده "
+"است \"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_info/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -101,6 +126,16 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: آخرین به روز رسانی در #{ticket.updated_at}_\n"
+"* گروه: #{ticket.group.name}\n"
+"* مالک: #{ticket.owner.fullname}\n"
+"* ایالت: #{t(ticket.state.name)}\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_reminder_reached/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -116,6 +151,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: یادآوری رسید!_\n"
+"یک بلیط نیاز به توجه دارد: یادآوری به آن رسید (#{ticket.title}) با مشتری \""
+"*#{ticket.customer.longname}*\".\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_update/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -135,6 +179,19 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: به روز شده توسط #{current_user.longname} at "
+"#{ticket.updated_at}_\n"
+"<% if @objects[:changes].present? %>\n"
+"  <% @objects[:changes].each do |key, value| %>\n"
+"  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
+"  <% end %>\n"
+"<% end %>\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/messaging/ticket_escalation_warning/en.md.erb in ERB/Markdown format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -150,6 +207,15 @@ msgid ""
 "#{article.body_as_text}\n"
 "<% end %>\n"
 msgstr ""
+"# #{ticket.title}\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
+"id}|Ticket##{ticket.number}>: تشدید خواهد شد در #{ticket.escalation_at}_\n"
+"The ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" will "
+"escalate at \"#{ticket.escalation_at}\"!\n"
+"\n"
+"<% if @objects[:article] %>\n"
+"#{article.body_as_text}\n"
+"<% end %>\n"
 
 #. This is the template file app/views/mailer/user_auth_provider/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -168,6 +234,18 @@ msgid ""
 "<br>\n"
 "<div>Your #{config.product_name} Team</div>\n"
 msgstr ""
+"#{config.product_name} حساب مرتبط با یک برنامه شخص ثالث\n"
+"\n"
+"<div>سلام #{user.firstname},</div>\n"
+"<br>\n"
+"<div>به نظر می رسد حساب خود را پیوند داده اید <b>با یک برنامه شخص ثالث</b> \""
+"#{t(provider)}\".</div>\n"
+"<br>\n"
+"<div>اگر این شما نبودید، لطفاً حساب پیوند داده شده را از نمایه خود حذف کنید و "
+"رمز عبور برنامه شخص ثالث خود را تغییر دهید. ممکن است شخصی در سرویس شخص ثالث "
+"به حساب شما دسترسی غیرمجاز داشته باشد.</div>\n"
+"<br>\n"
+"<div>Your #{config.product_name} Team</div>\n"
 
 #. This is the template file app/views/mailer/user_device_new_location/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -235,7 +313,7 @@ msgstr "%s (تایید)"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:108
 msgid "%s (method)"
-msgstr ""
+msgstr "%s (متد)"
 
 #: app/frontend/apps/mobile/components/Form/fields/FieldSecurity/FieldSecurityInput.vue:143
 msgid "%s (option)"
@@ -251,7 +329,7 @@ msgstr "%s (ویژگی)"
 #: app/frontend/apps/mobile/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDialog.vue:315
 #: app/frontend/shared/composables/useSelectOptions.ts:140
 msgid "%s (unknown)"
-msgstr ""
+msgstr "%s (ناشناخته)"
 
 #: app/assets/javascripts/app/views/telegram/bot_add.jst.eco:9
 #: app/assets/javascripts/app/views/telegram/bot_edit.jst.eco:6
@@ -362,6 +440,8 @@ msgid ""
 "%s email(s) were found in your mailbox. They will all be moved from your "
 "mailbox into Zammad."
 msgstr ""
+"%s ایمیل(های) در صندوق پست شما پیدا شد. همه آنها از صندوق پستی شما به Zammad "
+"منتقل می شوند."
 
 #: app/assets/javascripts/app/models/user.coffee:222
 #: app/frontend/shared/components/ActivityMessage/builders/user.ts:33
@@ -395,7 +475,7 @@ msgstr "%s الزامی است."
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/whatsapp_reply.coffee:67
 msgid "%s is sent without text caption"
-msgstr ""
+msgstr "%s بدون شرح متن ارسال می شود"
 
 #: app/frontend/shared/i18n/dates.ts:111
 msgid "%s minutes ago"
@@ -444,10 +524,8 @@ msgid "%s of my tickets escalated"
 msgstr "%s عدد از تیکت‌های من بالاسپاری شد"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:50
-#, fuzzy
-#| msgid "message"
 msgid "%s on message"
-msgstr "پیام"
+msgstr "%s در پیام"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 #: app/graphql/gql/queries/autocomplete_search/generic.rb:64

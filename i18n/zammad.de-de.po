@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-15 09:00+0000\n"
+"PO-Revision-Date: 2024-11-18 11:27+0000\n"
 "Last-Translator: Ralf Schmid <rsc@zammad.com>\n"
 "Language-Team: German <https://translations.zammad.org/projects/zammad/"
 "zammad-development/de/>\n"
@@ -576,10 +576,8 @@ msgid "%s of my tickets escalated"
 msgstr "%s meiner Tickets sind eskaliert"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:50
-#, fuzzy
-#| msgid "message"
 msgid "%s on message"
-msgstr "Nachricht"
+msgstr "%s auf Nachricht"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 #: app/graphql/gql/queries/autocomplete_search/generic.rb:64
@@ -1536,7 +1534,7 @@ msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:9
 msgid "Added"
-msgstr ""
+msgstr "Hinzugefügt"
 
 #: app/controllers/first_steps_controller.rb:109
 msgid "Additional Channels"
@@ -3160,16 +3158,12 @@ msgid "Change text color"
 msgstr "Textfarbe ändern"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
-#, fuzzy
-#| msgid "Change Objects"
 msgid "Changed reaction"
-msgstr "Objekte ändern"
+msgstr "Geänderte Reaktion"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
-#, fuzzy
-#| msgid "Exchange integration"
 msgid "Changed reaction to"
-msgstr "Exchange-Integration"
+msgstr "Geänderte Reaktion auf"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -3283,10 +3277,8 @@ msgstr ""
 "alphabetischer Reihenfolge sortiert."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
-#, fuzzy
-#| msgid "checked"
 msgid "Checked"
-msgstr "abgehakt"
+msgstr "Abgehakt"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
@@ -7150,16 +7142,16 @@ msgid "Error during execution of auto wizard."
 msgstr "Fehler während der Ausführung des automatischen Assistenten."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:52
-#, fuzzy
-#| msgid "Something went wrong. Please contact your administrator."
 msgid "Error fetching github information. Please contact your administrator."
-msgstr "Etwas ist schiefgelaufen. Bitte kontaktieren Sie Ihren Administrator."
+msgstr ""
+"Fehler beim Abrufen von Github-Informationen. Bitte kontaktieren Sie Ihren "
+"Administrator."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:64
-#, fuzzy
-#| msgid "Something went wrong. Please contact your administrator."
 msgid "Error fetching i-doit information. Please contact your administrator."
-msgstr "Etwas ist schiefgelaufen. Bitte kontaktieren Sie Ihren Administrator."
+msgstr ""
+"Fehler beim Abrufen von i-doit-Informationen. Bitte wenden Sie sich an Ihren "
+"Administrator."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:280
 #: db/seeds/overviews.rb:160
@@ -9803,10 +9795,8 @@ msgid "Last name"
 msgstr "Nachname"
 
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:129
-#, fuzzy
-#| msgid "Has update"
 msgid "Last owner update"
-msgstr "Hat Aktualisierung"
+msgstr "Letzte Aktualisierung durch Besitzers"
 
 #: app/assets/javascripts/app/models/job.coffee:19
 msgid "Last run"
@@ -10651,10 +10641,8 @@ msgstr "Mitglieder"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created-mention.ts:12
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:12
-#, fuzzy
-#| msgid "Mention user"
 msgid "Mention for"
-msgstr "Benutzer erwähnen"
+msgstr "Erwähnung für"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 msgid "Mention user"
@@ -10696,16 +10684,12 @@ msgid "Merged"
 msgstr "Zusammengefasst"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/merged-into.ts:11
-#, fuzzy
-#| msgid "Merge tickets"
 msgid "Merged this ticket into"
-msgstr "Tickets zusammenfassen"
+msgstr "Ticket zusammengefasst mit"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:11
-#, fuzzy
-#| msgid "Merge tickets"
 msgid "Merged ticket"
-msgstr "Tickets zusammenfassen"
+msgstr "Zusammengefasstes Ticket"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
 #: app/assets/javascripts/app/views/maintenance.jst.eco:32
@@ -12010,10 +11994,8 @@ msgid "Object Manager"
 msgstr "Objekt-Manager"
 
 #: app/services/service/history/list.rb:52
-#, fuzzy
-#| msgid "Given object does not support selector"
 msgid "Object does not support history"
-msgstr "Das gegebene Objekt unterstützt den Selektor nicht"
+msgstr "Objekt unterstützt keine Historie"
 
 #: app/frontend/apps/desktop/components/layout/LayoutPage.vue:60
 msgid ""
@@ -13327,16 +13309,12 @@ msgid "Raw"
 msgstr "Rohdaten"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
-#, fuzzy
-#| msgid "deactivated"
 msgid "Reacted"
-msgstr "deaktiviert"
+msgstr "Reagiert"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
-#, fuzzy
-#| msgid "ends with"
 msgid "Reacted with"
-msgstr "endet auf"
+msgstr "Reagiert mit"
 
 #: app/assets/javascripts/app/models/group.coffee:44
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:40
@@ -13591,16 +13569,12 @@ msgstr "Zwei-Faktor-Authentifizierung entfernen"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:9
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
-#, fuzzy
-#| msgid "Remove"
 msgid "Removed"
-msgstr "Entfernen"
+msgstr "Entfernt"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
-#, fuzzy
-#| msgid "Remove formatting"
 msgid "Removed reaction"
-msgstr "Formatierung entfernen"
+msgstr "Entfernte Reaktion"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:649
 msgid "Removes any hyperlink"
@@ -14969,10 +14943,8 @@ msgid "Shared"
 msgstr "Geteilt"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventEntityNames.ts:8
-#, fuzzy
-#| msgid "Shared Drafts"
 msgid "Shared Draft"
-msgstr "Gemeinsame Entwürfe"
+msgstr "Gemeinsamer Entwurf"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee:12
 #: app/assets/javascripts/app/models/group.coffee:17
@@ -18094,10 +18066,8 @@ msgid "Ticket Duplicate Detection"
 msgstr "Erkennung von Ticket-Duplikaten"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:62
-#, fuzzy
-#| msgid "Ticket Customer"
 msgid "Ticket History"
-msgstr "Ticket-Kunde"
+msgstr "Ticket-Historie"
 
 #: db/seeds/settings.rb:2167
 msgid "Ticket Hook"
@@ -19799,7 +19769,7 @@ msgstr "Benutzer ist inaktiv"
 
 #: app/frontend/shared/composables/useAvatarIndicator.ts:78
 msgid "User is inactive"
-msgstr "Benutzer ist inaktiv"
+msgstr "Benutzer ist deaktiviert"
 
 #: app/frontend/shared/composables/useAvatarIndicator.ts:95
 msgid "User is on desktop"
@@ -21173,10 +21143,8 @@ msgid "because ticket was escalated"
 msgstr "%s meiner Tickets sind eskaliert"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:20
-#, fuzzy
-#| msgid "Ticket |%s| will escalate soon!"
 msgid "because ticket will escalate soon"
-msgstr "Ticket |%s| wird bald eskalieren!"
+msgstr "weil das Ticket bald eskalieren wird"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
 msgid "because time event was reached"
