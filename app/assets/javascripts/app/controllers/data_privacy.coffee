@@ -134,7 +134,7 @@ class Index extends App.ControllerSubContent
       container:   @el.closest('.content')
     )
 
-  formHandler: (params, attribute, attributes, classname, form, ui) ->
+  formHandler: (params, attribute, attributes, classname, form, ui) =>
     return if !attribute
 
     userID = params['deletable_id']
@@ -145,6 +145,10 @@ class Index extends App.ControllerSubContent
       form.find('.js-preview').remove()
 
     return if !userID
+
+    return if userID == @previousUserID
+
+    @previousUserID = userID
 
     conditionCustomer =
       'condition':
@@ -166,6 +170,8 @@ class Index extends App.ControllerSubContent
       url:   "#{App.Config.get('api_path')}/tickets/selector"
       data:        JSON.stringify(conditionCustomer)
       processData: true,
+      error: (xhr, statusText, error) =>
+        @previousUserID = undefined
       success: (dataCustomer, status, xhr) ->
         App.Collection.loadAssets(dataCustomer.assets)
 
@@ -175,7 +181,11 @@ class Index extends App.ControllerSubContent
           url:   "#{App.Config.get('api_path')}/tickets/selector"
           data:        JSON.stringify(conditionOwner)
           processData: true,
+          error: (xhr, statusText, error) =>
+            @previousUserID = undefined
           success: (dataOwner, status, xhr) ->
+            isFocused = form.find('.js-preview [name="preferences::sure"]').is(':focus')
+
             App.Collection.loadAssets(dataOwner.assets)
 
             user               = App.User.find(userID)
@@ -207,6 +217,9 @@ class Index extends App.ControllerSubContent
               el:         form.find('.js-previewTableCustomer')
               ticket_ids: dataCustomer.object_ids
             )
+
+            if isFocused
+              form.find('.js-preview [name="preferences::sure"]').focus()
 
             return if !form.find('.js-previewTableOwner').length
 
