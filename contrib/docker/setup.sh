@@ -1,14 +1,20 @@
 #!/usr/bin/env bash
 set -e
 
-if [ "$1" = 'builder' ]; then
-  PACKAGES="build-essential curl git libimlib2-dev libpq-dev shared-mime-info postgresql"
-elif [ "$1" = 'runner' ]; then
-  PACKAGES="curl libimlib2 libpq5 nginx gnupg postgresql-client"
-fi
-
 apt-get update
 apt-get upgrade -y
+
+# Add official PostgreSQL apt repository to not depend on Debian's version.
+#   https://www.postgresql.org/download/linux/debian/
+apt-get install -y postgresql-common
+/usr/share/postgresql-common/pgdg/apt.postgresql.org.sh -y
+
+if [ "$1" = 'builder' ]; then
+  PACKAGES="build-essential curl git libimlib2-dev libpq-dev shared-mime-info postgresql-17"
+elif [ "$1" = 'runner' ]; then
+  PACKAGES="curl libimlib2 libpq5 nginx gnupg postgresql-client-17"
+fi
+
 # shellcheck disable=SC2086
 apt-get install -y --no-install-recommends ${PACKAGES}
 rm -rf /var/lib/apt/lists/*
