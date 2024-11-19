@@ -31,6 +31,7 @@ class App.UiElement.richtext.additions.RichTextToolPopupImage extends App.UiElem
   applyOnto: (dom, base64, width) ->
     dom.attr('src', base64)
     dom.attr('width', width)
+    dom.removeAttr('cid')
 
   insertImage: (base64) ->
     textEditor = $(@event.currentTarget).closest('.richtext.form-control').find('[contenteditable]')
