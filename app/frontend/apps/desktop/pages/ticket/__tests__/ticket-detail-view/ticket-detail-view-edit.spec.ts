@@ -808,10 +808,7 @@ describe('Ticket detail view', () => {
       expect(view.getByLabelText('State')).toHaveTextContent('closed')
     })
 
-    // TODO: Currently we have a problem in our resetForm-Function but also Formkit has an bug inside the own reset handling
-    //  (null / false will currently ignored when setting back the initial value).
-    // So we will improve our own reset function and create an issue on FormKit side to fix this.
-    it.skip('discards complete form with an reply and afterwards only the reply directly', async () => {
+    it('discards complete form with an reply and afterwards only the reply directly', async () => {
       mockTicketQuery({
         ticket: createDummyTicket({
           group: {
