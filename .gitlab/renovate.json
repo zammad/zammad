@@ -83,7 +83,12 @@
       "matchCategories": ["js"],
       "groupName": "Formkit packages",
       "groupSlug": "formkit-related",
-      "matchPackageNames": ["/^@formkit/"]
+      "matchPackageNames": ["/^@formkit/"],
+      "excludePackageNames": ["@formkit/drag-and-drop"]
+    },
+    {
+      "matchPackageNames": ["@formkit/drag-and-drop"],
+      "groupName": "FormKit Drag-and-Drop"
     },
     {
       "matchCategories": ["js"],
