@@ -182,8 +182,8 @@ importers:
         specifier: ^2.12.6
         version: 2.12.6(graphql@16.9.0)
       linkify-string:
-        specifier: ^4.1.3
-        version: 4.1.3(linkifyjs@4.1.3)
+        specifier: ^4.1.4
+        version: 4.1.4(linkifyjs@4.1.3)
       linkifyjs:
         specifier: ^4.1.3
         version: 4.1.3
@@ -4518,8 +4518,8 @@ packages:
   linkify-it@5.0.0:
     resolution: {integrity: sha512-5aHCbzQRADcdP+ATqnDuhhJ/MRIqDkZX5pyjFHRRysS8vZ5AbqGEoFIb6pYHPZ+L/OC2Lc+xT8uHVVR5CAK/wQ==}
 
-  linkify-string@4.1.3:
-    resolution: {integrity: sha512-6dAgx4MiTcvEX87OS5aNpAioO7cSELUXp61k7azOvMYOLSmREx0w4yM1Uf0+O3JLC08YdkUyZhAX+YkasRt/mw==}
+  linkify-string@4.1.4:
+    resolution: {integrity: sha512-4z2UEzEi4SxnhWMzzZ8Pa8vIOwX/2U0XWxk/0UIA7lI+Dn0ZRKqTE9ildnO6Jl6K5hqVuLKTeMD8p4bdFW6P8g==}
     peerDependencies:
       linkifyjs: ^4.0.0
 
@@ -11463,7 +11463,7 @@ snapshots:
     dependencies:
       uc.micro: 2.1.0
 
-  linkify-string@4.1.3(linkifyjs@4.1.3):
+  linkify-string@4.1.4(linkifyjs@4.1.3):
     dependencies:
       linkifyjs: 4.1.3
 
