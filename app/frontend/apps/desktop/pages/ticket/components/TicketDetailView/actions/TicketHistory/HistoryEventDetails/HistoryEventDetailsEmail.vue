@@ -10,25 +10,20 @@ interface Props {
 }
 
 const { event } = defineProps<Props>()
-
-const actionName2Source: Record<string, string> = {
-  'received-merge': __('Merged this ticket into %s'),
-  'merged-into': __('Merged %s into this ticket'),
-}
 </script>
 
 <template>
   <span>
     <CommonTranslateRenderer
       class="text-sm leading-snug text-gray-100 dark:text-neutral-400"
-      :source="actionName2Source[event.actionName]"
+      :source="__('Email sent to %s')"
       :placeholders="[
         {
-          type: 'link',
+          type: 'label',
           props: {
-            link: event.link,
             size: 'medium',
-            class: 'text-blue-800 hover:underline',
+            class:
+              'cursor-text rounded bg-neutral-200 px-0.5 font-mono text-black dark:bg-gray-400 dark:text-white',
           },
           content: event.details || '',
         },

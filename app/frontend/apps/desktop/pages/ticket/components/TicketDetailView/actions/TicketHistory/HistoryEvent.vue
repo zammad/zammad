@@ -19,19 +19,11 @@ const eventDetails = getEventOutput(event)
 
 <template>
   <div class="px-2">
-    <CommonLabel
-      class="rounded text-stone-200 ltr:mr-1 rtl:ml-1 dark:text-neutral-400"
-    >
-      {{ eventDetails.actionName }}
-    </CommonLabel>
-
-    <span>
-      <component
-        :is="eventDetails.component"
-        v-if="eventDetails.component"
-        :changes="eventDetails"
-      />
-      <HistoryEventDetails v-else :changes="eventDetails" />
-    </span>
+    <component
+      :is="eventDetails.component"
+      v-if="eventDetails.component"
+      :event="eventDetails"
+    />
+    <HistoryEventDetails v-else :event="eventDetails" />
   </div>
 </template>

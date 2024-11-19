@@ -9,7 +9,6 @@ import type {
 } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
 import type { DeepPartial } from '#shared/types/utils.ts'
-import { capitalize } from '#shared/utils/formatter.ts'
 
 import { eventActionsLookup } from '../event-actions/index.ts'
 import { historyEventIssuerNames } from '../utils/historyEventIssuerNames.ts'
@@ -63,7 +62,7 @@ export const useHistoryEvents = () => {
     return {
       component: module.component,
       ...module.content(event),
-      actionName: capitalize(i18n.t(actionName)),
+      actionName: kebabCase(actionName),
     }
   }
 

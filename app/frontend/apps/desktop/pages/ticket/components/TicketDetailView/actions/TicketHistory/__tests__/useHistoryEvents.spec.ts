@@ -6,21 +6,26 @@ import { effectScope } from 'vue'
 
 import { generateObjectData } from '#tests/graphql/builders/index.ts'
 
+import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
+import { waitForObjectManagerFrontendAttributesQueryCalls } from '#shared/entities/object-attributes/graphql/queries/objectManagerFrontendAttributes.mocks.ts'
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
-import type {
-  HistoryRecordEvent,
-  Job,
-  ObjectClass,
-  PostmasterFilter,
-  Trigger,
-  User,
-  TicketArticle,
+import {
+  type HistoryRecordEvent,
+  type Job,
+  type ObjectClass,
+  type PostmasterFilter,
+  type Trigger,
+  type User,
+  type TicketArticle,
+  EnumObjectManagerObjects,
 } from '#shared/graphql/types.ts'
 import { textTruncate } from '#shared/utils/helpers.ts'
 
 import { useHistoryEvents } from '../composables/useHistoryEvents.ts'
+import HistoryEventDetailsEmail from '../HistoryEventDetails/HistoryEventDetailsEmail.vue'
 import HistoryEventDetailsMerge from '../HistoryEventDetails/HistoryEventDetailsMerge.vue'
 import HistoryEventDetailsReaction from '../HistoryEventDetails/HistoryEventDetailsReaction.vue'
+import HistoryEventDetailsTimeTriggerPerformed from '../HistoryEventDetails/HistoryEventDetailsTimeTriggerPerformed.vue'
 
 const scope = effectScope()
 
@@ -216,16 +221,20 @@ describe('useHistoryEvents', () => {
             from: '',
             to: 'dummy',
           },
-          object: {},
+          object: {
+            __typename: 'ObjectClass',
+            klass: 'Ticket',
+          },
           attribute: 'tag',
         }
 
         const { getEventOutput } = useHistoryEvents()
 
         expect(getEventOutput(event)).toEqual({
-          actionName: 'Added',
+          actionName: 'added',
           component: undefined,
-          description: 'Tag',
+          entityName: 'Ticket',
+          attributeName: 'Tag',
           details: 'dummy',
         })
       })
@@ -247,9 +256,9 @@ describe('useHistoryEvents', () => {
         const { getEventOutput } = useHistoryEvents()
 
         expect(getEventOutput(event)).toEqual({
-          actionName: 'Checked',
+          actionName: 'checked',
           component: undefined,
-          description: 'Checklist Item',
+          entityName: 'Checklist Item',
           details: 'print tickets',
         })
       })
@@ -269,9 +278,9 @@ describe('useHistoryEvents', () => {
         const { getEventOutput } = useHistoryEvents()
 
         expect(getEventOutput(event)).toEqual({
-          actionName: 'Unchecked',
+          actionName: 'unchecked',
           component: undefined,
-          description: 'Checklist Item',
+          entityName: 'Checklist Item',
           details: 'print tickets',
         })
       })
@@ -307,7 +316,7 @@ describe('useHistoryEvents', () => {
         const { getEventOutput } = useHistoryEvents()
 
         expect(getEventOutput(event)).toEqual({
-          actionName: 'Created',
+          actionName: 'created',
           component: undefined,
           description: 'Mention for',
           details: 'John Doe',
@@ -327,9 +336,9 @@ describe('useHistoryEvents', () => {
         const { getEventOutput } = useHistoryEvents()
 
         expect(getEventOutput(event)).toEqual({
-          actionName: 'Created',
+          actionName: 'created',
           component: undefined,
-          description: 'Ticket',
+          entityName: 'Ticket',
           details: '',
         })
       })
@@ -348,9 +357,9 @@ describe('useHistoryEvents', () => {
         const { getEventOutput } = useHistoryEvents()
 
         expect(getEventOutput(event)).toEqual({
-          actionName: 'Created',
+          actionName: 'created',
           component: undefined,
-          description: 'Ticket',
+          entityName: 'Ticket',
           details: '',
         })
       })
@@ -372,9 +381,8 @@ describe('useHistoryEvents', () => {
         const { getEventOutput } = useHistoryEvents()
 
         expect(getEventOutput(event)).toEqual({
-          actionName: 'Email',
-          component: undefined,
-          description: 'sent to',
+          actionName: 'email',
+          component: HistoryEventDetailsEmail,
           details: 'John Doe <john.doe@example.org>',
         })
       })
@@ -392,7 +400,7 @@ describe('useHistoryEvents', () => {
         const { getEventOutput } = useHistoryEvents()
 
         expect(getEventOutput(event)).toEqual({
-          actionName: 'Merged this ticket into',
+          actionName: 'merged-into',
           component: HistoryEventDetailsMerge,
           details: '#89002',
           link: '/tickets/1',
@@ -416,7 +424,7 @@ describe('useHistoryEvents', () => {
         const { getEventOutput } = useHistoryEvents()
 
         expect(getEventOutput(event)).toEqual({
-          actionName: 'Notification',
+          actionName: 'notification',
           component: undefined,
           details: 'dummy@example.com',
           additionalDetails: 'update:online,email',
@@ -436,9 +444,8 @@ describe('useHistoryEvents', () => {
         const { getEventOutput } = useHistoryEvents()
 
         expect(getEventOutput(event)).toEqual({
-          actionName: 'Merged ticket',
+          actionName: 'received-merge',
           component: HistoryEventDetailsMerge,
-          description: 'into this ticket',
           details: '#89002',
           link: '/tickets/1',
         })
@@ -475,7 +482,7 @@ describe('useHistoryEvents', () => {
         const { getEventOutput } = useHistoryEvents()
 
         expect(getEventOutput(event)).toEqual({
-          actionName: 'Removed',
+          actionName: 'removed',
           component: undefined,
           description: 'Mention for',
           details: 'John Doe',
@@ -503,9 +510,10 @@ describe('useHistoryEvents', () => {
         const { getEventOutput } = useHistoryEvents()
 
         expect(getEventOutput(event)).toEqual({
-          actionName: 'Removed',
+          actionName: 'removed',
           component: undefined,
-          description: 'Checklist Item',
+          attributeName: '',
+          entityName: 'Checklist Item',
           details: 'dummy',
         })
       })
@@ -527,9 +535,9 @@ describe('useHistoryEvents', () => {
         const { getEventOutput } = useHistoryEvents()
 
         expect(getEventOutput(event)).toEqual({
-          actionName: 'Triggered',
-          component: undefined,
-          description: 'because pending reminder was reached',
+          actionName: 'triggered',
+          component: HistoryEventDetailsTimeTriggerPerformed,
+          description: 'Triggered because pending reminder was reached',
         })
       })
 
@@ -548,9 +556,9 @@ describe('useHistoryEvents', () => {
         const { getEventOutput } = useHistoryEvents()
 
         expect(getEventOutput(event)).toEqual({
-          actionName: 'Triggered',
-          component: undefined,
-          description: 'because ticket was escalated',
+          actionName: 'triggered',
+          component: HistoryEventDetailsTimeTriggerPerformed,
+          description: 'Triggered because ticket was escalated',
         })
       })
 
@@ -569,9 +577,9 @@ describe('useHistoryEvents', () => {
         const { getEventOutput } = useHistoryEvents()
 
         expect(getEventOutput(event)).toEqual({
-          actionName: 'Triggered',
-          component: undefined,
-          description: 'because ticket will escalate soon',
+          actionName: 'triggered',
+          component: HistoryEventDetailsTimeTriggerPerformed,
+          description: 'Triggered because ticket will escalate soon',
         })
       })
 
@@ -590,16 +598,22 @@ describe('useHistoryEvents', () => {
         const { getEventOutput } = useHistoryEvents()
 
         expect(getEventOutput(event)).toEqual({
-          actionName: 'Triggered',
-          component: undefined,
-          description: 'because time event was reached',
+          actionName: 'triggered',
+          component: HistoryEventDetailsTimeTriggerPerformed,
+          description: 'Triggered because time event was reached',
         })
       })
     })
 
     describe('updated', () => {
-      beforeEach(() => {
+      beforeEach(async () => {
         setActivePinia(createPinia())
+
+        await scope.run(async () => {
+          useObjectAttributes(EnumObjectManagerObjects.Ticket)
+
+          await waitForObjectManagerFrontendAttributesQueryCalls()
+        })
       })
 
       it('returns output for e.g. ticket title update', async () => {
@@ -619,9 +633,10 @@ describe('useHistoryEvents', () => {
           const { getEventOutput } = useHistoryEvents()
 
           expect(getEventOutput(event)).toEqual({
-            actionName: 'Updated',
+            actionName: 'updated',
             component: undefined,
-            description: 'Ticket title',
+            entityName: 'Ticket',
+            attributeName: 'Title',
             details: '-',
             additionalDetails: 'Dummy',
             showSeparator: true,
@@ -646,9 +661,10 @@ describe('useHistoryEvents', () => {
           const { getEventOutput } = useHistoryEvents()
 
           expect(getEventOutput(event)).toEqual({
-            actionName: 'Updated',
+            actionName: 'updated',
             component: undefined,
-            description: 'Ticket Closing time',
+            entityName: 'Ticket',
+            attributeName: 'Closing time',
             details: '-',
             additionalDetails: '2022-01-01 00:00',
             showSeparator: true,
@@ -673,9 +689,10 @@ describe('useHistoryEvents', () => {
           const { getEventOutput } = useHistoryEvents()
 
           expect(getEventOutput(event)).toEqual({
-            actionName: 'Updated',
+            actionName: 'updated',
             component: undefined,
-            description: 'Ticket group',
+            entityName: 'Ticket',
+            attributeName: 'Group',
             details: 'Group1 › Group2',
             additionalDetails: 'Group3 › Group4',
             showSeparator: true,
@@ -704,11 +721,11 @@ describe('useHistoryEvents', () => {
           const { getEventOutput } = useHistoryEvents()
 
           expect(getEventOutput(event)).toEqual({
-            actionName: 'Reacted with',
+            actionName: 'reacted-with',
             component: HistoryEventDetailsReaction,
-            description: '👍 to message',
+            description: '👍',
             details: textTruncate(article.body),
-            additionalDetails: 'from Dummy',
+            additionalDetails: 'Dummy',
           })
         })
 
@@ -728,11 +745,11 @@ describe('useHistoryEvents', () => {
           const { getEventOutput } = useHistoryEvents()
 
           expect(getEventOutput(event)).toEqual({
-            actionName: 'Reacted',
+            actionName: 'reacted',
             component: HistoryEventDetailsReaction,
-            description: 'to message',
+            description: '',
             details: textTruncate(article.body),
-            additionalDetails: 'from Dummy',
+            additionalDetails: 'Dummy',
           })
         })
       })
@@ -759,11 +776,11 @@ describe('useHistoryEvents', () => {
             const { getEventOutput } = useHistoryEvents()
 
             expect(getEventOutput(event)).toEqual({
-              actionName: 'Changed reaction to',
+              actionName: 'changed-reaction-to',
               component: HistoryEventDetailsReaction,
-              description: '🙏 on message',
+              description: '🙏',
               details: textTruncate(article.body),
-              additionalDetails: 'from Dummy',
+              additionalDetails: 'Dummy',
             })
           })
         })
@@ -785,11 +802,11 @@ describe('useHistoryEvents', () => {
             const { getEventOutput } = useHistoryEvents()
 
             expect(getEventOutput(event)).toEqual({
-              actionName: 'Changed reaction',
+              actionName: 'changed-reaction',
               component: HistoryEventDetailsReaction,
-              description: 'on message',
+              description: '',
               details: textTruncate(article.body),
-              additionalDetails: 'from Dummy',
+              additionalDetails: 'Dummy',
             })
           })
         })
@@ -812,11 +829,10 @@ describe('useHistoryEvents', () => {
           const { getEventOutput } = useHistoryEvents()
 
           expect(getEventOutput(event)).toEqual({
-            actionName: 'Removed reaction',
+            actionName: 'removed-reaction',
             component: HistoryEventDetailsReaction,
-            description: 'from message',
             details: textTruncate(article.body),
-            additionalDetails: 'from Dummy',
+            additionalDetails: 'Dummy',
           })
         })
       })

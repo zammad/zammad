@@ -6,7 +6,7 @@ import type { EventActionModule } from '../types.ts'
 
 export default <EventActionModule>{
   name: 'removed-mention',
-  actionName: __('Removed'),
+  actionName: 'removed',
   content: (event) => {
     return {
       description: __('Mention for'),

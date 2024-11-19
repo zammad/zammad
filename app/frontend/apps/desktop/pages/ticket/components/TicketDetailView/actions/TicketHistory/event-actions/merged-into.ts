@@ -8,7 +8,7 @@ import type { EventActionModule } from '../types.ts'
 
 export default <EventActionModule>{
   name: 'merged-into',
-  actionName: __('Merged this ticket into'),
+  actionName: 'merged-into',
   component: HistoryEventDetailsMerge,
   content: (event) => {
     const ticket = event.object as Ticket

@@ -5,22 +5,18 @@ import { defineProps, computed } from 'vue'
 
 import { i18n } from '#shared/i18n.ts'
 
-const typeComponents = {
-  link: 'CommonLink',
-  date: 'CommonDate',
-}
-
-type PlaceholderRenderType = keyof typeof typeComponents
-
-interface RenderPlaceholder {
-  type: PlaceholderRenderType
-  props?: Record<string, unknown>
-  content?: string
-}
+import type { PlaceholderRenderType, RenderPlaceholder } from './types.ts'
 
 interface Props {
   source: string
   placeholders: (string | RenderPlaceholder)[]
+}
+
+const typeComponents: Record<PlaceholderRenderType, string> = {
+  link: 'CommonLink',
+  datetime: 'CommonDateTime',
+  label: 'CommonLabel',
+  badge: 'CommonBadge',
 }
 
 const props = defineProps<Props>()

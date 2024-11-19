@@ -4,7 +4,7 @@ import type { EventActionModule } from '../types.ts'
 
 export default <EventActionModule>{
   name: 'notification',
-  actionName: __('Notification'),
+  actionName: 'notification',
   content: (event) => {
     const notification = event.changes?.to as string
 

@@ -3,7 +3,6 @@
 import { useObjectAttributes } from '#shared/entities/object-attributes/composables/useObjectAttributes.ts'
 import {
   EnumObjectManagerObjects,
-  type ObjectClass,
   type TicketArticle,
 } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
@@ -11,6 +10,7 @@ import { isDateString, validDateTime } from '#shared/utils/datetime.ts'
 import { textTruncate } from '#shared/utils/helpers.ts'
 
 import HistoryEventDetailsReaction from '../HistoryEventDetails/HistoryEventDetailsReaction.vue'
+import { getEntityFromObject } from '../utils/eventHelpers.ts'
 import { eventEntityNames } from '../utils/historyEventEntityNames.ts'
 
 import type { EventActionModule } from '../types.ts'
@@ -22,21 +22,10 @@ export default <EventActionModule>{
 
     const emoji = event.changes?.to as string
 
-    return emoji.length > 0 ? __('Changed reaction to') : __('Changed reaction')
+    return emoji.length > 0 ? 'changed-reaction-to' : 'changed-reaction'
   },
   // eslint-disable-next-line sonarjs/cognitive-complexity
   content: (event) => {
-    // TODO: Refactor this function to reduce cognitive complexity.
-    const entity =
-      (event.object?.__typename === 'ObjectClass'
-        ? (event.object as ObjectClass).klass
-        : event.object?.__typename) || __('Unknown')
-
-    let details = (event.changes?.from || '-') as string
-    let additionalDetails = (event.changes?.to || '-') as string
-
-    let description = eventEntityNames[entity] || entity
-
     const { attribute: attributeName } = event
 
     if (attributeName === 'reaction') {
@@ -45,15 +34,17 @@ export default <EventActionModule>{
       const emoji = event.changes?.to as string
 
       return {
-        description:
-          emoji.length > 0
-            ? i18n.t('%s on message', emoji)
-            : i18n.t('on message'),
+        description: emoji,
         details: textTruncate(article.body),
-        additionalDetails: i18n.t('from %s', event.changes.from),
+        additionalDetails: event.changes.from,
         component: HistoryEventDetailsReaction,
       }
     }
+
+    const entity = getEntityFromObject(event.object)
+
+    let details = (event.changes?.from || '-') as string
+    let additionalDetails = (event.changes?.to || '-') as string
 
     let displayName = attributeName
     let needsTranslation = false
@@ -72,13 +63,9 @@ export default <EventActionModule>{
 
         needsTranslation = objectAttribute?.dataOption?.translate ?? false
 
-        displayName = objectAttribute?.display
-          ? objectAttribute?.display
-          : attributeName
+        if (objectAttribute?.display) displayName = objectAttribute?.display
       }
     }
-
-    description += displayName ? ` ${displayName}` : ''
 
     if (validDateTime(details) || validDateTime(additionalDetails)) {
       const dateFormatFunction =
@@ -103,7 +90,8 @@ export default <EventActionModule>{
     }
 
     return {
-      description,
+      entityName: eventEntityNames[entity] || entity,
+      attributeName: displayName,
       details,
       additionalDetails,
       showSeparator: details.length > 0 && additionalDetails.length > 0,

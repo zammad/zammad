@@ -10,10 +10,7 @@ const formatNumber = (num: number, digits: number): string => {
   return result
 }
 
-export const absoluteDateTime = (
-  dateTimeString: string,
-  template: string,
-): string => {
+const parseDate = (dateTimeString: string): Date => {
   let date = new Date(dateTimeString)
   // On firefox the Date constructor does not recongise date format that
   // ends with UTC, instead it returns a NaN (Invalid Date Format) this
@@ -26,6 +23,15 @@ export const absoluteDateTime = (
     })
     date = new Date(Date.UTC(y, m - 1, d, H, M))
   }
+
+  return date
+}
+
+export const absoluteDateTime = (
+  dateTimeString: string,
+  template: string,
+): string => {
+  const date = parseDate(dateTimeString)
 
   const d = date.getDate()
   const m = date.getMonth() + 1
@@ -48,6 +54,9 @@ export const absoluteDateTime = (
     .replace('l', l.toString())
     .replace('P', H >= 12 ? 'pm' : 'am')
 }
+
+export const getISODatetime = (dateTimeString: string): string =>
+  parseDate(dateTimeString).toISOString()
 
 const durationMinute = 60
 const durationHour = 60 * durationMinute

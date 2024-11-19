@@ -6,7 +6,7 @@ import type { EventActionModule } from '../types.ts'
 
 export default <EventActionModule>{
   name: 'created-mention',
-  actionName: __('Created'),
+  actionName: 'created',
   content: (event) => {
     return {
       description: __('Mention for'),

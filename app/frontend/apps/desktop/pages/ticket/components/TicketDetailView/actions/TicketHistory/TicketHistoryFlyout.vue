@@ -8,6 +8,7 @@ import type {
   HistoryRecordEvent,
   HistoryRecordIssuer,
 } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n/index.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
 import CommonDivider from '#desktop/components/CommonDivider/CommonDivider.vue'
@@ -37,10 +38,18 @@ const ticketHistory = computed(() => {
   return ticketHistoryQueryResult.value?.ticketHistory
 })
 
+const isLoadingHistory = computed(() => {
+  // Return already true when a history result already exists from the cache, also
+  // when maybe a loading is in progress(because of cache + network).
+  if (ticketHistory.value !== undefined) return false
+
+  return ticketHistoryQueryLoading.value
+})
+
 const historyContainerElement = useTemplateRef('history-container')
 
 watch(
-  historyContainerElement,
+  [historyContainerElement, ticketHistoryQueryLoading],
   (newValue) => {
     if (!newValue || !ticketHistoryQueryResult.value?.ticketHistory.length) {
       return
@@ -48,7 +57,7 @@ watch(
 
     nextTick(() => {
       historyContainerElement.value?.scrollIntoView({
-        behavior: 'smooth',
+        behavior: 'instant',
         block: 'end',
       })
     })
@@ -66,7 +75,7 @@ watch(
     no-close-on-action
     hide-footer
   >
-    <CommonLoader :loading="ticketHistoryQueryLoading" no-transition>
+    <CommonLoader :loading="isLoadingHistory" no-transition>
       <div ref="history-container">
         <div
           v-for="(entry, idxAll) in ticketHistory"
@@ -100,6 +109,7 @@ watch(
             <HistoryEvent
               v-for="(event, idxEvent) in record.events"
               :key="`${event.createdAt}-${idxEvent}`"
+              v-tooltip="i18n.dateTimeISO(event.createdAt)"
               :event="event as HistoryRecordEvent"
             />
 

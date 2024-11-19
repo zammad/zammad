@@ -38,6 +38,10 @@ export class I18N {
     return dates.absoluteDateTime(dateTimeString, template)
   }
 
+  dateTimeISO(dateTimeString: string): string {
+    return dates.getISODatetime(dateTimeString)
+  }
+
   relativeDateTime(dateTimeString: string, baseDate?: Date): string {
     return dates.relativeDateTime(
       dateTimeString,

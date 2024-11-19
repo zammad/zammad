@@ -5,6 +5,7 @@ import timezoneMock from 'timezone-mock'
 import {
   absoluteDateTime as absDT,
   relativeDateTime as relDT,
+  getISODatetime,
 } from '../dates.ts'
 import { Translator } from '../translator.ts'
 
@@ -77,5 +78,17 @@ describe('Dates', () => {
     expect(relDT('2000-04-09T10:11:12Z', b, t)).toBe('21 years ago')
     expect(relDT('2022-04-09T10:11:12Z', b, t)).toBe('in 1 year')
     expect(relDT('2042-04-09T10:11:12Z', b, t)).toBe('in 21 years')
+  })
+
+  it('shows ISO date times', () => {
+    expect(getISODatetime('2021-04-09T10:11:12Z')).toBe(
+      '2021-04-09T10:11:12.000Z',
+    )
+
+    expect(getISODatetime('2021-04-09 10:11:12')).toBe(
+      '2021-04-09T10:11:12.000Z',
+    )
+
+    expect(getISODatetime('2021-04-09')).toBe('2021-04-09T00:00:00.000Z')
   })
 })

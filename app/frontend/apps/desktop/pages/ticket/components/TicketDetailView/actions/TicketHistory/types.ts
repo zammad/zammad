@@ -7,15 +7,17 @@ import type { Component } from 'vue'
 
 export interface EventActionContent {
   description?: string | null
+  entityName?: string | null
+  attributeName?: string | null
   details?: string | null
   additionalDetails?: string | null
   showSeparator?: boolean | null
-  component?: Component
   link?: string | null
 }
 
 export interface EventActionOutput extends EventActionContent {
   actionName: string
+  component?: Component
 }
 
 export type EventActionModule = {

@@ -65,6 +65,9 @@ describe('i18n', () => {
       expect(i18n.date('2021-04-09T10:11:12Z')).toBe('09/04/2021')
       expect(i18n.dateTime('2021-04-09T10:11:12Z')).toBe('09/04/2021 10:11:12')
       expect(i18n.relativeDateTime(new Date().toISOString())).toBe('just now')
+      expect(i18n.dateTimeISO('2021-04-09T10:11:12Z')).toBe(
+        '2021-04-09T10:11:12.000Z',
+      )
     })
 
     it('returns date/time format information', () => {
