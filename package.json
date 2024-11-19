@@ -171,7 +171,7 @@
     "tiptap-text-direction": "^0.3.1",
     "ts-essentials": "^10.0.3",
     "tslib": "^2.8.1",
-    "ua-parser-js": "^1.0.39",
+    "ua-parser-js": "^2.0.0",
     "uuid": "^11.0.3",
     "vite-bundle-visualizer": "^1.2.1",
     "vue": "^3.5.13",

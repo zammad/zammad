@@ -1,10 +1,6 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
-import {
-  generateFingerprint,
-  setCursorAtTextEnd,
-  setPastedTextToCurrentSelection,
-} from '../browser.ts'
+import { generateFingerprint } from '../browser.ts'
 
 vi.hoisted(() => {
   const userAgentSpy = vi.spyOn(window.navigator, 'userAgent', 'get')
@@ -15,12 +11,6 @@ vi.hoisted(() => {
 
 describe('browser', () => {
   it('generate fingerprint', () => {
-    expect(generateFingerprint()).toBe('1613472439')
-  })
-  it.todo('sets cursor at the end of the text', () => {
-    setCursorAtTextEnd(document.createElement('div'))
-  })
-  it.todo('sets pasted text to current selection', () => {
-    setPastedTextToCurrentSelection(new ClipboardEvent('paste'))
+    expect(generateFingerprint()).toBe('91006247')
   })
 })
