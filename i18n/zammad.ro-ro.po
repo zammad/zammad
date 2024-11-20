@@ -78,8 +78,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "#{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Creat de #{current_user.longname} la #{ticket."
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Creat de #{current_user.longname} la #{ticket."
 "updated_at}_\n"
 "* Grup: #{ticket.group.name}\n"
 "* Proprietar: #{ticket.owner.fullname}\n"
@@ -104,8 +104,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "#{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Escaladat la #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Escaladat la #{ticket.escalation_at}_\n"
 "Tichetul (#{ticket.title}) de la „#{ticket.customer.longname}” a fost "
 "escaladat la „#{ticket.escalation_at}”!\n"
 "\n"
@@ -129,8 +129,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "#{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Ultima actualizare la #{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Ultima actualizare la #{ticket.updated_at}_\n"
 "* Grup: #{ticket.group.name}\n"
 "* Proprietar: #{ticket.owner.fullname}\n"
 "* Stare: #{t(ticket.state.name)}\n"
@@ -182,9 +182,9 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "#{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Actualizat de #{current_user.longname} la "
-"#{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Actualizat de #{current_user.longname} la #{ticket."
+"updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
 "  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
@@ -210,8 +210,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "#{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: Îl vom escalada la #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: Îl vom escalada la #{ticket.escalation_at}_\n"
 "Tichetul (#{ticket.title}) de la „#{ticket.customer.longname}” a fost "
 "escaladat la „#{ticket.escalation_at}”!\n"
 "\n"
@@ -2100,7 +2100,7 @@ msgstr "Ești sigur că vrei să elimini \"%s\" ca implicit?"
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:234
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:130
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/maintenance.coffee:55
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:61
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:123
@@ -5669,7 +5669,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:674
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:118
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
 #: app/assets/javascripts/app/controllers/user.coffee:177
@@ -5793,7 +5793,7 @@ msgstr "Șterge înregistrările vechi pentru token-uri."
 msgid "Delete old upload cache entries."
 msgstr "Șterge înregistrările vechi pentru cache-ul fișierelor încărcate."
 
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 msgid "Delete organization?"
 msgstr "Ștergi organizația?"
 
@@ -16805,7 +16805,7 @@ msgstr "Notificarea nu a putut fi ștearsă."
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:801
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:267
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:280
 #: app/assets/javascripts/app/controllers/object_manager.coffee:261
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:94
 msgid "The object could not be created."
@@ -21415,7 +21415,7 @@ msgid "default"
 msgstr "implicit"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:4
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee:8
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:17
 msgid "delete"

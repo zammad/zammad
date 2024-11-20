@@ -80,8 +80,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓."
-"번호}>: 현재_사용자.긴이름}이 #{티켓.업데이트된_날짜}_에서 생성했습니다_\n"
+"_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓.번호}"
+">: 현재_사용자.긴이름}이 #{티켓.업데이트된_날짜}_에서 생성했습니다_\n"
 "* 그룹: #{ticket.group.name}\n"
 "* 소유자: #{ticket.owner.fullname}\n"
 "* 상태: #{t(ticket.state.name)}\n"
@@ -105,8 +105,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓."
-"번호}>: 티켓 에스컬레이션 주소 #{ticket.escalation_at}_에서 에스컬레이션됨_\n"
+"_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓.번호}"
+">: 티켓 에스컬레이션 주소 #{ticket.escalation_at}_에서 에스컬레이션됨_\n"
 "\"#{ticket.customer.longname}\"의 티켓(#{ticket.title})이 \"#{ticket."
 "escalation_at}\" 이후 에스컬레이션되었습니다!\n"
 "\n"
@@ -155,8 +155,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓."
-"번호}>: 알림이 도착했습니다!_\n"
+"_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓.번호}"
+">: 알림이 도착했습니다!_\n"
 "티켓에 주의가 필요합니다: 고객 \"*#{ticket.customer.longname}*\"의 (#{ticket."
 "title})에 대한 알림이 도달했습니다.\n"
 "\n"
@@ -183,9 +183,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓."
-"번호}>: 현재_사용자.긴이름}이 #{티켓.업데이트된_시간}_에서 "
-"업데이트했습니다_\n"
+"_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓.번호}"
+">: 현재_사용자.긴이름}이 #{티켓.업데이트된_시간}_에서 업데이트했습니다_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
 "  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
@@ -211,8 +210,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓."
-"번호}>: 티켓 에스컬레이션 주소 #{ticket.escalation_at}_에서 에스컬레이션됨_\n"
+"_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓.번호}"
+">: 티켓 에스컬레이션 주소 #{ticket.escalation_at}_에서 에스컬레이션됨_\n"
 "\"#{ticket.customer.longname}\"의 티켓(#{ticket.title})이 \"#{ticket."
 "escalation_at}\" 이후 에스컬레이션되었습니다!\n"
 "\n"
@@ -241,12 +240,12 @@ msgstr ""
 "\n"
 "<div>Hi #{user.firstname},</div>\n"
 "<br>\n"
-"<div>타사 애플리케이션에 계정을 <b>\"#{t(provider)}\".</div>연동한 것 "
-"같습니다.\n"
+"<div>타사 애플리케이션에 계정을 <b>\"#{t(provider)}\".</div>연동한 것 같습니"
+"다.\n"
 "<br>\n"
-"<div>본인이 아닌 경우 프로필에서 연결된 계정을 삭제하고 타사 애플리케이션 "
-"비밀번호를 변경해 주세요. 누군가 타사 서비스에서 귀하의 계정에 무단으로 "
-"액세스했을 수 있습니다.</div>\n"
+"<div>본인이 아닌 경우 프로필에서 연결된 계정을 삭제하고 타사 애플리케이션 비"
+"밀번호를 변경해 주세요. 누군가 타사 서비스에서 귀하의 계정에 무단으로 액세스"
+"했을 수 있습니다.</div>\n"
 "<br>\n"
 "<div>귀하의 #{config.product_name} 팀</div>\n"
 
@@ -2170,7 +2169,7 @@ msgstr "이 개체를 삭제해야?"
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:234
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:130
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/maintenance.coffee:55
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:61
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:123
@@ -5796,7 +5795,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:674
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:118
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
 #: app/assets/javascripts/app/controllers/user.coffee:177
@@ -5928,7 +5927,7 @@ msgstr ""
 msgid "Delete old upload cache entries."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 msgid "Delete organization?"
 msgstr "소속 삭제?"
 
@@ -17416,7 +17415,7 @@ msgstr "%s 객체 (들) 업데이트됩니다."
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:801
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:267
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:280
 #: app/assets/javascripts/app/controllers/object_manager.coffee:261
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:94
 #, fuzzy
@@ -22051,7 +22050,7 @@ msgid "default"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:4
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee:8
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:17
 msgid "delete"

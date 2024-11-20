@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-20 06:15+0000\n"
-"Last-Translator: Dominik Klein <dk@zammad.com>\n"
+"PO-Revision-Date: 2024-11-20 22:00+0000\n"
+"Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fr/>\n"
 "Language: fr-fr\n"
@@ -181,8 +181,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}> : Mis à jour par #{current_user.longname} à "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}> : Mis à jour par #{current_user.longname} à "
 "#{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
@@ -767,10 +767,10 @@ msgid ""
 "displayed in a separate view in your overviews. You can also configure "
 "**email notifications**."
 msgstr ""
-"**Service Level Agreements** (Accords de Niveau de Service), abrégés "
-"**SLAs**, vous aide à répondre aux demandes de vos clients dans le temps "
-"imparti. Vous pouvez de cette façon définir des objectifs tels que répondre "
-"à toutes les demandes dans les huit heures. Si vous risquez de rater cet "
+"**Service Level Agreements** (Accords de Niveau de Service), abrégés **SLAs**"
+", vous aide à répondre aux demandes de vos clients dans le temps imparti. "
+"Vous pouvez de cette façon définir des objectifs tels que répondre à toutes "
+"les demandes dans les huit heures. Si vous risquez de ne pas atteindre cet "
 "objectif, Zammad vous alertera.\n"
 "\n"
 "Vous pouvez définir les objectifs avec trois métriques différentes : **temps "
@@ -779,9 +779,9 @@ msgstr ""
 "d'un client et l'intervention d'un agent), et **temps de résolution** (durée "
 "entre la création d'un ticket et sa résolution)\n"
 "\n"
-"Tout les tickets escaladés (par ex : les tickets ayant raté un objectif "
-"défini) sont affichés dans une vue séparée de vos aperçus. Vous pouvez aussi "
-"configurer des **notifications par email**."
+"Tout les tickets escaladés (par ex : les tickets n'ayant pas atteint un "
+"objectif défini) sont affichés dans une vue séparée de vos aperçus. Vous "
+"pouvez aussi configurer des **notifications par e-mail**."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleFooter.vue:30
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:223
@@ -806,7 +806,7 @@ msgstr "il y a 1 heure"
 
 #: db/seeds/ticket_priorities.rb:3
 msgid "1 low"
-msgstr "1 bas"
+msgstr "1 basse"
 
 #: app/frontend/shared/i18n/dates.ts:110
 msgid "1 minute ago"
@@ -842,7 +842,7 @@ msgstr "2 minuscules et 2 majuscules"
 
 #: db/seeds/ticket_priorities.rb:4
 msgid "2 normal"
-msgstr "2 normal"
+msgstr "2 normale"
 
 #: db/seeds/settings.rb:1106
 msgid "2 weeks"
@@ -854,7 +854,7 @@ msgstr "2. Mise à jour du ticket"
 
 #: db/seeds/ticket_priorities.rb:5
 msgid "3 high"
-msgstr "3 haut"
+msgstr "3 haute"
 
 #: db/seeds/settings.rb:1106
 msgid "3 weeks"
@@ -2039,11 +2039,11 @@ msgstr "Appliquer le filtre…"
 #: app/assets/javascripts/app/controllers/report.coffee:204
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Apr"
-msgstr "Avr"
+msgstr "avr."
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 msgid "April"
-msgstr "Avril"
+msgstr "avril"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_controller.coffee:141
 msgid "Archive"
@@ -2100,7 +2100,7 @@ msgstr "Êtes-vous sûr(e) de ne plus vouloir mettre \"%s\" par défaut ?"
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:234
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:130
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/maintenance.coffee:55
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:61
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:123
@@ -2384,11 +2384,11 @@ msgstr "Fichier audio"
 #: app/assets/javascripts/app/controllers/report.coffee:204
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Aug"
-msgstr "Aoû"
+msgstr "août"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 msgid "August"
-msgstr "Août"
+msgstr "août"
 
 #: app/assets/javascripts/app/views/integration/exchange.jst.eco:4
 msgid "Authentication"
@@ -4283,7 +4283,7 @@ msgstr "Créer :"
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
-msgstr "Créés"
+msgstr "Création"
 
 #: app/assets/javascripts/app/controllers/widget/placeholder.coffee:108
 msgid "Created Article"
@@ -4587,11 +4587,11 @@ msgstr "Jours"
 #: app/assets/javascripts/app/controllers/report.coffee:204
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Dec"
-msgstr "Déc"
+msgstr "déc."
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 msgid "December"
-msgstr "Décembre"
+msgstr "décembre"
 
 #: app/frontend/shared/components/Form/fields/FieldDate/useDateTime.ts:66
 msgid "Decrement hours value"
@@ -4767,30 +4767,28 @@ msgstr "Définit la clé API d'authentification pour Freshdesk."
 #: db/seeds/settings.rb:3536
 msgid "Defines HTTP basic auth password of Elasticsearch."
 msgstr ""
-"Définit le mot de passe de l'authentification \"HTTP basic\" pour "
-"Elasticsearch."
+"Définit le mot de passe de l'authentification \"HTTP Basic\" d'Elasticsearch."
 
 #: db/seeds/settings.rb:3527
 msgid "Defines HTTP basic auth user of Elasticsearch."
 msgstr ""
-"Définit l'utilisateur de l'authentification \"HTTP basic\" pour "
-"Elasticsearch."
+"Définit l'utilisateur pour l'authentification \"HTTP Basic\" d'Elasticsearch."
 
 #: db/seeds/settings.rb:3719
 msgid ""
 "Defines HTTP basic authentication password (only if OTRS is protected via "
 "HTTP basic auth)."
 msgstr ""
-"Définit le mot de passe de l'authentification \"HTTP basic\" (seulement si "
-"OTRS est protégé par une authentification \"HTTP basic\")."
+"Définit le mot de passe pour l'authentification \"HTTP Basic\" (seulement si "
+"OTRS est protégé par une authentification \"HTTP Basic\")."
 
 #: db/seeds/settings.rb:3700
 msgid ""
 "Defines HTTP basic authentication user (only if OTRS is protected via HTTP "
 "basic auth)."
 msgstr ""
-"Définit l'utilisateur de l'authentification \"HTTP basic\" (uniquement si "
-"OTRS est protégé par une authentification \"HTTP basic\")."
+"Définit l'utilisateur pour l'authentification \"HTTP Basic\" (uniquement si "
+"OTRS est protégé par une authentification \"HTTP Basic\")."
 
 #: db/seeds/settings.rb:3867
 msgid "Defines Kayako endpoint authentication password."
@@ -5378,8 +5376,8 @@ msgid ""
 "Defines the backend for geo location lookups to store geo locations for "
 "addresses."
 msgstr ""
-"Définit le serveur qui stocke la correspondance entre une adresse IP et son "
-"emplacement géographique."
+"Définit le serveur qui stocke la correspondance entre une adresse IP et sa "
+"géolocalisation."
 
 #: db/seeds/settings.rb:375
 msgid "Defines the backend for user and organization image lookups."
@@ -5669,7 +5667,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:674
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:118
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
 #: app/assets/javascripts/app/controllers/user.coffee:177
@@ -5787,7 +5785,7 @@ msgstr "Supprimer les anciennes entrées de jetons."
 msgid "Delete old upload cache entries."
 msgstr "Supprimer les anciennes entrées du cache d'envoi."
 
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 msgid "Delete organization?"
 msgstr "Supprimer l'organisation ?"
 
@@ -6560,7 +6558,7 @@ msgstr "Adresse e-mail"
 #: app/models/user.rb:609
 msgid "Email address '%{email}' is already used for another user."
 msgstr ""
-"L'adresse email '%{email}' est déjà utilisée pour un autre utilisateur."
+"L'adresse e-mail '%{email}' est déjà utilisée pour un autre utilisateur."
 
 #: app/assets/javascripts/app/controllers/email_verify.coffee:53
 #: app/frontend/apps/desktop/pages/authentication/views/SignupVerify.vue:50
@@ -7047,8 +7045,8 @@ msgid ""
 "Enter your email address and password from your %s account which should be "
 "used for the import."
 msgstr ""
-"Saisissez votre adresse email et le mot de passe de votre compte %s qui doit "
-"être utilisé pour l'importation."
+"Saisissez votre adresse e-mail et le mot de passe de votre compte %s qui "
+"doit être utilisé pour l'importation."
 
 #: app/assets/javascripts/app/views/import/zendesk.jst.eco:33
 msgid ""
@@ -7223,14 +7221,14 @@ msgid ""
 "certain changes, and then fire off whenever those changes occur."
 msgstr ""
 "Chaque fois qu'un client crée un nouveau ticket, une confirmation est "
-"automatiquement envoyée par email afin de confirmer la réception de leur "
+"automatiquement envoyée par e-mail afin de confirmer la réception de leur "
 "demande. Ce comportement est interne à Zammad, mais est aussi hautement "
 "personnalisable, vous pouvez également programmer des actions automatiques "
 "similaires.\n"
 "\n"
 "Vous souhaitez peut-être définir une priorité plus élevée sur un ticket dont "
 "le titre contient le mot \"urgent\". Vous voulez peut-être éviter d'envoyer "
-"des emails de réponse automatique aux clients de certaines organisations. "
+"des e-mails de réponse automatique aux clients de certaines organisations. "
 "Peut-être voulez-vous marquer un ticket comme \"en attente\" lorsque "
 "quelqu'un ajoute une note interne à un ticket.\n"
 "\n"
@@ -7495,11 +7493,11 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/report.coffee:204
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Feb"
-msgstr "Fév"
+msgstr "févr."
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 msgid "February"
-msgstr "Février"
+msgstr "février"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:34
 msgid "Feedback"
@@ -8222,19 +8220,19 @@ msgstr "Jeton d'authentification HTTP"
 
 #: app/assets/javascripts/app/models/webhook.coffee:11
 msgid "HTTP Basic Authentication Password"
-msgstr "Mot de passe de l'authentification HTTP Basic"
+msgstr "Mot de passe pour l'authentification HTTP Basic"
 
 #: app/assets/javascripts/app/models/webhook.coffee:10
 msgid "HTTP Basic Authentication Username"
-msgstr "Login de l'authentification de base HTTP"
+msgstr "Login pour l'authentification HTTP Basic"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:759
 msgid "HTTP Basic Authentication password"
-msgstr "Mot de passe de l'authentification HTTP Basic"
+msgstr "Mot de passe pour l'authentification HTTP Basic"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:748
 msgid "HTTP Basic Authentication username"
-msgstr "Login de l'authentification HTTP Basic"
+msgstr "Login pour l'authentification HTTP Basic"
 
 #: app/assets/javascripts/app/controllers/widget/http_log.coffee:45
 msgid "HTTP Log"
@@ -8464,11 +8462,11 @@ msgstr "Historique"
 #: app/assets/javascripts/app/models/calendar.coffee:10
 #: app/assets/javascripts/app/views/calendar/index.jst.eco:67
 msgid "Holidays"
-msgstr "Vacances"
+msgstr "Jours fériés"
 
 #: app/assets/javascripts/app/models/calendar.coffee:10
 msgid "Holidays iCalendar Feed"
-msgstr "Flux des vacances au format iCal"
+msgstr "Jours fériés depuis iCalendar"
 
 #: app/frontend/apps/mobile/components/CommonBackButton/CommonBackButton.vue:47
 #: app/frontend/apps/mobile/pages/home/routes.ts:8
@@ -8840,7 +8838,7 @@ msgstr "Mot de passe d'importation pour appeler l'API Kayako"
 
 #: db/seeds/settings.rb:3697
 msgid "Import User for HTTP basic authentication"
-msgstr "Importer un utilisateur pour l'authentification HTTP Basic"
+msgstr "Importer l'utilisateur pour l'authentification HTTP Basic"
 
 #: db/seeds/settings.rb:3846
 msgid "Import User for requesting the Kayako API"
@@ -9441,11 +9439,11 @@ msgstr "Éléments par page"
 #: app/assets/javascripts/app/controllers/report.coffee:204
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Jan"
-msgstr "Jan"
+msgstr "janv."
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 msgid "January"
-msgstr "Janvier"
+msgstr "janvier"
 
 #: app/assets/javascripts/app/views/integration/exchange_last_import.jst.eco:9
 #: app/assets/javascripts/app/views/integration/ldap_last_import.jst.eco:9
@@ -9465,21 +9463,21 @@ msgstr "Rejoindre %s"
 #: app/assets/javascripts/app/controllers/report.coffee:204
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Jul"
-msgstr "Juil"
+msgstr "juill."
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 msgid "July"
-msgstr "Juillet"
+msgstr "juillet"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 #: app/assets/javascripts/app/controllers/report.coffee:204
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Jun"
-msgstr "Juin"
+msgstr "juin"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 msgid "June"
-msgstr "Juin"
+msgstr "juin"
 
 #: app/assets/javascripts/app/views/translation/description.jst.eco:14
 msgid ""
@@ -9709,7 +9707,7 @@ msgstr "Dernière synchronisation à :"
 
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:20
 msgid "Last used"
-msgstr "Dernier(es) utilisé(es)"
+msgstr "Dernière utilisation"
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:152
 msgid "Layout"
@@ -9917,7 +9915,7 @@ msgstr "Localisation des modifications d'exécution"
 #: app/assets/javascripts/app/views/session.jst.eco:10
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingDevices.vue:108
 msgid "Location"
-msgstr "Emplacement"
+msgstr "Localisation"
 
 #: app/assets/javascripts/app/controllers/_channel/chat.coffee:103
 msgid "Location of an external chat.css file."
@@ -9944,7 +9942,7 @@ msgid ""
 "email verification step?"
 msgstr ""
 "Échec d'authentification. Avez-vous vérifié vos informations de connexion et "
-"validé votre adresse email ?"
+"validé votre adresse e-mail ?"
 
 #: lib/auth/error/two_factor_failed.rb:4
 msgid ""
@@ -10347,11 +10345,11 @@ msgstr "Cartographie"
 #: app/assets/javascripts/app/controllers/report.coffee:204
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Mar"
-msgstr "Mar"
+msgstr "mars"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 msgid "March"
-msgstr "Mars"
+msgstr "mars"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:4
 #: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:131
@@ -10460,7 +10458,7 @@ msgstr "Nombre maximal de tickets affichés dans les aperçus"
 #: app/assets/javascripts/app/controllers/report.coffee:204
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "May"
-msgstr "Mai"
+msgstr "mai"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
 msgid "Me"
@@ -10666,7 +10664,7 @@ msgstr "Numéro de téléphone ne correspondant pas."
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:23
 #: db/seeds/object_manager_attributes.rb:837
 msgid "Mobile"
-msgstr "Téléphone"
+msgstr "Portable"
 
 #: app/assets/javascripts/app/views/maintenance.jst.eco:14
 msgid "Mode"
@@ -11732,11 +11730,11 @@ msgstr "Notifications"
 #: app/assets/javascripts/app/controllers/report.coffee:204
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Nov"
-msgstr "Nov"
+msgstr "nov."
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 msgid "November"
-msgstr "Novembre"
+msgstr "novembre"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket.coffee:10
 #: app/assets/javascripts/app/views/agent_ticket_view/detail.jst.eco:20
@@ -11821,11 +11819,11 @@ msgstr "Objets"
 #: app/assets/javascripts/app/controllers/report.coffee:204
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Oct"
-msgstr "Oct"
+msgstr "oct."
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 msgid "October"
-msgstr "Octobre"
+msgstr "octobre"
 
 #: public/assets/chat/chat.coffee:206
 msgid "Offline"
@@ -11867,7 +11865,7 @@ msgstr "Service en ligne"
 
 #: lib/validations/ticket_article_validator/whatsapp_message.rb:18
 msgid "Only %s attachment allowed"
-msgstr "Uniquement %s pièces-jointes sont autorisées"
+msgstr "Uniquement %s pièces jointes sont autorisées"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_new.coffee:823
 msgid "Only %s attachment allowed."
@@ -12272,7 +12270,7 @@ msgstr "Désindenter le texte"
 #: app/assets/javascripts/app/models/user_overview_sorting.coffee:7
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:52
 msgid "Overview"
-msgstr "Vue d'ensemble"
+msgstr "Aperçu"
 
 #: app/assets/javascripts/app/controllers/core_workflow.coffee:56
 msgid "Overview bulk mask"
@@ -12866,7 +12864,7 @@ msgid ""
 msgstr ""
 "Pretty Good Privacy (PGP) est un programme de chiffrement qui peut être "
 "utilisé pour signer, chiffrer et déchiffrer des messages et pour accroître "
-"la sécurité des communications par email."
+"la sécurité des communications par e-mail."
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:852
 #: app/assets/javascripts/app/views/channel/chat.jst.eco:20
@@ -13234,7 +13232,7 @@ msgstr "Enregistrement effectué !"
 
 #: app/assets/javascripts/app/views/link/kb_answer.jst.eco:1
 msgid "Related Answers"
-msgstr "Réponses connexes"
+msgstr "Réponses semblables"
 
 #: app/frontend/apps/desktop/pages/guided-setup/views/GuidedSetupAutomated/GuidedSetupAutomatedRun.vue:77
 msgid "Relax, your system is being set up…"
@@ -14371,7 +14369,7 @@ msgstr "Les tickets sélectionnés ne correspondent à aucune macro."
 
 #: app/assets/javascripts/app/models/trigger.coffee:8
 msgid "Selective (default)"
-msgstr "Conditionnelle (défaut)"
+msgstr "Conditionnelle (par défaut)"
 
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:4
 msgid "Selector"
@@ -14491,7 +14489,7 @@ msgstr "Envoyé avec succès !"
 #: app/assets/javascripts/app/controllers/report.coffee:204
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "Sep"
-msgstr "Sep"
+msgstr "sept."
 
 #: app/assets/javascripts/app/views/customer_chat/setting.jst.eco:36
 msgid "Separate multiple values by ;"
@@ -14499,7 +14497,7 @@ msgstr "Séparez les valeurs multiples par ;"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:161
 msgid "September"
-msgstr "Septembre"
+msgstr "septembre"
 
 #: db/seeds/settings.rb:3896
 msgid "Sequencer log level"
@@ -15451,11 +15449,11 @@ msgstr "S'abonner"
 
 #: app/assets/javascripts/app/views/generic/ical_feed.jst.eco:29
 msgid "Subscribe to iCalendar feed"
-msgstr "S'inscrire au flux iCalendar"
+msgstr "S'abonner au flux iCalendar"
 
 #: app/assets/javascripts/app/views/generic/ical_feed.jst.eco:8
 msgid "Subscribe to public holidays in"
-msgstr "Souscrire aux jours fériés de"
+msgstr "S'abonner aux jours fériés de"
 
 #: app/assets/javascripts/app/views/generic/notification_matrix.jst.eco:7
 msgid "Subscribed Tickets"
@@ -16445,7 +16443,7 @@ msgstr "La notification n'a pas pu être supprimée."
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:801
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:267
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:280
 #: app/assets/javascripts/app/controllers/object_manager.coffee:261
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:94
 msgid "The object could not be created."
@@ -18759,8 +18757,8 @@ msgstr "Méthodes d'authentification à deux facteurs"
 #: app/controllers/application_controller/authenticates.rb:58
 msgid "Two-factor authentication is not supported with HTTP BasicAuth."
 msgstr ""
-"L'authentification à deux facteurs n'est pas prise en charge avec "
-"l’authentification HTTP Basic."
+"L'authentification à deux facteurs n'est pas prise en charge pour l’"
+"authentification HTTP Basic."
 
 #: app/assets/javascripts/app/controllers/after_auth/two_factor_configuration.coffee:37
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationMethodList.vue:73
@@ -18924,7 +18922,7 @@ msgstr "Désactiver la valeur par défaut"
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:7
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:57
 msgid "Unsubscribe"
-msgstr "Se désinscrire"
+msgstr "Se désabonner"
 
 #: lib/whatsapp/webhook/payload.rb:46
 msgid "Unsupported message type."
@@ -19292,7 +19290,7 @@ msgid ""
 "Use subject field for emails. If disabled, the ticket title will be used as "
 "subject."
 msgstr ""
-"Utiliser le champ sujet pour les emails. Si désactivé, le titre du ticket "
+"Utiliser le champ sujet pour les e-mails. Si désactivé, le titre du ticket "
 "sera utilisé comme sujet."
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingAvatarCameraFlyout.vue:149
@@ -19714,11 +19712,11 @@ msgstr ""
 #: app/frontend/shared/entities/ticket-article/action/plugins/web.ts:12
 #: db/seeds/object_manager_attributes.rb:757 db/seeds/permissions.rb:89
 msgid "Web"
-msgstr "Web"
+msgstr "Site web"
 
 #: app/models/report.rb:171
 msgid "Web (in)"
-msgstr "Web (entrant)"
+msgstr "Site web (entrant)"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/base_form.coffee:97
 #: app/assets/javascripts/app/controllers/knowledge_base/server_snippet.coffee:2
@@ -20158,8 +20156,8 @@ msgid ""
 "screen. These have many purposes, such as displaying a data privacy page for "
 "all people using your Zammad instance."
 msgstr ""
-"Vous pouvez définir des liens qui seront affichés, par exemple, dans le bas "
-"de page de l'écran de login de Zammad. Cela peut avoir plusieurs objectifs, "
+"Vous pouvez définir des liens qui seront affichés, par exemple, en bas de "
+"page de l'écran de login de Zammad. Cela peut avoir plusieurs objectifs, "
 "comme l'affichage d'une page sur la confidentialité des données pour tous "
 "les utilisateurs de l'instance Zammad."
 
@@ -20678,7 +20676,7 @@ msgstr ""
 
 #: db/seeds/settings.rb:217
 msgid "absolute - e. g. \"Monday 09:30\" or \"Tuesday 23. Feb 14:20\""
-msgstr "absolue - par exemple \"Lundi 09:30\" ou \"Mardi 23 Fev 14:20\""
+msgstr "absolue - par exemple \"Lundi 09:30\" ou \"Mardi 23 févr. 14:20\""
 
 #: app/assets/javascripts/app/controllers/_ui_element/active.coffee:4
 msgid "active"
@@ -20974,7 +20972,7 @@ msgid "default"
 msgstr "défaut"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:4
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee:8
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:17
 msgid "delete"
@@ -21236,7 +21234,7 @@ msgstr "Intégration i-doit"
 
 #: app/assets/javascripts/app/views/generic/ical_feed.jst.eco:19
 msgid "iCalendar links from Google will get fetched once a day"
-msgstr "Les liens iCalendar de Google ne sont rafraîchis qu'une fois par jour"
+msgstr "Les liens iCalendar de Google seront récupérés une fois par jour"
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:87
 msgid "in %s"
@@ -21937,7 +21935,7 @@ msgstr "commence par une des valeurs"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/calendar.ts:24
 msgid "subscription,calendars,ticket,ical"
-msgstr "subscription,calendars,ticket,ical"
+msgstr "abonnement,calendriers,ticket,ical"
 
 #: app/assets/javascripts/app/views/getting_started/email.jst.eco:16
 msgid "support@example.com"
@@ -22071,7 +22069,7 @@ msgstr "mis à jour"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/outOfOffice.ts:25
 msgid "vacation,holiday,replacement,time off"
-msgstr "vacances,remplacement,récupération"
+msgstr "absence,jour férié,remplacement,récupération"
 
 #: db/seeds/ticket_article_types.rb:13
 msgid "web"

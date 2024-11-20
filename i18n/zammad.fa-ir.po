@@ -76,8 +76,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: ایجاد شده توسط #{current_user.longname} at "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: ایجاد شده توسط #{current_user.longname} at "
 "#{ticket.updated_at}_\n"
 "* گروه: #{ticket.group.name}\n"
 "* مالک: #{ticket.owner.fullname}\n"
@@ -102,8 +102,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: تشدید شد در #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: تشدید شد در #{ticket.escalation_at}_\n"
 "بلیط (#{ticket.title}) از \"#{ticket.customer.longname}\" آن زمان تشدید شده "
 "است \"#{ticket.escalation_at}\"!\n"
 "\n"
@@ -127,8 +127,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: آخرین به روز رسانی در #{ticket.updated_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: آخرین به روز رسانی در #{ticket.updated_at}_\n"
 "* گروه: #{ticket.group.name}\n"
 "* مالک: #{ticket.owner.fullname}\n"
 "* ایالت: #{t(ticket.state.name)}\n"
@@ -152,10 +152,10 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: یادآوری رسید!_\n"
-"یک بلیط نیاز به توجه دارد: یادآوری به آن رسید (#{ticket.title}) با مشتری \""
-"*#{ticket.customer.longname}*\".\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: یادآوری رسید!_\n"
+"یک بلیط نیاز به توجه دارد: یادآوری به آن رسید (#{ticket.title}) با مشتری "
+"\"*#{ticket.customer.longname}*\".\n"
 "\n"
 "<% if @objects[:article] %>\n"
 "#{article.body_as_text}\n"
@@ -180,8 +180,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: به روز شده توسط #{current_user.longname} at "
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: به روز شده توسط #{current_user.longname} at "
 "#{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
@@ -208,8 +208,8 @@ msgid ""
 "<% end %>\n"
 msgstr ""
 "# #{ticket.title}\n"
-"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket."
-"id}|Ticket##{ticket.number}>: تشدید خواهد شد در #{ticket.escalation_at}_\n"
+"_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
+"Ticket##{ticket.number}>: تشدید خواهد شد در #{ticket.escalation_at}_\n"
 "The ticket (#{ticket.title}) from \"#{ticket.customer.longname}\" will "
 "escalate at \"#{ticket.escalation_at}\"!\n"
 "\n"
@@ -238,8 +238,8 @@ msgstr ""
 "\n"
 "<div>سلام #{user.firstname},</div>\n"
 "<br>\n"
-"<div>به نظر می رسد حساب خود را پیوند داده اید <b>با یک برنامه شخص ثالث</b> \""
-"#{t(provider)}\".</div>\n"
+"<div>به نظر می رسد حساب خود را پیوند داده اید <b>با یک برنامه شخص ثالث</b> "
+"\"#{t(provider)}\".</div>\n"
 "<br>\n"
 "<div>اگر این شما نبودید، لطفاً حساب پیوند داده شده را از نمایه خود حذف کنید و "
 "رمز عبور برنامه شخص ثالث خود را تغییر دهید. ممکن است شخصی در سرویس شخص ثالث "
@@ -1935,7 +1935,7 @@ msgstr "آیا مایل هستید «%s» را از پیش‌فرض برداری
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:234
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:130
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/maintenance.coffee:55
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:61
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:123
@@ -5243,7 +5243,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:674
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:118
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
 #: app/assets/javascripts/app/controllers/user.coffee:177
@@ -5367,7 +5367,7 @@ msgstr ""
 msgid "Delete old upload cache entries."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 msgid "Delete organization?"
 msgstr "حذف سازمان؟"
 
@@ -15932,7 +15932,7 @@ msgstr "اعلان قابل حذف نیست."
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:801
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:267
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:280
 #: app/assets/javascripts/app/controllers/object_manager.coffee:261
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:94
 msgid "The object could not be created."
@@ -20228,7 +20228,7 @@ msgid "default"
 msgstr "پیش‌فرض"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:4
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee:8
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:17
 msgid "delete"
