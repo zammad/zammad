@@ -1,8 +1,8 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓.번호}>: 현재_사용자.긴이름}이 #{티켓.업데이트된_시간}_에서 업데이트했습니다.
+_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓.번호}>: 현재_사용자.긴이름}이 #{티켓.업데이트된_시간}_에서 업데이트했습니다_
 <% if @objects[:changes].present? %>
-  <% @objects[:changes].each do |키, 값| %>
-  * <%= t 키 %>: <%= h 값[0] %> -> <%= h 값[1] %>
+  <% @objects[:changes].each do |key, value| %>
+  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>
   <% end %>
 <% end %>
 

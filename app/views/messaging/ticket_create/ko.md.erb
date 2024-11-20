@@ -1,7 +1,7 @@
 # #{ticket.title}
-_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓.번호}>: 현재_사용자.긴이름}이 #{티켓.업데이트된_날짜}_에서 생성했습니다.
-* 그룹: #{티켓.그룹.이름}
-* 소유자: #{티켓.소유자.전체이름}
+_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓.번호}>: 현재_사용자.긴이름}이 #{티켓.업데이트된_날짜}_에서 생성했습니다_
+* 그룹: #{ticket.group.name}
+* 소유자: #{ticket.owner.fullname}
 * 상태: #{t(ticket.state.name)}
 
 <% if @objects[:article] %>
