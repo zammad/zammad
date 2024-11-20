@@ -36,7 +36,7 @@ class TriggerWebhookJob::CustomPayload::Track::Notification < TriggerWebhookJob:
 
       type = type!(event)
       template = fetch(tracks, event, type)
-      tracks[:notification] = assemble(template, has_body: tracks[:article].present? && tracks[:article].body_as_text.strip.present?)
+      tracks[:notification] = assemble(template, has_body: tracks[:article].present? && tracks[:article].body_as_text.strip.present?, type:)
     end
 
     private
@@ -62,8 +62,10 @@ class TriggerWebhookJob::CustomPayload::Track::Notification < TriggerWebhookJob:
       raise ArgumentError, __("The required event field 'execution' is unknown or missing.")
     end
 
-    def assemble(template, has_body: false)
+    def assemble(template, has_body: false, type: nil)
       match = regex(has_body).match(template[:body])
+
+      raise ArgumentError, "Extracting information for the notification failed due to a non-matching template (template: #{"ticket_#{type}"}, locale: #{Setting.get('locale_default')})." if match.nil?
 
       notification = {
         subject: template[:subject][2..],
@@ -78,7 +80,7 @@ class TriggerWebhookJob::CustomPayload::Track::Notification < TriggerWebhookJob:
     end
 
     def regex(extended)
-      source = '_<(?<link>.+)\|.+>:(?<message>.+)_(\n(?<changes>.+))?'
+      source = '_<(?<link>.+)\|.+>[ ]?:(?<message>.+)_(\n(?<changes>.+))?'
       source += '\n{3,4}(?<body>.+)?' if extended
 
       Regexp.new(source, Regexp::MULTILINE)
