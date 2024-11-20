@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-09-12 05:39+0000\n"
-"Last-Translator: Bogdan Lungu <bogdy_lungu_alex@yahoo.co.uk>\n"
+"PO-Revision-Date: 2024-11-20 06:15+0000\n"
+"Last-Translator: Dominik Klein <dk@zammad.com>\n"
 "Language-Team: Romanian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ro/>\n"
 "Language: ro-ro\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=n==1 ? 0 : (n==0 || (n%100 > 0 && n%100 < "
 "20)) ? 1 : 2;\n"
-"X-Generator: Weblate 5.7\n"
+"X-Generator: Weblate 5.7.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -80,7 +80,7 @@ msgstr ""
 "#{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
 "Ticket##{ticket.number}>: Creat de #{current_user.longname} la #{ticket."
-"updated_at}__.\n"
+"updated_at}_\n"
 "* Grup: #{ticket.group.name}\n"
 "* Proprietar: #{ticket.owner.fullname}\n"
 "* Stare: #{t(ticket.state.name)}\n"
@@ -105,8 +105,7 @@ msgid ""
 msgstr ""
 "#{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Escaladat la #{ticket.escalation_at}_{ticket."
-"escalation_at}_.\n"
+"Ticket##{ticket.number}>: Escaladat la #{ticket.escalation_at}_\n"
 "Tichetul (#{ticket.title}) de la „#{ticket.customer.longname}” a fost "
 "escaladat la „#{ticket.escalation_at}”!\n"
 "\n"
@@ -131,7 +130,7 @@ msgid ""
 msgstr ""
 "#{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Ultima actualizare la #{ticket.updated_at}_.\n"
+"Ticket##{ticket.number}>: Ultima actualizare la #{ticket.updated_at}_\n"
 "* Grup: #{ticket.group.name}\n"
 "* Proprietar: #{ticket.owner.fullname}\n"
 "* Stare: #{t(ticket.state.name)}\n"
@@ -185,7 +184,7 @@ msgstr ""
 "#{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
 "Ticket##{ticket.number}>: Actualizat de #{current_user.longname} la #{ticket."
-"updated_at}__.\n"
+"updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
 "  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
@@ -212,8 +211,7 @@ msgid ""
 msgstr ""
 "#{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}>: Îl vom escalada la #{ticket.escalation_at}_{ticket."
-"escalation_at}_.\n"
+"Ticket##{ticket.number}>: Îl vom escalada la #{ticket.escalation_at}_\n"
 "Tichetul (#{ticket.title}) de la „#{ticket.customer.longname}” a fost "
 "escaladat la „#{ticket.escalation_at}”!\n"
 "\n"
@@ -483,7 +481,7 @@ msgstr "%s a creat utilizatorul |%s|"
 msgid "%s credentials"
 msgstr "Date de autentificare %s"
 
-#: app/frontend/shared/i18n/dates.ts:97
+#: app/frontend/shared/i18n/dates.ts:106
 msgid "%s days ago"
 msgstr "%s zile în urmă"
 
@@ -514,7 +512,7 @@ msgstr "%s foldere"
 msgid "%s groups to %s roles assignments"
 msgstr "Grupurile %s mapate la atribuirile de roluri %s"
 
-#: app/frontend/shared/i18n/dates.ts:104
+#: app/frontend/shared/i18n/dates.ts:113
 msgid "%s hours ago"
 msgstr "%s ore în urmă"
 
@@ -533,11 +531,11 @@ msgstr "Câmpul %s este obligatoriu."
 msgid "%s is sent without text caption"
 msgstr "%s a fost trimis fără text descriptiv"
 
-#: app/frontend/shared/i18n/dates.ts:111
+#: app/frontend/shared/i18n/dates.ts:120
 msgid "%s minutes ago"
 msgstr "%s minute în urmă"
 
-#: app/frontend/shared/i18n/dates.ts:83
+#: app/frontend/shared/i18n/dates.ts:92
 msgid "%s months ago"
 msgstr "%s luni în urmă"
 
@@ -578,12 +576,6 @@ msgstr "%s din tichetele mele sunt în prezent în lucru."
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:11
 msgid "%s of my tickets escalated"
 msgstr "%s din tichetele mele au fost escaladate"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:50
-#, fuzzy
-#| msgid "message"
-msgid "%s on message"
-msgstr "mesaj"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 #: app/graphql/gql/queries/autocomplete_search/generic.rb:64
@@ -635,12 +627,6 @@ msgstr "%s tichete"
 msgid "%s tickets found"
 msgstr "%s tichete găsite"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:37
-#, fuzzy
-#| msgid "message"
-msgid "%s to message"
-msgstr "mesaj"
-
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
 msgid "%s updated article for |%s|"
@@ -689,11 +675,11 @@ msgstr "Utilizator %s la utilizator %s"
 msgid "%s via WhatsApp"
 msgstr "%s prin WhatsApp"
 
-#: app/frontend/shared/i18n/dates.ts:90
+#: app/frontend/shared/i18n/dates.ts:99
 msgid "%s weeks ago"
 msgstr "%s săptămâni în urmă"
 
-#: app/frontend/shared/i18n/dates.ts:76
+#: app/frontend/shared/i18n/dates.ts:85
 msgid "%s years ago"
 msgstr "%s ani în urmă"
 
@@ -809,7 +795,7 @@ msgstr "1 fișier atașat"
 msgid "1 day"
 msgstr "1 zi"
 
-#: app/frontend/shared/i18n/dates.ts:96
+#: app/frontend/shared/i18n/dates.ts:105
 msgid "1 day ago"
 msgstr "1 zi în urmă"
 
@@ -817,7 +803,7 @@ msgstr "1 zi în urmă"
 msgid "1 hour"
 msgstr "o ora"
 
-#: app/frontend/shared/i18n/dates.ts:103
+#: app/frontend/shared/i18n/dates.ts:112
 msgid "1 hour ago"
 msgstr "cu o oră în urmă"
 
@@ -825,11 +811,11 @@ msgstr "cu o oră în urmă"
 msgid "1 low"
 msgstr "1 - Mică"
 
-#: app/frontend/shared/i18n/dates.ts:110
+#: app/frontend/shared/i18n/dates.ts:119
 msgid "1 minute ago"
 msgstr "acum un minut"
 
-#: app/frontend/shared/i18n/dates.ts:82
+#: app/frontend/shared/i18n/dates.ts:91
 msgid "1 month ago"
 msgstr "acum o lună"
 
@@ -837,11 +823,11 @@ msgstr "acum o lună"
 msgid "1 week"
 msgstr "o săptămână"
 
-#: app/frontend/shared/i18n/dates.ts:89
+#: app/frontend/shared/i18n/dates.ts:98
 msgid "1 week ago"
 msgstr "în urmă cu o săptămână"
 
-#: app/frontend/shared/i18n/dates.ts:75
+#: app/frontend/shared/i18n/dates.ts:84
 msgid "1 year ago"
 msgstr "acum un an"
 
@@ -1548,10 +1534,6 @@ msgstr ""
 "Adaugă această clasă unui buton de pe pagina ta care ar trebui să deschidă "
 "chatul."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:9
-msgid "Added"
-msgstr ""
-
 #: app/controllers/first_steps_controller.rb:109
 msgid "Additional Channels"
 msgstr "Canale suplimentare"
@@ -2127,7 +2109,7 @@ msgstr "Ești sigur că vrei să elimini \"%s\" ca implicit?"
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:234
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:130
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/maintenance.coffee:55
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:61
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:123
@@ -3172,17 +3154,17 @@ msgstr "Schimba-ți parola contului personal."
 msgid "Change text color"
 msgstr "Schimbă culoarea textului"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:17
 #, fuzzy
-#| msgid "Change Objects"
-msgid "Changed reaction"
-msgstr "Modifică obiectele"
+#| msgid "%s ended switch to |%s|!"
+msgid "Changed reaction on message %s from %s"
+msgstr "%s a încheiat comutarea la |%s|!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:18
 #, fuzzy
-#| msgid "Exchange integration"
-msgid "Changed reaction to"
-msgstr "Integrare Exchange"
+#| msgid "%s ended switch to |%s|!"
+msgid "Changed reaction to %s on message %s from %s"
+msgstr "%s a încheiat comutarea la |%s|!"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -3294,12 +3276,6 @@ msgstr ""
 "Bifează această casetă dacă dorești să personalizezi modul în care sunt "
 "sortate opțiunile. Dacă caseta nu este bifată, valorile sunt sortate în "
 "ordine alfabetică."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
-#, fuzzy
-#| msgid "Select item"
-msgid "Checked"
-msgstr "Alege un articol"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
@@ -4330,7 +4306,6 @@ msgstr "Create:"
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList.vue:43
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created-mention.ts:9
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -5734,7 +5709,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:674
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:118
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
 #: app/assets/javascripts/app/controllers/user.coffee:177
@@ -5858,7 +5833,7 @@ msgstr "Șterge înregistrările vechi pentru token-uri."
 msgid "Delete old upload cache entries."
 msgstr "Șterge înregistrările vechi pentru cache-ul fișierelor încărcate."
 
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 msgid "Delete organization?"
 msgstr "Ștergi organizația?"
 
@@ -6597,7 +6572,6 @@ msgstr "Ultima sincronizare"
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:7
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:167
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
@@ -6720,6 +6694,12 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:91
 msgid "Email sent to \"%s\". Please verify your email account."
 msgstr "E-mail trimis la \"%s\". Te rugăm să îți verifici contul de e-mail."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsEmail.vue:19
+#, fuzzy
+#| msgid "email sent to '%s'"
+msgid "Email sent to %s"
+msgstr "e-mail trimis la '%s'"
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco:21
 #: app/assets/javascripts/app/views/knowledge_base/search_field_panel.jst.eco:5
@@ -10929,16 +10909,16 @@ msgstr "Fuzionează cu tichetul#"
 msgid "Merged"
 msgstr "Fuzionat"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/merged-into.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
 #, fuzzy
-#| msgid "Merge tickets"
-msgid "Merged this ticket into"
-msgstr "Fuzionare tichete"
+#| msgid "Find a ticket"
+msgid "Merged %s into this ticket"
+msgstr "Caută un tichet"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
 #, fuzzy
 #| msgid "Merge tickets"
-msgid "Merged ticket"
+msgid "Merged this ticket into %s"
 msgstr "Fuzionare tichete"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
@@ -12143,7 +12123,6 @@ msgstr "Observație:"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:59
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/notification.ts:7
 #: app/views/mailer/application.html.erb:36
 msgid "Notification"
 msgstr "Notificare"
@@ -13663,17 +13642,17 @@ msgstr ""
 msgid "Raw"
 msgstr "Brut"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:19
 #, fuzzy
-#| msgid "deactivated"
-msgid "Reacted"
-msgstr "dezactivat"
+#| msgid "%s ended switch to |%s|!"
+msgid "Reacted to message %s from %s"
+msgstr "%s a încheiat comutarea la |%s|!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:20
 #, fuzzy
-#| msgid "ends with"
-msgid "Reacted with"
-msgstr "se termină cu"
+#| msgid "%s ended switch to |%s|!"
+msgid "Reacted with %s to message %s from %s"
+msgstr "%s a încheiat comutarea la |%s|!"
 
 #: app/assets/javascripts/app/models/group.coffee:44
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:40
@@ -13946,18 +13925,11 @@ msgstr "Șterge imaginea"
 msgid "Remove two-factor authentication"
 msgstr "Șterge autentificare cu doi factori"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:9
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:16
 #, fuzzy
-#| msgid "Remove"
-msgid "Removed"
-msgstr "Șterge"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
-#, fuzzy
-#| msgid "Remove formatting"
-msgid "Removed reaction"
-msgstr "Înlătură formatarea"
+#| msgid "%s ended switch to |%s|!"
+msgid "Removed reaction from message %s from %s"
+msgstr "%s a încheiat comutarea la |%s|!"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:649
 msgid "Removes any hyperlink"
@@ -14088,7 +14060,7 @@ msgstr "Cerem permisiunea"
 msgid "Required parameter 'downloadBackendSelected' is missing."
 msgstr "Parametrul necesar 'downloadBackendSelected' lipsește."
 
-#: app/controllers/reports_controller.rb:117
+#: app/controllers/reports_controller.rb:116
 msgid "Required parameter 'profile' is missing."
 msgstr "Parametrul necesar 'profile' lipsește."
 
@@ -16191,7 +16163,7 @@ msgstr "Sincronizează cu calculatorul"
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: app/assets/javascripts/app/controllers/manage.coffee:37
 #: app/assets/javascripts/app/views/generic/history.jst.eco:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:32
 #: db/seeds/permissions.rb:191 db/seeds/ticket_article_senders.rb:5
 msgid "System"
 msgstr "Sistem"
@@ -16568,7 +16540,7 @@ msgstr "Serviciul de stocare simplă nu este disponibil."
 msgid "The Telegram bot could not be saved."
 msgstr "Bot-ul Telegram nu a putut fi salvat."
 
-#: lib/telegram_helper.rb:688
+#: lib/telegram_helper.rb:686
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr "Fișierul Telegram este mai mare decât maximul permis de 20MB."
 
@@ -16622,7 +16594,7 @@ msgstr "%s Obiecte sunt create."
 msgid "The account link was successfully removed!"
 msgstr "Testul a avut succes."
 
-#: app/controllers/reports_controller.rb:130
+#: app/controllers/reports_controller.rb:129
 msgid "The active reporting profile could not be found."
 msgstr "Profilul de raportare activ nu a putut fi găsit."
 
@@ -16955,7 +16927,7 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr "Înregistrarea nu a putut fi creată."
 
-#: lib/telegram_helper.rb:696
+#: lib/telegram_helper.rb:694
 msgid "The file could not be retrieved from the bot."
 msgstr "Fișierul nu a putut fi preluat de la bot."
 
@@ -17175,7 +17147,7 @@ msgstr "Notificarea nu a putut fi ștearsă."
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:801
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:267
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:280
 #: app/assets/javascripts/app/controllers/object_manager.coffee:261
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:94
 msgid "The object could not be created."
@@ -18544,7 +18516,7 @@ msgstr "Client tichet"
 msgid "Ticket Duplicate Detection"
 msgstr "Detectare duplicate"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:71
 #, fuzzy
 #| msgid "Ticket Customer"
 msgid "Ticket History"
@@ -19373,11 +19345,31 @@ msgstr "Traduceri"
 msgid "Trigger"
 msgstr "Declanșator (trigger)"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:7
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:14
 #, fuzzy
-#| msgid "Trigger"
-msgid "Triggered"
-msgstr "Declanșator (trigger)"
+#| msgid "trigger '%s' was performed because pending reminder was reached"
+msgid "Triggered because pending reminder was reached"
+msgstr ""
+"declanșatorul '%s' a fost activat deoarece s-a atins mementoul în așteptare"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:19
+#, fuzzy
+#| msgid "%s of my tickets escalated"
+msgid "Triggered because ticket was escalated"
+msgstr "%s din tichetele mele au fost escaladate"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
+#, fuzzy
+#| msgid "Ticket |%s| will escalate soon!"
+msgid "Triggered because ticket will escalate soon"
+msgstr "Tichetul |%s| va fi escaladat în curând!"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:29
+#, fuzzy
+#| msgid "trigger '%s' was performed because pending reminder was reached"
+msgid "Triggered because time event was reached"
+msgstr ""
+"declanșatorul '%s' a fost activat deoarece s-a atins mementoul în așteptare"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
 msgid "Triggers"
@@ -19665,21 +19657,12 @@ msgstr "Adresele de email neatribuite, alocă-le unui canal sau șterge-le."
 msgid "Uncheck item"
 msgstr "Alege un articol"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
-#, fuzzy
-#| msgid "Select item"
-msgid "Unchecked"
-msgstr "Alege un articol"
-
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:12
 msgid "Unit"
 msgstr "Unitate"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:42
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:25
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:35
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:41
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/eventHelpers.ts:14
 #, fuzzy
 #| msgid "Unknown error"
 msgid "Unknown"
@@ -21695,29 +21678,6 @@ msgstr "atributul nu este editabil"
 msgid "auto select"
 msgstr "selectează automat"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:12
-#, fuzzy
-#| msgid "trigger '%s' was performed because pending reminder was reached"
-msgid "because pending reminder was reached"
-msgstr ""
-"declanșatorul '%s' a fost activat deoarece s-a atins mementoul în așteptare"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:16
-#, fuzzy
-#| msgid "%s of my tickets escalated"
-msgid "because ticket was escalated"
-msgstr "%s din tichetele mele au fost escaladate"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:20
-#, fuzzy
-#| msgid "Ticket |%s| will escalate soon!"
-msgid "because ticket will escalate soon"
-msgstr "Tichetul |%s| va fi escaladat în curând!"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
-msgid "because time event was reached"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -21922,7 +21882,7 @@ msgid "default"
 msgstr "implicit"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:4
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee:8
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:17
 msgid "delete"
@@ -22105,25 +22065,12 @@ msgstr "redirecționează"
 msgid "from"
 msgstr "de la"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:40
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:53
-#, fuzzy
-#| msgid "Call from %s"
-msgid "from %s"
-msgstr "Apel de la %s"
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:481
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "from (relative)"
 msgstr "de la (relativ)"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:25
-#, fuzzy
-#| msgid "Welcome message"
-msgid "from message"
-msgstr "Mesaj de bun venit"
 
 #: app/controllers/integration/pgp_controller.rb:48
 msgid "gpg (GnuPG) 2.2.0 or newer is required"
@@ -22211,51 +22158,51 @@ msgstr "link-urile iCalendar din Google vor fi importate o dată pe zi"
 msgid "in %s"
 msgstr "în %s"
 
-#: app/frontend/shared/i18n/dates.ts:99
+#: app/frontend/shared/i18n/dates.ts:108
 msgid "in %s days"
 msgstr "în %s zile"
 
-#: app/frontend/shared/i18n/dates.ts:106
+#: app/frontend/shared/i18n/dates.ts:115
 msgid "in %s hours"
 msgstr "în %s ore"
 
-#: app/frontend/shared/i18n/dates.ts:113
+#: app/frontend/shared/i18n/dates.ts:122
 msgid "in %s minutes"
 msgstr "în %s minute"
 
-#: app/frontend/shared/i18n/dates.ts:85
+#: app/frontend/shared/i18n/dates.ts:94
 msgid "in %s months"
 msgstr "în %s luni"
 
-#: app/frontend/shared/i18n/dates.ts:92
+#: app/frontend/shared/i18n/dates.ts:101
 msgid "in %s weeks"
 msgstr "în %s săptămâni"
 
-#: app/frontend/shared/i18n/dates.ts:78
+#: app/frontend/shared/i18n/dates.ts:87
 msgid "in %s years"
 msgstr "în %s ani"
 
-#: app/frontend/shared/i18n/dates.ts:98
+#: app/frontend/shared/i18n/dates.ts:107
 msgid "in 1 day"
 msgstr "în o zi"
 
-#: app/frontend/shared/i18n/dates.ts:105
+#: app/frontend/shared/i18n/dates.ts:114
 msgid "in 1 hour"
 msgstr "în o oră"
 
-#: app/frontend/shared/i18n/dates.ts:112
+#: app/frontend/shared/i18n/dates.ts:121
 msgid "in 1 minute"
 msgstr "în un minut"
 
-#: app/frontend/shared/i18n/dates.ts:84
+#: app/frontend/shared/i18n/dates.ts:93
 msgid "in 1 month"
 msgstr "în o lună"
 
-#: app/frontend/shared/i18n/dates.ts:91
+#: app/frontend/shared/i18n/dates.ts:100
 msgid "in 1 week"
 msgstr "în o săptămână"
 
-#: app/frontend/shared/i18n/dates.ts:77
+#: app/frontend/shared/i18n/dates.ts:86
 msgid "in 1 year"
 msgstr "în un an"
 
@@ -22283,12 +22230,6 @@ msgstr "intern"
 #: db/seeds/settings.rb:1190
 msgid "internal database"
 msgstr "bază de date internă"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:19
-#, fuzzy
-#| msgid "Find a ticket"
-msgid "into this ticket"
-msgstr "Caută un tichet"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:96
@@ -22639,12 +22580,6 @@ msgstr "Notificări"
 msgid "now"
 msgstr "acum"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:51
-#, fuzzy
-#| msgid "message"
-msgid "on message"
-msgstr "mesaj"
-
 #: app/models/object_manager/attribute.rb:548
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr "sunt permise doar litere mici, cifre și '_'"
@@ -22825,12 +22760,6 @@ msgstr "selectează atașamentul…"
 msgid "select visible options"
 msgstr "selectează opțiunile vizibile"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:10
-#, fuzzy
-#| msgid "set to public"
-msgid "sent to"
-msgstr "setează ca public"
-
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 msgid "sent to the customer"
@@ -22995,12 +22924,6 @@ msgstr "marcaj temporal - de ex. \"2018-08-30 14:30\""
 #: app/views/knowledge_base/public/not_found.html.erb:8
 msgid "to go to the homepage."
 msgstr "pentru a merge la pagina principală."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:38
-#, fuzzy
-#| msgid "message"
-msgid "to message"
-msgstr "mesaj"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
@@ -23175,6 +23098,91 @@ msgstr "...zonei întregi a textului"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Timp de așteptare azi"
+
+#, fuzzy
+#~| msgid "message"
+#~ msgid "%s on message"
+#~ msgstr "mesaj"
+
+#, fuzzy
+#~| msgid "message"
+#~ msgid "%s to message"
+#~ msgstr "mesaj"
+
+#, fuzzy
+#~| msgid "Change Objects"
+#~ msgid "Changed reaction"
+#~ msgstr "Modifică obiectele"
+
+#, fuzzy
+#~| msgid "Exchange integration"
+#~ msgid "Changed reaction to"
+#~ msgstr "Integrare Exchange"
+
+#, fuzzy
+#~| msgid "Select item"
+#~ msgid "Checked"
+#~ msgstr "Alege un articol"
+
+#, fuzzy
+#~| msgid "Merge tickets"
+#~ msgid "Merged ticket"
+#~ msgstr "Fuzionare tichete"
+
+#, fuzzy
+#~| msgid "deactivated"
+#~ msgid "Reacted"
+#~ msgstr "dezactivat"
+
+#, fuzzy
+#~| msgid "ends with"
+#~ msgid "Reacted with"
+#~ msgstr "se termină cu"
+
+#, fuzzy
+#~| msgid "Remove"
+#~ msgid "Removed"
+#~ msgstr "Șterge"
+
+#, fuzzy
+#~| msgid "Remove formatting"
+#~ msgid "Removed reaction"
+#~ msgstr "Înlătură formatarea"
+
+#, fuzzy
+#~| msgid "Trigger"
+#~ msgid "Triggered"
+#~ msgstr "Declanșator (trigger)"
+
+#, fuzzy
+#~| msgid "Select item"
+#~ msgid "Unchecked"
+#~ msgstr "Alege un articol"
+
+#, fuzzy
+#~| msgid "Call from %s"
+#~ msgid "from %s"
+#~ msgstr "Apel de la %s"
+
+#, fuzzy
+#~| msgid "Welcome message"
+#~ msgid "from message"
+#~ msgstr "Mesaj de bun venit"
+
+#, fuzzy
+#~| msgid "message"
+#~ msgid "on message"
+#~ msgstr "mesaj"
+
+#, fuzzy
+#~| msgid "set to public"
+#~ msgid "sent to"
+#~ msgstr "setează ca public"
+
+#, fuzzy
+#~| msgid "message"
+#~ msgid "to message"
+#~ msgstr "mesaj"
 
 #, fuzzy
 #~| msgid "%s Object(s) are updated."

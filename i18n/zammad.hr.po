@@ -479,7 +479,7 @@ msgstr "%s kreiran korisnik |%s|"
 msgid "%s credentials"
 msgstr "%s prijavnih podataka"
 
-#: app/frontend/shared/i18n/dates.ts:97
+#: app/frontend/shared/i18n/dates.ts:106
 msgid "%s days ago"
 msgstr "prije %s dana"
 
@@ -510,7 +510,7 @@ msgstr "%s mape"
 msgid "%s groups to %s roles assignments"
 msgstr "%s grupe u %s dodjele uloga"
 
-#: app/frontend/shared/i18n/dates.ts:104
+#: app/frontend/shared/i18n/dates.ts:113
 msgid "%s hours ago"
 msgstr "prije %s sati"
 
@@ -529,11 +529,11 @@ msgstr "%s je potrebno."
 msgid "%s is sent without text caption"
 msgstr "%s je poslan bez tekstnog opisa"
 
-#: app/frontend/shared/i18n/dates.ts:111
+#: app/frontend/shared/i18n/dates.ts:120
 msgid "%s minutes ago"
 msgstr "prije %s minuta"
 
-#: app/frontend/shared/i18n/dates.ts:83
+#: app/frontend/shared/i18n/dates.ts:92
 msgid "%s months ago"
 msgstr "prije %s mjeseca/i"
 
@@ -574,12 +574,6 @@ msgstr "%s mojih ticketa je trenutno u obradi."
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:11
 msgid "%s of my tickets escalated"
 msgstr "%s mojih eskaliranih ticketa"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:50
-#, fuzzy
-#| msgid "message"
-msgid "%s on message"
-msgstr "poruka"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 #: app/graphql/gql/queries/autocomplete_search/generic.rb:64
@@ -629,12 +623,6 @@ msgstr "%s ticketa"
 msgid "%s tickets found"
 msgstr "Pronađeno %s ticketa"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:37
-#, fuzzy
-#| msgid "message"
-msgid "%s to message"
-msgstr "poruka"
-
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
 msgid "%s updated article for |%s|"
@@ -682,11 +670,11 @@ msgstr "%s korisnik prema %s korisniku"
 msgid "%s via WhatsApp"
 msgstr "%s preko WhatsApp-a"
 
-#: app/frontend/shared/i18n/dates.ts:90
+#: app/frontend/shared/i18n/dates.ts:99
 msgid "%s weeks ago"
 msgstr "prije %s tjedana"
 
-#: app/frontend/shared/i18n/dates.ts:76
+#: app/frontend/shared/i18n/dates.ts:85
 msgid "%s years ago"
 msgstr "prije %s godina"
 
@@ -797,7 +785,7 @@ msgstr "1 priložena datoteka"
 msgid "1 day"
 msgstr "1 dan"
 
-#: app/frontend/shared/i18n/dates.ts:96
+#: app/frontend/shared/i18n/dates.ts:105
 msgid "1 day ago"
 msgstr "prije jednog dana"
 
@@ -805,7 +793,7 @@ msgstr "prije jednog dana"
 msgid "1 hour"
 msgstr "1 sat"
 
-#: app/frontend/shared/i18n/dates.ts:103
+#: app/frontend/shared/i18n/dates.ts:112
 msgid "1 hour ago"
 msgstr "prije jednog sata"
 
@@ -813,11 +801,11 @@ msgstr "prije jednog sata"
 msgid "1 low"
 msgstr "1 nizak"
 
-#: app/frontend/shared/i18n/dates.ts:110
+#: app/frontend/shared/i18n/dates.ts:119
 msgid "1 minute ago"
 msgstr "prije jednu minutu"
 
-#: app/frontend/shared/i18n/dates.ts:82
+#: app/frontend/shared/i18n/dates.ts:91
 msgid "1 month ago"
 msgstr "prije mjesec dana"
 
@@ -825,11 +813,11 @@ msgstr "prije mjesec dana"
 msgid "1 week"
 msgstr "1 tjedan"
 
-#: app/frontend/shared/i18n/dates.ts:89
+#: app/frontend/shared/i18n/dates.ts:98
 msgid "1 week ago"
 msgstr "prije tjedan dana"
 
-#: app/frontend/shared/i18n/dates.ts:75
+#: app/frontend/shared/i18n/dates.ts:84
 msgid "1 year ago"
 msgstr "prije godinu dana"
 
@@ -1518,10 +1506,6 @@ msgstr "Dodaj naslov treće razine"
 msgid "Add this class to a button on your page that should open the chat."
 msgstr "Dodaj ovu razinu gumbu na stranici koji bi trebao otvoriti chat."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:9
-msgid "Added"
-msgstr ""
-
 #: app/controllers/first_steps_controller.rb:109
 msgid "Additional Channels"
 msgstr "Dodatni kanali"
@@ -2090,7 +2074,7 @@ msgstr "Jeste li sigurni da želite ukloniti \"%s\" kao zadanu vrijednost?"
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:234
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:130
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/maintenance.coffee:55
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:61
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:123
@@ -3120,17 +3104,17 @@ msgstr "Promijenite osobnu lozinku profila."
 msgid "Change text color"
 msgstr "Promijeni boju teksta"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:17
 #, fuzzy
-#| msgid "Change Objects"
-msgid "Changed reaction"
-msgstr "Promijeni objekte"
+#| msgid "removed reaction to message from %s '%s'"
+msgid "Changed reaction on message %s from %s"
+msgstr "uklonjena reakcija na poruku od %s '%s'"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:18
 #, fuzzy
-#| msgid "Exchange integration"
-msgid "Changed reaction to"
-msgstr "Exchange integracija"
+#| msgid "removed reaction to message from %s '%s'"
+msgid "Changed reaction to %s on message %s from %s"
+msgstr "uklonjena reakcija na poruku od %s '%s'"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -3243,12 +3227,6 @@ msgstr ""
 "Stavite kvačicu u kućicu, ukoliko želite prilagoditi kako su opcije "
 "sortirane. Ukoliko kućica nije označena, vrijednosti se sortiraju abecednim "
 "redom."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
-#, fuzzy
-#| msgid "checked"
-msgid "Checked"
-msgstr "označeno"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
@@ -4265,7 +4243,6 @@ msgstr "Kreiraj:"
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList.vue:43
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created-mention.ts:9
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -5624,7 +5601,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:674
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:118
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
 #: app/assets/javascripts/app/controllers/user.coffee:177
@@ -5742,7 +5719,7 @@ msgstr "Briše stare unose tokena."
 msgid "Delete old upload cache entries."
 msgstr "Briše stare unose u predmemoriji za upload."
 
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 msgid "Delete organization?"
 msgstr "Obrisati organizaciju?"
 
@@ -6419,7 +6396,6 @@ msgstr "Elasticsearch verzija"
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:7
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:167
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
@@ -6535,6 +6511,12 @@ msgstr "Mail poslan na \"%s\". Korisnik treba potvrditi svoj račun."
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:91
 msgid "Email sent to \"%s\". Please verify your email account."
 msgstr "Mail poslan na \"%s\". Molimo, potvrdite svoj račun."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsEmail.vue:19
+#, fuzzy
+#| msgid "email sent to '%s'"
+msgid "Email sent to %s"
+msgstr "e-mail poslan na ’%s’"
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco:21
 #: app/assets/javascripts/app/views/knowledge_base/search_field_panel.jst.eco:5
@@ -10562,16 +10544,16 @@ msgstr "Spoji sa Ticket#"
 msgid "Merged"
 msgstr "Spojeno"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/merged-into.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
 #, fuzzy
-#| msgid "Merge tickets"
-msgid "Merged this ticket into"
-msgstr "Spoji tickete"
+#| msgid "Find a ticket"
+msgid "Merged %s into this ticket"
+msgstr "Pronađi ticket"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
 #, fuzzy
 #| msgid "Merge tickets"
-msgid "Merged ticket"
+msgid "Merged this ticket into %s"
 msgstr "Spoji tickete"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
@@ -11734,7 +11716,6 @@ msgstr "Uputa:"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:59
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/notification.ts:7
 #: app/views/mailer/application.html.erb:36
 msgid "Notification"
 msgstr "Obavijest"
@@ -13170,17 +13151,17 @@ msgstr ""
 msgid "Raw"
 msgstr "Neobrađeni podaci"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:19
 #, fuzzy
-#| msgid "deactivated"
-msgid "Reacted"
-msgstr "deaktiviran"
+#| msgid "reacted to message from %s '%s'"
+msgid "Reacted to message %s from %s"
+msgstr "reagira na poruku od %s '%s'"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:20
 #, fuzzy
-#| msgid "ends with"
-msgid "Reacted with"
-msgstr "završava na"
+#| msgid "reacted with a %s to message from %s '%s'"
+msgid "Reacted with %s to message %s from %s"
+msgstr "reagira sa %s na poruku od %s '%s'"
 
 #: app/assets/javascripts/app/models/group.coffee:44
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:40
@@ -13430,18 +13411,11 @@ msgstr "Ukloni ovu oznaku"
 msgid "Remove two-factor authentication"
 msgstr "Ukloni dvofaktorsku autentifikaciju"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:9
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:16
 #, fuzzy
-#| msgid "Remove"
-msgid "Removed"
-msgstr "Ukloni"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
-#, fuzzy
-#| msgid "Remove formatting"
-msgid "Removed reaction"
-msgstr "Ukloni oblikovanje"
+#| msgid "removed reaction to message from %s '%s'"
+msgid "Removed reaction from message %s from %s"
+msgstr "uklonjena reakcija na poruku od %s '%s'"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:649
 msgid "Removes any hyperlink"
@@ -13568,7 +13542,7 @@ msgstr "Zahtjev za pristupna prava"
 msgid "Required parameter 'downloadBackendSelected' is missing."
 msgstr "Nedostaje obavezan parametar ’downloadBackendSelected’."
 
-#: app/controllers/reports_controller.rb:117
+#: app/controllers/reports_controller.rb:116
 msgid "Required parameter 'profile' is missing."
 msgstr "Nedostaje obavezan parametar ’profile’."
 
@@ -15606,7 +15580,7 @@ msgstr "Sinkroniziraj sa računalom"
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: app/assets/javascripts/app/controllers/manage.coffee:37
 #: app/assets/javascripts/app/views/generic/history.jst.eco:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:32
 #: db/seeds/permissions.rb:191 db/seeds/ticket_article_senders.rb:5
 msgid "System"
 msgstr "Sustav"
@@ -15977,7 +15951,7 @@ msgstr "Simple Storage usluga nije dostupna."
 msgid "The Telegram bot could not be saved."
 msgstr "Telegram bota nije moguće spremiti."
 
-#: lib/telegram_helper.rb:688
+#: lib/telegram_helper.rb:686
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr "Telegramova datoteka je veća od dopuštenih 20 MB."
 
@@ -16025,7 +15999,7 @@ msgstr "Nije moguće stvoriti pristupni token."
 msgid "The account link was successfully removed!"
 msgstr "Poveznica računa je uspješno uklonjena!"
 
-#: app/controllers/reports_controller.rb:130
+#: app/controllers/reports_controller.rb:129
 msgid "The active reporting profile could not be found."
 msgstr "Nije moguće pronaći aktivni profil izvještaja."
 
@@ -16333,7 +16307,7 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr "Unos nije moguće dodati."
 
-#: lib/telegram_helper.rb:696
+#: lib/telegram_helper.rb:694
 msgid "The file could not be retrieved from the bot."
 msgstr "Nije moguće dohvatiti datoteku od bota."
 
@@ -16537,7 +16511,7 @@ msgstr "Obavijest nije moguće izbrisati."
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:801
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:267
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:280
 #: app/assets/javascripts/app/controllers/object_manager.coffee:261
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:94
 msgid "The object could not be created."
@@ -17846,7 +17820,7 @@ msgstr "Ticket.Klijent"
 msgid "Ticket Duplicate Detection"
 msgstr "Prepoznavanje duplih ticketa"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:71
 #, fuzzy
 #| msgid "Ticket Customer"
 msgid "Ticket History"
@@ -18638,11 +18612,29 @@ msgstr "Prijevodi"
 msgid "Trigger"
 msgstr "Okidač"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:7
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:14
 #, fuzzy
-#| msgid "Trigger"
-msgid "Triggered"
-msgstr "Okidač"
+#| msgid "trigger '%s' was performed because pending reminder was reached"
+msgid "Triggered because pending reminder was reached"
+msgstr "okidač '%s' je reagirao jer je dosegnut podsjetnik na čekanju"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:19
+#, fuzzy
+#| msgid "%s of my tickets escalated"
+msgid "Triggered because ticket was escalated"
+msgstr "%s mojih eskaliranih ticketa"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
+#, fuzzy
+#| msgid "Ticket |%s| will escalate soon!"
+msgid "Triggered because ticket will escalate soon"
+msgstr "Ticket |%s| će uskoro eskalirati!"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:29
+#, fuzzy
+#| msgid "trigger '%s' was performed because pending reminder was reached"
+msgid "Triggered because time event was reached"
+msgstr "okidač '%s' je reagirao jer je dosegnut podsjetnik na čekanju"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
 msgid "Triggers"
@@ -18919,21 +18911,12 @@ msgstr "Nepovezane e-mail adrese, dodijelite ih kanalima ili obrišite."
 msgid "Uncheck item"
 msgstr "Odznači stavku"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
-#, fuzzy
-#| msgid "checked"
-msgid "Unchecked"
-msgstr "označeno"
-
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:12
 msgid "Unit"
 msgstr "Jedinica"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:42
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:25
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:35
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:41
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/eventHelpers.ts:14
 #, fuzzy
 #| msgid "Unknown error"
 msgid "Unknown"
@@ -20884,28 +20867,6 @@ msgstr "atribut se ne može uređivati"
 msgid "auto select"
 msgstr "automatski odabir"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:12
-#, fuzzy
-#| msgid "trigger '%s' was performed because pending reminder was reached"
-msgid "because pending reminder was reached"
-msgstr "okidač '%s' je reagirao jer je dosegnut podsjetnik na čekanju"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:16
-#, fuzzy
-#| msgid "%s of my tickets escalated"
-msgid "because ticket was escalated"
-msgstr "%s mojih eskaliranih ticketa"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:20
-#, fuzzy
-#| msgid "Ticket |%s| will escalate soon!"
-msgid "because ticket will escalate soon"
-msgstr "Ticket |%s| će uskoro eskalirati!"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
-msgid "because time event was reached"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -21106,7 +21067,7 @@ msgid "default"
 msgstr "standard"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:4
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee:8
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:17
 msgid "delete"
@@ -21287,25 +21248,12 @@ msgstr "proslijedi"
 msgid "from"
 msgstr "od"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:40
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:53
-#, fuzzy
-#| msgid "Call from %s"
-msgid "from %s"
-msgstr "Poziv od %s"
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:481
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "from (relative)"
 msgstr "od prije (relativno)"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:25
-#, fuzzy
-#| msgid "Welcome message"
-msgid "from message"
-msgstr "Poruka dobrodošlice"
 
 #: app/controllers/integration/pgp_controller.rb:48
 msgid "gpg (GnuPG) 2.2.0 or newer is required"
@@ -21393,51 +21341,51 @@ msgstr "iCalendar veze od Googlea se preuzimaju jednom dnevno"
 msgid "in %s"
 msgstr "za %s"
 
-#: app/frontend/shared/i18n/dates.ts:99
+#: app/frontend/shared/i18n/dates.ts:108
 msgid "in %s days"
 msgstr "za %s dan(a)"
 
-#: app/frontend/shared/i18n/dates.ts:106
+#: app/frontend/shared/i18n/dates.ts:115
 msgid "in %s hours"
 msgstr "u %s sat(a)"
 
-#: app/frontend/shared/i18n/dates.ts:113
+#: app/frontend/shared/i18n/dates.ts:122
 msgid "in %s minutes"
 msgstr "u %s minut(a)"
 
-#: app/frontend/shared/i18n/dates.ts:85
+#: app/frontend/shared/i18n/dates.ts:94
 msgid "in %s months"
 msgstr "za %s mjesec(a/i)"
 
-#: app/frontend/shared/i18n/dates.ts:92
+#: app/frontend/shared/i18n/dates.ts:101
 msgid "in %s weeks"
 msgstr "za %s tjedana"
 
-#: app/frontend/shared/i18n/dates.ts:78
+#: app/frontend/shared/i18n/dates.ts:87
 msgid "in %s years"
 msgstr "za %s godina(u/e)"
 
-#: app/frontend/shared/i18n/dates.ts:98
+#: app/frontend/shared/i18n/dates.ts:107
 msgid "in 1 day"
 msgstr "za jedan dan"
 
-#: app/frontend/shared/i18n/dates.ts:105
+#: app/frontend/shared/i18n/dates.ts:114
 msgid "in 1 hour"
 msgstr "za sat vremena"
 
-#: app/frontend/shared/i18n/dates.ts:112
+#: app/frontend/shared/i18n/dates.ts:121
 msgid "in 1 minute"
 msgstr "za jednu minutu"
 
-#: app/frontend/shared/i18n/dates.ts:84
+#: app/frontend/shared/i18n/dates.ts:93
 msgid "in 1 month"
 msgstr "za mjesec dana"
 
-#: app/frontend/shared/i18n/dates.ts:91
+#: app/frontend/shared/i18n/dates.ts:100
 msgid "in 1 week"
 msgstr "za tjedan dana"
 
-#: app/frontend/shared/i18n/dates.ts:77
+#: app/frontend/shared/i18n/dates.ts:86
 msgid "in 1 year"
 msgstr "za godinu dana"
 
@@ -21465,12 +21413,6 @@ msgstr "interno"
 #: db/seeds/settings.rb:1190
 msgid "internal database"
 msgstr "interna baza podataka"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:19
-#, fuzzy
-#| msgid "Find a ticket"
-msgid "into this ticket"
-msgstr "Pronađi ticket"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:96
@@ -21815,12 +21757,6 @@ msgstr "obavijesti, ticketi"
 msgid "now"
 msgstr "sad"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:51
-#, fuzzy
-#| msgid "message"
-msgid "on message"
-msgstr "poruka"
-
 #: app/models/object_manager/attribute.rb:548
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr "dopuštena su samo mala slova, brojevi i '_'"
@@ -21993,12 +21929,6 @@ msgstr "odaberi privitak…"
 msgid "select visible options"
 msgstr "odaberi vidljive opcije"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:10
-#, fuzzy
-#| msgid "set to public"
-msgid "sent to"
-msgstr "postavi kao javno"
-
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 msgid "sent to the customer"
@@ -22164,12 +22094,6 @@ msgstr "vremenska oznaka - npr. \"2018-08-30 14:30\""
 #: app/views/knowledge_base/public/not_found.html.erb:8
 msgid "to go to the homepage."
 msgstr "za povratak na početnu stranicu."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:38
-#, fuzzy
-#| msgid "message"
-msgid "to message"
-msgstr "poruka"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
@@ -22340,6 +22264,91 @@ msgstr "... cijelog tekstnog polja"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ vrijeme čekanja danas"
+
+#, fuzzy
+#~| msgid "message"
+#~ msgid "%s on message"
+#~ msgstr "poruka"
+
+#, fuzzy
+#~| msgid "message"
+#~ msgid "%s to message"
+#~ msgstr "poruka"
+
+#, fuzzy
+#~| msgid "Change Objects"
+#~ msgid "Changed reaction"
+#~ msgstr "Promijeni objekte"
+
+#, fuzzy
+#~| msgid "Exchange integration"
+#~ msgid "Changed reaction to"
+#~ msgstr "Exchange integracija"
+
+#, fuzzy
+#~| msgid "checked"
+#~ msgid "Checked"
+#~ msgstr "označeno"
+
+#, fuzzy
+#~| msgid "Merge tickets"
+#~ msgid "Merged ticket"
+#~ msgstr "Spoji tickete"
+
+#, fuzzy
+#~| msgid "deactivated"
+#~ msgid "Reacted"
+#~ msgstr "deaktiviran"
+
+#, fuzzy
+#~| msgid "ends with"
+#~ msgid "Reacted with"
+#~ msgstr "završava na"
+
+#, fuzzy
+#~| msgid "Remove"
+#~ msgid "Removed"
+#~ msgstr "Ukloni"
+
+#, fuzzy
+#~| msgid "Remove formatting"
+#~ msgid "Removed reaction"
+#~ msgstr "Ukloni oblikovanje"
+
+#, fuzzy
+#~| msgid "Trigger"
+#~ msgid "Triggered"
+#~ msgstr "Okidač"
+
+#, fuzzy
+#~| msgid "checked"
+#~ msgid "Unchecked"
+#~ msgstr "označeno"
+
+#, fuzzy
+#~| msgid "Call from %s"
+#~ msgid "from %s"
+#~ msgstr "Poziv od %s"
+
+#, fuzzy
+#~| msgid "Welcome message"
+#~ msgid "from message"
+#~ msgstr "Poruka dobrodošlice"
+
+#, fuzzy
+#~| msgid "message"
+#~ msgid "on message"
+#~ msgstr "poruka"
+
+#, fuzzy
+#~| msgid "set to public"
+#~ msgid "sent to"
+#~ msgstr "postavi kao javno"
+
+#, fuzzy
+#~| msgid "message"
+#~ msgid "to message"
+#~ msgstr "poruka"
 
 #~ msgid "This tab could not be found."
 #~ msgstr "Ovu karticu nije moguće pronaći."

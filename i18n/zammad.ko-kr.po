@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-02-29 02:05+0000\n"
-"Last-Translator: FoW <fow@netspheres.org>\n"
+"PO-Revision-Date: 2024-11-20 06:15+0000\n"
+"Last-Translator: Dominik Klein <dk@zammad.com>\n"
 "Language-Team: Korean <https://translations.zammad.org/projects/zammad/"
 "zammad-development/ko/>\n"
 "Language: ko-kr\n"
@@ -11,7 +11,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 5.3.1\n"
+"X-Generator: Weblate 5.7.2\n"
 
 #. Default date format to use for the current locale.
 #. These placeholders are supported:
@@ -81,9 +81,9 @@ msgid ""
 msgstr ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓.번호}"
-">: 현재_사용자.긴이름}이 #{티켓.업데이트된_날짜}_에서 생성했습니다.\n"
-"* 그룹: #{티켓.그룹.이름}\n"
-"* 소유자: #{티켓.소유자.전체이름}\n"
+">: 현재_사용자.긴이름}이 #{티켓.업데이트된_날짜}_에서 생성했습니다_\n"
+"* 그룹: #{ticket.group.name}\n"
+"* 소유자: #{ticket.owner.fullname}\n"
 "* 상태: #{t(ticket.state.name)}\n"
 "\n"
 "<% if @objects[:article] %>\n"
@@ -106,7 +106,7 @@ msgid ""
 msgstr ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓.번호}"
-">: 티켓 에스컬레이션 주소 #{ticket.escalation_at}_에서 에스컬레이션됨\n"
+">: 티켓 에스컬레이션 주소 #{ticket.escalation_at}_에서 에스컬레이션됨_\n"
 "\"#{ticket.customer.longname}\"의 티켓(#{ticket.title})이 \"#{ticket."
 "escalation_at}\" 이후 에스컬레이션되었습니다!\n"
 "\n"
@@ -156,7 +156,7 @@ msgid ""
 msgstr ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓.번호}"
-">: 알림이 도착했습니다!\n"
+">: 알림이 도착했습니다!_\n"
 "티켓에 주의가 필요합니다: 고객 \"*#{ticket.customer.longname}*\"의 (#{ticket."
 "title})에 대한 알림이 도달했습니다.\n"
 "\n"
@@ -184,10 +184,10 @@ msgid ""
 msgstr ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓.번호}"
-">: 현재_사용자.긴이름}이 #{티켓.업데이트된_시간}_에서 업데이트했습니다.\n"
+">: 현재_사용자.긴이름}이 #{티켓.업데이트된_시간}_에서 업데이트했습니다_\n"
 "<% if @objects[:changes].present? %>\n"
-"  <% @objects[:changes].each do |키, 값| %>\n"
-"  * <%= t 키 %>: <%= h 값[0] %> -> <%= h 값[1] %>\n"
+"  <% @objects[:changes].each do |key, value| %>\n"
+"  * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>\n"
 "  <% end %>\n"
 "<% end %>\n"
 "\n"
@@ -211,7 +211,7 @@ msgid ""
 msgstr ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#티켓/줌/#{티켓.id}|티켓##{티켓.번호}"
-">: 티켓 에스컬레이션 주소 #{ticket.escalation_at}_에서 에스컬레이션됨\n"
+">: 티켓 에스컬레이션 주소 #{ticket.escalation_at}_에서 에스컬레이션됨_\n"
 "\"#{ticket.customer.longname}\"의 티켓(#{ticket.title})이 \"#{ticket."
 "escalation_at}\" 이후 에스컬레이션되었습니다!\n"
 "\n"
@@ -240,7 +240,7 @@ msgstr ""
 "\n"
 "<div>Hi #{user.firstname},</div>\n"
 "<br>\n"
-"<div>타사 애플리케이션에 계정을 <b>\"#{t(공급자)}\".</div>연동한 것 같습니"
+"<div>타사 애플리케이션에 계정을 <b>\"#{t(provider)}\".</div>연동한 것 같습니"
 "다.\n"
 "<br>\n"
 "<div>본인이 아닌 경우 프로필에서 연결된 계정을 삭제하고 타사 애플리케이션 비"
@@ -481,7 +481,7 @@ msgstr "%s 유저 생성 |%s|"
 msgid "%s credentials"
 msgstr "%s 자격 증명"
 
-#: app/frontend/shared/i18n/dates.ts:97
+#: app/frontend/shared/i18n/dates.ts:106
 msgid "%s days ago"
 msgstr "%s 이전"
 
@@ -516,7 +516,7 @@ msgstr "%s 폴더"
 msgid "%s groups to %s roles assignments"
 msgstr "%s 역할 할당에 %s 그룹"
 
-#: app/frontend/shared/i18n/dates.ts:104
+#: app/frontend/shared/i18n/dates.ts:113
 msgid "%s hours ago"
 msgstr "%s 시간 전"
 
@@ -537,11 +537,11 @@ msgstr "%S가 필요합니다!"
 msgid "%s is sent without text caption"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:111
+#: app/frontend/shared/i18n/dates.ts:120
 msgid "%s minutes ago"
 msgstr "%s 분전"
 
-#: app/frontend/shared/i18n/dates.ts:83
+#: app/frontend/shared/i18n/dates.ts:92
 msgid "%s months ago"
 msgstr "%s 달전"
 
@@ -586,12 +586,6 @@ msgstr "티켓의 %s 는 현재 진행 중입니다."
 #| msgid "%s of my tickets escalated."
 msgid "%s of my tickets escalated"
 msgstr "내 Ticket %s은 (는) 에스컬레이션."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:50
-#, fuzzy
-#| msgid "Add Tag"
-msgid "%s on message"
-msgstr "태그 추가"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 #: app/graphql/gql/queries/autocomplete_search/generic.rb:64
@@ -644,12 +638,6 @@ msgstr "%s Tickets"
 #| msgid "%s tickets"
 msgid "%s tickets found"
 msgstr "%s Tickets"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:37
-#, fuzzy
-#| msgid "Add Tag"
-msgid "%s to message"
-msgstr "태그 추가"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
@@ -711,13 +699,13 @@ msgstr "%s 사용자의 사용자 %"
 msgid "%s via WhatsApp"
 msgstr "채널"
 
-#: app/frontend/shared/i18n/dates.ts:90
+#: app/frontend/shared/i18n/dates.ts:99
 #, fuzzy
 #| msgid "%s ago"
 msgid "%s weeks ago"
 msgstr "%s 전"
 
-#: app/frontend/shared/i18n/dates.ts:76
+#: app/frontend/shared/i18n/dates.ts:85
 #, fuzzy
 #| msgid "%s ago"
 msgid "%s years ago"
@@ -810,7 +798,7 @@ msgstr "첨부 파일"
 msgid "1 day"
 msgstr "1일"
 
-#: app/frontend/shared/i18n/dates.ts:96
+#: app/frontend/shared/i18n/dates.ts:105
 #, fuzzy
 #| msgid "1 day"
 msgid "1 day ago"
@@ -820,7 +808,7 @@ msgstr "1일"
 msgid "1 hour"
 msgstr "1시간"
 
-#: app/frontend/shared/i18n/dates.ts:103
+#: app/frontend/shared/i18n/dates.ts:112
 #, fuzzy
 #| msgid "1 hour"
 msgid "1 hour ago"
@@ -830,13 +818,13 @@ msgstr "1시간"
 msgid "1 low"
 msgstr "1 low"
 
-#: app/frontend/shared/i18n/dates.ts:110
+#: app/frontend/shared/i18n/dates.ts:119
 #, fuzzy
 #| msgid "minute"
 msgid "1 minute ago"
 msgstr "분"
 
-#: app/frontend/shared/i18n/dates.ts:82
+#: app/frontend/shared/i18n/dates.ts:91
 msgid "1 month ago"
 msgstr ""
 
@@ -844,13 +832,13 @@ msgstr ""
 msgid "1 week"
 msgstr "일주일"
 
-#: app/frontend/shared/i18n/dates.ts:89
+#: app/frontend/shared/i18n/dates.ts:98
 #, fuzzy
 #| msgid "1 week"
 msgid "1 week ago"
 msgstr "일주일"
 
-#: app/frontend/shared/i18n/dates.ts:75
+#: app/frontend/shared/i18n/dates.ts:84
 msgid "1 year ago"
 msgstr ""
 
@@ -1610,10 +1598,6 @@ msgstr ""
 msgid "Add this class to a button on your page that should open the chat."
 msgstr "채팅을 열어야 페이지에 버튼에이 클래스를 추가합니다."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:9
-msgid "Added"
-msgstr ""
-
 #: app/controllers/first_steps_controller.rb:109
 msgid "Additional Channels"
 msgstr "추가 채널"
@@ -2194,7 +2178,7 @@ msgstr "이 개체를 삭제해야?"
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:234
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:130
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/maintenance.coffee:55
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:61
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:123
@@ -3298,17 +3282,17 @@ msgstr "내 암호 바꾸기"
 msgid "Change text color"
 msgstr "날짜 바꾸기"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:17
 #, fuzzy
-#| msgid "Change Objects"
-msgid "Changed reaction"
-msgstr "오브젝트 바꾸기"
+#| msgid "%s ended switch to |%s|!"
+msgid "Changed reaction on message %s from %s"
+msgstr "%에의 종료 스위치 |%s|!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:18
 #, fuzzy
-#| msgid "Change date"
-msgid "Changed reaction to"
-msgstr "날짜 바꾸기"
+#| msgid "%s ended switch to |%s|!"
+msgid "Changed reaction to %s on message %s from %s"
+msgstr "%에의 종료 스위치 |%s|!"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -3431,12 +3415,6 @@ msgid ""
 "Check this box if you want to customise how options are sorted. If the box "
 "is not checked, values are sorted in alphabetical order."
 msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
-#, fuzzy
-#| msgid "Select item"
-msgid "Checked"
-msgstr "물품을 고르시 오"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
@@ -4531,7 +4509,6 @@ msgstr "생성"
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList.vue:43
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created-mention.ts:9
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -5858,7 +5835,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:674
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:118
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
 #: app/assets/javascripts/app/controllers/user.coffee:177
@@ -5990,7 +5967,7 @@ msgstr ""
 msgid "Delete old upload cache entries."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 msgid "Delete organization?"
 msgstr "소속 삭제?"
 
@@ -6759,7 +6736,6 @@ msgstr "마지막 동기화"
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:7
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:167
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
@@ -6884,6 +6860,12 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:91
 msgid "Email sent to \"%s\". Please verify your email account."
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsEmail.vue:19
+#, fuzzy
+#| msgid "Invitation sent!"
+msgid "Email sent to %s"
+msgstr "초대 보냈습니다!"
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco:21
 #: app/assets/javascripts/app/views/knowledge_base/search_field_panel.jst.eco:5
@@ -11201,16 +11183,16 @@ msgstr "Ticket #에 병합"
 msgid "Merged"
 msgstr "병합"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/merged-into.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
 #, fuzzy
-#| msgid "Merge to Ticket#"
-msgid "Merged this ticket into"
-msgstr "Ticket #에 병합"
+#| msgid "assign tickets"
+msgid "Merged %s into this ticket"
+msgstr "Ticket을 할당"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
 #, fuzzy
 #| msgid "Merge to Ticket#"
-msgid "Merged ticket"
+msgid "Merged this ticket into %s"
 msgstr "Ticket #에 병합"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
@@ -12467,7 +12449,6 @@ msgstr "주의"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:59
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/notification.ts:7
 #: app/views/mailer/application.html.erb:36
 msgid "Notification"
 msgstr "공고"
@@ -14059,17 +14040,17 @@ msgstr ""
 msgid "Raw"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:19
 #, fuzzy
-#| msgid "deactivated"
-msgid "Reacted"
-msgstr "비활성화"
+#| msgid "%s ended switch to |%s|!"
+msgid "Reacted to message %s from %s"
+msgstr "%에의 종료 스위치 |%s|!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:20
 #, fuzzy
-#| msgid "Created at"
-msgid "Reacted with"
-msgstr "에서 만든"
+#| msgid "%s ended switch to |%s|!"
+msgid "Reacted with %s to message %s from %s"
+msgstr "%에의 종료 스위치 |%s|!"
 
 #: app/assets/javascripts/app/models/group.coffee:44
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:40
@@ -14365,18 +14346,11 @@ msgstr "풀다"
 msgid "Remove two-factor authentication"
 msgstr "인증"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:9
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:16
 #, fuzzy
-#| msgid "Remove"
-msgid "Removed"
-msgstr "풀다"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
-#, fuzzy
-#| msgid "Removes the formatting"
-msgid "Removed reaction"
-msgstr "서식을 제거합니다"
+#| msgid "%s ended switch to |%s|!"
+msgid "Removed reaction from message %s from %s"
+msgstr "%에의 종료 스위치 |%s|!"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:649
 msgid "Removes any hyperlink"
@@ -14521,7 +14495,7 @@ msgstr "부여 요청"
 msgid "Required parameter 'downloadBackendSelected' is missing."
 msgstr ""
 
-#: app/controllers/reports_controller.rb:117
+#: app/controllers/reports_controller.rb:116
 msgid "Required parameter 'profile' is missing."
 msgstr ""
 
@@ -16734,7 +16708,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: app/assets/javascripts/app/controllers/manage.coffee:37
 #: app/assets/javascripts/app/views/generic/history.jst.eco:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:32
 #: db/seeds/permissions.rb:191 db/seeds/ticket_article_senders.rb:5
 msgid "System"
 msgstr "시스템"
@@ -17127,7 +17101,7 @@ msgstr ""
 msgid "The Telegram bot could not be saved."
 msgstr "%s 객체 (들)이 생성된다."
 
-#: lib/telegram_helper.rb:688
+#: lib/telegram_helper.rb:686
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr ""
 
@@ -17187,7 +17161,7 @@ msgstr "%s 객체 (들)이 생성된다."
 msgid "The account link was successfully removed!"
 msgstr "테스트 실행 성공했습니다."
 
-#: app/controllers/reports_controller.rb:130
+#: app/controllers/reports_controller.rb:129
 #, fuzzy
 #| msgid "When notification is being sent."
 msgid "The active reporting profile could not be found."
@@ -17533,7 +17507,7 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr ""
 
-#: lib/telegram_helper.rb:696
+#: lib/telegram_helper.rb:694
 msgid "The file could not be retrieved from the bot."
 msgstr ""
 
@@ -17766,7 +17740,7 @@ msgstr "%s 객체 (들) 업데이트됩니다."
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:801
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:267
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:280
 #: app/assets/javascripts/app/controllers/object_manager.coffee:261
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:94
 #, fuzzy
@@ -19185,7 +19159,7 @@ msgstr "편집 고객"
 msgid "Ticket Duplicate Detection"
 msgstr "Ticket 생성을 활성화"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:71
 #, fuzzy
 #| msgid "Edit Customer"
 msgid "Ticket History"
@@ -20035,11 +20009,29 @@ msgstr "번역"
 msgid "Trigger"
 msgstr "트리거"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:7
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:14
 #, fuzzy
-#| msgid "Trigger"
-msgid "Triggered"
-msgstr "트리거"
+#| msgid "Ticket reminder reached"
+msgid "Triggered because pending reminder was reached"
+msgstr "Ticket 알림에 도달"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:19
+#, fuzzy
+#| msgid "%s of my tickets escalated."
+msgid "Triggered because ticket was escalated"
+msgstr "내 Ticket %s은 (는) 에스컬레이션."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
+#, fuzzy
+#| msgid "Ticket |%s| will escalate soon!"
+msgid "Triggered because ticket will escalate soon"
+msgstr "Ticket |%s| 곧 확대됩니다!"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:29
+#, fuzzy
+#| msgid "Ticket reminder reached"
+msgid "Triggered because time event was reached"
+msgstr "Ticket 알림에 도달"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
 msgid "Triggers"
@@ -20343,21 +20335,12 @@ msgstr "할당되지 않은 이메일 주소는 채널에 할당하거나 삭제
 msgid "Uncheck item"
 msgstr "물품을 고르시 오"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
-#, fuzzy
-#| msgid "Select item"
-msgid "Unchecked"
-msgstr "물품을 고르시 오"
-
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:12
 msgid "Unit"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:42
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:25
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:35
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:41
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/eventHelpers.ts:14
 #, fuzzy
 #| msgid "%s (unknown)"
 msgid "Unknown"
@@ -22302,28 +22285,6 @@ msgstr ""
 msgid "auto select"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:12
-#, fuzzy
-#| msgid "Ticket reminder reached"
-msgid "because pending reminder was reached"
-msgstr "Ticket 알림에 도달"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:16
-#, fuzzy
-#| msgid "%s of my tickets escalated."
-msgid "because ticket was escalated"
-msgstr "내 Ticket %s은 (는) 에스컬레이션."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:20
-#, fuzzy
-#| msgid "Ticket |%s| will escalate soon!"
-msgid "because ticket will escalate soon"
-msgstr "Ticket |%s| 곧 확대됩니다!"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
-msgid "because time event was reached"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -22533,7 +22494,7 @@ msgid "default"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:4
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee:8
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:17
 msgid "delete"
@@ -22729,25 +22690,12 @@ msgstr ""
 msgid "from"
 msgstr "...에서"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:40
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:53
-#, fuzzy
-#| msgid "Import from"
-msgid "from %s"
-msgstr "에서 가져 오기"
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:481
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "from (relative)"
 msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:25
-#, fuzzy
-#| msgid "Welcome message"
-msgid "from message"
-msgstr "환영 메세지"
 
 #: app/controllers/integration/pgp_controller.rb:48
 msgid "gpg (GnuPG) 2.2.0 or newer is required"
@@ -22839,69 +22787,69 @@ msgstr "구글에서 iCalendar는 링크는 하루에 한 번 인출 얻을 것�
 msgid "in %s"
 msgstr "%s에서"
 
-#: app/frontend/shared/i18n/dates.ts:99
+#: app/frontend/shared/i18n/dates.ts:108
 #, fuzzy
 #| msgid "in %s"
 msgid "in %s days"
 msgstr "%s에서"
 
-#: app/frontend/shared/i18n/dates.ts:106
+#: app/frontend/shared/i18n/dates.ts:115
 #, fuzzy
 #| msgid "in hours"
 msgid "in %s hours"
 msgstr "시간"
 
-#: app/frontend/shared/i18n/dates.ts:113
+#: app/frontend/shared/i18n/dates.ts:122
 #, fuzzy
 #| msgid "minutes"
 msgid "in %s minutes"
 msgstr "의사록"
 
-#: app/frontend/shared/i18n/dates.ts:85
+#: app/frontend/shared/i18n/dates.ts:94
 msgid "in %s months"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:92
+#: app/frontend/shared/i18n/dates.ts:101
 #, fuzzy
 #| msgid "2 weeks"
 msgid "in %s weeks"
 msgstr "2주"
 
-#: app/frontend/shared/i18n/dates.ts:78
+#: app/frontend/shared/i18n/dates.ts:87
 #, fuzzy
 #| msgid "in %s"
 msgid "in %s years"
 msgstr "%s에서"
 
-#: app/frontend/shared/i18n/dates.ts:98
+#: app/frontend/shared/i18n/dates.ts:107
 #, fuzzy
 #| msgid "1 day"
 msgid "in 1 day"
 msgstr "1일"
 
-#: app/frontend/shared/i18n/dates.ts:105
+#: app/frontend/shared/i18n/dates.ts:114
 #, fuzzy
 #| msgid "in hours"
 msgid "in 1 hour"
 msgstr "시간"
 
-#: app/frontend/shared/i18n/dates.ts:112
+#: app/frontend/shared/i18n/dates.ts:121
 #, fuzzy
 #| msgid "minute"
 msgid "in 1 minute"
 msgstr "분"
 
-#: app/frontend/shared/i18n/dates.ts:84
+#: app/frontend/shared/i18n/dates.ts:93
 msgid "in 1 month"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:91
+#: app/frontend/shared/i18n/dates.ts:100
 #, fuzzy
 #| msgid "1 week"
 msgid "in 1 week"
 msgstr "일주일"
 
-#: app/frontend/shared/i18n/dates.ts:77
+#: app/frontend/shared/i18n/dates.ts:86
 msgid "in 1 year"
 msgstr ""
 
@@ -22931,12 +22879,6 @@ msgstr "내부의"
 #| msgid "internal"
 msgid "internal database"
 msgstr "내부의"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:19
-#, fuzzy
-#| msgid "assign tickets"
-msgid "into this ticket"
-msgstr "Ticket을 할당"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:96
@@ -23313,12 +23255,6 @@ msgstr "알림"
 msgid "now"
 msgstr "아니"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:51
-#, fuzzy
-#| msgid "Add Tag"
-msgid "on message"
-msgstr "태그 추가"
-
 #: app/models/object_manager/attribute.rb:548
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr ""
@@ -23515,12 +23451,6 @@ msgstr "선택 첨부 ..."
 msgid "select visible options"
 msgstr "댓글"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:10
-#, fuzzy
-#| msgid "set to public"
-msgid "sent to"
-msgstr "공개로 설정"
-
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 #, fuzzy
@@ -23693,12 +23623,6 @@ msgstr ""
 #: app/views/knowledge_base/public/not_found.html.erb:8
 msgid "to go to the homepage."
 msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:38
-#, fuzzy
-#| msgid "Add Tag"
-msgid "to message"
-msgstr "태그 추가"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
@@ -23889,6 +23813,91 @@ msgstr "... 전체 텍스트 영역의"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ 오늘 대기 시간"
+
+#, fuzzy
+#~| msgid "Add Tag"
+#~ msgid "%s on message"
+#~ msgstr "태그 추가"
+
+#, fuzzy
+#~| msgid "Add Tag"
+#~ msgid "%s to message"
+#~ msgstr "태그 추가"
+
+#, fuzzy
+#~| msgid "Change Objects"
+#~ msgid "Changed reaction"
+#~ msgstr "오브젝트 바꾸기"
+
+#, fuzzy
+#~| msgid "Change date"
+#~ msgid "Changed reaction to"
+#~ msgstr "날짜 바꾸기"
+
+#, fuzzy
+#~| msgid "Select item"
+#~ msgid "Checked"
+#~ msgstr "물품을 고르시 오"
+
+#, fuzzy
+#~| msgid "Merge to Ticket#"
+#~ msgid "Merged ticket"
+#~ msgstr "Ticket #에 병합"
+
+#, fuzzy
+#~| msgid "deactivated"
+#~ msgid "Reacted"
+#~ msgstr "비활성화"
+
+#, fuzzy
+#~| msgid "Created at"
+#~ msgid "Reacted with"
+#~ msgstr "에서 만든"
+
+#, fuzzy
+#~| msgid "Remove"
+#~ msgid "Removed"
+#~ msgstr "풀다"
+
+#, fuzzy
+#~| msgid "Removes the formatting"
+#~ msgid "Removed reaction"
+#~ msgstr "서식을 제거합니다"
+
+#, fuzzy
+#~| msgid "Trigger"
+#~ msgid "Triggered"
+#~ msgstr "트리거"
+
+#, fuzzy
+#~| msgid "Select item"
+#~ msgid "Unchecked"
+#~ msgstr "물품을 고르시 오"
+
+#, fuzzy
+#~| msgid "Import from"
+#~ msgid "from %s"
+#~ msgstr "에서 가져 오기"
+
+#, fuzzy
+#~| msgid "Welcome message"
+#~ msgid "from message"
+#~ msgstr "환영 메세지"
+
+#, fuzzy
+#~| msgid "Add Tag"
+#~ msgid "on message"
+#~ msgstr "태그 추가"
+
+#, fuzzy
+#~| msgid "set to public"
+#~ msgid "sent to"
+#~ msgstr "공개로 설정"
+
+#, fuzzy
+#~| msgid "Add Tag"
+#~ msgid "to message"
+#~ msgstr "태그 추가"
 
 #, fuzzy
 #~| msgid "%s Object(s) are updated."

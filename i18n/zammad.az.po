@@ -360,7 +360,7 @@ msgstr "%s istifadəçi yaratdı |%s|"
 msgid "%s credentials"
 msgstr "%s məxfi məlumatlar"
 
-#: app/frontend/shared/i18n/dates.ts:97
+#: app/frontend/shared/i18n/dates.ts:106
 msgid "%s days ago"
 msgstr "%s gün əvvəl"
 
@@ -390,7 +390,7 @@ msgstr "%s qovluqlar"
 msgid "%s groups to %s roles assignments"
 msgstr "%s rolları təyin etmək üçün %s qruplar"
 
-#: app/frontend/shared/i18n/dates.ts:104
+#: app/frontend/shared/i18n/dates.ts:113
 msgid "%s hours ago"
 msgstr "%s saat əvvəl"
 
@@ -411,11 +411,11 @@ msgstr "%s tələb olunur!"
 msgid "%s is sent without text caption"
 msgstr "%s mətn alt yazısı olmadan göndərilir"
 
-#: app/frontend/shared/i18n/dates.ts:111
+#: app/frontend/shared/i18n/dates.ts:120
 msgid "%s minutes ago"
 msgstr "%s dəqiqqə əvvəl"
 
-#: app/frontend/shared/i18n/dates.ts:83
+#: app/frontend/shared/i18n/dates.ts:92
 msgid "%s months ago"
 msgstr "%s ay əvvəl"
 
@@ -456,12 +456,6 @@ msgstr "%s biletlərim hazırda qeydiyyat mərhələsindədir."
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:11
 msgid "%s of my tickets escalated"
 msgstr "%s biletlərim eskalasiya olmuşdur"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:50
-#, fuzzy
-#| msgid "Add a message"
-msgid "%s on message"
-msgstr "Mesaj əlavə et"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 #: app/graphql/gql/queries/autocomplete_search/generic.rb:64
@@ -513,12 +507,6 @@ msgstr "%s biletlər"
 msgid "%s tickets found"
 msgstr "%s biletlər tapıldı"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:37
-#, fuzzy
-#| msgid "Add a message"
-msgid "%s to message"
-msgstr "Mesaj əlavə et"
-
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
 msgid "%s updated article for |%s|"
@@ -569,11 +557,11 @@ msgstr "%s istifadəçidən %s istifadəçiyə"
 msgid "%s via WhatsApp"
 msgstr "Kanal - WhatsApp"
 
-#: app/frontend/shared/i18n/dates.ts:90
+#: app/frontend/shared/i18n/dates.ts:99
 msgid "%s weeks ago"
 msgstr "%s həftə əvvəl"
 
-#: app/frontend/shared/i18n/dates.ts:76
+#: app/frontend/shared/i18n/dates.ts:85
 msgid "%s years ago"
 msgstr "%s il əvvəl"
 
@@ -667,7 +655,7 @@ msgstr "1 əlavə fayl"
 msgid "1 day"
 msgstr "1 gün"
 
-#: app/frontend/shared/i18n/dates.ts:96
+#: app/frontend/shared/i18n/dates.ts:105
 msgid "1 day ago"
 msgstr "1 gün əvvəl"
 
@@ -675,7 +663,7 @@ msgstr "1 gün əvvəl"
 msgid "1 hour"
 msgstr "1 saat"
 
-#: app/frontend/shared/i18n/dates.ts:103
+#: app/frontend/shared/i18n/dates.ts:112
 msgid "1 hour ago"
 msgstr "1 saat əvvəl"
 
@@ -683,11 +671,11 @@ msgstr "1 saat əvvəl"
 msgid "1 low"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:110
+#: app/frontend/shared/i18n/dates.ts:119
 msgid "1 minute ago"
 msgstr "1 dəqiqə əvvəl"
 
-#: app/frontend/shared/i18n/dates.ts:82
+#: app/frontend/shared/i18n/dates.ts:91
 msgid "1 month ago"
 msgstr "1 ay əvvəl"
 
@@ -695,11 +683,11 @@ msgstr "1 ay əvvəl"
 msgid "1 week"
 msgstr "1 həftə"
 
-#: app/frontend/shared/i18n/dates.ts:89
+#: app/frontend/shared/i18n/dates.ts:98
 msgid "1 week ago"
 msgstr "1 həftə əvvəl"
 
-#: app/frontend/shared/i18n/dates.ts:75
+#: app/frontend/shared/i18n/dates.ts:84
 msgid "1 year ago"
 msgstr "1 il əvvəl"
 
@@ -1436,10 +1424,6 @@ msgstr "Üçüncü səviyyə başlığı əlavə et"
 msgid "Add this class to a button on your page that should open the chat."
 msgstr "Səhifədəki söhbəti açacaq düyməyə bu sinfi əlavə edin."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:9
-msgid "Added"
-msgstr ""
-
 #: app/controllers/first_steps_controller.rb:109
 msgid "Additional Channels"
 msgstr "Əlavə kanallar"
@@ -2030,7 +2014,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:234
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:130
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/maintenance.coffee:55
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:61
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:123
@@ -3096,17 +3080,17 @@ msgstr "Şifrənizi dəyişdir"
 msgid "Change text color"
 msgstr "Tarixi dəyişdir"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:17
 #, fuzzy
-#| msgid "Change Objects"
-msgid "Changed reaction"
-msgstr "Obyektləri dəyişdir"
+#| msgid "%s ended switch to |%s|!"
+msgid "Changed reaction on message %s from %s"
+msgstr "%s bitdi , keçdi |%s|!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:18
 #, fuzzy
-#| msgid "Change date"
-msgid "Changed reaction to"
-msgstr "Tarixi dəyişdir"
+#| msgid "%s ended switch to |%s|!"
+msgid "Changed reaction to %s on message %s from %s"
+msgstr "%s bitdi , keçdi |%s|!"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -3220,11 +3204,6 @@ msgid ""
 "Check this box if you want to customise how options are sorted. If the box "
 "is not checked, values are sorted in alphabetical order."
 msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
-#, fuzzy
-msgid "Checked"
-msgstr "Checkmk"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
@@ -4325,7 +4304,6 @@ msgstr "Yarat:"
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList.vue:43
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created-mention.ts:9
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -5712,7 +5690,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:674
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:118
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
 #: app/assets/javascripts/app/controllers/user.coffee:177
@@ -5840,7 +5818,7 @@ msgstr "Keçmiş açar qeydləri sil."
 msgid "Delete old upload cache entries."
 msgstr "Köhnə yükləmə keşi qeydlərini sil."
 
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 msgid "Delete organization?"
 msgstr "Təşkilatı silmək istəyirsiz?"
 
@@ -6590,7 +6568,6 @@ msgstr "Elasticsearch SSL verification"
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:7
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:167
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
@@ -6716,6 +6693,11 @@ msgstr ""
 msgid "Email sent to \"%s\". Please verify your email account."
 msgstr ""
 "%s adressinə e-poçt göndərildi. Zəhmət olmasa e-poçt hesabınızı təstiqləyin."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsEmail.vue:19
+#, fuzzy
+msgid "Email sent to %s"
+msgstr "Dəvət göndərildi!"
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco:21
 #: app/assets/javascripts/app/views/knowledge_base/search_field_panel.jst.eco:5
@@ -11029,16 +11011,16 @@ msgstr "Biletlə birləşdir#"
 msgid "Merged"
 msgstr "Birləşdir"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/merged-into.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
 #, fuzzy
-#| msgid "Merge tickets"
-msgid "Merged this ticket into"
-msgstr "Biletlərin birləşdirilməsi"
+#| msgid "Find a ticket"
+msgid "Merged %s into this ticket"
+msgstr "Bilet tap"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
 #, fuzzy
 #| msgid "Merge tickets"
-msgid "Merged ticket"
+msgid "Merged this ticket into %s"
 msgstr "Biletlərin birləşdirilməsi"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
@@ -12277,7 +12259,6 @@ msgstr "Xəbərdarlıq:"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:59
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/notification.ts:7
 #: app/views/mailer/application.html.erb:36
 msgid "Notification"
 msgstr "Bildiriş"
@@ -13841,15 +13822,17 @@ msgstr ""
 msgid "Raw"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
-msgid "Reacted"
-msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:19
 #, fuzzy
-#| msgid "Created At"
-msgid "Reacted with"
-msgstr "Yaradıldı"
+#| msgid "%s ended switch to |%s|!"
+msgid "Reacted to message %s from %s"
+msgstr "%s bitdi , keçdi |%s|!"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:20
+#, fuzzy
+#| msgid "%s ended switch to |%s|!"
+msgid "Reacted with %s to message %s from %s"
+msgstr "%s bitdi , keçdi |%s|!"
 
 #: app/assets/javascripts/app/models/group.coffee:44
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:40
@@ -14131,18 +14114,11 @@ msgstr "Şəkli sil"
 msgid "Remove two-factor authentication"
 msgstr "İki faktorlu autentifikasiyanı sil"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:9
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:16
 #, fuzzy
-#| msgid "Remove"
-msgid "Removed"
-msgstr "Sil"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
-#, fuzzy
-#| msgid "Remove formatting"
-msgid "Removed reaction"
-msgstr "Formatlaşdırmanı sil"
+#| msgid "%s ended switch to |%s|!"
+msgid "Removed reaction from message %s from %s"
+msgstr "%s bitdi , keçdi |%s|!"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:649
 msgid "Removes any hyperlink"
@@ -14284,7 +14260,7 @@ msgstr ""
 msgid "Required parameter 'downloadBackendSelected' is missing."
 msgstr "Tələb olunan 'downloadBackendSelected' parametri yoxdur."
 
-#: app/controllers/reports_controller.rb:117
+#: app/controllers/reports_controller.rb:116
 msgid "Required parameter 'profile' is missing."
 msgstr "Tələb olunan 'profil' parametri yoxdur."
 
@@ -16281,7 +16257,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: app/assets/javascripts/app/controllers/manage.coffee:37
 #: app/assets/javascripts/app/views/generic/history.jst.eco:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:32
 #: db/seeds/permissions.rb:191 db/seeds/ticket_article_senders.rb:5
 msgid "System"
 msgstr ""
@@ -16634,7 +16610,7 @@ msgstr ""
 msgid "The Telegram bot could not be saved."
 msgstr ""
 
-#: lib/telegram_helper.rb:688
+#: lib/telegram_helper.rb:686
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr ""
 
@@ -16682,7 +16658,7 @@ msgstr "Məqalə silinə bilməz."
 msgid "The account link was successfully removed!"
 msgstr ""
 
-#: app/controllers/reports_controller.rb:130
+#: app/controllers/reports_controller.rb:129
 msgid "The active reporting profile could not be found."
 msgstr ""
 
@@ -16963,7 +16939,7 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr ""
 
-#: lib/telegram_helper.rb:696
+#: lib/telegram_helper.rb:694
 msgid "The file could not be retrieved from the bot."
 msgstr ""
 
@@ -17172,7 +17148,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:801
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:267
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:280
 #: app/assets/javascripts/app/controllers/object_manager.coffee:261
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:94
 msgid "The object could not be created."
@@ -18432,7 +18408,7 @@ msgstr ""
 msgid "Ticket Duplicate Detection"
 msgstr "Dublikatların aşkarlanması"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:71
 #, fuzzy
 #| msgid "History"
 msgid "Ticket History"
@@ -19187,11 +19163,27 @@ msgstr ""
 msgid "Trigger"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:7
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:14
 #, fuzzy
-#| msgid "New Trigger"
-msgid "Triggered"
-msgstr "Yeni Trigger"
+msgid "Triggered because pending reminder was reached"
+msgstr "Bilet üçün gözlənilən xatırlatma çatdı |%s|"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:19
+#, fuzzy
+#| msgid "%s of my tickets escalated"
+msgid "Triggered because ticket was escalated"
+msgstr "%s biletlərim eskalasiya olmuşdur"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
+#, fuzzy
+#| msgid "Process ticket escalations."
+msgid "Triggered because ticket will escalate soon"
+msgstr "Biletlərin artırılması prosesi."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:29
+#, fuzzy
+msgid "Triggered because time event was reached"
+msgstr "Bilet üçün gözlənilən xatırlatma çatdı |%s|"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
 msgid "Triggers"
@@ -19464,19 +19456,12 @@ msgstr ""
 msgid "Uncheck item"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
-msgid "Unchecked"
-msgstr ""
-
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:12
 msgid "Unit"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:42
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:25
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:35
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:41
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/eventHelpers.ts:14
 #, fuzzy
 #| msgid "%s (unknown)"
 msgid "Unknown"
@@ -21286,27 +21271,6 @@ msgstr ""
 msgid "auto select"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:12
-#, fuzzy
-msgid "because pending reminder was reached"
-msgstr "Bilet üçün gözlənilən xatırlatma çatdı |%s|"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:16
-#, fuzzy
-#| msgid "%s of my tickets escalated"
-msgid "because ticket was escalated"
-msgstr "%s biletlərim eskalasiya olmuşdur"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:20
-#, fuzzy
-#| msgid "Process ticket escalations."
-msgid "because ticket will escalate soon"
-msgstr "Biletlərin artırılması prosesi."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
-msgid "because time event was reached"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -21506,7 +21470,7 @@ msgid "default"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:4
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee:8
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:17
 msgid "delete"
@@ -21689,25 +21653,12 @@ msgstr ""
 msgid "from"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:40
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:53
-#, fuzzy
-#| msgid "Call from %s"
-msgid "from %s"
-msgstr "%s -dən zəng"
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:481
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "from (relative)"
 msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:25
-#, fuzzy
-#| msgid "Add a message"
-msgid "from message"
-msgstr "Mesaj əlavə et"
 
 #: app/controllers/integration/pgp_controller.rb:48
 msgid "gpg (GnuPG) 2.2.0 or newer is required"
@@ -21791,51 +21742,51 @@ msgstr ""
 msgid "in %s"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:99
+#: app/frontend/shared/i18n/dates.ts:108
 msgid "in %s days"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:106
+#: app/frontend/shared/i18n/dates.ts:115
 msgid "in %s hours"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:113
+#: app/frontend/shared/i18n/dates.ts:122
 msgid "in %s minutes"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:85
+#: app/frontend/shared/i18n/dates.ts:94
 msgid "in %s months"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:92
+#: app/frontend/shared/i18n/dates.ts:101
 msgid "in %s weeks"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:78
+#: app/frontend/shared/i18n/dates.ts:87
 msgid "in %s years"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:98
+#: app/frontend/shared/i18n/dates.ts:107
 msgid "in 1 day"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:105
+#: app/frontend/shared/i18n/dates.ts:114
 msgid "in 1 hour"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:112
+#: app/frontend/shared/i18n/dates.ts:121
 msgid "in 1 minute"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:84
+#: app/frontend/shared/i18n/dates.ts:93
 msgid "in 1 month"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:91
+#: app/frontend/shared/i18n/dates.ts:100
 msgid "in 1 week"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:77
+#: app/frontend/shared/i18n/dates.ts:86
 msgid "in 1 year"
 msgstr ""
 
@@ -21863,12 +21814,6 @@ msgstr ""
 #: db/seeds/settings.rb:1190
 msgid "internal database"
 msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:19
-#, fuzzy
-#| msgid "Find a ticket"
-msgid "into this ticket"
-msgstr "Bilet tap"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:96
@@ -22220,12 +22165,6 @@ msgstr "Bildirişlər"
 msgid "now"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:51
-#, fuzzy
-#| msgid "Add a message"
-msgid "on message"
-msgstr "Mesaj əlavə et"
-
 #: app/models/object_manager/attribute.rb:548
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr ""
@@ -22408,10 +22347,6 @@ msgstr ""
 msgid "select visible options"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:10
-msgid "sent to"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 #, fuzzy
@@ -22578,12 +22513,6 @@ msgstr ""
 #: app/views/knowledge_base/public/not_found.html.erb:8
 msgid "to go to the homepage."
 msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:38
-#, fuzzy
-#| msgid "Add a message"
-msgid "to message"
-msgstr "Mesaj əlavə et"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
@@ -22752,6 +22681,75 @@ msgstr ""
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr ""
+
+#, fuzzy
+#~| msgid "Add a message"
+#~ msgid "%s on message"
+#~ msgstr "Mesaj əlavə et"
+
+#, fuzzy
+#~| msgid "Add a message"
+#~ msgid "%s to message"
+#~ msgstr "Mesaj əlavə et"
+
+#, fuzzy
+#~| msgid "Change Objects"
+#~ msgid "Changed reaction"
+#~ msgstr "Obyektləri dəyişdir"
+
+#, fuzzy
+#~| msgid "Change date"
+#~ msgid "Changed reaction to"
+#~ msgstr "Tarixi dəyişdir"
+
+#, fuzzy
+#~ msgid "Checked"
+#~ msgstr "Checkmk"
+
+#, fuzzy
+#~| msgid "Merge tickets"
+#~ msgid "Merged ticket"
+#~ msgstr "Biletlərin birləşdirilməsi"
+
+#, fuzzy
+#~| msgid "Created At"
+#~ msgid "Reacted with"
+#~ msgstr "Yaradıldı"
+
+#, fuzzy
+#~| msgid "Remove"
+#~ msgid "Removed"
+#~ msgstr "Sil"
+
+#, fuzzy
+#~| msgid "Remove formatting"
+#~ msgid "Removed reaction"
+#~ msgstr "Formatlaşdırmanı sil"
+
+#, fuzzy
+#~| msgid "New Trigger"
+#~ msgid "Triggered"
+#~ msgstr "Yeni Trigger"
+
+#, fuzzy
+#~| msgid "Call from %s"
+#~ msgid "from %s"
+#~ msgstr "%s -dən zəng"
+
+#, fuzzy
+#~| msgid "Add a message"
+#~ msgid "from message"
+#~ msgstr "Mesaj əlavə et"
+
+#, fuzzy
+#~| msgid "Add a message"
+#~ msgid "on message"
+#~ msgstr "Mesaj əlavə et"
+
+#, fuzzy
+#~| msgid "Add a message"
+#~ msgid "to message"
+#~ msgstr "Mesaj əlavə et"
 
 #~ msgid "Editing"
 #~ msgstr "Redaktə"

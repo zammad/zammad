@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-14 09:00+0000\n"
+"PO-Revision-Date: 2024-11-19 09:00+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
@@ -475,7 +475,7 @@ msgstr "%s skapade användare |%s|"
 msgid "%s credentials"
 msgstr "%s inloggningsuppgifter"
 
-#: app/frontend/shared/i18n/dates.ts:97
+#: app/frontend/shared/i18n/dates.ts:106
 msgid "%s days ago"
 msgstr "%s dagar sedan"
 
@@ -506,7 +506,7 @@ msgstr "%s mappar"
 msgid "%s groups to %s roles assignments"
 msgstr "%s grupper till %s roll-tilldelningar"
 
-#: app/frontend/shared/i18n/dates.ts:104
+#: app/frontend/shared/i18n/dates.ts:113
 msgid "%s hours ago"
 msgstr "%s timmar sedan"
 
@@ -525,11 +525,11 @@ msgstr "%s är obligatorisk."
 msgid "%s is sent without text caption"
 msgstr "%s skickas utan rubrik"
 
-#: app/frontend/shared/i18n/dates.ts:111
+#: app/frontend/shared/i18n/dates.ts:120
 msgid "%s minutes ago"
 msgstr "%s minuter sedan"
 
-#: app/frontend/shared/i18n/dates.ts:83
+#: app/frontend/shared/i18n/dates.ts:92
 msgid "%s months ago"
 msgstr "%s månader sedan"
 
@@ -570,12 +570,6 @@ msgstr "%s av mina ärenden är pågående."
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:11
 msgid "%s of my tickets escalated"
 msgstr "%s av mina ärenden eskalerade"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:50
-#, fuzzy
-#| msgid "message"
-msgid "%s on message"
-msgstr "meddelande"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 #: app/graphql/gql/queries/autocomplete_search/generic.rb:64
@@ -625,12 +619,6 @@ msgstr "%s ärenden"
 msgid "%s tickets found"
 msgstr "%s ärenden hittades"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:37
-#, fuzzy
-#| msgid "message"
-msgid "%s to message"
-msgstr "meddelande"
-
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
 msgid "%s updated article for |%s|"
@@ -677,11 +665,11 @@ msgstr "%s användare till %s användare"
 msgid "%s via WhatsApp"
 msgstr "%s via WhatsApp"
 
-#: app/frontend/shared/i18n/dates.ts:90
+#: app/frontend/shared/i18n/dates.ts:99
 msgid "%s weeks ago"
 msgstr "%s veckor sedan"
 
-#: app/frontend/shared/i18n/dates.ts:76
+#: app/frontend/shared/i18n/dates.ts:85
 msgid "%s years ago"
 msgstr "%s år sedan"
 
@@ -791,7 +779,7 @@ msgstr "1 bifogad fil"
 msgid "1 day"
 msgstr "1 dag"
 
-#: app/frontend/shared/i18n/dates.ts:96
+#: app/frontend/shared/i18n/dates.ts:105
 msgid "1 day ago"
 msgstr "1 dag sedan"
 
@@ -799,7 +787,7 @@ msgstr "1 dag sedan"
 msgid "1 hour"
 msgstr "1 timme"
 
-#: app/frontend/shared/i18n/dates.ts:103
+#: app/frontend/shared/i18n/dates.ts:112
 msgid "1 hour ago"
 msgstr "1 timme sedan"
 
@@ -807,11 +795,11 @@ msgstr "1 timme sedan"
 msgid "1 low"
 msgstr "1 låg"
 
-#: app/frontend/shared/i18n/dates.ts:110
+#: app/frontend/shared/i18n/dates.ts:119
 msgid "1 minute ago"
 msgstr "1 minut sedan"
 
-#: app/frontend/shared/i18n/dates.ts:82
+#: app/frontend/shared/i18n/dates.ts:91
 msgid "1 month ago"
 msgstr "1 månad sedan"
 
@@ -819,11 +807,11 @@ msgstr "1 månad sedan"
 msgid "1 week"
 msgstr "1 vecka"
 
-#: app/frontend/shared/i18n/dates.ts:89
+#: app/frontend/shared/i18n/dates.ts:98
 msgid "1 week ago"
 msgstr "1 vecka sedan"
 
-#: app/frontend/shared/i18n/dates.ts:75
+#: app/frontend/shared/i18n/dates.ts:84
 msgid "1 year ago"
 msgstr "1 år sedan"
 
@@ -1513,10 +1501,6 @@ msgstr "Lägg till underrubrik"
 msgid "Add this class to a button on your page that should open the chat."
 msgstr "Lägg till denna css klass på en knapp på sidan som ska öppna chatten."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:9
-msgid "Added"
-msgstr ""
-
 #: app/controllers/first_steps_controller.rb:109
 msgid "Additional Channels"
 msgstr "Ytterligare kanaler"
@@ -2085,7 +2069,7 @@ msgstr "Vill du ta bort \"%s\" som standard?"
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:234
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:130
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/maintenance.coffee:55
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:61
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:123
@@ -3112,17 +3096,17 @@ msgstr "Ändra Lösenord för personligt konto."
 msgid "Change text color"
 msgstr "Ändra textfärg"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:17
 #, fuzzy
-#| msgid "Change Objects"
-msgid "Changed reaction"
-msgstr "Ändra Objekt"
+#| msgid "removed reaction to message from %s '%s'"
+msgid "Changed reaction on message %s from %s"
+msgstr "tog bort reaktion på meddelande från %s '%s'"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:18
 #, fuzzy
-#| msgid "Exchange integration"
-msgid "Changed reaction to"
-msgstr "Exchange integration"
+#| msgid "removed reaction to message from %s '%s'"
+msgid "Changed reaction to %s on message %s from %s"
+msgstr "tog bort reaktion på meddelande från %s '%s'"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -3233,12 +3217,6 @@ msgid ""
 msgstr ""
 "Bocka i rutan om du vill ändra sorteringen av alternativ. Om inte ibockad så "
 "sorteras värdena alfabetiskt."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
-#, fuzzy
-#| msgid "checked"
-msgid "Checked"
-msgstr "Markerad"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
@@ -4252,7 +4230,6 @@ msgstr "Skapa:"
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList.vue:43
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created-mention.ts:9
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -5618,7 +5595,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:674
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:118
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
 #: app/assets/javascripts/app/controllers/user.coffee:177
@@ -5736,7 +5713,7 @@ msgstr "Radera gamla tokenposter."
 msgid "Delete old upload cache entries."
 msgstr "Radera gamla cacheposter."
 
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 msgid "Delete organization?"
 msgstr "Radera organisation?"
 
@@ -6408,7 +6385,6 @@ msgstr "Elasticsearch version"
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:7
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:167
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
@@ -6525,6 +6501,12 @@ msgstr "E-post skickat till \"%s\". Be användaren verifiera deras e-postkonto."
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:91
 msgid "Email sent to \"%s\". Please verify your email account."
 msgstr "E-post skickat till \"%s\". Verifiera ditt e-postkonto."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsEmail.vue:19
+#, fuzzy
+#| msgid "email sent to '%s'"
+msgid "Email sent to %s"
+msgstr "e-post skickat till '%s'"
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco:21
 #: app/assets/javascripts/app/views/knowledge_base/search_field_panel.jst.eco:5
@@ -7025,16 +7007,12 @@ msgid "Error during execution of auto wizard."
 msgstr "Fel under exekvering av automatisk guide."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:52
-#, fuzzy
-#| msgid "Something went wrong. Please contact your administrator."
 msgid "Error fetching github information. Please contact your administrator."
-msgstr "Något gick fel. Kontakta din administratör."
+msgstr "Fel vid hämtning av github-information. Kontakta din administratör."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:64
-#, fuzzy
-#| msgid "Something went wrong. Please contact your administrator."
 msgid "Error fetching i-doit information. Please contact your administrator."
-msgstr "Något gick fel. Kontakta din administratör."
+msgstr "Fel vid hämtning av i-doit information. Kontakta din administratör."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:280
 #: db/seeds/overviews.rb:160
@@ -9634,10 +9612,8 @@ msgid "Last name"
 msgstr "Efternamn"
 
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:129
-#, fuzzy
-#| msgid "Has update"
 msgid "Last owner update"
-msgstr "Har uppdatering"
+msgstr "Senaste ägare uppdatering"
 
 #: app/assets/javascripts/app/models/job.coffee:19
 msgid "Last run"
@@ -10478,10 +10454,8 @@ msgstr "Medlemmar"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created-mention.ts:12
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:12
-#, fuzzy
-#| msgid "Mention user"
 msgid "Mention for"
-msgstr "Nämn användare"
+msgstr "Omnämnande för"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 msgid "Mention user"
@@ -10522,17 +10496,17 @@ msgstr "Sammanfoga till Ärende#"
 msgid "Merged"
 msgstr "Sammanfogad"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/merged-into.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
 #, fuzzy
-#| msgid "Merge tickets"
-msgid "Merged this ticket into"
-msgstr "Sammanfoga ärenden"
+#| msgid "into this ticket"
+msgid "Merged %s into this ticket"
+msgstr "till detta ärende"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
 #, fuzzy
-#| msgid "Merge tickets"
-msgid "Merged ticket"
-msgstr "Sammanfoga ärenden"
+#| msgid "Merged this ticket into"
+msgid "Merged this ticket into %s"
+msgstr "Slog samman detta ärende till"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
 #: app/assets/javascripts/app/views/maintenance.jst.eco:32
@@ -11693,7 +11667,6 @@ msgstr "OBS:"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:59
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/notification.ts:7
 #: app/views/mailer/application.html.erb:36
 msgid "Notification"
 msgstr "Notifikation"
@@ -11832,10 +11805,8 @@ msgid "Object Manager"
 msgstr "Objekthanterare"
 
 #: app/services/service/history/list.rb:52
-#, fuzzy
-#| msgid "Given object does not support selector"
 msgid "Object does not support history"
-msgstr "Det givna objektet stöder inte väljaren"
+msgstr "Objektet stöder inte historik"
 
 #: app/frontend/apps/desktop/components/layout/LayoutPage.vue:60
 msgid ""
@@ -13128,17 +13099,17 @@ msgstr ""
 msgid "Raw"
 msgstr "Raw"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:19
 #, fuzzy
-#| msgid "deactivated"
-msgid "Reacted"
-msgstr "inaktiverad"
+#| msgid "reacted to message from %s '%s'"
+msgid "Reacted to message %s from %s"
+msgstr "reagerade på meddelande från %s '%s'"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:20
 #, fuzzy
-#| msgid "ends with"
-msgid "Reacted with"
-msgstr "slutar med"
+#| msgid "reacted with a %s to message from %s '%s'"
+msgid "Reacted with %s to message %s from %s"
+msgstr "reagerade med en %s på meddelande från %s '%s'"
 
 #: app/assets/javascripts/app/models/group.coffee:44
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:40
@@ -13390,18 +13361,11 @@ msgstr "Ta bort denna tagg"
 msgid "Remove two-factor authentication"
 msgstr "Ta bort två-faktorautentisering"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:9
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:16
 #, fuzzy
-#| msgid "Remove"
-msgid "Removed"
-msgstr "Ta bort"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
-#, fuzzy
-#| msgid "Remove formatting"
-msgid "Removed reaction"
-msgstr "Ta bort formatering"
+#| msgid "removed reaction to message from %s '%s'"
+msgid "Removed reaction from message %s from %s"
+msgstr "tog bort reaktion på meddelande från %s '%s'"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:649
 msgid "Removes any hyperlink"
@@ -13528,7 +13492,7 @@ msgstr "Begär bidraget"
 msgid "Required parameter 'downloadBackendSelected' is missing."
 msgstr "Den obligatoriska parametern \"downloadBackendSelected\" saknas."
 
-#: app/controllers/reports_controller.rb:117
+#: app/controllers/reports_controller.rb:116
 msgid "Required parameter 'profile' is missing."
 msgstr "Den obligatoriska parametern \"profil\" saknas."
 
@@ -14749,10 +14713,8 @@ msgid "Shared"
 msgstr "Delad"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventEntityNames.ts:8
-#, fuzzy
-#| msgid "Shared Drafts"
 msgid "Shared Draft"
-msgstr "Delade utkast"
+msgstr "Delat utkast"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee:12
 #: app/assets/javascripts/app/models/group.coffee:17
@@ -15467,7 +15429,7 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupActionFooter.vue:53
 #: app/frontend/shared/form/i18n/locales.ts:42
 msgid "Submit"
-msgstr "Skicka"
+msgstr "Spara"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:139
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:178
@@ -15552,7 +15514,7 @@ msgstr "Synkronisera med dator"
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: app/assets/javascripts/app/controllers/manage.coffee:37
 #: app/assets/javascripts/app/views/generic/history.jst.eco:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:32
 #: db/seeds/permissions.rb:191 db/seeds/ticket_article_senders.rb:5
 msgid "System"
 msgstr "System"
@@ -15921,7 +15883,7 @@ msgstr "Simple Storage Service(S3) är inte tillgängligt."
 msgid "The Telegram bot could not be saved."
 msgstr "Telegram-botten kunde inte sparas."
 
-#: lib/telegram_helper.rb:688
+#: lib/telegram_helper.rb:686
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr "Telegram filen är större än de tillåtna 20 MB."
 
@@ -15969,7 +15931,7 @@ msgstr "Det gick inte att skapa en access-token."
 msgid "The account link was successfully removed!"
 msgstr "Länken till kontot har tagits bort!"
 
-#: app/controllers/reports_controller.rb:130
+#: app/controllers/reports_controller.rb:129
 msgid "The active reporting profile could not be found."
 msgstr "Den aktiva rapportprofilen kunde inte hittas."
 
@@ -16277,7 +16239,7 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr "Objektet kunde inte skapas."
 
-#: lib/telegram_helper.rb:696
+#: lib/telegram_helper.rb:694
 msgid "The file could not be retrieved from the bot."
 msgstr "Filen kunde inte hämtas från bot."
 
@@ -16477,7 +16439,7 @@ msgstr "Notifieringen kunde inte tas bort."
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:801
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:267
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:280
 #: app/assets/javascripts/app/controllers/object_manager.coffee:261
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:94
 msgid "The object could not be created."
@@ -17800,11 +17762,9 @@ msgstr "Ärende Kund"
 msgid "Ticket Duplicate Detection"
 msgstr "Ärende Duplikatdetektering"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:62
-#, fuzzy
-#| msgid "Ticket Customer"
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:71
 msgid "Ticket History"
-msgstr "Ärende Kund"
+msgstr "Ärendehistorik"
 
 #: db/seeds/settings.rb:2167
 msgid "Ticket Hook"
@@ -18584,11 +18544,29 @@ msgstr "Översättningar"
 msgid "Trigger"
 msgstr "Trigger"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:7
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:14
 #, fuzzy
-#| msgid "Trigger"
-msgid "Triggered"
-msgstr "Trigger"
+#| msgid "because pending reminder was reached"
+msgid "Triggered because pending reminder was reached"
+msgstr "eftersom väntande påminnelse nåddes"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:19
+#, fuzzy
+#| msgid "because ticket was escalated"
+msgid "Triggered because ticket was escalated"
+msgstr "eftersom ärendet eskalerades"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
+#, fuzzy
+#| msgid "because ticket will escalate soon"
+msgid "Triggered because ticket will escalate soon"
+msgstr "eftersom ärendet snart kommer att eskalera"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:29
+#, fuzzy
+#| msgid "because time event was reached"
+msgid "Triggered because time event was reached"
+msgstr "eftersom tidshändelsen nåddes"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
 msgid "Triggers"
@@ -18865,25 +18843,14 @@ msgstr ""
 msgid "Uncheck item"
 msgstr "Avmarkera post"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
-#, fuzzy
-#| msgid "checked"
-msgid "Unchecked"
-msgstr "Markerad"
-
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:12
 msgid "Unit"
 msgstr "Enhet"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:42
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:25
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:35
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:33
-#, fuzzy
-#| msgid "Unknown error"
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:41
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/eventHelpers.ts:14
 msgid "Unknown"
-msgstr "Okänt fel"
+msgstr "Okänd"
 
 #: lib/password_policy/backend.rb:15
 msgid "Unknown error"
@@ -20809,28 +20776,6 @@ msgstr "Attributet är inte redigerbart"
 msgid "auto select"
 msgstr "Automatiskt"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:12
-#, fuzzy
-#| msgid "trigger '%s' was performed because pending reminder was reached"
-msgid "because pending reminder was reached"
-msgstr "trigger '%s' utfördes eftersom väntande påminnelse uppnåddes"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:16
-#, fuzzy
-#| msgid "%s of my tickets escalated"
-msgid "because ticket was escalated"
-msgstr "%s av mina ärenden eskalerade"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:20
-#, fuzzy
-#| msgid "Ticket |%s| will escalate soon!"
-msgid "because ticket will escalate soon"
-msgstr "Ärende |%s| är påväg att eskalera!"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
-msgid "because time event was reached"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -21031,7 +20976,7 @@ msgid "default"
 msgstr "standard"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:4
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee:8
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:17
 msgid "delete"
@@ -21212,25 +21157,12 @@ msgstr "vidarebefordra"
 msgid "from"
 msgstr "från"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:40
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:53
-#, fuzzy
-#| msgid "Call from %s"
-msgid "from %s"
-msgstr "Samtal från %s"
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:481
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "from (relative)"
 msgstr "från (relativt)"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:25
-#, fuzzy
-#| msgid "Welcome message"
-msgid "from message"
-msgstr "Välkomstmeddelande"
 
 #: app/controllers/integration/pgp_controller.rb:48
 msgid "gpg (GnuPG) 2.2.0 or newer is required"
@@ -21316,51 +21248,51 @@ msgstr "iCalendar-länkar från Google kommer hämtas en gång om dagen"
 msgid "in %s"
 msgstr "om %s"
 
-#: app/frontend/shared/i18n/dates.ts:99
+#: app/frontend/shared/i18n/dates.ts:108
 msgid "in %s days"
 msgstr "om %s dagar"
 
-#: app/frontend/shared/i18n/dates.ts:106
+#: app/frontend/shared/i18n/dates.ts:115
 msgid "in %s hours"
 msgstr "om %s timmar"
 
-#: app/frontend/shared/i18n/dates.ts:113
+#: app/frontend/shared/i18n/dates.ts:122
 msgid "in %s minutes"
 msgstr "om %s minuter"
 
-#: app/frontend/shared/i18n/dates.ts:85
+#: app/frontend/shared/i18n/dates.ts:94
 msgid "in %s months"
 msgstr "om %s månader"
 
-#: app/frontend/shared/i18n/dates.ts:92
+#: app/frontend/shared/i18n/dates.ts:101
 msgid "in %s weeks"
 msgstr "om %s veckor"
 
-#: app/frontend/shared/i18n/dates.ts:78
+#: app/frontend/shared/i18n/dates.ts:87
 msgid "in %s years"
 msgstr "om %s år"
 
-#: app/frontend/shared/i18n/dates.ts:98
+#: app/frontend/shared/i18n/dates.ts:107
 msgid "in 1 day"
 msgstr "om en dag"
 
-#: app/frontend/shared/i18n/dates.ts:105
+#: app/frontend/shared/i18n/dates.ts:114
 msgid "in 1 hour"
 msgstr "om en timme"
 
-#: app/frontend/shared/i18n/dates.ts:112
+#: app/frontend/shared/i18n/dates.ts:121
 msgid "in 1 minute"
 msgstr "om en minut"
 
-#: app/frontend/shared/i18n/dates.ts:84
+#: app/frontend/shared/i18n/dates.ts:93
 msgid "in 1 month"
 msgstr "inom 1 månad"
 
-#: app/frontend/shared/i18n/dates.ts:91
+#: app/frontend/shared/i18n/dates.ts:100
 msgid "in 1 week"
 msgstr "om en vecka"
 
-#: app/frontend/shared/i18n/dates.ts:77
+#: app/frontend/shared/i18n/dates.ts:86
 msgid "in 1 year"
 msgstr "inom 1 år"
 
@@ -21388,12 +21320,6 @@ msgstr "intern"
 #: db/seeds/settings.rb:1190
 msgid "internal database"
 msgstr "intern databas"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:19
-#, fuzzy
-#| msgid "Find a ticket"
-msgid "into this ticket"
-msgstr "Hitta ett ärende"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:96
@@ -21736,12 +21662,6 @@ msgstr "notifieringar,ärenden"
 msgid "now"
 msgstr "nu"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:51
-#, fuzzy
-#| msgid "message"
-msgid "on message"
-msgstr "meddelande"
-
 #: app/models/object_manager/attribute.rb:548
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr "endast små bokstäver, siffror och '_' är tillåtna"
@@ -21916,12 +21836,6 @@ msgstr "Välj bilagor …"
 msgid "select visible options"
 msgstr "Välj synliga alternativ"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:10
-#, fuzzy
-#| msgid "set to public"
-msgid "sent to"
-msgstr "sätt som publik"
-
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 msgid "sent to the customer"
@@ -22086,12 +22000,6 @@ msgstr "tidsstämpel - t.ex. \"2018-08-30 14:30\""
 #: app/views/knowledge_base/public/not_found.html.erb:8
 msgid "to go to the homepage."
 msgstr "för att gå till startsidan."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:38
-#, fuzzy
-#| msgid "message"
-msgid "to message"
-msgstr "meddelande"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
@@ -22262,6 +22170,60 @@ msgstr "...av hela textfältet"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Väntetid idag"
+
+#~ msgid "%s on message"
+#~ msgstr "%s på meddelandet"
+
+#~ msgid "%s to message"
+#~ msgstr "%s till meddelande"
+
+#~ msgid "Added"
+#~ msgstr "Tillagd"
+
+#~ msgid "Changed reaction"
+#~ msgstr "Ändrad reaktion"
+
+#~ msgid "Changed reaction to"
+#~ msgstr "Ändrad reaktion på"
+
+#~ msgid "Checked"
+#~ msgstr "Markerad"
+
+#~ msgid "Merged ticket"
+#~ msgstr "Sammanfogat ärende"
+
+#~ msgid "Reacted"
+#~ msgstr "Reagerade"
+
+#~ msgid "Reacted with"
+#~ msgstr "Reagerade med"
+
+#~ msgid "Removed"
+#~ msgstr "Borttagen"
+
+#~ msgid "Removed reaction"
+#~ msgstr "Borttagen reaktion"
+
+#~ msgid "Triggered"
+#~ msgstr "Utlöstes"
+
+#~ msgid "Unchecked"
+#~ msgstr "Omarkerad"
+
+#~ msgid "from %s"
+#~ msgstr "från %s"
+
+#~ msgid "from message"
+#~ msgstr "från meddelande"
+
+#~ msgid "on message"
+#~ msgstr "på meddelande"
+
+#~ msgid "sent to"
+#~ msgstr "skickades till"
+
+#~ msgid "to message"
+#~ msgstr "till meddelande"
 
 #~ msgid "This tab could not be found."
 #~ msgstr "Denna flik kunde inte hittas."

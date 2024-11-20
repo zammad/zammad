@@ -477,7 +477,7 @@ msgstr "%s sukūrė naudotoją |%s|"
 msgid "%s credentials"
 msgstr "%s prisijungimai"
 
-#: app/frontend/shared/i18n/dates.ts:97
+#: app/frontend/shared/i18n/dates.ts:106
 msgid "%s days ago"
 msgstr "prieš %s dienų(-ą)"
 
@@ -506,7 +506,7 @@ msgstr "%s aplankai(-as)"
 msgid "%s groups to %s roles assignments"
 msgstr "%s grupių priskyrimas %s rolėms"
 
-#: app/frontend/shared/i18n/dates.ts:104
+#: app/frontend/shared/i18n/dates.ts:113
 msgid "%s hours ago"
 msgstr "prieš %s valandų"
 
@@ -525,11 +525,11 @@ msgstr "%s privalomas."
 msgid "%s is sent without text caption"
 msgstr "%s siunčiamas be teksto"
 
-#: app/frontend/shared/i18n/dates.ts:111
+#: app/frontend/shared/i18n/dates.ts:120
 msgid "%s minutes ago"
 msgstr "prieš %s minučių"
 
-#: app/frontend/shared/i18n/dates.ts:83
+#: app/frontend/shared/i18n/dates.ts:92
 msgid "%s months ago"
 msgstr "prieš %s mėnesių(-į)"
 
@@ -570,12 +570,6 @@ msgstr "%s mano trikčių yra apdorojamos."
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:11
 msgid "%s of my tickets escalated"
 msgstr "%s mano trikčių eskaluotos"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:50
-#, fuzzy
-#| msgid "message"
-msgid "%s on message"
-msgstr "žinutė"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 #: app/graphql/gql/queries/autocomplete_search/generic.rb:64
@@ -627,12 +621,6 @@ msgstr "%s triktys"
 msgid "%s tickets found"
 msgstr "rastos %s triktys"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:37
-#, fuzzy
-#| msgid "message"
-msgid "%s to message"
-msgstr "žinutė"
-
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
 msgid "%s updated article for |%s|"
@@ -679,11 +667,11 @@ msgstr "%s naudotojas į %s naudotoją"
 msgid "%s via WhatsApp"
 msgstr "%s per WhatsApp"
 
-#: app/frontend/shared/i18n/dates.ts:90
+#: app/frontend/shared/i18n/dates.ts:99
 msgid "%s weeks ago"
 msgstr "prieš %s savaičių"
 
-#: app/frontend/shared/i18n/dates.ts:76
+#: app/frontend/shared/i18n/dates.ts:85
 msgid "%s years ago"
 msgstr "prieš %s metų"
 
@@ -795,7 +783,7 @@ msgstr "1 prisegtukas"
 msgid "1 day"
 msgstr "1 diena"
 
-#: app/frontend/shared/i18n/dates.ts:96
+#: app/frontend/shared/i18n/dates.ts:105
 msgid "1 day ago"
 msgstr "prieš dieną"
 
@@ -803,7 +791,7 @@ msgstr "prieš dieną"
 msgid "1 hour"
 msgstr "1 valanda"
 
-#: app/frontend/shared/i18n/dates.ts:103
+#: app/frontend/shared/i18n/dates.ts:112
 msgid "1 hour ago"
 msgstr "prieš valandą"
 
@@ -811,11 +799,11 @@ msgstr "prieš valandą"
 msgid "1 low"
 msgstr "1 žemas"
 
-#: app/frontend/shared/i18n/dates.ts:110
+#: app/frontend/shared/i18n/dates.ts:119
 msgid "1 minute ago"
 msgstr "prieš minutę"
 
-#: app/frontend/shared/i18n/dates.ts:82
+#: app/frontend/shared/i18n/dates.ts:91
 msgid "1 month ago"
 msgstr "prieš mėnesį"
 
@@ -823,11 +811,11 @@ msgstr "prieš mėnesį"
 msgid "1 week"
 msgstr "1 savaitė"
 
-#: app/frontend/shared/i18n/dates.ts:89
+#: app/frontend/shared/i18n/dates.ts:98
 msgid "1 week ago"
 msgstr "prieš savaitę"
 
-#: app/frontend/shared/i18n/dates.ts:75
+#: app/frontend/shared/i18n/dates.ts:84
 msgid "1 year ago"
 msgstr "prieš metus"
 
@@ -1519,10 +1507,6 @@ msgstr ""
 "Pridėkite šią klasę prie mygtuko savo puslapyje, kuris turėtų atverti "
 "pokalbių langelį."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:9
-msgid "Added"
-msgstr ""
-
 #: app/controllers/first_steps_controller.rb:109
 msgid "Additional Channels"
 msgstr "Papildomi kanalai"
@@ -2091,7 +2075,7 @@ msgstr "Ar tikrai norite nebenaudoti „%s“ kaip numatytojo?"
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:234
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:130
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/maintenance.coffee:55
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:61
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:123
@@ -3116,17 +3100,17 @@ msgstr "Keisti savo paskyros slaptažodį."
 msgid "Change text color"
 msgstr "Keisti teksto spalvą"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:17
 #, fuzzy
-#| msgid "Change Objects"
-msgid "Changed reaction"
-msgstr "Pakeisti objektus"
+#| msgid "%s ended switch to |%s|!"
+msgid "Changed reaction on message %s from %s"
+msgstr "%s baigė prisijungimą kaip |%s|!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:18
 #, fuzzy
-#| msgid "Exchange integration"
-msgid "Changed reaction to"
-msgstr "Exchange integracija"
+#| msgid "%s ended switch to |%s|!"
+msgid "Changed reaction to %s on message %s from %s"
+msgstr "%s baigė prisijungimą kaip |%s|!"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -3237,12 +3221,6 @@ msgid ""
 msgstr ""
 "Pažymėkite šį langelį, jei norite išrūšiuoti parinktis rankiniu būdu. Jei "
 "langelis nepažymėtas, reikšmės rūšiuojamos abėcėlės tvarka."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
-#, fuzzy
-#| msgid "Uncheck item"
-msgid "Checked"
-msgstr "Pažymėti punktą kaip nebaigtą"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
@@ -4254,7 +4232,6 @@ msgstr "Sukurta:"
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList.vue:43
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created-mention.ts:9
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -5575,7 +5552,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:674
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:118
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
 #: app/assets/javascripts/app/controllers/user.coffee:177
@@ -5693,7 +5670,7 @@ msgstr "Ištrinti senus žetonus."
 msgid "Delete old upload cache entries."
 msgstr "Ištrinti senus įkėlimo talpyklos įrašus."
 
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 msgid "Delete organization?"
 msgstr "Ištrinti organizaciją?"
 
@@ -6376,7 +6353,6 @@ msgstr "Elasticsearch versija"
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:7
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:167
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
@@ -6494,6 +6470,12 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:91
 msgid "Email sent to \"%s\". Please verify your email account."
 msgstr "Laiškas išsiųstas „%s“. Patvirtinkite savo el. pašto adresą."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsEmail.vue:19
+#, fuzzy
+#| msgid "email sent to '%s'"
+msgid "Email sent to %s"
+msgstr "laiškas išsiųstas „%s“"
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco:21
 #: app/assets/javascripts/app/views/knowledge_base/search_field_panel.jst.eco:5
@@ -10513,16 +10495,16 @@ msgstr "Prijungti prie trikties #"
 msgid "Merged"
 msgstr "Prijungta"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/merged-into.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
 #, fuzzy
-#| msgid "Merge tickets"
-msgid "Merged this ticket into"
-msgstr "Prijungti triktis"
+#| msgid "Find a ticket"
+msgid "Merged %s into this ticket"
+msgstr "Rasti triktį"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
 #, fuzzy
 #| msgid "Merge tickets"
-msgid "Merged ticket"
+msgid "Merged this ticket into %s"
 msgstr "Prijungti triktis"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
@@ -11686,7 +11668,6 @@ msgstr "Perspėjimas:"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:59
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/notification.ts:7
 #: app/views/mailer/application.html.erb:36
 msgid "Notification"
 msgstr "Pranešimas"
@@ -13112,17 +13093,17 @@ msgstr ""
 msgid "Raw"
 msgstr "Žalias"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:19
 #, fuzzy
-#| msgid "deactivated"
-msgid "Reacted"
-msgstr "deaktyvuota"
+#| msgid "%s ended switch to |%s|!"
+msgid "Reacted to message %s from %s"
+msgstr "%s baigė prisijungimą kaip |%s|!"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:20
 #, fuzzy
-#| msgid "ends with"
-msgid "Reacted with"
-msgstr "baigiasi"
+#| msgid "%s ended switch to |%s|!"
+msgid "Reacted with %s to message %s from %s"
+msgstr "%s baigė prisijungimą kaip |%s|!"
 
 #: app/assets/javascripts/app/models/group.coffee:44
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:40
@@ -13376,18 +13357,11 @@ msgstr "Pašalinti paveikslėlį"
 msgid "Remove two-factor authentication"
 msgstr "Pašalinti dviejų veiksnių autentifikavimąsi"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:9
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:16
 #, fuzzy
-#| msgid "Remove"
-msgid "Removed"
-msgstr "Pašalinti"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
-#, fuzzy
-#| msgid "Remove formatting"
-msgid "Removed reaction"
-msgstr "Pašalinti formatavimą"
+#| msgid "%s ended switch to |%s|!"
+msgid "Removed reaction from message %s from %s"
+msgstr "%s baigė prisijungimą kaip |%s|!"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:649
 msgid "Removes any hyperlink"
@@ -13514,7 +13488,7 @@ msgstr "Prieigos prašymas"
 msgid "Required parameter 'downloadBackendSelected' is missing."
 msgstr "Trūksta privalomo „downloadBackendSelected“ parametro."
 
-#: app/controllers/reports_controller.rb:117
+#: app/controllers/reports_controller.rb:116
 msgid "Required parameter 'profile' is missing."
 msgstr "Trūksta prilomo „profile“ parametro."
 
@@ -15557,7 +15531,7 @@ msgstr "Automatiškai pagal įrenginį"
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: app/assets/javascripts/app/controllers/manage.coffee:37
 #: app/assets/javascripts/app/views/generic/history.jst.eco:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:32
 #: db/seeds/permissions.rb:191 db/seeds/ticket_article_senders.rb:5
 msgid "System"
 msgstr "Sistema"
@@ -15928,7 +15902,7 @@ msgstr "Simple Storage Service (S3) nepasiekiamas."
 msgid "The Telegram bot could not be saved."
 msgstr "Nepavyko išsaugoti „Telegram“ boto."
 
-#: lib/telegram_helper.rb:688
+#: lib/telegram_helper.rb:686
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr "Telegram failas yra viršyja leistiną 20 MB ribą."
 
@@ -15976,7 +15950,7 @@ msgstr "Nepavyko sukurti prieigos žetono."
 msgid "The account link was successfully removed!"
 msgstr "Paskyros sąsaja buvo pašalinta!"
 
-#: app/controllers/reports_controller.rb:130
+#: app/controllers/reports_controller.rb:129
 msgid "The active reporting profile could not be found."
 msgstr "Nepavyko rasti aktyvaus ataskaitų profilio."
 
@@ -16278,7 +16252,7 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr "Nepavyko sukurti įrašo."
 
-#: lib/telegram_helper.rb:696
+#: lib/telegram_helper.rb:694
 msgid "The file could not be retrieved from the bot."
 msgstr "Nepavyko gauti failo iš boto."
 
@@ -16483,7 +16457,7 @@ msgstr "Nepavyko ištrinti pranešimo."
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:801
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:267
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:280
 #: app/assets/javascripts/app/controllers/object_manager.coffee:261
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:94
 msgid "The object could not be created."
@@ -17788,7 +17762,7 @@ msgstr "Trikties klientas"
 msgid "Ticket Duplicate Detection"
 msgstr "Trikties dublikatų aptikimas"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:71
 #, fuzzy
 #| msgid "Ticket Customer"
 msgid "Ticket History"
@@ -18584,11 +18558,29 @@ msgstr "Vertimai"
 msgid "Trigger"
 msgstr "Trigger"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:7
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:14
 #, fuzzy
-#| msgid "Trigger"
-msgid "Triggered"
-msgstr "Trigger"
+#| msgid "trigger '%s' was performed because pending reminder was reached"
+msgid "Triggered because pending reminder was reached"
+msgstr "Paleistukas „%s“ buvo paleistas, nes suėjo laukimo laikas"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:19
+#, fuzzy
+#| msgid "%s of my tickets escalated"
+msgid "Triggered because ticket was escalated"
+msgstr "%s mano trikčių eskaluotos"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
+#, fuzzy
+#| msgid "Ticket |%s| will escalate soon!"
+msgid "Triggered because ticket will escalate soon"
+msgstr "Triktis „%s“ greitai eskaluosis!"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:29
+#, fuzzy
+#| msgid "trigger '%s' was performed because pending reminder was reached"
+msgid "Triggered because time event was reached"
+msgstr "Paleistukas „%s“ buvo paleistas, nes suėjo laukimo laikas"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
 msgid "Triggers"
@@ -18865,21 +18857,12 @@ msgstr ""
 msgid "Uncheck item"
 msgstr "Pažymėti punktą kaip nebaigtą"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
-#, fuzzy
-#| msgid "Uncheck item"
-msgid "Unchecked"
-msgstr "Pažymėti punktą kaip nebaigtą"
-
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:12
 msgid "Unit"
 msgstr "Matas"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:42
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:25
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:35
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:41
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/eventHelpers.ts:14
 #, fuzzy
 #| msgid "Unknown error"
 msgid "Unknown"
@@ -20825,28 +20808,6 @@ msgstr "atributas negali būti redaguojamas"
 msgid "auto select"
 msgstr "automatinis pasirinkimas"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:12
-#, fuzzy
-#| msgid "trigger '%s' was performed because pending reminder was reached"
-msgid "because pending reminder was reached"
-msgstr "Paleistukas „%s“ buvo paleistas, nes suėjo laukimo laikas"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:16
-#, fuzzy
-#| msgid "%s of my tickets escalated"
-msgid "because ticket was escalated"
-msgstr "%s mano trikčių eskaluotos"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:20
-#, fuzzy
-#| msgid "Ticket |%s| will escalate soon!"
-msgid "because ticket will escalate soon"
-msgstr "Triktis „%s“ greitai eskaluosis!"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
-msgid "because time event was reached"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -21046,7 +21007,7 @@ msgid "default"
 msgstr "numatytasis"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:4
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee:8
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:17
 msgid "delete"
@@ -21227,25 +21188,12 @@ msgstr "persiųsti"
 msgid "from"
 msgstr "nuo"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:40
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:53
-#, fuzzy
-#| msgid "Call from %s"
-msgid "from %s"
-msgstr "Skambutis nuo %s"
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:481
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "from (relative)"
 msgstr "nuo (santykinai)"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:25
-#, fuzzy
-#| msgid "Welcome message"
-msgid "from message"
-msgstr "Pasisveikinimo žinutė"
 
 #: app/controllers/integration/pgp_controller.rb:48
 msgid "gpg (GnuPG) 2.2.0 or newer is required"
@@ -21333,51 +21281,51 @@ msgstr "iCalendar nuorodos iš Google bus parsisiunčiamos kartą per dieną"
 msgid "in %s"
 msgstr "per %s"
 
-#: app/frontend/shared/i18n/dates.ts:99
+#: app/frontend/shared/i18n/dates.ts:108
 msgid "in %s days"
 msgstr "per %s dienų"
 
-#: app/frontend/shared/i18n/dates.ts:106
+#: app/frontend/shared/i18n/dates.ts:115
 msgid "in %s hours"
 msgstr "per %s valandų"
 
-#: app/frontend/shared/i18n/dates.ts:113
+#: app/frontend/shared/i18n/dates.ts:122
 msgid "in %s minutes"
 msgstr "per %s minučių"
 
-#: app/frontend/shared/i18n/dates.ts:85
+#: app/frontend/shared/i18n/dates.ts:94
 msgid "in %s months"
 msgstr "per %s mėnesių"
 
-#: app/frontend/shared/i18n/dates.ts:92
+#: app/frontend/shared/i18n/dates.ts:101
 msgid "in %s weeks"
 msgstr "per %s savaičių"
 
-#: app/frontend/shared/i18n/dates.ts:78
+#: app/frontend/shared/i18n/dates.ts:87
 msgid "in %s years"
 msgstr "per %s metų"
 
-#: app/frontend/shared/i18n/dates.ts:98
+#: app/frontend/shared/i18n/dates.ts:107
 msgid "in 1 day"
 msgstr "per 1 dieną"
 
-#: app/frontend/shared/i18n/dates.ts:105
+#: app/frontend/shared/i18n/dates.ts:114
 msgid "in 1 hour"
 msgstr "per 1 valandą"
 
-#: app/frontend/shared/i18n/dates.ts:112
+#: app/frontend/shared/i18n/dates.ts:121
 msgid "in 1 minute"
 msgstr "per 1 minutę"
 
-#: app/frontend/shared/i18n/dates.ts:84
+#: app/frontend/shared/i18n/dates.ts:93
 msgid "in 1 month"
 msgstr "per 1 mėnesį"
 
-#: app/frontend/shared/i18n/dates.ts:91
+#: app/frontend/shared/i18n/dates.ts:100
 msgid "in 1 week"
 msgstr "per 1 savaitę"
 
-#: app/frontend/shared/i18n/dates.ts:77
+#: app/frontend/shared/i18n/dates.ts:86
 msgid "in 1 year"
 msgstr "per 1 metus"
 
@@ -21405,12 +21353,6 @@ msgstr "vidinis"
 #: db/seeds/settings.rb:1190
 msgid "internal database"
 msgstr "vidinė duombazė"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:19
-#, fuzzy
-#| msgid "Find a ticket"
-msgid "into this ticket"
-msgstr "Rasti triktį"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:96
@@ -21756,12 +21698,6 @@ msgstr "pranešimai,triktys,notifications,žinutės"
 msgid "now"
 msgstr "dabar"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:51
-#, fuzzy
-#| msgid "message"
-msgid "on message"
-msgstr "žinutė"
-
 #: app/models/object_manager/attribute.rb:548
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr "leidžiama tik mažosios raidės, skaičiai ir „_“"
@@ -21940,12 +21876,6 @@ msgstr "pasirinkti prisegtuką…"
 msgid "select visible options"
 msgstr "pažymėti matomus pasirinkimus"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:10
-#, fuzzy
-#| msgid "set to public"
-msgid "sent to"
-msgstr "padaryti viešu"
-
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 msgid "sent to the customer"
@@ -22112,12 +22042,6 @@ msgstr "laiko žyma - pvz. „2018-08-30 14:30“"
 #: app/views/knowledge_base/public/not_found.html.erb:8
 msgid "to go to the homepage."
 msgstr "norėdami grįžti į pradinį puslapį."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:38
-#, fuzzy
-#| msgid "message"
-msgid "to message"
-msgstr "žinutė"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
@@ -22290,6 +22214,91 @@ msgstr "...viso teksto laukelio"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Laukimo laikas šiandien"
+
+#, fuzzy
+#~| msgid "message"
+#~ msgid "%s on message"
+#~ msgstr "žinutė"
+
+#, fuzzy
+#~| msgid "message"
+#~ msgid "%s to message"
+#~ msgstr "žinutė"
+
+#, fuzzy
+#~| msgid "Change Objects"
+#~ msgid "Changed reaction"
+#~ msgstr "Pakeisti objektus"
+
+#, fuzzy
+#~| msgid "Exchange integration"
+#~ msgid "Changed reaction to"
+#~ msgstr "Exchange integracija"
+
+#, fuzzy
+#~| msgid "Uncheck item"
+#~ msgid "Checked"
+#~ msgstr "Pažymėti punktą kaip nebaigtą"
+
+#, fuzzy
+#~| msgid "Merge tickets"
+#~ msgid "Merged ticket"
+#~ msgstr "Prijungti triktis"
+
+#, fuzzy
+#~| msgid "deactivated"
+#~ msgid "Reacted"
+#~ msgstr "deaktyvuota"
+
+#, fuzzy
+#~| msgid "ends with"
+#~ msgid "Reacted with"
+#~ msgstr "baigiasi"
+
+#, fuzzy
+#~| msgid "Remove"
+#~ msgid "Removed"
+#~ msgstr "Pašalinti"
+
+#, fuzzy
+#~| msgid "Remove formatting"
+#~ msgid "Removed reaction"
+#~ msgstr "Pašalinti formatavimą"
+
+#, fuzzy
+#~| msgid "Trigger"
+#~ msgid "Triggered"
+#~ msgstr "Trigger"
+
+#, fuzzy
+#~| msgid "Uncheck item"
+#~ msgid "Unchecked"
+#~ msgstr "Pažymėti punktą kaip nebaigtą"
+
+#, fuzzy
+#~| msgid "Call from %s"
+#~ msgid "from %s"
+#~ msgstr "Skambutis nuo %s"
+
+#, fuzzy
+#~| msgid "Welcome message"
+#~ msgid "from message"
+#~ msgstr "Pasisveikinimo žinutė"
+
+#, fuzzy
+#~| msgid "message"
+#~ msgid "on message"
+#~ msgstr "žinutė"
+
+#, fuzzy
+#~| msgid "set to public"
+#~ msgid "sent to"
+#~ msgstr "padaryti viešu"
+
+#, fuzzy
+#~| msgid "message"
+#~ msgid "to message"
+#~ msgstr "žinutė"
 
 #~ msgid "This tab could not be found."
 #~ msgstr "Skirtukas nerastas."

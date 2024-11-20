@@ -475,7 +475,7 @@ msgstr "%s stofnaði notanda |%s|"
 msgid "%s credentials"
 msgstr "%s notendakenni"
 
-#: app/frontend/shared/i18n/dates.ts:97
+#: app/frontend/shared/i18n/dates.ts:106
 msgid "%s days ago"
 msgstr "fyrir %s dögum síðan"
 
@@ -506,7 +506,7 @@ msgstr "%s möppur"
 msgid "%s groups to %s roles assignments"
 msgstr "%s hópar yfir í %s hlutverk"
 
-#: app/frontend/shared/i18n/dates.ts:104
+#: app/frontend/shared/i18n/dates.ts:113
 msgid "%s hours ago"
 msgstr "fyrir %s klukkustundum síðan"
 
@@ -525,11 +525,11 @@ msgstr "%s er skilyrt."
 msgid "%s is sent without text caption"
 msgstr "%s er sent án fyrirsagnar"
 
-#: app/frontend/shared/i18n/dates.ts:111
+#: app/frontend/shared/i18n/dates.ts:120
 msgid "%s minutes ago"
 msgstr "fyrir %s mínútum síðan"
 
-#: app/frontend/shared/i18n/dates.ts:83
+#: app/frontend/shared/i18n/dates.ts:92
 msgid "%s months ago"
 msgstr "fyrir %s mánuðum síðan"
 
@@ -570,12 +570,6 @@ msgstr "%s af beiðnunum mínum eru í vinnslu."
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:11
 msgid "%s of my tickets escalated"
 msgstr "%s beiðnanna minna með hækkaðan forgang"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:50
-#, fuzzy
-#| msgid "Add Tag"
-msgid "%s on message"
-msgstr "Bæta við merki"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 #: app/graphql/gql/queries/autocomplete_search/generic.rb:64
@@ -625,12 +619,6 @@ msgstr "%s beiðnir"
 msgid "%s tickets found"
 msgstr "%s beiðnir fundust"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:37
-#, fuzzy
-#| msgid "Add Tag"
-msgid "%s to message"
-msgstr "Bæta við merki"
-
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
 msgid "%s updated article for |%s|"
@@ -677,11 +665,11 @@ msgstr "%s notanda til %s notanda"
 msgid "%s via WhatsApp"
 msgstr "%s með WhatsApp"
 
-#: app/frontend/shared/i18n/dates.ts:90
+#: app/frontend/shared/i18n/dates.ts:99
 msgid "%s weeks ago"
 msgstr "fyrir %s vikum síðan"
 
-#: app/frontend/shared/i18n/dates.ts:76
+#: app/frontend/shared/i18n/dates.ts:85
 msgid "%s years ago"
 msgstr "fyrir %s árum síðan"
 
@@ -794,7 +782,7 @@ msgstr "1 skrá hengd við"
 msgid "1 day"
 msgstr "1 dagur"
 
-#: app/frontend/shared/i18n/dates.ts:96
+#: app/frontend/shared/i18n/dates.ts:105
 msgid "1 day ago"
 msgstr "1 degi síðan"
 
@@ -802,7 +790,7 @@ msgstr "1 degi síðan"
 msgid "1 hour"
 msgstr "1 klukkustund"
 
-#: app/frontend/shared/i18n/dates.ts:103
+#: app/frontend/shared/i18n/dates.ts:112
 msgid "1 hour ago"
 msgstr "fyrir 1 klukkustund"
 
@@ -810,11 +798,11 @@ msgstr "fyrir 1 klukkustund"
 msgid "1 low"
 msgstr "1 lágt"
 
-#: app/frontend/shared/i18n/dates.ts:110
+#: app/frontend/shared/i18n/dates.ts:119
 msgid "1 minute ago"
 msgstr "fyrir 1 mínútu"
 
-#: app/frontend/shared/i18n/dates.ts:82
+#: app/frontend/shared/i18n/dates.ts:91
 msgid "1 month ago"
 msgstr "1 mánuði síðan"
 
@@ -822,11 +810,11 @@ msgstr "1 mánuði síðan"
 msgid "1 week"
 msgstr "1 vika"
 
-#: app/frontend/shared/i18n/dates.ts:89
+#: app/frontend/shared/i18n/dates.ts:98
 msgid "1 week ago"
 msgstr "1 viku síðan"
 
-#: app/frontend/shared/i18n/dates.ts:75
+#: app/frontend/shared/i18n/dates.ts:84
 msgid "1 year ago"
 msgstr "1 ári síðan"
 
@@ -1554,10 +1542,6 @@ msgstr ""
 msgid "Add this class to a button on your page that should open the chat."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:9
-msgid "Added"
-msgstr ""
-
 #: app/controllers/first_steps_controller.rb:109
 msgid "Additional Channels"
 msgstr "Viðbótarrásir"
@@ -2110,7 +2094,7 @@ msgstr "Flipi hefur breyst, ertu viss um að þú viljir loka?"
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:234
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:130
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/maintenance.coffee:55
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:61
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:123
@@ -3161,17 +3145,17 @@ msgstr "Breyta lykilorði þíns reiknings."
 msgid "Change text color"
 msgstr "Breyta röðun"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:17
 #, fuzzy
-#| msgid "Change order"
-msgid "Changed reaction"
-msgstr "Breyta röðun"
+#| msgid "removed reaction to message from %s '%s'"
+msgid "Changed reaction on message %s from %s"
+msgstr "fjarlægði viðbrögð við skilaboðum frá %s '%s'"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:18
 #, fuzzy
-#| msgid "Change order"
-msgid "Changed reaction to"
-msgstr "Breyta röðun"
+#| msgid "removed reaction to message from %s '%s'"
+msgid "Changed reaction to %s on message %s from %s"
+msgstr "fjarlægði viðbrögð við skilaboðum frá %s '%s'"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -3286,12 +3270,6 @@ msgid ""
 "Check this box if you want to customise how options are sorted. If the box "
 "is not checked, values are sorted in alphabetical order."
 msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
-#, fuzzy
-#| msgid "Select item"
-msgid "Checked"
-msgstr "Veldu hlut"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
@@ -4340,7 +4318,6 @@ msgstr "Stofna:"
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList.vue:43
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created-mention.ts:9
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -5613,7 +5590,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:674
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:118
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
 #: app/assets/javascripts/app/controllers/user.coffee:177
@@ -5743,7 +5720,7 @@ msgstr ""
 msgid "Delete old upload cache entries."
 msgstr ""
 
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 msgid "Delete organization?"
 msgstr "Eyða stofnun?"
 
@@ -6479,7 +6456,6 @@ msgstr "Síðasta samstilling"
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:7
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:167
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
@@ -6602,6 +6578,12 @@ msgstr ""
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:91
 msgid "Email sent to \"%s\". Please verify your email account."
 msgstr ""
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsEmail.vue:19
+#, fuzzy
+#| msgid "Invitation sent to %s"
+msgid "Email sent to %s"
+msgstr "Boð sent til %s"
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco:21
 #: app/assets/javascripts/app/views/knowledge_base/search_field_panel.jst.eco:5
@@ -10742,16 +10724,16 @@ msgstr "Sameina miða#"
 msgid "Merged"
 msgstr "Sameina"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/merged-into.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
 #, fuzzy
-#| msgid "Merge to Ticket#"
-msgid "Merged this ticket into"
-msgstr "Sameina miða#"
+#| msgid "assign tickets"
+msgid "Merged %s into this ticket"
+msgstr "úthluta miða"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
 #, fuzzy
 #| msgid "Merge to Ticket#"
-msgid "Merged ticket"
+msgid "Merged this ticket into %s"
 msgstr "Sameina miða#"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
@@ -11969,7 +11951,6 @@ msgstr "Tilkynning:"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:59
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/notification.ts:7
 #: app/views/mailer/application.html.erb:36
 msgid "Notification"
 msgstr "Tilkynning"
@@ -13510,17 +13491,17 @@ msgstr ""
 msgid "Raw"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:19
 #, fuzzy
-#| msgid "deactivated"
-msgid "Reacted"
-msgstr "afvirkjað"
+#| msgid "reacted to message from %s '%s'"
+msgid "Reacted to message %s from %s"
+msgstr "brást við skilaboðum frá %s '%s'"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:20
 #, fuzzy
-#| msgid "Created at"
-msgid "Reacted with"
-msgstr "Stofnað þann"
+#| msgid "reacted with a %s to message from %s '%s'"
+msgid "Reacted with %s to message %s from %s"
+msgstr "brást við með %s, við skilaboðum frá %s '%s'"
 
 #: app/assets/javascripts/app/models/group.coffee:44
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:40
@@ -13812,18 +13793,11 @@ msgstr "Fjarlægja"
 msgid "Remove two-factor authentication"
 msgstr "Auðkenning"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:9
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:16
 #, fuzzy
-#| msgid "Remove"
-msgid "Removed"
-msgstr "Fjarlægja"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
-#, fuzzy
-#| msgid "Removes the formatting"
-msgid "Removed reaction"
-msgstr "Fjarlægir forsnið"
+#| msgid "removed reaction to message from %s '%s'"
+msgid "Removed reaction from message %s from %s"
+msgstr "fjarlægði viðbrögð við skilaboðum frá %s '%s'"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:649
 msgid "Removes any hyperlink"
@@ -13964,7 +13938,7 @@ msgstr "Óska eftir heimild"
 msgid "Required parameter 'downloadBackendSelected' is missing."
 msgstr ""
 
-#: app/controllers/reports_controller.rb:117
+#: app/controllers/reports_controller.rb:116
 msgid "Required parameter 'profile' is missing."
 msgstr ""
 
@@ -16106,7 +16080,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: app/assets/javascripts/app/controllers/manage.coffee:37
 #: app/assets/javascripts/app/views/generic/history.jst.eco:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:32
 #: db/seeds/permissions.rb:191 db/seeds/ticket_article_senders.rb:5
 msgid "System"
 msgstr "Kerfi"
@@ -16491,7 +16465,7 @@ msgstr ""
 msgid "The Telegram bot could not be saved."
 msgstr "The Telegram bot could not be saved."
 
-#: lib/telegram_helper.rb:688
+#: lib/telegram_helper.rb:686
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr ""
 
@@ -16551,7 +16525,7 @@ msgstr "%s% hafa verið enduropnaðir"
 msgid "The account link was successfully removed!"
 msgstr "The account link was successfully removed!"
 
-#: app/controllers/reports_controller.rb:130
+#: app/controllers/reports_controller.rb:129
 #, fuzzy
 #| msgid "When notification is being sent."
 msgid "The active reporting profile could not be found."
@@ -16855,7 +16829,7 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr ""
 
-#: lib/telegram_helper.rb:696
+#: lib/telegram_helper.rb:694
 msgid "The file could not be retrieved from the bot."
 msgstr ""
 
@@ -17068,7 +17042,7 @@ msgstr "Ekki tókst að eyða tilkynningunni."
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:801
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:267
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:280
 #: app/assets/javascripts/app/controllers/object_manager.coffee:261
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:94
 msgid "The object could not be created."
@@ -18381,7 +18355,7 @@ msgstr "Breyta viðskiptavin"
 msgid "Ticket Duplicate Detection"
 msgstr "Virkja stofnun miða"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:71
 #, fuzzy
 #| msgid "Edit Customer"
 msgid "Ticket History"
@@ -19183,11 +19157,29 @@ msgstr "Þýðingar"
 msgid "Trigger"
 msgstr "Kveikja"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:7
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:14
 #, fuzzy
-#| msgid "Trigger"
-msgid "Triggered"
-msgstr "Kveikja"
+#| msgid "pending reminder"
+msgid "Triggered because pending reminder was reached"
+msgstr "bíður áminningar"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:19
+#, fuzzy
+#| msgid "%s of my tickets escalated"
+msgid "Triggered because ticket was escalated"
+msgstr "%s beiðnanna minna með hækkaðan forgang"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
+#, fuzzy
+#| msgid "Ticket |%s| will escalate soon!"
+msgid "Triggered because ticket will escalate soon"
+msgstr "Beiðni |%s| mun fara í hærri forgang fljótlega!"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:29
+#, fuzzy
+#| msgid "pending reminder"
+msgid "Triggered because time event was reached"
+msgstr "bíður áminningar"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
 msgid "Triggers"
@@ -19481,21 +19473,12 @@ msgstr ""
 msgid "Uncheck item"
 msgstr "Veldu hlut"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
-#, fuzzy
-#| msgid "Select item"
-msgid "Unchecked"
-msgstr "Veldu hlut"
-
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:12
 msgid "Unit"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:42
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:25
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:35
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:41
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/eventHelpers.ts:14
 #, fuzzy
 #| msgid "%s (unknown)"
 msgid "Unknown"
@@ -21379,28 +21362,6 @@ msgstr ""
 msgid "auto select"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:12
-#, fuzzy
-#| msgid "pending reminder"
-msgid "because pending reminder was reached"
-msgstr "bíður áminningar"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:16
-#, fuzzy
-#| msgid "%s of my tickets escalated"
-msgid "because ticket was escalated"
-msgstr "%s beiðnanna minna með hækkaðan forgang"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:20
-#, fuzzy
-#| msgid "Ticket |%s| will escalate soon!"
-msgid "because ticket will escalate soon"
-msgstr "Beiðni |%s| mun fara í hærri forgang fljótlega!"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
-msgid "because time event was reached"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -21610,7 +21571,7 @@ msgid "default"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:4
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee:8
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:17
 msgid "delete"
@@ -21802,25 +21763,12 @@ msgstr ""
 msgid "from"
 msgstr "frá"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:40
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:53
-#, fuzzy
-#| msgid "Import from"
-msgid "from %s"
-msgstr "Flytja inn frá"
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:481
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "from (relative)"
 msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:25
-#, fuzzy
-#| msgid "Add Tag"
-msgid "from message"
-msgstr "Bæta við merki"
 
 #: app/controllers/integration/pgp_controller.rb:48
 msgid "gpg (GnuPG) 2.2.0 or newer is required"
@@ -21910,61 +21858,61 @@ msgstr "iCalendar hlekkir frá Google verða sóttir daglega"
 msgid "in %s"
 msgstr "í %s"
 
-#: app/frontend/shared/i18n/dates.ts:99
+#: app/frontend/shared/i18n/dates.ts:108
 #, fuzzy
 #| msgid "in %s"
 msgid "in %s days"
 msgstr "í %s"
 
-#: app/frontend/shared/i18n/dates.ts:106
+#: app/frontend/shared/i18n/dates.ts:115
 #, fuzzy
 #| msgid "in hours"
 msgid "in %s hours"
 msgstr "í klukkustundum"
 
-#: app/frontend/shared/i18n/dates.ts:113
+#: app/frontend/shared/i18n/dates.ts:122
 msgid "in %s minutes"
 msgstr "eftir %s mínútu(r)"
 
-#: app/frontend/shared/i18n/dates.ts:85
+#: app/frontend/shared/i18n/dates.ts:94
 msgid "in %s months"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:92
+#: app/frontend/shared/i18n/dates.ts:101
 #, fuzzy
 #| msgid "in %s"
 msgid "in %s weeks"
 msgstr "í %s"
 
-#: app/frontend/shared/i18n/dates.ts:78
+#: app/frontend/shared/i18n/dates.ts:87
 #, fuzzy
 #| msgid "in %s"
 msgid "in %s years"
 msgstr "í %s"
 
-#: app/frontend/shared/i18n/dates.ts:98
+#: app/frontend/shared/i18n/dates.ts:107
 msgid "in 1 day"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:105
+#: app/frontend/shared/i18n/dates.ts:114
 #, fuzzy
 #| msgid "in hours"
 msgid "in 1 hour"
 msgstr "í klukkustundum"
 
-#: app/frontend/shared/i18n/dates.ts:112
+#: app/frontend/shared/i18n/dates.ts:121
 msgid "in 1 minute"
 msgstr "eftir 1 mínútu"
 
-#: app/frontend/shared/i18n/dates.ts:84
+#: app/frontend/shared/i18n/dates.ts:93
 msgid "in 1 month"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:91
+#: app/frontend/shared/i18n/dates.ts:100
 msgid "in 1 week"
 msgstr ""
 
-#: app/frontend/shared/i18n/dates.ts:77
+#: app/frontend/shared/i18n/dates.ts:86
 msgid "in 1 year"
 msgstr ""
 
@@ -21994,12 +21942,6 @@ msgstr "innri"
 #| msgid "internal"
 msgid "internal database"
 msgstr "innri"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:19
-#, fuzzy
-#| msgid "assign tickets"
-msgid "into this ticket"
-msgstr "úthluta miða"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:96
@@ -22368,12 +22310,6 @@ msgstr "Tilkynningar"
 msgid "now"
 msgstr "nei"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:51
-#, fuzzy
-#| msgid "Add Tag"
-msgid "on message"
-msgstr "Bæta við merki"
-
 #: app/models/object_manager/attribute.rb:548
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr ""
@@ -22564,12 +22500,6 @@ msgstr "veldu viðhengi…"
 msgid "select visible options"
 msgstr "svara"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:10
-#, fuzzy
-#| msgid "set to public"
-msgid "sent to"
-msgstr "setja sem ytri samskipti"
-
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 #, fuzzy
@@ -22740,12 +22670,6 @@ msgstr ""
 #: app/views/knowledge_base/public/not_found.html.erb:8
 msgid "to go to the homepage."
 msgstr ""
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:38
-#, fuzzy
-#| msgid "Add Tag"
-msgid "to message"
-msgstr "Bæta við merki"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
@@ -22922,6 +22846,91 @@ msgstr "...af textasvæðinu"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Biðtími í dag"
+
+#, fuzzy
+#~| msgid "Add Tag"
+#~ msgid "%s on message"
+#~ msgstr "Bæta við merki"
+
+#, fuzzy
+#~| msgid "Add Tag"
+#~ msgid "%s to message"
+#~ msgstr "Bæta við merki"
+
+#, fuzzy
+#~| msgid "Change order"
+#~ msgid "Changed reaction"
+#~ msgstr "Breyta röðun"
+
+#, fuzzy
+#~| msgid "Change order"
+#~ msgid "Changed reaction to"
+#~ msgstr "Breyta röðun"
+
+#, fuzzy
+#~| msgid "Select item"
+#~ msgid "Checked"
+#~ msgstr "Veldu hlut"
+
+#, fuzzy
+#~| msgid "Merge to Ticket#"
+#~ msgid "Merged ticket"
+#~ msgstr "Sameina miða#"
+
+#, fuzzy
+#~| msgid "deactivated"
+#~ msgid "Reacted"
+#~ msgstr "afvirkjað"
+
+#, fuzzy
+#~| msgid "Created at"
+#~ msgid "Reacted with"
+#~ msgstr "Stofnað þann"
+
+#, fuzzy
+#~| msgid "Remove"
+#~ msgid "Removed"
+#~ msgstr "Fjarlægja"
+
+#, fuzzy
+#~| msgid "Removes the formatting"
+#~ msgid "Removed reaction"
+#~ msgstr "Fjarlægir forsnið"
+
+#, fuzzy
+#~| msgid "Trigger"
+#~ msgid "Triggered"
+#~ msgstr "Kveikja"
+
+#, fuzzy
+#~| msgid "Select item"
+#~ msgid "Unchecked"
+#~ msgstr "Veldu hlut"
+
+#, fuzzy
+#~| msgid "Import from"
+#~ msgid "from %s"
+#~ msgstr "Flytja inn frá"
+
+#, fuzzy
+#~| msgid "Add Tag"
+#~ msgid "from message"
+#~ msgstr "Bæta við merki"
+
+#, fuzzy
+#~| msgid "Add Tag"
+#~ msgid "on message"
+#~ msgstr "Bæta við merki"
+
+#, fuzzy
+#~| msgid "set to public"
+#~ msgid "sent to"
+#~ msgstr "setja sem ytri samskipti"
+
+#, fuzzy
+#~| msgid "Add Tag"
+#~ msgid "to message"
+#~ msgstr "Bæta við merki"
 
 #, fuzzy
 #~| msgid "The hostname could not be found."

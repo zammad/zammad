@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-15 09:00+0000\n"
+"PO-Revision-Date: 2024-11-20 06:15+0000\n"
 "Last-Translator: Anael Mobilia <contrib@anael.eu>\n"
 "Language-Team: French <https://translations.zammad.org/projects/zammad/"
 "zammad-development/fr/>\n"
@@ -182,11 +182,11 @@ msgid ""
 msgstr ""
 "# #{ticket.title}\n"
 "_<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|"
-"Ticket##{ticket.number}> : Mis à jour par #{current_user.longname} à "
+"Ticket##{ticket.number}> : Mis à jour par #{current_user.longname} à "
 "#{ticket.updated_at}_\n"
 "<% if @objects[:changes].present? %>\n"
 "  <% @objects[:changes].each do |key, value| %>\n"
-"  * <%= t key %> : <%= h value[0] %> -> <%= h value[1] %>\n"
+"  * <%= t key %> : <%= h value[0] %> -> <%= h value[1] %>\n"
 "  <% end %>\n"
 "<% end %>\n"
 "\n"
@@ -480,7 +480,7 @@ msgstr "%s a créé l'utilisateur |%s|"
 msgid "%s credentials"
 msgstr "identifiants %s"
 
-#: app/frontend/shared/i18n/dates.ts:97
+#: app/frontend/shared/i18n/dates.ts:106
 msgid "%s days ago"
 msgstr "il y a %s jours"
 
@@ -511,7 +511,7 @@ msgstr "dossiers %s"
 msgid "%s groups to %s roles assignments"
 msgstr "Affectations des groupes %s aux rôles %s"
 
-#: app/frontend/shared/i18n/dates.ts:104
+#: app/frontend/shared/i18n/dates.ts:113
 msgid "%s hours ago"
 msgstr "il y a %s heures"
 
@@ -530,11 +530,11 @@ msgstr "%s est requis."
 msgid "%s is sent without text caption"
 msgstr "%s est envoyé sans légende"
 
-#: app/frontend/shared/i18n/dates.ts:111
+#: app/frontend/shared/i18n/dates.ts:120
 msgid "%s minutes ago"
 msgstr "il y a %s minutes"
 
-#: app/frontend/shared/i18n/dates.ts:83
+#: app/frontend/shared/i18n/dates.ts:92
 msgid "%s months ago"
 msgstr "il y a %s mois"
 
@@ -575,12 +575,6 @@ msgstr "%s de mes tickets sont actuellement en cours de traitement."
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_escalation.jst.eco:11
 msgid "%s of my tickets escalated"
 msgstr "%s de mes tickets escaladés"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:50
-#, fuzzy
-#| msgid "message"
-msgid "%s on message"
-msgstr "message"
 
 #: app/assets/javascripts/app/views/ticket_overview/batch_overlay_user_group.jst.eco:11
 #: app/graphql/gql/queries/autocomplete_search/generic.rb:64
@@ -630,12 +624,6 @@ msgstr "%s tickets"
 msgid "%s tickets found"
 msgstr "%s tickets trouvés"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:37
-#, fuzzy
-#| msgid "message"
-msgid "%s to message"
-msgstr "message"
-
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
 #: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
 msgid "%s updated article for |%s|"
@@ -684,11 +672,11 @@ msgstr "%s utilisateur à %s utilisateur"
 msgid "%s via WhatsApp"
 msgstr "%s via WhatsApp"
 
-#: app/frontend/shared/i18n/dates.ts:90
+#: app/frontend/shared/i18n/dates.ts:99
 msgid "%s weeks ago"
 msgstr "il y a %s semaines"
 
-#: app/frontend/shared/i18n/dates.ts:76
+#: app/frontend/shared/i18n/dates.ts:85
 msgid "%s years ago"
 msgstr "il y a %s années"
 
@@ -804,7 +792,7 @@ msgstr "1 pièce jointe"
 msgid "1 day"
 msgstr "1 jour"
 
-#: app/frontend/shared/i18n/dates.ts:96
+#: app/frontend/shared/i18n/dates.ts:105
 msgid "1 day ago"
 msgstr "il y a 1 jour"
 
@@ -812,7 +800,7 @@ msgstr "il y a 1 jour"
 msgid "1 hour"
 msgstr "1 heure"
 
-#: app/frontend/shared/i18n/dates.ts:103
+#: app/frontend/shared/i18n/dates.ts:112
 msgid "1 hour ago"
 msgstr "il y a 1 heure"
 
@@ -820,11 +808,11 @@ msgstr "il y a 1 heure"
 msgid "1 low"
 msgstr "1 bas"
 
-#: app/frontend/shared/i18n/dates.ts:110
+#: app/frontend/shared/i18n/dates.ts:119
 msgid "1 minute ago"
 msgstr "il y a 1 minute"
 
-#: app/frontend/shared/i18n/dates.ts:82
+#: app/frontend/shared/i18n/dates.ts:91
 msgid "1 month ago"
 msgstr "il y a 1 mois"
 
@@ -832,11 +820,11 @@ msgstr "il y a 1 mois"
 msgid "1 week"
 msgstr "1 semaine"
 
-#: app/frontend/shared/i18n/dates.ts:89
+#: app/frontend/shared/i18n/dates.ts:98
 msgid "1 week ago"
 msgstr "il y a 1 semaine"
 
-#: app/frontend/shared/i18n/dates.ts:75
+#: app/frontend/shared/i18n/dates.ts:84
 msgid "1 year ago"
 msgstr "il y a 1 an"
 
@@ -1538,10 +1526,6 @@ msgstr "Ajouter un titre de troisième niveau"
 msgid "Add this class to a button on your page that should open the chat."
 msgstr "Assignez cette classe au un bouton de votre page qui ouvrira le chat."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:9
-msgid "Added"
-msgstr ""
-
 #: app/controllers/first_steps_controller.rb:109
 msgid "Additional Channels"
 msgstr "Canaux supplémentaires"
@@ -2123,7 +2107,7 @@ msgstr "Êtes-vous sûr(e) de ne plus vouloir mettre \"%s\" par défaut ?"
 #: app/assets/javascripts/app/controllers/_integration/pgp.coffee:234
 #: app/assets/javascripts/app/controllers/_profile/token_access.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:130
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/maintenance.coffee:55
 #: app/assets/javascripts/app/controllers/ssl_certificate.coffee:61
 #: app/assets/javascripts/app/controllers/ticket_shared_draft_modal.coffee:123
@@ -3168,17 +3152,17 @@ msgstr "Modifier le mot de passe de votre compte."
 msgid "Change text color"
 msgstr "Modifier la couleur du texte"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:17
 #, fuzzy
-#| msgid "Change Objects"
-msgid "Changed reaction"
-msgstr "Modifier les objets"
+#| msgid "removed reaction to message from %s '%s'"
+msgid "Changed reaction on message %s from %s"
+msgstr "a retiré la réaction au message de %s '%s'"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:25
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:18
 #, fuzzy
-#| msgid "Exchange integration"
-msgid "Changed reaction to"
-msgstr "Intégration d'Exchange"
+#| msgid "removed reaction to message from %s '%s'"
+msgid "Changed reaction to %s on message %s from %s"
+msgstr "a retiré la réaction au message de %s '%s'"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -3292,12 +3276,6 @@ msgid ""
 msgstr ""
 "Cochez cette case si vous souhaitez personnaliser le tri des options. Si la "
 "case n'est pas cochée, le tri sera alphabétique."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
-#, fuzzy
-#| msgid "checked"
-msgid "Checked"
-msgstr "coché"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/sidebar_checklist.coffee:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/checklist.ts:11
@@ -4330,7 +4308,6 @@ msgstr "Créer :"
 #: app/assets/javascripts/app/views/widget/ticket_stats_frequency.jst.eco:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:99
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList.vue:43
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created-mention.ts:9
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:124
 #: app/models/report.rb:22
 msgid "Created"
@@ -5728,7 +5705,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:4
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:674
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:118
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 #: app/assets/javascripts/app/controllers/knowledge_base/delete_action.coffee:9
 #: app/assets/javascripts/app/controllers/package.coffee:54
 #: app/assets/javascripts/app/controllers/user.coffee:177
@@ -5846,7 +5823,7 @@ msgstr "Supprimer les anciennes entrées de jetons."
 msgid "Delete old upload cache entries."
 msgstr "Supprimer les anciennes entrées du cache d'envoi."
 
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:186
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:196
 msgid "Delete organization?"
 msgstr "Supprimer l'organisation ?"
 
@@ -6530,7 +6507,6 @@ msgstr "Version d'Elasticsearch"
 #: app/frontend/apps/desktop/composables/authentication/useSignupForm.ts:32
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceKayako.vue:34
 #: app/frontend/apps/desktop/pages/guided-setup/components/GuidedSetupImport/GuidedSetupImportSource/GuidedSetupImportSourceZendesk.vue:34
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:7
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/email.ts:11
 #: app/frontend/shared/entities/ticket-article/action/plugins/email.ts:167
 #: db/seeds/object_manager_attributes.rb:705 db/seeds/permissions.rb:131
@@ -6650,6 +6626,12 @@ msgstr "Email envoyé à \"%s\". L'utilisateur doit vérifier sa boite."
 #: app/frontend/apps/desktop/pages/authentication/views/Signup.vue:91
 msgid "Email sent to \"%s\". Please verify your email account."
 msgstr "Email envoyé à \"%s\". Merci de vérifier votre boite."
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsEmail.vue:19
+#, fuzzy
+#| msgid "email sent to '%s'"
+msgid "Email sent to %s"
+msgstr "email envoyé à '%s'"
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco:21
 #: app/assets/javascripts/app/views/knowledge_base/search_field_panel.jst.eco:5
@@ -7157,16 +7139,16 @@ msgid "Error during execution of auto wizard."
 msgstr "Erreur pendant l'exécution de l'assistant automatique."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:52
-#, fuzzy
-#| msgid "Something went wrong. Please contact your administrator."
 msgid "Error fetching github information. Please contact your administrator."
-msgstr "Un problème est survenu. Veuillez contacter votre administrateur."
+msgstr ""
+"Erreur lors de la récupération des informations sur GitHub. Veuillez "
+"contacter votre administrateur."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:64
-#, fuzzy
-#| msgid "Something went wrong. Please contact your administrator."
 msgid "Error fetching i-doit information. Please contact your administrator."
-msgstr "Un problème est survenu. Veuillez contacter votre administrateur."
+msgstr ""
+"Erreur lors de la récupération des informations sur i-doit. Veuillez "
+"contacter votre administrateur."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:280
 #: db/seeds/overviews.rb:160
@@ -9817,10 +9799,8 @@ msgid "Last name"
 msgstr "Nom"
 
 #: app/frontend/shared/entities/ticket/stores/objectAttributes.ts:129
-#, fuzzy
-#| msgid "Has update"
 msgid "Last owner update"
-msgstr "A une mise à jour"
+msgstr "Dernière mise à jour du propriétaire"
 
 #: app/assets/javascripts/app/models/job.coffee:19
 msgid "Last run"
@@ -10667,10 +10647,8 @@ msgstr "Membres"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created-mention.ts:12
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:12
-#, fuzzy
-#| msgid "Mention user"
 msgid "Mention for"
-msgstr "Mention de l'utilisateur"
+msgstr "Mention pour"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 msgid "Mention user"
@@ -10711,17 +10689,17 @@ msgstr "Fusioner avec le ticket #"
 msgid "Merged"
 msgstr "Fusionné"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/merged-into.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
 #, fuzzy
-#| msgid "Merge tickets"
-msgid "Merged this ticket into"
-msgstr "Fusionner les tickets"
+#| msgid "into this ticket"
+msgid "Merged %s into this ticket"
+msgstr "dans ce ticket"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:11
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
 #, fuzzy
-#| msgid "Merge tickets"
-msgid "Merged ticket"
-msgstr "Fusionner les tickets"
+#| msgid "Merged this ticket into"
+msgid "Merged this ticket into %s"
+msgstr "Fusionné ce ticket dans"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
 #: app/assets/javascripts/app/views/maintenance.jst.eco:32
@@ -11885,7 +11863,6 @@ msgstr "Note :"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:59
 #: app/assets/javascripts/app/controllers/_ui_element/object_perform_action.coffee:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/notification.ts:7
 #: app/views/mailer/application.html.erb:36
 msgid "Notification"
 msgstr "Notification"
@@ -12025,10 +12002,8 @@ msgid "Object Manager"
 msgstr "Gestionnaire d'objets"
 
 #: app/services/service/history/list.rb:52
-#, fuzzy
-#| msgid "Given object does not support selector"
 msgid "Object does not support history"
-msgstr "L'objet donné ne supporte pas de sélecteur"
+msgstr "L'objet ne prend pas en charge l'historique"
 
 #: app/frontend/apps/desktop/components/layout/LayoutPage.vue:60
 msgid ""
@@ -13342,17 +13317,17 @@ msgstr ""
 msgid "Raw"
 msgstr "Brut"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:19
 #, fuzzy
-#| msgid "deactivated"
-msgid "Reacted"
-msgstr "désactivé"
+#| msgid "reacted to message from %s '%s'"
+msgid "Reacted to message %s from %s"
+msgstr "a réagi au message de %s '%s'"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:19
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:20
 #, fuzzy
-#| msgid "ends with"
-msgid "Reacted with"
-msgstr "se termine par"
+#| msgid "reacted with a %s to message from %s '%s'"
+msgid "Reacted with %s to message %s from %s"
+msgstr "a réagi avec %s au message de %s '%s'"
 
 #: app/assets/javascripts/app/models/group.coffee:44
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:40
@@ -13605,18 +13580,11 @@ msgstr "Supprimer cette étiquette"
 msgid "Remove two-factor authentication"
 msgstr "Supprimer l'authentification à deux facteurs"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed-mention.ts:9
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:16
 #, fuzzy
-#| msgid "Remove"
-msgid "Removed"
-msgstr "Supprimer"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:16
-#, fuzzy
-#| msgid "Remove formatting"
-msgid "Removed reaction"
-msgstr "Supprimer le formatage"
+#| msgid "removed reaction to message from %s '%s'"
+msgid "Removed reaction from message %s from %s"
+msgstr "a retiré la réaction au message de %s '%s'"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:649
 msgid "Removes any hyperlink"
@@ -13743,7 +13711,7 @@ msgstr "Demander le droit"
 msgid "Required parameter 'downloadBackendSelected' is missing."
 msgstr "La paramètre requis 'downloadBackendSelected' est manquant."
 
-#: app/controllers/reports_controller.rb:117
+#: app/controllers/reports_controller.rb:116
 msgid "Required parameter 'profile' is missing."
 msgstr "Le paramètre requis 'profile' est manquant."
 
@@ -14981,10 +14949,8 @@ msgid "Shared"
 msgstr "Partagé"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/historyEventEntityNames.ts:8
-#, fuzzy
-#| msgid "Shared Drafts"
 msgid "Shared Draft"
-msgstr "Brouillons partagés"
+msgstr "Brouillon partagé"
 
 #: app/assets/javascripts/app/controllers/agent_ticket_create/sidebar_shared_draft.coffee:12
 #: app/assets/javascripts/app/models/group.coffee:17
@@ -15799,7 +15765,7 @@ msgstr "Synchroniser avec l'ordinateur"
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:37
 #: app/assets/javascripts/app/controllers/manage.coffee:37
 #: app/assets/javascripts/app/views/generic/history.jst.eco:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:33
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:32
 #: db/seeds/permissions.rb:191 db/seeds/ticket_article_senders.rb:5
 msgid "System"
 msgstr "Système"
@@ -16176,7 +16142,7 @@ msgstr "Le service Simple Storage (S3) n'est pas disponible."
 msgid "The Telegram bot could not be saved."
 msgstr "Le robot Telegram n'a pas pu être sauvegardé."
 
-#: lib/telegram_helper.rb:688
+#: lib/telegram_helper.rb:686
 msgid "The Telegram file is larger than the allowed 20 MB."
 msgstr "Le fichier Telegram est plus grand que les 20 MB autorisés."
 
@@ -16225,7 +16191,7 @@ msgstr "Le jeton d'accès n'a pas pu être créé."
 msgid "The account link was successfully removed!"
 msgstr "Le lien du compte a été supprimé avec succès !"
 
-#: app/controllers/reports_controller.rb:130
+#: app/controllers/reports_controller.rb:129
 msgid "The active reporting profile could not be found."
 msgstr "Le profil de rapport actif est introuvable."
 
@@ -16547,7 +16513,7 @@ msgstr ""
 msgid "The entry could not be created."
 msgstr "L'entrée n'a pas pu être créée."
 
-#: lib/telegram_helper.rb:696
+#: lib/telegram_helper.rb:694
 msgid "The file could not be retrieved from the bot."
 msgstr "Le fichier n'a pas pu être récupéré du robot."
 
@@ -16749,7 +16715,7 @@ msgstr "La notification n'a pas pu être supprimée."
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:801
 #: app/assets/javascripts/app/controllers/customer_ticket_create.coffee:193
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:267
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:280
 #: app/assets/javascripts/app/controllers/object_manager.coffee:261
 #: app/assets/javascripts/app/lib/app_post/user_organization_autocompletion.coffee:94
 msgid "The object could not be created."
@@ -18106,11 +18072,9 @@ msgstr "Client du ticket"
 msgid "Ticket Duplicate Detection"
 msgstr "Détection de doublons de tickets"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:62
-#, fuzzy
-#| msgid "Ticket Customer"
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/TicketHistoryFlyout.vue:71
 msgid "Ticket History"
-msgstr "Client du ticket"
+msgstr "Historique du ticket"
 
 #: db/seeds/settings.rb:2167
 msgid "Ticket Hook"
@@ -18906,11 +18870,29 @@ msgstr "Traductions"
 msgid "Trigger"
 msgstr "Déclencheur"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:7
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:14
 #, fuzzy
-#| msgid "Trigger"
-msgid "Triggered"
-msgstr "Déclencheur"
+#| msgid "because pending reminder was reached"
+msgid "Triggered because pending reminder was reached"
+msgstr "parce que le rappel en attente a été atteint"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:19
+#, fuzzy
+#| msgid "because ticket was escalated"
+msgid "Triggered because ticket was escalated"
+msgstr "parce que le ticket a été escaladé"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
+#, fuzzy
+#| msgid "because ticket will escalate soon"
+msgid "Triggered because ticket will escalate soon"
+msgstr "parce que le ticket va bientôt être escaladé"
+
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:29
+#, fuzzy
+#| msgid "because time event was reached"
+msgid "Triggered because time event was reached"
+msgstr "parce que l'événement temporel a été atteint"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
 msgid "Triggers"
@@ -19195,25 +19177,14 @@ msgstr ""
 msgid "Uncheck item"
 msgstr "Décocher l'élément"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/checklist-item-checked.ts:8
-#, fuzzy
-#| msgid "checked"
-msgid "Unchecked"
-msgstr "coché"
-
 #: app/assets/javascripts/app/views/time_accounting/settings.jst.eco:12
 msgid "Unit"
 msgstr "Unité"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:42
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/added.ts:15
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:25
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:35
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:33
-#, fuzzy
-#| msgid "Unknown error"
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/composables/useHistoryEvents.ts:41
+#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/utils/eventHelpers.ts:14
 msgid "Unknown"
-msgstr "Erreur inconnue"
+msgstr "Inconnu"
 
 #: lib/password_policy/backend.rb:15
 msgid "Unknown error"
@@ -21168,29 +21139,6 @@ msgstr "attribut non modifiable"
 msgid "auto select"
 msgstr "sélection auto"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:12
-#, fuzzy
-#| msgid "trigger '%s' was performed because pending reminder was reached"
-msgid "because pending reminder was reached"
-msgstr ""
-"le déclencheur '%s' a été exécuté car le rappel en attente a été atteint"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:16
-#, fuzzy
-#| msgid "%s of my tickets escalated"
-msgid "because ticket was escalated"
-msgstr "%s de mes tickets escaladés"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:20
-#, fuzzy
-#| msgid "Ticket |%s| will escalate soon!"
-msgid "because ticket will escalate soon"
-msgstr "Le ticket |%s| va bientôt être escaladé !"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
-msgid "because time event was reached"
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:66
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
@@ -21391,7 +21339,7 @@ msgid "default"
 msgstr "défaut"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_destroy_confirm.coffee:4
-#: app/assets/javascripts/app/controllers/data_privacy.coffee:189
+#: app/assets/javascripts/app/controllers/data_privacy.coffee:199
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/delete.coffee:8
 #: app/assets/javascripts/app/views/data_privacy/preview.jst.eco:17
 msgid "delete"
@@ -21573,25 +21521,12 @@ msgstr "transférer"
 msgid "from"
 msgstr "de"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:40
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:53
-#, fuzzy
-#| msgid "Call from %s"
-msgid "from %s"
-msgstr "Appel de %s"
-
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:481
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:73
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:52
 msgid "from (relative)"
 msgstr "A partir du (valeur relative)"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/removed.ts:25
-#, fuzzy
-#| msgid "Welcome message"
-msgid "from message"
-msgstr "Message de bienvenue"
 
 #: app/controllers/integration/pgp_controller.rb:48
 msgid "gpg (GnuPG) 2.2.0 or newer is required"
@@ -21677,51 +21612,51 @@ msgstr "Les liens iCalendar de Google ne sont rafraîchis qu'une fois par jour"
 msgid "in %s"
 msgstr "dans %s"
 
-#: app/frontend/shared/i18n/dates.ts:99
+#: app/frontend/shared/i18n/dates.ts:108
 msgid "in %s days"
 msgstr "dans %s jours"
 
-#: app/frontend/shared/i18n/dates.ts:106
+#: app/frontend/shared/i18n/dates.ts:115
 msgid "in %s hours"
 msgstr "dans %s heures"
 
-#: app/frontend/shared/i18n/dates.ts:113
+#: app/frontend/shared/i18n/dates.ts:122
 msgid "in %s minutes"
 msgstr "dans %s minutes"
 
-#: app/frontend/shared/i18n/dates.ts:85
+#: app/frontend/shared/i18n/dates.ts:94
 msgid "in %s months"
 msgstr "dans %s mois"
 
-#: app/frontend/shared/i18n/dates.ts:92
+#: app/frontend/shared/i18n/dates.ts:101
 msgid "in %s weeks"
 msgstr "dans %s semaines"
 
-#: app/frontend/shared/i18n/dates.ts:78
+#: app/frontend/shared/i18n/dates.ts:87
 msgid "in %s years"
 msgstr "dans %s années"
 
-#: app/frontend/shared/i18n/dates.ts:98
+#: app/frontend/shared/i18n/dates.ts:107
 msgid "in 1 day"
 msgstr "dans 1 jour"
 
-#: app/frontend/shared/i18n/dates.ts:105
+#: app/frontend/shared/i18n/dates.ts:114
 msgid "in 1 hour"
 msgstr "dans 1 heure"
 
-#: app/frontend/shared/i18n/dates.ts:112
+#: app/frontend/shared/i18n/dates.ts:121
 msgid "in 1 minute"
 msgstr "dans 1 minute"
 
-#: app/frontend/shared/i18n/dates.ts:84
+#: app/frontend/shared/i18n/dates.ts:93
 msgid "in 1 month"
 msgstr "dans 1 mois"
 
-#: app/frontend/shared/i18n/dates.ts:91
+#: app/frontend/shared/i18n/dates.ts:100
 msgid "in 1 week"
 msgstr "dans 1 semaine"
 
-#: app/frontend/shared/i18n/dates.ts:77
+#: app/frontend/shared/i18n/dates.ts:86
 msgid "in 1 year"
 msgstr "dans 1 an"
 
@@ -21749,12 +21684,6 @@ msgstr "interne"
 #: db/seeds/settings.rb:1190
 msgid "internal database"
 msgstr "base de données interne"
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/received-merge.ts:19
-#, fuzzy
-#| msgid "Find a ticket"
-msgid "into this ticket"
-msgstr "Trouver un ticket"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:28
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:96
@@ -22097,12 +22026,6 @@ msgstr "notifications,tickets"
 msgid "now"
 msgstr "maintenant"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/updated.ts:51
-#, fuzzy
-#| msgid "message"
-msgid "on message"
-msgstr "message"
-
 #: app/models/object_manager/attribute.rb:548
 msgid "only lowercase letters, numbers, and '_' are allowed"
 msgstr ""
@@ -22278,10 +22201,6 @@ msgstr "sélectionner une pièce jointe…"
 msgid "select visible options"
 msgstr "sélectionner les options visibles"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/email.ts:10
-msgid "sent to"
-msgstr "envoyé à"
-
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:159
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:22
 msgid "sent to the customer"
@@ -22446,12 +22365,6 @@ msgstr "heure exacte - par exemple \"2018-08-30 14:30\""
 #: app/views/knowledge_base/public/not_found.html.erb:8
 msgid "to go to the homepage."
 msgstr "pour aller à la page d'accueil."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/created.ts:38
-#, fuzzy
-#| msgid "message"
-msgid "to message"
-msgstr "message"
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:25
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:163
@@ -22623,6 +22536,60 @@ msgstr "... de toute la zone de texte"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Temps d'attente aujourd'hui"
+
+#~ msgid "%s on message"
+#~ msgstr "%s du message"
+
+#~ msgid "%s to message"
+#~ msgstr "%s du message"
+
+#~ msgid "Added"
+#~ msgstr "Ajouté"
+
+#~ msgid "Changed reaction"
+#~ msgstr "Réaction modifiée"
+
+#~ msgid "Changed reaction to"
+#~ msgstr "Réaction modifiée à"
+
+#~ msgid "Checked"
+#~ msgstr "coché"
+
+#~ msgid "Merged ticket"
+#~ msgstr "Ticket fusionné"
+
+#~ msgid "Reacted"
+#~ msgstr "Réagi"
+
+#~ msgid "Reacted with"
+#~ msgstr "Réagi avec"
+
+#~ msgid "Removed"
+#~ msgstr "Supprimé"
+
+#~ msgid "Removed reaction"
+#~ msgstr "Réaction supprimée"
+
+#~ msgid "Triggered"
+#~ msgstr "Déclenché"
+
+#~ msgid "Unchecked"
+#~ msgstr "décoché"
+
+#~ msgid "from %s"
+#~ msgstr "de %s"
+
+#~ msgid "from message"
+#~ msgstr "du message"
+
+#~ msgid "on message"
+#~ msgstr "dans le message"
+
+#~ msgid "sent to"
+#~ msgstr "envoyé à"
+
+#~ msgid "to message"
+#~ msgstr "vers le message"
 
 #~ msgid "This tab could not be found."
 #~ msgstr "Cet onglet est introuvable."
