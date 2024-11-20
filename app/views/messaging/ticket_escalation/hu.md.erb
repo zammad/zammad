@@ -1,5 +1,5 @@
 # #{ticket.title}
-_<<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Eszkalálódott ekkor: #{ticket.escalation_at}
+_<<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Eszkalálódott ekkor: #{ticket.escalation_at}_
 A "#{ticket.customer.longname}"-tól származó jegy (#{ticket.title}) "#{ticket.escalation_at}" óta eszkalálódott!
 
 <% if @objects[:article] %>

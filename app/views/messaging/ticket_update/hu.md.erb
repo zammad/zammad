@@ -1,5 +1,5 @@
 # #{ticket.title}
-_<<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Frissítette: #{current_user.longname} ekkor: #{ticket.updated_at}
+_<<#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}|Ticket##{ticket.number}>: Frissítette: #{current_user.longname} ekkor: #{ticket.updated_at}_
 <% if @objects[:changes].present? %>
   <% @objects[:changes].each do |key, value| %>
   * <%= t key %>: <%= h value[0] %> -> <%= h value[1] %>
