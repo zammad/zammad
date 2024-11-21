@@ -10,24 +10,45 @@ class CheckPostgresArrayColumns
       exit 1
     end
 
-    puts 'Checking data type of array columns:'
+    puts 'Checking database array columns:'
 
-    check_columns
+    check_columns_type
+    check_columns_array
 
     puts 'done.'
   end
 
-  def self.check_columns
-    public_links.concat(object_manager_attributes).each do |item|
-      print "  #{item[:table]}.#{item[:column]} ... "
+  def self.check_columns_type
+    puts '  (type == :string):'
 
-      type = data_type(item[:table], item[:column])
+    smime_certificates.concat(pgp_keys).concat(public_links).concat(object_manager_attributes).each do |item|
+      print "    #{item[:table]}.#{item[:column]} ... "
 
-      if type == 'ARRAY'
+      type = column(item[:table], item[:column]).type
+
+      if type == :string
         puts 'OK'
       else
         puts 'Not OK!'
-        puts "    Expected type ARRAY, but got: #{type}"
+        puts "    Expected type :string, but got: #{type}"
+        exit 1
+      end
+    end
+  end
+
+  def self.check_columns_array
+    puts '  (array == true):'
+
+    smime_certificates.concat(pgp_keys).concat(public_links).concat(object_manager_attributes).each do |item|
+      print "    #{item[:table]}.#{item[:column]} ... "
+
+      array = column(item[:table], item[:column]).array
+
+      if array
+        puts 'OK'
+      else
+        puts 'Not OK!'
+        puts "      Expected array true, but got: #{array}"
         exit 1
       end
     end
@@ -39,12 +60,20 @@ class CheckPostgresArrayColumns
     end
   end
 
+  def self.smime_certificates
+    [{ table: SMIMECertificate.table_name, column: 'email_addresses' }]
+  end
+
+  def self.pgp_keys
+    [{ table: PGPKey.table_name, column: 'email_addresses' }]
+  end
+
   def self.public_links
     [{ table: PublicLink.table_name, column: 'screen' }]
   end
 
-  def self.data_type(table, column)
-    ActiveRecord::Base.connection.execute("select data_type from information_schema.columns where table_name = '#{table}' and column_name = '#{column}' limit 1")[0]['data_type']
+  def self.column(table, column)
+    ActiveRecord::Base.connection.columns(table.to_sym).find { |c| c.name == column }
   end
 end
 
