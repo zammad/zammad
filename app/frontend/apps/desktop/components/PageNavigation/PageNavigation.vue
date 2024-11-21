@@ -21,7 +21,7 @@ const router = useRouter()
 </script>
 
 <template>
-  <div class="py-2 pt-14">
+  <div class="py-2">
     <CommonSectionCollapse
       id="page-navigation"
       :title="__('Navigation')"

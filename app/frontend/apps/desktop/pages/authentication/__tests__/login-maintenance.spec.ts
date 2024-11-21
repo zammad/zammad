@@ -11,6 +11,7 @@ import {
 } from '#tests/support/mock-graphql-api.ts'
 import { mockPermissions } from '#tests/support/mock-permissions.ts'
 
+import { OnlineNotificationsCountDocument } from '#shared/entities/online-notification/graphql/subscriptions/onlineNotificationsCount.api.ts'
 import {
   mockPublicLinks,
   mockPublicLinksSubscription,
@@ -40,6 +41,7 @@ beforeEach(() => {
   mockApplicationConfig({ product_name: 'Zammad' })
   mockGraphQLSubscription(UserCurrentTaskbarItemUpdatesDocument)
   mockGraphQLSubscription(UserCurrentTaskbarItemListUpdatesDocument)
+  mockGraphQLSubscription(OnlineNotificationsCountDocument)
 })
 
 describe('testing login maintenance mode', () => {

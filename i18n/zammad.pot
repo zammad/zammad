@@ -175,42 +175,42 @@ msgid "%s attached files"
 msgstr ""
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:32
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:39
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:39
 msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:49
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:26
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:26
 msgid "%s created article for |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:28
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:27
 msgid "%s created data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee:30
-#: app/frontend/shared/components/ActivityMessage/builders/group.ts:26
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:26
 msgid "%s created group |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/organization.coffee:87
-#: app/frontend/shared/components/ActivityMessage/builders/organization.ts:25
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:25
 msgid "%s created organization |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/role.coffee:27
-#: app/frontend/shared/components/ActivityMessage/builders/role.ts:26
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/role.ts:26
 msgid "%s created role |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:109
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:25
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:25
 msgid "%s created ticket |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee:208
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:25
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:25
 msgid "%s created user |%s|"
 msgstr ""
 
@@ -233,7 +233,7 @@ msgid "%s email(s) were found in your mailbox. They will all be moved from your 
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee:222
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:33
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:33
 msgid "%s ended switch to |%s|!"
 msgstr ""
 
@@ -318,7 +318,7 @@ msgid "%s people"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:53
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:31
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:31
 msgid "%s reacted with a %s to message from %s |%s|"
 msgstr ""
 
@@ -331,7 +331,7 @@ msgid "%s required!"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee:212
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:29
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:29
 msgid "%s started a new session"
 msgstr ""
 
@@ -341,7 +341,7 @@ msgid "%s subdomain"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee:217
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:31
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:31
 msgid "%s switched to |%s|!"
 msgstr ""
 
@@ -357,37 +357,37 @@ msgid "%s tickets found"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:28
 msgid "%s updated article for |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:30
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:33
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:33
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee:32
-#: app/frontend/shared/components/ActivityMessage/builders/group.ts:28
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:28
 msgid "%s updated group |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/organization.coffee:89
-#: app/frontend/shared/components/ActivityMessage/builders/organization.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:27
 msgid "%s updated organization |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/role.coffee:29
-#: app/frontend/shared/components/ActivityMessage/builders/role.ts:28
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/role.ts:28
 msgid "%s updated role |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:111
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:27
 msgid "%s updated ticket |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee:210
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:27
 msgid "%s updated user |%s|"
 msgstr ""
 
@@ -1432,7 +1432,7 @@ msgid "Another ticket was merged into ticket (#{ticket.title})\n\n<div>Hi #{reci
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:121
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:37
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:37
 msgid "Another ticket was merged into ticket |%s|"
 msgstr ""
 
@@ -2468,7 +2468,7 @@ msgstr ""
 msgid "Cannot process external data source %s. %s"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:71
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:109
 msgid "Cannot set online notifications as seen"
 msgstr ""
 
@@ -6448,7 +6448,7 @@ msgstr ""
 msgid "For security reasons, the API token is shown only once. You'll need to save it somewhere secure before continuing."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:48
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:49
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:459
 #: app/frontend/shared/errors/useErrorHandler.ts:29
 #: app/frontend/shared/router/guards/before/permission.ts:37
@@ -8606,7 +8606,7 @@ msgstr ""
 msgid "Macros make it easy to automate common, multi-step tasks within Zammad.\n\nYou can use macros in Zammad to automate recurring sequences, saving time (and nerves). This allows a combined sequence of actions on the ticket to be executed with just one click."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:96
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:97
 msgid "Main sidebar"
 msgstr ""
 
@@ -8931,7 +8931,7 @@ msgid "March"
 msgstr ""
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:4
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:131
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:103
 msgid "Mark all as read"
 msgstr ""
 
@@ -9908,7 +9908,7 @@ msgid "No email!"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:135
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:117
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:89
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:267
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:150
 msgid "No entries"
@@ -10044,6 +10044,10 @@ msgstr ""
 msgid "No unread notifications for you. :)"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList.vue:22
+msgid "No unread notifications."
+msgstr ""
+
 #: db/seeds/settings.rb:1300
 msgid "No user creation on logon"
 msgstr ""
@@ -10090,7 +10094,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:160
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:240
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:119
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:56
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:57
 #: app/frontend/shared/errors/useErrorHandler.ts:25
 #: app/frontend/shared/router/error.ts:18
 #: app/helpers/knowledge_base_public_page_title_helper.rb:25
@@ -10218,7 +10222,7 @@ msgstr ""
 msgid "Notification matrix"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:77
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:48
 msgid "Notification read"
 msgstr ""
 
@@ -10248,6 +10252,8 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:2
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:1
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:3
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:20
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:34
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
@@ -10334,7 +10340,7 @@ msgstr ""
 msgid "Object does not support history"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:60
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:61
 msgid "Object with specified ID was not found. Try checking the URL for errors."
 msgstr ""
 
@@ -10996,7 +11002,7 @@ msgid "Pending Tickets"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:113
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:29
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:29
 msgid "Pending reminder reached for ticket |%s|"
 msgstr ""
 
@@ -11737,6 +11743,10 @@ msgstr ""
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:166
 msgid "Remove %s"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList/NotificationItem.vue:79
+msgid "Remove Notification"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:37
@@ -13144,6 +13154,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:252
 msgid "Show next tab"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:18
+msgid "Show notifications"
 msgstr ""
 
 #: db/seeds/settings.rb:1030
@@ -14574,10 +14588,6 @@ msgstr ""
 msgid "The new ticket number could not be generated."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:49
-msgid "The notifcation could not be deleted."
-msgstr ""
-
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:64
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:801
@@ -14602,7 +14612,7 @@ msgstr ""
 msgid "The object could not be updated."
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:47
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:98
 msgid "The online notification could not be marked as seen."
 msgstr ""
 
@@ -15961,17 +15971,17 @@ msgid "Ticket with specified ID was not found. Try checking the URL for errors."
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:115
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:31
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:31
 msgid "Ticket |%s| has escalated!"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:119
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:35
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:35
 msgid "Ticket |%s| was merged into another ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:117
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:33
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:33
 msgid "Ticket |%s| will escalate soon!"
 msgstr ""
 
@@ -16695,7 +16705,7 @@ msgstr ""
 msgid "Unpin this panel"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:77
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:48
 msgid "Unread notification"
 msgstr ""
 
@@ -16705,6 +16715,10 @@ msgstr ""
 
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:44
 msgid "Unsaved Changes"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:29
+msgid "Unseen notifications count"
 msgstr ""
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:605
@@ -17774,28 +17788,28 @@ msgstr ""
 msgid "You can help translating Zammad."
 msgstr ""
 
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:19
 msgid "You can no longer see the data privacy task."
 msgstr ""
 
-#: app/frontend/shared/components/ActivityMessage/builders/group.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:19
 msgid "You can no longer see the group."
 msgstr ""
 
-#: app/frontend/shared/components/ActivityMessage/builders/organization.ts:18
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:18
 msgid "You can no longer see the organization."
 msgstr ""
 
-#: app/frontend/shared/components/ActivityMessage/builders/role.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/role.ts:19
 msgid "You can no longer see the role."
 msgstr ""
 
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:19
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:18
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:18
 msgid "You can no longer see the ticket."
 msgstr ""
 
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:18
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:18
 msgid "You can no longer see the user."
 msgstr ""
 
@@ -17854,7 +17868,7 @@ msgid "You have insufficient permissions to mention other users."
 msgstr ""
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:17
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:51
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:52
 msgid "You have insufficient rights to view this object."
 msgstr ""
 
@@ -18885,6 +18899,10 @@ msgstr ""
 
 #: app/assets/javascripts/app/lib/app_post/pretty_date.coffee:120
 msgid "m"
+msgstr ""
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:27
+msgid "mark all as read"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:273

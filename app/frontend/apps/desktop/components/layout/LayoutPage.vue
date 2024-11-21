@@ -13,6 +13,7 @@ import { ErrorStatusCodes } from '#shared/types/error.ts'
 import CommonError from '#desktop/components/CommonError/CommonError.vue'
 import LayoutMain from '#desktop/components/layout/LayoutMain.vue'
 import LeftSidebarFooterMenu from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarFooterMenu.vue'
+import LeftSidebarHeader from '#desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader.vue'
 import LayoutSidebar from '#desktop/components/layout/LayoutSidebar.vue'
 import PageNavigation from '#desktop/components/PageNavigation/PageNavigation.vue'
 import UserTaskbarTabs from '#desktop/components/UserTaskbarTabs/UserTaskbarTabs.vue'
@@ -110,6 +111,7 @@ const {
       @reset-width="resetSidebarWidth"
     >
       <template #default="{ isCollapsed }">
+        <LeftSidebarHeader class="mb-2" :collapsed="isCollapsed" />
         <PageNavigation :collapsed="isCollapsed" />
         <UserTaskbarTabs :collapsed="isCollapsed" />
         <LeftSidebarFooterMenu :collapsed="isCollapsed" class="mt-auto" />

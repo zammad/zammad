@@ -3,12 +3,10 @@
 import { generateObjectData } from '#tests/graphql/builders/index.ts'
 import { renderComponent } from '#tests/support/components/index.ts'
 
-import type { Ticket } from '#shared/graphql/types.ts'
+import type { OnlineNotification, Ticket } from '#shared/graphql/types.ts'
 import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import ActivityMessage from '../ActivityMessage.vue'
-
-import type { Props } from '../ActivityMessage.vue'
 
 const now = vi.hoisted(() => {
   const now = new Date('2022-01-03 00:00:00')
@@ -22,25 +20,30 @@ vi.mock('non-existing')
 
 const userId = convertToGraphQLId('User', 100)
 
-const renderActivityMessage = (props: Partial<Props> = {}) => {
-  const finishedProps: Props = {
-    objectName: 'Ticket',
-    typeName: 'update',
-    createdBy: {
-      id: userId,
-      fullname: 'John Doe',
-      firstname: 'John',
-      lastname: 'Doe',
-      active: true,
-    },
-    createdAt: new Date('2022-01-01 00:00:00').toISOString(),
-    metaObject: generateObjectData<Ticket>('Ticket', {
-      title: 'Ticket Title',
-      id: convertToGraphQLId('Ticket', '1'),
-      internalId: 1,
-    }),
-    ...props,
+const renderActivityMessage = (
+  activityProps: Partial<OnlineNotification> = {},
+) => {
+  const finishedProps = {
+    activity: {
+      objectName: 'Ticket',
+      typeName: 'update',
+      createdBy: {
+        id: userId,
+        fullname: 'John Doe',
+        firstname: 'John',
+        lastname: 'Doe',
+        active: true,
+      },
+      createdAt: new Date('2022-01-01 00:00:00').toISOString(),
+      metaObject: generateObjectData<Ticket>('Ticket', {
+        title: 'Ticket Title',
+        id: convertToGraphQLId('Ticket', '1'),
+        internalId: 1,
+      }),
+      ...activityProps,
+    } as OnlineNotification,
   }
+
   return renderComponent(ActivityMessage, {
     props: finishedProps,
     router: true,

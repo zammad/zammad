@@ -121,7 +121,7 @@ const collapseButtonClass = computed(() => {
       v-else
       class="flex h-full max-w-full flex-col overflow-x-hidden"
       :class="{
-        'p-3': !isCollapsed && !noPadding,
+        'px-3 py-2.5': !isCollapsed && !noPadding,
         'overflow-y-hidden': noScroll,
         'overflow-y-auto': !noScroll,
       }"
