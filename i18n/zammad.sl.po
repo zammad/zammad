@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-18 09:00+0000\n"
+"PO-Revision-Date: 2024-11-21 06:36+0000\n"
 "Last-Translator: Rok Poje <rok.poje@mintpos.si>\n"
 "Language-Team: Slovenian <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sl/>\n"
@@ -595,17 +595,6 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee
-#, fuzzy
-#| msgid ""
-#| "** Data Privacy ** helps you to delete and verify the removal of existing "
-#| "data from the system.\n"
-#| "\n"
-#| "It can be used to delete tickets, organizations, and users. The owner "
-#| "assignment will be unset in case the deleted user is an agent.\n"
-#| "\n"
-#| "Data Privacy tasks will be executed every 10 minutes. The execution might "
-#| "take some additional time depending on the number of objects that will be "
-#| "deleted."
 msgid ""
 "**Data Privacy** helps you to delete and verify the removal of existing data "
 "from the system.\n"
@@ -617,7 +606,7 @@ msgid ""
 "take some additional time depending on the number of objects that will be "
 "deleted."
 msgstr ""
-"** Zasebnost podatkov ** vam pomaga izbrisati in preveriti izbris obstoječih "
+"**Zasebnost podatkov** vam pomaga izbrisati in preveriti izbris obstoječih "
 "podatkov sistema. \n"
 " \n"
 "Z njim lahko izbrišete zahtevke, organizacije in uporabnike. Lastnik bo "
@@ -1493,15 +1482,12 @@ msgid "Agent Name"
 msgstr "Ime svetovalca"
 
 #: db/seeds/settings.rb:3129
-#, fuzzy
 msgid "Agent Name + FromSeparator + System Address Display Name"
-msgstr "Ime svetovalca + FromSeparator + System Address Display Name"
+msgstr ""
 
 #: db/seeds/permissions.rb:314
-#, fuzzy
-#| msgid "Agent"
 msgid "Agent chat"
-msgstr "Agent"
+msgstr ""
 
 #: db/seeds/settings.rb:3483
 msgid "Agent idle timeout"
@@ -1774,10 +1760,8 @@ msgid "App credentials for Twitter."
 msgstr "Poverilnice za Twitter."
 
 #: app/assets/javascripts/app/views/whatsapp/account_cloud_api.jst.eco:28
-#, fuzzy
-#| msgid "App Secret"
 msgid "App secret"
-msgstr "App Secret"
+msgstr ""
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:433
 #: app/assets/javascripts/app/controllers/_profile/appearance.coffee:3
@@ -1877,11 +1861,8 @@ msgid "Are you sure you want to set \"%s\" as default?"
 msgstr "Ali ste prepričani, da želite nastaviti \"%s\" kot privzeto?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/table.coffee:709
-#, fuzzy
-#| msgid "Tab has changed, do you really want to close it?"
 msgid "Are you sure you want to unset \"%s\" as default?"
-msgstr ""
-"Zavihek je bil spremenjen, ste prepričani da ne želite shraniti sprememb?"
+msgstr "Ali ste prepričani, da želite odstraniti \"%s\" kot privzeto?"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_confirm_delete.coffee:6
 #: app/assets/javascripts/app/controllers/_channel/email.coffee:145
@@ -2030,15 +2011,13 @@ msgid "Assignees"
 msgstr "Naslovnik"
 
 #: db/seeds/object_manager_attributes.rb:1890
-#, fuzzy
 msgid "Assignment Timeout"
-msgstr "Časovna omejitev dodelitve"
+msgstr ""
 
 #: app/assets/javascripts/app/models/_application_model.coffee:164
 #: app/assets/javascripts/app/models/group.coffee:8
-#, fuzzy
 msgid "Assignment timeout"
-msgstr "Časovna omejitev dodelitve"
+msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee:8
 #: db/seeds/object_manager_attributes.rb:1895
@@ -2707,10 +2686,8 @@ msgstr "Koledarji"
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:22
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:38
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:25
-#, fuzzy
-#| msgid "Settings"
 msgid "Call Settings"
-msgstr "Nastavitve"
+msgstr "Nastavitve klicev"
 
 #: app/models/cti/driver/base.rb:152
 #, fuzzy
@@ -2736,8 +2713,6 @@ msgstr "Spremeni se lahko tudi ID klicatelja odhodnih klicev."
 #: app/assets/javascripts/app/views/integration/cti.jst.eco:31
 #: app/assets/javascripts/app/views/integration/placetel.jst.eco:47
 #: app/assets/javascripts/app/views/integration/sipgate.jst.eco:34
-#, fuzzy
-#| msgid "Caller id to block"
 msgid "Caller ID to block"
 msgstr "ID klicatelja za blokiranje"
 
@@ -6986,10 +6961,8 @@ msgid "Execution Time"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:285
-#, fuzzy
-#| msgid "Waiting Customers"
 msgid "Existing members"
-msgstr "Čakajoči kupci"
+msgstr "Obstoječi člani"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_selector.coffee:257
 #, fuzzy
@@ -12421,7 +12394,7 @@ msgstr ""
 #: app/graphql/gql/types/overview_type.rb:66
 #: db/seeds/object_manager_attributes.rb:307
 msgid "Pending till"
-msgstr "Čakati do"
+msgstr "Odloženo do"
 
 #: db/seeds/roles.rb:24
 msgid "People who create Tickets ask for help."
@@ -19634,7 +19607,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/cti/caller_log.jst.eco:29
 msgid "Waiting"
-msgstr "Čakanje"
+msgstr "Čaka"
 
 #: app/assets/javascripts/app/controllers/chat.coffee:153
 #: app/assets/javascripts/app/views/customer_chat/chat_header.jst.eco:5
@@ -19658,10 +19631,8 @@ msgstr "Dodaj oznako"
 
 #: app/assets/javascripts/app/controllers/_manage/ticket_duplicate_detection.coffee:33
 #: db/seeds/settings.rb:2611
-#, fuzzy
-#| msgid "Pending till"
 msgid "Warning title"
-msgstr "Čakati do"
+msgstr "Naslov opozorila"
 
 #: public/assets/chat/views/waiting_list_timeout.eco:2
 msgid ""
@@ -21643,11 +21614,11 @@ msgstr ""
 
 #: db/seeds/ticket_states.rb:35
 msgid "pending close"
-msgstr "čaka na zaključek"
+msgstr "odložen zaključek"
 
 #: db/seeds/ticket_state_types.rb:5 db/seeds/ticket_states.rb:17
 msgid "pending reminder"
-msgstr "čaka na opomnik"
+msgstr "odložen opomnik"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/phone_reply.coffee:12
 #: db/seeds/ticket_article_types.rb:7

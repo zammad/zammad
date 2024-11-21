@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-18 09:00+0000\n"
+"PO-Revision-Date: 2024-11-21 06:36+0000\n"
 "Last-Translator: Dusan Vuckovic <dv@zammad.com>\n"
 "Language-Team: Serbian (Cyrillic script) <https://translations.zammad.org/"
 "projects/zammad/zammad-development/sr_Cyrl/>\n"
@@ -3097,16 +3097,12 @@ msgid "Change text color"
 msgstr "Измени боју текста"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:17
-#, fuzzy
-#| msgid "removed reaction to message from %s '%s'"
 msgid "Changed reaction on message %s from %s"
-msgstr "је уклонио(ла) реакцију на поруку %s '%s'"
+msgstr "Измењена реакција на поруку %s од %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:18
-#, fuzzy
-#| msgid "removed reaction to message from %s '%s'"
 msgid "Changed reaction to %s on message %s from %s"
-msgstr "је уклонио(ла) реакцију на поруку %s '%s'"
+msgstr "Измењена реакција у %s на поруку %s од %s"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -6489,10 +6485,8 @@ msgid "Email sent to \"%s\". Please verify your email account."
 msgstr "Имејл порука је послата на „%s”. Молимо проверите ваш имејл налог."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsEmail.vue:19
-#, fuzzy
-#| msgid "email sent to '%s'"
 msgid "Email sent to %s"
-msgstr "имејл послат на ’%s’"
+msgstr "Имејл послат на %s"
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco:21
 #: app/assets/javascripts/app/views/knowledge_base/search_field_panel.jst.eco:5
@@ -10471,16 +10465,12 @@ msgid "Merged"
 msgstr "Спојено"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
-#, fuzzy
-#| msgid "into this ticket"
 msgid "Merged %s into this ticket"
-msgstr "са овим тикетом"
+msgstr "Спојен %с са овим тикетом"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
-#, fuzzy
-#| msgid "Merged this ticket into"
 msgid "Merged this ticket into %s"
-msgstr "Спојен тикета са"
+msgstr "Спојен овај тикета са %s"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
 #: app/assets/javascripts/app/views/maintenance.jst.eco:32
@@ -13066,16 +13056,12 @@ msgid "Raw"
 msgstr "Сирово"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:19
-#, fuzzy
-#| msgid "reacted to message from %s '%s'"
 msgid "Reacted to message %s from %s"
-msgstr "је реаговао(ла) на поруку од %s '%s'"
+msgstr "Реакција на поруку %s од %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:20
-#, fuzzy
-#| msgid "reacted with a %s to message from %s '%s'"
 msgid "Reacted with %s to message %s from %s"
-msgstr "је реаговао(ла) са %s на поруку од %s '%s'"
+msgstr "Реакција са %s на поруку %s од %s"
 
 #: app/assets/javascripts/app/models/group.coffee:44
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:40
@@ -13326,10 +13312,8 @@ msgid "Remove two-factor authentication"
 msgstr "Уклони двофакторску аутентификацију"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:16
-#, fuzzy
-#| msgid "removed reaction to message from %s '%s'"
 msgid "Removed reaction from message %s from %s"
-msgstr "је уклонио(ла) реакцију на поруку %s '%s'"
+msgstr "Уклоњена реакција на поруку %s од %s"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:649
 msgid "Removes any hyperlink"
@@ -18499,28 +18483,20 @@ msgid "Trigger"
 msgstr "Окидач"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:14
-#, fuzzy
-#| msgid "because pending reminder was reached"
 msgid "Triggered because pending reminder was reached"
-msgstr "због достизања времена чекања"
+msgstr "Извршен због достизања времена чекања"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:19
-#, fuzzy
-#| msgid "because ticket was escalated"
 msgid "Triggered because ticket was escalated"
-msgstr "због ескалације тикета"
+msgstr "Извршен због ескалације тикета"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
-#, fuzzy
-#| msgid "because ticket will escalate soon"
 msgid "Triggered because ticket will escalate soon"
-msgstr "због скоре ескалације тикета"
+msgstr "Извршен због скоре ескалације тикета"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:29
-#, fuzzy
-#| msgid "because time event was reached"
 msgid "Triggered because time event was reached"
-msgstr "због достизања временског догађаја"
+msgstr "Извршен због достизања временског догађаја"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
 msgid "Triggers"
