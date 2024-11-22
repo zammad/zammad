@@ -1,7 +1,7 @@
 <!-- Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/ -->
 
 <script setup lang="ts">
-import { computed, onMounted, toRef, useTemplateRef, watch } from 'vue'
+import { computed, onMounted, ref, toRef, useTemplateRef, watch } from 'vue'
 
 import { EnumTicketExternalReferencesIssueTrackerType } from '#shared/graphql/types.ts'
 
@@ -29,6 +29,12 @@ const { hideSidebar, issueLinks, isTicketEditable, openIssuesBadge } =
 
 const issueTrackerListInstance = useTemplateRef('issue-tracker-list')
 
+const error = ref<string | null>(null)
+
+const handleError = (message: string | null) => {
+  error.value = message
+}
+
 const flyoutConfig = {
   name: 'link-gitlab-issue',
   icon: props.sidebarPlugin.icon,
@@ -55,7 +61,7 @@ if (props.context.screenType === TicketSidebarScreenType.TicketDetailView) {
 }
 
 const actions = computed((): MenuItem[] =>
-  issueLinks.value?.length
+  issueLinks.value?.length && !error.value
     ? [
         {
           key: 'link-gilab-issue',
@@ -91,6 +97,7 @@ const actions = computed((): MenuItem[] =>
         :issue-links="issueLinks"
         :tracker-type="EnumTicketExternalReferencesIssueTrackerType.Gitlab"
         :flyout-config="flyoutConfig"
+        @error="handleError"
       />
     </TicketSidebarContent>
   </TicketSidebarWrapper>

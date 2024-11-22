@@ -9,9 +9,11 @@ import { waitForNextTick } from '#tests/support/utils.ts'
 
 import { createDummyTicket } from '#shared/entities/ticket-article/__tests__/mocks/ticket.ts'
 import { EnumTicketExternalReferencesIssueTrackerItemState } from '#shared/graphql/types.ts'
+import { convertToGraphQLId } from '#shared/graphql/utils.ts'
 
 import TicketSidebarGitHub from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue'
 import { TICKET_SIDEBAR_SYMBOL } from '#desktop/pages/ticket/composables/useTicketSidebar.ts'
+import { waitForTicketExternalReferencesIssueTrackerItemAddMutationCalls } from '#desktop/pages/ticket/graphql/mutations/ticketExternalReferencesIssueTrackerItemAdd.mocks.ts'
 import { waitForTicketExternalReferencesIssueTrackerItemRemoveMutationCalls } from '#desktop/pages/ticket/graphql/mutations/ticketExternalReferencesIssueTrackerItemRemove.mocks.ts'
 import { mockTicketExternalReferencesIssueTrackerItemListQuery } from '#desktop/pages/ticket/graphql/queries/ticketExternalReferencesIssueTrackerList.mocks.ts'
 import { TicketSidebarScreenType } from '#desktop/pages/ticket/types/sidebar.ts'
@@ -196,7 +198,6 @@ describe('TicketSidebarGitHub', () => {
     ).toBeInTheDocument()
   })
 
-  // :TODO Missing field 'ticketExternalReferencesIssueTrackerItemList'
   it('links a new issue with issues present', async () => {
     const wrapper = renderGitHubSidebar()
 
@@ -226,7 +227,14 @@ describe('TicketSidebarGitHub', () => {
       wrapper.getByRole('button', { name: 'Link Issue' }),
     )
 
-    // :TODO add mutation trigger
+    const calls =
+      await waitForTicketExternalReferencesIssueTrackerItemAddMutationCalls()
+
+    expect(calls.at(-1)?.variables).toEqual({
+      issueTrackerLink: 'https://git.zammad.com/zammad/zammad/-/issues/124',
+      issueTrackerType: 'github',
+      ticketId: convertToGraphQLId('Ticket', 1),
+    })
   })
 
   it('links a new issue with no issues present', async () => {

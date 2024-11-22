@@ -20,6 +20,8 @@ module Gql::Queries
                            input.idoit_object_ids
                          end
 
+      return [] if idoit_object_ids.blank?
+
       # This code a) ignores ordering of the input ids array and uses the ordering from idoit,
       #   and b) will silently skip over not found items.
       #   That's how the legacy frontend also works and thus we'll keep it.

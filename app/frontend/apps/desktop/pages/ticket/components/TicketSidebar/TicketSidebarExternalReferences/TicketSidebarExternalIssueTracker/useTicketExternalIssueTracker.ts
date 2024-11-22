@@ -4,6 +4,7 @@ import { isEqual } from 'lodash-es'
 import { computed, ref, type Ref, watch } from 'vue'
 
 import { EnumTicketExternalReferencesIssueTrackerType } from '#shared/graphql/types.ts'
+import { i18n } from '#shared/i18n.ts'
 import { QueryHandler } from '#shared/server/apollo/handler/index.ts'
 
 import { useTicketExternalReferencesIssueTrackerItemListQuery } from '#desktop/pages/ticket/graphql/queries/ticketExternalReferencesIssueTrackerList.api.ts'
@@ -46,10 +47,16 @@ export const useTicketExternalIssueTracker = (
 
   const queryError = issueTrackerQuery.operationError()
 
+  const trackerTypeTranslationMap = {
+    [EnumTicketExternalReferencesIssueTrackerType.Github]: __('GitHub'),
+    [EnumTicketExternalReferencesIssueTrackerType.Gitlab]: __('GitLab'),
+  }
+
   const error = computed(() =>
     queryError.value
-      ? __(
-          'Error fetching github information. Please contact your administrator.',
+      ? i18n.t(
+          `Error fetching information from %s. Please contact your administrator.`,
+          trackerTypeTranslationMap[issueTrackerType],
         )
       : null,
   )

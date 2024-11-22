@@ -60,11 +60,24 @@ const objectListQuery = new QueryHandler(
           : 'cache-and-network',
     }),
   ),
+  {
+    errorShowNotification: false,
+  },
 )
 
 const result = objectListQuery.result()
 
 const isLoading = objectListQuery.loading()
+
+const queryError = objectListQuery.operationError()
+
+const error = computed(() =>
+  queryError.value
+    ? __(
+        `Error fetching information from i-doit. Please contact your administrator.`,
+      )
+    : null,
+)
 
 const objectList = computed(() => {
   return result.value?.ticketExternalReferencesIdoitObjectList || []
@@ -130,7 +143,7 @@ const openFlyout = () =>
   })
 
 const actions = computed((): MenuItem[] =>
-  props.objectIds?.length
+  props.objectIds?.length && !error.value
     ? [
         {
           key: 'link-idoit-object',
@@ -180,7 +193,7 @@ if (props.ticketId) {
       {{ $t('Link Objects') }}
     </CommonButton>
 
-    <CommonLoader v-if="objectIds?.length" :loading="isLoading">
+    <CommonLoader v-if="objectIds?.length" :loading="isLoading" :error="error">
       <div class="space-y-6" tabindex="-1">
         <div
           v-for="object in objectList"

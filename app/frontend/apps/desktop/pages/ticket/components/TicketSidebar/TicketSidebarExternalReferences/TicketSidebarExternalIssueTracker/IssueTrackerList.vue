@@ -2,7 +2,7 @@
 
 <script setup lang="ts">
 import { cloneDeep } from 'lodash-es'
-import { computed, toRef } from 'vue'
+import { computed, toRef, watch } from 'vue'
 
 import type { FormRef } from '#shared/components/Form/types.ts'
 import {
@@ -41,6 +41,10 @@ interface Props {
 
 const props = defineProps<Props>()
 
+const emit = defineEmits<{
+  error: [string | null]
+}>()
+
 const { isLoadingIssues, issueList, skipNextLinkUpdate, error } =
   useTicketExternalIssueTracker(
     props.screenType,
@@ -49,8 +53,15 @@ const { isLoadingIssues, issueList, skipNextLinkUpdate, error } =
     props.ticketId,
   )
 
+watch(error, () => {
+  emit('error', error.value)
+})
+
 const unlinkMutation = new MutationHandler(
   useTicketExternalReferencesIssueTrackerItemRemoveMutation(),
+  {
+    errorShowNotification: false,
+  },
 )
 
 const removeIssueLinkListCacheUpdate = (
@@ -188,6 +199,9 @@ const linkIssueMutation = new MutationHandler(
       })
     },
   }),
+  {
+    errorShowNotification: false,
+  },
 )
 
 const linkIssue = async (link: string) => {

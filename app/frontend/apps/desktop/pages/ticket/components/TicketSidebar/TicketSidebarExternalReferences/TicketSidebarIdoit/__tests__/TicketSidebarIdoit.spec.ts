@@ -43,14 +43,20 @@ const mockedData = [
   },
 ]
 
-const renderIdoitSidebar = (isTicketEditable = true, objects = mockedData) => {
+const renderIdoitSidebar = (
+  isTicketEditable = true,
+  objects = mockedData,
+  customMocks = false,
+) => {
   mockApplicationConfig({
     idoit_integration: true,
   })
 
-  mockTicketExternalReferencesIdoitObjectListQuery({
-    ticketExternalReferencesIdoitObjectList: objects,
-  })
+  if (!customMocks) {
+    mockTicketExternalReferencesIdoitObjectListQuery({
+      ticketExternalReferencesIdoitObjectList: objects,
+    })
+  }
 
   const iDoitIds: number[] = []
 
@@ -65,7 +71,7 @@ const renderIdoitSidebar = (isTicketEditable = true, objects = mockedData) => {
 
   return renderComponent(TicketSidebarIdoit, {
     props: {
-      sidebar: 'github',
+      sidebar: 'i-doit',
       sidebarPlugin: idoitPlugin,
       selected: true,
       context: {
