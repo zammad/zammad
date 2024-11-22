@@ -1,7 +1,12 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 import { getNode } from '@formkit/core'
-import { getByLabelText, getByRole, within } from '@testing-library/vue'
+import {
+  getByLabelText,
+  getByRole,
+  waitFor,
+  within,
+} from '@testing-library/vue'
 import { expect } from 'vitest'
 
 import { visitView } from '#tests/support/components/visitView.ts'
@@ -939,13 +944,15 @@ describe('Ticket detail view', () => {
         view.getByRole('button', { name: 'Discard unsaved reply' }),
       )
 
-      expect(
-        await view.findByRole('dialog', { name: 'Unsaved Changes' }),
-      ).toBeInTheDocument()
+      const dialog = await view.findByRole('dialog', {
+        name: 'Unsaved Changes',
+      })
 
       await view.events.click(
-        view.getByRole('button', { name: 'Discard Changes' }),
+        within(dialog).getByRole('button', { name: 'Discard Changes' }),
       )
+
+      await waitFor(() => expect(dialog).not.toBeInTheDocument())
 
       expect(
         view.queryByRole('button', {
