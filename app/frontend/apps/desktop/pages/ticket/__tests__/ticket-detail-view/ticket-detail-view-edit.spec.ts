@@ -954,6 +954,8 @@ describe('Ticket detail view', () => {
 
       await waitFor(() => expect(dialog).not.toBeInTheDocument())
 
+      await waitForNextTick()
+
       expect(
         view.queryByRole('button', {
           name: 'Discard your unsaved changes',
