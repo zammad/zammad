@@ -43,11 +43,12 @@ module Zammad
 
     # Custom directories with classes and modules you want to be autoloadable.
     config.add_autoload_paths_to_load_path = false
-    config.autoload_lib(ignore: %w[tasks templates])
+    # We cannot use 'autoload_lib' as it would also add 'lib/' to eager_load_paths, see #5420.
+    config.autoload_paths += %W[#{config.root}/lib]
 
     # zeitwerk:check will only check preloaded paths. To make sure that also lib/ gets validated,
     #   add it to the eager_load_paths only if zeitwerk:check is running.
-    Rails.autoloaders.main.do_not_eager_load(config.root.join('lib')) if ArgvHelper.argv[0] != 'zeitwerk:check'
+    config.eager_load_paths += %W[#{config.root}/lib] if ArgvHelper.argv[0].eql? 'zeitwerk:check'
 
     config.active_job.queue_adapter = :delayed_job
 
