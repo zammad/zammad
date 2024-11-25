@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-10-08 07:43+0000\n"
-"Last-Translator: Arturo <r2r0@posteo.de>\n"
+"PO-Revision-Date: 2024-11-25 08:48+0000\n"
+"Last-Translator: Benjamin Scharf <bs@zammad.com>\n"
 "Language-Team: Spanish <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/es/>\n"
 "Language: es-es\n"
@@ -3262,12 +3262,10 @@ msgid "Checklist items are limited to 100 items per checklist."
 msgstr "Los ítems de la lista de comprobación están limitados a 100 por lista."
 
 #: app/models/checklist.rb:100
-#, fuzzy
-#| msgid "Checklist Template items are limited to 100 items per checklist."
 msgid "Checklist template must be active to use as a checklist starting point."
 msgstr ""
-"Los ítems de la plantilla de listas de comprobación están limitados a 100 "
-"ítems por lista de comprobación."
+"La plantilla de la lista de comprobación debe estar activa para poder "
+"utilizarla como punto de partida."
 
 #: app/assets/javascripts/app/controllers/checklist_template.coffee:3
 #: app/assets/javascripts/app/views/checklist_template/index.jst.eco:7
@@ -6209,8 +6207,6 @@ msgid "Draft"
 msgstr "Borrador"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailBottomBar/TicketSharedDraftZoom.vue:24
-#, fuzzy
-#| msgid "Draft available"
 msgid "Draft Available"
 msgstr "Borrador disponible"
 
@@ -6654,10 +6650,8 @@ msgstr ""
 "Habilitar asignación automática la primera vez que un agente abra un ticket."
 
 #: db/seeds/settings.rb:5793
-#, fuzzy
-#| msgid "Enable Checklists"
 msgid "Enable checklists."
-msgstr "Activar listas de comprobación"
+msgstr "Habilitar listas de comprobación."
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:72
 msgid "Enable debugging for implementation."
@@ -8751,6 +8745,8 @@ msgstr "Archivo de imagen"
 #: app/assets/javascripts/app/lib/base/jquery.contenteditable.js:360
 msgid "Image file size is too large, please try inserting a smaller file."
 msgstr ""
+"El tamaño del archivo de imagen es demasiado grande, por favor intente "
+"insertar un archivo más pequeño."
 
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:107
 msgid "Image of %s"
@@ -13665,10 +13661,8 @@ msgid "Retry"
 msgstr "Reintentar"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleMediaError.vue:43
-#, fuzzy
-#| msgid "Retry attachment download"
 msgid "Retry Attachment Download"
-msgstr "Reintentar la descarga del archivo adjunto"
+msgstr "Reintentar el archivo adjunto Descargar"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleBubble/ArticleBubbleSecurityWarning.vue:37
 msgid "Retry Security Process"
@@ -14451,7 +14445,7 @@ msgstr "Remitente del último artículo"
 
 #: app/models/ticket/article.rb:305
 msgid "Sending an email without a valid recipient is not possible."
-msgstr ""
+msgstr "No es posible enviar un correo electrónico sin un destinatario válido."
 
 #: app/assets/javascripts/app/views/widget/invite_user.jst.eco:35
 msgid "Sending…"
@@ -17642,10 +17636,8 @@ msgstr ""
 "entrantes de WhatsApp."
 
 #: app/models/ticket/checklists.rb:38
-#, fuzzy
-#| msgid "This bot already exists."
 msgid "This ticket already has a checklist."
-msgstr "Este bot ya existe."
+msgstr "Este ticket ya tiene una lista de comprobación."
 
 #: app/policies/ticket/shared_draft_start_policy.rb:26
 msgid "This user does not have access to the given group"
@@ -17989,10 +17981,8 @@ msgid "Ticket tag could not be removed."
 msgstr "No se ha podido eliminar la etiqueta del caso."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarInformation/TicketSidebarInformationContent/TicketTags.vue:145
-#, fuzzy
-#| msgid "Ticket tags updated successfully."
 msgid "Ticket tag removed successfully."
-msgstr "Etiquetas del ticket actualizadas con éxito."
+msgstr "Ticket eliminado correctamente."
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketTags.vue:37
 msgid "Ticket tags could not be updated."
@@ -18512,10 +18502,8 @@ msgstr "Rastrear retweets"
 
 #: app/assets/javascripts/app/lib/app_post/popover_provider/ticket_references_popover_provider.coffee:8
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ReferencingTicketsBadgePopover.vue:85
-#, fuzzy
-#| msgid "checked checklist item '%s'"
 msgid "Tracked as checklist item in"
-msgstr "elemento de la lista de comprobación '%s' comprobado"
+msgstr "Seguimiento como lista de comprobación en"
 
 #: app/assets/javascripts/app/views/customer_chat/chat_window.jst.eco:27
 msgid "Transfer conversation to another chat:"
@@ -20198,6 +20186,8 @@ msgid ""
 "You can open the Keyboard Shortcuts dialog here and view the new and "
 "improved layout, or revert to the old one if you prefer it."
 msgstr ""
+"Aquí puede abrir el cuadro de diálogo Métodos abreviados de teclado y ver la "
+"nueva disposición mejorada, o volver a la antigua si la prefiere."
 
 #: app/assets/javascripts/app/models/knowledge_base.coffee:282
 msgid ""
@@ -20792,10 +20782,8 @@ msgid "chat"
 msgstr "chat"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadgeList.vue:44
-#, fuzzy
-#| msgid "Uncheck item"
 msgid "checked"
-msgstr "Desmarcar ítem"
+msgstr "comprobado"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:126
 msgid "checked checklist item '%s'"
@@ -21688,16 +21676,12 @@ msgid "reached"
 msgstr "alcanzado"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:140
-#, fuzzy
-#| msgid "%s ended switch to |%s|!"
 msgid "reacted to message from %s '%s'"
-msgstr "%s finalizado , cambiar a |%s|!"
+msgstr "reaccionó al mensaje de %s '%s'"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:134
-#, fuzzy
-#| msgid "%s ended switch to |%s|!"
 msgid "reacted with a %s to message from %s '%s'"
-msgstr "%s finalizado , cambiar a |%s|!"
+msgstr "reaccionó con un %s al mensaje de %s '%s'"
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:153
 #: app/frontend/shared/entities/ticket/channel/composables/useWhatsapp.ts:11
@@ -21735,10 +21719,8 @@ msgid "remove option"
 msgstr "eliminar opción"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:143
-#, fuzzy
-#| msgid "%s ended switch to |%s|!"
 msgid "removed reaction to message from %s '%s'"
-msgstr "%s finalizado , cambiar a |%s|!"
+msgstr "reacción eliminada al mensaje de %s '%s'"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/email_reply.coffee:10
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/facebook_reply.coffee:8
@@ -21972,7 +21954,7 @@ msgstr "token de acceso,token,api,token de acceso,aplicación"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketDetailTopBar/TopBarHeader/TicketInformation/TicketInformationBadgeList/ChecklistBadge.vue:8
 msgid "tracked in"
-msgstr ""
+msgstr "rastreado en"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/locale.ts:24
 msgid "translation,locale,localization"

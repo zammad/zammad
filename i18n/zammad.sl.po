@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-20 22:00+0000\n"
+"PO-Revision-Date: 2024-11-25 08:48+0000\n"
 "Last-Translator: Rok Poje <rok.poje@mintpos.si>\n"
 "Language-Team: Slovenian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/sl/>\n"
@@ -1390,7 +1390,7 @@ msgstr ""
 
 #: db/seeds/permissions.rb:5
 msgid "Admin interface"
-msgstr ""
+msgstr "Upraviteljski vmesnik"
 
 #: app/assets/javascripts/app/views/admin_password_auth/request_sent.jst.eco:4
 #: app/frontend/apps/desktop/pages/authentication/views/AdminPasswordAuth.vue:57
@@ -1430,7 +1430,7 @@ msgstr "Administracijski račun"
 
 #: app/assets/javascripts/app/models/macro.coffee:9
 msgid "Advance to next ticket from overview"
-msgstr ""
+msgstr "Nadaljuj na naslednji zahtevek iz pregleda"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:62
 msgid "Affects only notifications for not assigned and all tickets."
@@ -3861,7 +3861,7 @@ msgstr "Država"
 #: app/frontend/apps/desktop/pages/ticket/views/TicketCreate.vue:412
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:487
 msgid "Create"
-msgstr "Shrani"
+msgstr "Ustvari"
 
 #: app/assets/javascripts/app/controllers/getting_started/admin.coffee:13
 msgid "Create Admin"
@@ -3937,12 +3937,11 @@ msgstr "Ustvarite novo postavko kontrolnega seznama"
 #: app/assets/javascripts/app/views/ticket_zoom/sidebar_checklist/start.jst.eco:18
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarChecklist/TicketSidebarChecklistContent/ChecklistEmptyTemplates.vue:21
 msgid "Create a new checklist template in the admin interface."
-msgstr ""
-"V administratorskem vmesniku ustvarite novo predlogo kontrolnega seznama."
+msgstr "V upraviteljskem vmesniku ustvarite novo predlogo kontrolnega seznama."
 
 #: app/assets/javascripts/app/views/widget/template.jst.eco:17
 msgid "Create a new template in the admin interface."
-msgstr "Ustvarite novo predlogo v administratorskem vmesniku."
+msgstr "Ustvarite novo predlogo v upraviteljskem vmesniku."
 
 #: app/assets/javascripts/app/views/widget/shared_draft.jst.eco:4
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:147
@@ -5439,10 +5438,8 @@ msgid "Delete table"
 msgstr "Izbriši tabelo"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:154
-#, fuzzy
-#| msgid "Delete"
 msgid "Delete this access token"
-msgstr "Izbriši"
+msgstr "Izbriši ta žeton"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingAvatar.vue:352
 #, fuzzy
@@ -6930,10 +6927,8 @@ msgid "Experts"
 msgstr "Napredno"
 
 #: app/frontend/apps/desktop/pages/personal-setting/components/PersonalSettingNewAccessTokenFlyout.vue:37
-#, fuzzy
-#| msgid "Expires"
 msgid "Expiration date"
-msgstr "Poteče"
+msgstr "Datum izteka veljavnosti"
 
 #: app/assets/javascripts/app/views/integration/smime_list.jst.eco:15
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:19
@@ -9094,14 +9089,14 @@ msgstr "Bližnjice na tipkovnici"
 
 #: app/assets/javascripts/app/models/text_module.coffee:7
 msgid "Keywords"
-msgstr ""
+msgstr "Ključne besede"
 
 #: app/assets/javascripts/app/controllers/_manage/knowledge_base.coffee:2
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:3
 #: app/assets/javascripts/app/models/knowledge_base.coffee:75
 #: app/models/knowledge_base.rb:199 db/seeds/permissions.rb:113
 msgid "Knowledge Base"
-msgstr ""
+msgstr "Baza znanja"
 
 #: app/assets/javascripts/app/models/knowledge_base_answer_translation.coffee:71
 msgid "Knowledge Base Answer"
@@ -11469,7 +11464,7 @@ msgstr "Prevajanje na zaslonu"
 
 #: app/assets/javascripts/app/models/macro.coffee:8
 msgid "Once completed…"
-msgstr ""
+msgstr "Po zaključku…"
 
 #: app/models/application_model/can_creates_and_updates.rb:21
 msgid "One of the required parameters must be provided, but none was found."
@@ -11841,17 +11836,15 @@ msgstr "Nastavitve"
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:126
 #: db/seeds/permissions.rb:416
 msgid "Out of Office"
-msgstr ""
+msgstr "Odsotnost"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:157
-#, fuzzy
-#| msgid "%s Object(s) are updated."
 msgid "Out of Office settings could not be saved."
-msgstr "%s Objektov posodobljenih."
+msgstr "Odsotnost ni bilo mogoče shraniti."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:150
 msgid "Out of Office settings have been saved successfully"
-msgstr ""
+msgstr "Odsotnost je bila uspešno shranjena"
 
 #: lib/validations/out_of_office_validator.rb:31
 msgid "Out of Office start date has to be earlier than or equal to end date"
@@ -12178,7 +12171,7 @@ msgstr "Dovoljenja"
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:12
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:212
 msgid "Personal Access Tokens"
-msgstr ""
+msgstr "Osebni žetoni za dostop"
 
 #: app/assets/javascripts/app/controllers/clues/first_steps_clues.coffee:28
 msgid "Personal Settings"
@@ -12227,7 +12220,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/profile/token_access.jst.eco:7
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingTokenAccess.vue:182
 msgid "Pick a name for the application, and we'll give you a unique token."
-msgstr ""
+msgstr "Izberite ime za aplikacijo in dodelili vam bomo unikaten žeton."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/ArticleReply.vue:246
 msgid "Pin this panel"
@@ -13076,7 +13069,7 @@ msgstr "Spremeni vrstni red"
 
 #: app/assets/javascripts/app/views/profile/out_of_office.jst.eco:26
 msgid "Replacement"
-msgstr "Zamenjava"
+msgstr "Nadomešča"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingOutOfOffice.vue:61
 msgid "Replacement agent"
@@ -14398,10 +14391,8 @@ msgstr "%s Objektov posodobljenih."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/TicketSharedDraftConflictDialog.vue:49
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarSharedDraftStart/TicketSidebarSharedDraftStartContent.vue:129
-#, fuzzy
-#| msgid "The test run was successful."
 msgid "Shared draft has been updated successfully."
-msgstr "Testiranje je bilo uspešno."
+msgstr "Deljen osnutek je bil uspešno posodobljen."
 
 #: app/graphql/gql/queries/ticket/shared_draft/start/list.rb:20
 msgid "Shared drafts are not activated for the selected group"
@@ -18640,6 +18631,7 @@ msgstr "Posodobil"
 #. This is the template file app/views/mailer/ticket_update/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
 #: app/views/mailer/ticket_update/en.html.erb
+#, fuzzy
 msgid ""
 "Updated ticket (#{ticket.title})\n"
 "\n"
@@ -18674,6 +18666,38 @@ msgid ""
 "this in #{config.product_name}</a>\n"
 "</div>\n"
 msgstr ""
+"Zahtevek posodobljen (#{ticket.title})\n"
+"\n"
+"<div>Pozdravljeni,</div>\n"
+"<br>\n"
+"<div>\n"
+"Uporabnik \"<b>#{current_user.longname}</b>\" je posodobil zahtevek (#{ticket"
+".title}).\n"
+"</div>\n"
+"<br>\n"
+"<% if @objects[:changes].present? %>\n"
+"  <div>\n"
+"  Spremembe:<br>\n"
+"  <% @objects[:changes].each do |key, value| %>\n"
+"    <%= t key %>: <%= h value[0] %> -&gt; <%= h value[1] %><br>\n"
+"  <% end %>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<% if @objects[:article] %>\n"
+"  <div>\n"
+"  Information:\n"
+"  <blockquote type=\"cite\">\n"
+"  #{article.body_as_html}\n"
+"  </blockquote>\n"
+"  </div>\n"
+"<% end %>\n"
+"<br>\n"
+"<div>\n"
+"  <a href=\"#{config.http_type}://#{config.fqdn}/#ticket/zoom/#{ticket.id}<% "
+"if @objects[:article] %>/#{article.id}<% end %>\" target=\"zammad_app\">View "
+"this in #{config.product_name}</a>\n"
+"</div>\n"
 
 #. This is the template file app/views/mailer/ticket_article_update_reaction/en.html.erb in ERB/HTML format.
 #. Please make sure to translate it to a valid corresponding output structure.
@@ -19536,21 +19560,23 @@ msgstr ""
 #: app/models/transaction/notification.rb:117
 msgid ""
 "You are receiving this because you are a member of the group of this ticket."
-msgstr ""
+msgstr "To sporočilo ste prejeli ker ste član skupine tega zahtevka."
 
 #: app/models/transaction/notification.rb:281
 msgid ""
 "You are receiving this because you are out-of-office replacement for a "
 "participant of this ticket."
 msgstr ""
+"To sporočilo ste prejeli ker ste dodeljeni kot nadomestni svetovalec "
+"(odstotnost)."
 
 #: app/models/transaction/notification.rb:85
 msgid "You are receiving this because you are the owner of this ticket."
-msgstr ""
+msgstr "To sporočilo ste prejeli ker ste lastnik tega zahtevka."
 
 #: app/models/transaction/notification.rb:79
 msgid "You are receiving this because you were mentioned in this ticket."
-msgstr ""
+msgstr "To sporočilo ste prejeli ker ste bili omenjeni na tem zahtevku."
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:273
 msgid "You calendar subscription settings were updated."
@@ -20080,10 +20106,8 @@ msgid "active"
 msgstr "aktivno"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:40
-#, fuzzy
-#| msgid "Add"
 msgid "add"
-msgstr "Dodaj"
+msgstr "dodaj"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/useAddUnknownValueAction.ts:28
 #: app/frontend/apps/desktop/components/Form/fields/FieldRecipient/FieldRecipientWrapper.vue:27
@@ -21221,7 +21245,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:40
 #: app/assets/javascripts/app/views/profile/linked_accounts.jst.eco:17
 msgid "remove"
-msgstr ""
+msgstr "odstrani"
 
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_perform.coffee:170
 msgid "remove option"
@@ -21380,7 +21404,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector.coffee:540
 #: app/assets/javascripts/app/controllers/_ui_element/_application_selector_expert.coffee:633
 msgid "specific user"
-msgstr ""
+msgstr "določen uporabnik"
 
 #: app/assets/javascripts/app/controllers/ticket_zoom/article_action/split.coffee:7
 msgid "split"
@@ -21509,7 +21533,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_ui_element/_application_action.coffee:423
 msgid "unassign user"
-msgstr ""
+msgstr "odstrani uporabnika"
 
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_history.coffee:128
 #, fuzzy

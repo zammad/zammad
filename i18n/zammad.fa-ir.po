@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-18 11:27+0000\n"
-"Last-Translator: sesoltani <se.soltani@hotmail.com>\n"
+"PO-Revision-Date: 2024-11-25 08:48+0000\n"
+"Last-Translator: Sajjad Jazini <s.jazini@vatanmail.ir>\n"
 "Language-Team: Persian <https://translations.zammad.org/projects/zammad/"
 "zammad-stable/fa/>\n"
 "Language: fa-ir\n"
@@ -3083,7 +3083,7 @@ msgstr "Checksum"
 
 #: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:66
 msgid "Child"
-msgstr "فرعی"
+msgstr "فرزند"
 
 #: app/frontend/shared/form/i18n/locales.ts:90
 msgid "Choose date"
@@ -8748,12 +8748,16 @@ msgid ""
 "Invalid permissions. This role does not have access to this category because "
 "parent category is not visible for it."
 msgstr ""
+"دسترسی نامعتبر. این نقش به این دسته دسترسی ندارد، به دلیل اینکه دسته والد "
+"برای آن قابل مشاهده نیست."
 
 #: lib/knowledge_base/permissions_update.rb:115
 msgid ""
 "Invalid permissions. This role has editor access to parent category. "
 "Limiting access is not effective."
 msgstr ""
+"دسترسی نامعتر. این نقش دسترسی ویرایش والد را دارد. محدود کردن دسترسی هیچ "
+"اثری ندارد."
 
 #: app/assets/javascripts/app/controllers/widget/two_factor_configuration/modal/authenticator_app.coffee:93
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:107
@@ -11934,7 +11938,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/widget/link/ticket.coffee:66
 #: app/assets/javascripts/app/models/knowledge_base_category.coffee:87
 msgid "Parent"
-msgstr "اصلی"
+msgstr "والد"
 
 #: db/seeds/object_manager_attributes.rb:1857
 msgid "Parent group"
@@ -20074,7 +20078,7 @@ msgstr ""
 
 #: app/models/knowledge_base/category.rb:139
 msgid "cannot be a subcategory of the parent category"
-msgstr ""
+msgstr "نمی‌توان زیردسته از دسته‌ی والد قرار داد"
 
 #: db/seeds/ticket_article_types.rb:5
 msgid "chat"
@@ -20095,7 +20099,7 @@ msgstr "Checksum"
 #: app/assets/javascripts/app/views/object_manager/attribute/multi_tree_select.jst.eco:24
 #: app/assets/javascripts/app/views/object_manager/attribute/tree_select.jst.eco:24
 msgid "children"
-msgstr "فرزند"
+msgstr "فرزندان"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:164
 msgid "clear"

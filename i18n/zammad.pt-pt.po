@@ -2,9 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-20 06:15+0000\n"
-"Last-Translator: Ruben Daniel Ribeiro Duarte <ruben.ribeiro.duarte@gmail."
-"com>\n"
+"PO-Revision-Date: 2024-11-25 08:48+0000\n"
+"Last-Translator: Mario Gomes <mafigo74@gmail.com>\n"
 "Language-Team: Portuguese (Portugal) <https://translations.zammad.org/"
 "projects/zammad/zammad-stable/pt_PT/>\n"
 "Language: pt-pt\n"
@@ -6549,10 +6548,8 @@ msgid "Download raw email"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/article_view/item.coffee:319
-#, fuzzy
-#| msgid "select attachment..."
 msgid "Downloading attachments…"
-msgstr "select attachment..."
+msgstr "Selecione um anexo(s)…"
 
 #: app/assets/javascripts/app/controllers/knowledge_base/content_can_be_published_form.coffee:101
 #: app/assets/javascripts/app/views/ticket_zoom/attribute_bar.jst.eco:9
@@ -9540,10 +9537,8 @@ msgid "Include your own tickets in subscription for pending tickets."
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:117
-#, fuzzy
-#| msgid "Overviews"
 msgid "Included ticket overviews"
-msgstr "Overviews"
+msgstr "Visão geral"
 
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingCalendar.vue:309
 msgid "Includes escalated, new & open and pending tickets."
@@ -10940,10 +10935,8 @@ msgid "Manage ticket macros of your system."
 msgstr "Digite o URL do seu sistema % s"
 
 #: db/seeds/permissions.rb:36
-#, fuzzy
-#| msgid "Overviews"
 msgid "Manage ticket overviews of your system."
-msgstr "Overviews"
+msgstr "Gerir a visão geral"
 
 #: db/seeds/permissions.rb:246
 #, fuzzy
@@ -11172,33 +11165,29 @@ msgstr "Número máximo de \"triggers\" executados recursivamente."
 
 #: db/seeds/settings.rb:1001
 msgid "Maximum number of ticket shown in overviews"
-msgstr ""
+msgstr "Numero máximo de tickets na visão geral"
 
 #: app/assets/javascripts/app/controllers/_ui_element/basedate.coffee:160
 #: app/assets/javascripts/app/controllers/report.coffee:204
 #: app/assets/javascripts/app/controllers/time_accounting_accounted_time.coffee:26
 msgid "May"
-msgstr "Mai"
+msgstr "Maio"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleBubble.vue:81
-#, fuzzy
-#| msgid "Mode"
 msgid "Me"
-msgstr "Mode"
+msgstr "Modo"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleWhatsappMediaBadge.vue:53
 msgid "Media Download Error"
-msgstr ""
+msgstr "Erro a descarregar conteúdo"
 
 #: app/frontend/shared/entities/ticket-article/composables/useTicketArticleRetryMediaDownload.ts:43
 msgid "Media download failed. Please try again later."
 msgstr ""
 
 #: app/frontend/shared/entities/ticket-article/composables/useTicketArticleRetryMediaDownload.ts:35
-#, fuzzy
-#| msgid "Registration successful!"
 msgid "Media download was successful."
-msgstr "Registro realizado com sucesso!"
+msgstr "Download realizado com sucesso!"
 
 #: app/assets/javascripts/app/views/organization_profile/object.jst.eco:20
 #: app/assets/javascripts/app/views/popover/organization.jst.eco:6
@@ -11206,7 +11195,7 @@ msgstr "Registro realizado com sucesso!"
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarOrganization/TicketSidebarOrganizationContent.vue:76
 #: app/frontend/apps/mobile/components/Organization/OrganizationMembersList.vue:29
 msgid "Members"
-msgstr "Members"
+msgstr "Membros"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/useEditorActions.ts:334
 #, fuzzy
@@ -11228,20 +11217,16 @@ msgid "Merge"
 msgstr "Fundir"
 
 #: app/frontend/shared/components/Form/fields/FieldEditor/FieldEditorTableMenu.vue:169
-#, fuzzy
-#| msgid "Merge to Ticket#"
 msgid "Merge cells"
-msgstr "Merge to Ticket#"
+msgstr "Fundir com o Ticket#"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/TicketActionsDialog.vue:51
-#, fuzzy
-#| msgid "Merge to Ticket#"
 msgid "Merge tickets"
-msgstr "Merge to Ticket#"
+msgstr "Fundir para o Ticket#"
 
 #: app/assets/javascripts/app/views/agent_ticket_merge.jst.eco:2
 msgid "Merge to Ticket#"
-msgstr "Merge to Ticket#"
+msgstr "Fundir para o Ticket#"
 
 #: app/models/report.rb:75
 #, fuzzy
@@ -11258,10 +11243,8 @@ msgstr "Mensagem"
 #: app/assets/javascripts/app/views/ticket_zoom/article_view.jst.eco:46
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/article-type/plugins/whatsappMessage.ts:15
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:115
-#, fuzzy
-#| msgid "Messages"
 msgid "Message Status"
-msgstr "Messages"
+msgstr "Estado da mensagem"
 
 #: app/assets/javascripts/app/views/channel/form.jst.eco:47
 msgid "Message after sending form"
@@ -11274,7 +11257,7 @@ msgstr "Mensagem para ecrã de Login."
 #: app/assets/javascripts/app/views/telegram/index.jst.eco:26
 #: app/assets/javascripts/app/views/whatsapp/index.jst.eco:35
 msgid "Messages"
-msgstr "Messages"
+msgstr "Mensagens"
 
 #: app/models/webhook/pre_defined/mattermost.rb:38
 #, fuzzy
@@ -11289,20 +11272,16 @@ msgid "Messaging Icon URL"
 msgstr "URL do Ícone de Mensagens"
 
 #: app/models/webhook/pre_defined/mattermost.rb:31
-#, fuzzy
-#| msgid "Username"
 msgid "Messaging Username"
-msgstr "Nome de usuário"
+msgstr "Nome de utilizador"
 
 #: app/frontend/apps/mobile/pages/ticket/components/TicketDetailView/ArticleMetadataDialog.vue:78
-#, fuzzy
-#| msgid "Show Search Details"
 msgid "Meta Data"
-msgstr "Exibir detalhes de busca"
+msgstr "Exibir detalhes de procura"
 
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:11
 msgid "Method"
-msgstr ""
+msgstr "Método"
 
 #: app/assets/javascripts/app/controllers/_ui_element/object_manager_attribute.coffee:686
 msgid "Method (AJAX endpoint)"
@@ -11311,23 +11290,19 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:91
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:54
 #: db/seeds/settings.rb:1738
-#, fuzzy
-#| msgid "Macros"
 msgid "Microsoft"
-msgstr "Macros"
+msgstr "Microsoft"
 
 #: app/assets/javascripts/app/controllers/_channel/microsoft365.coffee:3
 #: app/assets/javascripts/app/views/microsoft365/index.jst.eco:3
 #: app/assets/javascripts/app/views/microsoft365/list.jst.eco:3
 #: db/seeds/permissions.rb:155
 msgid "Microsoft 365"
-msgstr ""
+msgstr "Microsoft 365"
 
 #: db/seeds/settings.rb:1746
-#, fuzzy
-#| msgid "Twitter App Credentials"
 msgid "Microsoft 365 App Credentials"
-msgstr "Twitter Credenciais"
+msgstr "Credenciais Microsoft 365"
 
 #: db/seeds/settings.rb:1739
 msgid "Microsoft Application Registration Portal"
@@ -11335,16 +11310,12 @@ msgstr ""
 
 #: app/assets/javascripts/app/views/widget/two_factor_configuration/authenticator_app.jst.eco:15
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfiguration/TwoFactorConfigurationAuthenticatorApp.vue:128
-#, fuzzy
-#| msgid "Authentication"
 msgid "Microsoft Authenticator"
-msgstr "Authentication"
+msgstr "Microsoft Authenticator"
 
 #: app/models/webhook/pre_defined/microsoft_teams.rb:5
-#, fuzzy
-#| msgid "Disable Notifications"
 msgid "Microsoft Teams Notifications"
-msgstr "Desabilitar Notifications"
+msgstr "Desativar Notificações"
 
 #: app/assets/javascripts/app/views/import/freshdesk.jst.eco:56
 #: app/assets/javascripts/app/views/import/kayako.jst.eco:60
@@ -21885,7 +21856,7 @@ msgstr "Você não configurou% s agora."
 
 #: app/assets/javascripts/app/views/customer_not_ticket_exists.jst.eco:7
 msgid "You have no tickets to display in this overview."
-msgstr ""
+msgstr "Não existem tickets para mostrar nesta vista."
 
 #: app/assets/javascripts/app/controllers/_plugin/electron_events.coffee:84
 msgid "You have no unread messages"
@@ -23482,10 +23453,8 @@ msgstr "Definir como opcional"
 
 #: app/assets/javascripts/app/views/generic/attachment.jst.eco:9
 #: app/assets/javascripts/app/views/ticket_zoom/article_new.jst.eco:101
-#, fuzzy
-#| msgid "select attachment..."
 msgid "select attachment…"
-msgstr "select attachment..."
+msgstr "Anexar ficheiro…"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldTreeSelect/FieldTreeSelectInputDropdown.vue:478
 #, fuzzy
