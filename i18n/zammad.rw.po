@@ -9003,9 +9003,13 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:12
+#, fuzzy
+#| msgid ""
+#| "If you want to move already stored attachments from one backend to "
+#| "another, you need to execute the following via console."
 msgid ""
 "If you want to move already stored attachments from one backend to another, "
-"you need to execute the following via console."
+"you need to execute the following rails/rake task."
 msgstr ""
 "Niba ushaka kwimura inyomeko zibitse uzivana mu ibanga ry'urubuga uzijyana "
 "mu rindi banga ry'urubuga, usabwa gukora ibikurikira bivuye krui console"

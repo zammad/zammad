@@ -8314,9 +8314,13 @@ msgid ""
 msgstr "如果您丢失恢复代码，则可以生成新的代码。此操作将使先前的恢复代码无效。"
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:12
+#, fuzzy
+#| msgid ""
+#| "If you want to move already stored attachments from one backend to "
+#| "another, you need to execute the following via console."
 msgid ""
 "If you want to move already stored attachments from one backend to another, "
-"you need to execute the following via console."
+"you need to execute the following rails/rake task."
 msgstr ""
 "如果您想将已存储的附件从一个后端移动到另一个后端，您需要通过控制台执行以下命"
 "令。"

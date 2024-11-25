@@ -8519,9 +8519,13 @@ msgstr ""
 "акција ће поништити све пређашње шифре за опоравак."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:12
+#, fuzzy
+#| msgid ""
+#| "If you want to move already stored attachments from one backend to "
+#| "another, you need to execute the following via console."
 msgid ""
 "If you want to move already stored attachments from one backend to another, "
-"you need to execute the following via console."
+"you need to execute the following rails/rake task."
 msgstr ""
 "Уколико желите да преместите већ снимљене прилоге из једног позадинског "
 "модула у други, мораћете да извршите следећу команду преко конзоле."

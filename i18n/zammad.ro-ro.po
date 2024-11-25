@@ -8785,9 +8785,13 @@ msgstr ""
 "Această acțiune va invalida codurile de recuperare anterioare."
 
 #: app/assets/javascripts/app/views/settings/storage_provider.jst.eco:12
+#, fuzzy
+#| msgid ""
+#| "If you want to move already stored attachments from one backend to "
+#| "another, you need to execute the following via console."
 msgid ""
 "If you want to move already stored attachments from one backend to another, "
-"you need to execute the following via console."
+"you need to execute the following rails/rake task."
 msgstr ""
 "Dacă doriți să mutați atașamentele deja stocate dintr-un backend în altul, "
 "trebuie să executați următoarele comenzi în consolă."
