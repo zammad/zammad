@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: zammad\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2024-11-19 09:00+0000\n"
+"PO-Revision-Date: 2024-11-26 07:04+0000\n"
 "Last-Translator: chrand818 <can@telenabler.com>\n"
 "Language-Team: Swedish <https://translations.zammad.org/projects/zammad/"
 "zammad-development/sv/>\n"
@@ -430,42 +430,42 @@ msgid "%s attached files"
 msgstr "%s bifogade filer"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:32
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:39
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:39
 msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr "%s slutförde GDRP-uppgiften att radera användar-ID |%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:49
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:26
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:26
 msgid "%s created article for |%s|"
 msgstr "%s skapade en artikel åt |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:28
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:27
 msgid "%s created data privacy task to delete user ID |%s|"
 msgstr "%s skapade dataskyddsuppgiften för att radera användar-ID |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee:30
-#: app/frontend/shared/components/ActivityMessage/builders/group.ts:26
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:26
 msgid "%s created group |%s|"
 msgstr "%s skapade grupp |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee:87
-#: app/frontend/shared/components/ActivityMessage/builders/organization.ts:25
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:25
 msgid "%s created organization |%s|"
 msgstr "%s skapade organisation |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee:27
-#: app/frontend/shared/components/ActivityMessage/builders/role.ts:26
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/role.ts:26
 msgid "%s created role |%s|"
 msgstr "%s skapade roll |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee:109
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:25
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:25
 msgid "%s created ticket |%s|"
 msgstr "%s skapade ärende |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee:208
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:25
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:25
 msgid "%s created user |%s|"
 msgstr "%s skapade användare |%s|"
 
@@ -492,7 +492,7 @@ msgstr ""
 "din e-postlåda till Zammad."
 
 #: app/assets/javascripts/app/models/user.coffee:222
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:33
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:33
 msgid "%s ended switch to |%s|!"
 msgstr "%s slutförde byte till |%s|!"
 
@@ -577,7 +577,7 @@ msgid "%s people"
 msgstr "%s personer"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:53
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:31
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:31
 msgid "%s reacted with a %s to message from %s |%s|"
 msgstr "%s reagerade med %s på meddelande från %s |%s|"
 
@@ -594,7 +594,7 @@ msgid "%s required!"
 msgstr "%s krävs!"
 
 #: app/assets/javascripts/app/models/user.coffee:212
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:29
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:29
 msgid "%s started a new session"
 msgstr "%s startade en ny session"
 
@@ -604,7 +604,7 @@ msgid "%s subdomain"
 msgstr "%s underdomän"
 
 #: app/assets/javascripts/app/models/user.coffee:217
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:31
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:31
 msgid "%s switched to |%s|!"
 msgstr "%s bytte till |%s|!"
 
@@ -620,37 +620,37 @@ msgid "%s tickets found"
 msgstr "%s ärenden hittades"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:28
 msgid "%s updated article for |%s|"
 msgstr "%s uppdaterade en artikel åt |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:30
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:33
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:33
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr "%s updaterade dataskyddsuppgiften att radera |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee:32
-#: app/frontend/shared/components/ActivityMessage/builders/group.ts:28
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:28
 msgid "%s updated group |%s|"
 msgstr "%s uppdaterade grupp |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee:89
-#: app/frontend/shared/components/ActivityMessage/builders/organization.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:27
 msgid "%s updated organization |%s|"
 msgstr "%s uppdaterade organisation |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee:29
-#: app/frontend/shared/components/ActivityMessage/builders/role.ts:28
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/role.ts:28
 msgid "%s updated role |%s|"
 msgstr "%s uppdaterade roll |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee:111
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:27
 msgid "%s updated ticket |%s|"
 msgstr "%s uppdaterade ärende |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee:210
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:27
 msgid "%s updated user |%s|"
 msgstr "%s uppdaterade användare |%s|"
 
@@ -1896,7 +1896,7 @@ msgstr ""
 "</div>\n"
 
 #: app/assets/javascripts/app/models/ticket.coffee:121
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:37
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:37
 msgid "Another ticket was merged into ticket |%s|"
 msgstr "Ett annat ärende slogs ihop med ärende |%s|"
 
@@ -3009,7 +3009,7 @@ msgstr "Kan inte ha både svars och uppdateringstid."
 msgid "Cannot process external data source %s. %s"
 msgstr "Kan inte processera extern datakälla %s. %s"
 
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:71
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:109
 msgid "Cannot set online notifications as seen"
 msgstr "Kunde inte sätta online-notiser som visade"
 
@@ -3097,16 +3097,12 @@ msgid "Change text color"
 msgstr "Ändra textfärg"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:17
-#, fuzzy
-#| msgid "removed reaction to message from %s '%s'"
 msgid "Changed reaction on message %s from %s"
-msgstr "tog bort reaktion på meddelande från %s '%s'"
+msgstr "Ändrad reaktion på meddelandet %s från %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:18
-#, fuzzy
-#| msgid "removed reaction to message from %s '%s'"
 msgid "Changed reaction to %s on message %s from %s"
-msgstr "tog bort reaktion på meddelande från %s '%s'"
+msgstr "Ändrad reaktion till %s på meddelandet %s från %s"
 
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:31
 msgid "Changed:"
@@ -6503,10 +6499,8 @@ msgid "Email sent to \"%s\". Please verify your email account."
 msgstr "E-post skickat till \"%s\". Verifiera ditt e-postkonto."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsEmail.vue:19
-#, fuzzy
-#| msgid "email sent to '%s'"
 msgid "Email sent to %s"
-msgstr "e-post skickat till '%s'"
+msgstr "E-post skickat till '%s'"
 
 #: app/assets/javascripts/app/views/knowledge_base/public_menu_manager.jst.eco:21
 #: app/assets/javascripts/app/views/knowledge_base/search_field_panel.jst.eco:5
@@ -7005,10 +6999,6 @@ msgstr "Fel"
 #: app/services/service/system/run_auto_wizard.rb:18
 msgid "Error during execution of auto wizard."
 msgstr "Fel under exekvering av automatisk guide."
-
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:52
-msgid "Error fetching github information. Please contact your administrator."
-msgstr "Fel vid hämtning av github-information. Kontakta din administratör."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:64
 msgid "Error fetching i-doit information. Please contact your administrator."
@@ -7605,7 +7595,7 @@ msgstr ""
 "Av säkerhetsskäl visas API-token endast en gång. Du måste kopiera token-"
 "strängen och spara på ett säkert ställe innan du fortsätter."
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:48
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:49
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:459
 #: app/frontend/shared/errors/useErrorHandler.ts:29
 #: app/frontend/shared/router/guards/before/permission.ts:37
@@ -7843,6 +7833,7 @@ msgstr "Hämtar viktig information från webbläsaren…"
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:81
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/github.ts:11
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:40
 #: db/seeds/settings.rb:1603
@@ -7870,12 +7861,13 @@ msgid "GitHub request failed. Please have a look at the log file for details."
 msgstr ""
 "GitHub förfrågan misslyckades. Kontrollera loggfilen för mer information."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:35
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:41
 msgid "GitHub: Link issue"
 msgstr "GitHub: Länka ärende"
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:52
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/gitlab.ts:11
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:47
 #: db/seeds/settings.rb:1667
@@ -7903,7 +7895,7 @@ msgid "GitLab request failed. Please have a look at the log file for details."
 msgstr ""
 "GitLab förfrågan misslyckades. Kontrollera loggfilen för mer information."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:35
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:41
 msgid "GitLab: Link issue"
 msgstr "GitLab: Länka problem"
 
@@ -8463,7 +8455,7 @@ msgid "How to use it"
 msgstr "Hur man använder det"
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:201
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:214
 msgid "ID"
 msgstr "ID"
 
@@ -9710,14 +9702,14 @@ msgid "Link GitLab issues to your tickets."
 msgstr "Länka GitLab-problem till dina ärenden."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:70
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList.vue:274
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:62
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList.vue:288
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:68
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:68
 msgid "Link Issue"
 msgstr "Länka problem"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:183
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:180
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:193
 msgid "Link Objects"
 msgstr "Länka ärenden"
 
@@ -9745,7 +9737,7 @@ msgstr "Länk finns redan"
 msgid "Link issue"
 msgstr "Länka problem"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:137
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:150
 msgid "Link objects"
 msgstr "Länka ärenden"
 
@@ -9978,7 +9970,7 @@ msgstr ""
 "och spara tid (och nerver). Detta gör det möjligt att utföra en sekvens av "
 "åtgärder med bara ett klick."
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:96
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:97
 msgid "Main sidebar"
 msgstr "Primärt sidofält"
 
@@ -10319,7 +10311,7 @@ msgid "March"
 msgstr "mars"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:4
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:131
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:103
 msgid "Mark all as read"
 msgstr "Markera alla som lästa"
 
@@ -10497,16 +10489,12 @@ msgid "Merged"
 msgstr "Sammanfogad"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:16
-#, fuzzy
-#| msgid "into this ticket"
 msgid "Merged %s into this ticket"
-msgstr "till detta ärende"
+msgstr "Sammanslagning av %s till detta ärende"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsMerge.vue:15
-#, fuzzy
-#| msgid "Merged this ticket into"
 msgid "Merged this ticket into %s"
-msgstr "Slog samman detta ärende till"
+msgstr "Slog samman detta ärende till %s"
 
 #: app/assets/javascripts/app/controllers/_channel/sms.coffee:398
 #: app/assets/javascripts/app/views/maintenance.jst.eco:32
@@ -11359,7 +11347,7 @@ msgid "No email!"
 msgstr "Ingen email!"
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:135
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:117
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:89
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:267
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:150
 msgid "No entries"
@@ -11496,6 +11484,10 @@ msgstr "Inga triggers aktiva"
 msgid "No unread notifications for you. :)"
 msgstr "Inga olästa notifieringar :)"
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList.vue:22
+msgid "No unread notifications."
+msgstr "Inga olästa notifieringar"
+
 #: db/seeds/settings.rb:1300
 msgid "No user creation on logon"
 msgstr "Användare skapas inte vid inloggning"
@@ -11545,7 +11537,7 @@ msgstr "Ej tillgänglig"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:160
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:240
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:119
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:56
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:57
 #: app/frontend/shared/errors/useErrorHandler.ts:25
 #: app/frontend/shared/router/error.ts:18
 #: app/helpers/knowledge_base_public_page_title_helper.rb:25
@@ -11684,7 +11676,7 @@ msgstr "Notifikationsljud"
 msgid "Notification matrix"
 msgstr "Meddelandematris"
 
-#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:77
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:48
 msgid "Notification read"
 msgstr "Lästa notifieringar"
 
@@ -11714,6 +11706,8 @@ msgstr "Notifikationsljud"
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:2
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:1
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:3
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:20
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:34
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
@@ -11808,7 +11802,7 @@ msgstr "Objekthanterare"
 msgid "Object does not support history"
 msgstr "Objektet stöder inte historik"
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:60
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:61
 msgid ""
 "Object with specified ID was not found. Try checking the URL for errors."
 msgstr ""
@@ -12497,7 +12491,7 @@ msgid "Pending Tickets"
 msgstr "Mina väntande ärenden"
 
 #: app/assets/javascripts/app/models/ticket.coffee:113
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:29
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:29
 msgid "Pending reminder reached for ticket |%s|"
 msgstr "Väntande påminnelse uppnådd för ärende |%s|"
 
@@ -13100,16 +13094,12 @@ msgid "Raw"
 msgstr "Raw"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:19
-#, fuzzy
-#| msgid "reacted to message from %s '%s'"
 msgid "Reacted to message %s from %s"
-msgstr "reagerade på meddelande från %s '%s'"
+msgstr "Reagerade på meddelandet %s från %s"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:20
-#, fuzzy
-#| msgid "reacted with a %s to message from %s '%s'"
 msgid "Reacted with %s to message %s from %s"
-msgstr "reagerade med en %s på meddelande från %s '%s'"
+msgstr "Reagerade med %s på meddelandet %s från %s"
 
 #: app/assets/javascripts/app/models/group.coffee:44
 #: app/frontend/apps/desktop/components/Form/fields/FieldGroupPermissions/FieldGroupPermissionsInput.vue:40
@@ -13295,6 +13285,10 @@ msgstr "Ta bort"
 msgid "Remove %s"
 msgstr "Ta bort %s"
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList/NotificationItem.vue:79
+msgid "Remove Notification"
+msgstr "Ta bort Notifikation"
+
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:37
 msgid "Remove Two-factor Authentication: %s"
 msgstr "Ta bort två-faktorautentisering: %s"
@@ -13362,10 +13356,8 @@ msgid "Remove two-factor authentication"
 msgstr "Ta bort två-faktorautentisering"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/HistoryEventDetails/HistoryEventDetailsReaction.vue:16
-#, fuzzy
-#| msgid "removed reaction to message from %s '%s'"
 msgid "Removed reaction from message %s from %s"
-msgstr "tog bort reaktion på meddelande från %s '%s'"
+msgstr "Borttagen reaktion från meddelandet %s från %s"
 
 #: app/assets/javascripts/app/controllers/_plugin/keyboard_shortcuts.coffee:649
 msgid "Removes any hyperlink"
@@ -14835,6 +14827,10 @@ msgstr "Visa metadata"
 msgid "Show next tab"
 msgstr "Visa nästa flik"
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:18
+msgid "Show notifications"
+msgstr "Visa notifieringar"
+
 #: db/seeds/settings.rb:1030
 msgid ""
 "Show password login for users on login page. Disabling only takes effect if "
@@ -15300,7 +15296,7 @@ msgstr "Statistik Backend"
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:10
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:206
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:219
 msgid "Status"
 msgstr "Status"
 
@@ -16431,10 +16427,6 @@ msgstr "Månader overlay"
 msgid "The new ticket number could not be generated."
 msgstr "Det nya ärendenumret kunde inte genereras."
 
-#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:49
-msgid "The notifcation could not be deleted."
-msgstr "Notifieringen kunde inte tas bort."
-
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:64
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:801
@@ -16459,7 +16451,7 @@ msgstr "Objektet hittades inte."
 msgid "The object could not be updated."
 msgstr "Objektet kunde inte uppdateras."
 
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:47
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:98
 msgid "The online notification could not be marked as seen."
 msgstr "Online notifieringen kunde inte markeras som sedd."
 
@@ -18093,17 +18085,17 @@ msgstr ""
 "webbadressen."
 
 #: app/assets/javascripts/app/models/ticket.coffee:115
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:31
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:31
 msgid "Ticket |%s| has escalated!"
 msgstr "Ärende |%s| eskalerade!"
 
 #: app/assets/javascripts/app/models/ticket.coffee:119
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:35
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:35
 msgid "Ticket |%s| was merged into another ticket"
 msgstr "Ärende |%s| har sammanfogats med ett annat ärende"
 
 #: app/assets/javascripts/app/models/ticket.coffee:117
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:33
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:33
 msgid "Ticket |%s| will escalate soon!"
 msgstr "Ärende |%s| är påväg att eskalera!"
 
@@ -18545,28 +18537,20 @@ msgid "Trigger"
 msgstr "Trigger"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:14
-#, fuzzy
-#| msgid "because pending reminder was reached"
 msgid "Triggered because pending reminder was reached"
-msgstr "eftersom väntande påminnelse nåddes"
+msgstr "Utlöstes eftersom väntande påminnelse uppnåddes"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:19
-#, fuzzy
-#| msgid "because ticket was escalated"
 msgid "Triggered because ticket was escalated"
-msgstr "eftersom ärendet eskalerades"
+msgstr "Utlöstes på grund av att ärendet har eskalerat"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:24
-#, fuzzy
-#| msgid "because ticket will escalate soon"
 msgid "Triggered because ticket will escalate soon"
-msgstr "eftersom ärendet snart kommer att eskalera"
+msgstr "Utlöstes eftersom ärendet snart kommer att eskalera"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketDetailView/actions/TicketHistory/event-actions/time-trigger-performed.ts:29
-#, fuzzy
-#| msgid "because time event was reached"
 msgid "Triggered because time event was reached"
-msgstr "eftersom tidshändelsen nåddes"
+msgstr "Utlöstes eftersom tidshändelsen uppnåddes"
 
 #: app/assets/javascripts/app/controllers/trigger.coffee:3
 msgid "Triggers"
@@ -18794,7 +18778,7 @@ msgstr "Två-faktorsmetoden har konfigurerats."
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:57
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:105
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:210
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:223
 #: db/seeds/object_manager_attributes.rb:124
 msgid "Type"
 msgstr "Typ"
@@ -18874,7 +18858,7 @@ msgstr ""
 msgid "Unlink issue"
 msgstr "Problem med frånkoppling"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:196
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:209
 msgid "Unlink object"
 msgstr "Koppla bort objektet"
 
@@ -18886,7 +18870,7 @@ msgstr "Lås upp"
 msgid "Unpin this panel"
 msgstr "Lossa denna panel"
 
-#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:77
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:48
 msgid "Unread notification"
 msgstr "Oläst notifiering"
 
@@ -18897,6 +18881,10 @@ msgstr "Olästa notifieringar"
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:44
 msgid "Unsaved Changes"
 msgstr "Osparade ändringar"
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:29
+msgid "Unseen notifications count"
+msgstr "Osedda notifieringar räknare"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:605
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:279
@@ -20213,28 +20201,28 @@ msgstr ""
 msgid "You can help translating Zammad."
 msgstr "Du kan hjälpa till att översätta Zammad."
 
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:19
 msgid "You can no longer see the data privacy task."
 msgstr "Du kan inte längre se dataskyddsuppgiften."
 
-#: app/frontend/shared/components/ActivityMessage/builders/group.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:19
 msgid "You can no longer see the group."
 msgstr "Du kan inte längre se gruppen."
 
-#: app/frontend/shared/components/ActivityMessage/builders/organization.ts:18
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:18
 msgid "You can no longer see the organization."
 msgstr "Du kan inte längre se organisationen."
 
-#: app/frontend/shared/components/ActivityMessage/builders/role.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/role.ts:19
 msgid "You can no longer see the role."
 msgstr "Du kan inte längre se rollen."
 
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:19
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:18
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:18
 msgid "You can no longer see the ticket."
 msgstr "Du kan inte längre se ärendet."
 
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:18
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:18
 msgid "You can no longer see the user."
 msgstr "Du kan inte längre se användaren."
 
@@ -20318,7 +20306,7 @@ msgid "You have insufficient permissions to mention other users."
 msgstr "Du har inte tillräckliga behörigheter för att nämna andra användare."
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:17
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:51
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:52
 msgid "You have insufficient rights to view this object."
 msgstr "Du har inte tillräckliga rättigheter för att se detta objekt."
 
@@ -21465,6 +21453,10 @@ msgstr "läs in %s fler"
 msgid "m"
 msgstr "m"
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:27
+msgid "mark all as read"
+msgstr "markera alla som lästa"
+
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:273
 msgid "match all modules"
 msgstr "matcha alla moduler"
@@ -22170,6 +22162,13 @@ msgstr "...av hela textfältet"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ Väntetid idag"
+
+#~ msgid ""
+#~ "Error fetching github information. Please contact your administrator."
+#~ msgstr "Fel vid hämtning av github-information. Kontakta din administratör."
+
+#~ msgid "The notifcation could not be deleted."
+#~ msgstr "Notifieringen kunde inte tas bort."
 
 #~ msgid "%s on message"
 #~ msgstr "%s på meddelandet"

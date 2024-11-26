@@ -313,44 +313,44 @@ msgid "%s attached files"
 msgstr "Fail Yang Dilampirkan"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:32
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:39
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:39
 msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:49
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:26
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:26
 msgid "%s created article for |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:28
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:27
 msgid "%s created data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee:30
-#: app/frontend/shared/components/ActivityMessage/builders/group.ts:26
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:26
 msgid "%s created group |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/organization.coffee:87
-#: app/frontend/shared/components/ActivityMessage/builders/organization.ts:25
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:25
 #, fuzzy
 #| msgid "Shared organization"
 msgid "%s created organization |%s|"
 msgstr "Kumpulan dikongsi"
 
 #: app/assets/javascripts/app/models/role.coffee:27
-#: app/frontend/shared/components/ActivityMessage/builders/role.ts:26
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/role.ts:26
 msgid "%s created role |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:109
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:25
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:25
 msgid "%s created ticket |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee:208
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:25
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:25
 msgid "%s created user |%s|"
 msgstr ""
 
@@ -377,7 +377,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee:222
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:33
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:33
 msgid "%s ended switch to |%s|!"
 msgstr ""
 
@@ -484,7 +484,7 @@ msgid "%s people"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:53
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:31
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:31
 msgid "%s reacted with a %s to message from %s |%s|"
 msgstr ""
 
@@ -499,7 +499,7 @@ msgid "%s required!"
 msgstr "%s diperlukan!"
 
 #: app/assets/javascripts/app/models/user.coffee:212
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:29
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:29
 msgid "%s started a new session"
 msgstr ""
 
@@ -509,7 +509,7 @@ msgid "%s subdomain"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee:217
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:31
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:31
 msgid "%s switched to |%s|!"
 msgstr ""
 
@@ -529,39 +529,39 @@ msgid "%s tickets found"
 msgstr "tugaskan tiket"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:28
 msgid "%s updated article for |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:30
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:33
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:33
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/group.coffee:32
-#: app/frontend/shared/components/ActivityMessage/builders/group.ts:28
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:28
 msgid "%s updated group |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/organization.coffee:89
-#: app/frontend/shared/components/ActivityMessage/builders/organization.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:27
 #, fuzzy
 #| msgid "Shared organization"
 msgid "%s updated organization |%s|"
 msgstr "Kumpulan dikongsi"
 
 #: app/assets/javascripts/app/models/role.coffee:29
-#: app/frontend/shared/components/ActivityMessage/builders/role.ts:28
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/role.ts:28
 msgid "%s updated role |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:111
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:27
 msgid "%s updated ticket |%s|"
 msgstr ""
 
 #: app/assets/javascripts/app/models/user.coffee:210
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:27
 msgid "%s updated user |%s|"
 msgstr ""
 
@@ -1809,7 +1809,7 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:121
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:37
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:37
 msgid "Another ticket was merged into ticket |%s|"
 msgstr ""
 
@@ -2952,7 +2952,7 @@ msgstr ""
 msgid "Cannot process external data source %s. %s"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:71
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:109
 msgid "Cannot set online notifications as seen"
 msgstr ""
 
@@ -6954,10 +6954,6 @@ msgstr ""
 msgid "Error during execution of auto wizard."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:52
-msgid "Error fetching github information. Please contact your administrator."
-msgstr ""
-
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:64
 msgid "Error fetching i-doit information. Please contact your administrator."
 msgstr ""
@@ -7565,7 +7561,7 @@ msgid ""
 "it somewhere secure before continuing."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:48
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:49
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:459
 #: app/frontend/shared/errors/useErrorHandler.ts:29
 #: app/frontend/shared/router/guards/before/permission.ts:37
@@ -7813,6 +7809,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:81
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/github.ts:11
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:40
 #: db/seeds/settings.rb:1603
@@ -7841,12 +7838,13 @@ msgstr ""
 msgid "GitHub request failed. Please have a look at the log file for details."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:35
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:41
 msgid "GitHub: Link issue"
 msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:52
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/gitlab.ts:11
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:47
 #: db/seeds/settings.rb:1667
@@ -7875,7 +7873,7 @@ msgstr ""
 msgid "GitLab request failed. Please have a look at the log file for details."
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:35
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:41
 msgid "GitLab: Link issue"
 msgstr ""
 
@@ -8434,7 +8432,7 @@ msgid "How to use it"
 msgstr ""
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:201
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:214
 msgid "ID"
 msgstr ""
 
@@ -9682,16 +9680,16 @@ msgid "Link GitLab issues to your tickets."
 msgstr ""
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:70
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList.vue:274
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:62
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList.vue:288
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:68
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:68
 #, fuzzy
 #| msgid "Templates"
 msgid "Link Issue"
 msgstr "Templat"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:183
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:180
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:193
 #, fuzzy
 #| msgid "Objects"
 msgid "Link Objects"
@@ -9727,7 +9725,7 @@ msgstr ""
 msgid "Link issue"
 msgstr ""
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:137
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:150
 #, fuzzy
 #| msgid "Recently viewed"
 msgid "Link objects"
@@ -9971,7 +9969,7 @@ msgid ""
 "executed with just one click."
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:96
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:97
 msgid "Main sidebar"
 msgstr ""
 
@@ -10323,7 +10321,7 @@ msgid "March"
 msgstr "Mac"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:4
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:131
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:103
 msgid "Mark all as read"
 msgstr ""
 
@@ -11420,7 +11418,7 @@ msgid "No email!"
 msgstr ""
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:135
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:117
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:89
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:267
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:150
 #, fuzzy
@@ -11570,6 +11568,12 @@ msgstr ""
 msgid "No unread notifications for you. :)"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList.vue:22
+#, fuzzy
+#| msgid "Email Notification"
+msgid "No unread notifications."
+msgstr "Notifikasi Emel"
+
 #: db/seeds/settings.rb:1300
 msgid "No user creation on logon"
 msgstr ""
@@ -11619,7 +11623,7 @@ msgstr ""
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:160
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:240
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:119
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:56
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:57
 #: app/frontend/shared/errors/useErrorHandler.ts:25
 #: app/frontend/shared/router/error.ts:18
 #: app/helpers/knowledge_base_public_page_title_helper.rb:25
@@ -11756,7 +11760,7 @@ msgstr ""
 msgid "Notification matrix"
 msgstr "Notifikasi"
 
-#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:77
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:48
 #, fuzzy
 #| msgid "Notifications"
 msgid "Notification read"
@@ -11796,6 +11800,8 @@ msgstr "Notifikasi"
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:2
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:1
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:3
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:20
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:34
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
@@ -11888,7 +11894,7 @@ msgstr ""
 msgid "Object does not support history"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:60
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:61
 msgid ""
 "Object with specified ID was not found. Try checking the URL for errors."
 msgstr ""
@@ -12634,7 +12640,7 @@ msgid "Pending Tickets"
 msgstr "Telah dilihat"
 
 #: app/assets/javascripts/app/models/ticket.coffee:113
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:29
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:29
 msgid "Pending reminder reached for ticket |%s|"
 msgstr ""
 
@@ -13442,6 +13448,12 @@ msgstr "Buang"
 #| msgid "Remove"
 msgid "Remove %s"
 msgstr "Buang"
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList/NotificationItem.vue:79
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Remove Notification"
+msgstr "Blok Pemberitahuan"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:37
 #, fuzzy
@@ -15069,6 +15081,12 @@ msgstr ""
 msgid "Show next tab"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:18
+#, fuzzy
+#| msgid "Block Notifications"
+msgid "Show notifications"
+msgstr "Blok Pemberitahuan"
+
 #: db/seeds/settings.rb:1030
 msgid ""
 "Show password login for users on login page. Disabling only takes effect if "
@@ -15561,7 +15579,7 @@ msgstr ""
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:10
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:206
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:219
 msgid "Status"
 msgstr "Status"
 
@@ -16753,12 +16771,6 @@ msgstr ""
 msgid "The new ticket number could not be generated."
 msgstr "%s% telah dibuka kembali"
 
-#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:49
-#, fuzzy
-#| msgid "%s% have been reopened"
-msgid "The notifcation could not be deleted."
-msgstr "%s% telah dibuka kembali"
-
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:64
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:801
@@ -16789,7 +16801,7 @@ msgstr "%s% telah dibuka kembali"
 msgid "The object could not be updated."
 msgstr "%s% telah dibuka kembali"
 
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:47
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:98
 #, fuzzy
 #| msgid "%s% have been reopened"
 msgid "The online notification could not be marked as seen."
@@ -18439,19 +18451,19 @@ msgid ""
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:115
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:31
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:31
 #, fuzzy
 #| msgid "Ticket %s merged!"
 msgid "Ticket |%s| has escalated!"
 msgstr "Tiket %s digabungkan!"
 
 #: app/assets/javascripts/app/models/ticket.coffee:119
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:35
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:35
 msgid "Ticket |%s| was merged into another ticket"
 msgstr ""
 
 #: app/assets/javascripts/app/models/ticket.coffee:117
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:33
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:33
 msgid "Ticket |%s| will escalate soon!"
 msgstr ""
 
@@ -19164,7 +19176,7 @@ msgstr "Kemaskini berjaya!"
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:57
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:105
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:210
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:223
 #: db/seeds/object_manager_attributes.rb:124
 msgid "Type"
 msgstr "Jenis"
@@ -19248,7 +19260,7 @@ msgstr ""
 msgid "Unlink issue"
 msgstr "tiada isu"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:196
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:209
 #, fuzzy
 #| msgid "no issues"
 msgid "Unlink object"
@@ -19262,7 +19274,7 @@ msgstr ""
 msgid "Unpin this panel"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:77
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:48
 #, fuzzy
 #| msgid "Email Notification"
 msgid "Unread notification"
@@ -19279,6 +19291,12 @@ msgstr "Notifikasi Emel"
 #| msgid "Discard Changes"
 msgid "Unsaved Changes"
 msgstr "Buang Perubahan"
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:29
+#, fuzzy
+#| msgid "Email Notification"
+msgid "Unseen notifications count"
+msgstr "Notifikasi Emel"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:605
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:279
@@ -20528,28 +20546,28 @@ msgstr ""
 msgid "You can help translating Zammad."
 msgstr ""
 
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:19
 msgid "You can no longer see the data privacy task."
 msgstr ""
 
-#: app/frontend/shared/components/ActivityMessage/builders/group.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:19
 msgid "You can no longer see the group."
 msgstr ""
 
-#: app/frontend/shared/components/ActivityMessage/builders/organization.ts:18
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:18
 msgid "You can no longer see the organization."
 msgstr ""
 
-#: app/frontend/shared/components/ActivityMessage/builders/role.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/role.ts:19
 msgid "You can no longer see the role."
 msgstr ""
 
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:19
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:18
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:18
 msgid "You can no longer see the ticket."
 msgstr ""
 
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:18
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:18
 msgid "You can no longer see the user."
 msgstr ""
 
@@ -20620,7 +20638,7 @@ msgid "You have insufficient permissions to mention other users."
 msgstr ""
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:17
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:51
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:52
 msgid "You have insufficient rights to view this object."
 msgstr ""
 
@@ -21800,6 +21818,10 @@ msgstr ""
 msgid "m"
 msgstr ""
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:27
+msgid "mark all as read"
+msgstr ""
+
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:273
 msgid "match all modules"
 msgstr ""
@@ -22538,6 +22560,11 @@ msgstr ""
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "Masa menuggungu hari ini"
+
+#, fuzzy
+#~| msgid "%s% have been reopened"
+#~ msgid "The notifcation could not be deleted."
+#~ msgstr "%s% telah dibuka kembali"
 
 #, fuzzy
 #~| msgid "Add Tag"

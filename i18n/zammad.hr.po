@@ -431,45 +431,45 @@ msgid "%s attached files"
 msgstr "%s privitak(a)"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:32
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:39
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:39
 msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr ""
 "%s završenih zadataka zaštite podataka prilikom brisanja korisničkog ID-a |"
 "%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:49
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:26
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:26
 msgid "%s created article for |%s|"
 msgstr "%s kreirana stavka za |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:28
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:27
 msgid "%s created data privacy task to delete user ID |%s|"
 msgstr ""
 "%s stvorenih zadataka zaštite podataka za brisanje korisničkog ID-a %s|"
 
 #: app/assets/javascripts/app/models/group.coffee:30
-#: app/frontend/shared/components/ActivityMessage/builders/group.ts:26
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:26
 msgid "%s created group |%s|"
 msgstr "%s kreirana grupa |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee:87
-#: app/frontend/shared/components/ActivityMessage/builders/organization.ts:25
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:25
 msgid "%s created organization |%s|"
 msgstr "%s kreirana organizacija |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee:27
-#: app/frontend/shared/components/ActivityMessage/builders/role.ts:26
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/role.ts:26
 msgid "%s created role |%s|"
 msgstr "%s kreirana uloga |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee:109
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:25
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:25
 msgid "%s created ticket |%s|"
 msgstr "%s kreiran ticket |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee:208
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:25
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:25
 msgid "%s created user |%s|"
 msgstr "%s kreiran korisnik |%s|"
 
@@ -496,7 +496,7 @@ msgstr ""
 "sandučića i preneseni u Zammad."
 
 #: app/assets/javascripts/app/models/user.coffee:222
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:33
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:33
 msgid "%s ended switch to |%s|!"
 msgstr "%s završeno preuzimanje |%s|!"
 
@@ -581,7 +581,7 @@ msgid "%s people"
 msgstr "%s osoba"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:53
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:31
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:31
 msgid "%s reacted with a %s to message from %s |%s|"
 msgstr "%s reagirao sa %s na poruku od|%s|"
 
@@ -598,7 +598,7 @@ msgid "%s required!"
 msgstr "%s je obavezno!"
 
 #: app/assets/javascripts/app/models/user.coffee:212
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:29
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:29
 msgid "%s started a new session"
 msgstr "%s započeo novu sesiju"
 
@@ -608,7 +608,7 @@ msgid "%s subdomain"
 msgstr "%s poddomena"
 
 #: app/assets/javascripts/app/models/user.coffee:217
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:31
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:31
 msgid "%s switched to |%s|!"
 msgstr "%s započeo sesiju kao |%s|!"
 
@@ -624,38 +624,38 @@ msgid "%s tickets found"
 msgstr "Pronađeno %s ticketa"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:28
 msgid "%s updated article for |%s|"
 msgstr "%s ažuriranih stavki za |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:30
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:33
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:33
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr ""
 "%s ažuriran zadatak zaštite podataka prilikom brisanja korisničkog ID-a |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee:32
-#: app/frontend/shared/components/ActivityMessage/builders/group.ts:28
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:28
 msgid "%s updated group |%s|"
 msgstr "%s ažurirao grupu |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee:89
-#: app/frontend/shared/components/ActivityMessage/builders/organization.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:27
 msgid "%s updated organization |%s|"
 msgstr "%s ažurirao organizaciju |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee:29
-#: app/frontend/shared/components/ActivityMessage/builders/role.ts:28
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/role.ts:28
 msgid "%s updated role |%s|"
 msgstr "%s ažurirao ulogu |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee:111
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:27
 msgid "%s updated ticket |%s|"
 msgstr "%s ažurirao ticket |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee:210
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:27
 msgid "%s updated user |%s|"
 msgstr "%s ažurirao korisnika |%s|"
 
@@ -1899,7 +1899,7 @@ msgstr ""
 "</div>\n"
 
 #: app/assets/javascripts/app/models/ticket.coffee:121
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:37
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:37
 msgid "Another ticket was merged into ticket |%s|"
 msgstr "Drugi ticket je spojen sa ticketom |%s|"
 
@@ -3017,7 +3017,7 @@ msgstr "Nije moguće istovremeno imati vrijeme odaziva i vrijeme ažuriranja."
 msgid "Cannot process external data source %s. %s"
 msgstr "Vanjski izvor podataka %s nije moguće obraditi. %s"
 
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:71
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:109
 msgid "Cannot set online notifications as seen"
 msgstr "Nije moguće označiti obavijesti kao pročitane"
 
@@ -7006,12 +7006,6 @@ msgstr "Greška"
 msgid "Error during execution of auto wizard."
 msgstr "Greška prilikom izvođenja automatskog čarobnjaka."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:52
-#, fuzzy
-#| msgid "Something went wrong. Please contact your administrator."
-msgid "Error fetching github information. Please contact your administrator."
-msgstr "Nešto je pošlo po zlu. Molimo, obratite se administratoru."
-
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:64
 #, fuzzy
 #| msgid "Something went wrong. Please contact your administrator."
@@ -7611,7 +7605,7 @@ msgstr ""
 "Iz sigurnosnih razloga, API token se prikazuje samo jednom. Morati ćete ga "
 "spremiti negdje na sigurno prije nego što nastavite."
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:48
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:49
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:459
 #: app/frontend/shared/errors/useErrorHandler.ts:29
 #: app/frontend/shared/router/guards/before/permission.ts:37
@@ -7852,6 +7846,7 @@ msgstr "Dohvaćanje ključnih informacija iz preglednika…"
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:81
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/github.ts:11
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:40
 #: db/seeds/settings.rb:1603
@@ -7881,7 +7876,7 @@ msgstr "GitHub integracija"
 msgid "GitHub request failed. Please have a look at the log file for details."
 msgstr "GitHub zahtjev nije uspio! Detalje potražite u datoteci zapisa"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:35
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:41
 #, fuzzy
 #| msgid "Link issue"
 msgid "GitHub: Link issue"
@@ -7889,6 +7884,7 @@ msgstr "Poveži bug"
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:52
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/gitlab.ts:11
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:47
 #: db/seeds/settings.rb:1667
@@ -7918,7 +7914,7 @@ msgstr "GitLab integracija"
 msgid "GitLab request failed. Please have a look at the log file for details."
 msgstr "GitLab zahtjev nije uspio! Detalje potražite u datoteci zapisnika"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:35
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:41
 #, fuzzy
 #| msgid "Link issue"
 msgid "GitLab: Link issue"
@@ -8481,7 +8477,7 @@ msgid "How to use it"
 msgstr "Kako to funkcionira"
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:201
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:214
 msgid "ID"
 msgstr "ID"
 
@@ -9736,16 +9732,16 @@ msgid "Link GitLab issues to your tickets."
 msgstr "Povežite GitLab bugove sa svojim ticketima."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:70
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList.vue:274
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:62
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList.vue:288
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:68
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:68
 #, fuzzy
 #| msgid "Link issue"
 msgid "Link Issue"
 msgstr "Poveži bug"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:183
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:180
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:193
 #, fuzzy
 #| msgid "Objects"
 msgid "Link Objects"
@@ -9781,7 +9777,7 @@ msgstr "%{name} već postoji"
 msgid "Link issue"
 msgstr "Poveži bug"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:137
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:150
 #, fuzzy
 #| msgid "Linked Tickets"
 msgid "Link objects"
@@ -10023,7 +10019,7 @@ msgstr ""
 "sekvenci, štedeći vrijeme (i živce). To omogućuje da se kombinirani slijed "
 "radnji u ticketu izvrši samo jednim klikom."
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:96
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:97
 msgid "Main sidebar"
 msgstr "Glavna bočna traka"
 
@@ -10362,7 +10358,7 @@ msgid "March"
 msgstr "ožujak"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:4
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:131
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:103
 msgid "Mark all as read"
 msgstr "Označi sve kao pročitano"
 
@@ -11407,7 +11403,7 @@ msgid "No email!"
 msgstr "Nema e-maila!"
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:135
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:117
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:89
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:267
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:150
 msgid "No entries"
@@ -11545,6 +11541,12 @@ msgstr "Nema aktivnih okidača"
 msgid "No unread notifications for you. :)"
 msgstr "Trenutno nemate nepročitanih obavijesti. :)"
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList.vue:22
+#, fuzzy
+#| msgid "Unread notifications"
+msgid "No unread notifications."
+msgstr "Nepročitane obavijesti"
+
 #: db/seeds/settings.rb:1300
 msgid "No user creation on logon"
 msgstr "Nema stvaranja korisnika prilikom prijave"
@@ -11594,7 +11596,7 @@ msgstr "Nije dostupno"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:160
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:240
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:119
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:56
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:57
 #: app/frontend/shared/errors/useErrorHandler.ts:25
 #: app/frontend/shared/router/error.ts:18
 #: app/helpers/knowledge_base_public_page_title_helper.rb:25
@@ -11733,7 +11735,7 @@ msgstr "Zvuk obavijesti"
 msgid "Notification matrix"
 msgstr "Obavijesna tablica"
 
-#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:77
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:48
 msgid "Notification read"
 msgstr "Pročitana obavijest"
 
@@ -11763,6 +11765,8 @@ msgstr "Zvuk obavijesti"
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:2
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:1
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:3
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:20
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:34
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
@@ -11859,7 +11863,7 @@ msgstr "Upravljanje objektima"
 msgid "Object does not support history"
 msgstr "Navedeni objekt ne podržava odabir"
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:60
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:61
 #, fuzzy
 #| msgid ""
 #| "Ticket with specified ID was not found. Try checking the URL for errors."
@@ -12548,7 +12552,7 @@ msgid "Pending Tickets"
 msgstr "Ticketi na čekanju"
 
 #: app/assets/javascripts/app/models/ticket.coffee:113
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:29
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:29
 msgid "Pending reminder reached for ticket |%s|"
 msgstr "Dosegnuto vrijeme čekanja za ticket |%s|"
 
@@ -13344,6 +13348,12 @@ msgstr "Ukloni"
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:166
 msgid "Remove %s"
 msgstr "Ukloni %s"
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList/NotificationItem.vue:79
+#, fuzzy
+#| msgid "Service Notification"
+msgid "Remove Notification"
+msgstr "Obavijest o usluzi"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:37
 msgid "Remove Two-factor Authentication: %s"
@@ -14896,6 +14906,12 @@ msgstr "Pokaži metapodatke"
 msgid "Show next tab"
 msgstr "Pokaži sljedeću karticu"
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:18
+#, fuzzy
+#| msgid "Save Notifications"
+msgid "Show notifications"
+msgstr "Spremi obavijesti"
+
 #: db/seeds/settings.rb:1030
 msgid ""
 "Show password login for users on login page. Disabling only takes effect if "
@@ -15364,7 +15380,7 @@ msgstr "Statistika pozadinskog sustava"
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:10
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:206
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:219
 msgid "Status"
 msgstr "Status"
 
@@ -16503,10 +16519,6 @@ msgstr "Pregled odabira mjeseci"
 msgid "The new ticket number could not be generated."
 msgstr "Novi broj ticketa nije moguće generirati."
 
-#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:49
-msgid "The notifcation could not be deleted."
-msgstr "Obavijest nije moguće izbrisati."
-
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:64
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:801
@@ -16531,7 +16543,7 @@ msgstr "Nije moguće pronaći objekt."
 msgid "The object could not be updated."
 msgstr "Nije moguće ažurirati objekt."
 
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:47
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:98
 msgid "The online notification could not be marked as seen."
 msgstr "Obavijest nije mogla biti označena kao pročitana."
 
@@ -18157,17 +18169,17 @@ msgstr ""
 "Ticket s navedenim ID-em nije pronađen. Provjerite ima li pogrešaka u URL-u."
 
 #: app/assets/javascripts/app/models/ticket.coffee:115
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:31
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:31
 msgid "Ticket |%s| has escalated!"
 msgstr "Ticket |%s| je eskalirao!"
 
 #: app/assets/javascripts/app/models/ticket.coffee:119
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:35
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:35
 msgid "Ticket |%s| was merged into another ticket"
 msgstr "Ticket |%s| je spojen u drugi ticket"
 
 #: app/assets/javascripts/app/models/ticket.coffee:117
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:33
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:33
 msgid "Ticket |%s| will escalate soon!"
 msgstr "Ticket |%s| će uskoro eskalirati!"
 
@@ -18863,7 +18875,7 @@ msgstr "Metoda dvofaktorske autentifikacije je uspješno konfigurirana."
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:57
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:105
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:210
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:223
 #: db/seeds/object_manager_attributes.rb:124
 msgid "Type"
 msgstr "Tip"
@@ -18945,7 +18957,7 @@ msgstr ""
 msgid "Unlink issue"
 msgstr "Poveži bug"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:196
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:209
 #, fuzzy
 #| msgid "Link issue"
 msgid "Unlink object"
@@ -18959,7 +18971,7 @@ msgstr "Otključaj"
 msgid "Unpin this panel"
 msgstr "Otkvači ovo polje"
 
-#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:77
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:48
 msgid "Unread notification"
 msgstr "Nepročitana obavijest"
 
@@ -18970,6 +18982,12 @@ msgstr "Nepročitane obavijesti"
 #: app/frontend/apps/desktop/components/CommonConfirmationDialog/CommonConfirmationDialog.vue:44
 msgid "Unsaved Changes"
 msgstr "Nespremljene promjene"
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:29
+#, fuzzy
+#| msgid "Unread notifications"
+msgid "Unseen notifications count"
+msgstr "Nepročitane obavijesti"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:605
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:279
@@ -20302,28 +20320,28 @@ msgstr ""
 msgid "You can help translating Zammad."
 msgstr "Možete pomoći u prevođenju Zammad-a."
 
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:19
 msgid "You can no longer see the data privacy task."
 msgstr "Više ne možete vidjeti zadatak brisanja podataka."
 
-#: app/frontend/shared/components/ActivityMessage/builders/group.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:19
 msgid "You can no longer see the group."
 msgstr "Više ne možete vidjeti grupu."
 
-#: app/frontend/shared/components/ActivityMessage/builders/organization.ts:18
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:18
 msgid "You can no longer see the organization."
 msgstr "Više ne možete vidjeti organizaciju."
 
-#: app/frontend/shared/components/ActivityMessage/builders/role.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/role.ts:19
 msgid "You can no longer see the role."
 msgstr "Više ne možete vidjeti ulogu."
 
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:19
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:18
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:18
 msgid "You can no longer see the ticket."
 msgstr "Više ne možete vidjeti ticket."
 
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:18
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:18
 msgid "You can no longer see the user."
 msgstr "Više ne možete vidjeti korisnika."
 
@@ -20406,7 +20424,7 @@ msgid "You have insufficient permissions to mention other users."
 msgstr "Nemate dovoljno ovlasti za spominjanje drugih korisnika."
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:17
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:51
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:52
 #, fuzzy
 #| msgid "You have insufficient rights to view this ticket."
 msgid "You have insufficient rights to view this object."
@@ -21561,6 +21579,12 @@ msgstr "učitaj još %s"
 msgid "m"
 msgstr "m"
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:27
+#, fuzzy
+#| msgid "Mark all as read"
+msgid "mark all as read"
+msgstr "Označi sve kao pročitano"
+
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:273
 msgid "match all modules"
 msgstr "podudaranje svih modula"
@@ -22264,6 +22288,15 @@ msgstr "... cijelog tekstnog polja"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "∅ vrijeme čekanja danas"
+
+#, fuzzy
+#~| msgid "Something went wrong. Please contact your administrator."
+#~ msgid ""
+#~ "Error fetching github information. Please contact your administrator."
+#~ msgstr "Nešto je pošlo po zlu. Molimo, obratite se administratoru."
+
+#~ msgid "The notifcation could not be deleted."
+#~ msgstr "Obavijest nije moguće izbrisati."
 
 #, fuzzy
 #~| msgid "message"

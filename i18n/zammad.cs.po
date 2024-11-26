@@ -439,42 +439,42 @@ msgid "%s attached files"
 msgstr "%s přiložených souborů"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:32
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:39
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:39
 msgid "%s completed data privacy task to delete user ID |%s|"
 msgstr "%s dokončil úlohu Soukromí dat pro vymazání uživatele ID |%s|"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:49
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:26
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:26
 msgid "%s created article for |%s|"
 msgstr "%s vytvořil(a) položku pro |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:28
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:27
 msgid "%s created data privacy task to delete user ID |%s|"
 msgstr "%s vytvořil úkolu Soukromí dat pro vymazání uživatele ID |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee:30
-#: app/frontend/shared/components/ActivityMessage/builders/group.ts:26
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:26
 msgid "%s created group |%s|"
 msgstr "%s vytvořil(a) Skupinu |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee:87
-#: app/frontend/shared/components/ActivityMessage/builders/organization.ts:25
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:25
 msgid "%s created organization |%s|"
 msgstr "%s vytvořil(a) Organizaci |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee:27
-#: app/frontend/shared/components/ActivityMessage/builders/role.ts:26
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/role.ts:26
 msgid "%s created role |%s|"
 msgstr "%s vytvořil(a) Skupinu |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee:109
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:25
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:25
 msgid "%s created ticket |%s|"
 msgstr "%s vytvořil(a) Ticket |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee:208
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:25
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:25
 msgid "%s created user |%s|"
 msgstr "%s vytvořil(a) uživatele |%s|"
 
@@ -505,7 +505,7 @@ msgstr ""
 "schránky do Zammadu."
 
 #: app/assets/javascripts/app/models/user.coffee:222
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:33
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:33
 msgid "%s ended switch to |%s|!"
 msgstr "%s dokončil přepnutí na |%s|!"
 
@@ -596,7 +596,7 @@ msgid "%s people"
 msgstr "%s lidí"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:53
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:31
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:31
 #, fuzzy
 #| msgid "%s ended switch to |%s|!"
 msgid "%s reacted with a %s to message from %s |%s|"
@@ -615,7 +615,7 @@ msgid "%s required!"
 msgstr "%s je vyžadován!"
 
 #: app/assets/javascripts/app/models/user.coffee:212
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:29
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:29
 msgid "%s started a new session"
 msgstr "%s spustil nové sezení"
 
@@ -625,7 +625,7 @@ msgid "%s subdomain"
 msgstr "Subdoména %s"
 
 #: app/assets/javascripts/app/models/user.coffee:217
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:31
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:31
 msgid "%s switched to |%s|!"
 msgstr "%s se přepnul na |%s|!"
 
@@ -641,37 +641,37 @@ msgid "%s tickets found"
 msgstr "nalezeno %s ticketů"
 
 #: app/assets/javascripts/app/models/ticket_article.coffee:51
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:28
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:28
 msgid "%s updated article for |%s|"
 msgstr "%s aktualizoval (a) položku pro |%s|"
 
 #: app/assets/javascripts/app/models/data_privacy_task.coffee:30
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:33
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:33
 msgid "%s updated data privacy task to delete user ID |%s|"
 msgstr "%s aktualizoval úlohu Soukromí dat pro vymazání uživatele ID |%s|"
 
 #: app/assets/javascripts/app/models/group.coffee:32
-#: app/frontend/shared/components/ActivityMessage/builders/group.ts:28
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:28
 msgid "%s updated group |%s|"
 msgstr "%s aktualizoval skupinu |%s|"
 
 #: app/assets/javascripts/app/models/organization.coffee:89
-#: app/frontend/shared/components/ActivityMessage/builders/organization.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:27
 msgid "%s updated organization |%s|"
 msgstr "%s aktualizoval organizaci |%s|"
 
 #: app/assets/javascripts/app/models/role.coffee:29
-#: app/frontend/shared/components/ActivityMessage/builders/role.ts:28
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/role.ts:28
 msgid "%s updated role |%s|"
 msgstr "%s aktualizoval roli |%s|"
 
 #: app/assets/javascripts/app/models/ticket.coffee:111
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:27
 msgid "%s updated ticket |%s|"
 msgstr "%s aktualizoval ticket |%s|"
 
 #: app/assets/javascripts/app/models/user.coffee:210
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:27
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:27
 msgid "%s updated user |%s|"
 msgstr "%s aktualizoval uživatele |%s|"
 
@@ -2017,7 +2017,7 @@ msgstr ""
 "</div>\n"
 
 #: app/assets/javascripts/app/models/ticket.coffee:121
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:37
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:37
 msgid "Another ticket was merged into ticket |%s|"
 msgstr "Další ticket byl sloučen do ticketu |%s|"
 
@@ -3177,7 +3177,7 @@ msgstr "Nelze mít zároveň čas odpovědi a čas aktualizace."
 msgid "Cannot process external data source %s. %s"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:71
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:109
 msgid "Cannot set online notifications as seen"
 msgstr "Nebylo možné označit online oznámení jako zobrazené"
 
@@ -7442,12 +7442,6 @@ msgstr "Chyba"
 msgid "Error during execution of auto wizard."
 msgstr "Chyba při spouštění auto průvodce."
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:52
-#, fuzzy
-#| msgid "Something went wrong. Please contact your administrator."
-msgid "Error fetching github information. Please contact your administrator."
-msgstr "Něco se nepovedlo. Kontaktujte prosím vašeho správce."
-
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:64
 #, fuzzy
 #| msgid "Something went wrong. Please contact your administrator."
@@ -8088,7 +8082,7 @@ msgstr ""
 "Z bezpečnostních důvodů se API token zobrazí pouze jednou. Před pokračováním "
 "si jej pečlivě poznamenejte."
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:48
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:49
 #: app/frontend/apps/mobile/pages/ticket/views/TicketCreate.vue:459
 #: app/frontend/shared/errors/useErrorHandler.ts:29
 #: app/frontend/shared/router/guards/before/permission.ts:37
@@ -8338,6 +8332,7 @@ msgstr ""
 
 #: app/assets/javascripts/app/controllers/_integration/github.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:81
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:51
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/github.ts:11
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:40
 #: db/seeds/settings.rb:1603
@@ -8369,7 +8364,7 @@ msgstr ""
 "Požadavek na GitHub se nezdařil! Pro více informací prosím zkontrolujte "
 "logovací soubor"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:35
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:41
 #, fuzzy
 #| msgid "Link issue"
 msgid "GitHub: Link issue"
@@ -8377,6 +8372,7 @@ msgstr "Připojit problém"
 
 #: app/assets/javascripts/app/controllers/_integration/gitlab.coffee:3
 #: app/assets/javascripts/app/controllers/_profile/linked_accounts.coffee:86
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/useTicketExternalIssueTracker.ts:52
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/plugins/gitlab.ts:11
 #: app/frontend/shared/composables/authentication/useThirdPartyAuthentication.ts:47
 #: db/seeds/settings.rb:1667
@@ -8408,7 +8404,7 @@ msgstr ""
 "Požadavek na GitLab se nezdařil! Pro více informací prosím zkontrolujte "
 "logovací soubor"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:35
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:41
 #, fuzzy
 #| msgid "Link issue"
 msgid "GitLab: Link issue"
@@ -8985,7 +8981,7 @@ msgid "How to use it"
 msgstr "Jak na to"
 
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:8
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:201
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:214
 msgid "ID"
 msgstr "ID"
 
@@ -10310,16 +10306,16 @@ msgid "Link GitLab issues to your tickets."
 msgstr "Připojit GitLab problémy (issues) k vašim ticketům."
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerLinkFlyout.vue:70
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList.vue:274
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:62
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:62
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/IssueTrackerList.vue:288
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitHub/TicketSidebarGitHub.vue:68
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarExternalIssueTracker/TicketSidebarGitLab/TicketSidebarGitLab.vue:68
 #, fuzzy
 #| msgid "Link issue"
 msgid "Link Issue"
 msgstr "Připojit problém"
 
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:183
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:180
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:193
 #, fuzzy
 #| msgid "Objects"
 msgid "Link Objects"
@@ -10357,7 +10353,7 @@ msgstr "%{name} již existuje"
 msgid "Link issue"
 msgstr "Připojit problém"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:137
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:150
 #, fuzzy
 #| msgid "Linked Tickets"
 msgid "Link objects"
@@ -10602,7 +10598,7 @@ msgstr ""
 "šetřit přitom čas (a nervy). Umožňují Vám spustit kombinovanou sekvenci akcí "
 "nad ticketem na jedno kliknutí."
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:96
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:97
 msgid "Main sidebar"
 msgstr ""
 
@@ -11057,7 +11053,7 @@ msgid "March"
 msgstr "Březen"
 
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:4
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:131
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:103
 msgid "Mark all as read"
 msgstr "Označit vše jako přečtené"
 
@@ -12166,7 +12162,7 @@ msgid "No email!"
 msgstr "Žádný e-mail!"
 
 #: app/frontend/apps/mobile/pages/home/views/FavoriteTicketOverviewsEdit.vue:135
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:117
+#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:89
 #: app/frontend/apps/mobile/pages/search/views/SearchOverview.vue:267
 #: app/frontend/apps/mobile/pages/ticket/components/TicketList/TicketList.vue:150
 msgid "No entries"
@@ -12318,6 +12314,12 @@ msgstr "Žádné aktivní spouštěče"
 msgid "No unread notifications for you. :)"
 msgstr "Nemáte žádná nepřečtená oznámení. :)"
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList.vue:22
+#, fuzzy
+#| msgid "Unread notifications"
+msgid "No unread notifications."
+msgstr "Nepřečtená oznámení"
+
 #: db/seeds/settings.rb:1300
 msgid "No user creation on logon"
 msgstr ""
@@ -12371,7 +12373,7 @@ msgstr "Není k dispozici"
 #: app/assets/javascripts/app/controllers/_profile/out_of_office.coffee:160
 #: app/assets/javascripts/app/controllers/knowledge_base/agent_controller.coffee:240
 #: app/assets/javascripts/app/controllers/ticket_zoom.coffee:119
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:56
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:57
 #: app/frontend/shared/errors/useErrorHandler.ts:25
 #: app/frontend/shared/router/error.ts:18
 #: app/helpers/knowledge_base_public_page_title_helper.rb:25
@@ -12510,7 +12512,7 @@ msgstr "Zvuk oznámení"
 msgid "Notification matrix"
 msgstr "Oznámení přečteno"
 
-#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:77
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:48
 msgid "Notification read"
 msgstr "Oznámení přečteno"
 
@@ -12551,6 +12553,8 @@ msgstr "Zvuk oznámení"
 #: app/assets/javascripts/app/views/profile/notification.jst.eco:2
 #: app/assets/javascripts/app/views/widget/mention.jst.eco:1
 #: app/assets/javascripts/app/views/widget/online_notification.jst.eco:3
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification.vue:20
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:20
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSetting/plugins/notifications.ts:6
 #: app/frontend/apps/desktop/pages/personal-setting/views/PersonalSettingNotifications.vue:34
 #: app/frontend/apps/mobile/pages/online-notification/routes.ts:8
@@ -12657,7 +12661,7 @@ msgstr "Správce Objektů"
 msgid "Object does not support history"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:60
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:61
 #, fuzzy
 #| msgid ""
 #| "Ticket with specified ID was not found. Try checking the URL for errors."
@@ -13412,7 +13416,7 @@ msgid "Pending Tickets"
 msgstr "Mé nevyřízené tickety"
 
 #: app/assets/javascripts/app/models/ticket.coffee:113
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:29
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:29
 msgid "Pending reminder reached for ticket |%s|"
 msgstr "Uplynula doba čekání pro ticket |%s|"
 
@@ -14259,6 +14263,12 @@ msgstr "Odstranit"
 #: app/frontend/shared/components/CommonFilePreview/CommonFilePreview.vue:166
 msgid "Remove %s"
 msgstr "Odstranit %s"
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationList/NotificationItem.vue:79
+#, fuzzy
+#| msgid "Service Notification"
+msgid "Remove Notification"
+msgstr "Servisní oznámení"
 
 #: app/frontend/apps/desktop/components/TwoFactor/TwoFactorConfigurationFlyout.vue:37
 #, fuzzy
@@ -15979,6 +15989,12 @@ msgstr "Zobrazit metadata"
 msgid "Show next tab"
 msgstr "Zobrazit další záložku"
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:18
+#, fuzzy
+#| msgid "Slack Notifications"
+msgid "Show notifications"
+msgstr "Slack oznámení"
+
 #: db/seeds/settings.rb:1030
 msgid ""
 "Show password login for users on login page. Disabling only takes effect if "
@@ -16488,7 +16504,7 @@ msgstr "Rozhraní statistik"
 #: app/assets/javascripts/app/views/integration/idoit_object_result.jst.eco:10
 #: app/assets/javascripts/app/views/widget/http_log_show.jst.eco:14
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout/IdoitObjectList.vue:24
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:206
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:219
 msgid "Status"
 msgstr "Stav"
 
@@ -17756,10 +17772,6 @@ msgstr "Otevřít oblast pro poznámku"
 msgid "The new ticket number could not be generated."
 msgstr "Nové číslo ticketu se nepodařilo vygenerovat."
 
-#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:49
-msgid "The notifcation could not be deleted."
-msgstr "Oznámení se nepodařilo smazat."
-
 #: app/assets/javascripts/app/controllers/_application_controller/_modal_generic_new.coffee:64
 #: app/assets/javascripts/app/controllers/_channel/_email_signature.coffee:93
 #: app/assets/javascripts/app/controllers/agent_ticket_create.coffee:801
@@ -17784,7 +17796,7 @@ msgstr "Objekt nebyl nalezen."
 msgid "The object could not be updated."
 msgstr "Objekt se nepodařilo aktualizovat."
 
-#: app/frontend/apps/mobile/pages/online-notification/views/NotificationsList.vue:47
+#: app/frontend/shared/entities/online-notification/composables/useOnlineNotificationActions.ts:98
 #, fuzzy
 #| msgid "The online notifcation could not be marked as seen."
 msgid "The online notification could not be marked as seen."
@@ -19560,17 +19572,17 @@ msgstr ""
 "neobsahuje chyby."
 
 #: app/assets/javascripts/app/models/ticket.coffee:115
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:31
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:31
 msgid "Ticket |%s| has escalated!"
 msgstr "Ticket |%s| byl eskalován!"
 
 #: app/assets/javascripts/app/models/ticket.coffee:119
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:35
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:35
 msgid "Ticket |%s| was merged into another ticket"
 msgstr "Ticket |%s| byl sloučen s jiným ticketem"
 
 #: app/assets/javascripts/app/models/ticket.coffee:117
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:33
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:33
 msgid "Ticket |%s| will escalate soon!"
 msgstr "Ticket |%s| bude brzy eskalován!"
 
@@ -20330,7 +20342,7 @@ msgstr "Ticket byl úspěšně vytvořen."
 #: app/assets/javascripts/app/views/object_manager/index.jst.eco:57
 #: app/frontend/apps/desktop/entities/channel-email/composables/useEmailInboundForm.ts:105
 #: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/IdoitFlyout.vue:119
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:210
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:223
 #: db/seeds/object_manager_attributes.rb:124
 msgid "Type"
 msgstr "Typ"
@@ -20413,7 +20425,7 @@ msgstr ""
 msgid "Unlink issue"
 msgstr "Připojit problém"
 
-#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:196
+#: app/frontend/apps/desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue:209
 #, fuzzy
 #| msgid "Link issue"
 msgid "Unlink object"
@@ -20427,7 +20439,7 @@ msgstr "Odemknout"
 msgid "Unpin this panel"
 msgstr ""
 
-#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:77
+#: app/frontend/apps/mobile/pages/online-notification/components/NotificationItem.vue:48
 msgid "Unread notification"
 msgstr "Nepřečtené oznámení"
 
@@ -20440,6 +20452,12 @@ msgstr "Nepřečtená oznámení"
 #| msgid "Discard Changes"
 msgid "Unsaved Changes"
 msgstr "Zahodit změny"
+
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:29
+#, fuzzy
+#| msgid "Unread notifications"
+msgid "Unseen notifications count"
+msgstr "Nepřečtená oznámení"
 
 #: app/frontend/apps/desktop/components/Form/fields/FieldAutoComplete/FieldAutoCompleteInput.vue:605
 #: app/frontend/apps/desktop/components/Form/fields/FieldSelect/FieldSelectInput.vue:279
@@ -21832,28 +21850,28 @@ msgstr ""
 msgid "You can help translating Zammad."
 msgstr "Věděli jste? Můžete pomoci s překladem %s na:"
 
-#: app/frontend/shared/components/ActivityMessage/builders/data-privacy-task.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/data-privacy-task.ts:19
 msgid "You can no longer see the data privacy task."
 msgstr "Již nemůžete vidět úlohy soukromí dat."
 
-#: app/frontend/shared/components/ActivityMessage/builders/group.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/group.ts:19
 msgid "You can no longer see the group."
 msgstr "Nyní už nemůžete vidět skupinu."
 
-#: app/frontend/shared/components/ActivityMessage/builders/organization.ts:18
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/organization.ts:18
 msgid "You can no longer see the organization."
 msgstr "Nyní už nemůžete vidět organizaci."
 
-#: app/frontend/shared/components/ActivityMessage/builders/role.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/role.ts:19
 msgid "You can no longer see the role."
 msgstr "Nyní už nemůžete vidět roli."
 
-#: app/frontend/shared/components/ActivityMessage/builders/ticket-article.ts:19
-#: app/frontend/shared/components/ActivityMessage/builders/ticket.ts:18
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket-article.ts:19
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/ticket.ts:18
 msgid "You can no longer see the ticket."
 msgstr "Již nemůžete zobrazit tento ticket."
 
-#: app/frontend/shared/components/ActivityMessage/builders/user.ts:18
+#: app/frontend/shared/composables/activity-message/activityMessageBuilder/builders/user.ts:18
 msgid "You can no longer see the user."
 msgstr "Nyní už nemůžete vidět uživatele."
 
@@ -21940,7 +21958,7 @@ msgid "You have insufficient permissions to mention other users."
 msgstr "Nemáte dostatečná oprávnění pro zobrazení tohoto uživatele."
 
 #: app/frontend/apps/desktop/components/UserTaskbarTabs/UserTaskbarTabForbidden.vue:17
-#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:51
+#: app/frontend/apps/desktop/components/layout/LayoutPage.vue:52
 #, fuzzy
 #| msgid "You have insufficient rights to view this ticket."
 msgid "You have insufficient rights to view this object."
@@ -23150,6 +23168,12 @@ msgstr "načíst dalších %s"
 msgid "m"
 msgstr "m"
 
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationPopover/NotificationHeader.vue:27
+#, fuzzy
+#| msgid "Mark all as read"
+msgid "mark all as read"
+msgstr "Označit vše jako přečtené"
+
 #: app/assets/javascripts/app/controllers/_ui_element/core_workflow_condition.coffee:273
 msgid "match all modules"
 msgstr "vyhovuje všem modulům"
@@ -23890,6 +23914,15 @@ msgstr "...celé textové oblasti"
 #: app/assets/javascripts/app/views/dashboard/stats/ticket_waiting_time.jst.eco:3
 msgid "∅ Waiting time today"
 msgstr "dnešní ∅ čekací doby"
+
+#, fuzzy
+#~| msgid "Something went wrong. Please contact your administrator."
+#~ msgid ""
+#~ "Error fetching github information. Please contact your administrator."
+#~ msgstr "Něco se nepovedlo. Kontaktujte prosím vašeho správce."
+
+#~ msgid "The notifcation could not be deleted."
+#~ msgstr "Oznámení se nepodařilo smazat."
 
 #, fuzzy
 #~| msgid "message"
