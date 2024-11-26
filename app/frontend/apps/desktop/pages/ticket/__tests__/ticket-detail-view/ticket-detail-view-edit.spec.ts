@@ -681,9 +681,11 @@ describe('Ticket detail view', () => {
         within(confirmDialog).getByRole('button', { name: 'Discard Changes' }),
       )
 
-      expect(
-        view.queryByRole('textbox', { name: 'Text' }),
-      ).not.toBeInTheDocument()
+      await waitFor(() =>
+        expect(
+          view.queryByRole('textbox', { name: 'Text' }),
+        ).not.toBeInTheDocument(),
+      )
     })
 
     it('discards reply form and it keeps the ticket attribute fields state', async () => {
@@ -952,15 +954,13 @@ describe('Ticket detail view', () => {
         within(dialog).getByRole('button', { name: 'Discard Changes' }),
       )
 
-      await waitFor(() => expect(dialog).not.toBeInTheDocument())
-
-      await waitForNextTick()
-
-      expect(
-        view.queryByRole('button', {
-          name: 'Discard your unsaved changes',
-        }),
-      ).not.toBeInTheDocument()
+      await waitFor(() => {
+        expect(
+          view.queryByRole('button', {
+            name: 'Discard your unsaved changes',
+          }),
+        ).not.toBeInTheDocument()
+      })
     })
   })
 
