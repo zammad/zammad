@@ -1,0 +1,19 @@
+#{config.product_name} - prijava iz nove naprave
+
+<div>Pozdravljeni,</div>
+<br>
+<div>Zaznali smo da ste se v svoj račun <b>prijavili z novo napravo</b> (#{user_device.created_at}):</div>
+<br>
+<div>
+Vaša naprava: #{user_device.name}<br>
+Vaša lokacija (relativna): #{user_device.location}<br>
+Vaš IP: #{user_device.ip}<br>
+</div>
+<br>
+<div>Vaša naprava je bila dodana na seznam znanih naprav. Svoje naprave si ga lahko ogledate tukaj:</div>
+<br>
+<div><a href="#{config.http_type}://#{config.fqdn}/#profile/devices">#{config.http_type}://#{config.fqdn}/#profile/devices</a></div>
+<br>
+<div>Če to niste bili vi, odstranite napravo, spremenite geslo svojega računa in se obrnite na skrbnika. Nekdo je morda pridobil nepooblaščen dostop do vašega računa.</div>
+<br>
+<div>Vaša #{config.product_name} ekipa</div>
