@@ -350,38 +350,7 @@ export const useUserCurrentTaskbarTabsStore = defineStore(
     }
 
     const taskbarUpdateMutation = new MutationHandler(
-      useUserCurrentTaskbarItemUpdateMutation({
-        update: (cache, { data }) => {
-          if (!data) return
-
-          const { userCurrentTaskbarItemUpdate } = data
-          if (!userCurrentTaskbarItemUpdate?.taskbarItem) return
-
-          const existingTaskbarItemList =
-            cache.readQuery<UserCurrentTaskbarItemListQuery>({
-              query: UserCurrentTaskbarItemListDocument,
-            })
-
-          const listIndex =
-            existingTaskbarItemList?.userCurrentTaskbarItemList?.findIndex(
-              (taskbarTab) =>
-                taskbarTab.id === userCurrentTaskbarItemUpdate?.taskbarItem?.id,
-            )
-
-          if (!listIndex) return
-
-          existingTaskbarItemList?.userCurrentTaskbarItemList?.splice(
-            listIndex,
-            1,
-            userCurrentTaskbarItemUpdate?.taskbarItem,
-          )
-
-          cache.writeQuery({
-            query: UserCurrentTaskbarItemListDocument,
-            data: existingTaskbarItemList,
-          })
-        },
-      }),
+      useUserCurrentTaskbarItemUpdateMutation(),
     )
 
     const updateTaskbarTab = (taskbarTabId: ID, taskbarTab: UserTaskbarTab) => {
