@@ -489,6 +489,17 @@ RSpec.describe NotificationFactory::Renderer do
 
         it_behaves_like 'correctly rendering the attributes'
       end
+
+      context 'with a textarea attribute' do
+        let(:create_object_manager_attribute) do
+          create(:object_manager_attribute_textarea, name: 'textarea')
+        end
+        let(:ticket)          { create(:ticket, customer: @user, textarea: "Line 1\nLine 2\nLine 3") }
+        let(:template)        { '#{ticket.textarea} _SEPERATOR_ #{ticket.textarea.value}' }
+        let(:expected_render) { 'Line 1<br>Line 2<br>Line 3 _SEPERATOR_ Line 1<br>Line 2<br>Line 3' }
+
+        it_behaves_like 'correctly rendering the attributes'
+      end
     end
   end
   # rubocop:enable Lint/InterpolationCheck

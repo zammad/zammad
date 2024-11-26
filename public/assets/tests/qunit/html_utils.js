@@ -1674,6 +1674,37 @@ QUnit.test("check replace tags", assert => {
   verify = App.Utils.replaceTags(message, data)
   assert.equal(verify, result)
 
+  var attribute_textarea = {
+    name: 'textarea', display: 'textarea', tag: 'textarea', null: true, nulloption: true, value: null
+  }
+  App.Ticket.configure_attributes.push(attribute_textarea)
+  data = {
+    ticket: {
+      textarea: 'Line 1\nLine 2\nLine 3',
+    }
+  }
+  message = "Test: #{ticket.textarea}"
+  result = 'Test: <div>Line 1</div><div>Line 2</div><div>Line 3</div>'
+  verify = App.Utils.replaceTags(message, data)
+  assert.equal(verify, result)
+
+  message = "Test: #{ticket.textarea.value}"
+  result = 'Test: <div>Line 1</div><div>Line 2</div><div>Line 3</div>'
+  verify = App.Utils.replaceTags(message, data)
+  assert.equal(verify, result)
+
+  data = { ticket: {} }
+  message = "Test: #{ticket.textarea}"
+  result = 'Test: -'
+  verify = App.Utils.replaceTags(message, data)
+  assert.equal(verify, result)
+
+  data = { ticket: {} }
+  message = "Test: #{ticket.textarea.value}"
+  result = 'Test: -'
+  verify = App.Utils.replaceTags(message, data)
+  assert.equal(verify, result)
+
   message = "<div>#{user.avatar(100, 100)}</div>"
   result  = '<div></div>'
   data    = {

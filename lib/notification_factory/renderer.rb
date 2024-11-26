@@ -100,14 +100,20 @@ examples how to use
 
     previous_object_refs = ''
     object_methods_s = ''
-    object_methods.each do |method_raw|
+    object_methods.each_with_index do |method_raw, index|
 
       method = method_raw.strip
 
       if method == 'value'
+        escape = textarea_attributes(previous_object_refs).exclude?(object_methods_s.split('.').last)
         temp = object_refs
         object_refs = display_value(previous_object_refs, method, object_methods_s, object_refs)
         previous_object_refs = temp
+      elsif index == object_methods.length - 1 && (is_textarea_attribute = textarea_attributes(object_refs).include?(method))
+        temp = object_refs
+        object_refs = object_refs.send(method.to_sym).text2html
+        previous_object_refs = temp
+        escape = false
       end
 
       if object_methods_s != ''
@@ -115,7 +121,7 @@ examples how to use
       end
       object_methods_s += method
 
-      next if method == 'value'
+      next if method == 'value' || is_textarea_attribute
 
       if object_methods_s == ''
         value = debug("\#{#{object_name}.#{object_methods_s} / no such method}")
@@ -274,13 +280,15 @@ examples how to use
     return key if method_name != 'value' ||
                   (!key.instance_of?(String) && !key.instance_of?(Array) && !key.is_a?(Hash))
 
-    attributes = ObjectManager::Attribute
-                 .where(object_lookup_id: ObjectLookup.by_name(object.class.to_s))
-                 .where(name: previous_method_names.split('.').last)
+    attribute = object_manager_attributes(object)
+                  .where(name: previous_method_names.split('.').last)
+                  .first
 
-    case attributes.first.data_type
+    case attribute.data_type
     when %r{^(multi)?select$}
-      select_value(attributes.first, key)
+      select_value(attribute, key)
+    when 'textarea'
+      key.text2html
     when 'autocompletion_ajax_external_data_source'
       key['label']
     else
@@ -303,5 +311,13 @@ examples how to use
     Avatar.get_by_hash(image_hash)
   rescue
     nil
+  end
+
+  def object_manager_attributes(object)
+    ObjectManager::Attribute.where(object_lookup_id: ObjectLookup.by_name(object.class.to_s))
+  end
+
+  def textarea_attributes(object)
+    object_manager_attributes(object).where(data_type: :textarea).map(&:name)
   end
 end

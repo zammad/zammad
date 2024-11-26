@@ -928,6 +928,8 @@ class App.Utils
 
               if level is 'value'
                 switch dataType
+                  when 'textarea'
+                    value = App.Utils.text2html(dataRefLast[attributeName])
                   when 'select'
                     key = dataRefLast[attributeName]
                     value = attributes[attributeName]['historical_options'][key]
@@ -940,6 +942,8 @@ class App.Utils
                     value = dataRefLast[attributeName]
               else
                 switch dataType
+                  when 'textarea'
+                    value = if dataRef then App.Utils.text2html(dataRef) else '-'
                   when 'datetime'
                     value = App.i18n.translateTimestamp(dataRef)
                   when 'date'
