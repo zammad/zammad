@@ -418,11 +418,16 @@ Capybara/ClickLinkOrButtonStyle:
   EnforcedStyle: link_or_button
 
 RSpec/ExampleLength:
+  inherit_mode:
+    merge:
+      - Exclude
   CountAsOne:
     - 'array'
     - 'hash'
     - 'heredoc'
   Max: 25
+  Exclude:
+    - "spec/system/**/*.rb"
 
 FactoryBot/ExcessiveCreateList:
   Enabled: false

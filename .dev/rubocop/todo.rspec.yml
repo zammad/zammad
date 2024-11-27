@@ -204,11 +204,6 @@ RSpec/ExampleLength:
     - 'spec/requests/ticket_spec.rb'
     - 'spec/requests/user/organization_spec.rb'
     - 'spec/requests/user_spec.rb'
-    - 'spec/system/chat_spec.rb'
-    - 'spec/system/setup/system_spec.rb'
-    - 'spec/system/system/object_manager_spec.rb'
-    - 'spec/system/ticket/update/simultaneously_with_two_user_spec.rb'
-    - 'spec/system/ticket/zoom_spec.rb'
 
 RSpec/ExpectInHook:
   Exclude:

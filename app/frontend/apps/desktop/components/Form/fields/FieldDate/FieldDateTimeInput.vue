@@ -3,13 +3,14 @@
 <script setup lang="ts">
 import VueDatePicker, { type DatePickerInstance } from '@vuepic/vue-datepicker'
 import { storeToRefs } from 'pinia'
-import { computed, ref, toRef } from 'vue'
+import { computed, nextTick, ref, toRef } from 'vue'
 
 import useValue from '#shared/components/Form/composables/useValue.ts'
 import type { DateTimeContext } from '#shared/components/Form/fields/FieldDate/types.ts'
 import { useDateTime } from '#shared/components/Form/fields/FieldDate/useDateTime.ts'
 import { EnumTextDirection } from '#shared/graphql/types.ts'
 import { i18n } from '#shared/i18n.ts'
+import testFlags from '#shared/utils/testFlags.ts'
 
 import { useThemeStore } from '#desktop/stores/theme.ts'
 import '@vuepic/vue-datepicker/dist/main.css'
@@ -61,6 +62,18 @@ const inputIcon = computed(() => {
 const picker = ref<DatePickerInstance>()
 
 const { isDarkMode } = storeToRefs(useThemeStore())
+
+const open = () => {
+  nextTick(() => {
+    testFlags.set('field-date-time.opened')
+  })
+}
+
+const closed = () => {
+  nextTick(() => {
+    testFlags.set('field-date-time.closed')
+  })
+}
 </script>
 
 <template>
@@ -95,6 +108,8 @@ const { isDarkMode } = storeToRefs(useThemeStore())
       :text-input="{ openMenu: 'toggle' }"
       auto-apply
       offset="12"
+      @open="open"
+      @closed="closed"
       @blur="context.handlers.blur"
     >
       <template

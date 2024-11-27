@@ -16,7 +16,7 @@ RSpec.describe 'Desktop > Guided Setup', app: :desktop_view, authenticated_as: f
     Redis.new(driver: :hiredis, url: ENV['REDIS_URL'].presence || 'redis://localhost:6379').del('Zammad::System::Setup')
   end
 
-  it 'Perform the basic system set-up' do # rubocop:disable RSpec/ExampleLength
+  it 'Perform the basic system set-up' do
     visit '/'
 
     click_on 'Set up a new system'

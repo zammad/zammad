@@ -118,22 +118,31 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   #   # To select an autocomplete option with a different text than the query, provide an optional `label` parameter.
   #   find autocomplete('Customer').search_for_option(customer.email, label: customer.fullname)
   #
-  def search_for_option(query, label: query, gql_filename: '', gql_number: 1, **find_options)
+  def search_for_option(query, label: query, gql_filename: '', gql_number: 1, use_action: false, **find_options)
     return search_for_options(query, gql_filename: gql_filename, gql_number: gql_number, **find_options) if query.is_a?(Array)
     return search_for_tags_option(query, gql_filename: gql_filename, gql_number: gql_number) if type_tags?
-    return search_for_autocomplete_option(query, label: label, gql_filename: gql_filename, gql_number: gql_number, **find_options) if autocomplete?
+    return search_for_autocomplete_option(query, label: label, gql_filename: gql_filename, gql_number: gql_number, use_action: use_action, **find_options) if autocomplete?
 
     raise 'Field does not support searching for options' if !type_treeselect?
 
     element.click
 
-    wait_for_test_flag("field-tree-select-#{field_id}.opened")
+    wait_until_opened
 
     # calculate before closing, since we cannot access it, if dialog is closed
     is_multi_select = multi_select?
 
     browse_for_option(query, **find_options) do |option|
-      find('[role="searchbox"]').fill_in with: option
+
+      # Filter input in desktop view is part of the element, not the dropdown/dialog.
+      searchbox = if desktop_view?
+                    element.find('[role="searchbox"]')
+                  else
+                    find('[role="searchbox"]')
+                  end
+
+      searchbox.fill_in with: option
+
       find('[role="option"]', text: option, **find_options).click
 
       maybe_wait_for_form_updater
@@ -141,7 +150,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     send_keys(:escape) if is_multi_select
 
-    wait_for_test_flag("field-tree-select-#{field_id}.closed")
+    wait_until_closed
 
     self # support chaining
   end
@@ -157,9 +166,9 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   #   # To wait for a custom GraphQL response, you can provide expected `gql_filename` and/or `gql_number`.
   #   find_autocomplete('Tags').search_for_option('foo', gql_number: 3)
   #
-  def search_for_options(queries, labels: queries, gql_filename: '', gql_number: 1, **find_options)
+  def search_for_options(queries, labels: queries, gql_filename: '', gql_number: 1, use_action: false, **find_options)
     return search_for_tags_options(queries, gql_filename: gql_filename, gql_number: gql_number) if type_tags?
-    return search_for_autocomplete_options(queries, labels: labels, gql_filename: gql_filename, gql_number: gql_number, **find_options) if autocomplete?
+    return search_for_autocomplete_options(queries, labels: labels, gql_filename: gql_filename, gql_number: gql_number, use_action: use_action, **find_options) if autocomplete?
 
     raise 'Field does not support searching for options' if !type_treeselect?
 
@@ -171,7 +180,15 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     queries.each do |query|
       browse_for_option(query, **find_options) do |option, rewind|
-        find('[role="searchbox"]').fill_in with: option
+        # Filter input in desktop view is part of the element, not the dropdown/dialog.
+        searchbox = if desktop_view?
+                      element.find('[role="searchbox"]')
+                    else
+                      find('[role="searchbox"]')
+                    end
+
+        searchbox.fill_in with: option
+
         find('[role="option"]', text: option, **find_options).click
 
         maybe_wait_for_form_updater
@@ -187,7 +204,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     self # support chaining
   end
 
-  # Selects an option in select, treeselect nad autocomplete fields via its label.
+  # Selects an option in select, treeselect and autocomplete fields via its label.
   #   NOTE: The option must be part of initial options provided by the field, no autocomplete search will occur.
   #
   # Usage:
@@ -319,7 +336,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     element.click
 
-    wait_for_test_flag("field-date-time-#{field_id}.opened")
+    wait_until_opened
 
     date = Date.parse(date) if !date.is_a?(Date) && !date.is_a?(DateTime) && !date.is_a?(Time)
 
@@ -331,11 +348,16 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     id = date.strftime('%Y-%m-%d')
     element.find_by_id(id).click # rubocop:disable Rails/DynamicFindBy
 
+    if desktop_view?
+      element.click
+      wait_until_opened
+    end
+
     yield if block_given?
 
     # close_date_picker(element)
 
-    # wait_for_test_flag("field-date-time-#{field_id}.closed")
+    # wait_until_closed
 
     maybe_wait_for_form_updater
 
@@ -473,6 +495,23 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     self # support chaining
   end
 
+  def menu_element
+    return dropdown_element if desktop_view?
+
+    dialog_element
+  end
+
+  # Dropdowns are teleported to the root element, so we must search them within the document body.
+  #   In order to improve the test performance, we don't do any implicit waits here.
+  #   Instead, we do explicit waits when opening/closing dropdowns within the actions.
+  def dropdown_element
+    if type_select? || type_tags? || autocomplete?
+      page.find('#common-select > [role="menu"]', wait: false)
+    elsif type_treeselect?
+      page.find('#field-tree-select-input-dropdown > [role="menu"]', wait: false)
+    end
+  end
+
   # Dialogs are teleported to the root element, so we must search them within the document body.
   #   In order to improve the test performance, we don't do any implicit waits here.
   #   Instead, we do explicit waits when opening/closing dialogs within the actions.
@@ -518,27 +557,45 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   end
 
   def wait_until_opened
+    return wait_until_opened_desktop_view if desktop_view?
     return wait_for_test_flag('common-select.opened') if type_select?
     return wait_for_test_flag("field-tree-select-#{field_id}.opened") if type_treeselect?
-    return wait_for_test_flag("field-date-time-#{field_id}.opened") if type_date? || !type_datetime
+    return wait_for_test_flag("field-date-time-#{field_id}.opened") if type_date? || type_datetime?
     return wait_for_test_flag("field-tags-#{field_id}.opened") if type_tags?
     return wait_for_test_flag("field-auto-complete-#{field_id}.opened") if autocomplete?
 
-    raise 'Element cannot be opened'
+    raise "Couldn't detect if element was opened"
+  end
+
+  def wait_until_opened_desktop_view
+    return wait_for_test_flag('common-select.opened') if type_select? || type_tags? || autocomplete?
+    return wait_for_test_flag('field-tree-select-input-dropdown.opened') if type_treeselect?
+    return wait_for_test_flag('field-date-time.opened') if type_date? || type_datetime?
+
+    raise "Couldn't detect if element was opened"
   end
 
   def wait_until_closed
+    return wait_until_closed_desktop_view if desktop_view?
     return wait_for_test_flag('common-select.closed') if type_select?
     return wait_for_test_flag("field-tree-select-#{field_id}.closed") if type_treeselect?
-    return wait_for_test_flag("field-date-time-#{field_id}.closed") if type_date? || !type_datetime
+    return wait_for_test_flag("field-date-time-#{field_id}.closed") if type_date? || type_datetime?
     return wait_for_test_flag("field-tags-#{field_id}.closed") if type_tags?
     return wait_for_test_flag("field-auto-complete-#{field_id}.closed") if autocomplete?
 
-    raise 'Element cannot be closed'
+    raise "Couldn't detect if element was closed"
+  end
+
+  def wait_until_closed_desktop_view
+    return wait_for_test_flag('common-select.closed') if type_select? || type_tags? || autocomplete?
+    return wait_for_test_flag('field-tree-select-input-dropdown.closed') if type_treeselect?
+    return wait_for_test_flag('field-date-time.closed') if type_date? || type_datetime?
+
+    raise "Couldn't detect if element was closed"
   end
 
   def select_option_by_label(label, **find_options)
-    within dialog_element do
+    within menu_element do
       find('[role="option"]', text: label, **find_options).click
 
       maybe_wait_for_form_updater
@@ -556,11 +613,17 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
       end
     end
 
+    child_menu_button = if desktop_view?
+                          'div[role="button"]'
+                        else
+                          'svg[role=link]'
+                        end
+
     components.each_with_index do |option, index|
 
       # Child option is always the last item.
       if index == components.size - 1
-        within dialog_element do
+        within menu_element do
           yield option, rewind
         end
 
@@ -568,8 +631,8 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
       end
 
       # Parents come before.
-      within dialog_element do
-        find('[role="option"] span', text: option, **find_options).sibling('svg[role=link]').click
+      within menu_element do
+        find('[role="option"] span', text: option, **find_options).sibling(child_menu_button).click
       end
     end
   end
@@ -577,10 +640,17 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   def search_for_tags_option(query, gql_filename: '', gql_number: 1)
     element.click
 
-    wait_for_test_flag("field-tags-#{field_id}.opened")
+    wait_until_opened
 
-    within dialog_element do
-      find('[role="searchbox"]').fill_in with: query
+    within menu_element do
+      # Filter input in desktop view is part of the element, not the dropdown/dialog.
+      searchbox = if desktop_view?
+                    element.find('[role="searchbox"]')
+                  else
+                    find('[role="searchbox"]')
+                  end
+
+      searchbox.fill_in with: query
 
       send_keys(:tab)
 
@@ -589,36 +659,47 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     send_keys(:escape)
 
-    wait_for_test_flag("field-tags-#{field_id}.closed")
+    wait_until_closed
 
     maybe_wait_for_form_updater
 
     self # support chaining
   end
 
-  def search_for_autocomplete_option(query, label: query, gql_filename: '', gql_number: 1, already_open: false, **find_options)
+  def search_for_autocomplete_option(query, label: query, gql_filename: '', gql_number: 1, already_open: false, use_action: false, **find_options)
     if !already_open
       element.click
 
-      wait_for_test_flag("field-auto-complete-#{field_id}.opened")
+      wait_until_opened
     end
 
     # calculate before closing, since we cannot access it, if dialog is closed
     is_multi_select = multi_select?
 
-    within dialog_element do
-      find('[role="searchbox"]').fill_in with: query
+    within menu_element do
+      # Filter input in desktop view is part of the element, not the dropdown/dialog.
+      searchbox = if desktop_view?
+                    element.find('[role="searchbox"]')
+                  else
+                    find('[role="searchbox"]')
+                  end
+
+      searchbox.fill_in with: query
 
       wait_for_autocomplete_gql(gql_filename, gql_number)
 
-      find('[role="option"]', text: label, **find_options).click
+      if use_action
+        find('[role="button"]', **find_options).click
+      else
+        find('[role="option"]', text: label, **find_options).click
+      end
 
       maybe_wait_for_form_updater
     end
 
     send_keys(:escape) if is_multi_select
 
-    wait_for_test_flag("field-auto-complete-#{field_id}.closed")
+    wait_until_closed
 
     self # support chaining
   end
@@ -626,13 +707,20 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   def search_for_tags_options(queries, gql_filename: '', gql_number: 1)
     element.click
 
-    wait_for_test_flag("field-tags-#{field_id}.opened")
+    wait_until_opened
 
     raise 'Field does not support multiple selection' if !multi_select?
 
-    within dialog_element do
+    within menu_element do
       queries.each do |query|
-        find('[role="searchbox"]').fill_in with: query
+        # Filter input in desktop view is part of the element, not the dropdown/dialog.
+        searchbox = if desktop_view?
+                      element.find('[role="searchbox"]')
+                    else
+                      find('[role="searchbox"]')
+                    end
+
+        searchbox.fill_in with: query
 
         send_keys(:tab)
 
@@ -642,37 +730,51 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     send_keys(:escape)
 
-    wait_for_test_flag("field-tags-#{field_id}.closed")
+    wait_until_closed
 
     maybe_wait_for_form_updater
 
     self # support chaining
   end
 
-  def search_for_autocomplete_options(queries, labels: queries, gql_filename: '', gql_number: 1, **find_options)
+  def search_for_autocomplete_options(queries, labels: queries, gql_filename: '', gql_number: 1, use_action: false, **find_options)
     element.click
 
-    wait_for_test_flag("field-auto-complete-#{field_id}.opened")
+    wait_until_opened
 
-    within dialog_element do
+    within menu_element do
       queries.each_with_index do |query, index|
-        find('[role="searchbox"]').fill_in with: query
+
+        # Filter input in desktop view is part of the element, not the dropdown/dialog.
+        searchbox = if desktop_view?
+                      element.find('[role="searchbox"]')
+                    else
+                      find('[role="searchbox"]')
+                    end
+
+        searchbox.fill_in with: query
 
         wait_for_autocomplete_gql(gql_filename, gql_number + index)
 
         raise 'Field does not support multiple selection' if !multi_select?
 
-        find('[role="option"]', text: labels[index], **find_options).click
+        if use_action
+          find('[role="button"]', text: 'add new email address', **find_options).click
+        else
+          find('[role="option"]', text: labels[index], **find_options).click
+        end
 
         maybe_wait_for_form_updater
 
-        find('[aria-label="Clear Search"]').click
+        if !use_action
+          find('[aria-label="Clear Search"]').click
+        end
       end
     end
 
     send_keys(:escape)
 
-    wait_for_test_flag("field-auto-complete-#{field_id}.closed")
+    wait_until_closed
 
     self # support chaining
   end
@@ -680,7 +782,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   def select_treeselect_option(label, **find_options)
     element.click
 
-    wait_for_test_flag("field-tree-select-#{field_id}.opened")
+    wait_until_opened
 
     # calculate before closing, since we cannot access it, if dialog is closed
     is_multi_select = multi_select?
@@ -693,7 +795,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     send_keys(:escape) if is_multi_select
 
-    wait_for_test_flag("field-tree-select-#{field_id}.closed")
+    wait_until_closed
 
     self # support chaining
   end
@@ -701,13 +803,13 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   def select_tags_option(label, **find_options)
     element.click
 
-    wait_for_test_flag("field-tags-#{field_id}.opened")
+    wait_until_opened
 
     select_option_by_label(label, **find_options)
 
     send_keys(:escape)
 
-    wait_for_test_flag("field-tags-#{field_id}.closed")
+    wait_until_closed
 
     self # support chaining
   end
@@ -715,7 +817,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   def select_autocomplete_option(label, **find_options)
     element.click
 
-    wait_for_test_flag("field-auto-complete-#{field_id}.opened")
+    wait_until_opened
 
     # calculate before closing, since we cannot access it, if dialog is closed
     is_multi_select = multi_select?
@@ -724,7 +826,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     send_keys(:escape) if is_multi_select
 
-    wait_for_test_flag("field-auto-complete-#{field_id}.closed")
+    wait_until_closed
 
     self # support chaining
   end
@@ -732,7 +834,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   def select_treeselect_options(labels, **find_options)
     element.click
 
-    wait_for_test_flag("field-tree-select-#{field_id}.opened")
+    wait_until_opened
 
     raise 'Field does not support multiple selection' if !multi_select?
 
@@ -748,7 +850,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     send_keys(:escape)
 
-    wait_for_test_flag("field-tree-select-#{field_id}.closed")
+    wait_until_closed
 
     self # support chaining
   end
@@ -756,7 +858,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   def select_tags_options(labels, **find_options)
     element.click
 
-    wait_for_test_flag("field-tags-#{field_id}.opened")
+    wait_until_opened
 
     raise 'Field does not support multiple selection' if !multi_select?
 
@@ -766,7 +868,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     send_keys(:escape)
 
-    wait_for_test_flag("field-tags-#{field_id}.closed")
+    wait_until_closed
 
     self # support chaining
   end
@@ -774,7 +876,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
   def select_autocomplete_options(labels, **find_options)
     element.click
 
-    wait_for_test_flag("field-auto-complete-#{field_id}.opened")
+    wait_until_opened
 
     raise 'Field does not support multiple selection' if !multi_select?
 
@@ -784,7 +886,7 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
 
     send_keys(:escape)
 
-    wait_for_test_flag("field-auto-complete-#{field_id}.closed")
+    wait_until_closed
 
     self # support chaining
   end
@@ -799,7 +901,12 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     if gql_filename.present?
       wait_for_gql(gql_filename, number: gql_number)
     elsif type_customer?
-      wait_for_gql('shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.graphql', number: gql_number)
+      query_name = if desktop_view?
+                     'shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/generic.graphql'
+                   else
+                     'shared/components/Form/fields/FieldCustomer/graphql/queries/autocompleteSearch/user.graphql'
+                   end
+      wait_for_gql(query_name, number: gql_number)
     elsif type_organization?
       wait_for_gql('shared/components/Form/fields/FieldOrganization/graphql/queries/autocompleteSearch/organization.graphql', number: gql_number)
     elsif type_recipient?
@@ -851,6 +958,10 @@ class ZammadFormFieldCapybaraElementDelegator < SimpleDelegator
     maybe_wait_for_form_updater
 
     self # support chaining
+  end
+
+  def desktop_view?
+    RSpec.current_example.metadata[:app] == :desktop_view
   end
 end
 
