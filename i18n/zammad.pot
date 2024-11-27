@@ -8495,7 +8495,7 @@ msgstr ""
 #: app/assets/javascripts/app/lib/app_post/task_manager.coffee:151
 #: app/assets/javascripts/app/lib/base/jquery.textmodule.js:647
 #: app/assets/javascripts/app/views/generic/page_loading.jst.eco:3
-#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:40
+#: app/frontend/apps/desktop/components/CommonLoader/CommonLoader.vue:63
 #: app/frontend/apps/desktop/components/CommonSelect/CommonSelect.vue:512
 #: app/frontend/shared/form/i18n/locales.ts:58
 #: app/views/init/spinner-loading.html.erb:260
@@ -13154,7 +13154,7 @@ msgstr ""
 msgid "Show next tab"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:18
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:24
 msgid "Show notifications"
 msgstr ""
 
@@ -16715,7 +16715,7 @@ msgstr ""
 msgid "Unsaved Changes"
 msgstr ""
 
-#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:29
+#: app/frontend/apps/desktop/components/layout/LayoutSidebar/LeftSidebar/LeftSidebarHeader/OnlineNotification/NotificationButton.vue:35
 msgid "Unseen notifications count"
 msgstr ""
 

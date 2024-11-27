@@ -66,6 +66,7 @@ const runMarkAllRead = async () => {
 </script>
 
 <template>
+  <!-- min height is required to prevent scrollbar to show on initial load -->
   <section ref="section" class="max-h-full w-[400px]">
     <NotificationHeader
       class="sticky top-0 z-10 mb-2 bg-neutral-50 px-3 py-3 dark:bg-gray-500"
