@@ -34,6 +34,9 @@ class App.UiElement.postmaster_set extends App.UiElement.ApplicationAction
                   config.operator = ['static', 'relative']
                 when 'tag'
                   config.operator = ['add', 'remove']
+                when 'autocompletion_ajax_external_data_source'
+                  config.objectName = groupMeta.model
+                  config.attributeName = config.name
 
               elements["x-zammad-#{groupKey}-#{config.name}"] = config
 
