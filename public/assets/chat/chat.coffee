@@ -519,6 +519,24 @@ do($ = window.jQuery, window) ->
         'Today': '今天'
         'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': ''
         'You are on waiting list position <strong>%s</strong>.': '您目前的等候位置是第 <strong>%s</strong> 位.'
+      'zh-tw':
+        '<strong>Chat</strong> with us!': '髮起<strong>即時對話</strong>!'
+        'All colleagues are busy.': '所有同事都很忙。'
+        'Chat closed by %s': '對話已被 %s 關閉'
+        'Compose your message…': '編輯您的信息…'
+        'Connecting': '連接中'
+        'Connection lost': '連接丟失'
+        'Connection re-established': '正在重新建立連接'
+        'Offline': '離線'
+        'Online': '在線'
+        'Scroll down to see new messages': '向下滾動以查看新消息'
+        'Send': '髮送'
+        'Since you didn\'t respond in the last %s minutes your conversation was closed.': '"由於您超過 %s 分鐘沒有任何回複'
+        'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': '"由於您超過 %s 分鐘沒有任何回複'
+        'Start new conversation': '开始新的会话'
+        'Today': '今天'
+        'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': '很抱歉，我们需要的时间比预计的要长。请稍后再试或给我们发邮件。谢谢你！'
+        'You are on waiting list position <strong>%s</strong>.': '您目前的等候位置是第 <strong>%s</strong> 位.'
     # ZAMMAD_TRANSLATIONS_END
     sessionId: undefined
     scrolledToBottom: true
