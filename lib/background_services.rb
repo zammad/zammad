@@ -65,6 +65,13 @@ class BackgroundServices
 
       Rails.logger.debug { "Starting thread for service #{service.service_name} in the main process." }
       service.new.run
+    # BackgroundServices rspec test is using Timeout.timeout to stop background services.
+    # It was fine for a long time, but started throwing following error in Rails 7.2.
+    # This seems to affect that test case only.
+    # Unfortunately, since it's running on a separate thread, that error has to be rescued here.
+    # That said, this should be handled by improving services loops to support graceful exiting.
+    rescue ActiveRecord::ActiveRecordError => e
+      raise e if Rails.env.test? && e.message != 'Cannot expire connection, it is not currently leased.' # rubocop:disable Zammad/DetectTranslatableString
     end
   end
 end
