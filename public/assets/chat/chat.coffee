@@ -533,7 +533,7 @@ do($ = window.jQuery, window) ->
         'Send': '髮送'
         'Since you didn\'t respond in the last %s minutes your conversation was closed.': '"由於您超過 %s 分鐘沒有任何回複'
         'Since you didn\'t respond in the last %s minutes your conversation with <strong>%s</strong> was closed.': '"由於您超過 %s 分鐘沒有任何回複'
-        'Start new conversation': '开始新的会话'
+        'Start new conversation': '開始新的會話'
         'Today': '今天'
         'We are sorry, it is taking longer than expected to get a slot. Please try again later or send us an email. Thank you!': '很抱歉，我们需要的时间比预计的要长。请稍后再试或给我们发邮件。谢谢你！'
         'You are on waiting list position <strong>%s</strong>.': '您目前的等候位置是第 <strong>%s</strong> 位.'
