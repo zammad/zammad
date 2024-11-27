@@ -867,6 +867,7 @@ returns
         'image/jpg':               %w[jpg image],
         'image/png':               %w[png image],
         'image/gif':               %w[gif image],
+        'text/calendar':           %w[ics calendar],
       }
       map.each do |type, ext|
         next if !content_type.match?(%r{^#{Regexp.quote(type)}}i)

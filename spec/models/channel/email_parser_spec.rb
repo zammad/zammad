@@ -154,6 +154,27 @@ RSpec.describe Channel::EmailParser, type: :model do
         expect(inline_image_attachment[:preferences]['Content-ID']).to eq cid
       end
     end
+
+    describe 'calendar attachment without a filename' do
+      let(:store) { create(:store, :ics).tap { |store| store.filename = '' } }
+
+      it 'gets fallback filename with correct file extension (#5427)' do
+        mail = Channel::EmailBuild.build(
+          from:         'sender@example.com',
+          to:           'recipient@example.com',
+          body:         'foobar',
+          content_type: 'text/html',
+          attachments:  [store],
+        )
+
+        parser = described_class.new
+        data = parser.parse(mail.to_s)
+
+        calendar_attachment = data[:attachments].last
+
+        expect(calendar_attachment[:filename]).to eq('calendar.ics')
+      end
+    end
   end
 
   describe '#process' do
