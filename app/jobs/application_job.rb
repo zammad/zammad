@@ -7,6 +7,12 @@ class ApplicationJob < ActiveJob::Base
 
   discard_on HasActiveJobLock::LockKeyNotGeneratable
 
+  # Rails 7.2 changed how background jobs are handled inside ActiveRecord transaction.
+  # Turns out some jobs are still enqueued within transaction which is a bad practice.
+  # For now, this reverts to pre-7.2 behavior.
+  # Jobs enqueued inside transaction should be moved to post-transaction callbacks in the future.
+  self.enqueue_after_transaction_commit = :never
+
   ActiveJob::LogSubscriber.detach_from :active_job
 
   # See config/initializers/delayed_jobs_timeout_per_job.rb for details.
