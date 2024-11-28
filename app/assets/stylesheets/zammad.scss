@@ -9049,27 +9049,6 @@ li.list-item-none {
   display: block;
 }
 
-.table.user-list {
-  tr:hover .switchView {
-    visibility: visible;
-  }
-
-  td .list {
-    margin-top: -4px;
-  }
-
-  .switchView {
-    visibility: hidden;
-    display: block;
-    text-overflow: ellipsis;
-    overflow: hidden;
-  }
-
-  .btn {
-    margin: 3px 5px 0;
-  }
-}
-
 .switchBackToUser {
   display: flex;
   align-items: center;

@@ -12,8 +12,8 @@ module CanSelector
       return [] if !query
 
       ActiveRecord::Base.transaction(requires_new: true) do
-        tickets = distinct.where(query, *bind_params).joins(tables).reorder(options[:order_by])
-        [tickets.count, tickets.limit(limit)]
+        objects = distinct.where(query, *bind_params).joins(tables).reorder(options[:order_by])
+        [objects.count, objects.limit(limit)]
       rescue ActiveRecord::StatementInvalid => e
         Rails.logger.error e
         raise ActiveRecord::Rollback

@@ -5,6 +5,7 @@ Zammad::Application.routes.draw do
 
   # overviews
   match api_path + '/overviews',            to: 'overviews#index',   via: :get
+  match api_path + '/overviews/search',     to: 'overviews#search',  via: %i[get post]
   match api_path + '/overviews/:id',        to: 'overviews#show',    via: :get
   match api_path + '/overviews',            to: 'overviews#create',  via: :post
   match api_path + '/overviews/:id',        to: 'overviews#update',  via: :put

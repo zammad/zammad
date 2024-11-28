@@ -5,6 +5,7 @@ Zammad::Application.routes.draw do
 
   # macros
   match api_path + '/macros',         to: 'macros#index',   via: :get
+  match api_path + '/macros/search',  to: 'macros#search',  via: %i[get post]
   match api_path + '/macros/:id',     to: 'macros#show',    via: :get
   match api_path + '/macros',         to: 'macros#create',  via: :post
   match api_path + '/macros/:id',     to: 'macros#update',  via: :put

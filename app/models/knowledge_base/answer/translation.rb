@@ -6,8 +6,8 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
   include HasAgentAllowedParams
   include HasLinks
   include HasSearchIndexBackend
-  include KnowledgeBase::Search
   include KnowledgeBase::HasUniqueTitle
+  include KnowledgeBase::Answer::Translation::Search
 
   AGENT_ALLOWED_ATTRIBUTES       = %i[title kb_locale_id].freeze
   AGENT_ALLOWED_NESTED_RELATIONS = %i[content].freeze
@@ -67,50 +67,18 @@ class KnowledgeBase::Answer::Translation < ApplicationModel
     output
   end
 
-  class << self
-    def search_preferences(current_user)
-      return false if !KnowledgeBase.exists? || !current_user.permissions?('knowledge_base.*')
+  scope :search_sql_text_fallback, lambda { |query|
+    fields = %w[title]
+    fields << KnowledgeBase::Answer::Translation::Content.arel_table[:body]
 
-      {
-        prio:                1209,
-        direct_search_index: false,
-      }
-    end
+    where_or_cis(fields, query).joins(:content)
+  }
 
-    def search_es_filter(es_response, _query, kb_locales, options)
-      return es_response if options[:user]&.permissions?('knowledge_base.editor')
-
-      answer_translations_id = es_response.pluck(:id)
-
-      allowed_answer_translation_ids = KnowledgeBase::Answer
-        .internal
-        .joins(:translations)
-        .where(knowledge_base_answer_translations: { id: answer_translations_id, kb_locale_id: kb_locales.map(&:id) })
-        .pluck('knowledge_base_answer_translations.id')
-
-      es_response.filter { |elem| allowed_answer_translation_ids.include? elem[:id].to_i }
-    end
-
-    def search_fallback(query, scope = nil, options: {})
-      fields = %w[title]
-      fields << KnowledgeBase::Answer::Translation::Content.arel_table[:body]
-
-      output = where_or_cis(fields, query)
-               .joins(:content)
-
-      if !options[:user]&.permissions?('knowledge_base.editor')
-        answer_ids = KnowledgeBase::Answer.internal.pluck(:id)
-
-        output = output.where(answer_id: answer_ids)
-      end
-
-      if scope.present?
-        output = output
-                 .joins(:answer)
-                 .where(knowledge_base_answers: { category_id: scope })
-      end
-
+  scope :apply_kb_scope, lambda { |scope|
+    if scope.present?
       output
+        .joins(:answer)
+        .where(knowledge_base_answers: { category_id: scope })
     end
-  end
+  }
 end

@@ -317,6 +317,10 @@ remove whole data from index
 =end
 
   def self.search(query, index, options = {})
+    if options.key? :with_total_count
+      raise 'Option "with_total_count" is not supported by multi-index search. Please use search_by_index instead.' # rubocop:disable Zammad/DetectTranslatableString
+    end
+
     if !index.is_a? Array
       return search_by_index(query, index, options)
     end
@@ -337,10 +341,15 @@ remove whole data from index
 =end
 
   def self.search_by_index(query, index, options = {})
-    return [] if query.blank?
+    return if query.blank?
 
-    url = build_url(type: index, action: '_search', with_pipeline: false, with_document_type: false)
-    return [] if url.blank?
+    action = '_search'
+    if options[:only_total_count].present?
+      action = '_count'
+    end
+
+    url = build_url(type: index, action: action, with_pipeline: false, with_document_type: false)
+    return if url.blank?
 
     # real search condition
     condition = {
@@ -358,28 +367,37 @@ remove whole data from index
 
     query_data = build_query(index, condition, options)
 
-    if (fields = options.dig(:highlight_fields_by_indexes, index.to_sym))
+    if (fields = options.dig(:highlight_fields_by_indexes, index.to_sym)) && options[:only_total_count].blank?
       fields_for_highlight = fields.index_with { |_elem| {} }
 
       query_data[:highlight] = { fields: fields_for_highlight }
     end
 
+    if options[:only_total_count].present?
+      query_data.slice!(:query)
+    end
+
     response = make_request(url, data: query_data, method: :post)
 
-    if !response.success?
-      Rails.logger.error humanized_error(
-        verb:     'GET',
-        url:      url,
-        payload:  query_data,
-        response: response,
-      )
-      return []
+    if options[:only_total_count].present?
+      return {
+        total_count: response.data&.dig('count') || 0,
+      }
     end
-    data = response.data&.dig('hits', 'hits')
 
-    return [] if !data
+    data = if response.success?
+             Array.wrap(response.data&.dig('hits', 'hits'))
+           else
+             Rails.logger.error humanized_error(
+               verb:     'GET',
+               url:      url,
+               payload:  query_data,
+               response: response,
+             )
+             []
+           end
 
-    data.map do |item|
+    data.map! do |item|
       Rails.logger.debug { "... #{item['_type']} #{item['_id']}" }
 
       output = {
@@ -393,6 +411,15 @@ remove whole data from index
 
       output
     end
+
+    if options[:with_total_count].present?
+      return {
+        total_count:     response.data&.dig('hits', 'total', 'value') || 0,
+        object_metadata: data,
+      }
+    end
+
+    data
   end
 
   def self.search_by_index_sort(index:, sort_by: nil, order_by: nil, fulltext: false)
@@ -674,7 +701,8 @@ generate url for index or document access (only for internal use)
   }.freeze
 
   def self.build_query(index, condition, options = {})
-    options = DEFAULT_QUERY_OPTIONS.merge(options.deep_symbolize_keys)
+    options[:from] = options[:from].presence || options[:offset].presence
+    options        = DEFAULT_QUERY_OPTIONS.merge(options.compact_blank.deep_symbolize_keys)
 
     data = {
       from:  options[:from],
@@ -682,7 +710,8 @@ generate url for index or document access (only for internal use)
       sort:  search_by_index_sort(index: index, sort_by: options[:sort_by], order_by: options[:order_by], fulltext: options[:fulltext]),
       query: {
         bool: {
-          must: []
+          must:     [],
+          must_not: [],
         }
       }
     }
@@ -695,6 +724,12 @@ generate url for index or document access (only for internal use)
 
     if options[:ids].present?
       data[:query][:bool][:must].push({ ids: { values: options[:ids] } })
+    end
+
+    if options[:condition].present?
+      selector_query = SearchIndexBackend.selector2query(index, options[:condition], {}, nil)
+      data[:query][:bool][:must] += Array.wrap(selector_query[:query][:bool][:must])
+      data[:query][:bool][:must_not] += Array.wrap(selector_query[:query][:bool][:must_not])
     end
 
     data

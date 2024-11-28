@@ -720,4 +720,46 @@ RSpec.describe 'Search', authenticated_as: :authenticate, searchindex: true, typ
       expect(page).to have_no_css('.popover')
     end
   end
+
+  describe 'search with many results', searchindex: false do
+    let(:new_customers) { create_list(:customer, 55) }
+    let(:all_zammad_customers)        { User.where('email LIKE ?', '%zammad%') }
+    let(:all_zammad_customers_sorted) { all_zammad_customers.reorder(:login) }
+
+    before do
+      new_customers
+      visit '#search/zammad'
+    end
+
+    it 'shows 50 on first page and remaining on second page' do
+      expect(page).to have_css('.tab[data-tab-content=User] .tab-badge', text: all_zammad_customers.count)
+
+      click '.tab[data-tab-content=User]'
+
+      expect(page).to have_css('.js-tableBody tr', count: 50)
+
+      page.first('.js-page', text: '2').click
+
+      expect(page).to have_css('.js-tableBody tr', count: all_zammad_customers.count % 50)
+    end
+
+    it 'sorts correctly across pages' do
+      click '.tab[data-tab-content=User]'
+
+      first('.js-sort').click
+
+      expect(page).to have_css('.js-tableBody tr:first-child',
+                               text: all_zammad_customers_sorted.first.login)
+
+      first('.js-sort').click
+
+      expect(page).to have_css('.js-tableBody tr:first-child',
+                               text: all_zammad_customers_sorted.last.login)
+
+      first('.js-page', text: '2').click
+
+      expect(page).to have_css('.js-tableBody tr:last-child',
+                               text: all_zammad_customers_sorted.first.login)
+    end
+  end
 end

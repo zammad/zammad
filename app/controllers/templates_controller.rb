@@ -149,6 +149,10 @@ curl http://localhost/api/v1/templates/1.json -v -u #{login}:#{password} -H "Con
     model_update_render(policy_scope(Template), params)
   end
 
+  def search
+    model_search_render(Template, params)
+  end
+
 =begin
 
 Resource:

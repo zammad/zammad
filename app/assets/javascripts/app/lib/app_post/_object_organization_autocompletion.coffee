@@ -403,8 +403,8 @@ class App.ObjectOrganizationAutocompletion extends App.Controller
         App.Collection.loadAssets(data.assets)
 
         # user search endpoint
-        if data.user_ids
-          for id in data.user_ids
+        if data.record_ids
+          for id in data.record_ids
             object = App[@objectSingle].fullLocal(id)
             @recipientList.append(@buildObjectItem(object))
 

@@ -3,13 +3,113 @@
 require 'rails_helper'
 
 RSpec.describe Service::Search do
-  describe '#models' do
-    let(:search)                      { described_class.new(current_user: create(:agent)) }
-    let(:models_with_direct_index)    { search.models(objects: Models.searchable, direct_search_index: true) }
-    let(:models_without_direct_index) { search.models(objects: Models.searchable, direct_search_index: false) }
+  let(:query)        { 'test_phrase' }
+  let(:current_user) { create(:agent) }
+  let(:objects)      { [User, Organization, Ticket] }
+  let(:options)      { {} }
+  let(:instance)     { described_class.new(current_user:, query:, objects:, options:) }
 
-    it 'returns different models for different direct_search_index flags' do
-      expect(models_with_direct_index).not_to be_intersect(models_without_direct_index)
+  describe '#execute' do
+    let(:customer) { create(:customer, firstname: query) }
+    let(:organization) { create(:organization, name: query) }
+
+    before do
+      customer
+      organization
+    end
+
+    it 'returns combined result with found items' do
+      expect(instance.execute.result).to include(
+        User         => include(objects: [customer], total_count: 1),
+        Organization => include(objects: [organization], total_count: 1),
+        Ticket       => include(objects: be_blank, total_count: 0)
+      )
+    end
+
+    it 'lists models in the result in a specific order' do
+      expect(instance.execute.result.keys).to eq [Ticket, User, Organization]
+    end
+
+    it 'lists flattened results in correct order' do
+      expect(instance.execute.flattened).to eq [customer, organization]
+    end
+
+    context 'when objects are restricted' do
+      let(:objects) { [User] }
+
+      it 'searches given model only' do
+        expect(instance.execute.result.keys).to eq [User]
+      end
+    end
+  end
+
+  describe '#search_single_model' do
+    before do
+      allow(SearchIndexBackend).to receive(:search_by_index)
+      allow(User).to receive(:search)
+      allow(Ticket).to receive(:search)
+    end
+
+    context 'when ElasticSearch is available' do
+      before { allow(SearchIndexBackend).to receive(:enabled?).and_return(true) }
+
+      context 'when direct index query allowed' do
+        it 'uses SearchIndexBackend' do
+          instance.send(:search_single_model, User)
+
+          expect(SearchIndexBackend).to have_received(:search_by_index)
+        end
+      end
+
+      context 'when direct index query not allowed' do
+        it 'uses model#search' do
+          instance.send(:search_single_model, Ticket)
+
+          expect(Ticket).to have_received(:search)
+        end
+      end
+    end
+
+    context 'when ElasticSearch not available' do
+      before { allow(SearchIndexBackend).to receive(:enabled?).and_return(false) }
+
+      context 'when direct index query allowed' do
+        it 'uses model#search' do
+          instance.send(:search_single_model, User)
+
+          expect(User).to have_received(:search)
+        end
+      end
+
+      context 'when direct index query not allowed' do
+        it 'uses model#search' do
+          instance.send(:search_single_model, Ticket)
+
+          expect(Ticket).to have_received(:search)
+        end
+      end
+    end
+
+    context 'with given options' do
+      let(:options) { { limit: 123, offset: 1024 } }
+
+      before { allow(SearchIndexBackend).to receive(:enabled?).and_return(true) }
+
+      it 'forwards limit and offset arguments to model#search' do
+        instance.send(:search_single_model, User)
+
+        expect(SearchIndexBackend)
+          .to have_received(:search_by_index)
+          .with(anything, anything, include(limit: 123, offset: 1024))
+      end
+
+      it 'forwards limit and offset arguments to SearchIndexBackend' do
+        instance.send(:search_single_model, Ticket)
+
+        expect(Ticket)
+          .to have_received(:search)
+          .with(include(limit: 123, offset: 1024))
+      end
     end
   end
 end

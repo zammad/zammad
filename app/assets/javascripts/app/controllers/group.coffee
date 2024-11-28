@@ -9,6 +9,8 @@ class Group extends App.ControllerSubContent
       id: @id
       genericObject: 'Group'
       defaultSortBy: 'name'
+      searchBar: true
+      searchQuery: @search_query
       pageData:
         home:      'groups'
         object:    __('Group')
@@ -16,7 +18,7 @@ class Group extends App.ControllerSubContent
         pagerAjax: true
         pagerBaseUrl: '#manage/groups/'
         pagerSelected: ( @page || 1 )
-        pagerPerPage: 150
+        pagerPerPage: 50
         navupdate: '#groups'
         notes:     [
           __('Groups are …')
@@ -32,6 +34,6 @@ class Group extends App.ControllerSubContent
       if key isnt 'el' && key isnt 'shown' && key isnt 'match'
         @[key] = value
 
-    @genericController.paginate( @page || 1 )
+    @genericController.paginate(@page || 1, params)
 
 App.Config.set('Group', { prio: 1500, name: __('Groups'), parent: '#manage', target: '#manage/groups', controller: Group, permission: ['admin.group'] }, 'NavBarAdmin')

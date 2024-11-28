@@ -3,7 +3,7 @@
 FactoryBot.define do
   factory :overview do
     sequence(:name) { |n| "Test Overview #{n}" }
-    prio            { 1 }
+    sequence(:prio) { |n| n }
     role_ids        { Role.where(name: %w[Customer Agent Admin]).pluck(:id) }
     out_of_office   { false }
     updated_by_id   { 1 }

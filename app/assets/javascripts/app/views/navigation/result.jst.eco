@@ -1,7 +1,8 @@
-<% for area, items of @result: %>
-  <% if done && items.length > 0: %> <li class="divider"></li> <% end %>
+<% for area, metadata of @result: %>
+  <% if done && metadata.items.length > 0: %> <li class="divider"></li> <% end %>
   <% done = true %>
-  <% for item in items: %>
+
+  <% for item in metadata.items: %>
     <li>
       <a href="<%- item.url %>" class="nav-tab nav-tab--search <%= item.class %>" data-id="<%= item.id %>" data-popover-show-avatar="true">
         <div class="nav-tab-icon">

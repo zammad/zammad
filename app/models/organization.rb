@@ -7,6 +7,7 @@ class Organization < ApplicationModel
   include ChecksClientNotification
   include HasHistory
   include HasSearchIndexBackend
+  include CanSelector
   include CanCsvImport
   include ChecksHtmlSanitized
   include HasObjectManagerAttributes

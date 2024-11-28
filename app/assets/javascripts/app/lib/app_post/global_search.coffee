@@ -3,19 +3,22 @@ class App.GlobalSearch extends App.Controller
   constructor: ->
     super
     @searchResultCache = {}
-    @lastQuery = undefined
+    @lastParams = undefined
     @apiPath = App.Config.get('api_path')
     @ajaxId = "search-#{Math.floor( Math.random() * 999999 )}"
 
   search: (params) =>
     query = params.query
+
+    cacheKey = @searchResultCacheKey(query, params)
+
     # use cache for search result
     currentTime = new Date
-    if !params.force && @searchResultCache[query] && @searchResultCache[query].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
+    if !params.force && @searchResultCache[cacheKey] && @searchResultCache[cacheKey].time > currentTime.setSeconds(currentTime.getSeconds() - 20)
       if @ajaxRequestId
         App.Ajax.abort(@ajaxRequestId)
       @ajaxStart(params)
-      @renderTry(@searchResultCache[query].result, query, params)
+      @renderTry(@searchResultCache[cacheKey].result, query, params)
       delayCallback = =>
         @ajaxStop(params)
       @delay(delayCallback, 700)
@@ -31,12 +34,17 @@ class App.GlobalSearch extends App.Controller
       @delay(delayCallback, 10000, 'global-search-ajax-longer-as-expected')
 
       @ajaxRequestId = App.Ajax.request(
-        id:    @ajaxId
-        type:  'GET'
-        url:   "#{@apiPath}/search"
+        id:   @ajaxId
+        type: 'GET'
+        url: "#{@apiPath}/search"
         data:
           query: query
+          by_object: true
+          objects: params.object
           limit: @limit || 10
+          offset: params.offset
+          order_by: params.orderDirection
+          sort_by: params.orderBy
         processData: true
         success: (data, status, xhr) =>
           @clearDelay('global-search-ajax-longer-as-expected')
@@ -46,23 +54,30 @@ class App.GlobalSearch extends App.Controller
           organizationProfileAccess = @permissionCheck(App.Config.get('organization/profile/:organization_id', 'Routes').requiredPermission)
 
           result = {}
-          for item in data.result
-            # user and organization are allowed via API but should not show
-            # up for customers because there are no profile pages for customers
-            continue if item.type is 'User' && !userProfileAccess
-            continue if item.type is 'Organization' && !organizationProfileAccess
+          for klassName, metadata of data.result
+            # user and organization are allowed via API but should not show # up for customers because there are no profile pages for customers
+            continue if klassName is 'User' && !userProfileAccess
+            continue if klassName is 'Organization' && !organizationProfileAccess
 
-            if App[item.type] && App[item.type].find
-              if !result[item.type]
-                result[item.type] = []
-              item_object = App[item.type].find(item.id)
-              if item_object.searchResultAttributes
-                item_object_search_attributes = item_object.searchResultAttributes()
-                result[item.type].push item_object_search_attributes
-              else
-                App.Log.error('_globalSearchSingleton', "No such model #{item.type.toLocaleLowerCase()}.searchResultAttributes()")
-            else
-              App.Log.error('_globalSearchSingleton', "No such model App.#{item.type}")
+            klass = App[klassName]
+
+            if !klass.find
+              App.Log.error('_globalSearchSingleton', "No such model App.#{klassName}")
+              continue
+
+            item_objects = []
+
+            for item_id in metadata.object_ids
+              item_object = klass.find(item_id)
+
+              if !item_object.searchResultAttributes
+                App.Log.error('_globalSearchSingleton', "No such model #{klassName.toLocaleLowerCase()}.searchResultAttributes()")
+                continue
+
+              item_objects.push(item_object.searchResultAttributes())
+
+            result[klassName] = { items: item_objects, total_count: metadata.total_count }
+
           @ajaxStop(params)
           @renderTry(result, query, params)
         error: =>
@@ -82,6 +97,7 @@ class App.GlobalSearch extends App.Controller
       params.callbackStop()
 
   renderTry: (result, query, params) =>
+    cacheKey = @searchResultCacheKey(query, params)
 
     if query
       if _.isEmpty(result)
@@ -92,19 +108,22 @@ class App.GlobalSearch extends App.Controller
           params.callbackMatch()
 
       # if result hasn't changed, do not rerender
-      if !params.force && @lastQuery is query && @searchResultCache[query]
-        diff = difference(@searchResultCache[query].result, result)
+      if !params.force && @lastParams is params && @searchResultCache[cacheKey]
+        diff = difference(@searchResultCache[cacheKey].result, result)
         if _.isEmpty(diff)
           return
 
-      @lastQuery = query
+      @lastParams = params
 
       # cache search result
-      @searchResultCache[query] =
+      @searchResultCache[cacheKey] =
         result: result
         time: new Date
 
-    @render(result)
+    @render(result, params)
+
+  searchResultCacheKey: (query, params) ->
+    "#{query}-#{params.object}-#{params.offset}-#{params.orderDirection}-#{params.orderBy}"
 
   close: =>
-    @lastQuery = undefined
+    @lastParams = undefined

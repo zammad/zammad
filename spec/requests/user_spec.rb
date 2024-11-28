@@ -1435,15 +1435,16 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
     end
   end
 
-  describe 'GET /api/v1/users/search group ids' do
+  describe 'POST /api/v1/users/search group ids and generic model_search_render tests' do
     let(:group1) { create(:group) }
-    let(:group2)  { create(:group) }
-    let!(:agent1) { create(:agent, firstname: '9U7Z-agent1', groups: [group1]) }
-    let!(:agent2) { create(:agent, firstname: '9U7Z-agent2', groups: [group2]) }
+    let(:group2)         { create(:group) }
+    let!(:agent1)        { create(:agent, firstname: '9U7Z-agent1', groups: [group1]) }
+    let!(:agent2)        { create(:agent, firstname: '9U7Z-agent2', groups: [group2]) }
+    let!(:random_agents) { create_list(:agent, 20) }
 
     def make_request(params)
       authenticated_as(agent1)
-      get '/api/v1/users/search', params: params, as: :json
+      post '/api/v1/users/search', params: params, as: :json
     end
 
     describe 'without searchindex' do
@@ -1477,6 +1478,45 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
         make_request(query: '')
         not_in_response = json_response.none? { |item| item['id'] == 1 }
         expect(not_in_response).to be(true)
+      end
+
+      it 'does return data' do
+        make_request(offset: 0, limit: 10)
+        expect(json_response).to be_a(Array)
+        expect(json_response.count).to eq(10)
+      end
+
+      it 'does return expand data' do
+        make_request(expand: true, offset: 0, limit: 10)
+        expect(json_response).to be_a(Array)
+        expect(json_response.count).to eq(10)
+        expect(json_response[0]['groups']).to be_present
+      end
+
+      it 'does return full data with total count' do
+        make_request(query: '9U7Z', full: true, offset: 0, limit: 1)
+        expect(json_response['assets']).to be_present
+        expect(json_response['record_ids'].count).to eq(1)
+        expect(json_response['total_count']).to eq(2)
+      end
+
+      it 'does return label data' do
+        make_request(query: '9U7Z', label: true, offset: 0, limit: 1)
+        expect(json_response).to be_a(Array)
+        expect(json_response[0].keys).to include('id', 'label', 'value')
+      end
+
+      it 'does return term data' do
+        make_request(term: '9U7Z', offset: 0, limit: 1)
+        expect(json_response).to be_a(Array)
+        expect(json_response[0].keys).to include('id', 'label', 'value', 'inactive')
+      end
+
+      it 'does return only total count' do
+        make_request(term: '9U7Z', offset: 0, limit: 1, only_total_count: true)
+        expect(json_response).to be_a(Hash)
+        expect(json_response.keys).to eq(['total_count'])
+        expect(json_response['total_count']).to eq(2)
       end
     end
 
@@ -1512,6 +1552,45 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
         not_in_response = json_response.none? { |item| item['id'] == 1 }
         expect(not_in_response).to be(true)
       end
+
+      it 'does return data' do
+        make_request(offset: 0, limit: 10)
+        expect(json_response).to be_a(Array)
+        expect(json_response.count).to eq(10)
+      end
+
+      it 'does return expand data' do
+        make_request(expand: true, offset: 0, limit: 10)
+        expect(json_response).to be_a(Array)
+        expect(json_response.count).to eq(10)
+        expect(json_response[0]['groups']).to be_present
+      end
+
+      it 'does return full data with total count' do
+        make_request(query: '9U7Z', full: true, offset: 0, limit: 1)
+        expect(json_response['assets']).to be_present
+        expect(json_response['record_ids'].count).to eq(1)
+        expect(json_response['total_count']).to eq(2)
+      end
+
+      it 'does return label data' do
+        make_request(query: '9U7Z', label: true, offset: 0, limit: 1)
+        expect(json_response).to be_a(Array)
+        expect(json_response[0].keys).to include('id', 'label', 'value')
+      end
+
+      it 'does return term data' do
+        make_request(term: '9U7Z', offset: 0, limit: 1)
+        expect(json_response).to be_a(Array)
+        expect(json_response[0].keys).to include('id', 'label', 'value', 'inactive')
+      end
+
+      it 'does return only total count' do
+        make_request(term: '9U7Z', offset: 0, limit: 1, only_total_count: true)
+        expect(json_response).to be_a(Hash)
+        expect(json_response.keys).to eq(['total_count'])
+        expect(json_response['total_count']).to eq(2)
+      end
     end
   end
 
@@ -1532,17 +1611,17 @@ RSpec.describe 'User', performs_jobs: true, type: :request do
 
     it 'uses elasticsearch when query is non empty' do
       # Check if ES is used
-      allow(SearchIndexBackend).to receive(:search)
+      allow(SearchIndexBackend).to receive(:search_by_index)
 
       make_request(query: 'Test')
-      expect(SearchIndexBackend).to have_received(:search)
+      expect(SearchIndexBackend).to have_received(:search_by_index)
     end
 
     it 'does not uses elasticsearch when query is empty' do
-      allow(SearchIndexBackend).to receive(:search)
+      allow(SearchIndexBackend).to receive(:search_by_index)
 
       make_request(query: '')
-      expect(SearchIndexBackend).not_to have_received(:search)
+      expect(SearchIndexBackend).not_to have_received(:search_by_index)
     end
   end
 

@@ -6,7 +6,7 @@ require 'system/examples/pagination_examples'
 
 RSpec.describe 'Manage > Groups', type: :system do
   context 'ajax pagination' do
-    include_examples 'pagination', model: :group, klass: Group, path: 'manage/groups'
+    include_examples 'pagination', model: :group, klass: Group, path: 'manage/groups', create_params: { email_address_id: 1 }
   end
 
   describe 'with nested groups' do

@@ -7,9 +7,13 @@ class Overview < ApplicationModel
   include ChecksConditionValidation
   include CanSeed
   include CanPriorization
+  include HasSearchIndexBackend
+  include CanSelector
+  include CanSearch
 
   include Overview::Assets
   include Overview::TriggersSubscriptions
+  include Overview::SearchIndex
 
   has_and_belongs_to_many :roles, after_add: :cache_update, after_remove: :cache_update, class_name: 'Role'
   has_and_belongs_to_many :users, after_add: :cache_update, after_remove: :cache_update, class_name: 'User'

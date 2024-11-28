@@ -1,6 +1,7 @@
 # Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
 require 'rails_helper'
+require 'system/examples/pagination_examples'
 
 RSpec.describe 'Manage > Overviews', type: :system do
   let(:group) { create(:group) }
@@ -42,6 +43,10 @@ RSpec.describe 'Manage > Overviews', type: :system do
   end
 
   let(:overview) { create(:overview, condition: condition) }
+
+  context 'ajax pagination' do
+    include_examples 'pagination', model: :overview, klass: Overview, path: 'manage/overviews', sort_by: :prio
+  end
 
   shared_examples 'previewing the correct ticket for single selected object' do
     before do

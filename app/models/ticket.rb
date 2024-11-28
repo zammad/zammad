@@ -28,9 +28,9 @@ class Ticket < ApplicationModel
   include ::Ticket::Subject
   include ::Ticket::Assets
   include ::Ticket::SearchIndex
+  include ::Ticket::CanSelector
   include ::Ticket::Search
   include ::Ticket::MergeHistory
-  include ::Ticket::CanSelector
   include ::Ticket::PerformChanges
 
   store :preferences

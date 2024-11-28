@@ -126,6 +126,10 @@ curl http://localhost/api/v1/roles.json -v -u #{login}:#{password} -H "Content-T
     model_update_render(Role, params)
   end
 
+  def search
+    model_search_render(Role, params)
+  end
+
 =begin
 
 Resource:

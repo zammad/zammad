@@ -1,13 +1,20 @@
 class App.ControllerGenericIndex extends App.Controller
+  elements:
+    '.js-search': 'searchField'
+
   events:
     'click [data-type=edit]':    'edit'
     'click [data-type=new]':     'new'
     'click [data-type=payload]': 'payload'
     'click [data-type=import]':  'import'
     'click .js-description':     'description'
+    'input .js-search': 'search'
 
   constructor: ->
     super
+
+    @searchQuery        ||= ''
+    @dndCallbackOrignal   = @dndCallback
 
     # set title
     if @pageData.title
@@ -18,7 +25,9 @@ class App.ControllerGenericIndex extends App.Controller
       @navupdate @pageData.navupdate
 
     # bind render after a change is done
-    if !@disableRender
+    if @pageData?.pagerAjax && !@disableRender
+      @controllerBind("#{@genericObject}:create #{@genericObject}:update #{@genericObject}:touch #{@genericObject}:destroy", @delayedRender)
+    else if !@disableRender
       @subscribeId = App[ @genericObject ].subscribe(@render)
 
     App[ @genericObject ].bind 'ajaxError', (rec, msg) =>
@@ -49,12 +58,31 @@ class App.ControllerGenericIndex extends App.Controller
     if @subscribeId
       App[@genericObject].unsubscribe(@subscribeId)
 
-  paginate: (page) =>
-    return if page is @pageData.pagerSelected
+  paginate: (page, params) =>
+    search_query = decodeURIComponent(params?.search_query || '')
+    return if page is @pageData.pagerSelected && @searchQuery is search_query
+
     @pageData.pagerSelected = page
+    @searchQuery = search_query
+
+    if @table && @searchField.val() isnt search_query
+      @searchField.val(search_query)
+
     @render()
 
+  search: ->
+    @delay(
+      =>
+        @navigate "#{@pageData.pagerBaseUrl}1/#{encodeURIComponent(@searchField.val())}"
+    , 300, "#{@controllerId}-render")
+
+  delayedRender: =>
+    @delay(@render, 300, "#{@controllerId}-render")
+
   render: =>
+    if @pageData?.objects
+      @title @pageData.objects, true
+
     if @pageData.pagerAjax
       sortBy  = @table?.customOrderBy || @table?.orderBy || @defaultSortBy  || 'id'
       orderBy = @table?.customOrderDirection || @table?.orderDirection || @defaultOrder || 'ASC'
@@ -66,18 +94,40 @@ class App.ControllerGenericIndex extends App.Controller
         fallbackOrderBy = "#{orderBy}, ASC"
 
       @startLoading()
-      App[@genericObject].indexFull(
+
+      params = {
+        force: true
+        refresh: false
+        sort_by: fallbackSortBy
+        order_by:  fallbackOrderBy
+        page: @pageData.pagerSelected
+        per_page: @pageData.pagerPerPage
+        query: @searchQuery
+      }
+
+      active_filters = []
+      @$('.tab.active').each( (i,d) ->
+        active_filters.push $(d).data('id')
+      )
+
+      if @filterCallback
+        params = @filterCallback(active_filters, params)
+
+      method = 'indexFull'
+      if @searchBar
+        method = 'searchFull'
+
+      App[@genericObject][method](
         (collection, data) =>
           @pageData.pagerTotalCount = data.total_count
+          if data.total_count > @pageData.pagerPerPage || @searchQuery
+            @dndCallback = undefined
+          else if @dndCallback is undefined && @dndCallbackOrignal
+            @dndCallback       = @dndCallbackOrignal
+            @table.renderState = undefined if @table
           @stopLoading()
           @renderObjects(collection)
-        {
-          refresh: false
-          sort_by: fallbackSortBy
-          order_by:  fallbackOrderBy
-          page: @pageData.pagerSelected
-          per_page: @pageData.pagerPerPage
-        }
+        params
       )
       return
 
@@ -108,6 +158,18 @@ class App.ControllerGenericIndex extends App.Controller
         buttons:         @pageData.buttons
         subHead:         @pageData.subHead
         showDescription: showDescription
+        objects:         @pageData.objects
+        searchBar:       @searchBar
+        searchQuery:     @searchQuery
+        filterMenu:      @filterMenu
+      )
+
+      @$('.tab').off('click').on(
+        'click'
+        (e) =>
+          e.preventDefault()
+          $(e.target).toggleClass('active')
+          @delayedRender()
       )
 
       # show description in content if no no content exists
@@ -144,6 +206,7 @@ class App.ControllerGenericIndex extends App.Controller
           pagerPerPage: @pageData.pagerPerPage
           pagerTotalCount: @pageData.pagerTotalCount
           sortRenderCallback: @render
+          searchQuery: @searchQuery
         },
         params
       )
@@ -151,7 +214,7 @@ class App.ControllerGenericIndex extends App.Controller
     if !@table
       @table = new App.ControllerTable(params)
     else
-      @table.update(objects: objects, pagerSelected: @pageData.pagerSelected, pagerTotalCount: @pageData.pagerTotalCount)
+      @table.update(objects: objects, pagerSelected: @pageData.pagerSelected, pagerTotalCount: @pageData.pagerTotalCount, dndCallback: @dndCallback, searchQuery: @searchQuery)
 
     if @pageData.logFacility
       new App.HttpLog(
@@ -183,6 +246,12 @@ class App.ControllerGenericIndex extends App.Controller
       handlers:         @handlers
       validateOnSubmit: @validateOnSubmit
       screen:           @editScreen
+      callback: =>
+        @resetActiveTabs()
+        if @searchQuery
+          @navigate "#{@pageData.pagerBaseUrl}"
+        else
+          @delayedRender()
     )
 
   newControllerClass: ->
@@ -203,6 +272,12 @@ class App.ControllerGenericIndex extends App.Controller
       handlers:         @handlers
       validateOnSubmit: @validateOnSubmit
       screen:           @createScreen
+      callback: =>
+        @resetActiveTabs()
+        if @searchQuery
+          @navigate "#{@pageData.pagerBaseUrl}"
+        else
+          @delayedRender()
     )
 
   clone: (item) =>
@@ -224,3 +299,6 @@ class App.ControllerGenericIndex extends App.Controller
       description: App[ @genericObject ].description
       container:   @container
     )
+
+  resetActiveTabs: ->
+    @$('.tab.active').removeClass('active')

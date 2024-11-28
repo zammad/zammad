@@ -178,64 +178,7 @@ curl http://localhost/api/v1/organization/{id} -v -u #{login}:#{password} -H "Co
 
   # GET /api/v1/organizations/search
   def search
-    query = params[:query]
-    if query.respond_to?(:permit!)
-      query = query.permit!.to_h
-    end
-    query_params = {
-      query:        query,
-      limit:        pagination.limit,
-      offset:       pagination.offset,
-      sort_by:      params[:sort_by],
-      order_by:     params[:order_by],
-      current_user: current_user,
-    }
-    %i[ids role_ids].each do |key|
-      next if params[key].blank?
-
-      query_params[key] = params[key]
-    end
-
-    # do query
-    organization_all = Organization.search(query_params)
-
-    if response_expand?
-      list = organization_all.map(&:attributes_with_association_names)
-      render json: list, status: :ok
-      return
-    end
-
-    # build result list
-    if params[:label]
-      organizations = []
-      organization_all.each do |organization|
-        a = { id: organization.id, label: organization.name, value: organization.name }
-        organizations.push a
-      end
-
-      # return result
-      render json: organizations
-      return
-    end
-
-    if response_full?
-      organization_ids = []
-      assets = {}
-      organization_all.each do |organization|
-        assets = organization.assets(assets)
-        organization_ids.push organization.id
-      end
-
-      # return result
-      render json: {
-        assets:           assets,
-        organization_ids: organization_ids.uniq,
-      }
-      return
-    end
-
-    list = organization_all.map(&:attributes_with_association_ids)
-    render json: list, status: :ok
+    model_search_render(Organization, params)
   end
 
   # GET /api/v1/organizations/history/1

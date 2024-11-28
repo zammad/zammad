@@ -76,7 +76,7 @@ RSpec.describe 'Manage > Users', type: :system do
 
         click '.js-submit'
 
-        expect(page).to have_css('table.user-list td', text: 'NewTestUserFirstName')
+        expect(page).to have_css('table td', text: 'NewTestUserFirstName')
       end
     end
 
@@ -113,7 +113,7 @@ RSpec.describe 'Manage > Users', type: :system do
 
           click '.js-submit'
 
-          expect(page).to have_css('table.user-list td', text: 'üser@äcme.corp')
+          expect(page).to have_css('table td', text: 'üser@äcme.corp')
         end
       end
     end
@@ -146,7 +146,7 @@ RSpec.describe 'Manage > Users', type: :system do
 
   context 'updating a user' do
     let(:user)   { create(:admin, firstname: 'Dummy') }
-    let(:row)    { find "table.user-list tbody tr[data-id='#{user.id}']" }
+    let(:row)    { find "table tbody tr[data-id='#{user.id}']" }
     let(:group)  { Group.first }
     let(:group2) { Group.second }
 

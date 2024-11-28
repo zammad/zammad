@@ -9,6 +9,9 @@ class Role < ApplicationModel
   include ChecksHtmlSanitized
   include HasGroups
   include HasCollectionUpdate
+  include HasSearchIndexBackend
+  include CanSelector
+  include CanSearch
 
   include Role::Assets
 

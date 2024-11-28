@@ -123,6 +123,7 @@ class App.ControllerTable extends App.Controller
 
   currentRows: []
 
+  orderEnabled: true
   orderDirection: 'ASC'
   orderBy: undefined
 
@@ -208,6 +209,7 @@ class App.ControllerTable extends App.Controller
       @renderPagerStatic(el, find)
 
   renderPagerAjax: (el, find = false) =>
+    page  = parseInt(@pagerSelected) - 1
     pages = parseInt((@pagerTotalCount - 1)  / @pagerPerPage)
     if pages < 1
       if find
@@ -216,7 +218,7 @@ class App.ControllerTable extends App.Controller
         el.filter('.js-pager').html('')
       return
     pager = App.view('generic/table_pager')(
-      page:  @pagerSelected - 1
+      page:  page
       pages: pages
     )
     if find
@@ -225,7 +227,8 @@ class App.ControllerTable extends App.Controller
       el.filter('.js-pager').html(pager)
 
   renderPagerStatic: (el, find = false) =>
-    pages = parseInt(((@objects.length - 1)  / @pagerItemsPerPage))
+    page      = parseInt(@pagerShownPage)
+    pages     = parseInt(((@objects.length - 1)  / @pagerItemsPerPage))
     if pages < 1
       if find
         el.find('.js-pager').html('')
@@ -233,7 +236,7 @@ class App.ControllerTable extends App.Controller
         el.filter('.js-pager').html('')
       return
     pager = App.view('generic/table_pager')(
-      page:  @pagerShownPage
+      page:  page
       pages: pages
     )
     if find
@@ -750,10 +753,13 @@ class App.ControllerTable extends App.Controller
     @objects.slice(page * @pagerItemsPerPage, (page + 1) * @pagerItemsPerPage)
 
   paginate: (e) =>
+    return if !@pagerEnabled
+
+    e.preventDefault()
     e.stopPropagation()
     page = $(e.currentTarget).attr('data-page')
     if @pagerAjax
-      @navigate "#{@pagerBaseUrl}#{(parseInt(page) + 1)}"
+      @navigate "#{@pagerBaseUrl}#{(parseInt(page) + 1)}/#{encodeURIComponent(@searchQuery)}"
     else
       render = =>
         @pagerShownPage = page
@@ -1176,11 +1182,13 @@ class App.ControllerTable extends App.Controller
           header.displayWidth = @resizeTargetRight.outerWidth()
 
   sortByColumn: (event) =>
+    return if !@orderEnabled
+
     column = $(event.currentTarget).closest('[data-column-key]').attr('data-column-key')
 
     # for ajax pagination we only accept valid attributes for sorting
     if @model && @pagerAjax
-      return if !@attributesList[column]
+      return if !@attributesList[column] || @attributesList[column]?.relation
 
     orderBy = @customOrderBy || @orderBy
     orderDirection = @customOrderDirection || @orderDirection

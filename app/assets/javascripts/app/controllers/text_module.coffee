@@ -15,6 +15,8 @@ class TextModule extends App.ControllerSubContent
           container: @el.closest('.content')
           deleteOption: true
         )
+      searchBar: true
+      searchQuery: @search_query
       pageData:
         home:      'text_modules'
         object:    __('Text module')
@@ -22,7 +24,7 @@ class TextModule extends App.ControllerSubContent
         pagerAjax: true
         pagerBaseUrl: '#manage/text_modules/'
         pagerSelected: ( @page || 1 )
-        pagerPerPage: 150
+        pagerPerPage: 50
         navupdate: '#text_modules'
         notes:     [
           __('Text modules are …')
@@ -39,6 +41,6 @@ class TextModule extends App.ControllerSubContent
       if key isnt 'el' && key isnt 'shown' && key isnt 'match'
         @[key] = value
 
-    @genericController.paginate( @page || 1 )
+    @genericController.paginate(@page || 1, params)
 
 App.Config.set('TextModule', { prio: 2300, name: __('Text modules'), parent: '#manage', target: '#manage/text_modules', controller: TextModule, permission: ['admin.text_module'] }, 'NavBarAdmin')
