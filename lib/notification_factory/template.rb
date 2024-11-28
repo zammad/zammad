@@ -41,7 +41,7 @@ examples how to use
         %(<%= d "#{sanitize_object_name(input_template)}", #{@escape} %>)
       end
     end
-    result.gsub(%r{\\\#{\s*(.*?)\s*}}m, '#{\1}') # rubocop:disable Lint/InterpolationCheck
+    result.gsub(%r{\\\#{\s*(.*?)\s*}}m, '#{\1}')
   end
 
   def sanitize_text(string)

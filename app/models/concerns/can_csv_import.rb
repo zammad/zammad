@@ -70,7 +70,7 @@ returns
         raise "Unable to parse empty file/string for #{self}." if data[:string].blank?
         raise "Unable to parse file/string without header for #{self}." if header.blank?
         raise "No records found in file/string for #{self}." if rows.first.blank?
-        raise "No lookup column like #{lookup_keys.map(&:to_s).join(',')} for #{self} found." if (header & lookup_keys.map(&:to_s)).none?
+        raise "No lookup column like #{lookup_keys.map(&:to_s).join(',')} for #{self} found." if !header.intersect?(lookup_keys.map(&:to_s))
       rescue => e
         return {
           try:    try,

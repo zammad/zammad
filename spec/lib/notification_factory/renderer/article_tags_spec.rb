@@ -97,7 +97,7 @@ RSpec.describe 'NotificationFactory::Renderer article tags' do # rubocop:disable
     let(:template) { "\#{created_article.body}" }
 
     it 'no such object' do
-      expect(renderer.render).to eq '#{created_article / no such object}' # rubocop:disable Lint/InterpolationCheck
+      expect(renderer.render).to eq '#{created_article / no such object}'
     end
   end
 
@@ -105,7 +105,7 @@ RSpec.describe 'NotificationFactory::Renderer article tags' do # rubocop:disable
     let(:template) { "\#{created_internal_article.body}" }
 
     it 'no such object' do
-      expect(renderer.render).to eq '#{created_internal_article / no such object}' # rubocop:disable Lint/InterpolationCheck
+      expect(renderer.render).to eq '#{created_internal_article / no such object}'
     end
   end
 
@@ -113,7 +113,7 @@ RSpec.describe 'NotificationFactory::Renderer article tags' do # rubocop:disable
     let(:template) { "\#{created_external_article.body}" }
 
     it 'no such object' do
-      expect(renderer.render).to eq '#{created_external_article / no such object}' # rubocop:disable Lint/InterpolationCheck
+      expect(renderer.render).to eq '#{created_external_article / no such object}'
     end
   end
 
@@ -150,7 +150,7 @@ RSpec.describe 'NotificationFactory::Renderer article tags' do # rubocop:disable
       let(:template) { "\#{created_external_article.body}" }
 
       it 'no such object' do
-        expect(renderer.render).to eq '#{created_external_article / no such object}' # rubocop:disable Lint/InterpolationCheck
+        expect(renderer.render).to eq '#{created_external_article / no such object}'
       end
     end
 
@@ -179,7 +179,7 @@ RSpec.describe 'NotificationFactory::Renderer article tags' do # rubocop:disable
         let(:template) { "\#{created_internal_article.body}" }
 
         it 'no such object' do
-          expect(renderer.render).to eq '#{created_internal_article / no such object}' # rubocop:disable Lint/InterpolationCheck
+          expect(renderer.render).to eq '#{created_internal_article / no such object}'
         end
       end
 
@@ -218,7 +218,7 @@ RSpec.describe 'NotificationFactory::Renderer article tags' do # rubocop:disable
       let(:template) { "\#{created_article.body}" }
 
       it 'no such object' do
-        expect(renderer.render).to eq '#{created_article / no such object}' # rubocop:disable Lint/InterpolationCheck
+        expect(renderer.render).to eq '#{created_article / no such object}'
       end
     end
   end

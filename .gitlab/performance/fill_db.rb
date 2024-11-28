@@ -30,7 +30,7 @@ end
 
 def suppress_output
   original_stdout = $stdout.clone
-  $stdout.reopen(File.new('/dev/null', 'w'))
+  $stdout.reopen(File.new(File::NULL, 'w'))
   yield
 ensure
   $stdout.reopen(original_stdout)
