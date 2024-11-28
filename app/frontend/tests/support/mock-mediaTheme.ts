@@ -10,4 +10,10 @@ export const mockMediaTheme = (theme: EnumAppearanceTheme) => {
       matches: rule === '(prefers-color-scheme: dark)' && theme === 'dark',
       addEventListener,
     }) as any
+
+  window.matchMedia = (rule) =>
+    ({
+      matches: rule === '(prefers-color-scheme: light)' && theme === 'light',
+      addEventListener,
+    }) as any
 }

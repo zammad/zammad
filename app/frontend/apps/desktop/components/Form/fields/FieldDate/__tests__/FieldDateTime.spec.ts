@@ -1,5 +1,7 @@
 // Copyright (C) 2012-2024 Zammad Foundation, https://zammad-foundation.org/
 
+import { computed } from 'vue'
+
 const { FormKit } = await import('@formkit/vue')
 const { EnumAppearanceTheme } = await import('#shared/graphql/types.ts')
 const { renderComponent } = await import('#tests/support/components/index.ts')
@@ -228,6 +230,16 @@ describe('Fields - FieldDate', () => {
 
     it('renders in dark mode when user prefers dark media theme', async () => {
       mockMediaTheme(EnumAppearanceTheme.Dark)
+
+      vi.mock('@vueuse/core', async () => {
+        const mod =
+          await vi.importActual<typeof import('@vueuse/core')>('@vueuse/core')
+
+        return {
+          ...mod,
+          usePreferredColorScheme: () => computed(() => 'dark'),
+        }
+      })
 
       const view = await renderDateField()
 

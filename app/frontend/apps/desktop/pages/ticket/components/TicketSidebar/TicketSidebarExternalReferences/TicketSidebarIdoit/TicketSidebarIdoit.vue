@@ -4,8 +4,6 @@
 import { storeToRefs } from 'pinia'
 import { computed, onMounted, watch } from 'vue'
 
-import { EnumAppearanceTheme } from '#shared/graphql/types.ts'
-
 import TicketSidebarIdoitContent from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/TicketSidebarIdoit/TicketSidebarIdoitContent.vue'
 import type { ExternalReferencesFormValues } from '#desktop/pages/ticket/components/TicketSidebar/TicketSidebarExternalReferences/types.ts'
 import {
@@ -26,13 +24,12 @@ const isTicketEditable = computed(
   () => props.context.isTicketEditable?.value ?? true, // True for ticket create screen.
 )
 
-const { currentTheme } = storeToRefs(useThemeStore())
+const { isDarkMode } = storeToRefs(useThemeStore())
 
 const plugin = computed(() => {
-  const icon =
-    currentTheme?.value === EnumAppearanceTheme.Dark
-      ? `${props.sidebarPlugin.icon}-light`
-      : `${props.sidebarPlugin.icon}-dark`
+  const icon = isDarkMode.value
+    ? `${props.sidebarPlugin.icon}-light`
+    : `${props.sidebarPlugin.icon}-dark`
 
   return {
     ...props.sidebarPlugin,
