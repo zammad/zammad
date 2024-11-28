@@ -1,0 +1,6 @@
+# See: https://securitytxt.org/
+Contact: mailto:security@zammad.com
+Expires: 2049-12-31T23:00:00.000Z
+Encryption: https://raw.githubusercontent.com/zammad/zammad/refs/heads/develop/SECURITY.asc
+Preferred-Languages: en
+Policy: https://github.com/zammad/zammad/blob/develop/SECURITY.md
