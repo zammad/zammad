@@ -54,7 +54,10 @@ class Issue5409WrongDbColumnArrayType < ActiveRecord::Migration[7.1]
       object_table = object.table_name.to_sym
 
       table_column = ActiveRecord::Base.connection.columns(object_table).find { |c| c.name == attribute.name }
-      next if table_column.type == :string
+
+      # In case the table column does not exist in the schema, skip the check and data type change (#5430).
+      #   This can happen if the table column migration was not executed after adding an object manager attribute.
+      next if !table_column || table_column.type == :string
 
       change_column object_table, attribute.name.to_sym, :string, null: table_column.null, array: table_column.array # rubocop:disable Zammad/ExistsResetColumnInformation
 
